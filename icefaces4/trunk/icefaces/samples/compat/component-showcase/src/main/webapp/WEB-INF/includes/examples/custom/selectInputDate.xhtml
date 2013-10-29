@@ -1,0 +1,156 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ice:panelGroup styleClass="componentBox"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <!-- Standard Calendar -->
+    <ice:panelGroup styleClass="synopsisBox selectInputDateContainer">
+        <ice:outputText
+                value="#{msgs['page.selectInputDate.synopsis']}"/>
+        <ice:outputText
+                value="#{msgs['page.selectInputDate.instructions']}"/>
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="clearer"/>
+
+    <ice:panelGroup styleClass="exampleBox firstChildTitle">
+
+        <ice:outputText
+                value="#{msgs['page.selectInputDate.nonPopup.label']}"/>
+        <br/><br/>
+
+        <!-- display regular selectInputDate bean values-->
+        <ice:outputLabel
+                value="#{msgs['page.selectInputDate.selectedDate.label']}"/>
+        <ice:outputText id="defaultSelectedDate"
+                        effect="#{dateSelect.valueChangeEffect}"
+                        value="#{dateSelect.date1}">
+            <f:convertDateTime pattern="MM/dd/yyyy"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:outputText>
+        <!-- Calendar Component -->
+        <ice:selectInputDate id="date1"
+                             value="#{dateSelect.date1}"
+                             valueChangeListener="#{dateSelect.effectChangeListener}"
+                             highlightClass="weekend: august:"
+                             highlightUnit="DAY_OF_WEEK: MONTH"
+                             highlightValue="1,7: 8">
+            <f:convertDateTime pattern="MM/dd/yyyy"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:selectInputDate>
+
+        <ice:panelGroup style="text-align:right;margin-top:10px;">
+            <ice:outputText
+                    value="#{msgs['page.selectInputDate.comment.weekends']}"/><br/>
+            <ice:outputText
+                    value="#{msgs['page.selectInputDate.comment.august']}"/><br/>
+
+        </ice:panelGroup>
+
+    </ice:panelGroup>
+
+
+
+    <!-- Popup Calendar -->
+    <ice:panelGroup styleClass="exampleBox firstChildTitle">
+
+        <ice:outputText id="popupSelectedDate"
+                        value="#{msgs['page.selectInputDate.popup.label']}"/>
+
+        <br/><br/>
+        <ice:outputLabel value="Select Pattern :"/>
+        <ice:selectOneMenu id="datePattern" value="#{dateSelect.pattern}" partialSubmit="true" >
+            <f:selectItems id="pattern" value="#{dateSelect.patterns}"/>
+        </ice:selectOneMenu>
+
+        <!-- display popup selectInputDate bean values-->
+        <br/><br/>
+        <ice:outputLabel id="popupSelectedDateTxt"
+                         value="#{msgs['page.selectInputDate.selectedDate.label']}"/>
+        
+        <ice:outputText id="popupSelectedDatePattern1" value="#{dateSelect.date2}" rendered="#{dateSelect.pattern eq 'date'}"
+                        effect="#{dateSelect.valueChangeEffect2}">
+            <f:convertDateTime pattern="MM/dd/yyyy"
+                               timeZone="#{dateSelect.timeZone}"/>
+    </ice:outputText>
+        <ice:outputText id="popupSelectedDatePattern2" value="#{dateSelect.date3}" rendered="#{dateSelect.pattern eq 'dateTime'}"
+                        effect="#{dateSelect.valueChangeEffect2}">
+            <f:convertDateTime pattern="MM/dd/yyyy HH:mm"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:outputText>
+        
+        <ice:outputText id="popupSelectedDatePattern3" value="#{dateSelect.date4}" rendered="#{dateSelect.pattern eq 'dateTimeAmPm'}"
+                        effect="#{dateSelect.valueChangeEffect2}">
+            <f:convertDateTime pattern="MM/dd/yyyy hh:mm a"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:outputText>        
+
+        <ice:outputText id="popupSelectedDatePattern4" value="#{dateSelect.date5}" rendered="#{dateSelect.pattern eq 'dateTimeSs'}"
+                        effect="#{dateSelect.valueChangeEffect2}">
+            <f:convertDateTime pattern="MMM/dd/yyyy HH:mm:ss"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:outputText>
+        <!-- Calendar Component -->
+        
+        <ice:selectInputDate id="popupDatePttrn1" renderMonthAsDropdown="true" renderYearAsDropdown="true" renderWeekNumbers="true"
+                             value="#{dateSelect.date2}" rendered="#{dateSelect.pattern eq 'date'}"
+                             valueChangeListener="#{dateSelect.effect2ChangeListener}"
+                             title="#{msgs['page.selectInputDate.popup.title']}"
+                             renderAsPopup="true">
+            <f:convertDateTime pattern="MM/dd/yyyy"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:selectInputDate>
+        
+        
+        <ice:selectInputDate id="popupDatePttrn2" renderMonthAsDropdown="true" renderYearAsDropdown="true" renderWeekNumbers="true"
+                             value="#{dateSelect.date3}" rendered="#{dateSelect.pattern eq 'dateTime'}"
+                             valueChangeListener="#{dateSelect.effect2ChangeListener}"
+                             title="#{msgs['page.selectInputDate.popup.title']}"
+                             renderAsPopup="true">
+            <f:convertDateTime pattern="MM/dd/yyyy HH:mm"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:selectInputDate>
+
+        <ice:selectInputDate id="popupDatePttrn3" renderMonthAsDropdown="true" renderYearAsDropdown="true" renderWeekNumbers="true"
+                             value="#{dateSelect.date4}" rendered="#{dateSelect.pattern eq 'dateTimeAmPm'}"
+                             valueChangeListener="#{dateSelect.effect2ChangeListener}"
+                             title="#{msgs['page.selectInputDate.popup.title']}"
+                             renderAsPopup="true">
+            <f:convertDateTime pattern="MM/dd/yyyy hh:mm a"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:selectInputDate>
+
+        <ice:selectInputDate id="popupDatePttrn4" renderMonthAsDropdown="true" renderYearAsDropdown="true" renderWeekNumbers="true"
+                             value="#{dateSelect.date5}" rendered="#{dateSelect.pattern eq 'dateTimeSs'}"
+                             valueChangeListener="#{dateSelect.effect2ChangeListener}"
+                             title="#{msgs['page.selectInputDate.popup.title']}"
+                             renderAsPopup="true">
+            <f:convertDateTime pattern="MMM/dd/yyyy HH:mm:ss"
+                               timeZone="#{dateSelect.timeZone}"/>
+        </ice:selectInputDate>
+
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="clearer"/>
+
+    <ice:panelGroup styleClass="selectInputDateContainer">
+        <ice:messages/>
+    </ice:panelGroup>
+</ice:panelGroup>

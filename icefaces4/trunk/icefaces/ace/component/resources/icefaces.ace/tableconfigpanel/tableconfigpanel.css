@@ -1,0 +1,92 @@
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+.ui-tableconf {
+    width:500px;
+    position: absolute;
+    left:50%;
+    margin-left:-250px !important;
+    z-index:5;
+}
+
+.ui-tableconf-modal {
+    height:100%;
+    width:100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 4;
+    background: #aaaaaa;
+    opacity: .3;
+    filter: Alpha(Opacity=30);
+}
+
+.ui-tableconf-header {
+    padding: 4px;
+    line-height:1.9;
+    zoom:1;
+}
+
+.ui-tableconf-body {
+    text-align:center;
+    border-top: 0;
+}
+.ui-tableconf-body > table {
+    width:100%;
+}
+.ui-tableconf-body > table > thead > tr > th {
+    padding: 3px 10px;
+}
+.ui-tableconf-body > table > tbody > tr > td {
+    padding: 4px 10px
+}
+.ui-tableconf-body > table {
+    border-collapse: collapse;
+}
+.ui-tableconf-body > table td, .ui-tableconf-body > table th {
+    border: 1px solid #AAA;
+}
+.ui-tableconf-body > table > thead > tr:first-child th {
+    border: 0;
+}
+.ui-tableconf-body > table tr:first-child th {
+    border-top: 0;
+}
+.ui-tableconf-body > table tr:last-child td {
+    border-bottom: 0;
+}
+.ui-tableconf-body > table tr td:first-child,
+.ui-tableconf-body > table tr th:first-child {
+    border-left: 0;
+}
+.ui-tableconf-body > table tr td:last-child,
+.ui-tableconf-body > table tr th:last-child {
+    border-right: 0;
+}
+
+*+html .ui-tableconf-head-button {
+    /* IE7 inline block hack */
+    display:inline;
+}
+
+.ui-tableconf-head-button {
+    text-align: left;
+    padding: 2px 4px;
+    margin: 0px 2px;
+    display: inline-block;
+    width:16px; /* required for inline-block on IE7 */
+}

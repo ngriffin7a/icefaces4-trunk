@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[dateLocale.title]}"/>
+    <ui:param name="description" value="#{msgs[dateLocale.description]}"/>
+    <ui:param name="resourceValue" value="#{dateLocale.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dateTimeEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dateTimeEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="calLocaleForm">
+            <ace:panel>
+                <h:panelGrid style="text-align: center;" width="100%">
+                    <h:panelGroup>
+                        <ace:simpleSelectOneMenu value="#{dateLocale.locale}" label="Locale: " labelPosition="left">
+                            <f:selectItem itemValue="default" itemLabel="default"/>
+                            <f:selectItem itemValue="fr_CA" itemLabel="French (Canada)"/>
+                            <f:selectItem itemValue="es_MX" itemLabel="Spanish (Mexico)"/>
+                            <f:selectItem itemValue="pt_BR" itemLabel="Portuguese (Brazil)"/>
+                            <f:selectItem itemValue="zh_HK" itemLabel="Chinese (Hong Kong)"/>
+                            <f:selectItem itemValue="ko_KR" itemLabel="Korean (South Korea)"/>
+                            <f:selectItem itemValue="ja_JP" itemLabel="Japanese (Japan)"/>
+                            <f:selectItem itemValue="it_IT" itemLabel="Italian (Italy)"/>
+                            <f:selectItem itemValue="de_DE" itemLabel="German (Germany)"/>
+                            <f:selectItem itemValue="ru_RU" itemLabel="Russian (Russia)"/>
+                            <ace:ajax render="calLocale"/>
+                        </ace:simpleSelectOneMenu>
+                    </h:panelGroup>
+                    
+                </h:panelGrid>
+            </ace:panel>
+            
+            <h:panelGrid style="margin-left: auto; margin-right: auto; text-align: center;" width="100">
+                        <ace:dateTimeEntry id="calLocale" locale="#{dateLocale.locale}"
+                                   value="#{dateLocale.selectedDate}"
+                                   timeZone="Canada/Mountain"
+                                   pattern="MMM/dd/yyyy"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

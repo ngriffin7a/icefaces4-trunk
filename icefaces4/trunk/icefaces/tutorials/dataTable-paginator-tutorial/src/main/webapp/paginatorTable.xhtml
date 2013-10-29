@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>DataTable DataPaginator Tutorial</title>
+        <link href="./xmlhttp/css/xp/xp.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <p>
+            This is a basic dataTable comprising several columns. Each
+            row represents an inventory item. Each column represents an
+            inventory item property.<br/>
+            <br/>
+            Two dataPaginator components have been added, each illustrating
+            a typical use case, the first being a graphical interface with
+            image buttons for the user to change the current page, and the
+            second textually representing the paging information available
+            from the various var properties.
+        </p>
+        <ice:form id="frm">
+            <ice:dataTable rows="5" id="inventoryList" value="#{inventoryList.carInventory}" var="item">
+
+                <!-- Stock number -->
+                <ice:column id="hrd0">
+                    <f:facet name="header">
+                        <ice:outputText value="Stock #"></ice:outputText>
+                    </f:facet>
+                    <ice:outputText id="clmn0" value="#{item.stock}"/>
+                </ice:column>
+
+                <!-- Model number -->
+                <ice:column id="hrd1">
+                    <f:facet name="header">
+                        <ice:outputText value="Model"/>
+                    </f:facet>
+                    <ice:outputText id="clmn1" value="#{item.model}"/>
+                </ice:column>
+
+                <!-- Description  -->
+                <ice:column id="hrd2">
+                    <f:facet name="header">
+                        <ice:outputText value="Description"/>
+                    </f:facet>
+                    <ice:outputText id="clmn2" value="#{item.description}"/>
+                </ice:column>
+
+                <!-- Odometer reading -->
+                <ice:column id="hrd3">
+                    <f:facet name="header">
+                        <ice:outputText value="Odometer"/>
+                    </f:facet>
+                    <ice:outputText id="clmn3" value="#{item.odometer}"/>
+                </ice:column>
+
+                <!-- Price number -->
+                <ice:column id="hrd4">
+                    <f:facet name="header">
+                        <ice:outputText value="Price"/>
+                    </f:facet>
+                    <ice:outputText id="clmn4" value="#{item.price}"/>
+                </ice:column>
+
+            </ice:dataTable>
+
+            <!-- Paginator with page controls -->
+            <ice:dataPaginator id="dataScroll_3" for="inventoryList" paginator="true"
+                               fastStep="3" paginatorMaxPages="4">
+                <f:facet name="first">
+                    <ice:graphicImage title="First Page" id="imgFirst" style="border:none;"
+                                      url="./xmlhttp/css/xp/css-images/arrow-first.gif" />
+                </f:facet>
+                <f:facet name="last">
+                    <ice:graphicImage title="Last Page" id="imgLast" style="border:none;"
+                                      url="./xmlhttp/css/xp/css-images/arrow-last.gif" />
+                </f:facet>
+                <f:facet name="previous">
+                    <ice:graphicImage title="Previous Page" id="imgprev" style="border:none;"
+                                      url="./xmlhttp/css/xp/css-images/arrow-previous.gif"/>
+                </f:facet>
+                <f:facet name="next">
+                    <ice:graphicImage title="Next Page" id="imgNext" style="border:none;"
+                                      url="./xmlhttp/css/xp/css-images/arrow-next.gif"/>
+                </f:facet>
+                <f:facet name="fastforward">
+                    <ice:graphicImage title="Fast Forward" id="imgFfwd" style="border:none;"
+                                      url="./xmlhttp/css/xp/css-images/arrow-ff.gif"/>
+                </f:facet>
+                <f:facet name="fastrewind">
+                    <ice:graphicImage title="Fast Backwards" id="imgrewind" style="border:none;"
+                                      url="./xmlhttp/css/xp/css-images/arrow-fr.gif"/>
+                </f:facet>
+            </ice:dataPaginator>
+
+            <!-- Display counts about the table and the currently displayed page -->
+            <ice:dataPaginator id="dataScroll_2" for="inventoryList"
+                               rowsCountVar="rowsCount" displayedRowsCountVar="displayedRowsCount"
+                               firstRowIndexVar="firstRowIndex" lastRowIndexVar="lastRowIndex"
+                               pageCountVar="pageCount" pageIndexVar="pageIndex">
+                <ice:outputFormat value="{0} cars found, displaying {1} car(s), from {2} to {3}. Page {4} / {5}."
+                                  styleClass="standard">
+                    <f:param value="#{rowsCount}"/>
+                    <f:param value="#{displayedRowsCount}"/>
+                    <f:param value="#{firstRowIndex}"/>
+                    <f:param value="#{lastRowIndex}"/>
+                    <f:param value="#{pageIndex}"/>
+                    <f:param value="#{pageCount}"/>
+                </ice:outputFormat>
+            </ice:dataPaginator>
+
+        </ice:form>
+    </h:body>
+</f:view>
+</html>

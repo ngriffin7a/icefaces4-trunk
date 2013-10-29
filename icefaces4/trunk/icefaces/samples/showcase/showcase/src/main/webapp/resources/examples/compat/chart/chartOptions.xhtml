@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[chartOptions.title]}"/>
+    <ui:param name="description" value="#{msgs[chartOptions.description]}"/>
+    <ui:param name="resourceValue" value="#{chartOptions.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <icecore:singleSubmit/>
+            <h:panelGrid columns="3">
+                <h:outputLabel for="chartTitleIn" value="Chart Title:"/>
+                <h:inputText id="chartTitleIn" value="#{chartOptions.chartTitle}"
+                             required="true" size="30" maxlength="55">
+                     <f:validateLength minimum="1" maximum="55"/>
+                </h:inputText>
+                <h:message for="chartTitleIn"/>
+                
+                <h:outputLabel for="xTitleIn" value="X-Axis Title:"/>
+                <h:inputText id="xTitleIn" value="#{chartOptions.xaxisTitle}"
+                             required="true" size="30" maxlength="55">
+                     <f:validateLength minimum="1" maximum="55"/>
+                </h:inputText>
+                <h:message for="xTitleIn"/>
+                
+                <h:outputLabel for="yTitleIn" value="Y-Axis Title:"/>
+                <h:inputText id="yTitleIn" value="#{chartOptions.yaxisTitle}"
+                             required="true" size="30" maxlength="55">
+                     <f:validateLength minimum="1" maximum="55"/>
+                </h:inputText>
+                <h:message for="yTitleIn"/>
+                
+                <h:outputLabel for="legendIn" value="Legend Placement:"/>
+                <h:selectOneMenu id="legendIn" value="#{chartOptions.legendPlacement}"
+                                 required="true">
+                     <f:selectItems value="#{chartOptions.availablePlacements}"/>
+                </h:selectOneMenu>
+                <h:message for="legendIn"/>
+                
+                <h:outputLabel for="widthIn" value="Chart Width (300-1000):"/>
+                <h:panelGroup>
+                    <h:inputText id="widthIn" value="#{chartOptions.width}"
+                                 required="true" size="4" maxlength="4">
+                         <f:validateLongRange minimum="300" maximum="1000"/>
+                    </h:inputText>
+                    (Default 450)
+                </h:panelGroup>
+                <h:message for="widthIn"/>
+                
+                <h:outputLabel for="heightIn" value="Chart Height (200-500):"/>
+                <h:panelGroup>
+                    <h:inputText id="heightIn" value="#{chartOptions.height}"
+                                 required="true" size="4" maxlength="4">
+                         <f:validateLongRange minimum="200" maximum="500"/>
+                    </h:inputText>
+                    (Default 300)
+                </h:panelGroup>
+                <h:message for="heightIn"/>
+            </h:panelGrid>
+        </h:form>
+            
+        <div style="width: 100%; height: 325px; overflow: auto;">
+            <ice:outputChart type="#{chartArea.type}" 
+                             chartTitle="#{chartOptions.chartTitle}"
+                             xaxisTitle="#{chartOptions.xaxisTitle}"
+                             yaxisTitle="#{chartOptions.yaxisTitle}"
+                             labels="#{chartArea.model.legendLabels}"
+                             legendPlacement="#{chartOptions.legendPlacement}"
+                             colors="#{chartArea.model.colors}"
+                             xaxisLabels="#{chartArea.model.XAxisLabels}"
+                             data="#{chartArea.model.chartData}"
+                             renderOnSubmit="true"
+                             width="#{chartOptions.width}"
+                             height="#{chartOptions.height}"/>
+        </div>
+    </ui:define>
+</ui:composition>

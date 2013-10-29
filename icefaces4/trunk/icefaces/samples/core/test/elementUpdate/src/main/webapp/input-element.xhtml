@@ -1,0 +1,151 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view  contentType="text/html"/>
+<h:head>
+    <title>Request scoped counter</title>
+    <h:outputScript name="jsf.js" library="javax.faces"/>
+    <style type="text/css">
+        .A {
+            border-width: 10px;
+        }
+
+        .B {
+            border-width: 1px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div style="border: 1px dotted black; padding: 5px;">
+        <h5>input [type="*"]</h5>
+        <h:form>
+            <span>toggle common attributes: </span>
+            <h:commandButton value="value" action="#{InputBean.toggleValue}">
+                <f:ajax render="@all" execute="@all"/>
+            </h:commandButton>
+            <h:commandButton value="disabled" action="#{InputBean.toggleDisabled}">
+                <f:ajax render="@all" execute="@all"/>
+            </h:commandButton>
+            <h:commandButton value="className" action="#{InputBean.toggleClassName}">
+                <f:ajax render="@all" execute="@all"/>
+            </h:commandButton>
+            <h:commandButton value="title" action="#{InputBean.toggleTitle}">
+                <f:ajax render="@all" execute="@all"/>
+            </h:commandButton>
+            <h:commandButton value="lang" action="#{InputBean.toggleLang}">
+                <f:ajax render="@all" execute="@all"/>
+            </h:commandButton>
+            <h:commandButton value="syle" action="#{InputBean.toggleStyle}">
+                <f:ajax render="@all" execute="@all"/>
+            </h:commandButton>
+        </h:form>
+        <div style="border: 1px dotted black; padding: 10px; margin: 5px;">
+            <h5>input [type="text"]</h5>
+            <h:form>
+                <span>toggle specific attributes: </span>
+                <h:commandButton value="readonly" action="#{InputBean.toggleReadOnly}">
+                    <f:ajax render="@all" execute="@all"/>
+                </h:commandButton>
+                <h:commandButton value="size" action="#{InputBean.toggleSize}">
+                    <f:ajax render="@all" execute="@all"/>
+                </h:commandButton>
+            </h:form>
+            <h:form>
+                <h:inputText id="in"
+                             value="#{InputBean.value}"
+                             readonly="#{InputBean.readOnly}"
+                             disabled="#{InputBean.disabled}"
+                             styleClass="#{InputBean.className}"
+                             title="#{InputBean.title}"
+                             lang="#{InputBean.lang}"
+                             size="#{InputBean.size}"
+                             style="#{InputBean.style}"
+                        />
+            </h:form>
+        </div>
+        <div style="border: 1px dotted black; padding: 5px; margin: 5px;">
+            <h5>input [type="image" src="..."] </h5>
+            <h:form>
+                <span>toggle specific attributes: </span>
+                <h:commandButton value="url" action="#{InputBean.toggleSrc}">
+                    <f:ajax render="@all" execute="@all"/>
+                </h:commandButton>
+            </h:form>
+            <h:form>
+                <h:graphicImage id="im1"
+                                styleClass="#{InputBean.className}"
+                                title="#{InputBean.title}"
+                                lang="#{InputBean.lang}"
+                                url="#{InputBean.src}"
+                                style="#{InputBean.style}"
+                        />
+            </h:form>
+        </div>
+        <div style="border: 1px dotted black; padding: 5px; margin: 5px;">
+            <h5>input [type="image"]</h5>
+            <h:form>
+                <span>toggle specific attributes: </span>
+                <h:commandButton value="alt" action="#{InputBean.toggleAlt}">
+                    <f:ajax render="@all" execute="@all"/>
+                </h:commandButton>
+            </h:form>
+            <h:form>
+                <h:graphicImage id="im2"
+                                styleClass="#{InputBean.className}"
+                                title="#{InputBean.title}"
+                                lang="#{InputBean.lang}"
+                                alt="#{InputBean.alt}"
+                                style="#{InputBean.style}"
+                        />
+            </h:form>
+        </div>
+        <div style="border: 1px dotted black; padding: 5px; margin: 5px;">
+            <h5>input [type="checkbox"]</h5>
+            <h:form id="cbxf">
+                <h:selectBooleanCheckbox id="cbx" value="#{InputBean.value eq 'A'}"
+                                         disabled="#{InputBean.disabled}"
+                                         readonly="#{InputBean.readOnly}"
+                                         styleClass="#{InputBean.className}"
+                                         title="#{InputBean.title}"
+                                         lang="#{InputBean.lang}"
+                                         style="#{InputBean.style}">
+                </h:selectBooleanCheckbox>
+                A
+            </h:form>
+        </div>
+        <div style="border: 1px dotted black; padding: 5px; margin: 5px;">
+            <h5>input [type="radio"]</h5>
+            <h:form>
+                <h:selectOneRadio id="rd" value="#{InputBean.value}"
+                                  disabled="#{InputBean.disabled}"
+                                  readonly="#{InputBean.readOnly}"
+                                  styleClass="#{InputBean.className}"
+                                  title="#{InputBean.title}"
+                                  lang="#{InputBean.lang}"
+                                  style="#{InputBean.style}">
+                    <f:selectItem itemLabel="A" itemValue="A"/>
+                    <f:selectItem itemLabel="B" itemValue="B"/>
+                </h:selectOneRadio>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>
+

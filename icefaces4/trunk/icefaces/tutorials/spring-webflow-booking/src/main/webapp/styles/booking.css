@@ -1,0 +1,82 @@
+
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+a,a:visited,a:link,a:active {
+	color: #59924B;
+	background-color: transparent;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a:hover {
+	color: white;
+	background-color: #65a242;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+input[type=submit] {
+	color: #fff;
+	background: #fff url(../images/btn.bg.gif) 0 0 repeat-x;
+	border-style: none;
+	margin:0.4em 0.4em 0.4em 0;
+	height: 1.8em;
+}
+
+input[type=submit]:hover {
+	color: yellow;
+	background: #fff url(../images/btn.bg.gif) 0 0 repeat-x;
+	border-style: none;
+}
+
+label {
+	margin-right: 0.5em;	
+}
+
+.summary {
+	width: 100%;
+	border: 1px solid #414f23;
+	border-collapse: collapse;
+}
+
+.summary thead th {
+	border-left: 1px solid #414f23;
+	background: #fff url(../images/th.bg.gif) 0 100% repeat-x;
+	border-bottom: 1px solid #414f23;
+	padding: 6px;
+	text-align: left;
+	font-size: small;
+}
+
+.summary tbody td {
+	border-left: 1px solid #9cac7c;
+	padding: 4px;
+	border-bottom: 1px solid #9cac7c;
+	font-size: 8pt;
+}
+
+.label {
+	font-weight: bold;
+}
+
+.tooltipWithPanel, .tooltipWithPanel > .ui-tooltip-content {
+    padding: 0px;
+}
+
+.ui-input-label-left {
+    width: 150px;
+}

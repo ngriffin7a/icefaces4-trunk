@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
+<f:view><h:head><title>Effects Component Tutorial</title>
+    <link href="./css/effects.css" rel="stylesheet" type="text/css" />
+</h:head>
+    <h:body>
+        <ice:form id="frm">
+            <ice:panelGrid columns="2">
+                <ice:panelGroup id="grp">
+                    <ice:outputText value="Click to reveal ICEfaces info"/>
+                    <ice:commandButton id="btn" value="Reveal" action="#{customEffects.fireEffect}"/>
+                </ice:panelGroup>
+                <ice:panelGroup id="grp2" styleClass="blindDownPanel" effect="#{customEffects.panelEffect}" visible="false">
+                    <ice:outputText id="txt" value="ICEfaces"/><br />
+                    <br />
+                    <ice:outputText id="txt2" value="ICEfaces is more than a rich component library, it's an Ajax-based Java EE framework for developing and deploying rich enterprise applications (REAs). With ICEfaces, enterprise Java developers can develop rich applications in Java, not JavaScript."/>
+                </ice:panelGroup>
+            </ice:panelGrid>
+        </ice:form>
+    </h:body>
+</f:view>
+</html>

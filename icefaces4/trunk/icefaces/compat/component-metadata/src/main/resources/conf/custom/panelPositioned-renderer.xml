@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+         <description>
+             <![CDATA[ With the positioned panel component lists can be used to 
+             generate a series of repeating child-components within a panel. 
+             Each one of these child-components is draggable and can exchange 
+             positions with other children in the same panel as well as a child 
+             component can be moved between different positioned panels components. 
+             When a Child Component is moved the source value (java.util.List/Array ) 
+             for the positioned Panel is modified by the component to reflect the 
+             new order of the positioned panel. <br/>
+             (e.g.) <br/>
+            
+            &lt;ice:panelPositioned var="person" <br/>
+                                 value="#{panelPositioned.people}"
+                                &gt;<br/>
+                &lt;ice:panelGroup style="cursor:move;"&gt;<br/>
+                        &lt;ice:outputText value="#{person.name}"/&gt;<br/>
+                &lt;/ice:panelGroup&gt;<br/>
+            &lt;/ice:panelPositioned&gt;    <br/>         
+             ]]>
+         </description>
+	<component-family>com.icesoft.faces.dragdrop.PanelPositionedFamily</component-family>
+	<renderer-type>com.icesoft.faces.dragdrop.PanelPositionedRenderer</renderer-type>	
+
+	<renderer-extension>
+		<instance-name>panelPositioned</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelPositioned</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

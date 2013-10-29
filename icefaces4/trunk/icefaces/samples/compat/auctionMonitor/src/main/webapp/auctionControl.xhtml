@@ -1,0 +1,86 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <h:head><title>Auction Monitor Control</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <ice:outputStyle href="./css/demo_template.css"/>
+        <ice:outputStyle href="./css/auction_styles.css"/>
+        <h:outputScript name="jsf.js" library="javax.faces"/>
+    </h:head>
+    <h:body>
+    <ice:form>
+        <div id="hiddenDiv">
+            <ice:outputText value="#{LogBean.autoLoad}"/>
+        </div>
+        <div id="bandDiv" style="color:#000000">
+            Free memory: <ice:outputText value="#{LogBean.freeMemory}"/>
+            <ice:commandButton id="updateValues" action="refresh" value="Refresh"
+                               styleClass="buttons" title="Refresh this value"/>
+            Total memory: <ice:outputText value="#{LogBean.totalMemory}"/>
+            Max memory: <ice:outputText value="#{LogBean.maxMemory}"/>
+        </div>
+        <div id="resultsDiv" style="background-color: #FEFEFE">
+            <table cellspacing="4" cellpadding="2">
+                <tr>
+                    <td align="left">Reset Auction?</td>
+                    <td align="left"><ice:commandButton value="Reset"
+                                                        action="#{LogBean.resetAuction}"
+                                                        title="Clear all bids and reset bid time"
+                                                        styleClass="buttons"
+                                                        style="width: 90px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">Clear Log?</td>
+                    <td align="left"><ice:commandButton value="Clear"
+                                                        action="#{LogBean.clearMessageLog}"
+                                                        title="Clear all messages in the log"
+                                                        styleClass="buttons"
+                                                        style="width: 90px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">Print Log?</td>
+                    <td align="left"><ice:commandButton value="Print"
+                                                        action="#{LogBean.printMessageLog}"
+                                                        title="Output the message log to the terminal"
+                                                        styleClass="buttons"
+                                                        style="width: 90px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">Timestamps?</td>
+                    <td align="left"><ice:commandButton
+                            value="#{LogBean.timeStampState}"
+                            title="Enable or disable timestamps on messages"
+                            action="#{LogBean.toggleTimeStamp}"
+                            styleClass="buttons" style="width: 90px;"/></td>
+                </tr>
+            </table>
+        </div>
+        <ice:dataTable value="#{LogBean.controlLog}" var="control">
+            <ice:column>
+                <ice:outputText value="#{control}"/>
+            </ice:column>
+        </ice:dataTable>
+    </ice:form>
+    </h:body>
+</html>

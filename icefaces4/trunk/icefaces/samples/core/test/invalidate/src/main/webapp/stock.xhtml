@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>
+        Session Invalidation Test - Stock JSF
+    </title>
+</h:head>
+
+<h:body>
+
+    <h:form>
+        
+        <h:panelGrid columns="2">
+            <h:outputText value="Response writer:"/>
+            <h:outputText value="#{bean.responseWriter}"/>
+
+            <h:outputText value="Session:"/>
+            <h:outputText value="#{bean.thisSession}"/>
+
+            <h:outputText value="Bean:"/>
+            <h:outputText value="#{bean.thisBean}"/>
+
+            <h:outputText value="Bean scope:"/>
+            <h:outputText value="#{bean.scope}"/>
+
+            <h:outputText value="Message output:"/>
+            <h:outputText value="#{bean.message}"/>
+
+            <h:outputText value="Message input:"/>
+            <h:panelGroup>
+                <h:inputText value="#{bean.message}"/>
+                <h:commandButton value="Submit" actionListener="#{bean.submit}"/>
+            </h:panelGroup>
+
+            <h:outputText value="Invalidate session using session.invalidate() with action:"/>
+            <h:commandButton value="Standard Invalidation" action="#{bean.invalidateStandard}"/>
+
+            <h:outputText value="Invalidate session using session.invalidate() via Ajax with action:"/>
+            <h:commandButton value="Standard Invalidation" action="#{bean.invalidateStandard}">
+                <f:ajax execute="@this" render="@all"/>
+            </h:commandButton>
+
+            <h:outputText value="Invalidate session using session.invalidate() with actionListener:"/>
+            <h:commandButton value="Standard Invalidation" actionListener="#{bean.invalidateStandard}"/>
+
+            <h:outputText value="Invalidate session using session.invalidate() via Ajax with actionListener:"/>
+            <h:commandButton value="Standard Invalidation" actionListener="#{bean.invalidateStandard}">
+                <f:ajax execute="@this" render="@all"/>
+            </h:commandButton>
+
+            <h:outputText value="Invalidate session by going to logout.jsp:"/>
+            <h:outputLink value="/invalidate/logout.jsp">Click here to navigate to logout.jsp.</h:outputLink>
+        </h:panelGrid>
+
+    </h:form>
+
+</h:body>
+
+</html>

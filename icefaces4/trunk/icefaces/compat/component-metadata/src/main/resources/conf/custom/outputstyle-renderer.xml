@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+         <description>
+         <![CDATA[
+         <p>The outputStyle component is used to link the desired ICEfaces 
+            theme CSS stylesheets into the page to style the ICEfaces 
+            Component Suite components.</p>
+         <p>Inserting the outputStyle component into the HEAD region of a 
+            page will link both the default CSS stylesheet for the theme and 
+            optionally an additional stylesheet that alters the default 
+            styles to accommodate differences in CSS rendering in various 
+            user-agents/browsers.</p>
+         <p>The additional style sheet will have a different extension for 
+            each browser.</p>
+            <ul>
+              <li>Internet Explorer < 7 = _ie.css</li>
+              <li>Internet Explorer 7 = _ie7.css</li>
+              <li>Internet Explorer 8 = _ie8.css</li>
+              <li>Safari = _safari.css</li>
+              <li>Sun Studio Creator = _dt.css</li>
+            </ul>
+         <p>This extension replaces the .css value of the href attribute.
+            So when href is 'xp.css' and the page is rendered in Internet 
+            Explorer 6 or less, an additional style sheet will be included 
+            called 'xp_ie.css'.</p>
+		]]>
+         </description>
+	<component-family>com.icesoft.faces.OutputStyle</component-family>
+	<renderer-type>com.icesoft.faces.style.OutputStyleRenderer</renderer-type>	
+
+	<renderer-extension>
+		<instance-name>outputStyle</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>outputStyle</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

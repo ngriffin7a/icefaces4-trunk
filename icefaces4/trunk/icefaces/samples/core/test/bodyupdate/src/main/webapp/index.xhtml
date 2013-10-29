@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Updates</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="countForm" prependId="false">
+
+            <h2>Updates</h2>
+
+            <h3> <h:outputText id="counters" value="View counter: #{ajaxBean.viewCount}  Session counter: #{ajaxBean.sessionCount}"/></h3>
+
+            <h:panelGrid columns="5">
+                <h:outputText value=""/>
+                <h:outputText value="trigger"/>
+                <h:outputText value="f:ajax"/>
+                <h:outputText value="execute"/>
+                <h:outputText value="render"/>
+
+                <h:commandButton value="A"
+                                 action="#{ajaxBean.countAction}">
+                </h:commandButton>
+                <h:outputText value="action"/>
+                <h:outputText value="no"/>
+                <h:outputText value="n/a"/>
+                <h:outputText value="n/a"/>
+
+                <h:commandButton value="B"
+                                 actionListener="#{ajaxBean.countActionListener}">
+                </h:commandButton>
+                <h:outputText value="actionListener"/>
+                <h:outputText value="no"/>
+                <h:outputText value="n/a"/>
+                <h:outputText value="n/a"/>
+
+                <h:commandButton value="C"
+                                 action="#{ajaxBean.countAction}">
+                    <f:ajax execute="@all" render="@all"/>
+                </h:commandButton>
+                <h:outputText value="action"/>
+                <h:outputText value="yes"/>
+                <h:outputText value="@all"/>
+                <h:outputText value="@all"/>
+
+                <h:commandButton value="D"
+                                 actionListener="#{ajaxBean.countActionListener}">
+                    <f:ajax execute="@all" render="@all"/>
+                </h:commandButton>
+                <h:outputText value="actionListener"/>
+                <h:outputText value="yes"/>
+                <h:outputText value="@all"/>
+                <h:outputText value="@all"/>
+
+                <h:commandButton value="E"
+                                 action="#{ajaxBean.countAction}"
+                                 id="buttonE">
+                    <f:ajax execute="buttonE" render="@all"/>
+                </h:commandButton>
+                <h:outputText value="action"/>
+                <h:outputText value="yes"/>
+                <h:outputText value="buttonE"/>
+                <h:outputText value="@all"/>
+
+                <h:commandButton value="F"
+                                 actionListener="#{ajaxBean.countActionListener}"
+                                 id="buttonF">
+                    <f:ajax execute="buttonF" render="@all"/>
+                </h:commandButton>
+                <h:outputText value="actionListener"/>
+                <h:outputText value="yes"/>
+                <h:outputText value="buttonF"/>
+                <h:outputText value="@all"/>
+
+                <h:commandButton value="G"
+                                 action="#{ajaxBean.countAction}"
+                                 id="buttonG">
+                    <f:ajax execute="buttonG" render="countForm"/>
+                </h:commandButton>
+                <h:outputText value="action"/>
+                <h:outputText value="yes"/>
+                <h:outputText value="buttonG"/>
+                <h:outputText value="countForm"/>
+
+                <h:commandButton value="H"
+                                 actionListener="#{ajaxBean.countActionListener}"
+                                 id="buttonH">
+                    <f:ajax execute="buttonH" render="countForm"/>
+                </h:commandButton>
+                <h:outputText value="actionListener"/>
+                <h:outputText value="yes"/>
+                <h:outputText value="buttonH"/>
+                <h:outputText value="countForm"/>
+
+                <h:commandButton value="I"
+                                 action="#{ajaxBean.countAction}">
+                    <f:ajax execute="@all" render="@all" disabled="true"/>
+                </h:commandButton>
+                <h:outputText value="action"/>
+                <h:outputText value="disabled"/>
+                <h:outputText value="@all"/>
+                <h:outputText value="@all"/>
+
+                <h:commandButton value="J"
+                                 actionListener="#{ajaxBean.countActionListener}">
+                    <f:ajax execute="@all" render="@all" disabled="true"/>
+                </h:commandButton>
+                <h:outputText value="actionListener"/>
+                <h:outputText value="disabled"/>
+                <h:outputText value="@all"/>
+                <h:outputText value="@all"/>
+
+                <h:commandButton value="K"
+                                 action="#{ajaxBean.countAction}"
+                                 id="buttonK">
+                    <f:ajax execute="buttonK" render="counters"/>
+                </h:commandButton>
+                <h:outputText value="action"/>
+                <h:outputText value="yes"/>
+                <h:outputText value="buttonK"/>
+                <h:outputText value="counters"/>
+
+                <h:commandButton value="L"
+                                 actionListener="#{ajaxBean.countActionListener}"
+                                 id="buttonL">
+                    <f:ajax execute="buttonL" render="counters"/>
+                </h:commandButton>
+                <h:outputText value="actionListener"/>
+                <h:outputText value="yes"/>
+                <h:outputText value="buttonL"/>
+                <h:outputText value="counters"/>
+
+            </h:panelGrid>
+
+            <h:messages/>
+        </h:form>
+    </h:body>
+</html>

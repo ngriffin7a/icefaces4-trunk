@@ -1,0 +1,96 @@
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+.if-list-nctrl {
+    display:inline-block;
+}
+
+.if-list-nctrls {
+    display: block;
+    margin: 3px;
+    padding: 0.3em;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+}
+
+.if-list-dl {
+    margin: 3px;
+    padding: 0.3em .7em .5em .7em;
+    position: relative;
+    min-height: 152px;
+    white-space: nowrap;
+}
+
+/* Break nowrap inheritance */
+.if-list-dl > * > * {
+    white-space: normal;
+}
+
+.if-list-nctrl-head {
+    margin: 3px;
+    padding: 0.3em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.if-list-nctrl-foot {
+    margin: 3px;
+    padding: 0.3em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.if-list-dl-1 {
+    vertical-align: top;
+    display: inline-block;
+    width: 50%;
+    position: relative;
+    right:0.3em;
+}
+
+.if-list-dl-2 {
+    vertical-align: top;
+    display: inline-block;
+    width: 50%;
+    /* IE7 width fix */
+    *width: 49%;
+    position: relative;
+    left:.3em;
+}
+
+.if-list-dl .if-list {
+    width:100%;
+}
+
+.if-list-dl > .if-list-nctrls + .if-list-dl-2 {
+    left:1.5em;
+}
+
+.if-list-dl .if-list-nctrls {
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -77px;
+    display: inline-block;
+    padding: 1em 0.3em;
+    margin-left: -12px;
+}
+
+.if-list-dl .if-list-nctrls .if-list-ctrl-spcr {
+    display: block;
+    padding: 0.5em 0;
+}

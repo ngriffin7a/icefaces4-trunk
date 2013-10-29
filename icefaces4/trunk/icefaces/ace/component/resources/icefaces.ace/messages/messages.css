@@ -1,0 +1,25 @@
+.ui-faces-message .ui-widget, .ui-faces-message-icon, .ui-faces-message-text {
+    vertical-align: middle;
+}
+
+.ui-faces-message .ui-widget {
+    padding: 0.3em;
+}
+
+.ui-faces-message-icon {
+    display: inline-block;
+}
+
+.ui-faces-messages .ui-icon {
+    float: left;
+    margin-top: 0.2em;
+}
+
+.ui-faces-messages div.ui-empty-message  .ui-icon {
+    float: none;
+    margin-right: 0;
+}
+
+.ui-faces-messages .ui-corner-all {
+    padding: 0.3em;
+}

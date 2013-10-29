@@ -1,0 +1,61 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head><title>Escaping Text Example Page </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <h:outputScript name="jsf.js" library="javax.faces"/>
+</h:head>
+
+<h:body>
+    <h:form id="form1"> <!-- Note that unlike previous examples, prependid='true' -->
+        <h:outputScript name="jsf.js" library="javax.faces" target="head"/>
+
+        Output text with escaped values:  Output: <h:outputText id="out1" value="#{ajaxecho.str}"/>
+        <br/>
+        Input: <h:inputText id="in1" value="#{ajaxecho.str}"/>  <br/>
+        <!-- Increment the counter on the server, and the client -->
+       Input with escaped cdata text <h:inputText id="inOne" value="]]&gt;" /> <br/>
+       Input with un - escaped cdata text <h:inputText id="inTwo" value="]]>" /> <br/>
+        <br/>
+
+
+        <h:commandButton id="sendButton" value="Send it"
+                            actionListener="#{ajaxecho.sendIt}" />
+         <!--Input with ]]&gt; unescaped: <h:inputText id="inTwo" value="]]&gtx; " /> <br></br>-->
+
+        <h:commandButton id="childAdder" value="Toggle Include"
+                            actionListener="#{ajaxecho.toggleInclude}" />
+
+         <ui:include src="#{ajaxecho.filepath}" />
+
+        <br> </br>
+        The following input text fields should have alt attributes whose value equal what is
+        shown in the value field. 
+        <h:inputText id="escapeAttribute_1" alt="ampasand'test_eh?" value="ampasand'test_eh?"/> <br></br>
+        <h:inputText id="escapeAttribute_2" alt="ampasand'!@#$%^*()_test_eh?" value="ampasand'!@#$%^*()_test_eh?"/>
+
+         <h:messages/>
+    </h:form>
+
+</h:body> 
+</html>
+
+

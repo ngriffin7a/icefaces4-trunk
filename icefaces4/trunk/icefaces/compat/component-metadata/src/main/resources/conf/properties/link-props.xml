@@ -1,0 +1,73 @@
+<?xml encoding='UTF-8'?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+&ice-ext-core-styled-props;
+&ice-effects-props;
+&ice-att-userrole-enabled-props;
+&pass-thru-accesskey-props;
+&pass-thru-dir-props;
+&pass-thru-lang-props;
+&pass-thru-onblur-props;
+&pass-thru-onfocus-props;
+&pass-thru-rel-props;
+&pass-thru-coords-props;
+&pass-thru-hreflang-props;
+&pass-thru-charset-props;
+&pass-thru-rev-props;
+&pass-thru-shape-props;
+&pass-thru-tabindex-props;
+&pass-thru-title-props;
+&events-props;
+<property>
+    <description>
+		Name of a frame where the resource retrieved via this hyperlink is to 
+		be displayed.
+    </description>
+    <property-name>target</property-name>
+      <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+           &selectOneDomainEditor;
+        </editor-class>
+        <named-value>
+          <name>&domainClass;</name>
+          <expression>
+            &frameTargetsDomain;
+          </expression>
+        </named-value>
+      </property-extension>
+</property>
+
+
+<property>
+    <description>
+		The content type of the resource designated by this hyperlink.
+    </description>
+    <property-name>type</property-name>
+      <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+         &selectOneDomainEditor;
+        </editor-class>
+        <named-value>
+          <name>&domainClass;</name>
+          <expression>
+            &mimeTypesDomain;
+          </expression>
+        </named-value>
+      </property-extension>
+</property>

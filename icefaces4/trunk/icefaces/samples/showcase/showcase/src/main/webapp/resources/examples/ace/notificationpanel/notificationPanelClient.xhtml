@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[notificationPanelClient.title]}"/>
+    <ui:param name="description" value="#{msgs[notificationPanelClient.description]}"/>
+    <ui:param name="resourceValue" value="#{notificationPanelClient.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{notificationPanelResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{notificationPanelResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            
+            <h:panelGrid id="commandButtons" styleClass="centeredPanelGridWithBorderSpacing" columns="2">
+                <h:commandButton id="clientBttnShow" value="Show via client" onclick="myNoteBar.show();" type="button"/>
+                <h:commandButton id="clientBttnHide" value="Hide via client" onclick="myNoteBar.hide();" type="button"/>
+            </h:panelGrid>
+		 
+            <ace:notificationPanel id="notificationPanelClient"
+                                                     widgetVar="myNoteBar"
+                                                     position="top"
+                                                     effect="slide" effectSpeed="slow"
+                                                     >
+                <h:panelGrid columns="2" cellspacing="20">
+                   <h:graphicImage id="img" 
+                                               value="/resources/css/images/dragdrop/vwBeatle.png"
+                                               alt="VW Beatle"
+                                               style="text-align: right;"/>
+                   <h:outputText id="txt"
+                                           value="The Volkswagen Type 1, widely known as the Volkswagen Beetle and Volkswagen Bug,
+                                                       is an economy car produced by the German auto maker Volkswagen (VW) from 1938. 
+                                                       With over 21 million manufactured in an air-cooled, rear-engined, rear-wheel drive configuration, 
+                                                       the Beetle is the longest-running and most-manufactured automobile of a single design platform anywhere in the world.
+                                                       (source: Wikipedia)"
+                                           style="text-align: left; display: block;"/>
+                </h:panelGrid>
+            </ace:notificationPanel>  
+        </h:form>
+    </ui:define>
+</ui:composition>

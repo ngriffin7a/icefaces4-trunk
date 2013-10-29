@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+	<description>
+		<![CDATA[<p>The selectInputDate component renders a localized dateSelect. Users may select a date by clicking
+            on a date in the displayed month. The displayed month and year can be changed using arrow buttons or dropdown lists.
+            Optionally, the selectInputDate component may be used in popup mode. In this mode an inputText
+            component is rendered that displays the selected date. Users may enter a date directly into the
+            inputText component, or optionally click a button beside the inputText component to display a popup
+            dateSelect view. Selecting a date in the dateSelect closes  the popup dateSelect view and updates the
+            selected date.<br>
+            The selectInputDate component can be used in cases where a date value must be displayed or entered. 
+            <p>
+             In order to highlight a day, following three attributes need to be 
+             set with corresponding values:
+            <ol>
+                <li> highlightClass
+            	<li> highlightUnit   
+            	<li> highlightValue
+            </ol>
+            (e.g.)
+            &lt;ice:selectInputDate highlighClass="newyear"
+            					 highlightUnit="DAY_OF_YEAR"
+            					 highlightValue="1" /&gt;
+            <p>					 	
+            To highlighting days in more granular fashion, above attributes can 
+            be set to defining more then one rules by separating them with : 
+            colon (e.g.)<br/>
+
+            &lt;ice:selectInputDate highlighClass="newyear: weekend"
+            					 highlightUnit="DAY_OF_YEAR: DAY_OF_WEEK"
+            					 highlightValue="1: 7" /&gt;
+            </p>
+            <p>					 	
+            A rule can be set to defining more then one values using comma "," (e.g.)<br/>
+            &lt;ice:selectInputDate highlighClass="newyear: weekend"
+            					 highlightUnit="DAY_OF_YEAR: DAY_OF_WEEK"
+            					 highlightValue="1: 1, 7" /&gt;	 <br/>
+            </p>            
+            
+			NOTE: all 3 highlight attributes should have a corresponding values.<br/>
+                  The action and actionListener will only be fired, when "enter" 
+                  being pressed on a input text in a popup mode.<br/><br/> 
+
+            Time Entry: When the f:convertDateTime is configured to show time, the calendar will include a time editing UI.  
+            ]]>
+	</description>
+	<component-family>javax.faces.Input</component-family>
+	<renderer-type>com.icesoft.faces.Calendar</renderer-type>
+	<renderer-extension>
+		<instance-name>selectInputDate</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>selectInputDate</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[dateMinMax.title]}"/>
+    <ui:param name="description" value="#{msgs[dateMinMax.description]}"/>
+    <ui:param name="resourceValue" value="#{dateMinMax.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dateTimeEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dateTimeEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            <ace:panel>
+                <h:panelGrid style="text-align: center;" width="100%">
+                    <h:panelGroup>
+                        <h:outputLabel for="selectedOut" value="Selected Date: "/>
+                        <h:outputText id="selectedOut"
+                                      value="#{dateMinMax.selectedDate}"
+                                      style="font-weight: bold;">
+                            <f:convertDateTime pattern="MMMM dd, yyyy"/>
+                        </h:outputText>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </ace:panel>
+                
+            <h:panelGrid id="calendarPanel" width="80%" columns="3"
+                         style="margin-left: auto; margin-right: auto; text-align: center;">
+                <h:outputLabel for="minIn" value="Minimum Date:"/>
+                <ace:dateTimeEntry id="minIn" value="#{dateMinMax.minDate}"
+                                   timeZone="Canada/Mountain" pattern="MMM/dd/yyyy"
+                                   maxdate="#{dateMinMax.maxDate}"
+                                   navigator="true"
+                                   readOnlyInputText="true"
+                                   renderAsPopup="true"/>
+                <h:outputText value=""/>
+                
+                <h:outputLabel for="maxIn" value="Maximum Date:"/>
+                <ace:dateTimeEntry id="maxIn" value="#{dateMinMax.maxDate}"
+                                   timeZone="Canada/Mountain" pattern="MMM/dd/yyyy"
+                                   mindate="#{dateMinMax.minDate}"
+                                   navigator="true"
+                                   readOnlyInputText="true"
+                                   renderAsPopup="true"/>
+                <h:commandButton id="submitMinMax" value="Submit Min/Max Dates"
+                                 actionListener="#{dateMinMax.submitMinMax}"/>
+                
+                <h:outputLabel for="cal" value="Selected Date:"/>
+                <ace:dateTimeEntry id="cal"
+                                   value="#{dateMinMax.selectedDate}"
+                                   timeZone="Canada/Mountain"
+                                   pattern="MMM/dd/yyyy"
+                                   mindate="#{dateMinMax.minDate}"
+                                   maxdate="#{dateMinMax.maxDate}"/>
+                <h:commandButton id="submit" value="Submit Date"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

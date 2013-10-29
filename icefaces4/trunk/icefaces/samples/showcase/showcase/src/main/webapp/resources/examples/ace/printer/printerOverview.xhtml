@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[printerBean.title]}"/>
+    <ui:param name="description" value="#{msgs[printerBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[printerBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{printerBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{printerBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{printerResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{printerResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            
+            <ace:panel id="panel">
+                <h:panelGrid columns="2" width="100%">
+                    <h:graphicImage id="image" value="#{printerBean.image.path}" alt="#{printerBean.image.description}"/>
+                
+                
+                
+                <ace:dataTable id="carTable"
+                                         value="#{printerBean.cars}"
+                                         var="car">
+                        <f:facet name="header">
+                            <h:outputText value="Car Data Table"/>
+                        </f:facet>
+                    
+                        <ace:column headerText="Name">
+                            <h:outputText value="#{car.name}"/>
+                        </ace:column>
+                       <ace:column headerText="Chassis">
+                            <h:outputText value="#{car.chassis}"/>
+                        </ace:column>
+                       <ace:column headerText="MPG">
+                           <h:outputText value="#{car.mpg}"/>
+                        </ace:column>
+                       <ace:column headerText="Cost">
+                           <h:outputText value="#{car.cost}">
+                           <f:convertNumber type="currency"
+                                                 currencySymbol="$"
+                                                 groupingUsed="true"
+                                                 minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                           </h:outputText>
+                        </ace:column>
+                </ace:dataTable>
+                    </h:panelGrid>
+            </ace:panel>
+            
+            <ace:panel>
+                <h:panelGrid style="text-align: center; margin-left: auto; margin-right: auto;" columns="3" width="50%">
+                    <h:panelGrid>
+                        <h:commandLink id="printImgLnk">
+                            <h:graphicImage id="printerImg" value="#{printerBean.printerIcon.path}" alt="#{printerBean.printerIcon.description}"/>
+                            <h:outputText id="printImg" value="print image"/>
+                            <ace:printer for="image"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                    <h:panelGrid>
+                        <h:commandLink id="printTblLnk">
+                            <h:graphicImage id="printerImg2" value="#{printerBean.printerIcon.path}" alt="#{printerBean.printerIcon.description}"/>
+                            <h:outputText id="printTbl" value="print table"/>
+                            <ace:printer for="carTable"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                    
+                    <h:panelGrid>
+                        
+                        <h:commandLink id="printBothLnk">
+                            <h:graphicImage id="printerImg3" value="#{printerBean.printerIcon.path}" alt="#{printerBean.printerIcon.description}"/>
+                            <h:outputText id="printBoth" value="print both"/>
+                            <ace:printer for="panel"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </ace:panel>
+            
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,5 @@
+.ui-inputfield.ui-input-label-infield {color: #aaa;}
+.ui-input-label.hidden {visibility: hidden;}
+.ui-input-label-left, .ui-input-label.hidden, .ui-optional-indicator-left, .ui-required-indicator-left {margin-right: 4px;}
+.ui-input-label-right, .ui-optional-indicator-right, .ui-required-indicator-right {margin-left: 4px;}
+.ui-input-label-left, .ui-input-label.hidden {width: 100px; display: inline-block;}

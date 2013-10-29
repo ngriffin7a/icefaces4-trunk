@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[dragdropEvents.title]}"/>
+    <ui:param name="description" value="#{msgs[dragdropEvents.description]}"/>
+    <ui:param name="resourceValue" value="#{dragdropEvents.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <icecore:singleSubmit/>
+            <h:panelGrid columns="2" width="100%" border="1">
+                <f:facet name="header">
+                    <center>Types of Events to Mask from the Server</center>
+                </f:facet>
+                <h:outputLabel for="dragFrom" value="Drag Mask (for product):"/>
+                <h:selectManyCheckbox id="dragFrom" value="#{dragdropEvents.dragMaskFrom}">
+                    <f:selectItems value="#{dragdropEvents.availableMasks}"/>
+                </h:selectManyCheckbox>
+                
+                <h:outputLabel for="dropFrom" value="Drop Mask (for product):"/>
+                <h:selectManyCheckbox id="dropFrom" value="#{dragdropEvents.dropMaskFrom}">
+                    <f:selectItems value="#{dragdropEvents.availableMasks}"/>
+                </h:selectManyCheckbox>
+                
+                <h:outputLabel for="dragTo" value="Drag Mask (for cart):"/>
+                <h:selectManyCheckbox id="dragTo" value="#{dragdropEvents.dragMaskTo}">
+                    <f:selectItems value="#{dragdropEvents.availableMasks}"/>
+                </h:selectManyCheckbox>
+                
+                <h:outputLabel for="dropTo" value="Drop Mask (for cart):"/>
+                <h:selectManyCheckbox id="dropTo" value="#{dragdropEvents.dropMaskTo}">
+                    <f:selectItems value="#{dragdropEvents.availableMasks}"/>
+                </h:selectManyCheckbox>
+            </h:panelGrid>
+        </h:form>
+        
+        <br/>
+        
+        <h:form>
+            <ice:panelSeries value="#{dragdropData.items}"
+                             var="item">
+                 <h:panelGroup styleClass="dragContainer"
+                               style="margin: 5px;">
+                    <ice:panelGroup draggable="true"
+                                    dragListener="#{dragdropEvents.dragListener}"
+                                    dragValue="#{item.id}"
+                                    dragMask="#{dragdropEvents.dragMaskFromString}"
+                                    dropMask="#{dragdropEvents.dropMaskFromString}"
+                                    dragOptions="revert"
+                                    style="z-index: 1004;"
+                                    rendered="#{!item.outOfStock}">
+                        <h:graphicImage library="css/images/dragdrop"
+                                        name="#{item.image}"
+                                        alt="#{item.name}"
+                                        style="z-index: 1005;"
+                                        width="119px" height="76px"/>
+                    </ice:panelGroup>
+                    <h:panelGroup rendered="#{item.outOfStock}">
+                        <h:graphicImage library="css/images/dragdrop"
+                                        name="sold-out.png"
+                                        alt="Sold Out"
+                                        title="Item #{item.name} is Sold Out"
+                                        width="119px" height="76px"/>
+                    </h:panelGroup>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="nameOut" value="Name:"/>
+                        <h:outputText id="nameOut" value="#{item.name}"/>
+                        
+                        <h:outputLabel for="priceOut" value="Price:"/>
+                        <h:outputText id="priceOut" value="#{item.price}">
+                            <f:convertNumber type="currency"
+                                             currencySymbol="$"
+                                             groupingUsed="true"
+                                             minFractionDigits="2"
+                                             maxFractionDigits="2"/>
+                        </h:outputText>
+                        
+                        <h:outputLabel for="quantOut" value="Quantity:"/>
+                        <h:outputText id="quantOut" value="#{item.quantity}"
+                                      style="color: #{item.outOfStock ? 'red' : 'white'};"/>
+                    </h:panelGrid>
+                 </h:panelGroup>
+            </ice:panelSeries>
+            
+            <br/>
+            
+            <ice:dataTable value="#{dragdrop.purchased}"
+                           var="item"
+                           width="100%">
+                <f:facet name="header">
+                    <ice:panelGroup dropTarget="true"
+                                    dragMask="#{dragdropEvents.dragMaskToString}"
+                                    dropMask="#{dragdropEvents.dropMaskToString}"
+                                    dropListener="#{dragdropEvents.dropListener}"
+                                    effect="#{dragdrop.dropEffect}"
+                                    styleClass="dropContainer">
+                        <h:graphicImage library="css/images/dragdrop"
+                                        name="shopping-cart.png"
+                                        alt="Shopping Cart"
+                                        style="padding-top: 22px;"/>
+                    </ice:panelGroup>
+                </f:facet>
+                <ice:column>
+                    <f:facet name="header">
+                        ID
+                    </f:facet>
+                    #{item.id}
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        Name
+                    </f:facet>
+                    #{item.name}
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        Unit Price
+                    </f:facet>
+                    <h:outputText value="#{item.price}">
+                        <f:convertNumber type="currency"
+                                         currencySymbol="$"
+                                         groupingUsed="true"
+                                         minFractionDigits="2"
+                                         maxFractionDigits="2"/>
+                    </h:outputText>
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        Quantity
+                    </f:facet>
+                    #{item.quantity}
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        Manage
+                    </f:facet>
+                    <h:commandButton value="Return"
+                                     immediate="true"
+                                     action="#{dragdrop.returnItemAction}">
+                         <f:setPropertyActionListener target="#{dragdrop.toReturn}"
+                                                      value="#{item.id}"/>
+                    </h:commandButton>
+                </ice:column>
+                <f:facet name="footer">
+                    <h:panelGrid columns="3"
+                                 columnClasses="col25,col75,colRight">
+                        <h:outputLabel for="totalOut" value="Total Cart Price:"/>
+                        <h:outputText id="totalOut" value="#{dragdrop.totalPrice}">
+                            <f:convertNumber type="currency"
+                                             currencySymbol="$"
+                                             groupingUsed="true"
+                                             minFractionDigits="2"
+                                             maxFractionDigits="2"/>
+                        </h:outputText>
+                        <h:commandButton value="Return All"
+                                         actionListener="#{dragdrop.returnAll}"
+                                         disabled="#{!dragdrop.hasPurchased}"/>
+                    </h:panelGrid>
+                </f:facet>
+            </ice:dataTable>
+        </h:form>
+        
+        <br/>
+        
+        <h:form>
+            <h:dataTable value="#{dragdropEvents.eventLog}"
+                         var="event"
+                         style="border: 1px solid #CDCDCD; padding: 10px;"
+                         width="100%" cellspacing="0" cellpadding="2"
+                         rows="#{dragdropEvents.rowSize}">
+                 <h:column>
+                     <f:facet name="header">
+                        Event Log
+                     </f:facet>
+                     #{event}
+                 </h:column>
+            </h:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

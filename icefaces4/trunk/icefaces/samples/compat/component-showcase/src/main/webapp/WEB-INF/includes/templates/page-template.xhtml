@@ -1,0 +1,88 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:icecore="http://www.icefaces.org/icefaces/core">
+
+
+  <f:view locale="#{localeBean.currentLanguage}" contentType="text/html">
+
+     <h:head>
+        <title id="dynamicTitle">
+            <ui:insert name="title">#{msgs[applicationModel.currentNode.contentDescriptor.title]}</ui:insert>
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <ice:outputText style="padding-top:0; padding-bottom:0;"
+                      value="#{styleBean.style}" escape="false" nospan="true"/>
+        <link rel='stylesheet' type='text/css' href='./css/showcase_style.css'/>
+        <link rel='stylesheet' type='text/css' href='./css/showcase_overrides.css'/>
+        <link rel='stylesheet' type='text/css' href='./css/showcase_layout.css'/>
+        <link href="./css/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+        <link href="./css/images/favicon.ico" rel="icon" type="image/x-icon"/>
+		<icecore:config mandatoryResource="inputRichText com.icesoft.faces.component.gmap.GMap" />
+    </h:head>
+    <h:body>
+        <ui:insert name="header">
+            <ui:include src="/WEB-INF/includes/content/header.xhtml"/>
+        </ui:insert>
+
+        <div class="body_container">
+
+            <div class="body_content">
+
+
+                <ice:outputConnectionStatus id="connectStat"
+                                            styleClass="navConnectionStatus"
+                                            showPopupOnDisconnect="true"/>
+
+                <div class="navigationContainer">
+                    <ui:insert name="navigation">
+                        <ui:include src="/WEB-INF/includes/content/languageThemeControl.xhtml"/>
+                        <ui:include src="/WEB-INF/includes/content/navigation.xhtml"/>
+                        
+                    </ui:insert>
+                </div>
+
+                <div class="contentContainer">
+
+                    <!--
+                       Main Component content;
+                       controls which content to display for the respective navigation
+                    -->
+                    <ice:form id="iceform">
+                        <ui:insert name="page-content"/>
+                        <ice:panelGroup styleClass="clearer"/>
+
+                    </ice:form>
+
+                </div>
+            </div>
+
+        </div>
+
+        <ui:insert name="footer">
+            <ui:include src="/WEB-INF/includes/content/footer.xhtml"/>
+        </ui:insert>
+    </h:body>
+ </f:view>
+</html>
+ 
+

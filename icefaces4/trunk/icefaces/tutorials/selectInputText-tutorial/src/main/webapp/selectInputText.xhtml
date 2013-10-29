@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:icecore="http://www.icefaces.org/icefaces/core"
+		xmlns:ice="http://www.icesoft.com/icefaces/component">
+	<h:head>
+		<title>ICEfaces SelectInputText Tutorial</title>
+		<link href="./xmlhttp/css/xp/xp.css" rel="stylesheet" type="text/css" />
+	</h:head>
+	<h:body>
+		<style type="text/css">
+		.iceSelInpTxt div {
+			margin-top: 20px;
+			margin-left: 8px;
+		}
+		.iceSelInpTxt div div {
+			margin: 0;
+		}
+		</style>
+		<h:form id="frm">
+            <h1>ICEfaces SelectInputText Tutorial</h1>
+			<h:panelGrid columns="1">
+                <h:panelGroup>
+                    <h:outputText value="Enter some text to start the selectInputText component:"></h:outputText>
+                    <ice:selectInputText id="selectin" rows="10" width="300" valueChangeListener="#{selectInputTextBean.updateList}">
+                        <f:selectItems value="#{selectInputTextBean.list}"/>
+                    </ice:selectInputText>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:outputText value="SelectInputText Output:" style="font-weight:bold;"/>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="City:"/>
+                        <h:outputText id="city" value="#{selectInputTextBean.currentCity.city}"/>
+                        <h:outputText value="State:"/>
+                        <h:outputText id="state" value="#{selectInputTextBean.currentCity.state} #{selectInputTextBean.currentCity.stateCode}"/>
+                        <h:outputText value="County:"/>
+                        <h:outputText id="county" value="#{selectInputTextBean.currentCity.country}"/>
+                        <h:outputText value="Zip:"/>
+                        <h:outputText id="zip" value="#{selectInputTextBean.currentCity.zip}"/>
+                        <h:outputText value="Area Code:"/>
+                        <h:outputText id="areaCode" value="#{selectInputTextBean.currentCity.areaCode}"/>
+                    </h:panelGrid>
+                </h:panelGroup>
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+</html>

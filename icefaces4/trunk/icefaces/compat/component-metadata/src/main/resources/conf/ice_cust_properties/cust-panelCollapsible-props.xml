@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+&base-props;
+&ice-att-userrole-enabled-props;
+&ice-att-userrole-rendered-props;
+&ice-att-immediate-props;
+&pass-thru-tabindex-props;
+
+<property>
+	<description>
+		Fired when a panel is expanded or collapsed
+	</description>	
+	<property-name>actionListener</property-name>
+    <property-class>javax.faces.el.MethodBinding</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&methodBindingEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+    <description>
+        CSS style
+    </description>
+    <property-name>style</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+<property>
+    <description>
+        <![CDATA[
+		<p>
+        Space-separated list of CSS style class(es) to be applied when this
+        element is rendered. This value must be passed through as the 
+        "class" attribute on generated markup.<br/>
+        The base name for all style classes. Default value is <b>icePnlClpsbl</b></p>
+        The class names for the panel, the header, and the content are:<br>
+		Expanded
+		<ul>
+        <li>icePnlClpsbl</li>
+        <li>icePnlClpsblHdr</li>
+        <li>icePnlClpsblCnt</li>
+		</ul>
+        Collapsed
+		<ul>
+        <li>icePnlClpsblColpsd</li>
+        <li>icePnlClpsblColpsdHdr</li>
+        <li>icePnlClpsblColpsdCnt</li>
+		</ul>
+        Expanded and disabled
+		<ul>
+        <li>icePnlClpsbl-dis</li>
+        <li>icePnlClpsblHdr-dis</li>
+        <li>icePnlClpsblCnt-dis</li>
+		</ul>
+        Collapsed and disabled
+		<ul>
+        <li>icePnlClpsblColpsd-dis</li>
+        <li>icePnlClpsblColpsdHdr-dis</li>
+        <li>icePnlClpsblColpsdCnt-dis</li>
+        </ul>
+		</p>
+		]]>
+
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+<property>
+    <description>
+        True when panel is expanded, false when collapsed
+    </description>
+    <property-name>expanded</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+     </property-extension>
+</property>
+
+<property>
+    <description>
+        When true clicking on the header will expand or collapse the panel
+    </description>
+    <property-name>toggleOnClick</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <default-value>true</default-value>
+     </property-extension>
+</property>
+
+<property>
+    <description>
+        When true clicking on a text input field in the header will expand or collapse the panel.
+    </description>
+    <property-name>toggleOnInput</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <default-value>true</default-value>
+     </property-extension>
+</property>

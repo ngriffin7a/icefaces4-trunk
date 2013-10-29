@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
+<f:view><h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>DataTable Component Tutorial</title>
+    <link href="./xmlhttp/css/xp/xp.css" rel="stylesheet" type="text/css" />
+</h:head>
+    <h:body>
+        <ice:form id="frm">
+            <p>
+                This is a basic dataTable comprising several columns. Each
+                row represents an inventory item. Each column represents an
+                inventory item property.
+            </p>
+            <ice:dataTable id="dataTbl"
+                           value="#{inventoryList.carInventory}" var="item">
+
+                <!-- Stock number -->
+                <ice:column id="hdr0">
+                    <f:facet name="header">
+                        <ice:outputText value="Stock #"/>
+                    </f:facet>
+                    <ice:outputText id="clmn0" value="#{item.stock}"/>
+                </ice:column>
+
+                <!-- Model number -->
+                <ice:column id="hdr1">
+                    <f:facet name="header">
+                        <ice:outputText value="Model"/>
+                    </f:facet>
+                    <ice:outputText id="clmn1" value="#{item.model}"/>
+                </ice:column>
+
+                <!-- Description  -->
+                <ice:column id="hdr2">
+                    <f:facet name="header">
+                        <ice:outputText value="Description"/>
+                    </f:facet>
+                    <ice:outputText id="clmn2" value="#{item.description}"/>
+                </ice:column>
+
+                <!-- Odometer reading -->
+                <ice:column id="hdr3">
+                    <f:facet name="header">
+                        <ice:outputText value="Odometer"/>
+                    </f:facet>
+                    <ice:outputText id="clmn3" value="#{item.odometer}"/>
+                </ice:column>
+
+                <!-- Price number -->
+                <ice:column id="hdr4">
+                    <f:facet name="header">
+                        <ice:outputText value="Price"/>
+                    </f:facet>
+                    <ice:outputText id="clmn4" value="#{item.price}"/>
+                </ice:column>
+
+            </ice:dataTable>
+
+        </ice:form>
+    </h:body>
+</f:view>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[notificationPanelBean.title]}"/>
+    <ui:param name="description" value="#{msgs[notificationPanelBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[notificationPanelBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{notificationPanelBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{notificationPanelBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{notificationPanelResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{notificationPanelResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            
+            <h:panelGrid id="commandButtons" styleClass="centeredPanelGrid">
+                <f:ajax execute="@this" render="@form">
+                    <h:commandButton id="serverBttn" value="#{notificationPanelBean.visible ? 'Hide' : 'Show'} using server" actionListener="#{notificationPanelBean.showAppropriateButton}"/>
+                </f:ajax>
+            </h:panelGrid>
+		 
+            <ace:notificationPanel id="notificationPanel"
+                                               widgetVar="myNoteBar"
+                                               visible="#{notificationPanelBean.visible}"
+                                               position="top"
+                                               effect="slide" effectSpeed="slow"
+                                               >
+                    <ace:ajax event="close" execute="@this" render="@form" listener="#{notificationPanelBean.closeListener}"/>
+                    <ace:ajax event="display" execute="@this" render="@form" listener="#{notificationPanelBean.displayListener}"/>
+                <f:facet name="close">
+                    <div class="ui-icon ui-icon-closethick"></div>
+                </f:facet>  
+                
+                <h:panelGrid columns="2" cellspacing="20">
+                   <h:graphicImage id="img" 
+                                               value="#{notificationPanelBean.imageLocation}"
+                                               alt="#{notificationPanelBean.imageAlt}"
+                                               style="text-align: right;"/>
+                   <h:outputText id="txt"
+                                          value="#{notificationPanelBean.imageDescription}"
+                                          style="text-align: left; display: block;"/>
+                </h:panelGrid>
+            </ace:notificationPanel>  
+        </h:form>
+    </ui:define>
+</ui:composition>

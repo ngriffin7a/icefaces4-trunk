@@ -1,0 +1,194 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project name="icefaces-compat" default="lib">
+
+    <!-- This property file is only used for EE builds and overrides various
+         property values if it is available. -->
+    <property file="../../../ee-bundle.properties"/>
+
+    <property file="./build.properties"/>
+    <property file="../build.properties"/>
+    <property file="../../build.properties"/>
+
+    <property name="java.dir" location="./src/main/java"/>
+    <property name="resources.dir" location="./src/main/resources"/>
+    <property name="lib.dir" location="../../lib"/>
+    <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
+    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
+    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
+    <property name="compat.lib.dir" location="${lib.dir}/compat"/>
+    <property name="build.dir" location="./build"/>
+    <property name="classes.dir" location="${build.dir}/classes"/>
+    <property name="dist.dir" location="${build.dir}/dist"/>
+    <property name="javadocs.dir" location="${build.dir}/javadocs"/>
+    <property name="components.dir" value="../components"/>
+
+    <!-- Check which JSF implementation to use and set the appropriate sub-directory  -->
+    <condition property="jsf.impl.dir" value="${myfaces.lib.dir}" else="${mojarra.lib.dir}">
+        <isset property="myfaces"/>
+    </condition>
+
+    <!-- Check which JSF version to use and set the appropriate sub-directory  -->
+    <condition property="jsf.ver.dir" value="2.2" else="2.1">
+        <isset property="jsf22"/>
+    </condition>
+
+    <property name="jsf.lib.dir" value="${jsf.impl.dir}/${jsf.ver.dir}" />
+    <echo message="JSF lib dir: ${jsf.lib.dir}"/>
+
+	<!-- Check if release.type is set, and if so append it after the tertiary value -->
+	<condition property="version.string" value="${version.primary}.${version.secondary}.${version.tertiary}.${release.type}">
+    	<isset property="release.type"/>
+	</condition>
+    <property name="version.string" value="${version.primary}.${version.secondary}.${version.tertiary}"/>
+    	
+    <property name="javadoc.title" value="${product} ${product.lib} Java API Documentation" />
+    <property name="javadoc.header" value="${product} ${product.lib} ${version.string}&lt;br&gt;Java API Documentation" />
+
+    
+
+    <tstamp>
+        <format property="build.time" pattern="yyyy-MM-dd hh:mm:ss"/>
+    </tstamp>
+
+    <patternset id="lib.compile">
+        <include name="*.jar"/>
+    </patternset>
+
+    <target name="clean.components">
+        <ant antfile="${components.dir}/build.xml" target="clean" inheritall="false"/>
+    </target>
+
+    <target name="clean" depends="clean.components">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="pre.compile" description="pre-compilation tasks">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.dir}/classes"/>
+        <mkdir dir="${build.dir}/dist"/>
+        <copy todir="${build.dir}/resources">
+            <fileset dir="${resources.dir}" excludes="**/faces-config.xml"/>
+        </copy>
+        <ant antfile="build.javascript.xml" target="build" inheritall="false"/>
+    </target>
+
+    <target name="compile" depends="pre.compile" description="compile ICEfaces compatibility classes">
+        <javac srcdir="${java.dir}"
+               destdir="${classes.dir}"
+               source="1.5"
+               target="1.5"
+               debug="true"
+               includeantruntime="false">
+            <classpath>
+                <fileset dir="${jsf.lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+                <fileset dir="${lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+                <fileset dir="${compat.lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <copy todir="${classes.dir}">
+            <fileset dir="${java.dir}" includes="**/*.dtd"/>
+        </copy>
+    </target>
+
+    <target name="compile.components" depends="compile">
+        <ant antfile="${components.dir}/build.xml" target="gen.facelets.file" inheritall="false" inheritrefs="false"/>
+        <ant antfile="${components.dir}/build.xml" target="test" inheritall="false" inheritrefs="false"/>
+    </target>
+
+    <target name="jar" depends="compile.components" description="assemble icefaces-compat.jar">
+        <copy file="../component-metadata/target/classes/conf/faces-config.xml"
+              todir="${build.dir}/resources/META-INF"/>
+        <copy todir="${build.dir}/resources/META-INF">
+            <fileset dir="${components.dir}/src/main/resources/META-INF" excludes="myfaces/"/>
+        </copy>
+        <copy todir="${build.dir}/resources/META-INF">
+            <fileset dir="${components.dir}/build/generate/src/" includes="*.tld"/>
+        </copy>
+        <jar destfile="${dist.dir}/${icefaces-compat.lib.name}.jar">
+            <metainf dir="${build.dir}/resources/META-INF"/>
+
+            <manifest>
+                <section name="org.icefaces">
+                    <attribute name="Implementation-Title"
+                               value="${product} ${product.lib}"/>
+                    <attribute name="Implementation-Version"
+                               value="${version.string}"/>
+                    <attribute name="Build-Number"
+                               value="${build.number}"/>
+                    <attribute name="Build-Time"
+                               value="${build.time}"/>
+                    <attribute name="Implementation-Vendor"
+                               value="${company}"/>
+                </section>
+            </manifest>
+            <fileset dir="${classes.dir}"/>
+            <fileset dir="${build.dir}/resources/css"/>
+            <fileset dir="${components.dir}/build/classes"/>
+            <fileset dir="${components.dir}/src/main/java" excludes="**/*.java"/>
+
+            <!-- fileset dir="${build.dir}/javascript"/ -->
+        </jar>
+    </target>
+
+    <target name="lib" depends="jar" description="copy icefaces.jar to main lib directory">
+        <copy file="${dist.dir}/${icefaces-compat.lib.name}.jar"
+              todir="${lib.dir}"
+              overwrite="true"/>
+    </target>
+
+  <target name="javadoc">
+        <delete dir="${javadocs.dir}"/>
+        <javadoc destdir="${javadocs.dir}"
+                 windowtitle="${javadoc.title}"
+                 failonerror="true"
+        	     bottom="Copyright ${year} ${copyright}"
+                 useexternalfile="true">
+        <classpath>
+                <fileset dir="${lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+                <fileset dir="${jsf.lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+                <fileset dir="${compat.lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+            </classpath>
+            <fileset dir="${java.dir}">
+                <include name="com/icesoft/faces/context/DOMContext.java"/>
+                <include name="com/icesoft/faces/renderkit/dom_html_basic/HTML.java"/>
+                <include name="com/icesoft/faces/renderkit/dom_html_basic/DomBasicInputRenderer.java"/>
+                <include name="com/icesoft/faces/renderkit/dom_html_basic/DomBasicRenderer.java"/>
+                <include name="com/icesoft/faces/renderkit/dom_html_basic/PassThruAttributeRenderer.java"/>
+                <include name="com/icesoft/faces/async/render/SessionRenderer.java"/>
+                <include name="com/icesoft/faces/context/effects/**"/>
+            </fileset>
+            <header><![CDATA[${javadoc.header}]]></header>
+            <footer><![CDATA[${javadoc.header}]]></footer>
+            <doctitle><![CDATA[<h2>${javadoc.title}</h2>]]></doctitle>
+        </javadoc>
+    </target>
+    
+</project>
+

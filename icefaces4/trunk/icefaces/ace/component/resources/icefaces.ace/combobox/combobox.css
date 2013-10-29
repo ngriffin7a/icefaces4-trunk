@@ -1,0 +1,3 @@
+.ui-combobox-value .ui-inputfield {
+border:0; /* this setting is placed here, rather than inline, so it can be easily overriden */
+}

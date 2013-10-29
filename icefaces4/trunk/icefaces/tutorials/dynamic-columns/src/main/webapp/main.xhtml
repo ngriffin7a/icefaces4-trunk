@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    template="WEB-INF/templates/tutorial-template.xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components">
+    <ui:param name="backing" value="#{dynamicColumnsBean}" />
+    
+    <ui:define name="content">
+        <h:outputText value="#{msgs['content.main.html']}" escape="false" />
+    </ui:define>
+
+    <ui:define name="example">
+        <h:form id="exampleForm">
+            <h:selectManyCheckbox value="#{backing.selectedCheckboxes}"
+                                  valueChangeListener="#{backing.checkboxChange}"
+                                  style="width:100%; border: 1px solid black; text-align: center;">
+                <f:ajax render="@form" execute="@this" />
+                <f:selectItems value="#{backing.checkboxes}" />
+            </h:selectManyCheckbox>
+
+            <ace:dataTable value="#{backing.data}" var="row">
+                <c:forEach items="#{backing.columns}" var="colModel">
+                    <ace:column headerText="#{colModel.headerText}" filterMatchMode="contains"
+                            sortBy="#{row[colModel.value]}" filterBy="#{row[colModel.value]}">
+                        #{row[colModel.value]}
+                    </ace:column>
+                </c:forEach>
+            </ace:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

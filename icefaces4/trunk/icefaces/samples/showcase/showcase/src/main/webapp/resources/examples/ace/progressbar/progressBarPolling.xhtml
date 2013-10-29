@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[progressBarPolling.title]}"/>
+    <ui:param name="description" value="#{msgs[progressBarPolling.description]}"/>
+    <ui:param name="resourceValue" value="#{progressBarPolling.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{progressBarResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{progressBarResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="exampleForm" prependId="false">
+            <h:outputText value="Select an image to upload: " />
+            <h:selectOneMenu id="uploadSelector"
+							 value="#{progressBarPolling.selection}"
+							 valueChangeListener="#{progressBarPolling.processSelection}"
+							 disabled="#{progressBarPolling.selectorIsDisabled}">
+
+                    <f:selectItem itemValue="none" itemLabel="-Select an image to upload-"/>
+                    <f:selectItems  value="#{progressBarPolling.pendingUploads}" var="pendingUpload"
+									itemValue="#{pendingUpload.widgetVarName}"
+									itemLabel="#{pendingUpload.imageDescription}"/>
+                    <f:ajax execute="@this" render="@this uploadManagerContainer" event="change"/>
+            </h:selectOneMenu>
+            
+            <ace:panel id="uploadManagerContainer">
+                <ace:dataTable id="uploadManager"
+							   value="#{progressBarPolling.uploads}"
+							   rendered="#{not empty progressBarPolling.uploads}"
+							   var="upload"
+                >
+
+                                <f:facet name="header">
+                                    <h:outputText value="Upload Manager"/>
+                                </f:facet>
+
+                                <ace:column footerText="Image">
+                                    <h:graphicImage id="img" value="#{upload.imagePath}" alt="#{upload.imageDescription}"/>
+                                </ace:column>
+
+                               <ace:column footerText="Description">
+                                   <h:outputText id="desc" value="#{upload.imageDescription}"/>
+                              </ace:column>
+
+                             <ace:column footerText="Progress"> 
+                                 <ace:progressBar   id="myProgressBar"
+													widgetVar="#{upload.widgetVarName}"
+													usePolling="true"
+													pollingInterval="2000"
+													value="#{upload.progressValue}"
+													completeListener="#{progressBarPolling.completeListener}">
+                                     <ace:ajax event="complete" execute="@this" render="@form" />
+                                 </ace:progressBar>
+                             </ace:column>
+
+                             <ace:column footerText="Action">
+                                 <h:commandButton id="upload" value="upload" type="button" onclick="#{upload.widgetVarName}.start();" rendered="#{upload.ready}" actionListener="#{progressBarPolling.startUpload}">
+                                     <f:ajax execute="@this" render="@form"/>
+                                 </h:commandButton>
+                             </ace:column>
+                </ace:dataTable>
+            </ace:panel>
+           
+            <h:panelGrid style="float: right;">
+                <h:commandButton id="reset"
+								 value="Reset uploads"
+								 actionListener="#{progressBarPolling.processFormReset}"
+								 title="enabled once there are no more images to upload"
+								 disabled="#{not empty progressBarPolling.pendingUploads}">
+                    <f:ajax execute="@this" render="uploadSelector uploadManagerContainer @this"/>
+                </h:commandButton>
+            </h:panelGrid>
+            
+        </h:form>
+    </ui:define>
+</ui:composition>

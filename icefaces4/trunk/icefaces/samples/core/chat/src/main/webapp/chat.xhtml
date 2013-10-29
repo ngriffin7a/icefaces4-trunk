@@ -1,0 +1,125 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      locale="en">
+
+    <h:head>
+        <h:outputStylesheet name="chat.css" library="css"/>
+    </h:head>
+    <h:body>
+
+        <f:loadBundle basename="org.icefaces.sample.portlet.chat.resources.messages"
+                      var="msgs"/>
+
+        <!-- Login/Logout -->
+        <h:form>
+
+            <!-- Login -->
+            <h:panelGrid columns="2"
+                         cellpadding="4"
+                         cellspacing="4"
+                         width="100%"
+                         rendered="#{not participant.registered}">
+                <h:commandButton value="#{msgs['login']}: "
+                                 actionListener="#{participant.login}"/>
+                <h:inputText value="#{participant.handle}"
+                             required="true"/>
+            </h:panelGrid>
+
+            <!-- Logout + Send Message -->
+            <h:panelGrid columns="4"
+                         cellpadding="4"
+                         cellspacing="4"
+                         columnClasses="columns-four"
+                         width="100%"
+                         rendered="#{participant.registered}">
+
+                <!-- Logout -->
+                <h:commandButton value="#{msgs['logout']}: "
+                                 actionListener="#{participant.logout}"/>
+                <h:outputText value="#{participant.handle}"/>
+
+                <!-- Send Message -->
+                <h:commandButton value="#{msgs['send']}: "
+                                 actionListener="#{participant.sendMessage}"/>
+                <h:inputText value="#{participant.message}"/>
+            </h:panelGrid>
+
+            <h:messages/>
+
+            <!-- Participants and Messages -->
+            <h:panelGrid columns="2"
+                         cellspacing="2"
+                         cellpadding="2"
+                         width="100%"
+                         rendered="#{participant.registered}"
+                         rowClasses="series-rows"
+                         columnClasses="columns-two">
+
+                <!-- Participants -->
+                <h:panelGrid columns="1"
+                             rowClasses="series-rows">
+                    <h:outputText value="#{msgs['participants']}: [#{chatRoom.numberOfParticipants}]"
+                                  escape="false"/>
+                    <h:graphicImage alt="spacer"
+                                    url="/images/spacer.png"
+                                    rendered="true"/>
+                    <ui:repeat value="#{chatRoom.handles}"
+                               var="handle">
+                        <h:outputText value="#{handle}"/>
+                        <br />
+                    </ui:repeat>
+                    <h:graphicImage alt="spacer"
+                                    url="/images/spacer.png"
+                                    rendered="true"/>
+                </h:panelGrid>
+
+                <!-- Messages -->
+                <h:panelGrid columns="1"
+                             rowClasses="series-rows"
+                             columnClasses="series-columns">
+                    <h:outputText value="#{msgs['messages']}: [#{chatRoom.numberOfMessages}]"
+                                  escape="false"/>
+                    <h:graphicImage alt="spacer"
+                                    url="/images/spacer.png"
+                                    rendered="#{not participant.newer}"/>
+                    <h:commandButton image="/images/up-arrow.png"
+                                     rendered="#{participant.newer}"
+                                     actionListener="#{participant.newerMessages}"/>
+                    <ui:repeat value="#{participant.messages}"
+                               var="message">
+                        <h:outputText value="#{message}"/>
+                        <br />
+                    </ui:repeat>
+                    <h:graphicImage alt="spacer"
+                                    url="/images/spacer.png"
+                                    rendered="#{not participant.older}"/>
+                    <h:commandButton image="/images/down-arrow.png"
+                                     rendered="#{participant.older}"
+                                     actionListener="#{participant.olderMessages}"/>
+                </h:panelGrid>
+
+            </h:panelGrid>
+
+        </h:form>
+
+    </h:body>
+</html>

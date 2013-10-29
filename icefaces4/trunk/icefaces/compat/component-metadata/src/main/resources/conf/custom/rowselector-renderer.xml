@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+	<description>
+		<![CDATA[
+		The Row Selector tag enables single and multiple row selection 
+		for DataTable. To add the row selection to the dataTable, the rowSelector
+		component can be added to any column of the dataTable(e.g.)
+		<p>
+		&lt;ice:dataTable..&gt;<br/>
+		&nbsp;&nbsp;&lt;ice:column&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;ice:rowSelector .../&gt; <br/>
+		       &nbsp;&nbsp;&nbsp;&nbsp;&lt;f:facet name="header"&gt;<br/>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ice:outputText ..../&gt;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;/f:facet&gt;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;ice:outputText ...../&gt;<br/>
+        &nbsp;&nbsp;&lt;/ice:column&gt;<br/>
+        </p>    
+        <b>Note:</b> there should be only one rowSelector component inside a dataTable.
+        <p> The row selection will fire a <i>RowSelectorEvent</i> which can be caught by
+        the <i>selectionListener</i> on this component.
+        </p>
+        
+        <p>The selection is based on the following two attributes:
+        <ul>
+            <li>multiple</li>
+            <li>enhancedMultiple</li>
+        </ul>
+        By default the component runs in single selection mode. In which selecting a row
+        deselects the previously selected row. Setting "multiple" to true, puts the component in
+        multiple selection mode, which allows you to select multiple rows but you
+        can not use "ctrl" or "shift" keys for selection. <br>
+        Setting the "enhancedMultiple" to true, allows single or muliple selection 
+        using the shift or ctrl keys combination. For more detail please see the 
+        attribute specific description. 
+        </p>
+	    <p>
+	    <b> Note: </b>It is a good practice to use the immediate parameter of the rowSelector. If set to true, it will work with the results
+     of the selection in APPLY_REQUEST_VALUE phase, before validation occurs. If set to false it will defer event
+     processing until INVOKE_APPLICATION phase, after validation. If validation fails, selection event will not fire with
+     immediate=false
+        </p>	
+     ]]>
+	</description>
+	<component-family>
+		com.icesoft.faces.RowSelectorFamily
+	</component-family>
+	<renderer-type>null	</renderer-type>
+
+	<renderer-extension>
+		<instance-name>rowSelector</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>rowSelector</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

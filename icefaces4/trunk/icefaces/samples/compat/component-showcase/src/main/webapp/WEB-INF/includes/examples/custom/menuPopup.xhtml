@@ -1,0 +1,90 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!--
+In this demonstration, ice:menuPopup and ice:menuItem are
+used to build an application menupopup. The menuItem selection events
+invoke application logic to fire effects.
+-->
+
+<ice:panelGroup styleClass="componentBox"
+            xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:panelGroup styleClass="synopsisBox menuPopupContainer menuPopupContainer">
+
+        <ice:outputText value="#{msgs['page.menuPopup.synopsis']}"/>
+        <ice:outputText value="#{msgs['page.menuPopup.description']}"/>
+
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="exampleBox menuPopupContainer menuPopupContainer"
+                    style="width:362px;height:122px;">
+
+        <!-- Text example popup area -->
+        <ice:panelGroup style="margin:5px;text-align: justify;"
+                        id="menuBarText"
+                        menuPopup="menuPopupEffects" >
+
+            <ice:outputText escape="false"
+                    value="#{msgs['page.menuPopup.text.example.label']}"/>
+
+        </ice:panelGroup>
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="exampleBox menuPopupContainer menuPopupContainer"
+                    style="width:362px;height:122px;">
+        <!-- graphic image example popup area -->
+        <ice:panelGroup style="padding:5px;"
+                        id="menuBarImage"
+                        menuPopup="menuPopupEffects" >
+
+            <ice:graphicImage value="/images/icefaces-menupop.png"
+                alt="ICEfaces" title="ICEfaces" width="352" height="122"/>
+
+        </ice:panelGroup>
+
+
+
+    </ice:panelGroup>
+
+    <!-- simple image menupup -->
+    <ice:menuPopup id="menuPopupEffects"
+                   imageDir="#{styleBean.imageDirectory}">
+        <!-- File menu -->
+        <ice:menuItem id="effects" onclick="return false;"
+                      value="#{msgs['page.menuPopup.menu.label']}">
+            <ice:menuItem id="shake"
+                          value="#{msgs['page.menuPopup.menu.shake.label']}"
+                          actionListener="#{menuPopupBean.executeMenuEffect}" >
+                <f:param name="effectType" value="shake"/>
+            </ice:menuItem>
+            <ice:menuItem id="highlight"
+                          value="#{msgs['page.menuPopup.menu.highligh.label']}"
+                          actionListener="#{menuPopupBean.executeMenuEffect}" >
+                <f:param name="effectType" value="hightlight"/>
+            </ice:menuItem>
+            <ice:menuItem id="pulsate"
+                          value="#{msgs['page.menuPopup.menu.pulsate.label']}"
+                          actionListener="#{menuPopupBean.executeMenuEffect}" >
+                <f:param name="effectType" value="pulsate"/>
+            </ice:menuItem>
+        </ice:menuItem>
+    </ice:menuPopup>
+
+</ice:panelGroup>

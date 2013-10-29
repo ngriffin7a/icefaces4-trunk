@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<property>
+	<description>effect</description>
+	<property-name>effect</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>disabled</description>
+	<property-name>disabled</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>maxLength</description>
+	<property-name>maxLength</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>partialSubmit</description>
+	<property-name>partialSubmit</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>readOnly</description>
+	<property-name>readOnly</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>scrollHeight</description>
+	<property-name>scrollHeight</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>scrollWidth</description>
+	<property-name>scrollWidth</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>sortAscending</description>
+	<property-name>sortAscending</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>sortColumn</description>
+	<property-name>sortColumn</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>visible</description>
+	<property-name>visible</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+
+
+

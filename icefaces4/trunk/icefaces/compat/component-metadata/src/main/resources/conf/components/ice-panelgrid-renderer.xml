@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+	<description>
+	<![CDATA[Renders an HTML "table" element, conforming to the
+          rules in the HTML 401 specification.  If the "styleClass"
+          attribute is specified, render its value as the value of the
+          "class" attribute.  Render the pass-through attributes in the
+          table below.  Render the "header" facet, if present, inside of
+          "thead", "tr", and "th" elements, nested in that order.  If the
+          "headerClass" attribute is specified, render its value as the value
+          of the "class" attribute on the "th" element.  Render "colgroup"
+          as the value of the "scope" attribute.  Render the value of the
+          "columns" attribute as the value of the "colspan" attribute on the
+          "th" element.  Render the "footer" facet if present, using similar
+          logic to the rendering of the "header", but replacing "thead" with
+          "tfoot", "th" with "td", and "headerClass" with "footerClass".
+          Render the children of the <code>UIPanel</code> component inside
+          of a "tbody" element.  Render the children based on the value of
+          the "columns" attribute, creating a new row each time a "columns"
+          worth of children have been rendered.  Each child is rendered
+          inside of a "td" element.  If a child has "rendered==false" it is
+          not rendered, and the column counter must not be incremented.
+          ]]>
+	</description>
+	<component-family>javax.faces.Panel</component-family>
+
+	<renderer-type>com.icesoft.faces.Grid</renderer-type>
+
+	<renderer-extension>
+		<instance-name>panelGrid</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelGrid</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

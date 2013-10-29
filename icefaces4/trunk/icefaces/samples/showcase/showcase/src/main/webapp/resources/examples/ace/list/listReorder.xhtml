@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param value="#{listReorderBean}" name="backing" />
+    <ui:param name="title" value="#{msgs[backing.title]}"/>
+    <ui:param name="description" value="#{msgs[backing.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[backing.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{backing.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{backing.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{listResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{listResources.tldResources}"/>
+
+    <ui:define name="example">
+
+        <h:form id="form">
+            <h:panelGroup id="panelGroupOne" style="padding: 0.5em;" layout="block">
+                <h:panelGrid id="panelGridOne" columns="3" style="margin-left:auto; margin-right:auto;" cellspacing="30">
+                    <ace:list id="firstList" value="#{backing.stringList}"
+                              selectionMode="multiple"
+                              dragging="false"
+                              controlsEnabled="true"/>
+
+                    <h:commandButton id="submitBtn" value="Submit Reorder" />
+
+                    <h:panelGroup>
+                        <ui:repeat id="repeatOne" value="#{backing.stringList}" var="selectItem">
+                            <h:outputText id="outputTextOne" value="#{selectItem.value}" /><br/>
+                        </ui:repeat>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

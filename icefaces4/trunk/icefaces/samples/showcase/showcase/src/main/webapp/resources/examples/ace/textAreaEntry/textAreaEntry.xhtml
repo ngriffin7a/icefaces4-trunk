@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[textAreaEntryBean.title]}"/>
+    <ui:param name="description" value="#{msgs[textAreaEntryBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[textAreaEntryBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{textAreaEntryBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{textAreaEntryBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{textAreaEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{textAreaEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="textAreaEntryForm">
+            <ace:panel id="inputPanel" header="Enter Comments Below" styleClass="required-styling-demo">
+                <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
+                    <ace:textAreaEntry id="comment1Input" value="#{textAreaEntryBean.comment1}" label="Comments" labelPosition="inField" required="true" requiredIndicator=" (*)" indicatorPosition="labelRight">
+                        <ace:ajax render="@this comment1Output comment1Msg"/>
+                    </ace:textAreaEntry>
+                    
+                    <ace:textAreaEntry id="comment2Input" value="#{textAreaEntryBean.comment2}" label="Additional Comments" labelPosition="inField" required="false" optionalIndicator=" (Opt.)" indicatorPosition="labelRight" resizable="false">
+                        <ace:ajax render="@this comment2Output comment2Msg"/>
+                    </ace:textAreaEntry>
+
+                </h:panelGrid>
+                <h:panelGrid width="100%">
+                    <ace:message id="comment1Msg" for="comment1Input"/>
+                    <ace:message id="comment2Msg" for="comment2Input"/>
+                </h:panelGrid>
+            </ace:panel>
+            
+            <ace:panel id="personalInfoOutputPanel" header="Entered data">
+                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
+                    <h:outputText id="comment1Output" value="Comments: #{textAreaEntryBean.comment1}"/>
+                    <h:outputText id="comment2Output" value="Additional Comments: #{textAreaEntryBean.comment2}"/>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>
+

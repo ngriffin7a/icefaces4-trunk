@@ -1,0 +1,53 @@
+<!--
+  ~ Copyright 2004-2012 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view  contentType="text/html"/>
+<h:head>
+    <title>Validation driven focus management</title>
+</h:head>
+<h:body>
+    <h2>Validation driven focus management</h2>
+    <p>
+        The second input text element should be selected when the page is first loaded.
+    </p>
+    <p>
+        When the entered text (in any of the inputs) has less then 3 characters ore more than 5 the validation will fail, thus causing the focus to be put back on the first invalid entry.
+    </p>
+    <h:form id="form1" prependId="false">
+        <p>
+            <icecore:focusManager for="aaa">
+                <h:inputText value="#{Entry.a}">
+                    <f:validateLength minimum="3" maximum="5"/>
+                </h:inputText>
+                <h:inputText id="aaa" value="#{Entry.b}">
+                    <f:validateLength minimum="3" maximum="5"/>
+                </h:inputText>
+                <h:inputText value="#{Entry.c}">
+                    <f:validateLength minimum="3" maximum="5"/>
+                </h:inputText>
+            </icecore:focusManager>
+        </p>
+        <h:commandButton value="submit" type="submit"/>
+        <h:messages/>
+    </h:form>
+</h:body>
+</html>
+

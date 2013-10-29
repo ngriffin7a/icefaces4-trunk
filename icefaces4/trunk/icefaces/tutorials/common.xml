@@ -1,0 +1,224 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project name="common"> 
+    <property file="../../../../ee-bundle.properties"/>
+    <property file="../../../ee-bundle.properties"/>
+    <property file="../../../build.properties"/>
+
+    <property name="icefaces.base.dir" location="../../"/>
+    <property name="samples.dist.dir" location="${icefaces.base.dir}/samples/dist"/>
+    <property name="lib.extra.dir" location="./lib" />
+    <property name="lib.dir" location="${icefaces.base.dir}/lib"/>
+    <property name="lib.compat.dir" location="${lib.dir}/compat"/>
+    <property name="lib.compat.dir.includes" value=""/>
+    
+    <property name="lib.compile.application.includes" value=""/>
+    <property name="lib.distribute.application.includes" value=""/>
+    <property name="lib.distribute.compat.includes" value="commons-digester.jar commons-beanutils.jar commons-collections.jar jxl.jar krysalis-jCharts-1.0.0-alpha-1.jar"/>
+    <property name="lib.compile.compat.includes" value="commons-digester.jar commons-beanutils.jar commons-collections.jar jxl.jar krysalis-jCharts-1.0.0-alpha-1.jar el-api.jar" />
+
+    <property name="mojarra.lib.dir" location="${lib.dir}/mojarra" />
+    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
+    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
+
+    <property name="lib.portlet.dir" location="${lib.dir}/portlets"/>
+    <property name="lib.liferay.dir" location="${lib.dir}/portlets/liferayfaces"/>
+    <property name="java.dir" location="./src/main/java"/>
+    <property name="res.dir" location="./src/main/resources"/>
+    <property name="web.dir" location="./src/main/webapp"/>
+    <property name="lib.application.dir" location="${web.dir}/WEB-INF/lib"/>     
+    
+    <property name="build.dir" location="./build"/>
+    <property name="classes.dir" location="${build.dir}/classes"/>
+    <property name="dist.dir" location="${build.dir}/dist"/>
+    
+                                                      
+    <property name="icefaces.lib.name" value="icefaces" />                                                                         
+    <property name="icefaces-ace.lib.name" value="icefaces-ace" />
+    <property name="icefaces-compat.lib.name" value="icefaces-compat" /> 
+    <property name="icepush.lib.name" value="icepush" />    
+    
+    <!-- Check which JSF implementation to use and set the appropriate sub-directory  -->
+    <condition property="jsf.impl.dir" value="${myfaces.lib.dir}" else="${mojarra.lib.dir}">
+         <isset property="myfaces"/>
+    </condition>
+ 
+    <!-- Check which JSF version to use and set the appropriate sub-directory  -->
+    <condition property="jsf.ver.dir" value="2.2" else="2.1">
+        <isset property="jsf22"/>
+    </condition>
+
+    <property name="jsf.lib.dir" value="${jsf.impl.dir}/${jsf.ver.dir}" />
+    <echo message="JSF lib dir: ${jsf.lib.dir}"/>
+
+    <patternset id="lib.compile">
+        <include name="*.jar"/>
+    </patternset>
+
+    <patternset id="lib.myfaces.common">
+        <exclude name="*.jar" unless="myfaces"/>
+    </patternset>
+
+    <patternset id="lib.distribute">
+        <patternset id="lib.distribute.ice" includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icefaces-compat.lib.name}.jar ${icepush.lib.name}.jar jstl.jar">
+            <exclude name="${icefaces.lib.name}.jar"        if="no-icefaces"/>
+
+            <exclude name="${icefaces-ace.lib.name}.jar"    if="no-icefaces"/>
+            <exclude name="${icefaces-ace.lib.name}.jar"    unless="ace"/>
+
+            <exclude name="${icefaces-compat.lib.name}.jar" if="no-icefaces"/>
+            <exclude name="${icefaces-compat.lib.name}.jar" unless="compat"/>
+
+            <exclude name="${icepush.lib.name}.jar"         if="no-icefaces"/>
+            <exclude name="${icepush.lib.name}.jar"         if="no-icepush"/>
+
+            <exclude name="jstl.jar" unless="compat"/>
+        </patternset>
+    </patternset>
+
+    <patternset id="lib.compile.compat" includes="commons-logging.jar ${lib.compile.compat.includes}">
+        <exclude name="*.jar"                              unless="compat"/>
+        <exclude name="jxl.jar"                            unless="compat_dataExporter"/>
+        <exclude name="krysalis-jCharts-1.0.0-alpha-1.jar" unless="compat_outputChart"/>
+    </patternset>
+
+    <patternset id="lib.distribute.compat" includes="commons-logging.jar ${lib.distribute.compat.includes}">
+        <exclude name="*.jar"                              unless="compat"/>
+        <exclude name="jxl.jar"                            unless="compat_dataExporter"/>
+        <exclude name="krysalis-jCharts-1.0.0-alpha-1.jar" unless="compat_outputChart"/>
+    </patternset>
+
+    <patternset id="lib.compile.mojarra" includes="*.jar"/>
+    
+    <patternset id="lib.distribute.jsf">
+        <exclude name="*.jar" unless="jsf"/>
+    </patternset>
+    
+    <patternset id="lib.distribute.portlet">
+        <include name="portletfaces*.jar"/>
+        <include name="slf4j*.jar"/>
+        <exclude name="*.jar" unless="portlet"/>
+    </patternset>
+    
+    <patternset id="lib.distribute.liferay">
+        <include name="*.jar"/>
+        <exclude name="*.jar" unless="liferay"/>
+    </patternset>
+    
+    <patternset id="lib.compile.application" includes="${lib.compile.application.includes}"/>
+
+    <patternset id="lib.distribute.application" includes="${lib.distribute.application.includes}"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="pre.compile">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.dir}/classes"/>
+        <mkdir dir="${build.dir}/dist"/>
+    </target>
+
+    <target name="compile" depends="pre.compile">
+        <javac srcdir="${java.dir}"
+               destdir="${classes.dir}"
+               source="1.5"
+               target="1.5"
+               debug="true"
+               includeantruntime="false">
+
+            <classpath>
+                <fileset dir="${lib.application.dir}" erroronmissingdir="false">
+                    <patternset refid="lib.compile.application"/>
+                </fileset>
+                <fileset dir="${lib.compat.dir}">
+                    <patternset refid="lib.compile.compat"/>
+                </fileset>
+                <fileset dir="${jsf.lib.dir}">
+                    <patternset refid="lib.compile.mojarra"/>
+                </fileset>
+                <fileset dir="${myfaces.common.dir}">
+                    <patternset refid="lib.myfaces.common"/>
+                </fileset>
+                <fileset dir="${lib.dir}" >
+                    <patternset refid="lib.compile"/>
+                </fileset>
+                <fileset dir="${lib.extra.dir}" erroronmissingdir="false">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+            </classpath>
+        </javac>
+        
+        <copy todir="${classes.dir}">
+            <fileset dir="${res.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="war.basic" depends="compile">
+
+        <condition property="myfaces.common.include" value="true">
+            <and>
+                <isset property="myfaces"/>
+                <isset property="jsf"/>
+            </and>
+        </condition>
+
+        <war basedir="${web.dir}"
+             destfile="${dist.dir}/${ant.project.name}.war" 
+             webxml="${web.dir}/WEB-INF/web.xml">
+            <lib dir="${lib.dir}">
+                <patternset refid="lib.distribute"/>
+            </lib>
+            <lib dir="${lib.compat.dir}">
+                <patternset refid="lib.distribute.compat"/>
+            </lib>
+            <lib dir="${jsf.lib.dir}">
+                <patternset refid="lib.distribute.jsf"/>
+            </lib>
+            <lib dir="${myfaces.common.dir}" erroronmissingdir="false">
+                <exclude name="*.jar" unless="myfaces.common.include"/>
+            </lib>
+            <lib dir="${lib.portlet.dir}">
+                <patternset refid="lib.distribute.portlet"/>
+            </lib>
+            <lib dir="${lib.liferay.dir}">
+                <patternset refid="lib.distribute.liferay"/>
+            </lib>
+            <lib dir="${lib.extra.dir}" erroronmissingdir="false">
+                <patternset refid="lib.compile"/>
+            </lib>
+            <classes dir="${classes.dir}"/>
+        </war>
+        <unzip src="${dist.dir}/${ant.project.name}.war" dest="${dist.dir}/exploded"/>        
+    </target>
+
+    <target name="servlet-profile"
+            description="Generate a .war file according to the servlet-profile which includes the JSF and EL libraries. (Jetty 7, Tomcat 6 and 7)">
+
+        <antcall target="war.basic">
+            <param name="jsf"  value="true" />
+        </antcall>
+    </target>
+
+    <target name="web-profile"
+            description="Generate a .war file according to the web-profile which excludes the JSF and EL libraries. (GlassFish v3, JBoss 6)">
+        <antcall target="war.basic">
+        </antcall>
+    </target>
+</project>

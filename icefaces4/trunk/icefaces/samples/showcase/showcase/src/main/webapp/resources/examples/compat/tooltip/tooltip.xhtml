@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[tooltip.title]}"/>
+    <ui:param name="description" value="#{msgs[tooltip.description]}"/>
+    <ui:param name="resourceValue" value="#{tooltip.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <h:panelGroup>
+                <ice:panelGroup panelTooltip="icefaces" styleClass="tooltipWrap">ICEfaces 2</ice:panelGroup>
+                is an <ice:panelGroup panelTooltip="opensource" styleClass="tooltipWrap">open-source</ice:panelGroup>
+                Rich Internet Application (RIA) development
+                framework based on the <ice:panelGroup panelTooltip="jsf" styleClass="tooltipWrap">JavaServer Faces (JSF) 2</ice:panelGroup> standard. Like its predecessor,
+                ICEfaces 1.8, <ice:panelGroup panelTooltip="icefaces" styleClass="tooltipWrap">ICEfaces 2</ice:panelGroup> extends <ice:panelGroup panelTooltip="jsf" styleClass="tooltipWrap">JSF</ice:panelGroup> to simplify development and enhance
+                the standard JSF feature set - simultaneously improving developer efficiency
+                and expanding the spectrum of RIA capabilities that can be included in any
+                JSF-based web application.
+            </h:panelGroup>
+            
+            <ice:panelTooltip id="icefaces"
+                              style="width: 200px;"
+                              displayOn="hover"
+                              hoverDelay="100">
+                <f:facet name="header">
+                    ICEfaces
+                </f:facet>
+                <f:facet name="body">
+                    ICEfaces 2 provides some key feature enhancements over JSF 2, while inheriting all the new features available in JSF 2.
+                </f:facet>
+            </ice:panelTooltip>
+            
+            <ice:panelTooltip id="opensource"
+                              style="width: 400px;"
+                              displayOn="hover"
+                              hoverDelay="100">
+                <f:facet name="header">
+                    Open Source
+                </f:facet>
+                <f:facet name="body">
+                    <h:panelGroup>
+                        <p>The term open source describes practices in production and development that promote access to the end product's source materials. Some consider open source a philosophy, others consider it a pragmatic methodology. Before the term open source became widely adopted, developers and producers used a variety of phrases to describe the concept; open source gained hold with the rise of the Internet, and the attendant need for massive retooling of the computing source code. Opening the source code enabled a self-enhancing diversity of production models, communication paths, and interactive communities. Subsequently, the new phrase "open-source software" was born to describe the environment that the new copyright, licensing, domain, and consumer issues created.</p>
+                    </h:panelGroup>
+                </f:facet>
+            </ice:panelTooltip>
+            
+            <ice:panelTooltip id="jsf"
+                              style="width: 500px;"
+                              displayOn="hover"
+                              hoverDelay="100">
+                <f:facet name="header">
+                    Java Server Faces
+                </f:facet>
+                <f:facet name="body">
+                    <h:panelGroup style="width: 95%;">
+                        <p>JSF 2 brings many beneficial features over JSF 1.2. There is a wealth of JSF 2 documentation available on-line, but the high points are enumerate below.</p>
+                        
+                        <ul>
+                        <li>Facelets is now a first-class citizen of the JSF spec, and is the principle view declaration language in JSF 2.</li>
+                        <li>A comprehensive composite component model enables easy development of components using only markup.</li>
+                        <li>Ajax request processing and partial page updates have been incorporated into the JSF lifecycle.</li>
+                        <li>Partial State Saving drastically reduces state saving overhead.</li>
+                        <li>Broader support for system events is available.</li>
+                        <li>Improved navigation support includes implicit, conditional and preemptive navigation.</li>
+                        <li>HTTP GET now fully supported in the JSF lifecycle.</li>
+                        <li>New scopes, and support for custom scopes (see ICEfaces Window Scope).</li>
+                        <li>Annotations simplify configuration.</li>
+                        <li>Standardized resource loading is provided.</li>
+                        <li>Exception handling has been improved.</li>
+                        </ul>
+                    </h:panelGroup>
+                </f:facet>
+            </ice:panelTooltip>
+        </h:form>
+    </ui:define>
+</ui:composition>

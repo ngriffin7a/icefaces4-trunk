@@ -1,0 +1,48 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view  contentType="text/html"/>
+<h:head>
+    <title>Window scoped counter</title>
+    <h:outputScript name="jsf.js" library="javax.faces"/>
+</h:head>
+<h:body>
+    
+    <h2>Window scope counter -- page A</h2>
+
+    <h3>
+        <h:outputText id="out" value="#{WindowScopedCounter.count}"/>
+    </h3>
+    <h:form id="form1" prependId="false">
+        <p>
+            <h:commandButton id="plus" value="+" action="#{WindowScopedCounter.increment}"/>
+            <h:commandButton id="minus" value="-" action="#{WindowScopedCounter.decrement}"/>
+        </p>
+        <p>
+            <h:commandButton id="redirect" value="Goto Page B" action="B"/>
+        </p>
+        <p style="font-style: italic;">Redirecting between pages or reloading the page should not reset the state of the
+            counter.</p>
+        <a href="index.html">back to tests index</a>
+        <h:messages/>
+    </h:form>
+</h:body>
+</html>
+

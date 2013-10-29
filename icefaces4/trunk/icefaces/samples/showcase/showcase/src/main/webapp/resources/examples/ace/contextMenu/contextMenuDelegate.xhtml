@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[contextMenuDelegate.title]}"/>
+    <ui:param name="description" value="#{msgs[contextMenuDelegate.description]}"/>
+    <ui:param name="resourceValue" value="#{contextMenuDelegate.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{contextMenuResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{contextMenuResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+
+			<ace:delegate id="delegate">		
+				<ace:dataTable id="carTable"
+							  value="#{dataTableDynamic.carsData}"
+							  var="car">
+					<ace:column>
+						<f:facet name="header">
+						   ID
+						</f:facet>
+						#{car.id}
+					</ace:column>
+					<ace:column>
+						<f:facet name="header">
+						   Name
+						</f:facet>
+						<h:outputText id="carName" value="#{car.name}" />
+					</ace:column>
+					<ace:column>
+						<f:facet name="header">
+						   Chassis
+						</f:facet>
+						#{car.chassis}
+					</ace:column>
+					<ace:column>
+						<f:facet name="header">
+						   Weight
+						</f:facet>
+						#{car.weight}lbs.
+					</ace:column>
+					<ace:column>
+						<f:facet name="header">
+						   Accel
+						</f:facet>
+						#{car.acceleration}
+					</ace:column>
+					<ace:column>
+						<f:facet name="header">
+						   MPG
+						</f:facet>
+						#{car.mpg}
+					</ace:column>
+					<ace:column>
+						<f:facet name="header">
+						   Cost
+						</f:facet>
+						<ice:outputText value="#{car.cost}">
+							<f:convertNumber type="currency"
+											 currencySymbol="$"
+											 groupingUsed="true"
+											 minFractionDigits="2"
+											 maxFractionDigits="2"/>
+						</ice:outputText>
+					</ace:column>
+				</ace:dataTable>
+			</ace:delegate>
+            
+            <ace:contextMenu id="contextMenu" for="carName" forDelegate="delegate" fetch="#{car}" store="#{contextMenuDelegate.data}">
+				<ace:multiColumnSubmenu label="Options for #{contextMenuDelegate.data.name}">
+					<ace:menuColumn width="150">
+						<ace:submenu label="Chassis">
+							<ace:menuItem value="Bus" rendered="#{contextMenuDelegate.data.chassis != 'Bus'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Bus" />
+							</ace:menuItem>
+							<ace:menuItem value="Luxury" rendered="#{contextMenuDelegate.data.chassis != 'Luxury'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Luxury" />
+							</ace:menuItem>
+							<ace:menuItem value="Mid-Size" rendered="#{contextMenuDelegate.data.chassis != 'Mid-Size'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Mid-Size" />
+							</ace:menuItem>
+							<ace:menuItem value="Motorcycle" rendered="#{contextMenuDelegate.data.chassis != 'Motorcycle'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Motorcycle" />
+							</ace:menuItem>
+							<ace:menuItem value="Pickup" rendered="#{contextMenuDelegate.data.chassis != 'Pickup'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Pickup" />
+							</ace:menuItem>
+							<ace:menuItem value="Semi-Truck" rendered="#{contextMenuDelegate.data.chassis != 'Semi-Truck'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Semi-Truck" />
+							</ace:menuItem>
+							<ace:menuItem value="Station Wagon" rendered="#{contextMenuDelegate.data.chassis != 'Station Wagon'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Station Wagon" />
+							</ace:menuItem>
+							<ace:menuItem value="Subcompact" rendered="#{contextMenuDelegate.data.chassis != 'Subcompact'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Subcompact" />
+							</ace:menuItem>
+							<ace:menuItem value="Van" rendered="#{contextMenuDelegate.data.chassis != 'Van'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.chassis}" value="Van" />
+							</ace:menuItem>
+						</ace:submenu>
+					</ace:menuColumn>
+					<ace:menuColumn width="100">
+						<ace:submenu label="Accel">
+							<ace:menuItem value="5" rendered="#{contextMenuDelegate.data.acceleration != '5'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.acceleration}" value="5" />
+							</ace:menuItem>
+							<ace:menuItem value="10" rendered="#{contextMenuDelegate.data.acceleration != '10'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.acceleration}" value="10" />
+							</ace:menuItem>
+							<ace:menuItem value="15" rendered="#{contextMenuDelegate.data.acceleration != '15'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.acceleration}" value="15" />
+							</ace:menuItem>
+						</ace:submenu>
+					</ace:menuColumn>
+					<ace:menuColumn width="150">
+						<ace:submenu label="Cost">
+							<ace:menuItem value="(-$2K) #{contextMenuDelegate.data.cost - 2000}" rendered="#{contextMenuDelegate.data.cost > '2000'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.cost}" value="#{contextMenuDelegate.data.cost - 2000}" />
+							</ace:menuItem>
+							<ace:menuItem value="(-$1K) #{contextMenuDelegate.data.cost - 1000}" rendered="#{contextMenuDelegate.data.cost > '1000'}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.cost}" value="#{contextMenuDelegate.data.cost - 1000}" />
+							</ace:menuItem>
+							<ace:menuItem value="(+$1K) #{contextMenuDelegate.data.cost + 1000}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.cost}" value="#{contextMenuDelegate.data.cost + 1000}" />
+							</ace:menuItem>
+							<ace:menuItem value="(+$2K) #{contextMenuDelegate.data.cost + 2000}">
+								<ace:ajax event="activate" execute="@form" render="@form" />
+								<f:setPropertyActionListener target="#{contextMenuDelegate.data.cost}" value="#{contextMenuDelegate.data.cost + 2000}" />
+							</ace:menuItem>
+						</ace:submenu>
+					</ace:menuColumn>
+				</ace:multiColumnSubmenu>
+            </ace:contextMenu>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[overlayBean.title]}"/>
+    <ui:param name="description" value="#{msgs[overlayBean.description]}"/>
+    <ui:param name="resourceValue" value="#{overlayBean.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+
+    <ui:define name="example">
+    <ace:gMap id="gMapOverlay"  style="width: 675px; height: 500px" latitude="0" longitude="0" zoomLevel="3">
+        <ace:gMapOverlay shape="${overlayBean.shape}" points="${overlayBean.points}" options="${overlayBean.options}"/>
+    </ace:gMap>
+	<br/>
+    <h:form id="inputForm">
+        <ace:simpleSelectOneMenu id="locationSelector" value="#{overlayBean.shape}">
+        <ace:ajax event="valueChange" render="@all"/>
+        <f:selectItem itemValue="polyline" itemLabel="Line"/>
+        <f:selectItem itemValue="polygon" itemLabel="Polygon"/>
+        <f:selectItem itemValue="rectangle" itemLabel="Rectangle"/>
+        <f:selectItem itemValue="circle" itemLabel="Circle"/>
+    </ace:simpleSelectOneMenu>
+        <h:outputLabel for="optionsIn" value="Options:"/>
+        <h:inputText  id="optionsIn" size="50" value="${overlayBean.options}"/>
+        <br/>
+        <h:outputLabel for="pointsIn" value="Points:"/>
+        <h:inputText  size="75" id="pointsIn" value="${overlayBean.points}"/>
+		<br/>
+		<h:commandButton value="Submit" type="submit"/>
+        <p>Line and Polygon will use all points given to them to create a shape.
+            <br/>Rectangle will use the first two points as top left and bottom right corners.
+            <br/>Circle will use the first point as center, and requires the radius: option to display.
+            <b>Note: To view circle from initial zoom, set options to radius:1000000.</b> 
+        <br/><br/>All possible options can be found at <a href="https://developers.google.com/maps/documentation/javascript/reference">the google maps API documentation</a>.
+		<br/> A few good examples for possible options are: 
+		<br/>editable:true or editable:false will choose to lock the shape as is, or leave it open to change. 
+		<br/>fillColor:'color' and strokeColor:'color', will recolor the shape or border for any CSS3 compatible colour.
+		<br/>fillOpacity and strokeOpacity each take a double between 0.0 and 1.0, and determine how solid to make the shape appear.
+        </p>
+    </h:form>
+	<p>Relevant sections of the Google Maps API: <a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#Polyline">Polyline</a>, 
+	<a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#Polygon">Polygon</a>, 
+	<a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#Rectangle">Rectangle</a>, 
+	<a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#Circle">Circle</a><br/></p>
+</ui:define>
+</ui:composition>

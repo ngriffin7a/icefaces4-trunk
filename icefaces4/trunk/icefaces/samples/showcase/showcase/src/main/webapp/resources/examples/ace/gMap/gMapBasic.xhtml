@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[mapBean.title]}"/>
+    <ui:param name="description" value="#{msgs[mapBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[mapBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{mapBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{mapBean.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="input">
+		<ace:gMap id="gMapBasic"  style="width: 675px; height: 500px" latitude="${mapBean.lat}" longitude="${mapBean.lon}" type="${mapBean.type}"
+                  zoomLevel="${mapBean.zoom}" address="${mapBean.address}" locateAddress="${mapBean.locateAddress}"/>
+			<br/>
+            <h:outputLabel for="latitude" value="Latitude:"/>
+            <h:inputText label="Latitude" id="latitude" value="#{mapBean.lat}"/>
+            <h:outputLabel for="longitude" value="Longitude:"/>
+            <h:inputText label="Longitude" id="longitude" value="#{mapBean.lon}"/>
+            <br/>
+			<h:outputLabel for="typeSelector" value="Map Type:"/>
+            <ace:simpleSelectOneMenu id="typeSelector" value="#{mapBean.type}">
+                <ace:ajax event="valueChange" render="@all"/>
+                <f:selectItem itemValue="Map" itemLabel="Map"/>
+                <f:selectItem itemValue="Terrain" itemLabel="Terrain"/>
+                <f:selectItem itemValue="Hybrid" itemLabel="Hybrid"/>
+                <f:selectItem itemValue="Satellite" itemLabel="Satellite"/>
+            </ace:simpleSelectOneMenu>
+            <h:outputLabel for="zoom" value="Zoom:"/>
+            <h:inputText label="Zoom" id="zoom" value="#{mapBean.zoom}"/>
+            <br/>
+            <br/>
+            <h:outputLabel for="address" value="Address:"/>
+            <h:inputText label="Address" id="address" value="#{mapBean.address}"
+                         onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+                <f:ajax event="change" listener="#{mapBean.ajaxLookup}"/>
+            </h:inputText>
+            <h:commandButton id="findAddress" value="Find Address"
+                             actionListener="#{mapBean.lookup}"/>
+			<br/>
+			<h:commandButton value="Submit" type="submit"/>
+        </h:form>
+		<p>Relevant section of the Google Maps API: <a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#Map">Map</a></p>
+    </ui:define>
+</ui:composition>

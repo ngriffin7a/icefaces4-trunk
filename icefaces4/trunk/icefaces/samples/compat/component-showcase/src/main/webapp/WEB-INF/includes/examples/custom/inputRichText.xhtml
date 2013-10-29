@@ -1,0 +1,89 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ice:panelGroup styleClass="componentBox"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:panelGroup styleClass="synopsisBox inputRichTextContainer">
+        <ice:outputText value="#{msgs['page.inputRichText.synopsis']}"/>
+        <ice:outputText value="#{msgs['page.inputRichText.instructions']}"/>
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="exampleBox firstChildTitle verticalAlignMdl inputRichTextContainer">
+
+        <ice:panelGroup style="float:left;vertical-align:middle;">
+            <ice:outputText
+                    style="display:block;margin-top:2px;"
+                    value="#{msgs['page.inputRichText.toolbar.title']}"/>
+        </ice:panelGroup>
+
+        <ice:panelGroup style="float:left;vertical-align:middle;">
+            <ice:selectOneRadio id="modeSlctRadio"
+                                value="#{inputRichTextBean.toolbarMode}"
+                                partialSubmit="true" style="padding:0;margin:0;">
+                <f:selectItem
+                        itemLabel="#{msgs['page.inputRichText.toolbar.default']}"
+                        itemValue="#{inputRichTextBean.toolbarModeDefault}"/>
+                <f:selectItem
+                        itemLabel="#{msgs['page.inputRichText.toolbar.basic']}"
+                        itemValue="#{inputRichTextBean.toolbarModeBasic}"/>
+            </ice:selectOneRadio>
+        </ice:panelGroup>
+        
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="clearer" />
+
+    <ice:panelGroup styleClass="exampleBox inputRichTextContainer" >
+
+        <ice:inputRichText id="iceInpRchTxt"
+                           height="100"
+                           width="600"
+                           toolbar="#{inputRichTextBean.toolbarMode}"
+                           value="#{inputRichTextBean.value}"
+                           language="en"
+                           skin="#{inputRichTextBean.skinMapping[styleBean.currentStyle]}"
+                           />
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="clearer"/>
+
+    <!-- Value on the server displayed through an outputText component -->
+    <ice:panelGroup
+            styleClass="exampleBox firstChildTitle backBeanChangeContainer">
+
+        <!-- backing bean title box -->
+        <ice:panelGroup styleClass="backBeanChangeTitle">
+            <ice:outputText value="#{msgs['page.global.serverFeedback']}"/>
+        </ice:panelGroup>
+
+        <!-- actual backing bean values. -->
+        <ice:panelGroup styleClass="backBeanChangeBody"
+                        effect="#{inputRichTextBean.valueChangeEffect}">
+
+            <ice:panelGroup>
+                <ice:outputText
+                        value="#{msgs['page.inputRichText.valuelabel']}"/>
+                <br/>
+                <ice:outputText id="renderedExample"
+                                value="#{inputRichTextBean.value}"/>
+            </ice:panelGroup>
+        </ice:panelGroup>
+    </ice:panelGroup>
+</ice:panelGroup>

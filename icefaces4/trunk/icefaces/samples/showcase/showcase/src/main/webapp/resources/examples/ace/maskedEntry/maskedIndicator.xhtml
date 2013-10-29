@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[maskedIndicatorBean.title]}"/>
+    <ui:param name="description" value="#{msgs[maskedIndicatorBean.description]}"/>
+    <ui:param name="resourceValue" value="#{maskedIndicatorBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{maskedEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{maskedEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="configForm">
+            <icecore:singleSubmit/>
+            
+            <ace:panel id="indicatorCustomizing" header="Indicator Customization" style="width: 100%;">
+                <h:panelGrid width="60%" columns="2" cellpadding="6" cellspacing="6">
+                     <h:outputLabel for="requiredIn" value="Required?"/>
+                     <h:selectBooleanCheckbox id="requiredIn" value="#{maskedIndicatorBean.required}"/>
+                     
+                     <h:outputLabel for="requiredText" value="Required Indicator Text:"/>
+                     <h:inputText id="requiredText" value="#{maskedIndicatorBean.requiredText}"
+                                  disabled="#{!maskedIndicatorBean.required}"/>
+                     
+                     <h:outputLabel for="optionalText" value="Optional Indicator Text:"/>
+                     <h:inputText id="optionalText" value="#{maskedIndicatorBean.optionalText}"
+                                  disabled="#{maskedIndicatorBean.required}"/>
+                                  
+                     <h:outputLabel for="positionIn" value="Indicator Position:"/>
+                     <ace:simpleSelectOneMenu id="positionIn" value="#{maskedIndicatorBean.position}">
+						<ace:ajax execute="@this" />
+                        <f:selectItems value="#{positionBean.indicatorPositions}"/>
+                     </ace:simpleSelectOneMenu>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+        
+        <h:form id="entryForm">    
+            <ace:panel id="personalInfoInputPanel" header="Personal Info" style="width: 100%;">
+                <h:panelGrid columns="1" cellpadding="6" cellspacing="6">
+                <ace:maskedEntry id="dobInput" value="#{maskedIndicatorBean.dob}" mask="99/99/9999"
+                                 requiredIndicator="#{maskedIndicatorBean.requiredText}"
+                                 optionalIndicator="#{maskedIndicatorBean.optionalText}"
+                                 indicatorPosition="#{maskedIndicatorBean.position}"
+                                 required="#{maskedIndicatorBean.required}"
+                                 label="Date of Birth:"
+                                 labelPosition="left">
+                    <ace:ajax event="blur" execute="@this" render="@all"/>
+                </ace:maskedEntry>
+				<ace:message for="dobInput" />
+                <ace:maskedEntry id="workPhoneInput" value="#{maskedIndicatorBean.workPhone}" mask="(999) 999-9999? x99999"
+                                 requiredIndicator="#{maskedIndicatorBean.requiredText}"
+                                 optionalIndicator="#{maskedIndicatorBean.optionalText}"
+                                 indicatorPosition="#{maskedIndicatorBean.position}"
+                                 required="#{maskedIndicatorBean.required}"
+                                 label="Work Phone:"
+                                 labelPosition="left">
+                    <ace:ajax event="blur" execute="@this" render="@all"/>
+                </ace:maskedEntry>
+				<ace:message for="workPhoneInput" />
+                </h:panelGrid>
+            </ace:panel>
+            
+            <ace:panel id="personalInfoOutputPanel" header="Entered Data" style="width: 100%;">
+                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
+                    <h:outputText id="dobOutput" value="Date of Birth: #{maskedIndicatorBean.dob}"/>
+                    <h:outputText id="workPhoneOutput" value="Work Phone: #{maskedIndicatorBean.workPhone}"/>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>
+

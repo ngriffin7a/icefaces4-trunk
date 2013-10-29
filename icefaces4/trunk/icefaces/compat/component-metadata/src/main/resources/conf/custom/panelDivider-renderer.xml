@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+         <description>
+             <![CDATA[ 
+<p>
+          The panelDivider component creates a spilttable panel. The position of 
+          the divider can be defined using the "dividerPosition" attribute. The
+          orientation of the spilttable panel can be set to the vertical or the 
+          horizontal using the "orientation" attribute.
+        </p><p>
+          The component requires two named facets ("first", "second") to define each pane. (e.g.)<br/>
+
+&lt;ice:panelDivider styleClass="myDvrPanel1"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&lt;f:facet name="first"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ice:outputText value="left"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&lt;/f:facet&gt;<br/><br/>
+     
+&nbsp;&nbsp;&nbsp;&lt;f:facet name="second"&gt; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ice:outputText value="second"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&lt;/f:facet&gt;<br/>  
+&lt;/ice:panelDivider&gt; 
+           
+        </p>
+        
+             ]]>
+         </description>
+    <component-family>javax.faces.Panel</component-family>
+    <renderer-type>com.icesoft.faces.PanelDividerRenderer</renderer-type>
+	<renderer-extension>
+		<instance-name>panelDivider</instance-name>
+		<is-container>true</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>panelDivider</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

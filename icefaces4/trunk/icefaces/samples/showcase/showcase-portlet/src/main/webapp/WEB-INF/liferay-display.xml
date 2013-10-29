@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE display PUBLIC "-//Liferay//DTD Display 6.0.0//EN" "http://www.liferay.com/dtd/liferay-display_6_0_0.dtd">
+
+<display>
+
+<category name="ICEfaces3">
+        <category name="ACE">
+            <category name="Accordion">
+                <portlet id="accordionPanel"/>
+                <portlet id="accordionPanelDynamic"/>
+                <portlet id="accordionPanelEffect"/>
+            </category>
+            <category name="Autocomplete">
+                <portlet id="autoCompleteEntry"/>
+                <portlet id="autoCompleteEntryFacet"/>
+                <portlet id="autoCompleteEntryIndicator"/>
+                <portlet id="autoCompleteEntryLabel"/>
+                <portlet id="autoCompleteEntryLazy"/>
+                <portlet id="autoCompleteEntryMatch"/>
+                <portlet id="autoCompleteEntryReqStyle"/>
+                <portlet id="autoCompleteEntryRows"/>
+                <portlet id="autoCompleteEntrySelect"/>
+            </category>
+            <category name="Button">
+                <portlet id="checkboxButton"/>
+                <portlet id="checkboxButtonCustom"/>
+<!--
+                While these components work in portlets, the current example
+                code has them doing navigation which is disruptive to the
+                portlet experience.
+                <portlet id="linkButton"/>
+                <portlet id="pushButton"/>
+ -->
+            </category>
+            <category name="Chart">
+                <portlet id="chart"/>
+                <portlet id="chartBar"/>
+                <portlet id="chartBubble"/>
+                <portlet id="chartCandlestick"/>
+                <portlet id="chartCombined"/>
+                <portlet id="chartDonut"/>
+                <portlet id="chartDynamic"/>
+                <portlet id="chartExport"/>
+                <portlet id="chartGauge"/>
+                <portlet id="chartLine"/>
+                <portlet id="chartPie"/>
+            </category>
+            <category name="ComboBox">
+                <portlet id="comboBox"/>
+                <portlet id="comboBoxFacet"/>
+                <portlet id="comboBoxFiltering"/>
+                <portlet id="comboBoxIndicator"/>
+                <portlet id="comboBoxLabel"/>
+                <portlet id="comboBoxReqStyle"/>
+            </category>
+            <category name="Dialog">
+                <portlet id="confirmationDialog"/>
+                <portlet id="confirmationDialogEffect"/>
+                <portlet id="confirmationDialogModal"/>
+                <portlet id="dialog"/>
+                <portlet id="dialogEffectsAndSize"/>
+                <portlet id="modalDialog"/>
+            </category>
+            <category name="Export">
+                <portlet id="dataExporter"/>
+                <portlet id="dataExporterColumns"/>
+                <portlet id="dataExporterCustom"/>
+                <portlet id="dataExporterExcludeFromExport"/>
+                <portlet id="dataExporterRows"/>
+            </category>
+            <category name="Datatable">
+                <portlet id="dataTable"/>
+                <portlet id="dataTableColumnReordering"/>
+                <portlet id="dataTableConfigPanel"/>
+                <portlet id="dataTableDynamicColumns"/>
+                <portlet id="dataTableFiltering"/>
+                <portlet id="dataTableFind"/>
+                <portlet id="dataTableGrouping"/>
+                <portlet id="dataTableLazyLoading"/>
+                <portlet id="dataTableListener"/>
+                <portlet id="dataTableMultiRowHeader"/>
+                <portlet id="dataTablePaginator"/>
+                <portlet id="dataTablePanelExpansion"/>
+                <portlet id="dataTablePinning"/>
+                <portlet id="dataTableResizableColumns"/>
+                <portlet id="dataTableRowEditing"/>
+                <portlet id="dataTableRowExpansion"/>
+                <portlet id="dataTableRowState"/>
+                <portlet id="dataTableScrolling"/>
+                <portlet id="dataTableSelector"/>
+                <portlet id="dataTableSorting"/>
+                <portlet id="dataTableStackable"/>
+            </category>
+            <category name="Date">
+                <portlet id="dateAjax"/>
+                <portlet id="dateEntry"/>
+                <portlet id="dateIndicator"/>
+                <portlet id="dateLabel"/>
+                <portlet id="dateMinMax"/>
+                <portlet id="dateNavigator"/>
+                <portlet id="datePages"/>
+                <portlet id="datePopup"/>
+                <portlet id="dateReqStyle"/>
+                <portlet id="dateTimeEntry"/>
+            </category>
+            <category name="Drag-n-Drop">
+                <portlet id="dragDrop"/>
+                <portlet id="draggable"/>
+                <portlet id="dataTableIntegration"/>
+            </category>
+            <category name="File">
+                <portlet id="fileEntry"/>
+                <portlet id="fileEntryCallback"/>
+                <!--<portlet id="fileEntryFailPop"/>-->
+                <portlet id="fileEntryListener"/>
+                <!--<portlet id="fileEntryMultiple"/>-->
+                <portlet id="fileEntryValidation"/>
+            </category>
+            <category name="GMap">
+                <portlet id="gMapAutocomplete"/>
+                <portlet id="gMapBasic"/>
+                <portlet id="gMapControl"/>
+                <portlet id="gMapDirections"/>
+                <portlet id="gMapEvent"/>
+                <portlet id="gMapInfoWindow"/>
+                <portlet id="gMapLayer"/>
+                <portlet id="gMapMarker"/>
+                <portlet id="gMapOptions"/>
+                <portlet id="gMapOverlay"/>
+            </category>
+            <category name="List">
+                <portlet id="list"/>
+                <portlet id="listBlock"/>
+                <portlet id="listBlockComplex"/>
+                <portlet id="listDrag"/>
+                <portlet id="listDual"/>
+                <portlet id="listMulti"/>
+                <portlet id="listReorder"/>
+                <portlet id="listReorderAjax"/>
+                <portlet id="listSelection"/>
+                <portlet id="listSelectionAjax"/>
+                <portlet id="listSelectionMini"/>
+            </category>
+            <category name="Menu">
+                <portlet id="contextMenu"/>
+                <portlet id="contextMenuComponent"/>
+                <portlet id="contextMenuEffect"/>
+                <portlet id="contextMenuMultiColumn"/>
+                <portlet id="contextMenuTable"/>
+                <portlet id="menu"/>
+                <portlet id="menuDisplay"/>
+                <portlet id="menuDynamic"/>
+                <portlet id="menuEffect"/>
+                <portlet id="menuEvents"/>
+                <portlet id="menuType"/>
+                <portlet id="menuBar"/>
+                <portlet id="menuBarClick"/>
+                <portlet id="menuBarDynamic"/>
+                <portlet id="menuBarEffect"/>
+                <portlet id="menuBarMultiColumn"/>
+                <portlet id="menuButton"/>
+                <portlet id="selectMenu"/>
+                <portlet id="selectMenuFacet"/>
+                <portlet id="selectMenuIndicator"/>
+                <portlet id="selectMenuLabel"/>
+                <portlet id="selectMenuReqStyle"/>
+                <portlet id="simpleSelectOneMenu"/>
+                <portlet id="simpleSelectOneMenuIndicator"/>
+                <portlet id="simpleSelectOneMenuLabel"/>
+                <portlet id="simpleSelectOneMenuReqStyle"/>
+            </category>
+            <category name="Misc">
+                <portlet id="animation"/>
+                <portlet id="breadcrumbMenu"/>
+                <portlet id="message"/>
+                <portlet id="printer"/>
+                <portlet id="submitMonitor"/>
+            </category>
+            <category name="Notification">
+                <portlet id="notificationPanel"/>
+                <portlet id="notificationPanelClient"/>
+            </category>
+            <category name="Panel">
+                <portlet id="panel"/>
+                <portlet id="panelClose"/>
+                <portlet id="panelHeader"/>
+                <portlet id="panelListener"/>
+                <portlet id="panelMenu"/>
+                <portlet id="panelToggle"/>
+                <portlet id="resizable"/>
+                <portlet id="resizeListener"/>
+            </category>
+            <category name="Progress">
+                <portlet id="progressBar"/>
+                <portlet id="progressBarClient"/>
+                <portlet id="progressBarClientAndServer"/>
+                <portlet id="progressBarPolling"/>
+                <portlet id="progressBarPush"/>
+            </category>
+            <category name="Text">
+                <portlet id="maskedEntry"/>
+                <portlet id="maskedIndicator"/>
+                <portlet id="maskedLabel"/>
+                <portlet id="maskedReqStyle"/>
+                <portlet id="richTextEntry"/>
+                <portlet id="textAreaEntry"/>
+                <portlet id="textAreaEntryIndicator"/>
+                <portlet id="textAreaEntryLabel"/>
+                <portlet id="textAreaEntryReqStyle"/>
+                <portlet id="textEntry"/>
+                <portlet id="textEntryAutotab"/>
+                <portlet id="textEntryIndicator"/>
+                <portlet id="textEntryLabel"/>
+                <portlet id="textEntryReqStyle"/>
+            </category>
+            <category name="Slider">
+                <portlet id="slider"/>
+                <portlet id="sliderAsyncInput"/>
+                <portlet id="sliderListener"/>
+                <portlet id="sliderSubmission"/>
+            </category>
+            <category name="Tabs">
+                <portlet id="tabset"/>
+                <portlet id="tabsetClientSide"/>
+                <portlet id="tabsetProxy"/>
+                <portlet id="tabsetServerSide"/>
+            </category>
+            <category name="Tooltip">
+                <portlet id="tooltip"/>
+                <portlet id="delegateTooltip"/>
+                <portlet id="tooltipGlobal"/>
+            </category>
+            <category name="Tree">
+                <portlet id="tree"/>
+                <portlet id="treeClient"/>
+                <portlet id="treeLazy"/>
+                <portlet id="treeNested"/>
+                <portlet id="treeReorder"/>
+                <portlet id="treeSelection"/>
+            </category>
+        </category>
+    </category>
+</display>

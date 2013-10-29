@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>XHR2 Upload</title>
+    <script type="text/javascript" src="upload-progress.js"/>
+    <style type="text/css">
+        table, td {
+            border: 1px solid #808080;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <h:form enctype="multipart/form-data">
+        <h:inputFile id="file" value="${TestBean.file}"/>
+        <h:commandButton type="submit" value="Upload" action="#{TestBean.upload}">
+        </h:commandButton>
+    </h:form>
+    <div id="progress">
+        <h4>JSF submit events:</h4>
+    </div>
+    <h4>Uploaded files:</h4>
+    <table id="uploaded-files">
+        <tr>
+            <th>File name</th>
+            <th>Content type</th>
+            <th>Content disposition</th>
+            <th>Content</th>
+        </tr>
+        <c:forEach var="part" items="${TestBean.uploadedFiles}">
+            <tr>
+                <td><h:outputText value="${part.fileName}"/></td>
+                <td><h:outputText value="${part.contentType}"/></td>
+                <td><h:outputText value="${part.contentDisposition}"/></td>
+                <td><h:outputText value="${part.content}"/></td>
+            </tr>
+        </c:forEach>
+    </table>
+</h:body>
+</html>
+

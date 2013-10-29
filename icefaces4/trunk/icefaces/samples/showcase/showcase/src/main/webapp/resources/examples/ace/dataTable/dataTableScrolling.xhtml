@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[dataTableScrolling.title]}"/>
+    <ui:param name="description" value="#{msgs[dataTableScrolling.description]}"/>
+    <ui:param name="resourceValue" value="#{dataTableScrolling.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            <icecore:singleSubmit/>
+            <h:panelGrid columns="3">
+                <h:outputLabel for="scrollingIn" value="Enable Scrolling:"/>
+                <h:selectBooleanCheckbox id="scrollingIn" value="#{dataTableScrolling.scrolling}"/>
+                <ace:message id="scrollMsg" for="scrollingIn"/>
+                
+                <h:outputLabel for="heightIn" value="Table Height (in pixels):"/>
+                <h:inputText id="heightIn" value="#{dataTableScrolling.height}"
+                             required="true" size="3" maxlength="3"
+                             disabled="#{!dataTableScrolling.scrolling}">
+                     <f:validateLongRange minimum="50" maximum="500"/>
+                </h:inputText>
+                <ace:message id="heightMsg" for="heightIn"/>
+            </h:panelGrid>
+        </h:form>
+    
+        <h:form id="form2">
+           <ace:dataTable id="carTable"
+                          value="#{dataTableScrolling.carsData}"
+                          var="car"
+                          scrollable="#{dataTableScrolling.scrolling}"
+                          selectionMode="single"
+                          height="#{dataTableScrolling.height}"
+                   >
+               <ace:ajax event="select" />
+
+                <ace:column headerText="ID" footerText="ID">
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                    &#160;
+                    <h:outputText  value="#{car.id}"/>
+                </ace:column>
+                <ace:column headerText="Name" footerText="Name">
+                    <h:outputText id="nameCell" value="#{car.name}"/>
+                </ace:column>
+                <ace:column headerText="Chassis" footerText="Chassis">
+                    <h:outputText id="chassisCell" value="#{car.chassis}"/>
+                </ace:column>
+                <ace:column headerText="Weight" footerText="Weight">
+                    <h:outputText value="#{car.weight}lbs."/>
+                </ace:column>
+                <ace:column headerText="Accel" footerText="Accel">
+                    <h:outputText id="accelCell" value="#{car.acceleration}"/>
+                </ace:column>
+                <ace:column headerText="MPG" footerText="MPG">
+                    <h:outputText id="mpgCell" value="#{car.mpg}"/>
+                </ace:column>
+                <ace:column headerText="Cost" footerText="Cost">
+                    <h:outputText id="costCell" value="#{car.cost}">
+                        <f:convertNumber type="currency"
+                                         currencySymbol="$"
+                                         groupingUsed="true"
+                                         minFractionDigits="2"
+                                         maxFractionDigits="2"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </h:form>
+
+        <h:form id="form3" style="padding-top: 1em;">
+            <h:commandButton id="show" value="Show Table Popup" onclick="sampleDialog.show();" type="button"/>
+
+            <ace:dialog id="dialog"
+                        header="Scrollable Table Sample"
+                        widgetVar="sampleDialog"
+                        closable="true"
+                        modal="true"
+                        width="400"
+                        draggable="true"
+                        showEffect="fade"
+                        hideEffect="fade"
+                        resizable="true"
+                        position="center">
+                    <ace:dataTable id="carTable"
+                                   scrollable="true"
+                                   styleClass="scrollingTable"
+                                   value="#{dataTableScrolling.carsData}"
+                                   var="car"
+                                   height="#{dataTableScrolling.height}"
+                                   paginator="true"
+                                   rows="10">
+                        <ace:column headerText="ID" footerText="ID">
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                            <h:outputText  value="#{car.id}"/>
+                        </ace:column>
+                        <ace:column headerText="Name" footerText="Name">
+                            <h:outputText id="nameCell" value="#{car.name}"/>
+                        </ace:column>
+                        <ace:column headerText="Chassis" footerText="Chassis">
+                            <h:outputText id="chassisCell" value="#{car.chassis}"/>
+                        </ace:column>
+                        <ace:column headerText="Weight" footerText="Weight">
+                            <h:outputText value="#{car.weight}lbs."/>
+                        </ace:column>
+                        <ace:column headerText="Accel" footerText="Accel">
+                            <h:outputText id="accelCell" value="#{car.acceleration}"/>
+                        </ace:column>
+                        <ace:column headerText="MPG" footerText="MPG">
+                            <h:outputText id="mpgCell" value="#{car.mpg}"/>
+                        </ace:column>
+                        <ace:column headerText="Cost" footerText="Cost">
+                            <h:outputText id="costCell" value="#{car.cost}">
+                                <f:convertNumber type="currency"
+                                                 currencySymbol="$"
+                                                 groupingUsed="true"
+                                                 minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                        </ace:column>
+                    </ace:dataTable>
+            </ace:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

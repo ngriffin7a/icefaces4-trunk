@@ -1,0 +1,142 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ice="http://icefaces.org/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Faces Messages</title>
+</h:head>
+<h:body>
+    <ice:config render="true" />
+    <h:form id="form1" prependId="false">
+        <h:panelGrid columns="1">
+            <h:outputText value="Messages:"/>
+            <h:messages />
+            <h:outputText value="--------------------"/>
+            <h:outputText value="Global Messages:"/>
+            <h:messages globalOnly="true"/>
+            <h:outputText value="--------------------"/>
+            
+            <h:panelGrid columns="3">
+                <h:commandButton id="btn_reg" value="Regular"/>
+                <h:commandButton id="btn_this" value="This">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton>
+                <h:commandButton id="btn_form" value="Form">
+                    <f:ajax execute="@form" render="@all"/>
+                </h:commandButton>
+            </h:panelGrid>
+            <h:outputText value="--------------------"/>
+            
+            <h:outputText value="Add global message"/>
+            <h:panelGrid columns="3">
+                <h:commandButton id="gbl_hi_reg" value="Regular HI" immediate="true" actionListener="#{facesMessagesBean.hi}"/>
+                <h:commandButton id="gbl_hi_this" value="This HI" immediate="true" actionListener="#{facesMessagesBean.hi}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton>
+                <h:commandButton id="gbl_hi_form" value="Form HI" immediate="true" actionListener="#{facesMessagesBean.hi}">
+                    <f:ajax execute="@form" render="@all"/>
+                </h:commandButton>
+                
+                <h:commandButton id="gbl_bye_reg" value="Regular BYE" immediate="true" actionListener="#{facesMessagesBean.bye}"/>
+                <h:commandButton id="gbl_bye_this" value="This BYE" immediate="true" actionListener="#{facesMessagesBean.bye}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton>
+                <h:commandButton id="gbl_bye_form" value="Form BYE" immediate="true" actionListener="#{facesMessagesBean.bye}">
+                    <f:ajax execute="@form" render="@all"/>
+                </h:commandButton>
+            </h:panelGrid>
+            <h:outputText value="--------------------"/>
+            
+            <h:outputText value="h:panelGroup(s)"/>
+            <h:panelGroup id="pg_reg">
+                <h:outputLabel value="pg_reg" for="pg_reg_txt"/>
+                <h:inputText id="pg_reg_txt" value="#{facesMessagesBean.pg_reg_txt}" required="true"/>
+                <h:outputText value="[[#{facesMessagesBean.pg_reg_txt}]]"/>
+                <h:commandButton id="pg_reg_btn"/>
+            </h:panelGroup>
+            <h:panelGroup id="pg_fpg">
+                <h:outputLabel value="pg_fpg" for="pg_fpg_txt"/>
+                <h:inputText id="pg_fpg_txt" value="#{facesMessagesBean.pg_fpg_txt}" required="true"/>
+                <h:outputText value="[[#{facesMessagesBean.pg_fpg_txt}]]"/>
+                <h:commandButton id="pg_fpg_btn">
+                    <f:ajax execute="pg_fpg" render="@all"/>
+                </h:commandButton>
+            </h:panelGroup>
+            <h:panelGroup id="pg_ff">
+                <h:outputLabel value="pg_ff" for="pg_ff_txt"/>
+                <h:inputText id="pg_ff_txt" value="#{facesMessagesBean.pg_ff_txt}" required="true"/>
+                <h:outputText value="[[#{facesMessagesBean.pg_ff_txt}]]"/>
+                <h:commandButton id="pg_ff_btn">
+                    <f:ajax execute="@form" render="@all"/>
+                </h:commandButton>
+            </h:panelGroup>
+            <h:outputText value="--------------------"/>
+            
+            <h:outputText value="h:dataTable regular"/>
+            <h:dataTable id="list_reg" value="#{facesMessagesBean.list_reg}" var="var_list_reg">
+                <h:column>
+                    <h:panelGroup id="list_pg_reg">
+                        <h:outputLabel value="list_pg_reg" for="list_pg_reg_txt"/>
+                        <h:inputText id="list_pg_reg_txt" value="#{var_list_reg.val}" required="true"/>
+                        <h:outputText value="[[#{var_list_reg.val}]]"/>
+                        <h:commandButton id="list_pg_reg_btn"/>
+                    </h:panelGroup>
+                </h:column>
+            </h:dataTable>
+            <h:outputText value="--------------------"/>
+            
+            <h:outputText value="h:dataTable fpg"/>
+            <h:dataTable id="list_fpg" value="#{facesMessagesBean.list_fpg}" var="var_list_fpg">
+                <h:column>
+                    <h:panelGroup id="list_pg_fpg">
+                        <h:outputLabel value="list_pg_fpg" for="list_pg_fpg_txt"/>
+                        <h:inputText id="list_pg_fpg_txt" value="#{var_list_fpg.val}" required="true"/>
+                        <h:outputText value="[[#{var_list_fpg.val}]]"/>
+                        <h:commandButton id="list_pg_fpg_btn">
+                            <f:ajax execute="list_pg_fpg" render="@all"/>
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:column>
+            </h:dataTable>
+            <h:outputText value="--------------------"/>
+            
+            <h:outputText value="h:dataTable ff"/>
+            <h:dataTable id="list_ff" value="#{facesMessagesBean.list_ff}" var="var_list_ff">
+                <h:column>
+                    <h:panelGroup id="list_pg_ff">
+                        <h:outputLabel value="list_pg_ff" for="list_pg_ff_txt"/>
+                        <h:inputText id="list_pg_ff_txt" value="#{var_list_ff.val}" required="true"/>
+                        <h:outputText value="[[#{var_list_ff.val}]]"/>
+                        <h:commandButton id="list_pg_ff_btn">
+                            <f:ajax execute="@form" render="@all"/>
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:column>
+            </h:dataTable>
+            <h:outputText value="--------------------"/>
+            
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>
+

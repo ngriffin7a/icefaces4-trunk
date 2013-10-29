@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+	<description>
+		<![CDATA[<p>Render an HTML option list.</p><p><a name="decode">Decode Behavior</a></p><ul><p>See the <a href="javax.faces.SelectManyjavax.faces.Listbox.html#decodeOne">"Decode
+          Behavior for UISelectOne Components"</a> section.</p></ul><p>Encode Behavior</p><ul><p>Render an HTML "select" element.  Render the clientId of the
+          component as the value of the "name" attribute.  If the
+          "styleClass" attribute is specified, render its value as the value
+          of the "class" attribute on the "select" element. If the component
+          to be rendered is a UISelectMany, render "true" as the value of
+          the "multiple" attribute.  Use the number of items as the value of
+          the "size" attribute.  See the <a href="javax.faces.SelectManyjavax.faces.Listbox.html#options">"Rendering
+          the option elements" </a> specification for
+          <code>ListboxRenderer</code> for more detail on how to render the
+          "option" elements in this renderer.</p></ul>]]>
+	</description>
+
+	<component-family>javax.faces.SelectOne</component-family>
+
+	<renderer-type>com.icesoft.faces.Menu</renderer-type>
+
+	<renderer-extension>
+		<instance-name>selectOneMenu</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>selectOneMenu</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

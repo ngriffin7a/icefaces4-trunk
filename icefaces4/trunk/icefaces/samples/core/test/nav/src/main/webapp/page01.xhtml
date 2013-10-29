@@ -1,0 +1,233 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html
+      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ice="http://icefaces.org/core"
+>
+<h:head>
+    <title>Navigation Techniques - Page 1</title>
+</h:head>
+<h:body>
+
+    <h1>Page 1</h1>
+
+    <h:outputText id="theWriter" value="Response writer: #{nav.responseWriter}"/><br/>
+
+    <h2>Buttons that navigate back to the same page</h2>
+    <h:panelGrid columns="4" border="1">
+        <h:outputText value=""/>
+        <h:outputText value="Forms WITHOUT f:ajax"/>
+        <h:outputText value="Forms WITH f:ajax @all"/>
+        <h:outputText value="Forms WITH f:ajax @form"/>
+
+        <p>Navigate using action=/page01</p>
+        <h:form id="navFormA1">
+            <h:inputText value="#{nav.navData1a}"/><br/>
+            <h:commandButton type="submit"
+                             value="A1 - Page 1"
+                             action="/page01">
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="navFormA2">
+            <h:inputText value="#{nav.navData1a}"/><br/>
+            <h:commandButton type="submit"
+                             value="A2 - Page 1"
+                             action="/page01">
+                <f:ajax render="@all"/>
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="navFormA3">
+            <h:inputText value="#{nav.navData1a}"/><br/>
+            <h:commandButton type="submit"
+                             value="A3 - Page 1"
+                             action="/page01">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+        </h:form>
+
+
+        <p>Navigate using action=nav.gotoPage01</p>
+        <h:form id="navFormA4">
+            <h:inputText value="#{nav.navData1a}"/><br/>
+            <h:commandButton type="submit"
+                             value="A4 - Page 1"
+                             action="#{nav.gotoPage01}">
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="navFormA5">
+            <h:inputText value="#{nav.navData1a}"/><br/>
+            <h:commandButton type="submit"
+                             value="A5 - Page 1"
+                             action="#{nav.gotoPage01}">
+                <f:ajax render="@all"/>
+            </h:commandButton>
+        </h:form>
+
+
+        <h:form id="navFormA6">
+            <h:inputText value="#{nav.navData1a}"/><br/>
+            <h:commandButton type="submit"
+                             value="A6 - Page 1"
+                             action="#{nav.gotoPage01}">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+        </h:form>
+
+
+
+    </h:panelGrid>
+
+    <h2>Buttons that navigate to a different page</h2>
+
+    <h:panelGrid columns="4" border="1">
+        <h:outputText value=""/>
+        <h:outputText value="Forms WITHOUT f:ajax"/>
+        <h:outputText value="Forms WITH f:ajax @all"/>
+        <h:outputText value="Forms WITH f:ajax @form"/>
+
+        <p>Navigate using action=/page02</p>
+        <h:form id="navFormB1">
+            <h:inputText value="#{nav.navData2a}"/><br/>
+            <h:commandButton type="submit"
+                             value="B1 - Page 2"
+                             action="/page02">
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="navFormB2">
+            <h:inputText value="#{nav.navData2a}"/><br/>
+            <h:commandButton type="submit"
+                             value="B2 - Page 2"
+                             action="/page02">
+                <f:ajax render="@all"/>
+            </h:commandButton>
+        </h:form>
+
+
+        <h:form id="navFormB3">
+            <h:inputText value="#{nav.navData2a}"/><br/>
+            <h:commandButton type="submit"
+                             value="B3 - Page 2"
+                             action="/page02">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+        </h:form>
+
+        <p>Navigate using action=nav.gotoPage02</p>
+        <h:form id="navFormB4">
+            <h:inputText value="#{nav.navData2a}"/><br/>
+            <h:commandButton type="submit"
+                             value="B4 - Page 2"
+                             action="#{nav.gotoPage02}">
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="navFormB5">
+            <h:inputText value="#{nav.navData2a}"/><br/>
+            <h:commandButton type="submit"
+                             value="B5 - Page 2"
+                             action="#{nav.gotoPage02}">
+                <f:ajax render="@all"/>
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="navFormB6">
+            <h:inputText value="#{nav.navData2a}"/><br/>
+            <h:commandButton type="submit"
+                             value="B6 - Page 2"
+                             action="#{nav.gotoPage02}">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+        </h:form>
+
+    </h:panelGrid>
+
+    <h2>Buttons that navigate using faces-config rules</h2>
+    <h:panelGrid columns="4" border="1">
+        <h:outputText value=""/>
+        <h:outputText value="Forms WITHOUT f:ajax"/>
+        <h:outputText value="Forms WITH f:ajax @all"/>
+        <h:outputText value="Forms WITH f:ajax @form"/>
+
+        <p>Navigate using action=nav.otherPageForward</p>
+        <h:form id="navFormC1">
+            <h:inputText value="#{nav.navData3a}"/><br/>
+            <h:commandButton type="submit"
+                             value="C1 - Page 2"
+                             action="#{nav.otherPageForward}">
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="navFormC2">
+            <h:inputText value="#{nav.navData3a}"/><br/>
+            <h:commandButton type="submit"
+                             value="C2 - Page 2"
+                             action="#{nav.otherPageForward}">
+                <f:ajax render="@all"/>
+            </h:commandButton>
+        </h:form>
+
+
+        <h:form id="navFormC3">
+            <h:inputText value="#{nav.navData3a}"/><br/>
+            <h:commandButton type="submit"
+                             value="C3 - Page 2"
+                             action="#{nav.otherPageForward}">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+        </h:form>
+
+        <p>Navigate using action=nav.otherPageRedirect</p>
+        <h:form id="navFormC4">
+            <h:inputText value="#{nav.navData3a}"/><br/>
+            <h:commandButton type="submit"
+                             value="C4 - Page 2"
+                             action="#{nav.otherPageRedirect}">
+            </h:commandButton>
+        </h:form>
+
+        <h:form id="navFormC5">
+            <h:inputText value="#{nav.navData3a}"/><br/>
+            <h:commandButton type="submit"
+                             value="C5 - Page 2"
+                             action="#{nav.otherPageRedirect}">
+                <f:ajax render="@all"/>
+            </h:commandButton>
+        </h:form>
+
+
+        <h:form id="navFormC6">
+            <h:inputText value="#{nav.navData3a}"/><br/>
+            <h:commandButton type="submit"
+                             value="C6 - Page 2"
+                             action="#{nav.otherPageRedirect}">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+        </h:form>
+
+    </h:panelGrid>
+
+</h:body>
+</html>

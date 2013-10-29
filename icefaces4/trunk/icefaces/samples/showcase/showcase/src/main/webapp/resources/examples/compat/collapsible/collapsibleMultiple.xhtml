@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[collapsibleMultiple.title]}"/>
+    <ui:param name="description" value="#{msgs[collapsibleMultiple.description]}"/>
+    <ui:param name="resourceValue" value="#{collapsibleMultiple.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+        <ice:panelCollapsible expanded="true" >
+            <f:facet name="header">
+                <h:panelGrid columns="2">
+                    <h:graphicImage value="/resources/css/images/collapsible-on.gif" alt="Collapse"/>
+                    <h:outputText value="Links" styleClass="panelHeaderStyle"/>
+                </h:panelGrid>
+            </f:facet>
+            <h:panelGrid columns="4" width="100%">
+                <h:outputLink value="http://www.icefaces.org/" target="_blank">ICEfaces.org</h:outputLink>
+                <h:outputLink value="http://www.icefaces.org/main/downloads/os-downloads.iface" target="_blank">Downloads</h:outputLink>
+                <h:outputLink value="http://www.icefaces.org/JForum" target="_blank">Forum</h:outputLink>
+                <h:outputLink value="http://sventon.icefaces.org/" target="_blank">SVN</h:outputLink>
+                <h:outputLink value="http://wiki.icefaces.org/display/ICE/Tutorials" target="_blank">Tutorials</h:outputLink>
+                <h:outputLink value="http://www.icepush.org" target="_blank">ICEpush</h:outputLink>
+                <h:outputLink value="http://www.icepdf.org" target="_blank">ICEpdf</h:outputLink>
+                <h:outputLink value="http://auctionmonitor.icefaces.org" target="_blank">Auction Monitor</h:outputLink>
+            </h:panelGrid>
+        </ice:panelCollapsible>
+        
+        <br/>
+        
+        <ice:panelCollapsible expanded="true">
+            <f:facet name="header">
+                <h:panelGrid columns="2">
+                    <h:graphicImage value="/resources/css/images/collapsible-on.gif" alt="Collapse"/>
+                    <h:outputText value="Form" styleClass="panelHeaderStyle"/>
+                </h:panelGrid>
+            </f:facet>
+            <ice:panelGrid columns="2">
+                <h:outputLabel for="formFirstName" value="First Name:"/>
+                <h:inputText id="formFirstName"/>
+                
+                <h:outputLabel for="formLastName" value="Last Name:"/>
+                <h:inputText id="formLastName"/>
+                
+                <h:outputLabel for="formComments" value="Comments:"/>
+                <h:inputTextarea id="formComments" rows="5" cols="50"/>
+            </ice:panelGrid>
+        </ice:panelCollapsible>
+        
+        <br/>
+        
+        <ice:panelCollapsible expanded="false" >
+            <f:facet name="header">
+                <h:panelGrid columns="2">
+                    <h:graphicImage value="/resources/css/images/collapsible-on.gif" alt="Collapse"/>
+                    <h:outputText value="Image" styleClass="panelHeaderStyle"/>
+                </h:panelGrid>
+            </f:facet>
+            <h:graphicImage library="css/images" name="header.png" alt="Header"/>
+        </ice:panelCollapsible>
+        
+        <br/>
+        
+        <ice:panelCollapsible expanded="false" >
+            <f:facet name="header">
+                <h:graphicImage value="/resources/css/images/collapsible-on.gif" alt="Collapse"/>
+                <h:outputText value="Text" styleClass="panelHeaderStyle"/>
+            </f:facet>
+                <p>The industry's first standards-compliant AJAX based solution for rapidly creating all Java rich web applications that are easily maintained, extended, and scaled, at very low cost.</p>
+        </ice:panelCollapsible>
+        </h:form>
+    </ui:define>
+</ui:composition>

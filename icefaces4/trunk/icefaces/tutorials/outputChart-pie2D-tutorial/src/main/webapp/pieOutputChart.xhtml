@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>OutputChart Component Tutorial</title>
+        <link href="./xmlhttp/css/xp/xp.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <ice:form id="frm">
+            <ice:panelGrid columns="2">
+                <ice:outputChart id="pieOutputChart" type="pie2D" chartTitle="Pie2D Chart" width="350" height="350"
+                                 labels="#{pieChartBean.labels}" colors="#{pieChartBean.paints}"
+                                 data="#{pieChartBean.data}" actionListener="#{pieChartBean.imageClicked}"
+                                 renderOnSubmit="#{pieChartBean.newChart}"/>
+
+                <ice:panelGroup>
+                    <ice:outputText value="Year Specific Data:"/>
+                    <ice:dataTable id="sales" var="sale" value="#{pieChartBean.sales}">
+                        <ice:column>
+                            <f:facet name="header">
+                                <ice:outputText value="Product Name"/>
+                            </f:facet>
+                            <ice:outputText id="product" value="#{sale.product}"/>
+                        </ice:column>
+                        <ice:column>
+                            <f:facet name="header">
+                                <ice:outputText value="Price"/>
+                            </f:facet>
+                            <ice:outputText id="price" value="#{sale.price}"/>
+                        </ice:column>
+                        <ice:column>
+                            <f:facet name="header">
+                                <ice:outputText value="Year"/>
+                            </f:facet>
+                            <ice:outputText id="year" value="#{sale.year}"/>
+                        </ice:column>
+                    </ice:dataTable>
+                </ice:panelGroup>
+
+            </ice:panelGrid>
+
+        </ice:form>
+    </h:body>
+</f:view>
+</html>

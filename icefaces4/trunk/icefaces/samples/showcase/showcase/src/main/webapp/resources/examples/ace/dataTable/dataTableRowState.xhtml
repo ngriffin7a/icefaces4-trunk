@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[dataTableRowState.title]}"/>
+    <ui:param name="description" value="#{msgs[dataTableRowState.description]}"/>
+    <ui:param name="resourceValue" value="#{dataTableRowState.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="controls">
+            <icecore:singleSubmit/>
+            <h:panelGroup id="selection" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
+                Selection<br/>
+                <h:commandButton id="enableSelectAll" value="Enable Selection For All"
+                        actionListener="#{dataTableRowState.enableAllSelection}"/><br/>
+                <h:commandButton id="disableSelect" value="Disable Selection For Selected"
+                        actionListener="#{dataTableRowState.disableSelection}" /><br/>
+                <h:commandButton id="disableSelectAll" value="Disable Selection For All"
+                        actionListener="#{dataTableRowState.disableAllSelection}" /><br/>
+            </h:panelGroup>
+            <h:panelGroup id="visibility" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
+                Visibility<br/>
+                <h:commandButton id="enableVisAll" value="Enable Visibility For All"
+                        actionListener="#{dataTableRowState.enableAllVisibility}" /><br/>
+                <h:commandButton id="disableVisAll" value="Disable Visibility For All"
+                        actionListener="#{dataTableRowState.disableAllVisibility}" /><br/>
+                <h:commandButton id="disableVisSel" value="Disable Visibility For Selected"
+                        actionListener="#{dataTableRowState.disableVisibility}" /><br/>
+            </h:panelGroup>
+            <h:panelGroup id="editability" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
+                Editability<br/>
+                <h:commandButton id="enableEditAll" value="Enable Editing For All"
+                        actionListener="#{dataTableRowState.enableAllEditing}" /><br/>
+                <h:commandButton id="enableEditSel" value="Enable Editing For Selected"
+                        actionListener="#{dataTableRowState.enableEditing}" /><br/>
+                <h:commandButton id="disableEditAll" value="Disable Editing For All"
+                        actionListener="#{dataTableRowState.disableAllEditing}" /><br/>
+                <h:commandButton id="disableEditSel" value="Disable Editing For Selected"
+                        actionListener="#{dataTableRowState.disableEditing}" /><br/>
+            </h:panelGroup>
+            <h:panelGroup id="editing" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
+                Editing<br/>
+                <h:commandButton id="startEditAll" value="Start Editing For All"
+                                 actionListener="#{dataTableRowState.startAllEditing}" /><br/>
+                <h:commandButton id="startEditSel" value="Start Editing For Selected"
+                                 actionListener="#{dataTableRowState.startEditing}" /><br/>
+                <h:commandButton id="stopEditAll" value="Stop Editing For All"
+                                 actionListener="#{dataTableRowState.stopAllEditing}" /><br/>
+                <h:commandButton id="stopEditSel" value="Stop Editing For Selected"
+                                 actionListener="#{dataTableRowState.stopEditing}" /><br/>
+            </h:panelGroup>
+            <h:panelGroup id="selectedRows" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
+                Currently Selected Rows<br/>
+                <ui:repeat id="multiRowOut"
+                           value="#{dataTableRowState.selection}" var="selCar">
+                    #{selCar.name}<br/>
+                </ui:repeat>
+            </h:panelGroup>
+        </h:form>
+
+        <h:form id="form">
+           <ace:dataTable id="carTableRowExpansion"
+                          binding="#{dataTableBindings.tables[dataTableRowState.clazz]}"
+                          stateMap="${dataTableRowState.stateMap}"
+                          value="#{dataTableRowState.carsData}"
+                          selectionMode="multiple"
+                          var="car"
+                          rows="10">
+               <ace:ajax event="select" render="controls @this" execute="@this" />
+               <ace:ajax event="editSubmit" render="facesMsgs"/>
+
+               <ace:column id="selectable" headerText="Selectable">
+                   <h:panelGroup id="selectableCheck" style="#{rowState.selectable ? '' : 'display:none'}" styleClass="ui-icon ui-icon-check"/>
+                   <h:panelGroup id="selectableClose" style="#{rowState.selectable ? 'display:none' : ''}" styleClass="ui-icon ui-icon-close"/>
+               </ace:column>
+               <ace:column id="editable" headerText="Editable">
+                   <h:panelGroup id="editableCheck" style="#{rowState.editable ? '' : 'display:none'}" styleClass="ui-icon ui-icon-check"/>
+                   <h:panelGroup id="editableClose" style="#{rowState.editable ? 'display:none' : ''}" styleClass="ui-icon ui-icon-close"/>
+               </ace:column>
+                <ace:column id="name">
+                    <f:facet name="header">
+                       Name
+                    </f:facet>
+                    <ace:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText id="nameCell" value="#{car.name}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText id="nameInput" value="#{car.name}" style="width:90%"/>
+                        </f:facet>
+                    </ace:cellEditor>
+                </ace:column>
+                <ace:column id="weight">
+                    <f:facet name="header">
+                       Weight
+                    </f:facet>
+                    <ace:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText id="weightCell" value="#{car.weight}"/>lbs.
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText id="weightInput" value="#{car.weight}" style="width:90%"/>lbs.
+                        </f:facet>
+                    </ace:cellEditor>
+                </ace:column>
+                <ace:column id="accel">
+                    <f:facet name="header">
+                       Accel
+                    </f:facet>
+                    <ace:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText id="accelCell" value="#{car.acceleration}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText id="accelInput" value="#{car.acceleration}" style="width:90%"/>
+                        </f:facet>
+                    </ace:cellEditor>
+                </ace:column>
+                <ace:column id="mpg">
+                    <f:facet name="header">
+                       MPG
+                    </f:facet>
+                    <ace:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText id="mpgCell" value="#{car.mpg}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText id="mpgInput" value="#{car.mpg}" style="width:90%"/>
+                        </f:facet>
+                    </ace:cellEditor>
+                </ace:column>
+                <ace:column id="cost">
+                    <f:facet name="header">
+                       Cost
+                    </f:facet>
+                    <ace:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText id="costCell" value="#{car.cost}">
+                                <f:convertNumber type="currency"
+                                                 currencySymbol="$"
+                                                 groupingUsed="true"
+                                                 minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText id="costInput" value="#{car.cost}" style="width:90%">
+                                <f:convertNumber type="currency"
+                                                 currencySymbol="$"
+                                                 groupingUsed="true"
+                                                 minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:inputText>
+                        </f:facet>
+                    </ace:cellEditor>
+                </ace:column>
+                <ace:column headerText="Edit">
+                   <ace:rowEditor id="rowEdit"/>
+                </ace:column>
+           </ace:dataTable>
+        </h:form>
+        <ace:messages id="facesMsgs"/>
+    </ui:define>
+</ui:composition>

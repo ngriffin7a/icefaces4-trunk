@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[menuPopupDynamic.title]}"/>
+    <ui:param name="description" value="#{msgs[menuPopupDynamic.description]}"/>
+    <ui:param name="resourceValue" value="#{menuPopupDynamic.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:panelGrid columns="3" width="100%" style="text-align: center;">
+        <h:form>
+            <h:panelGrid columns="4">
+                <h:outputLabel for="newText" value="New Text:"/>
+                <h:inputText id="newText" value="#{menuPopupDynamic.currentText}"
+                             required="true"
+                             size="10" maxlength="10">
+                     <f:validateLength minimum="1" maximum="10"/>
+                </h:inputText>
+                <h:outputText/>
+                <h:message for="newText"/>
+                
+                <h:outputLabel for="newIcon" value="New Icon:"/>
+                <h:selectOneMenu id="newIcon" value="#{menuPopupDynamic.currentIcon}"
+                                 required="true">
+                     <f:selectItem itemValue="" itemLabel="--Select--"
+                                   noSelectionOption="true"/>
+                     <f:selectItems value="#{menuPopupDynamic.icons}"/>
+                </h:selectOneMenu>
+                <h:commandButton value="Add Item"
+                                 actionListener="#{menuPopupDynamic.addItem}"/>
+                <h:message for="newIcon"/>
+            </h:panelGrid>
+        </h:form>
+                
+        <h:form>
+            <h:panelGrid columns="4">
+                <h:outputLabel for="newGen" value="Generate New Items:"/>
+                <h:inputText id="newGen" value="#{menuPopupDynamic.generateCount}"
+                             required="true"
+                             size="2" maxlength="2">
+                     <f:validateLongRange minimum="1" maximum="25"/>
+                </h:inputText>
+                <h:commandButton value="Generate"
+                                 actionListener="#{menuPopupDynamic.generateNewItems}"/>
+                <h:message for="newGen"/>
+            </h:panelGrid>
+        </h:form>
+        
+        <h:form>
+            <ice:panelGroup menuPopup="menuPopupDyn">
+                <h:graphicImage library="css/images" name="header.png" alt="Header"/>
+            </ice:panelGroup>
+        
+            <ice:menuPopup id="menuPopupDyn">
+                <ice:menuItem value="Dynamic Menu">
+                    <ice:menuItems value="#{menuPopupDynamic.items}"/>
+                </ice:menuItem>
+                <ice:menuItem value="Static Menu">
+                    <ice:menuItem value="Open"/>
+                    <ice:menuItem value="Save"/>
+                    <ice:menuItem value="Close"/>
+                </ice:menuItem>
+            </ice:menuPopup>
+        </h:form>
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>

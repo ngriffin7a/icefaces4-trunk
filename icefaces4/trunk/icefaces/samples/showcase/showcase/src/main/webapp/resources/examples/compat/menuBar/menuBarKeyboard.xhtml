@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[menuBarKeyboard.title]}"/>
+    <ui:param name="description" value="#{msgs[menuBarKeyboard.description]}"/>
+    <ui:param name="resourceValue" value="#{menuBarKeyboard.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <icecore:singleSubmit/>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="keyIn" value="Keyboard Navigation?"/>
+                <h:selectBooleanCheckbox id="keyIn" value="#{menuBarKeyboard.enable}"/>
+            </h:panelGrid>
+        </h:form>
+        
+        <h:form>
+            <ice:menuBar id="menuBar"
+                         keyboardNavigationEnabled="#{menuBarKeyboard.enable}">
+            <!-- File menu -->
+            <ice:menuItem value="File"
+                          id="file">
+                <ice:menuItem id="open"
+                              value="Open"
+                              icon="resources/css/images/menu/open.gif"/>
+                <ice:menuItem id="close"
+                              value="Close"/>
+                <ice:menuItem id="recent"
+                              value="Recent"
+                              icon="resources/css/images/menu/recent.gif">
+                    <ice:menuItem id="file1"
+                                  value="File 1"/>
+                    <ice:menuItem id="file2"
+                                  value="File 2">
+                        <ice:menuItem id="para1"
+                                      value="Para 1"/>
+                        <ice:menuItem id="para2"
+                                      value="Para 2"/>
+                        <ice:menuItem id="para3"
+                                      value="Para 3"/>
+                    </ice:menuItem>
+                    <ice:menuItem value="File 3"
+                                  id="file3"/>
+                    <ice:menuItem value="File 4"
+                                  id="file4"/>
+                </ice:menuItem>
+                <ice:menuItemSeparator/>
+                <ice:menuItem id="save"
+                              icon="resources/css/images/menu/save.gif"
+                              value="Save"/>
+                <ice:menuItem id="print"
+                              icon="resources/css/images/menu/print.gif"
+                              value="Print"/>
+            </ice:menuItem>
+            
+            <!-- Edit menu -->
+            <ice:menuItem value="Edit"
+                          id="edit">
+                <ice:menuItem id="cut"
+                              value="Cut"/>
+                <ice:menuItem id="copy"
+                              value="Copy"/>
+                <ice:menuItem id="paste"
+                              value="Paste"/>
+            </ice:menuItem>
+            
+            <!-- View menu -->
+            <ice:menuItem value="View"
+                          id="view">
+                <ice:menuItem id="zoom_in"
+                              value="Zoom In"
+                              icon="resources/css/images/menu/zoomin.gif"/>
+                <ice:menuItem id="zoom_out"
+                              value="Zoom Out"
+                              icon="resources/css/images/menu/zoomout.gif"/>
+                <ice:menuItem id="fit_in_window"
+                              value="Fit In Window"
+                              icon="resources/css/images/menu/fitinwindow.gif"/>
+                <ice:menuItem id="actual_size"
+                              value="Actual Size"
+                              icon="resources/css/images/menu/actualsize.gif"/>
+            </ice:menuItem>
+            
+            <!-- Help Menu -->
+            <ice:menuItem value="Help"
+                          id="help" onclick="return false;">
+                <ice:menuItem id="docs"
+                              value="Documentation"
+                              icon="resources/css/images/menu/help.gif"
+                              link="http://www.icefaces.org/main/resources/documentation.iface"
+                              target="_blank"/>
+            </ice:menuItem>
+            
+            </ice:menuBar>
+        </h:form>
+    </ui:define>
+</ui:composition>

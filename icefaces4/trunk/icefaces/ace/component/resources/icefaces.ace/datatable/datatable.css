@@ -1,0 +1,317 @@
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+.ui-datatable { line-height: 1; display:inline-block; width:100%; }
+.ui-datatable table {
+    border-collapse:collapse;
+    width:100%;
+}
+
+.ui-datatable .ui-datatable-header,.ui-datatable .ui-datatable-footer {
+    text-align:center;
+    padding:4px 10px;
+}
+
+.ui-datatable .ui-header-text {
+    font-weight:bold;
+    line-height: 1.4;
+}
+.ui-datatable th,.ui-datatable tfoot td {
+    vertical-align: middle;
+    text-align:center;
+    margin:0;
+    padding:0;
+}
+.ui-datatable th .ui-header-column > span {
+    vertical-align: middle;
+}
+
+.ui-datatable .ui-header-column, .ui-datatable .ui-footer-column { padding:4px 10px; }
+.ui-datatable div.ui-header-column, .ui-datatable div.ui-footer-column { border:none; }
+
+.ui-datatable tbody.ui-datatable-data > tr:focus {
+    outline: none;
+}
+
+.ui-datatable tbody.ui-datatable-data > tr > td,.ui-datatable tbody.ui-datatable-data-empty > tr > td {
+    border-color:inherit;
+    border-style:solid;
+    border-width:1px;
+    padding:4px 10px;
+    text-align: center;
+}
+
+.ui-datatable tbody.ui-datatable-data > tr.ui-state-active > td,
+.ui-datatable tbody.ui-datatable-data > tr.ui-state-highlight > td,
+.ui-datatable tbody.ui-datatable-data > tr.ui-state-active,
+.ui-datatable tbody.ui-datatable-data > tr.ui-state-highlight {
+    border-style:double;
+}
+
+.ui-datatable .ui-paginator {
+    text-align:center;
+    margin:0;
+    padding:2px;
+}
+
+.ui-datatable .ui-header-right {
+    display:inline-block;
+    white-space: nowrap;
+}
+
+.ui-datatable .ui-header-left {
+    display:inline-block;
+    white-space: nowrap;
+    position: relative;
+}
+
+.ui-sortable-control {
+    vertical-align: middle;
+    cursor:pointer;
+}
+
+.ui-tableconf-button a {
+    display:inline-block;
+    padding:2px 4px 4px 2px;
+    margin:0px 5px 0px 5px;
+    text-align:left;
+    vertical-align:middle;
+}
+
+.ui-datatable.ui-row-select:not(.ui-disabled) > div > table > tbody.ui-datatable-data > tr:not(.ui-unselectable) {
+    cursor:pointer;
+}
+
+.ui-datatable.ui-cell-select:not(.ui-disabled) > div > table > tbody.ui-datatable-data > tr:not(.ui-unselectable) > td {
+    cursor:pointer;
+}
+
+.ui-sortable-column-order {
+    font-family: Verdana, Arial, sans-serif;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+.ui-datatable .ui-sortable-column .ui-sortable-column-icon {
+    vertical-align: middle;
+    display: inline-block;
+    width:16px;
+    height:1.7em;
+    margin-left: 5px;
+    position:relative;
+}
+.ui-tableconf-button {
+    vertical-align: middle;
+}
+.ui-tableconf-body .ui-sortable-column-icon {
+    display: inline-block;
+    position: relative;
+    height: 27px;
+    width: 16px;
+    vertical-align: middle;
+
+}
+.ui-tableconf-body .ui-sortable-column-icon .ui-icon-triangle-1-n {
+    position:absolute;
+    top:0px;
+}
+.ui-tableconf-body .ui-sortable-column-icon .ui-icon-triangle-1-s {
+    position:absolute;
+    bottom:0px;
+}
+.ui-sortable-column-icon .ui-icon-triangle-1-n {
+    position:absolute;
+    top:-2px;
+    left:1px;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    /* IE 5-7 */
+    filter: alpha(opacity=20);
+    /* Netscape */
+    -moz-opacity: 0.33;
+    /* Safari 1.x */
+    -khtml-opacity: 0.33;
+    /* Good browsers */
+    opacity: 0.33;
+}
+.ui-sortable-column-icon .ui-icon-triangle-1-n.ui-toggled {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+}
+
+.ui-sortable-column-icon .ui-icon-triangle-1-s {
+    position:absolute;
+    bottom:-1px;
+    *left:0px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+    -moz-opacity: 0.33;
+    -khtml-opacity: 0.33;
+    opacity: 0.33;
+}
+.ui-sortable-column-icon .ui-icon-triangle-1-s.ui-toggled {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+}
+
+.ui-disabled {
+    cursor: default !important;
+}
+.ui-opacity-40 {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+    filter: alpha(opacity=40);
+    -moz-opacity: .4;
+    -khtml-opacity: .4;
+    opacity: .4;
+}
+
+.ui-datatable .ui-column-filter {
+    width:100%;
+    display:block;
+    margin:auto;
+    margin-top:.2em;
+}
+
+.ui-datatable .ui-cell-editor.ui-state-highlight { padding: 6px; }
+
+.ui-datatable .ui-selection-column {
+    width:20px;
+}
+
+.ui-datatable-scrollable-body {
+    overflow:auto;
+    *position: relative; /* IE7 nested table positioning fix */
+    min-height: 0%; /* IE9 hover + scrolling error. description : http://blog.brianrichards.net/post/6721471926/ie9-hover-bug-workaround */
+}
+
+.ui-datatable-scrollable-footer {
+    margin-top:-1px; /* Easy fix for double border in scrollable mode */
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-body > table {
+    table-layout: fixed;
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-body > table > tbody {
+    border-top:none;
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-body > table > tbody > tr:first-child > td {
+    border-top:none;
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-body > table > tbody > tr:first-child {
+    border-top:none;
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-header, .ui-datatable-scrollable .ui-datatable-scrollable-footer {
+    overflow:hidden;
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-header table,.ui-datatable-scrollable .ui-datatable-scrollable-footer table {
+    width:auto;
+}
+
+.ui-datatable .ui-column-resizer {
+    width:2px;
+    height:20px;
+    cursor:col-resize;
+    position:absolute;
+    top:0;
+    right:0;
+    background:transparent;
+    margin:0;
+    padding:0;
+}
+
+.ui-datatable .ui-sortable-column.clickable { cursor: pointer; }
+.ui-datatable .ui-sortable-column.clickable span { cursor: pointer; }
+.ui-datatable .ui-sortable-column.clickable a { cursor: pointer; }
+
+.ui-datatable .ui-datatable-header,.ui-datatable .ui-paginator-top,.ui-datatable .ui-expanded-row {
+    border-bottom:0 none #AAA;
+}
+
+.ui-datatable .ui-datatable-footer,.ui-datatable .ui-paginator-bottom,.ui-datatable .ui-expanded-row-content {
+    border-top:0 none #AAA;
+}
+
+.ui-datatable .ui-reorderable-col {
+    cursor:move;
+}
+.ui-datatable .ui-reorderable-col span {
+    cursor:default;
+}
+.ui-datatable thead {
+    vertical-align: bottom;
+}
+
+.ui-datatable .ui-row-toggler,
+.ui-datatable .ui-row-panel-toggler,
+.ui-datatable .ui-row-editor .ui-icon,
+.ui-datatable tr.ui-state-highlight,
+.ui-datatable tr.ui-state-active {
+    cursor:pointer;
+}
+.ui-datatable .ui-row-toggler-parent {
+    white-space: nowrap;
+    text-align: left;
+}
+.ui-datatable .ui-row-toggler-span {
+    display: inline-block;
+    height:7px;
+    border-top:1px dotted #a9a9a9;
+}
+.ui-datatable .ui-row-toggler-parent > a.ui-icon {
+    display:inline-block;
+    *display:block; /* IE7 hack */
+}
+.ui-datatable .ui-icon-pencil, .ui-datatable .ui-icon-check, .ui-datatable .ui-icon-close {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+*+html .ui-pin-control {
+    /* IE7 inline block hack */
+    padding: 2px 4px;
+    margin: 0px 2px;
+    display:inline;
+    width:16px; /* required for inline-block on IE7 */
+}
+
+.ui-pin-control > a {
+    padding: 2px 4px;
+    margin: 0px 2px;
+    display: inline-block;
+    width:16px; /* required for inline-block on IE7 */
+}
+
+.ui-datatable th .ui-pin-control > a > span.ui-icon {
+    background-position: -240px -48px;
+}
+
+.ui-datatable th.pinned .ui-pin-control > a > span.ui-icon {
+    background-position: -208px -48px;
+}
+.ui-datatable .ui-datatable-scrollable-header {
+    zoom:1;
+}

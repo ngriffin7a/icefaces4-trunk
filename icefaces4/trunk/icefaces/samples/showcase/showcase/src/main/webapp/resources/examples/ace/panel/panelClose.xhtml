@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[panelClose.title]}"/>
+    <ui:param name="description" value="#{msgs[panelClose.description]}"/>
+    <ui:param name="resourceValue" value="#{panelClose.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{panelResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{panelResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            <icecore:singleSubmit/>
+            
+            <h:panelGrid columns="3">
+                <h:outputLabel for="closeIn" value="Closable?"/>
+                <h:selectBooleanCheckbox id="closeIn" value="#{panelClose.closable}"/>
+                <ace:message for="closeIn"/>
+                
+                <h:outputLabel for="closeSpeed" value="Close Speed (milliseconds):"/>
+                <h:inputText id="closeSpeed" value="#{panelClose.speed}"
+                             required="true" size="4" maxlength="4"
+                             disabled="#{!panelClose.closable}">
+                     <f:validateLongRange minimum="100" maximum="5000"/>
+                </h:inputText>
+                <ace:message id="closeSpeedMsg" for="closeSpeed"/>
+            </h:panelGrid>
+        </h:form>
+        
+        <h:form id="form2">
+            <ace:panel id="panel"
+					   header="ICEfaces Closeable Header"
+                       closable="#{panelClose.closable}"
+                       closeSpeed="#{panelClose.speed}">
+                <p>ICEfaces 2 is an open-source Rich Internet Application (RIA) development framework based on the JavaServer Faces (JSF) 2 standard. Like its predecessor, ICEfaces 1.8, ICEfaces 2 extends JSF to simplify development and enhance the standard JSF feature set - simultaneously improving developer efficiency and expanding the spectrum of RIA capabilities that can be included in any JSF-based web application.</p>
+                <p>Adhering closely to the standard JSF 2 extension points allows ICEfaces to work transparently with the stock JSF framework, simplifying integration and fostering 3rd party compatibility with other JSF 2-compliant libraries.</p>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

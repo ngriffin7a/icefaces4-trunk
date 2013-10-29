@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>Tree Component Tutorial</title>
+        <link href="./xmlhttp/css/royale/royale.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <ice:form id="frm">
+
+            <ice:panelGrid columns="2" cellspacing="5">
+
+                <!-- first column, for tree navigation -->
+                <ice:panelGroup id="grp" style="border: 1px solid gray; height: 300px;">
+                    <!--
+                        This is a very links tree comprising of only text nodes.  The
+                        expand and contract images are rendered because the "imageDir"
+                        attribute on the tree component has been set to a known path.
+                    -->
+                    <ice:tree id="tree" value="#{tree.model}" var="item" hideRootNode="false" hideNavigation="false"
+                              imageDir="./xmlhttp/css/xp/css-images/">
+                        <ice:treeNode id="node">
+                            <f:facet name="content">
+                                <ice:panelGroup id="grp2" style="display: inline">
+                                    <ice:commandLink id="link" actionListener="#{item.userObject.selectPanelStackPanel}"
+                                                     value="#{item.userObject.text}"/>
+                                </ice:panelGroup>
+                            </f:facet>
+                        </ice:treeNode>
+                    </ice:tree>
+                </ice:panelGroup>
+
+                <!-- Second column, for panel stack -->
+                <ice:panelGroup style="border: 1px solid gray; width:350px ">
+                    <ice:panelStack id="pStack" selectedPanel="#{panelStack.selectedPanel}" styleClass="">
+
+                        <!-- splash panel -->
+                        <ice:panelGroup id="splash">
+                            <h3>Splash Page</h3>
+
+                            <p>Click on the tree nodes to change the slected panel in
+                                the panel stack component. </p>
+                        </ice:panelGroup>
+
+                        <!-- ICEfaces panel  -->
+                        <ice:panelGroup id="icefaces">
+                            <h3>ICEfaces</h3>
+
+                            <p>The industry's first standards-compliant AJAX based
+                                solution for rapidly creating all Java rich web
+                                applications that are easily maintained, extended,
+                                and scaled, at very low cost.</p>
+                        </ice:panelGroup>
+
+                        <!-- ICEbrowser panel  -->
+                        <ice:panelGroup id="icebrowser">
+                            <h3>ICEbrowser</h3>
+
+                            <p>The most widely distributed Java browser in the world
+                                for rendering web content into Java enterprise
+                                applications.</p>
+                        </ice:panelGroup>
+
+                        <!-- ICEpdf panel  -->
+                        <ice:panelGroup id="icepdf">
+                            <h3>ICEpdf</h3>
+
+                            <p>The leading Java PDF document rendering and viewing
+                                solution designed to be easily integrated into Java
+                                enterprise applications.</p>
+                        </ice:panelGroup>
+
+                    </ice:panelStack>
+                </ice:panelGroup>
+
+            </ice:panelGrid>
+
+        </ice:form>
+    </h:body>
+</f:view>
+</html>

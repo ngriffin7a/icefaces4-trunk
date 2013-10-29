@@ -1,0 +1,67 @@
+
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+.ice-skin-sam .ice-file-entry {
+    margin: 2px;
+    padding: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+}
+
+.ice-skin-sam .ice-file-entry-disabled {
+    margin: 2px;
+    padding: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #CCCCCC;
+    cursor: default;
+	/* temporary image just to make it work with smartsprites */
+	background-image: url(bullet.gif); /** sprite-ref: sprite; */
+}
+
+.ice-skin-sam .ice-file-entry .inactive,
+.ice-skin-sam .ice-file-entry .complete {
+    display: none;
+}
+
+.ice-skin-sam .ice-file-entry .uploading,
+.ice-skin-sam .ice-file-entry .progress {
+    display: block;
+    background-color: #D0D4EE;
+    border: 1px solid #0056EA;
+    height: 15px;
+    width: 200px;
+}
+
+.ice-skin-sam .ice-file-entry .uploading .progress-bar,
+.ice-skin-sam .ice-file-entry .progress .progress-bar {
+    position: relative;
+    display: block;
+    height: 15px;
+}
+
+.ice-skin-sam .ice-file-entry .uploading .progress-bar {
+    background-color: #EFEFEF;
+    background-image: url( fileEntryIndet.gif );
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.ice-skin-sam .ice-file-entry .progress .progress-bar {
+    background-color: #026AFF;
+    background-position: top left;
+    background-repeat: repeat-x;
+}

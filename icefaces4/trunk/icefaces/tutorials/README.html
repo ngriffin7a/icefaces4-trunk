@@ -1,0 +1,443 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <title>ICESoft Tutorial Compilation &amp; Deployment</title>
+        <meta name="description" content="Instructions regarding the assembly and use of sample ICEFaces applications.">
+        <meta name="author" content="ICESoft Technologies 2011 - Nils Lundquist">
+        <link rel="shortcut icon" href="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAwAAAAAAAAAAAAAAAEAAAAAAAAAD///8A9+/vAPfn1gDv1sYA586tAN61lADWrYQA1qVzAM6UYwDGjFIAxoRKAL17MQC1YxgArVoIAAAAAAAAAAAA7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7uWJqhMu7uJBbXNdfc7u59fdzM2M0+5L193HvcjdVN3X3cp9191V3dfFbHSI3Gap193Krd22VZzXx3mM3dw+MzKMvJmENO7u7lp1W5Lu7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7//wAA//8AAP//AAD8AwAAwAMAAMABAACAAAAAAAAAAAAAAAAAAAAAAAAAAIABAAD4BwAA//8AAP//AAD//wAA" />
+
+        <!-- Google Web Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans+Caption' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+
+        <!-- Pre-defined mobile browser width -->
+        <meta name="viewport" content="width=960px, initial-scale=1.0">
+        <!-- ### HTML 5 Shiv ### IE HTML5 Tag Fix ########################## -->
+        <!--[if lt IE 9 ]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style type="text/css">
+            html { background:url(data:image/gif;base64,R0lGODlhAQC8ANUAALze8LTa7tHo9K3W7Lbb7u73++r1+tXq9brd777f8LLZ7fn8/vH4/Oby+ePx+djs9s7n9Mrl88bj8sTi8sLh8fX6/fP5/Oz2++Ty+eHw+N3u99fr9tPp9czm8/3+//v9/q/X7bjc78jk8rPa7vb6/cDg8fr9/rHY7ff7/fz+/v7+/67X7Mnk867X7cHh8fz9/s/o9N/v+LPZ7t7v9/3+/ujz+tzt99vt9/r8/vT5/On0+s3m9MPi8bDY7f7//////yH5BAAAAAAALAAAAAABALwAAAZ8wN5gsCquWqBkb3k6KZ4y2WgUqBKu15A2hOh2AeCEWFwquyho3mQtaYtELFZk3qnvIHiYYC/gcA6ABxsbD4U3NhoaMzEZGQ4OGA0NNTU6OgYGFxcFnAyeFhY5FRUkJCinC6k4JiYfri8pKTQetCoqPrg+P7u8vb6/wME/QQA7) repeat-x;}
+            body {
+                font-family: 'PT Sans Caption', arial, serif;
+                overflow-x:hidden;
+                max-width:960px;
+                min-width:530px;
+                margin:0 auto;
+                position:relative;
+            }
+            header {
+                display:inline-block;
+                padding-left:1em;
+                line-height:110px;
+                position:relative;
+                top:-.5em;
+            }
+            h1 {
+                font-size:28pt;
+                font-weight:700;
+                white-space:nowrap;
+                overflow:hidden;
+            }
+            h2 {
+                font-size:16pt;
+                height:26px;
+                margin:10px 0px;
+                cursor:pointer;
+            }
+            h3 { font-size:20pt; font-weight:400; white-space:nowrap;}
+            h4 { font-size:16pt; font-weight:400; margin: 0; }
+            header > h3 {
+                position:absolute;
+                top:1.35em;
+                left:2em;
+            }
+            footer {
+                border: 1px solid grey;
+                margin: 0.5em;
+                margin-top:1em;
+                padding: .5em 1em;
+                text-align: right;
+                display:block;
+            }
+            @-moz-document url-prefix() { /* FF fix*/
+                nav div {line-height:28px !important; }
+                nav a {position:relative; top:3px;}
+            }
+
+            pre {
+                font-family: 'Inconsolata', monospace, serif;
+                display:inline-block;
+                text-decoration:underline;
+                margin:0 .5em;
+            }
+
+            nav {
+                line-height:35px;
+                display:inline;
+                overflow:hidden;
+                white-space:nowrap;
+            }
+            nav > *:last-child {
+                margin-right:.5em;
+            }
+            nav > div.inactive { visibility:hidden; }
+            *+html nav > div { display:inline; } /* IE Fix */
+            nav > div {
+                display: inline-block;
+                width:165px;
+                margin-left:.5em;
+            }
+            html nav > div > a {
+                display:inline-block;
+                width:165px;
+                font-size:10pt;
+                color:white;
+                font-weight:400;
+                padding-left:1em;
+                overflow:hidden;
+            }
+            nav > nav.right { position:absolute; right:0 }
+            nav > div.button { position:relative; }
+            nav > div.faces { background:url(data:image/gif;base64,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);}
+            nav > div.snow { background:url(data:image/gif;base64,R0lGODlhpQAlAPcAABhJbjN7qiZ3qCtbfhpYgih2pip/sZnC1xtReHWlwUuCoxhahiZehSxxnRpgjRdciSVxoShwny5qksrV3jN2ohlOdXyrxbDK2ihyoGGDnSdqlip4pxxSeWanzBlKcCh8rhhfjStznx1chRpMcxhYhBlWgB5YgBpeij59pSh1o4+2zylumyZunClvnM7i7Tt3nhxhjRlciRxagit9rR1WfhpWgC11oRhXghpciDN5pyp6qhxUex1VfCh5qyp0oStumhtlkh1dhxldih5Wfil6rBxRdyltmh5fiSuAsSx+rh5giit/rx5hjB1ijix8qx1kkSx9rCx7qR1jjy15px1mky16pxxnlBxoli14pS52oi13oy51oODy+f///9rv9+X0+tXt9hlUfen2+/L6/Mzp9CZtnCR0p9Dr9e74+8Pl8/r9/iRzpfH2+d/r8r/k8rHZ6vb7/RlVftnr9P3+/8fn8yVypKDC1q7T5SZsmsTe69zp8Sp+rxxkkSVzpS9liRtXf0CDrSZrmBxbhGeZt7ze7M/n8Spslzdvkx5gi57I3ISwzT+FsKfQ48Xa5laNsYCrxluWvLzV4xhei7HV5Sx4pVqOrh5eiLHS4myeulSLridzoyl+ryVvnsjc6D+Bqj16oSNlj8ff7Blbhpa+07jc7Mjf7Ct6qabI293t9SZ4qhxijyx7qil8rZXB1h1fipzG3kWAoyt2oytwmy50nyx9rTCFtT6JtS2FtymBsxtmlCZgiSt+rhxPdR1lkix4pix5py14ph1YgRtZgkCRvh5ZgcHa6B1eiIqluRxnlV2BmpuwwGebvF+SsIixy4q1zClxnhpjkChxn1N/nSpwnIy92LnS4rjV5+Tt9BtahB1jkDOAri14pCx3pC12op7A1hpchxpUfBpVfyprlViexSx6qBpXgr3b6CpsmTJ0nih4qCl7qyl9ryp5qGaixilsmD2PvR5ehxpLcB5agh5XfxlJbRxTehtPdSuBsiqEtx9chB9dhiqEtiuDsyuCsyqEtSqDtCH5BAAAAAAALAAAAAClACUAAAj/ALt0CdXhHb6DCBMqXMiwocOHECNKnEixosWDwzq4ENiF2r6PIEOKHEmypMmTKFOqXMmypUuSt151seavps2bOHPq3Mmzp8+fQIMKHUqU579S4/4pXcq0qdOnUKNKnUq1qtWrWLNCxWWgXS1+YMOKHUu2rNmzaNOqXcu2rdu3ZfsZWGern927ePPq3cu3r9+/gAMLHky48N57c4lou8e4sePHkCNLnky5suXLmDNrNvBhkwEDjzd9AE05cTptSFKrXs26tevXsGPLnk27tm3be8zo1p3KQCozAnbvgb1kD6seAgIsWc68ufPn0KNLn069uvXr2LELWKMI0qJFa7av/1kDSVF46btmqEtXIECS9/Djy59Pv779+/jz69/Pn3+fOmxc0wkbdfzHxoAE9mEfLU7osEF7UEQo4YQUVmjhhRhmqOGGHHboYYcFQABINXPM4Q0EKKpQ4gWAQFDAhU6swk4BKeTgxI045qjjjjz26OOPQAYp5JBEDqkJBI2ooWQbbUDApJJqNAKBJj2uYsqDmuQQxZZcdunll2CGKeaYZJZp5plonpkCJ54s4wIccOihgh5w6pGAJ5ykECY5v2yQAgYUVCHooIQWauihiCaq6KKMNuroo4z+ggEn0bDwyBiYZprpIyxUGg0lhk7hCzc+PEPBFKimquqqrLbq6quwxv8q66y01iprNGXkWgYFkaDh669oREKBrmVEwCowlMQSwjQrYOHss9BGK+201FZr7bXYZqvtttdGgAceqDRjhx1ilGuuuXZcYIEYKODRQrTbkPpMC0ZoYe+9+Oar77789uvvvwAHLPDA/oYQCDqOyCFHMV807PDDX7igsCMoBPIMvt3YsKwR7mTh8ccghyzyyCSXbPLJKKes8somt6CBClzELPPMNM98igYrgLzFLA3Ico4hWwQt9NBEF2300UgnrfTSTDftdNINaPBJJnl4UbUXWGetdR6FFJLJJxrIMvQsPP9giDhXpK322my37fbbcMct99x012233CA88AIYCZz/cgkYgAce+CXmJADGCw+AwDYyuQDhAAhCWCH55JRXbvnlmGeu+eacd+7555xLojcoDzzgzBmop37GKKWDAssDklhOBRDQOCDEA1TkrvvuvPfu++/ABy/88MQXb/zwfAghyvKDkOH8888PsrwoQvDRey98qOJADAs84f334Icv/vjkl2/++einr/766p+wgASVTEIHHYQcQMj8k1QiwQInkJ+N9kJYAAmkQMACGvCACEygAhfIwAY68IEQjCAERUGCA6Thgne4AwlIcYcLpuEAJBCFApsAgxN8YwE3aIIKV8jCFrrwhTCMoQxnSMMa2vCGNsTBDSSQCDe4ARM3CCIm/3zYCgXcAAcwhEEJKagLJjjxiVCMohSnSMUqWvGKWMyiFre4xRuU4A1vSAQjSlCOEjAiEWAswQ0QQUVEuCII2CgHA5RAxzra8Y54zKMe98jHPvrxj4AMZCAJEAcLKMAPh4iDMOJwCD8ogBlxIMAej2AMEQijBgw4giY3yclOevKToAylKEdJylKa8pSnFEQYVrnKGliiBqxcZRBCaYkgCIIA4WAAPHbJy1768pfADKYwh0nMYhrzmMhMpgz+IAMRiICXzhSEMJ4pTH2IYJngYIA+tsnNbnrzm+AMpzjHSc5ymvOc6EynOr+ZD3kEgwbgGEA+5knPetrznvjMpz73yfXPfvrznwANqEDvKQ9iwBMB8qSnPBbK0IY69KEQjahEJ0rRilr0ohjNqEYLagIa7AABFRgAAzg6j5Ka9KQoTalKV8rSlrr0pTCNqUxnStN50IAH9QDpCPwgjSHwYAc7qIdQh0rUohr1qEhNqlKXytSmOvWpUIUqBziAAHtUYAQeyMAFdsCBIhTBHmANq1jHStaymvWsaE2rWtfK1ra69a32GMEI4uEBAEygC8fghVzjwde++vWvgA2sYAdL2MIa9rCITaxiFeuButIDAPFQhkDmMIFkDIAemM2sZjfL2c569rOgDa1oR0va0pr2tJgdQAbu2oWAAAA7)}
+            nav > div.toggle > a { text-decoration:none; }
+            nav > div.faces.button:hover, nav > div.faces.toggle:active, nav > div.snow.activated {
+                background:url(data:image/gif;base64,R0lGODlhpQAlAPcAAMXc6Rpzp4u1zRh1qtrk6yppkmuhwkVzkhdqnkiJsdfo8C1ynC9wmipljXWbtC5umC1qkd3t9J7F2ViXvhtrm2ibu+rx9qrB0RVupBpwojBtlRdej7zc6xtvoBVqoev3+7PQ4YOjuTdxmFqNrczm8C1mjRZmmVCRuKzK2ytiiO31+ebt8+f0+u/5+y1ojy5znEWFrcPl83WrylWKqy1kiZ25y6K8zDBojRxpmBlklLHK1y15q+Lz+Tp4ohZsoa7T5JO2y26ZtWOZuiJsnBdzqIWtxYS51EuBpF6HpDJ6pk2Ptsni7bnR3iNxoz92m77j8jh2oOPw9xZhkjZpj9bl7GOVtNbq8hZklszb5GOewN3s8jBlimeRrhlhkJa5zaPO4ytghSt0ohhrnhlnmIapv73X5a7X6W6lxRZwpmuPqT5xk5290LnL1zZniRhypsPX4ixghF6XvLXK2NPi6s3j7WuUsBZilGOOqszo83qgudPf5xhuoi5ihsrX4Bptnn+uySprlDptkSttmZfH3pDC2ixvmRdvpBtomX+nvyxwmy1slBdroC5ghCxhhi9tljZoixZomxJnoTBrkBpxpBpypTBskhtunzBskxttnS9vmBxqmi50ntrv98fn89Xt9szp9PP6/P///9Dr9RZnnDBnjP3+/zBrkbvi8ff7/b/k8jdskPr9/i9sk0h2luf1+hJnn42twhluoPH3+hlwoxpsnW+cuNDb483f653B1m6pyTBjh8Hj8hRro+/09xxolx56rpSxxRxpmp+3yD1+p/L4+lWAnafD1JvJ4J3K3y1sli5slRppmRlpmxlqnHmxz5e+1kSAp7/R3U+Kr0N1l0B5nk2Gq0l4l0t4mFeEpE6WwFyKqCtslqLR5cLi78Tj8Ov1+Nrs82ifwDVrkdTh6JPE3JfC2ZGsvyNvnytnj4a10jxsj4m71Yq+2G2TrS1ihxRpnzFqjxl0qDFpjhJooRdxpxRtpRNqohh0qTFkhzFnjDFojTFliDFmizFmijFliRl1qiH5BAAAAAAALAAAAAClACUAAAj/AEOF6pPmAL6DCBMqXMiwocOHECNKnEixosWDB9LYEhjK3L6PIEOKHEmypMmTKFOqXMmypUuSbYSFYuOvps2bOHPq3Mmzp8+fQIMKHUqUJ74+SPopXcq0qdOnUKNKnUq1qtWrWLNC3acrzRR+YMOKHUu2rNmzaNOqXcu2rdu3ZbfoYnQgn927ePPq3cu3r9+/gAMLHky48F5+W/gwaqOvsePHkCNLnky5suXLmDNr3sxZMmI+cNrIG026tOnTqFOrXs26tevXsGPLI3WD1BZSuGff0Mdan23QbeAJH068uPHjyJMrX868ufPnz0m5g0O9unU4NEgll3djC41GjySJ/x9Pvrz58+jTq1/Pvr379+5pgAHT6oC1EOquFWvUSs2j+TSgB488JXz3SCUIJqjgggw26OCDEEYo4YQUVuigKRhi6EIjWwjTyzh3hOKAHGyk0csKBFwQSCOSQCCPKQqaIokLJaQwxSU45qjjjjz26OOPQAYp5JBEFsljjSkkqWQKNpTipA3RXKCHMHo46WQ7S6ZQQo6VmEIjDVNoIOaYZJZp5plopqnmmmy26eabZUKQAg2qqKHGNGqokkIdNYyzyiorWNALFnpECUwIeU6DDRfypMCKmJewAoELDUzxwKWYZqrpppx26umnoIYq6qikakrpBRbIIosKKmCBjRyw3P9xhxyooEKGNnXkAYsNcoyzAjG1OtAABJc6oowilIqTybLMNuvss9BGK+201FZr7bXYOotOA1QgEsQcoIBCRR3hgvIGrt/koUO57IarAhMNoLPsA44oAsG2DOSr77789uvvvwAHLPDABBdsML/ooKPAG04cIUcLVHDxQQsUtxCEMUDUUPHGUZDhgBYJ55vJA8nc28ALKKes8sost+zyyzDHLPPMNNe8cgEKf8CEFh98oMAMUfTs8weurFFEzxEEzcIHXoiwhisJo5zvA4rgbPPVWGet9dY0A1IAHa6EHbYCR0QADiLUzOCFKyjUssYRIyACTi0RsAAACBEUUADKCyz/UMg2em8i+OCEF2744YgnrvjijDfu+OOFe10GD5RTTscRVvAAQBEVoMBDGVXQUUQVQCwxQgSVW1EAIIK/sEAigniNw+y012777bjnrvvuvPfu++/A297FBrhwYrzxAEBBwvHHL1EN8yDMwDwJG2wwuy++5DD8Bpp07/334Icv/vjkl2/++einrz74OWzwhyfww8+B8vF7IgE0PQhCQvwCVFD/EtXrHg58MQbtbYACCEygAhfIwAY68IEQjKAEJ0jBCi5wDBvYhDSGIQFRiIIDm+CABz34DGnE4Q94GKEQBDBCUXyiegjUxDIKKIUNYOKGOMyhDnfIwx768IdADKIQ/4dIxB1eQQpINMAnPtGNTfxgiVCM4hLxAIMnfsIb5QiHFK5wQ1pQgBk5sIMULEHGMprxjGhMoxrXyMY2uvGNcIxjGmnRDDskoBN4HEY58MjHPuLxBzCIAR7DYYdC0oKMmKDjGK5ghw448pGQjKQkJ0nJSlrykpjMpCY3SUk/XCEMMdiFGRIAgyxwIAZfMIASwhGHM+wiBjLIQgxmCYMrMIMWj7SEH5pRwCFk4JfADKYwh0nMYhrzmMhMpjKXyUxjXmEMCUhCMJ65jlQ8QQZJSMIYwpCLJzwhAchIhTiTcIVYBLMDsRADJEwwhEm4853wjKc850nPetrznvjMpz73Wf9PBJjgnybw5wnMcIqCfuEYBT3FIMJACHIQwghDMEEG4JmBWSzCn+eghEY3ytGOevSjIA2pSEdK0pKa9KQincQeZkGJSYzCBE1QQhZy4QwjsGMQ3JgAQAGKgI5OYhZ7QAAkzhGAohr1qEhNqlKXytSmOvWpUI2qVKVKiUWM4qpYzeooEMDVRewhqS3dwyIg0YR4mPWsaE2rWtfK1ra69a1wjatc50rXeAQAqHvwgQ8WcVEfuOGtAXCDIXzwjib847CITaxiF8vYxjr2sZCNrGQnS9nKWlax8biHYAlr2Mt69rOgDa1oR+vYAdyDCPQwBC8K+4vDmvYesI2tbGdL29qu2va2uM2tbnfL29761rdEIIIb0IABD7xjB9kwbXDpwdzmOve50I2udKdL3epa97rYza52t4sGQ9Rjta+IAwiIgAbi1uO86E2vetfL3va6973wja9850vf+tqXF7ywxzxe8QoAhCIdaPhufu1B4AIb+MAITrCCF8zgBjv4wRCOsIQlPI95RMIDz+AIACawgwp7+MMgDrGIR0ziEpv4xChOsYpXzOIKR2IHcbiFQAICADs=);
+            }
+            nav > div.snow.button:hover, nav > div.snow.toggle:active, nav > div.snow.activated {
+                background:url(data:image/gif;base64,R0lGODlhpQAlAPcAADBlijx5oZnE21aKrChmkBdejxdhkmuRqzZpjxdyqFiXvxZkljRtlSp0o0RxkiRtm5e+1l2ZvkqMs5Kvwy1jiMnX4KC4ySJxoxZwpxZilBdpnDZnibrM2F+Go8bb6RhuoilghhZlmS5ihhZsohhhkRJpohVpnxZmmhppmRdvpRhfjSpljihjjSxwmhh0qhhypy9qkStumRlrnS5pjxhsoBRspGuPqC1mjBRro4q2zylfhCpokitnkM3h7C5tlixsli1slC1rkyprlTBojSxpkS9njCxnjyxkjBVpoBtnlhhnmRhnly5hhRhzqCtslhptnipmjxdomxJnoS1hhjFqjxpypTFpjjBrkBtunzBskhpwohtvoBttnTBtlTBsky9uly9vmBtrmxxqmi9wmhxpmC50ni5znC9ym+Dy+f///9rv9+X0+tXt9un2+/L6/Mzp9Cldgu74+9Dr9Slegxl2qxZfkMPl8/r9/vL19/3+/9nr8xlxpfb7/cfn87Ha6+Dp77/k8qC/0i9liq3V5ylghShiiytih8Te6tzo7ihkjzBmiy5slWukxDR8qRJnn8/n8bzf7RpvoabS5kR0lUN0mCdokypqk3alwitjihlxphdroCxynidnkVmTt7HS4rHW5xlwo7zT34GlvcbW4IeluRVvpi1ghClhiWacvCNnlZzK4Bhpmh56riNvnxlvpDBjhy1umBdllxlqmy9skxxpmRNspHabtTFpj0WBqS9vmRpypi15q4+1y+Tr8C1ynEB3nYa10kZ0k6bG2KXJ3K3D0TZojJ/M4Bd0qc/e55GsvzVrkdDb4xNooC9xm7jd7b3b6Rpwoy5znRpsnRtsnC5wmrXT5C5umKzI2cHZ5itghSthhhdpnTBojhxomDBnjBprmxtqmkNykTBrkXuyzzBslBZmmJXE232kvhVupYmtxRl3rCpkjU6WwBlklN3t9BpllBpxpBpzpxJooTFojRdxpxRtpRNqohh0qTFkhxl0qDFnjDFliDFmizFmijFliRl1qiH5BAAAAAAALAAAAAClACUAAAj/ANOkqWAjHL6DCBMqXMiwocOHECNKnEixosWDwWwsE5gm2b6PIEOKHEmypMmTKFOqXMmypUuSGyyk4eCvps2bOHPq3Mmzp8+fQIMKHUqUJ74KHfopXcq0qdOnUKNKnUq1qtWrWLNC3ffKBgJ+YMOKHUu2rNmzaNOqXcu2rdu3ZQG8YuJAn927ePPq3cu3r9+/gAMLHky48F5+AESY2jCvsePHkCNLnky5suXLmDNr3qyIgiBFiiALohC6siJBijdYWc26tevXsGPLnk27tu3buHEXgcObd7Yh2ubo6F1E9jxvqBdTWc68ufPn0KNLn069uvXr2LEbmkOqgwMHc7bP/5nTgVR46be4dZ5S7Ir79/Djy59Pv779+/jz69+/n5AOPL1UgIcO/uEh4ICE1EfFDEVQwF4WEEYo4YQUVmjhhRhmqOGGHHbI4Q0gTMJBHnlYAMKJE5BIzCQg3GChODDMcAMFCHhh44045qjjjjz26OOPQAYp5JBCYgLCKHck+ccfICyZ5B2jgIAJj1mIIyMmCHSh5ZZcdunll2CGKeaYZJZp5plmGnEKJQcgwwcfiEyAyJuI2ELJKUaASc4sMBhxBAJfBCrooIQWauihiCaq6KKMNurooj5AwcIKhYjixqWYYipKIZSusEihPiwSBBErKAPGqaimquqqrLbq6quwxv8q66y0xsoDC7iywEAocfTqaxyhMJArC1Cs+oUPQBABxTpjNOvss9BGK+201FZr7bXYZquttTskkog76QQSSBvklltuINec08YviewAbS7W/BAEDyucYe+9+Oar77789uvvvwAHLPDA/sLCCQMD6KEHNms07PDDa/Sg8AC/EPADvs1QA8sPRPBgxscghyzyyCSXbPLJKKes8sosn+wEJ7ygIfPMNNdMszCcCBHyGb604IQlO5Qh9NBEF2300UgnrfTSTDft9NNKt1BJAAMcoobVamSt9daHPPLIAAFUEgPR0fQcgxCWkKH22my37fbbcMct99x012333XOTUEAAbFz/MownbAQuuOCePHMJGwEUQELb3STxDgkqqCDG5JRXbvnlmGeu+eacd+7556B3rncAqRRQQA5ypK66HBCYngouil9OS+PtQB7G7bjnrvvuvPfu++/ABy/88MQHj4IBdSSPyhvMN988KsnXYQAKu4ODwhLtIM/F9tx37/334Icv/vjkl2/++eifv4QBm3TySR99QCIAJPB/0skmBiwR/jTfoBBLBgbAggAHSMACGvCACEygAhfIwAY68IEO/J8A7EDBQQwiA84YBAXtIIAMxAKBXJCGLJSwgAxs4YQoTKEKV8jCFrrwhTCMoQxnSMMZriIDDTAGIADBiAX4kBE7NIcE/xawihZi4QkyUEIsHqCFJjrxiVCMohSnSMUqWvGKWMyiFrUYggX4wQ+qkMQCuigJVXxxjJGYYiQ+IIMolOMB8IijHOdIxzra8Y54zKMe98jHPvrRjxoIwTgk0IBGhGAbIWhEAyQQgRBoAI/QiAQNtnGCVlThkpjMpCY3yclOevKToAylKEdJSlJ+4ASoROUjNZBKVILCk/AAxQe2EYVWxOOWuMylLnfJy1768pfADKYwh0nMYn5AEx/IxB5wuYdMuOIDy/SlLvZwzG1cIB/YzKY2t8nNbnrzm+AMpzjHSc5ymvOc3IzHC1IwAhNc4B/wjKc850nPetrznvjMpz73yerPfvrzn/PMxz3W2c4L0OGgBwWoQhfK0IY69KH0vEcT6JECHLiTFeqgwz9ccI+OevSjIA2pSEdK0pKa9KQoTalKV7rSJjQhARgYgT1MsAt2/OMYL6WHTnfK05769KdADapQh0rUohr1qEhNKgZSUA8cIIEZEagGTEuBjnpY9apYzapWt8rVrnr1q2ANq1jHStay1gAH9mCGIxzhgTQAoxT1qAVa7UHXutr1rnjNq173yte++vWvgA2sYANbghLIQwpIgABHPKCAXRhWHpCNrGQnS9nKWvaymM2sZjfL2c561rNS2EUEeiCQgAAAOw==);
+            }
+
+            hr { margin:1em .5em; }
+
+            article {
+                border: 1px solid grey;
+                margin: .5em;
+            }
+            article aside.small { font-size:10pt; }
+            article aside {
+                font-size:12pt;
+                display:block;
+                border: 1px solid grey;
+                line-height:1.3;
+                padding: .5em;
+                margin: 1em;
+            }
+            article ol {
+                margin: 0.5em 0;
+            }
+            article ol li{
+                margin: 0.25em 0;
+            }
+            article ol aside{
+                margin: .5em 0;
+            }
+            *+html article h2 {
+                display:inline; /* IE Fix */
+            }
+            article h2 {
+                width:auto;
+                display:inline;
+                padding-left:2em;
+                line-height:2;
+                background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA/dpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ1dWlkOjY1RTYzOTA2ODZDRjExREJBNkUyRDg4N0NFQUNCNDA3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjZDNzJGMkI2MkVGRDExRTBCMEYzRUVGNDdCRTE1RUFDIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI2MEU2NTZDMkVGRDExRTBCMEYzRUVGNDdCRTE1RUFDIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzUgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDE4MDExNzQwNzIwNjgxMUI5RkRCQkJCQzI5QzBGOTciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RkQ3RjExNzQwNzIwNjgxMTgwODNEOUM2QTZGQThDOUQiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4gPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5nbHlwaGljb25zX3NtYWxsX2Rhcms8L3JkZjpsaT4gPC9yZGY6QWx0PiA8L2RjOnRpdGxlPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PtSbHfMAAACzSURBVHjavFbBDYAgDKQuxAiMgJsxgis4gpswSi2GB0HbSPRocsQEuLOltDhmdhrEomATZAF3yHUumhwKcVBINZS14ZWAWBog7pFMgeoyf8T2KPDxz1VP2pjzzwitQAYI5Mp9pSKDEBcZVoezFRWe9n6ok966oV16e42H6sfNZCONxIKIHnngAouxwQ+Qm2uhh1w8OIBpehSBHSiw40vFlGIHL9dTGs6Uljml6f/9bDkFGACIYnNPlIULxwAAAABJRU5ErkJggg==) left center no-repeat;
+            }
+
+            article h2.activated {
+                background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA/dpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ1dWlkOjY1RTYzOTA2ODZDRjExREJBNkUyRDg4N0NFQUNCNDA3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI2MEU2NTY5MkVGRDExRTBCMEYzRUVGNDdCRTE1RUFDIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI2MEU2NTY4MkVGRDExRTBCMEYzRUVGNDdCRTE1RUFDIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzUgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDE4MDExNzQwNzIwNjgxMUI5RkRCQkJCQzI5QzBGOTciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RkQ3RjExNzQwNzIwNjgxMTgwODNEOUM2QTZGQThDOUQiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4gPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5nbHlwaGljb25zX3NtYWxsX2Rhcms8L3JkZjpsaT4gPC9yZGY6QWx0PiA8L2RjOnRpdGxlPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhCmnrIAAADBSURBVHjavFbhEYYgCAUXcgRHsM0aoRUaoU0chbDzR59fhFnI3eu6U3nA80AgIpDAFhkLIzGoQipr8daH4DgITiXkvaGJgG1+4LjGfEtQUqaXWC4JXkYuZnKuuXbIVxpp+8OZQBX0QitV+LLvuIpkQJARHX8msLMJWu97ZwYJNEFbIQmP5efH+AD21AMR/3w5MDYnROI7og/SmqnIOYPNsEJbJlgNCVb7VtHZ7PyjZmferocMnCEjc8jQ//rZsgswAG9mnw0akw5iAAAAAElFTkSuQmCC) left center no-repeat;
+            }
+            article aside.tip {
+                background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAZCAYAAADuWXTMAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA/dpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ1dWlkOjY1RTYzOTA2ODZDRjExREJBNkUyRDg4N0NFQUNCNDA3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjFFMkI5NDRDMkVGMTExRTBCMEYzRUVGNDdCRTE1RUFDIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjFFMkI5NDRCMkVGMTExRTBCMEYzRUVGNDdCRTE1RUFDIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzUgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDE4MDExNzQwNzIwNjgxMUI5RkRCQkJCQzI5QzBGOTciIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RkQ3RjExNzQwNzIwNjgxMTgwODNEOUM2QTZGQThDOUQiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4gPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5nbHlwaGljb25zX3NtYWxsX2Rhcms8L3JkZjpsaT4gPC9yZGY6QWx0PiA8L2RjOnRpdGxlPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqKbz9IAAAGISURBVHjarJQxSwNBEIV3j7NQxATEIIgYOwULbSxTBC3lQAJ2prNJY22jlZXg1TYmnZ3xF3h2YnWFfeIvEC0sbM43cSbMbbLmUAe+bG72vZ25vb0zWZYZAVECl6AHMkWP86WcXhkj8KoM9+ABPKoczUc5M6KpBKe6AmIRHICO0kQ8N2hVKjZ1WyzYBHvMheqgFOLnDJRphLhjrZ3C/2WuOG/yQbexAA5Jb3kzqrzAJ9gGc8YfM+AG9AM2Jqj6hnFrgpHiAzyRL+BEiHanx7TpC+rYiJlMO6Z4zIo5AeugUtBYYX1C5jYn9wuaRde29Cxxv7LjJ+D5B+MGOKedhm9V7vmYx9aEqi2tH5ixyh2GLlgCDY+xwfNd1hsrZxStr1A74B0c8fPUB+OKz0AVnhf9qAwnYhbUnKo1zsdizJk5Yh7rTr7uzH+fLH1Bq6L9lN+kXTW1BlJdVQzuK3jrfEWEa1c73LDfRDhy4q31roZCVl8H5g/x7+bUox3Jj90wz32X+WszjC8BBgBpY8qyQ+FJXQAAAABJRU5ErkJggg==) 10px 50% no-repeat;
+                padding:.5em .5em .5em 3em;
+                background-color:#FFFDC0;
+            }
+            article aside.info {
+                background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAYCAYAAAAPtVbGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA/dpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ1dWlkOjY1RTYzOTA2ODZDRjExREJBNkUyRDg4N0NFQUNCNDA3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjlEQURFNzU1MkY4NDExRTA5RTVFODk4M0I1MDNENDQ1IiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjlEQURFNzU0MkY4NDExRTA5RTVFODk4M0I1MDNENDQ1IiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzUgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDQ4MDExNzQwNzIwNjgxMThDMTRBNDlEMDJBQzk3NTUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDM4MDExNzQwNzIwNjgxMThDMTRBNDlEMDJBQzk3NTUiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4gPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5nbHlwaGljb25zX3NtYWxsX2Rhcms8L3JkZjpsaT4gPC9yZGY6QWx0PiA8L2RjOnRpdGxlPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PpZThQkAAAEFSURBVHjatFYLEYMwDC0YYA6QMAlIAAfMARKQMAlIQAISkAAOtino0l1610HT9UGXu3d82rTJy0tBaa0VArIR9gE3KAnm5or45Qqzhq83yAvMZOZMlr/Q5VClUcryA1RJz+fpcqiymJPS5aHKokxJVwO+39ldiDIVektHTXgkXnwhVF81ISsIU6INRrOeWHiy7sTiho0uSl2m0TyS/YVZatCQbAtOO4qeQxKmwZdKZBlHvR/IMpPJE1jrIgWWH2hAeD66ycrfkhUKKlD0bXEHq30eHzxzimh1kbUb7dfCvO1J0SKbjI72y4gTegpJWXL8HGzgp7mXKJO6vUJ/e9i38mX+FmAAyy+Fz6bJ6XMAAAAASUVORK5CYII=) 5px 50% no-repeat;
+                padding:.5em .5em .5em 3em;
+                background-color:#E9F2F9;
+            }
+            article aside.warning {
+                background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAZCAYAAAAv3j5gAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA/dpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ1dWlkOjY1RTYzOTA2ODZDRjExREJBNkUyRDg4N0NFQUNCNDA3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkEyN0M5OTM0MkY4NDExRTA5RTVFODk4M0I1MDNENDQ1IiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkEyN0M5OTMzMkY4NDExRTA5RTVFODk4M0I1MDNENDQ1IiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzUgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDQ4MDExNzQwNzIwNjgxMThDMTRBNDlEMDJBQzk3NTUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDM4MDExNzQwNzIwNjgxMThDMTRBNDlEMDJBQzk3NTUiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4gPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5nbHlwaGljb25zX3NtYWxsX2Rhcms8L3JkZjpsaT4gPC9yZGY6QWx0PiA8L2RjOnRpdGxlPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pr0eICAAAAE+SURBVHjavJYBkYMwEEWpgkiIBCREQiVEAhIiAQlIqIRKiIRIQEJuufm52cmF9ENpmflTSDd5s3/ZHYac83C15Fr+rZEbR9FTlKFFZKqYSeS2dcRYPE8UCBtXURTdRV6U8GxUnAUgVb+OBU0AmQY8VKCosi4wy4LmzbbGegBsxH3uaOkBmpuqmFK3dSc+FSdegWwPhDiHjCbEFHjs1giHzx0b5uJ7o5Zj9dbZ5lunCp9faC0H7LgRdvsIvaEPmmFLt8h0E6tMsvLWoF8ikZ0nm/6vJzRkIQA6e8OAgtpgD0KKAgOKan65E5BfJxhQCd7m2OMkKB8Bnc2GAt0Q+PYlh916/38NNJC9csnL4C8AebZh0xuQRDWsGvVnQY6edYD5T1jW/ApCZom0yx36BNspnMeUWKvh+TiShdaPAAMAodkgUQNT8MAAAAAASUVORK5CYII=) 5px 50% no-repeat;
+                padding:.5em .5em .5em 3em;
+                background-color:#F26C4F;
+            }
+            article aside.more {
+                background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA/dpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ1dWlkOjY1RTYzOTA2ODZDRjExREJBNkUyRDg4N0NFQUNCNDA3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjdGOUY4RjAyMkY4NDExRTA5RTVFODk4M0I1MDNENDQ1IiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjdGOUY4RjAxMkY4NDExRTA5RTVFODk4M0I1MDNENDQ1IiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzUgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDQ4MDExNzQwNzIwNjgxMThDMTRBNDlEMDJBQzk3NTUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDM4MDExNzQwNzIwNjgxMThDMTRBNDlEMDJBQzk3NTUiLz4gPGRjOnRpdGxlPiA8cmRmOkFsdD4gPHJkZjpsaSB4bWw6bGFuZz0ieC1kZWZhdWx0Ij5nbHlwaGljb25zX3NtYWxsX2Rhcms8L3JkZjpsaT4gPC9yZGY6QWx0PiA8L2RjOnRpdGxlPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Psz3eiUAAAGRSURBVHjarFbRdYMwDDR5/acbmA3oBukGZIN0g45AN6AbkA3SDegG6QZuJ4BOQOX03CdcQUQcvXePEGEfOp9lzDiOhoMiJ1h2PwI57m34vQYxiZ+kBypCw4ha/Bfy5RqiDATnyLLMVzMYXdzT2G/ls2YDAguSYgXRzo8hlFoyT+AgT8+k0qLXrNmdlwAw7Brik/CGKp9QsSgjYVlGrFElvGkrOLIVnqvUrqOoo8FuTg4mM3ejvUg0o3uzMKCeGbNdItqY28WgcV2SdGvWqJTMEJMlmQEVnWZ0d2hDjVAJ30dWW5G7YqOOrO+Fhvs8ZwreTC0k1HaHfdiDjGSyvpNTQNBSS2RZd3dCpY53+Ym9fXOFTT12hBeWfiU8Ej6YlUPLKoSWVOA6/LWgCwdfqNCyfC640GGbHOPKRenUJ+YvSR9PKLxA5w2SQsTfuoty2yhfpxDto4pKluPyHc9uvpZIkKjHpCfpUEwl6jTb4Bbd+4BT+CCczO+TrZBSkbBm/4whfm6lBL6iHnw1NOdXnP8RYACvvsVDfVo0sQAAAABJRU5ErkJggg==) 5px 50% no-repeat;
+                padding:.5em .5em .5em 3em;
+                background-color:#9CC4E4;
+            }
+
+            section {
+                display:block;
+                margin: 1em;
+                padding:.75em;
+                border:1px solid grey;
+            }
+
+            #cpyrgt {}
+            nav div, nav a, nav{line-height:28px\0/; }
+            nav a {position:relative\0/; top:3px\0/;}
+        </style>
+    </head>
+
+
+    <body>
+        <header>
+            <h1>ICEFaces Tutorial Build Guide</h1>
+            <h3>Revision 3.0.1 - May 2012</h3>
+        </header>
+        <nav>
+            <div class="snow toggle"><a onclick="javascript:toggleArticle('integration')" href="#integration">Integration</a></div>
+            <div class="snow toggle"><a onclick="javascript:toggleArticle('compilation')" href="#compilation">Compilation</a></div>
+            <div class="snow toggle"><a onclick="javascript:toggleArticle('deployment')" href="#deployment">Deployment</a></div>
+
+            <nav class="right">
+                <div class="faces button"><a href="http://www.icefaces.org">ICESoft.org</a></div>
+            </nav>
+        </nav>
+
+        <hr>
+
+        <article id="compilation">
+            <aside class="info">
+                <h4>Compilation</h4>
+                This section covers the build process for tutorials using either the Maven or Ant tools.
+            </aside>
+            <aside class="tip">These instruction are regarding tool use from the command line, to automate the process using your IDE, see <a href="#integration" onclick="javascript:toggleArticle('integration')">integration.</a></aside>
+            <section>
+                <h2 onclick="toggleSection('maven')">Maven</h2>
+                <aside class="more">Apache Maven is a popular, convention-over-configuration dependency and build manager. The premier Java project builder. <a href="http://maven.apache.org/what-is-maven.html">Maven Homepage</a></aside>
+                <ol>
+                    <li>Navigate to the root directory of the tutorial project. The same directory as 'pom.xml'.</li>
+                    <li>Run the command <pre>mvn package -P servlet</pre> if building for Tomcat, or <pre>mvn package -P app</pre> if building for Glassfish (or another JSF-providing app-server).</li>
+                    <li>Maven will begin downloading the dependencies specified in the POM. Once the dependencies have been installed to your local repository, compilation will begin.</li>
+                    <li>If compilation finished without error, the prepared application, "example-named-tutorial.war" will be located in the "target" project subdirectory.</li>
+                </ol>
+            </section>
+            <section>
+                <h2 onclick="toggleSection('ant')">Ant</h2>
+                <aside class="more">Ant is a powerful but verbose 'make'-like build tool from Apache. <a href="http://ant.apache.org/">Ant Homepage</a></aside>
+                <aside class="warning">
+                    Ant requires configuration of where it's dependencies are located and how to compile the project source folders; stored in this case, in the "common.xml" file.
+                    Common.xml is included in the same directory as this README, and is configured by default for builds made in the ICEfaces SVN directory tree. To use Ant independently of
+                    this location, the property name named "icefaces.base.dir" must be set to the root of a local ICEfaces distribution.
+                </aside>
+                <ol>
+                    <li>Navigate to the parent directory of the tutorial project. The same directory as "common.xml".</li>
+                    <li>Open common.xml and replace the value of the <pre>&lt;property&gt;</pre> tag named "icefaces.base.dir" with the path to your local ICEfaces source bundle. If this build is located as part of an ICEfaces bundle, skip this step.</li>
+                    <li>Navigate to the tutorial directory. The same directory as "build.xml".</li>
+                    <li>Run the command <pre>ant servlet-profile</pre> if building for Tomcat, or <pre>ant web-profile</pre> if building for Glassfish (or another JSF-providing app-server).</li>
+                    <li>Ant will begin copying in dependencies and compiling the source files. If compilation is successful a war file will be generated in ".../tutorial/build/dist/" with the same name as the tutorial directory.</li>
+                </ol>
+            </section>
+        </article>
+
+        <article id="deployment">
+            <aside class="info">
+                <h4>Deployment</h4>
+                This section covers running the <a onclick="toggleArticle('compilation')" href="#compiled">compiled</a> web application on a Java application server.
+            </aside>
+            <section>
+                <h2 onclick="toggleSection('tomcat')">Tomcat 7</h2>
+                <aside class="more">
+                    The current stable version of the most popular Java servlet container. The standard for other Java servers; in fact many heavierweight
+                    servers have modified versions of Tomcat at their core somewhere. <a href="http://tomcat.apache.org">Tomcat Homepage</a>
+                </aside>
+                <ol>
+					<li>Locate the war file you <a onclick="javascript:toggleArticle('compilation')" href="#compilation">compiled</a> either by yourself or with your IDE.</li>
+					<li>Copy the war file to the "tomcat/webapps" directory of the server.</li>
+					<li>Run the server. A directory within "webpps" is automatically created with the contents of the war.</li>
+                    <li>Navigate to the application-context of your server domain; by default, something like <pre>http://localhost:8080/a-tutorial-name/</pre>.</li>
+                </ol>
+                <aside class="tip">
+                    If you recieve a 404 error, check to see if the application includes a index.jsp file,
+                    without this default entry point, you might need to access your application pages
+                    explicitly in your URL, i.e "...a-tutorial-name/main.jsf"
+                </aside>
+                <aside class="warning">
+                    If problems persist, check to make sure you <a onclick="toggleArticle('compilation')" href="#compilation">compiled</a> the tutorial for Tomcat/servlet configurations!
+                </aside>
+            </section>
+            <section>
+                <h2 onclick="toggleSection('glassfish')">Glassfish 3</h2>
+                <aside class="more">
+                    The open source version of the Java enterprise server developed by Oracle; more feature filled than Tomcat, although with accompanying slowdown and complexity.
+                    <a href="http://glassfish.java.net">Glassfish Homepage</a>
+                </aside>
+                <ol>
+					<li>Locate the war file you <a onclick="toggleArticle('compilation')" href="#compilation">compiled</a> either by yourself or with your IDE.</li>
+					<li>Copy the war file to the "glassfish3/domains/domain1/autodeploy" directory of the server.</li>
+                    <aside class="tip">
+                        Alternately you could use the powerful Glassfish console. By default hosted at <pre>http://locahost:4848/</pre>.
+                    </aside>
+					<li>Run the server. A directory within "autodeploy" is automatically created with the contents of the war.</li>
+                    <li>Navigate to the application-context of your server domain; by default, something like
+                        <pre>http://localhost:8080/a-tutorial-name/</pre>.</li>
+                </ol>
+                <aside class="tip">
+                    If you recieve a 404 error, check to see if the application includes a index.jsp file,
+                    without this default entry point, you might need to access your application pages
+                    explicitly in your URL, i.e "...a-tutorial-name/main.jsf"
+                </aside>
+                <aside class="warning">
+                    If problems persist, check to make sure you <a onclick="toggleArticle('compilation')" href="#compilation">compiled</a> the tutorial for Glassfish/application-server configurations!
+                </aside>
+            </section>
+        </article>
+
+        <article id="integration">
+            <aside class="info">
+                <h4>Integration</h4>
+                This section covers development environment importing and building of the Maven project definitions included with each tutorial.
+            </aside>
+            <aside class="tip">If you'd prefer to build using Ant, command-line Ant instructions are provided  on the <a href="#compilation" onclick="javascript:toggleArticle('compilation')">compilation</a> page.</aside>
+            <section>
+                <h2 onclick="toggleSection('eclipse')">Eclipse</h2>
+                <aside class="more">
+                    Whenever Java IDEs are the topic of discussion, Apache Eclipse is always the first name you hear.
+                    Extensible, ubiquitous and competent at it all, it's the #1 IDE choice of Java developers. <a href="http://www.eclipse.org/eclipse">Eclipse Homepage</a>
+                </aside>
+                <ol>
+                    <li>Select the "Import..." option from the File menu.</li>
+                    <li>Select the import source "Existing Maven Projects" under the Maven category.</li>
+                    <li>Click the "Browse..." button following the "Root Directory:" field, and select the folder
+                        containing the pom.xml you want to build.</li>
+                    <li>Checkoff the pom.xml files you'd like to have converted into projects and click "Finish".</li>
+                    <li>Once the build has appear in the "Project Explorer" sidebar, right click on it, and select th target "Maven package" under "Run As" to initiate the build.</li>
+                    <aside class="tip">By default, the pom.xml builds with dependencies for a servlet-container host, i.e Tomcat. If building for a full-scale application server, like Glassfish, select the target "Maven build..." instead from "Run As", displaying a prompt where you can set the build profile to "app".</aside>
+                </ol>
+            </section>
+            <section>
+                <h2 onclick="toggleSection('idea')">IntelliJ IDEA 10.x+</h2>
+                <aside class="more">
+                    IDEA is a privately developed, open source Java IDE with wide support of JRE and non-JRE languages, and the best auto-completion and code
+                    generation features bar none. <a href="http://www.jetbrains.com/idea/">Intellij Homepage</a>
+                </aside>
+                <aside class="tip small">
+                    IDEA has several flexible workflows to build projects from imported Java source trees.
+                    The one we'll be demonstrating is the lowest-configuration method, letting IDEA interpret the
+                    type of Java project via a Maven POM file.
+                </aside>
+                <ol>
+                    <li>Select the "Open Project..." option from the File menu.</li>
+                    <li>Navigate the root of the tutorial project and open the pom.xml file.</li>
+                    <li>IDEA will scan the POM and interpret that its a web application.</li>
+                    <li>To use Maven on this new project, open the "Maven Projects" tool window, and choose the profile appropriate for your server.</li>
+                    <li>Finally, double click the "package" phase, under "lifecycle" in the same tool window to initiate the build.</li>
+                </ol>
+            </section>
+            <section>
+                <h2 onclick="toggleSection('netbeans')">NetBeans 6.9</h2>
+                <aside class="more">
+                    NetBeans is an open-source IDE developed in cooperation with Oracle, formerly Sun Microsystems. It advertises close integration with Oracle technologies, non-JRE languages and a good GUI builder. <a href="http://netbeans.org">NetBeans Homepage</a>
+                </aside>
+                <ol>
+                    <li>Select the "Open Project..." option from the File menu.</li>
+                    <li>Navigate to the root of the tutorial project and select the folder containing the pom.xml file before clicking "Open Project".
+                        NetBeans will automatically recognize the folder as a usable Maven project.</li>
+                    <li>NetBeans now scans the Maven build in detail, creating a Web Application project from it.</li>
+                    <li>After the project finishes creation, NetBeans is ready to build it via Maven. To set the build profile, use the list of menu options under Run -> Set Build Configuration.
+                        To execute the build, click the hammer icon in the toolbar, or press F11.</li>
+                </ol>
+            </section>
+        </article>
+
+        <footer>
+            &#160;
+            <span id="cpyrgt">ICEsoft Technologies - 2012</span>
+        </footer>
+
+        <!-- ### Content Ends ### Scripts Begin ############################ -->
+        <!-- ### JQuery Minified ##################################### -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <!-- ### Document UI JS ############################################ -->
+        <script language="javascript">
+            optionalLinks = 2;
+            requiredLinks = 3;
+            enabledOptionalLinks = optionalLinks;
+            buttonWidth = 180;
+
+            // Case Insensitve Contains
+            jQuery.expr[':'].Contains = function(a,i,m){
+                return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase())>=0;
+            };
+
+            toggleLinksOnNavWidth = function() {
+                var requiredWidth = $('body').css("min-width");
+                requiredWidth = parseInt(requiredWidth.substr(0, requiredWidth.length-2));
+                while (enabledOptionalLinks != 0 &&
+                        requiredWidth+(buttonWidth*enabledOptionalLinks) > window.innerWidth) {
+                    enabledOptionalLinks--;
+                    $("nav > nav.right").animate({"right":"-="+(buttonWidth)+"px"},'fast','swing',
+                    function() {$("nav > div.right:not(div.right.inactive):first").addClass('inactive');});
+                }
+                while ((enabledOptionalLinks < optionalLinks) &&
+                         requiredWidth+(buttonWidth*(enabledOptionalLinks+1)) < window.innerWidth) {
+                    enabledOptionalLinks++;
+                    $("nav > nav.right").animate({"right":"+="+(buttonWidth)+"px"},'fast','swing',
+                    function() {$("nav > div.right.inactive:first").removeClass('inactive');});
+                }
+
+            }
+
+            findButton = function(buttonName) {return $("nav > div.toggle > a:[href=\"#"+buttonName+"\"]").parent();}
+            findOtherButtons = function(buttonName) {return $("nav > div.toggle > *:not(a[href=\"#"+buttonName+"\"])").parent();}
+            findArticle = function(articleId) {return $("article#" + articleId);}
+            findOtherArticles = function(articleId) {return $("article:not(#" + articleId + ")");}
+
+            toggleArticle = function(articleId) {
+                findButton(articleId).addClass("activated");
+                findOtherButtons(articleId).removeClass("activated");
+                findArticle(articleId).show();
+                findOtherArticles(articleId).hide();
+            }
+
+            toggleDefaultSections = function() {
+                $("section h2:not([default])").
+                        toggleClass("activated").parent().
+                        find("*:not(h2)").hide();
+            }
+
+            toggleSection = function(sectionId) {
+                $("section h2:Contains(\""+sectionId+"\")").
+                        toggleClass("activated").parent().
+                        find("*:not(h2)").fadeToggle();
+            }
+
+            $(window).resize(function() {toggleLinksOnNavWidth();});
+            $().ready(function() {
+                toggleLinksOnNavWidth();
+                toggleDefaultSections();
+
+                var articleId = window.location.hash.substr(1, window.location.hash.length);
+                if (articleId == "" || articleId == null) articleId = "integration";
+                toggleArticle(articleId);
+            });
+        </script>
+    </body>
+</html>

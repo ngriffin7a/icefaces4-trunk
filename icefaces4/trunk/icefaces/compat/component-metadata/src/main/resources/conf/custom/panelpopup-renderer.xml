@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+	<description>
+	      <![CDATA[<p>The panelPopup is a container component that renders a window or panel that hovers on
+            top of a web page. The popupPanel contains 2 regions which are defined using facets.
+            The facet names are; header and body.<br>
+            The panelPopup component can be used to provide a general popup window behavior such as moveable/dragable, resizeable and modal<br>
+            Note: A panelPopup facet needs a container type component as a child (e.g.,
+            panelGroup or panelGrid). panelGroup renders a span tag, which doesn't
+            work properly if using Mozilla. panelGrid can be used to avoid display problems. ]]>
+	</description>
+	<component-family>javax.faces.Panel</component-family>
+	<renderer-type>com.icesoft.faces.PanelPopup</renderer-type>
+	<renderer-extension>
+		<instance-name>panelPopup</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelPopup</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!--    NOTE:  Chart Export is not supported on IE 7/8.   -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[chartExportBean.title]}"/>
+    <ui:param name="description" value="#{msgs[chartExportBean.description]}"/>
+    <ui:param name="resourceValue" value="#{chartExportBean.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{chartResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{chartResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="exportForm">
+            <h:commandButton id="exportButton" value="Export as Image"
+                             disabled="#{chartExportBean.requestOldIE}"
+                             onclick="var img = ice.ace.jq('.chartExport'); exportChart.exportToImage(img); img.css('display','block'); return false;" />
+
+            <ace:chart id="chart"
+                       height="300"
+                       width="689"
+                       animated="false"
+                       value="#{chartCombinedBean.barData}"
+                       stackSeries="false"
+                       defaultAxesConfig="#{chartCombinedBean.barDemoDefaultAxis}"
+                       xAxis="#{chartCombinedBean.barDemoXOneAxis}"
+                       x2Axis="#{chartCombinedBean.barDemoXTwoAxis}"
+                       yAxes="#{chartCombinedBean.barDemoYAxes}"
+                       legend="true"
+                       legendPlacement="OUTSIDE_GRID"
+                       highlighter="true"
+                       highlighterLocation="N"
+                       highlighterShowMarker="false"
+                       highlighterBringSeriesToFront="true"
+                       widgetVar="exportChart" />
+        </h:form>
+
+        <h:graphicImage styleClass="chartExport" style="display: none;" />
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[columns.title]}"/>
+    <ui:param name="description" value="#{msgs[columns.description]}"/>
+    <ui:param name="resourceValue" value="#{columns.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <h:panelGrid columns="3">
+                <h:outputLabel for="colIn" value="Number of Columns (1-15):"/>
+                <h:inputText id="colIn" value="#{columns.columnNum}"
+                             required="true" size="2" maxlength="2">
+                     <f:validateLongRange minimum="1" maximum="15"/>
+                </h:inputText>
+                <h:message for="colIn"/>
+                
+                <h:outputLabel for="rowIn" value="Number of Rows (1-15):"/>
+                <h:inputText id="rowIn" value="#{columns.rowNum}"
+                             required="true" size="2" maxlength="2">
+                     <f:validateLongRange minimum="1" maximum="15"/>
+                </h:inputText>
+                <h:message for="rowIn"/>
+            </h:panelGrid>
+            
+            <h:commandButton value="Apply Changes"
+                             actionListener="#{columns.applyChanges}"/>
+        </h:form>
+        
+        <br/>
+        
+        <h:form>
+            <ice:dataTable value="#{columns.rowData}"
+                           var="row">
+                <ice:columns value="#{columns.columnData}"
+                             var="column">
+                     #{row}x#{column}
+                </ice:columns>
+            </ice:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

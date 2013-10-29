@@ -1,0 +1,459 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="content-type">
+    <title>ICEfaces ReadMe.html</title>
+    <style>
+body, td, th, input {
+font-family:verdana,sans-serif;
+font-size:80%;
+}
+code, pre {
+font-size:110% }
+body {
+color:#333333;
+margin-right:40px;
+margin-bottom:3em;
+margin-left:40px;
+}
+h2{
+font-size:150%;
+font-weight:normal;
+}
+h3 {
+font-size:125%;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family:arial,verdana,sans-serif;
+margin:1em 0pt 0.2em;
+}
+h1, h2 {
+border-bottom:1px solid #AAAAAA;
+font-weight: bold;
+}
+h4 {
+font-size: 110%
+}
+  </style>
+  </head>
+  <body>
+    <h2>Welcome to ICEfaces! <br>
+    </h2>
+    <br>
+    This bundle contains software source-code and executables
+    for&nbsp;ICEfaces<span style="text-decoration: underline;"></span>
+    3.3.<br>
+    <br>
+    All documentation related to ICEfaces and the use of this bundle can
+    be found in the <a target="_blank"
+      href="http://wiki.icesoft.org/display/ICE/ICEfaces+Overview">ICEfaces
+
+
+
+
+
+
+      Wiki</a>.<br>
+    <br>
+    <h3>Documentation Quick-links</h3>
+    <ul>
+      <li><a target="_blank"
+href="http://wiki.icesoft.org/display/ICE/ICEfaces+3.3.0+RC1+Release+Notes">Release
+
+
+
+
+
+
+          Notes</a></li>
+      <li><a target="_blank"
+          href="http://wiki.icesoft.org/display/ICE/ICEfaces+Documentation">ICEfaces
+
+
+
+
+
+
+          Documentation</a></li>
+      <ul>
+        <li><a target="_blank"
+            href="http://wiki.icesoft.org/display/ICE/ICEfaces+Overview">Overview</a></li>
+        <li><a target="_blank"
+            href="http://wiki.icesoft.org/display/ICE/Getting+Started">Getting
+
+
+
+
+
+
+            Started</a></li>
+      </ul>
+    </ul>
+    <br>
+    <h3>Contents</h3>
+    <h4 style="font-weight: normal;">Both Binary and Source Bundles are
+      available for download. The contents of each bundle type vary, as
+      described below.<br>
+    </h4>
+    <h4><br>
+    </h4>
+    <h4>Binary Bundle</h4>
+    <br>
+    The binary bundle comes with the ICEfaces libraries pre-compiled and
+    the sample applications pre-built to run on "Servlet-profile"
+    platforms, such as Tomcat. The binary bundle also includes all the
+    source files for the sample applications, but not the ICEfaces
+    libraries themselves.&nbsp; <br>
+    <br>
+    The icefaces directory of the binary bundle contains: <br>
+    <ul>
+      <li><span style="font-weight: bold;">docs</span></li>
+      <ul>
+        <li>The ICEfaces API and TLD documentation.</li>
+        <ul>
+          <li>ace - JavaDocs and TLD docs for the ACE Components (api
+            and tld).</li>
+          <li>compat - JavaDocs and TLD docs for the ICEfaces 1.x
+            compatibility APIs (compat/api), and the ICE Components
+            (compat/comps/api, compat/comps/tld).</li>
+          <li>core - JavaDocs and TLD docs for the core framework APIs
+            and icecore tags.</li>
+        </ul>
+      </ul>
+      <li><span style="font-weight: bold;">lib</span></li>
+      <ul>
+        <li>The ICEfaces libraries along with any possibly required
+          3rd-party run-time libraries. </li>
+        <ul>
+          <li>icefaces.jar - The core ICEfaces framework.</li>
+          <li>icepush.jar - The ICEpush library, provides push
+            functionality to the ICEfaces framework (optional).</li>
+          <li>icefaces-ace.jar - The ACE Components (ICEfaces Advanced
+            Components) library (optional).</li>
+          <li>icefaces-compat.jar - ICEfaces compatibility library that
+            includes the ICE Components and a set of ICEfaces 1.x core
+            APIs to ease migration of existing ICEfaces 1.x applications
+            to ICEfaces 3. (optional).</li>
+          <li>version-licenses.html - Version and license information
+            for all included libraries.<br>
+          </li>
+        </ul>
+      </ul>
+      <li><span style="font-weight: bold;">licenses</span></li>
+      <ul>
+        <li>Summary of legal licenses used by ICEfaces and 3rd party
+          libraries.</li>
+      </ul>
+      <li><span style="font-weight: bold;">samples</span></li>
+      <ul>
+        <li style="font-weight: bold;">ace/themes</li>
+        <ul>
+          <li>A set of jQuery ThemeRoller themes that have been
+            converted to work with the ACE Components.</li>
+          <li>See the <a target="_blank"
+              href="http://wiki.icesoft.org/display/ICE/ACE+ThemeRoller+support">ACE
+
+
+              ThemeRoller Support</a> Wiki topic for details on how to
+            configure and use these in your application.</li>
+        </ul>
+      </ul>
+    </ul>
+    <ul>
+      <ul>
+        <li style="font-weight: bold;">compat</li>
+        <ul>
+          <li>ICEfaces 1.x sample applications that have been ported to
+            ICEfaces 3 using the ICE Components and the core
+            compatibility APIs.</li>
+          <li>See the <a target="_blank"
+              href="http://wiki.icesoft.org/display/ICE/ICE+Components">ICE
+
+
+
+
+
+
+              Components</a> and <a target="_blank"
+              href="http://wiki.icesoft.org/display/ICE/ICEfaces+1.x+Compatibility">Compatibility</a>
+            topics in the ICEfaces Wiki for more information. </li>
+          <ul style="font-style: italic;">
+            <li>/auctionMonitor<br>
+            </li>
+          </ul>
+        </ul>
+        <li><span style="font-weight: bold;">core</span><br>
+        </li>
+        <ul>
+          <li>ICEfaces core framework sample applications. Demonstrates
+            using the ICEfaces framework with standard JSF h:
+            components.<br>
+          </li>
+          <ul>
+            <li style="font-style: italic;">/auction</li>
+            <ul>
+              <li>A simulated online auction application using only
+                standard JSF components. Demonstrates core benefits of
+                the ICEfaces framework, including the use of push to
+                asynchronously update user's browsers when an auction
+                bid occurs.</li>
+            </ul>
+          </ul>
+          <ul>
+          </ul>
+        </ul>
+        <ul>
+          <ul>
+            <li style="font-style: italic;">/portlets/chat</li>
+            <ul>
+              <li>A simple ICEfaces chat portlet that demonstrates using
+                ICEfaces and ICEpush in a portal environment.</li>
+            </ul>
+          </ul>
+        </ul>
+        <li><span style="font-weight: bold;">dist</span></li>
+        <ul>
+          <li>Contains all the sample app .wars prebuilt for
+            "Servlet-profile" platforms, such as Tomcat.</li>
+        </ul>
+        <li style="font-weight: bold;">showcase</li>
+        <ul>
+          <li>ICEfaces Showcase sample application demonstrates key
+            ICEfaces framework features and includes comprehensive
+            demonstrations of both the ICE and ACE Components sets.</li>
+          <li>See the <a target="_blank"
+              href="http://wiki.icesoft.org/display/ICE/ICE+Components">ICE
+
+
+
+
+
+
+              Components</a> and <a
+              href="http://wiki.icesoft.org/display/ICE/ACE+Components">ACE
+
+
+
+
+
+
+              Components</a> topics in the ICEfaces Wiki for more
+            information. </li>
+          <ul style="font-style: italic;">
+            <li>/showcase</li>
+            <li>/showcase-portlets<br>
+            </li>
+          </ul>
+        </ul>
+      </ul>
+    </ul>
+    <br>
+    <h4>Source Bundle</h4>
+    <br>
+    The source bundle contains all the same libraries and applications
+    as the binary bundle but also includes the complete source code for
+    the ICEfaces libraries themselves, and additional required ICEfaces
+    build-time libraries.&nbsp; The source bundle does not contain any
+    pre-built ICEfaces libraries or example .wars. <br>
+    <br>
+    Use the "ant -p" command in the "icefaces" directory to see the
+    available ant build targets.<br>
+    <br>
+    The icefaces directory of the source bundle contains: <br>
+    <ul>
+      <li><span style="font-weight: bold;">ace</span></li>
+      <ul>
+        <li>Source files and resources for the ICEfaces Advanced
+          Component Environment (ACE) and the ACE Components.</li>
+        <li>See the <a target="_blank"
+            href="http://wiki.icesoft.org/display/ICE/ACE+Components">ACE
+
+
+
+
+
+
+            Components</a> topic of the ICEfaces Wiki for more
+          information.</li>
+      </ul>
+      <li><span style="font-weight: bold;">compat</span></li>
+      <ul>
+        <li>Source files and resources for the ICE Components and the
+          ICEfaces 1.x compatibility APIs. </li>
+        <li>See the <a target="_blank"
+            href="http://wiki.icesoft.org/display/ICE/ICEfaces+1.x+Compatibility">Compatibility</a>
+          and <a target="_blank"
+            href="http://wiki.icesoft.org/display/ICE/ICE+Components">ICE
+
+
+
+
+
+
+            Components</a> topics in the ICEfaces Wiki for more
+          information. </li>
+      </ul>
+      <li><span style="font-weight: bold;">core</span></li>
+      <ul>
+        <li>Source files and resources for the ICEfaces core framework.<br>
+        </li>
+      </ul>
+      <li><span style="font-weight: bold;">lib</span></li>
+      <ul>
+        <li>The ICEfaces libraries are located here (after being built)
+          along with any possibly required 3rd-party run-time and
+          build-time libraries. </li>
+        <ul>
+          <li>icefaces.jar - The core ICEfaces framework.</li>
+          <li>icepush.jar - The ICEpush library, provides push
+            functionality to the ICEfaces framework (optional).</li>
+          <li>icefaces-ace.jar - The ACE Components library (optional).</li>
+          <li>icefaces-compat.jar - ICEfaces compatibility library that
+            includes the ICE Components and a set of ICEfaces 1.x core
+            APIs to ease migration of existing ICEfaces 1.x applications
+            to ICEfaces 3. (optional).</li>
+          <li>version-licenses.html - Version and license information
+            for all included libraries.<br>
+          </li>
+        </ul>
+      </ul>
+      <li><span style="font-weight: bold;">licenses</span></li>
+      <ul>
+        <li>Summary of legal licenses used by ICEfaces and 3rd party
+          libraries.</li>
+      </ul>
+      <li><span style="font-weight: bold;">samples</span></li>
+      <ul>
+        <li style="font-weight: bold;">ace/themes</li>
+        <ul>
+          <li>A set of jQuery ThemeRoller themes that have been
+            converted to work with the ACE Components.</li>
+          <li>See the <a target="_blank"
+              href="http://wiki.icesoft.org/display/ICE/ACE+ThemeRoller+support">ACE
+
+
+              ThemeRoller Support</a> Wiki topic for details on how to
+            configure and use these in your application.</li>
+        </ul>
+      </ul>
+    </ul>
+    <ul>
+      <ul>
+        <li style="font-weight: bold;">compat</li>
+        <ul>
+          <li>ICEfaces 1.x sample applications that have been ported to
+            ICEfaces 3 using the ICE Components and the core
+            compatibility APIs.</li>
+          <li>See the <a target="_blank"
+              href="http://wiki.icesoft.org/display/ICE/ICE+Components">ICE
+
+
+
+
+
+
+              Components</a> and <a target="_blank"
+              href="http://wiki.icesoft.org/display/ICE/ICEfaces+1.x+Compatibility">Compatibility</a>
+            topics in the ICEfaces Wiki for more information. </li>
+          <ul style="font-style: italic;">
+            <li>/auctionMonitor<br>
+            </li>
+          </ul>
+        </ul>
+        <li><span style="font-weight: bold;">core</span><br>
+        </li>
+        <ul>
+          <li>ICEfaces core framework sample applications. Demonstrates
+            using the ICEfaces framework with standard JSF h:
+            components.<br>
+          </li>
+          <ul>
+            <li style="font-style: italic;">/auction</li>
+            <ul>
+              <li>A simulated online auction application using only
+                standard JSF components. Demonstrates core benefits of
+                the ICEfaces framework, including the use of push to
+                asynchronously update user's browsers when an auction
+                bid occurs.</li>
+            </ul>
+          </ul>
+        </ul>
+        <ul>
+          <ul>
+            <li style="font-style: italic;">/portlets/chat</li>
+            <ul>
+              <li>A simple ICEfaces chat portlet that demonstrates using
+                ICEfaces and ICEpush in a portal environment.</li>
+            </ul>
+          </ul>
+        </ul>
+        <li style="font-weight: bold;">showcase</li>
+        <ul>
+          <li>ICEfaces Showcase sample application demonstrates key
+            ICEfaces framework features and includes comprehensive
+            demonstrations of both the ACE and ICE Component sets.</li>
+          <li>See the <a target="_blank"
+              href="http://wiki.icesoft.org/display/ICE/ICE+Components">ICE
+
+
+
+
+
+
+              Components</a> and <a
+              href="http://wiki.icesoft.org/display/ICE/ACE+Components">ACE
+
+
+
+
+
+
+              Components</a> topics in the ICEfaces Wiki for more
+            information. </li>
+          <ul style="font-style: italic;">
+            <li>/showcase</li>
+            <li>/showcase-portlets<br>
+            </li>
+          </ul>
+        </ul>
+        <ul>
+          <ul>
+          </ul>
+        </ul>
+      </ul>
+    </ul>
+    <br>
+    <ul>
+      <ul>
+      </ul>
+    </ul>
+    <h3>Support</h3>
+    Please direct all inquiries regarding ICEfaces to the <a
+      target="_blank"
+      href="http://www.icesoft.org/JForum/forums/list.page">ICEfaces
+      forums</a>.<br style="font-family: monospace;">
+    <br style="font-family: monospace;">
+    <span style="font-family: monospace;"></span><span
+      style="font-family: monospace;"></span><br>
+    <br>
+    <br>
+    <p class="Body"><small><br>
+        © Copyright 2013 ICEsoft Technologies, Inc.</small></p>
+  </body>
+</html>

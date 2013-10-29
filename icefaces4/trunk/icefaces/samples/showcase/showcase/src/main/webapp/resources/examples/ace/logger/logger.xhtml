@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[logger.title]}"/>
+    <ui:param name="description" value="#{msgs[logger.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[logger.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{logger.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{logger.exampleResource}"/>
+
+    <ui:define name="example">
+        <h:form>
+            <span class="row">
+                <span class="top">
+                    <!-- Logger Rendered Attribute Doesn't Work as Expected -->
+                    <!-- Continually adds more loggers to the page when rendered and unredendered -->
+                    <!-- Fixed by rendereding once, and using JS to hide afterwards -->
+                    <ice:commandButton onclick="#{logger.rendered ? 'toggleLoggerDisplay();' : ''}"
+                                       style="position:absolute"
+                                       actionListener="#{logger.enableRendered}"
+                                       value="#{logger.rendered ? 'Show/Hide Logger(s)':'Render Logger(s)'}"/>
+                    <ice:commandButton onclick="toggleLoggerDisplay();"
+                                       rendered="#{logger.rendered}"
+                                       styleClass="loggerCloseButton"
+                                       value="Show/Hide Logger(s)"/>
+                    <!-- hide class span applies display:none to all child elements.
+                         ace:logger renders here a div with class yui-log that holds no elements.
+                         yui-log is the class used to style the actual logger that is rendered near the top of every page.
+                         so hide this yui-log element so we can consistantly style the actual logger. -->
+                    <span class="hide"><ace:logger rendered="#{logger.rendered}" styleClass="logger" /></span>
+                    <script type="text/javascript" language="javascript">
+                    //<![CDATA[
+                        loggerDisplay = true;
+                        function toggleLoggerDisplay() {
+                            loggerDisplay = !loggerDisplay;
+                            displayValue = loggerDisplay ? 'block' : 'none';
+                            loggerContainers = Element.select(document,".yui-log-container.yui-log");
+                            loggerContainers[0].setStyle({ display:displayValue });
+                            loggerContainers[1].setStyle({ display:displayValue });
+                        }
+                        function globalLog(msg) {
+                            // Add message in default global category
+                            YAHOO.log(msg);
+                        }
+                        function errorLog(msg, src) {
+                            // Add message in error category
+                            if (!src) YAHOO.log(msg,"error");
+                            else YAHOO.log(msg,"error",src)
+                        }
+                        function customLog(msg, cat, src) {
+                            // Add message in info category from a "sourec"
+                            YAHOO.log(msg,cat,src);
+                        }
+                    //]]>
+                    </script>
+                </span>
+                <span class="top options" style="width:60%; float:none; margin-left:31%;">
+                    <h:form>
+                    <ul>
+                        <li>Example Controls</li>
+                        <li><h:commandButton value="Add Info Log" onclick="globalLog('This could be a message.')" /></li>
+                        <li><h:commandButton value="Add Error Log" onclick="errorLog('This could be a message.')" /></li>
+                        <li><h:commandButton value="Add Error Log From 'source.js'"
+                                             onclick="errorLog('This could be a message.','source.js')" /></li>
+                        <li><h:commandButton value="Add Custom Log From 'source.js'"
+                                             onclick="YAHOO.log('This could be a message.','#{logger.category}','source.js')" />
+                        </li>
+                        <li>Custom Category Name: <h:inputText value="#{logger.category}" /></li>
+                    </ul>
+                    </h:form>
+                </span>
+            </span>
+
+            <span class="row">
+                <span class="messages top">
+                    <ace:messages/>
+                </span>
+            </span>
+        </h:form>
+    </ui:define>
+</ui:composition>

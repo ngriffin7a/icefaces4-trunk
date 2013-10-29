@@ -1,0 +1,224 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project name="icefaces" default="lib">
+	
+    <!-- This property file is only used for EE builds and overrides various
+         property values if it is available. -->
+    <property file="../../ee-bundle.properties"/>
+
+	<property file="./build.properties"/>
+    <property file="../build.properties"/>
+
+    <property name="java.dir" location="./src/main/java"/>
+    <property name="meta.dir" location="./src/main/resources/META-INF"/>
+    <property name="lib.dir" location="../lib"/>
+    <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
+    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
+    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
+    <property name="build.dir" location="./build"/>
+    <property name="classes.dir" location="${build.dir}/classes"/>
+    <property name="dist.dir" location="${build.dir}/dist"/>
+    <property name="javadocs.dir" location="${build.dir}/javadocs"/>
+    <property name="product.info" value="org/icefaces/application/ProductInfo.java"/>
+    <property name="build.doc.dir" location="${build.dir}/doc"/>
+    <property name="build.api.doc.dir" location="${build.doc.dir}/api"/>
+    <property name="build.tld.doc.dir" location="${build.doc.dir}/tld"/>
+    <property name="tld.file" location="${meta.dir}/core.tld"/>
+
+    <!-- Check which JSF implementation to use and set the appropriate sub-directory  -->
+    <condition property="jsf.impl.dir" value="${myfaces.lib.dir}" else="${mojarra.lib.dir}">
+        <isset property="myfaces"/>
+    </condition>
+
+    <!-- Check which JSF version to use and set the appropriate sub-directory  -->
+    <condition property="jsf.ver.dir" value="2.2" else="2.1">
+        <isset property="jsf22"/>
+    </condition>
+
+    <property name="jsf.lib.dir" value="${jsf.impl.dir}/${jsf.ver.dir}" />
+    <echo message="JSF lib dir: ${jsf.lib.dir}"/>
+
+	<!-- Check if release.type is set, and if so append it after the tertiary value -->
+	<condition property="version.string" value="${version.primary}.${version.secondary}.${version.tertiary}.${release.type}">
+    	<isset property="release.type"/>
+	</condition>
+    <property name="version.string" value="${version.primary}.${version.secondary}.${version.tertiary}"/>
+    	
+    <property name="javadoc.title" value="${product} ${product.lib} Java API Documentation" />
+    <property name="javadoc.header" value="${product} ${product.lib} ${version.string}&lt;br&gt;Java API Documentation" />
+    <property name="tld.title" value="${product} ${product.lib} ${version.string} Tag Library Reference" />
+
+    <tstamp>
+        <format property="build.time" pattern="yyyy-MM-dd hh:mm:ss"/>
+    </tstamp>
+
+    <!-- Specifically formatted date for versioning of resources -->
+    <tstamp>
+        <format property="build.date" pattern="yyMMdd"/>
+    </tstamp>
+
+    <patternset id="lib.compile">
+        <include name="*.jar"/>
+    </patternset>
+
+    <!-- We have some classes that work around issues in the Mojarra implementation and rely
+         on implementation-specific classes.  We need to ignore these when compiling against
+         MyFaces. -->
+    <patternset id="compile.classes">
+        <include name="**/*.java"/>
+        <exclude name="org/icefaces/impl/renderkit/html_basic/MessagesRenderer.java" if="myfaces"/>
+        <exclude name="org/icefaces/impl/renderkit/html_basic/MessageRenderer.java"  if="myfaces"/>
+        <exclude name="org/icefaces/impl/event/MojarraDebugTagListener.java"         if="myfaces"/>
+    </patternset>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete file="${java.dir}/${product.info}"/>
+    </target>
+
+    <target name="pre.compile" description="pre-compilation tasks">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.dir}/classes"/>
+        <mkdir dir="${build.dir}/dist"/>
+        <antcall target="product.info"/>
+    </target>
+
+    <target name="build.bridge" description="collate bridge code">
+        <ant antfile="build.javascript.xml" target="build" inheritall="no">
+            <property name="no-compress" value="true"/>
+        </ant>
+    </target>
+
+    <target name="product.info" description="update product information">
+        <copy file="conf/${product.info}"
+              tofile="${java.dir}/${product.info}"
+              overwrite="true"/>
+        <replace file="${java.dir}/${product.info}" >
+            <replacefilter token="@company@"           value="${company}"/>
+            <replacefilter token="@product@"           value="${product}"/>
+            <replacefilter token="@release.type@"      value="${release.type}"/>
+            <replacefilter token="@version.primary@"   value="${version.primary}"/>
+            <replacefilter token="@version.secondary@" value="${version.secondary}"/>
+            <replacefilter token="@version.tertiary@"  value="${version.tertiary}"/>
+            <replacefilter token="@build.number@"      value="${build.number}"/>
+            <replacefilter token="@revision@"          value="${revision}"/>
+            <replacefilter token="@build.date@"        value="${build.date}"/>
+            <replacefilter token="@version.patch@"     value="${version.patch}"/>
+        </replace>
+    </target>
+
+    <target name="tlddoc">
+        <gen.tld.doc tld.file="${tld.file}"/>
+    </target>
+
+    <macrodef name="gen.tld.doc">
+        <attribute name="tld.file"/>
+        <sequential>
+            <delete dir="${build.tld.doc.dir}"/>
+            <java jar="${lib.dir}/tlddoc.jar" fork="true" failonerror="true">
+                <arg value="-d"/>
+                <arg value="${build.tld.doc.dir}"/>
+                <arg value="-doctitle"/>
+                <arg value="${tld.title}"/>
+                <arg value="-windowtitle"/>
+                <arg value="${tld.title}"/>
+                <arg value="@{tld.file}"/>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <target name="compile" depends="pre.compile" description="compile ICEfaces 2.0 classes">
+        <javac srcdir="${java.dir}"
+               destdir="${classes.dir}"
+               source="1.5"
+               target="1.5"
+               debug="true"
+               includeantruntime="false">
+            <classpath>
+                <fileset dir="${jsf.lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+                <fileset dir="${lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+            </classpath>
+            <patternset refid="compile.classes"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile, build.bridge" description="assemble icefaces.jar">
+        <jar destfile="${dist.dir}/${icefaces.lib.name}.jar">
+            <metainf dir="${meta.dir}"/>
+            <metainf dir="${build.dir}/javascript"/>
+
+            <manifest>
+                <section name="org.icefaces">
+                    <attribute name="Implementation-Title"
+                               value="${product} ${product.lib}"/>
+                    <attribute name="Implementation-Version"
+                               value="${version.string}"/>
+                    <attribute name="Build-Number"
+                               value="${build.number}"/>
+                    <attribute name="Build-Time"
+                               value="${build.time}"/>
+                    <attribute name="Implementation-Vendor"
+                               value="${company}"/>
+                </section>
+            </manifest>
+            <fileset dir="${classes.dir}"/>
+        </jar>
+    </target>
+
+    <target name="lib" depends="jar" description="copy icefaces.jar to main lib directory">
+        <copy file="${dist.dir}/${icefaces.lib.name}.jar"
+              todir="${lib.dir}"
+              overwrite="true"/>
+    </target>
+
+
+    <target name="javadoc">
+        <delete dir="${javadocs.dir}"/>
+        <javadoc destdir="${javadocs.dir}"
+                 windowtitle="${javadoc.title}"
+                 failonerror="true"
+        	     bottom="Copyright ${year} ${copyright}"
+                 useexternalfile="true" >
+            <fileset dir="${java.dir}" defaultexcludes="yes">
+                <include name="org/icefaces/bean/*.java"/>
+                <include name="org/icefaces/util/EnvUtils.java"/>
+                <include name="org/icefaces/render/ExternalScript.java"/>
+                <include name="org/icefaces/util/FocusController.java"/>
+                <include name="org/icefaces/util/JavaScriptRunner.java"/>
+                <include name="org/icefaces/application/PortableRenderer.java"/>
+                <include name="org/icefaces/application/PushRenderer.java"/>
+                <include name="org/icefaces/application/ResourceRegistry.java"/>
+            </fileset>
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+                <fileset dir="${jsf.lib.dir}">
+                    <patternset refid="lib.compile"/>
+                </fileset>
+            </classpath>
+            <header><![CDATA[${javadoc.header}]]></header>
+            <footer><![CDATA[${javadoc.header}]]></footer>
+            <doctitle><![CDATA[<h2>${javadoc.title}</h2>]]></doctitle>
+        </javadoc>
+    </target>
+
+</project>

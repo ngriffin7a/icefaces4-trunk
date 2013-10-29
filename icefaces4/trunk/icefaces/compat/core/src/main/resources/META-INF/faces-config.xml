@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0"
+              metadata-complete="false">
+    <ordering>
+        <after>
+            <name>ICEfacesCore</name>
+        </after>
+    </ordering>
+    <lifecycle>
+        <phase-listener>com.icesoft.faces.application.PartialSubmitPhaseListener</phase-listener>
+    </lifecycle>
+    <application>
+        <navigation-handler>com.icesoft.faces.application.ExtrasSymbolicResourceHandler</navigation-handler>
+        <system-event-listener>
+            <system-event-listener-class>com.icesoft.faces.application.ExtrasSetup</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>com.icesoft.faces.component.JavaScriptContextSetup
+            </system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderViewEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>com.icesoft.faces.async.render.SessionRenderer$StartupListener
+            </system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+    </application>
+    <factory>
+        <partial-view-context-factory>com.icesoft.faces.context.CompatDOMPartialViewContextFactory</partial-view-context-factory>
+    </factory>
+</faces-config>

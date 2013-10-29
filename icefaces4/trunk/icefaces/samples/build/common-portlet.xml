@@ -1,0 +1,109 @@
+<!--
+  ~ Copyright 2004-2012 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project name="common-portlet" default="liferay6.servlet-profile">
+
+    <property name="portlet" value="true" />
+
+    <!--This needs to be overridden in the build file for each portlet sample.-->
+    <property name="parent.dir" location="../"/>
+
+    <property name="parent.java.dir" location="${parent.dir}/src/main/java"/>
+    <property name="parent.res.dir" location="${parent.dir}/src/main/resources"/>
+    <property name="parent.res.meta.dir" location="${parent.dir}/src/main/resources-meta"/>
+    <property name="parent.web.dir" location="${parent.dir}/src/main/webapp"/>
+
+    <property name="base.portlet.dir" location="../../../lib/portlets"/>
+    <property name="portletfaces.lib.dir" location="${base.portlet.dir}/portletfaces"/>
+    <property name="liferayfaces.lib.dir" location="${base.portlet.dir}/liferayfaces"/>
+
+    <patternset id="portlet.jars">
+        <include name="*.jar"/>
+    </patternset>
+
+    <patternset id="portlet.files"/>
+
+    <!-- Check which portlet bridge implementation to use and set the appropriate sub-directory. The
+         default is LiferayFaces but can be changed to PortletFaces by setting the portletfaces property. -->
+    <condition property="bridge.lib.dir" value="${portletfaces.lib.dir}" else="${liferayfaces.lib.dir}">
+        <isset property="portletfaces"/>
+    </condition>
+
+    <target name="clean" depends="clean.parent.resources">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="clean.parent.resources">
+        <delete includeemptydirs="true" dir="src/main">
+            <patternset refid="portlet.files"/>
+        </delete>
+    </target>
+
+    <!--If not using the PortletFaces Bridge, check to make sure that that the LiferayFaces Bridge libraries
+        are available in the proper location before attempting to build the portlet application.-->
+    <target name="liferayfaces.check" unless="portletfaces">
+
+        <fileset id="liferayfaces.libs.available" dir="${base.portlet.dir}" casesensitive="no">
+            <include name="**/liferay-faces-*.jar"/>
+        </fileset>
+
+        <property name="fail.message"
+                  value="*** The LiferayFaces Bridge libraries were not found. ***
+                  ${line.separator}1) Download the appropriate version from http://www.liferay.com/community/liferay-projects/liferay-faces/download.
+                  ${line.separator}2) Copy the jars into the icefaces/lib/portlets/liferayfaces directory.
+                  ${line.separator}3) Run the build again.
+                  ${line.separator}
+                  ${line.separator}More information on the portlet bridges and running the sample applications is available at
+                  ${line.separator}http://www.icesoft.org/wiki/display/ICE/Portlet+Development"/>
+
+        <fail message="${fail.message}">
+            <condition>
+                <resourcecount count="0">
+                    <fileset refid="liferayfaces.libs.available"/>
+                </resourcecount>
+            </condition>
+        </fail>
+    </target>
+
+    <target name="copy.parent.resources">
+        <copy todir="${java.dir}">
+            <fileset dir="${parent.java.dir}">
+                <patternset refid="portlet.files"/>
+            </fileset>
+        </copy>
+        <copy todir="${res.dir}">
+            <fileset dir="${parent.res.dir}">
+                <patternset refid="portlet.files"/>
+            </fileset>
+        </copy>
+        <copy todir="${res.meta.dir}" failonerror="false">
+            <fileset dir="${parent.res.meta.dir}">
+                <patternset refid="portlet.files"/>
+            </fileset>
+        </copy>
+        <copy todir="${web.dir}">
+            <fileset dir="${parent.web.dir}">
+                <patternset refid="portlet.files"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="liferay6.servlet-profile"
+            depends="liferayfaces.check, copy.parent.resources, servlet-profile"
+            description="Generate a Liferay 6 .war file running on a servlet-profile container (Jetty 7, Tomcat 6 and 7)">
+    </target>
+
+</project>

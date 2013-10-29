@@ -1,0 +1,527 @@
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+.auctionMonitorContainer {
+    background-color: #FFFFFF;
+    border: 1px solid #A6A6A6;
+    padding: 3px;
+    margin: 15px;
+    margin-bottom:5px;
+    margin-top: 45px;
+    position: relative;
+}
+
+.headerFontStyle
+{
+    font-weight: bolder;
+    font-family: Verdana, sans-serif;
+}
+
+.animationHolderParent
+{
+    width: 130px;
+    font-weight: bolder;
+}
+
+.animationHolder
+{
+    letter-spacing: 1px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.conditionTxt{
+    font-size:smaller;
+    color: #808080;
+    margin-left:15px;
+}
+
+.auctionMontiorTable {
+    width: 100%;
+    padding: 1px;
+}
+
+.auctionMontiorTable thead th, .auctionMontiorTable tbody td {
+    padding: 4px;
+}
+
+.auctionMontiorTable thead {
+    background-color: #A6A6A6;
+    color: white;
+}
+
+.auctionMontiorTable thead tr th a, .auctionMontiorTable thead tr th a:visited {
+    text-decoration: none;
+    color: white;
+    font-weight: normal;
+}
+
+.auctionMontiorTable thead th.sorted_true {
+    background-color: #717171;
+}
+
+.auctionMontiorTable tbody tr.odd td {
+    background-color: #EEEEEE;
+}
+
+.auctionMontiorTable tbody tr.expanded td {
+    background-color: #DDEEFF;
+}
+
+.auctionMontiorTable tbody tr.description td {
+    border-bottom: 1px solid white;
+}
+
+.centeredPanelGrid
+{
+    text-align: center;  
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.centeredPanelGridWithLeftJustifiedText
+{
+    text-align: left;  
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.centeredPanelGridWithBorderSpacing
+{
+    text-align: center;  
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 10px;
+}
+
+.centeredPanelWithBorderSpacingAndLeftJustifiedText
+{
+    text-align: left;  
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 10px;
+}
+
+.menuLogStyle
+{
+    vertical-align: top;
+    width: 70%;
+    text-align: left;
+}
+.menuStyle
+{
+    width: 27%;
+}
+
+.menuWrapper {
+    vertical-align: top;
+}
+
+.infoMessage
+{
+    color: #009933;
+    font-weight: bold;
+}
+
+.infoMessageHidden
+{
+    display: none;
+}
+
+.warningMessage
+{
+    color:#ffcc00;
+    font-weight: bold;
+}
+
+
+.errorMessage
+{
+    color: #cc0000;
+    font-weight: bold;
+}
+
+.selectedCheckBox
+{
+    font-weight: bold;
+    color:#009933;
+}
+
+.tooltipBoxStyle
+{
+    text-align: center;
+    font-weight: bold;
+    height: 50px;
+    width: 120px;
+}
+
+.tooltipTargetStyle
+{
+    border-collapse: collapse;
+    font-weight: bold;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 2px;
+}
+
+.tooltipTargetStyle:hover
+{
+    border-color: #009933;
+}
+
+span#examplePanel_menu.ui-icon.ui-icon-gear{
+    background: url("#{resource['css/images/infoIcon.png']}") no-repeat;
+}
+
+/* prevent hack above to show ace:menuBar in the vertical layout instead of horizontal)*/
+div.ui-widget.ui-widget-content.wijmo-wijmenu.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-horizontal
+{
+    width: auto;
+}
+
+.newBid {
+    background-color: yellow;
+}
+
+.spacerColumn {
+    width: 2%
+}
+
+.itemColumn {
+    width: 40%
+}
+
+.priceColumn {
+    width: 10%
+}
+
+.bidsColumn {
+    width: 10%
+}
+
+.timeColumn {
+    width: 15%
+}
+
+.actionColumn {
+    width: 15%
+}
+
+.colRight {
+    text-align: right;
+}
+
+.col75 {
+    width: 75%;
+}
+
+.col50, .col50c {
+    width: 50%;
+}
+
+.col33 {
+    width: 33%;
+}
+
+.col10 {
+    width: 10%;
+}
+
+.col25 {
+    width: 25%;
+}
+
+.col50c {
+    text-align: center;
+}
+
+.rowLight {
+    background-color: #FFFFFF;
+}
+
+.rowDark {
+    background-color: #CDCDCD;
+}
+
+.silkImage {
+    width: 16px;
+    height: 16px;
+    border: 0;
+}
+
+.employeeTable {
+    width: 50%;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.employeeTable th {
+    text-align: center;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+    border-bottom: 2px solid #CDCDCD;
+}
+
+.tooltipWrap {
+    display: inline;
+    text-decoration: underline;
+    color: blue;
+}
+
+.tooltipTable {
+    width: 100%;
+    border: 1px solid black;
+}
+
+.tooltipTable th {
+    text-align: center;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+    border-bottom: 2px solid #CDCDCD;
+}
+
+.dateHighlightGray, .dateHighlightGray a {
+    background-color: #B9B9B9;
+    font-weight: bold;
+}
+
+.dateHighlightBig, .dateHighlightBig a {
+    font-size: 18px;
+}
+
+.dateHighlightRed .iceOutTxt {
+    border: 2px solid red;
+}
+
+.dateHighlightItalic, .dateHighlightItalic a {
+    font-style: italic;
+    text-align: left;
+}
+
+.borderRedNorth, .borderRedEast, .borderRedWest, .borderRedSouth,
+.borderRedCenter {
+    background-color: #FF0000;
+}
+
+.borderTallNorth, .borderTallSouth {
+    height: 120px;
+}
+
+.borderTallEast, .borderTallWest, .borderTallCenter {
+    height: 200px;
+}
+
+.borderOutsetNorth, .borderOutsetEast, .borderOutsetWest, .borderOutsetSouth,
+.borderOutsetCenter {
+    border: 5px outset #11BB11;
+}
+
+.borderLeftNorth, .borderLeftEast, .borderLeftWest, .borderLeftSouth,
+.borderLeftCenter {
+    text-align: left;
+}
+
+.borderNoBoldNorth, .borderNoBoldEast, .borderNoBoldWest, .borderNoBoldSouth,
+.borderNoBoldCenter {
+    font-weight: normal;
+}
+
+.positionedElement {
+    cursor: move;
+    background: url("#{resource['css/images/positioned-bgslice.gif']}") repeat-x scroll left top #FFFFFF;
+    border: 1px solid #D9D9D9;
+    color: #484848;
+    font-weight: normal;
+    vertical-align: middle;
+    width: 125px;
+    height: 22px;
+}
+
+.positionedElement .moveLabel {
+    background: url("#{resource['css/images/move-arrow.gif']}") no-repeat scroll left center transparent;
+    vertical-align: middle;
+    height: 22px;
+    padding-left: 25px;
+}
+
+.iceOutProgFill.progressRedTxt {
+    color: white;
+    font-weight: bold;
+}
+
+.iceOutProgFill.progressRedBg {
+    background-color: #880000;
+    border: 2px inset black;
+}
+
+.iceOutProgFill.progressRedFill {
+    background-color: red;
+    background-image: none;
+}
+
+.progressThickTxt {
+    font-size: 18px;
+    font-weight: bold;
+    vertical-align: middle;
+    color: #00CC00;
+}
+
+.progressThickBg {
+    background-color: #444444;
+    border: 1px solid black;
+    height: 40px;
+}
+
+.progressThickFill {
+    background-image: none;
+    background-color: #FFFFFF;
+    height: 40px;
+}
+
+.iceOutProgFill.progressPurpleTxt {
+    font-size: 14px;
+    font-family: monospace;
+    color: white;
+}
+
+.iceOutProgFill.progressPurpleBg {
+    background-color: #673C83;
+    border: 2px outset #864BB9;
+}
+
+.iceOutProgFill.progressPurpleFill {
+    background: url("#{resource['css/images/purple-progress-slice.jpg']}") repeat-x scroll left top transparent;
+    background-color: #864BB9;
+}
+
+.dragContainer {
+    float: left;
+    border: 1px solid black;
+    background-color: #666666;
+    color: white;
+}
+
+.dragContainer span, .dragContainer label {
+    color: white;
+}
+
+.dropContainer {
+    height: 88px;
+    vertical-align: middle;
+    text-align: center;
+    border: 3px inset #000000;
+}
+
+.tableIdCol, .tableAccelCol, .tableMpgCol {
+    text-align: center;
+}
+
+.tableCostCol {
+    text-align: right;
+}
+
+.tableIdCol {
+    width: 8%;
+}
+
+.tableNameCol {
+    width: 26%;
+}
+
+.tableChassisCol {
+    width: 21%;
+}
+
+.tableWeightCol {
+    width: 12%;
+}
+
+.tableAccelCol {
+    width: 8%;
+}
+
+.tableMpgCol {
+    width: 8%;
+}
+
+.tableCostCol {
+    width: 15%;
+}
+
+.columnsBlock {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    display: block;
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.droppableSlot
+{
+    background: #B9B9B9 !important;
+    width: 199px;
+    height: 176px;
+    display: block;
+}
+
+.activatedSlot
+{
+    background: #0099ff !important;
+}
+
+.slot
+{
+    background: #F0E68C;
+}
+
+.imageStyle
+{
+  position: relative;  
+}
+
+.required-styling-demo .ui-inputfield.ui-state-required,
+.required-styling-demo .ui-inputfield.ui-state-optional {
+	border-width: 2px;
+	margin:1px;
+}
+
+.required-styling-demo .ui-state-required.ui-state-error,
+.required-styling-demo .ui-state-optional.ui-state-error {
+	border-width: 3px;
+	margin:0;
+}
+
+.required-styling-demo .ui-combobox-value .ui-inputfield,
+.required-styling-demo .ui-selectmenu-value .ui-inputfield {
+	margin: 0;
+	border: 2px solid;
+}
+
+div.ui-widget.ui-widget-content.wijmo-wijmenu.ui-corner-all.ui-helper-clearfix.plainMenu {
+	width: 180px;
+}
+
+.plainMenu ul {
+	padding: .5em 0 .5em 0;
+}

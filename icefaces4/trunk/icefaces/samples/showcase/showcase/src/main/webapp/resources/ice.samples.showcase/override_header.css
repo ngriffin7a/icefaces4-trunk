@@ -1,0 +1,151 @@
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+.required-styling-demo .ui-inputfield.ui-state-optional.blueRS {
+    border-color: #9999cc;
+}
+
+.required-styling-demo .ui-state-optional.ui-state-error.blueRS {
+    border-color: #ccccff;
+}
+
+.required-styling-demo .ui-inputfield.ui-state-required.blueRS {
+    border-color: #0000cc;
+}
+
+.required-styling-demo .ui-state-required.ui-state-error.blueRS {
+    border-color: #0000ff;
+	background-color: #ccccff;
+	background-image: none; /* prevent theme background */
+	color: #000099;
+}
+
+.required-styling-demo .blueRS .ui-inputfield.ui-state-optional {
+    border-color: #9999cc;
+}
+
+.required-styling-demo .blueRS .ui-state-optional.ui-state-error {
+    border-color: #ccccff;
+}
+
+.required-styling-demo .blueRS .ui-inputfield.ui-state-required {
+    border-color: #0000cc;
+}
+
+.required-styling-demo .blueRS .ui-state-required.ui-state-error {
+    border-color: #0000ff;
+	background-color: #ccccff;
+	background-image: none; /* prevent theme background */
+	color: #000099;
+}
+
+.required-styling-demo .ui-inputfield.ui-state-optional.redRS {
+    border-color: #cc9999;
+}
+
+.required-styling-demo .ui-state-optional.ui-state-error.redRS {
+    border-color: #ffcccc;
+}
+
+.required-styling-demo .ui-inputfield.ui-state-required.redRS {
+    border-color: #cc0000;
+}
+
+.required-styling-demo .ui-state-required.ui-state-error.redRS {
+    border-color: #ff0000;
+	background-color: #ffcccc;
+	background-image: none; /* prevent theme background */
+	color: #990000;
+}
+
+.required-styling-demo .redRS .ui-inputfield.ui-state-optional {
+    border-color: #cc9999;
+}
+
+.required-styling-demo .redRS .ui-state-optional.ui-state-error {
+    border-color: #ffcccc;
+}
+
+.required-styling-demo .redRS .ui-inputfield.ui-state-required {
+    border-color: #cc0000;
+}
+
+.required-styling-demo .redRS .ui-state-required.ui-state-error {
+    border-color: #ff0000;
+	background-color: #ffcccc;
+	background-image: none; /* prevent theme background */
+	color: #990000;
+}
+
+.required-styling-demo .ui-inputfield.ui-state-optional.greenRS {
+    border-color: #99cc99;
+}
+
+.required-styling-demo .ui-state-optional.ui-state-error.greenRS {
+    border-color: #ccffcc;
+}
+
+.required-styling-demo .ui-inputfield.ui-state-required.greenRS {
+    border-color: #00cc00;
+}
+
+.required-styling-demo .ui-state-required.ui-state-error.greenRS {
+    border-color: #00ff00;
+	background-color: #ccffcc;
+	background-image: none; /* prevent theme background */
+	color: #009900;
+}
+
+.required-styling-demo .greenRS .ui-inputfield.ui-state-optional {
+    border-color: #99cc99;
+}
+
+.required-styling-demo .greenRS .ui-state-optional.ui-state-error {
+    border-color: #ccffcc;
+}
+
+.required-styling-demo .greenRS .ui-inputfield.ui-state-required {
+    border-color: #00cc00;
+}
+
+.required-styling-demo .greenRS .ui-state-required.ui-state-error {
+    border-color: #00ff00;
+	background-color: #ccffcc;
+	background-image: none; /* prevent theme background */
+	color: #009900;
+}
+
+.icePnlTbSetHdrIconLft, .icePnlTbSetHdrIconRt {
+    display: inline;
+    width: auto;
+    height: auto;
+}
+
+.ui-input-label-left {
+    width: auto;
+}
+
+.textEntryInputTable .ui-input-label-left {
+    width: 100px;
+}
+
+.th-align-left {
+    text-align: left;
+}
+
+.growl-attr-col {
+    width: 25%;
+}

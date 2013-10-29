@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[contextMenuComponent.title]}"/>
+    <ui:param name="description" value="#{msgs[contextMenuComponent.description]}"/>
+    <ui:param name="resourceValue" value="#{contextMenuComponent.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{contextMenuResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{contextMenuResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            
+            <ace:panel id="panel" footer="#{contextMenuComponent.actionDescription}">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <h:outputText id="intro" value=" Right click on this sentence to display a component specific menu"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputLabel for="button" value="Right click on button to open context menu:"/>
+                        <h:commandButton id="button" value="Submit Button"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </ace:panel>
+            
+            <ace:contextMenu id="contextMenuTxt" for="intro">
+                <ace:menuItem value="Copy" icon="ui-icon ui-icon-disk" style="font-size: small;"
+                              action="#{contextMenuComponent.performAction}">
+                    <f:param name="actionType" value="Text Copy" />
+                </ace:menuItem>
+                <ace:menuItem value="Translate" icon="ui-icon ui-icon-arrowrefresh-1-w" style="font-style: small;"
+                              action="#{contextMenuComponent.performAction}">
+                    <f:param name="actionType" value="Text Translation" />
+                </ace:menuItem>
+            </ace:contextMenu>
+            
+            <ace:contextMenu id="contextMenuBttn" for="button">
+                <ace:menuItem id="menuItemOne" value="Click" icon="ui-icon ui-icon-disk" style="font-size: small;"
+                              action="#{contextMenuComponent.performAction}">
+                    <f:param name="actionType" value="Click" />
+                </ace:menuItem>
+                <ace:menuItem id="menuItemTwo" value="Status" icon="ui-icon" style="font-size: small;"
+                              action="#{contextMenuComponent.performAction}">
+                    <f:param name="actionType" value="Status Check" />
+                </ace:menuItem>
+                <ace:menuItem id="menuItemThree" value="Refresh" icon="ui-icon ui-icon-arrowrefresh-1-w" style="font-size: small;"
+                              action="#{contextMenuComponent.performAction}">
+                    <f:param name="actionType" value="Page Refresh" />
+                </ace:menuItem>
+            </ace:contextMenu>
+        </h:form>
+    </ui:define>
+</ui:composition>

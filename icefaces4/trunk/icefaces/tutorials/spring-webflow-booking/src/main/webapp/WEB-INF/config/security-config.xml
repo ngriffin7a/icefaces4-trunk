@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <!-- Configure Spring Security -->
+    <http auto-config="false"
+          use-expressions="true"
+          access-denied-page="/spring/login">
+
+        <form-login login-page="/spring/login"
+                    login-processing-url="/spring/loginProcess"
+                    default-target-url="/spring/main" always-use-default-target="true"
+                    authentication-failure-url="/spring/login?login_error=1" />
+
+        <!-- When using custom filters, please make sure the positions do not conflict with default filters.
+            Alternatively you can disable the default filters by removing the corresponding child elements from
+            http and avoiding the use of http auto-config='true'. -->
+
+        <custom-filter ref="exceptionTranslationFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+
+
+        <logout logout-url="/spring/logout" logout-success-url="/spring/logoutSuccess" invalidate-session="true"/>
+        <intercept-url pattern="/secure" method="POST" access="hasRole('ROLE_SUPERVISOR')"/>
+    </http>
+
+    <!--
+		Define local authentication provider, a real app would use an external provider (JDBC, LDAP, CAS, etc)
+		
+		usernames/passwords are:
+			keith/melbourne
+			erwin/leuven
+			jeremy/atlanta
+			scott/rochester
+	-->
+    <authentication-manager>
+        <authentication-provider>
+            <password-encoder hash="md5"/>
+            <user-service>
+                <user name="keith" password="417c7382b16c395bc25b5da1398cf076"
+                      authorities="ROLE_USER, ROLE_SUPERVISOR"/>
+                <user name="erwin" password="12430911a8af075c6f41c6976af22b09"
+                      authorities="ROLE_USER, ROLE_SUPERVISOR"/>
+                <user name="jeremy" password="57c6cbff0d421449be820763f03139eb" authorities="ROLE_USER"/>
+                <user name="scott" password="942f2339bf50796de535a384f0d1af3e" authorities="ROLE_USER"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+
+
+    <beans:bean id="sessionManagementFilter"
+            class="org.springframework.security.web.session.SessionManagementFilter">
+        <beans:constructor-arg name="securityContextRepository" ref="httpSessionSecurityContextRepository" />
+        <beans:property name="invalidSessionStrategy" ref="jsfInvalidSessionStrategy" />
+    </beans:bean>
+
+    <beans:bean id="jsfInvalidSessionStrategy" class="com.icesoft.spring.security.JsfInvalidSessionStrategy">
+        <beans:constructor-arg name="invalidSessionUrl" value="/general/logins/sessionExpired.jsf" />
+    </beans:bean>
+
+
+    <!-- http://static.springsource.org/spring-security/site/docs/3.1.x/reference/core-web-filters.html -->
+    <beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+      <beans:property name="accessDeniedHandler" ref="jsfAccessDeniedHandler"/>
+      <beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
+    </beans:bean>
+
+    <beans:bean id="jsfAccessDeniedHandler" class="com.icesoft.spring.security.JsfAccessDeniedHandler">
+        <beans:property name="loginPath" value="/spring/login" />
+        <beans:property name="contextRelative" value="true" />
+    </beans:bean>
+
+    <beans:bean  id="authenticationEntryPoint" class="com.icesoft.spring.security.JsfLoginUrlAuthenticationEntryPoint">
+        <beans:property name="loginFormUrl" value="/spring/login"/>
+        <beans:property name="redirectStrategy" ref="jsfRedirectStrategy" />
+    </beans:bean >
+
+
+    <beans:bean id="jsfRedirectStrategy" class="com.icesoft.spring.security.JsfRedirectStrategy"/>
+    <beans:bean id="httpSessionSecurityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>
+
+</beans:beans>

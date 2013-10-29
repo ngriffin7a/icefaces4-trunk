@@ -1,0 +1,59 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+				template="/WEB-INF/layouts/standard.xhtml">
+<ui:define name="notes">
+	<p>
+		This page uses the ICE faces data table backed by a Spring Web Flow managed bean.  The bean loads the model
+        data during the 'view-state' element 'on-render' when the view is first entered (see <strong>main-flow.xml</strong>).  Page navigation is Ajax-based and uses JSF 2 partial rendering.
+	</p>
+</ui:define>
+    <ui:define name="content">
+        <h:form id="reviewHotelsForm">
+
+            <ace:dataTable id="hotels" var="tblHotel" value="#{hotels}" rows="#{searchCriteria.pageSize}"
+                           paginator="true" paginatorPosition="bottom">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        Hotel Search Results<br/>
+                        <h:commandLink value="Modify or start search again" action="changeSearch" styleClass="alt" />
+                    </h:panelGroup>
+                </f:facet>
+                <ace:column headerText="Name">
+                    #{tblHotel.name}
+                </ace:column>
+                <ace:column  headerText="Address">
+                    #{tblHotel.address}
+                </ace:column>
+                <ace:column headerText="City, State">
+                    #{tblHotel.city}, #{tblHotel.state}, #{tblHotel.country}
+                </ace:column>
+                <ace:column headerText="Zip">
+                    #{tblHotel.zip}
+                </ace:column>
+                <ace:column headerText="Action">
+                    <ace:pushButton id="select" value="View" action="#{hotelModel.selectHotelAction(tblHotel)}" />
+                </ace:column>
+            </ace:dataTable>
+        </h:form>
+</ui:define>
+</ui:composition>

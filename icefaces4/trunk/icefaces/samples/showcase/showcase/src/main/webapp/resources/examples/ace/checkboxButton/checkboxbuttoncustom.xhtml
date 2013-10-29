@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[checkboxButtonCustom.title]}"/>
+    <ui:param name="description" value="#{msgs[checkboxButtonCustom.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[checkboxButtonCustom.subMenuTitle]}"/>
+    <ui:param name="resourceValue" value="#{checkboxButtonCustom.exampleResource}"/>
+    <ui:param name="subMenuLinks" value="#{checkboxButton.subMenuLinks}"/>
+
+    <ui:param name="wikiResources" value="#{checkboxButtonResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{checkboxButtonResources.tldResources}"/>
+
+    <ui:define name="example">
+        <style type="text/css">
+            .ice-checkboxbutton button {
+                height:24px;
+                width:24px;
+            }
+
+            .ice-checkboxbutton button.ui-state-hover {
+                background: url("#{resource['css/images/checkGrey.png']}") no-repeat;
+                border:none;
+            }
+
+            .ice-checkboxbutton button.ui-state-active {
+                background: url("#{resource['css/images/check.png']}") no-repeat;
+                border:none;
+            }
+
+            .ice-checkboxbutton span.ui-state-default {
+                background: url("#{resource['css/images/uncheck.png']}") no-repeat;
+            }
+
+            .ice-checkboxbutton .ui-state-active .ui-icon {
+                background: transparent;
+            }
+        </style>
+
+        <h:form id="form" style="text-align: center">
+            <ace:panel>
+                <ace:checkboxButton id="checkBox" value="#{checkboxButton.selected}">
+                    <ace:ajax execute="@this" event="activate" render="valueDescription"/>
+                </ace:checkboxButton>
+                <br/>
+
+                The checkbox is:
+                <h:outputText id="valueDescription" value="#{checkboxButton.boxValueDescription}" style="font-weight: bold;"/>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

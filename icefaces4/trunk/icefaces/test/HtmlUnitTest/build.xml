@@ -1,0 +1,104 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project name="htmlunit-test" default="test.unit">
+
+    <!-- This property file is only used for EE builds and overrides various
+         property values if it is available. -->
+    <property file="../../../ee-bundle.properties"/>
+
+    <property file="../../build.properties"/>
+
+    <import file="../../core/build.xml"/>
+
+    <property file="htmlunit.properties"/>
+    <property name="test.dir" location="./src/"/>
+    <property name="test.build.dir" location="./build"/>
+    <property name="test.classes.dir" location="${test.build.dir}/classes"/>
+    <property name="test.lib.dir" location="../../lib"/>
+
+    <patternset id="test.lib.compile">
+        <include name="${icefaces.lib.name}.jar"/>
+        <include name="junit-4.5.jar"/> 
+    </patternset>
+
+        
+    
+    <target name="check.install" > 
+       <fail message="HtmlUnit jars not found. Please define the location of HtmlUnit in htmlunit.properties">
+         <condition> 
+           <not> 
+               <available file="htmlunit-2.5.jar" filepath="${htmlUnitLocation}/lib/"/> 
+           </not>
+       </condition>
+       </fail> 
+    </target>
+
+    <target name="test.clean" >
+        <delete dir="${test.build.dir}"/>
+    </target>
+
+    <target name="test.pre.compile"  
+            depends="check.install" description="test pre-compilation tasks">
+        <mkdir dir="${test.build.dir}"/>
+        <mkdir dir="${test.classes.dir}"/>
+    </target>
+
+    <target name="test.compile"
+            depends="test.pre.compile" 
+	    description="compile ICEfaces 2.0 htmlunit test classes">
+        <javac srcdir="${test.dir}" destdir="${test.classes.dir}">
+            <classpath>
+                <fileset dir="${test.lib.dir}">
+                    <patternset refid="lib.compile"/>
+                    <patternset refid="test.lib.compile"/>
+                </fileset>
+		<fileset dir="${htmlUnitLocation}/lib" > 
+		    <include name ="*.jar" />
+		</fileset> 
+		    
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="test.unit" 
+            depends="test.compile" 
+	    description="run htmlunit tests against the core framework">
+        <junit printsummary="yes" haltonfailure="yes">
+            <classpath>
+                <pathelement path="${test.classes.dir}"/>
+                <fileset dir="${test.lib.dir}">
+                    <patternset refid="lib.compile"/>
+                    <patternset refid="test.lib.compile"/>
+                </fileset>
+		<fileset dir="${htmlUnitLocation}/lib" > 
+		    <include name ="*.jar" />
+		</fileset>
+            </classpath>
+
+            <formatter type="plain"/>
+
+            <batchtest fork="yes" todir="${test.build.dir}">
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+
+</project>
+

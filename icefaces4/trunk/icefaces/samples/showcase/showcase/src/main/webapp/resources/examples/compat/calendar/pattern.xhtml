@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[calendarPattern.title]}"/>
+    <ui:param name="description" value="#{msgs[calendarPattern.description]}"/>
+    <ui:param name="resourceValue" value="#{calendarPattern.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form id="example-form">
+            
+            <h:panelGrid columns="4" styleClass="centeredPanelWithBorderSpacingAndLeftJustifiedText">
+                <h:outputLabel for="patternType" value="Format Types:"/>
+                <h:selectOneMenu id="patternType"
+                                  value="#{calendarPattern.patternType}"
+                                  required="true">
+                    <f:selectItems value="#{calendarPattern.patternTypes}"/>
+                    <f:ajax execute="@this" render="example-form:radios" event="change"/>
+                </h:selectOneMenu>
+
+                <h:outputLabel for="radios" value="Format Options:"/>
+                <h:panelGroup id="radios">
+                        <h:selectOneMenu id="optionPattern"
+                                          value="#{calendarPattern.optionPattern}"
+                                          valueChangeListener="#{calendarPattern.reloadChanges}"
+                                          rendered="#{calendarPattern.typePattern}"
+                                          required="true">
+                            <f:ajax />
+                            <f:selectItems value="#{calendarPattern.patternOptions}"/>
+                        </h:selectOneMenu>
+
+                        <h:selectOneMenu id="optionDateStyle"
+                                          value="#{calendarPattern.optionDateStyle}"
+                                          valueChangeListener="#{calendarPattern.reloadChanges}"
+                                          rendered="#{calendarPattern.typeDateStyle}"
+                                          required="true">
+                            <f:ajax />
+                            <f:selectItems value="#{calendarPattern.styleOptions}"/>
+                        </h:selectOneMenu>
+                </h:panelGroup>
+            </h:panelGrid>
+            
+            <h:panelGrid columns="2" styleClass="centeredPanelGridWithBorderSpacing">
+                <h:outputLabel for="display" value="Selected Date:"/>
+                <h:panelGroup id="display">
+                    <h:outputText value="#{calendarPattern.date}"
+                                  rendered="#{calendarPattern.typePattern}">
+                        <f:convertDateTime pattern="#{calendarPattern.optionPattern}"/>
+                    </h:outputText>
+                    <h:outputText value="#{calendarPattern.date}"
+                                  rendered="#{calendarPattern.typeDateStyle}">
+                        <f:convertDateTime type="both"
+                                           dateStyle="#{calendarPattern.optionDateStyle}"/>
+                    </h:outputText>
+                </h:panelGroup>
+            </h:panelGrid>
+            
+            <h:panelGrid styleClass="centeredPanelGridWithBorderSpacing">
+                <h:commandButton value="Apply Changes"/>
+                
+                <ice:selectInputDate value="#{calendarPattern.date}" renderAsPopup="false"
+                                 rendered="#{calendarPattern.typePattern}">
+                    <f:convertDateTime pattern="#{calendarPattern.optionPattern}"/>
+                </ice:selectInputDate>
+            
+                <ice:selectInputDate value="#{calendarPattern.date}" renderAsPopup="false"
+                                 rendered="#{calendarPattern.typeDateStyle}">
+                    <f:convertDateTime type="both"
+                                       dateStyle="#{calendarPattern.optionDateStyle}"/>
+                </ice:selectInputDate>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

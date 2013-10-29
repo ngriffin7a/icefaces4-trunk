@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[border.title]}"/>
+    <ui:param name="description" value="#{msgs[border.description]}"/>
+    <ui:param name="resourceValue" value="#{border.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+
+        <h:form>
+            <ice:panelBorder styleClass="borderNoBold borderLeft">
+                <f:facet name="north">
+                    <h:graphicImage library="css/images" name="header.png" alt="Header"/>
+                    Here is some header info in the North facet
+                </f:facet>
+                
+                <f:facet name="east">
+                    East Facet
+                </f:facet>
+
+                <f:facet name="south">
+                    Example footer in the South facet
+                </f:facet>
+
+                <f:facet name="west">
+                    Simulated Menu Links
+                    <ul>
+                        <li><a href="http://www.google.com/" target="_blank">http://www.google.com</a></li>
+                        <li><a href="http://www.yahoo.com/" target="_blank">http://www.yahoo.com</a></li>
+                        <li><a href="http://www.bing.com/" target="_blank">http://www.bing.com</a></li>
+                        <li><a href="http://www.ask.com/" target="_blank">http://www.ask.com</a></li>
+                    </ul>
+                    West Facet
+                </f:facet>
+
+                <f:facet name="center">
+                    <p>Simulated content in the Center facet.</p>
+                    <br/>
+                    <p>ICEfaces 2 is an open-source Rich Internet Application (RIA) development framework based on the JavaServer Faces (JSF) 2 standard. Like its predecessor, ICEfaces 1.8, ICEfaces 2 extends JSF to simplify development and enhance the standard JSF feature set - simultaneously improving developer efficiency and expanding the spectrum of RIA capabilities that can be included in any JSF-based web application.</p>
+                    <p>Adhering closely to the standard JSF 2 extension points allows ICEfaces to work transparently with the stock JSF framework, simplifying integration and fostering 3rd party compatibility with other JSF 2-compliant libraries.</p>
+                </f:facet>
+            </ice:panelBorder>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[dateReqStyle.title]}"/>
+    <ui:param name="description" value="#{msgs[dateReqStyle.description]}"/>
+    <ui:param name="resourceValue" value="#{dateReqStyle.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dateTimeEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dateTimeEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form1">
+            <icecore:singleSubmit/>
+            <ace:panel>
+                <h:panelGrid style="text-align: center;" width="100%">
+                    <h:panelGroup>
+                        <h:outputLabel for="reqDate" value="Selected Dates: "/>
+                        <h:outputText id="reqDate" value="#{dateReqStyle.selectedDate1}"
+                                      style="font-weight: bold;">
+                            <f:convertDateTime pattern="MMMM dd, yyyy"
+                                               timeZone="Canada/Mountain"/>
+                        </h:outputText>
+                        and
+                        <h:outputText id="optDate" value="#{dateReqStyle.selectedDate2}"
+                                      style="font-weight: bold;">
+                            <f:convertDateTime pattern="MMMM dd, yyyy"
+                                               timeZone="Canada/Mountain"/>
+                        </h:outputText>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </ace:panel>
+            
+            <ace:panel header="Color Customization">
+                <h:panelGrid width="100%" columns="3" columnClasses="col25,col25,col50"
+                             cellpadding="6" cellspacing="6">
+                        <h:outputLabel for="reqColor" value="Required Color Style:"/>
+                        <ace:simpleSelectOneMenu id="reqColor" value="#{dateReqStyle.reqColor}"
+                                         style="width: 150px;" disabled="#{dateReqStyle.useTheme}">
+										 <ace:ajax execute="@this" />
+                            <f:selectItem itemValue="blueRS" itemLabel="Blue"/>
+                            <f:selectItem itemValue="greenRS" itemLabel="Green"/>
+                            <f:selectItem itemValue="redRS" itemLabel="Red"/>
+                        </ace:simpleSelectOneMenu>
+                        <ace:message for="reqColor"/>
+                    
+                        <h:outputLabel for="optColor" value="Optional Color Style:"/>
+                        <ace:simpleSelectOneMenu id="optColor" value="#{dateReqStyle.optColor}"
+                                         style="width: 150px;" disabled="#{dateReqStyle.useTheme}">
+										 <ace:ajax execute="@this" />
+                            <f:selectItem itemValue="blueRS" itemLabel="Blue"/>
+                            <f:selectItem itemValue="greenRS" itemLabel="Green"/>
+                            <f:selectItem itemValue="redRS" itemLabel="Red"/>
+                        </ace:simpleSelectOneMenu>
+                        <ace:message for="optColor"/>
+                </h:panelGrid>
+				<h:panelGroup>
+					<h:selectBooleanCheckbox id="useTheme" value="#{dateReqStyle.useTheme}" />
+					<h:outputLabel for="useTheme" value=" No custom styling (use theme)" />
+				</h:panelGroup>
+            </ace:panel>
+       </h:form>
+       <h:form id="form">             
+            <ace:panel header="Date Entry" styleClass="#{dateReqStyle.useTheme ? '' : 'required-styling-demo'}">
+                <h:panelGrid id="calendarPanel" width="100%" columns="2">
+                    <ace:dateTimeEntry id="calReq"
+                                       value="#{dateReqStyle.selectedDate1}"
+                                       timeZone="Canada/Mountain"
+                                       pattern="MMM/dd/yyyy"
+                                       renderAsPopup="true"
+                                       label="Selected Date 1:"
+                                       labelPosition="left"
+                                       required="true"
+                                       requiredIndicator="(Required)"
+                                       indicatorPosition="right"
+                                       styleClass="#{dateReqStyle.reqColor}"/>
+                    <ace:message id="calReqMsg" for="calReq"/>
+                    
+                    <ace:dateTimeEntry id="calOpt"
+                                       value="#{dateReqStyle.selectedDate2}"
+                                       timeZone="Canada/Mountain"
+                                       pattern="MMM/dd/yyyy"
+                                       renderAsPopup="true"
+                                       label="Selected Date 2:"
+                                       labelPosition="left"
+                                       required="false"
+                                       optionalIndicator="(Optional)"
+                                       indicatorPosition="right"
+                                       styleClass="#{dateReqStyle.optColor}"/>
+                    <ace:message id="calOptMsg" for="calOpt"/>
+                </h:panelGrid>
+                <h:commandButton id="submit" value="Submit"/>
+            </ace:panel>
+        </h:form>
+		<ui:include src="/resources/ice.samples.showcase/reqStyleCss.xhtml" />
+    </ui:define>
+</ui:composition>

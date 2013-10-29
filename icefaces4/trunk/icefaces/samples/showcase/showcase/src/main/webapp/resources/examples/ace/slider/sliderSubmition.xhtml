@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[sliderSubmitionExample.title]}"/>
+    <ui:param name="description" value="#{msgs[sliderSubmitionExample.description]}"/>
+    <ui:param name="resourceValue" value="#{sliderSubmitionExample.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{sliderEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{sliderEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:panelGrid columns="2" styleClass="centeredPanelGrid">
+            <ace:panel header="Basic Slider" style="height: 150px;">
+                <h:form id="form">
+                    <h:panelGrid styleClass="centeredPanelGridWithBorderSpacing">
+                        <h:outputText id="manualValue" value="Value: #{sliderSubmitionExample.manualValue}"/>
+                        <ace:sliderEntry id="regularSlideEntry"
+                                         length="200px"
+                                         min="0"
+                                         max="99"
+                                         value="#{sliderSubmitionExample.manualValue}"/>
+                        <h:commandButton id="submit" style="width:200px;" type="submit" value="Set Slider Value"/>
+                    </h:panelGrid>
+                </h:form>
+            </ace:panel>
+            
+            <ace:panel header="AJAX Slider" style="height: 150px;">
+                <h:form id="form2">
+                    <h:panelGrid styleClass="centeredPanelGridWithBorderSpacing">
+                        <h:outputText id="autoValue" value="Value: #{sliderSubmitionExample.autoValue}"/>
+                        <ace:sliderEntry   id="ajaxSliderEntry"
+                                           length="200px"
+                                           min="0"
+                                           max="99"
+                                           value="#{sliderSubmitionExample.autoValue}" >
+                            <ace:ajax event="slideEnd" execute="@this" render="@form"/>
+                        </ace:sliderEntry>
+                    </h:panelGrid>
+                </h:form>
+            </ace:panel>
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>
