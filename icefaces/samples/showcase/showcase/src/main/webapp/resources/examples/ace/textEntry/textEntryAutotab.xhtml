@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[textEntryAutotabBean.title]}"/>
+    <ui:param name="description" value="#{msgs[textEntryAutotabBean.description]}"/>
+    <ui:param name="resourceValue" value="#{textEntryAutotabBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{textEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{textEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="textEntryForm">
+            <ace:panel id="personalInfoInputPanel" header="Personal Info">
+                <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
+                    <ace:textEntry id="firstNameInput" value="#{textEntryAutotabBean.firstName}"
+                                   label="First Name:" labelPosition="left"
+                                   maxlength="#{textEntryAutotabBean.firstNameLength}"
+                                   autoTab="true">
+                        <ace:ajax render="@this firstNameOutput firstNameMsg"/>
+                    </ace:textEntry>
+                    <h:outputText value="Max #{textEntryAutotabBean.firstNameLength} characters"/>
+                    
+                    <ace:textEntry id="lastNameInput" value="#{textEntryAutotabBean.lastName}"
+                                   label="Last Name:" labelPosition="left"
+                                   maxlength="#{textEntryAutotabBean.lastNameLength}"
+                                   autoTab="true">
+                        <ace:ajax render="@this lastNameOutput lastNameMsg"/>
+                    </ace:textEntry>
+                    <h:outputText value="Max #{textEntryAutotabBean.lastNameLength} characters"/>
+
+                    <ace:textEntry id="cityInput" value="#{textEntryAutotabBean.city}"
+                                   label="City:" labelPosition="left"
+                                   maxlength="#{textEntryAutotabBean.cityLength}"
+                                   autoTab="true">
+                        <ace:ajax render="@this cityOutput cityMsg"/>
+                    </ace:textEntry>
+                    <h:outputText value="Max #{textEntryAutotabBean.cityLength} characters"/>
+                    
+                    <ace:textEntry id="provinceInput" value="#{textEntryAutotabBean.province}"
+                                   label="Province:" labelPosition="left"
+                                   maxlength="#{textEntryAutotabBean.provinceLength}"
+                                   autoTab="true">
+                        <ace:ajax render="@this provinceOutput provinceMsg"/>
+                    </ace:textEntry>
+                    <h:outputText value="Max #{textEntryAutotabBean.provinceLength} characters"/>
+                </h:panelGrid>
+
+                <h:panelGrid width="100%">
+                    <ace:message id="firstNameMsg" for="firstNameInput"/>
+                    <ace:message id="lastNameMsg" for="lastNameInput"/>
+                    <ace:message id="cityMsg" for="cityInput"/>
+                    <ace:message id="provinceMsg" for="provinceInput"/>
+                </h:panelGrid>
+            </ace:panel>
+            
+            <ace:panel id="personalInfoOutputPanel" header="Entered data">
+                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
+                    <h:outputText id="firstNameOutput" value="first name: #{textEntryAutotabBean.firstName}"/>
+                    <h:outputText id="lastNameOutput" value="last name: #{textEntryAutotabBean.lastName}"/>
+                    <h:outputText id="cityOutput" value="city: #{textEntryAutotabBean.city}"/>
+                    <h:outputText id="provinceOutput" value="province: #{textEntryAutotabBean.province}"/>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>
+

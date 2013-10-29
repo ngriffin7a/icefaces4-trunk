@@ -1,0 +1,89 @@
+Test ICEfaces basic scenario: single form, h: components
+
+1. Test regular full form button in h:panelGroup(s) section
+
+1.Click Regular button to make empty text fields invalid
+2.Click pg_reg section's button
+3.==> FacesMessage(s) should not change
+4.Fill in pg_reg text field, and re-click pg_reg button
+5.==> pg_reg_txt now valid, the rest are the same
+
+2. Test f:ajax execute panelGroup button in h:panelGroup(s) section
+
+1.Click Regular button to make empty text fields invalid
+2.Click pg_fpg section's button
+3.==> FacesMessage(s) should not change
+4.Fill in pg_fpg text field, and re-click pg_fpg button
+5.==> pg_fpg_txt now valid, the rest are the same
+
+3. Test f:ajax execute form button in h:panelGroup(s) section
+
+1.Click Regular button to make empty text fields invalid
+2.Click pg_ff section's button
+3.==> FacesMessage(s) should not change
+4.Fill in pg_ff text field, and re-click pg_ff button
+5.==> pg_ff_txt now valid, the rest are the same
+
+
+4. Test f:ajax execute this button
+
+1.Click Regular button to make empty text fields invalid
+2.Click This button
+3.==> FacesMessage(s) should not change
+
+5. Test f:ajax form button
+
+1.Click Regular button to make empty text fields invalid
+2.Click Form button
+3.==> FacesMessage(s) should not change
+
+
+6. Test regular full form button in h:dataTable regular section
+
+1.Click Regular button to make empty text fields invalid
+2.Click middle list_pg_reg section's button
+3.==> FacesMessage(s) should not change
+4.Fill in middle list_pg_reg text field, and re-click list_pg_reg button
+5.==> list_reg:1:list_pg_reg_txt now valid, the rest are the same
+
+7. Test f:ajax execute panelGroup button in h:dataTable fpg section
+
+1.Click Regular button to make empty text fields invalid
+2.Click middle list_pg_fpg section's button
+3.==> FacesMessage(s) should not change
+4.Fill in middle list_pg_fpg text field, and re-click list_pg_fpg button
+5.==> list_fpg:1:list_pg_fpg_txt now valid, the rest are the same
+
+8. Test f:ajax execute form button in h:dataTable ff section
+
+1.Click Regular button to make empty text fields invalid
+2.Click middle list_pg_ff section's button
+3.==> FacesMessage(s) should not change
+4.Fill in middle list_pg_ff text field, and re-click list_pg_ff button
+5.==> list_ff:1:list_pg_ff_txt now valid, the rest are the same
+
+
+9. Test global message clearing after full form button
+1.Click Regular HI button
+2.==> HI global message added
+3.Click Regular BYE button
+4.==> BYE global message added, HI global message removed
+5.Click Regular button
+6.==> All global messages removed
+
+10. Test global message retention after f:ajax execute this button
+1.Click This HI button
+2.==> HI global message added
+3.Click This BYE button
+4.==> BYE global message added, HI global message retained
+5.Click Regular button
+6.==> All global messages removed
+
+11. Test global message retention after f:ajax execute form button
+7.Click Form HI button
+8.==> HI global message added
+9.Click Form BYE button
+10.==> BYE global message added, HI global message retained
+11.Click Regular button
+12.==> All global messages removed
+

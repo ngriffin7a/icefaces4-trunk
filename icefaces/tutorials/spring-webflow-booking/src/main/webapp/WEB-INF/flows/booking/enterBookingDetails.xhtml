@@ -1,0 +1,138 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:ace="http://www.icefaces.org/icefaces/components"
+				template="/WEB-INF/layouts/standard.xhtml">
+<ui:define name="notes">
+	<p>
+		The form uses Ajax-based validations to redisplay server-side errors without refreshing the entire page.
+		The booking bean backing the form is a flow-scoped object (see <strong>booking-flow.xml</strong>).		
+	</p>
+</ui:define>
+<ui:define name="content">
+	<h:form id="bookingForm">
+		<ace:panel header="Hotel Reservation Form">
+			<ace:messages />
+			<div class="large">
+				${booking.hotel.name},
+				${booking.hotel.address}
+				${booking.hotel.city}, ${booking.hotel.state}, ${booking.hotel.zip}
+				${booking.hotel.country}
+			</div>
+			<hr/>
+            <h:panelGrid columns="4" columnClasses="">
+                <h:panelGroup styleClass="label">
+                    <h:outputLabel for="price" value="Nightly Rate:"/>
+                </h:panelGroup>
+                <h:outputText id="price" value="#{booking.hotel.price}" styleClass="label">
+                    <f:convertNumber type="currency" currencySymbol="$"/>
+                </h:outputText>
+
+                <h:outputText value=" "/>
+                <h:outputText value=" "/>
+
+
+                <h:panelGroup styleClass="label">
+                    <h:outputLabel for="checkinDate" value="Check In:"/>
+                </h:panelGroup>
+                <ace:dateTimeEntry id="checkinDate" value="#{booking.checkinDate}"
+                                   label="Check in date"
+                                   mindate="#{booking.minCheckinDate}"
+                                   required="true" requiredIndicator="*"
+                                   pattern="MM-dd-yyyy" timeZone="EST"
+                                   renderAsPopup="true" singleSubmit="true"/>
+                
+                <h:panelGroup styleClass="label">
+                    <h:outputLabel for="checkoutDate" value="Check Out:"/>
+                </h:panelGroup>
+                <ace:dateTimeEntry id="checkoutDate" value="#{booking.checkoutDate}"
+                                   label="Check out date"
+                                   mindate="#{booking.minCheckoutDate}"
+                                   required="true" requiredIndicator="*"
+                                   pattern="MM-dd-yyyy" timeZone="EST"
+                                   renderAsPopup="true" singleSubmit="true"/>
+
+
+                <h:panelGroup styleClass="label">
+                    <h:outputLabel for="beds" value="Room Preference:"/>
+                </h:panelGroup>
+                <ace:simpleSelectOneMenu id="beds" value="#{booking.beds}" label="Room preference"
+                                         required="true" requiredIndicator="*">
+                    <f:selectItems value="#{referenceData.bedOptions}"/>
+				</ace:simpleSelectOneMenu>
+
+                <h:panelGroup styleClass="label">
+                    <h:outputLabel for="smoking" value="Smoking:"/>
+                </h:panelGroup>
+                <h:selectOneRadio id="smoking" value="#{booking.smoking}" layout="pageDirection"  styleClass="label">
+                    <f:selectItems value="#{referenceData.smokingOptions}"/>
+                </h:selectOneRadio>
+
+
+                <h:panelGroup styleClass="label">
+                    <h:outputLabel for="creditCard" value="Credit Card Number:"/>
+                </h:panelGroup>
+                <ace:textEntry id="creditCard" title="16-digit credit card number." label="Credit card number"
+                               value="#{booking.creditCard}" required="true" requiredIndicator="*" maxlength="16"/>
+
+                <h:panelGroup styleClass="label">
+                    <h:outputLabel for="creditCardName" value="Credit Card Name:"/>
+                </h:panelGroup>
+                <ace:textEntry id="creditCardName" title="Name on credit card" label="Credit card name"
+                               value="#{booking.creditCardName}" required="true" requiredIndicator="*"/>
+
+
+                <h:panelGroup styleClass="label">
+                    <h:outputLabel for="creditCardExpiryMonth" value="Expiration Date:"/>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <ace:simpleSelectOneMenu id="creditCardExpiryMonth" value="#{booking.creditCardExpiryMonth}"
+                                             label="Credit card expiration month" required="true">
+                        <f:selectItems value="#{referenceData.creditCardExpMonths}" />
+                    </ace:simpleSelectOneMenu>&nbsp;
+                    <ace:simpleSelectOneMenu id="creditCardExpiryYear" value="#{booking.creditCardExpiryYear}"
+                                             label="Credit card expiration year" required="true">
+                        <f:selectItems value="#{referenceData.creditCardExpYears}"/>
+                    </ace:simpleSelectOneMenu>
+                </h:panelGroup>
+
+                <h:outputText value=" "/>
+                <h:outputText value=" "/>
+
+
+                <h:panelGroup>
+                    <ace:pushButton id="proceed" value="Proceed" action="proceed" style="display: inline;"/>
+                    <ace:pushButton id="cancel" value="Cancel" action="cancel" style="display: inline;">
+                        <ace:ajax execute="@this" render="@all"/>
+                    </ace:pushButton>
+                </h:panelGroup>
+            </h:panelGrid>
+		</ace:panel>
+        <ace:tooltip id="ccPanelToolTip" for="creditCard" showEffectLength="150" hideDelay="400" 
+                     targetPosition="topRight" position="bottomLeft" speechBubble="true"
+                     styleClass="tootipWithPanel">
+            <ace:panel header="Credit Card Input Tip">
+                <h:outputText value="Enter Credit Card as 16-digit number only: e.g. 1234567890123456" />
+            </ace:panel>
+        </ace:tooltip>
+	</h:form>
+</ui:define>
+</ui:composition>

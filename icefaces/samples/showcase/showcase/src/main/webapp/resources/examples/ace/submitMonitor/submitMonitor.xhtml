@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[submitMonitor.title]}"/>
+    <ui:param name="description" value="#{msgs[submitMonitor.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[submitMonitor.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{submitMonitor.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{submitMonitor.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{submitMonitorResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{submitMonitorResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:panelGrid id="completeExample" columns="2" style="width: 100%;">
+            <ace:panel id="configPanel" header="Configuration Panel" style="height: 300px;">
+                <h:form id="configForm">
+                    <icecore:singleSubmit/>
+                    <h:panelGrid id="configGrid" columns="2" styleClass="centeredPanelWithBorderSpacingAndLeftJustifiedText">
+                        <h:outputLabel id="forLabel" for="forSelector" value="Region to listen to:" />
+                        <ace:simpleSelectOneMenu id="forSelector" value="#{submitMonitor.forSelection}" valueChangeListener="#{submitMonitor.sleep}">
+							<ace:ajax execute="@this" />
+                            <f:selectItem itemValue=":demoForm:demoGroup" itemLabel="Demonstration Panel"/>
+                            <f:selectItem itemValue=":configForm:configGrid :demoForm:demoGroup" itemLabel="Configuration and Demonstration Panels"/>
+                            <f:selectItem itemValue="" itemLabel="Whole page"/>
+                        </ace:simpleSelectOneMenu>
+
+                        <h:outputLabel id="blockLabel" for="blockSelector" value="What to block:" />
+                        <ace:simpleSelectOneMenu id="blockSelector" value="#{submitMonitor.blockSelection}" valueChangeListener="#{submitMonitor.sleep}">
+							<ace:ajax execute="@this" />
+                            <f:selectItem itemValue="@none" itemLabel="Nothing"/>
+                            <f:selectItem itemValue="@source" itemLabel="Only the submitting component"/>
+                            <f:selectItem itemValue=":completeExample" itemLabel="Configuration and Demonstration Panels"/>
+                            <f:selectItem itemValue="@all" itemLabel="Whole page"/>
+                        </ace:simpleSelectOneMenu>
+
+                        <h:outputLabel id="idleLabel" for="idleInput" value="Idle label:"/>
+                        <h:inputText id="idleInput" value="#{submitMonitor.idleLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+
+                        <h:outputLabel id="activeLabel" for="activeInput" value="Active label:"/>
+                        <h:inputText id="activeInput" value="#{submitMonitor.activeLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+
+                        <h:outputLabel id="serverErrorLabel" for="serverInput" value="Server error label:"/>
+                        <h:inputText id="serverInput" value="#{submitMonitor.serverErrorLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+
+                        <h:outputLabel id="networkErrorLabel" for="networkInput" value="Network error label:"/>
+                        <h:inputText id="networkInput" value="#{submitMonitor.networkErrorLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+
+                        <h:outputLabel id="sessionExpiredLabel" for="sessionInput" value="Session expired label:"/>
+                        <h:inputText id="sessionInput" value="#{submitMonitor.sessionExpiredLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+                    </h:panelGrid>
+                </h:form>
+            </ace:panel>
+            <ace:panel id="demoPanel" header="Demonstration Panel" style="height: 300px;">
+                <h:panelGroup id="submitMonitorGroup">
+                    <ace:submitMonitor id="submitMonitor"
+                                       idleLabel="#{submitMonitor.idleLabel}"
+                                       activeLabel="#{submitMonitor.activeLabel}"
+                                       serverErrorLabel="#{submitMonitor.serverErrorLabel}"
+                                       networkErrorLabel="#{submitMonitor.networkErrorLabel}"
+                                       sessionExpiredLabel="#{submitMonitor.sessionExpiredLabel}"
+                                       for="#{submitMonitor.forSelection}"
+                                       blockUI="#{submitMonitor.blockSelection}"/>
+                </h:panelGroup>
+                <br/>
+                <h:form id="demoForm">
+                    <h:panelGroup id="demoGroup">
+                        <ace:pushButton id="submitButton" label="Submit" actionListener="#{submitMonitor.sleep}"/>
+                    </h:panelGroup>
+                </h:form>
+            </ace:panel>
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>

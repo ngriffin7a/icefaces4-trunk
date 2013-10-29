@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[menuType.title]}"/>
+    <ui:param name="description" value="#{msgs[menuType.description]}"/>
+    <ui:param name="resourceValue" value="#{menuType.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{menuResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{menuResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+                <h:panelGrid columns="3" columnClasses ="menuWrapper, menuWrapper, menuWrapper" width="100%">
+                    <h:panelGrid>
+                        <h:panelGrid styleClass="centeredPanelGrid">
+                            <h:outputText value="plain" style="font-weight: bolder; font-size: 10pt;"/>
+                        </h:panelGrid>
+                        <ace:menu id="plainMenu" type="plain" styleClass="plainMenu">
+                            <ace:submenu label="File" id="plainMenuFile">
+                                <ace:menuItem id="plainMenuNew"
+                                              value="New" 
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem   id="plainMenuOpen"
+                                                value="Open"
+                                                actionListener="#{menuType.fireAction}"
+                                                icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="plainMenuSave"
+                                              value="Save"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon ui-icon-disk">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="plainMenuDelete"
+                                              value="Delete"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon ui-icon-close">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                            </ace:submenu>
+
+                            <ace:submenu id="plainMenuView" label="View">
+                                <ace:menuItem id="plainMenuHorizontal"
+                                              value="Horizontal"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="plainMenuVertical"
+                                              value="Vertical"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="plainMenuFill"
+                                              value="Fill"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                            </ace:submenu>
+                        </ace:menu>
+                    </h:panelGrid>
+                    
+                    <h:panelGrid>
+                        <h:panelGrid styleClass="centeredPanelGrid">
+                            <h:outputText value="tiered" style="font-weight: bolder; font-size: 10pt;"/>
+                        </h:panelGrid>
+                        <ace:menu id="tieredMenu" type="tiered" zindex="1">
+                            <ace:submenu label="File" id="tieredMenuFile">
+                                <ace:menuItem id="tieredMenuNew"
+                                              value="New" 
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem   id="tieredMenuOpen"
+                                                value="Open"
+                                                actionListener="#{menuType.fireAction}"
+                                                icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="tieredMenuSave"
+                                              value="Save"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon ui-icon-disk">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="tieredMenuDelete"
+                                              value="Delete"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon ui-icon-close">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                            </ace:submenu>
+
+                            <ace:submenu id="tieredMenuView" label="View">
+                                <ace:menuItem id="tieredMenuHorizontal"
+                                              value="Horizontal"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="tieredMenuVertical"
+                                              value="Vertical"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="tieredMenuFill"
+                                              value="Fill"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                            </ace:submenu>
+                        </ace:menu>
+                    </h:panelGrid>
+                    
+                    <h:panelGrid>
+                        <h:panelGrid styleClass="centeredPanelGrid">
+                            <h:outputText value="sliding" style="font-weight: bolder; font-size: 10pt;"/>
+                        </h:panelGrid>
+                        <ace:menu id="slidingMenu" type="sliding">
+                            <ace:submenu label="File" id="slidingMenuFile">
+                                <ace:menuItem id="slidingMenuNew"
+                                              value="New" 
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem   id="slidingMenuOpen"
+                                                value="Open"
+                                                actionListener="#{menuType.fireAction}"
+                                                icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="slidingMenuSave"
+                                              value="Save"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon ui-icon-disk">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="slidingMenuDelete"
+                                              value="Delete"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon ui-icon-close">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                            </ace:submenu>
+
+                            <ace:submenu id="slidingMenuView" label="View">
+                                <ace:menuItem id="slidingMenuHorizontal"
+                                              value="Horizontal"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="slidingMenuVertical"
+                                              value="Vertical"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                                <ace:menuItem id="slidingMenuFill"
+                                              value="Fill"
+                                              actionListener="#{menuType.fireAction}"
+                                              icon="ui-icon">
+                                    <ace:ajax event="activate" execute="@this" render="message" />
+                                </ace:menuItem>
+                            </ace:submenu>
+                        </ace:menu>
+                    </h:panelGrid>
+                </h:panelGrid>
+            
+            <ace:panel  header="Menu Selections Log">
+                <h:dataTable id="message" value="#{menuType.list}" var="message">
+                    <h:column>
+                        <h:outputText id="msg" value="#{message}"/>
+                    </h:column>
+                </h:dataTable>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

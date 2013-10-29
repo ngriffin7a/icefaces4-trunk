@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[dateLabel.title]}"/>
+    <ui:param name="description" value="#{msgs[dateLabel.description]}"/>
+    <ui:param name="resourceValue" value="#{dateLabel.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dateTimeEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dateTimeEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            <icecore:singleSubmit/>
+            <ace:panel>
+                <h:panelGrid style="text-align: center;" width="100%">
+                    <h:panelGroup>
+                        <h:outputLabel for="selectedOut" value="Selected Date: "/>
+                        <h:outputText id="selectedOut"
+                                      value="#{dateLabel.selectedDate}"
+                                      style="font-weight: bold;">
+                            <f:convertDateTime pattern="MMMM dd, yyyy"
+                                               timeZone="Canada/Mountain"/>
+                        </h:outputText>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </ace:panel>
+            
+            <ace:panel header="Label Customization">
+                <h:panelGrid width="50%" columns="2" cellpadding="6" cellspacing="6">
+                     <h:outputLabel for="labelText" value="Label Text:"/>
+                     <h:inputText id="labelText" value="#{dateLabel.labelText}" maxlength="250"/>
+                     
+                     <h:outputLabel for="positionIn" value="Label Position:"/>
+                     <ace:simpleSelectOneMenu id="positionIn" value="#{dateLabel.labelPosition}"
+                                      valueChangeListener="#{dateLabel.positionChanged}">
+									  <ace:ajax execute="@this" />
+                        <f:selectItems value="#{positionBean.labelPositions}"/>
+                     </ace:simpleSelectOneMenu>
+                </h:panelGrid>
+            </ace:panel>
+            </h:form>
+            <h:form id="form2">
+            <ace:panel header="Date Entry">
+                <h:panelGrid id="calendarPanel" width="100%" columns="3">
+                
+                    <ace:dateTimeEntry id="cal"
+                                       value="#{dateLabel.selectedDate}"
+                                       timeZone="Canada/Mountain"
+                                       pattern="MMM/dd/yyyy"
+                                       renderAsPopup="true"
+                                       label="#{dateLabel.labelText}"
+                                       labelPosition="#{dateLabel.labelPosition}"/>
+                    <h:commandButton id="submit" value="Submit"/>
+                    <ace:message for="cal"/>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

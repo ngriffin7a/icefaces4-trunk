@@ -1,0 +1,82 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+&series-value-props;
+&uicomponent-props;
+
+<property>
+	<description>
+		Zero-relative row number of the first row to be displayed. If this 
+		property is set to zero, rendering will begin with the first row of the 
+		underlying data.
+	</description>
+	<property-name>first</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+		<named-value>
+			<name>minValue</name>
+			<expression>new Integer(0)</expression>
+		</named-value>
+		<named-value>
+			<name>unsetValue</name>
+			<expression>new Integer(Integer.MIN_VALUE)</expression>
+		</named-value>
+        <default-value>0</default-value>
+    </property-extension>
+</property>
+
+
+<property>
+	<description>
+		The number of rows to display, starting with the one identified
+		by the "first" property. If this value is set to zero, all
+		available rows in the underlying data model will be displayed.
+	</description>
+	<property-name>rows</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&numberEditor;
+		</editor-class>
+        <default-value>0</default-value>
+    </property-extension>
+</property>
+
+
+
+<property>
+	<description>
+		Name of a request-scope attribute under which the model data for
+		the row selected by the current value of the "rowIndex" property
+		(i.e. also the current value of the "rowData" property) will be
+		exposed.
+	</description>
+	<property-name>var</property-name>
+	<property-extension>
+		<category>DATA</category>		
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+		<is-bindable>false</is-bindable>		
+	</property-extension>
+</property>

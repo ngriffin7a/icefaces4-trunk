@@ -1,0 +1,61 @@
+
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+html, body, div, table, img, fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow: scroll;
+
+}
+
+body, pre, PRE {
+    font-family: Tahoma, Sans-Serif;
+    font-size: 11px;
+    color: #484848;
+    background-color: #ffffff;
+}
+
+/* for some reson IE things a form should have dimensions, */
+form {
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    font-size: 11px;
+}
+
+ul {
+    margin-left: 15px;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    background: url( '../xmlhttp/css/rime/css-images/bullet.gif' ) no-repeat 0 3px;
+    padding-left: 22px;
+    padding-bottom: 3px;
+}
+
+h2 {
+    font: 18px tahoma;
+    color: #646464;
+}

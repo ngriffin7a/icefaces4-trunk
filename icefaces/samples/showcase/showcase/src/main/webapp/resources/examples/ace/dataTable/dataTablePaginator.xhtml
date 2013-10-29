@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[dataTablePaginator.title]}"/>
+    <ui:param name="description" value="#{msgs[dataTablePaginator.description]}"/>
+    <ui:param name="resourceValue" value="#{dataTablePaginator.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            <h:panelGrid columns="3">
+                <h:outputLabel for="paginatorIn" value="Enable Paginator:"/>
+                <h:selectBooleanCheckbox id="paginatorIn" value="#{dataTablePaginator.paginator}">
+                    <f:ajax render="@this carTable" execute="@this" />
+                </h:selectBooleanCheckbox>
+                <ace:message id="pagMsg" for="paginatorIn"/>
+                
+                <h:outputLabel for="positionIn" value="Paginator Position:"/>
+                <h:selectOneRadio id="positionIn" value="#{dataTablePaginator.position}"
+                                  required="true"
+                                  disabled="#{!dataTablePaginator.paginator}">
+                    <f:selectItems value="#{dataTablePaginator.positionAvailable}"/>
+                    <f:ajax render="@this carTable" execute="@this" />
+                </h:selectOneRadio>
+                <ace:message id="posMsg" for="positionIn"/>
+                
+                <h:outputLabel for="rowsIn" value="Table Rows (1-30):"/>
+                <h:inputText id="rowsIn" value="#{dataTablePaginator.rows}"
+                             required="true" size="2" maxlength="2"
+                             disabled="#{!dataTablePaginator.paginator}">
+                    <f:ajax render="@this carTable pageLabel pageIn" execute="@this" />
+                    <f:validateLongRange minimum="1" maximum="30"/>
+                </h:inputText>
+                <ace:message id="rowsMsg" for="rowsIn"/>
+                
+                <h:outputLabel id="pageLabel" for="pageIn" value="Selected Page (1-#{dataTablePaginator.startPageMaximum}):"/>
+                <h:inputText id="pageIn" value="#{dataTablePaginator.startPage}"
+                             required="true" size="2" maxlength="2"
+                             disabled="#{!dataTablePaginator.paginator}">
+                    <f:ajax render="@this carTable" execute="@this" />
+                </h:inputText>
+                <ace:message id="pageMsg" for="pageIn" />
+            </h:panelGrid>
+
+            <ace:dataTable id="carTable"
+                          value="#{dataTablePaginator.carsData}"
+                          var="car"
+                          paginator="#{dataTablePaginator.paginator}"
+                          paginatorPosition="#{dataTablePaginator.position}"
+                          paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+                          rowsPerPageTemplate="5,10,15,all"
+                          page="#{dataTablePaginator.startPage}"
+                          rows="#{dataTablePaginator.rows}">
+                <ace:ajax event="page" render="@form" execute="@this" />
+                <ace:ajax event="rowsPerPage" render="@form" execute="@this" />
+                <ace:column id="id">
+                    <f:facet name="header">
+                       <h:outputText value="ID"/>
+                    </f:facet>
+                    <h:outputText id="idCell" value="#{car.id}"/>
+                </ace:column>
+                <ace:column id="name">
+                    <f:facet name="header">
+                       <h:outputText value="Name"/>
+                    </f:facet>
+                    <h:outputText id="nameCell" value="#{car.name}"/>
+                </ace:column>
+                <ace:column id="chassis">
+                    <f:facet name="header">
+                       <h:outputText value="Chassis"/>
+                    </f:facet>
+                    <h:outputText id="chassisCell" value="#{car.chassis}"/>
+                </ace:column>
+                <ace:column id="weight">
+                    <f:facet name="header">
+                       <h:outputText value="Weight"/>
+                    </f:facet>
+                    <h:outputText value="#{car.weight}lbs."/>
+                </ace:column>
+                <ace:column id="accel">
+                    <f:facet name="header">
+                       <h:outputText value="Accel"/>
+                    </f:facet>
+                    <h:outputText id="accelCell" value="#{car.acceleration}"/>
+                </ace:column>
+                <ace:column id="mpg">
+                    <f:facet name="header">
+                       <h:outputText value="MPG"/>
+                    </f:facet>
+                    <h:outputText id="mpgCell" value="#{car.mpg}"/>
+                </ace:column>
+                <ace:column id="cost">
+                    <f:facet name="header">
+                       <h:outputText value="Cost"/>
+                    </f:facet>
+                    <h:outputText id="costCell" value="#{car.cost}">
+                        <f:convertNumber type="currency"
+                                         currencySymbol="$"
+                                         groupingUsed="true"
+                                         minFractionDigits="2"
+                                         maxFractionDigits="2"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

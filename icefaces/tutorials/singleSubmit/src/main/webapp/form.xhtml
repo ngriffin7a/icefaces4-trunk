@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
+<h:head>
+	<title>Single Submit - Form</title>
+</h:head>
+<h:body>
+	<h:form id="frm">
+		<icecore:singleSubmit/>
+		<h:panelGrid columns="3">
+			<h:outputLabel for="name" value="Name:"/>
+			<h:inputText id="name" value="#{personBean.name}" required="true" maxlength="50"/>
+			<h:message id="nameMsg" for="name"/>
+			
+			<h:outputLabel for="age" value="Age:"/>
+			<h:inputText id="age" value="#{personBean.age}" required="true"
+						 size="2" maxlength="2">
+				<f:validateLongRange minimum="1" maximum="99"/>
+			</h:inputText>
+			<h:message id="ageMsg" for="age"/>
+			
+			<h:outputLabel for="gender" value="Gender:"/>
+			<h:selectOneMenu id="gender" value="#{personBean.gender}" required="true">
+				<f:selectItem noSelectionOption="true" itemValue="" itemLabel="--Select--"/>
+				<f:selectItem itemValue="Male"/>
+				<f:selectItem itemValue="Female"/>
+			</h:selectOneMenu>
+			<h:message id="genderMsg" for="gender"/>
+			
+			<h:outputLabel for="favorite" value="Favorite Food:"/>
+			<h:inputText id="favorite" value="#{personBean.favorite}" maxlength="225"/>
+			<h:message id="favoriteMsg" for="favorite"/>
+		</h:panelGrid>
+		
+		<h:commandButton id="submitId" value="Submit" actionListener="#{personBean.submitButton}"/>
+	</h:form>
+	
+	<br/>
+	
+	<h:panelGrid columns="2" border="1">
+		<f:facet name="header">
+			Person Information
+		</f:facet>
+		
+		<h:outputLabel for="nameOut" value="Name:"/>
+		<h:outputText id="nameOut" value="#{personBean.name}"/>
+		
+		<h:outputLabel for="ageOut" value="Age:"/>
+		<h:outputText id="ageOut" value="#{personBean.age}"/>
+		
+		<h:outputLabel for="genderOut" value="Gender:"/>
+		<h:outputText id="genderOut" value="#{personBean.gender}"/>
+		
+		<h:outputLabel for="favoriteOut" value="Favorite:"/>
+		<h:outputText id="favoriteOut" value="#{personBean.favorite}"/>
+	</h:panelGrid>
+</h:body>
+</html>

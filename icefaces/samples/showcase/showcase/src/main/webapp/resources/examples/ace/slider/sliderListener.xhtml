@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[sliderListener.title]}"/>
+    <ui:param name="description" value="#{msgs[sliderListener.description]}"/>
+    <ui:param name="resourceValue" value="#{sliderListener.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{sliderEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{sliderEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            <ace:panel>
+                <h:panelGrid id="exampleHolder" styleClass="centeredPanelGridWithBorderSpacing">
+                    <h:panelGrid  style="margin-left: auto; margin-right: auto; height: 150px; width: 150px;">
+                        <h:graphicImage id="img" value="#{sliderListener.image.path}" alt="#{sliderListener.image.description}"/>
+                   </h:panelGrid>
+                    <h:panelGrid  styleClass="centeredPanelGridWithBorderSpacing" columns="3">
+                        <h:outputText value="OFF" style="font-weight: bolder;"/>
+                        <ace:sliderEntry id="slideEntry"
+                                     length="50px"
+                                     clickableRail="false"
+                                     min="0"
+                                     max="1"
+                                     stepPercent="100"
+                                     valueChangeListener="#{sliderListener.handleSwitch}"
+                                     value="#{sliderListener.sliderValue}" >
+                            <ace:ajax event="slideEnd" execute="@this" render="@form" />
+                        </ace:sliderEntry>
+                        <h:outputText value="ON" style="font-weight: bolder;"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

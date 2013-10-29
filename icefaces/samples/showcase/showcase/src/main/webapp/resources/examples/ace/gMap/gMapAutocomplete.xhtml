@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[autocompleteBean.title]}"/>
+    <ui:param name="description" value="#{msgs[autocompleteBean.description]}"/>
+    <ui:param name="resourceValue" value="#{autocompleteBean.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+
+    <ui:define name="example">
+    <h:form id="input">
+    <ace:gMap style="width: 675px; height: 500px" id="gMap"><ace:gMapAutocomplete style="xAlign:left" window="${autocompleteBean.showWindow}" address="${autocompleteBean.address}" types="${autocompleteBean.types}" url="${autocompleteBean.url}"/></ace:gMap>
+        <br/>
+        <h:outputLabel for="displayWindow" value="Display window:"/>
+		<h:selectBooleanCheckbox value="${autocompleteBean.showWindow}" id="displayWindow"><ace:ajax/></h:selectBooleanCheckbox><br/>
+        <h:outputText value="Address: ${autocompleteBean.address}"/><br/>
+        <h:outputText value="Types: ${autocompleteBean.types}"/><br/>
+        <h:outputLabel for="link" value="Google page link(Only click after supplying location):"/> <h:outputLink id="link" style="color:blue;" value="${autocompleteBean.url}">Link</h:outputLink>
+    </h:form>
+	<p>Relevant sections of the Google Maps API: <a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#Autocomplete">Autocomplete</a> 
+	<br/><b>NOTE:</b> In order to use this subcomponent, the places library must be loaded. The easiest way to accomplish this is by appending '&amp;amp;libraries=places' to the gMap key in the application's web.xml. 
+	</p>
+</ui:define>
+</ui:composition>

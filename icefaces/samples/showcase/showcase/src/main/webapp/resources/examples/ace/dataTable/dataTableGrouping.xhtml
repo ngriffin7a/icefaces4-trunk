@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[dataTableGrouping.title]}"/>
+    <ui:param name="description" value="#{msgs[dataTableGrouping.description]}"/>
+    <ui:param name="resourceValue" value="#{dataTableGrouping.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+
+    <ui:define name="example">
+        <style type="text/css">
+            .ui-datatable-group-odd {
+                background-color: #fafad2;
+                background-position-y: -1400px; /* IE7 hack */
+            }
+
+            .group-header {
+                font-weight:bold;
+                background-color:lightgray;
+            }
+        </style>
+
+        <h:form id="form">
+            <ace:dataTable id="carTable"
+                           value="#{dataTableGrouping.carsData}"
+                           var="car"
+                           scrollable="true"
+                           height="400"
+                           rowIndexVar="index"
+                           binding="#{dataTableBindings.tables[dataTableGrouping.clazz]}" >
+                <ace:row condition="group" groupBy="#{car.chassis}" pos="before" styleClass="group-header">
+                    <ace:column colspan="8">
+                        #{car.chassis}
+                    </ace:column>
+                </ace:row>
+
+                <ace:row condition="group" groupBy="#{car.chassis}" pos="after" styleClass="group-header">
+                    <ace:column colspan="6" style="text-align:right;">
+                        <h:outputText value="MPG &amp; Cost Totals : " />
+                    </ace:column>
+                    <ace:column colspan="1">
+                        <h:outputText id="mpgTotalCell"
+                                      value="#{dataTableGrouping.groupTotal('car.chassis','car.mpg',index)}">
+                            <f:convertNumber type="number"
+                                             groupingUsed="true"
+                                             minFractionDigits="2"
+                                             maxFractionDigits="2"/>
+                        </h:outputText>
+                    </ace:column>
+                    <ace:column colspan="1">
+                        <h:outputText id="costTotalCell"
+                                      value="#{dataTableGrouping.groupTotal('car.chassis','car.cost',index)}">
+                            <f:convertNumber type="currency"
+                                             currencySymbol="$"
+                                             groupingUsed="true"
+                                             minFractionDigits="2"
+                                             maxFractionDigits="2"/>
+                        </h:outputText>
+                    </ace:column>
+                </ace:row>
+
+                <ace:column id="exp">
+                    <ace:expansionToggler />
+                </ace:column>
+                <ace:column id="id" headerText="ID" sortBy="#{car.id}">
+                    <h:outputText id="idCell" value="#{car.id}"/>
+                </ace:column>
+                <ace:column id="name" headerText="Name" sortBy="#{car.name}">
+                    <h:outputText id="nameCell" value="#{car.name}"/>
+                </ace:column>
+                <ace:column id="chassis" headerText="Chassis" groupBy="#{car.chassis}" sortAscending="true">
+                    <h:outputText id="chassisCell" value="#{car.chassis}"/>
+                </ace:column>
+                <ace:column id="weight" headerText="Weight (lbs)" sortBy="#{car.weight}" filterBy="#{car.weight}">
+                    <h:outputText id="weightCell" value="#{car.weight}"/>
+                </ace:column>
+                <ace:column id="accel" headerText="Accel" groupBy="#{car.acceleration}">
+                    <h:outputText id="accelCell" value="#{car.acceleration}"/>
+                </ace:column>
+                <ace:column id="mpg" headerText="MPG" sortBy="#{car.mpg}">
+                    <h:outputText id="mpgCell" value="#{car.mpg}"/>
+                </ace:column>
+                <ace:column id="cost" headerText="Cost" sortBy="#{car.cost}">
+                    <h:outputText id="costCell" value="#{car.cost}">
+                        <f:convertNumber type="currency"
+                                         currencySymbol="$"
+                                         groupingUsed="true"
+                                         minFractionDigits="2"
+                                         maxFractionDigits="2"/>
+                    </h:outputText>
+                </ace:column>
+
+                <ace:panelExpansion>
+                    <h:outputText id="costPerLbTxt" value="Cost Per Pound: " />
+                    <h:outputText id="costPerLb" value="#{car.cost /  car.weight}">
+                        <f:convertNumber     type="currency"
+                                             currencySymbol="$"
+                                             groupingUsed="true"
+                                             minFractionDigits="2"
+                                             maxFractionDigits="2"/>
+                    </h:outputText>
+                </ace:panelExpansion>
+            </ace:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

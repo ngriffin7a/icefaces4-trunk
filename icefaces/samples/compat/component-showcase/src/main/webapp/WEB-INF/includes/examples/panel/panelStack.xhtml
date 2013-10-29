@@ -1,0 +1,174 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!--
+In this demonstration ice:panelStack is manipulated by the following coontrols
+to show how the selected panel can be dynamically changed.
+-->
+
+<ice:panelGroup styleClass="componentBox"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component" >
+
+    <ice:panelGroup styleClass="synopsisBox panelStackContainer">
+        <ice:outputText value="#{msgs['page.panelStack.synopsis']}"/>
+        <ice:outputText value="#{msgs['page.panelStack.instructions']}"/>
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="exampleBox panelStackContainer" >
+
+        <ice:panelGroup style="float:left;margin-right:5px;margin-top:3px;">
+            <ice:outputLabel for="mainRadio"
+                             value="#{msgs['page.panelStack.example.radio.label']}"/>
+        </ice:panelGroup>
+
+        <!-- Main Controls to change panels -->
+        <ice:panelGroup style="float:left;">
+            <ice:selectOneRadio id="mainRadio"
+                                value="#{panelStack.selectedPanel}"
+                                partialSubmit="true"
+                                accesskey="S">
+                <f:selectItem
+                        itemValue="auction"
+                        itemLabel="#{msgs['page.panelStack.example.1.label']}"/>
+                <f:selectItem
+                        itemValue="mobility"
+                        itemLabel="#{msgs['page.panelStack.example.2.label']}"/>
+                <f:selectItem
+                        itemValue="timezone"
+                        itemLabel="#{msgs['page.panelStack.example.3.label']}"/>
+                <f:selectItem
+                        itemValue="address"
+                        itemLabel="#{msgs['page.panelStack.example.4.label']}"/>
+            </ice:selectOneRadio>
+        </ice:panelGroup>
+    </ice:panelGroup>
+
+    <ice:panelGroup styleClass="clearer" />
+
+    <ice:panelGroup styleClass="exampleBox panelStackContainer" >
+
+        <!-- selectedPanel is manipulated by the radio buttons above -->
+        <ice:panelStack
+                selectedPanel="#{panelStack.selectedPanel}" >
+
+            <!-- panel 1-->
+            <ice:panelGroup id="auction"
+                            styleClass="stackExamplePanel">
+
+                <ice:panelGrid columns="2" cellpadding="0" cellspacing="0" >
+                    <!-- example picture -->
+                    <ice:graphicImage
+                            value="#{msgs['page.panelStack.example.1.img']}"
+                            alt="#{msgs['page.panelStack.example.1.label']}"
+                            title="#{msgs['page.panelStack.example.1.label']}"
+                            width="124px" height="75px"/>
+                    <!-- example link and text-->
+                    <ice:panelGroup>
+                        <ice:outputText
+                                value="ICEfaces #{msgs['page.panelStack.example.1.label']}"/>
+                        <br/>
+                        <ice:outputLink
+                                value="#{msgs['page.panelStack.example.1.url']}"
+                                target="_blank">
+                            <ice:outputText value="#{msgs['page.panelStack.example.1.url']}" />
+                        </ice:outputLink>
+                    </ice:panelGroup>
+                </ice:panelGrid>
+
+            </ice:panelGroup>
+
+            <!-- panel 2-->
+            <ice:panelGroup id="mobility"
+                            styleClass="stackExamplePanel">
+
+                <ice:panelGrid columns="2" cellpadding="0" cellspacing="0" >
+                    <!-- example picture -->
+                    <ice:graphicImage
+                            value="#{msgs['page.panelStack.example.2.img']}"
+                            alt="#{msgs['page.panelStack.example.2.label']}"
+                            title="#{msgs['page.panelStack.example.2.label']}"
+                            width="124px" height="75px"/>
+                    <!-- example link and text-->
+                    <ice:panelGroup>
+                        <ice:outputText
+                                value="ICEfaces #{msgs['page.panelStack.example.2.label']}"/>
+                        <br/>
+                        <ice:outputLink
+                                value="#{msgs['page.panelStack.example.2.url']}"
+                                target="_blank">
+                            <ice:outputText value="#{msgs['page.panelStack.example.2.url']}" />
+                        </ice:outputLink>
+                    </ice:panelGroup>
+                </ice:panelGrid>
+            </ice:panelGroup>
+
+            <!-- panel 3-->
+            <ice:panelGroup id="timezone"
+                            styleClass="stackExamplePanel">
+
+                <ice:panelGrid columns="2" cellpadding="0" cellspacing="0" >
+                    <!-- example picture -->
+                    <ice:graphicImage
+                            value="#{msgs['page.panelStack.example.3.img']}"
+                            alt="#{msgs['page.panelStack.example.3.label']}"
+                            title="#{msgs['page.panelStack.example.3.label']}"
+                            width="124px" height="75px"/>
+                    <!-- example link and text-->
+                    <ice:panelGroup>
+                        <ice:outputText
+                                value="ICEfaces #{msgs['page.panelStack.example.3.label']}"/>
+                        <br/>
+                        <ice:outputLink
+                                value="#{msgs['page.panelStack.example.3.url']}"
+                                target="_blank">
+                            <ice:outputText value="#{msgs['page.panelStack.example.3.url']}" />
+                        </ice:outputLink>
+                    </ice:panelGroup>
+                </ice:panelGrid>
+            </ice:panelGroup>
+
+            <!-- panel 4-->
+            <ice:panelGroup id="address"
+                            styleClass="stackExamplePanel">
+
+                <ice:panelGrid columns="2" cellpadding="0" cellspacing="0" >
+                    <!-- example picture -->
+                    <ice:graphicImage
+                            value="#{msgs['page.panelStack.example.4.img']}"
+                            alt="#{msgs['page.panelStack.example.4.label']}"
+                            title="#{msgs['page.panelStack.example.4.label']}"
+                            width="124px" height="75px"/>
+                    <!-- example link and text-->
+                    <ice:panelGroup>
+                        <ice:outputText
+                                value="ICEfaces #{msgs['page.panelStack.example.4.label']}"/>
+                        <br/>
+                        <ice:outputLink
+                                value="#{msgs['page.panelStack.example.4.url']}"
+                                target="_blank">
+                            <ice:outputText value="#{msgs['page.panelStack.example.4.url']}" />
+                        </ice:outputLink>
+                    </ice:panelGroup>
+                </ice:panelGrid>
+            </ice:panelGroup>
+
+        </ice:panelStack>
+    </ice:panelGroup>
+
+</ice:panelGroup>

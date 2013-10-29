@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.icefaces.samples</groupId>
+        <artifactId>showcase-parent</artifactId>
+        <version>3.4.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <artifactId>showcase</artifactId>
+    <packaging>war</packaging>
+    <name>${icefaces.product.name}: Showcase Sample</name>
+
+    <properties>
+        <private.demo>true</private.demo>
+        <themes.groupId>org.icefaces.ace-themes</themes.groupId>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-black-tie</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-blitzer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-cupertino</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-dark-hive</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-dot-luv</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-eggplant</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-excite-bike</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-flick</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-hot-sneaks</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-humanity</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-le-frog</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-mint-choc</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-overcast</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-pepper-grinder</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-redmond</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-smoothness</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-south-street</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-start</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-sunny</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-swanky-purse</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-trontastic</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-ui-darkness</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-ui-lightness</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${themes.groupId}</groupId>
+            <artifactId>ace-vader</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

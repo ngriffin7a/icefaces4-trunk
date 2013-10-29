@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+	<description>
+		<![CDATA[<p>The panelSeries component provides a mechanism for dynamically generating a series of repeating
+            child-components within a panel. This component renders its child components in an iterative fashion
+            similar to way the dataTable component renders data rows. However, the panelSeries component is more 
+            flexibile in that it can render a series of arbitrarily complex child components. The dataset can be 
+            defined and used by implementing the value and var attributes respectively.
+            ]]>
+	</description>
+	<component-family>javax.faces.Panel</component-family>
+
+	<renderer-type>com.icesoft.faces.PanelSeriesRenderer</renderer-type>
+
+	<renderer-extension>
+		<instance-name>panelSeries</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelSeries</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

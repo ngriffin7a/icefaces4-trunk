@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<partial-response>
+    <changes>
+        <update id="javax.faces.ViewState"><![CDATA[1760608254553507271:-2283240700511427654]]></update>
+        <eval>
+            <![CDATA[; Ice.autoPosition.stop('j_idt8:j_idt11'); Ice.autoCentre.start('j_idt8:j_idt11',false); Ice.iFrameFix.start('j_idt8:j_idt11','/sample/xmlhttp/blank');//1385446506]]></eval>
+        <extension aceCallbackParam="validationFailed">{"validationFailed":false}</extension>
+    </changes>
+</partial-response>
+
+        <?xml version='1.0' encoding='UTF-8'?>
+<partial-response>
+<changes>
+    <update id="javax.faces.ViewState"><![CDATA[1760608254553507271:-2283240700511427654]]></update>
+    <eval>
+        <![CDATA[; Ice.autoPosition.stop('j_idt8:j_idt11'); Ice.autoCentre.start('j_idt8:j_idt11',false); Ice.iFrameFix.start('j_idt8:j_idt11','/sample/xmlhttp/blank');//1852224021]]></eval>
+    <extension aceCallbackParam="validationFailed">{"validationFailed":false}</extension>
+</changes>
+</partial-response>

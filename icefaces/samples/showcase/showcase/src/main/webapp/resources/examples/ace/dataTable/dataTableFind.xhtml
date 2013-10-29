@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[aceDataTableFind.title]}"/>
+    <ui:param name="description" value="#{msgs[aceDataTableFind.description]}"/>
+    <ui:param name="resourceValue" value="#{aceDataTableFind.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form id="form">
+            <h:panelGroup styleClass="componentBox">
+                <h:panelGroup style="border: 1px solid #CDCDCD;" >
+                    <h:panelGrid columns="2" style="width:100%;">
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Search Query:" />
+                                <h:inputText id="searchQuery" value="#{aceDataTableFind.searchQuery}" />
+
+                                <h:outputText value="Case Sensitive:" />
+                                <h:selectBooleanCheckbox id="caseSensitive" value="#{aceDataTableFind.caseSensitive}" />
+
+                                <h:outputText value="Columns To Search:" />
+                                <h:selectManyCheckbox id="selectedColumns" value="#{aceDataTableFind.selectedColumns}" >
+                                    <f:selectItems value="#{aceDataTableFind.COLUMNS}"/>
+                                </h:selectManyCheckbox>
+
+                                <h:outputText value="Search Type:" />
+                                <h:selectOneRadio id="selectedMode" value="#{aceDataTableFind.selectedSearchMode}">
+                                    <f:selectItems value="#{aceDataTableFind.SEARCH_MODES}"/>
+                                </h:selectOneRadio>
+
+                                <h:outputText value="Effect To Use:" />
+                                <h:selectOneRadio id="selectedType" value="#{aceDataTableFind.selectedEffectType}">
+                                    <f:selectItems value="#{aceDataTableFind.EFFECT_TYPES}"/>
+                                </h:selectOneRadio>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <h:commandButton id="findNext" value="Find Next" actionListener="#{aceDataTableFind.find}" style="float:right;" />
+                                <h:commandButton id="reset" value="Reset" actionListener="#{aceDataTableFind.reset}" style="float:right;" />
+                            </h:panelGrid>
+                            <ace:messages id="msgs"/>
+                    </h:panelGrid>
+                </h:panelGroup>
+
+                <h:panelGroup styleClass="exampleBox dataScrollingContainer" style="display: block;"  >
+                    <!-- DataTable with 5 rows per page -->
+                    <ace:dataTable id="data"
+                                   var="car"
+                                   value="#{aceDataTableFind.cars}"
+                                   rows="6"
+                                   paginator="true"
+                                   binding="#{dataTableBindings.tables[aceDataTableFind.clazz]}"
+                                   style="width:100%">
+                        <ace:column id="id">
+                            <f:facet name="header">ID</f:facet>
+                            #{car.id}
+                        </ace:column>
+                        <ace:column id="name">
+                            <f:facet name="header">Name</f:facet>
+                            #{car.name}
+                        </ace:column>
+                        <ace:column id="chassis">
+                            <f:facet name="header">Chassis</f:facet>
+                            #{car.chassis}
+                        </ace:column>
+                        <ace:column id="weight">
+                            <f:facet name="header">Weight</f:facet>
+                            #{car.weight}lbs.
+                        </ace:column>
+                        <ace:column id="accel">
+                            <f:facet name="header">Accel</f:facet>
+                            #{car.acceleration}
+                        </ace:column>
+                        <ace:column id="mpg">
+                            <f:facet name="header">MPG</f:facet>
+                            #{car.mpg}
+                        </ace:column>
+                        <ace:column id="cost">
+                            <f:facet name="header">Cost</f:facet>
+                            <h:outputText id="costCell" value="#{car.cost}">
+                                <f:convertNumber type="currency"
+                                                 currencySymbol="$"
+                                                 groupingUsed="true"
+                                                 minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

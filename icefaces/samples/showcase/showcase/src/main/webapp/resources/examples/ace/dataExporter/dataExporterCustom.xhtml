@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[dataExporterCustom.title]}"/>
+    <ui:param name="description" value="#{msgs[dataExporterCustom.description]}"/>
+    <ui:param name="resourceValue" value="#{dataExporterCustom.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dataExporterResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dataExporterResources.tldResources}"/>
+
+    <ui:define name="example">
+        <style type="text/css">
+		.grid td {
+			vertical-align: top;
+		}
+		</style>
+		<h:form id="mainForm" >
+			<h:panelGrid id="panelGrid" columns="2" class="grid">
+				<ace:dataTable id="carTable" value="#{dataExporterCustom.carsData}" var="car" rows="10" paginator="true" paginatorPosition="top" rowIndexVar="i">
+					<ace:ajax event="page" excute="@form" render="@form" />
+					<ace:column id="exp">
+						<ace:expansionToggler />
+					</ace:column>		
+					<ace:column headerText="ID">
+						<h:outputText value="#{car.id}" />
+					</ace:column>
+
+					<ace:column headerText="Name">
+						<h:outputText value="#{car.name}" />
+					</ace:column>
+
+					<ace:column headerText="Chassis">
+						<h:outputText value="#{car.chassis}"/>
+					</ace:column>
+
+					<ace:column headerText="Weight">
+						<h:outputText value="#{car.weight}lbs."/>
+					</ace:column>
+
+					<ace:column headerText="Accel">
+						<h:outputText value="#{car.acceleration}"/>
+					</ace:column>
+
+					<ace:column headerText="MPG">
+						<h:outputText value="#{car.mpg}"/>
+					</ace:column>
+
+					<ace:column headerText="Cost">
+						<h:outputText value="#{car.cost}">
+							<f:convertNumber type="currency"
+											 currencySymbol="$"
+											 groupingUsed="true"
+											 minFractionDigits="2"
+											 maxFractionDigits="2"/>
+						</h:outputText>
+					</ace:column>
+					<ace:panelExpansion>
+						<h:panelGroup>
+							<ace:dataTable value="#{car.expansionData1}" var="exp" id="innerTable1">
+								<ace:column headerText="Number1">
+									<h:outputText value="#{exp.number1}" />
+								</ace:column>
+								<ace:column headerText="Number2">
+									<h:outputText value="#{exp.number2}" />
+								</ace:column>
+								<ace:column headerText="Number3">
+									<h:outputText value="#{exp.number3}" />
+								</ace:column>
+							</ace:dataTable>
+							<ace:dataTable value="#{car.expansionData2}" var="exp" id="innerTable2">
+								<ace:column headerText="Number1">
+									<h:outputText value="#{exp.number1}" />
+								</ace:column>
+								<ace:column headerText="Number2">
+									<h:outputText value="#{exp.number2}" />
+								</ace:column>
+								<ace:column headerText="Number3">
+									<h:outputText value="#{exp.number3}" />
+								</ace:column>
+							</ace:dataTable>
+						</h:panelGroup>
+					</ace:panelExpansion>
+				</ace:dataTable>
+				<h:panelGroup id="listboxPanelGroup" style="display:inline-block;padding-left:10px;">
+					<h:outputLabel for="listbox" value="Select inner table to export: " /><br />
+					<h:selectOneListbox id="listbox" value="#{dataExporterCustom.selectedItem}">
+						<f:selectItems value="#{dataExporterCustom.selectItems}" />
+						<f:ajax execute="@this" render="@this" />
+					</h:selectOneListbox><br />
+					<ace:dataExporter id="dataExporter" label="Export" target="carTable" fileName="cars" pageOnly="true" customExporter="#{dataExporterCustom.customExporter}" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</h:form>
+    </ui:define>
+</ui:composition>

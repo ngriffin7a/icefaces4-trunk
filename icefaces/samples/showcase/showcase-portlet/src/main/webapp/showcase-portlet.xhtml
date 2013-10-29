@@ -1,0 +1,119 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                template="/resources/templates/main-template.xhtml">
+
+    <!--<ui:define name="metadata">-->
+        <!--<f:metadata>-->
+            <!--<f:viewParam name="grp" required="false"-->
+                         <!--value="#{navigationModel.componentGroup}"/>-->
+            <!--<f:viewParam name="exp" required="false"-->
+                         <!--value="#{navigationModel.componentExample}"/>-->
+            <!--<f:event type="postValidate"-->
+                     <!--listener="#{navigationController.navigate}"/>-->
+        <!--</f:metadata>-->
+    <!--</ui:define>-->
+
+    <!--<ui:define name="suite-select-menu">-->
+        <!--<li class="first">-->
+            <!--<h:link title="#{aceMenu.title}"-->
+                    <!--class="#{navigationModel.componentGroup == aceMenu.beanName ? 'selected' : '' }"-->
+                    <!--outcome="showcase">-->
+                <!--<f:param name="grp" value="#{aceMenu.beanName}"/>-->
+                <!--#{msgs[aceMenu.title]}-->
+            <!--</h:link>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<h:link title="#{compatMenu.title}"-->
+                    <!--class="#{navigationModel.componentGroup == compatMenu.beanName ? 'selected' : '' }"-->
+                    <!--outcome="showcase">-->
+                <!--<f:param name="grp" value="#{compatMenu.beanName}"/>-->
+                <!--#{msgs[compatMenu.title]}-->
+            <!--</h:link>-->
+        <!--</li>-->
+        <!--<li class="last">-->
+             <!--<h:link title="#{eeMenu.title}"-->
+                    <!--class="#{navigationModel.componentGroup == eeMenu.beanName ? 'selected' : '' }"-->
+                    <!--outcome="showcase">-->
+                <!--<f:param name="grp" value="#{eeMenu.beanName}"/>-->
+                <!--#{msgs[eeMenu.title]}-->
+            <!--</h:link>-->
+        <!--</li>-->
+    <!--</ui:define>-->
+
+    <ui:define name="suite-menu">
+        <!--<h2>#{msgs[navigationModel.currentComponentGroup.title]}</h2>-->
+        <!--<ul>-->
+            <!--<ui:repeat var="menuLink"-->
+                       <!--value="#{navigationModel.currentComponentGroup.menuLinks}">-->
+                <!--<li>-->
+                    <!--<c:set var="mainSelected"-->
+                           <!--value="#{(navigationModel.currentComponentExample['class']['package'] == window[menuLink.exampleBeanName]['class']['package']) ||-->
+                                <!--(navigationModel.componentExample == null and menuLink['default']) ? 'selected' : '' }"/>-->
+
+                    <!--<h:link title="#{msgs[menuLink.title]}"-->
+                                <!--outcome="showcase"-->
+                                <!--disabled="#{menuLink.disabled}"-->
+                                <!--class="#{mainSelected}"-->
+                                <!--includeViewParams="true">-->
+                        <!--<f:param name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>-->
+                        <!--<f:param name="exp" value="#{menuLink.exampleBeanName}"/>-->
+                        <!--#{msgs[menuLink.title]}-->
+                    <!--</h:link>-->
+
+                    <!--<ice:panelGroup effect="#{navigationModel.currentComponentExample.effect}"-->
+                                    <!--rendered="#{'selected' eq mainSelected}">-->
+                    <h:form>
+                        <ul>
+                        <ui:repeat var="subMenuLink"
+                                   value="#{navigationModel.currentComponentExample.subMenuLinks}">
+                                <li style="padding-left: 15px;">
+                                    <ui:param name="beanName" value="#{subMenuLink.exampleBeanName}.title"/>
+                                    <h:commandButton title="#{msgs[subMenuLink.title]}"
+                                              value="#{msgs[subMenuLink.title]}"
+                                              disabled="#{subMenuLink.disabled}"
+                                              includeViewParams="true"
+                                              actionListener="#{navigationController.navigate}"
+                                              class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
+                                                     (navigationModel.componentExample eq null and subMenuLink['default'])
+                                                   ? 'selected'
+                                                   : ''}">
+                                          <f:param name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
+                                          <f:param name="exp" value="#{subMenuLink.exampleBeanName}"/>
+                                    </h:commandButton>
+                                </li>
+                        </ui:repeat>
+                        </ul>
+                    </h:form>
+                    <!--</ice:panelGroup>-->
+                <!--</li>-->
+            <!--</ui:repeat>-->
+        <!--</ul>-->
+    </ui:define>
+
+    <ui:define name="component-example">
+        <ui:include src="#{navigationModel.currentComponentExample.example}"/>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,48 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view contentType="text/html"/>
+<h:head>
+    <title id="title">Welcome!</title>
+</h:head>
+<h:body>
+    <h2>page A</h2>
+    <h:form id="form1" prependId="false">
+        <p>
+            <div>the button will be clicked automatically after 60 seconds</div>
+            <div><h:commandButton id="act" value="click" action="#{bean.click}"/></div>
+            <div><span>countdown to session expiry: </span><span id="timer"></span></div>
+        </p>
+        <h:messages/>
+    </h:form>
+    <script type="text/javascript">
+        var e = document.getElementById('timer');
+        var counter = 60;
+        var pid = setInterval(function() {
+            e.innerHTML = String(counter--);
+            if (0 > counter) {
+                clearInterval(pid);
+                document.getElementById('act').click();
+            }
+        }, 1000);
+    </script>
+</h:body>
+</html>
+

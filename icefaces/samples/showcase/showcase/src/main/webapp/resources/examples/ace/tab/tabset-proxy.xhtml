@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[tabProxy.title]}"/>
+    <ui:param name="description" value="#{msgs[tabProxy.description]}"/>
+    <ui:param name="resourceValue" value="#{tabProxy.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{tabSetResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{tabSetResources.tldResources}"/>
+    
+    <ui:define name="example">
+            
+            <ace:tabSet id="myTabSet" cancelOnInvalid="#{not tabProxy.invalidSwitch}" clientSide="false">
+                <ace:tabPane id="txtEntry">
+                    <f:facet name="label">Text Entry</f:facet>
+                    <h:form id="proxyForm">
+                        <ace:tabSetProxy for="myTabSet"/>
+                        <h:panelGrid columns="2" styleClass="centeredPanelGrid">
+                            <h:outputLabel value="Some Text:" for="txt"/>
+                            <h:inputText id="txt" required="true" value="#{tabProxy.exampleText}" requiredMessage="You must enter some text before selecting any other tab"/>   
+                        </h:panelGrid>
+                    </h:form>
+                </ace:tabPane>
+                
+                <ace:tabPane id="confirm">
+                    <f:facet name="label">Confirmation</f:facet>
+                    
+                    <h:form id="proxyForm2">
+                        <ace:tabSetProxy for="myTabSet" />
+                        <h:panelGrid styleClass="centeredPanelGrid">
+                            <h:outputText id="entered" value="You entered: #{tabProxy.exampleText}"/>
+                            <h:panelGroup>
+                                <h:outputText value="Would You like to save it? - "/>
+                                <h:selectOneMenu id="choice" value="#{tabProxy.secondTabSelection}" validator="#{tabProxy.validateSelection}">
+                                    <f:selectItem itemLabel="-choose one-" itemValue="-1"/>
+                                    <f:selectItems value="#{tabProxy.options}" var="option" itemLabel="#{option.key}" itemValue="#{option.value}"/>
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:form>
+                </ace:tabPane>
+                
+                <ace:tabPane id="outcome">
+                    <f:facet name="label">Outcome</f:facet>
+                    
+                     <h:form id="proxyForm3" >
+                        <ace:tabSetProxy id="tsProxyThree" for="myTabSet" />
+                        <h:outputText id="saved"
+								      rendered="#{tabProxy.secondTabSelection eq 1}"
+                                      value="You successfully saved: #{tabProxy.exampleText}"/>
+                        <h:outputText id="notSaved"
+									  rendered="#{tabProxy.secondTabSelection eq 0}"
+                                      value="Your entry has not been saved"/>
+                    </h:form>
+                </ace:tabPane>
+            </ace:tabSet>
+        
+        <h:panelGrid styleClass="centeredPanelGrid">
+            <ace:messages id="msgs" style="color: #ff3333; font-weight: bold;"/>
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>

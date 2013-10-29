@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+&ice-att-userrole-rendered-props;
+&ice-att-style-props;
+&uicommand-novalue-props;
+
+<property>
+    <description>
+        Defines the orientation of the top-level menu items, whether they 
+        are layed out in a horizontal or vertical fashion. When horizontal,
+        sub menus appear below, and when vertical they appear to the side. 
+        The default is horizontal.
+    </description>
+    <property-name>orientation</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <default-value>horizontal</default-value>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[Set directory for location of the tree images.
+            Default directory is /xmlhttp/css/xp/css-images/ which is include in the icefaces.jar.]]>
+    </description>
+    <property-name>imageDir</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <default-value>/xmlhttp/css/xp/css-images/</default-value>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+
+
+<property>
+    <description>
+        <![CDATA[If true, this component will not rendered icons and icon spacers in menuItems.
+        The default is false. By default icons are rendered.]]>
+    </description>
+    <property-name>noIcons</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <default-value>false</default-value>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+      
+              Space-separated list of CSS style class(es) to be applied when this
+              element is rendered. This value must be passed through as the 
+              "class" attribute on generated markup.<br/>
+              The base name for all style classes. Default value is <b>iceMnuBar</b></p>
+              if enabled + horizontal
+              <ul>
+                <li>iceMnuBar</li>
+                <li>iceMnuBarItem</li>
+                <li>iceMnuBarItemLabel</li>
+                <li>iceMnuBarItemImage</li>                
+                <li>iceMnuBarSubMenu</li>
+                <li>iceMnuBarSubMenuInd</li>
+              </ul>
+              if enabled + vertical
+              <ul>                
+                <li>iceMnuBarVrt</li>
+                <li>iceMnuBarVrtItem</li>
+                <li>iceMnuBarVrtItemLabel</li>
+                <li>iceMnuBarVrtItemImage</li>
+                <li>iceMnuBarVrtSubMenu</li>
+                <li>iceMnuBarVrtSubMenuInd</li>
+              </ul>   
+              if disabled + horizontal
+              <ul>
+                <li>iceMnuBar-dis</li>
+                <li>iceMnuBarItem-dis</li>
+                <li>iceMnuBarItemLabel-dis</li>
+                <li>iceMnuBarItemImage-dis</li>
+                <li>iceMnuBarSubMenu-dis</li>
+                <li>iceMnuBarSubMenuInd-dis</li>
+              </ul>
+              if disabled + vertical
+              <ul>                
+                <li>iceMnuBarVrt-dis</li>
+                <li>iceMnuBarVrtItem-dis</li>
+                <li>iceMnuBarVrtItemLabel-dis</li>
+                <li>iceMnuBarVrtItemImage-dis</li>                
+                <li>iceMnuBarVrtSubMenu-dis</li>
+                <li>iceMnuBarVrtSubMenuInd-dis</li>
+              </ul>                          
+             
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description> 
+       <![CDATA[<p>
+        By default the sub menus are being displayed on the hover event. which
+        can be replaced with the click event by setting this attribute to true.</p>
+        ]]>
+    </description>
+    <property-name>displayOnClick</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <default-value>false</default-value>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+       <![CDATA[<p>
+        By default (false) the sub menus positions are adjusted properly when in scrollable browser window.
+        When set to true, sub menus positions are adjusetd in scrollable divs but not in scrollable browser window.</p>
+        ]]>
+    </description>
+    <property-name>scrollableDivMode</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <default-value>false</default-value>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+
+		Flag indicating that this component's value must be converted
+		and validated immediately (that is, during Apply Request Values
+		phase), rather than waiting until Process Validations phase.
+
+	</description>
+	<property-name>immediate</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+        <default-value>false</default-value>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+            Flag indicating whether or not this component should be rendered
+            (during Render Response Phase), or processed on any subsequent form
+            submit.
+    </description>
+  <property-name>rendered</property-name>
+  <property-class>boolean</property-class>
+  <property-extension>
+      <category>ICE_COMPONENT</category>
+      <default-value>true</default-value>
+  </property-extension>
+</property>
+        
+<property>
+    <description>
+        Enables keyboard support, default value is true.
+    </description>
+    <property-name>keyboardNavigationEnabled</property-name>
+    <property-class>boolean</property-class>    
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <default-value>true</default-value>
+    </property-extension>
+</property>        

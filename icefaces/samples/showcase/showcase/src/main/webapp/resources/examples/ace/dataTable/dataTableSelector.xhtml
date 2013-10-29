@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[dataTableSelector.title]}"/>
+    <ui:param name="description" value="#{msgs[dataTableSelector.description]}"/>
+    <ui:param name="resourceValue" value="#{dataTableSelector.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+
+    <ui:define name="example">
+<h:form id="form">
+    <h:panelGrid columns="3">
+        <h:outputLabel for="modeIn" value="Selection Mode:"/>
+        <h:selectOneRadio id="modeIn" value="#{dataTableSelector.selectionMode}"
+                          required="true"
+                          valueChangeListener="#{dataTableSelector.changedMode}">
+            <f:selectItems value="#{dataTableSelector.availableModes}"/>
+            <f:ajax render="@form" execute="@form" />
+        </h:selectOneRadio>
+        <ace:message id="modeInMsg" for="modeIn"/>
+
+        <h:outputLabel for="clickIn" value="Double Click to Select:"/>
+        <h:selectBooleanCheckbox id="clickIn" value="#{dataTableSelector.dblClick}">
+            <f:ajax render="@form" execute="@form" />
+        </h:selectBooleanCheckbox>
+        <ace:message id="clickInMsg" for="clickIn"/>
+
+        <h:outputLabel for="instantIn" value="Instant Status Update via Ajax:"/>
+        <h:selectBooleanCheckbox id="instantIn" value="#{dataTableSelector.instantUpdate}">
+            <f:ajax render="@form" execute="@form" />
+        </h:selectBooleanCheckbox>
+        <ace:message id="instantInMsg" for="instantIn"/>
+    </h:panelGrid>
+
+    <ace:dataTable id="selectionTable"
+                  binding="#{dataTableBindings.tables[dataTableSelector.clazz]}"
+                  value="#{dataTableSelector.carsData}"
+                  var="car"
+                  rows="7"
+                  selectionMode="#{dataTableSelector.selectionMode}"
+                  stateMap="${dataTableSelector.stateMap}"
+                  doubleClickSelect="#{dataTableSelector.dblClick}">
+        <ace:ajax event="select" render="@this form:status" execute="@this" disabled="#{!dataTableSelector.instantUpdate}" />
+        <ace:ajax event="deselect" render="@this form:status" execute="@this" disabled="#{!dataTableSelector.instantUpdate}" />
+
+        <ace:column id="id">
+            <f:facet name="header">
+               ID
+            </f:facet>
+            <h:outputText value="#{car.id}" />
+        </ace:column>
+        <ace:column id="name">
+            <f:facet name="header">
+               Name
+            </f:facet>
+            <h:outputText value="#{car.name}" />
+        </ace:column>
+        <ace:column id="chassis">
+            <f:facet name="header">
+               Chassis
+            </f:facet>
+            <h:outputText value="#{car.chassis}"/>
+        </ace:column>
+        <ace:column id="weight">
+            <f:facet name="header">
+               Weight
+            </f:facet>
+            <h:outputText value="#{car.weight} lb"/>
+        </ace:column>
+        <ace:column id="accel">
+            <f:facet name="header">
+               Accel
+            </f:facet>
+            <h:outputText value="#{car.acceleration}"/>
+        </ace:column>
+        <ace:column id="mpg">
+            <f:facet name="header">
+               MPG
+            </f:facet>
+            <h:outputText value="#{car.mpg}"/>
+        </ace:column>
+        <ace:column id="cost">
+            <f:facet name="header">
+               Cost
+            </f:facet>
+            <h:outputText id="costCell" value="#{car.cost}">
+                <f:convertNumber type="currency"
+                                 currencySymbol="$"
+                                 groupingUsed="true"
+                                 minFractionDigits="2"
+                                 maxFractionDigits="2"/>
+            </h:outputText>
+        </ace:column>
+    </ace:dataTable>
+
+	<h:commandButton id="refresh" value="Refresh Status" rendered="#{!dataTableSelector.instantUpdate}"/>
+	<br />
+	<h:panelGroup id="status">
+       <h:panelGroup layout="block" style="display:inline-block; vertical-align: top; width:50%;">
+           <h:outputText value="Selected Rows:"/><br/>
+           <ui:repeat value="#{dataTableSelector.multiRow}" var="selCar" varStatus="rowRepeat">
+               #{selCar.name}#{rowRepeat.last ?  '' : ', '}
+           </ui:repeat>
+       </h:panelGroup>
+
+       <h:panelGroup layout="block" style="display:inline-block; max-width:50%;">
+           <h:outputText value="Selected Cells:"/><br/>
+           <ui:repeat value="#{dataTableSelector.cellSelections}" var="cellItem">
+               <h:outputText value="#{cellItem.object} : "/>
+               <h:panelGroup style="display: inline-block">
+                   <ui:repeat value="#{cellItem.columnSelections}" var="colVal" varStatus="colRepeat">
+                       <h:outputText value="#{colVal}#{colRepeat.last ? '' : ', '}"/>
+                   </ui:repeat>
+               </h:panelGroup>
+               <br/>
+           </ui:repeat>
+       </h:panelGroup>
+	</h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

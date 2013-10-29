@@ -1,0 +1,345 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project name="icefaces" default="world">
+
+    <!-- This property file is only used for EE builds and overrides various
+         property values if it is available. -->
+    <property file="../ee-bundle.properties"/>
+
+    <propertyset id="build.properties">
+        <propertyref name="build.number"/>
+        <propertyref name="revision"/>
+        <propertyref name="version.primary"/>
+        <propertyref name="version.secondary"/>
+        <propertyref name="version.tertiary"/>
+        <propertyref name="release.type"/>
+        <propertyref name="bundle.name"/>
+    </propertyset>
+
+    <property file="./build.properties"/>
+
+    <property name="icepush.dist.dir" location="icepush/core/build/dist"/>
+    <property name="lib.dir" location="lib"/>
+
+
+    <target name="icepush" depends="checkIfEEBundle" if="isOSBundle" description="Builds the ICEpush core library (icepush.jar).">
+        <subant>
+            <fileset dir="." includes="icepush/core/build.xml">
+            </fileset>
+            <propertyset refid="build.properties"/>
+        </subant>
+        <copy file="${icepush.dist.dir}/${icepush.lib.name}.jar"
+              todir="${lib.dir}"
+              overwrite="true"/>
+    </target>
+
+    <target name="core" depends="icepush" description="Builds the ICEfaces core framework (icefaces.jar).">
+        <subant>
+            <fileset dir="." includes="core/build.xml test/build.xml">
+              <exclude name="**/maven2/build.xml"/>
+            </fileset>
+            <propertyset refid="build.properties"/>
+        </subant> 
+    </target>
+
+    <target name="compat" depends="core" description="Builds the ICEfaces Components and 1.x Compat libraries (icefaces-compat.jar).">
+            <subant>
+                  <fileset dir="." includes="compat/build.xml">
+                    <exclude name="**/maven2/build.xml"/>
+                </fileset>
+            </subant>
+    </target>
+
+    <target name="ace" depends="core" description="Builds the ICEfaces Advanced Components (icefaces-ace.jar).">
+            <subant>
+                  <fileset dir="." includes="ace/build.xml">
+                    <exclude name="**/maven2/build.xml"/>
+                </fileset>
+            </subant>
+    </target>
+
+    <target name="samples" depends="icepush, core, ace, compat" description="Builds the ICEfaces samples.">
+        <subant>
+            <fileset dir="." includes="samples/build.xml">
+                <exclude name="**/maven2/build.xml"/>
+            </fileset>
+        </subant>
+    </target>
+
+    <target name="world" depends="icepush, core, compat, ace, samples"  description="Builds all ICEfaces/ICEpush libraries.">
+    </target>
+
+    <target name="clean" depends="allclean">
+    </target>
+
+
+    <target name="allclean" depends="checkIfEEBundle" description="Cleans all remnants of previous ICEfaces builds.">
+        <subant target="clean">
+            <fileset dir="." includes="*/build.xml">
+                <exclude name="**/maven2/build.xml"/>
+		</fileset>
+        </subant>
+        <subant target="allclean">
+            <fileset file="samples/build.xml" />
+        </subant>
+        <subant target="clean">
+            <fileset file="icepush/core/build.xml" />
+        </subant>
+        <delete>
+            <fileset dir="lib">
+                <include name="${icefaces.lib.name}.jar" />
+                <include name="${icefaces-compat.lib.name}.jar" />
+                <include name="${icefaces-ace.lib.name}.jar" />
+                <include name="${icepush.lib.name}.jar" if="isOSBundle" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="bundle.clean">
+        <delete dir="${bundle.dir}"/>
+    </target>
+
+    <target name="bundle">
+        <mkdir dir="${bundle.dir}"/>
+
+        <copy todir="${bundle.dir.bin}">
+          <fileset dir="."/>
+        </copy>
+        <antcall target="bundle.bin"/>
+
+        <zip destfile="${bundle.dir}/${bundle.name.bin}.zip">
+            <zipfileset dir="${bundle.dir}/${bundle.name.bin}" prefix="${bundle.name.bin}"/>
+        </zip>
+        <copy todir="${bundle.dir.src}">
+          <fileset dir="."/>
+        </copy>
+        <antcall target="bundle.src"/>
+
+		<antcall target="zip.os.bundles" />
+    </target>
+
+	<target name="zip.os.bundles" depends="checkIfEEBundle" if="isOSBundle">
+		<!-- Only create the O/S bundle zips if this is not the EE Bundle build.  -->
+        <zip destfile="${bundle.dir}/${bundle.name.bin}.zip" >
+        	<zipfileset dir="${bundle.dir}/${bundle.name.bin}" prefix="${bundle.name.bin}"/>
+        </zip>
+
+        <zip destfile="${bundle.dir}/${bundle.name.src}.zip">
+            <zipfileset dir="${bundle.dir}/${bundle.name.src}" prefix="${bundle.name.src}"/>
+        </zip>
+	</target>
+
+	<target name="checkIfEEBundle" >
+ 		<condition property="isOSBundle">
+ 			<not>
+				<isset property="ee.bundle.dir"/>
+			</not>	
+		</condition>	
+	<echo message="isOSBundle=${isOSBundle}"/>
+	</target>
+
+    <!-- Only delete these files here and now if this is not the EE build. -->
+	<target name="if.not.ee.delete.bundle.bin.files" depends="checkIfEEBundle" if="isOSBundle" >
+		<antcall target="delete.bundle.bin.files" />
+	</target>	
+
+	<target name="delete.bundle.bin.files" >
+	    <!-- Remove the following files and directories as they are not required for the binary bundle -->
+			<delete>
+				<fileset dir="${bundle.dir.bin}">
+					<include name="build.xml"/>
+				</fileset>
+				<fileset dir="${bundle.dir.bin}/lib">
+					<include name="junit*.jar"/>
+					<include name="junit*.jar"/>
+					<include name="commons-fileupload.jar"/>
+					<include name="tlddoc.jar"/>                
+					<include name="yui-compressor.jar"/>                
+				</fileset>
+				<fileset dir="${bundle.dir.bin}/lib/compat">
+					<include name="freemarker*.jar"/>
+					<include name="jsf-metadata*.jar"/>
+					<include name="jsp-api*.jar"/>
+					<include name="portlet*.jar"/>
+				</fileset>
+				<fileset dir="${bundle.dir.bin}/samples/dist">
+					<include name="basic.war"/>
+					<include name="compat-basic.war"/>
+					<include name="component-showcase.war"/>
+					<include name="component-showcase-portlets.war"/>
+				</fileset>
+	
+			</delete>
+	
+			<!-- Due to a quirk of Ant and Windows, we can't delete a .jar file that was
+				 used on the classpath to execute a task. With ACE, we use the smartsprites
+				 library and then try to remove it from the binary bundle. To try and avoid
+				 this we avoid failing on any error meaning it'll need to be manually removed
+				 when the bundle is built on a Windows machine. -->
+			<delete dir="${bundle.dir.bin}/ace" failonerror="false"/>
+			<delete dir="${bundle.dir.bin}/compat"/>
+			<delete dir="${bundle.dir.bin}/core"/>
+			<delete dir="${bundle.dir.bin}/test"/>
+			<delete dir="${bundle.dir.bin}/tutorials"/>
+	
+			<delete dir="${bundle.dir.bin}/samples/core/test"/>        
+			<delete dir="${bundle.dir.bin}/samples/core/basic"/>
+			<delete dir="${bundle.dir.bin}/samples/compat/compat-basic"/>
+			<delete dir="${bundle.dir.bin}/samples/compat/component-showcase/"/>
+			<delete dir="${bundle.dir.bin}/samples/compat/component-showcase-portlets/"/>
+	
+			<delete dir="${bundle.dir.bin}/samples/showcase/showcase/build"/>
+			<delete dir="${bundle.dir.bin}/samples/showcase/showcase-portlet/build"/> 
+			<delete dir="${bundle.dir.bin}/samples/core/auction/build"/>
+			<delete dir="${bundle.dir.bin}/samples/core/chat/build"/>
+			<delete dir="${bundle.dir.bin}/samples/compat/auctionMonitor/build"/>
+			<delete dir="${bundle.dir.bin}/samples/compat/auctionMonitor/src/main/webapp/WEB-INF/lib"/>
+			<delete dir="${bundle.dir.bin}/samples/compat/auctionMonitor/src/main/webapp/WEB-INF/classes"/>
+	
+			<delete dir="${bundle.dir.bin}/icepush"/>
+	</target>
+	
+    <target name="bundle.bin">
+
+        <!-- Clean and build everything for the binary bundle -->
+        <subant target="allclean">
+            <fileset dir="${bundle.dir.bin}" includes="build.xml"/>
+        </subant>
+
+		<!-- Remove the itext.jar so it doesn't end up in the distribution bundles -->
+        <delete>
+            <fileset dir="${bundle.dir.bin}/lib/ace">
+                <include name="itext*.jar"/>
+            </fileset>
+        </delete>
+
+        <subant target="world">
+            <fileset dir="${bundle.dir.bin}" includes="build.xml"/>
+            <propertyset refid="build.properties"/>
+        </subant>
+
+        <!-- Create the JavaDocs for core, compat, ace, icepush and move them to the docs directory -->
+        <subant target="javadoc">
+            <fileset dir="${bundle.dir.bin}/core" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/core/build/javadocs" tofile="${bundle.dir.bin}/docs/core/api"/>
+
+        <subant target="javadoc">
+            <fileset dir="${bundle.dir.bin}/compat/core" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/compat/core/build/javadocs" tofile="${bundle.dir.bin}/docs/compat/core/api"/>
+
+        <subant target="javadoc">
+            <fileset dir="${bundle.dir.bin}/compat/components" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/compat/components/build/doc/api" tofile="${bundle.dir.bin}/docs/compat/comps/api"/>
+
+        <subant target="javadoc">
+            <fileset dir="${bundle.dir.bin}/ace/component" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/ace/component/build/doc/javadoc" tofile="${bundle.dir.bin}/docs/ace/api"/>
+		
+       	<subant target="icepush-javadoc">
+            <fileset dir="${bundle.dir.bin}" includes="build.xml"/>
+       	</subant>
+
+        <!-- Create the TLD docs for icecore, compat, ace move them to the docs directory -->
+        <subant target="tlddoc">
+            <fileset dir="${bundle.dir.bin}/core" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/core/build/doc/tld" tofile="${bundle.dir.bin}/docs/core/comps/tld"/>
+
+        <subant target="tlddoc">
+            <fileset dir="${bundle.dir.bin}/compat/components" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/compat/components/build/doc/tld" tofile="${bundle.dir.bin}/docs/compat/comps/tld"/>
+
+        <subant target="tlddoc">
+            <fileset dir="${bundle.dir.bin}/ace/component" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/ace/component/build/doc/tld" tofile="${bundle.dir.bin}/docs/ace/tld"/>
+
+        <antcall target="if.not.ee.delete.bundle.bin.files" />
+
+        <subant target="clean">
+            <fileset dir="${bundle.dir.bin}/samples/showcase/showcase-portlet" includes="build.xml"/>
+            <fileset dir="${bundle.dir.bin}/samples/core/chat-portlet" includes="build.xml"/>
+        </subant>
+
+        <!-- Not yet ready to distribute the Liferay Faces Bridge yet. -->
+        <delete dir="${bundle.dir.bin}/lib/portlets/liferayfaces"/>
+    </target>
+
+    <target name="bundle.src">
+
+        <!-- Clean and build everything for the src bundle -->
+        <subant target="allclean">
+            <fileset dir="${bundle.dir.src}" includes="build.xml"/>
+        </subant>
+
+        <!-- Remove the following files and directories as they are not required for the source bundle -->
+        <delete>
+            <fileset dir="${bundle.dir.src}/lib">
+                <include name="commons-fileupload.jar"/>
+            </fileset>
+        </delete>
+        <delete>
+            <fileset dir="${bundle.dir.src}/lib/ace">
+                <include name="itext*.jar"/>
+            </fileset>
+        </delete>
+
+        <delete>
+            <fileset dir="${bundle.dir.src}/icepush">
+                <include name="build.xml"/>
+                <include name="build.packages.xml"/>
+            </fileset>
+        </delete>
+        <copy todir="${bundle.dir.src}/lib" failonerror="false">
+            <fileset dir="${bundle.dir.src}/icepush/lib">
+                <include name="jsp-api.jar" />
+                <include name="mail.jar" />
+            </fileset>
+        </copy>
+        <delete dir="${bundle.dir.src}/icepush/lib" />
+
+        <delete dir="${bundle.dir.src}/icepush/samples"/>
+
+        <delete dir="${bundle.dir.src}/test"/>
+        <delete dir="${bundle.dir.src}/ace/test"/>
+        <delete dir="${bundle.dir.src}/tutorials"/>
+        <delete dir="${bundle.dir.src}/samples/dist"/>
+        <delete dir="${bundle.dir.src}/samples/core/test"/>        
+        <delete dir="${bundle.dir.src}/samples/core/basic"/>
+        <delete dir="${bundle.dir.src}/samples/compat/compat-basic"/>
+        <delete dir="${bundle.dir.src}/samples/compat/component-showcase/"/>
+        <delete dir="${bundle.dir.src}/samples/compat/component-showcase-portlets/"/>
+        
+        <!-- Not yet ready to distribute the Liferay Faces Bridge yet. -->
+        <delete dir="${bundle.dir.src}/lib/portlets/liferayfaces"/>
+    </target>
+
+	<target name="icepush-javadoc" depends="checkIfEEBundle" if="isOSBundle" >
+		<!-- Only generate the icepush javadocs from icefaces/icepush/core if this is the OSBundle -->
+       	<subant target="javadoc">
+           	<fileset dir="./icepush/core" includes="build.xml"/>
+       	</subant>
+	    <move file="./icepush/core/build/javadocs" tofile="./docs/icepush/api"/>
+    </target>
+
+</project>
+

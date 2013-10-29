@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[gMapOptionsBean.title]}"/>
+    <ui:param name="description" value="#{msgs[gMapOptionsBean.description]}"/>
+    <ui:param name="resourceValue" value="#{gMapOptionsBean.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+
+    <ui:define name="example">
+	
+	<h:form id="input">
+    <ace:gMap id="gMapOptions"  style="width: 675px; height: 500px" options="mapTypeControl:${gMapOptionsBean.typeControl}, overviewMapControl:${gMapOptionsBean.overviewControl},
+panControl:${gMapOptionsBean.panControl}, rotateControl:${gMapOptionsBean.rotateControl}, scaleControl:${gMapOptionsBean.scaleControl},
+streetViewControl:${gMapOptionsBean.streetViewControl}, zoomControl:${gMapOptionsBean.zoomControl},
+mapTypeControlOptions:{position: google.maps.ControlPosition.${gMapOptionsBean.typeLocation}, style: google.maps.MapTypeControlStyle.${gMapOptionsBean.typeStyle}},
+draggable:${gMapOptionsBean.draggable}, scrollwheel:${gMapOptionsBean.scrollWheel}, minZoom:${gMapOptionsBean.minZoom}, maxZoom:${gMapOptionsBean.maxZoom}"/>
+		<br/>
+	
+        <ace:panel id="controlsPanel"
+                   header="Map Controls"
+                   closable="false"
+                   toggleable="true"
+                   collapsed="#{gMapOptionsBean.controlsPanelCollapsed}">
+        <h:panelGrid columns="2">
+            <h:outputLabel for="mapTypeControl" value="Map Type Control:"/>
+            <h:selectBooleanCheckbox id="mapTypeControl" value="#{gMapOptionsBean.typeControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+            <h:outputLabel for="overviewMapControl" value="Overview Map Control:"/>
+            <h:selectBooleanCheckbox id="overviewMapControl" value="#{gMapOptionsBean.overviewControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+            <h:outputLabel for="panControl" value="Pan Control:"/>
+            <h:selectBooleanCheckbox id="panControl" value="#{gMapOptionsBean.panControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+            <h:outputLabel for="rotateControl" value="Rotate Control:"/>
+            <h:selectBooleanCheckbox id="rotateControl" value="#{gMapOptionsBean.rotateControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+            <h:outputLabel for="scaleControl" value="Scale Control:"/>
+            <h:selectBooleanCheckbox id="scaleControl" value="#{gMapOptionsBean.scaleControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+            <h:outputLabel for="streetViewControl" value="Street View Control:"/>
+            <h:selectBooleanCheckbox id="streetViewControl" value="#{gMapOptionsBean.streetViewControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+            <h:outputLabel for="zoomControl" value="Zoom Control:"/>
+            <h:selectBooleanCheckbox id="zoomControl" value="#{gMapOptionsBean.zoomControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+        </h:panelGrid>
+        </ace:panel>
+        <ace:panel id="controlOptionsPanel"
+                   header="Map Type Control Options"
+                   closable="false"
+                   toggleable="true"
+                   collapsed="#{gMapOptionsBean.mapTypeControlPanel}">
+            <ace:simpleSelectOneMenu id="locationSelector" value="#{gMapOptionsBean.typeLocation}">
+                <ace:ajax render="@all"/>
+                <f:selectItem itemValue="TOP_LEFT" itemLabel="Top Left"/>
+                <f:selectItem itemValue="TOP_CENTER" itemLabel="Top Center"/>
+                <f:selectItem itemValue="TOP_RIGHT" itemLabel="Top Right"/>
+                <f:selectItem itemValue="LEFT_TOP" itemLabel="Left Top"/>
+                <f:selectItem itemValue="LEFT_CENTER" itemLabel="Left Center"/>
+                <f:selectItem itemValue="LEFT_BOTTOM" itemLabel="Left Bottom"/>
+                <f:selectItem itemValue="BOTTOM_LEFT" itemLabel="Bottom Left"/>
+                <f:selectItem itemValue="BOTTOM_CENTER" itemLabel="Bottom Center"/>
+                <f:selectItem itemValue="BOTTOM_RIGHT" itemLabel="Bottom Right"/>
+                <f:selectItem itemValue="RIGHT_TOP" itemLabel="Right Top"/>
+                <f:selectItem itemValue="RIGHT_CENTER" itemLabel="Right Center"/>
+                <f:selectItem itemValue="RIGHT_BOTTOM" itemLabel="Right Bottom"/>
+            </ace:simpleSelectOneMenu>
+            <ace:simpleSelectOneMenu id="styleSelector" value="#{gMapOptionsBean.typeStyle}">
+                <ace:ajax render="@all"/>
+                <f:selectItem itemValue="HORIZONTAL_BAR" itemLabel="Horizontal Bar"/>
+                <f:selectItem itemValue="DROPDOWN_MENU" itemLabel="Dropdown"/>
+            </ace:simpleSelectOneMenu>
+         </ace:panel>
+        <ace:panel id="mapOptionsPanel"
+                   header="Map Options"
+                   closable="false"
+                   toggleable="true"
+                   collapsed="#{gMapOptionsBean.optionsPanelCollapsed}">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="draggable" value="Draggable:"/>
+                <h:selectBooleanCheckbox id="draggable" value="#{gMapOptionsBean.draggable}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+                <h:outputLabel for="scrollWheel" value="Scroll Wheel:"/>
+                <h:selectBooleanCheckbox id="scrollWheel" value="#{gMapOptionsBean.scrollWheel}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
+                <h:outputLabel for="minZoom" value="Minimum Zoom:"/>
+                <h:inputText id="minZoom" value="#{gMapOptionsBean.minZoom}"><f:ajax render="@all"/></h:inputText>
+                <h:outputLabel for="maxZoom" value="Maximum Zoom:"/>
+                <h:inputText id="maxZoom" value="#{gMapOptionsBean.maxZoom}"><f:ajax render="@all"/></h:inputText>
+            </h:panelGrid>
+        </ace:panel>
+		<br/>
+		
+    <p>
+	Note: The 'rotate' control is currently not supported on all areas of a google map, and as such will only appear at maximum zoom in satellite or hybrid mode, in supported areas. At all other times, it will be invisible, even if enabled. To see it for yourself, try zooming in to the highest level on LA, San Francisco, or most other major American cities.
+	<br/><br/>
+	Relevant section of the Google Maps API: <a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#MapOptions">Map Options</a></p>
+	</h:form>
+</ui:define>
+</ui:composition>

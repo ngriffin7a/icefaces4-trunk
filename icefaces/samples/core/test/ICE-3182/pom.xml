@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.icefaces.samples</groupId>
+  <artifactId>basic</artifactId>
+  <packaging>war</packaging>
+  <name>@{artifactId}</name>
+  <version>2.0.0.RC2</version>
+  <description />
+  <repositories>
+     <repository>
+        <id>snapshots</id>
+        <url>http://anonsvn.icefaces.org/repo/maven2/snapshots/</url>
+     </repository>
+  </repositories>
+  <build>
+    <finalName>${artifactId}</finalName>
+    <sourceDirectory>${basedir}/src/main/</sourceDirectory>
+    <outputDirectory>${basedir}/web/WEB-INF/classes</outputDirectory>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+          <exclude>**/.svn/*</exclude>
+         <exclude>**/webapp/*</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    
+    <plugins>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+              <resource>
+                 <directory>${basedir}/web</directory>
+                 <excludes>
+                    <exclude>**/.svn/*</exclude>
+                    <exclude>**/main/*</exclude>
+                 </excludes>
+              </resource>
+          </webResources>
+          <packagingExcludes>**/.svn/*</packagingExcludes> 
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+    	<groupId>org.icefaces</groupId>
+    	<artifactId>icefaces</artifactId>
+    	<version>${version}</version>
+    	<scope>compile</scope>
+    </dependency>
+ <!--     <dependency>
+      	<groupId>javax.annotation</groupId>
+      	<artifactId>jsr250-api</artifactId>
+      	<version>1.0</version>
+      	<scope>provided</scope>
+    </dependency>
+    <dependency>
+      	<groupId>javax.servlet</groupId>
+      	<artifactId>servlet-api</artifactId>
+      	<version>2.5</version>
+      	<scope>provided</scope>
+     </dependency>  
+     <dependency>
+         <groupId>org.icefaces</groupId>
+         <artifactId>icepush</artifactId>
+         <version>${version}</version>
+     </dependency>-->
+  </dependencies>
+  <profiles>
+    <profile>
+       <id>tomcat6</id>
+       <activation>
+          <activeByDefault>false</activeByDefault>
+       </activation>
+       <dependencies>
+          <dependency>
+             <groupId>javax.faces</groupId>
+             <artifactId>jsf-impl</artifactId>
+             <version>2.0.3.FCS</version>
+          </dependency>
+          <dependency>
+             <groupId>javax.faces</groupId>
+             <artifactId>jsf-api</artifactId>
+             <version>2.0.3.FCS</version>
+          </dependency>
+       </dependencies>
+    </profile>
+    <profile>
+       <id>glassfish3</id>
+      <activation>
+          <activeByDefault>true</activeByDefault>
+       </activation>       
+       <dependencies>
+          <dependency>
+             <groupId>javax.faces</groupId>
+             <artifactId>jsf-impl</artifactId>
+             <version>2.0.3.FCS</version>
+             <scope>provided</scope>
+          </dependency>
+          <dependency>
+             <groupId>javax.faces</groupId>
+             <artifactId>jsf-api</artifactId>
+             <version>2.0.3.FCS</version>
+             <scope>provided</scope>
+          </dependency>
+       </dependencies>
+    </profile>
+  </profiles>
+  
+</project>

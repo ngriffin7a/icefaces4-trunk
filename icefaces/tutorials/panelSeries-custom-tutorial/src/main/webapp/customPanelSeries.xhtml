@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>Series Panel Component Tutorial</title>
+        <link href="./xmlhttp/css/xp/xp.css" rel="stylesheet" type="text/css"/>
+        <style type="text/css" media="screen">
+            .first {
+                width: 200px;
+            }
+
+            .second {
+                width: 600px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <ice:form id="frm">
+            <ice:panelSeries id="pSeries" var="customObject" value="#{customPanelSeriesBean.customObjectList}">
+                <ice:panelGrid id="grid" columns="2" style="border:1px solid silver;" width="800px"
+                               columnClasses="first,second">
+                    <ice:outputText id="nameLbl" value="Name:"/>
+                    <ice:outputText id="name" value="#{customObject.name}"/>
+                    <ice:outputText id="ageLbl" value="Age:"/>
+                    <ice:outputText id="age" value="#{customObject.age}"/>
+                    <ice:outputText id="emailLbl" value="Email Address:"/>
+                    <ice:outputText id="email" value="#{customObject.emailAddress}"/>
+                    <ice:outputText id="phoneLbl" value="Phone Number:"/>
+                    <ice:outputText id="phone" value="#{customObject.phoneNumber}"/>
+                    <ice:outputText id="anonymousLbl" value="Anonymous Message?"/>
+                    <ice:selectBooleanCheckbox id="anonymous" value="#{customObject.anonymous}" partialSubmit="true"/>
+                    <ice:outputText id="msgToLbl" value="Message to #{customObject.name}:"/>
+                    <ice:inputText id="msgIn" value="#{customObject.inputMessage}" partialSubmit="true"/>
+                    <ice:outputText id="dayLbl" value="Pick a Day:"/>
+                    <ice:selectInputDate id="day" value="#{customObject.selectedDate}" partialSubmit="true"
+                                         renderAsPopup="true"/>
+
+                    <ice:commandButton id="btn" value="Done" actionListener="#{customObject.showMessage}"/>
+                    <ice:outputText id="msgTo"
+                                    value="You have Left following message to #{customObject.name} at                   #{customObject.selectedDate}:"
+                                    rendered="#{customObject.done}"/>
+                    <br/>
+                    <ice:outputText id="msgOut" value="#{customObject.inputMessage}" escape="false"
+                                    rendered="#{customObject.done}"/>
+
+                </ice:panelGrid>
+                <br/>
+            </ice:panelSeries>
+        </ice:form>
+    </h:body>
+</f:view>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+	<description>
+        <![CDATA[
+        <p>The menuBar component provides a robust menu system that supports:</p>
+        <ol>
+           <li>Nested child menuItem and menuItemSeparator components. Support for menuItemCheckbox and menuItemRadio
+           components are planned for a future release.</li>
+
+           <li>Horizontal (default) and Vertical menu orientations. Defines whether the submenus of the top-level
+           menu items appear beside or below the top-level menu items.</li>
+
+           <li> Definition of the heirarchy of menu items and their submenus in one of two ways:
+                <ul>
+                   <li>by using a binding to a bean method that returns a (potentially) dynamic heirarchy of menu items.</li>
+                   <li>by statically defining the heirarchy in the JSPX page.</li>
+                </ul>
+           </li>
+
+           <li>The action attribute of the contained menuItem tags or instances can be defined to indicate a string or
+           a backing bean method that can be used in application navigation.</li>
+
+           <li>The actionListener attribute of the contained menuItem tags or instances can be defined to indicate an
+           actionListener that resides in a backing bean.</li>
+        </ol>
+        <p>See the menuItem component's description for more relevant information.</p>]]>
+	</description>
+	<component-family>com.icesoft.faces.Menu</component-family>
+
+	<renderer-type>com.icesoft.faces.View</renderer-type>
+
+	<renderer-extension>
+		<instance-name>menuBar</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>menuBar</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

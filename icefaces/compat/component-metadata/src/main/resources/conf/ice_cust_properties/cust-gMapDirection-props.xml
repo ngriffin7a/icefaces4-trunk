@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!--
+&ice-att-userrole-enabled-props;
+&ice-att-userrole-rendered-props;
+-->
+&base-props;
+<property>
+    <description>
+        Point B
+    </description>
+    <property-name>to</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+<property>
+    <description>
+        Point A
+    </description>
+    <property-name>from</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+<property>
+    <description>
+    <![CDATA[     
+        This attribute reference the id of the panelGroup, that displays the textual direction. (e.g.)<br/>
+        
+        &lt;ice:GMap&gt;<br/>
+             &lt;ice:GDirection textualDivId="textDiv" ...../&gt;</br>
+         &lt;/ice:GMap&gt; </br>
+         &lt;ice:panelGroup id="textDiv"/&gt;
+    ]]>           
+    </description>
+    <property-name>textualDivId</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+<!--
+<property>
+    <description>
+        The locale to use for the directions result. For example, "en_US", "fr", "fr_CA", etc.
+    </description>
+    <property-name>locale</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+-->
+<property>
+    <description>
+        This attribute tells to the map to get the direction if set to true.        
+    </description>    
+    <property-name>locateAddress</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>

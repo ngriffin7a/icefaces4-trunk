@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
+<ui:insert name="metadata"/>
+
+<h:head>
+    <title id="title">#{msgs['showcase.title']}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <h:outputStylesheet library="ice.compat" name="rime/rime.css"/>
+    <h:outputStylesheet library="ice.samples.showcase" name="override_header.css"/>
+    <h:outputStylesheet library="ice.samples.showcase" name="demo_template.css"/>
+    <h:outputStylesheet library="ice.samples.showcase" name="override_styles.css"/>
+    <h:outputStylesheet library="ice.samples.showcase" name="showcase_styles.css"/>
+    <icecore:config mandatoryResource="dataTable" />
+</h:head>
+
+<h:body styleClass="suite ice-skin-rime">
+    <f:view contentType="text/html">
+        <h:panelGroup styleClass="header" layout="block">
+            <ui:insert name="suite-select-menu"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="container" layout="block">
+            <h:panelGroup layout="block" styleClass="mid full-width">
+                    <h:panelGroup styleClass="menu">
+                        <h:panelGroup layout="block" styleClass="menuContainer">
+                            <ui:insert name="suite-menu"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="primary">
+                        <!-- TODO: Implement bread crumbs-->
+                        <h:panelGroup layout="block" styleClass="breadCrumbs">
+                        </h:panelGroup>
+                        <!-- todo implement theme selection, going to be tricky... -->
+                        <h:panelGroup layout="block" styleClass="themeSelect">
+                        </h:panelGroup>
+
+                        <ui:insert name="component-example"/>
+                    </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="footer">
+                <!--
+                <ul class="footer-nav">
+                        <li><a>about</a></li>
+                        <li><a>contact</a></li>
+                        <li><a>components....</a></li>
+                </ul>
+                -->
+                <p>&#xA9; 2013 ICEsoft Technologies Inc.</p>
+            </h:panelGroup>
+        </h:panelGroup>
+    </f:view>
+</h:body>
+</html>

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[menuEffect.title]}"/>
+    <ui:param name="description" value="#{msgs[menuEffect.description]}"/>
+    <ui:param name="resourceValue" value="#{menuEffect.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{menuResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{menuResources.tldResources}"/>
+
+    <ui:define name="example">
+	<style type="text/css">
+	.mid  { padding-top: 18px; overflow:visible; }
+	</style>
+        <h:form id="form">
+            <h:panelGrid columns="2" columnClasses="menuLogStyle, menuStyle">
+               <ace:panel>
+                    <h:panelGrid styleClass="centeredPanelGridWithBorderSpacing" columns="2"> 
+                        <h:outputLabel value="Effect Type:" for="effectType"/>
+                            <ace:simpleSelectOneMenu    id="effectType"
+                                                value="#{menuEffect.effectName}">
+                                <f:selectItems value="#{menuEffect.availableEffects}"
+                                               var="type"
+                                               itemValue="#{type.value}"
+                                               itemLabel="#{type.key}"/>
+                                <ace:ajax execute="@this" render="@form" />
+                            </ace:simpleSelectOneMenu>
+                            <h:outputLabel id="effectDur" value="Effect Duration (#{menuEffect.effectDuration} ms):" for="effectDuration"/>
+                            <h:panelGroup>
+                            <ace:sliderEntry id="effectDuration"
+                                             clickableRail="true"
+                                             min="100"
+                                             max="1100"
+                                             value="#{menuEffect.effectDuration}"
+                                             showLabels="true"
+                                             stepPercent="25">
+                                <ace:ajax event="slideEnd" execute="@this" render="@form" />
+                            </ace:sliderEntry>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </ace:panel>
+                
+                <ace:menu id="menu" type="tiered"
+                      effect="#{menuEffect.effectName}"
+                      effectDuration="#{menuEffect.effectDuration}">
+
+                    <ace:submenu label="File">
+                        <ace:menuItem value="New" icon="ui-icon"/>
+                        <ace:menuItem value="Open" icon="ui-icon"/>
+                        <ace:menuItem value="Save" icon="ui-icon ui-icon-disk"/>
+                        <ace:menuItem value="Delete" icon="ui-icon ui-icon-close"/>
+                    </ace:submenu>
+                    <ace:submenu label="View">
+                        <ace:menuItem value="Horizontal" icon="ui-icon"/>
+                        <ace:menuItem value="Vertical" icon="ui-icon"/>
+                        <ace:menuItem value="Fill" icon="ui-icon"/>
+                    </ace:submenu>
+                </ace:menu>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

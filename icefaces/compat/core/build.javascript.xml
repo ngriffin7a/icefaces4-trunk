@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project name="bridge" default="build">
+    <property file="build.properties"/>
+    <property name="src.dir" location="${basedir}/src/main/javascript"/>
+    <property name="extras.dir" location="${src.dir}/extras"/>
+    <property name="prototype.dir" location="${src.dir}/prototype"/>
+    <property name="scriptaculous.dir" location="${src.dir}/scriptaculous"/>
+    <property name="lib.dir" location="${basedir}/src/main/javascript/lib"/>
+    <property name="build.dir" location="${basedir}/build/"/>
+    <property name="build.res.dir" location="${build.dir}/resources/META-INF/resources/ice.compat"/>
+    <property name="tmp" value="${build.dir}/tmp.js"/>
+    <property name="tmp.extra" value="${build.dir}/tmp.extra.js"/>
+
+    <target name="prepare" depends="build.icefaces.compat" description="Collate bridge code">
+        <tstamp/>
+        <echoproperties/>
+        <mkdir dir="${build.res.dir}"/>
+        <delete file="${tmp}" failonerror="not"/>
+        <loadfile property="status.js" srcFile="${src.dir}/status.js"/>
+        <loadfile property="submit.js" srcFile="${src.dir}/submit.js"/>
+        <copy file="${src.dir}/compat.js" tofile="${tmp}" overwrite="yes">
+            <filterset begintoken="//include " endtoken=".js">
+                <filter token="status" value="${status.js}"/>
+                <filter token="submit" value="${submit.js}"/>
+            </filterset>
+        </copy>
+    </target>
+
+
+    <target name="build.icefaces.compat" description="Collate compat components code">
+        <tstamp/>
+        <echoproperties/>
+        <mkdir dir="${build.res.dir}"/>
+        <delete file="${tmp.extra}" failonerror="not"/>
+        <concat destfile="${tmp.extra}" append="yes" fixlastline="yes">
+            <header file="src/main/javascript/compat.header.js"/>
+            <footer file="src/main/javascript/compat.footer.js"/>
+            <filelist dir="${prototype.dir}">
+                <file name="prototype.js"/>
+            </filelist>
+            <filelist dir="${scriptaculous.dir}">
+                <!--<file name="builder.js"/>-->
+                <file name="effects.js"/>
+                <file name="dragdrop.js"/>
+                <!--<file name="controls.js"/>-->
+                <!--<file name="slider.js"/>-->
+                <!--<file name="sound.js"/>-->
+            </filelist>
+            <filelist dir="${extras.dir}">
+                <file name="extras.js"/>
+            </filelist>
+        </concat>
+    </target>
+
+    <target name="build.bridge.compressed" depends="prepare">
+        <echo message="Compressing Javascript code..."/>
+        <java jar="../../lib/shrinksafe.jar" fork="true" output="${build.res.dir}/compat.js">
+            <arg value="${tmp}"/>
+        </java>
+        <!-- Use yui-compressor this time since it gets rid of line breaks and comments, although is not really capable
+        of minifying the code. ShrinkSafe will minify the code but it breaks the Prototype code. -->
+        <java jar="../../lib/yui-compressor.jar" fork="yes">
+            <arg line="--preserve-semi"/>
+            <arg value="-o"/>
+            <arg value="${build.res.dir}/icefaces-compat.js"/>
+            <arg value="${tmp.extra}"/>
+        </java>
+    </target>
+
+    <target name="build.bridge.uncompressed" depends="prepare">
+        <copy file="${tmp}" tofile="${build.res.dir}/compat.uncompressed.js" overwrite="yes">
+            <filterchain>
+                <stripjavacomments/>
+                <ignoreblank/>
+            </filterchain>
+        </copy>
+        <copy file="${tmp.extra}" tofile="${build.res.dir}/icefaces-compat.uncompressed.js" overwrite="yes">
+            <filterchain>
+                <!-- using built in 'stripjavacomments' for removing comments breaks Prototype code, one of
+                the regular expressions contains '/*' characters which are mistakenly interpreted as JS comments -->
+                <!--stripjavacomments/-->
+                <ignoreblank/>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="build.cleanup">
+        <delete file="${tmp}"/>
+        <delete file="${tmp.extra}"/>
+    </target>
+
+    <target name="build" depends="build.cleanup, build.bridge.uncompressed, build.bridge.compressed"
+            description="Build bridge"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>

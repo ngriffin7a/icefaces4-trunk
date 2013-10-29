@@ -1,0 +1,465 @@
+ /*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /*font-family: "Arial","Helvetica",sans-serif;*/
+    /*text-align: center;*/
+}
+
+p+ul {
+    line-height: 20px;
+    margin-left: 20px;
+}
+
+p {
+    text-align: left;
+    line-height: 20px;
+}
+
+.panelHeaderStyle
+{
+    font-weight: bold;
+}
+
+table { font-size: 1.0em; }
+.full-width { width:100%; }
+.text-center { text-align:center; }
+span.hide * {
+    display:none;
+}
+
+a:link, a:visited {
+    color: #000000;
+    text-decoration: none;
+}    
+
+
+.container { 
+    /*width: 95%;*/
+    margin: 0 auto; 
+}
+
+
+/*HEADER STYLES BEGIN*/
+.header
+{
+    background: url("#{resource['css/images/topBannerImages/showcaseHeaderBlank.png']}") no-repeat;
+    background-color: transparent;
+    background-position: top center;
+    width: 100%;
+    height: 123px;
+}
+
+.headerCenter
+{
+    background-color: transparent;
+    width: 1020px;
+    height: 110px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.headerLogo
+{
+    overflow: hidden;
+    float: left;
+    padding-top: 8px;
+}
+
+.headerTabs
+{
+    text-align: right;
+    overflow: hidden;
+    padding-top: 29px;
+}
+
+.linkTableStyle
+{
+    float:right;
+}
+.linksHolder
+{
+    display: inline-block;
+    background-color: transparent;
+}
+
+.aceSuiteLink
+{
+    margin-right: 0px;
+}
+
+.iceSuiteLink
+{
+    margin-right: 0px;
+}
+
+.suiteLinkImageStyle
+{
+    background-color: transparent;
+    border-style:  none;
+}
+/*HEADER STYLES END*/
+
+
+.mid, .footer { text-align: left; }
+.mid ul { list-style: none outside none; }
+
+#meta-nav {
+    height: 19px;
+    padding: 16px 0 12px;
+}
+#meta-nav li {
+    color: #666666;
+    padding-left: 6px;
+	display: inline;
+	font-weight: bold; 
+}
+#meta-nav li.first { padding-left: 0; }
+
+#main-nav
+{
+      display: inline-block;
+      border-radius: 3px 3px 3px 3px;
+}
+
+#main-nav ul { width: 543px; }
+#main-nav li { display: inline-block; }
+
+/* search bar*/
+#search-group  {
+    background: url("#{resource['css/images/comp_search_bg.png']}") repeat;
+	background-color: #d3d3d3;             
+	text-align: center;
+	display: inline-block;
+	width: 299px;
+	line-height: 61px;
+	margin-left: 6px;
+	-moz-border-radius: 3px;
+	border-radius:3px;
+	/* IE 6 Fix */     
+	vertical-align: top; 
+	height: 61px; 
+}
+#search-group form {
+	display: inline;
+    line-height: 61px;
+	padding: 0px 16px 0 17px; 
+	/* IE 6 Fix */  
+	_position: relative;
+	_top: 15px;
+}
+
+
+
+/* content */
+.mid  { padding-top: 18px; overflow:hidden; }
+
+.primary {
+	display: inline-block;
+    width: 100%;
+}                           
+
+.menu {
+	vertical-align: top;
+	display: inline-block;
+    margin-right: 10px;
+    width: 230px;
+    font-size: 10pt;
+}
+
+.containerPanelStyle
+{
+    border: none;
+}
+
+
+.menuContainer {
+    -moz-border-radius: 5px;
+	border-radius:5px;
+    background-color: #F1F1F1;
+    margin-bottom: 10px;
+    padding: 16px 19px;    
+}
+.menuContainer h2 {
+    border-bottom: 1px solid #DEDEDB;
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+}
+.menuContainer li a { line-height: 19px; }
+.menuContainer li span[disabled='true'] { line-height: 19px; text-decoration:line-through; margin:0; }
+.menu .selected { font-weight:bold; }
+  
+.breadCrumbs, .themeSelect{
+    color: #ccc;
+    font-size: 12px;
+}
+.breadCrumbs{ float: left; }
+.themeSelect{ float: right; }     
+
+        
+
+/* Example - This would be alot easier if we could use the '>' selector unsupported by IE6 */
+.example {
+    float: left;
+    clear: left;
+    margin-top: -5px;
+    /*border: 1px solid #ECECEC; Styling preference, and %100 width hides right border*/
+    width: 100%;
+}
+.example h2 {
+                
+    font-weight: bold; 
+    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+/* Example Element Containers */
+/* Don't use broad matches like span and div since components internally use those elements
+.example span, .example div { margin: 6px; font-size: 10pt;} 
+.example * span, .example * div { margin: 0;}
+*/
+div .resources { font-size: 10pt;}
+.content ul.info { padding:.5em 40px .5em 0; }
+.content .yui-nav { padding: 0; }
+.content .instance ul li { 
+    text-align:left; 
+}
+.content .instance .submit {
+    padding:1px 6px;
+}
+.example .submenu {
+	float: left;
+    width: 150px;
+    margin: 0px 0px 6px 6px;
+    padding: 9px 12px;
+    background-color: #F6F6F6;
+    -moz-border-radius: 5px 5px 5px 5px;
+	border-radius:5px;
+}
+.example .content {
+   	margin: 6px;
+}
+.example .submenu + .content { 
+	margin-left: 187px; /* 187px reserved flow room for floated submenu when sibling */ 
+    border: 1px solid #ECECEC;
+} 
+.example .content .desc {
+    font-family: "Arial","Helvetica",sans-serif;
+    font-size: 10pt;
+    margin: 6px;                       
+    padding: 2px;
+}     
+.example .content .desc p {
+	padding-top: 0px;
+}   
+.example .content .desc p:first-child {
+	padding-top: 10px;
+}
+.example .instance {
+  	background-color: #F1F1F1;
+                font-size: 10pt;
+	padding: 8px 6px 6px 12px;    
+	margin: 8px;
+	line-height: 1.5; /* Double spaced inline elements */
+	_height: 65px; /* IE6 Height Behaves like min-height */
+	min-height: 65px;
+                -moz-border-radius: 5px 5px 5px 5px;
+	border-radius:5px;
+}
+/* Don't use broad matches like span and div since components internally use those elements
+.instance .yui-content div { margin: 6px; }
+.example .instance .ice-file-entry { margin-bottom: 10px; }                                   
+*/
+.example .submenu h2, .example .resources h2 {
+    font-size: 12px; 
+	border-bottom: 1px solid #ECECEC;
+	padding-bottom: 3px;
+    margin-bottom: 5px;
+	margin-left: 0px;
+}
+.example .submenu .selected { font-weight: bold; }
+.example .submenu span[disabled='true'] { text-decoration: line-through; margin: 0; }
+
+.example .resources { padding: 2px; clear: left; }
+.example .resources * { margin: 0px; } /* IE 6 Fix */
+
+/* Example Resource Tab Panel */
+.example .resources .yui-content { background:none; } /* Given background is a sprite. No css exists to clip a background image, so this technique is not possible */
+.example .resources .yui-content h1 { text-transform:capitalize; }
+.example .resources .yui-navset { margin-top: 6px; }                  
+.example .resources .yui-navset .yui-nav .selected div.yui-navdiv,  /* Border between tabs and content due to blank bg */ 
+.example .resources .ice-skin-rime .yui-navset .yui-nav .selected a:focus, 
+.example .resources .ice-skin-rime .yui-navset .yui-nav .selected a:hover { border-bottom: 1px solid black; }  
+
+.example .instance .row .top { display: inline-block; vertical-align: top; }
+.example .instance .row .submit { float: left; clear:left; /* Clear for IE */ }
+.example .instance .row .messages { width: 60%; margin-left:10%; }
+.example .instance .row .messages div { display:inline; zoom: 1; /*IE Block Fix*/}
+.example .instance .row .options {
+    float:right;
+    padding:6px 11px 6px 26px;
+    margin:0px 8px 8px 8px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius:3px;
+    display:inline-block;
+    background-color:lightgray;
+}
+.example .instance .row .options input[type="submit"] {
+    margin-left:-20px;
+    *margin-left:-27px;
+    padding: 1px 6px;
+}
+.example .instance .row .options ul li input {
+    margin:2px 2px;
+}
+.example .instance form .row { text-align: left; clear:both; }
+/* This keeps the indeterminate progress from showing properly for fileEntry
+.example .instance form .uploading { float: right; clear:right; }
+*/
+
+.footer {
+    border-top: 1px solid #EAEAEA;
+    margin: 40px 0 10px;
+    padding: 8px 0 8px;
+    font-size: 11px;
+    color: #666666;
+}
+.footer p { float: left; }
+.footer ul.footer-nav { float: right; }
+.footer ul.footer-nav li { display: inline; padding: 0 6px; }         
+
+
+/* Component Styles */
+.yui-log {
+     padding:10px;
+     width:460px;
+     max-height:80%;
+     top:47px;
+     left:50%;
+     margin-left:-485px;
+     padding-bottom:55px;
+     border:1px solid black;
+     position:fixed;
+     z-index:5;
+     background:white;
+     overflow-y:auto;
+     overflow-x:hidden;
+}
+.yui-log:first-child {
+    margin-left:8px;
+    left:50%;
+    position:fixed;
+}
+.yui-log .yui-log-hd .yui-log-button {
+    z-index:5;
+    position:absolute;
+    top:0px;
+    right:0px;
+}
+.yui-log .yui-log-hd h4 {
+    position:absolute;
+    display:block;
+    width:100%;
+    text-align:center;
+    top:0px;
+}
+.yui-log .yui-log-ft .yui-log-btns {
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+.yui-log .yui-log-categoryfilters {
+    width:100%;
+    position:absolute;
+    top:18px;
+    left:0px;
+}
+.yui-log .yui-log-sourcefilters {
+    width:100%;
+    position:absolute;
+    top:36px;
+    left:0px;
+}
+.yui-log-sourcefilters::before {content:"Source Filters: ";}
+.yui-log-categoryfilters::before {content:"Category Filters: ";}
+.yui-log .yui-log-filtergrp {padding:0px 3px;}
+.yui-log-bd {
+    z-index:6;
+    position:relative;
+    top:50px;
+    word-wrap:break-word;
+    text-align:left;
+}
+.yui-log-bd pre p:first-child { text-decoration:underline; font-weight:600; }
+.loggerCloseButton {
+    position:absolute;
+    top:14px;
+    left:50%;
+    width:400px;
+    margin-left:-200px;
+}
+
+.ice-skin-rime .yui-calendar .calnavleft { left:-2px; top:0px; } /* Fix nav arrows rendering on the borders of the cal */
+.ice-skin-rime .yui-calendar .calnavright { right:-2px; top:0px; } /* Observed in FF/Safari */
+
+.ace-inline .ice-checkboxbutton { display:inline; }
+.ace-inline .ice-pushbutton { display:inline; }
+.ace-inline .ice-linkbutton { display:inline; position:relative; top:1px; line-height:28px;}
+
+
+
+
+
+/* Source Code Classes - XHTML */
+.example .resources .yui-content h1 { font-family: sans-serif; font-size: 16pt; font-weight: bold; color: rgb(0,0,0); background: rgb(210,210,210); border: solid 1px black; padding: 5px; text-align: center; }                                              
+
+code { color: rgb(0,0,0); font-family: monospace; font-size: 12px; white-space:nowrap; width:100%; } /* Width acts as IE6 max-width, prevents expansion */   
+code { overflow-x:auto; } /* Needed to overflow IE 6 */ 
+.example .resources .yui-content div { 
+	overflow-x:auto; /* Needed to overflow non IE6,
+    IE7 mode puts y-scroll when over-x:auto */
+    overflow-y:hidden;
+    *padding-bottom:1.5em; /* IE 7 - add the space taken up by horizontal scroll */ 
+    _padding-bottom:0; /* IE 6 - doesn`t need IE7 fix*/
+}               
+.xml_plain { color: rgb(0,0,0); }
+.xml_tag_name { color: rgb(0,55,255); }
+.xml_comment { color: rgb(147,147,147); background-color: rgb(247,247,247); }
+.xml_tag_symbols { color: rgb(0,59,255); }
+.xml_rife_tag { color: rgb(0,0,0); background-color: rgb(228,230,160); }
+.xml_attribute_value { color: rgb(193,0,0); }
+.xml_attribute_name { color: rgb(0,0,0); font-weight: bold; }
+.xml_char_data { color: rgb(0,0,0); }
+.xml_rife_name { color: rgb(0,0,196); background-color: rgb(228,230,160); }
+.xml_processing_instruction { color: rgb(0,0,0); font-weight: bold; font-style: italic; }
+/* Source Code Classes - Java */
+.java_type { color: rgb(0,44,221); }
+.java_keyword { color: rgb(0,0,0); font-weight: bold; }
+.java_javadoc_comment { color: rgb(147,147,147); background-color: rgb(247,247,247); font-style: italic; }
+.java_comment { color: rgb(147,147,147); background-color: rgb(247,247,247); }
+.java_operator { color: rgb(0,124,31); }
+.java_plain { color: rgb(0,0,0); }
+.java_literal { color: rgb(188,0,0); }
+.java_javadoc_tag { color: rgb(147,147,147); background-color: rgb(247,247,247); font-style: italic; font-weight: bold; }
+.java_separator { color: rgb(0,33,255); }

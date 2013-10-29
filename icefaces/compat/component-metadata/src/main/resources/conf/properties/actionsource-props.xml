@@ -1,0 +1,54 @@
+<?xml encoding='UTF-8'?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+&ice-att-immediate-props;
+
+<property>
+	<description>
+		MethodBinding representing the application action to invoke when
+		this component is activated by the user. The expression must
+		evaluate to a either a String or a public method that takes no
+		parameters, and returns a String (the logical outcome) which is
+		passed to the NavigationHandler for this application.
+	</description>
+	
+	<property-name>action</property-name>
+   <property-class>javax.faces.el.MethodBinding</property-class>
+
+	<property-extension>
+		<category>EVENTS</category>	
+	</property-extension>
+</property>
+
+
+
+<property>
+	<description>
+		MethodBinding representing an action listener method that will be 
+		notified when this component is activated by the user. The expression 
+		must evaluate to a public method that takes an ActionEvent parameter, 
+		with a return type of void. 
+	</description>	
+	<property-name>actionListener</property-name>
+    <property-class>javax.faces.el.MethodBinding</property-class>	
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&methodBindingEditor;
+		</editor-class>
+	</property-extension>
+</property>

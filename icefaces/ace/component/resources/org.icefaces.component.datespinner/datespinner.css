@@ -1,0 +1,167 @@
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+ 
+/* @import "../mixins";*/
+
+
+.mobi-date-container .icon-time, .mobi-time-container .icon-time {
+    margin-right: 10px;
+    font-size: 150%;
+    vertical-align: middle;
+}
+
+.mobi-date-container button, .mobi-time-container button {
+    background-color: transparent;
+}
+
+.mobi-date-container .mobi-date-title, .mobi-time-container .mobi-time-title {
+    vertical-align: middle;
+}
+
+.mobi-date-wrapper, .mobi-time-wrapper {
+    display: inline-block;
+}
+.mobi-date-popup-btn, .mobi-time-popup-btn {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    margin: 0 0 0 5px;
+    cursor: pointer;
+    vertical-align: top;
+    -webkit-appearance: none;
+}
+.mobi-date-popup-btn {
+    background-image: url("#{resource['org.icefaces.component.datespinner:btn-calendar.png']}");
+    width: 28px;
+    height: 26px;
+}
+.mobi-time-popup-btn {
+    background-image: url("#{resource['org.icefaces.component.datespinner:btn-time.png']}");
+    width: 27px;
+    height: 24px;
+}
+.mobi-date-bg, .mobi-time-bg {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    opacity: 0.5;
+    filter: alpha(opacity = 50);
+}
+
+.mobi-date-bg-inv, .mobi-time-bg-inv {
+    display: none;
+}
+
+.mobi-date-container-inv, .mobi-time-container-inv  {
+    display: none;
+}
+
+.mobi-date-container, .mobi-time-container {
+    padding: 0;
+    z-index: 1001;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 3px;
+    @include box-shadow(3px 3px 5px black);
+    border: 1px solid white;
+    color: #000000;
+}
+.mobi-date-title-container, .mobi-time-title-container {
+    padding: 5px 0 5px 10px;
+    border-bottom: 1px solid white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.mobi-date-select-container, .mobi-time-select-container  {
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.mobi-date-submit-container, .mobi-time-submit-container {
+    height: 34px;
+    padding: 3px;
+}
+
+.mobi-date-select-value-cont, .mobi-time-select-value-cont {
+    border: 1px solid #999999;
+}
+
+.mobi-date-submit-container .mobi-button,
+.mobi-time-submit-container .mobi-button{
+    width: 49%;
+    margin: 0;
+}
+
+.mobi-date-submit-container .mobi-button:first-child,
+.mobi-time-submit-container .mobi-button:first-child {
+    float: left;
+}
+
+.mobi-date-submit-container .mobi-button:last-child,
+.mobi-time-submit-container .mobi-button:last-child{
+    float: right;
+}
+
+.mobi-date-select-value-cont, .mobi-time-select-value-cont {
+    width: 50px;
+    margin: 5px;
+    background-color: white;
+    display: inline-block;
+}
+
+.mobi-date-btn, .mobi-time-btn {
+    width: 100%;
+    height: 35px;
+    border: none;
+}
+.mobi-time-popup-btn {
+    width: 27px;
+    height: 24px;
+}
+.mobi-date-popup-btn {
+    width: 28px;
+    height: 26px;
+}
+
+.mobi-date-btn-incr, .mobi-time-btn-incr {
+    @include box-shadow(0 3px 3px #888);
+    border-radius: 3px 3px 0 0;
+}
+
+.mobi-date-btn-decr, .mobi-time-btn-decr  {
+    @include box-shadow(0 -3px 3px #888);
+    border-radius: 0 0 3px 3px;
+}
+
+.mobi-date-select-value, .mobi-time-select-value  {
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: none;
+}
+
+

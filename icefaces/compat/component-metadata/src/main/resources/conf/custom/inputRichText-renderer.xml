@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+         <description>
+             <![CDATA[
+             <p>The ICEfaces inputRichText component uses the FCKEditor API to 
+             provide JSF based rich text component.<br/>
+             The "customConfigPath" attribute can be used to defined the custom 
+             config.js where you can customize the FCKeditor including 
+             the custom toolbar and the css.<p>
+             The following steps are involved in creating the custom toolbar:
+             <ol>
+             <li>
+             Create a config file under the webapp, defining the custom toolbar(e.g.)
+             <u>js/config.js</u><br/>
+CKEDITOR.editorConfig = function( config )<br/>
+{<br/>
+    &nbsp;&nbsp;&nbsp;config.toolbar = 'MyToolbar';<br/>
+    &nbsp;&nbsp;&nbsp;config.toolbar_MyToolbar = [['Bold','Italic', 'Underline'], ['Save']];<br/>
+};<br/>
+             </li>
+             <li>
+             Set the "toolbar" attribute on the inputRichText component to 
+             define the custom toolbar name and set the "customConfigPath" attribute to
+             reference the custom config.js.(e.g.) <br/>
+             &lt;ice:inputRichText toolbar="MyToolbar"  customConfigPath="js/config.js"/&gt;
+             </li>
+             </ol>
+             
+<p >The following steps are involved in defining the custom CSS:</p>
+<ol>
+    <li>
+        create a customize css file(e.g.)
+        <u>css/mysitestyles.css</u><br/><br/>
+    </li>
+    <li>
+        Create a config file under the webapp, overriding the "config.contentsCss" property(e.g.)
+        <u>js/config.js</u><br/>
+        CKEDITOR.editorConfig = function( config )<br/>
+		{<br/>
+		 &nbsp;&nbsp;&nbsp;config.contentsCss = '/css/mysitestyles.css';<br/>
+		};<br/>
+    </li>
+    <li>
+         Set the "customConfigPath" attribute to reference the custom config.js.(e.g.) <br/>
+         &lt;ice:inputRichText customConfigPath="js/config.js"/&gt;
+    </li>
+</ol>             
+             ]]>
+         </description>
+	<component-family>javax.faces.Input</component-family>
+	<renderer-type>com.icesoft.faces.InputRichTextRenderer</renderer-type>	
+	<renderer-extension>
+		<instance-name>inputRichText</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>inputRichText</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

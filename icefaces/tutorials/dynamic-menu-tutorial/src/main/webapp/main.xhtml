@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    template="WEB-INF/templates/tutorial-template.xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components">
+    <ui:define name="content">
+        <h:outputText value="#{msgs['content.main.html']}" escape="false" />
+    </ui:define>
+
+    <ui:define name="example">
+		<h:form id="exampleForm">
+			<table style="font-size: x-small;" id="overTable">
+				<tr>
+					<td valign="top" style="width:600px;">
+						<ace:dataTable id="dynamicTable" value="#{todoListBean.items}" var="item"
+                                       selectionMode="single" rowSelectListener="#{todoListBean.rowSelectListener}">
+							<ace:ajax event="deselect" render="@form" execute="@form" listener="#{todoListBean.rowDeselectListener}"/>
+							<ace:ajax event="select" render="@form" execute="@form" />
+							<ace:column headerText="Description" sortBy="#{item.description}" id="description">
+								<h:outputText value="#{item.description}" id="descriptionText"/>
+							</ace:column>
+							<ace:column headerText="Status" sortBy="#{item.status}" id="status">
+								<h:outputText value="#{item.status}" id="statusText"/>
+							</ace:column>
+							<ace:column headerText="Created" sortBy="#{item.created}" id="created">
+								<h:outputText value="#{item.created}" id="createdText"/>
+							</ace:column>
+							<ace:column headerText="Finished" sortBy="#{item.finished}" id="finished">
+								<h:outputText value="#{item.finished}" id="finishedText"/>
+							</ace:column>
+						</ace:dataTable>
+					</td>
+					<td valign="top">
+						<ace:menu type="plain" model="#{todoListBean.menu}"	id="activeMenu"/>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form id="inputForm">
+			<h:outputText value="Enter description: " />
+			<h:inputText style="width:400px;"  value="#{todoListBean.newItem}" id="description"/>
+			<h:commandButton value="Add new task" actionListener="#{todoListBean.addNewItem}" id="submitButton"/>
+		</h:form>
+    </ui:define>
+</ui:composition>
+

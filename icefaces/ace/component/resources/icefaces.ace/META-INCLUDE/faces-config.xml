@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <ordering>
+        <after>ICEfacesCore</after>
+    </ordering>
+    <application>
+        <resource-handler>org.icefaces.ace.component.fileentry.FileEntryResourceHandler</resource-handler>
+        <resource-handler>org.icefaces.ace.component.richtextentry.RichTextEntryResourceHandler</resource-handler>
+		<resource-handler>org.icefaces.ace.component.gmap.GMapResourceHandler</resource-handler>
+        <resource-handler>org.icefaces.ace.component.themeselect.ThemeSymbolicResourceHandler</resource-handler>
+        <resource-handler>org.icefaces.ace.renderkit.AceSymbolicResourceHandler</resource-handler>
+		<resource-handler>org.icefaces.ace.component.qrcode.generator.QRCodeResourceHandler</resource-handler>
+    </application>
+   <factory>
+        <partial-view-context-factory>
+            org.icefaces.ace.context.AutoUpdateCallbackPartialViewContextFactory
+        </partial-view-context-factory>
+    </factory>
+	<render-kit>
+		<renderer>
+			<component-family>org.icefaces.ace.component</component-family>
+			<renderer-type>org.icefaces.ace.component.AnimationRenderer</renderer-type>
+			<renderer-class>org.icefaces.ace.component.animation.AnimationRenderer</renderer-class>
+		</renderer>
+	</render-kit>
+
+</faces-config>

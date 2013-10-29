@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[menuPopupKeyboard.title]}"/>
+    <ui:param name="description" value="#{msgs[menuPopupKeyboard.description]}"/>
+    <ui:param name="resourceValue" value="#{menuPopupKeyboard.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <icecore:singleSubmit/>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="keyIn" value="Keyboard Navigation?"/>
+                <h:selectBooleanCheckbox id="keyIn" value="#{menuPopupKeyboard.enable}"/>
+            </h:panelGrid>
+        </h:form>
+        
+        <h:form>
+            <p>Right-click on any of the words in the sentence below. A menu popup will be displayed that allows you to choose a style or color for each word.</p>
+            <br/>
+            
+            <ice:panelSeries value="#{menuPopup.wordList}"
+                             var="word"
+                             style="border: 1px solid #CDCDCD; padding: 10px; text-align: center;">
+                <ice:panelGroup style="display: inline; padding-right: 5px;"
+                                menuPopup="menuPopupFormat">
+                    <ice:outputText value="#{word.text}"
+                                    style="#{word.style}"/>
+                </ice:panelGroup>
+                <ice:menuPopup id="menuPopupFormat"
+                               keyboardNavigationEnabled="#{menuPopupKeyboard.enable}">
+                    <ice:menuItem value="Format Word '#{word}'">
+                        <ice:menuItem value="Color">
+                            <ice:menuItem value="Black"
+                                          actionListener="#{menuPopup.applyStyle}">
+                                <f:param name="#{menuPopup.paramText}" value="#{word.text}"/>
+                                <f:param name="#{menuPopup.paramStyle}" value="color: black;"/>
+                            </ice:menuItem>
+                            <ice:menuItem value="Red"
+                                          actionListener="#{menuPopup.applyStyle}">
+                                <f:param name="#{menuPopup.paramText}" value="#{word.text}"/>
+                                <f:param name="#{menuPopup.paramStyle}" value="color: red;"/>
+                            </ice:menuItem>
+                            <ice:menuItem value="Blue"
+                                          actionListener="#{menuPopup.applyStyle}">
+                                <f:param name="#{menuPopup.paramText}" value="#{word.text}"/>
+                                <f:param name="#{menuPopup.paramStyle}" value="color: blue;"/>
+                            </ice:menuItem>
+                            <ice:menuItem value="Green"
+                                          actionListener="#{menuPopup.applyStyle}">
+                                <f:param name="#{menuPopup.paramText}" value="#{word.text}"/>
+                                <f:param name="#{menuPopup.paramStyle}" value="color: green;"/>
+                            </ice:menuItem>
+                        </ice:menuItem>
+                        <ice:menuItem value="Style">
+                            <ice:menuItem value="Normal"
+                                          actionListener="#{menuPopup.applyStyle}">
+                                <f:param name="#{menuPopup.paramText}" value="#{word.text}"/>
+                                <f:param name="#{menuPopup.paramStyle}" value="font-weight: normal;"/>
+                            </ice:menuItem>
+                            <ice:menuItem value="Bold"
+                                          actionListener="#{menuPopup.applyStyle}">
+                                <f:param name="#{menuPopup.paramText}" value="#{word.text}"/>
+                                <f:param name="#{menuPopup.paramStyle}" value="font-weight: bold;"/>
+                            </ice:menuItem>
+                            <ice:menuItem value="Italic"
+                                          actionListener="#{menuPopup.applyStyle}">
+                                <f:param name="#{menuPopup.paramText}" value="#{word.text}"/>
+                                <f:param name="#{menuPopup.paramStyle}" value="font-style: italic;"/>
+                            </ice:menuItem>
+                        </ice:menuItem>
+                    </ice:menuItem>
+                </ice:menuPopup>
+            </ice:panelSeries>
+        </h:form>        
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<dependencies>
+    <!-- Load the ACE component theme css before the custom app. override styles -->
+    <resource name="override_styles.css" library="ice.samples.showcase">
+        <requires>
+            <resource name="util/combined.css" library="icefaces.ace"/>
+        </requires>
+    </resource>
+    <resource name="demo_template.css" library="ice.samples.showcase">
+        <requires>
+            <resource name="override_styles.css" library="ice.samples.showcase"/>
+        </requires>
+    </resource>
+    <resource name="showcase_styles.css" library="ice.samples.showcase">
+        <requires>
+            <resource name="demo_template.css" library="ice.samples.showcase"/>
+        </requires>
+    </resource>
+    <resource name="rime/rime.css" library="ice.compat">
+        <requires>
+            <resource name="showcase_styles.css" library="ice.samples.showcase"/>
+        </requires>
+    </resource>
+    <resource name="rime/rime-accessible.css" library="ice.compat">
+        <requires>
+            <resource name="showcase_styles.css" library="ice.samples.showcase"/>
+        </requires>
+    </resource>
+    <resource name="override_header.css" library="ice.samples.showcase">
+        <requires>
+            <resource name="rime/rime.css" library="ice.compat"/>
+        </requires>
+    </resource>
+
+
+    <!-- These entries ensure that the .css files load before the .js ones in the head -->
+    <resource name="jsf.js" library="javax.faces">
+        <requires>
+            <!-- REPLACE these entries with the actual CSS files used in YOUR application
+                    (these are specifc to the ICEfaces Showcase sample app. )	           -->
+            <resource name="showcase_styles.css" library="ice.samples.showcase"/>
+        </requires>
+    </resource>
+    <resource name="bridge.js">
+        <requires>
+            <resource name="jsf.js" library="javax.faces"/>
+        </requires>
+    </resource>
+    <resource name="util/ace-jquery.js" library="icefaces.ace">
+        <requires>
+            <resource name="jsf.js" library="javax.faces"/>
+        </requires>
+    </resource>
+</dependencies>
+

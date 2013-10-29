@@ -1,0 +1,189 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!--
+	!!! Special Note !!!
+	
+	Any updates made to this file must also be applied to the core.tld file.
+	These two files must be kept in sync.
+-->
+
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+    <description>
+    </description>
+    <tlib-version>3.3.0</tlib-version>
+    <short-name>icecore</short-name>
+    <uri>http://icefaces.org/tld/core</uri>
+    <listener>
+        <listener-class>org.icefaces.impl.push.servlet.ICEpushResourceHandlerLifecycle</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.icefaces.impl.application.SessionExpiredListener</listener-class>
+    </listener>
+
+    <tag>
+        <description><![CDATA[This tag can be used to adjust behaviour on a per-page basis.
+		These settings take precedence over corresponding application global settings specified via context-param entries in the web.xml file.]]></description>
+        <name>config</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description><![CDATA[A value of "true" indicates that ICEfaces rendering Direct-to-DOM should be applied to the current view.
+                A value of "false" indicates that stock JSF rendering should be used. The default value is "true", since the presence of this tag indicates the use of ICEfaces.]]></description>
+            <name>render</name>
+            <required>no</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+
+        <!-- *** Comment out ARIA support config. as it is not officially supported as of ICEfaces 3.0
+                <attribute>
+                    <description><![CDATA[A value of "true" indicates that ARIA support will be applied to the current view. The default value is "true".
+                    ARIA support can also be enabled at an application level by setting the "org.icefaces.aria.enabled" context parameter to true in the web.xml file.
+                    If ARIA is enabled application level, this attribute can disable ARIA for the current view.]]></description>
+                    <name>ariaEnabled</name>
+                    <required>no</required>
+                    <rtexprvalue>false</rtexprvalue>
+                    <type>boolean</type>
+                </attribute>
+        -->
+
+        <attribute>
+            <description><![CDATA[A space-delimited list of component tag-names (or fully qualified Java class-names) that will have their requisite resources pre-loaded on this page. The pre-loading allows the components to function correctly even if they are later added to the page dynamically.  The values "none" (which is the default) and "all" are also valid.  The value of this attribute on a page takes precedence over the values specified by the context
+                parameter org.icefaces.mandatoryResourceConfiguration in the web.xml file.]]></description>
+            <name>mandatoryResource</name>
+            <required>no</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <description><![CDATA[A value of "true" indicates that faces messages are persisted
+                across single submits.  This attribute takes precedence over the
+                org.icefaces.messagePersistence context parameter in the web.xml fule on a per-view basis.]]></description>
+            <name>messagePersistence</name>
+            <required>no</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description><![CDATA[This tag can be used to configure push behavior on a per-view basis.]]></description>
+        <name>refresh</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[The push group name the current view should be added to.]]></description>
+            <name>interval</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.Long</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description><![CDATA[This tag can be used to configure push behavior on a per-view basis.]]></description>
+        <name>push</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[The push group name the current view should be added to.]]></description>
+            <name>group</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description><![CDATA[The Set Event Phase component allows one to specify the phase that
+certain events will be broadcast in, for events originating from components
+in its child hierarchy. Note that some iterative containers, such as UIRepeat,
+UIData and its sub-classes, will wrap events inside another event type that
+records source row information, so if the iterative container is in-between
+setEventPhase and the intended source component, in the child/parent component
+hierarchy, that will interfere with setEventPhase's ability to alter events
+by their class name. Only selecting all events by specifying an events value
+of "FacesEvent" would work.]]></description>
+        <name>setEventPhase</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[Space delimited list of class names of events that should 
+      be changed to be broadcasted in the specified phase. Default is for no 
+      events to be affected.]]></description>
+            <name>events</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The phase for the specified events to be broadcasted in. 
+      One of: ANY, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, 
+      UPDATE_MODEL_VALUES, INVOKE_APPLICATION.]]></description>
+            <name>phase</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description>
+            <![CDATA[This tag allows form submission from just the component generating the event and then update the page with any changes from all components (equivilant to &lt;f:ajax execute=&quot;@this&quot; render=&quot;@all&quot;&gt;).]]></description>
+        <name>singleSubmit</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[Perform a singleSubmit in reponse to blur events.]]></description>
+            <name>submitOnBlur</name>
+            <required>no</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+
+    </tag>
+
+    <tag>
+        <description><![CDATA[ This tag can be used to configure the page to be notified when the browser back button is pressed.]]></description>
+        <name>navigationNotifier</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[The reference to a bean method that will be invoked when 'back' or 'forward' browser button is used.]]></description>
+            <name>action</name>
+            <required>yes</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+    </tag>
+
+</taglib>

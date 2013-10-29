@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[fileEntryMultiple.title]}"/>
+    <ui:param name="description" value="#{msgs[fileEntryMultiple.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[fileEntry.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{fileEntry.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{fileEntryMultiple.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{fileEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{fileEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <div class="instance">
+        <span class="row">
+            <h:form id="form">
+                <div style="width:45%" class="top options">
+                    <ul>
+                        <li>Max File Count:<h:inputText
+                                styleClass="full-width"
+                                value="#{fileEntryMultiple.maxFileCount}" /></li>
+                        <li>Max Count Message:<h:inputText
+                                styleClass="full-width"
+                                value="#{fileEntryMultiple.maxFileCountMessage}" /></li>
+                        <li>Max Total Size:<h:inputText
+                                styleClass="full-width"
+                                value="#{fileEntryMultiple.maxTotalSizeString}" /></li>
+                        <li>Max Size Message :<h:inputText
+                                styleClass="full-width"
+                                value="#{fileEntryMultiple.maxTotalMessage}" /></li>
+                    </ul>
+                    <h:commandButton value="Set Options"/>
+                </div>
+            </h:form>
+            <h:form id="form2">
+                <span class="top">
+                    <ace:fileEntry id="file-entry"
+                        style-class="top"
+                        maxFileCount="#{fileEntryMultiple.maxFileCount}"
+                        maxFileCountMessage="#{fileEntryMultiple.maxFileCountMessage}"
+                        maxTotalSize="#{fileEntryMultiple.maxTotalSize}"
+                        maxTotalSizeMessage="#{fileEntryMultiple.maxTotalMessage}"/>
+                </span>
+                <div class="row">
+                    <span class="top">
+                        <h:commandButton id="submit" class="submit" type="submit" value="Send File"/>
+                    </span>
+                    <span class="messages top">
+                        <ace:messages id="msgs"/>
+                    </span>
+                </div>
+            </h:form>
+        </span>
+        </div>
+    </ui:define>
+</ui:composition>

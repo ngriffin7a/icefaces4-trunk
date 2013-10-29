@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+
+	<var name="searchCriteria" class="org.springframework.webflow.samples.booking.SearchCriteria" />
+	<var name="hotelModel" class="org.springframework.webflow.samples.booking.HotelModelBean" />
+	<var name="currentUser" class="org.springframework.webflow.samples.booking.User" />
+    <var name="selectedHotel" class="org.springframework.webflow.samples.booking.Hotel" />
+
+
+	
+	<view-state id="enterSearchCriteria" >
+		<on-render>
+			<evaluate expression="bookingService.findBookings(currentUser?.name)" result="viewScope.bookings" result-type="dataModel" />
+		</on-render>
+		<transition on="search" to="reviewHotels"/>
+		<transition on="cancelBooking">
+			<evaluate expression="bookingService.cancelBooking(bookings.selectedRow)" />
+		</transition>
+	</view-state>
+	
+	<view-state id="reviewHotels" >
+		<on-entry>
+			<set name="viewScope.hotels" value="hotelModel.getHotels(searchCriteria,bookingService)" />
+		</on-entry>
+		<transition on="select" to="reviewHotel">
+			<set name="flowScope.hotel" value="hotelModel.selected" />
+		</transition>
+		<transition on="changeSearch" to="enterSearchCriteria" />
+	</view-state>
+	
+	<view-state id="reviewHotel">
+		<transition on="book" to="bookHotel" />
+		<transition on="cancel" to="reviewHotels" />
+	</view-state>
+
+	<subflow-state id="bookHotel" subflow="booking" >
+		<input name="hotelId" value="hotel.id" />
+		<transition on="bookingConfirmed" to="finish" />
+		<transition on="bookingCancelled" to="enterSearchCriteria" />
+	</subflow-state>
+			
+	<end-state id="finish" />
+	
+</flow>

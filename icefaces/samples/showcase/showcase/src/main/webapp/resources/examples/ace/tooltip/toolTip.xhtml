@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[tooltipOverviewBean.title]}"/>
+    <ui:param name="description" value="#{msgs[tooltipOverviewBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[tooltipOverviewBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{tooltipOverviewBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{tooltipOverviewBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{tooltipResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{tooltipResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            
+            <icecore:singleSubmit/>
+            
+            <ace:panel header="Tooltip Component Configuration Panel">
+                <h:panelGrid columns="2" styleClass="centeredPanelGridWithLeftJustifiedText">
+                       <h:outputLabel id="tooltipEffectLabel" for="tooltipEffectSelector" value="Effect:" />
+                        <ace:simpleSelectOneMenu id="tooltipEffectSelector" value="#{tooltipOverviewBean.tooltipEffect}">
+							<ace:ajax execute="@this" />
+                            <f:selectItem itemValue="fade" itemLabel="Fade Effect"/>
+                            <f:selectItem itemValue="slide" itemLabel="Slide Effect"/>
+                            <f:selectItem itemValue="grow" itemLabel="Grow Effect"/>
+                        </ace:simpleSelectOneMenu>
+                   
+                        <h:outputLabel id="tooltipShowDelayLabel" for="tooltipShowDelaySelector" value="Show Delay:" />
+                        <ace:simpleSelectOneMenu id="tooltipShowDelaySelector" value="#{tooltipOverviewBean.tooltipShowDelay}">
+							<ace:ajax execute="@this" />
+                            <f:selectItem itemValue="100" itemLabel="0.1 seconds"/>
+                            <f:selectItem itemValue="500" itemLabel="0.5 seconds"/>
+                            <f:selectItem itemValue="1000" itemLabel="1 second"/>
+                            
+                        </ace:simpleSelectOneMenu>
+                   
+                       <h:outputLabel id="tooltipHideDelayLabel" for="tooltipHideDelaySelector" value="Hide Delay:" />
+                        <ace:simpleSelectOneMenu id="tooltipHideDelaySelector" value="#{tooltipOverviewBean.tooltipHideDelay}">
+							<ace:ajax execute="@this" />
+                            <f:selectItem itemValue="100" itemLabel="0.1 seconds"/>
+                            <f:selectItem itemValue="500" itemLabel="0.5 seconds"/>
+                            <f:selectItem itemValue="1000" itemLabel="1 second"/>
+                        </ace:simpleSelectOneMenu>
+                   
+                        <h:outputLabel id="tooltipShowEffectLengthDelayLabel" for="tooltipShowEffectLengthSelector" value="Show Effect Length:" />
+                        <ace:simpleSelectOneMenu id="tooltipShowEffectLengthSelector" value="#{tooltipOverviewBean.showEffectLength}">
+							<ace:ajax execute="@this" />
+                            <f:selectItem itemValue="100" itemLabel="100 ms"/>
+                            <f:selectItem itemValue="500" itemLabel="500 ms"/>
+                            <f:selectItem itemValue="1000" itemLabel="1 second"/>
+                        </ace:simpleSelectOneMenu>
+                   
+                        <h:outputLabel id="tooltipHideEffectLengthDelayLabel" for="tooltipHideEffectLengthSelector" value="Hide Effect Length:" />
+                        <ace:simpleSelectOneMenu id="tooltipHideEffectLengthSelector" value="#{tooltipOverviewBean.hideEffectLength}">
+							<ace:ajax execute="@this" />
+                            <f:selectItem itemValue="100" itemLabel="100 ms"/>
+                            <f:selectItem itemValue="500" itemLabel="500 ms"/>
+                            <f:selectItem itemValue="1000" itemLabel="1 second"/>
+                        </ace:simpleSelectOneMenu>
+                   
+                       <h:outputLabel id="tooltipTargetPositionLabel" for="tooltipTargetPositionSelector" value="Position relative to tooltip target:" />
+                        <ace:simpleSelectOneMenu id="tooltipTargetPositionSelector" value="#{tooltipOverviewBean.tooltipTargetPosition}">
+							<ace:ajax execute="@this" />
+                            <f:selectItem itemValue="bottomLeft" itemLabel="Bottom Left"/>
+                            <f:selectItem itemValue="bottomRight" itemLabel="Bottom Right"/>
+                            <f:selectItem itemValue="topLeft" itemLabel="Top Left"/>
+                            <f:selectItem itemValue="topRight" itemLabel="Top Right"/>
+                        </ace:simpleSelectOneMenu>
+                   
+                       <h:outputLabel id="tooltipPositionLabel" for="tooltipPositionSelector" value="Tooltip position:" />
+                       <ace:simpleSelectOneMenu id="tooltipPositionSelector" value="#{tooltipOverviewBean.tooltipPosition}">
+							<ace:ajax execute="@this" />
+                           <f:selectItem itemValue="topRight" itemLabel="Top Right"/>
+                            <f:selectItem itemValue="topLeft" itemLabel="Top Left"/>
+                            <f:selectItem itemValue="bottomRight" itemLabel="Bottom Right"/>
+                            <f:selectItem itemValue="bottomLeft" itemLabel="Bottom Left"/>
+                        </ace:simpleSelectOneMenu>
+                       
+                       <h:outputLabel id="tooltipBubbleLabel" for="tooltipBubbleSelector" value="Enable Tooltip Speech Bubble:" />
+                       <h:selectBooleanCheckbox id="tooltipBubbleSelector" value="#{tooltipOverviewBean.renderSpeechBuble}"/>    
+               </h:panelGrid>
+           </ace:panel>
+           
+           <br/>
+           <br/>
+           <ace:panel footer="mouse over text to see a tooltip for it">
+               <h:panelGrid styleClass="centeredPanelGridWithBorderSpacing" columns="5">
+                   
+                   <h:panelGrid styleClass="tooltipTargetStyle">
+                       <h:outputText id="bmw" value="#{tooltipOverviewBean.carSet[0].description}"/>
+                   </h:panelGrid>
+                   
+                   <h:panelGrid styleClass="tooltipTargetStyle">
+                       <h:outputText id="camaro" value="#{tooltipOverviewBean.carSet[1].description}"/>
+                   </h:panelGrid>
+                   
+                   <h:panelGrid styleClass="tooltipTargetStyle">
+                       <h:outputText id="chevrolet" value="#{tooltipOverviewBean.carSet[2].description}"/>
+                   </h:panelGrid>
+                   
+                   <h:panelGrid styleClass="tooltipTargetStyle">
+                       <h:outputText id="truck" value="#{tooltipOverviewBean.carSet[3].description}"/>
+                   </h:panelGrid>
+                   
+                   <h:panelGrid styleClass="tooltipTargetStyle">
+                       <h:outputText id="vw" value="#{tooltipOverviewBean.carSet[4].description}"/>
+                   </h:panelGrid>
+               </h:panelGrid>
+               
+               <ace:tooltip id="tooltipBMW"
+                                for="bmw"
+                                speechBubble="#{tooltipOverviewBean.renderSpeechBuble}"
+                                showEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                hideEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                showDelay="#{tooltipOverviewBean.tooltipShowDelay}"
+                                hideDelay="#{tooltipOverviewBean.tooltipHideDelay}"
+                                position="#{tooltipOverviewBean.tooltipPosition}"
+                                targetPosition="#{tooltipOverviewBean.tooltipTargetPosition}"
+                                showEffectLength="#{tooltipOverviewBean.showEffectLength}"
+                                hideEffectLength="#{tooltipOverviewBean.hideEffectLength}">
+                                       
+                    <h:panelGrid styleClass="tooltipBoxStyle"> 
+                       <h:graphicImage  id="img0" value="#{tooltipOverviewBean.carSet[0].path}" alt="#{tooltipOverviewBean.carSet[0].description}"/>
+                       <h:outputText id="desc0" value="#{tooltipOverviewBean.carSet[0].description}"/>
+                   </h:panelGrid>
+                </ace:tooltip>
+                   
+               <ace:tooltip id="tooltipCamaro"
+                                for="camaro"
+                                speechBubble="#{tooltipOverviewBean.renderSpeechBuble}"
+                                showEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                hideEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                showDelay="#{tooltipOverviewBean.tooltipShowDelay}"
+                                hideDelay="#{tooltipOverviewBean.tooltipHideDelay}"
+                                position="#{tooltipOverviewBean.tooltipPosition}"
+                                targetPosition="#{tooltipOverviewBean.tooltipTargetPosition}"
+                                showEffectLength="#{tooltipOverviewBean.showEffectLength}"
+                                hideEffectLength="#{tooltipOverviewBean.hideEffectLength}">
+
+                    <h:panelGrid styleClass="tooltipBoxStyle"> 
+                       <h:graphicImage  id="img1" value="#{tooltipOverviewBean.carSet[1].path}" alt="#{tooltipOverviewBean.carSet[1].description}"/>
+                       <h:outputText id="desc1" value="#{tooltipOverviewBean.carSet[1].description}"/>
+                   </h:panelGrid>
+                </ace:tooltip>
+               
+               <ace:tooltip id="tooltipChevrolet"
+                                for="chevrolet"
+                                speechBubble="#{tooltipOverviewBean.renderSpeechBuble}"
+                                showEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                hideEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                showDelay="#{tooltipOverviewBean.tooltipShowDelay}"
+                                hideDelay="#{tooltipOverviewBean.tooltipHideDelay}"
+                                position="#{tooltipOverviewBean.tooltipPosition}"
+                                targetPosition="#{tooltipOverviewBean.tooltipTargetPosition}"
+                                showEffectLength="#{tooltipOverviewBean.showEffectLength}"
+                                hideEffectLength="#{tooltipOverviewBean.hideEffectLength}">
+                                       
+                        <h:panelGrid styleClass="tooltipBoxStyle"> 
+                           <h:graphicImage  id="img2" value="#{tooltipOverviewBean.carSet[2].path}" alt="#{tooltipOverviewBean.carSet[2].description}"/>
+                           <h:outputText id="desc2" value="#{tooltipOverviewBean.carSet[2].description}"/>
+                       </h:panelGrid>
+                </ace:tooltip>
+               
+               <ace:tooltip id="tooltipTruck"
+                                for="truck"
+                                speechBubble="#{tooltipOverviewBean.renderSpeechBuble}"
+                                showEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                hideEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                showDelay="#{tooltipOverviewBean.tooltipShowDelay}"
+                                hideDelay="#{tooltipOverviewBean.tooltipHideDelay}"
+                                position="#{tooltipOverviewBean.tooltipPosition}"
+                                targetPosition="#{tooltipOverviewBean.tooltipTargetPosition}"
+                                showEffectLength="#{tooltipOverviewBean.showEffectLength}"
+                                hideEffectLength="#{tooltipOverviewBean.hideEffectLength}">
+                                       
+                    <h:panelGrid styleClass="tooltipBoxStyle"> 
+                       <h:graphicImage  id="img3" value="#{tooltipOverviewBean.carSet[3].path}" alt="#{tooltipOverviewBean.carSet[3].description}"/>
+                       <h:outputText id="desc3" value="#{tooltipOverviewBean.carSet[3].description}"/>
+                   </h:panelGrid>
+                </ace:tooltip>
+               
+               <ace:tooltip id="tooltipVW"
+                                for="vw"
+                                speechBubble="#{tooltipOverviewBean.renderSpeechBuble}"
+                                showEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                hideEffect="#{tooltipOverviewBean.tooltipEffect}"
+                                showDelay="#{tooltipOverviewBean.tooltipShowDelay}"
+                                hideDelay="#{tooltipOverviewBean.tooltipHideDelay}"
+                                position="#{tooltipOverviewBean.tooltipPosition}"
+                                targetPosition="#{tooltipOverviewBean.tooltipTargetPosition}"
+                                showEffectLength="#{tooltipOverviewBean.showEffectLength}"
+                                hideEffectLength="#{tooltipOverviewBean.hideEffectLength}">
+                                       
+                    <h:panelGrid styleClass="tooltipBoxStyle"> 
+                       <h:graphicImage  id="img4" value="#{tooltipOverviewBean.carSet[4].path}" alt="#{tooltipOverviewBean.carSet[4].description}"/>
+                       <h:outputText id="desc4" value="#{tooltipOverviewBean.carSet[4].description}"/>
+                   </h:panelGrid>
+                </ace:tooltip>
+           </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[messageBean.title]}"/>
+    <ui:param name="description" value="#{msgs[messageBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[messageBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{messageBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{messageBean.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{messageResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{messageResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="messageDemoForm">
+            <ace:panel id="personalInfoInputPanel" header="Personal Info">
+                <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
+                    <ace:textEntry id="firstNameInput" value="#{messageBean.firstName}" label="First Name" labelPosition="left">
+                        <ace:ajax render="firstNameMsg allMsgs" listener="#{messageBean.blurListener}"/>
+                    </ace:textEntry>
+                    <ace:message id="firstNameMsg" for="firstNameInput" initEffect="bounce" changeEffect="explode"/>
+
+                    <ace:textEntry id="lastNameInput" value="#{messageBean.lastName}" label="Last Name" labelPosition="left">
+                        <ace:ajax render="lastNameMsg allMsgs" listener="#{messageBean.blurListener}"/>
+                    </ace:textEntry>
+                    <ace:message id="lastNameMsg" for="lastNameInput" initEffect="fade" changeEffect="size"/>
+
+                    <ace:textEntry id="cityInput" value="#{messageBean.city}" label="City" labelPosition="left">
+                        <ace:ajax render="cityMsg allMsgs" listener="#{messageBean.blurListener}"/>
+                    </ace:textEntry>
+                    <ace:message id="cityMsg" for="cityInput" initEffect="pulsate" changeEffect="scale"/>
+
+                    <ace:textEntry id="countryInput" value="#{messageBean.country}" label="Country" labelPosition="left">
+                        <ace:ajax render="countryMsg allMsgs" listener="#{messageBean.blurListener}"/>
+                    </ace:textEntry>
+                    <ace:message id="countryMsg" for="countryInput" initEffect="slide" changeEffect="shake"/>
+                </h:panelGrid>
+            </ace:panel>
+
+            <ace:panel id="personalInfoOutputPanel" header="All Faces Messages">
+                <ace:messages id="allMsgs" initEffect="highlight" changeEffect="puff"/>
+            </ace:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

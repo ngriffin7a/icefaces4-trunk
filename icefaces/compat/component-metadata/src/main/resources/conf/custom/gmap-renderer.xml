@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<renderer>
+         <description>
+             <![CDATA[
+                   This component uses the version 2 of the Google Maps API. In
+                   order to use the google maps, an API key is required. The API
+                   key can be obtained from the google maps' website. You must need to specify
+                   the API key in the web.xml(e.g.)<br/>
+                   &lt;context-param&gt;<br/>
+                    &nbsp;&nbsp;&nbsp;&lt;param-name&gt;com.icesoft.faces.gmapKey&lt;/param-name&gt;<br/>
+                    &nbsp;&nbsp;&nbsp;&lt;param-value&gt;ABQIAAAADlu0Z........&lt;/param-value&gt;<br/>
+                   &lt;/context-param&gt;
+
+              ]]>
+         </description>
+	<component-family>javax.faces.Panel</component-family>
+	<renderer-type>com.icesoft.faces.GMapRenderer</renderer-type>	
+	<renderer-extension>
+		<instance-name>gMap</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>gMap</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

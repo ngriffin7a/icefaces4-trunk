@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[confirmationMouse.title]}"/>
+    <ui:param name="description" value="#{msgs[confirmationMouse.description]}"/>
+    <ui:param name="resourceValue" value="#{confirmationMouse.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <icecore:singleSubmit/>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="mouseIn" value="Display Dialog at Mouse Pointer?"/>
+                <h:selectBooleanCheckbox id="mouseIn" value="#{confirmationMouse.displayAtMouse}"/>
+            </h:panelGrid>
+        </h:form>
+        
+        <h:form>
+            <p>First submit some text with the provided input field. Clicking "Confirm Submit" will display a confirmation panel. Accepting that panel will persist the text to the server. Then you can clear the text by accepting a second confirmation panel when the "Confirm Delete" button is pressed.</p>
+            <br/>
+            <h:panelGrid columns="3">
+                <h:outputLabel for="textIn" value="Text to Submit:"/>
+                <h:inputText id="textIn" value="#{confirmationButton.text}"/>
+                <ice:commandButton value="Confirm Submit"
+                                   panelConfirmation="saveConfirm"/>
+                                   
+                <h:outputLabel for="textOut" value="Submitted Text:"/>
+                <h:outputText id="textOut" value="#{confirmationButton.text}"/>
+                <ice:commandButton value="Confirm Delete"
+                                   panelConfirmation="deleteConfirm"
+                                   actionListener="#{confirmationButton.clearText}"/>
+            </h:panelGrid>
+                               
+            <ice:panelConfirmation id="saveConfirm"
+                                   message="Click 'Accept' if you wish to submit the text you entered. Otherwise click 'Cancel' and the server will not be updated with the text."
+                                   acceptLabel="Accept"
+                                   cancelLabel="Cancel"
+                                   autoCentre="#{!confirmationMouse.displayAtMouse}"
+                                   displayAtMouse="#{confirmationMouse.displayAtMouse}"
+                                   rendered="true"/>
+                                   
+            <ice:panelConfirmation id="deleteConfirm"
+                                   message="Click 'Accept' if you wish to remove the previously submitted text. Otherwise click 'Cancel' and the text will remain on the server."
+                                   acceptLabel="Accept"
+                                   cancelLabel="Cancel"
+                                   autoCentre="#{!confirmationMouse.displayAtMouse}"
+                                   displayAtMouse="#{confirmationMouse.displayAtMouse}"
+                                   rendered="true"/>        
+        </h:form>
+    </ui:define>
+</ui:composition>

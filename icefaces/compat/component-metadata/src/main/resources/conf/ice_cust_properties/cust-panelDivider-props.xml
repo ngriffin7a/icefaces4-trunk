@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+&base-props;
+&core-props; 
+&ice-att-userrole-rendered-props;
+<property>
+    <description>
+        <![CDATA[
+        The orientation can be set to the vertical or the horizontal.
+        ]]>               
+    </description>
+    <property-name>orientation</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <default-value>vertical</default-value>
+     </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+        The divider position can be set between 1 to 100.
+        ]]>               
+    </description>
+    <property-name>dividerPosition</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <default-value>50</default-value>
+     </property-extension>
+</property>
+
+<property>
+	<description>
+		<![CDATA[
+        <p>
+		Space-separated list of CSS style class(es) to be applied when this 
+		element is rendered. This value must be passed through as the "class" 
+		attribute on generated markup.
+		</p>
+		<p>Defines the base class name for all style classes.
+        Default value is <b>icePnlDvr</b> for the vertical orientation, <b>icePnlDvrHor</b> for the horizontal orientation</p>
+        If Vertical:<br/>
+        <ul>
+            <li>icePnlDvr</li>
+            <li>icePnlDvrCnt</li>
+            <li>icePnlDvrFst</li>
+            <li>icePnlDvrSnd</li>
+            <li>icePnlDvrSpt</li>            
+        </ul>  
+
+        If Horizontal:<br/>
+        <ul>
+            <li>icePnlDvrHor</li>
+            <li>icePnlDvrHorCnt</li>
+            <li>icePnlDvrHorFst</li>
+            <li>icePnlDvrHorSnd</li>
+            <li>icePnlDvrHorSpt</li>            
+        </ul>  		
+           
+		]]>
+	</description>
+	<property-name>styleClass</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

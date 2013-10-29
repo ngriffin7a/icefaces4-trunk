@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[chartBarClustered.title]}"/>
+    <ui:param name="description" value="#{msgs[chartBarClustered.description]}"/>
+    <ui:param name="resourceValue" value="#{chartBarClustered.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <h:panelGrid columns="2" rendered="#{chartBarClustered.model.areaMapEnabled}">
+                <h:outputLabel for="statusOut" value="Clicked:"/>
+                <h:outputText id="statusOut" value="#{chart.clickedStatus}"/>
+            </h:panelGrid>
+        
+            <ice:outputChart type="#{chartBarClustered.type}" 
+                             chartTitle="#{chartBarClustered.model.chartTitle} Chart"
+                             xaxisTitle="#{chartBarClustered.model.XAxisTitle}"
+                             yaxisTitle="#{chartBarClustered.model.YAxisTitle}"
+                             labels="#{chartBarClustered.model.legendLabels}"
+                             legendPlacement="#{chartBarClustered.model.legendPlacement}"
+                             colors="#{chartBarClustered.model.colors}"
+                             xaxisLabels="#{chartBarClustered.model.XAxisLabels}"
+                             data="#{chartBarClustered.model.chartData}"
+                             renderOnSubmit="#{chartBarClustered.model.renderOnSubmit}"
+                             horizontal="false"
+                             actionListener="#{chart.chartClicked}"
+                             width="450" height="300"/>
+                             
+            <ice:outputChart type="#{chartBarClustered.type}" 
+                             chartTitle="#{chartBarClustered.model.chartTitle} Chart"
+                             xaxisTitle="#{chartBarClustered.model.XAxisTitle}"
+                             yaxisTitle="#{chartBarClustered.model.YAxisTitle}"
+                             labels="#{chartBarClustered.model.legendLabels}"
+                             legendPlacement="#{chartBarClustered.model.legendPlacement}"
+                             colors="#{chartBarClustered.model.colors}"
+                             xaxisLabels="#{chartBarClustered.model.XAxisLabels}"
+                             data="#{chartBarClustered.model.chartData}"
+                             renderOnSubmit="#{chartBarClustered.model.renderOnSubmit}"
+                             horizontal="true"
+                             actionListener="#{chart.chartClicked}"
+                             width="450" height="300"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

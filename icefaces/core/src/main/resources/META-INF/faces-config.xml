@@ -1,0 +1,165 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0"
+              metadata-complete="false">
+
+    <name>ICEfacesCore</name>
+    <factory>
+        <faces-context-factory>
+            org.icefaces.impl.context.ICEFacesContextFactory
+        </faces-context-factory>
+        <partial-view-context-factory>
+            org.icefaces.impl.context.DOMPartialViewContextFactory
+        </partial-view-context-factory>
+        <exception-handler-factory>
+            org.icefaces.impl.application.ExtendedExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
+    <render-kit>
+        <render-kit-id>HTML_BASIC</render-kit-id>
+        <render-kit-class>org.icefaces.impl.renderkit.DOMRenderKit</render-kit-class>
+    </render-kit>
+    <component>
+        <component-type>org.icefaces.impl.component.Push</component-type>
+        <component-class>org.icefaces.impl.component.Push</component-class>
+    </component>
+    <component>
+        <component-type>org.icefaces.impl.component.Redirect</component-type>
+        <component-class>org.icefaces.impl.component.Redirect</component-class>
+    </component>
+    <component>
+        <component-type>org.icefaces.impl.component.SetEventPhase</component-type>
+        <component-class>org.icefaces.impl.component.SetEventPhase</component-class>
+    </component>
+    <component>
+        <component-type>org.icefaces.impl.component.NavigationNotifier</component-type>
+        <component-class>org.icefaces.impl.component.NavigationNotifier</component-class>
+    </component>
+    <component>
+        <component-type>org.icefaces.impl.component.DefaultAction</component-type>
+        <component-class>org.icefaces.impl.component.DefaultAction</component-class>
+    </component>
+    <component>
+        <component-type>org.icefaces.impl.component.IdleMonitor</component-type>
+        <component-class>org.icefaces.impl.component.IdleMonitor</component-class>
+    </component>
+    <component>
+        <component-type>org.icefaces.impl.component.FocusManager</component-type>
+        <component-class>org.icefaces.impl.component.FocusManager</component-class>
+    </component>
+    <lifecycle>
+        <phase-listener>org.icefaces.impl.event.DeltaSubmitPhaseListener</phase-listener>
+        <phase-listener>org.icefaces.impl.event.FacesMessagesPhaseListener</phase-listener>
+        <phase-listener>org.icefaces.impl.application.WindowScopeManager$SaveScopeState</phase-listener>
+        <phase-listener>org.icefaces.impl.application.WindowScopeManager$DetermineOrDisposeScope</phase-listener>
+        <phase-listener>org.icefaces.impl.application.ReloadAfterNavigationFix$TriggerNavigation</phase-listener>
+        <phase-listener>org.icefaces.impl.event.BridgeSetup$AssignViewID</phase-listener>
+    </lifecycle>
+    <application>
+        <view-handler>org.icefaces.impl.application.ExternalServletContextSetup</view-handler>
+        <navigation-handler>org.icefaces.impl.application.PropagatingNavigationHandler</navigation-handler>
+        <navigation-handler>org.icefaces.impl.application.ReloadAfterNavigationFix</navigation-handler>
+        <resource-handler>org.icefaces.impl.application.VersioningResourceHandler</resource-handler>
+        <resource-handler>org.icefaces.impl.application.CoalescingResourceHandler</resource-handler>
+        <resource-handler>org.icefaces.impl.push.servlet.ICEpushResourceHandler</resource-handler>
+        <resource-handler>org.icefaces.impl.push.DynamicResourceDispatcher</resource-handler>
+        <resource-handler>org.icefaces.application.ResourceRegistry</resource-handler>
+        <resource-handler>org.icefaces.impl.application.WindowScopeManager</resource-handler>
+        <resource-handler>org.icefaces.impl.component.NavigationNotifierHandler</resource-handler>
+        <resource-handler>org.icefaces.impl.event.BridgeSymbolicResourceHandler</resource-handler>
+        <!-- SessionTimeoutMonitor needs be the last in the list of resource handlers so that it executes first. -->
+        <resource-handler>org.icefaces.impl.application.SessionTimeoutMonitor</resource-handler>
+        <el-resolver>org.icefaces.impl.application.WindowELResolver</el-resolver>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.JavaScriptRunnerSetup</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.FormSubmit</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.HeadBodyListener</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.RestoreResourceDependencies
+            </system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.MandatoryResourcesSetup</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.BridgeSetup</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.BridgeFormsSetup</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.WindowAndViewIDSetup</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.FixViewState</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.ResourceOrdering$RegisterListener</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.application.CoalescingResourceHandler$RegisterListener</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.component.DefaultAction$AttachToForm</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.component.FocusManager$DetectInvalidChild</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostValidateEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.CheckComponentID</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.SessionExpiryWarning</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
+        <!-- MainEventListener, AjaxDisabledList and DebugTagListener are added programatically -->
+    </application>
+    <render-kit>
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>org.icefaces.singleSubmit</renderer-type>
+            <renderer-class>org.icefaces.impl.renderkit.html_basic.SingleSubmitRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>org.icefaces.submitOnEnter</renderer-type>
+            <renderer-class>org.icefaces.impl.renderkit.html_basic.SubmitOnEnterRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+</faces-config>

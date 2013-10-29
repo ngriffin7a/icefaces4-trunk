@@ -1,0 +1,112 @@
+/*
+ * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+ 
+.icePnlPop {
+    width: 300px;
+    border: 4px outset #555555;
+    background-color: white;
+    z-index: 1001;
+}
+
+.icePnlPopBody {
+    width: 100%;
+}
+
+.icePnlPopHdr {
+    text-align: center;
+    width: 100%;
+}
+
+.icePnlTlTipBody {
+    width: 100%;
+    padding: 10px;
+}
+
+.iceSelInpTxtList {
+    z-index: 500;
+}
+
+.icePnlBrdrNorth, .icePnlBrdrEast, .icePnlBrdrWest, .icePnlBrdrSouth,
+.icePnlBrdrCenter {
+    background-color: #CDCDCD;
+    border: 1px solid #555555;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.icePnlBrdrNorth, .icePnlBrdrSouth {
+    height: 60px;
+}
+
+.icePnlBrdrEast, .icePnlBrdrWest, .icePnlBrdrCenter {
+    height: 100px;
+}
+
+.icePnlBrdrEast, .icePnlBrdrWest {
+    width: 100px;
+}
+
+.icePnlStk {
+    background-color: #CDCDCD;
+    border: 1px solid #555555;
+    color: black;
+}
+
+.iceMnuPopVrt, .iceMnuPopVrtTopSubMenu, .iceMnuPopVrtSubMenu {
+    z-index: 1005;
+}
+
+.iceMnuPopVrtTopSubMenu, .iceMnuPopVrtItem {
+    width: 200px;
+}
+
+.icePnlClpsblColpsdHdr h2 {
+    background: url("#{resource['css/images/collapsible-off.gif']}") no-repeat scroll 3px 2px transparent;
+    margin: -2px 0 0 -2px;
+    padding: 5px 0 0 5px;
+}
+
+/*
+This also overrides the indeterminate progress imagery. But the themes don't support that anyway.
+*/
+.ui-progressbar-value
+{
+    border: 1px solid #000000/*{borderColorHeader}*/;
+    color: black/*{fcHeader}*/;
+    font-weight: bold;
+}
+
+.ui-datepicker { 
+    width: 17em; 
+    padding: .2em .2em 0;
+    display: none;
+    font-size: 9pt;
+}
+
+.textEntryInputTable td {
+    padding-top: 8px;
+}
+
+.ui-datepicker-trigger {
+    border: 0;
+}
+
+.ui-notificationbar.ui-widget-content table {
+    color: inherit;
+}

@@ -1,0 +1,54 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>Tree Component Tutorial</title>
+        <link href="./xmlhttp/css/xp/xp.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <ice:form id="frm">
+
+            <!-- first column, for tree navigation -->
+            <ice:panelGroup id="pg0" style="border: 1px solid gray; height: 300px;">
+                <!--
+                    Fully styled Xp themed tree.
+                -->
+                <ice:tree id="tree" value="#{tree.model}" var="item" hideRootNode="false" hideNavigation="false"
+                          imageDir="./xmlhttp/css/xp/css-images/">
+                    <ice:treeNode id="node">
+                        <f:facet name="icon">
+                            <ice:panelGroup id="pg1" style="display: inline">
+                                <h:graphicImage id="img" value="#{item.userObject.icon}"/>
+                            </ice:panelGroup>
+                        </f:facet>
+                        <f:facet name="content">
+                            <ice:panelGroup id="pg2" style="display: inline">
+                                <ice:commandLink id="lnk" value="#{item.userObject.text}"/>
+                            </ice:panelGroup>
+                        </f:facet>
+                    </ice:treeNode>
+                </ice:tree>
+            </ice:panelGroup>
+
+        </ice:form>
+    </h:body>
+</f:view>
+</html>

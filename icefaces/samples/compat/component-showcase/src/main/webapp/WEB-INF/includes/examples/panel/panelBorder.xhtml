@@ -1,0 +1,139 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!--
+In this demonstration, ice:borderLayout is used to layout the different border
+layout configurations. The center panel has a list of options to allow you to
+change the border layout dynamically.
+-->
+
+<ice:panelGroup styleClass="componentBox"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ice:panelGroup styleClass="synopsisBox panelBorderContainer">
+    <ice:outputText value="#{msgs['page.panelBorder.synopsis']}"/>
+    <ice:outputText value="#{msgs['page.panelBorder.description']}"/>
+</ice:panelGroup>
+
+<ice:panelGroup styleClass="clearer"/>
+
+<!-- Panel Visibility Control -->
+<ice:panelGroup styleClass="exampleBox firstChildTitle panelBorderContainer">
+
+    <ice:panelGroup style="float:left;padding:10px;">
+        <ice:outputText value="#{msgs['page.panelBorder.visibility.label']}"/>
+    </ice:panelGroup>
+
+    <ice:panelGroup style="float:left;padding:10px;">
+        <!-- north visibility -->
+        <ice:selectBooleanCheckbox
+                id="northChk"
+                partialSubmit="true"
+                value="true"
+                valueChangeListener="#{borderLayout.north}"/>
+        <ice:outputLabel
+                for="northChk"
+                styleClass="pnlBrdrLabel"
+                value="#{msgs['page.panelBorder.visibility.north.label']}"/>
+    </ice:panelGroup>
+    <ice:panelGroup style="float:left;padding:10px;">
+        <!-- east -->
+        <ice:selectBooleanCheckbox
+                id="eastChk"
+                partialSubmit="true"
+                value="true"
+                valueChangeListener="#{borderLayout.east}"/>
+        <ice:outputLabel
+                for="eastChk"
+                styleClass="pnlBrdrLabel"
+                value="#{msgs['page.panelBorder.visibility.east.label']}"/>
+    </ice:panelGroup>
+    <ice:panelGroup style="float:left;padding:10px;">
+        <!-- south-->
+        <ice:selectBooleanCheckbox id="southChk"
+                                   partialSubmit="true"
+                                   value="true"
+                                   valueChangeListener="#{borderLayout.south}"/>
+        <ice:outputLabel
+                for="southChk"
+                styleClass="pnlBrdrLabel"
+                value="#{msgs['page.panelBorder.visibility.south.label']}"/>
+    </ice:panelGroup>
+    <ice:panelGroup style="float:left;padding:10px;">
+        <!-- west -->
+        <ice:selectBooleanCheckbox
+                id="westChk"
+                partialSubmit="true"
+                value="true"
+                valueChangeListener="#{borderLayout.west}"/>
+        <ice:outputLabel
+                for="westChk"
+                styleClass="pnlBrdrLabel"
+                value="#{msgs['page.panelBorder.visibility.west.label']}"/>
+    </ice:panelGroup>
+    <ice:panelGroup style="float:left;padding:10px;">
+        <!-- center -->
+        <ice:selectBooleanCheckbox
+                id="centerChk"
+                partialSubmit="true"
+                value="true"
+                valueChangeListener="#{borderLayout.center}"/>
+        <ice:outputLabel
+                for="centerChk"
+                styleClass="pnlBrdrLabel"
+                value="#{msgs['page.panelBorder.visibility.center.label']}"/>
+    </ice:panelGroup>
+</ice:panelGroup>
+
+<!-- Panel Layout -->
+<ice:panelGroup styleClass="exampleBox panelBorderContainer">
+    <ice:panelBorder id="page"
+                     styleClass="pnlBrdrDemo"
+                     renderNorth="#{borderLayout.renderNorth}"
+                     renderSouth="#{borderLayout.renderSouth}"
+                     renderCenter="#{borderLayout.renderCenter}"
+                     renderWest="#{borderLayout.renderWest}"
+                     renderEast="#{borderLayout.renderEast}">
+
+        <f:facet name="north">
+            <ice:outputText id="north"
+                            value="North"/>
+        </f:facet>
+
+        <f:facet name="west">
+            <ice:outputText id="west"
+                            value="West"/>
+        </f:facet>
+
+        <f:facet name="east">
+            <ice:outputText id="east"
+                            value="East"/>
+        </f:facet>
+
+        <f:facet name="center">
+            <ice:outputText id="center"
+                            value="Center"/>
+        </f:facet>
+
+        <f:facet name="south">
+            <ice:outputText id="south"
+                            value="South"/>
+        </f:facet>
+    </ice:panelBorder>
+</ice:panelGroup>
+</ice:panelGroup>

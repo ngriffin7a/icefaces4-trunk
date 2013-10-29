@@ -1,0 +1,7 @@
+.ui-textareaentry-resizable {resize: both;}
+.ui-textareaentry-non-resizable {resize: none;}
+
+.ui-textareaentry-container .ui-input-label-left, .ui-textareaentry-container .ui-required-indicator-left, .ui-textareaentry-container .ui-optional-indicator-left,
+.ui-textareaentry-container .ui-input-label-right, .ui-textareaentry-container .ui-required-indicator-right, .ui-textareaentry-container .ui-optional-indicator-right {
+    vertical-align: top;
+}

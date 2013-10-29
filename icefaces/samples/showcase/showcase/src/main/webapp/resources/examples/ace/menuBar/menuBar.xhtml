@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[menuBarBean.title]}"/>
+    <ui:param name="description" value="#{msgs[menuBarBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[menuBarBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{menuBarBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{menuBarBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{menuBarResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{menuBarResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+             <ace:menuBar id="#{menuBarBean.menuBarId}" autoSubmenuDisplay="true">
+                 <ace:menuItem value="Home" url="http://www.icefaces.org" target="_blank" icon="ui-icon ui-icon-home" />
+                 <ace:submenu id="file"
+                              label="File"
+                              icon="ui-icon ui-icon-document">
+                     <ace:submenu id="new" 
+                                  label="New"
+                                  icon="ui-icon ui-icon-contact">
+                         
+                         <ace:menuItem id="window"
+                                          value="Window"
+                                          actionListener="#{menuBarBean.fireAction}">
+                                <ace:ajax event="activate" execute="@this" render="message" />
+                        </ace:menuItem>
+                        <ace:menuItem id="tab"
+                                      value="Tab"
+                                      actionListener="#{menuBarBean.fireAction}">
+                            <ace:ajax event="activate" execute="@this" render="message" />
+                        </ace:menuItem>  
+                     </ace:submenu>
+                     
+                     <ace:menuItem id="open"
+                                   value="Open"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="close"
+                                   value="Close"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="print"
+                                   value="Print"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="Quit"
+                                   value="Quit"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                 </ace:submenu>
+            
+                 <ace:submenu id="edit"
+                              label="Edit"
+                              icon="ui-icon ui-icon-pencil">  
+                     
+                     <ace:menuItem id="undo"
+                                   value="Undo"
+                                   actionListener="#{menuBarBean.fireAction}"
+                                   icon="ui-icon ui-icon-arrowreturnthick-1-w">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="redo"
+                                   value="Redo"
+                                   actionListener="#{menuBarBean.fireAction}"
+                                   icon="ui-icon ui-icon-arrowreturnthick-1-e">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="cut"
+                                   value="Cut"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="copy"
+                                   value="Copy"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="paste"
+                                   value="Paste"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="find"
+                                   value="Find"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                 </ace:submenu>
+                 
+                 <ace:submenu id="tools" label="Tools" icon="ui-icon ui-icon-gear">
+                     <ace:menuItem id="downloads"
+                                   value="Downloads"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="console"
+                                   value="Error Console"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="info"
+                                   value="Info Page"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                 </ace:submenu>
+                 
+                 <ace:submenu id="help" label="Help" icon="ui-icon ui-icon-help">
+                     <ace:menuItem id="contents"
+                                   value="Contents"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="translate"
+                                   value="Translate"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                     <ace:menuItem id="about"
+                                   value="About"
+                                   actionListener="#{menuBarBean.fireAction}">
+                        <ace:ajax event="activate" execute="@this" render="message" />
+                     </ace:menuItem>
+                 </ace:submenu>
+             </ace:menuBar>
+            <br/>
+            <ace:panel>
+                <h:outputText id="message" value="#{menuBarBean.message}"/>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

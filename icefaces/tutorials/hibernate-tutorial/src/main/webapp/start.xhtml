@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>ICEfaces Hibernate Tutorial</title>
+        <link href="./xmlhttp/css/xp/xp.css" rel="stylesheet" type="text/css"/> 
+		<style type="text/css">
+			.icePnlTbOn img, .icePnlTb img {
+				display:none;
+			}
+		</style>
+    </h:head>
+    <h:body>
+         <div id="content">
+            <ice:form>
+                <h1>ICEfaces Student Registration</h1>
+                    <ice:panelTabSet selectedIndex="#{registerManager.selectedTabIndex}">
+                        <ice:panelTab label="Add Student">
+                            <h3>Instructions:</h3>
+                            <ul>
+                                <li>To add a student, enter in the appropriate information.</li>
+                                <li>When finished, click the Add Student button.</li>
+                                <li>To clear the screen at any time click the Clear button.</li>
+                            </ul>
+                            <br/>
+                            <ice:panelGrid columns="2">
+                                <ice:outputLabel value="First Name:" for="newFirstName"/>
+                                <ice:inputText id="newFirstName" value="#{registerManager.newStudent.firstName}" required="true"/>
+                                <ice:outputLabel value="Last Name:" for="newLastName"/>
+                                <ice:inputText id="newLastName" value="#{registerManager.newStudent.lastName}" required="true"/>
+                                <ice:outputLabel value="Address:" for="newAddress"/>
+                                <ice:inputText id="newAddress" value="#{registerManager.newStudent.address}" required="true"/>
+                                <ice:commandButton type="submit" value="Add Student" 
+                                                    actionListener="#{registerManager.addStudent}"/>
+                                <h:commandButton type="submit" value="Clear" action="#{registerManager.newStudent.clear}">
+                                    <f:ajax execute="@this" render="@all"/>
+                                </h:commandButton>
+                            </ice:panelGrid>
+                        </ice:panelTab>
+                        <ice:panelTab label="Edit Student" disabled="#{empty registerManager.studentItems}">
+                            <h3>Instructions:</h3>
+                            <ul>
+                                <li>To edit a student's information, select their id from the box.</li>
+                                <li>Their info will be displayed, to edit the information, enter in the new content in the text box beside the old content.</li>
+                                <li>To save the changes click the Save Changes button. Only filled in fields will be saved.</li>
+                                <li>To delete the student from the system, click the Delete Student button.</li>
+                            </ul>
+                            <br/>
+                            <ice:panelGrid columns="3">
+                                <ice:outputText value="Student ID:"/>
+                                <ice:selectOneMenu value="#{registerManager.selectedStudent}"
+									   			   partialSubmit="true" 		  
+												   valueChangeListener="#{registerManager.studentValueChanged}">
+                                    <f:selectItems value="#{registerManager.studentItems}"/>
+                                </ice:selectOneMenu>
+                                <ice:outputText value=""/> 
+
+								<ice:outputText value="Input Changes Below"/><ice:outputText value=""/><ice:outputText value=""/>    
+								
+                                <ice:outputText value="First Name:"/>
+                                <ice:outputText value="#{registerManager.currentStudent.firstName}"/>
+                                <ice:inputText value="#{registerManager.updateStudent.firstName}"/> 
+
+                                <ice:outputText value="Last Name:"/>
+                                <ice:outputText value="#{registerManager.currentStudent.lastName}"/>
+                                <ice:inputText value="#{registerManager.updateStudent.lastName}"/>
+
+                                <ice:outputText value="Address:"/>
+                                <ice:outputText value="#{registerManager.currentStudent.address}"/>
+                                <ice:inputText value="#{registerManager.updateStudent.address}"/>  
+
+                                <ice:commandButton type="submit" value="Save Changes" actionListener="#{registerManager.updateStudent}"/>
+                                <ice:commandButton type="submit" value="Delete Student" actionListener="#{registerManager.deleteStudent}"/>
+                            </ice:panelGrid>
+                        </ice:panelTab>
+                        <ice:panelTab label="Add/Remove Courses" disabled="#{empty registerManager.studentItems}">
+                            <h3>Instructions:</h3>
+                            <ul>
+                                <li>Choose the Student ID of the student you want to add/remove a course.</li>
+                                <li>To add a course for a student, choose the name of the course from the drop down list, and the details of the course will appear in the table below. Then click Add Course</li>
+                                <li>To remove a course for a student, click the appropriate Remove Course button in the bottom table.</li>
+                            </ul>
+                            <br/>
+                            <ice:panelGrid columns="2">
+                                <ice:outputLabel value="Student ID:" for="currStudent"/>
+                                <ice:selectOneMenu  id="currStudent"
+                                                    value="#{registerManager.selectedStudent}"
+                                                    partialSubmit="true"
+                                                    valueChangeListener="#{registerManager.studentValueChanged}">
+                                    <f:selectItems value="#{registerManager.studentItems}"/>
+                                </ice:selectOneMenu>
+                                <ice:outputLabel value="Course Name:" for="currCourse"/>
+                                <ice:selectOneMenu  id="currCourse"
+                                                    value="#{registerManager.selectedCourse}"
+                                                    partialSubmit="true"
+                                                    valueChangeListener="#{registerManager.courseValueChanged}">
+                                    <f:selectItems value="#{registerManager.courseItems}"/>
+                                </ice:selectOneMenu>
+                            </ice:panelGrid>
+                            <ice:dataTable value="#{registerManager.currentCourse}"
+                                           columnWidths="100px,100px,200px">
+                                <ice:column>
+                                    <f:facet name="header">
+                                        <ice:outputText value="Course ID"/>
+                                    </f:facet>
+                                    <ice:outputText value="#{registerManager.currentCourse.courseId}"/>
+                                </ice:column>
+                                <ice:column>
+                                    <f:facet name="header">
+                                        <ice:outputText value="Course Name"/>
+                                    </f:facet>
+                                    <ice:outputText value="#{registerManager.currentCourse.courseName}"/>
+                                </ice:column>
+                                <ice:column>
+                                    <f:facet name="header">
+                                        <ice:outputText value="Description"/>
+                                    </f:facet>
+                                    <ice:outputText value="#{registerManager.currentCourse.description}"/>
+                                </ice:column>
+                            </ice:dataTable>
+                            <ice:panelGroup>
+                                <ice:commandButton type="submit" value="Add Course"
+                                                   actionListener="#{registerManager.addCourseToStudent}"/>
+                            </ice:panelGroup>
+                            <br/>
+                            <ice:outputText value="Courses currently registered:"/>
+                            <br/>
+                            <ice:dataTable var="course" value="#{registerManager.studentCourses}"
+                                           columnWidths="100px,100px,200px,100px">
+                                <ice:column>
+                                    <f:facet name="header">
+                                        <ice:outputText value="Course ID:"/>
+                                    </f:facet>
+                                    <ice:outputText value="#{course.courseId}"/>
+                                </ice:column>
+                                <ice:column>
+                                    <f:facet name="header">
+                                        <ice:outputText value="Course Name:"/>
+                                    </f:facet>
+                                    <ice:outputText value="#{course.courseName}"/>
+                                </ice:column>
+                                <ice:column>
+                                    <f:facet name="header">
+                                        <ice:outputText value="Description"/>
+                                    </f:facet>
+                                    <ice:outputText value="#{course.description}"/>
+                                </ice:column>
+                                <ice:column>
+                                    <f:facet name="header">
+                                        <ice:outputText value="Remove"/>
+                                    </f:facet>
+                                    <ice:commandButton type="submit" value="Remove Course"
+                                                       action="#{registerManager.removeCourseFromStudent}">
+                                        <f:setPropertyActionListener value="#{course.courseId}"
+                                                                     target="#{registerManager.courseIdToRemoveFromStudent}"/>
+                                    </ice:commandButton>
+                                </ice:column>
+                            </ice:dataTable>
+                        </ice:panelTab>
+                    </ice:panelTabSet>
+                                    
+                <ice:messages/>
+            </ice:form>
+         </div>
+    </h:body>
+</f:view>
+</html>

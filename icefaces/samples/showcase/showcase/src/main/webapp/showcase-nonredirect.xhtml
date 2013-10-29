@@ -1,0 +1,211 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                template="/resources/templates/main-template.xhtml">
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="grp" required="false"
+                         value="#{navigationModel.componentGroup}"/>
+            <f:viewParam name="exp" required="false"
+                         value="#{navigationModel.componentExample}"/>
+            <f:event type="postValidate"
+                     listener="#{navigationController.navigate}"/>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="suite-select-menu">
+        <h:panelGroup layout="block" styleClass="headerCenter">
+            <h:panelGroup layout="block" styleClass="headerLogo">
+                <h:graphicImage value="/resources/css/images/topBannerImages/title.png" alt="ICEfaces Logo"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="headerTabs">
+                <h:panelGrid id="suiteLinks" styleClass="linkTableStyle">
+                    <h:panelGroup styleClass="linksHolder">
+                        <h:link id="iceSuiteLink"
+                                styleClass="iceSuiteLink"
+                                outcome="showcase">
+                            <f:param name="grp" value="#{compatMenu.beanName}"/>
+                            <h:graphicImage
+                                    value="#{navigationModel.componentGroup == compatMenu.beanName ? '/resources/css/images/topBannerImages/ice-on.png' : '/resources/css/images/topBannerImages/ice-off.png' }"
+                                    alt="ICE Components Showcase"
+                                    styleClass="suiteLinkImageStyle"
+                                    title="ICE Components Showcase"/>
+                        </h:link>
+                        <h:link id="aceSuiteLink"
+                                styleClass="aceSuiteLink"
+                                outcome="showcase">
+                            <f:param name="grp" value="#{aceMenu.beanName}"/>
+                            <h:graphicImage
+                                    value="#{navigationModel.componentGroup == aceMenu.beanName ? '/resources/css/images/topBannerImages/ace-on.png' : '/resources/css/images/topBannerImages/ace-off.png' }"
+                                    alt="ACE Components Showcase"
+                                    styleClass="suiteLinkImageStyle"
+                                    title="ACE Components Showcase"/>
+                        </h:link>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <!--
+       ~ Temporary ui:remove tag hide link to the EE suite showcase. (to be removed once ee components will be available)
+        -->
+        <ui:remove>
+            <li class="last">
+                <h:link title="#{eeMenu.title}"
+                        class="#{navigationModel.componentGroup == eeMenu.beanName ? 'selected' : '' }"
+                        outcome="showcase">
+                    <f:param name="grp" value="#{eeMenu.beanName}"/>
+                    #{msgs[eeMenu.title]}
+                </h:link>
+            </li>
+        </ui:remove>
+    </ui:define>
+
+    <ui:define name="suite-menu">
+        <!--
+        ~ ACCORDION PANEL MAIN MENU IMPLEMENTATION UNDER CONSTRUCTION
+         -->
+        <h2>#{msgs[navigationModel.currentComponentGroup.title]}</h2>
+
+        <h:form>
+            <ace:accordion effect="bounceslide" dynamic="true"
+                           paneChangeListener="#{navigationController.onMenuPaneChangeWithoutRedirect}"
+                           activeIndex="#{navigationModel.activePaneIndex}">
+                <c:forEach items="#{navigationModel.currentComponentGroup.menuLinks}" var="menuLink">
+                    <ace:accordionPane title="#{msgs[menuLink.title]}">
+                        <f:attribute name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
+                        <f:attribute name="exp" value="#{menuLink.exampleBeanName}"/>
+                        <!--Command link implementation below can be replaced via row select listener -->
+                        <h:dataTable var="subMenuLink"
+                                     value="#{navigationModel.currentComponentExample.subMenuLinks}"
+                                     style="font-size: 8pt;">
+                            <h:column>
+                                <ui:param name="beanName" value="#{subMenuLink.exampleBeanName}.title"/>
+                                <h:commandLink actionListener="#{navigationController.navigate}"
+                                               title="#{msgs[subMenuLink.title]}"
+                                               disabled="#{subMenuLink.disabled}"
+                                               class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
+                                                                    (navigationModel.componentExample eq null and subMenuLink['default'])
+                                                                    ? 'selected'
+                                                                    : ''}">
+                                    <h:outputText value="#{msgs[subMenuLink.title]}"/>
+                                    <f:attribute name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
+                                    <f:attribute name="exp" value="#{subMenuLink.exampleBeanName}"/>
+                                </h:commandLink>
+                            </h:column>
+                        </h:dataTable>
+                    </ace:accordionPane>
+                </c:forEach>
+            </ace:accordion>
+        </h:form>
+        <!--
+        ~ ACCORDION PANEL MAIN MENU IMPLEMENTATION END
+         -->
+
+        <ui:remove>
+            <!--
+           ~ Regular menu via links (swap ui:remove with accordion implementation to activate, also uncomment code responsible for animation effect firing in NavigaionController.navigate(String, String))
+            -->
+            <h2>#{msgs[navigationModel.currentComponentGroup.title]}</h2>
+            <!--
+                    ~ navigationModel.currentComponentGroup.menuLinks - is an array with links to all showcases in a suite
+            -->
+            <h:form id="frm">
+                <ul>
+                    <ui:repeat id="menuLinks" var="menuLink"
+                               value="#{navigationModel.currentComponentGroup.menuLinks}">
+                        <li>
+                            <c:set var="mainSelected"
+                                   value="#{(navigationModel.currentComponentExample['class']['package'] == window[menuLink.exampleBeanName]['class']['package']) ||
+                                (navigationModel.componentExample == null and menuLink['default']) ? 'selected' : '' }"/>
+                            <!--
+                            ~  <ui:repeat var="menuLink" ... > is used below to create links dynamically from the array navigationModel.currentComponentGroup.menuLinks
+                            -->
+                            <h:link id="link"
+                                    title="#{msgs[menuLink.title]}"
+                                    outcome="showcase"
+                                    disabled="#{menuLink.disabled}"
+                                    class="#{mainSelected}"
+                                    includeViewParams="true">
+                                <f:param name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
+                                <f:param name="exp" value="#{menuLink.exampleBeanName}"/>
+                                #{msgs[menuLink.title]}
+                            </h:link>
+
+                            <ice:panelGroup effect="#{navigationModel.currentComponentExample.effect}"
+                                            rendered="#{'selected' eq mainSelected}">
+                                <ul>
+                                    <ui:repeat id="subMenuLinks"
+                                               var="subMenuLink"
+                                               value="#{navigationModel.currentComponentExample.subMenuLinks}">
+                                        <li style="padding-left: 15px;">
+                                            <ui:param name="beanName" value="#{subMenuLink.exampleBeanName}.title"/>
+                                            <h:commandLink id="subLink"
+                                                           actionListener="#{navigationController.navigate}"
+                                                           title="#{msgs[subMenuLink.title]}"
+                                                           disabled="#{subMenuLink.disabled}"
+                                                           class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
+                                                            (navigationModel.componentExample eq null and subMenuLink['default'])
+                                                            ? 'selected'
+                                                            : ''}">
+                                                <h:outputText value="&gt; #{msgs[subMenuLink.title]}" escape="false"
+                                                              nospan="true"/>
+                                                <f:attribute name="grp"
+                                                             value="#{navigationModel.currentComponentGroup.beanName}"/>
+                                                <f:attribute name="exp" value="#{subMenuLink.exampleBeanName}"/>
+                                            </h:commandLink>
+                                            <!-- OLD APPROACH NOV 10/11
+                                    We used to do a full page refresh and navigation on each sublink
+                                    Now for smoother integration with portlets we want to use a normal commandLink (above)
+                                    This means each subdemo won't be bookmarkable though -->
+                                            <!--
+                                            <h:link title="#{msgs[subMenuLink.title]}"
+                                                    outcome="showcase"
+                                                    disabled="#{subMenuLink.disabled}"
+                                                    includeViewParams="true"
+                                                    class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
+                                                             (navigationModel.componentExample eq null and subMenuLink['default'])
+                                                           ? 'selected'
+                                                           : ''}">
+                                                <f:param name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
+                                                <f:param name="exp" value="#{subMenuLink.exampleBeanName}"/>
+                                                > #{msgs[subMenuLink.title]}
+                                            </h:link>
+                                            -->
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </ice:panelGroup>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            </h:form>
+        </ui:remove>
+    </ui:define>
+
+    <ui:define name="component-example">
+        <ui:include src="#{navigationModel.currentComponentExample.example}"/>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,80 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ice:panelGroup styleClass="componentBox"
+            xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:panelGroup styleClass="synopsisBox gmapContainer">
+        <ice:outputText value="#{msgs['page.gMap.synopsis']}"/>
+        <ice:outputText value="#{msgs['page.gMap.description']}"/>
+    </ice:panelGroup>
+    
+    <ice:panelGroup styleClass="exampleBox gmapContainer">
+        <table cellspacing="4" cellpadding="4">
+            <tr>
+                <td>
+                    <ice:outputLabel value="#{msgs['page.gMap.city.label']}"
+                                     for="mapCityList"/>
+                </td>
+                <td>
+                    <ice:selectOneMenu id="mapCityList" partialSubmit="true"
+                                       value="#{gmap.standardAddress}"
+                                       valueChangeListener="#{gmap.findAddress}">
+                        <f:selectItem itemValue="" itemLabel="#{msgs['page.gMap.search.select']}"/>
+                        <f:selectItem itemValue="Tokyo" itemLabel="#{msgs['page.gMap.search.city1']}"/>
+                        <f:selectItem itemValue="Mexico City" itemLabel="#{msgs['page.gMap.search.city2']}"/>
+                        <f:selectItem itemValue="New York" itemLabel="#{msgs['page.gMap.search.city3']}"/>
+                        <f:selectItem itemValue="Sao Paulo" itemLabel="#{msgs['page.gMap.search.city4']}"/>
+                        <f:selectItem itemValue="Mumbai" itemLabel="#{msgs['page.gMap.search.city5']}"/>
+                    </ice:selectOneMenu>
+                </td>
+                <td>
+                    <ice:outputLabel value="#{msgs['page.gMap.controls.label']}"
+                                     for="showControlBox"/>
+                </td>
+                <td>
+                    <ice:selectBooleanCheckbox id="showControlBox"
+                                               value="#{gmap.showControls}" partialSubmit="true" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <ice:outputLabel value="#{msgs['page.gMap.address.label']}"
+                                     for="inadress"/>
+                </td>
+                <td colspan="5">
+                    <ice:inputText id="inadress" value="#{gmap.geoCoderAddress}"
+                                   actionListener="#{gmap.enterKeyPressed}"
+                                   style="width: 99%;"/>
+                </td>
+            </tr>
+        </table>
+    </ice:panelGroup>
+    
+    <ice:panelGroup styleClass="clearer" />
+        
+    <ice:panelGroup styleClass="exampleBox gmapContainer">
+        <ice:gMap id="gmap" address="#{gmap.address}" locateAddress="#{gmap.locateAddress}">
+            <ice:gMapControl id="largectrl" name="GLargeMapControl" rendered="#{gmap.showControls}"/>
+            <ice:gMapControl id="scalectrl" name="GScaleControl" rendered="#{gmap.showControls}"/>
+            <ice:gMapControl id="typectrl" name="GMapTypeControl" rendered="#{gmap.showControls}"/>
+        </ice:gMap>
+    </ice:panelGroup>
+
+</ice:panelGroup>

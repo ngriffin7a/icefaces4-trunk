@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[contextMenuBean.title]}"/>
+    <ui:param name="description" value="#{msgs[contextMenuBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[contextMenuBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{contextMenuBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{contextMenuBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{contextMenuResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{contextMenuResources.tldResources}"/>
+
+    <ui:define name="example">
+        <icecore:config mandatoryResource="dataTable" />
+        <h:form id="form">
+            <ace:panel style="text-align: center;">
+                <h:outputText id="txt" value="Right-click anywhere on this page to display the global menu"/>
+            </ace:panel>
+        
+            <ace:contextMenu id="contextMenu" effect="slide" effectDuration="200">
+                <ace:menuItem value="Homepage" icon="ui-icon ui-icon-extlink" url="http://www.icefaces.org" target="_blank"/>
+                <ace:submenu id="edit" label="Edit" icon="ui-icon ui-icon-pencil">  
+                     <ace:menuItem id="cut" value="Cut"/>
+                     <ace:menuItem id="copy" value="Copy"/>
+                     <ace:menuItem id="paste" value="Paste"/>
+                     <ace:menuItem id="find" value="Find"/>
+                 </ace:submenu>
+                
+                <ace:submenu id="file" label="File" icon="ui-icon ui-icon-document">
+                    <ace:menuItem value="Save" icon="ui-icon ui-icon-disk"/>
+                    <ace:menuItem value="Update" icon="ui-icon ui-icon-arrowrefresh-1-w"/>  
+                    <ace:menuItem value="Delete" icon="ui-icon ui-icon-close"/>
+                </ace:submenu>
+                
+            </ace:contextMenu>
+            <p><i><b>Note: </b>Save, Update and Delete menu items associated with the context menu are just placeholders in this example and do not perform any functionality.</i></p>
+            
+        </h:form>
+    </ui:define>
+</ui:composition>

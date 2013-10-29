@@ -1,0 +1,46 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
+<f:view><h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Columns Component Tutorial</title>
+    <link href="./xmlhttp/css/xp/xp.css" rel="stylesheet" type="text/css" />
+</h:head>
+    <h:body>
+        <ice:form id="frm">
+            <ice:dataTable id="dt" value="#{backing.rowModel}" var="index"
+                           style="border: medium solid #555555; width: 200px;">
+                <ice:columns id="clmns" value="#{backing.columnsModel}" var="headings">
+                    <f:facet name="header">
+                        <h:outputText id="header" value="#{headings}"/>
+                    </f:facet>
+                    <ice:outputText id="cellValue" value="#{backing.cellValue}"/>
+                </ice:columns>
+            </ice:dataTable>
+            <ice:messages/>
+            <ice:outputText value="Enter the number of columns to display (between 1 to 8)"/>
+            <br />
+            <ice:inputText id="input" value="#{backing.numberOfColumns}" valueChangeListener="#{backing.change}"/>
+        </ice:form>
+    </h:body>
+</f:view>
+</html>

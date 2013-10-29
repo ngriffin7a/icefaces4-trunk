@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[textEntryReqStyleBean.title]}"/>
+    <ui:param name="description" value="#{msgs[textEntryReqStyleBean.description]}"/>
+    <ui:param name="resourceValue" value="#{textEntryReqStyleBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{textEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{textEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="textEntryConfigForm">
+            <icecore:singleSubmit/>
+            <ace:panel header="Color Customization">
+                <h:panelGrid width="100%" columns="3" columnClasses="col25,col25,col50"
+                             cellpadding="6" cellspacing="6">
+                        <h:outputLabel for="reqColor" value="Required Color Style:"/>
+                        <ace:simpleSelectOneMenu id="reqColor" value="#{textEntryReqStyleBean.reqColor}"
+                                         style="width: 150px;" disabled="#{textEntryReqStyleBean.useTheme}">
+										 <ace:ajax execute="@this" />
+                            <f:selectItem itemValue="blueRS" itemLabel="Blue"/>
+                            <f:selectItem itemValue="greenRS" itemLabel="Green"/>
+                            <f:selectItem itemValue="redRS" itemLabel="Red"/>
+                        </ace:simpleSelectOneMenu>
+                        <ace:message for="reqColor"/>
+                    
+                        <h:outputLabel for="optColor" value="Optional Color Style:"/>
+                        <ace:simpleSelectOneMenu id="optColor" value="#{textEntryReqStyleBean.optColor}"
+                                         style="width: 150px;" disabled="#{textEntryReqStyleBean.useTheme}">
+										 <ace:ajax execute="@this" />
+                            <f:selectItem itemValue="blueRS" itemLabel="Blue"/>
+                            <f:selectItem itemValue="greenRS" itemLabel="Green"/>
+                            <f:selectItem itemValue="redRS" itemLabel="Red"/>
+                        </ace:simpleSelectOneMenu>
+                        <ace:message for="optColor"/>
+                </h:panelGrid>
+				<h:panelGroup>
+					<h:selectBooleanCheckbox id="useTheme" value="#{textEntryReqStyleBean.useTheme}" />
+					<h:outputLabel for="useTheme" value=" No custom styling (use theme)" />
+				</h:panelGroup>
+            </ace:panel>
+        </h:form>
+        <h:form id="textEntryForm">
+            <ace:panel id="personalInfoInputPanel" header="Personal Info" styleClass="#{textEntryReqStyleBean.useTheme ? '' : 'required-styling-demo'}">
+                <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
+                    <ace:textEntry id="firstNameInput" value="#{textEntryReqStyleBean.firstName}"
+                                   label="First Name" labelPosition="left"
+                                   required="true" requiredIndicator="(Required)"
+                                   indicatorPosition="right"
+                                   styleClass="#{textEntryReqStyleBean.reqColor}">
+                        <ace:ajax render="@this firstNameOutput firstNameMsg"/>
+                    </ace:textEntry>
+                    
+                    <ace:textEntry id="lastNameInput" value="#{textEntryReqStyleBean.lastName}"
+                                   label="Last Name" labelPosition="left"
+                                   required="true" requiredIndicator="(Required)"
+                                   indicatorPosition="right"
+                                   styleClass="#{textEntryReqStyleBean.reqColor}">
+                        <ace:ajax render="@this lastNameOutput lastNameMsg"/>
+                    </ace:textEntry>
+
+                    <ace:textEntry id="address1Input" value="#{textEntryReqStyleBean.address1}"
+                                   label="Apt./Suite #" labelPosition="left"
+                                   required="true" requiredIndicator="(Required)"
+                                   indicatorPosition="right"
+                                   styleClass="#{textEntryReqStyleBean.reqColor}">
+                        <ace:ajax render="@this address1Output address1Msg"/>
+                    </ace:textEntry>
+
+                    <ace:textEntry id="address2Input" value="#{textEntryReqStyleBean.address2}"
+                                   label="Street Address" labelPosition="left"
+                                   required="false" optionalIndicator="(Optional)"
+                                   indicatorPosition="right"
+                                   styleClass="#{textEntryReqStyleBean.optColor}">
+                        <ace:ajax render="@this address2Output"/>
+                    </ace:textEntry>
+
+                    <ace:textEntry id="cityInput" value="#{textEntryReqStyleBean.city}"
+                                   label="City" labelPosition="left"
+                                   required="true" requiredIndicator="(Required)"
+                                   indicatorPosition="right"
+                                   styleClass="#{textEntryReqStyleBean.reqColor}">
+                        <ace:ajax render="@this cityOutput cityMsg"/>
+                    </ace:textEntry>
+                    
+                    <ace:textEntry id="provinceInput" value="#{textEntryReqStyleBean.province}"
+                                   label="Prov./State" labelPosition="left"
+                                   required="false" optionalIndicator="(Optional)"
+                                   indicatorPosition="right"
+                                   styleClass="#{textEntryReqStyleBean.optColor}">
+                        <ace:ajax render="@this provinceOutput provinceMsg"/>
+                        <f:validateLength minimum="2"/>
+                    </ace:textEntry>
+
+                    <ace:textEntry id="countryInput" value="#{textEntryReqStyleBean.country}"
+                                   label="Country" labelPosition="left"
+                                   required="true" requiredIndicator="(Required)"
+                                   indicatorPosition="right"
+                                   styleClass="#{textEntryReqStyleBean.reqColor}">
+                        <ace:ajax render="@this countryOutput countryMsg"/>
+                    </ace:textEntry>
+                </h:panelGrid>
+                <h:panelGrid width="100%">
+                    <ace:message id="firstNameMsg" for="firstNameInput"/>
+                    <ace:message id="lastNameMsg" for="lastNameInput"/>
+                    <ace:message id="address1Msg" for="address1Input"/>
+                    <ace:message id="cityMsg" for="cityInput"/>
+                    <ace:message id="provinceMsg" for="provinceInput"/>
+                    <ace:message id="countryMsg" for="countryInput"/>
+                </h:panelGrid>
+            </ace:panel>
+            
+            <ace:panel id="personalInfoOutputPanel" header="Entered data">
+                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
+                    <h:outputText id="firstNameOutput" value="first name: #{textEntryReqStyleBean.firstName}"/>
+                    <h:outputText id="lastNameOutput" value="last name: #{textEntryReqStyleBean.lastName}"/>
+                    <h:outputText id="address1Output" value="address: #{textEntryReqStyleBean.address1}"/>
+                    <h:outputText id="address2Output" value="address(cont.): #{textEntryReqStyleBean.address2}"/>
+                    <h:outputText id="cityOutput" value="city: #{textEntryReqStyleBean.city}"/>
+                    <h:outputText id="provinceOutput" value="province: #{textEntryReqStyleBean.province}"/>
+                    <h:outputText id="countryOutput" value="country: #{textEntryReqStyleBean.country}"/>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+		<ui:include src="/resources/ice.samples.showcase/reqStyleCss.xhtml" />
+        
+    </ui:define>
+</ui:composition>
+

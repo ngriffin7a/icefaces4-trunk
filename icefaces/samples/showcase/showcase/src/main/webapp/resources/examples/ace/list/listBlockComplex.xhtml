@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param value="#{listBlockComplexBean}" name="backing" />
+    <ui:param name="title" value="#{msgs[backing.title]}"/>
+    <ui:param name="description" value="#{msgs[backing.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[backing.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{backing.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{backing.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{listResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{listResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            <h:panelGroup style="padding: 0.5em;" layout="block">
+                <style type="text/css">
+                    .floatList {
+                        float:left;
+                        padding:.5em;
+                        font-size:85% !important;
+                        width:47%;
+                    }
+                    .blockList .if-list-item {
+                        display:inline-block;
+
+                        /* IE7 inline block hack */
+                        *display:inline;
+                        zoom:1;
+
+                        border:1px solid black;
+                        margin: .5em;
+                    }
+                        /* drag placeholder style */
+                    .blockList .if-list-plhld {
+                        display:inline-block;
+
+                        /* IE7 inline block hack */
+                        *display:inline;
+                        zoom:1;
+
+                        border:1px solid black;
+                    }
+                </style>
+
+
+                <ace:listControl id="multiListControl" selector=".floatList" />
+
+                <ace:list id="carList" value="#{listBean.carList}"
+                          var="car"
+                          styleClass="floatList"
+                          bodyClass="blockList"
+                          dropGroup="blockGroup"
+                          selectionMode="multiple"
+                          controlsEnabled="true">
+                    <f:facet name="header">
+                        First Head
+                    </f:facet>
+                    <f:facet name="footer">
+                        First Foot
+                    </f:facet>
+
+                    <h:panelGrid id="panelGrid" columns="2" >
+                        <f:facet name="header">
+                            <h:outputText id="carNameFirstList" value="#{car.name}" /><hr/>
+                        </f:facet>
+                        Chassis: <h:outputText id="carChassisFirstList" value="#{car.chassis}" />
+                        Weight: <h:outputText id="carWeightFirstList" value="#{car.weight}" />
+                        Accel: <h:outputText id="carAccelFirstList" value="#{car.acceleration}" />
+                    </h:panelGrid>
+                </ace:list>
+
+                <ace:list id="carListTwo" value="#{listBean.fstDestCarList}"
+                          var="car"
+                          styleClass="floatList"
+                          bodyClass="blockList"
+                          dropGroup="blockGroup"
+                          selectionMode="multiple"
+                          controlsEnabled="true">
+                    <f:facet name="header">
+                        Second Head
+                    </f:facet>
+                    <f:facet name="footer">
+                        Second Foot
+                    </f:facet>
+
+                    <h:panelGrid id="panelGridTwo" columns="2">
+                        <f:facet name="header">
+                            <h:outputText id="carNameSecondList" value="#{car.name}" /><hr/>
+                        </f:facet>
+                        Chassis: <h:outputText id="carChassisSecondList" value="#{car.chassis}" />
+                        Weight: <h:outputText id="carWeightSecondList" value="#{car.weight}" />
+                        Accel: <h:outputText id="carAccelSecondList" value="#{car.acceleration}" />
+                    </h:panelGrid>
+                </ace:list>
+
+                <ace:list id="carListThree" value="#{listBean.sndDestCarList}"
+                          var="car"
+                          styleClass="floatList"
+                          bodyClass="blockList"
+                          dropGroup="blockGroup"
+                          selectionMode="multiple"
+                          controlsEnabled="true">
+                    <f:facet name="header">
+                        Third Head
+                    </f:facet>
+                    <f:facet name="footer">
+                        Third Foot
+                    </f:facet>
+
+                    <h:panelGrid id="panelGridThree" columns="2">
+                        <f:facet name="header">
+                            <h:outputText id="carNameThirdList" value="#{car.name}" /><hr/>
+                        </f:facet>
+                        Chassis: <h:outputText id="carChassisThirdList" value="#{car.chassis}" />
+                        Weight: <h:outputText id="carWeightThirdList" value="#{car.weight}" />
+                        Accel: <h:outputText id="carAccelThirdList" value="#{car.acceleration}" />
+                    </h:panelGrid>
+                </ace:list>
+
+                <!-- Float Height Fix -->
+                <div style="clear:left;" />
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

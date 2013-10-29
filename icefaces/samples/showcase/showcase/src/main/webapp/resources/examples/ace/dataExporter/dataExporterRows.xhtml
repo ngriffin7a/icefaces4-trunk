@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[dataExporterRows.title]}"/>
+    <ui:param name="description" value="#{msgs[dataExporterRows.description]}"/>
+    <ui:param name="resourceValue" value="#{dataExporterRows.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dataExporterResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dataExporterResources.tldResources}"/>
+
+    <ui:define name="example">
+        
+        <ace:panel>
+            <h:panelGrid styleClass="centeredPanelGridWithBorderSpacing">
+            <h:form id="form1">
+                <h:panelGrid columns="2">
+                        <h:outputLabel for="typeIn" value="Export As:"/>
+                        <h:selectOneRadio id="typeIn" value="#{dataExporterRows.type}" required="true">
+                            <f:ajax disabled="false"/>
+                            <f:selectItem itemValue="csv" itemLabel="CSV"/>
+                            <f:selectItem itemValue="pdf" itemLabel="PDF"/>
+                            <f:selectItem itemValue="xls" itemLabel="XLS"/>
+                            <f:selectItem itemValue="xml" itemLabel="XML"/>
+                        </h:selectOneRadio>
+                </h:panelGrid>
+            </h:form>
+
+            <h:form id="form3">
+                <h:panelGrid styleClass="centeredPanelGrid">
+                    <ace:dataExporter id="dataExporter" label="Export File" type="#{dataExporterRows.type}" target="carData" fileName="cars" selectedRowsOnly="true" />
+                </h:panelGrid>
+            </h:form>
+            </h:panelGrid>
+        </ace:panel>
+        
+        <br/>
+        <h:form id="form4">
+           <ace:dataTable id="carData"
+                          value="#{dataExporterRows.cars}"
+                          var="car"
+                          stateMap="#{dataExporterRows.stateMap}"
+                          selectionMode="multiple"
+                          paginator="true"
+                          rows="15" >
+                <ace:ajax event="select" render="@this" execute="@this" />
+                
+                <ace:column headerText="ID">
+                    <h:outputText value="#{car.id}" />
+                </ace:column>
+               <ace:column headerText="Name">
+                    <h:outputText value="#{car.name}" />
+                </ace:column>
+                <ace:column headerText="Chassis">
+                    <h:outputText value="#{car.chassis}" />
+                </ace:column>
+                <ace:column headerText="Weight">
+                    <h:outputText value="#{car.weight}lbs." />
+                </ace:column>
+                <ace:column headerText="Accel">
+                    <h:outputText value="#{car.acceleration}" />
+                </ace:column>
+                <ace:column headerText="MPG">
+                    <h:outputText value="#{car.mpg}" />
+                </ace:column>
+                <ace:column headerText="Cost">
+                    <ice:outputText value="#{car.cost}">
+                        <f:convertNumber type="currency"
+                                         currencySymbol="$"
+                                         groupingUsed="true"
+                                         minFractionDigits="2"
+                                         maxFractionDigits="2"/>
+                    </ice:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[confirmationDialogEffectBean.title]}"/>
+    <ui:param name="description" value="#{msgs[confirmationDialogEffectBean.description]}"/>
+    <ui:param name="resourceValue" value="#{confirmationDialogEffectBean.exampleResource}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[confirmationDialogEffectBean.subMenuTitle]}"/>
+    
+    <ui:param name="wikiResources" value="#{confirmationDialogResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{confirmationDialogResources.tldResources}"/>
+    
+    <ui:define name="example">
+    <h:form id="form">
+        
+            <icecore:singleSubmit/>
+            
+            <ace:panel id="inputPanel" header="Confirmation Dialog Effects">
+                <h:panelGrid columns="2" styleClass="centeredPanelGridWithLeftJustifiedText">
+                    <h:outputLabel id="onShowEffectLabel" for="onShowEffectSelector" value="Show effect:"/>
+                    <ace:simpleSelectOneMenu id="onShowEffectSelector" value="#{confirmationDialogEffectBean.showEffect}">
+						<ace:ajax execute="@this" />
+                        <f:selectItems value="#{confirmationDialogEffectBean.showEffects}"
+                                                var="effect"
+                                                itemValue="#{effect.value}"
+                                                itemLabel="#{effect.key}"/>
+                    </ace:simpleSelectOneMenu>
+                    <h:panelGroup>
+                        <br/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <br/>
+                    </h:panelGroup>
+                    <h:outputLabel id="onHideEffectLabel" for="onHideEffectSelector" value="Hide effect:"/>
+                    <ace:simpleSelectOneMenu id="onHideEffectSelector" value="#{confirmationDialogEffectBean.hideEffect}">
+						<ace:ajax execute="@this" />
+                        <f:selectItems value="#{confirmationDialogEffectBean.hideEffects}"
+                                                var="effect"
+                                                itemValue="#{effect.value}"
+                                                itemLabel="#{effect.key}"/>
+                    </ace:simpleSelectOneMenu>
+                </h:panelGrid>
+
+                <br/>
+                
+                <center>
+                    <h:commandButton id="show" value="Display Dialog"  onclick="confirmation.show();return false;"/>
+                </center>
+            </ace:panel>
+        </h:form>
+        <h:form id="form2">
+            <ace:confirmationDialog id="confirmDialog"
+									widgetVar="confirmation"
+								    showEffect="#{confirmationDialogEffectBean.showEffect}"
+								    hideEffect="#{confirmationDialogEffectBean.hideEffect}"
+								    header="Confirmation Dialog"
+								    message="Confirm?"
+								    width="200" height="200"
+								    closable="true">
+
+                <h:panelGrid width="100%" style="text-align: center;" columns="2" cellspacing="30">
+                    <h:commandButton id="yes" value="Yes" onclick="confirmation.hide();return false;"/>
+                    <h:commandButton id="no" value="No" onclick="confirmation.hide();return false;"/>
+                </h:panelGrid>
+
+            </ace:confirmationDialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

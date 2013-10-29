@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="WEB-INF/templates/tutorial-template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core">
+    <ui:define name="content">
+        <h:outputText value="#{msgs['content.main.html']}" escape="false" />
+    </ui:define>
+
+    <ui:define name="example">
+        <h:outputText value="#{dynamic.richText}"/>
+        <br/>
+        <h:form id="exampleForm">
+            <h:panelGroup id="tabSetPanel">
+                <ace:tabSet id="tbset"
+                            clientSide="false"
+                            tabChangeListener="#{dynamic.tabChangeListener}"
+                            selectedIndex="#{dynamic.selectedTabIndex}">
+                    <c:forEach id="cForEachId" items="#{dynamic.movies}" var="tab">
+                        <ace:tabPane label="#{tab.title}" id="tab_#{tab.id}">
+                            <f:subview id="sub_#{tab.id}">
+                                <h:panelGroup id="pnlGrp">
+                                    <h3><h:outputText value="#{msgs['content.tab.plot.label']}"/></h3>
+                                    <h:outputText id="spn" value="#{tab.plot}"/>
+                                </h:panelGroup>
+                            </f:subview>
+                        </ace:tabPane>
+                    </c:forEach>
+                </ace:tabSet>
+            </h:panelGroup>
+        </h:form>
+        <br />
+        <h:form id="addRemForm">
+            <icecore:singleSubmit/>
+            <h:commandButton value="#{msgs['content.button.addTab']}" actionListener="#{dynamic.addTab}" id="add"/>
+            <h:commandButton value="#{msgs['content.button.removeCurrent']}" actionListener="#{dynamic.removeCurrent}" id="remove"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

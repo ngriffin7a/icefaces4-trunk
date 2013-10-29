@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="WEB-INF/templates/tutorial-template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components">
+<ui:define name="content">
+        <h:outputText value="#{msgs['content.main.html']}" escape="false" />
+    </ui:define>
+
+    <ui:define name="example">
+        <h:form id="exampleForm">
+            <h:panelGroup id="tabSetPanel">
+                <ace:tabSet id="tbset"
+                            clientSide="false">
+                    <ace:tabPane label="#{msgs['content.tab.none.label']}"
+                                 id="tab_none"
+                                 cache="none">
+                        <f:subview id="sub_none">
+                            <h:panelGroup id="pnl_none">
+                                <h3><h:outputText value="#{msgs['content.tab.none.header']}"/></h3>
+                                <h:outputText value="#{msgs['content.tab.none.description']}"/>
+                                <br/>
+                                <br/>
+                                <h:outputText value="#{msgs['content.tab.none.interpretation']}"/>
+                                <br/>
+                                <iframe id="iframe_none"
+                                        org.icefaces.ace.component.tabset.deferred_src="./changing-content/none/#{caching.alwaysIncrement}"/>
+                                <h:commandButton value="#{msgs['content.button.update']}" id="noneUpdate"/>
+                            </h:panelGroup>
+                        </f:subview>
+                    </ace:tabPane>
+                    <ace:tabPane label="#{msgs['content.tab.dynamic.label']}"
+                                 id="tab_dynamic"
+                                 cache="dynamic">
+                        <f:subview id="sub_dynamic">
+                            <h:panelGroup id="pnl_dynamic">
+                                <h3><h:outputText value="#{msgs['content.tab.dynamic.header']}"/></h3>
+                                <h:outputText value="#{msgs['content.tab.dynamic.description']}"/>
+                                <br/>
+                                <br/>
+                                <h:outputText value="#{msgs['content.tab.dynamic.interpretation']}"/>
+                                <br/>
+                                <iframe id="iframe_dynamicA"
+                                        org.icefaces.ace.component.tabset.deferred_src="./changing-content/dynamicA/#{caching.alwaysIncrement}"/>
+                                <h:commandButton id="submitTabDynamic" value="#{msgs['content.button.submit']}"/>
+                                <h:commandButton id="updateTabDynamic" value="#{msgs['content.button.update']}"
+                                                 actionListener="#{caching.increment}"/>
+                                <iframe id="iframe_dynamicB"
+                                        org.icefaces.ace.component.tabset.deferred_src="./changing-content/dynamicB/#{caching.conditionallyIncrement}"/>
+                            </h:panelGroup>
+                        </f:subview>
+                    </ace:tabPane>
+                    <ace:tabPane label="#{msgs['content.tab.static.label']}"
+                                 id="tab_static"
+                                 cache="static">
+                        <f:subview id="sub_static">
+                            <h:panelGroup id="pnl_static">
+                                <h3><h:outputText value="#{msgs['content.tab.static.header']}"/></h3>
+                                <h:outputText value="#{msgs['content.tab.static.description']}"/>
+                                <br/>
+                                <br/>
+                                <h:outputText value="#{msgs['content.tab.static.interpretation']}"/>
+                                <br/>
+                                <iframe id="iframe_static"
+                                        org.icefaces.ace.component.tabset.deferred_src="./changing-content/static/#{caching.alwaysIncrement}"/>
+                                <h:commandButton id="tryUpdate" value="#{msgs['content.button.tryUpdateStaticCached']}"/>
+                            </h:panelGroup>
+                        </f:subview>
+                    </ace:tabPane>
+                    <ace:tabPane label="#{msgs['content.tab.staticAuto.label']}"
+                                 id="tab_staticAuto"
+                                 cache="staticAuto">
+                        <f:subview id="sub_staticAuto">
+                            <h:panelGroup id="pnl_staticAuto">
+                                <h3><h:outputText value="#{msgs['content.tab.staticAuto.header']}"/></h3>
+                                <h:outputText value="#{msgs['content.tab.staticAuto.description']}"/>
+                                <br/>
+                                <br/>
+                                <h:outputText value="#{msgs['content.tab.staticAuto.interpretation']}"/>
+                                <br/>
+                                <iframe id="iframe_staticAuto"
+                                        org.icefaces.ace.component.tabset.deferred_src="./changing-content/staticAuto/#{caching.alwaysIncrement}"/>
+                                <h:inputText id="input" value="#{caching.staticAutoInput}">
+                                    <f:ajax execute="@this" render="@all"/>
+                                </h:inputText>
+                                <h:commandButton id="interact" value="#{msgs['content.button.interact']}"/>
+                            </h:panelGroup>
+                        </f:subview>
+                    </ace:tabPane>
+                    <ace:tabPane label="#{msgs['content.tab.dynamicRevertStaticAuto.label']}"
+                                 id="tab_dynamicRevertStaticAuto"
+                                 cache="#{caching.cache}">
+                        <f:subview id="sub_dynamicRevertStaticAuto">
+                            <h:panelGroup id="pnl_dynamicRevertStaticAuto">
+                                <h3><h:outputText value="#{msgs['content.tab.dynamicRevertStaticAuto.header']}"/></h3>
+                                <h:outputText value="#{msgs['content.tab.dynamicRevertStaticAuto.description']}"/>
+                                <br/>
+                                <br/>
+                                <h:outputText value="#{msgs['content.tab.dynamicRevertStaticAuto.interpretation']}"/>
+                                <br/>
+                                <iframe id="iframe_dynamicRevertStaticAuto"
+                                        org.icefaces.ace.component.tabset.deferred_src="./changing-content/dynamicRevertStaticAuto/#{caching.alwaysIncrement}"/>
+                                <h:inputText id="input" value="#{caching.dynamicRevertStaticAutoInput}">
+                                    <f:ajax execute="@this" render="@all"/>
+                                </h:inputText>
+                                <h:commandButton id="interact" value="#{msgs['content.button.interact']}"/>
+                            </h:panelGroup>
+                        </f:subview>
+                    </ace:tabPane>
+                </ace:tabSet>
+            </h:panelGroup>
+            <h:commandButton id="submitForm" value="#{msgs['content.button.submit']}"/>
+            <h:commandButton id="dynamicForm" value="#{msgs['content.button.dynamicRevertStaticAuto']}"
+                             actionListener="#{caching.dynamicRevertStaticAutoActionListener}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

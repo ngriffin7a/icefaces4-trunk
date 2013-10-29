@@ -1,0 +1,167 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:form>
+<ace:accordion collapsible="true" activeIndex="-1">
+<ace:accordionPane title="CSS Source">
+<div style="background-color: #fff;color:#000;"><pre>
+<span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-required</span><span> {
+	</span><span style="color:#00c;">border-width</span><span>:</span><span style="color:#909;"> 2px</span><span>;
+	</span><span style="color:#00c;">margin</span><span>:</span><span style="color:#909;"> 1px</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-optional</span><span> {
+	</span><span style="color:#00c;">border-width</span><span>:</span><span style="color:#909;"> 2px</span><span>;
+	</span><span style="color:#00c;">margin</span><span>:</span><span style="color:#909;"> 1px</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-state-required.ui-state-error</span><span> {
+	</span><span style="color:#00c;">border-width</span><span>:</span><span style="color:#909;"> 3px</span><span>;
+	</span><span style="color:#00c;">margin</span><span>:</span><span style="color:#909;"> 0</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-state-optional.ui-state-error</span><span> {
+	</span><span style="color:#00c;">border-width</span><span>:</span><span style="color:#909;"> 3px</span><span>;
+	</span><span style="color:#00c;">margin</span><span>:</span><span style="color:#909;"> 0</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-optional.blueRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #9999cc</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-state-optional.ui-state-error.blueRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #ccccff</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-required.blueRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #0000cc</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-state-required.ui-state-error.blueRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #0000ff</span><span>;
+	</span><span style="color:#00c;">background-color</span><span>:</span><span style="color:#909;"> #ccccff</span><span>;
+	</span><span style="color:#00c;">background-image</span><span>:</span><span style="color:#909;"> none</span><span>; </span><span style="color:#090;">/* prevent theme background */</span><span>
+	</span><span style="color:#00c;">color</span><span>:</span><span style="color:#909;"> #000099</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.blueRS</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-optional</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #9999cc</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.blueRS</span><span> </span><span style="color:#c00;">.ui-state-optional.ui-state-error</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #ccccff</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.blueRS</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-required</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #0000cc</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.blueRS</span><span> </span><span style="color:#c00;">.ui-state-required.ui-state-error</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #0000ff</span><span>;
+	</span><span style="color:#00c;">background-color</span><span>:</span><span style="color:#909;"> #ccccff</span><span>;
+	</span><span style="color:#00c;">background-image</span><span>:</span><span style="color:#909;"> none</span><span>; </span><span style="color:#090;">/* prevent theme background */</span><span>
+	</span><span style="color:#00c;">color</span><span>:</span><span style="color:#909;"> #000099</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-optional.redRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #cc9999</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-state-optional.ui-state-error.redRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #ffcccc</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-required.redRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #cc0000</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-state-required.ui-state-error.redRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #ff0000</span><span>;
+	</span><span style="color:#00c;">background-color</span><span>:</span><span style="color:#909;"> #ffcccc</span><span>;
+	</span><span style="color:#00c;">background-image</span><span>:</span><span style="color:#909;"> none</span><span>; </span><span style="color:#090;">/* prevent theme background */</span><span>
+	</span><span style="color:#00c;">color</span><span>:</span><span style="color:#909;"> #990000</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.redRS</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-optional</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #cc9999</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.redRS</span><span> </span><span style="color:#c00;">.ui-state-optional.ui-state-error</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #ffcccc</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.redRS</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-required</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #cc0000</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.redRS</span><span> </span><span style="color:#c00;">.ui-state-required.ui-state-error</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #ff0000</span><span>;
+	</span><span style="color:#00c;">background-color</span><span>:</span><span style="color:#909;"> #ffcccc</span><span>;
+	</span><span style="color:#00c;">background-image</span><span>:</span><span style="color:#909;"> none</span><span>; </span><span style="color:#090;">/* prevent theme background */</span><span>
+	</span><span style="color:#00c;">color</span><span>:</span><span style="color:#909;"> #990000</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-optional.greenRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #99cc99</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-state-optional.ui-state-error.greenRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #ccffcc</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-required.greenRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #00cc00</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.ui-state-required.ui-state-error.greenRS</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #00ff00</span><span>;
+	</span><span style="color:#00c;">background-color</span><span>:</span><span style="color:#909;"> #ccffcc</span><span>;
+	</span><span style="color:#00c;">background-image</span><span>:</span><span style="color:#909;"> none</span><span>; </span><span style="color:#090;">/* prevent theme background */</span><span>
+	</span><span style="color:#00c;">color</span><span>:</span><span style="color:#909;"> #009900</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.greenRS</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-optional</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #99cc99</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.greenRS</span><span> </span><span style="color:#c00;">.ui-state-optional.ui-state-error</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #ccffcc</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.greenRS</span><span> </span><span style="color:#c00;">.ui-inputfield.ui-state-required</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #00cc00</span><span>;
+}
+
+</span><span style="color:#c00;">.required-styling-demo</span><span> </span><span style="color:#c00;">.greenRS</span><span> </span><span style="color:#c00;">.ui-state-required.ui-state-error</span><span> {
+	</span><span style="color:#00c;">border-color</span><span>:</span><span style="color:#909;"> #00ff00</span><span>;
+	</span><span style="color:#00c;">background-color</span><span>:</span><span style="color:#909;"> #ccffcc</span><span>;
+	</span><span style="color:#00c;">background-image</span><span>:</span><span style="color:#909;"> none</span><span>; </span><span style="color:#090;">/* prevent theme background */</span><span>
+	</span><span style="color:#00c;">color</span><span>:</span><span style="color:#909;"> #009900</span><span>;
+}</span>
+</pre></div>
+</ace:accordionPane>
+</ace:accordion>
+</h:form>
+</ui:composition>

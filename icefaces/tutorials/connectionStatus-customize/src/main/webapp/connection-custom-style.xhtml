@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
+<f:view>
+    <h:head>
+        <title>ICEfaces Output Connection Status Tutorial</title>
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body>
+        <ice:panelGroup>
+        <ice:outputConnectionStatus
+                id="status"
+                cautionLabel="Custom styling-Caution: Connection in danger."
+                activeLabel="Custom styling-Active: Working."
+                disconnectedLabel="Custom styling-Disconnected."
+                inactiveLabel="Custom styling-Active: Idle."/>
+        <hr />
+
+        <p>ICEsoft Technologies Inc. is a commercial open source company and a
+            leading global provider of rich Internet application solutions for
+            desktop and mobile enterprise. Founded in 2001, ICEsoft products
+            are used by over 10,000 enterprises worldwide, with a developer
+            community now exceeding 150,000 developers.</p>
+            
+        <p>ICEsoft is the proud sponsor of the following commercial open source projects:</p>
+        <ul>
+            <li><b>ICEfaces</b> – is the most advanced JSF framework for
+                enterprise application development. ICEfaces now offers over
+                125 rich JSF / Ajax components, including the most advance JSF
+                data table in the industry. ICEfaces also supports the widest
+                array of third party and legacy technologies making it one of
+                the most successful and widely deployed Java RIA technologies
+                on the market today.</li>
+            <li><b>ICEmobile</b> – is a revolutionary new product for the
+                development and deployment of rich Internet applications for
+                the mobile enterprise. ICEmobile is a hybrid solution that
+                combines the best of native and web-based application
+                development. With ICEmobile, developers can achieve the
+                richness and responsiveness of native mobile applications,
+                while reaping the cost benefits of web-based applications.</li>
+            <li><b>ICEpdf</b> – is an open source, Java-based PDF engine for
+                viewing, printing, and manipulating PDF documents. The ICEpdf
+                API is 100% Java-based, lightweight, fast, efficient, and very
+                easy to use. ICEpdf can be used as a standalone PDF viewer, or
+                can be easily embedded in any Java application.</li>
+        </ul>
+        </ice:panelGroup>
+        <h:form>
+            <ice:commandButton value="Submit" actionListener="#{bean.sleep}"/>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

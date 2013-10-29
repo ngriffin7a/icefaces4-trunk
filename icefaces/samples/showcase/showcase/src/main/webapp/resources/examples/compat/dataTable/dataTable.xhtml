@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[dataTable.title]}"/>
+    <ui:param name="description" value="#{msgs[dataTable.description]}"/>
+    <ui:param name="resourceValue" value="#{dataTable.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{compatComponentsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{compatComponentsResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form>
+            <ice:dataTable id="carTable"
+                           value="#{dataTableSort.carsData}"
+                           var="car"
+                           resizable="true"
+                           rows="#{dataTable.defaultRows}"
+                           width="100%" cellspacing="1" cellpadding="5"
+                           sortColumn="#{dataTableSort.columnName}"
+                           sortAscending="#{dataTableSort.ascending}"
+                           columnClasses="tableIdCol,tableNameCol,tableChassisCol,
+                                          tableWeightCol,tableAccelCol,tableMpgCol,tableCostCol">
+                <ice:column>
+                    <f:facet name="header">
+                        <ice:commandSortHeader columnName="#{dataTableSort.sortColumnId}"
+                                               actionListener="#{dataTableSort.columnSort}">
+                           ID
+                        </ice:commandSortHeader>
+                    </f:facet>
+                    #{car.id}
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        <ice:commandSortHeader columnName="#{dataTableSort.sortColumnName}"
+                                               actionListener="#{dataTableSort.columnSort}">
+                           Name
+                        </ice:commandSortHeader>
+                    </f:facet>
+                    #{car.name}
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        <ice:commandSortHeader columnName="#{dataTableSort.sortColumnChassis}"
+                                               actionListener="#{dataTableSort.columnSort}">
+                           Chassis
+                        </ice:commandSortHeader>
+                    </f:facet>
+                    #{car.chassis}
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        <ice:commandSortHeader columnName="#{dataTableSort.sortColumnWeight}"
+                                               actionListener="#{dataTableSort.columnSort}">
+                           Weight
+                        </ice:commandSortHeader>
+                    </f:facet>
+                    #{car.weight}lbs.
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        <ice:commandSortHeader columnName="#{dataTableSort.sortColumnAcceleration}"
+                                               actionListener="#{dataTableSort.columnSort}">
+                           Accel
+                        </ice:commandSortHeader>
+                    </f:facet>
+                    #{car.acceleration}
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        <ice:commandSortHeader columnName="#{dataTableSort.sortColumnMpg}"
+                                               actionListener="#{dataTableSort.columnSort}">
+                           MPG
+                        </ice:commandSortHeader>
+                    </f:facet>
+                    #{car.mpg}
+                </ice:column>
+                <ice:column>
+                    <f:facet name="header">
+                        <ice:commandSortHeader columnName="#{dataTableSort.sortColumnCost}"
+                                               actionListener="#{dataTableSort.columnSort}">
+                           Cost
+                        </ice:commandSortHeader>
+                    </f:facet>
+                    <ice:outputText value="#{car.cost}">
+                        <f:convertNumber type="currency"
+                                         currencySymbol="$"
+                                         groupingUsed="true"
+                                         minFractionDigits="2"
+                                         maxFractionDigits="2"/>
+                    </ice:outputText>
+                </ice:column>
+            </ice:dataTable>
+            
+            <ice:dataPaginator id="paginator"
+                               for="carTable" 
+                               fastStep="2"
+                               paginator="true"
+                               paginatorMaxPages="3">
+                <f:facet name="first">
+                    <h:graphicImage value="/xmlhttp/css/rime/css-images/arrow-first.gif"
+                                    style="width: 18px; height: 18px; border: none;"
+                                    alt="First" title="First"/>
+                </f:facet>
+                <f:facet name="last">
+                    <h:graphicImage value="/xmlhttp/css/rime/css-images/arrow-last.gif"
+                                    style="width: 18px; height: 18px; border: none;"
+                                    alt="Last" title="Last"/>
+                </f:facet>
+                <f:facet name="previous">
+                    <h:graphicImage value="/xmlhttp/css/rime/css-images/arrow-previous.gif"
+                                    style="width: 18px; height: 18px; border: none;"
+                                    alt="Previous" title="Previous"/>
+                </f:facet>
+                <f:facet name="next">
+                    <h:graphicImage value="/xmlhttp/css/rime/css-images/arrow-next.gif"
+                                    style="width: 18px; height: 18px; border: none;"
+                                    alt="Next" title="Next"/>
+                </f:facet>
+                <f:facet name="fastforward">
+                    <h:graphicImage value="/xmlhttp/css/rime/css-images/arrow-ff.gif"
+                                    style="width: 18px; height: 18px; border: none;"
+                                    alt="Fast Forward" title="Fast Forward"/>
+                </f:facet>
+                <f:facet name="fastrewind">
+                    <h:graphicImage value="/xmlhttp/css/rime/css-images/arrow-fr.gif"
+                                    style="width: 18px; height: 18px; border: none;"
+                                    alt="Fast Rewind" title="Fast Rewind"/>
+                </f:facet>
+            </ice:dataPaginator>
+        </h:form>
+    </ui:define>
+</ui:composition>

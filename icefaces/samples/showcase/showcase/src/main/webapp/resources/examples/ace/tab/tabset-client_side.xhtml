@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[tabClientSide.title]}"/>
+    <ui:param name="description" value="#{msgs[tabClientSide.description]}"/>
+    <ui:param name="resourceValue" value="#{tabClientSide.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{tabSetResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{tabSetResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            <ace:tabSet id="clientTabSet" clientSide="true" style="clear:both;">
+                <ace:tabPane id="calendar" label="Calendar">
+                    <h:panelGrid styleClass="centeredPanelGrid" >
+                        <ace:dateTimeEntry id="cal"
+                                           timeZone="Canada/Mountain"
+                                           pattern="MMM/dd/yyyy" />
+                    </h:panelGrid>
+                </ace:tabPane>
+                <ace:tabPane id="dataTable" label="Pre-loaded Data Table">
+                    <ace:dataTable id="tbl"
+								   value="#{tabSet.items}"
+                                   var="item"
+                                   style="width: 100%;">
+                            <ace:column headerText="Picture">
+                                <h:graphicImage value="#{item.image}" alt="#{item.name}"/>
+                            </ace:column>
+                           <ace:column headerText="Description">
+                               <h:outputText value="#{item.name}"/>
+                          </ace:column>
+                    </ace:dataTable>
+                </ace:tabPane>
+                <ace:tabPane id="image" label="Pre-loaded Image">
+                    <h:panelGrid style="text-align: center; width: 100%">
+                        <h:graphicImage id="sampleImage" value="#{tabSet.image.path}" alt="#{tabSet.image.description}"/>
+                    </h:panelGrid>
+                </ace:tabPane>
+            </ace:tabSet>
+        </h:form>
+    </ui:define>
+</ui:composition>

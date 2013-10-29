@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[markerBean.title]}"/>
+    <ui:param name="description" value="#{msgs[markerBean.description]}"/>
+    <ui:param name="resourceValue" value="#{markerBean.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+
+    <ui:define name="example">
+	
+    <ace:gMap id="gMapMarker"  style="width: 675px; height: 500px" latitude="0" longitude="0" zoomLevel="3">
+        <ace:gMapMarker id="marker1" latitude="#{markerBean.latList[0]}" longitude="#{markerBean.longList[0]}" options="#{markerBean.optionsList[0]}"/>
+        <ace:gMapMarker id="marker2" latitude="#{markerBean.latList[1]}" longitude="#{markerBean.longList[1]}" options="#{markerBean.optionsList[1]}"/>
+        <ace:gMapMarker id="marker3" latitude="#{markerBean.latList[2]}" longitude="#{markerBean.longList[2]}" options="#{markerBean.optionsList[2]}"/>
+    </ace:gMap>
+	<br/>
+    <h:form id="markerList">
+    <h:panelGrid columns="4" border="1" rules="rows" id="grid">
+        <h:outputText/><h:outputText value="Latitude"/><h:outputText value="Longitude"/><h:outputText value="Options"/>
+        <pre style="font-family: Verdana, Arial, sans serif;">1:  </pre><h:inputText id="latitude1" value="#{markerBean.latList[0]}"/>
+        <h:inputText id="longitude1" value="#{markerBean.longList[0]}"/><h:inputText id="options1" value="#{markerBean.optionsList[0]}"/>
+        <pre style="font-family: Verdana, Arial, sans serif;">2:  </pre><h:inputText id="latitude2" value="#{markerBean.latList[1]}"/>
+        <h:inputText id="longitude2" value="#{markerBean.longList[1]}"/><h:inputText id="options2" value="#{markerBean.optionsList[1]}"/>
+        <pre style="font-family: Verdana, Arial, sans serif;">3:  </pre><h:inputText id="latitude3" value="#{markerBean.latList[2]}"/>
+        <h:inputText id="longitude3" value="#{markerBean.longList[2]}"/><h:inputText id="options3" value="#{markerBean.optionsList[2]}"/>
+    </h:panelGrid>
+	<br/>
+	<h:commandButton value="Submit" type="submit"/>
+    </h:form>
+    <p>Options are set as name:value, and are separated by commas.
+	<p>Relevant section of the Google Maps API: <a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#Marker">Map Marker</a></p>
+	<br/>A few good example options are 'flat:true', which will remove the 3d 'shadow' from the marker, and 'draggable:false', which will force the marker into one position.
+    </p>
+</ui:define>
+</ui:composition>

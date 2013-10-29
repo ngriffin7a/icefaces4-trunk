@@ -1,0 +1,740 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<project name="icefaces-ace" default="lib" basedir=".">
+    <description>
+        ICEfaces Advanced Components build file.
+    </description>
+
+    <!-- This property file is only used for EE builds and overrides various
+         property values if it is available. -->
+    <property file="../../../ee-bundle.properties"/>
+
+    <property file="./build.properties"/>
+    <property file="../build.properties"/>
+    <property file="../../build.properties"/>
+
+
+    <property name="lib.dir" location="../../lib"/>
+    <property name="ace.lib.dir" location="${lib.dir}/ace"/>
+    <property name="compat.lib.dir" location="${lib.dir}/compat"/>
+    <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
+    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
+    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
+    <property name="src" location="src"/>
+    <property name="resources" location="resources"/>
+    <property name="meta-include"
+              location="resources/icefaces.ace/META-INCLUDE"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="dist"/>
+    <property name="conf" location="conf"/>
+    <property name="bin" location="bin/"/>
+    <property name="exploded" location="${build}/exploded"/>
+    <property name="doc" location="${build}/doc"/>
+    <property name="tld.doc" location="${doc}/tld"/>
+    <property name="java.doc" location="${doc}/javadoc"/>
+    <property name="tld.file"
+              location="${build}/exploded/META-INF/components.tld"/>
+    <property name="tld.jar" location="${lib.dir}"/>
+    <property name="smartsprites.basedir" location="../tools/smartsprites"/>
+
+    <!-- combined resources -->
+    <property name="ace-yui.js.base" value="${resources}/icefaces.ace/util/ace-yui"/>
+    <property name="ace-yui.js" location="${ace-yui.js.base}.js"/>
+    <property name="ace-yui.js.uncompressed" location="${ace-yui.js.base}.uncompressed.js"/>
+    <property name="ace-jquery.js.base" value="${resources}/icefaces.ace/util/ace-jquery"/>
+    <property name="ace-jquery.js" location="${ace-jquery.js.base}.js"/>
+    <property name="ace-jquery.js.uncompressed" location="${ace-jquery.js.base}.uncompressed.js"/>
+    <property name="ace-datatable.js.base" value="${resources}/icefaces.ace/util/ace-datatable"/>
+    <property name="ace-datatable.js" location="${ace-datatable.js.base}.js"/>
+    <property name="ace-datatable.js.uncompressed" location="${ace-datatable.js.base}.uncompressed.js"/>
+    <property name="ace-menu.js.base" value="${resources}/icefaces.ace/util/ace-menu"/>
+    <property name="ace-menu.js" location="${ace-menu.js.base}.js"/>
+    <property name="ace-menu.js.uncompressed" location="${ace-menu.js.base}.uncompressed.js"/>
+    <property name="ace-components.js.base" value="${resources}/icefaces.ace/util/ace-components"/>
+    <property name="ace-components.js" location="${ace-components.js.base}.js"/>
+    <property name="ace-components.js.uncompressed" location="${ace-components.js.base}.uncompressed.js"/>
+    <property name="ace-chart.js.base" location="${resources}/icefaces.ace/chart/ace-chart"/>
+    <property name="ace-chart.js" location="${ace-chart.js.base}.js"/>
+    <property name="ace-chart.js.uncompressed" location="${ace-chart.js.base}.uncompressed.js"/>
+
+    <property name="root.dir.path" location="${build}/skins/in"/>
+    <property name="output.dir.path" location="${build}/skins/out"/>
+    <property name="faces-config.host"
+              location="${exploded}/META-INF/faces-config.xml"/>
+    <property name="faces-config.merge.grimlock"
+              location="${meta-include}/faces-config.xml"/>
+    <!-- Space or line separated list of faces-config.xml files to merge with ACE output -->
+    <property name="faces-config.merge" value="${faces-config.merge.grimlock}"/>
+
+    <!-- Example of declaring to merge in a manual TLD file in before the generated one
+    <property name="jsp.tld.merge" location="resources/icefaces.ace/META-INCLUDE/manual.tld"/>
+    -->
+
+    <!-- Check which JSF implementation to use and set the appropriate sub-directory  -->
+    <condition property="jsf.impl.dir" value="${myfaces.lib.dir}" else="${mojarra.lib.dir}">
+        <isset property="myfaces"/>
+    </condition>
+
+    <!-- Check which JSF version to use and set the appropriate sub-directory  -->
+    <condition property="jsf.ver.dir" value="2.2" else="2.1">
+        <isset property="jsf22"/>
+    </condition>
+
+    <property name="jsf.lib.dir" value="${jsf.impl.dir}/${jsf.ver.dir}" />
+    <echo message="JSF lib dir: ${jsf.lib.dir}"/>
+
+    <!-- Check if release.type is set, and if so append it after the tertiary value -->
+    <condition property="version.string"
+               value="${version.primary}.${version.secondary}.${version.tertiary}.${release.type}">
+        <isset property="release.type"/>
+    </condition>
+    <property name="version.string"
+              value="${version.primary}.${version.secondary}.${version.tertiary}"/>
+
+    <property name="javadoc.title"
+              value="${product} ${product.lib} Java API Documentation"/>
+    <property name="javadoc.header"
+              value="${product} ${product.lib} ${version.string}&lt;br&gt;Java API Documentation"/>
+    <property name="tld.title"
+              value="${product} ${product.lib} ${version.string} Tag Library Reference"/>
+
+
+    <tstamp>
+        <format property="build.time" pattern="yyyy-MM-dd hh:mm:ss"/>
+    </tstamp>
+
+
+    <path id="compile.run.classpath">
+        <fileset dir="${jsf.lib.dir}" includes="*.jar" erroronmissingdir="false"/>
+        <fileset dir="${ace.lib.dir}" includes="*.jar"/>
+        <fileset dir="${compat.lib.dir}" includes="commons-collections.jar"/>
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+        <pathelement path="../component/src"/>
+        <pathelement path="../generator/build"/>
+        <pathelement path="../component/build/meta"/>
+    </path>
+
+    <path id="javadoc.classpath">
+        <fileset dir="${jsf.lib.dir}" includes="*.jar" erroronmissingdir="false"/>
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+        <fileset dir="${lib.dir}/ace" includes="*.jar"/>
+        <pathelement path="../generator/build"/>
+        <pathelement path="./src"/>
+        <pathelement path="./build/meta"/>
+        <pathelement path="./build/generated/base"/>
+        <pathelement path="./build/generated-jsp/base"/>
+        <pathelement path="./build/generated-interfaces"/>
+        <pathelement path="./build/exploded"/>
+    </path>
+
+    <!-- include source images and css for sprite generation -->
+    <macrodef name="includeresources">
+        <attribute name="dir"/>
+        <attribute name="name"/>
+        <attribute name="skin"/>
+        <sequential>
+            <mkdir dir="${root.dir.path}/@{skin}"/>
+            <!-- Copy all resources to the input directory for SmartSprites. -->
+            <mkdir dir="${root.dir.path}/@{skin}/@{name}"/>
+            <copy todir="${root.dir.path}/@{skin}/@{name}">
+                <fileset dir="@{dir}" includes="**"/>
+            </copy>
+            <!-- At the same time, copy all resources to the SmartSprites output directory.
+                   If use.sprites is set, SmartSprites will overwrite the CSS files.
+               -->
+            <mkdir dir="${output.dir.path}/@{skin}/@{name}"/>
+            <copy todir="${output.dir.path}/@{skin}/@{name}">
+                <fileset dir="@{dir}" includes="**"/>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <!-- check for any file modifications and call smartsprites -->
+    <macrodef name="generatesprites">
+        <attribute name="skin"/>
+        <sequential>
+            <mkdir dir="${root.dir.path}/@{skin}/base"/>
+            <copy todir="${root.dir.path}/@{skin}/base"
+                  file="${smartsprites.basedir}/base.css"/>
+            <fileset id="@{skin}.files" dir="${root.dir.path}/@{skin}">
+                <modified/>
+            </fileset>
+            <pathconvert property="@{skin}.modified" refid="@{skin}.files"
+                         setonempty="false"/>
+            <antcall target="smartsprites">
+                <param name="skin" value="@{skin}"/>
+            </antcall>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="concatskin">
+        <attribute name="name"/>
+        <sequential>
+            <delete file="${resources}/${skins.lib}/@{name}.css"/>
+            <concat destfile="${resources}/${skins.lib}/@{name}.css"
+                    append="true">
+                <fileset dir="${resources}/${skins.lib}/@{name}"
+                         includes="**/*.css"/>
+            </concat>
+        </sequential>
+    </macrodef>
+
+    <target name="compile"
+            depends="prepare, generator-dist, compile-meta, generate, compile-interfaces, compile-base, compile-manual, compile-support, res-js-compress, res-js-no-compress, res-css-combine, res-copy"
+            description="compile the source ">
+    </target>
+
+    <target name="res-js-combine">
+        <!-- ace-yui.js -->
+        <available file="${ace-yui.js.uncompressed}" property="ace-yui.js.uncompressed.present"/>
+        <delete file="${ace-yui.js.uncompressed}" verbose="${ace-yui.js.uncompressed.present}"/>
+        <concat destfile="${ace-yui.js.uncompressed}" force="true" fixlastline="true">
+            <filelist dir="${resources}">
+                <file name="yui/2_8_2/yahoo/yahoo.js"/>
+                <file name="yui/2_8_2/dom/dom.js"/>
+                <file name="yui/2_8_2/event/event.js"/>
+                <file name="yui/2_8_2/element/element.js"/>
+                <file name="yui/2_8_2/tabview/tabview.js"/>
+                <file name="icefaces.ace/util/component.js"/>
+                <file name="icefaces.ace/tabset/tabset.js"/>
+            </filelist>
+        </concat>
+        <!-- ace-jquery.js -->
+        <available file="${ace-jquery.js.uncompressed}" property="ace-jquery.js.uncompressed.present"/>
+        <delete file="${ace-jquery.js.uncompressed}" verbose="${ace-jquery.js.uncompressed.present}"/>
+        <concat destfile="${ace-jquery.js.uncompressed}" force="true" fixlastline="true">
+            <filelist dir="${resources}">
+                <file name="icefaces.ace/jquery/jquery.js"/>
+                <file name="icefaces.ace/jquery/ui/jquery-ui.js"/>
+                <file name="icefaces.ace/jquery/ui/jquery.ui.touch-punch.js"/>
+                <file name="icefaces.ace/core/core.js"/>
+                <file name="icefaces.ace/util/util.js"/>
+                <file name="icefaces.ace/json/json2.js"/>
+                <file name="icefaces.ace/util/blockui.js"/>
+                <file name="icefaces.ace/simpleselectonemenu/simpleselectonemenu.js"/>
+            </filelist>
+        </concat>
+        <!-- ace-datatable.js -->
+        <available file="${ace-datatable.js.uncompressed}" property="ace-datatable.js.uncompressed.present"/>
+        <delete file="${ace-datatable.js.uncompressed}" verbose="${ace-datatable.js.uncompressed.present}"/>
+        <concat destfile="${ace-datatable.js.uncompressed}" force="true" fixlastline="true">
+            <filelist dir="${resources}">
+                <file name="icefaces.ace/datatable/datatable.js"/>
+                <file name="icefaces.ace/paginator/paginator.js"/>
+                <file name="icefaces.ace/tableconfigpanel/tableconfigpanel.js"/>
+                <file name="icefaces.ace/dataexporter/dataexporter.js"/>
+            </filelist>
+        </concat>
+        <!-- ace-menu.js -->
+        <available file="${ace-menu.js.uncompressed}" property="ace-menu.js.uncompressed.present"/>
+        <delete file="${ace-menu.js.uncompressed}" verbose="${ace-menu.js.uncompressed.present}"/>
+        <concat destfile="${ace-menu.js.uncompressed}" force="true" fixlastline="true">
+            <filelist dir="${resources}">
+                <file name="icefaces.ace/wijmo/wijmo.js"/>
+                <file name="icefaces.ace/menu/menu.js"/>
+            </filelist>
+        </concat>
+        <!-- ace-components.js -->
+        <available file="${ace-components.js.uncompressed}" property="ace-components.js.uncompressed.present"/>
+        <delete file="${ace-components.js.uncompressed}" verbose="${ace-components.js.uncompressed.present}"/>
+        <concat destfile="${ace-components.js.uncompressed}" force="true" fixlastline="true">
+            <filelist dir="${resources}">
+                <file name="icefaces.ace/radiobutton/radiobutton.js"/>
+                <file name="icefaces.ace/checkboxbutton/checkboxbutton.js"/>
+                <file name="icefaces.ace/datetimeentry/jquery-ui-timepicker-addon.js"/>
+                <file name="icefaces.ace/datetimeentry/datetimeentry.js"/>
+                <file name="icefaces.ace/maskedentry/maskedentry.js"/>
+                <file name="icefaces.ace/textentry/textentry.js"/>
+                <file name="icefaces.ace/textareaentry/textareaentry.js"/>
+                <file name="icefaces.ace/dialog/dialog.js"/>
+                <file name="icefaces.ace/dnd/dragdrop.js"/>
+                <file name="icefaces.ace/progressbar/progressbar.js"/>
+                <file name="icefaces.ace/pushbutton/pushbutton.js"/>
+                <file name="icefaces.ace/resizable/resizable.js"/>
+                <file name="icefaces.ace/sliderentry/slider.js"/>
+                <file name="icefaces.ace/confirmationdialog/confirmationdialog.js"/>
+                <file name="icefaces.ace/panel/panel.js"/>
+                <file name="icefaces.ace/linkbutton/linkbutton.js"/>
+                <file name="icefaces.ace/list/list.js"/>
+                <file name="icefaces.ace/listcontrol/listcontrol.js"/>
+                <file name="icefaces.ace/animation/animation.js"/>
+                <file name="icefaces.ace/accordion/accordion.js"/>
+                <file name="icefaces.ace/notificationpanel/notificationpanel.js"/>
+                <file name="icefaces.ace/printer/printer.js"/>
+                <file name="icefaces.ace/tooltip/jquery.qtip-2.0.0.js"/>
+                <file name="icefaces.ace/tooltip/tooltip.js"/>
+                <file name="icefaces.ace/gmap/gmap.js"/>
+                <file name="icefaces.ace/tree/tree.js"/>
+                <file name="icefaces.ace/submitmonitor/submitmonitor.js"/>
+                <file name="icefaces.ace/autocompleteentry/autocompleteentry.js"/>
+                <file name="icefaces.ace/combobox/combobox.js"/>
+                <file name="icefaces.ace/selectmenu/selectmenu.js"/>
+                <file name="icefaces.ace/themeselect/themeselect.js"/>
+                <file name="icefaces.ace/messages/messages.js"/>
+                <file name="icefaces.ace/growlmessages/jquery.jgrowl.js"/>
+                <file name="icefaces.ace/growlmessages/growlmessages.js"/>
+            </filelist>
+        </concat>
+        <!-- ace-chart.js -->
+        <available file="${ace-chart.js.uncompressed}" property="ace-chart.js.uncompressed.present"/>
+        <delete file="${ace-chart.js.uncompressed}" verbose="${ace-chart.js.uncompressed.present}"/>
+        <concat destfile="${ace-chart.js.uncompressed}" force="true" fixlastline="true">
+            <filelist dir="${resources}">
+                <file name="icefaces.ace/chart/jquery.jqplot.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.barRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.pieRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.donutRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.categoryAxisRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.highlighter.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.pointLabels.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.canvasTextRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.canvasAxisTickRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.dateAxisRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.dragable.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.cursor.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.bubbleRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.meterGaugeRenderer.js"/>
+                <file name="icefaces.ace/chart/plugins/jqplot.ohlcRenderer.js"/>
+                <file name="icefaces.ace/chart/chart.js"/>
+            </filelist>
+        </concat>
+    </target>
+
+    <target name="res-js-compress" depends="res-js-combine"
+            unless="no-compress">
+        <echo message="Compressing ace-yui.js"/>
+        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
+            <arg line="--preserve-semi"/>
+            <arg value="-o"/>
+            <arg value="${ace-yui.js}"/>
+            <arg value="${ace-yui.js.uncompressed}"/>
+        </java>
+        <echo message="Compressing ace-jquery.js"/>
+        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
+            <arg line="--preserve-semi"/>
+            <arg value="-o"/>
+            <arg value="${ace-jquery.js}"/>
+            <arg value="${ace-jquery.js.uncompressed}"/>
+        </java>
+        <echo message="Compressing ace-datatable.js"/>
+        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
+            <arg line="--preserve-semi"/>
+            <arg value="-o"/>
+            <arg value="${ace-datatable.js}"/>
+            <arg value="${ace-datatable.js.uncompressed}"/>
+        </java>
+        <echo message="Compressing ace-menu.js"/>
+        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
+            <arg line="--preserve-semi"/>
+            <arg value="-o"/>
+            <arg value="${ace-menu.js}"/>
+            <arg value="${ace-menu.js.uncompressed}"/>
+        </java>
+        <echo message="Compressing ace-components.js"/>
+        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
+            <arg line="--preserve-semi"/>
+            <arg value="-o"/>
+            <arg value="${ace-components.js}"/>
+            <arg value="${ace-components.js.uncompressed}"/>
+        </java>
+        <echo message="Compressing ace-chart.js"/>
+        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
+            <arg line="--preserve-semi"/>
+            <arg value="-o"/>
+            <arg value="${ace-chart.js}"/>
+            <arg value="${ace-chart.js.uncompressed}"/>
+        </java>
+    </target>
+
+    <target name="res-js-no-compress" depends="res-js-combine" if="no-compress">
+        <echo message="Not compressing combined javascript code"/>
+        <copy file="${ace-yui.js.uncompressed}" tofile="${ace-yui.js}" overwrite="yes">
+        </copy>
+        <copy file="${ace-jquery.js.uncompressed}" tofile="${ace-jquery.js}" overwrite="yes">
+        </copy>
+        <copy file="${ace-datatable.js.uncompressed}" tofile="${ace-datatable.js}" overwrite="yes">
+        </copy>
+        <copy file="${ace-menu.js.uncompressed}" tofile="${ace-menu.js}" overwrite="yes">
+        </copy>
+        <copy file="${ace-components.js.uncompressed}" tofile="${ace-components.js}" overwrite="yes">
+        </copy>
+        <copy file="${ace-chart.js.uncompressed}" tofile="${ace-chart.js}" overwrite="yes">
+        </copy>
+    </target>
+
+    <target name="res-css-combine">
+        <available file="${resources}/icefaces.ace/util/combined.css" property="combined.css.present"/>
+        <delete file="${resources}/icefaces.ace/util/combined.css"
+                verbose="${combined.css.present}"/>
+        <concat destfile="${resources}/icefaces.ace/util/combined.css"
+                force="true" fixlastline="true">
+            <filelist dir="${resources}">
+                <file name="yui/2_8_2/button/assets/button-core.css"/>
+            </filelist>
+            <fileset dir="${resources}">
+                <include name="icefaces.ace/*/*.css"/>
+                <exclude name="icefaces.ace/fileentry/*.css"/>
+                <exclude name="icefaces.ace/util/*.css"/>
+                <exclude name="icefaces.ace/jquery/ui/jquery-ui.css"/>
+                <exclude name="${skins.lib}/*.css"/>
+            </fileset>
+        </concat>
+    </target>
+
+    <target name="res-copy"
+            description="Copy the resources into the exploded dir ">
+        <copy todir="${exploded}/META-INF">
+            <fileset dir="${meta-include}">
+            </fileset>
+        </copy>
+        <copy todir="${exploded}/META-INF/resources">
+            <fileset dir="${resources}"/>
+        </copy>
+        <delete dir="${exploded}/META-INF/resources/icefaces.ace/META-INCLUDE"/>
+    </target>
+
+    <target name="compile-interfaces">
+        <!-- If ACE begins using JSPs, srcdir="./src/org/icefaces/ace/jspTag:..." -->
+        <javac srcdir="${build}/generated-interfaces" destdir="${exploded}"
+               debug="true" verbose="true" includeantruntime="false"
+               failonerror="true" source="1.5" target="1.5">
+            <classpath refid="compile.run.classpath"/>
+        </javac>
+    </target>
+
+    <target name="compile-base">
+        <javac srcdir="${build}/generated/base" destdir="${exploded}"
+               debug="true" verbose="true" includeantruntime="false"
+               failonerror="true" source="1.5" target="1.5">
+            <classpath refid="compile.run.classpath"/>
+        </javac>
+    </target>
+
+    <target name="compile-manual">
+        <!--
+        Have to build generated-jsp/base and generated-interfaces
+        simultaneously with manual, since manual JSP code will depend on them,
+        while they'll depend on their superclass Tags and interfaces
+        -->
+        <javac srcdir="${src}:${build}/generated-jsp/base" destdir="${exploded}" debug="true"
+               excludes="**/*Meta.java" verbose="true" failonerror="true"
+               includeantruntime="false" source="1.5" target="1.5">
+            <classpath refid="compile.run.classpath"/>
+        </javac>
+    </target>
+
+    <target name="compile-support">
+        <javac srcdir="${build}/generated/support" destdir="${exploded}"
+               debug="true" verbose="true" includeantruntime="false"
+               failonerror="true" source="1.5" target="1.5">
+            <classpath refid="compile.run.classpath"/>
+        </javac>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${build}/meta"/>
+        <mkdir dir="${build}/resources/META-INF"/>
+        <mkdir dir="${exploded}"/>
+        <mkdir dir="${build}/generated"/>
+        <mkdir dir="${build}/generated/base"/>
+        <mkdir dir="${build}/generated/support"/>
+        <mkdir dir="${build}/generated-jsp"/>
+        <mkdir dir="${build}/generated-jsp/base"/>
+        <mkdir dir="${build}/generated-interfaces"/>
+    </target>
+
+    <target name="generator-dist">
+        <ant inheritAll="false" antfile="../generator/build.xml" target="dist"/>
+    </target>
+
+    <target name="compile-meta">
+        <!-- Add these to javac if getting funky compilation errors: optimize="false" verbose="true" -->
+        <javac srcdir="${src}" destdir="${build}/meta" debug="true"
+               verbose="true" failonerror="true"
+               includes="**/*Meta.java" includeantruntime="false" source="1.5" target="1.5">
+            <classpath refid="compile.run.classpath"/>
+        </javac>
+    </target>
+
+    <target name="generate">
+        <ant inheritAll="false" antfile="../generator/build.xml"
+             target="generate">
+            <property name="generator.tld.doc.display.name"
+                      value="${product} ${product.lib}"/>
+            <property name="generator.tld.doc.version"
+                      value="${version.string}"/>
+            <property name="generator.faces-config.host"
+                      value="${faces-config.host}"/>
+            <property name="generator.faces-config.merge"
+                      value="${faces-config.merge}"/>
+            <property name="generator.faces-config.output"
+                      value="${faces-config.host}"/>
+            <property name="generator.taglib.merge"
+                      value="${taglib.merge}"/>
+            <property name="generator.build.dir"
+                      value="${build}"/>
+            <property name="generator.jsp.tld.merge"
+                      value="${jsp.tld.merge}"/>
+        </ant>
+    </target>
+
+    <target name="lib" depends="compile, lib-jar"
+            description="Generate the icefaces-ace.jar">
+    </target>
+
+    <target name="lib-js" depends="res-js-compress, res-js-no-compress, res-copy, lib-jar"
+            description="Update the Javascript and build the icefaces-ace.jar">
+    </target>
+
+    <target name="lib-manual" depends="compile-manual, lib-jar"
+            description="Compile the manual java classes (Component, Renderer) and build the icefaces-ace.jar">
+    </target>
+
+    <target name="lib-jar">
+        <!-- Create the distribution directory -->
+        <mkdir dir="${dist}"/>
+
+        <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+        <jar destfile="${dist}/${icefaces-ace.lib.name}.jar" duplicate="fail">
+            <metainf dir="${build}/resources/META-INF"/>
+
+            <manifest>
+                <section name="org.icefaces">
+                    <attribute name="Implementation-Title"
+                               value="${product} ${product.lib}"/>
+                    <attribute name="Implementation-Version"
+                               value="${version.string}"/>
+                    <attribute name="Build-Number"
+                               value="${build.number}"/>
+                    <attribute name="Build-Time"
+                               value="${build.time}"/>
+                    <attribute name="Implementation-Vendor"
+                               value="${company}"/>
+                </section>
+            </manifest>
+
+            <fileset dir="${exploded}">
+                <include name="META-INF/PF-LICENSE.txt"/>
+                <include name="META-INF/PF-NOTICE.txt"/>
+
+                <include name="org/"/>
+                <include name="META-INF/*"/>
+                <include name="META-INF/resources/org*/**"/>
+                <include name="META-INF/resources/icefaces.ace/**"/>
+            </fileset>
+            <fileset dir="${src}" includes="org/icefaces/ace/resources/"/>
+        </jar>
+        <copy file="${dist}/${icefaces-ace.lib.name}.jar" todir="${lib.dir}"
+              overwrite="true"/>
+    </target>
+
+    <target name="dist" depends="lib,tlddoc,javadoc-no-compile"
+            description="Generate the complete ICEfaces Advanced Components distribution (lib + javadoc, tld doc)">
+    </target>
+
+    <target name="javadoc" depends="compile" description="Generate the component JavaDoc Documentation in HTML format.">
+        <antcall target="javadoc-no-compile"/>
+    </target>
+
+    <target name="javadoc-no-compile">
+        <delete dir="${javadocs.dir}"/>
+        <javadoc destdir="${java.doc}"
+                 classpathref="javadoc.classpath"
+                 windowtitle="${javadoc.title}" failonerror="true"
+                 bottom="Copyright ${year} ${copyright}"
+                 useexternalfile="true">
+            <fileset dir="." defaultexcludes="yes">
+                <include name="src/**/*.java"/>
+                <include name="build/generated/support/**/*.java"/>
+                <include name="build/generated/base/**/*.java"/>
+                <include name="build/generated-jsp/base/**/*.java"/>
+                <include name="build/generated-interfaces/**/*.java"/>
+                <exclude name="src/org/icefaces/ace/component/**/*Meta.java"/>
+                <exclude name="src/org/icefaces/apache/**"/>
+            </fileset>
+            <fileset dir="../generator" defaultexcludes="yes">
+                <include name="src/org/icefaces/ace/meta/**/*.java"/>
+            </fileset>
+            <header><![CDATA[${javadoc.header}]]></header>
+            <footer><![CDATA[${javadoc.header}]]></footer>
+            <doctitle><![CDATA[<h2>${javadoc.title}</h2>]]></doctitle>
+        </javadoc>
+    </target>
+
+    <target name="clean"
+            description="clean up">
+
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+        <antcall target="clean-skins"/>
+        <subant buildpath="${cssurlmapper.rootdir}" target="clean"/>
+        <delete file="${ace-yui.js.uncompressed}"/>
+        <delete file="${ace-yui.js}"/>
+        <delete file="${resources}/icefaces.ace/util/combined.css"/>
+        <delete file="${ace-jquery.js.uncompressed}"/>
+        <delete file="${ace-jquery.js}"/>
+        <delete file="${ace-datatable.js.uncompressed}"/>
+        <delete file="${ace-datatable.js}"/>
+        <delete file="${ace-menu.js.uncompressed}"/>
+        <delete file="${ace-menu.js}"/>
+        <delete file="${ace-components.js.uncompressed}"/>
+        <delete file="${ace-components.js}"/>
+        <delete file="${ace-chart.js.uncompressed}"/>
+        <delete file="${ace-chart.js}"/>
+    </target>
+
+    <target name="skins"
+            description="Generate skinning resources for deployment."
+            depends="cssurlmapper">
+
+        <taskdef name="cssurlmapper" classname="${cssurlmapper.class}"
+                 classpath="${cssurlmapper.rootdir}/dist/cssurlmapper.jar;${cssurlmapper.rootdir}/lib/commons-cli-1.2.jar"/>
+
+        <!-- Declare all the resources to include -->
+        <!-- 'dir' is the actual directory that contains the resources -->
+        <!-- 'name' is just a working name for these resources; they will be placed under a directory with this name -->
+        <!-- 'skin' is the name of the skin these resources will be part of -->
+        <!--
+                <includeresources
+                        dir="src/org/icefaces/ace/component/datetimeentry/skins/sam"
+                        name="calendar" skin="sam"/>
+        -->
+
+        <!--
+                <includeresources
+                        dir="src/org/icefaces/ace/component/datetimeentry/skins/rime"
+                        name="calendar" skin="rime"/>
+        -->
+
+        <!-- Process sprites, if use.sprites is set -->
+        <antcall target="sprites"/>
+
+        <!-- Copy all resources to the skins resource library -->
+        <copy todir="${resources}/${skins.lib}">
+            <fileset dir="${output.dir.path}" includes="**"/>
+        </copy>
+
+        <!-- Map all URLs to the JSF format, CSS files already in the skins resource library will be overwritten -->
+        <cssurlmapper libraryname="${skins.lib}" inputdir="${output.dir.path}"
+                      outputdir="${resources}/${skins.lib}"/>
+
+        <!-- Generate a single CSS file per skin -->
+        <concatskin name="rime"/>
+        <concatskin name="sam"/>
+
+    </target>
+
+    <target name="clean-skins"
+            description="Clean all generated skinning resources.">
+
+        <!-- Delete temporary directories -->
+        <delete dir="${root.dir.path}"/>
+        <delete dir="${output.dir.path}"/>
+
+        <!-- Delete the entire skins resource library -->
+        <delete dir="${resources}/${skins.lib}"/>
+
+        <delete file="cache.properties"/>
+
+    </target>
+
+    <target name="sprites" description="Prepare files to generate sprites."
+            if="use.sprites">
+
+        <available file="build.properties"
+                   property="smartsprites.properties.available"/>
+        <fail unless="smartsprites.properties.available">
+
+            Please provide SmartSprite parameters in a 'build.properties' file.
+
+        </fail>
+
+        <property file="build.properties"/>
+
+        <taskdef resource="smartsprites.xml">
+            <classpath>
+                <fileset dir="${smartsprites.basedir}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </taskdef>
+
+        <!-- Specify the names of the skins to process, based on the resources included above. -->
+        <generatesprites skin="sam"/>
+        <generatesprites skin="rime"/>
+
+    </target>
+
+    <target name="smartsprites" description="Performs CSS sprite processing."
+            if="${skin}.modified">
+
+        <smartsprites rootdir="${root.dir.path}/${skin}"
+                      documentrootdir="${document.root.dir.path}"
+                      outputdir="${output.dir.path}/${skin}"
+                      cssfileencoding="${css.file.encoding}"
+                      cssfilesuffix="${css.file.suffix}"
+                      loglevel="${log.level}"
+                      spritepngdepth="${sprite.png.depth}"
+                      spritepngie6="${sprite.png.ie6}"/>
+    </target>
+
+    <target name="cssurlmapper" description="Build the CSS URL mapping tool.">
+        <subant buildpath="${cssurlmapper.rootdir}" target="compile"/>
+    </target>
+
+    <macrodef name="gen.tld.doc">
+        <attribute name="tld.file"/>
+        <sequential>
+            <delete dir="${tld.doc}"/>
+            <mkdir dir="${tld.doc}"/>
+            <java jar="${tld.jar}/tlddoc.jar" fork="true" failonerror="true">
+                <arg value="-d"/>
+                <arg value="${tld.doc}"/>
+                <arg value="-doctitle"/>
+                <arg value="${tld.title}"/>
+                <arg value="-windowtitle"/>
+                <arg value="${tld.title}"/>
+                <arg value="@{tld.file}"/>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <!--
+        <macrodef name="gen.tld.doc">
+            <attribute name="tld.file"/>
+            <sequential>
+                <delete dir="${tld.doc}"/>
+                <mkdir dir="${tld.doc}"/>
+                <java jar="${tld.jar}/tlddoc.jar" fork="true" failonerror="true">
+                    <arg value="-d"/>
+                    <arg value="${tld.doc}"/>
+                    <arg value="-doctitle"/>
+                    <arg value="${generator.tld.doc.overall.name} ${generator.tld.doc.version}"/>
+                    <arg value="-windowtitle"/>
+                    <arg value="${generator.tld.doc.overall.name} ${generator.tld.doc.version}"/>
+                    <arg value="@{tld.file}"/>
+                </java>
+            </sequential>
+        </macrodef>
+    -->
+
+    <target name="tlddoc"
+            description="Generate the component TLD Documentation in HTML format.">
+        <gen.tld.doc tld.file="${tld.file}"/>
+    </target>
+</project>

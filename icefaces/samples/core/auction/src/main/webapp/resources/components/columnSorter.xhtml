@@ -1,0 +1,77 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+<head><title>(For validation only)</title></head>
+<body>
+
+<!--
+    Coloumn sorter is a medium complexity composite component that is used as
+    a column sorter for a dataTable or ui:repeat synthetic table.
+-->
+<composite:interface
+        displayName="Column Sorter"
+        shortDescription="Single column sort component." >
+    <composite:attribute name="columnName" required="true"
+            displayName="Column Name"
+            shortDescription="Name of column being sorted, used to match style with currently sorted column."/>
+    <composite:attribute name="columnLabel" required="true"
+            displayName="Column Label"
+            shortDescription="Label for column hdader."/>
+    <composite:attribute name="ascending" required="true"
+            displayName="isAscending"
+            shortDescription="Sort order, true ascending; false, descending."/>
+    <composite:attribute name="sortColumn" required="true"
+            displayName="Sort Column"
+            shortDescription="Name column that is currently sorted."/>
+    <composite:attribute name="colspan" default="1"
+            displayName="Column Span"
+            shortDescription="HTML td/tr columnspan if needed."/>
+    <composite:attribute name="columnClass"
+            displayName="Column Class"
+            shortDescription="HTML class name if needed."/>
+    <!-- Event mapping when a users clicks on the sort column. -->
+    <composite:actionSource name="sortColumnEvent"/>
+</composite:interface>
+
+<composite:implementation>
+    <!-- store the boolean state of whether or not column should show the
+         sort arrow and special styling. Little faster then calling the same
+         EL multiple times. -->
+    <ui:param name="isSortedColumn"
+              value="#{cc.attrs.columnName eq cc.attrs.sortColumn}"/>
+    <th colspan="#{cc.attrs.colspan}"
+        class="sorted_#{isSortedColumn} #{cc.attrs.columnClass}">
+        <h:commandLink id="sortColumnEvent"
+                       immediate="true">
+            <!-- pass in the name of the column that we want to sort.-->
+            <f:param name="#{parameterNames.sortColumnName}"
+                     value="#{cc.attrs.columnName}"/>
+            <h:graphicImage library="images"
+                            rendered="#{isSortedColumn}"
+                            name="ascending_arrow_#{cc.attrs.ascending}.gif"
+                            alt="Sorting order"/>
+            #{cc.attrs.columnLabel}
+        </h:commandLink>
+    </th>
+</composite:implementation>
+</body>
+</html>

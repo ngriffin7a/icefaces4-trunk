@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[contextMenuMultiColumn.title]}"/>
+    <ui:param name="description" value="#{msgs[contextMenuMultiColumn.description]}"/>
+    <ui:param name="resourceValue" value="#{contextMenuMultiColumn.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{contextMenuResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{contextMenuResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+            
+            <ace:panel style="text-align: center;">
+                <h:outputText id="txt" value="Right-click anywhere on this page to display a context menu with a multi-column submenu."/>
+            </ace:panel>
+			
+            <ace:contextMenu id="contextMenu" effect="slide" effectDuration="200">
+                <ace:menuItem value="Homepage" icon="ui-icon ui-icon-extlink" url="http://www.icefaces.org" target="_blank"/>
+                <ace:submenu id="edit" label="Edit" icon="ui-icon ui-icon-pencil">  
+                     <ace:menuItem id="cut" value="Cut"/>
+                     <ace:menuItem id="copy" value="Copy"/>
+                     <ace:menuItem id="paste" value="Paste"/>
+                     <ace:menuItem id="find" value="Find"/>
+                 </ace:submenu>
+                
+                <ace:submenu id="file" label="File" icon="ui-icon ui-icon-document">
+                    <ace:menuItem value="Save" icon="ui-icon ui-icon-disk"/>
+                    <ace:menuItem value="Update" icon="ui-icon ui-icon-arrowrefresh-1-w"/>  
+                    <ace:menuItem value="Delete" icon="ui-icon ui-icon-close"/>
+                </ace:submenu>
+                
+                 <ace:multiColumnSubmenu label="Multi" icon="ui-icon ui-icon-home">
+				<ace:menuColumn>
+					<ace:submenu label="Submenu 1.1">
+						<ace:menuItem value="Item 1.1.1">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+						<ace:menuItem value="Item 1.1.2">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+					</ace:submenu>
+					<ace:submenu label="Submenu 1.2">
+						<ace:menuItem value="Item 1.2.1">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+						<ace:menuItem value="Item 1.2.2">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+						<ace:menuItem value="Item 1.2.3">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+					</ace:submenu>
+				</ace:menuColumn>
+				<ace:menuColumn>
+					<ace:submenu label="Submenu 1.3">
+						<ace:menuItem value="Item 1.3.1">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+						<ace:menuItem value="Item 1.3.2">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+						<ace:menuItem value="Item 1.3.3">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+						<ace:menuItem value="Item 1.3.4">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+						<ace:menuItem value="Item 1.3.5">
+							<ace:ajax event="activate" execute="@this" render="message" />
+						</ace:menuItem>
+					</ace:submenu>
+				</ace:menuColumn>
+                 </ace:multiColumnSubmenu>
+				
+            </ace:contextMenu>
+			
+        </h:form>
+    </ui:define>
+</ui:composition>

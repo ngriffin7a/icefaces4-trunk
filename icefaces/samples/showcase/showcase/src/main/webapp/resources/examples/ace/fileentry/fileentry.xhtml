@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:ace="http://www.icefaces.org/icefaces/components" 
+    xmlns:ice="http://www.icesoft.com/icefaces/component" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[fileEntry.title]}"/>
+    <ui:param name="description" value="#{msgs[fileEntry.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[fileEntry.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{fileEntry.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{fileEntry.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{fileEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{fileEntryResources.tldResources}"/>
+    
+    <ui:define name="example">
+        <h:form id="example-form">
+            <h:panelGrid styleClass="centeredPanelGrid">
+                <h:outputText value="File Upload" styleClass="headerFontStyle"/>
+            </h:panelGrid>
+            <ace:panel>  <!-- style="width: 500px;" -->
+                <ace:fileEntry id="file-entry"
+                               relativePath="/files/"
+                               maxFileCount="10"
+                               maxFileCountMessage="Limited to 10 files uploaded concurrantly."
+                               fileEntryListener="#{fileEntry.sampleListener}"
+                               maxFileSize="6291456"
+                               maxFileSizeMessage="Submitted file is too large."
+                               maxTotalSize="18874368"
+                               maxTotalSizeMessage="Total size of submitted files is too large."
+                               required="true"
+                               requiredMessage="The file is required to submit this form."
+                               useOriginalFilename="true"
+                               useSessionSubdir="true"
+                               autoUpload="false"
+                               multiple="true"/>
+                <br/>
+                <br/>
+                <ace:dataTable id="tbl" value="#{fileEntry.fileData}" var="fileDataVal">
+                    <ace:columnGroup id="columnGroup" type="header">
+                        <ace:row>
+                            <ace:column colspan="3" headerText="Files on Server"/>
+                        </ace:row>
+
+                        <ace:row>
+                            <ace:column headerText="File name"/>
+                            <ace:column headerText="File size"/>
+                            <ace:column headerText="Content Type"/>
+                        </ace:row>
+                    </ace:columnGroup>
+
+                    <ace:column>
+                        <h:outputText value="#{fileDataVal.name}"/>
+                    </ace:column>
+                    <ace:column>
+                        <h:outputText value="#{fileDataVal.size}"/>
+                    </ace:column>
+                    <ace:column>
+                        <h:outputText value="#{fileDataVal.contentType}"/>
+                    </ace:column>
+
+                    <ace:panelExpansion>
+                        <h:outputText rendered="#{not fileDataVal.info == null}" value="#{fileDataVal.info}" />
+                    </ace:panelExpansion>
+
+                    <f:facet name="footer">
+                        <h:panelGrid columns="1">
+                            <h:outputText value="#{fileEntry.totalFiles}"/>
+                            <h:outputText value="#{fileEntry.totalSize}"/>
+                        </h:panelGrid>
+                    </f:facet>
+                </ace:dataTable>
+                <ace:messages id="msgs" for="example-form:file-entry"/>
+            </ace:panel>
+        </h:form>
+    </ui:define>       
+</ui:composition>
