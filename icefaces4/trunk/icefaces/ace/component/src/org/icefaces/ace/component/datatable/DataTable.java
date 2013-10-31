@@ -27,6 +27,7 @@ package org.icefaces.ace.component.datatable;
 import org.icefaces.ace.component.ajax.AjaxBehavior;
 import org.icefaces.ace.component.column.Column;
 import org.icefaces.ace.component.columngroup.ColumnGroup;
+import org.icefaces.ace.component.expansiontoggler.ExpansionToggler;
 import org.icefaces.ace.component.panelexpansion.PanelExpansion;
 import org.icefaces.ace.component.row.Row;
 import org.icefaces.ace.component.rowexpansion.RowExpansion;
@@ -938,6 +939,20 @@ public class DataTable extends DataTableBase implements Serializable {
     protected boolean isInstantUnselectionRequest(FacesContext x) { return isIdPrefixedParamSet("_instantUnselectedRowIndexes", x); }
     protected boolean isScrollingRequest(FacesContext x)          { return isIdPrefixedParamSet("_scrolling", x); }
     protected boolean isTableFeatureRequest(FacesContext x)       { return isColumnReorderRequest(x) || isScrollingRequest(x) || isInstantUnselectionRequest(x) || isInstantSelectionRequest(x) || isPaginationRequest(x) || isFilterRequest(x) || isSortRequest(x) || isTableConfigurationRequest(x); }
+
+	protected boolean isRowExpansionRequest(FacesContext x) {
+		Iterator<String> names = x.getExternalContext().getRequestParameterNames();
+		String clientId = this.getClientId(x);
+		while (names.hasNext()) {
+			String name = names.next();
+			if (name.startsWith(clientId)) {
+				if (name.endsWith("_rowExpansion")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
     protected Boolean isInDuplicateSegment() {
         return isInDuplicateSegment;
@@ -2084,6 +2099,8 @@ public class DataTable extends DataTableBase implements Serializable {
         RowState rowState;
         Boolean expanded;
         TreeDataModel treeDataModel;
+		boolean executeContents = isAlwaysExecuteContents();
+		boolean isRowExpansionRequest = isRowExpansionRequest(context);
 
         iteration: while (true) {
             // Have we processed the requested number of rows?
@@ -2145,6 +2162,9 @@ public class DataTable extends DataTableBase implements Serializable {
 
                     if (kid.getChildCount() > 0) {
                         for (UIComponent grandkid : kid.getChildren()) {
+							if (isRowExpansionRequest && !executeContents) {
+								if (!(grandkid instanceof ExpansionToggler)) continue;
+							}
                             if (!grandkid.isRendered()) {
                                 continue;
                             }
