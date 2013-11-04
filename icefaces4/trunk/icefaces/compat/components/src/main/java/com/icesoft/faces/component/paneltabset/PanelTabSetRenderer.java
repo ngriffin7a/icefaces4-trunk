@@ -458,6 +458,7 @@ public class PanelTabSetRenderer
             }
             tabSet.setRowIndex(-1);
         } else {
+            tabSet.setRowIndex(-1);
             List children = tabSet.getChildren();
             for (int i = 0, len = children.size(); i < len; i++) {
                 UIComponent child =
