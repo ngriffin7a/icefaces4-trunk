@@ -198,6 +198,7 @@ public class TableConfigPanelRenderer extends CoreRenderer {
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
         writer.writeAttribute(HTML.HREF_ATTR, "#", null);
+		writer.writeAttribute(HTML.ONCLICK_ATTR, "return false;", null);
         writer.writeAttribute(HTML.ID_ATTR, clientId +"_tableconf_trash", null);
 
         writer.startElement(HTML.SPAN_ELEM, null);
@@ -217,6 +218,7 @@ public class TableConfigPanelRenderer extends CoreRenderer {
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
         writer.writeAttribute(HTML.HREF_ATTR, "#", null);
+		writer.writeAttribute(HTML.ONCLICK_ATTR, "return false;", null);
         writer.writeAttribute(HTML.ID_ATTR, clientId +"_tableconf_ok", null);
 
         writer.startElement(HTML.SPAN_ELEM, null);
@@ -236,6 +238,7 @@ public class TableConfigPanelRenderer extends CoreRenderer {
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
         writer.writeAttribute(HTML.HREF_ATTR, "#", null);
+		writer.writeAttribute(HTML.ONCLICK_ATTR, "return false;", null);
         writer.writeAttribute(HTML.ID_ATTR, clientId +"_tableconf_close", null);
 
         writer.startElement(HTML.SPAN_ELEM, null);
