@@ -293,7 +293,7 @@ public class DataTableHeadRenderer {
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all", null);
         writer.writeAttribute(HTML.HREF_ATTR, "#", null);
         writer.writeAttribute(HTML.ONCLICK_ATTR,
-                CoreRenderer.resolveWidgetVar(tableContext.getTable())+".pinThisColumn(event)", null);
+                CoreRenderer.resolveWidgetVar(tableContext.getTable())+".pinThisColumn(event);return false;", null);
         writer.startElement(HTML.SPAN_ELEM, null);
 
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-icon", null);
