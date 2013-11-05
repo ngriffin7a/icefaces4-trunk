@@ -201,7 +201,10 @@ public abstract class Exporter {
 				boolean hasExpansionToggler = false;
                 for (UIComponent columnChild : column.getChildren())
 					if (columnChild instanceof ExpansionToggler) hasExpansionToggler = true;
-				if (hasExpansionToggler) continue;
+				if (hasExpansionToggler) {
+					rowColumnIndex++;
+					continue;
+				}
 				
 				if (column.isRendered()) {
 					rowColumnIndex++;
