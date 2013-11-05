@@ -100,9 +100,9 @@ public class DataTableRowRenderer {
                 context.getExternalContext().getRequestMap().put(tableContext.getRowIndexVar(), rowIndex);
             writer.endElement(HTML.TR_ELEM);
 
+			boolean isPanel = table.getPanelExpansion() != null;
+			boolean isRow = table.getRowExpansion() != null;
             if (expanded) {
-                boolean isPanel = table.getPanelExpansion() != null;
-                boolean isRow = table.getRowExpansion() != null;
 
                 context.getExternalContext().getRequestMap()
                         .put(clientId + "_expandedRowId", "" + rowIndex);
@@ -115,17 +115,24 @@ public class DataTableRowRenderer {
                         encodeRowExpansion(context, tableContext, writer);
                     }
                     else if (rowState.getExpansionType() == RowState.ExpansionType.PANEL) {
-                        encodeRowPanelExpansion(context, table);
+                        encodeRowPanelExpansion(context, table, true);
                     }
                 } else if (isPanel) {
-                    encodeRowPanelExpansion(context, table);
+                    encodeRowPanelExpansion(context, table, true);
                 } else if (isRow) {
                     encodeRowExpansion(context, tableContext, writer);
                 }
 
                 // Row index will have come back different from row expansion.
                 table.setRowIndex(rowIndex);
-            }
+            } else {
+				if (isPanel || isRow) {
+					writer.startElement(HTML.TR_ELEM, null);
+					writer.writeAttribute(HTML.ID_ATTR, clientId + "_row_" + rowIndex + ".0", null);
+					writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
+					writer.endElement(HTML.TR_ELEM);
+				}
+			}
 
             // Add tailing conditional row for this row object if required
             List<Row> tailingRows = table.getConditionalRows(rowIndex, false);
@@ -332,10 +339,10 @@ public class DataTableRowRenderer {
                                 encodeRowExpansion(context, tableContext, writer);
                             }
                             else if (rowState.getExpansionType() == RowState.ExpansionType.PANEL) {
-                                encodeRowPanelExpansion(context, table);
+                                encodeRowPanelExpansion(context, table, false);
                             }
                         } else if (isPanel) {
-                            encodeRowPanelExpansion(context, table);
+                            encodeRowPanelExpansion(context, table, false);
                         } else if (isRow) {
                             encodeRowExpansion(context, tableContext, writer);
                         }
@@ -356,7 +363,7 @@ public class DataTableRowRenderer {
         table.setRowIndex(-1);
     }
 
-    private static void encodeRowPanelExpansion(FacesContext context, DataTable table) throws IOException {
+    private static void encodeRowPanelExpansion(FacesContext context, DataTable table, boolean isRootRow) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         Map<String,String> params = context.getExternalContext().getRequestParameterMap();
         String clientId = table.getClientId(context);
@@ -381,6 +388,7 @@ public class DataTableRowRenderer {
         table.getStateMap().get(table.getRowData()).setExpanded(true);
 
         writer.startElement(HTML.TR_ELEM, null);
+		if (isRootRow) writer.writeAttribute(HTML.ID_ATTR, clientId + "_row_" + table.getRowIndex() + ".0", null);
         writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.EXPANDED_ROW_CONTENT_CLASS + " ui-widget-content " + DataTableConstants.UNSELECTABLE_ROW_CLASS , null);
 
         writer.startElement(HTML.TD_ELEM, null);
