@@ -922,6 +922,7 @@ ice.ace.Autocompleter.prototype = {
 		var currentValue = this.element.value;
 		if (currentValue.indexOf(value) != 0)
 			this.element.value = value;
+		if (value == '') this.element.value = '';
 		if (focus && ice.ace.jq.support.leadingWhitespace) this.element.focus(); // browsers other than IE7/8
 		if (!ice.ace.jq.support.leadingWhitespace) { // force IE7/8 to set focus on the text field
 			var element = this.element;
