@@ -23,6 +23,8 @@ import org.icefaces.impl.util.DOMUtils;
 import org.icefaces.util.EnvUtils;
 import org.w3c.dom.*;
 
+import javax.el.ELContext;
+import javax.el.ValueExpression;
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
@@ -36,7 +38,9 @@ import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,6 +73,7 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
 
     // flag to indicate that we're writing a 'style' element
     private boolean isStyle;
+    private Map<Node, Map<String, Object>> elementPasstroughAttributes = new HashMap();
 
 
     public DOMResponseWriter(Writer writer, String encoding, String contentType) {
@@ -265,6 +270,13 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
             document = DOMUtils.getNewDocument();
         }
         pointCursorAt(appendToCursor(document.createElement(name)));
+
+        if (component != null) {
+            Map<String, Object> passthroughAttributes = component.getPassThroughAttributes(false);
+            if (passthroughAttributes != null) {
+                elementPasstroughAttributes.put(cursor, passthroughAttributes);
+            }
+        }
     }
 
     public void endElement(String name) throws IOException {
@@ -287,6 +299,20 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
                 }
             }
         }
+
+        Map<String, Object> passthroughAttributes = elementPasstroughAttributes.get(cursor);
+        if (passthroughAttributes != null) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            for (Map.Entry<String, Object> entry : passthroughAttributes.entrySet()) {
+                Object valObj = entry.getValue();
+                String val = getAttributeValue(context, valObj);
+                String key = entry.getKey();
+
+                writeAttribute(key, val, key);
+            }
+            elementPasstroughAttributes.remove(cursor);
+        }
+
         pointCursorAt(cursor.getParentNode());
     }
 
@@ -595,4 +621,14 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         }
     }
 
+    private String getAttributeValue(FacesContext context, Object expr) {
+        String val;
+        if (expr instanceof ValueExpression) {
+            ELContext elContext = context.getELContext();
+            val = (String) ((ValueExpression) expr).getValue(elContext);
+        } else {
+            val = (String) expr;
+        }
+        return val;
+    }
 }
