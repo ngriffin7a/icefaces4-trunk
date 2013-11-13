@@ -37,6 +37,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +75,16 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
 
     // flag to indicate that we're writing a 'style' element
     private boolean isStyle;
+
+    private static Method getPassThroughAttributesMethod;
+    static {
+        try {
+            getPassThroughAttributesMethod = UIComponent.class.getDeclaredMethod("getPassThroughAttributes", new Class[] { boolean.class });
+        } catch (NoSuchMethodException e) {
+            getPassThroughAttributesMethod = null;
+        }
+
+    }
     private Map<Node, Map<String, Object>> elementPasstroughAttributes = new HashMap();
 
 
@@ -271,10 +283,16 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         }
         pointCursorAt(appendToCursor(document.createElement(name)));
 
-        if (component != null) {
-            Map<String, Object> passthroughAttributes = component.getPassThroughAttributes(false);
-            if (passthroughAttributes != null) {
-                elementPasstroughAttributes.put(cursor, passthroughAttributes);
+        if (component != null && getPassThroughAttributesMethod != null) {
+            try {
+                Map<String, Object> passthroughAttributes = (Map<String, Object>) getPassThroughAttributesMethod.invoke(component, new Object[]{true});
+                if (passthroughAttributes != null) {
+                    elementPasstroughAttributes.put(cursor, passthroughAttributes);
+                }
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         }
     }
