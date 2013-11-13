@@ -554,5 +554,26 @@ public class CoreRenderer extends Renderer {
         return label;
     }
 
+    /**
+     *
+     * @param bundle
+     * @param MESSAGE_KEY_PREFIX
+     * @param key
+     * @param defaultValue
+     * @return localized or internationalized String value from message bundle
+     */
+    public static String getLocalisedMessageFromBundle(ResourceBundle bundle,
+                                                        String MESSAGE_KEY_PREFIX,
+                                                        String key,
+                                                        String defaultValue){
+         if (null == bundle) {
+             return defaultValue;
+         }
+         String label = bundle.getString(MESSAGE_KEY_PREFIX + key);
+         if (null == label){
+             label= defaultValue; //if not in bundle will return default
+         }
+         return label;
+    }
 
 }

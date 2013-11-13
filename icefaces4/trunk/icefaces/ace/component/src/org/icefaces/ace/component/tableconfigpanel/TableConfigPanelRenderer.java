@@ -30,8 +30,12 @@ import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class TableConfigPanelRenderer extends CoreRenderer {
+    private static final String ACE_MESSAGES_BUNDLE = "org.icefaces.ace.resources.messages";
+    private static final String TABLECONFIG_KEY_PREFIX = "org.icefaces.ace.component.tableconfigpanel.";
+
     @Override
     public void decode(FacesContext context, UIComponent component) {
         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
@@ -70,11 +74,16 @@ public class TableConfigPanelRenderer extends CoreRenderer {
 
         writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-tableconf-header ui-widget-header ui-corner-tr ui-corner-tl", null);
-        writer.writeText("Column Settings", null);
+        ResourceBundle bundle = getComponentResourceBundle(context, ACE_MESSAGES_BUNDLE);
+        String columnSettingsTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "COLUMN_SETTINGS_TITLE", "Column Settings");
+        writer.writeText(columnSettingsTitle, null);
 
-        writeConfigPanelOkButton(writer, clientId);
-        writeConfigPanelCloseButton(writer, clientId, jsId);
-        writeConfigPanelTrashButton(writer, clientId, jsId);
+        String okTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "OK_BUTTON_TITLE", "Save Changes");
+        String closeTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "CLOSE_BUTTON_TITLE", "Cancel Changes");
+        String trashTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "RESET_BUTTON_TITLE", "Reset To Original Settings");
+        writeConfigPanelOkButton(writer, clientId, okTitle);
+        writeConfigPanelCloseButton(writer, clientId, closeTitle);
+        writeConfigPanelTrashButton(writer, clientId, trashTitle);
 
         writer.endElement(HTML.DIV_ELEM);
 
@@ -83,7 +92,7 @@ public class TableConfigPanelRenderer extends CoreRenderer {
 
         writer.startElement(HTML.TABLE_ELEM, null);
 
-        writeHeaderRow(writer, component);
+        writeHeaderRow(writer, component, context);
 
         writer.startElement(HTML.TBODY_ELEM, null);
 
@@ -154,20 +163,24 @@ public class TableConfigPanelRenderer extends CoreRenderer {
         return true;
     }
 
-    private void writeHeaderRow(ResponseWriter writer, TableConfigPanel component) throws IOException {
+    private void writeHeaderRow(ResponseWriter writer, TableConfigPanel component, FacesContext context) throws IOException {
         writer.startElement(HTML.THEAD_ELEM, null);
         writer.startElement(HTML.TR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default", null);
         writer.writeAttribute(HTML.STYLE_ATTR, "border:0;", null);
-
+        ResourceBundle bundle = getComponentResourceBundle(context, ACE_MESSAGES_BUNDLE);
+        String orderLabel = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "ORDER_LABEL", "Order");
+        String nameLabel = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "NAME_LABEL", "Name");
+        String visibleLabel  = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "VISIBLE_LABEL", "Visible");
+        String sortLabel = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "SORT_LABEL", "Sort");
         if (component.isColumnOrderingConfigurable()) {
             writer.startElement(HTML.TH_ELEM, null);
-            writer.writeText("Ordering", null);
+            writer.writeText(orderLabel, null);
             writer.endElement(HTML.TH_ELEM);
         }
 
         writer.startElement(HTML.TH_ELEM, null);
-        writer.writeText("Name", null);
+        writer.writeText(nameLabel, null);
         writer.endElement(HTML.TH_ELEM);
 
         //if (component.isColumnSizingConfigurable()) {
@@ -178,12 +191,12 @@ public class TableConfigPanelRenderer extends CoreRenderer {
 
         if (component.isColumnVisibilityConfigurable()) {
             writer.startElement(HTML.TH_ELEM, null);
-            writer.writeText("Visibility", null);
+            writer.writeText(visibleLabel, null);
             writer.endElement(HTML.TH_ELEM);
         }
         if (component.isColumnSortingConfigurable()) {
             writer.startElement(HTML.TH_ELEM, null);
-            writer.writeText("Sorting", null);
+            writer.writeText(sortLabel, null);
             writer.endElement(HTML.TH_ELEM);
         }
 
@@ -191,13 +204,14 @@ public class TableConfigPanelRenderer extends CoreRenderer {
         writer.endElement(HTML.THEAD_ELEM);
     }
 
-    private void writeConfigPanelTrashButton(ResponseWriter writer, String clientId, String jsId) throws IOException {
+    private void writeConfigPanelTrashButton(ResponseWriter writer, String clientId, String title) throws IOException {
         writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.STYLE_ATTR, "float:right;", null);
 
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
         writer.writeAttribute(HTML.HREF_ATTR, "#", null);
+        writer.writeAttribute(HTML.TITLE_ATTR, title, null);
 		writer.writeAttribute(HTML.ONCLICK_ATTR, "return false;", null);
         writer.writeAttribute(HTML.ID_ATTR, clientId +"_tableconf_trash", null);
 
@@ -211,13 +225,14 @@ public class TableConfigPanelRenderer extends CoreRenderer {
         writer.endElement(HTML.SPAN_ELEM);
     }
 
-    private void writeConfigPanelOkButton(ResponseWriter writer, String clientId) throws IOException {
+    private void writeConfigPanelOkButton(ResponseWriter writer, String clientId, String title) throws IOException {
         writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.STYLE_ATTR, "float:right;", null);
 
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
         writer.writeAttribute(HTML.HREF_ATTR, "#", null);
+        writer.writeAttribute(HTML.TITLE_ATTR, title, null);
 		writer.writeAttribute(HTML.ONCLICK_ATTR, "return false;", null);
         writer.writeAttribute(HTML.ID_ATTR, clientId +"_tableconf_ok", null);
 
@@ -231,13 +246,14 @@ public class TableConfigPanelRenderer extends CoreRenderer {
         writer.endElement(HTML.SPAN_ELEM);
     }
 
-    private void writeConfigPanelCloseButton(ResponseWriter writer, String clientId, String jsId) throws IOException {
+    private void writeConfigPanelCloseButton(ResponseWriter writer, String clientId, String title) throws IOException {
         writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.STYLE_ATTR, "float:right;", null);
 
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
         writer.writeAttribute(HTML.HREF_ATTR, "#", null);
+        writer.writeAttribute(HTML.TITLE_ATTR, title, null);
 		writer.writeAttribute(HTML.ONCLICK_ATTR, "return false;", null);
         writer.writeAttribute(HTML.ID_ATTR, clientId +"_tableconf_close", null);
 
