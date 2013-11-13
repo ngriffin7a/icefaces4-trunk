@@ -420,16 +420,10 @@ public class DataTableRenderer extends CoreRenderer {
         String currPgTemplate = table.getCurrentPageReportTemplate();
         boolean notAlwaysVis = !table.isPaginatorAlwaysVisible();
         ResourceBundle bundle = getComponentResourceBundle(context, ACE_MESSAGES_BUNDLE);
-        String first = "firstINIT";
-        String next = "nextINIT";
-        String last = "lastINIT";
-        String prev = "prevINIT";
-        if (null != bundle){
-            first = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "FIRST_LABEL");
-            last = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "LAST_LABEL");
-            next = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "NEXT_LABEL");
-            prev = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "PREV_LABEL");
-        }
+        String first = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "FIRST_LABEL", "First");
+        String last = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "LAST_LABEL", "Last");
+        String next = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "NEXT_LABEL", "Next");
+        String prev = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "PREV_LABEL", "Prev");
         configJson.beginMap();
         configJson.entry("rowsPerPage", table.getRows());
         configJson.entry("totalRecords", table.getRowCount());

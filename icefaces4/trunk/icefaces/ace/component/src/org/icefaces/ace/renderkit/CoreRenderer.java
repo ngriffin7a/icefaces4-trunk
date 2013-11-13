@@ -540,18 +540,7 @@ public class CoreRenderer extends Renderer {
         if (bundleName == null) {
             bundleName = ACE_MESSAGES_BUNDLE;
         }
-        ResourceBundle bundle = ResourceBundle.getBundle(bundleName, locale, classLoader);
         return ResourceBundle.getBundle(bundleName, locale, classLoader);
-    }
-
-    public static String getLocalisedMessageFromBundle(ResourceBundle bundle,
-                                                       String MESSAGE_KEY_PREFIX,
-                                                       String key){
-        String label = bundle.getString(MESSAGE_KEY_PREFIX + key);
-        if (null == label){
-            label=" ";//at least return the empty string so no NPE
-        }
-        return label;
     }
 
     /**
