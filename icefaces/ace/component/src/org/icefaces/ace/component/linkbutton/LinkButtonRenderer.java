@@ -99,7 +99,9 @@ public class LinkButtonRenderer extends CoreRenderer {
         if (!disabled) {
             encodeScript(facesContext, writer, HTML.ONFOCUS_ATTR,
                          linkButton, uiParams, clientId, doAction);
-            encodeHref(linkButton, writer, uiParams);
+            if (null != linkButton.getHref()){
+                encodeHref(linkButton, writer, uiParams);
+            }
         } else
             writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-disabled", null);
 
@@ -122,7 +124,6 @@ public class LinkButtonRenderer extends CoreRenderer {
         String paramString = uiParams != null
                 ? "?"+ Utils.asParameterString(uiParams)
                 : "";
-
         if (href != null) {
             href += paramString;
             writer.writeAttribute(HTML.HREF_ATTR, href, null );
@@ -182,8 +183,10 @@ public class LinkButtonRenderer extends CoreRenderer {
 
         if (doAction && uiParams != null) {
             json.beginMap("uiParams");
-            for (UIParameter param : uiParams)
-                json.entry(param.getName(), param.getValue().toString());
+            for (UIParameter param : uiParams){
+                    String temp = param.getValue() == null ? "null": param.getValue().toString();
+                    json.entry(param.getName(), temp);
+            }
             json.endMap();
         }
 

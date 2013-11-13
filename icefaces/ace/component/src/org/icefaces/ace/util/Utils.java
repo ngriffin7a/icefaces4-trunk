@@ -257,6 +257,7 @@ public class Utils {
 
     /**
      * Capture UIParameter (f:param) children of a component
+     * generally a UICommand
      * @param component The component to work from
      * @return List of UIParameter objects, null if no UIParameter children present
      */
@@ -266,10 +267,12 @@ public class Utils {
         for (UIComponent child: children) {
             if (child instanceof UIParameter) {
                 UIParameter param = (UIParameter) child;
-                if (returnVal == null) {
-                    returnVal = new ArrayList<UIParameter>();
+                if (!param.isDisable()){
+                    if (returnVal == null) {
+                        returnVal = new ArrayList<UIParameter>();
+                    }
+                    returnVal.add( param );
                 }
-                returnVal.add( param );
             }
         }
         return returnVal;
@@ -277,40 +280,30 @@ public class Utils {
 
     /**
      * Return the name value pairs parameters as a ANSI escaped string
-     * formatted in query string parameter format.
-     * TODO: determine the correct escaping here
+     * formatted in query string parameter format, only if the UIParameter
+     * is not disable.
      * @param children List of children
      * @return a String in the form name1=value1&name2=value2...
      */
     public static String asParameterString ( List<UIParameter> children) {
         StringBuffer builder = new StringBuffer();
         for (UIParameter param: children) {
-            builder.append(DOMUtils.escapeAnsi(param.getName()) )
-                    .append("=").append(DOMUtils.escapeAnsi(
-                    (String)param.getValue() ).replace(' ', '+')).append("&");
+            if (!param.isDisable()){
+                Object temp = param.getValue() ==null ? null : param.getValue();
+                    if (temp instanceof String){
+                        builder.append(DOMUtils.escapeAnsi(param.getName()) )
+                            .append("=").append(DOMUtils.escapeAnsi(temp.toString()).replace(' ', '+')).append("&");
+                    } else {
+                        builder.append(DOMUtils.escapeAnsi(param.getName()) )
+                            .append("=").append(
+                            temp).append("&");
+                    }
+            }
         }
         if (builder.length() > 0) {
             builder.setLength( builder.length() - 1 );
         }
         return builder.toString();
-    }
-
-
-    /**
-     * Return the name value pairs parameters as a comma separated list. This is
-     * simpler for passing to the javascript parameter rebuilding code.
-     * @param children List of children
-     * @return a String in the form name1, value1, name2, value2...
-     */
-    public static String[] asStringArray( List<UIParameter> children) {
-        ArrayList builder = new ArrayList();
-        for (UIParameter param: children) {
-            builder.add(param.getName());
-            builder.add(param.getValue().toString());
-        }
-        Object[] returnVal = new String[ builder.size() ];
-        builder.toArray (returnVal);
-        return (String[]) returnVal;
     }
 
     public static boolean superValueIfSet(UIComponent component, StateHelper sh, String attName, boolean superValue, boolean defaultValue) {
