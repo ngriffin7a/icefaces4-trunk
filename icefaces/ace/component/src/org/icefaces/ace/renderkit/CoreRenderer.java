@@ -263,7 +263,10 @@ public class CoreRenderer extends Renderer {
 
         jb.beginMap("behaviors");
 
-        for(Iterator<String> eventIterator = behaviorEvents.keySet().iterator(); eventIterator.hasNext();) {
+		List<String> sortedBehaviourList = new ArrayList<String>(behaviorEvents.keySet());
+		Collections.sort(sortedBehaviourList);
+
+        for(Iterator<String> eventIterator = sortedBehaviourList.iterator(); eventIterator.hasNext();) {
             String event = eventIterator.next();
             String domEvent = getDomEvent(event);
             ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, (UIComponent) component, event, clientId, params);
