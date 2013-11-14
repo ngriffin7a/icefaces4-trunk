@@ -107,12 +107,13 @@ public class TabSetRenderer extends CoreRenderer {
     throws IOException {
         String clientId = uiComponent.getClientId(facesContext);
         ResponseWriter writer = facesContext.getResponseWriter();
-        TabSet tabSet = (TabSet) uiComponent;   
-        boolean isBottom = "bottom".equals(tabSet.getOrientation());
+        TabSet tabSet = (TabSet) uiComponent;
+        String orientation = tabSet.getOrientation();
+        orientation = orientation == null || "".equals(orientation) ? "top" : orientation;
         
         //As per YUI's contract if the orientation is set to bottom, the contents of the tab
         //should ger rendered first, and then tabs
-        if (isBottom) {
+        if ("bottom".equals(orientation)) {
             writer.startElement(HTML.DIV_ELEM, uiComponent);
                 writer.writeAttribute(HTML.TABINDEX_ATTR, 0, HTML.TABINDEX_ATTR);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
@@ -128,7 +129,7 @@ public class TabSetRenderer extends CoreRenderer {
                 doTabs(facesContext, uiComponent, Do.RENDER_LABEL, null, null, null);
             writer.endElement(HTML.UL_ELEM);
               
-        } else if ("top".equals(tabSet.getOrientation())) {
+        } else if ("top".equals(orientation)) {
             writer.startElement(HTML.UL_ELEM, uiComponent);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"_nav", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-nav ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all", HTML.CLASS_ATTR);
@@ -143,21 +144,6 @@ public class TabSetRenderer extends CoreRenderer {
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-content ui-tabs-panel ui-widget-content ui-corner-bottom", HTML.CLASS_ATTR);
             writer.endElement(HTML.DIV_ELEM);			  
-        } else {
-            writer.startElement(HTML.UL_ELEM, uiComponent);
-                writer.writeAttribute(HTML.ID_ATTR, clientId+"_nav", HTML.ID_ATTR);
-                writer.writeAttribute(HTML.CLASS_ATTR, "yui-nav ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all ui-tabs-vertical", HTML.CLASS_ATTR);
-                if (EnvUtils.isAriaEnabled(facesContext)) {
-                    writer.writeAttribute(ARIA.ROLE_ATTR, ARIA.TABLIST_ROLE, ARIA.ROLE_ATTR);  
-                }                
-                doTabs(facesContext, uiComponent, Do.RENDER_LABEL, null, null, null);
-            writer.endElement(HTML.UL_ELEM);
-            
-            
-            writer.startElement(HTML.DIV_ELEM, uiComponent);
-                writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
-                writer.writeAttribute(HTML.CLASS_ATTR, "yui-content ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-content-vertical", HTML.CLASS_ATTR);
-            writer.endElement(HTML.DIV_ELEM);
         }
     }
     
@@ -389,12 +375,13 @@ public class TabSetRenderer extends CoreRenderer {
         writer.writeAttribute(HTML.ID_ATTR, clientId+ "li"+ index, HTML.ID_ATTR);
         UIComponent labelFacet = ((TabPane)tab).getLabelFacet();
 		String styleClass = "ui-state-default";
-		if ("top".equals(tabSet.getOrientation())) {
+        String orientation = tabSet.getOrientation();
+        orientation = orientation == null || "".equals(orientation) ? "top" : orientation;
+
+        if ("top".equals(orientation)) {
 			styleClass += " ui-corner-top";
-		} else if ("bottom".equals(tabSet.getOrientation())) {
+		} else if ("bottom".equals(orientation)) {
 			styleClass += " ui-corner-bottom";
-		} else {
-			styleClass += " ui-corner-all";
 		}
 		writer.writeAttribute(HTML.CLASS_ATTR, styleClass, HTML.CLASS_ATTR);
 
