@@ -55,34 +55,37 @@ public class DataTableRowRenderer {
 
         context.getExternalContext().getRequestMap().put(tableContext.getRowStateVar(), rowState);
 
+		ResponseWriter writer = context.getResponseWriter();
+
         if (visible) {
-            ResponseWriter writer = context.getResponseWriter();
+			// Add leading conditional row for this row object if required
+			List<Row> leadingRows = table.getConditionalRows(rowIndex, true);
+			for (Row r : leadingRows) encodeConditionalRow(context, tableContext, r);
+		}
 
-            // Add leading conditional row for this row object if required
-            List<Row> leadingRows = table.getConditionalRows(rowIndex, true);
-            for (Row r : leadingRows) encodeConditionalRow(context, tableContext, r);
+		String userRowStyleClass = table.getRowStyleClass();
+		String expandedClass = expanded ? DataTableConstants.EXPANDED_ROW_CLASS : "";
+		String unselectableClass = unselectable ? DataTableConstants.UNSELECTABLE_ROW_CLASS : "";
+		String rowStyleClass = rowIndex % 2 == 0
+				? DataTableConstants.ROW_CLASS + " " + DataTableConstants.EVEN_ROW_CLASS
+				: DataTableConstants.ROW_CLASS + " " + DataTableConstants.ODD_ROW_CLASS;
 
-            String userRowStyleClass = table.getRowStyleClass();
-            String expandedClass = expanded ? DataTableConstants.EXPANDED_ROW_CLASS : "";
-            String unselectableClass = unselectable ? DataTableConstants.UNSELECTABLE_ROW_CLASS : "";
-            String rowStyleClass = rowIndex % 2 == 0
-                    ? DataTableConstants.ROW_CLASS + " " + DataTableConstants.EVEN_ROW_CLASS
-                    : DataTableConstants.ROW_CLASS + " " + DataTableConstants.ODD_ROW_CLASS;
+		if (selected)
+			rowStyleClass = rowStyleClass + " ui-selected ui-state-active";
+		if (userRowStyleClass != null)
+			rowStyleClass = rowStyleClass + " " + userRowStyleClass;
 
-            if (selected)
-                rowStyleClass = rowStyleClass + " ui-selected ui-state-active";
-            if (userRowStyleClass != null)
-                rowStyleClass = rowStyleClass + " " + userRowStyleClass;
+		writer.startElement(HTML.TR_ELEM, null);
+		parentIndex = (parentIndex != null) ? parentIndex + "." : "";
+		writer.writeAttribute(HTML.ID_ATTR, clientId + "_row_" + parentIndex + rowIndex, null);
 
-            writer.startElement(HTML.TR_ELEM, null);
-            parentIndex = (parentIndex != null) ? parentIndex + "." : "";
-            writer.writeAttribute(HTML.ID_ATTR, clientId + "_row_" + parentIndex + rowIndex, null);
+        boolean innerTdDivRequired = ((tableContext.isScrollable() || tableContext.isResizableColumns()) & !topVisibleRowRendered);
+
+        if (visible) {
             writer.writeAttribute(HTML.CLASS_ATTR, rowStyleClass + " " + expandedClass + " " + unselectableClass, null);
             if (table.isRenderRowTabindex()) {
                 writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
             }
-
-            boolean innerTdDivRequired = ((tableContext.isScrollable() || tableContext.isResizableColumns()) & !topVisibleRowRendered);
 
             List<Column> cols = tableContext.getColumns();
             for (int i = 0; i < cols.size(); i++) {
@@ -95,51 +98,46 @@ public class DataTableRowRenderer {
                     );
                 }
             }
+		} else {
+			writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
+		}
 
-            if (tableContext.getRowIndexVar() != null)
-                context.getExternalContext().getRequestMap().put(tableContext.getRowIndexVar(), rowIndex);
-            writer.endElement(HTML.TR_ELEM);
+		if (tableContext.getRowIndexVar() != null)
+			context.getExternalContext().getRequestMap().put(tableContext.getRowIndexVar(), rowIndex);
+		writer.endElement(HTML.TR_ELEM);
 
-			boolean isPanel = table.getPanelExpansion() != null;
-			boolean isRow = table.getRowExpansion() != null;
-            if (expanded) {
+		boolean isPanel = table.getPanelExpansion() != null;
+		boolean isRow = table.getRowExpansion() != null;
 
-                context.getExternalContext().getRequestMap()
-                        .put(clientId + "_expandedRowId", "" + rowIndex);
+		context.getExternalContext().getRequestMap()
+				.put(clientId + "_expandedRowId", "" + rowIndex);
 
-                // Ensure that table.getTableId returns correctly for request map look
-                table.setRowIndex(-1);
+		// Ensure that table.getTableId returns correctly for request map look
+		table.setRowIndex(-1);
 
-                if (isPanel && isRow) {
-                    if (rowState.getExpansionType() == RowState.ExpansionType.ROW) {
-                        encodeRowExpansion(context, tableContext, writer);
-                    }
-                    else if (rowState.getExpansionType() == RowState.ExpansionType.PANEL) {
-                        encodeRowPanelExpansion(context, table, true);
-                    }
-                } else if (isPanel) {
-                    encodeRowPanelExpansion(context, table, true);
-                } else if (isRow) {
-                    encodeRowExpansion(context, tableContext, writer);
-                }
-
-                // Row index will have come back different from row expansion.
-                table.setRowIndex(rowIndex);
-            } else {
-				if (isPanel || isRow) {
-					writer.startElement(HTML.TR_ELEM, null);
-					writer.writeAttribute(HTML.ID_ATTR, clientId + "_row_" + rowIndex + ".0", null);
-					writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
-					writer.endElement(HTML.TR_ELEM);
-				}
+		if (isPanel && isRow) {
+			if (rowState.getExpansionType() == RowState.ExpansionType.ROW) {
+				encodeRowExpansion(context, tableContext, writer, expanded);
 			}
+			else if (rowState.getExpansionType() == RowState.ExpansionType.PANEL) {
+				encodeRowPanelExpansion(context, table, expanded, true);
+			}
+		} else if (isPanel) {
+			encodeRowPanelExpansion(context, table, expanded, true);
+		} else if (isRow) {
+			encodeRowExpansion(context, tableContext, writer, expanded);
+		}
 
-            // Add tailing conditional row for this row object if required
-            List<Row> tailingRows = table.getConditionalRows(rowIndex, false);
-            for (Row r : tailingRows) encodeConditionalRow(context, tableContext, r);
+		// Row index will have come back different from row expansion.
+		table.setRowIndex(rowIndex);
 
-            return innerTdDivRequired;
-        }
+        if (visible) {
+			// Add tailing conditional row for this row object if required
+			List<Row> tailingRows = table.getConditionalRows(rowIndex, false);
+			for (Row r : tailingRows) encodeConditionalRow(context, tableContext, r);
+
+			return innerTdDivRequired;
+		}
 
         return false;
     }
@@ -252,7 +250,7 @@ public class DataTableRowRenderer {
         }
     }
 
-    private static void encodeRowExpansion(FacesContext context, DataTableRenderingContext tableContext, ResponseWriter writer) throws IOException {
+    private static void encodeRowExpansion(FacesContext context, DataTableRenderingContext tableContext, ResponseWriter writer, boolean display) throws IOException {
         DataTable table = tableContext.getTable();
 
         String rowVar = tableContext.getVar();
@@ -275,7 +273,7 @@ public class DataTableRowRenderer {
 
         TreeDataModel rootModel = (TreeDataModel)model;
         rootModel.setRootIndex(expandedRowId);
-        tableContext.getStateMap().get(rootModel.getRootData()).setExpanded(true);
+        if (display) tableContext.getStateMap().get(rootModel.getRootData()).setExpanded(true);
         table.setRowIndex(0);
 
         if (rootModel.getRowCount() > 0)
@@ -305,10 +303,11 @@ public class DataTableRowRenderer {
                 String unselectableClass = unselectable
                         ? DataTableConstants.UNSELECTABLE_ROW_CLASS : "";
 
-                if (visible) {
-                    writer.startElement(HTML.TR_ELEM, null);
-                    writer.writeAttribute(HTML.ID_ATTR,
-                            clientId + "_row_" + expandedRowId + "." + rootModel.getRowIndex(), null);
+				writer.startElement(HTML.TR_ELEM, null);
+				writer.writeAttribute(HTML.ID_ATTR,
+						clientId + "_row_" + expandedRowId + "." + rootModel.getRowIndex(), null);
+
+                if (visible && display) {
                     writer.writeAttribute(HTML.CLASS_ATTR,
                             DataTableConstants.ROW_CLASS + " " + alternatingClass + " " + selectionClass + " " + expandedClass + " " + unselectableClass, null);
 
@@ -320,39 +319,40 @@ public class DataTableRowRenderer {
                             encodeRegularCell(new CellRenderingContext(context, cols, i, selectedColumnIds.contains(kid.getId()), false));
                         }
                     }
-                    writer.endElement(HTML.TR_ELEM);
+                } else {
+					writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
+				}
 
-                    if (expanded) {
-                        int rowIndex = rootModel.getRowIndex();
-                        context.getExternalContext().getRequestMap().put(clientId + "_expandedRowId", expandedRowId+"."+rowIndex);
+				writer.endElement(HTML.TR_ELEM);
 
-                        PanelExpansion panelExpansion = table.getPanelExpansion();
-                        RowExpansion rowExpansion = table.getRowExpansion();
-                        boolean isPanel = panelExpansion != null;
-                        boolean isRow = rowExpansion != null;
+				int rowIndex = rootModel.getRowIndex();
+				context.getExternalContext().getRequestMap().put(clientId + "_expandedRowId", expandedRowId+"."+rowIndex);
 
-                        // Ensure that table.getTableId returns correctly for request map look
-                        table.setRowIndex(-1);
+				PanelExpansion panelExpansion = table.getPanelExpansion();
+				RowExpansion rowExpansion = table.getRowExpansion();
+				boolean isPanel = panelExpansion != null;
+				boolean isRow = rowExpansion != null;
 
-                        if (isPanel && isRow) {
-                            if (rowState.getExpansionType() == RowState.ExpansionType.ROW) {
-                                encodeRowExpansion(context, tableContext, writer);
-                            }
-                            else if (rowState.getExpansionType() == RowState.ExpansionType.PANEL) {
-                                encodeRowPanelExpansion(context, table, false);
-                            }
-                        } else if (isPanel) {
-                            encodeRowPanelExpansion(context, table, false);
-                        } else if (isRow) {
-                            encodeRowExpansion(context, tableContext, writer);
-                        }
+				// Ensure that table.getTableId returns correctly for request map look
+				table.setRowIndex(-1);
 
-                        rootModel = (TreeDataModel) table.getDataModel();
-                        rootModel.setRootIndex(expandedRowId);
-                        table.setRowIndex(rowIndex); // Row index will have come back different from row expansion.
-                        context.getExternalContext().getRequestMap().put(clientId + "_expandedRowId", expandedRowId);
-                    }
-                }
+				if (isPanel && isRow) {
+					if (rowState.getExpansionType() == RowState.ExpansionType.ROW) {
+						encodeRowExpansion(context, tableContext, writer, expanded);
+					}
+					else if (rowState.getExpansionType() == RowState.ExpansionType.PANEL) {
+						encodeRowPanelExpansion(context, table, expanded, false);
+					}
+				} else if (isPanel) {
+					encodeRowPanelExpansion(context, table, expanded, false);
+				} else if (isRow) {
+					encodeRowExpansion(context, tableContext, writer, expanded);
+				}
+
+				rootModel = (TreeDataModel) table.getDataModel();
+				rootModel.setRootIndex(expandedRowId);
+				table.setRowIndex(rowIndex); // Row index will have come back different from row expansion.
+				context.getExternalContext().getRequestMap().put(clientId + "_expandedRowId", expandedRowId);
 
                 table.setRowIndex(rootModel.getRowIndex() + 1);
                 if (rowIndexVar != null) context.getExternalContext().getRequestMap().remove(rowIndexVar);
@@ -363,7 +363,7 @@ public class DataTableRowRenderer {
         table.setRowIndex(-1);
     }
 
-    private static void encodeRowPanelExpansion(FacesContext context, DataTable table, boolean isRootRow) throws IOException {
+    private static void encodeRowPanelExpansion(FacesContext context, DataTable table, boolean display, boolean isRootRow) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         Map<String,String> params = context.getExternalContext().getRequestParameterMap();
         String clientId = table.getClientId(context);
@@ -374,6 +374,7 @@ public class DataTableRowRenderer {
         if (expandedRowId == null) {
             expandedRowId = (String) context.getExternalContext().getRequestMap().get(clientId + "_expandedRowId");
         }
+		String originalExpandedRowId = expandedRowId;
 
         int sepIndex = expandedRowId.lastIndexOf('.');
         String rootIndex = null;
@@ -385,21 +386,27 @@ public class DataTableRowRenderer {
         if (rootIndex != null) ((TreeDataModel)model).setRootIndex(rootIndex);
         table.setRowIndex(Integer.parseInt(expandedRowId));
 
-        table.getStateMap().get(table.getRowData()).setExpanded(true);
+        if (display) table.getStateMap().get(table.getRowData()).setExpanded(true);
 
         writer.startElement(HTML.TR_ELEM, null);
-		if (isRootRow) writer.writeAttribute(HTML.ID_ATTR, clientId + "_row_" + table.getRowIndex() + ".0", null);
-        writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.EXPANDED_ROW_CONTENT_CLASS + " ui-widget-content " + DataTableConstants.UNSELECTABLE_ROW_CLASS , null);
+		writer.writeAttribute(HTML.ID_ATTR, clientId + "_exp_" + originalExpandedRowId, null);
 
-        writer.startElement(HTML.TD_ELEM, null);
+		if (display) {
+			writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.EXPANDED_ROW_CONTENT_CLASS + " ui-widget-content " + DataTableConstants.UNSELECTABLE_ROW_CLASS , null);
 
-        int enabledColumns = 0;
-        for (Column c : table.getColumns()) if (c.isRendered() && !c.isStacked()) enabledColumns++;
+			writer.startElement(HTML.TD_ELEM, null);
 
-        writer.writeAttribute(HTML.COLSPAN_ATTR, enabledColumns, null);
-        table.getPanelExpansion().encodeAll(context);
+			int enabledColumns = 0;
+			for (Column c : table.getColumns()) if (c.isRendered() && !c.isStacked()) enabledColumns++;
 
-        writer.endElement(HTML.TD_ELEM);
+			writer.writeAttribute(HTML.COLSPAN_ATTR, enabledColumns, null);
+			table.getPanelExpansion().encodeAll(context);
+
+			writer.endElement(HTML.TD_ELEM);
+		} else {
+			writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
+		}
+
         writer.endElement(HTML.TR_ELEM);
         table.setRowIndex(-1);
     }
