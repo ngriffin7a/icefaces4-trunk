@@ -168,4 +168,9 @@ public class AutoCompleteEntry extends AutoCompleteEntryBase implements NamingCo
     public String getFocusedElementId() {
         return getClientId(FacesContext.getCurrentInstance()) + "_input";
     }
+
+	public void setValue(Object value) {
+		super.setValue(value);
+		if (value == null) setText(null);
+	}
 }
