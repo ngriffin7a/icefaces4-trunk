@@ -1206,7 +1206,7 @@ public class UISeriesBase extends HtmlDataTable implements SeriesStateHolder {
                 int index = 0;
                 for (UIComponent kid : getChildren()) {
                     if (!(kid instanceof UIColumn)) {
-                        setRowIndex(index++);
+                        rowIndex = index++;
                         if (kid.visitTree(context, callback)) {
                             return true;
                         }
