@@ -89,6 +89,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 			} else if (keyEvent.getKeyCode() == KeyEvent.UP_ARROW_KEY || keyEvent.getKeyCode() == KeyEvent.DOWN_ARROW_KEY) {
 				autoCompleteEntry.setPopulateList(true);
 			} else if (textChanged) {
+				if ("".equals(text)) autoCompleteEntry.setSubmittedValue("");
 				autoCompleteEntry.queueEvent(new TextChangeEvent(autoCompleteEntry, text, oldText, keyEvent.getKeyCode()));
 			}
         } else {
