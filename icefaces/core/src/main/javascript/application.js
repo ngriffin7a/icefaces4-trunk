@@ -504,7 +504,9 @@ if (!window.ice.icefaces) {
         };
 
         namespace.setupPush = function(viewID) {
-            ice.push.register([viewID], retrieveUpdate(viewID));
+            var retrieveViewUpdate = retrieveUpdate(viewID);
+            ice.push.register([viewID], retrieveViewUpdate);
+            ice.onBlockingConnectionReEstablished(retrieveViewUpdate);
         };
 
         namespace.unsetupPush = function(viewID) {
