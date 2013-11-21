@@ -88,14 +88,16 @@ public class DataTableRowRenderer {
             }
 
             List<Column> cols = tableContext.getColumns();
+			int visibleIndex = 0;
             for (int i = 0; i < cols.size(); i++) {
                 Column kid = cols.get(i);
                 if (kid.isRendered()) {
                     encodeRegularCell(new CellRenderingContext(
-                            context, cols, i,
+                            context, cols, i, visibleIndex,
                             selectedColumnIds.contains(kid.getId()),
                             innerTdDivRequired)
                     );
+					visibleIndex++;
                 }
             }
 		} else {
@@ -211,7 +213,7 @@ public class DataTableRowRenderer {
 
                 CellEditor editor = column.getCellEditor();
 
-                String columnStyleClass = "ui-col-"+cellContext.index;
+                String columnStyleClass = "ui-col-"+cellContext.visibleIndex;
 
                 if (column.getStyleClass() != null)
                     columnStyleClass += " " + column.getStyleClass();
@@ -312,11 +314,13 @@ public class DataTableRowRenderer {
                             DataTableConstants.ROW_CLASS + " " + alternatingClass + " " + selectionClass + " " + expandedClass + " " + unselectableClass, null);
 
                     List<Column> cols = tableContext.getColumns();
+					int visibleIndex = 0;
                     for (int i = 0; i < cols.size(); i++) {
                         Column kid = cols.get(i);
                         if (kid.isRendered()) {
                             boolean cellSelected = false;
-                            encodeRegularCell(new CellRenderingContext(context, cols, i, selectedColumnIds.contains(kid.getId()), false));
+                            encodeRegularCell(new CellRenderingContext(context, cols, i, visibleIndex, selectedColumnIds.contains(kid.getId()), false));
+							visibleIndex++;
                         }
                     }
                 } else {
@@ -415,13 +419,15 @@ public class DataTableRowRenderer {
         FacesContext context;
         List columns;
         int index;
+		int visibleIndex;
         boolean selected;
         boolean resizable;
 
-        public CellRenderingContext(FacesContext context, List<Column> columns, int index, boolean selected, boolean innerDiv) {
+        public CellRenderingContext(FacesContext context, List<Column> columns, int index, int visibleIndex, boolean selected, boolean innerDiv) {
             this.context = context;
             this.columns = columns;
             this.index = index;
+			this.visibleIndex = visibleIndex;
             this.selected = selected;
             this.resizable = innerDiv;
         }
