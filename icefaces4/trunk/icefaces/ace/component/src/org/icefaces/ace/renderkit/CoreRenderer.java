@@ -569,7 +569,9 @@ public class CoreRenderer extends Renderer {
          try {
              label = bundle.getString(MESSAGE_KEY_PREFIX + key);
          } catch(MissingResourceException mre){
-             logger.info(" BUNDLE missing property : "+key+" defaultValue used : "+defaultValue);
+             if (logger.isLoggable(Level.FINE)) {
+                 logger.fine(" BUNDLE missing property : "+key+" defaultValue used : "+defaultValue);
+             }
          }
          return label;
     }
