@@ -48,10 +48,14 @@ import javax.faces.render.Renderer;
 import java.io.IOException;
 import java.util.*;
 import java.util.ResourceBundle;
+import java.util.MissingResourceException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import org.icefaces.ace.util.JSONBuilder;
 
 public class CoreRenderer extends Renderer {
+    private static final Logger logger = Logger.getLogger(CoreRenderer.class.getName());
 
     public static String resolveWidgetVar(UIComponent component) {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -561,9 +565,11 @@ public class CoreRenderer extends Renderer {
          if (null == bundle) {
              return defaultValue;
          }
-         String label = bundle.getString(MESSAGE_KEY_PREFIX + key);
-         if (null == label){
-             label= defaultValue; //if not in bundle will return default
+         String label=defaultValue;
+         try {
+             label = bundle.getString(MESSAGE_KEY_PREFIX + key);
+         } catch(MissingResourceException mre){
+             logger.info(" BUNDLE missing property : "+key+" defaultValue used : "+defaultValue);
          }
          return label;
     }
