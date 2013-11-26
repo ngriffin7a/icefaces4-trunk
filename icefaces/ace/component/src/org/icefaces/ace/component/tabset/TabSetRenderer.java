@@ -144,6 +144,21 @@ public class TabSetRenderer extends CoreRenderer {
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-content ui-tabs-panel ui-widget-content ui-corner-bottom", HTML.CLASS_ATTR);
             writer.endElement(HTML.DIV_ELEM);			  
+        } else {
+            writer.startElement(HTML.UL_ELEM, uiComponent);
+                writer.writeAttribute(HTML.ID_ATTR, clientId+"_nav", HTML.ID_ATTR);
+                writer.writeAttribute(HTML.CLASS_ATTR, "yui-nav ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all ui-tabs-vertical", HTML.CLASS_ATTR);
+                if (EnvUtils.isAriaEnabled(facesContext)) {
+                    writer.writeAttribute(ARIA.ROLE_ATTR, ARIA.TABLIST_ROLE, ARIA.ROLE_ATTR);  
+                }                
+                doTabs(facesContext, uiComponent, Do.RENDER_LABEL, null, null, null);
+            writer.endElement(HTML.UL_ELEM);
+            
+            
+            writer.startElement(HTML.DIV_ELEM, uiComponent);
+                writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
+                writer.writeAttribute(HTML.CLASS_ATTR, "yui-content ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-content-vertical", HTML.CLASS_ATTR);
+            writer.endElement(HTML.DIV_ELEM);
         }
     }
     
