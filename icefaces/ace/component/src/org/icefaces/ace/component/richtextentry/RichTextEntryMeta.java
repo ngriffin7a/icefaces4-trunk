@@ -82,7 +82,7 @@ public class RichTextEntryMeta extends UIInputMeta {
     @Property(tlddoc = "Specify the pre-defined skin for the editor. Possible values are 'v2', 'office2003', and 'kama' ('default' is synonymous of 'v2').", defaultValue="default")
     private String skin;
 	
-    @Property(tlddoc = "Boolean value to disable and re-enable the component.", defaultValue="false")
+    @Property(tlddoc = "Boolean value to disable the editor functions.", defaultValue="false")
     private boolean disabled;
 	
     @Property(tlddoc = "By default the data of the editor will only be saved when its 'Save' button is clicked. Any other submit request will not save its data. In order to save its data on any submit request like inputText does, this attribute can be set to true.", defaultValue="false")

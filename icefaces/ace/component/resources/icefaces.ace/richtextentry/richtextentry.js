@@ -76,7 +76,7 @@ ice.ace.richtextentry.getToolbar = function(toolbar) {
 };
 
 
-ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _skin, _height, _width, _customConfig, saveOnSubmit, hashCode, behaviors) {
+ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _skin, _height, _width, _customConfig, saveOnSubmit, isReadOnly, hashCode, behaviors) {
     CKEDITOR.config.defaultLanguage = lang;
 	CKEDITOR.config.language = lang;
     if (_skin == 'default' || _skin == 'silver') {
@@ -103,6 +103,7 @@ ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _ski
             htmlEncodeOutput : false
         });
         editorInstance.setData(document.getElementById(editor).value);
+		editorInstance.setReadOnly(isReadOnly);
         if (behaviors && behaviors.behaviors) {
 			if (behaviors.behaviors.save) editorInstance.ajaxSave = behaviors.behaviors.save;
 			if (behaviors.behaviors.blur) editorInstance.ajaxBlur = behaviors.behaviors.blur;

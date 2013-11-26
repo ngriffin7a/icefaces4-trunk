@@ -81,6 +81,7 @@ public class RichTextEntryRenderer extends InputRenderer {
 			.item(richTextEntry.getWidth())
 			.item(customConfig)
 			.item(richTextEntry.isSaveOnSubmit())
+			.item(richTextEntry.isDisabled())
 			.item(hashCode)
 			.beginMap()
 			.entry("p", ""); // dummy property
