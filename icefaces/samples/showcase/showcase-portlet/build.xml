@@ -22,11 +22,6 @@
     <property name="lib.application.dir"
               location="${parent.lib.dir}"/>
 
-    <property name="lib.compile.compat.includes"
-              value="commons-beanutils.jar jxl.jar krysalis-jCharts-1.0.0-alpha-1.jar"/>
-    <property name="lib.distribute.compat.includes"
-              value="commons-beanutils.jar jxl.jar krysalis-jCharts-1.0.0-alpha-1.jar"/>
-
     <property name="lib.compile.application.includes"
               value="*.jar"/>
     <property name="lib.distribute.application.includes"
@@ -36,7 +31,6 @@
     <import file="../build/common-portlet.xml"/>
     <import file="../build/common.xml"/>
 
-    <property name="compat" value="true" />
     <property name="ace" value="true" />
 
     <patternset id="portlet.files">

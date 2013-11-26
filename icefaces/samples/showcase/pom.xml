@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.icefaces.samples</groupId>
         <artifactId>samples-parent</artifactId>
-        <version>3.4.0-SNAPSHOT</version>
+        <version>4.0.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -66,19 +66,6 @@
         <dependency>
             <groupId>${icefaces.product.group}</groupId>
             <artifactId>${icefaces.lib.name}-ace</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>${icefaces.product.group}</groupId>
-            <artifactId>${icefaces.lib.name}-compat</artifactId>
-            <!-- WebSphere 8: The commons-logging library should not be included. Uncomment
-                 the following exclusion if you are building for that platform. -->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-logging</groupId>-->
-                    <!--<artifactId>commons-logging</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
         </dependency>
 
         <dependency>

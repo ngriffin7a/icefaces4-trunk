@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 import org.icefaces.samples.showcase.dataGenerators.VehicleGenerator;
-import org.icefaces.samples.showcase.example.compat.dataTable.Car;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
 @ComponentExample(
         title = "example.ace.richtextentry.title",

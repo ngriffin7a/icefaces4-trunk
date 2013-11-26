@@ -27,7 +27,6 @@ import javax.faces.event.ActionEvent;
 
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
-import org.icefaces.samples.showcase.example.compat.progress.LongTaskPool;
 import org.icefaces.samples.showcase.util.FacesUtils;
 
 @ManagedBean(name = ProgressBarTaskManager.BEAN_NAME)

@@ -49,11 +49,6 @@
     </context-param>
 
     <context-param>
-        <param-name>com.icesoft.faces.uploadDirectory</param-name>
-        <param-value>upload</param-value>
-    </context-param>
-
-    <context-param>
         <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
     </context-param>
@@ -76,11 +71,6 @@
     <context-param>
         <param-name>org.apache.myfaces.CHECK_ID_PRODUCTION_MODE</param-name>
         <param-value>false</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>com.icesoft.faces.gmapKey</param-name>
-        <param-value>AIzaSyAcAbAa7AL1DLU0785OeWn2byf4XOsm7KM</param-value>
     </context-param>
     
 	<context-param>
@@ -111,12 +101,6 @@
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>Resource Servlet</servlet-name>
-        <servlet-class>com.icesoft.faces.webapp.CompatResourceServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
    
     <servlet>

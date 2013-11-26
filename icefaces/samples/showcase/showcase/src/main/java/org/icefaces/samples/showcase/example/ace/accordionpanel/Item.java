@@ -19,7 +19,7 @@ package org.icefaces.samples.showcase.example.ace.accordionpanel;
 
 import java.io.Serializable;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
-import org.icefaces.samples.showcase.example.compat.dragdrop.DragDropItem;
+import org.icefaces.samples.showcase.example.ace.dragDrop.DragDropItem;
 
 public class Item extends DragDropItem implements Serializable
 {

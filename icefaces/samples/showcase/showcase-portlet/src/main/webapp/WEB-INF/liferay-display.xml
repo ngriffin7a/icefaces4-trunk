@@ -19,7 +19,7 @@
 
 <display>
 
-<category name="ICEfaces3">
+<category name="ICEfaces4">
         <category name="ACE">
             <category name="Accordion">
                 <portlet id="accordionPanel"/>

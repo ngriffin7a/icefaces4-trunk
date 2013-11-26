@@ -18,7 +18,6 @@ package org.icefaces.samples.showcase.view.navigation;
 
 import org.icefaces.ace.event.AccordionPaneChangeEvent;
 import org.icefaces.samples.showcase.example.ace.overview.AceSuiteOverviewBean;
-import org.icefaces.samples.showcase.example.compat.overview.IceSuiteOverviewBean;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import org.icefaces.samples.showcase.metadata.context.Menu;
 import org.icefaces.samples.showcase.metadata.context.MenuLink;
@@ -148,12 +147,14 @@ public class NavigationController implements Serializable {
                 // This is necessary when the overall demo was changed, so basically when the package is different
                 // Although checking against packages is not the desired approach, there isn't another option for matching beans
                 //  because they have no built-in idea of a parent-child heirarchy
+                
+                // NOTE: Effects are disabled due to switch to h:panelGroup as per ICE-9706.
                 if (currentExample != null) {
                     if (!setExample.getClass().getPackage().equals(currentExample.getClass().getPackage())) {
-                        setExample.prepareEffect();
+                        //setExample.prepareEffect();
                     }
                 } else {
-                    setExample.prepareEffect();
+                    //setExample.prepareEffect();
                 }
 
                 // Apply the new group and example
@@ -261,7 +262,7 @@ public class NavigationController implements Serializable {
     }
 
     private boolean isContentAnExample(String exampleDescription) {
-        if (exampleDescription.equals(AceSuiteOverviewBean.BEAN_NAME) || exampleDescription.equals(IceSuiteOverviewBean.BEAN_NAME)) {
+        if (exampleDescription.equals(AceSuiteOverviewBean.BEAN_NAME)) {
             return false;
         } else {
             return true;

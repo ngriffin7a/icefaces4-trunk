@@ -21,7 +21,6 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:ice="http://www.icesoft.com/icefaces/component"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 template="/resources/templates/main-template.xhtml">
 
@@ -44,15 +43,6 @@
             <h:panelGroup layout="block" styleClass="headerTabs">
                 <h:panelGrid styleClass="linkTableStyle">
                     <h:panelGroup styleClass="linksHolder">
-                        <h:link id="iceSuiteLink"
-                                styleClass="iceSuiteLink"
-                                outcome="showcase">
-                            <f:param name="grp" value="#{compatMenu.beanName}"/>
-                            <h:graphicImage value="#{navigationModel.componentGroup == compatMenu.beanName ? '/resources/css/images/topBannerImages/ice-on.png' : '/resources/css/images/topBannerImages/ice-off.png' }"
-                                            alt="ICE Components Showcase"
-                                            styleClass="suiteLinkImageStyle"
-                                            title="ICE Components Showcase"/>
-                        </h:link>
                         <h:link id="aceSuiteLink"
                                 styleClass="aceSuiteLink"
                                 outcome="showcase">
@@ -156,8 +146,7 @@
                         #{msgs[menuLink.title]}
                     </h:link>
                     
-                    <ice:panelGroup effect="#{navigationModel.currentComponentExample.effect}"
-                                    rendered="#{'selected' eq mainSelected}">
+                    <h:panelGroup rendered="#{'selected' eq mainSelected}">
                         <ul>
                         <ui:repeat id="subMenuLinks" 
 								   var="subMenuLink"
@@ -197,7 +186,7 @@
                                 </li>
                         </ui:repeat>
                         </ul>
-                    </ice:panelGroup>
+                    </h:panelGroup>
                 </li>
             </ui:repeat>
             </ul>

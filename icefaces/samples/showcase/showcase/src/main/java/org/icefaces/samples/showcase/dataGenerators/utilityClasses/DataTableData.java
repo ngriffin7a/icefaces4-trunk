@@ -17,8 +17,8 @@
 package org.icefaces.samples.showcase.dataGenerators.utilityClasses;
 
 import org.icefaces.samples.showcase.dataGenerators.VehicleGenerator;
-import org.icefaces.samples.showcase.example.compat.dataTable.Car;
-import org.icefaces.samples.showcase.example.compat.selector.SelectableCar;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+import org.icefaces.samples.showcase.example.ace.dataTable.SelectableCar;
 
 import java.io.Serializable;
 import java.util.List;

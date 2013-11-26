@@ -22,7 +22,7 @@ import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
-import org.icefaces.samples.showcase.example.compat.dataTable.Car;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
