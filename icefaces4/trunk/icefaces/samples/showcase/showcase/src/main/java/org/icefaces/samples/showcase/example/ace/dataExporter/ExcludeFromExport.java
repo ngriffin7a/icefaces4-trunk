@@ -25,7 +25,7 @@ import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.compat.dataTable.Car;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
 @ComponentExample(
         parent = DataExporterBean.BEAN_NAME,

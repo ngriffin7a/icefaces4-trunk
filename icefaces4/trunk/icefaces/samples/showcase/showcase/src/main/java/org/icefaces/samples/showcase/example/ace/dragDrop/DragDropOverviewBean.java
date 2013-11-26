@@ -26,7 +26,6 @@ import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.icefaces.samples.showcase.example.compat.dragdrop.DragDropItem;
 
 @ComponentExample(
         title = "example.ace.dragDrop.title",

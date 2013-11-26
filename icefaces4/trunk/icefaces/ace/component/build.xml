@@ -30,7 +30,6 @@
 
     <property name="lib.dir" location="../../lib"/>
     <property name="ace.lib.dir" location="${lib.dir}/ace"/>
-    <property name="compat.lib.dir" location="${lib.dir}/compat"/>
     <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
     <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
     <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
@@ -121,7 +120,6 @@
     <path id="compile.run.classpath">
         <fileset dir="${jsf.lib.dir}" includes="*.jar" erroronmissingdir="false"/>
         <fileset dir="${ace.lib.dir}" includes="*.jar"/>
-        <fileset dir="${compat.lib.dir}" includes="commons-collections.jar"/>
         <fileset dir="${lib.dir}" includes="*.jar"/>
         <pathelement path="../component/src"/>
         <pathelement path="../generator/build"/>

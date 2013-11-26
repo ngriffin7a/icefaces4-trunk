@@ -16,12 +16,9 @@
 
 <project name="showcase" default="servlet-profile">
 
-    <property name="lib.compile.compat.includes" value="commons-beanutils.jar jxl.jar krysalis-jCharts-1.0.0-alpha-1.jar"/>
-    <property name="lib.distribute.compat.includes" value="commons-beanutils.jar jxl.jar krysalis-jCharts-1.0.0-alpha-1.jar"/>
     <property name="lib.compile.application.includes" value="*.jar"/>
     <property name="lib.distribute.application.includes" value="*.jar"/>
     
-    <property name="compat" value="true" />
     <property name="ace" value="true" />
     <property name="includeSrc" value="true" />
     <property name="includeThemeJars" value="true"/>

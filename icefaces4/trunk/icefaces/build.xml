@@ -56,14 +56,6 @@
         </subant> 
     </target>
 
-    <target name="compat" depends="core" description="Builds the ICEfaces Components and 1.x Compat libraries (icefaces-compat.jar).">
-            <subant>
-                  <fileset dir="." includes="compat/build.xml">
-                    <exclude name="**/maven2/build.xml"/>
-                </fileset>
-            </subant>
-    </target>
-
     <target name="ace" depends="core" description="Builds the ICEfaces Advanced Components (icefaces-ace.jar).">
             <subant>
                   <fileset dir="." includes="ace/build.xml">
@@ -72,7 +64,7 @@
             </subant>
     </target>
 
-    <target name="samples" depends="icepush, core, ace, compat" description="Builds the ICEfaces samples.">
+    <target name="samples" depends="icepush, core, ace" description="Builds the ICEfaces samples.">
         <subant>
             <fileset dir="." includes="samples/build.xml">
                 <exclude name="**/maven2/build.xml"/>
@@ -80,7 +72,7 @@
         </subant>
     </target>
 
-    <target name="world" depends="icepush, core, compat, ace, samples"  description="Builds all ICEfaces/ICEpush libraries.">
+    <target name="world" depends="icepush, core, ace, samples"  description="Builds all ICEfaces/ICEpush libraries.">
     </target>
 
     <target name="clean" depends="allclean">
@@ -102,7 +94,6 @@
         <delete>
             <fileset dir="lib">
                 <include name="${icefaces.lib.name}.jar" />
-                <include name="${icefaces-compat.lib.name}.jar" />
                 <include name="${icefaces-ace.lib.name}.jar" />
                 <include name="${icepush.lib.name}.jar" if="isOSBundle" />
             </fileset>
@@ -170,17 +161,8 @@
 					<include name="tlddoc.jar"/>                
 					<include name="yui-compressor.jar"/>                
 				</fileset>
-				<fileset dir="${bundle.dir.bin}/lib/compat">
-					<include name="freemarker*.jar"/>
-					<include name="jsf-metadata*.jar"/>
-					<include name="jsp-api*.jar"/>
-					<include name="portlet*.jar"/>
-				</fileset>
 				<fileset dir="${bundle.dir.bin}/samples/dist">
 					<include name="basic.war"/>
-					<include name="compat-basic.war"/>
-					<include name="component-showcase.war"/>
-					<include name="component-showcase-portlets.war"/>
 				</fileset>
 	
 			</delete>
@@ -191,24 +173,17 @@
 				 this we avoid failing on any error meaning it'll need to be manually removed
 				 when the bundle is built on a Windows machine. -->
 			<delete dir="${bundle.dir.bin}/ace" failonerror="false"/>
-			<delete dir="${bundle.dir.bin}/compat"/>
 			<delete dir="${bundle.dir.bin}/core"/>
 			<delete dir="${bundle.dir.bin}/test"/>
 			<delete dir="${bundle.dir.bin}/tutorials"/>
 	
 			<delete dir="${bundle.dir.bin}/samples/core/test"/>        
 			<delete dir="${bundle.dir.bin}/samples/core/basic"/>
-			<delete dir="${bundle.dir.bin}/samples/compat/compat-basic"/>
-			<delete dir="${bundle.dir.bin}/samples/compat/component-showcase/"/>
-			<delete dir="${bundle.dir.bin}/samples/compat/component-showcase-portlets/"/>
 	
 			<delete dir="${bundle.dir.bin}/samples/showcase/showcase/build"/>
 			<delete dir="${bundle.dir.bin}/samples/showcase/showcase-portlet/build"/> 
 			<delete dir="${bundle.dir.bin}/samples/core/auction/build"/>
 			<delete dir="${bundle.dir.bin}/samples/core/chat/build"/>
-			<delete dir="${bundle.dir.bin}/samples/compat/auctionMonitor/build"/>
-			<delete dir="${bundle.dir.bin}/samples/compat/auctionMonitor/src/main/webapp/WEB-INF/lib"/>
-			<delete dir="${bundle.dir.bin}/samples/compat/auctionMonitor/src/main/webapp/WEB-INF/classes"/>
 	
 			<delete dir="${bundle.dir.bin}/icepush"/>
 	</target>
@@ -232,21 +207,11 @@
             <propertyset refid="build.properties"/>
         </subant>
 
-        <!-- Create the JavaDocs for core, compat, ace, icepush and move them to the docs directory -->
+        <!-- Create the JavaDocs for core, ace, icepush and move them to the docs directory -->
         <subant target="javadoc">
             <fileset dir="${bundle.dir.bin}/core" includes="build.xml"/>
         </subant>
         <move file="${bundle.dir.bin}/core/build/javadocs" tofile="${bundle.dir.bin}/docs/core/api"/>
-
-        <subant target="javadoc">
-            <fileset dir="${bundle.dir.bin}/compat/core" includes="build.xml"/>
-        </subant>
-        <move file="${bundle.dir.bin}/compat/core/build/javadocs" tofile="${bundle.dir.bin}/docs/compat/core/api"/>
-
-        <subant target="javadoc">
-            <fileset dir="${bundle.dir.bin}/compat/components" includes="build.xml"/>
-        </subant>
-        <move file="${bundle.dir.bin}/compat/components/build/doc/api" tofile="${bundle.dir.bin}/docs/compat/comps/api"/>
 
         <subant target="javadoc">
             <fileset dir="${bundle.dir.bin}/ace/component" includes="build.xml"/>
@@ -257,16 +222,11 @@
             <fileset dir="${bundle.dir.bin}" includes="build.xml"/>
        	</subant>
 
-        <!-- Create the TLD docs for icecore, compat, ace move them to the docs directory -->
+        <!-- Create the TLD docs for icecore, ace move them to the docs directory -->
         <subant target="tlddoc">
             <fileset dir="${bundle.dir.bin}/core" includes="build.xml"/>
         </subant>
         <move file="${bundle.dir.bin}/core/build/doc/tld" tofile="${bundle.dir.bin}/docs/core/comps/tld"/>
-
-        <subant target="tlddoc">
-            <fileset dir="${bundle.dir.bin}/compat/components" includes="build.xml"/>
-        </subant>
-        <move file="${bundle.dir.bin}/compat/components/build/doc/tld" tofile="${bundle.dir.bin}/docs/compat/comps/tld"/>
 
         <subant target="tlddoc">
             <fileset dir="${bundle.dir.bin}/ace/component" includes="build.xml"/>
@@ -325,9 +285,6 @@
         <delete dir="${bundle.dir.src}/samples/dist"/>
         <delete dir="${bundle.dir.src}/samples/core/test"/>        
         <delete dir="${bundle.dir.src}/samples/core/basic"/>
-        <delete dir="${bundle.dir.src}/samples/compat/compat-basic"/>
-        <delete dir="${bundle.dir.src}/samples/compat/component-showcase/"/>
-        <delete dir="${bundle.dir.src}/samples/compat/component-showcase-portlets/"/>
         
         <!-- Not yet ready to distribute the Liferay Faces Bridge yet. -->
         <delete dir="${bundle.dir.src}/lib/portlets/liferayfaces"/>

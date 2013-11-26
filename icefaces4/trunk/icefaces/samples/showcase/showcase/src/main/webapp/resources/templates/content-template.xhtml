@@ -20,7 +20,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:ice="http://www.icesoft.com/icefaces/component"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 <!--
@@ -70,7 +69,7 @@ Available ui:params to pass:
         <ace:panel header="#{title}" id="examplePanel" styleClass="containerPanelStyle">
         <div class="content">
             <div class="desc">
-                <ice:outputText value="#{description}" escape="false" nospan="true"/>
+                <h:outputText value="#{description}" escape="false" nospan="true"/>
             </div>
             <h:panelGroup layout="block" styleClass="instance" rendered="#{navigationModel.renderAsExample}">
                 <ui:insert name="example"/>

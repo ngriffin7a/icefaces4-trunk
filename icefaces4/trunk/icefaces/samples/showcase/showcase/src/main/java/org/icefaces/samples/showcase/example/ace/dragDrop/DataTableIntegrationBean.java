@@ -31,7 +31,7 @@ import javax.faces.event.ActionEvent;
 import org.icefaces.ace.event.DragDropEvent;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
-import org.icefaces.samples.showcase.example.compat.dragdrop.DragDropItem;
+import org.icefaces.samples.showcase.example.ace.dragDrop.DragDropItem;
 
 @ComponentExample(
         parent = DragDropOverviewBean.BEAN_NAME,

@@ -20,14 +20,12 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:ice="http://www.icesoft.com/icefaces/component"
       xmlns:icecore="http://www.icefaces.org/icefaces/core">
 <ui:insert name="metadata"/>
 
 <h:head>
     <title id="title">#{msgs['showcase.title']}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <h:outputStylesheet library="ice.compat" name="rime/rime.css"/>
     <h:outputStylesheet library="ice.samples.showcase" name="override_header.css"/>
     <h:outputStylesheet library="ice.samples.showcase" name="demo_template.css"/>
     <h:outputStylesheet library="ice.samples.showcase" name="override_styles.css"/>
@@ -35,7 +33,7 @@
     <icecore:config mandatoryResource="dataTable" />
 </h:head>
 
-<h:body styleClass="suite ice-skin-rime">
+<h:body>
     <f:view contentType="text/html">
         <h:panelGroup styleClass="header" layout="block">
             <ui:insert name="suite-select-menu"/>
@@ -61,13 +59,6 @@
             </h:panelGroup>
 
             <h:panelGroup layout="block" styleClass="footer">
-                <!--
-                <ul class="footer-nav">
-                        <li><a>about</a></li>
-                        <li><a>contact</a></li>
-                        <li><a>components....</a></li>
-                </ul>
-                -->
                 <p>&#xA9; 2013 ICEsoft Technologies Inc.</p>
             </h:panelGroup>
         </h:panelGroup>

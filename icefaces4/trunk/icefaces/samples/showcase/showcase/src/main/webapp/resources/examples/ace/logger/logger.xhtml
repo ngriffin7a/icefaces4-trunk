@@ -20,7 +20,6 @@
     xmlns:f="http://java.sun.com/jsf/core" 
     xmlns:c="http://java.sun.com/jsp/jstl/core" 
     xmlns:ace="http://www.icefaces.org/icefaces/components" 
-    xmlns:ice="http://www.icesoft.com/icefaces/component" 
     xmlns:ui="http://java.sun.com/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
@@ -37,11 +36,11 @@
                     <!-- Logger Rendered Attribute Doesn't Work as Expected -->
                     <!-- Continually adds more loggers to the page when rendered and unredendered -->
                     <!-- Fixed by rendereding once, and using JS to hide afterwards -->
-                    <ice:commandButton onclick="#{logger.rendered ? 'toggleLoggerDisplay();' : ''}"
+                    <h:commandButton onclick="#{logger.rendered ? 'toggleLoggerDisplay();' : ''}"
                                        style="position:absolute"
                                        actionListener="#{logger.enableRendered}"
                                        value="#{logger.rendered ? 'Show/Hide Logger(s)':'Render Logger(s)'}"/>
-                    <ice:commandButton onclick="toggleLoggerDisplay();"
+                    <h:commandButton onclick="toggleLoggerDisplay();"
                                        rendered="#{logger.rendered}"
                                        styleClass="loggerCloseButton"
                                        value="Show/Hide Logger(s)"/>

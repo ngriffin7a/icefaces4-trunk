@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.compat.dataTable.Car;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;

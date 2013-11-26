@@ -32,21 +32,6 @@
             <resource name="demo_template.css" library="ice.samples.showcase"/>
         </requires>
     </resource>
-    <resource name="rime/rime.css" library="ice.compat">
-        <requires>
-            <resource name="showcase_styles.css" library="ice.samples.showcase"/>
-        </requires>
-    </resource>
-    <resource name="rime/rime-accessible.css" library="ice.compat">
-        <requires>
-            <resource name="showcase_styles.css" library="ice.samples.showcase"/>
-        </requires>
-    </resource>
-    <resource name="override_header.css" library="ice.samples.showcase">
-        <requires>
-            <resource name="rime/rime.css" library="ice.compat"/>
-        </requires>
-    </resource>
 
 
     <!-- These entries ensure that the .css files load before the .js ones in the head -->

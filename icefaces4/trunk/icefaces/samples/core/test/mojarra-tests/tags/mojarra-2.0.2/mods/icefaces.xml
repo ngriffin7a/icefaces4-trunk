@@ -29,10 +29,6 @@
               value="${icefaces.root}/lib/icefaces.jar"/>    
     <property name="icepush.lib"
               value="${icefaces.root}/lib/icepush.jar"/>    
-    <property name="icefaces-compat.lib"
-              value="${icefaces.root}/compat/lib/icefaces-compat.jar"/>    
-    <property name="icefaces-comps-compat.lib"
-              value="${icefaces.root}/compat/lib/icefaces-comps-compat.jar"/> 
     
     <!-- 
         This property includes the specific ICEfaces jars to add to the webapp

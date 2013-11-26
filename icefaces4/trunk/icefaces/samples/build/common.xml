@@ -32,8 +32,6 @@
     <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
     <property name="lib.ace.dir" location="${lib.dir}/ace"/>
     <property name="lib.ace.dir.includes" value=""/>
-    <property name="lib.compat.dir" location="${lib.dir}/compat"/>
-    <property name="lib.compat.dir.includes" value=""/>
     <property name="lib.application.dir" location="./lib"/>
     <property name="lib.compile.application.includes" value=""/>
     <property name="lib.distribute.application.includes" value=""/>
@@ -58,7 +56,6 @@
     <property name="icepush.lib.name" value="icepush" />
     <property name="icefaces.lib.name" value="icefaces" />
     <property name="icefaces-ace.lib.name" value="icefaces-ace" />
-    <property name="icefaces-compat.lib.name" value="icefaces-compat" />
 
     <!-- Check which JSF implementation to use and set the appropriate sub-directory  -->
     <condition property="jsf.impl.dir" value="${myfaces.lib.dir}" else="${mojarra.lib.dir}">
@@ -78,20 +75,17 @@
     </patternset>
 
     <patternset id="lib.distribute">
-        <patternset id="lib.distribute.ice" includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icefaces-compat.lib.name}.jar ${icepush.lib.name}.jar">
+        <patternset id="lib.distribute.ice" includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icepush.lib.name}.jar">
             <exclude name="${icefaces.lib.name}.jar"        if="no-icefaces"/>
 
             <exclude name="${icefaces-ace.lib.name}.jar"    if="no-icefaces"/>
             <exclude name="${icefaces-ace.lib.name}.jar"    unless="ace"/>
 
-            <exclude name="${icefaces-compat.lib.name}.jar" if="no-icefaces"/>
-            <exclude name="${icefaces-compat.lib.name}.jar" unless="compat"/>
-
             <exclude name="${icepush.lib.name}.jar"         if="no-icefaces"/>
             <exclude name="${icepush.lib.name}.jar"         if="no-icepush"/>
         </patternset>
 
-        <!-- By default, include these libs in all compat and ace samples unless explicity excluded  -->
+        <!-- By default, include these libs in all ace samples unless explicity excluded  -->
         <patternset id="lib.distribute.common">
             <include name="jstl.jar"                unless="no-jstl"/>
         </patternset>
@@ -106,25 +100,8 @@
         <exclude name="*.jar" unless="myfaces"/>
     </patternset>
 
-    <patternset id="lib.distribute.ace" includes="itext-2.1.7.jar poi-3.7.jar ${lib.distribute.ace.includes}">
+    <patternset id="lib.distribute.ace" includes="commons-collections.jar itext-2.1.7.jar poi-3.7.jar ${lib.distribute.ace.includes}">
         <exclude name="*.jar"                   unless="ace"/>
-    </patternset>
-
-    <patternset id="lib.compile.compat" includes="commons-beanutils.jar commons-collections.jar commons-logging.jar ${lib.compile.compat.includes}">
-        <exclude name="*.jar"                   unless="compat"/>
-        <exclude name="commons-beanutils.jar"   if="myfaces"/>
-        <exclude name="commons-collections.jar" if="myfaces"/>
-        <exclude name="commons-logging.jar"     if="myfaces"/>
-    </patternset>
-
-    <patternset id="lib.distribute.compat" includes="commons-beanutils.jar commons-collections.jar commons-logging.jar ${lib.distribute.compat.includes}">
-        <exclude name="*.jar"                   unless="compat"/>
-        <exclude name="commons-beanutils.jar"   if="myfaces"/>
-        <exclude name="commons-collections.jar" if="myfaces"/>
-        <exclude name="commons-logging.jar"     if="myfaces"/>
-
-        <!-- Do not include commons-logging.  Necessary for WebSphere 8 builds. -->
-        <exclude name="commons-logging.jar"     if="no-commons-logging"/>
     </patternset>
 
     <patternset id="lib.distribute.portlet">
@@ -159,9 +136,6 @@
             <classpath>
                 <fileset dir="${lib.application.dir}" erroronmissingdir="false">
                     <patternset refid="lib.compile.application"/>
-                </fileset>
-                <fileset dir="${lib.compat.dir}">
-                    <patternset refid="lib.compile.compat"/>
                 </fileset>
                 <fileset dir="${jsf.lib.dir}">
                     <patternset refid="lib.compile"/>
@@ -207,9 +181,6 @@
             </lib>
             <lib dir="${lib.ace.dir}">
                 <patternset refid="lib.distribute.ace"/>
-            </lib>
-            <lib dir="${lib.compat.dir}">
-                <patternset refid="lib.distribute.compat"/>
             </lib>
             <lib dir="${lib.portlet.dir}">
                 <patternset refid="lib.distribute.portlet"/>

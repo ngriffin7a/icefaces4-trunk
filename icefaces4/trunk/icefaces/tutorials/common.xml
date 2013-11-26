@@ -23,13 +23,9 @@
     <property name="samples.dist.dir" location="${icefaces.base.dir}/samples/dist"/>
     <property name="lib.extra.dir" location="./lib" />
     <property name="lib.dir" location="${icefaces.base.dir}/lib"/>
-    <property name="lib.compat.dir" location="${lib.dir}/compat"/>
-    <property name="lib.compat.dir.includes" value=""/>
     
     <property name="lib.compile.application.includes" value=""/>
     <property name="lib.distribute.application.includes" value=""/>
-    <property name="lib.distribute.compat.includes" value="commons-digester.jar commons-beanutils.jar commons-collections.jar jxl.jar krysalis-jCharts-1.0.0-alpha-1.jar"/>
-    <property name="lib.compile.compat.includes" value="commons-digester.jar commons-beanutils.jar commons-collections.jar jxl.jar krysalis-jCharts-1.0.0-alpha-1.jar el-api.jar" />
 
     <property name="mojarra.lib.dir" location="${lib.dir}/mojarra" />
     <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
@@ -49,7 +45,6 @@
                                                       
     <property name="icefaces.lib.name" value="icefaces" />                                                                         
     <property name="icefaces-ace.lib.name" value="icefaces-ace" />
-    <property name="icefaces-compat.lib.name" value="icefaces-compat" /> 
     <property name="icepush.lib.name" value="icepush" />    
     
     <!-- Check which JSF implementation to use and set the appropriate sub-directory  -->
@@ -74,32 +69,17 @@
     </patternset>
 
     <patternset id="lib.distribute">
-        <patternset id="lib.distribute.ice" includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icefaces-compat.lib.name}.jar ${icepush.lib.name}.jar jstl.jar">
+        <patternset id="lib.distribute.ice" includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar  ${icepush.lib.name}.jar jstl.jar">
             <exclude name="${icefaces.lib.name}.jar"        if="no-icefaces"/>
 
             <exclude name="${icefaces-ace.lib.name}.jar"    if="no-icefaces"/>
             <exclude name="${icefaces-ace.lib.name}.jar"    unless="ace"/>
 
-            <exclude name="${icefaces-compat.lib.name}.jar" if="no-icefaces"/>
-            <exclude name="${icefaces-compat.lib.name}.jar" unless="compat"/>
-
             <exclude name="${icepush.lib.name}.jar"         if="no-icefaces"/>
             <exclude name="${icepush.lib.name}.jar"         if="no-icepush"/>
 
-            <exclude name="jstl.jar" unless="compat"/>
+            <exclude name="jstl.jar" />
         </patternset>
-    </patternset>
-
-    <patternset id="lib.compile.compat" includes="commons-logging.jar ${lib.compile.compat.includes}">
-        <exclude name="*.jar"                              unless="compat"/>
-        <exclude name="jxl.jar"                            unless="compat_dataExporter"/>
-        <exclude name="krysalis-jCharts-1.0.0-alpha-1.jar" unless="compat_outputChart"/>
-    </patternset>
-
-    <patternset id="lib.distribute.compat" includes="commons-logging.jar ${lib.distribute.compat.includes}">
-        <exclude name="*.jar"                              unless="compat"/>
-        <exclude name="jxl.jar"                            unless="compat_dataExporter"/>
-        <exclude name="krysalis-jCharts-1.0.0-alpha-1.jar" unless="compat_outputChart"/>
     </patternset>
 
     <patternset id="lib.compile.mojarra" includes="*.jar"/>
@@ -145,9 +125,6 @@
                 <fileset dir="${lib.application.dir}" erroronmissingdir="false">
                     <patternset refid="lib.compile.application"/>
                 </fileset>
-                <fileset dir="${lib.compat.dir}">
-                    <patternset refid="lib.compile.compat"/>
-                </fileset>
                 <fileset dir="${jsf.lib.dir}">
                     <patternset refid="lib.compile.mojarra"/>
                 </fileset>
@@ -184,9 +161,6 @@
              webxml="${web.dir}/WEB-INF/web.xml">
             <lib dir="${lib.dir}">
                 <patternset refid="lib.distribute"/>
-            </lib>
-            <lib dir="${lib.compat.dir}">
-                <patternset refid="lib.distribute.compat"/>
             </lib>
             <lib dir="${jsf.lib.dir}">
                 <patternset refid="lib.distribute.jsf"/>

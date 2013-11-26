@@ -18,8 +18,8 @@ package org.icefaces.samples.showcase.dataGenerators;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.*;
-import org.icefaces.samples.showcase.example.compat.dataTable.Car;
-import org.icefaces.samples.showcase.example.compat.selector.SelectableCar;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+import org.icefaces.samples.showcase.example.ace.dataTable.SelectableCar;
 
 
 public class VehicleGenerator implements Serializable

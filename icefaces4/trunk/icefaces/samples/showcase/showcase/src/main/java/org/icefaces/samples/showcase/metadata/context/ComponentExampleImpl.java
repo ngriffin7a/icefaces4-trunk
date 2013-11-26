@@ -19,7 +19,7 @@ package org.icefaces.samples.showcase.metadata.context;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
 import org.icefaces.samples.showcase.util.FacesUtils;
 
-import com.icesoft.faces.context.effects.*;
+// import com.icesoft.faces.context.effects.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class ComponentExampleImpl<T> implements ComponentExample, ExampleResourc
     private String subMenuTitle;
     private ArrayList<MenuLink> subMenuLinks;
     
-    private Effect effect;
+//  private Effect effect;
 
     public ComponentExampleImpl(Class<T> parentClass) {
         this.parentClass = parentClass;
@@ -189,17 +189,17 @@ public class ComponentExampleImpl<T> implements ComponentExample, ExampleResourc
         return subMenuTitle;
     }
     
-    public Effect getEffect() {
-        return effect;
-    }
+//    public Effect getEffect() {
+//        return effect;
+//    }
     
-    public void setEffect(Effect effect) {
-        this.effect = effect;
-    }
+//    public void setEffect(Effect effect) {
+//        this.effect = effect;
+//    }
     
-    public void prepareEffect() {
-        if (effect != null) {
-            effect.setFired(false);
-        }
-    }
+//    public void prepareEffect() {
+//        if (effect != null) {
+//            effect.setFired(false);
+//        }
+//    }
 }
