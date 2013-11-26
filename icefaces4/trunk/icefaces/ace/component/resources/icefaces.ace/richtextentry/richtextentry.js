@@ -40,7 +40,7 @@ ice.ace.richtextentry.CKsaveAjax = function(editor) {
     }
 };
 
-CKEDITOR.config.extraPlugins = "aceSave";
+CKEDITOR.config.extraPlugins = CKEDITOR.config.extraPlugins ? CKEDITOR.config.extraPlugins + ",aceSave" : "aceSave";
 
 ice.ace.richtextentry.getToolbar = function(toolbar) {
 
