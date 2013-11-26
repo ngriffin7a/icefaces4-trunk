@@ -228,7 +228,7 @@ ice.ace.DataTable.Paginator = function(table) {
     }
 
 
-    if (cfg.alwaysVisible == false && cfg.totalRecords < cfg.rowsPerPage) {
+    if (cfg.alwaysVisible == false && (cfg.totalRecords <= cfg.rowsPerPage || cfg.rowsPerPage == 0)) {
         container.css('display','none');
     } else {
         initPageMarkup();
