@@ -127,8 +127,8 @@
     <target name="compile" depends="pre.compile">
         <javac srcdir="${java.dir}"
                destdir="${classes.dir}"
-               source="1.5"
-               target="1.5"
+               source="1.6"
+               target="1.6"
                debug="true"
                includeantruntime="false"
                encoding="ISO-8859-1">
