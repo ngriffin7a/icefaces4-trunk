@@ -255,36 +255,37 @@ if (!window.ice.icefaces) {
 
         var viewIDs = [];
 
-        function retrieveUpdate(viewID) {
+        function requestForUpdates(viewID) {
             append(viewIDs, viewID);
             var formID = retrieveUpdateFormID(viewID);
             var form = lookupElementById(formID);
             appendOrReplaceHiddenInputElement(form, 'ice.view', viewID);
             appendOrReplaceHiddenInputElement(form, 'ice.window', namespace.window);
 
-            var requestUpdates = function() {
-                var form = lookupElementById(formID);
-                //form is missing after navigating to a non-icefaces page
-                if (form) {
-                    try {
-                        debug(logger, 'picking updates for view ' + viewID);
-                        var options = {
-                            'ice.submit.type': 'ice.push',
-                            render: '@all'
-                        };
-                        jsf.ajax.request(form, null, options);
-                    } catch (e) {
-                        warn(logger, 'failed to pick updates', e);
-                    }
+            //form is missing after navigating to a non-icefaces page
+            if (form) {
+                try {
+                    debug(logger, 'picking updates for view ' + viewID);
+                    var options = {
+                        'ice.submit.type': 'ice.push',
+                        render: '@all'
+                    };
+                    jsf.ajax.request(form, null, options);
+                } catch (e) {
+                    warn(logger, 'failed to pick updates', e);
                 }
-            };
+            }
+        }
+
+        function retrieveUpdate(viewID) {
+            //delay issuing the request until no submit event is in progress
             var delayedUpdates = function()  {
                 if (eventInProgress)  {
                     setTimeout(delayedUpdates, 20);
-                    return;
+                } else {
+                    requestForUpdates(viewID);
                 }
-                requestUpdates();
-            }
+            };
             return delayedUpdates;
         }
 
@@ -316,8 +317,8 @@ if (!window.ice.icefaces) {
         }
 
         function sessionExpired() {
-            //stop retrieving updates
-            retrieveUpdate = noop;
+            //stop requesting updates
+            requestForUpdates = noop;
             //deregister pushIds to stop blocking connection, if ICEpush is present
             if (namespace.push) {
                 each(viewIDs, namespace.push.deregister);

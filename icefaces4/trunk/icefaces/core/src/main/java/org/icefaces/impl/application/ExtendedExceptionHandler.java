@@ -25,6 +25,7 @@ import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.application.ProjectStage;
 import javax.faces.application.ViewExpiredException;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.ExternalContext;
@@ -103,8 +104,8 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
         }
 
         //Do the processing outside of the iterator to avoid ConcurrentModificationException
+        FacesContext fc = FacesContext.getCurrentInstance();
         if (sessionExpired) {
-            FacesContext fc = FacesContext.getCurrentInstance();
             Application app = fc.getApplication();
             if (app == null) {
                 ApplicationFactory factory = (ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
@@ -114,6 +115,13 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
             ExceptionQueuedEventContext ctxt =
                     new ExceptionQueuedEventContext(fc, new SessionExpiredException("session expired (causing view to expire)"));
             app.publishEvent(fc, ExceptionQueuedEvent.class, ctxt);
+        }
+
+        //create fake view root to workaround Mojarra's failure to send the exception message when javax.faces.PARTIAL_STATE_SAVING=false
+        if (fc.getViewRoot() == null)  {
+            UIViewRoot viewRoot = new UIViewRoot();
+            viewRoot.setRenderKitId("HTML_BASIC");
+            fc.setViewRoot(viewRoot);
         }
 
         //Once we've removed the ViewExpiredException and added the SessionExpiredException, we can
