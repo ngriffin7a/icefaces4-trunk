@@ -184,9 +184,10 @@ public class LinkButtonRenderer extends CoreRenderer {
         if (doAction && uiParams != null) {
             json.beginMap("uiParams");
             for (UIParameter param : uiParams){
-                    String temp = param.getValue() == null ? "null": param.getValue().toString();
-                    json.entry(param.getName(), temp);
-            }
+                Object temp = param.getValue() ==null ? null : param.getValue();
+                if (null != temp){
+                    json.entryNonNullValue(param.getName(), temp);
+                }            }
             json.endMap();
         }
 
