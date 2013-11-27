@@ -282,6 +282,33 @@ public class JSONBuilder {
     }
 
     /**
+     * Checks the Object to see if it's a primitive. Will default
+     * to String at end.  Used for f param support so params
+     * can support any type of primitive
+     * @param key
+     * @param value
+     * @return  a reference to this object
+     */
+    public JSONBuilder entryNonNullValue(String key, Object value){
+        if (value instanceof Boolean)  {
+           return entryNonNullValue(key, ((Boolean) value).booleanValue());
+        }
+        if (value instanceof java.lang.Integer){
+           return entryNonNullValue(key, (Integer)value);
+        }
+        if (value instanceof java.lang.Long){
+            return entryNonNullValue(key, (Long)value);
+        }
+        if (value instanceof java.lang.Double){
+            return entryNonNullValue(key, (Double)value);
+        }
+        if (value instanceof java.lang.Float){
+            return entryNonNullValue(key, (Float)value);
+        } //otherwise, default to String
+        return entryNonNullValue(key, value.toString());
+    }
+
+    /**
      * Adds a String property to a map.
      * Adds quotes and does JSON string escaping, as described at
      * <a href="http://www.json.org/">json.org</a>.

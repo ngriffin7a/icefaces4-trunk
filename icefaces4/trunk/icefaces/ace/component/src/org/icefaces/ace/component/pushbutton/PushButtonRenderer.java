@@ -188,12 +188,10 @@ public class PushButtonRenderer extends CoreRenderer {
 
         if (uiParams != null) {
             json.beginMap("uiParams");
-            for (UIParameter p : uiParams) {
-                /* if param not null then add to map */
-                if (null != p.getValue())  {
-                    String temp = p.getValue() == null ? "null": p.getValue().toString();
-                    json.entry(p.getName(), temp);
-                  //  json.entry(p.getName(), p.getValue().toString());
+            for (UIParameter param : uiParams) {
+                Object temp = param.getValue() ==null ? null : param.getValue();
+                if (null != temp){
+                    json.entryNonNullValue(param.getName(), temp);
                 }
             }
             json.endMap();
