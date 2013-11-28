@@ -147,6 +147,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.startElement("input", null);
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("name", clientId + "_hidden", null);
+        writer.writeAttribute("value", _value, null);
 		writer.endElement("input");
 		
 		// down arrow span
