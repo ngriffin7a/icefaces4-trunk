@@ -56,8 +56,12 @@ public class FacesConfigMerge {
     private static Node hostApp;
     private static Node hostFac;
     private static Node hostLif;
+    private static Node hostName;
+    private static Node hostOrder;
 
     private static XPathExpression ROOT;
+    private static XPathExpression NAME;
+    private static XPathExpression ORDERING;
     private static XPathExpression COMPONENTS;
     private static XPathExpression BEHAVIORS;
     private static XPathExpression RENDER_KIT;
@@ -98,6 +102,8 @@ public class FacesConfigMerge {
             RENDER_KIT = xPath.compile("/f:faces-config/f:render-kit");
             RENDERERS = xPath.compile("/f:faces-config/f:render-kit/f:renderer");
             ROOT = xPath.compile("/f:faces-config");
+            NAME = xPath.compile("/f:faces-config/f:name");
+            ORDERING = xPath.compile("f:faces-config/f:ordering");
             COMPONENTS = xPath.compile("/f:faces-config/f:component");
             BEHAVIORS = xPath.compile("/f:faces-config/f:behavior");
             APP = xPath.compile("/f:faces-config/f:application");
@@ -205,6 +211,16 @@ public class FacesConfigMerge {
                 importedNode = hostFile.importNode(mergeAppChildren.item(nodeIndex), true);
                 hostApp.appendChild(importedNode);
             }
+        }
+        NodeList orderings = ((NodeList)ORDERING.evaluate(mergeFile, XPathConstants.NODESET));
+        if (null != orderings){
+            importedNode = hostFile.importNode(orderings.item(nodeIndex), true);
+            hostRoot.insertBefore(importedNode, hostRoot.getFirstChild());
+        }
+        Node configName = ((Node)NAME.evaluate(mergeFile, XPathConstants.NODE));
+        if (configName !=null){
+            importedNode = hostFile.importNode(configName, true) ;
+            hostRoot.insertBefore(importedNode, hostRoot.getFirstChild());
         }
     }
 
