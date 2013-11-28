@@ -108,6 +108,15 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 		ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = uiComponent.getClientId(facesContext);
         AutoCompleteEntry autoCompleteEntry = (AutoCompleteEntry) uiComponent;
+
+		if (autoCompleteEntry.isReset()) {
+			autoCompleteEntry.setText(null);
+			autoCompleteEntry.setSubmittedText(null);
+			autoCompleteEntry.setValue(null);
+			autoCompleteEntry.setSubmittedValue(null);
+			autoCompleteEntry.setReset(false);
+		}
+
         int width = autoCompleteEntry.getWidth();
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
         Map paramMap = facesContext.getExternalContext().getRequestParameterMap();
