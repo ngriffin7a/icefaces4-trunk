@@ -648,6 +648,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 				Converter converterForType = context.getApplication().createConverter(valueType);
 
 				if(converterForType != null) {
+					if (converterForType instanceof javax.faces.convert.EnumConverter && "".equals(value)) return converterForType.getAsString(context, autoCompleteEntry, null);
 					return converterForType.getAsString(context, autoCompleteEntry, value);
 				}
 			}

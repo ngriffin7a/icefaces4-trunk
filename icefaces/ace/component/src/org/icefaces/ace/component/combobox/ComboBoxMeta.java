@@ -88,7 +88,7 @@ public class ComboBoxMeta extends HtmlInputTextMeta {
             tlddoc="ValueExpression that specifies the property of the data object to use for checking whether the item should be disabled or not. It must evaluate to a boolean value. This only applies when listvar is used and the rendering is done by means of a facet. When using f:selectItem(s), the disabled property on that object/tag is used for the same effect.")
 	private Object itemDisabled;
 	
-	@Property(tlddoc="Defines the method of filter comparison used, default is \"startsWith\". " +
+	@Property(tlddoc="Defines the method of filter comparison used. " +
             "Types available include: \"contains\", \"exact\", \"startsWith\", \"endsWith\" and \"none\".", defaultValue="none")
 	private String filterMatchMode;
 	
