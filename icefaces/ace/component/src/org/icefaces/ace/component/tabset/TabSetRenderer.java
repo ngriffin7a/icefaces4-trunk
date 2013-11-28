@@ -281,6 +281,7 @@ public class TabSetRenderer extends CoreRenderer {
         recursivelyRenderSafe(facesContext, writer, tabSet, safeIdPrefix,
                 visitedTabClientIds, renderWithoutUpdate, 0);
         writer.endElement(HTML.DIV_ELEM);
+        writer.endElement(HTML.DIV_ELEM);
 
         // If the server is trumping the browser's selectedIndex, by reverting
         // it to the previous value, then the dom diff won't know to tell the
@@ -314,10 +315,7 @@ public class TabSetRenderer extends CoreRenderer {
             encodeClientBehaviors(facesContext, tabSet, jb);
         jb.endMap().
         endFunction();
-
         ScriptWriter.insertScript(facesContext, uiComponent, jb.toString());
-
-        writer.endElement(HTML.DIV_ELEM);
     }
 
     private void recursivelyRenderSafe(FacesContext facesContext,
