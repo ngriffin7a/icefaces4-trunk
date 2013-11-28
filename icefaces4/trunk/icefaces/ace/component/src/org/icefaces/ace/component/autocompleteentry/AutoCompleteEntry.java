@@ -25,7 +25,6 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
@@ -169,18 +168,4 @@ public class AutoCompleteEntry extends AutoCompleteEntryBase implements NamingCo
     public String getFocusedElementId() {
         return getClientId(FacesContext.getCurrentInstance()) + "_input";
     }
-
-	public void setValue(Object value) {
-		super.setValue(value);
-		if (value == null && !isChildOfIceTable(this)) setText(null);
-	}
-
-	private boolean isChildOfIceTable(UIComponent component) {
-		if (component instanceof UIViewRoot) return false;
-		String className = component.getClass().getName();
-		if (className.equals("com.icesoft.faces.component.ext.HtmlDataTable") ||
-			className.equals("com.icesoft.faces.component.paneltabset.PanelTabSet") ||
-			className.endsWith("UIRepeat")) return true;
-		return isChildOfIceTable(component.getParent());
-	}
 }

@@ -156,6 +156,9 @@ public class AutoCompleteEntryMeta extends HtmlInputTextMeta {
 			"will be used instead.")
     private String placeholder;
 
+	@Property(tlddoc = "Flag to reset the component values completely. This component internally stores a number of temporary values to perform its functions. Since these values are not accessible to the app developer, they might linger after resetting the main value. Set this flag to true to completely reset all these temporary internal values. These values will be reset in the RENDER_RESPONSE phase. After that, this flag will automatically be set to false again. Typically this flag will be set in an action listener. When setting this flag to true, it is also advised to set the property bound to this component's value to null.", defaultValue="false")
+	private boolean reset;
+
     @Field(defaultValue="false")
     private Boolean populateList;
 	
