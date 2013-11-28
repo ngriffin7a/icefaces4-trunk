@@ -40,7 +40,7 @@ import java.io.Serializable;
             @ExampleResource(type = ResourceType.java,
                     title="DataTableSort.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/compat/dataTable/DataTableSort.java")
+                    "/example/ace/dataTable/DataTableSort.java")
         }
 )
 @ManagedBean(name= DataTableSorting.BEAN_NAME)
