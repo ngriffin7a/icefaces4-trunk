@@ -1203,15 +1203,16 @@ public class UISeriesBase extends HtmlDataTable implements SeriesStateHolder {
             // Visit as required on the *children* of the UIColumn
             // (facets have been done a single time with rowIndex=-1 already)
             if (getChildCount() > 0) {
-                int index = 0;
+                int index = getFirst();
                 for (UIComponent kid : getChildren()) {
                     if (!(kid instanceof UIColumn)) {
-                        rowIndex = index++;
+                        setRowIndex(index++);
                         if (kid.visitTree(context, callback)) {
                             return true;
                         }
                         continue;
                     }
+
                     if (kid.getChildCount() > 0) {
                     for (UIComponent grandkid : kid.getChildren()) {
                             if (grandkid.visitTree(context, callback)) {
@@ -1222,6 +1223,7 @@ public class UISeriesBase extends HtmlDataTable implements SeriesStateHolder {
                 }
             }
 
+            setRowIndex(-1);
             if (!visitRows) {
                 break;
             }
