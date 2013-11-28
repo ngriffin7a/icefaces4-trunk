@@ -204,6 +204,7 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 				Converter converterForType = context.getApplication().createConverter(valueType);
 
 				if(converterForType != null) {
+					if (converterForType instanceof javax.faces.convert.EnumConverter && "".equals(value)) return converterForType.getAsString(context, simpleSelectOneMenu, null);
 					return converterForType.getAsString(context, simpleSelectOneMenu, value);
 				}
 			}

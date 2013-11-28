@@ -440,6 +440,7 @@ public class SelectMenuRenderer extends InputRenderer {
 				Converter converterForType = context.getApplication().createConverter(valueType);
 
 				if(converterForType != null) {
+					if (converterForType instanceof javax.faces.convert.EnumConverter && "".equals(value)) return converterForType.getAsString(context, selectMenu, null);
 					return converterForType.getAsString(context, selectMenu, value);
 				}
 			}
