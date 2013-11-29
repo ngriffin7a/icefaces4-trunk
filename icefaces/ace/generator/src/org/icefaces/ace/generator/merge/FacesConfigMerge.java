@@ -212,9 +212,9 @@ public class FacesConfigMerge {
                 hostApp.appendChild(importedNode);
             }
         }
-        NodeList orderings = ((NodeList)ORDERING.evaluate(mergeFile, XPathConstants.NODESET));
-        if (null != orderings){
-            importedNode = hostFile.importNode(orderings.item(nodeIndex), true);
+        Node ordering = ((Node)ORDERING.evaluate(mergeFile, XPathConstants.NODE));
+        if (null != ordering){
+            importedNode = hostFile.importNode(ordering, true);
             hostRoot.insertBefore(importedNode, hostRoot.getFirstChild());
         }
         Node configName = ((Node)NAME.evaluate(mergeFile, XPathConstants.NODE));
