@@ -56,9 +56,9 @@ var restoreMonitorFocusChangesOnUpdate;
                 if (e && (e != document.activeElement)) {
                     setFocus(id);
                     if (e.focus) {
+                        var x = window.scrollX;
+                        var y = window.scrollY;
                         try {
-                            var x = window.scrollX;
-                            var y = window.scrollY;
                             e.focus();
                             //reset scroll position, Firefox will otherwise scroll to the focused element
                             window.scrollTo(x, y);
@@ -69,6 +69,8 @@ var restoreMonitorFocusChangesOnUpdate;
                                 //IE sometimes requires that focus() be called again
                                 try {
                                     e.focus();
+                                    //reset scroll position, Firefox will otherwise scroll to the focused element
+                                    window.scrollTo(x, y);
                                 } catch (ex2) {
                                     //IE throws exception if element is invisible
                                 }
