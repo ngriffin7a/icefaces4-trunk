@@ -534,7 +534,7 @@ if (!window.ice.icefaces) {
 
         //clear network listeners just before reloading or navigating away to avoid falsely notified errors
         onBeforeUnload(window, function() {
-            networkErrorListeners = [];
+            empty(networkErrorListeners);
         });
 
         onKeyPress(document, function(ev) {
