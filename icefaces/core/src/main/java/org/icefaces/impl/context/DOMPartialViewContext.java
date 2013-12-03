@@ -49,7 +49,6 @@ import java.util.regex.Pattern;
 public class DOMPartialViewContext extends PartialViewContextWrapper {
     private static final String JAVAX_FACES_VIEW_HEAD = "javax.faces.ViewHead";
     private static final String JAVAX_FACES_VIEW_BODY = "javax.faces.ViewBody";
-    private static final String JAVAX_FACES_VIEW_ROOT = PartialResponseWriter.RENDER_ALL_MARKER;
     private static final Logger log = Logger.getLogger(DOMPartialViewContext.class.getName());
     private static final Pattern SPACE_SEPARATED = Pattern.compile("[ ]+");
     private static final Pattern OPTION_TAG =
@@ -63,7 +62,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
 
     private PartialViewContext wrapped;
     protected FacesContext facesContext;
-    private PartialResponseWriter partialWriter;
     private Boolean isAjaxRequest;
     private DOMUtils.DiffConfig diffConfig = null;
     private boolean clientSideElementUpdateDetermination;
@@ -192,16 +190,16 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                         partialWriter.endExtension();
                     }
 
-                    Node body = newDOM.getElementsByTagName("body").item(0);
+                    Element body = (Element) newDOM.getElementsByTagName("body").item(0);
                     String target = JAVAX_FACES_VIEW_BODY;
 
                     // ICE-8379: If there is no body in the new DOM, then it's likely were running
                     // in a portlet so get the document as it will be a "fragment" of the page. We
                     // also need to just target the ViewRoot rather than the ViewBody for the update.
-                    if (body == null &&
-                            EnvUtils.instanceofPortletRequest(facesContext.getExternalContext().getRequest())) {
-                        body = newDOM.getDocumentElement();
-                        target = JAVAX_FACES_VIEW_ROOT;
+                    if (body == null && EnvUtils.instanceofPortletRequest(facesContext.getExternalContext().getRequest())) {
+                        //use element ID for the update (to comply with JSF 2.2 additional spec: https://java.net/jira/browse/JAVASERVERFACES-2660)
+                        body = (Element) newDOM.getDocumentElement().getFirstChild();
+                        target = body.getAttribute("id");
                     }
 
                     if (!clientSideElementUpdateDetermination) {
