@@ -376,6 +376,10 @@ ice.ace.Autocompleter.prototype = {
         else {
             if (event.keyCode == ice.ace.Autocompleter.keys.KEY_TAB || event.keyCode == ice.ace.Autocompleter.keys.KEY_RETURN) return;
         }
+		var adjustedDelay = this.delay;
+		if (event.keyCode == ice.ace.Autocompleter.keys.KEY_BACKSPACE || event.keyCode == ice.ace.Autocompleter.keys.KEY_DELETE) {
+			adjustedDelay = this.delay > 500 ? this.delay : 500;
+		}
 		
 		if (!this.isCharacterCode(event.keyCode)) return;
 
@@ -387,7 +391,7 @@ ice.ace.Autocompleter.prototype = {
         if (this.active) this.render();
         if (this.observer) clearTimeout(this.observer);
 		var self = this;
-        this.observer = setTimeout(function() { self.onObserverEvent() }, this.delay);
+        this.observer = setTimeout(function() { self.onObserverEvent() }, adjustedDelay);
     },
 
     onKeyDown: function(event) {
