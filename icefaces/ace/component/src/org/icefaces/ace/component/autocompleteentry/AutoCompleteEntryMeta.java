@@ -116,7 +116,7 @@ public class AutoCompleteEntryMeta extends HtmlInputTextMeta {
             "Default is \"labelRight\" if labelPosition is \"inField\", \"right\" otherwise.")
     private String indicatorPosition;
 	
-    @Property(tlddoc = "Delay in milliseconds for showing the list of possible matches after typing a character.", defaultValue="400")
+    @Property(tlddoc = "Delay in milliseconds for showing the list of possible matches after typing a character.", defaultValue="250")
     private int delay;
 
     @Property(tlddoc = "Minimum number of characters that must be in the text field before submitting and before producing the list of possible matches.", defaultValue="0")
