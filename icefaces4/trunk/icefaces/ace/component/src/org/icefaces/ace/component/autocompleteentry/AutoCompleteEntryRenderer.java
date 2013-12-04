@@ -293,14 +293,19 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 		String renderedValue = null;
 		String value = (String) autoCompleteEntry.getValue();
 		String submittedText = (String) autoCompleteEntry.getSubmittedText();
-		if (value != null) {
-			if (text == null) renderedValue = value;
+		if (autoCompleteEntry.isValid()) {
+			if (value != null) {
+				if (text == null) renderedValue = value;
+			}
+			if (submittedText != null && !submittedText.equals(value)) {
+				autoCompleteEntry.setText(value);
+				text = value;
+			}
+			if (renderedValue == null) renderedValue = text;
+		} else {
+			renderedValue = submittedText;
+			autoCompleteEntry.setPopulateList(false);
 		}
-		if (submittedText != null && !submittedText.equals(value)) {
-			autoCompleteEntry.setText(value);
-			text = value;
-		}
-		if (renderedValue == null) renderedValue = text;
 		autoCompleteEntry.setSubmittedText(null);
 
         // field update script
