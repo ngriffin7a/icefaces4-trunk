@@ -87,12 +87,6 @@
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     </servlet>
-
-    <servlet>
-        <servlet-name>Resource Servlet</servlet-name>
-        <servlet-class>com.icesoft.faces.webapp.CompatResourceServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
    
     <servlet>
         <servlet-name>SourceCode Reader</servlet-name>
@@ -115,11 +109,6 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/icefaces/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>Resource Servlet</servlet-name>
-        <url-pattern>/xmlhttp/*</url-pattern>
     </servlet-mapping>
 
     <session-config>
