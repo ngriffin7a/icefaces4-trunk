@@ -226,6 +226,7 @@ ice.ace.Autocompleter.prototype = {
 			update.style.position = 'absolute';
 			var jqElement = ice.ace.jq(element);
 			var jqUpdate = ice.ace.jq(update);
+			var jqWindow = ice.ace.jq(window);
 			var pos = jqElement.offset();
 			var autoUp = false;
 			if (this.direction == 'auto') {
@@ -244,18 +245,18 @@ ice.ace.Autocompleter.prototype = {
 			if (this.direction == 'up' || autoUp) {
 				var updateHeight = jqUpdate.height();
 				updateHeight = updateHeight > this.height ? this.height : updateHeight;
-				jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: jqElement.width(), maxHeight: this.height, overflow: "auto" });
+				jqUpdate.css({ position: "fixed", marginTop: 0, marginLeft: 0, width: jqElement.width(), maxHeight: this.height, overflow: "auto" });
 				var savedPos = element.style.position;
 				element.style.position = "relative";
-				update.style.left = element.offsetLeft + "px";
-				update.style.top = (element.offsetTop - updateHeight) + "px";
+				update.style.left = (pos.left - jqWindow.scrollLeft()) + "px";
+				update.style.top = (pos.top - jqWindow.scrollTop() - updateHeight) + "px";
 				element.style.position = savedPos;
 			} else {
-				jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: jqElement.width(), maxHeight: this.height, overflow: "auto" });
+				jqUpdate.css({ position: "fixed", marginTop: 0, marginLeft: 0, width: jqElement.width(), maxHeight: this.height, overflow: "auto" });
 				var savedPos = element.style.position;
 				element.style.position = "relative";
-				update.style.left = element.offsetLeft + "px";
-				update.style.top = (element.offsetTop + element.offsetHeight) + "px";
+				update.style.left = (pos.left - jqWindow.scrollLeft()) + "px";
+				update.style.top = (pos.top - jqWindow.scrollTop() + element.offsetHeight) + "px";
 				element.style.position = savedPos;
 			}
 		}
