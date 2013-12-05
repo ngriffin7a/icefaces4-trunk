@@ -101,7 +101,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
 		String clientId = menu.getClientId(context);
 		String delegateId = menu.getForDelegate();
 		
-		writer.startElement("script", menu);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
         writer.write("ice.ace.jq(function() {");

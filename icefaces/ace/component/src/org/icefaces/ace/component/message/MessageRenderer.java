@@ -69,7 +69,7 @@ public class MessageRenderer extends Renderer {
             writer.writeAttribute("aria-relevant", "all", null);
         }
 
-        writer.startElement("span", message);
+        writer.startElement("span", null);
         writer.writeAttribute("id", clientId + "_msg", "id");
         boolean rendered = false;
         FacesMessage facesMessage;
@@ -142,14 +142,14 @@ public class MessageRenderer extends Renderer {
         }
         writer.writeAttribute("class", styleClass + " ui-widget ui-corner-all ui-state-" + states[ordinal], null);
 
-        writer.startElement("span", message);
+        writer.startElement("span", null);
         writer.writeAttribute("class", "ui-faces-message-icon", null);
-        writer.startElement("span", message);
+        writer.startElement("span", null);
         writer.writeAttribute("class", "ui-icon ui-icon-" + icons[ordinal], null);
         writer.endElement("span");
         writer.endElement("span");
 
-        writer.startElement("span", message);
+        writer.startElement("span", null);
         writer.writeAttribute("class", "ui-faces-message-text", null);
         if (!text.equals("")) {
             if (message.isEscape()) {

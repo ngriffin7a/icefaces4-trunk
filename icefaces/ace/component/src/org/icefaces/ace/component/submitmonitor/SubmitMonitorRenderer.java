@@ -50,7 +50,7 @@ public class SubmitMonitorRenderer extends CoreRenderer {
 
     private void writeScript(FacesContext context, ResponseWriter writer,
             SubmitMonitor monitor, String clientId) throws IOException {
-        writer.startElement(HTML.DIV_ELEM, monitor);
+        writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_script", null);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
@@ -71,7 +71,7 @@ public class SubmitMonitorRenderer extends CoreRenderer {
 
     private void writeComponent(FacesContext context, ResponseWriter writer,
             SubmitMonitor monitor, String clientId) throws IOException {
-        writer.startElement(HTML.DIV_ELEM, monitor);
+        writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_display", null);
         Utils.writeConcatenatedStyleClasses(
             writer, "ice-sub-mon ui-widget", monitor.getStyleClass());
@@ -83,7 +83,7 @@ public class SubmitMonitorRenderer extends CoreRenderer {
         // and we don't want duplicate id(s) in the DOM. It may be problematic
         // with the facet components having id(s).
         for (State state : State.values()) {
-            writer.startElement(HTML.DIV_ELEM, monitor);
+            writer.startElement(HTML.DIV_ELEM, null);
             // Start us off in the idle state. When first rendering, this
             // puts us in the right state, since we don't have any listeners
             // setup to transition us from active to idle. But on subsequent
@@ -117,13 +117,13 @@ public class SubmitMonitorRenderer extends CoreRenderer {
         writer.endElement(HTML.DIV_ELEM);
 
         if (monitor.isPreload()) {
-            writer.startElement(HTML.DIV_ELEM, monitor);
+            writer.startElement(HTML.DIV_ELEM, null);
             writer.writeAttribute(HTML.ID_ATTR, clientId+"_preload", null);
             writer.writeAttribute(HTML.CLASS_ATTR, "ice-sub-mon ui-widget", null);
             writer.writeAttribute(HTML.STYLE_ATTR, "position:absolute;top:-99999px;left:-99999px;display:inline;width:0px;height:0px;padding:0px;margin:0px;", null);
 
             for (State state : State.values()) {
-                writer.startElement(HTML.DIV_ELEM, monitor);
+                writer.startElement(HTML.DIV_ELEM, null);
                 writer.writeAttribute(HTML.CLASS_ATTR, state.getMidClassName(), null);
 
                 UIComponent facet = monitor.getFacet(state.name());

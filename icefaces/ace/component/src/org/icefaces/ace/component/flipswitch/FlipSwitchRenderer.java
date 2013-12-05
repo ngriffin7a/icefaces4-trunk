@@ -118,7 +118,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
         String jsCall = builder.toString();
         if (!disabled | !readonly)writer.writeAttribute("onclick", jsCall, null);
         writer.writeAttribute("class", styleClass, "class");
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
 
         boolean switchVal = (Boolean) flipswitch.getValue();
         writer.writeAttribute("class", "mobi-flipswitch-txt-on" + (switchVal ? " ui-state-active" : "" ), null);
@@ -126,7 +126,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
         writer.endElement(HTML.SPAN_ELEM);
         writeHiddenField(uiComponent, clientId, writer, switchVal);
 
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute("class", "mobi-flipswitch-txt-off", null);
         writer.write(labelOff);
         writer.endElement(HTML.SPAN_ELEM);

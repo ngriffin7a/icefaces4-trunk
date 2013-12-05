@@ -400,7 +400,7 @@ public class DataTableRenderer extends CoreRenderer {
 
         json.endMap().endArray().endFunction();
 
-		writer.startElement(HTML.SCRIPT_ELEM, table);
+		writer.startElement(HTML.SCRIPT_ELEM, null);
 		writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);        
         writer.write(json.toString());
 		writer.endElement(HTML.SCRIPT_ELEM);

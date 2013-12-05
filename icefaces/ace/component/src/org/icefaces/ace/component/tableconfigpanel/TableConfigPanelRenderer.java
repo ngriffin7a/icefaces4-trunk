@@ -65,7 +65,7 @@ public class TableConfigPanelRenderer extends CoreRenderer {
         List<Column> columns = table.getColumns();
         int i;
 
-        writer.startElement(HTML.DIV_ELEM, null);
+        writer.startElement(HTML.DIV_ELEM, component);
         writer.writeAttribute(HTML.ID_ATTR, clientId, null);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 

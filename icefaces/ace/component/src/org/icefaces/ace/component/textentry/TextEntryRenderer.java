@@ -79,7 +79,7 @@ public class TextEntryRenderer extends InputRenderer {
         defaultClass += getStateStyleClasses(textEntry);
         Map<String, Object> labelAttributes = getLabelAttributes(component);
 
-        writer.startElement("span", textEntry);
+        writer.startElement("span", null);
 
         writeLabelAndIndicatorBefore(labelAttributes);
 

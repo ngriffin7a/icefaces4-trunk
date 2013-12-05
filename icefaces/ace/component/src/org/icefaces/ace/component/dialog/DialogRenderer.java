@@ -54,7 +54,7 @@ public class DialogRenderer extends CoreRenderer {
         Dialog dialog = (Dialog) component;
         String clientId = dialog.getClientId(context);
 
-        writer.startElement("div", null);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, null);
 
         encodeMarkup(context, dialog);

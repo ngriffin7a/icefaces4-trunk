@@ -54,7 +54,7 @@ public class ConfirmationDialogRenderer extends CoreRenderer {
         String messageText = dialog.getMessage();
         UIComponent messageFacet = dialog.getFacet("message");
 		
-		writer.startElement("div", null);
+		writer.startElement("div", dialog);
 		writer.writeAttribute("id", clientId , null);
 		
 		writer.startElement("div", null);
@@ -98,7 +98,7 @@ public class ConfirmationDialogRenderer extends CoreRenderer {
 		String clientId = dialog.getClientId();
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
 
-		writer.startElement("script", dialog);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		
 		JSONBuilder jb = JSONBuilder.create();

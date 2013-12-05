@@ -76,7 +76,7 @@ public class LinkButtonRenderer extends CoreRenderer {
         encodeRootStyle(linkButton, writer);
 
         // first span
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
 
         String styleClass = "yui-button yui-link-button ui-button ui-widget";
         if (disabled)
@@ -84,12 +84,12 @@ public class LinkButtonRenderer extends CoreRenderer {
         writer.writeAttribute(HTML.CLASS_ATTR, styleClass, null);
 
         // second span but "first-child"- ugh.
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "first-child", null);
         if (ariaEnabled) encodeAriaAttributes(writer, linkButton, doAction);
 
         // button element
-        writer.startElement(HTML.ANCHOR_ELEM, uiComponent);
+        writer.startElement(HTML.ANCHOR_ELEM, null);
 
         if (tabindex != null)
             writer.writeAttribute(HTML.TABINDEX_ATTR, tabindex, null);

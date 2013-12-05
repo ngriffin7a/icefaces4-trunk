@@ -412,7 +412,7 @@ public class CoreRenderer extends Renderer {
             String JS_LIBRARY, String JS2_NAME, String JS2_MIN_NAME, String JS2_LIB) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = component.getClientId(facesContext);
-        writer.startElement(HTML.SPAN_ELEM, component);
+        writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "mobi-hidden", null);
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_libJS", HTML.ID_ATTR);
         if (!isScriptLoaded(facesContext, JS_NAME)) {
@@ -451,7 +451,7 @@ public class CoreRenderer extends Renderer {
             String JS_LIBRARY) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = component.getClientId(facesContext);
-        writer.startElement(HTML.SPAN_ELEM, component);
+        writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_libJS", HTML.ID_ATTR);
         writer.writeAttribute(HTML.CLASS_ATTR, "mobi-hidden", null);
         if (!isScriptLoaded(facesContext, JS_NAME)) {

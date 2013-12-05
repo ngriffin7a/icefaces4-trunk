@@ -286,8 +286,16 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         if (component != null && getPassThroughAttributesMethod != null) {
             try {
                 Map<String, Object> passthroughAttributes = (Map<String, Object>) getPassThroughAttributesMethod.invoke(component, new Object[]{true});
-                if (passthroughAttributes != null) {
-                    elementPasstroughAttributes.put(cursor, passthroughAttributes);
+                if (passthroughAttributes != null && !passthroughAttributes.isEmpty()) {
+                    Map<String, Object> dataAttributes = new HashMap<String, Object>();
+                    //filter out non data-* attributes
+                    for (Map.Entry<String, Object> entry: passthroughAttributes.entrySet()) {
+                        String key = entry.getKey();
+                        if (key != null && key.startsWith("data-")) {
+                            dataAttributes.put(key, entry.getValue());
+                        }
+                    }
+                    elementPasstroughAttributes.put(cursor, dataAttributes);
                 }
             } catch (InvocationTargetException e) {
                 throw new RuntimeException(e);

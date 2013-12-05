@@ -85,7 +85,7 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		String inputClientId = clientId + "_input";
 
 		// root
-        writer.startElement("span", null);
+        writer.startElement("span", uiComponent);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", "ui-simpleselectonemenu " + simpleSelectOneMenu.getStyleClass(), null);
 

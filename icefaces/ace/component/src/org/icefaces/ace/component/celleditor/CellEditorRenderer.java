@@ -52,7 +52,7 @@ public class CellEditorRenderer extends CoreRenderer {
         RowState rowState = (RowState) context.getExternalContext().getRequestMap().get(rowStateVar);
         List<String> selectedEditorIds = rowState.getActiveCellEditorIds();
 
-        writer.startElement(HTML.DIV_ELEM, null);
+        writer.startElement(HTML.DIV_ELEM, component);
         writer.writeAttribute(HTML.ID_ATTR, component.getClientId(context), null);
         if (selectedEditorIds.contains(editor.getId()))
             writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-highlight " + DataTableConstants.CELL_EDITOR_CLASS, null);

@@ -59,7 +59,7 @@ public class ButtonGroupRenderer extends CoreRenderer {
         String headerText = (headerText = buttonGroup.getHeader()) == null ? "" : headerText.trim();
 
         if (headerFacet != null || headerText.length() > 0) {
-            writer.startElement("div", component);
+            writer.startElement("div", null);
             writer.writeAttribute("class", "ui-widget-header ui-corner-top", null);
             if (headerFacet != null) {
                 renderChild(context, headerFacet);

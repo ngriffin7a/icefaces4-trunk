@@ -123,7 +123,7 @@ public class SliderEntryRenderer extends CoreRenderer{
 		String styleClass = slider.getStyleClass();
 		if (styleClass != null) writer.writeAttribute("class", styleClass, null);
 		
-		writer.startElement("input", slider);
+		writer.startElement("input", null);
 		writer.writeAttribute("id", clientId + "_hidden" , "id");
 		writer.writeAttribute("name", clientId + "_hidden" , "name");
 		writer.writeAttribute("type", "hidden" , "type");
@@ -132,7 +132,7 @@ public class SliderEntryRenderer extends CoreRenderer{
 		writer.endElement("input");
 
 		// top/left label
-		writer.startElement("div", slider);
+		writer.startElement("div", null);
 		if (showLabels) {
 			if ("y".equals(axis)) {
 				writer.writeAttribute("class", "ice-ace-slider-label-top", null);
@@ -151,7 +151,7 @@ public class SliderEntryRenderer extends CoreRenderer{
 			length += "px";
 		}
 		String dimension = "y".equals(axis) ? "height" : "width";
-		writer.startElement("div", slider);
+		writer.startElement("div", null);
 		String sliderStyle = dimension + ":" + length + ";";
 		if (showLabels && !"y".equals(axis)) {
 			sliderStyle += "float:left;";
@@ -160,7 +160,7 @@ public class SliderEntryRenderer extends CoreRenderer{
 		writer.endElement("div");
 		
 		// right/bottom label
-		writer.startElement("div", slider);
+		writer.startElement("div", null);
 		if (showLabels) {
 			if ("y".equals(axis)) {
 				writer.writeAttribute("class", "ice-ace-slider-label-bottom", null);
@@ -177,7 +177,7 @@ public class SliderEntryRenderer extends CoreRenderer{
 		
 		// clear float styling
 		if (showLabels && !"y".equals(axis)) {
-			writer.startElement("div", slider);
+			writer.startElement("div", null);
 			writer.writeAttribute("style", "clear:both;", null);
 			writer.endElement("div");
 		}
@@ -204,7 +204,7 @@ public class SliderEntryRenderer extends CoreRenderer{
         String orientation = "y".equals(slider.getAxis()) ? "vertical" : "horizontal";
         String length = slider.getLength();
 
-		writer.startElement("script", slider);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
 		JSONBuilder jb = JSONBuilder.create();
@@ -243,9 +243,9 @@ public class SliderEntryRenderer extends CoreRenderer{
 		writer.endElement("script");
 		
 		// script to set value
-		writer.startElement("span", slider);
+		writer.startElement("span", null);
 		writer.writeAttribute("id", clientId + "_value", null);
-		writer.startElement("script", slider);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write("ice.ace.jq(ice.ace.escapeClientId('"+clientId+"')).children('div').eq(1).slider('value', "+slider.getValue()+");");
 		writer.endElement("script");

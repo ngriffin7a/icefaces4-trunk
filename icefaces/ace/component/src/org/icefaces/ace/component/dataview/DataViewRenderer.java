@@ -52,7 +52,7 @@ public class DataViewRenderer extends Renderer {
         String dvId = dataView.getClientId();
         ResponseWriter writer = context.getResponseWriter();
 
-        writer.startElement(HTML.DIV_ELEM, null);
+        writer.startElement(HTML.DIV_ELEM, component);
         writer.writeAttribute(HTML.ID_ATTR, dvId, null);
 
         String styleClass = DataView.DATAVIEW_CLASS;

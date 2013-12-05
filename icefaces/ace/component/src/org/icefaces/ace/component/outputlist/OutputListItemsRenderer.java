@@ -58,7 +58,7 @@ public class OutputListItemsRenderer extends CoreRenderer {
                 if (list.getStyle() !=null){
                     writer.writeAttribute(HTML.STYLE_ATTR, list.getStyle(), HTML.STYLE_ATTR);
                 }
-                writer.startElement(HTML.DIV_ELEM, uiComponent);
+                writer.startElement(HTML.DIV_ELEM, null);
                 writer.writeAttribute("class", OutputListItem.OUTPUTLISTITEMDEFAULT_CLASS, null);
                 renderChildren(facesContext, list);
                 writer.endElement(HTML.DIV_ELEM);

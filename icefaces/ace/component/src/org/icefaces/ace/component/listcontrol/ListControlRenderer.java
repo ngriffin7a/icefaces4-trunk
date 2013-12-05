@@ -68,7 +68,7 @@ public class ListControlRenderer extends CoreRenderer {
 
         String clientId = control.getClientId(context);
 
-        writer.startElement(HTML.DIV_ELEM, null);
+        writer.startElement(HTML.DIV_ELEM, component);
         writer.writeAttribute(HTML.ID_ATTR, clientId, "id");
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         writer.writeAttribute(HTML.CLASS_ATTR, styleClass, "styleClass");

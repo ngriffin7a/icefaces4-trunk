@@ -69,14 +69,14 @@ public class TextAreaEntryRenderer extends InputRenderer {
 
         Map<String, Object> labelAttributes = getLabelAttributes(component);
 
-        writer.startElement("span", textAreaEntry);
+        writer.startElement("span", null);
         writer.writeAttribute("id", clientId + "_markup", null);
         writer.writeAttribute("class", "ui-textareaentry-container", null);
         encodeLabelAndInput(component, labelAttributes, domUpdateMap);
         writer.endElement("span");
 
         domUpdateMap.putAll(labelAttributes);
-        writer.startElement("span", textAreaEntry);
+        writer.startElement("span", null);
         writer.writeAttribute("data-hashcode", domUpdateMap.hashCode(), null);
         writer.writeAttribute("style", "display: none;", null);
         writer.endElement("span");

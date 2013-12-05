@@ -79,17 +79,17 @@ public class PushButtonRenderer extends CoreRenderer {
         encodeRootStyle(writer, pushButton);
 
         // first span
-		writer.startElement(HTML.SPAN_ELEM, uiComponent);
+		writer.startElement(HTML.SPAN_ELEM, null);
 		writer.writeAttribute(HTML.CLASS_ATTR, yuiBaseClass, null);
 
 		// second span
-		writer.startElement(HTML.SPAN_ELEM, uiComponent);
+		writer.startElement(HTML.SPAN_ELEM, null);
         if (ariaEnabled)
             encodeAriaAttributes(writer, pushButton);
 		writer.writeAttribute(HTML.CLASS_ATTR, "first-child", null);
 
 		// button element
-		writer.startElement(HTML.BUTTON_ELEM, uiComponent);
+		writer.startElement(HTML.BUTTON_ELEM, null);
 		writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
         writer.writeAttribute(HTML.NAME_ATTR, clientId+"_button", null);
 
@@ -106,7 +106,7 @@ public class PushButtonRenderer extends CoreRenderer {
         renderPassThruAttributes(facesContext, pushButton, HTML.BUTTON_ATTRS, new String[]{"style"});
 
         // yet another span
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
 
         writeButtonValue(writer, pushButton);
 		

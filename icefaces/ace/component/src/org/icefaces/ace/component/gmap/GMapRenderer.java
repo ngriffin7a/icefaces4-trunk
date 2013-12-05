@@ -62,7 +62,7 @@ public class GMapRenderer extends CoreRenderer {
         writer.writeAttribute("id", clientId + "_wrapper", null);
         writer.writeAttribute("class", "ice-ace-gmap " + gmap.getStyleClass(), null);
         writer.writeAttribute("style", gmap.getStyle(), null);
-        writer.startElement("div", null);
+        writer.startElement("div", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("style", "height:100%; width:100%", null);
         writer.endElement("div");
