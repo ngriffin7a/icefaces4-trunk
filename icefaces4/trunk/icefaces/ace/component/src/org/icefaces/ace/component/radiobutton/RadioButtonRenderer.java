@@ -78,17 +78,17 @@ public class RadioButtonRenderer extends InputRenderer {
 		writeLabelAndIndicatorBefore(labelAttributes);
 
         // First Wrapper
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, firstWrapperClass, null);
 
         // Second Wrapper
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
 
         if (ariaEnabled)
             encodeAriaAttributes(writer, radioButton);
 
         // Button Element
-        writer.startElement(HTML.BUTTON_ELEM, uiComponent);
+        writer.startElement(HTML.BUTTON_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_button", null);
         writer.writeAttribute(HTML.NAME_ATTR, clientId+"_button", null);

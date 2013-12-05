@@ -47,7 +47,7 @@ public class RichTextEntryRenderer extends InputRenderer {
 			writer.writeAttribute("style", richTextEntry.getStyle(), null);
 		}
 
-		writer.startElement("textarea", null);
+		writer.startElement("textarea", uiComponent);
 		writer.writeAttribute("name", clientId, null);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("style", "display:none;", null);

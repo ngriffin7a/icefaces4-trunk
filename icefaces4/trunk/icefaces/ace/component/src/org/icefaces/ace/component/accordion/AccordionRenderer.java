@@ -82,7 +82,7 @@ public class AccordionRenderer extends CoreRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = accordionPanel.getClientId(context);
 		
-		writer.startElement("div", null);
+		writer.startElement("div", accordionPanel);
 		writer.writeAttribute("id", clientId, null);
 		String style = accordionPanel.getStyle();
 		if(style != null) writer.writeAttribute("style", style, null);

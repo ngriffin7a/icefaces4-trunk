@@ -74,7 +74,7 @@ public class PrinterRenderer extends CoreRenderer {
 		
 		writer.startElement("span", printer);
 		writer.writeAttribute("id", clientId, null);
-		writer.startElement("script", printer);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 			
 		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + parentClientId + "')).click(function(e) {\n");
@@ -102,9 +102,9 @@ public class PrinterRenderer extends CoreRenderer {
 		writer.endElement("script");
 		
 		// ignoreValidation
-		writer.startElement("span", printer);
+		writer.startElement("span", null);
 		writer.writeAttribute("id", clientId + "_ignoreValidation", null);
-		writer.startElement("script", printer);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		if (!printer.isIgnoreValidation() && printer.isPassedValidation()) {
 			Map requestMap = facesContext.getExternalContext().getRequestParameterMap();

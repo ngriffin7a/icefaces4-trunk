@@ -123,7 +123,7 @@ public class RowEditorRenderer extends CoreRenderer {
 
         if (state.isEditable()) {
             ResponseWriter writer = context.getResponseWriter();
-            writer.startElement(HTML.DIV_ELEM, null);
+            writer.startElement(HTML.DIV_ELEM, component);
             writer.writeAttribute("id", component.getClientId(context), null);
             if (hasActiveEditors) writer.writeAttribute("class", DataTableConstants.ROW_EDITOR_CLASS + " ui-state-highlight", null);
             else writer.writeAttribute("class", DataTableConstants.ROW_EDITOR_CLASS, null);

@@ -65,7 +65,7 @@ public class FileEntryRenderer extends Renderer {
             fileEntry.getStyleClass());
 		writer.writeAttribute("style", fileEntry.getStyle(), "style");
 
-        writer.startElement("div", uiComponent);
+        writer.startElement("div", null);
         // If multiple then render the buttons for  [+]Add Files  [^]Upload  [x]Delete
         // And render the hidden input type=file behind the AddFiles button
         /*
@@ -110,7 +110,7 @@ public class FileEntryRenderer extends Renderer {
 			
             writer.writeAttribute("class", "buttonbar", "styleClass");
 
-            writer.startElement("div", uiComponent);
+            writer.startElement("div", null);
             writer.writeAttribute("class", "buttons", "styleClass");
 
             // Add files button (CSS classes are added dynamically in the client)
@@ -119,17 +119,17 @@ public class FileEntryRenderer extends Renderer {
             writer.writeAttribute("aria-disabled", disabled ? "true" : "false", "disbled");
 
             // +
-            writer.startElement("span", uiComponent);
+            writer.startElement("span", null);
             writer.writeAttribute("class", "ui-button-icon-primary ui-icon ui-icon-plusthick", "styleClass");
 			writer.writeAttribute("style", "display:none;", null);
             writer.endElement("span");
 
-            writer.startElement("span", uiComponent);
+            writer.startElement("span", null);
             writer.writeAttribute("class", "ui-button-text", "styleClass");
 			writer.writeAttribute("style", "display:none;", null);
 
             // "Add files"
-            writer.startElement("span", uiComponent);
+            writer.startElement("span", null);
             writer.writeText(bundle.getString(MESSAGE_KEY_PREFIX + "ADD_FILES"), uiComponent, null);
             writer.endElement("span");
 
@@ -137,7 +137,7 @@ public class FileEntryRenderer extends Renderer {
 
             // <input type="file"> goes here
         }
-        writer.startElement("input", uiComponent);
+        writer.startElement("input", null);
         writer.writeAttribute("type", "file", "type");
         writer.writeAttribute("id", config.getIdentifier(), "clientId");
         writer.writeAttribute("name", config.getIdentifier(), "clientId");
@@ -196,28 +196,28 @@ public class FileEntryRenderer extends Renderer {
         }
         writer.endElement("div");
 
-        writer.startElement("div", uiComponent);
+        writer.startElement("div", null);
         writer.writeAttribute("class", "inactive", null);
-		writer.startElement("div", uiComponent);
+		writer.startElement("div", null);
 		writer.writeAttribute("class", "ui-progressbar ui-widget ui-widget-content ui-corner-all", null);
-        writer.startElement("div", uiComponent);
+        writer.startElement("div", null);
         writer.writeAttribute("class", "ui-progressbar-value ui-widget-header ui-corner-left ui-corner-right", null);
 		writer.endElement("div");
         writer.endElement("div");
         writer.endElement("div");
 
         if (multiple) {
-            writer.startElement("div", uiComponent);
+            writer.startElement("div", null);
             writer.writeAttribute("id", clientId + "_multSel", "clientId");
 
-            writer.startElement("table", uiComponent);
+            writer.startElement("table", null);
             writer.writeAttribute("class", "multiple-select-table", null);
             writer.writeAttribute("id", clientId + "_multSelTbl", "clientId");
             writer.endElement("table");
 
             writer.endElement("div");
 			
-			writer.startElement("script", uiComponent);
+			writer.startElement("script", null);
 			writer.writeAttribute("type", "text/javascript", null);
 			writer.writeText("ice.ace.jq(function(){"
 				+ "var root = ice.ace.jq(ice.ace.escapeClientId('" + clientId + "'));"
@@ -237,7 +237,7 @@ public class FileEntryRenderer extends Renderer {
             UIComponent uiComponent, boolean disabled, String label,
             String buttonType, String buttonClass, String iconClass, String id)
             throws IOException {
-        writer.startElement("button", uiComponent);
+        writer.startElement("button", null);
         writer.writeAttribute("id", id, null);
         writer.writeAttribute("class", buttonClass + " ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary", null);
         writer.writeAttribute("type", buttonType, null);
@@ -251,11 +251,11 @@ public class FileEntryRenderer extends Renderer {
 			writer.writeAttribute("onclick", "ice.ace.fileentry.clearFileSelection('" + id.substring(0,id.length()-7) + "');return false;", null);
 		}
 
-        writer.startElement("span", uiComponent);
+        writer.startElement("span", null);
         writer.writeAttribute("class", "ui-button-icon-primary ui-icon " + iconClass, null);
         writer.endElement("span");
 
-        writer.startElement("span", uiComponent);
+        writer.startElement("span", null);
         writer.writeAttribute("class", "ui-button-text", null);
         writer.writeText(label, uiComponent, null);
         writer.endElement("span");

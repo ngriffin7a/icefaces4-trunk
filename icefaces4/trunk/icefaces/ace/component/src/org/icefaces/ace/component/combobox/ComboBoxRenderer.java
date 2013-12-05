@@ -92,7 +92,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		}
 
 		// root
-		writer.startElement("div", null);
+		writer.startElement("div", uiComponent);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", "ui-combobox " + comboBox.getStyleClass(), null);
 

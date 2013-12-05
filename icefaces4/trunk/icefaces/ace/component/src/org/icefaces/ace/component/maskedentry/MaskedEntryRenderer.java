@@ -138,7 +138,7 @@ public class MaskedEntryRenderer extends InputRenderer {
         defaultClass += getStateStyleClasses(maskedEntry);
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
 
-		writer.startElement("span", null);
+		writer.startElement("span", maskedEntry);
 		writer.writeAttribute("id", clientId, null);
 		writer.startElement("input", null);
 		writer.writeAttribute("name", fieldClientId, null);

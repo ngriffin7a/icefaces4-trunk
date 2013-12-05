@@ -131,7 +131,7 @@ public class TooltipRenderer extends CoreRenderer {
 		Object owner = null;
 		String clientId = tooltip.getClientId(facesContext);
 
-        writer.startElement("span",null);
+        writer.startElement("span", tooltip);
         writer.writeAttribute("id", clientId, null);
 
 		writer.startElement("script", null);

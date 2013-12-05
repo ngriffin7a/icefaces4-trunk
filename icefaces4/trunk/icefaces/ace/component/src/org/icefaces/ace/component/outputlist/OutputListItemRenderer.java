@@ -36,7 +36,7 @@ public class OutputListItemRenderer extends Renderer {
         String clientId = uiComponent.getClientId(facesContext);
         OutputListItem item = (OutputListItem) uiComponent;
 
-        writer.startElement(HTML.LI_ELEM, uiComponent);
+        writer.startElement(HTML.LI_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
         String userDefinedClass = item.getStyleClass();
         String styleClass = OutputListItem.OUTPUTLISTITEM_CLASS;
@@ -54,7 +54,7 @@ public class OutputListItemRenderer extends Renderer {
         if (item.getStyle() !=null){
              writer.writeAttribute(HTML.STYLE_ATTR, item.getStyle(), HTML.STYLE_ATTR);
         }
-        writer.startElement(HTML.DIV_ELEM, uiComponent);
+        writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute("class", OutputListItem.OUTPUTLISTITEMDEFAULT_CLASS, null);
     }
 

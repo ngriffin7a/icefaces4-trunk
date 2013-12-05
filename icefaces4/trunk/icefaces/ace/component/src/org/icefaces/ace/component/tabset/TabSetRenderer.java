@@ -114,13 +114,13 @@ public class TabSetRenderer extends CoreRenderer {
         //As per YUI's contract if the orientation is set to bottom, the contents of the tab
         //should ger rendered first, and then tabs
         if ("bottom".equals(orientation)) {
-            writer.startElement(HTML.DIV_ELEM, uiComponent);
+            writer.startElement(HTML.DIV_ELEM, null);
                 writer.writeAttribute(HTML.TABINDEX_ATTR, 0, HTML.TABINDEX_ATTR);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-content ui-tabs-panel ui-widget-content ui-corner-top", HTML.CLASS_ATTR);
             writer.endElement(HTML.DIV_ELEM);
         
-            writer.startElement(HTML.UL_ELEM, uiComponent);
+            writer.startElement(HTML.UL_ELEM, null);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"_nav", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-nav ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all", HTML.CLASS_ATTR);
                 if (EnvUtils.isAriaEnabled(facesContext)) {
@@ -130,7 +130,7 @@ public class TabSetRenderer extends CoreRenderer {
             writer.endElement(HTML.UL_ELEM);
               
         } else if ("top".equals(orientation)) {
-            writer.startElement(HTML.UL_ELEM, uiComponent);
+            writer.startElement(HTML.UL_ELEM, null);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"_nav", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-nav ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all", HTML.CLASS_ATTR);
                 if (EnvUtils.isAriaEnabled(facesContext)) {
@@ -140,12 +140,12 @@ public class TabSetRenderer extends CoreRenderer {
             writer.endElement(HTML.UL_ELEM);
             
             
-            writer.startElement(HTML.DIV_ELEM, uiComponent);
+            writer.startElement(HTML.DIV_ELEM, null);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-content ui-tabs-panel ui-widget-content ui-corner-bottom", HTML.CLASS_ATTR);
             writer.endElement(HTML.DIV_ELEM);			  
         } else {
-            writer.startElement(HTML.UL_ELEM, uiComponent);
+            writer.startElement(HTML.UL_ELEM, null);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"_nav", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-nav ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all ui-tabs-vertical", HTML.CLASS_ATTR);
                 if (EnvUtils.isAriaEnabled(facesContext)) {
@@ -155,7 +155,7 @@ public class TabSetRenderer extends CoreRenderer {
             writer.endElement(HTML.UL_ELEM);
             
             
-            writer.startElement(HTML.DIV_ELEM, uiComponent);
+            writer.startElement(HTML.DIV_ELEM, null);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-content ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-content-vertical", HTML.CLASS_ATTR);
             writer.endElement(HTML.DIV_ELEM);
@@ -275,7 +275,7 @@ public class TabSetRenderer extends CoreRenderer {
         }
         
         // Write out the safe
-        writer.startElement(HTML.DIV_ELEM, uiComponent);
+        writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_safe", HTML.ID_ATTR);
         writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", HTML.STYLE_ATTR);
         recursivelyRenderSafe(facesContext, writer, tabSet, safeIdPrefix,
@@ -326,7 +326,7 @@ public class TabSetRenderer extends CoreRenderer {
             return;
         }
 
-        writer.startElement(HTML.DIV_ELEM, tabSet);
+        writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, idPrefix+index, HTML.ID_ATTR);
         String tabClientId = (String) visitedTabClientIds.get(index);
         if (tabClientId != null) {
@@ -345,7 +345,7 @@ public class TabSetRenderer extends CoreRenderer {
         }
         writer.endElement(HTML.DIV_ELEM);
 
-        writer.startElement(HTML.DIV_ELEM, tabSet);
+        writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, idPrefix+index+"_nxt", HTML.ID_ATTR);
         recursivelyRenderSafe(facesContext, writer, tabSet, idPrefix,
                 visitedTabClientIds, renderWithoutUpdate, index+1);
@@ -381,7 +381,7 @@ public class TabSetRenderer extends CoreRenderer {
 
     	String clientId = tab.getClientId(facesContext);
         ResponseWriter writer = facesContext.getResponseWriter();
-        writer.startElement(HTML.LI_ELEM, tab);
+        writer.startElement(HTML.LI_ELEM, null);
         if (EnvUtils.isAriaEnabled(facesContext)) {
             writer.writeAttribute(ARIA.ROLE_ATTR, ARIA.PRESENTATION_ROLE, ARIA.ROLE_ATTR);  
         }
@@ -398,7 +398,7 @@ public class TabSetRenderer extends CoreRenderer {
 		}
 		writer.writeAttribute(HTML.CLASS_ATTR, styleClass, HTML.CLASS_ATTR);
 
-        writer.startElement(HTML.DIV_ELEM, tab);  
+        writer.startElement(HTML.DIV_ELEM, null);
         if (EnvUtils.isAriaEnabled(facesContext)) {
             writer.writeAttribute(ARIA.ROLE_ATTR, ARIA.TAB_ROLE, ARIA.ROLE_ATTR);  
         }
@@ -418,7 +418,7 @@ public class TabSetRenderer extends CoreRenderer {
         writer.endElement(HTML.DIV_ELEM);        
    
         //this is to making a tab focusable.
-        writer.startElement(HTML.ANCHOR_ELEM, tab);
+        writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", HTML.STYLE_ATTR); 
         writer.endElement(HTML.ANCHOR_ELEM);               
         
@@ -432,7 +432,7 @@ public class TabSetRenderer extends CoreRenderer {
             TabSet tabSet, UIComponent tab, int index, Do d) throws IOException {
         String clientId = tab.getClientId(facesContext);
         ResponseWriter writer = facesContext.getResponseWriter();
-        writer.startElement(HTML.DIV_ELEM, tab);
+        writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
         writer.writeAttribute(HTML.TABINDEX_ATTR, 0, HTML.TABINDEX_ATTR);
 		writer.writeAttribute(HTML.CLASS_ATTR, "ui-tabs-panel ui-widget-content ui-corner-bottom", HTML.CLASS_ATTR);

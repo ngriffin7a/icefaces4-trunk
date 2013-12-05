@@ -69,9 +69,9 @@ public class ResizableRenderer extends CoreRenderer {
         String handles = resizable.getHandles();
         int grid = resizable.getGrid();
 
-        writer.startElement("span",null);
+        writer.startElement("span", component);
         writer.writeAttribute("id", clientId, null);
-		writer.startElement("script", resizable);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
         //If it is an image wait until the image is loaded

@@ -95,7 +95,7 @@ public class DraggableRenderer extends CoreRenderer {
 
         writer.startElement("span", draggable);
 		writer.writeAttribute("id", clientId, null);
-		writer.startElement("script", draggable);
+		writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.jq(function() {");
 

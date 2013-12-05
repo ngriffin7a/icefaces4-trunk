@@ -113,7 +113,7 @@ public class ProgressBarRenderer extends CoreRenderer {
         boolean hasChangeListener = progressBar.getChangeListener() != null;
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
 
-        writer.startElement("script", progressBar);
+        writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.jq(function() {");
 

@@ -50,7 +50,7 @@ public class BreadcrumbMenuRenderer extends BaseMenuRenderer {
         }
         writer.writeAttribute("class", "ui-breadcrumb-menu" + (styleClass == null ? "" : " " + styleClass), null);
 
-        writer.startElement("ul", component);
+        writer.startElement("ul", null);
         writer.writeAttribute("id", clientId + "_ul", null);
 
         List<UIComponent> children = component.getChildren();
@@ -72,13 +72,13 @@ public class BreadcrumbMenuRenderer extends BaseMenuRenderer {
             if (i == last) {
                 menuItem.setDisabled(true);
             }
-            writer.startElement("li", component);
+            writer.startElement("li", null);
             encodeMenuItem(context, menuItem);
             writer.endElement("li");
         }
         writer.endElement("ul");
 
-        writer.startElement("script", component);
+        writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.create('BreadcrumbMenu',['" + clientId + "',{}]);//" + UUID.randomUUID());
         writer.endElement("script");

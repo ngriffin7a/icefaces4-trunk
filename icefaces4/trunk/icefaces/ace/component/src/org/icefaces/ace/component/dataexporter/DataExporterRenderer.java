@@ -57,7 +57,7 @@ public class DataExporterRenderer extends CoreRenderer {
 		DataExporter exporter = (DataExporter) component;
 		String clientId = exporter.getClientId(facesContext);
 		
-		writer.startElement("button", null);
+		writer.startElement("button", component);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("name", clientId, null);
 		

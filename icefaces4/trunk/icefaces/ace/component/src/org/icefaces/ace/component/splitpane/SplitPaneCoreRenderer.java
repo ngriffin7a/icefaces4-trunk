@@ -76,7 +76,7 @@ public class SplitPaneCoreRenderer {
      */
     public void encodePane(SplitPane component, ResponseWriter writer, String side)
         throws IOException {
-        writer.startElement(HTML.DIV_ELEM, component);
+        writer.startElement(HTML.DIV_ELEM, null);
         String width = this.getLeftwidth();
         if (side.equals("right")){
            width = this.getRightwidth();
@@ -97,9 +97,9 @@ public class SplitPaneCoreRenderer {
 
     public void encodeEnd(SplitPane pane, ResponseWriter writer)
             throws IOException{
-        writer.startElement(HTML.SPAN_ELEM, pane);
+        writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "mobi-hidden", null);
-        writer.startElement(HTML.SCRIPT_ELEM, pane);
+        writer.startElement(HTML.SCRIPT_ELEM, null);
         writer.writeAttribute("type", "text/javascript", null);
         StringBuilder sb = new StringBuilder("ice.mobi.splitpane.initClient('").append(pane.getClientId()).append("'");
         sb.append(",{ scrollable: '").append(pane.isScrollable()).append("'");

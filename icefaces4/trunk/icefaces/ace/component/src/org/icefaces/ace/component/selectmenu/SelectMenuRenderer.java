@@ -93,7 +93,7 @@ public class SelectMenuRenderer extends InputRenderer {
         }
 
 		// root
-        writer.startElement("div", null);
+        writer.startElement("div", uiComponent);
         writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", "ui-selectmenu ui-widget " + selectMenu.getStyleClass(), null);
 		String dir = selectMenu.getDir();

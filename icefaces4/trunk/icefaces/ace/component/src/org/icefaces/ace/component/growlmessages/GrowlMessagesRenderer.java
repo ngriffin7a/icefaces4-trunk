@@ -80,7 +80,7 @@ public class GrowlMessagesRenderer extends Renderer {
         writer.writeAttribute("id", messages.getClientId(), "id");
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
-        writer.startElement("script", component);
+        writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
 
         JSONBuilder jb = JSONBuilder.create();

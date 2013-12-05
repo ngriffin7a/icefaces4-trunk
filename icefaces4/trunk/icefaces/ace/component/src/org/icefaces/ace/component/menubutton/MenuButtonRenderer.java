@@ -75,7 +75,7 @@ public class MenuButtonRenderer extends BaseMenuRenderer {
 		}
 		
 		// script to (re)initialize when only the button is dynamically updated
-		writer.startElement("script", button);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write("ice.ace.jq(function(){var b = ice.ace.jq(ice.ace.escapeClientId('"+buttonId+"')); if (!b.hasClass('ui-button')) { "+getInitCall(writer, button, clientId)+" }});");
 		writer.endElement("script");
@@ -114,7 +114,7 @@ public class MenuButtonRenderer extends BaseMenuRenderer {
 		
 		String formClientId = form.getClientId(context);
 		
-		writer.startElement("script", button);
+		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
  		writer.write(getInitCall(writer, button, clientId));

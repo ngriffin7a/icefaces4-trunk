@@ -77,18 +77,18 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         encodeRootStyle(writer, checkbox);
 
         // First Wrapper
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, firstWrapperClass, null);
 
         // Second Wrapper
-        writer.startElement(HTML.SPAN_ELEM, uiComponent);
+        writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, secondWrapperClass, null);
 
         if (ariaEnabled)
             encodeAriaAttributes(writer, checkbox);
 
         // Button Element
-        writer.startElement(HTML.BUTTON_ELEM, uiComponent);
+        writer.startElement(HTML.BUTTON_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
         String buttonId = clientId + "_button";
         writer.writeAttribute(HTML.ID_ATTR, buttonId, null);

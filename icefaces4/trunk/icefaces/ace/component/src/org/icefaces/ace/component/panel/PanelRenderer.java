@@ -121,7 +121,7 @@ public class PanelRenderer extends CoreRenderer {
         String clientId = panel.getClientId(context);
         Menu optionsMenu = panel.getOptionsMenu();
 
-        writer.startElement("div", null);
+        writer.startElement("div", panel);
         writer.writeAttribute("id", clientId, null);
 		
         String styleClass = panel.getStyleClass() ;
