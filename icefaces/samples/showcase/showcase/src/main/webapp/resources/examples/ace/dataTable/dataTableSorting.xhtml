@@ -35,7 +35,7 @@
     <ui:define name="example">
         <h:form id="form">
            <ace:dataTable id="carTable"
-                          value="#{dataTableSort.carsData}"
+                          value="#{dataTableSorting.carsData}"
                           var="car">
                <ace:column id="id" headerText="ID" sortBy="#{car.id}">
                     <h:outputText id="idCell" value="#{car.id}"/>
