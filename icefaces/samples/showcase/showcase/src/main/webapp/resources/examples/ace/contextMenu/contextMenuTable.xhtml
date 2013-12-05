@@ -35,7 +35,7 @@
         <h:form id="form">
             
            <ace:dataTable id="carTable"
-                          value="#{dataTableDynamic.carsData}"
+                          value="#{dataTableDynamicColumns.cars}"
                           var="car">
                 <ace:column>
                     <f:facet name="header">
@@ -89,9 +89,9 @@
             
             <ace:contextMenu id="contextMenu" for="carTable">
                 <ace:menuItem value="Undo All" icon="ui-icon ui-icon-arrowrefresh-1-w"
-                              actionListener="#{dataTableDynamic.restoreDefault}"/>
+                              actionListener="#{dataTableDynamicColumns.restoreDefault}"/>
                 <ace:menuItem value="Add Cars" icon="ui-icon ui-icon-disk"
-                              actionListener="#{dataTableDynamic.bulkAdd}"/>  
+                              actionListener="#{dataTableDynamicColumns.bulkAdd}"/>  
             </ace:contextMenu>
         </h:form>
     </ui:define>
