@@ -20,7 +20,6 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:ace="http://www.icefaces.org/icefaces/components"
-    xmlns:ice="http://www.icesoft.com/icefaces/component"
     xmlns:icecore="http://www.icefaces.org/icefaces/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
@@ -36,7 +35,7 @@
         <h:form id="form">
 			<ace:delegate id="tooltipDelegate">
 				<ace:dataTable id="carTable"
-										value="#{dataTableSort.carsData}"
+										value="#{dataTableSorting.carsData}"
 										var="car"
 										paginator="true"
 										rows="15">
