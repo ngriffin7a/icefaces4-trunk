@@ -56,8 +56,8 @@ var restoreMonitorFocusChangesOnUpdate;
                 if (e && (e != document.activeElement)) {
                     setFocus(id);
                     if (e.focus) {
-                        var x = window.scrollX;
-                        var y = window.scrollY;
+                        var x = window.scrollX || document.documentElement.scrollLeft;
+                        var y = window.scrollY || document.documentElement.scrollTop;
                         try {
                             e.focus();
                             //reset scroll position, Firefox will otherwise scroll to the focused element
