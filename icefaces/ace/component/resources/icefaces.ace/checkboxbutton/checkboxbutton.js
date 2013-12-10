@@ -53,7 +53,7 @@ ice.ace.checkboxbutton = function(clientId, options) {
         });
 
     if (options.ariaEnabled)
-        ice.ace.jq(this.jqId).on("keypress", function() { self.onAriaKeypress(); });
+        ice.ace.jq(this.jqId).on("keypress", function(e) { self.onAriaKeypress(e); });
 
     // lazy init occuring via kb focus, set focus style since
     // our focus event won't be set up yet
