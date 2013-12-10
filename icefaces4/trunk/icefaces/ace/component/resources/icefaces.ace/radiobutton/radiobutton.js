@@ -50,7 +50,7 @@ ice.ace.radiobutton = function(clientId, options) {
         });
 
     if (options.ariaEnabled)
-        ice.ace.jq(this.jqId).on("keypress", function() { self.onAriaKeypress(); });
+        ice.ace.jq(this.jqId).on("keypress", function(e) { self.onAriaKeypress(e); });
 		
 	if (this.isChecked()) {
 		this.addStateCSSClasses('checked');
