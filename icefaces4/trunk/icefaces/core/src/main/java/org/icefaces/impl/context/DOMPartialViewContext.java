@@ -701,10 +701,10 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
             ArrayList formIdList = (ArrayList) facesMap.get(FixViewState.FORM_LIST_KEY);
             if (formIdList != null && !formIdList.isEmpty()) {
                 UIViewRoot viewRoot = facesContext.getViewRoot();
-                String viewRootId = viewRoot.getId();
+                String containerClientId = viewRoot.getContainerClientId(facesContext);
                 char separator = UINamingContainer.getSeparatorChar(facesContext);
                 for (int i = 0; i < formIdList.size(); i++) {
-                    writer.startUpdate(viewRootId + separator + PartialResponseWriter.VIEW_STATE_MARKER + separator + i);
+                    writer.startUpdate(containerClientId + separator + PartialResponseWriter.VIEW_STATE_MARKER + separator + i);
                     writer.write(viewState);
                     writer.endUpdate();
                 }
