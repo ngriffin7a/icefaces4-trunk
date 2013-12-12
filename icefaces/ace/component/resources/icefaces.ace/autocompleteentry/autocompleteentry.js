@@ -245,16 +245,23 @@ ice.ace.Autocompleter.prototype = {
 			if (this.direction == 'up' || autoUp) {
 				var updateHeight = jqUpdate.height();
 				updateHeight = updateHeight > this.height ? this.height : updateHeight;
+				if (!(ice.ace.jq.browser.msie && ice.ace.jq.browser.version < 8))
+					updateHeight = updateHeight + (jqElement.outerHeight() - jqElement.height());
 				jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: jqElement.width(), maxHeight: this.height, overflow: "auto" });
 				var savedPos = element.style.position;
 				element.style.position = "relative";
+				update.style.left = '0';
 				update.style.top = (-1 * updateHeight) + "px";
 				element.style.position = savedPos;
 			} else {
 				jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: jqElement.width(), maxHeight: this.height, overflow: "auto" });
 				var savedPos = element.style.position;
 				element.style.position = "relative";
-				update.style.top = element.offsetHeight + "px";
+				update.style.left = '0';
+				if (!(ice.ace.jq.browser.msie && ice.ace.jq.browser.version < 8))
+					update.style.top = jqElement.height() + "px";
+				else
+					update.style.top = jqElement.outerHeight() + "px";
 				element.style.position = savedPos;
 			}
 		}
