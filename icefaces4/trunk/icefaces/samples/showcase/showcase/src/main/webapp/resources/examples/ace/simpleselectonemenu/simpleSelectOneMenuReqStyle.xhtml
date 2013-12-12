@@ -116,7 +116,7 @@
 					<h:outputText id="cityOutput" style="margin-left:20px;" value="City: #{simpleSelectOneMenuBean.city}" />
 				</h:panelGroup>
 			</h:panelGrid>
-			<ace:pushButton value="Clear values" actionListener="#{simpleSelectOneMenuBean.clearValues}">
+			<ace:pushButton id="clearButton" value="Clear values" actionListener="#{simpleSelectOneMenuBean.clearValues}">
 				<ace:ajax execute="@this" render="@all" />
 			</ace:pushButton>
             </ace:panel>
