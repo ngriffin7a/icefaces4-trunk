@@ -20,6 +20,7 @@ if (!ice.ace.Autocompleters) ice.ace.Autocompleters = {};
 
 ice.ace.Autocompleter = function(id, updateId, rowClass, selectedRowClass, delay, minChars, height, direction, behaviors, cfg, clientSideModeCfg, effects, placeholder) {
 	this.id = id;
+	if (ice.ace.Autocompleters[this.id]) ice.ace.Autocompleters[this.id].dispose();
 	var isInitialized = false;
 	if (ice.ace.Autocompleters[this.id] && ice.ace.Autocompleters[this.id].initialized) isInitialized = true;
 	this.showingList = false;
@@ -315,6 +316,7 @@ ice.ace.Autocompleter.prototype = {
     },
 
     onKeyPress: function(event) {
+		event.stopPropagation();
         if (!this.active) {
             switch (event.keyCode) {
                 case ice.ace.Autocompleter.keys.KEY_TAB:
@@ -702,20 +704,16 @@ ice.ace.Autocompleter.prototype = {
     },
 
     dispose:function() {
+		if (this.blurObserver) clearTimeout(this.blurObserver);
+		if (this.justSubmittedObserver) clearTimeout(this.justSubmittedObserver);
+		if (this.observer) clearTimeout(this.observer);
+		if (this.hideObserver) clearTimeout(this.hideObserver);
         for (var i = 0; i < this.entryCount; i++) {
             var entry = this.getEntry(i);
             entry.autocompleteIndex = i;
-			ice.ace.jq(entry).off('mouseover');
-			ice.ace.jq(entry).off('click');
-			ice.ace.jq(entry).off('mousemove');
+			ice.ace.jq(entry).off();
         }
-		ice.ace.jq(this.element).off('mouseover');
-		ice.ace.jq(this.element).off('click');
-		ice.ace.jq(this.element).off('mousemove');
-		ice.ace.jq(this.element).off('blur');
-		ice.ace.jq(this.element).off('keypress');
-        if (ice.ace.Autocompleter.Browser.IE || ice.ace.Autocompleter.Browser.WebKit)
-			ice.ace.jq(this.element).off('keydown');
+		ice.ace.jq(this.element).off();
     },
 
     onObserverEvent: function() {
