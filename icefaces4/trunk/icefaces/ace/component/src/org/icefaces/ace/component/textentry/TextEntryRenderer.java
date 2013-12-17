@@ -102,13 +102,12 @@ public class TextEntryRenderer extends InputRenderer {
             type = typeVal;
             PassThruAttributeWriter.renderNonBooleanAttributes(writer, textEntry, textEntry.getInputtextAttributeNames());
         }
-        writer.writeAttribute("type", type, null);
         if (!isDateType) writer.writeAttribute("autocorrect", textEntry.getAutocorrect(), null);
         else writer.writeAttribute("autocorrect", "on", null);
         writer.writeAttribute("autocapitalize", textEntry.getAutocapitalize(), null);
         String embeddedLabel = null;
         String nameToRender = clientId + "_input";
-        String valueToRender = ComponentUtils.getStringValueToRender(context, textEntry);
+        String valueToRender = textEntry.isRedisplay() ? ComponentUtils.getStringValueToRender(context, textEntry) : "";
         boolean hasLabel = (Boolean) labelAttributes.get("hasLabel");
         String labelPosition = (String) labelAttributes.get("labelPosition");
         String label = (String) labelAttributes.get("label");
@@ -121,6 +120,7 @@ public class TextEntryRenderer extends InputRenderer {
                 valueToRender =  sdf.format(aDate);
         }
         if ((valueToRender == null || valueToRender.trim().length() <= 0) && hasLabel && labelPosition.equals("inField")) {
+			writer.writeAttribute("type", type, null);
             nameToRender = clientId + "_label";
             valueToRender = embeddedLabel = label;
             if (hasIndicator) {
@@ -131,7 +131,9 @@ public class TextEntryRenderer extends InputRenderer {
                 }
             }
             defaultClass += " " + LABEL_STYLE_CLASS + "-infield";
-        }
+        } else {
+			writer.writeAttribute("type", textEntry.isSecret() ? "password" : type, null);
+		}
         writer.writeAttribute("name", nameToRender, null);
         writer.writeAttribute("value", valueToRender , null);
 
@@ -163,7 +165,9 @@ public class TextEntryRenderer extends InputRenderer {
           .item(clientId)
           .beginMap()
           .entryNonNullValue("embeddedLabel", embeddedLabel)
-          .entry("autoTab", textEntry.isAutoTab() && textEntry.getMaxlength() > 0);
+          .entry("autoTab", textEntry.isAutoTab() && textEntry.getMaxlength() > 0)
+          .entry("secret", textEntry.isSecret())
+          .entry("originalType", type);
 
         encodeClientBehaviors(context, textEntry, jb);
 
