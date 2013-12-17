@@ -39,7 +39,7 @@
             <ace:panel header="Some important ace:growlMessages attributes">
                 <h:panelGrid columns="4" width="100%" columnClasses="growl-attr-col,growl-attr-col,growl-attr-col,growl-attr-col">
                     <h:outputText value="autoHide"/>
-                    <ace:simpleSelectOneMenu value="#{growlMessagesBean.autoHide}">
+                    <ace:simpleSelectOneMenu id="hideSelector" value="#{growlMessagesBean.autoHide}">
                         <f:selectItem itemValue="false" itemLabel="false"/>
                         <f:selectItem itemValue="info" itemLabel="info"/>
                         <f:selectItem itemValue="warn" itemLabel="warn"/>
@@ -50,12 +50,12 @@
                     </ace:simpleSelectOneMenu>
 
                     <h:outputText value="closeAll"/>
-                    <ace:checkboxButton value="#{growlMessagesBean.closeAll}">
+                    <ace:checkboxButton id="closeAllBox" value="#{growlMessagesBean.closeAll}">
                         <ace:ajax render="allMsgs"/>
                     </ace:checkboxButton>
 
                     <h:outputText value="maxVisibleMessages"/>
-                    <ace:simpleSelectOneMenu value="#{growlMessagesBean.maxVisibleMessages}">
+                    <ace:simpleSelectOneMenu id="maxMessages" value="#{growlMessagesBean.maxVisibleMessages}">
                         <f:selectItem itemValue="0" itemLabel="0"/>
                         <f:selectItem itemValue="1" itemLabel="1"/>
                         <f:selectItem itemValue="2" itemLabel="2"/>
@@ -64,7 +64,7 @@
                     </ace:simpleSelectOneMenu>
 
                     <h:outputText value="position"/>
-                    <ace:simpleSelectOneMenu value="#{growlMessagesBean.position}">
+                    <ace:simpleSelectOneMenu id="messagePosition" value="#{growlMessagesBean.position}">
                         <f:selectItem itemValue="top-left" itemLabel="top-left"/>
                         <f:selectItem itemValue="top-right" itemLabel="top-right"/>
                         <f:selectItem itemValue="bottom-left" itemLabel="bottom-left"/>
@@ -79,24 +79,24 @@
                 <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
 					
 					<h:panelGroup>
-						<ace:checkboxButton value="#{growlMessagesBean.info}" />
+						<ace:checkboxButton id="infoBox" value="#{growlMessagesBean.info}" />
 						<h:outputText value=" Info" />
 					</h:panelGroup>
 					<h:panelGroup>
-						<ace:checkboxButton value="#{growlMessagesBean.warn}" />
+						<ace:checkboxButton id="warnBox" value="#{growlMessagesBean.warn}" />
 						<h:outputText value=" Warn" />
 					</h:panelGroup>
 					<h:panelGroup>
-						<ace:checkboxButton value="#{growlMessagesBean.error}" />
+						<ace:checkboxButton id="errorBox" value="#{growlMessagesBean.error}" />
 						<h:outputText value=" Error" />
 					</h:panelGroup>
 					<h:panelGroup>
-						<ace:checkboxButton value="#{growlMessagesBean.fatal}" />
+						<ace:checkboxButton id="fatalBox" value="#{growlMessagesBean.fatal}" />
 						<h:outputText value=" Fatal" />
 					</h:panelGroup>
 					
                 </h:panelGrid>
-				<ace:pushButton value="Show Messages" actionListener="#{growlMessagesBean.listener}" />
+				<ace:pushButton id="messageButton" value="Show Messages" actionListener="#{growlMessagesBean.listener}" />
             </ace:panel>
 
             <ace:growlMessages id="allMsgs" autoHide="#{growlMessagesBean.autoHide}" closeAll="#{growlMessagesBean.closeAll}" maxVisibleMessages="#{growlMessagesBean.maxVisibleMessages}" position="#{growlMessagesBean.position}"/>
