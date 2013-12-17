@@ -353,7 +353,7 @@ version: 2.8.2r1
                 value: attr.activeIndex,
                 validator: function(value) {
                     var ret = true;
-                    if (value && this.getTab(value).get('disabled')) { // cannot activate if disabled
+                    if (value && (!this.getTab(value) || this.getTab(value).get('disabled'))) { // cannot activate if disabled
                         ret = false;
                     }
                     return ret;
@@ -493,8 +493,10 @@ version: 2.8.2r1
             if (activeIndex) {
                 this.set(ACTIVE_TAB, this.getTab(activeIndex));
             } else {
-                this._configs.activeTab.value = active; // dont invoke method
-                this._configs.activeIndex.value = this.getTabIndex(active);
+                var lastTab = this.getTab(tabs.length - 1);
+                this._configs.activeTab.value = lastTab; // dont invoke method
+                this._configs.activeIndex.value = tabs.length - 1;
+                this.set(ACTIVE_TAB, lastTab);
             }
         },
 
