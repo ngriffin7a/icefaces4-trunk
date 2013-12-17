@@ -15,7 +15,7 @@
  */
 
 .ui-tableconf {
-    width:500px;
+    width:550px;
     position: absolute;
     left:50%;
     margin-left:-250px !important;
@@ -42,41 +42,14 @@
 }
 
 .ui-tableconf-body {
-    text-align:center;
     border-top: 0;
 }
+
+/*
 .ui-tableconf-body > table {
     width:100%;
 }
-.ui-tableconf-body > table > thead > tr > th {
-    padding: 3px 10px;
-}
-.ui-tableconf-body > table > tbody > tr > td {
-    padding: 4px 10px
-}
-.ui-tableconf-body > table {
-    border-collapse: collapse;
-}
-.ui-tableconf-body > table td, .ui-tableconf-body > table th {
-    border: 1px solid #AAA;
-}
-.ui-tableconf-body > table > thead > tr:first-child th {
-    border: 0;
-}
-.ui-tableconf-body > table tr:first-child th {
-    border-top: 0;
-}
-.ui-tableconf-body > table tr:last-child td {
-    border-bottom: 0;
-}
-.ui-tableconf-body > table tr td:first-child,
-.ui-tableconf-body > table tr th:first-child {
-    border-left: 0;
-}
-.ui-tableconf-body > table tr td:last-child,
-.ui-tableconf-body > table tr th:last-child {
-    border-right: 0;
-}
+*/
 
 *+html .ui-tableconf-head-button {
     /* IE7 inline block hack */
@@ -89,4 +62,26 @@
     margin: 0px 2px;
     display: inline-block;
     width:16px; /* required for inline-block on IE7 */
+}
+
+.ui-tableconf-item .handle-container {
+    padding:0 5px 0 5px;
+}
+.ui-tableconf-item .handle-container .ui-sortable-handle {
+    display:inline-block;
+    text-align:left;
+    vertical-align:middle;
+}
+.ui-tableconf-item .handle-container .icon-spacer {
+    display:inline-block;
+    background-position: -2000px -2000px;
+}
+.ui-tableconf-item .stacked-subsequent .handle-container .ui-sortable-handle .ui-icon {
+    background-position: -2000px -2000px;
+}
+/* padding has to line up with .handle-container padding */
+.ui-tableconf-body .ordering, .ui-tableconf-body .name, .ui-tableconf-body .visibility, .ui-tableconf-body .sorting {
+    display: inline-table;
+    padding: 0 5px 0 5px;
+    vertical-align: middle;
 }

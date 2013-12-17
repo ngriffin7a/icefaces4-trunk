@@ -105,7 +105,7 @@
     vertical-align: middle;
 }
 
-.ui-datatable .ui-sortable-column .ui-sortable-column-icon {
+.ui-datatable thead .ui-sortable-column .ui-sortable-column-icon {
     vertical-align: middle;
     display: inline-block;
     width:16px;
@@ -116,26 +116,34 @@
 .ui-tableconf-button {
     vertical-align: middle;
 }
+/* IE8, FF, Saf, Opera (Everything but IE 6,7) */
+.ui-tableconf>/**/.ui-tableconf-body .ui-sortable-column-icon {
+    position: relative;
+}
 .ui-tableconf-body .ui-sortable-column-icon {
     display: inline-block;
-    position: relative;
-    height: 27px;
+    height: 24px;
     width: 16px;
     vertical-align: middle;
 
 }
-.ui-tableconf-body .ui-sortable-column-icon .ui-icon-triangle-1-n {
+/* IE7 */
+.ui-tableconf .ui-tableconf-body .ui-sortable-column-icon .ui-icon-triangle-1-n {
+    margin-left: 1px;
+}
+/* IE8, FF, Saf, Opera (Everything but IE 6,7) */
+.ui-tableconf>/**/.ui-tableconf-body .ui-sortable-column-icon .ui-icon-triangle-1-n {
     position:absolute;
     top:0px;
+    left:1px;
+    margin-left: 0px;
 }
-.ui-tableconf-body .ui-sortable-column-icon .ui-icon-triangle-1-s {
-    position:absolute;
-    bottom:0px;
-}
-.ui-sortable-column-icon .ui-icon-triangle-1-n {
+.ui-datatable thead .ui-sortable-column-icon .ui-icon-triangle-1-n {
     position:absolute;
     top:-2px;
     left:1px;
+}
+.ui-sortable-column-icon .ui-icon-triangle-1-n {
     /* IE 8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     /* IE 5-7 */
@@ -154,11 +162,22 @@
     -khtml-opacity: 1;
     opacity: 1;
 }
-
-.ui-sortable-column-icon .ui-icon-triangle-1-s {
+/* IE8, FF, Saf, Opera (Everything but IE 6,7) */
+.ui-tableconf .ui-tableconf-body .ui-sortable-column-icon .ui-icon-triangle-1-s {
+    margin-top: -5px;
+}
+/* IE8, FF, Saf, Opera (Everything but IE 6,7) */
+.ui-tableconf>/**/.ui-tableconf-body .ui-sortable-column-icon .ui-icon-triangle-1-s {
+    position:absolute;
+    bottom:0px;
+    margin-top: 0px;
+}
+.ui-datatable thead .ui-sortable-column-icon .ui-icon-triangle-1-s {
     position:absolute;
     bottom:-1px;
     *left:0px;
+}
+.ui-sortable-column-icon .ui-icon-triangle-1-s {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     filter: alpha(opacity=20);
     -moz-opacity: 0.33;
