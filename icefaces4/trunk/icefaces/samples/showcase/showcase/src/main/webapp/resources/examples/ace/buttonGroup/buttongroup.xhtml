@@ -37,16 +37,16 @@
         <h:form id= "form" style="text-align: center">
             <ace:panel>
 				<ace:buttonGroup header="Using ace:radioButton" mutuallyExclusive="true">
-					<ace:radioButton value="#{buttonGroup.r1}">
+					<ace:radioButton id="radio1" value="#{buttonGroup.r1}">
 						<ace:ajax execute="@form" event="activate" render="@form"/>
 					</ace:radioButton>
-					<ace:radioButton value="#{buttonGroup.r2}">
+					<ace:radioButton id="radio2" value="#{buttonGroup.r2}">
 						<ace:ajax execute="@form" event="activate" render="@form"/>
 					</ace:radioButton>
-					<ace:radioButton value="#{buttonGroup.r3}">
+					<ace:radioButton id="radio3" value="#{buttonGroup.r3}">
 						<ace:ajax execute="@form" event="activate" render="@form"/>
 					</ace:radioButton>
-					<ace:radioButton value="#{buttonGroup.r4}">
+					<ace:radioButton id="radio4" value="#{buttonGroup.r4}">
 						<ace:ajax execute="@form" event="activate" render="@form"/>
 					</ace:radioButton>
 				</ace:buttonGroup>
@@ -54,16 +54,16 @@
                 <h:outputText id="radioDescription" value="#{buttonGroup.radioDescription}" style="font-weight: bold;"/>
 				<br/><br/>
 				<ace:buttonGroup header="Using ace:checkboxButton" mutuallyExclusive="true">
-					<ace:checkboxButton value="#{buttonGroup.cb1}">
+					<ace:checkboxButton id="check1" value="#{buttonGroup.cb1}">
 						<ace:ajax execute="@this" event="activate" render="@form"/>
 					</ace:checkboxButton>
-					<ace:checkboxButton value="#{buttonGroup.cb2}">
+					<ace:checkboxButton id="check2" value="#{buttonGroup.cb2}">
 						<ace:ajax execute="@this" event="activate" render="@form"/>
 					</ace:checkboxButton>
-					<ace:checkboxButton value="#{buttonGroup.cb3}">
+					<ace:checkboxButton id="check3" value="#{buttonGroup.cb3}">
 						<ace:ajax execute="@this" event="activate" render="@form"/>
 					</ace:checkboxButton>
-					<ace:checkboxButton value="#{buttonGroup.cb4}">
+					<ace:checkboxButton id="check4" value="#{buttonGroup.cb4}">
 						<ace:ajax execute="@this" event="activate" render="@form"/>
 					</ace:checkboxButton>
 				</ace:buttonGroup>
