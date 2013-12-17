@@ -20,22 +20,17 @@
 
 package org.icefaces.ace.component.column;
 
-import javax.faces.component.UIColumn;
 import javax.faces.context.FacesContext;
 import javax.el.ValueExpression;
-import javax.el.MethodExpression;
 import javax.faces.component.UIComponent;
-import javax.faces.model.DataModel;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
 
 import org.icefaces.ace.component.datatable.DataTable;
 import org.icefaces.ace.model.filter.*;
 import org.icefaces.ace.component.celleditor.CellEditor;
 import org.icefaces.ace.model.table.RowStateMap;
 
-public class Column extends ColumnBase implements Serializable {
+public class Column extends ColumnBase implements IProxiableColumn, Serializable {
 	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
     private int currGroupLength;
     // Toggled to true appropriately before first group rendering
@@ -88,15 +83,19 @@ public class Column extends ColumnBase implements Serializable {
         return null;
     }
 
+    public boolean hasCellEditor() {
+        return getCellEditor() != null;
+    }
+
     @Override
     public void setSortPriority(Integer i) {
-        DataTable table = findParentTable(getFacesContext(), this);
+        DataTable table = findParentTable();
         if (table != null) table.applySorting();
         super.setSortPriority(i);
     }
 
-    protected DataTable findParentTable(FacesContext context, Column editor) {
-        UIComponent parent = editor.getParent();
+    public DataTable findParentTable() {
+        UIComponent parent = getParent();
 
         while(parent != null)
             if (parent instanceof DataTable) return (DataTable) parent;
@@ -121,79 +120,6 @@ public class Column extends ColumnBase implements Serializable {
         this.oddGroup = oddGroup;
     }
 
-    public boolean isNextColumnGrouped() {
-        DataTable dataTable = findParentTable(getFacesContext(), this);
-        int currentRow = dataTable.getRowIndex();
-        Object currentValue = getGroupBy();
-
-        if (currentValue != null) {
-            dataTable.setRowIndex(currentRow + 1);
-            Object nextValue = getGroupBy();
-
-            dataTable.setRowIndex(currentRow);
-
-            return currentValue.equals(nextValue);
-        }
-
-        return false;
-    }
-
-    public int findCurrGroupLength() {
-        DataTable dataTable = findParentTable(getFacesContext(), this);
-
-        RowStateMap stateMap;
-        int result = 0; // isNextColumnGrouped == true is known
-        int currentRow = dataTable.getRowIndex();
-        Object rowData = dataTable.getRowData();
-        boolean keepCounting = true;
-        Object currentValue = getGroupBy();
-
-        // If this row doesn't break its group by rendering a conditional row after itself or
-        // by being expanded, span more than this row
-        stateMap = dataTable.getStateMap();
-        boolean notExpanded  = !stateMap.get(rowData).isExpanded();
-        boolean noTailingRows = dataTable.getConditionalRows(currentRow, false).size() == 0;
-        boolean lastExpanded = false;
-        if (notExpanded && noTailingRows)
-            while (keepCounting) {
-                dataTable.setRowIndex(currentRow + result + 1);
-
-                if (!dataTable.isRowAvailable()) break;
-
-                boolean expanded = stateMap.get(dataTable.getRowData()).isExpanded();
-                boolean hasConditionalRows = dataTable.getConditionalRows(currentRow + result + 1, true).size() > 0 || dataTable.getConditionalRows(currentRow + result, false).size() > 0;;
-
-                if (currentValue.equals(getGroupBy()) && !lastExpanded && !hasConditionalRows) {
-                    lastExpanded = expanded;
-                    result++;
-                }
-                else keepCounting = false;
-            }
-
-        dataTable.setRowIndex(currentRow);
-        setCurrGroupLength(result);
-        return result;  //To change body of created methods use File | Settings | File Templates.
-    }
-
-    public boolean isLastGroupDifferent() {
-        DataTable dataTable = findParentTable(getFacesContext(), this);
-        int currentRow = dataTable.getRowIndex();
-        Object currentValue = getGroupBy();
-
-        if (currentRow == 0) return true;
-
-        if (currentValue != null) {
-            dataTable.setRowIndex(currentRow - 1);
-            Object lastValue = getGroupBy();
-
-            dataTable.setRowIndex(currentRow);
-
-            return !currentValue.equals(lastValue);
-        }
-
-        return true;
-    }
-
     @Override
     public java.lang.Object getSortBy() {
         Object retVal = super.getSortBy();
@@ -213,5 +139,36 @@ public class Column extends ColumnBase implements Serializable {
     public boolean hasSortPriority() {
         Integer pri = getSortPriority();
         return (pri != null && pri > 0);
+    }
+
+    /**
+     * This works around the fact that rendered is not an ACE generated property,
+     * but comes from UIComponent, so is not writable to EL from the setter.
+     */
+    public void updateRendered(boolean rendered) {
+        ValueExpression valueExpression = getValueExpression("rendered");
+        if (valueExpression != null) {
+            valueExpression.setValue(
+                FacesContext.getCurrentInstance().getELContext(), rendered);
+        } else {
+            setRendered(rendered);
+        }
+    }
+
+    /**
+     * The AutoAdjustRenderedColspan code should not call body column
+     * updateRendered if their rendered property has been set to anything.
+     * We can't determine if set with non-EL, but if it's false, then it's not
+     * the default value, so was set. And if it was defaulted or intentionally
+     * set to true, then we're probably only unrendering a column if it's
+     * necessary. We just really want to avoid rendering columns specifically
+     * set not to.
+     */
+    public boolean isLikelySpecifiedRendered() {
+        return (getValueExpression("rendered") != null || !isRendered());
+    }
+
+    public boolean isPropertySet(String finder) {
+        return super.isPropertySet(finder);
     }
 }

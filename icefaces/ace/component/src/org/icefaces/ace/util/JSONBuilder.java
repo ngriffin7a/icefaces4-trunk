@@ -16,6 +16,9 @@
 
 package org.icefaces.ace.util;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Utility API that builds the parameter strings, performs param escaping.
  * Output is a JSON string as specified at <a href="http://www.json.org/">json.org</a>.
@@ -194,6 +197,43 @@ public class JSONBuilder {
         endArray();
         return this; 
     }
+
+    /**
+     * Using the List of Strings, adds an array of strings as a names map property.
+     * @param key name of the property.
+     * @param values strings to put into the array
+     * @param quote whether to add quotes arround each string
+     * @param escape whether to escape each string
+     * @return a reference to this object.
+     */
+    public JSONBuilder entry(String key, List<String> values, boolean quote, boolean escape) {
+        beginArray(key);
+        Iterator<String> it = values.iterator();
+        while (it.hasNext()) {
+            String curr = it.next();
+            if (curr == null) {
+                params.append("null");
+            }
+            else {
+                if (quote) {
+                    params.append('"');
+                }
+                if (escape) {
+                    curr = escapeString(curr);
+                }
+                params.append(curr);
+                if (quote) {
+                    params.append('"');
+                }
+            }
+            if (it.hasNext()) {
+                params.append(',');
+            }
+        }
+        endArray();
+        return this;
+    }
+    //List<String> sortableContainerIds
 
     /**
      * Adds an Integer property to a map only if the value is non-null,

@@ -25,6 +25,11 @@ import org.icefaces.resources.ICEResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 public class TableConfigPanel extends TableConfigPanelBase {
+    public static final String DATATABLE_HEADER_COLUMN_ORDER_SUFFIX = "_tcp_headcolorder";
+    public static final String DATATABLE_COLUMN_ORDER_SUFFIX = "_tcp_colorder";
+    public static final String COLUMN_VISIBILITY_SUFFIX = "_tcp_colvis";
+    public static final String COLUMN_HEAD_SUFFIX = "_tcp_colhead";
+
     // Find component cache
     private DataTable table;
 

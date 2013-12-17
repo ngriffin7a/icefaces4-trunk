@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.column.IProxiableColumn;
 import org.icefaces.ace.component.columngroup.ColumnGroup;
 import org.icefaces.ace.component.row.Row;
 import org.icefaces.ace.util.HTML;
@@ -83,10 +84,8 @@ public class DataTableFootRenderer {
     private static void encodeColumnFooter(FacesContext context, DataTable table, List columnSiblings, Column column, boolean subRows) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
-        Column nextColumn = DataTableRendererUtil.getNextColumn(column, columnSiblings);
         boolean isCurrStacked = DataTableRendererUtil.isCurrColumnStacked(columnSiblings, column);
-        boolean isNextStacked = (nextColumn == null) ? false
-                : (nextColumn.isRendered() && nextColumn.isStacked());
+        boolean isNextStacked = DataTableRendererUtil.isNextStacked(columnSiblings, column);
 
         if (!isCurrStacked) {
             String style = column.getStyle();
@@ -131,6 +130,7 @@ public class DataTableFootRenderer {
             writer.endElement(HTML.TD_ELEM);
         } else if (subRows) {
             // If in a multirow footer case, and using stacked, enforce these restrictions
+            IProxiableColumn nextColumn = DataTableRendererUtil.getNextColumn(column, columnSiblings);
             if (!DataTableRendererUtil.areBothSingleColumnSpan(column, nextColumn))
                 throw new FacesException("DataTable : \"" + table.getClientId(context) + "\" must not have stacked footer columns, with colspan values greater than 1.");
             if (!DataTableRendererUtil.isNextColumnRowSpanEqual(column, nextColumn))

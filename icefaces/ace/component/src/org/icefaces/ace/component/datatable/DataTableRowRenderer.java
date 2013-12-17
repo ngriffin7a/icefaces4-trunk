@@ -16,8 +16,8 @@
 
 package org.icefaces.ace.component.datatable;
 
-import org.icefaces.ace.component.celleditor.CellEditor;
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.column.IProxiableColumn;
 import org.icefaces.ace.component.panelexpansion.PanelExpansion;
 import org.icefaces.ace.component.row.Row;
 import org.icefaces.ace.component.rowexpansion.RowExpansion;
@@ -87,10 +87,11 @@ public class DataTableRowRenderer {
                 writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
             }
 
-            List<Column> cols = tableContext.getColumns();
+            //TODO DONE groupBy, stacked, etc.
+            List<IProxiableColumn> cols = tableContext.getProxiedBodyColumns();
 			int visibleIndex = 0;
             for (int i = 0; i < cols.size(); i++) {
-                Column kid = cols.get(i);
+                IProxiableColumn kid = cols.get(i);
                 if (kid.isRendered()) {
                     encodeRegularCell(new CellRenderingContext(
                             context, cols, i, visibleIndex,
@@ -185,19 +186,17 @@ public class DataTableRowRenderer {
     }
 
     private static void encodeRegularCell(CellRenderingContext cellContext) throws IOException {
-        List<Column> columns = cellContext.columns;
-        Column column = columns.get(cellContext.index);
+        List<IProxiableColumn> columns = cellContext.columns;
+        IProxiableColumn column = columns.get(cellContext.index);
         ResponseWriter writer = cellContext.context.getResponseWriter();
 
-        Column nextColumn = DataTableRendererUtil.getNextColumn(column, columns);
         boolean isCurrStacked = DataTableRendererUtil.isCurrColumnStacked(columns, column);
         boolean isCurrGrouped = column.getCurrGroupLength() > 0;
 
-        boolean isNextStacked = (nextColumn == null) ? false
-                : (nextColumn.isRendered() && nextColumn.isStacked());
+        boolean isNextStacked = DataTableRendererUtil.isNextStacked(columns, column);
 
         boolean isNextGrouped = isCurrGrouped ? false // No need to calculate next group if grouped
-                : column.isNextColumnGrouped();
+                : DataTableRendererUtil.isNextColumnGrouped(column);
 
         if (isCurrGrouped)
             column.setCurrGroupLength(column.getCurrGroupLength()-1);
@@ -209,21 +208,19 @@ public class DataTableRowRenderer {
                     writer.writeAttribute(HTML.STYLE_ELEM, column.getStyle(), null);
 
                 if (isNextGrouped)
-                    writer.writeAttribute(HTML.ROWSPAN_ATTR, column.findCurrGroupLength()+1, null);
-
-                CellEditor editor = column.getCellEditor();
+                    writer.writeAttribute(HTML.ROWSPAN_ATTR, DataTableRendererUtil.findCurrGroupLength(column)+1, null);
 
                 String columnStyleClass = "ui-col-"+cellContext.visibleIndex;
 
                 if (column.getStyleClass() != null)
                     columnStyleClass += " " + column.getStyleClass();
 
-                if (editor != null)
+                if (column.hasCellEditor())
                     columnStyleClass += " " + DataTableConstants.EDITABLE_COLUMN_CLASS;
 
                 // Add alternating styling, except when last group is the same value, split by an expansion or conditional row
                 if (column.getValueExpression("groupBy") != null) {
-                    if (column.isLastGroupDifferent())
+                    if (DataTableRendererUtil.isLastGroupDifferent(column))
                         column.setOddGroup(!column.isOddGroup());
 
                     columnStyleClass += column.isOddGroup()
@@ -313,10 +310,10 @@ public class DataTableRowRenderer {
                     writer.writeAttribute(HTML.CLASS_ATTR,
                             DataTableConstants.ROW_CLASS + " " + alternatingClass + " " + selectionClass + " " + expandedClass + " " + unselectableClass, null);
 
-                    List<Column> cols = tableContext.getColumns();
+                    List<IProxiableColumn> cols = tableContext.getProxiedBodyColumns();
 					int visibleIndex = 0;
                     for (int i = 0; i < cols.size(); i++) {
-                        Column kid = cols.get(i);
+                        IProxiableColumn kid = cols.get(i);
                         if (kid.isRendered()) {
                             boolean cellSelected = false;
                             encodeRegularCell(new CellRenderingContext(context, cols, i, visibleIndex, selectedColumnIds.contains(kid.getId()), false));
@@ -417,13 +414,13 @@ public class DataTableRowRenderer {
 
     private static class CellRenderingContext {
         FacesContext context;
-        List columns;
+        List<IProxiableColumn> columns;
         int index;
 		int visibleIndex;
         boolean selected;
         boolean resizable;
 
-        public CellRenderingContext(FacesContext context, List<Column> columns, int index, int visibleIndex, boolean selected, boolean innerDiv) {
+        public CellRenderingContext(FacesContext context, List<IProxiableColumn> columns, int index, int visibleIndex, boolean selected, boolean innerDiv) {
             this.context = context;
             this.columns = columns;
             this.index = index;

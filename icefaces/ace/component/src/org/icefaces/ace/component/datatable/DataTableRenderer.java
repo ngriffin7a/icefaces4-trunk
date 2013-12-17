@@ -27,6 +27,7 @@
 package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.column.IProxiableColumn;
 import org.icefaces.ace.component.tableconfigpanel.TableConfigPanel;
 import org.icefaces.ace.json.JSONException;
 import org.icefaces.ace.renderkit.CoreRenderer;
@@ -297,7 +298,7 @@ public class DataTableRenderer extends CoreRenderer {
             }
         }
         else
-            encodeEmptyMessage(table, writer, tableContext.getColumns());
+            encodeEmptyMessage(table, writer, tableContext.getProxiedBodyColumns());
 
         writer.endElement(HTML.TBODY_ELEM);
         table.setRowIndex(-1);
@@ -470,7 +471,7 @@ public class DataTableRenderer extends CoreRenderer {
         }
     }
 
-    private void encodeEmptyMessage(DataTable table, ResponseWriter writer, List<Column> columns) throws IOException {
+    private void encodeEmptyMessage(DataTable table, ResponseWriter writer, List<IProxiableColumn> columns) throws IOException {
         writer.startElement(HTML.TR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.ROW_CLASS, null);
         writer.startElement(HTML.TD_ELEM, null);

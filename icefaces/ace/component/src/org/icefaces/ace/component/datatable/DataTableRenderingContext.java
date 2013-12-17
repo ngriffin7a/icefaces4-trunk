@@ -17,6 +17,8 @@
 package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.column.IProxiableColumn;
+import org.icefaces.ace.model.table.ColumnModel;
 import org.icefaces.ace.model.table.RowStateMap;
 
 import java.util.List;
@@ -27,6 +29,8 @@ public class DataTableRenderingContext {
 
     private RowStateMap stateMap;
 
+    private ColumnModel columnModel;
+    private List<IProxiableColumn> proxiedBodyColumns;
     private List<Column> columns;
     private Integer rows;
     private Integer firstRowIndex;
@@ -63,6 +67,8 @@ public class DataTableRenderingContext {
         rows = table.getRows();
         firstRowIndex = table.getFirst();
         pagPose = table.getPage();
+        columnModel = table.getColumnModel();
+        proxiedBodyColumns = table.getProxiedBodyColumns();
         columns = table.getColumns();
         rowStateVar = table.getRowStateVar();
         selectionMode = table.getSelectionMode();
@@ -113,6 +119,14 @@ public class DataTableRenderingContext {
 
     public Integer getPagPose() {
         return pagPose;
+    }
+
+    public ColumnModel getColumnModel() {
+        return columnModel;
+    }
+    
+    public List<IProxiableColumn> getProxiedBodyColumns() {
+        return proxiedBodyColumns;
     }
 
     public List<Column> getColumns() {

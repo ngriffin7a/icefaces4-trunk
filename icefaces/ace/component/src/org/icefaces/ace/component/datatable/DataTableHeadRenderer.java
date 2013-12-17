@@ -17,9 +17,10 @@
 package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.column.Column;
-import org.icefaces.ace.component.columngroup.ColumnGroup;
-import org.icefaces.ace.component.row.Row;
 import org.icefaces.ace.component.tableconfigpanel.TableConfigPanel;
+import org.icefaces.ace.model.table.ColumnGroupModel;
+import org.icefaces.ace.model.table.ColumnModel;
+import org.icefaces.ace.model.table.DepthFirstHeadTraversal;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
@@ -35,13 +36,16 @@ import java.util.*;
 public class DataTableHeadRenderer {
     protected static void encodeTableHead(FacesContext context, DataTableRenderingContext tableContext) throws IOException {
         DataTable table = tableContext.getTable();
-
         if (!table.hasHeaders()) return;
 
-        List headContainer = tableContext.getColumns();
+        ColumnModel columnModel = tableContext.getColumnModel();
+        Map<String, AutoAdjustRenderedColspan.AdjustedRenderedColspan> map =
+            AutoAdjustRenderedColspan.adjustIfAllowed(
+                table.findTableConfigPanel(context), columnModel);
+        ColumnGroupModel.TreeIterator iterator = columnModel.getHeaderModel().iterate();
+        if (iterator.empty()) return;
+
         ResponseWriter writer = context.getResponseWriter();
-        ColumnGroup group = table.getColumnGroup("header");
-        if (group != null) headContainer = group.getChildren();
 
         if (tableContext.isStaticHeaders() && !table.isInDuplicateSegment()) {
             writer.startElement(HTML.DIV_ELEM, null);
@@ -54,55 +58,55 @@ public class DataTableHeadRenderer {
         if (table.isInDuplicateSegment())
             writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
 
-        // For each row of a col group, or child of a datatable
-        boolean firstHeadElement = true;
-        boolean subRows = false;
         boolean renderingFirstCol = true;
-        ListIterator<UIComponent> headElementIterator = headContainer.listIterator();
-
-        do {
-            UIComponent headerElem = headElementIterator.next();
-            List<UIComponent> headerRowChildren = new ArrayList<UIComponent>();
-            int i = 0;
-
-            // If its a row, get the row children, else add the column as a pseduo child,
-            // if not column, break.
-            if (headerElem.isRendered() && (headerElem instanceof Row || headerElem instanceof Column)) {
-                if (headerElem instanceof Row) {
-                    Row headerRow = (Row) headerElem;
-                    headerRowChildren = headerRow.getChildren();
-                    subRows = true;
-                } else headerRowChildren.add(headerElem);
-
-                // If the element was a row of a col-group render another row for a subrow
-                // of the header
-                if (subRows || firstHeadElement) writer.startElement(HTML.TR_ELEM, null);
-
-                // Either loop through row children or render the single column/columns
-                ListIterator<UIComponent> componentIterator = headerRowChildren.listIterator();
-                tableContext.setInHeaderSubrows(subRows);
-                List<UIComponent> siblings = (subRows) ? headerRowChildren : headContainer;
-                while (componentIterator.hasNext()) {
-                    UIComponent headerRowChild = componentIterator.next();
-
-                    boolean rendered = headerRowChild.isRendered();
-
-                    tableContext.setFirstColumn(rendered && renderingFirstCol);
-                    tableContext.setLastColumn(!componentIterator.hasNext() && (!headElementIterator.hasNext() || isLastRendered(headElementIterator)));
-
-                    if (headerRowChild.isRendered() && headerRowChild instanceof Column)
-                        encodeColumn(context, tableContext, (Column) headerRowChild, siblings);
-
-                    if (rendered) renderingFirstCol = false;
+        if (iterator.columnGroup() == null || iterator.columnGroup().isRendered()) {
+            do {
+                if (iterator.row() != null && !iterator.row().isRendered()) {
+                    continue;
                 }
+                writer.startElement(HTML.TR_ELEM, null);
+                tableContext.setInHeaderSubrows(iterator.row() != null);
+                do {
+                    List<Column> columnsInCell = iterator.columns();
+                    for (int i = 0; i < columnsInCell.size(); i++) {
+                        Column column = columnsInCell.get(i);
+                        if (column.isRendered()) {
+                            tableContext.setFirstColumn(renderingFirstCol);
+                            tableContext.setLastColumn(!iterator.nextRendered(false));
+                            boolean isCurrStacked = DataTableRendererUtil.
+                                isCurrColumnStacked(columnsInCell, column);
+                            boolean isNextStacked = DataTableRendererUtil.
+                                isNextStacked(columnsInCell, column);
+                            if (isNextStacked) { // Used to only check if tableContext.isInHeaderSubrows()
+                                if (!DataTableRendererUtil.areBothSingleColumnSpan(column, columnsInCell.get(i+1)))
+                                    throw new FacesException("DataTable : \"" + table.getClientId(context) + "\" must not have stacked header columns, with colspan values greater than 1.");
+                                if (!DataTableRendererUtil.isNextColumnRowSpanEqual(column, columnsInCell.get(i+1)))
+                                    throw new FacesException("DataTable : \"" + table.getClientId(context) + "\" must not have stacked header columns, with unequal rowspan values.");
+                            }
+                            encodeColumn(context, tableContext, column,
+                                isCurrStacked, isNextStacked, map);
+                            renderingFirstCol = false;
+                        }
+                    }
+                } while (iterator.nextPeer(false, true));
 
-                firstHeadElement = false;
+                writer.endElement(HTML.TR_ELEM);
+            } while (iterator.nextRow(true, true));
+        }
 
-                if (subRows) writer.endElement(HTML.TR_ELEM);
-            }
-        } while (headElementIterator.hasNext());
-
-        if (!subRows) writer.endElement(HTML.TR_ELEM);
+        // None of the header rows or columns are rendered, so render the
+        // TableConfigPanel launcher button on its own
+        TableConfigPanel panel = table.findTableConfigPanel(context);
+        if (renderingFirstCol && panel != null && !panel.getType().equals(
+            "paginator-button")) {
+            writer.startElement(HTML.TR_ELEM, null);
+            writer.startElement(HTML.TD_ELEM, null);
+            writer.writeAttribute(HTML.COLSPAN_ATTR,
+                iterator.getColumnGroupModel().getColumns(), null);
+            encodeConfigPanelLaunchButton(writer, table, true);
+            writer.endElement(HTML.TD_ELEM);
+            writer.endElement(HTML.TR_ELEM);
+        }
 
         writer.endElement(HTML.THEAD_ELEM);
 
@@ -112,37 +116,17 @@ public class DataTableHeadRenderer {
         }
     }
 
-    private static boolean isLastRendered(ListIterator<UIComponent> componentIterator) {
-        int index = 0;
-        boolean last = true;
-        // look ahead
-        while (componentIterator.hasNext()) {
-            index++;
-            if (componentIterator.next().isRendered()) {
-                last = false;
-                break;
-            }
-        }
-        // look back
-        while (index != 0) {
-            index--;
-            componentIterator.previous();
-        }
-        return last;
-    }
-
-    private static void encodeColumn(FacesContext context, DataTableRenderingContext tableContext, Column column, List columnSiblings) throws IOException {
+   private static void encodeColumn(FacesContext context,
+            DataTableRenderingContext tableContext, Column column,
+            boolean isCurrStacked, boolean isNextStacked,
+            Map<String, AutoAdjustRenderedColspan.AdjustedRenderedColspan>
+            adjColspans) throws IOException {
         DataTable table = tableContext.getTable();
         ResponseWriter writer = context.getResponseWriter();
         String clientId = column.getClientId(context);
 
         tableContext.setColumnSortable(column.getValueExpression("sortBy") != null);
         tableContext.setColumnFilterable(column.getValueExpression("filterBy") != null);
-
-        Column nextColumn = DataTableRendererUtil.getNextColumn(column, columnSiblings);
-        boolean isCurrStacked = DataTableRendererUtil.isCurrColumnStacked(columnSiblings, column);
-        boolean isNextStacked = (nextColumn == null) ? false
-                : (nextColumn.isRendered() && nextColumn.isStacked());
 
         if (!isCurrStacked) {
             String style = column.getStyle();
@@ -164,10 +148,14 @@ public class DataTableHeadRenderer {
 
             if (style != null)
                 writer.writeAttribute(HTML.STYLE_ELEM, style, null);
-            if (column.getRowspan() != 1)
-                writer.writeAttribute(HTML.ROWSPAN_ATTR, column.getRowspan(), null);
-            if (column.getColspan() != 1)
-                writer.writeAttribute(HTML.COLSPAN_ATTR, column.getColspan(), null);
+            int rowspan = column.getRowspan();
+            if (rowspan != 1)
+                writer.writeAttribute(HTML.ROWSPAN_ATTR, rowspan, null);
+            AutoAdjustRenderedColspan.AdjustedRenderedColspan adj =
+                (adjColspans != null) ? adjColspans.get(clientId) : null;
+            int colspan = adj != null ? adj.getAdjustedColspan() : column.getColspan();
+            if (colspan != 1)
+                writer.writeAttribute(HTML.COLSPAN_ATTR, colspan, null);
         }
 
         else {
@@ -192,7 +180,7 @@ public class DataTableHeadRenderer {
 
         TableConfigPanel panel = table.findTableConfigPanel(context);
 
-        if (panelTargetsColumn(panel, column,
+        if (!isCurrStacked && panelTargetsColumn(panel, column,
                 tableContext.isFirstColumn(),
                 tableContext.isLastColumn(), true))
             encodeLeftSideControls(writer, table,
@@ -218,7 +206,7 @@ public class DataTableHeadRenderer {
         writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.SPAN_ELEM);
 
-        boolean configButton = panelTargetsColumn(panel, column, tableContext.isFirstColumn(),
+        boolean configButton = !isCurrStacked && panelTargetsColumn(panel, column, tableContext.isFirstColumn(),
                 tableContext.isLastColumn(), false);
 
         if (tableContext.isColumnSortable() || tableContext.isColumnPinningEnabled() || configButton)
@@ -232,12 +220,6 @@ public class DataTableHeadRenderer {
 
         if (!isNextStacked) {
             writer.endElement("th");
-        } else if (tableContext.isInHeaderSubrows()) {
-            // If in a multirow header case, and using stacked, enforce these restrictions
-            if (!DataTableRendererUtil.areBothSingleColumnSpan(column, nextColumn))
-                throw new FacesException("DataTable : \"" + table.getClientId(context) + "\" must not have stacked header columns, with colspan values greater than 1.");
-            if (!DataTableRendererUtil.isNextColumnRowSpanEqual(column, nextColumn))
-                throw new FacesException("DataTable : \"" + table.getClientId(context) + "\" must not have stacked header columns, with unequal rowspan values.");
         }
     }
 
@@ -455,5 +437,4 @@ public class DataTableHeadRenderer {
         else if (options instanceof Collection<?>) return ((Collection<SelectItem>) column.getFilterOptions()).toArray(new SelectItem[] {});
         else throw new FacesException("Filter options for column " + column.getClientId() + " should be a SelectItem array or collection");
     }
-
 }
