@@ -241,6 +241,14 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
     public void endDocument() throws IOException {
         boolean isPartialRequest = FacesContext.getCurrentInstance().getPartialViewContext().isPartialRequest();
 
+        if (FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development)) {
+            if (log.isLoggable(Level.WARNING)) {
+                if (null != document && null != document.getDocumentElement()) {
+                    logAllUnclosedNodes(document.getDocumentElement());
+                }
+            }
+        }
+
         //full-page requests write directly to the response
         if (!isPartialRequest) {
             if(EnvUtils.isMojarra() ){
@@ -282,6 +290,11 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
             document = DOMUtils.getNewDocument();
         }
         pointCursorAt(appendToCursor(document.createElement(name)));
+        if (FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development)) {
+            if (log.isLoggable(Level.WARNING)) {
+                cursor.setUserData("closed", Boolean.FALSE, null);
+            }
+        }
 
         if (component != null && getPassThroughAttributesMethod != null) {
             try {
@@ -309,19 +322,9 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         if (FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development)) {
             if (log.isLoggable(Level.WARNING)) {
                 if (!cursor.getNodeName().equals(name)) {
-                    String path = "";
-                    Node tempCursor = cursor;
-                    while (tempCursor != null) {
-                        if (tempCursor != cursor) {
-                            path = " -> " + path;
-                        }
-                        path = tempCursor.getNodeName() + path;
-                        tempCursor = tempCursor.getParentNode();
-                    }
-                    Node idNode = cursor.getAttributes().getNamedItem("id");
-                    log.log(Level.WARNING, "Missing end-element for: " 
-                            + cursor.getNodeName() + (idNode == null ? "" : "["+idNode.toString()+"]") 
-                            + " (path: " + path + ")");
+                    logUnclosedNode(cursor);
+                } else {
+                    cursor.setUserData("closed", Boolean.TRUE, null);
                 }
             }
         }
@@ -340,6 +343,33 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         }
 
         pointCursorAt(cursor.getParentNode());
+    }
+
+    private void logUnclosedNode(Node node) {
+        if (node == null) return;
+        StringBuilder path = new StringBuilder();
+        Node tempCursor = node;
+        while (tempCursor != null) {
+            if (tempCursor != node) {
+                path.insert(0, " -> ");
+            }
+            path.insert(0, tempCursor.getNodeName());
+            tempCursor = tempCursor.getParentNode();
+        }
+        Node idNode = node.getAttributes().getNamedItem("id");
+        log.log(Level.WARNING, "Missing end-element for: "
+            + node.getNodeName() + (idNode == null ? "" : "["+idNode.toString()+"]")
+            + " (path: " + path + ")");
+    }
+
+    private void logAllUnclosedNodes(Node node) {
+        Boolean closed = (Boolean) cursor.getUserData("closed");
+        if (closed != null && !closed) {
+            logUnclosedNode(node);
+        }
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            logAllUnclosedNodes(node.getChildNodes().item(i));
+        }
     }
 
     public void writeAttribute(String name, Object value, String property) throws IOException {
