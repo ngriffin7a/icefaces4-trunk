@@ -26,6 +26,7 @@ package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.ajax.AjaxBehavior;
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.column.IProxiableColumn;
 import org.icefaces.ace.component.columngroup.ColumnGroup;
 import org.icefaces.ace.component.expansiontoggler.ExpansionToggler;
 import org.icefaces.ace.component.panelexpansion.PanelExpansion;
@@ -36,7 +37,6 @@ import org.icefaces.ace.event.DataTableCellClickEvent;
 import org.icefaces.ace.event.SelectEvent;
 import org.icefaces.ace.event.TableFilterEvent;
 import org.icefaces.ace.event.UnselectEvent;
-import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.model.MultipleExpressionComparator;
 import org.icefaces.ace.model.filter.ContainsFilterConstraint;
 import org.icefaces.ace.model.table.*;
@@ -636,6 +636,74 @@ public class DataTable extends DataTableBase implements Serializable {
         return getColumns(false);
     }
 
+    List<IProxiableColumn> getProxiedBodyColumns() {
+        if (!isColumnsInheritProperties() ||
+            (null == getColumnGroup("header"))) {
+            return new ArrayList<IProxiableColumn>(getColumns());
+        }
+        return getColumnModel().getProxiedBodyColumns();
+    }
+
+    public ColumnModel getColumnModel() {
+        ColumnGroupModel headerModel = null;
+        ColumnGroupModel bodyModel;
+
+        ColumnGroup columnGroup = getColumnGroup("header");
+        if (columnGroup != null) {
+            log.fine("HEADER columnGroup");
+
+            // Assume for any columns beyond columnOrdering's size, columnOrdering[i]==i
+            List<Integer> headerColumnOrdering = getHeaderColumnOrdering();
+            log.fine("headerColumnOrdering: " + headerColumnOrdering);
+
+            headerModel = new ColumnGroupModel(columnGroup);
+            ColumnGroupModel.ConstructionState state = headerModel.construct(headerColumnOrdering);
+
+            for (UIComponent child : columnGroup.getChildren()) {
+                if (child instanceof Row) {
+                    state.addRow((Row)child);
+                    for (UIComponent gchild : child.getChildren()) {
+                        if (gchild instanceof Column) {
+                            state.addUnsortedColumnForRow((Column)gchild);
+                        }
+                    }
+                    state.endRow();
+                }
+            }
+            state.end();
+        }
+
+        log.fine("BODY columns");
+
+        // Assume for any columns beyond columnOrdering's size, columnOrdering[i]==i
+        List<Integer> columnOrdering = getColumnOrdering();
+        log.fine("columnOrdering: " + columnOrdering);
+
+        bodyModel = new ColumnGroupModel();
+        ColumnGroupModel.ConstructionState state = bodyModel.construct(columnOrdering);
+
+        state.addRow(null);
+        Stack childStack = new Stack<UIComponent>();
+        childStack.add(this);
+        while (!childStack.empty()) {
+            for (UIComponent child : ((UIComponent)childStack.pop()).getChildren()) {
+                if (!(child instanceof ColumnGroup) && !(child instanceof Column) && !(child instanceof DataTable) && !(child instanceof Row)) {
+                    if (child.getChildren().size() > 0) {
+                        childStack.add(child);
+                    }
+                } else if (child instanceof Column) {
+                    state.addUnsortedColumnForRow((Column)child);
+                }
+            }
+        }
+        state.endRow();
+        state.end();
+
+        ColumnModel columnModel = new ColumnModel(headerModel, bodyModel);
+        columnModel.verifyCorresponding(getClientId());
+        return columnModel;
+    }
+
     /**
      * Generates a list of DataTable Column children intended to render the header, either from the header segement, or
      * from the normal grouping of columns.
@@ -1071,7 +1139,8 @@ public class DataTable extends DataTableBase implements Serializable {
 
     protected Map<String,String> getFilters() {
         HashMap<String, String> map = new HashMap<String, String>();
-        for (Column c : getColumns()) {
+        //TODO DONE filterBy
+        for (IProxiableColumn c : getProxiedBodyColumns()) {
             String value = c.getFilterValue();
             if (value != null && (value.length() > 0))
                 map.put(ComponentUtils.resolveField(c.getValueExpression("filterBy")), value);
@@ -1268,7 +1337,8 @@ public class DataTable extends DataTableBase implements Serializable {
                     if (isGroupedFilterResults()) {
                         int currentIndex = index;
                         int searchIndex;
-                        List<Column> columns = getColumns();
+                        //TODO DONE groupBy
+                        List<IProxiableColumn> columns = getProxiedBodyColumns();
                         List<Object> groupMembers = new ArrayList<Object>();
                         List<Object> previousGroupMembers = new ArrayList<Object>();
                         List<Object> followingGroupMembers = new ArrayList<Object>();
@@ -1292,7 +1362,7 @@ public class DataTable extends DataTableBase implements Serializable {
                             
                             if (model.isRowAvailable())
                             for (int i = 0; i < columns.size(); i++) {
-                                Column column = columns.get(i);    
+                                IProxiableColumn column = columns.get(i);
                                 if (column.getValueExpression("groupBy") != null) {
                                     Object searchValue = column.getGroupBy();
                                     if (searchValue == currentValues[i]) {
@@ -1325,7 +1395,7 @@ public class DataTable extends DataTableBase implements Serializable {
 
                             if (model.isRowAvailable())
                                 for (int i = 0; i < columns.size(); i++) {
-                                    Column column = columns.get(i);
+                                    IProxiableColumn column = columns.get(i);
                                     if (column.getValueExpression("groupBy") != null) {
                                         Object searchValue = column.getGroupBy();
                                         if (searchValue == currentValues[i]) {

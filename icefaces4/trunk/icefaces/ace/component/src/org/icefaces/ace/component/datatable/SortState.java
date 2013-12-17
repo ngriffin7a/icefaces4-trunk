@@ -73,7 +73,6 @@ public class SortState {
         String clientId = table.getClientId(context);
         String[] sortKeys = sortKeyString.split(",");
         String[] sortDirs = params.get(clientId + "_sortDirs").split(",");
-        List<Column> columns = table.getColumns(true);
 
         if (sortKeys[0].equals("")) {
             return;
@@ -100,8 +99,10 @@ public class SortState {
                 }
             }
 
-            saveState(sortColumn, i+1, Boolean.parseBoolean(sortDirs[i]));
-            i++;
+            if (sortColumn != null) { // Not dupeSeg for scrollable headers
+                saveState(sortColumn, i+1, Boolean.parseBoolean(sortDirs[i]));
+                i++;
+            }
         }
     }
 

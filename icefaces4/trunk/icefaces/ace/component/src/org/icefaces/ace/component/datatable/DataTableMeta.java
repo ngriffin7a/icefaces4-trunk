@@ -320,7 +320,7 @@ public class DataTableMeta extends UIDataMeta {
             "'first' and 'page' properties and that disabling the paginator will not return these " +
             "properties to their defaults; instead leaving the table at the position that was paginated to. " +
             "To return the table to the first page, 'first' must be set to 0, or 'page' must be set to 1." +
-            "Alternately the table has a convenience method for this, DataTable.resetSorting().")
+            "Alternately the table has a convenience method for this, DataTable.resetPagination().")
     private boolean paginator;
 
 
@@ -417,6 +417,14 @@ public class DataTableMeta extends UIDataMeta {
             "the Column children of the table.")
     private List<Integer> columnOrdering;
 
+    @Property(tlddoc = "Defines a list of integers representing a rendering " +
+            "order for the Column children of the header columnGroup. This " +
+            "is separate from the columnOrdering property to maintain " +
+            "backwards compatibility and simplify application code when " +
+            "columns are added or removed. Both properties should be " +
+            "maintained in sync with each other.")
+    private List<Integer> headerColumnOrdering;
+
     @Property(tlddoc = "Enabling makes the entire header container the clickable region for sort events.",
             defaultValue =  "true", defaultValueType = DefaultValueType.EXPRESSION)
     private boolean clickableHeaderSorting;
@@ -424,4 +432,15 @@ public class DataTableMeta extends UIDataMeta {
     @Property(tlddoc = "Row tabindex is required for dataTable Find feature. If Find feature is not used and the tabindex interferes with tabbing through inputs in the table, set this to false.",
             defaultValue =  "true")
     private boolean renderRowTabindex;
+
+    @Property(tlddoc="To reduce redundancy in markup, body columns can detect "+
+        "which header column that they correspond to, and inherit sorting, " +
+        "filtering and grouping properties from it. Previously, it was " +
+        "necessary to provide the same properties and values on both " +
+        "components, but now it's possible to specify them on the header " +
+        "column, and have the body column inherit them automatically. If a " +
+        "property is specified on the body column, then that will take " +
+        "precedence for it.", defaultValueType = DefaultValueType.EXPRESSION,
+        defaultValue =  "true")
+    private boolean columnsInheritProperties;
 }

@@ -17,21 +17,14 @@
 package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.column.Column;
-import org.icefaces.ace.component.columngroup.ColumnGroup;
-import org.icefaces.ace.component.row.Row;
 import org.icefaces.ace.component.tableconfigpanel.TableConfigPanel;
 import org.icefaces.ace.context.RequestContext;
 import org.icefaces.ace.event.SelectEvent;
 import org.icefaces.ace.event.UnselectEvent;
 import org.icefaces.ace.json.JSONException;
 import org.icefaces.ace.json.JSONObject;
-import org.icefaces.ace.model.table.RowState;
-import org.icefaces.ace.model.table.RowStateMap;
-import org.icefaces.ace.model.table.TreeDataModel;
+import org.icefaces.ace.model.table.*;
 
-import javax.el.ValueExpression;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import java.lang.String;
@@ -172,94 +165,115 @@ public class DataTableDecoder {
     // --------------------------------------------------------------------- //    
     static void decodeTableConfigurationRequest(FacesContext context, DataTable table) {
         TableConfigPanel tableConfigPanel = table.findTableConfigPanel(context);
+        tableConfigPanel.setForcedRenderCount(tableConfigPanel.getForcedRenderCount()+1);
         decodeColumnConfigurations(context, table, tableConfigPanel);
     }
 
     static private void decodeColumnConfigurations(FacesContext context, DataTable table, TableConfigPanel panel) {
-        int i;
-        String clientId = table.getClientId(context);
-        List<Column> columns = table.getColumns();
-        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-        boolean sizing = false; //panel.isColumnSizingConfigurable();
-        boolean name = panel.isColumnNameConfigurable();
-        boolean firstCol = panel.getType().equals("first-col") ;
-        boolean lastCol = panel.getType().equals("last-col");
-        boolean sorting = panel.isColumnSortingConfigurable();
-        boolean visibility = panel.isColumnVisibilityConfigurable();
-        boolean ordering = panel.isColumnOrderingConfigurable();
-        boolean firstRendered = true;
-
-        for (i = 0; i < columns.size(); i++) {
-            Column column = columns.get(i);
-
-            if (column.isConfigurable()) {
-                boolean disableVisibilityControl = (firstRendered && firstCol && i == 0) || ((lastCol && isLastRendered(columns, i)));
-                if (column.isRendered()) firstRendered = false;
-
-                String panelId = panel.getClientId();
-                if (visibility && !disableVisibilityControl) decodeColumnVisibility(params, column, i, panelId);
-                if (sizing) decodeColumnSizing(params, column, i, panelId);
-                if (name) decodeColumnName(params, column, i, panelId);
+        TableConfigPanelDecodeState state = new TableConfigPanelDecodeState(
+            context.getExternalContext().getRequestParameterMap(),
+            table.getColumnModel(),
+            panel.isColumnOrderingConfigurable(),
+            panel.isColumnNameConfigurable(),
+            panel.isColumnVisibilityConfigurable(),
+            panel.isColumnSortingConfigurable(),
+            panel.getType());
+        DepthFirstHeadTraversal.CallbackAdapter<TableConfigPanelDecodeState,
+            RuntimeException> callback = new DepthFirstHeadTraversal.
+            CallbackAdapter<TableConfigPanelDecodeState, RuntimeException>()
+        {
+            public void columnTraversal(TableConfigPanelDecodeState state,
+                    DepthFirstHeadTraversal.Quantity level, Column column,
+                    Column correspondingColumn, int headerIndex, int bodyIndex,
+                    int stackedIndex) throws RuntimeException {
+                if (column.isConfigurable()) {
+                    if (state.visibilityConfigurable) {
+                        decodeColumnVisibility(state.params, column, correspondingColumn);
+                    }
+                    if (state.namingConfigurable) {
+                        decodeColumnName(state.params, column);
+                    }
+                }
             }
+        };
+        DepthFirstHeadTraversal<TableConfigPanelDecodeState, RuntimeException>
+            t = new DepthFirstHeadTraversal<TableConfigPanelDecodeState,
+            RuntimeException>(state.columnModel, callback, state);
+        t.traverse();
+        String clientId = table.getClientId(context);
+        if (state.orderingConfigurable) {
+            decodeHeaderColumnOrdering(state.params, table, clientId);
+            decodeColumnOrdering(state.params, table, clientId);
         }
 
-        if (ordering) decodeColumnOrdering(params, table, clientId);
-        if (sorting) {
+        if (state.sortingConfigurable) {
             decodeSortRequest(context, table, clientId,
-                    processConfigPanelSortKeys(clientId, params, table));
+                    processConfigPanelSortKeys(clientId, state.params,
+                        state.columnModel));
         }
     }
 
-    private static boolean isLastRendered(List<Column> columns, int i) {
-        while (++i < columns.size())
-            if (columns.get(i).isRendered()) return false;
-
-        return true;
-    }
-
-    static private void decodeColumnName(Map<String, String> params, Column column, int i, String clientId) {
-        String text = params.get(clientId + "_head_" + i);
+    static private void decodeColumnName(Map<String, String> params, Column column) {
+        String text = params.get(column.getClientId()+TableConfigPanel.COLUMN_HEAD_SUFFIX);
         column.setHeaderText(text);
     }
 
+    static private void decodeHeaderColumnOrdering(Map<String, String> params, DataTable table, String clientId) {
+        ArrayList<Integer> indexes = parseIntegerListFromCommaDelimitedStringInMap(
+            params, clientId + TableConfigPanel.DATATABLE_HEADER_COLUMN_ORDER_SUFFIX);
+        if (indexes != null) {
+            table.setHeaderColumnOrdering(indexes);
+        }
+    }
+
     static private void decodeColumnOrdering(Map<String, String> params, DataTable table, String clientId) {
-        String strInput = params.get(clientId + "_colorder");
-        String[] indexes = strInput.split(",");
-        if (strInput.length() > 0) table.setColumnOrdering(indexes);
+        ArrayList<Integer> indexes = parseIntegerListFromCommaDelimitedStringInMap(
+            params, clientId + TableConfigPanel.DATATABLE_COLUMN_ORDER_SUFFIX);
+        if (indexes != null) {
+            table.setColumnOrdering(indexes);
+        }
     }
 
-    static private void decodeColumnSizing(Map<String, String> params, Column column, int i, String clientId) {
-
+    static private ArrayList<Integer> parseIntegerListFromCommaDelimitedStringInMap(
+            Map<String, String> params, String key) {
+        String strInput = params.get(key);
+        if (strInput != null && strInput.length() > 0) {
+            String[] indexes = strInput.split(",");
+            ArrayList<Integer> ints = new ArrayList<Integer>(Math.max(1, indexes.length));
+            for (String index : indexes) {
+                ints.add(Integer.parseInt(index));
+            }
+            return ints;
+        }
+        return null;
     }
 
-    static private void decodeColumnVisibility(Map<String, String> params, Column column, int i, String clientId) {
-        String code = params.get(clientId + "_colvis_" + i);
-        ValueExpression valueExpression = column.getValueExpression("rendered");
-        if (valueExpression != null) {
-            if (code == null) valueExpression.setValue(FacesContext.getCurrentInstance().getELContext(),
-                    Boolean.FALSE);
-            else valueExpression.setValue(FacesContext.getCurrentInstance().getELContext(),
-                    Boolean.TRUE);
-        } else {
-            if (code == null) column.setRendered(false);
-            else column.setRendered(true);
+    static private void decodeColumnVisibility(Map<String, String> params, Column column, Column correspondingColumn) {
+        String code = params.get(column.getClientId()+TableConfigPanel.COLUMN_VISIBILITY_SUFFIX);
+        boolean rendered = (code != null);
+        column.updateRendered(rendered);
+        if (correspondingColumn != null) {
+            correspondingColumn.updateRendered(rendered);
         }
     }
 
     // Util ---------------------------------------------------------------- //
-    static private String processConfigPanelSortKeys(String clientId, Map<String, String> params, DataTable table) {
+    static private String processConfigPanelSortKeys(String clientId,
+            Map<String, String> params, ColumnModel columnModel) {
+        StringBuilder newSortKeys = new StringBuilder();
         String[] sortKeys = params.get(clientId + "_sortKeys").split(",");
-        List<Column> columns = table.getColumns();
-        String newSortKeys = "";
-
         for (String key : sortKeys) {
             if (key.length() > 0) {
-                if (newSortKeys.length() == 0) newSortKeys = columns.get(Integer.parseInt(key)).getClientId();
-                else newSortKeys += "," + columns.get(Integer.parseInt(key)).getClientId();
+                if (newSortKeys.length() > 0) {
+                    newSortKeys.append(",");
+                }
+                int unsortedIndex = Integer.parseInt(key);
+                Column column = columnModel.getHeaderModel().
+                    getColumnWithUnsortedIndex(unsortedIndex);
+                newSortKeys.append(column.getClientId());
             }
         }
-
-        return newSortKeys;
+        return newSortKeys.toString();
     }
 
     public static void decodeColumnPinning(FacesContext context, DataTable table) throws JSONException {
@@ -287,16 +301,53 @@ public class DataTableDecoder {
 
     public static void decodeTrashConfigurationRequest(FacesContext context, DataTable table) {
         TableConfigPanel panel = table.findTableConfigPanel(context);
+        panel.setForcedRenderCount(panel.getForcedRenderCount()+1);
         boolean sorting = panel.isColumnSortingConfigurable();
         boolean visibility = panel.isColumnVisibilityConfigurable();
         boolean ordering = panel.isColumnOrderingConfigurable();
 
-        if (ordering)
+        if (ordering) {
+            table.setHeaderColumnOrdering((List)null);
             table.setColumnOrdering((List)null);
+        }
 
-        for (Column c : table.getColumns(true)) {
-            if (sorting) c.setSortPriority(null);
-            if (visibility) c.setRendered(true);
+        if (sorting || visibility) {
+            for (Column c : table.getColumns(true)) {
+                if (sorting && c.isPropertySet("sortPriority")) c.setSortPriority(null);
+                if (visibility) c.setRendered(true);
+            }
+            for (Column c : table.getColumns(false)) {
+                if (sorting && c.isPropertySet("sortPriority")) c.setSortPriority(null);
+                if (visibility) c.setRendered(true);
+            }
+        }
+    }
+
+
+    private static class TableConfigPanelDecodeState {
+        Map<String,String> params;
+        ColumnModel columnModel;
+        boolean orderingConfigurable;
+        boolean namingConfigurable;
+        boolean visibilityConfigurable;
+        boolean sortingConfigurable;
+        boolean firstCol;
+        boolean lastCol;
+
+        private TableConfigPanelDecodeState(
+            Map<String,String> params, ColumnModel columnModel,
+            boolean orderingConfigurable, boolean namingConfigurable,
+            boolean visibilityConfigurable, boolean sortingConfigurable,
+            String panelType)
+        {
+            this.params = params;
+            this.columnModel = columnModel;
+            this.orderingConfigurable = orderingConfigurable;
+            this.namingConfigurable = namingConfigurable;
+            this.visibilityConfigurable = visibilityConfigurable;
+            this.sortingConfigurable = sortingConfigurable;
+            this.firstCol = panelType.equals("first-col") ;
+            this.lastCol = panelType.equals("last-col");
         }
     }
 }
