@@ -49,22 +49,28 @@
                 <ace:column id="id" headerText="ID" footerText="ID">
                     <h:outputText id="idCell" value="#{car.id}"/>
                 </ace:column>
-                <ace:column id="name" headerText="Name" footerText="Name">
-                    <h:outputText id="nameCell" value="#{car.name}"/>
+               <ace:column id="name" headerText="Name" footerText="Name"
+                           sortBy="#{car.name}" filterBy="#{car.name}">
+                   <h:outputText id="nameCell" value="#{car.name}"/>
+               </ace:column>
+               <ace:column id="chassis" headerText="Chassis" footerText="Chassis"
+                           sortBy="#{car.chassis}" filterBy="#{car.chassis}">
+                   <h:outputText id="chassisCell" value="#{car.chassis}"/>
+               </ace:column>
+                <ace:column id="year" headerText="Year" footerText="Year"
+                            sortBy="#{car.year}" filterBy="#{car.year}">
+                    <h:outputText id="yearCell" value="#{car.year}"/>
                 </ace:column>
-                <ace:column id="chassis" headerText="Chassis" footerText="Chassis">
-                    <h:outputText id="chassisCell" value="#{car.chassis}"/>
+                <ace:column id="color" headerText="Color" footerText="Color"
+                            sortBy="#{car.color}" filterBy="#{car.color}">
+                    <h:outputText id="colorCell" value="#{car.color}"/>
                 </ace:column>
-                <ace:column id="weight" headerText="Weight (lbs)" footerText="Weight (lbs)">
-                    <h:outputText id="weightCell" value="#{car.weight}"/>
-                </ace:column>
-                <ace:column id="acceleration" headerText="Accel" footerText="Accel">
-                    <h:outputText id="accelerationCell" value="#{car.acceleration}"/>
-                </ace:column>
-                <ace:column id="mpg" headerText="MPG" footerText="MPG">
+                <ace:column id="mpg" headerText="MPG" footerText="MPG"
+                            sortBy="#{car.mpg}" filterBy="#{car.mpg}">
                     <h:outputText id="mpgCell" value="#{car.mpg}"/>
                 </ace:column>
-                <ace:column id="cost" headerText="Cost" footerText="Cost">
+                <ace:column id="cost" headerText="Cost" footerText="Cost"
+                            sortBy="#{car.cost}" filterBy="#{car.cost}">
                     <h:outputText id="costCell" value="#{car.cost}">
                         <f:convertNumber type="currency"
                                          currencySymbol="$"

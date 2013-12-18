@@ -34,31 +34,31 @@ import java.io.Serializable;
 
 @ComponentExample(
         parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.configpanel.title",
-        description = "example.ace.dataTable.configpanel.description",
-        example = "/resources/examples/ace/dataTable/dataTableConfigPanel.xhtml"
+        title = "example.ace.dataTable.configpaneladvanced.title",
+        description = "example.ace.dataTable.configpaneladvanced.description",
+        example = "/resources/examples/ace/dataTable/dataTableConfigPanelAdvanced.xhtml"
 )
 @ExampleResources(
         resources ={
                 // xhtml
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="dataTableConfigPanel.xhtml",
-                        resource = "/resources/examples/ace/dataTable/dataTableConfigPanel.xhtml"),
+                        title="dataTableConfigPanelAdvanced.xhtml",
+                        resource = "/resources/examples/ace/dataTable/dataTableConfigPanelAdvanced.xhtml"),
                 // Java Source
                 @ExampleResource(type = ResourceType.java,
-                        title="DataTableConfigPanel.java",
+                        title="DataTableConfigPanelAdvanced.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/dataTable/DataTableConfigPanel.java")
+                                "/example/ace/dataTable/DataTableConfigPanelAdvanced.java")
         }
 )
-@ManagedBean(name= DataTableConfigPanel.BEAN_NAME)
+@ManagedBean(name= DataTableConfigPanelAdvanced.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableConfigPanel extends ComponentExampleImpl<DataTableConfigPanel> implements Serializable {
-    public static final String BEAN_NAME = "dataTableConfigPanel";
+public class DataTableConfigPanelAdvanced extends ComponentExampleImpl<DataTableConfigPanelAdvanced> implements Serializable {
+    public static final String BEAN_NAME = "dataTableConfigPanelAdvanced";
     private List<Car> carsData;
     /////////////---- CONSTRUCTOR BEGIN
-    public DataTableConfigPanel() {
-        super(DataTableConfigPanel.class);
+    public DataTableConfigPanelAdvanced() {
+        super(DataTableConfigPanelAdvanced.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
     }
 
@@ -73,6 +73,8 @@ public class DataTableConfigPanel extends ComponentExampleImpl<DataTableConfigPa
 	
 	private ColumnSettings[] savedColumns = getDefaultColumns();
 	private ColumnSettings[] columns = getDefaultColumns();
+	private ColumnSettings[] savedHeaderColumns = getDefaultHeaderColumns();
+	private ColumnSettings[] headerColumns = getDefaultHeaderColumns();
 	private List<Integer> savedColumnOrder = getDefaultColumnOrder();
 	private List<Integer> columnOrder = getDefaultColumnOrder();
 	private List<Integer> savedColumnHeaderOrder = getDefaultColumnHeaderOrder();
@@ -82,6 +84,11 @@ public class DataTableConfigPanel extends ComponentExampleImpl<DataTableConfigPa
 		return new ColumnSettings[] { new ColumnSettings(true, "ID", null, false),
 			new ColumnSettings(true, "Name", null, false), new ColumnSettings(true, "Chassis", null, false), new ColumnSettings(true, "Weight", null, false),
 			new ColumnSettings(true, "Accel", null, false), new ColumnSettings(true, "MPG", null, false), new ColumnSettings(true, "Cost", null, false)};
+	}
+
+	private ColumnSettings[] getDefaultHeaderColumns() {
+		return new ColumnSettings[] { new ColumnSettings(true, "Car Details", null, false),
+			new ColumnSettings(true, "Model", null, false), new ColumnSettings(true, "Specifications", null, false), new ColumnSettings(true, "Cost", null, false)};
 	}
 
 	private List<Integer> getDefaultColumnOrder() {
@@ -112,6 +119,10 @@ public class DataTableConfigPanel extends ComponentExampleImpl<DataTableConfigPa
 		return columns;
 	}
 
+	public ColumnSettings[] getHeaderColumns() {
+		return headerColumns;
+	}
+
 	public List<Integer> getColumnOrder() {
 		return columnOrder;
 	}
@@ -130,18 +141,21 @@ public class DataTableConfigPanel extends ComponentExampleImpl<DataTableConfigPa
 
 	public void saveSettings(ActionEvent event) {
 		savedColumns = columns;
+		savedHeaderColumns = headerColumns;
 		savedColumnOrder = columnOrder;
 		savedColumnHeaderOrder = columnHeaderOrder;
 	}
 
 	public void restoreSavedSettings(ActionEvent event) {
 		columns = savedColumns;
+		headerColumns = savedHeaderColumns;
 		columnOrder = savedColumnOrder;
 		columnHeaderOrder = savedColumnHeaderOrder;
 	}
 
 	public void restoreDefaultSettings(ActionEvent event) {
 		columns = getDefaultColumns();
+		headerColumns = getDefaultHeaderColumns();
 		columnOrder = getDefaultColumnOrder();
 		columnHeaderOrder = getDefaultColumnHeaderOrder();
 		carsData = new ArrayList<Car>(DataTableData.getDefaultData()); // for undoing sorting

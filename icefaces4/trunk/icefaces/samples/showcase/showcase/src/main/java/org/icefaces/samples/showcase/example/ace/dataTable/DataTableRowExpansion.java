@@ -72,7 +72,10 @@ public class DataTableRowExpansion extends ComponentExampleImpl<DataTableRowExpa
         carsData = new ArrayList<Map.Entry<Car, List>>();
         for (Car c : DataTableData.getDefaultData()) {
             ArrayList<Map.Entry<Car, List>> detailData = new ArrayList<Map.Entry<Car, List>>();
-            detailData.add(new SimpleEntry(new Car(c.getId()+1000, c.getName()+" Custom Spec", c.getChassis(), c.getWeight(), c.getAcceleration()*2, c.getMpg()/2, c.getCost()*3), null));
+            detailData.add(new SimpleEntry(new Car(c.getId()+1000, c.getName()+
+                " Custom Spec", c.getChassis(), c.getColor(), c.getYear(),
+                c.getWeight(), c.getAcceleration()*2, c.getMpg()/2,
+                c.getCost()*3), null));
             carsData.add(new SimpleEntry(c, detailData));
         }
     }

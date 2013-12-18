@@ -37,7 +37,9 @@
             <ace:dataTable id="carTable"
                            value="#{dataTableConfigPanel.carsData}"
                            var="car"
-                           rows="10">
+                           rows="10"
+                           columnOrdering="#{dataTableConfigPanel.columnOrder}"
+                           headerColumnOrdering="#{dataTableConfigPanel.columnHeaderOrder}">
                 <ace:tableConfigPanel id="tableConfig"
                                       dragHandle=".ui-tableconf-header"
                                       columnNameConfigurable="true"
@@ -49,25 +51,46 @@
                     <!--<ace:ajax event="cancel" />-->
                 </ace:tableConfigPanel>
 
-                        <ace:column id="id" headerText="ID">
+                        <ace:column id="id" headerText="#{dataTableConfigPanel.columns[0].name}" 
+								rendered="#{dataTableConfigPanel.columns[0].rendered}"
+								sortPriority="#{dataTableConfigPanel.columns[0].sortPriority}"
+								sortAscending="#{dataTableConfigPanel.columns[0].sortAscending}">
                             #{car.id}
                         </ace:column>
-                        <ace:column id="name" headerText="Name" sortBy="#{car.name}">
+                        <ace:column id="name" headerText="#{dataTableConfigPanel.columns[1].name}" 
+								rendered="#{dataTableConfigPanel.columns[1].rendered}" sortBy="#{car.name}"
+								sortPriority="#{dataTableConfigPanel.columns[1].sortPriority}"
+								sortAscending="#{dataTableConfigPanel.columns[1].sortAscending}">
                             #{car.name}
                         </ace:column>
-                        <ace:column id="chassis" headerText="Chassis" sortBy="#{car.chassis}">
+                        <ace:column id="chassis" headerText="#{dataTableConfigPanel.columns[2].name}" 
+								rendered="#{dataTableConfigPanel.columns[2].rendered}" sortBy="#{car.chassis}"
+								sortPriority="#{dataTableConfigPanel.columns[2].sortPriority}"
+								sortAscending="#{dataTableConfigPanel.columns[2].sortAscending}">
                             #{car.chassis}
                         </ace:column>
-                        <ace:column id="weight" headerText="Weight" sortBy="#{car.weight}">
+                        <ace:column id="weight" headerText="#{dataTableConfigPanel.columns[3].name}" 
+								rendered="#{dataTableConfigPanel.columns[3].rendered}" sortBy="#{car.weight}"
+								sortPriority="#{dataTableConfigPanel.columns[3].sortPriority}"
+								sortAscending="#{dataTableConfigPanel.columns[3].sortAscending}">
                             #{car.weight}lbs.
                         </ace:column>
-                        <ace:column id="accel" headerText="Accel" sortBy="#{car.acceleration}">
+                        <ace:column id="accel" headerText="#{dataTableConfigPanel.columns[4].name}" 
+								rendered="#{dataTableConfigPanel.columns[4].rendered}" sortBy="#{car.acceleration}"
+								sortPriority="#{dataTableConfigPanel.columns[4].sortPriority}"
+								sortAscending="#{dataTableConfigPanel.columns[4].sortAscending}">
                             #{car.acceleration}
                         </ace:column>
-                        <ace:column id="mpg" headerText="MPG" sortBy="#{car.mpg}">
+                        <ace:column id="mpg" headerText="#{dataTableConfigPanel.columns[5].name}" 
+								rendered="#{dataTableConfigPanel.columns[5].rendered}" sortBy="#{car.mpg}"
+								sortPriority="#{dataTableConfigPanel.columns[5].sortPriority}"
+								sortAscending="#{dataTableConfigPanel.columns[5].sortAscending}">
                             #{car.mpg}
                         </ace:column>
-                        <ace:column id="cost" headerText="Cost" sortBy="#{car.cost}">
+                        <ace:column id="cost" headerText="#{dataTableConfigPanel.columns[6].name}" 
+								rendered="#{dataTableConfigPanel.columns[6].rendered}" sortBy="#{car.cost}"
+								sortPriority="#{dataTableConfigPanel.columns[6].sortPriority}"
+								sortAscending="#{dataTableConfigPanel.columns[6].sortAscending}">
                             <h:outputText id="costCell" value="#{car.cost}">
                                 <f:convertNumber type="currency"
                                                  currencySymbol="$"
@@ -77,6 +100,10 @@
                             </h:outputText>
                         </ace:column>
             </ace:dataTable>
+			
+			<h:commandButton value="Save Settings" actionListener="#{dataTableConfigPanel.saveSettings}" />
+			<h:commandButton value="Restore Saved Settings" actionListener="#{dataTableConfigPanel.restoreSavedSettings}" />
+			<h:commandButton value="Restore Default Settings" actionListener="#{dataTableConfigPanel.restoreDefaultSettings}" />
             
         </h:form>
     </ui:define>
