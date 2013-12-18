@@ -40,6 +40,9 @@
 if (!window.ice['ace']) {
     window.ice.ace = {};
 }
+if (!window.ice.ace['DataTableStylesheets']) {
+    window.ice.ace.DataTableStylesheets = {};
+}
 
 // JQuery Utilities
 (function ($) {
@@ -1152,18 +1155,17 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
         }
         initializeVar();
 
-		if (this.styleSheets) { // remove previous column size rules
-			for (var i = 0; i < this.styleSheets.length; i++) {
-				var sheet = this.styleSheets[i];
+		if (ice.ace.DataTableStylesheets[this.id]) { // remove previous column size rules
+			var styleSheets = ice.ace.DataTableStylesheets[this.id];
+			for (var i = 0; i < styleSheets.length; i++) {
+				var sheet = styleSheets[i];
 				if (ie8 || ie9) {
 					sheet.cssText = "";
 				} else {
 					sheet.parentNode.removeChild(sheet);
 				}
 			}
-			while (this.styleSheets.length > 0) {
-				this.styleSheets.pop();
-			}
+			styleSheets.length = 0;
 		}
 
         if (!ie7) {
@@ -1308,14 +1310,14 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
 				text += selector + ' { width:' + bodyColumnWidth + 'px; }\n';
             }
 
-			if (!this.styleSheets) this.styleSheets = [];
+			if (!ice.ace.DataTableStylesheets[this.id]) ice.ace.DataTableStylesheets[this.id] = [];
 			if (ie8 || ie9) {
 				styleSheet.cssText = text;
-				this.styleSheets.push(styleSheet);
+				ice.ace.DataTableStylesheets[this.id].push(styleSheet);
 			} else {
 				var rulesNode = document.createTextNode(text);
 				styleSheet.ownerNode.appendChild(rulesNode);
-				this.styleSheets.push(rulesNode);
+				ice.ace.DataTableStylesheets[this.id].push(rulesNode);
 			}
 			
 			// Get Duplicate Sizing
