@@ -27,15 +27,18 @@ public class SelectableCar extends Car implements Serializable{
     
     public SelectableCar(int id,
                String name, String chassis,
+               String color, int year,
                int weight, int acceleration, 
                double mpg, double cost) {
-        super(id, name, chassis, weight, acceleration, mpg, cost);
+        super(id, name, chassis, color, year, weight, acceleration, mpg, cost);
     }
     
     public SelectableCar(Car base) {
         super(base.getId(),
               base.getName(),
               base.getChassis(),
+              base.getColor(),
+              base.getYear(),
               base.getWeight(),
               base.getAcceleration(),
               base.getMpg(),

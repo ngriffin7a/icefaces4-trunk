@@ -80,7 +80,8 @@ import java.util.List;
             @MenuLink(title = "menu.ace.dataTable.subMenu.selector", exampleBeanName = DataTableSelector.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.scrolling", exampleBeanName = DataTableScrolling.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.sorting", exampleBeanName = DataTableSorting.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.configpanel", exampleBeanName = DataTableConfigPanel.BEAN_NAME)
+            @MenuLink(title = "menu.ace.dataTable.subMenu.configpanel", exampleBeanName = DataTableConfigPanel.BEAN_NAME),
+			@MenuLink(title = "menu.ace.dataTable.subMenu.configpaneladvanced", exampleBeanName = DataTableConfigPanelAdvanced.BEAN_NAME)
     }
 )
 @ManagedBean(name= DataTableBean.BEAN_NAME)

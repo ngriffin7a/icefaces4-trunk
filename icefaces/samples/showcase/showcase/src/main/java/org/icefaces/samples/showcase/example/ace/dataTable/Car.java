@@ -22,6 +22,8 @@ public class Car implements Serializable {
 	protected int id = -1;
 	protected String name;
 	protected String chassis;
+    protected String color;
+    protected int year;
 	protected int weight;
 	protected int acceleration;
 	protected double mpg;
@@ -43,6 +45,19 @@ public class Car implements Serializable {
 		this.cost = cost;
 	}
 	
+    public Car(int id, String name, String chassis, String color, int year,
+               int weight, int acceleration, double mpg, double cost) {
+        this.id = id;
+        this.name = name;
+        this.chassis = chassis;
+        this.color = color;
+        this.year = year;
+        this.weight = weight;
+        this.acceleration = acceleration;
+        this.mpg = mpg;
+        this.cost = cost;
+    }
+
 	public int getId() {
 		return id;
 	}
@@ -61,6 +76,18 @@ public class Car implements Serializable {
 	public void setChassis(String chassis) {
 		this.chassis = chassis;
 	}
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+    public int getYear() {
+        return year;
+    }
+    public void setYear(int year) {
+        this.year = year;
+    }
 	public int getWeight() {
 		return weight;
 	}
@@ -90,6 +117,8 @@ public class Car implements Serializable {
 	    setId(parent.getId());
 	    setName(parent.getName());
 	    setChassis(parent.getChassis());
+        setColor(parent.getColor());
+        setYear(parent.getYear());
 	    setWeight(parent.getWeight());
 	    setAcceleration(parent.getAcceleration());
 	    setMpg(parent.getMpg());

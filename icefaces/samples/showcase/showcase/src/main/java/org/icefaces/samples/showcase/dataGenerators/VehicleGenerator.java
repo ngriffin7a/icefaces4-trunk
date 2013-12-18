@@ -26,6 +26,7 @@ public class VehicleGenerator implements Serializable
 {
     private List<String> namesPool;
     private List<String> chassisPool;
+    private List<String> colorPool;
     private Random randomizer = new Random(System.nanoTime());
     private NumberFormat numberFormatter;
     
@@ -34,6 +35,7 @@ public class VehicleGenerator implements Serializable
     {
         this.namesPool = getVehicleDescriptions();
         this.chassisPool = getChassisDescriptions();
+        this.colorPool = getColorDescriptions();
         this.randomizer = new Random(System.nanoTime());
         this.numberFormatter = makeFormatter();
     }
@@ -66,29 +68,18 @@ public class VehicleGenerator implements Serializable
     
     public ArrayList<Car> addCarsToList(int quantityToAdd, ArrayList<Car> list)
     {
-        int currentListSize = list.size();
-        int position = 0;
-        /*by the end of this loop we will have partial copy, full copy or more then one copy of our list,
-        appended to the end of it */
-        for(int i = 0; i< quantityToAdd; i++)
-        {
-            //add Car from the begining of the list to the end of it
-            Car copyReference = list.get(position); //this pointer is mostly for code readabllity
-            //new car.id =  car list size+position value+id of the 1st element in the predefined car list
-            Car car = new Car(currentListSize+position+1, copyReference.getName(),
-                                      copyReference.getChassis(), copyReference.getWeight(),
-                                      copyReference.getAcceleration(), copyReference.getMpg(),
-                                      copyReference.getCost());
-            list.add(car);
-            //move pointer to one position up in the list
-            position ++;
-            //check if we copied all elements of the original list
-            if(position>=currentListSize)
-            {
-                //reset position pointer to the begining
-                position = 0;
-                //since our list doubled in size and contain full pattern of the original list we can increase currentListSize
-                currentListSize = list.size();
+        while (quantityToAdd > 0) {
+            final int addThisRound = Math.min(list.size(), quantityToAdd);
+System.out.println("quantityToAdd: " + quantityToAdd + "  currentListSize: " + list.size());
+
+            for (int i = 0; i < addThisRound; i++, quantityToAdd--) {
+                //add Car from the begining of the list to the end of it
+                Car copyReference = list.get(i); //this pointer is mostly for code readability
+                Car car = new Car(list.size()+1, copyReference.getName(),
+                    copyReference.getChassis(), generateColor(), generateYear(),
+                    generateWeight(), generateAccelerationValue(),
+                    generateMPG(), generateCost());
+                list.add(car);
             }
         }
         return list;
@@ -103,41 +94,41 @@ public class VehicleGenerator implements Serializable
     {
         ArrayList<Car> listWithCars = new ArrayList<Car>();
         
-        listWithCars.add(new Car(1,"Enduro","Van",15383,10,17.86,6617.17));
-        listWithCars.add(new Car(2,"Tomcat","Bus",7331,15,16.65,31464.24));
-        listWithCars.add(new Car(3,"Doublecharge","Pickup",5333,15,17.84,10922.73));
-        listWithCars.add(new Car(4,"Swordfish","Bus",10956,5,5.17,6019.83));
-        listWithCars.add(new Car(5,"Iguana","Pickup",1696,10,9.43,19736.16));
-        listWithCars.add(new Car(6,"Dart","Motorcycle",9261,15,12.85,37947.84));
-        listWithCars.add(new Car(7,"Pisces","Luxury",7846,10,15.13,19235.2));
-        listWithCars.add(new Car(8,"Flash","Mid-Size",11499,10,12.74,29942.38));
+        listWithCars.add(new Car(1,"Enduro","Van",generateColor(),generateYear(),15383,10,17.86,6617.17));
+        listWithCars.add(new Car(2,"Tamale","Bus",generateColor(),generateYear(),7331,15,16.65,31464.24));
+        listWithCars.add(new Car(3,"Doublecharge","Pickup",generateColor(),generateYear(),5333,15,17.84,10922.73));
+        listWithCars.add(new Car(4,"Swordfish","Bus",generateColor(),generateYear(),10956,5,5.17,6019.83));
+        listWithCars.add(new Car(5,"Iguana","Pickup",generateColor(),generateYear(),1696,10,9.43,19736.16));
+        listWithCars.add(new Car(6,"Dart","Motorcycle",generateColor(),generateYear(),9261,15,12.85,37947.84));
+        listWithCars.add(new Car(7,"Pisces","Luxury",generateColor(),generateYear(),7846,10,15.13,19235.2));
+        listWithCars.add(new Car(8,"Flash","Mid-Size",generateColor(),generateYear(),11499,10,12.74,29942.38));
         
-        listWithCars.add(new Car(9,"Tomcat","Mid-Size",10766,15,7.04,14342.74));
-        listWithCars.add(new Car(10,"Pisces","Subcompact",2082,10,13.38,8015.01));
-        listWithCars.add(new Car(11,"Superflash","Subcompact",14959,5,3.91,31941.1));
-        listWithCars.add(new Car(12,"Husky","Mid-Size",14334,15,13.98,9303.69));
-        listWithCars.add(new Car(13,"Gazelle","Semi-Truck",14248,5,8.64,9285.57));
+        listWithCars.add(new Car(9,"Tomcat","Mid-Size",generateColor(),generateYear(),10766,15,7.04,14342.74));
+        listWithCars.add(new Car(10,"Passion","Subcompact",generateColor(),generateYear(),2082,10,13.38,8015.01));
+        listWithCars.add(new Car(11,"Superflash","Subcompact",generateColor(),generateYear(),14959,5,3.91,31941.1));
+        listWithCars.add(new Car(12,"Husky","Mid-Size",generateColor(),generateYear(),14334,15,13.98,9303.69));
+        listWithCars.add(new Car(13,"Gazelle","Semi-Truck",generateColor(),generateYear(),14248,5,8.64,9285.57));
         
-        listWithCars.add(new Car(14,"Superflash","Luxury",3037,15,8.44,36154.13));
-        listWithCars.add(new Car(15,"Enduro","Subcompact",4997,5,6.02,31221.48));
-        listWithCars.add(new Car(16,"Tomcat","Pickup",4555,10,4.06,35895.53));
-        listWithCars.add(new Car(17,"Courier","Pickup",9848,10,16.15,27343.38));
-        listWithCars.add(new Car(18,"Enduro","Motorcycle",5725,5,14.17,34430.44));
+        listWithCars.add(new Car(14,"Supraflash","Luxury",generateColor(),generateYear(),3037,15,8.44,36154.13));
+        listWithCars.add(new Car(15,"Endino","Subcompact",generateColor(),generateYear(),4997,5,6.02,31221.48));
+        listWithCars.add(new Car(16,"Tonto","Pickup",generateColor(),generateYear(),4555,10,4.06,35895.53));
+        listWithCars.add(new Car(17,"Courage","Pickup",generateColor(),generateYear(),9848,10,16.15,27343.38));
+        listWithCars.add(new Car(18,"Encyclo","Motorcycle",generateColor(),generateYear(),5725,5,14.17,34430.44));
         
-        listWithCars.add(new Car(19,"Swordfish","Luxury",1466,10,11.72,19266.56));
-        listWithCars.add(new Car(20,"Tomcat","Station Wagon",15576,10,15.3,16844.05));
-        listWithCars.add(new Car(21,"Iguana","Van",10973,15,3.77,33369.32));
-        listWithCars.add(new Car(22,"Doublecharge","Pickup",9414,10,6.37,19370.61));
-        listWithCars.add(new Car(23,"Hawk","Motorcycle",8545,5,7.98,39124.1));
+        listWithCars.add(new Car(19,"Swansea","Luxury",generateColor(),generateYear(),1466,10,11.72,19266.56));
+        listWithCars.add(new Car(20,"Toure","Station Wagon",generateColor(),generateYear(),15576,10,15.3,16844.05));
+        listWithCars.add(new Car(21,"Ignite","Van",generateColor(),generateYear(),10973,15,3.77,33369.32));
+        listWithCars.add(new Car(22,"Doublecharge","Pickup",generateColor(),generateYear(),9414,10,6.37,19370.61));
+        listWithCars.add(new Car(23,"Hawk","Motorcycle",generateColor(),generateYear(),8545,5,7.98,39124.1));
         
-        listWithCars.add(new Car(24,"Hawk","Subcompact",1853,10,12.54,36068.19));
-        listWithCars.add(new Car(25,"Tomcat","Subcompact",12785,10,12.97,26141.79));
-        listWithCars.add(new Car(26,"Hawk","Semi-Truck",12453,10,10.4,13654.1));
-        listWithCars.add(new Car(27,"Doublecharge","Van",11952,10,17.58,22599.82));
-        listWithCars.add(new Car(28,"Flash","Semi-Truck",6107,5,8.48,26096.26));
+        listWithCars.add(new Car(24,"Hook","Subcompact",generateColor(),generateYear(),1853,10,12.54,36068.19));
+        listWithCars.add(new Car(25,"Tiny","Subcompact",generateColor(),generateYear(),12785,10,12.97,26141.79));
+        listWithCars.add(new Car(26,"Hinterland","Semi-Truck",generateColor(),generateYear(),12453,10,10.4,13654.1));
+        listWithCars.add(new Car(27,"Triplecharge","Van",generateColor(),generateYear(),11952,10,17.58,22599.82));
+        listWithCars.add(new Car(28,"Freeze","Semi-Truck",generateColor(),generateYear(),6107,5,8.48,26096.26));
         
-        listWithCars.add(new Car(29,"Courier","Bus",8187,5,4.25,25470.63));
-        listWithCars.add(new Car(30,"Dart","Motorcycle",7177,10,12.16,35394.23));
+        listWithCars.add(new Car(29,"Courier","Bus",generateColor(),generateYear(),8187,5,4.25,25470.63));
+        listWithCars.add(new Car(30,"Dart","Motorcycle",generateColor(),generateYear(),7177,10,12.16,35394.23));
 
         return listWithCars;
     }
@@ -156,8 +147,8 @@ public class VehicleGenerator implements Serializable
     private Car getRandomCar()
     {
         Car randomCar = new Car(randomizer.nextInt(10000000), generateName(),
-                                  generateChassis(), generateWeight(), generateAccelerationValue(),
-                                  generateMPG(), generateCost());
+            generateChassis(), generateColor(), generateYear(),generateWeight(),
+            generateAccelerationValue(), generateMPG(), generateCost());
         return randomCar;
     }
     
@@ -226,6 +217,42 @@ public class VehicleGenerator implements Serializable
         listWithNames.add("Semi-Truck");
         return listWithNames;
     }
+
+    private List<String> getColorDescriptions() {
+        List<String> list = new ArrayList<String>();
+        list.add("Aquamarine");
+        list.add("Auburn");
+        list.add("Black");
+        list.add("Blue");
+        list.add("Bronze");
+        list.add("Brown");
+        list.add("Burgundy");
+        list.add("Canary Yellow");
+        list.add("Champagne");
+        list.add("Cream");
+        list.add("Emerald");
+        list.add("Gold ");
+        list.add("Green");
+        list.add("Indigo");
+        list.add("Jade");
+        list.add("Lavender");
+        list.add("Navy");
+        list.add("Olive");
+        list.add("Orange");
+        list.add("Pink");
+        list.add("Purple");
+        list.add("Red");
+        list.add("Sand");
+        list.add("Silver");
+        list.add("Slate");
+        list.add("Steel");
+        list.add("Teal");
+        list.add("Turquoise");
+        list.add("Violet");
+        list.add("White");
+        list.add("Yellow");
+        return list;
+    }
     
     private NumberFormat makeFormatter() 
     {
@@ -236,11 +263,17 @@ public class VehicleGenerator implements Serializable
         return formatter;
     }
     
-    private String generateName() 
+    private String generateName()
     { return namesPool.get(randomizer.nextInt(namesPool.size())); }
 	
     private String generateChassis() 
     { return chassisPool.get(randomizer.nextInt(chassisPool.size())); }
+
+    private String generateColor() {
+        return colorPool.get(randomizer.nextInt(colorPool.size())); }
+
+    private int generateYear() {
+        return 1980+randomizer.nextInt(35); }
     
     private int generateWeight() 
     { return 1000+randomizer.nextInt(15000); }

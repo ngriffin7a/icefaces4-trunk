@@ -151,7 +151,7 @@ public class DataTableRowState extends ComponentExampleImpl<DataTableRowState> i
         List<Column> columns = table.getColumns();
         
         // Start by making everything editable
-        for (Column c : table.getColumns()) {
+        for (Column c : columns) {
             if (c.getCellEditor() != null) {
                 stateMap.setAllEditing(c.getCellEditor(), true);
             }

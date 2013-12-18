@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[dataTableConfigPanelAdvanced.title]}"/>
+    <ui:param name="description" value="#{msgs[dataTableConfigPanelAdvanced.description]}"/>
+    <ui:param name="resourceValue" value="#{dataTableConfigPanelAdvanced.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="carForm">
+            <ace:dataTable id="carTable"
+                           value="#{dataTableConfigPanelAdvanced.carsData}"
+                           var="car"
+                           rows="10"
+                           columnOrdering="#{dataTableConfigPanelAdvanced.columnOrder}"
+                           headerColumnOrdering="#{dataTableConfigPanelAdvanced.columnHeaderOrder}">
+                <ace:tableConfigPanel id="tableConfig"
+                                      dragHandle=".ui-tableconf-header"
+                                      columnNameConfigurable="true"
+                                      columnVisibilityConfigurable="true"
+                                      columnOrderingConfigurable="true"
+                                      columnSortingConfigurable="true"
+                                      modal="true"
+                                      type="last-col">
+                    <!--<ace:ajax event="cancel" />-->
+                </ace:tableConfigPanel>
+                <ace:columnGroup type="header">
+					<ace:row>
+						<ace:column colspan="7" headerText="#{dataTableConfigPanelAdvanced.headerColumns[0].name}"
+								rendered="#{dataTableConfigPanelAdvanced.headerColumns[0].rendered}" />
+					</ace:row>
+					<ace:row>
+						<ace:column colspan="3" headerText="#{dataTableConfigPanelAdvanced.headerColumns[1].name}"
+								rendered="#{dataTableConfigPanelAdvanced.headerColumns[1].rendered}" />
+						<ace:column colspan="3" headerText="#{dataTableConfigPanelAdvanced.headerColumns[2].name}"
+								rendered="#{dataTableConfigPanelAdvanced.headerColumns[2].rendered}" />
+						<ace:column colspan="1" headerText="#{dataTableConfigPanelAdvanced.headerColumns[3].name}"
+								rendered="#{dataTableConfigPanelAdvanced.headerColumns[3].rendered}" />
+					</ace:row>
+                    <ace:row>
+						<ace:column id="id" headerText="#{dataTableConfigPanelAdvanced.columns[0].name}" 
+								rendered="#{dataTableConfigPanelAdvanced.columns[0].rendered}"
+								sortPriority="#{dataTableConfigPanelAdvanced.columns[0].sortPriority}"
+								sortAscending="#{dataTableConfigPanelAdvanced.columns[0].sortAscending}" />
+						<ace:column id="name" headerText="#{dataTableConfigPanelAdvanced.columns[1].name}" 
+								rendered="#{dataTableConfigPanelAdvanced.columns[1].rendered}" sortBy="#{car.name}"
+								sortPriority="#{dataTableConfigPanelAdvanced.columns[1].sortPriority}"
+								sortAscending="#{dataTableConfigPanelAdvanced.columns[1].sortAscending}" />
+						<ace:column id="chassis" headerText="#{dataTableConfigPanelAdvanced.columns[2].name}" 
+								rendered="#{dataTableConfigPanelAdvanced.columns[2].rendered}" sortBy="#{car.chassis}"
+								sortPriority="#{dataTableConfigPanelAdvanced.columns[2].sortPriority}"
+								sortAscending="#{dataTableConfigPanelAdvanced.columns[2].sortAscending}" /> 
+						<ace:column id="weight" headerText="#{dataTableConfigPanelAdvanced.columns[3].name}" 
+								rendered="#{dataTableConfigPanelAdvanced.columns[3].rendered}" sortBy="#{car.weight}"
+								sortPriority="#{dataTableConfigPanelAdvanced.columns[3].sortPriority}"
+								sortAscending="#{dataTableConfigPanelAdvanced.columns[3].sortAscending}" />
+						<ace:column id="accel" headerText="#{dataTableConfigPanelAdvanced.columns[4].name}" 
+								rendered="#{dataTableConfigPanelAdvanced.columns[4].rendered}" sortBy="#{car.acceleration}"
+								sortPriority="#{dataTableConfigPanelAdvanced.columns[4].sortPriority}"
+								sortAscending="#{dataTableConfigPanelAdvanced.columns[4].sortAscending}" />
+						<ace:column id="mpg" headerText="#{dataTableConfigPanelAdvanced.columns[5].name}" 
+								rendered="#{dataTableConfigPanelAdvanced.columns[5].rendered}" sortBy="#{car.mpg}"
+								sortPriority="#{dataTableConfigPanelAdvanced.columns[5].sortPriority}"
+								sortAscending="#{dataTableConfigPanelAdvanced.columns[5].sortAscending}" />
+						<ace:column id="cost" headerText="#{dataTableConfigPanelAdvanced.columns[6].name}" 
+								rendered="#{dataTableConfigPanelAdvanced.columns[6].rendered}" sortBy="#{car.cost}"
+								sortPriority="#{dataTableConfigPanelAdvanced.columns[6].sortPriority}"
+								sortAscending="#{dataTableConfigPanelAdvanced.columns[6].sortAscending}" />
+                    </ace:row>
+                </ace:columnGroup>
+                        <ace:column>
+                            #{car.id}
+                        </ace:column>
+                        <ace:column>
+                            #{car.name}
+                        </ace:column>
+                        <ace:column>
+                            #{car.chassis}
+                        </ace:column>
+                        <ace:column>
+                            #{car.weight}lbs.
+                        </ace:column>
+                        <ace:column>
+                            #{car.acceleration}
+                        </ace:column>
+                        <ace:column>
+                            #{car.mpg}
+                        </ace:column>
+                        <ace:column>
+                            <h:outputText id="costCell" value="#{car.cost}">
+                                <f:convertNumber type="currency"
+                                                 currencySymbol="$"
+                                                 groupingUsed="true"
+                                                 minFractionDigits="2"
+                                                 maxFractionDigits="2"/>
+                            </h:outputText>
+                        </ace:column>
+            </ace:dataTable>
+			
+			<h:commandButton value="Save Settings" actionListener="#{dataTableConfigPanelAdvanced.saveSettings}" />
+			<h:commandButton value="Restore Saved Settings" actionListener="#{dataTableConfigPanelAdvanced.restoreSavedSettings}" />
+			<h:commandButton value="Restore Default Settings" actionListener="#{dataTableConfigPanelAdvanced.restoreDefaultSettings}" />
+            
+        </h:form>
+    </ui:define>
+</ui:composition>
