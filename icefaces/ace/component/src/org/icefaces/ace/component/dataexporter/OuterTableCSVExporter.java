@@ -64,6 +64,7 @@ public class OuterTableCSVExporter extends CSVExporter {
 			ColumnGroup columnGroup = getColumnGroupHeader(table);
 			if (columnGroup != null) {
 				ArrayList<Row> rows = (ArrayList<Row>) getRows(columnGroup);
+				determineHeaderColumnOrdering(rows, table);
 				int size = rows.size();
 				for (int i = 0; i < size; i++) {
 					Row row = rows.get(i);

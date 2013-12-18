@@ -83,6 +83,7 @@ public class ExcelExporter extends Exporter {
 			ColumnGroup columnGroup = getColumnGroupHeader(table);
 			if (columnGroup != null) {
 				List<org.icefaces.ace.component.row.Row> rows = getRows(columnGroup);
+				determineHeaderColumnOrdering(rows, table);
 				for (org.icefaces.ace.component.row.Row row : rows) {
 					List<UIColumn> rowColumns = getRowColumnsToExport(row, table, excludeColumns);
 					addFacetColumns(sheet, rowColumns, ColumnType.HEADER, sheetRowIndex++);
