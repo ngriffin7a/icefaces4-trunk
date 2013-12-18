@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import javax.el.MethodExpression;
@@ -56,7 +57,11 @@ import org.icefaces.ace.component.panelexpansion.PanelExpansion;
 
 import org.icefaces.application.ResourceRegistry;
 
+import java.util.logging.Logger;
+
 public abstract class Exporter {
+
+	protected final static Logger logger = Logger.getLogger(Exporter.class.getName());
 
 	protected static final Pattern HTML_TAG_PATTERN = Pattern.compile("\\<.*?\\>");
 	protected SpanningRows spanningRows = this.new SpanningRows();
@@ -71,6 +76,7 @@ public abstract class Exporter {
 	protected boolean selectedRowsOnly;
 	protected boolean userColumnOrder;
 	protected boolean expandedOnly;
+	private HashMap<Row, List<UIColumn>> headerRowColumns = new HashMap<Row, List<UIColumn>>();
 	
 	public void setUp(DataExporter component, DataTable table) {
 		filename = component.getFileName();
@@ -153,6 +159,49 @@ public abstract class Exporter {
 		return rows;
 	}
 	
+	protected void determineHeaderColumnOrdering(List<Row> rows, DataTable table) {
+		// for each row, take note of the number of columns it has
+		// make list of all columns in the header
+		// get header ordering
+		// create map of row and columns, assigning the ordered columns to the rows
+		// in getRowColumnsToExport() get columns from map
+		ArrayList<UIColumn> columns = new ArrayList<UIColumn>();
+		ArrayList<Integer> sizes = new ArrayList<Integer>();
+		for (Row row : rows) {
+			int size = 0;
+			for (UIComponent child : row.getChildren()) {
+				if (child instanceof UIColumn) {
+					columns.add((UIColumn) child);
+					size++;
+				}
+			}
+			sizes.add(size);
+		}
+		List<Integer> ordering = table.getHeaderColumnOrdering();
+		ArrayList<UIColumn> newColumns = new ArrayList<UIColumn>();
+		if (ordering == null || ordering.size() == 0) {
+			newColumns = columns;
+		} else {
+			if (columns.size() == ordering.size()) {
+				for (Integer integer : ordering) {
+					newColumns.add(columns.get(integer.intValue()));
+				}
+			} else {
+				newColumns = columns;
+				logger.warning("Header column ordering list size does not match number of defined columns in table " + table.getId() + ".");
+			}
+		}
+		int index = 0;
+		for (int i = 0; i < rows.size(); i++) {
+			ArrayList<UIColumn> rowColumns = new ArrayList<UIColumn>();
+			for (int j = 0; j < sizes.get(i); j++) {
+				rowColumns.add(newColumns.get(index));
+				index++;
+			}
+			headerRowColumns.put(rows.get(i), rowColumns);
+		}
+	}
+	
 	protected List<UIColumn> getRowColumnsToExport(Row row, UIData table, int[] excludedColumns) {
         List<UIColumn> columns = new ArrayList<UIColumn>();
 		ArrayList<UIColumn> rowColumns = new ArrayList<UIColumn>();
@@ -160,20 +209,32 @@ public abstract class Exporter {
 		int rowColumnIndex = 0;
 
 		SpanningRow spanningRow = spanningRows.getNextRow(); // fetch the set of previous columns that span to this row
-        for (UIComponent child : row.getChildren()) {
-			if (child instanceof UIColumn) {
-				if (shouldExcludeFromExport(child)) continue;
-				UIColumn uiColumn = (UIColumn) child;
-				if (uiColumn.isRendered()) {
-					if (uiColumn instanceof Column) {
+		int stackedCount = 0;
+        for (UIColumn uiColumn : headerRowColumns.get(row)) {
+			if (shouldExcludeFromExport(uiColumn)) continue;
+			if (uiColumn.isRendered()) {
+				if (uiColumn instanceof Column) {
 
-						if (spanningRow != null) { // add previous columns that span multiple rows
-							int added = spanningRow.addColumnsTo(rowColumns, rowColumnIndex);
-							rowColumnIndex = rowColumnIndex + added;
+					int added = 0;
+					if (spanningRow != null) { // add previous columns that span multiple rows
+						added = spanningRow.addColumnsTo(rowColumns, rowColumnIndex-stackedCount);
+						rowColumnIndex = rowColumnIndex + added;
+					}
+					Column column = (Column) uiColumn;
+					int colspan = column.getColspan();
+					int rowspan = column.getRowspan();
+					if (column.isStacked()) {
+						stackedCount++;
+						if (added > 0) {
+							rowColumns.add(rowColumnIndex-added, column);
+						} else {
+							rowColumns.add(column);
 						}
-						Column column = (Column) uiColumn;
-						int colspan = column.getColspan();
-						int rowspan = column.getRowspan();
+						for (int j = 1; j < rowspan; j++) { // register which columns span multiple rows
+							spanningRows.addColumn(column, j-1, rowColumnIndex-added);
+						}
+						rowColumnIndex++;
+					} else {
 						for (int i = 0; i < colspan; i++) {
 							rowColumns.add(column);
 							for (int j = 1; j < rowspan; j++) { // register which columns span multiple rows
@@ -181,18 +242,29 @@ public abstract class Exporter {
 							}
 							rowColumnIndex++;
 						}
-					} else {
-						rowColumns.add(uiColumn);
-						rowColumnIndex++;
 					}
+				} else {
+					rowColumns.add(uiColumn);
+					rowColumnIndex++;
 				}
 			}
 		}
-		
-		if (spanningRow != null) spanningRow.addColumnsTo(rowColumns, rowColumnIndex);
+		if (spanningRow != null) { // add previous columns that span multiple rows, at the end of the row
+			spanningRow.addColumnsTo(rowColumns, rowColumnIndex-stackedCount);
+		}
 		rowColumnIndex = -1;
 		
-		for (UIComponent child : table.getChildren()) {
+		List<UIComponent> children;
+		if (table instanceof DataTable && userColumnOrder) {
+			List<Column> dataTablecolumns = ((DataTable) table).getColumns();
+			children = new ArrayList<UIComponent>();
+			for (Column column : dataTablecolumns) {
+				children.add(column);
+			}
+		} else {
+			children = table.getChildren();
+		}
+		for (UIComponent child : children) {
             if (child instanceof UIColumn && !(child instanceof PanelExpansion)) {
 				if (shouldExcludeFromExport(child)) continue;
                 UIColumn column = (UIColumn) child;
@@ -209,6 +281,18 @@ public abstract class Exporter {
 				if (column.isRendered()) {
 					rowColumnIndex++;
 					if (excludedColumns == null || Arrays.binarySearch(excludedColumns, columnIndex) < 0) {
+						if (column instanceof Column && ((Column) column).isStacked()) {
+							boolean isRowColumnStacked = false;
+							if (rowColumnIndex < rowColumns.size()) {
+								UIColumn rowColumn = rowColumns.get(rowColumnIndex);
+								if (rowColumn != null && rowColumn instanceof Column && ((Column) rowColumn).isStacked()) {
+									columns.add(rowColumn);
+									isRowColumnStacked = true;
+								}
+							}
+							if (isRowColumnStacked) continue;
+							else rowColumnIndex--;
+						}
 						if (rowColumnIndex < rowColumns.size()) {
 							UIColumn rowColumn = rowColumns.get(rowColumnIndex);
 							if (rowColumn != null) {

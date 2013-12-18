@@ -75,7 +75,7 @@ public class DataExporterMeta extends UIComponentBaseMeta {
 	@Property(required=Required.no, tlddoc="Enable to export only the current page instead of the whole data set.", defaultValue="false")
 	private boolean pageOnly;
 	
-	@Property(required=Required.no, tlddoc="Define a comma separated list of column indexes (zero-relative) to be excluded from export.")
+	@Property(required=Required.no, tlddoc="Define a comma separated list of column indexes (zero-relative) to be excluded from export. Only Column components, without a rendered ExcludeFromExport child, count towards this indexing scheme.")
 	private String excludeColumns;
 	
 	@Property(required=Required.no, tlddoc="Defines a public void method to invoke before the PDF or XLS document is generated, allowing developers to manipulate the document. It must take a single argument of type Object. The object will be of type com.lowagie.text.Document (iText library) for PDF documents and of type org.apache.poi.ss.usermodel.Workbook (Apache POI library) for XLS documents.", expression = Expression.METHOD_EXPRESSION, methodExpressionArgument="Object")

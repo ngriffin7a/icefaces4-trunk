@@ -255,12 +255,16 @@ public class XMLExporter extends Exporter {
 		}
 	}
 	
-	protected List<String> getHeadersFromColumnGroup(ColumnGroup columnGroup, List<UIColumn> columns, UIData data, int[] excludeColumns) {
+	protected List<String> getHeadersFromColumnGroup(ColumnGroup columnGroup, List<UIColumn> columns, DataTable data, int[] excludeColumns) {
 	
 		ArrayList<Row> rows = (ArrayList<Row>) getRows(columnGroup);
+		determineHeaderColumnOrdering(rows, data);
 		int size = rows.size();
 		if (size > 0) {
-			List<UIColumn> rowColumns = getRowColumnsToExport(rows.get(size-1), data, excludeColumns); // only use last row in column group
+			List<UIColumn> rowColumns = new ArrayList<UIColumn>();
+			for (int i = 0; i < rows.size(); i++) {
+				rowColumns = getRowColumnsToExport(rows.get(i), data, excludeColumns); // only use last row in column group
+			}
 			List<String> values = new ArrayList<String>();
 			for (UIColumn column : rowColumns) {
 				String value = extractValueToDisplay(column, ColumnType.HEADER);

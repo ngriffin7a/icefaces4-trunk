@@ -58,6 +58,7 @@ public class CSVExporter extends Exporter {
 			ColumnGroup columnGroup = getColumnGroupHeader(table);
 			if (columnGroup != null) {
 				List<Row> rows = getRows(columnGroup);
+				determineHeaderColumnOrdering(rows, table);
 				for (Row row : rows) {
 					List<UIColumn> rowColumns = getRowColumnsToExport(row, table, excludeColumns);
 					addFacetColumns(builder, rowColumns, ColumnType.HEADER);
