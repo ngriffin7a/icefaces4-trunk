@@ -1171,7 +1171,7 @@ public class UISeriesBase extends HtmlDataTable implements SeriesStateHolder {
         // first, visit all columns
         if (getChildCount() > 0) {
             for (UIComponent kid : getChildren()) {
-                if (kid.visitTree(context, callback)) {
+                if (!(kid instanceof UIColumn) && kid.visitTree(context, callback)) {
                     return true;
                 }
             }
