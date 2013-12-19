@@ -151,7 +151,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
         writeLabelAndIndicatorBefore(labelAttributes);
 
 		writer.startElement("span", null); // position text field and list at the same level
-		writer.writeAttribute("style", "position:relative;", null);
+		writer.writeAttribute("style", "display:inline-block;", null);
         // text field
 		writer.startElement("input", null);
         writer.writeAttribute("type", "text", null);
@@ -201,11 +201,14 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 
         String divId = clientId + AUTOCOMPLETE_DIV;
 
+		writer.startElement("span", null);
+		writer.writeAttribute("style", "position:relative;display:block;", null);
         writer.startElement("div", null);
         writer.writeAttribute("id", divId, null);
         writer.writeAttribute("class", "ui-widget ui-widget-content ui-corner-all", null);
         writer.writeAttribute("style", "display:none;z-index:500;", null);
         writer.endElement("div");
+		writer.endElement("span");
 
         writer.endElement("span");
 
