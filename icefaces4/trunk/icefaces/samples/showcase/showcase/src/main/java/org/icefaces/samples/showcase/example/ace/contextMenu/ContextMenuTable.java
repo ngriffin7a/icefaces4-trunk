@@ -40,7 +40,7 @@ import java.io.Serializable;
             @ExampleResource(type = ResourceType.java,
                     title="DataTableDynamic.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableDynamicColumns.java")
+                    "/example/ace/dataTable/DataTableDynamic.java")
         }
 )
 @ManagedBean(name= ContextMenuTable.BEAN_NAME)
