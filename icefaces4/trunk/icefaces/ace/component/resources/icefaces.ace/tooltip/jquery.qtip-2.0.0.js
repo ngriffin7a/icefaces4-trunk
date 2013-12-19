@@ -11,8 +11,9 @@
 	if(typeof define === 'function' && define.amd) {
 		define(['jquery'], factory);
 	}
-	else if(ice.ace.jq && !ice.ace.jq.fn.qtip) {
-		factory(ice.ace.jq);
+//	else if(ice.ace.jq && !ice.ace.jq.fn.qtip) {  see ICE-9751
+    if(ice.ace.jq && !ice.ace.jq.fn.qtip) { 
+        factory(ice.ace.jq);
 	}
 }
 (function($) {
