@@ -243,27 +243,13 @@ ice.ace.Autocompleter.prototype = {
 						autoUp = true;
 				}
 			}
+			jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: '100%', maxHeight: this.height, overflow: "auto" });
+			update.style.left = '0';
 			if (this.direction == 'up' || autoUp) {
 				var updateHeight = jqUpdate.height();
 				updateHeight = updateHeight > this.height ? this.height : updateHeight;
-				if (!(ice.ace.jq.browser.msie && ice.ace.jq.browser.version < 8))
-					updateHeight = updateHeight + (jqElement.outerHeight() - jqElement.height());
-				jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: jqElement.width(), maxHeight: this.height, overflow: "auto" });
-				var savedPos = element.style.position;
-				element.style.position = "relative";
-				update.style.left = '0';
+				updateHeight = updateHeight + jqElement.outerHeight();
 				update.style.top = (-1 * updateHeight) + "px";
-				element.style.position = savedPos;
-			} else {
-				jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: jqElement.width(), maxHeight: this.height, overflow: "auto" });
-				var savedPos = element.style.position;
-				element.style.position = "relative";
-				update.style.left = '0';
-				if (!(ice.ace.jq.browser.msie && ice.ace.jq.browser.version < 8))
-					update.style.top = jqElement.height() + "px";
-				else
-					update.style.top = jqElement.outerHeight() + "px";
-				element.style.position = savedPos;
 			}
 		}
 	},
@@ -709,9 +695,7 @@ ice.ace.Autocompleter.prototype = {
 		if (this.observer) clearTimeout(this.observer);
 		if (this.hideObserver) clearTimeout(this.hideObserver);
         for (var i = 0; i < this.entryCount; i++) {
-            var entry = this.getEntry(i);
-            entry.autocompleteIndex = i;
-			ice.ace.jq(entry).off();
+			ice.ace.jq(this.getEntry(i)).off();
         }
 		ice.ace.jq(this.element).off();
     },
