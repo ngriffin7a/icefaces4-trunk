@@ -38,9 +38,9 @@ import java.io.Serializable;
                     resource = "/resources/examples/ace/dataTable/dataTableSorting.xhtml"),
             // Java Source
             @ExampleResource(type = ResourceType.java,
-                    title="DataTableSort.java",
+                    title="DataTableBean.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableSorting.java")
+                    "/example/ace/dataTable/DataTableBean.java")
         }
 )
 @ManagedBean(name= DataTableSorting.BEAN_NAME)
