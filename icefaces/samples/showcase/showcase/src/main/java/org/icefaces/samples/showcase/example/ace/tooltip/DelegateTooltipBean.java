@@ -42,9 +42,9 @@ import java.io.Serializable;
                     title="DelegateTooltipBean.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/tooltip/DelegateTooltipBean.java"),
             @ExampleResource(type = ResourceType.java,
-                    title="DataTableSort.java",
+                    title="DataTableBean.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableSorting.java")
+                    "/example/ace/dataTable/DataTableBean.java")
         }
 )
 
