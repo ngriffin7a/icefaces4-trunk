@@ -23,7 +23,7 @@
         <after>ICEfacesCore</after>
     </ordering>
     <application>
-        <resource-handler>org.icefaces.ace.renderkit.MobiSymbolicResourceHandler</resource-handler>
+        <resource-handler>org.icefaces.mobi.renderkit.MobiSymbolicResourceHandler</resource-handler>
     </application>
 
 </faces-config>
