@@ -1,0 +1,92 @@
+/**************************** JQuery Mobi Overrides ***************************/
+.mobi-dv.ui-widget-content, .mobi-dv .mobi-dv-det.ui-widget-content {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+}
+.mobi-dv-body tbody tr.ui-state-active  {
+    font-weight: normal;
+    border-left:0;
+    border-right:0;
+}
+/******************************************************************************/
+
+/******************* Derived form JQuery Mobi Structural CSS ******************/
+.mobi-dv table {
+    border: 0;
+    border-collapse: collapse;
+    padding: 0;
+    width: 100%;
+}
+.mobi-dv table th,
+.mobi-dv table td {
+    line-height: 1.5em;
+    text-align: left;
+    padding: .4em .5em;
+    vertical-align:top;
+}
+.mobi-dv table th {
+    font-weight: bold;
+}
+.mobi-dv table caption {
+    text-align:left;
+    margin-bottom:1.4em;
+    opacity: .5;
+}
+/* Add strokes between each row */
+.mobi-dv table.stroke tbody th,
+.mobi-dv table.stroke tbody td {
+    border-bottom: 1px solid #e6e6e6; /* non-RGBA fallback  */
+    border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+/* Add alternating row stripes */
+.mobi-dv table.stripe tbody tr:nth-child(odd) td,
+.mobi-dv table.stripe tbody tr:nth-child(odd) th {
+    background-color: #eeeeee; /* non-RGBA fallback  */
+    background-color: rgba(0,0,0,0.04);
+}
+/* Add stroke to the header and last item */
+.mobi-dv table.stripe thead th,
+.mobi-dv table.stripe tbody tr:last-child {
+    border-bottom: 1px solid #d6d6d6; /* non-RGBA fallback  */
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+/******************************************************************************/
+
+/******************************* ICEsoft Styles *******************************/
+.mobi-dv-mst > div {
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobi-dv > .mobi-dv-det:not([data-index]){
+    display: none;
+}
+
+.mobi-dv-head {
+    width:100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.mobi-dv-body {
+    width:100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.mobi-dv-foot {
+    width:100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.mobi-dv-head .mobi-dv-si {
+    position: absolute;
+    padding: .2em;
+}
+
+.mobi-dv-head .mobi-dv-si:not([class*='icon']) {
+    display: none;
+}
+/******************************************************************************/
