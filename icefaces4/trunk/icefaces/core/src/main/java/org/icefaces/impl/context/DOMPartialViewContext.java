@@ -157,6 +157,11 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                 } else {
                     writer.startSubtreeRendering(oldDOM);
                     Collection<String> renderIds = getRenderIds();
+
+                    if (isResetValues()) {
+                        viewRoot.resetValues(facesContext, renderIds);
+                    }
+
                     customIds = getCustomIds(customUpdate);
                     if (null != customIds) {
                         renderIds.removeAll(customIds);
@@ -211,7 +216,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                     partialWriter.startUpdate(target);
                     DOMUtils.printNodeCDATA(body, outputWriter);
                     partialWriter.endUpdate();
-                } else if (null != diffs) {
+                } else if (null != diffs && !diffs.isEmpty())  {
                     for (DOMUtils.EditOperation op : diffs) {
 
                         //client throws error on receiving an update for the 'head' element
@@ -261,6 +266,12 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                             partialWriter.endUpdate();
                         }
                     }
+                } else {
+                    //send no-op eval command to force the writing of 'changes' element into the partial update response
+                    //without 'changes' element in the response the JSF client will throw an error
+                    partialWriter.startEval();
+                    partialWriter.writeText("//no changes were generated", null);
+                    partialWriter.endEval();
                 }
 
                 //apply subtree changes to old DOM and then save it as the new DOM
@@ -291,6 +302,11 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         } else {
             super.processPartial(phaseId);
         }
+    }
+
+    public boolean isResetValues() {
+        Object value = facesContext.getExternalContext().getRequestParameterMap().get(RESET_VALUES_PARAM_NAME);
+        return (null != value && "true".equals(value)) ? true : false;
     }
 
     private static void generateElementUpdateNotifications(DOMUtils.EditOperation op, PartialResponseWriter partialWriter, Document oldDOM) throws IOException {
@@ -847,7 +863,7 @@ class DOMPartialRenderCallback implements VisitCallback {
             }
         }
         //Return REJECT to skip subtree visiting
-        return VisitResult.REJECT;
+        return VisitResult.ACCEPT;
     }
 
     public List<DocumentOperation> getDocumentOperations() {
