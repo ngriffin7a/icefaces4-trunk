@@ -529,10 +529,11 @@ public class DOMUtils {
 
         int startCursor = nodeDiffs.cursor;
 
-        if (!oldNode.getNodeName().equals(newNode.getNodeName())) {
-            debugNameDifference(config, newNode, oldNode, newNode);
-            return false;
-        }
+        //h:messages renderer does not care about this constrain
+//        if (!oldNode.getNodeName().equals(newNode.getNodeName())) {
+//            debugNameDifference(config, newNode, oldNode, newNode);
+//            return false;
+//        }
         if (!compareIDs(oldNode, newNode)) {
             debugIdDifference(config, newNode, oldNode, newNode, "A");
             return false;
