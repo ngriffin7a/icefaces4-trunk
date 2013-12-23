@@ -255,14 +255,14 @@ public class DataTableMeta extends UIDataMeta {
             methodExpressionArgument = "org.icefaces.ace.event.SelectEvent",
             tlddoc = "MethodExpression reference called whenever a table " +
                     "element is selected. The method receives a single " +
-                    "argument, RowSelectEvent.")
+                    "argument, SelectEvent.")
     private MethodExpression rowSelectListener;
 
     @Property(expression = Expression.METHOD_EXPRESSION,
             methodExpressionArgument = "org.icefaces.ace.event.UnselectEvent",
             tlddoc = "MethodExpression reference called whenever a table " +
                     "element is deselected. The method receives a single " +
-                    "argument, RowUnselectEvent.")
+                    "argument, UnselectEvent.")
     private MethodExpression rowUnselectListener;
 
     @Property(expression = Expression.METHOD_EXPRESSION,
