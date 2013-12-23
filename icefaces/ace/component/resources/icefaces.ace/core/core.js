@@ -272,6 +272,8 @@ ice.ace.AjaxRequest = function(cfg) {
     // Defaults for execute and render
     var jsfExecute = cfg.execute || '@all';
     var jsfRender = cfg.render || '@all';
+    var jsfResetValues = cfg.resetValues && cfg.resetValues == 'true';
+
 
     // Create IF bridge request
     ice.fullSubmit(jsfExecute, jsfRender, null, sourceElement, function(parameter) {
@@ -289,6 +291,10 @@ ice.ace.AjaxRequest = function(cfg) {
             parameter(ice.ace.PARTIAL_EVENT_PARAM, domEvent);
         } else {
             parameter(cfg.source, cfg.source);
+        }
+
+        if (jsfResetValues) {
+            parameter('javax.faces.partial.resetValues', 'true');
         }
 
         if(cfg.params) {
