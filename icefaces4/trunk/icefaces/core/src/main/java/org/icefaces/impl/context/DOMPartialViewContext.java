@@ -39,6 +39,8 @@ import javax.faces.event.PhaseId;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.StringCharacterIterator;
 import java.util.*;
 import java.util.logging.Level;
@@ -59,6 +61,16 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
             Pattern.compile("(selected=\"[^\"]*\")");
     public static final String CUSTOM_UPDATE = "ice.customUpdate";
     public static final String DATA_ELEMENTUPDATE = "data-elementupdate";
+    private static Method resetValuesMethod;
+    static {
+        try {
+            resetValuesMethod = UIViewRoot.class.getDeclaredMethod("resetValues", new Class[] { FacesContext.class, Collection.class });
+        } catch (NoSuchMethodException e) {
+            resetValuesMethod = null;
+        }
+
+    }
+
 
     private PartialViewContext wrapped;
     protected FacesContext facesContext;
@@ -142,6 +154,8 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                 writer.startDocument();
 
                 if (isRenderAll()) {
+                    resetValues(viewRoot, null);
+
                     Iterator<UIComponent> itr = viewRoot.getChildren().iterator();
                     while (itr.hasNext()) {
                         UIComponent kid = itr.next();
@@ -158,9 +172,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                     writer.startSubtreeRendering(oldDOM);
                     Collection<String> renderIds = getRenderIds();
 
-                    if (isResetValues()) {
-                        viewRoot.resetValues(facesContext, renderIds);
-                    }
+                    resetValues(viewRoot, renderIds);
 
                     customIds = getCustomIds(customUpdate);
                     if (null != customIds) {
@@ -305,8 +317,20 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
     }
 
     public boolean isResetValues() {
-        Object value = facesContext.getExternalContext().getRequestParameterMap().get(RESET_VALUES_PARAM_NAME);
+        Object value = facesContext.getExternalContext().getRequestParameterMap().get("javax.faces.partial.resetValues");
         return (null != value && "true".equals(value)) ? true : false;
+    }
+
+    private void resetValues(UIViewRoot viewRoot, Collection<String> renderIds) {
+        if (isResetValues() && resetValuesMethod != null) {
+            try {
+                resetValuesMethod.invoke(viewRoot, facesContext, renderIds);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private static void generateElementUpdateNotifications(DOMUtils.EditOperation op, PartialResponseWriter partialWriter, Document oldDOM) throws IOException {
