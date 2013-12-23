@@ -24,6 +24,32 @@
     <title>f:resetValues test</title>
 </h:head>
 <h:body>
+    <p>
+        Read about expected behaviour <a href="http://jsflive.wordpress.com/2013/06/20/jsf-22-reset-values/">here</a>
+    </p>
+    <h:form id="form">
+        <h:messages id="msgs"/>
+        <div>
+            <h:inputText id="v1" value="#{bean.value1}"/>
+            <h:commandLink value="+1" action="#{bean.incValue1}">
+                <f:ajax render="v1"  resetValues="true"/>
+            </h:commandLink>
+        </div>
+        <div>
+            <h:inputText id="v2" value="#{bean.value2}">
+                <f:validateLongRange minimum="10"/>
+            </h:inputText>
+        </div>
+        <h:commandButton value="Save">
+            <f:ajax execute="v1 v2" render="msgs v1 v2"/>
+        </h:commandButton>
+        <h:commandButton value="Reset" action="#{bean.reset}" immediate="true">
+            <f:resetValues render="form:v1 form:v2"/>
+        </h:commandButton>
+    </h:form>
+    <p>
+        Go back to <a href="./">index</a>
+    </p>
 </h:body>
 </html>
 

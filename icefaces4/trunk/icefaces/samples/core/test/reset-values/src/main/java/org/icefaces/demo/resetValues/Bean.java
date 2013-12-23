@@ -45,4 +45,9 @@ public class Bean implements Serializable {
     public void incValue1() {
         value1++;
     }
+
+    public void reset() {
+        value1 = 0;
+        value2 = 0;
+    }
 }
