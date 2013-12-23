@@ -218,6 +218,7 @@ public class AjaxBehaviorHandler extends AjaxBehaviorHandlerBase implements Beha
         setBehaviorAttribute(ctx, behavior, this.immediate, AjaxBehavior.Property.immediate);
         setBehaviorAttribute(ctx, behavior, this.execute, AjaxBehavior.Property.execute);
         setBehaviorAttribute(ctx, behavior, this.render, AjaxBehavior.Property.render);
+        setBehaviorAttribute(ctx, behavior, this.resetValues, AjaxBehavior.Property.resetValues);
 
         addListenerToAjaxBehavior(ctx, parent, behavior, eventName);
         return behavior;

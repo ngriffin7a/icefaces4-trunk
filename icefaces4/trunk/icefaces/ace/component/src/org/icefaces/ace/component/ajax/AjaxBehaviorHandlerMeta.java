@@ -45,10 +45,13 @@ public class AjaxBehaviorHandlerMeta {
 	
 	@Property(required=Required.no, tlddoc="Component(s) to execute in the ajax request. The format is the same as that of the f:ajax tag.")
 	private String execute;
-	
-	@Property(required=Required.no, tlddoc="Component(s) to render in the ajax rquest. The format is the same as that of the f:ajax tag.")
-	private String render;
-	
+
+    @Property(required=Required.no, tlddoc="Component(s) to render in the ajax rquest. The format is the same as that of the f:ajax tag.")
+    private String render;
+
+    @Property(required=Required.no, tlddoc="Reset submit values after submit. The format is the same as that of the f:ajax tag.")
+    private String resetValues;
+
 	@Property(required=Required.no, tlddoc="Javascript handler to execute before the ajax request begins. It is passed the 'cfg' argument, containing the ajax request configuration to be modified before the request is sent. The function has to return 'true' to continue with the ajax request; if 'false' or nothing is returned, the ajax request will be aborted.")
 	private String onStart;
 	

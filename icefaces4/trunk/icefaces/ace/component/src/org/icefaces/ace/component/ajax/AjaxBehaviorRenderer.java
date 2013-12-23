@@ -136,6 +136,10 @@ public class AjaxBehaviorRenderer extends ClientBehaviorRenderer {
         if(ajaxBehavior.getOnComplete() != null)
             jb.entry("oncomplete", "function(xhr, status, args){" + ajaxBehavior.getOnComplete() + ";}", true);
 
+        if (ajaxBehavior.isResetValues()) {
+            jb.entry("resetValues", "true");
+        }
+
         jb.endMap();
 
         if (nonACE) {

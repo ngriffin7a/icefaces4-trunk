@@ -53,7 +53,8 @@ public class AjaxBehavior extends ClientBehaviorBase {
         disabled(Boolean.TYPE),
         immediate(Boolean.TYPE),
         execute(String.class),
-        render(String.class);
+        render(String.class),
+        resetValues(Boolean.TYPE);
 
         final Class expectedType;
 
@@ -159,6 +160,11 @@ public class AjaxBehavior extends ClientBehaviorBase {
     public boolean isImmediateSet() {
         return literals.containsKey(Property.immediate) ||
             bindings.containsKey(Property.immediate);
+    }
+
+    public boolean isResetValues() {
+        Boolean ret = (Boolean) eval(Property.resetValues, Boolean.FALSE);
+        return ret.booleanValue();
     }
 
     //public void broadcast(javax.faces.event.BehaviorEvent event) throws javax.faces.event.AbortProcessingException {
