@@ -323,10 +323,9 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
             if (log.isLoggable(Level.WARNING)) {
                 if (!cursor.getNodeName().equals(name)) {
                     logUnclosedNode(cursor);
-                } else {
-                    cursor.setUserData("closed", Boolean.TRUE, null);
                 }
             }
+            cursor.setUserData("closed", Boolean.TRUE, null);
         }
 
         Map<String, Object> passthroughAttributes = elementPasstroughAttributes.get(cursor);
@@ -356,9 +355,9 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
             path.insert(0, tempCursor.getNodeName());
             tempCursor = tempCursor.getParentNode();
         }
-        Node idNode = node.getAttributes().getNamedItem("id");
+        Node idNode = node.hasAttributes() ? node.getAttributes().getNamedItem("id") : null;
         log.log(Level.WARNING, "Missing end-element for: "
-            + node.getNodeName() + (idNode == null ? "" : "["+idNode.toString()+"]")
+            + node.getNodeName() + (idNode == null ? "" : ("[" + idNode.toString() + "]"))
             + " (path: " + path + ")");
     }
 
