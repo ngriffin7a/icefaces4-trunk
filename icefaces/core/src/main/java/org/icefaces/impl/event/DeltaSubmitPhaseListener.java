@@ -267,7 +267,9 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
                 for (int j = 0; j < selects.getLength(); j++) {
                     Element select = (Element) selects.item(j);
                     String name = select.getAttribute("name");
-                    if (!parameters.containsKey(name)) {
+                    String multiple = select.getAttribute("multiple");
+                    boolean isMultipleSelection = "multiple".equals(multiple);
+                    if (!parameters.containsKey(name) || isMultipleSelection) {
                         NodeList options = select.getElementsByTagName("option");
                         ArrayList selectedOptions = new ArrayList();
                         for (int k = 0; k < options.getLength(); k++) {
@@ -278,7 +280,7 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
                             }
                         }
                         if (selectedOptions.isEmpty()) {
-                            if (options.getLength() > 0) {
+                            if (options.getLength() > 0 && !isMultipleSelection) {
                                 //select the first item if no option is marked as selected
                                 Element option = (Element) options.item(0);
                                 multiParameters.put(name, new String[] {option.getAttribute("value")});
