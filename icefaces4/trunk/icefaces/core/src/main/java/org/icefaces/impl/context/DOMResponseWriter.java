@@ -243,8 +243,8 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
 
         if (FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development)) {
             if (log.isLoggable(Level.WARNING)) {
-                if (null != document && null != document.getDocumentElement()) {
-                    logAllUnclosedNodes(document.getDocumentElement());
+                if (cursor != document) {
+                    logUnclosedNode(document);
                 }
             }
         }
@@ -291,9 +291,7 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         }
         pointCursorAt(appendToCursor(document.createElement(name)));
         if (FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development)) {
-            if (log.isLoggable(Level.WARNING)) {
-                cursor.setUserData("closed", Boolean.FALSE, null);
-            }
+            cursor.setUserData("closed", Boolean.FALSE, null);
         }
 
         if (component != null && getPassThroughAttributesMethod != null) {
@@ -359,16 +357,6 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         log.log(Level.WARNING, "Missing end-element for: "
             + node.getNodeName() + (idNode == null ? "" : ("[" + idNode.toString() + "]"))
             + " (path: " + path + ")");
-    }
-
-    private void logAllUnclosedNodes(Node node) {
-        Boolean closed = (Boolean) cursor.getUserData("closed");
-        if (closed != null && !closed) {
-            logUnclosedNode(node);
-        }
-        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-            logAllUnclosedNodes(node.getChildNodes().item(i));
-        }
     }
 
     public void writeAttribute(String name, Object value, String property) throws IOException {

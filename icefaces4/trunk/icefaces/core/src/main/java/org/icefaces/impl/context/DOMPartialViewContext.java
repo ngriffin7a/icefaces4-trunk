@@ -876,6 +876,8 @@ class DOMPartialRenderCallback implements VisitCallback {
                     }
                 }
             }
+
+            domWriter.endElement("div");
         } catch (Exception e) {
             //if errors occur in any of the subtrees, we likely should perform
             //a full diff, because a given subtree could be completely incompatible,
