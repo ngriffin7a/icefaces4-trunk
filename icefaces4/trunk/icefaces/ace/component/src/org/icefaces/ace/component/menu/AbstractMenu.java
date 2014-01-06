@@ -41,14 +41,21 @@ public abstract class AbstractMenu extends UIComponentBase {
 	
 	public void buildMenuFromModel() {
 		MenuModel model = (MenuModel) getModel();
-		
+
 		if(model != null) {
+            setInView(false);
 			getChildren().clear();
 			for(UIComponent kid : model.getMenus()) {
                 setTransientRecursive(kid);
+                UIComponent p = kid.getParent();
+                if (p != null) {
+                    p.setInView(false);
+                    kid.setParent(null);
+                }
                 getChildren().add(kid);
             }
 			markAsBuiltFromModel();
+            setInView(true);
 		}
 	}
 
