@@ -75,7 +75,8 @@
     </patternset>
 
     <patternset id="lib.distribute">
-        <patternset id="lib.distribute.ice" includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icepush.lib.name}.jar">
+        <patternset id="lib.distribute.ice" 
+        	includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icepush.lib.name}.jar ${icefaces-mobi.lib.name}.jar">
             <exclude name="${icefaces.lib.name}.jar"        if="no-icefaces"/>
 
             <exclude name="${icefaces-ace.lib.name}.jar"    if="no-icefaces"/>
@@ -83,6 +84,7 @@
 
             <exclude name="${icepush.lib.name}.jar"         if="no-icefaces"/>
             <exclude name="${icepush.lib.name}.jar"         if="no-icepush"/>
+        	<exclude name="${icefaces-mobi.lib.name}.jar"   unless="mobi"/>
         </patternset>
 
         <!-- By default, include these libs in all ace samples unless explicity excluded  -->
