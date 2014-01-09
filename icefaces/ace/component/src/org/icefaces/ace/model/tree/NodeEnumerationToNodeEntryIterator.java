@@ -16,9 +16,9 @@
 
 package org.icefaces.ace.model.tree;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.icefaces.ace.model.SimpleEntry;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class NodeEnumerationToNodeEntryIterator<V> implements Iterator<Map.Entry
     NodeKey parentKey;
 
     public NodeEnumerationToNodeEntryIterator(KeySegmentConverter converter, NodeKey parentKey, Enumeration<V> children) {
-        iter = (Iterator<V>)IteratorUtils.asIterator(children);
+        iter = Collections.list(children).iterator();
         this.converter = converter;
         this.parentKey = parentKey;
     }
