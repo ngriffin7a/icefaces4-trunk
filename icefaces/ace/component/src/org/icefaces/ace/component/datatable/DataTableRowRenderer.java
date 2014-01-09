@@ -116,7 +116,7 @@ public class DataTableRowRenderer {
 				.put(clientId + "_expandedRowId", "" + rowIndex);
 
 		// Ensure that table.getTableId returns correctly for request map look
-		table.setRowIndex(-1);
+		if (isPanel || isRow) table.setRowIndex(-1);
 
 		if (isPanel && isRow) {
 			if (rowState.getExpansionType() == RowState.ExpansionType.ROW) {
@@ -132,7 +132,7 @@ public class DataTableRowRenderer {
 		}
 
 		// Row index will have come back different from row expansion.
-		table.setRowIndex(rowIndex);
+		if (isPanel || isRow) table.setRowIndex(rowIndex);
 
         if (visible) {
 			// Add tailing conditional row for this row object if required
@@ -335,7 +335,7 @@ public class DataTableRowRenderer {
 				boolean isRow = rowExpansion != null;
 
 				// Ensure that table.getTableId returns correctly for request map look
-				table.setRowIndex(-1);
+				if (isPanel || isRow) table.setRowIndex(-1);
 
 				if (isPanel && isRow) {
 					if (rowState.getExpansionType() == RowState.ExpansionType.ROW) {
@@ -352,7 +352,7 @@ public class DataTableRowRenderer {
 
 				rootModel = (TreeDataModel) table.getDataModel();
 				rootModel.setRootIndex(expandedRowId);
-				table.setRowIndex(rowIndex); // Row index will have come back different from row expansion.
+				if (isPanel || isRow) table.setRowIndex(rowIndex); // Row index will have come back different from row expansion.
 				context.getExternalContext().getRequestMap().put(clientId + "_expandedRowId", expandedRowId);
 
                 table.setRowIndex(rootModel.getRowIndex() + 1);
