@@ -14,7 +14,7 @@
   ~ governing permissions and limitations under the License.
   -->
 
-<project name="icefaces" default="world">
+<project name="icefaces4" default="world">
 
     <!-- This property file is only used for EE builds and overrides various
          property values if it is available. -->
@@ -63,8 +63,16 @@
                 </fileset>
             </subant>
     </target>
+	
+	<target name="mobi" depends="core" description="Builds the ICEfaces Mobi Components (icefaces-mobi.jar).">
+            <subant>
+                  <fileset dir="." includes="mobi/build.xml">
+                    <exclude name="**/maven2/build.xml"/>
+                </fileset>
+            </subant>
+    </target>
 
-    <target name="samples" depends="icepush, core, ace" description="Builds the ICEfaces samples.">
+    <target name="samples" depends="icepush, core, ace, mobi" description="Builds the ICEfaces samples.">
         <subant>
             <fileset dir="." includes="samples/build.xml">
                 <exclude name="**/maven2/build.xml"/>
@@ -72,7 +80,7 @@
         </subant>
     </target>
 
-    <target name="world" depends="icepush, core, ace, samples"  description="Builds all ICEfaces/ICEpush libraries.">
+    <target name="world" depends="icepush, core, ace, mobi, samples"  description="Builds all ICEfaces/ICEpush libraries.">
     </target>
 
     <target name="clean" depends="allclean">
