@@ -20,6 +20,7 @@
     <property name="lib.distribute.application.includes" value="*.jar"/>
     
     <property name="ace" value="true" />
+	<property name="mobi" value="true" />
     <property name="includeSrc" value="true" />
     <property name="includeThemeJars" value="true"/>
     
