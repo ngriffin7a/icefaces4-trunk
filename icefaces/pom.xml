@@ -75,6 +75,7 @@
         <module>icepush</module>
         <module>core</module>
         <module>ace</module>
+        <module>mobi</module>
         <module>samples</module>
     </modules>
 
@@ -268,6 +269,12 @@
             <dependency>
                 <groupId>${icefaces.product.group}</groupId>
                 <artifactId>${icefaces.lib.name}-ace</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${icefaces.product.group}</groupId>
+                <artifactId>${icefaces.lib.name}-mobi</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
