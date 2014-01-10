@@ -155,14 +155,13 @@ ice.ace.Dialog = function(id, cfg) {
 };
 
 ice.ace.Dialog.prototype.show = function() {
-    this.jq.dialog('open');
-
-    this.focusFirstInput();
+	var self = this;
+    setTimeout(function(){self.jq.dialog('open');self.focusFirstInput();},1);
 };
 
 ice.ace.Dialog.prototype.hide = function() {
-    this.jq.dialog('close');
-	this.ajaxHide();
+	var self = this;
+    setTimeout(function(){self.jq.dialog('close');self.ajaxHide();},1);
 };
 
 /**
