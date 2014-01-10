@@ -31,10 +31,6 @@
     <url>http://www.icesoft.org</url>
     <description>${icefaces.product.name} MOBI Component Library</description>
 
-		<modules>
-       <module>themes</module>
-   </modules>
-
     <build>
         <plugins>
 
