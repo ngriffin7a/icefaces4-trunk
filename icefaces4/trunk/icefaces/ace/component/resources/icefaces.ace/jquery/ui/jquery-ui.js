@@ -4669,13 +4669,14 @@
                     maxHeight;
 
             if ( options.fillSpace ) {
+                var parent = this.element.parent().parent();
                 if ( $.browser.msie ) {
-                    var defOverflow = this.element.parent().css( "overflow" );
-                    this.element.parent().css( "overflow", "hidden");
+                    var defOverflow = parent.css( "overflow" );
+                    parent.css( "overflow", "hidden");
                 }
-                maxHeight = this.element.parent().height();
+                maxHeight = parent.height();
                 if ($.browser.msie) {
-                    this.element.parent().css( "overflow", defOverflow );
+                    parent.css( "overflow", defOverflow );
                 }
 
                 this.headers.each(function() {
