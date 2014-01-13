@@ -372,11 +372,15 @@ public class Tree<N> extends TreeBase implements Serializable {
         // and start at no node
         NodeKey oldNodeKey = NodeKey.ROOT_KEY;
         if (visitRows) {
-            NodeDataModel model = (NodeDataModel) getDataModel();
-            oldNodeKey = getKey();
-            setKey(NodeKey.ROOT_KEY);
-            // Initialized cached state map before clientId begins to change
-            getStateMap();
+            try {
+                NodeDataModel model = (NodeDataModel) getDataModel();
+                oldNodeKey = getKey();
+                setKey(NodeKey.ROOT_KEY);
+                // Initialized cached state map before clientId begins to change
+                getStateMap();
+            } catch (IllegalArgumentException e) {
+                return false;
+            }
         }
 
         // Push ourselves to EL
