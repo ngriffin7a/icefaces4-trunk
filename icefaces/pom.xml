@@ -366,7 +366,7 @@
                 <snapshotRepository>
                     <id>icefaces-remote</id>
                     <name>ICEsoft Maven Repository</name>
-                    <url>svn:http://10.18.39.25:8888/svn/ossrepo/maven2/snapshots/</url>
+                    <url>svn:http://dev.icesoft.com/svn/ossrepo/maven2/snapshots/</url> 
                 </snapshotRepository>
 
                 <!--<snapshotRepository>-->
