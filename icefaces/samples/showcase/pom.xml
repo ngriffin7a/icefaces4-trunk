@@ -67,6 +67,11 @@
             <groupId>${icefaces.product.group}</groupId>
             <artifactId>${icefaces.lib.name}-ace</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>${icefaces.product.group}</groupId>
+            <artifactId>${icefaces.lib.name}-mobi</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>${icepush.product.group}</groupId>
