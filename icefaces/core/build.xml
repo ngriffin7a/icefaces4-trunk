@@ -45,8 +45,8 @@
     </condition>
 
     <!-- Check which JSF version to use and set the appropriate sub-directory  -->
-    <condition property="jsf.ver.dir" value="2.2" else="2.1">
-        <isset property="jsf22"/>
+    <condition property="jsf.ver.dir" value="2.1" else="2.2">
+        <isset property="jsf21"/>
     </condition>
 
     <property name="jsf.lib.dir" value="${jsf.impl.dir}/${jsf.ver.dir}" />
