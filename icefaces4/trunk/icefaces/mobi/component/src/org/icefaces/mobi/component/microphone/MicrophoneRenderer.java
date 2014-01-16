@@ -31,9 +31,10 @@ import javax.faces.render.Renderer;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.HTML;
 import org.icefaces.mobi.util.MobiJSFUtils;
+import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.EnvUtils;
-import org.icefaces.mobi.renderkit.DeviceCoreRenderer;
 
+import static org.icefaces.mobi.util.HTML.*;
 
 public class MicrophoneRenderer extends Renderer {
     private static final Logger logger = Logger.getLogger(MicrophoneRenderer.class.getName());
@@ -74,9 +75,32 @@ public class MicrophoneRenderer extends Renderer {
         if (MobiJSFUtils.uploadInProgress(microphone))  {
            microphone.setButtonLabel(microphone.getCaptureMessageLabel()) ;
         } 
-        DeviceCoreRenderer renderer = new DeviceCoreRenderer();
         ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
-        renderer.encode(microphone, writer, false);
+        String clientId = microphone.getClientId();
+        //StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
+        //ClientDescriptor cd = microphone.getClient();
+		// button element
+		writer.startElement(BUTTON_ELEM, microphone);
+		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(NAME_ATTR, clientId + "_button");
+		writer.writeAttribute(TYPE_ATTR, "button");
+		//writeStandardAttributes(writer, microphone, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
+		//default value of unset in params is Integer.MIN_VALUE
+		String script = "bridgeit.microphone('" + clientId + "', '', {postURL:'" + microphone.getPostURL() + "'});";
+		writer.writeAttribute(ONCLICK_ATTR, script);
+		writer.startElement(SPAN_ELEM, microphone);
+		writer.writeText(microphone.getButtonLabel());
+		writer.endElement(SPAN_ELEM);
+		writer.endElement(BUTTON_ELEM);
         microphone.setButtonLabel(oldLabel);
+
+		// themeroller support
+		writer.startElement("span", microphone);
+		writer.writeAttribute("id", clientId + "_script");
+		writer.startElement("script", microphone);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.endElement("script");
+		writer.endElement("span");
     }
 }

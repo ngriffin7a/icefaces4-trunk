@@ -28,9 +28,9 @@ import org.icefaces.impl.application.AuxUploadResourceHandler;
 import org.icefaces.mobi.renderkit.BaseInputRenderer;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.MobiJSFUtils;
+import org.icefaces.mobi.util.CSSUtils;
 
-import org.icefaces.mobi.renderkit.DeviceCoreRenderer;
-
+import static org.icefaces.mobi.util.HTML.*;
 
 public class ScanRenderer extends BaseInputRenderer {
     private static final Logger logger = Logger.getLogger(ScanRenderer.class.getName());
@@ -67,10 +67,33 @@ public class ScanRenderer extends BaseInputRenderer {
         if (MobiJSFUtils.uploadInProgress(scan))  {
            scan.setButtonLabel(scan.getCaptureMessageLabel()) ;
         } 
-        DeviceCoreRenderer renderer = new DeviceCoreRenderer();
         ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
-        renderer.encode(scan, writer, false);
+        String clientId = scan.getClientId();
+        StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
+        //ClientDescriptor cd = scan.getClient();
+		// button element
+		writer.startElement(BUTTON_ELEM, scan);
+		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(NAME_ATTR, clientId + "_button");
+		writer.writeAttribute(TYPE_ATTR, "button");
+		//writeStandardAttributes(writer, scan, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
+		//default value of unset in params is Integer.MIN_VALUE
+		String script = "bridgeit.scan('" + clientId + "', '', {postURL:'" + scan.getPostURL() + "'});";
+		writer.writeAttribute(ONCLICK_ATTR, script);
+		writer.startElement(SPAN_ELEM, scan);
+		writer.writeText(scan.getButtonLabel());
+		writer.endElement(SPAN_ELEM);
+		writer.endElement(BUTTON_ELEM);
         scan.setButtonLabel(oldLabel);
+
+		// themeroller support
+		writer.startElement("span", scan);
+		writer.writeAttribute("id", clientId + "_script");
+		writer.startElement("script", scan);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.endElement("script");
+		writer.endElement("span");
     }
 
 

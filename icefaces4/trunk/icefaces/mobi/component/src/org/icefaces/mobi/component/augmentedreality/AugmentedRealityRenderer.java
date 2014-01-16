@@ -52,7 +52,7 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
          AugmentedReality ag = (AugmentedReality)uiComponent;
 
 //         boolean isEnhanced = EnvUtils.isEnhancedBrowser(facesContext);
-         ClientDescriptor clientDescriptor = MobiJSFUtils.getClientDescriptor();
+         /*ClientDescriptor clientDescriptor = MobiJSFUtils.getClientDescriptor();
          boolean isEnhanced = clientDescriptor.isICEmobileContainer();
          boolean isAuxUpload = EnvUtils.isAuxUploadBrowser(facesContext);
          if (!isEnhanced && !isAuxUpload) {  //no container or SX, use text field
@@ -63,7 +63,7 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
              writer.writeAttribute(HTML.NAME_ATTR, clientId, null);
              writer.endElement(HTML.INPUT_ELEM);
              return;
-         }
+         }*/
          writer.startElement(HTML.BUTTON_ELEM, uiComponent);
          writer.writeAttribute(HTML.ID_ATTR, clientId, null);
          String buttonValue=ag.getButtonLabel();
@@ -83,31 +83,27 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
          }
          writer.writeAttribute(HTML.CLASS_ATTR, defaultClass, HTML.CLASS_ATTR);
 
-        String arParams = "";
-        String urlBase = ag.getUrlBase();
+        String locationsString = "";
+        /*String urlBase = ag.getUrlBase();
         if (null != urlBase)  {
             arParams = "ub=" + URLEncoder.encode(urlBase) + "&";
-        }
+        }*/
         for (UIComponent child : ag.getChildren())  {
             if (child instanceof AugmentedRealityLocations) {
                 AugmentedRealityLocations locations = 
                         (AugmentedRealityLocations) child;
-                arParams += iterateLocations(facesContext, locations);
+                locationsString = iterateLocations(facesContext, locations);
             }
-            if (child instanceof AugmentedRealityMarkers) {
+            /*if (child instanceof AugmentedRealityMarkers) {
                 AugmentedRealityMarkers markers =
                         (AugmentedRealityMarkers) child;
                 arParams += iterateMarkers(facesContext, markers);
                 arParams += "v=vuforia" + "&";
-            }
+            }*/
         }
 
-        //allow legacy params value for now
-        if ("".equals(arParams))  {
-            arParams = ag.getParams();
-        }
         String script;
-        if (isAuxUpload)  {
+        /*if (isAuxUpload)  {
             writer.writeAttribute("data-params", arParams, null);
             writer.writeAttribute("data-command", "aug", null);
             String sessionId = MobiJSFUtils.getSessionIdCookie();
@@ -115,13 +111,24 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
             writer.writeAttribute("data-postURL",
                     MobiJSFUtils.getPostURL(), null);;
             script = "ice.mobi.sx(this);";
-        } else {
-            script = "ice.aug( '" + clientId + "', '" + 
-                    arParams + "' );return false;";
-        }
+        } else {*/
+            script = "bridgeit.augmentedReality( '" + clientId + "', '', {postURL:'" + ag.getUrlBase()
+                     + "', locations:{" + locationsString + "}});";
+        //}
         writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
+         writer.startElement(HTML.SPAN_ELEM, uiComponent);
          writer.writeText(buttonValue, null);
+        writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.BUTTON_ELEM);
+
+		// themeroller support
+		writer.startElement("span", ag);
+		writer.writeAttribute("id", clientId + "_script", null);
+		writer.startElement("script", ag);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.endElement("script");
+		writer.endElement("span");
      }
 
     @Override
@@ -164,7 +171,11 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
             Object oldVar = requestMap.put(var, item);
             Map<String,Object> attrs = locations.getAttributes();
             String itemLabel = (String) attrs.get(LOC_LABEL);
-            result.append(URLEncoder.encode(itemLabel)).append("=");
+			result.append("'");
+            result.append(itemLabel);
+			result.append("'");
+			result.append(":");
+			result.append("'");
             result.append(attrs.get(LOC_LAT)).append(",");
             result.append(attrs.get(LOC_LON)).append(",");
 
@@ -182,10 +193,12 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
             if (null != itemIcon)  {
                 result.append(URLEncoder.encode(itemIcon));
             }
-            result.append("&");
+			result.append("'");
+			result.append(",");
             requestMap.put(var, oldVar);
         }
-        return result.toString();
+		String finalResult = result.toString();
+        return finalResult.substring(0,finalResult.length()-1); // remove last comma
     }
 
     String iterateMarkers(FacesContext facesContext,

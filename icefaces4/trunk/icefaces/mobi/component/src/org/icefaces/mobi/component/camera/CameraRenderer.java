@@ -28,14 +28,14 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.render.Renderer;
 
+import org.icefaces.mobi.api.IDevice;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
-import org.icefaces.mobi.util.HTML;
+import static org.icefaces.mobi.util.HTML.*;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.Utils;
+import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.mobi.util.ClientDescriptor;
-import org.icefaces.mobi.renderkit.DeviceCoreRenderer;
-
 
 public class CameraRenderer extends Renderer {
     private static final Logger logger = Logger.getLogger(CameraRenderer.class.getName());
@@ -88,11 +88,33 @@ public class CameraRenderer extends Renderer {
         if (MobiJSFUtils.uploadInProgress(camera))  {
             camera.setButtonLabel(camera.getCaptureMessageLabel()) ;
         } 
-        DeviceCoreRenderer renderer = new DeviceCoreRenderer();
-        ResponseWriterWrapper writer = new ResponseWriterWrapper(
-                facesContext.getResponseWriter());
-        renderer.encode(camera, writer, false);
+        ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
+        String clientId = camera.getClientId();
+        //StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
+        ClientDescriptor cd = camera.getClient();
+		// button element
+		writer.startElement(BUTTON_ELEM, camera);
+		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(NAME_ATTR, clientId + "_button");
+		writer.writeAttribute(TYPE_ATTR, "button");
+		//writeStandardAttributes(writer, camera, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
+		//default value of unset in params is Integer.MIN_VALUE
+		String script = "bridgeit.camera('" + clientId + "', '', {postURL:'" + camera.getPostURL() + "', maxwidth: " +camera.getMaxwidth() + ", maxheight:" + camera.getMaxheight() + "});";
+		writer.writeAttribute(ONCLICK_ATTR, script);
+		writer.startElement(SPAN_ELEM, camera);
+		writer.writeText(camera.getButtonLabel());
+		writer.endElement(SPAN_ELEM);
+		writer.endElement(BUTTON_ELEM);
         camera.setButtonLabel(oldLabel);
+
+		// themeroller support
+		writer.startElement("span", camera);
+		writer.writeAttribute("id", clientId + "_script");
+		writer.startElement("script", camera);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.endElement("script");
+		writer.endElement("span");
     }
 
 }
