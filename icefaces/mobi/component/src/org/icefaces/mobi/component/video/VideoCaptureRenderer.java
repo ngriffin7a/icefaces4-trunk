@@ -28,10 +28,9 @@ import javax.faces.event.ValueChangeEvent;
 import org.icefaces.mobi.renderkit.BaseInputResourceRenderer;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.MobiJSFUtils;
+import org.icefaces.mobi.util.CSSUtils;
 
-import org.icefaces.mobi.renderkit.DeviceCoreRenderer;
-
-
+import static org.icefaces.mobi.util.HTML.*;
 
 public class VideoCaptureRenderer extends BaseInputResourceRenderer {
     private static final Logger logger = Logger.getLogger(VideoCaptureRenderer.class.getName());
@@ -70,9 +69,32 @@ public class VideoCaptureRenderer extends BaseInputResourceRenderer {
         if (MobiJSFUtils.uploadInProgress(camcorder))  {
             camcorder.setButtonLabel(camcorder.getCaptureMessageLabel()) ;
         } 
-        DeviceCoreRenderer renderer = new DeviceCoreRenderer();
         ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
-        renderer.encode(camcorder, writer, false);
+        String clientId = camcorder.getClientId();
+        //StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
+        //ClientDescriptor cd = camcorder.getClient();
+		// button element
+		writer.startElement(BUTTON_ELEM, camcorder);
+		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(NAME_ATTR, clientId + "_button");
+		writer.writeAttribute(TYPE_ATTR, "button");
+		//writeStandardAttributes(writer, camcorder, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
+		//default value of unset in params is Integer.MIN_VALUE
+		String script = "bridgeit.camcorder('" + clientId + "', '', {postURL:'" + camcorder.getPostURL() + "', maxwidth: " +camcorder.getMaxwidth() + ", maxheight:" + camcorder.getMaxheight() + "});";
+		writer.writeAttribute(ONCLICK_ATTR, script);
+		writer.startElement(SPAN_ELEM, camcorder);
+		writer.writeText(camcorder.getButtonLabel());
+		writer.endElement(SPAN_ELEM);
+		writer.endElement(BUTTON_ELEM);
         camcorder.setButtonLabel(oldLabel);
+
+		// themeroller support
+		writer.startElement("span", camcorder);
+		writer.writeAttribute("id", clientId + "_script");
+		writer.startElement("script", camcorder);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.endElement("script");
+		writer.endElement("span");
     }
 }
