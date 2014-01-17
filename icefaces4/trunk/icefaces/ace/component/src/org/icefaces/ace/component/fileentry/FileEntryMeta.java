@@ -253,7 +253,7 @@ public class FileEntryMeta extends UIComponentBaseMeta {
         "faces messages on every execute. When this is true, this component " +
         "will add its upload success and failure on every execute, " +
         "otherwise, when false, it will only add the faces messages when an " +
-        "upload occurs. Note: false precludes requires faces messages from " +
+        "upload occurs. Note: false precludes faces messages from " +
         "ever being added.",
         defaultValueType = DefaultValueType.EXPRESSION,
         defaultValue = "true")
