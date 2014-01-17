@@ -44,7 +44,7 @@ padding:0;
 
 .yui-navset .yui-navset-left .yui-nav,.yui-navset .yui-navset-right .yui-nav,.yui-navset-left .yui-nav,.yui-navset-right .yui-nav {
 width:6em;
-position:absolute;
+position:relative;
 z-index:1;
 }
 
@@ -99,13 +99,11 @@ vertical-align:text-top;
 }
 
 .yui-navset .yui-navset-left .yui-nav,.yui-navset-left .yui-nav {
-left:0;
-right:auto;
+    float: left;
 }
 
 .yui-navset .yui-navset-right .yui-nav,.yui-navset-right .yui-nav {
-right:0;
-left:auto;
+    float: right;
 }
 
 /* ----- JQuery-UI tabview structural styling ----- */
@@ -203,7 +201,8 @@ vertical-align:baseline;
 /* ----- custom rules ----- */
 
 .ui-tabs-vertical {
-height:100%;
+    height:100%;
+    margin: 3px;
 }
 
 .ui-tabs-content-vertical {
@@ -233,7 +232,6 @@ border:0 !important;
 
 .ui-tabset-vertical .ui-tabs-nav div em { /* added */
 text-decoration:none;
-padding:0.5em 1em;
 display: block;
 border:0 !important;
 }
@@ -256,7 +254,7 @@ cursor:pointer;
 display:block;
 background:none;
 border-width:0;
-padding:1em 1.4em;
+padding:0 1.4em;
 }
 
 .ui-tabset-vertical .ui-tabs-hide {
