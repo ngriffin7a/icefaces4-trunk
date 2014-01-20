@@ -69,7 +69,7 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 				self.updateNOW(self.content);
 			}
 		});
-		if (ice.ace.SelectMenu.Browser.IE) {
+		//if (ice.ace.SelectMenu.Browser.IE) {
 			$element.children().on('click', function(e) {
 				$element.off('focus');
 				$element.children().off('click');
@@ -86,7 +86,7 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 					self.updateNOW(self.content);
 				}
 			});
-		}
+		//}
 	}
 };
 
@@ -115,7 +115,7 @@ ice.ace.SelectMenu.Browser = (function() {
         var ua = navigator.userAgent;
         var isOpera = Object.prototype.toString.call(window.opera) == '[object Opera]';
         return {
-            IE:             !!window.attachEvent && !isOpera,
+            IE:             (!!window.attachEvent && !isOpera) || /rv:11.0/.test(window.navigator.userAgent),//detect IE11 as well
             Opera:          isOpera,
             WebKit:         ua.indexOf('AppleWebKit/') > -1,
             Gecko:          ua.indexOf('Gecko') > -1 && ua.indexOf('KHTML') === -1,
