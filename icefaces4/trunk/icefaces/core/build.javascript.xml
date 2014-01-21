@@ -65,11 +65,11 @@
 
     <target name="build.bridge.compressed" depends="prepare">
         <echo message="Compressing Javascript code..."/>
-        <java jar="../lib/shrinksafe.jar" fork="true" output="${build.dir}/bridge.js">
+        <java jar="../lib/js-compiler.jar" fork="true">
+            <arg value="--js"/>
             <arg value="${tmp}"/>
-            <classpath>
-                <pathelement location="../lib/js.jar"/>
-            </classpath>
+            <arg value="--js_output_file"/>
+            <arg value="${build.dir}/bridge.js"/>
         </java>
     </target>
 

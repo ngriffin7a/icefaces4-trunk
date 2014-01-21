@@ -315,46 +315,46 @@
     <target name="res-js-compress" depends="res-js-combine"
             unless="no-compress">
         <echo message="Compressing ace-yui.js"/>
-        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
-            <arg line="--preserve-semi"/>
-            <arg value="-o"/>
-            <arg value="${ace-yui.js}"/>
+        <java jar="${lib.dir}/js-compiler.jar" fork="yes">
+            <arg line="--js"/>
             <arg value="${ace-yui.js.uncompressed}"/>
+            <arg value="--js_output_file"/>
+            <arg value="${ace-yui.js}"/>
         </java>
         <echo message="Compressing ace-jquery.js"/>
-        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
-            <arg line="--preserve-semi"/>
-            <arg value="-o"/>
-            <arg value="${ace-jquery.js}"/>
+        <java jar="${lib.dir}/js-compiler.jar" fork="yes">
+            <arg line="--js"/>
             <arg value="${ace-jquery.js.uncompressed}"/>
+            <arg value="--js_output_file"/>
+            <arg value="${ace-jquery.js}"/>
         </java>
         <echo message="Compressing ace-datatable.js"/>
-        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
-            <arg line="--preserve-semi"/>
-            <arg value="-o"/>
-            <arg value="${ace-datatable.js}"/>
+        <java jar="${lib.dir}/js-compiler.jar" fork="yes">
+            <arg line="--js"/>
             <arg value="${ace-datatable.js.uncompressed}"/>
+            <arg value="--js_output_file"/>
+            <arg value="${ace-datatable.js}"/>
         </java>
         <echo message="Compressing ace-menu.js"/>
-        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
-            <arg line="--preserve-semi"/>
-            <arg value="-o"/>
-            <arg value="${ace-menu.js}"/>
+        <java jar="${lib.dir}/js-compiler.jar" fork="yes">
+            <arg line="--js"/>
             <arg value="${ace-menu.js.uncompressed}"/>
+            <arg value="--js_output_file"/>
+            <arg value="${ace-menu.js}"/>
         </java>
         <echo message="Compressing ace-components.js"/>
-        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
-            <arg line="--preserve-semi"/>
-            <arg value="-o"/>
-            <arg value="${ace-components.js}"/>
+        <java jar="${lib.dir}/js-compiler.jar" fork="yes">
+            <arg line="--js"/>
             <arg value="${ace-components.js.uncompressed}"/>
+            <arg value="--js_output_file"/>
+            <arg value="${ace-components.js}"/>
         </java>
         <echo message="Compressing ace-chart.js"/>
-        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
-            <arg line="--preserve-semi"/>
-            <arg value="-o"/>
-            <arg value="${ace-chart.js}"/>
+        <java jar="${lib.dir}/js-compiler.jar" fork="yes">
+            <arg line="--js"/>
             <arg value="${ace-chart.js.uncompressed}"/>
+            <arg value="--js_output_file"/>
+            <arg value="${ace-chart.js}"/>
         </java>
     </target>
 
