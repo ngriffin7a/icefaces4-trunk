@@ -76,7 +76,7 @@ public class GeolocationMeta extends UIComponentBaseMeta {
 	      " When singleSubmit is false, no submit occurs. The value is simply stored in the hidden field.")
     private boolean singleSubmit;
 
-	      @Property(tlddoc = "Determines if the component will coninuously update the position. If true, a listener is used to retrieve position from navigator.geolocation.watchPosition. If false, the component will fetch a one time update via navigator.gelocation.getCurrentPosition",
+	      @Property(tlddoc = "Determines if the component will continuously update the position. If true, a listener is used to retrieve position from navigator.geolocation.watchPosition. If false, the component will fetch a one time update via navigator.gelocation.getCurrentPosition",
               defaultValue = "true")
     private boolean continuousUpdates;
 

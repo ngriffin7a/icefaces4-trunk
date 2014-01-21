@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.mobi.component.video;
+package org.icefaces.mobi.component.camcorder;
 
 
 import java.io.IOException;
@@ -32,12 +32,12 @@ import org.icefaces.mobi.util.CSSUtils;
 
 import static org.icefaces.mobi.util.HTML.*;
 
-public class VideoCaptureRenderer extends BaseInputResourceRenderer {
-    private static final Logger logger = Logger.getLogger(VideoCaptureRenderer.class.getName());
+public class CamcorderRenderer extends BaseInputResourceRenderer {
+    private static final Logger logger = Logger.getLogger(CamcorderRenderer.class.getName());
 
     @Override
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
-        VideoCapture camcorder = (VideoCapture) uiComponent;
+        Camcorder camcorder = (Camcorder) uiComponent;
         String clientId = camcorder.getClientId();
         if (!camcorder.isDisabled()) {
            try {
@@ -64,7 +64,7 @@ public class VideoCaptureRenderer extends BaseInputResourceRenderer {
 
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
-        VideoCapture camcorder = (VideoCapture) uiComponent;
+        Camcorder camcorder = (Camcorder) uiComponent;
         String oldLabel = camcorder.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(camcorder))  {
             camcorder.setButtonLabel(camcorder.getCaptureMessageLabel()) ;

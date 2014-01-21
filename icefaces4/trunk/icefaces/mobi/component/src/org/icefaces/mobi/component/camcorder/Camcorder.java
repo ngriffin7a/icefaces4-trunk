@@ -13,7 +13,7 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.icefaces.mobi.component.video;
+package org.icefaces.mobi.component.camcorder;
 
 import org.icefaces.mobi.api.ThumbnailProvider;
 import org.icefaces.mobi.util.MobiJSFUtils;
@@ -30,9 +30,9 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 
-public class VideoCapture extends VideoCaptureBase implements IDevice, ThumbnailProvider{
+public class Camcorder extends CamcorderBase implements IDevice, ThumbnailProvider{
 
-    public VideoCapture() {
+    public Camcorder() {
         super();
     }
 
@@ -56,7 +56,7 @@ public class VideoCapture extends VideoCaptureBase implements IDevice, Thumbnail
      }
 
     public void queueEvent(FacesEvent event) {
-         if (event.getComponent() instanceof VideoCapture) {
+         if (event.getComponent() instanceof Camcorder) {
              if (isImmediate()) {
                  event.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
 }

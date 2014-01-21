@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.mobi.component.video;
+package org.icefaces.mobi.component.camcorder;
 
 
 import org.icefaces.ace.meta.annotation.Component;
@@ -34,13 +34,13 @@ import java.util.Map;
 
 @Component(
         tagName = "camcorder",
-        componentClass = "org.icefaces.mobi.component.video.VideoCapture",
-        rendererClass = "org.icefaces.mobi.component.video.VideoCaptureRenderer",
-        generatedClass = "org.icefaces.mobi.component.video.VideoCaptureBase",
-        componentType = "org.icefaces.VideoCapture",
-        rendererType = "org.icefaces.VideoCaptureRenderer",
+        componentClass = "org.icefaces.mobi.component.camcorder.Camcorder",
+        rendererClass = "org.icefaces.mobi.component.camcorder.CamcorderRenderer",
+        generatedClass = "org.icefaces.mobi.component.camcorder.CamcorderBase",
+        componentType = "org.icefaces.Camcorder",
+        rendererType = "org.icefaces.CamcorderRenderer",
         extendsClass = "javax.faces.component.UIComponentBase",
-        componentFamily = "org.icefaces.VideoCapture",
+        componentFamily = "org.icefaces.Camcorder",
         tlddoc = "camcorder renders a button to access the device video recording capabilities. " +
         		"For non-supported clients it renders an input type file.  The " +
         		"recorded or selected video file can be uploaded to the server.")
@@ -49,7 +49,7 @@ import java.util.Map;
 @ResourceDependencies({
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
 })
-public class VideoCaptureMeta extends UIComponentBaseMeta {
+public class CamcorderMeta extends UIComponentBaseMeta {
 
     @Property(defaultValue = "Integer.MIN_VALUE", tlddoc = "The maxium length of video clip in seconds. ")
     private int maxtime;
