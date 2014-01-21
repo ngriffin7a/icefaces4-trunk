@@ -92,7 +92,7 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
             if (child instanceof AugmentedRealityLocations) {
                 AugmentedRealityLocations locations = 
                         (AugmentedRealityLocations) child;
-                locationsString = iterateLocations(facesContext, locations);
+                locationsString = iterateLocations(facesContext, locations, ag.getUrlBase());
             }
             /*if (child instanceof AugmentedRealityMarkers) {
                 AugmentedRealityMarkers markers =
@@ -112,7 +112,7 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
                     MobiJSFUtils.getPostURL(), null);;
             script = "ice.mobi.sx(this);";
         } else {*/
-            script = "bridgeit.augmentedReality( '" + clientId + "', '', {postURL:'" + ag.getUrlBase()
+            script = "bridgeit.augmentedReality( '" + clientId + "', '', {postURL:'" + MobiJSFUtils.getPostURL()
                      + "', locations:{" + locationsString + "}});";
         //}
         writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
@@ -154,7 +154,7 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
 
 
     String iterateLocations(FacesContext facesContext, 
-            AugmentedRealityLocations locations)  {
+            AugmentedRealityLocations locations, String urlBase)  {
         String var = locations.getVar();
         if (null == var) {
             //cannot iterate without a var
@@ -191,7 +191,7 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
             result.append(",");
             String itemIcon = (String) attrs.get(LOC_ICON);
             if (null != itemIcon)  {
-                result.append(URLEncoder.encode(itemIcon));
+                result.append(URLEncoder.encode(urlBase + itemIcon));
             }
 			result.append("'");
 			result.append(",");
