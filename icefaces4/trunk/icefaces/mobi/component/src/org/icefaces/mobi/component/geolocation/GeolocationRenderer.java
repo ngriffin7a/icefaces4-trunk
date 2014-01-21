@@ -136,7 +136,7 @@ public class GeolocationRenderer extends CoreRenderer {
             boolean continuous = locator.isContinuousUpdates();
 
             sb.append("bridgeit.geoTrack('").append(clientId).append("','',{postURL:'" + MobiJSFUtils.getPostURL() + "', " +
-				"strategy:'"+ (continuous? "continuous":"significant") +"'});");
+				"strategy:'"+ (continuous? "continuous":"significant") +"', duration: " + ((float) locator.getMaximumAge() / 3600) + "});");
 
             //sb.append(includeHighPrecision).append("', '");
             //sb.append(maxAge).append("', '").append(timeout).append("'); ");
