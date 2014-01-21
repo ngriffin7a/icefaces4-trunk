@@ -99,7 +99,12 @@ public class CameraRenderer extends Renderer {
 		writer.writeAttribute(TYPE_ATTR, "button");
 		//writeStandardAttributes(writer, camera, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.camera('" + clientId + "', '', {postURL:'" + camera.getPostURL() + "', maxwidth: " +camera.getMaxwidth() + ", maxheight:" + camera.getMaxheight() + "});";
+		String script = "bridgeit.camera('" + clientId + "', '', {postURL:'" + camera.getPostURL() + "'";
+		int maxwidth = camera.getMaxwidth();
+		if (maxwidth > 0) script += ", maxwidth: " + maxwidth;
+		int maxheight = camera.getMaxheight();
+		if (maxheight > 0) script += ", maxheight:" + maxheight;
+		script += "});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		writer.startElement(SPAN_ELEM, camera);
 		writer.writeText(camera.getButtonLabel());
