@@ -406,7 +406,7 @@ ice.ace.TableConf.prototype.getSortOrder = function() {
                 $order = ice.ace.jq($row.find('.ui-sortable-column-order')[0]);
 
         if (ice.ace.util.getOpacity(topCarat) == 1 || ice.ace.util.getOpacity(bottomCarat) == 1) {
-            sortOrders[parseInt($order.html())-1] = $row.attr('data-tableconf-row-headcol');
+            sortOrders[parseInt($order.html())-1] = $row.attr('data-tableconf-headcol');
             maxOrder++;
         }
     });
