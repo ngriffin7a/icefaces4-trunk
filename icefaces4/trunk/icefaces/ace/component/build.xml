@@ -312,50 +312,40 @@
         </concat>
     </target>
 
-    <target name="res-js-compress" depends="res-js-combine"
-            unless="no-compress">
+    <macrodef name="minify">
+        <attribute name="src"/>
+        <attribute name="dest"/>
+        <element name="minify"/>
+        <sequential>
+            <java jar="${lib.dir}/js-compiler.jar" fork="yes">
+                <arg line="--js"/>
+                <arg value="@{src}"/>
+                <arg value="--js_output_file"/>
+                <arg value="@{dest}"/>
+                <redirector >
+                    <outputfilterchain>
+                        <filterreader classname="org.apache.tools.ant.filters.LineContains">
+                            <param type="contains" value="ERROR"/>
+                        </filterreader>
+                    </outputfilterchain>
+                </redirector>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <target name="res-js-compress" depends="res-js-combine" unless="no-compress">
         <echo message="Compressing ace-yui.js"/>
-        <java jar="${lib.dir}/js-compiler.jar" fork="yes" output="${build}/js-compiler.log">
-            <arg line="--js"/>
-            <arg value="${ace-yui.js.uncompressed}"/>
-            <arg value="--js_output_file"/>
-            <arg value="${ace-yui.js}"/>
-        </java>
+        <minify src="${ace-yui.js.uncompressed}" dest="${ace-yui.js}"/>
         <echo message="Compressing ace-jquery.js"/>
-        <java jar="${lib.dir}/js-compiler.jar" fork="yes" output="${build}/js-compiler.log">
-            <arg line="--js"/>
-            <arg value="${ace-jquery.js.uncompressed}"/>
-            <arg value="--js_output_file"/>
-            <arg value="${ace-jquery.js}"/>
-        </java>
+        <minify src="${ace-jquery.js.uncompressed}" dest="${ace-jquery.js}"/>
         <echo message="Compressing ace-datatable.js"/>
-        <java jar="${lib.dir}/js-compiler.jar" fork="yes" output="${build}/js-compiler.log">
-            <arg line="--js"/>
-            <arg value="${ace-datatable.js.uncompressed}"/>
-            <arg value="--js_output_file"/>
-            <arg value="${ace-datatable.js}"/>
-        </java>
+        <minify src="${ace-datatable.js.uncompressed}" dest="${ace-datatable.js}"/>
         <echo message="Compressing ace-menu.js"/>
-        <java jar="${lib.dir}/js-compiler.jar" fork="yes" output="${build}/js-compiler.log">
-            <arg line="--js"/>
-            <arg value="${ace-menu.js.uncompressed}"/>
-            <arg value="--js_output_file"/>
-            <arg value="${ace-menu.js}"/>
-        </java>
+        <minify src="${ace-menu.js.uncompressed}" dest="${ace-menu.js}"/>
         <echo message="Compressing ace-components.js"/>
-        <java jar="${lib.dir}/js-compiler.jar" fork="yes" output="${build}/js-compiler.log">
-            <arg line="--js"/>
-            <arg value="${ace-components.js.uncompressed}"/>
-            <arg value="--js_output_file"/>
-            <arg value="${ace-components.js}"/>
-        </java>
+        <minify src="${ace-components.js.uncompressed}" dest="${ace-components.js}"/>
         <echo message="Compressing ace-chart.js"/>
-        <java jar="${lib.dir}/js-compiler.jar" fork="yes" output="${build}/js-compiler.log">
-            <arg line="--js"/>
-            <arg value="${ace-chart.js.uncompressed}"/>
-            <arg value="--js_output_file"/>
-            <arg value="${ace-chart.js}"/>
-        </java>
+        <minify src="${ace-chart.js.uncompressed}" dest="${ace-chart.js}"/>
     </target>
 
     <target name="res-js-no-compress" depends="res-js-combine" if="no-compress">
