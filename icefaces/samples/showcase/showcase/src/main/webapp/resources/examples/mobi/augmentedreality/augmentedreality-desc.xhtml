@@ -1,0 +1,45 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
+             xmlns:mobi="http://www.icefaces.org/icefaces/components/mobi">
+
+    <mobi:fieldsetGroup styleClass="exampleDescription">
+        <mobi:fieldsetRow>
+        <p>The augmented reality component displays a set of labeled icons
+        with latitude-longitude locations via an overlay on the camera view.
+        The selected icon label is set as the component value.
+        </p>
+        </mobi:fieldsetRow>
+
+        <mobi:fieldsetRow>
+<pre>
+&lt;mobi:augmentedReality
+    value="&#x2317;{bean.selection}"/&gt;
+</pre>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+        <p>augmentedReality is only accessible for
+             ICEmobile device containers. In non-container environments
+            the component displays a text field input component. </p>
+        </mobi:fieldsetRow>
+    </mobi:fieldsetGroup>
+
+</ui:composition>

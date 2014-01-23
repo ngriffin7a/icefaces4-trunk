@@ -1,0 +1,210 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
+             xmlns:mobi="http://www.icefaces.org/icefaces/components/mobi">
+
+
+    <h:form prependId="false" id="arForm" >
+    
+        <mobi:fieldsetGroup styleClass="intro">
+            <mobi:fieldsetRow>
+            Augmented Reality makes use of the camera and video overlays to allow mobile applications 
+            to mix virtual and real world objects.
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+        
+        <mobi:geolocation 
+                          latitude="#{realityBean.latitude}"
+                          longitude="#{realityBean.longitude}"/>
+
+        <mobi:fieldsetGroup>
+            <mobi:fieldsetRow >
+                Use your camera to add pictures at various locations.
+                (depending on GPS accuracy, you may need to walk 10m between
+                locations).
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+                <mobi:camera id="arCam" value="#{realityBean.cameraImage}" style="float:right"/>
+                &#160;
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+                <ace:textEntry value="#{realityBean.label}" 
+                        placeholder="Label" style="width:100%"/>
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+        
+        <h:commandButton id="arSubmit"
+                                 styleClass="submit"
+                                 actionListener="#{realityBean.processUploadedImage}"
+                                 value="Submit"/>
+        
+        <div style="margin:10px">#{realityBean.uploadMessage}</div>
+
+    </h:form>
+
+    <h:form styleClass="results">
+
+        <mobi:fieldsetGroup>
+            <mobi:fieldsetRow>
+                Next, view the pictures superimposed on the camera view in the 
+                Augmented Reality overlay (this is an alpha level feature on iOS 
+                and pre-alpha on Android only).
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+        
+        <mobi:fieldsetGroup>
+            <mobi:fieldsetRow style="text-align:center">
+                <mobi:augmentedReality
+                    urlBase="#{realityBean.baseURL}"
+                    value="#{realityBean.selection}" style="width:50%">
+                    <mobi:augmentedRealityLocations 
+                        value="#{realityBean.messages}" var="place"
+                        locationLabel="#{place.title}"
+                        locationLat="#{place.latitude}"
+                        locationLon="#{place.longitude}"
+                        locationIcon="#{place.fileName}" />
+                </mobi:augmentedReality>
+                <br />
+                <h:panelGroup rendered="#{realityBean.image != null}">
+                    Selected Location:<br/>
+                    <h:graphicImage value="#{realityBean.image}"/>
+                    <br/>
+                    <h:outputText value="#{realityBean.selection}"/>
+                </h:panelGroup>
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+    </h:form>
+
+    <h:form>
+
+        <mobi:fieldsetGroup>
+            <mobi:fieldsetRow>
+                Print, cut-out, then view the <a href="resources/images/markers.html">Augmented Reality Markers</a> 
+                with 3D overlays. (This is an alpha level feature on iOS only.
+                Note that the view may take 30 seconds to display.)
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+        
+        <h3>Markers</h3>
+
+        <mobi:fieldsetGroup>
+            <mobi:fieldsetRow >
+                Select your desired 3D models:
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow style="text-align:center">
+                <h:selectOneMenu id="dynamicMarker1"
+                        style="width:45%;margin: 0 1%"
+                        value="#{realityBean.selectedModel1}">
+                    <f:selectItem itemLabel="ICEmobile Logo"
+                            itemValue="icemobile"/>
+                    <f:selectItem itemLabel="Puzzle Block 1"
+                            itemValue="puz1"/>
+                    <f:selectItem itemLabel="Puzzle Block 2"
+                            itemValue="puz2"/>
+<!--
+                    <f:selectItem itemLabel="Image Targets"
+                            itemValue="ice.targets"/>
+-->
+                    <f:selectItem itemLabel="AR Form"
+                            itemValue="ice.arform"/>
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectOneMenu>
+                 <h:selectOneMenu id="dynamicMarker2" style="width:45%;margin: 0 1%"
+                        value="#{realityBean.selectedModel2}">
+                    <f:selectItem itemLabel="ICEmobile Logo"
+                            itemValue="icemobile"/>
+                    <f:selectItem itemLabel="Puzzle Block 1"
+                            itemValue="puz1"/>
+                    <f:selectItem itemLabel="Puzzle Block 2"
+                            itemValue="puz2"/>
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectOneMenu>
+           </mobi:fieldsetRow>
+            <mobi:fieldsetRow style="text-align:center">
+                <div class="mobi-grid mobi-justify">
+                <mobi:augmentedReality buttonLabel="3D Augmented Reality"
+                    urlBase="#{realityBean.baseURL}"
+                    value="#{realityBean.selection}"
+                    disabled="#{not mobiClient.iOS}"
+                    styleClass="mobi-col">
+                    <mobi:augmentedRealityMarkers
+                        value="#{realityBean.markers}" var="marker"
+                        markerLabel="#{marker.label}"
+                        markerModel="#{marker.model}" />
+                </mobi:augmentedReality>
+                <h:commandButton
+                    value="Submit"/>
+                </div>
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+                
+        <mobi:outputList rendered="#{realityBean.shopping}" inset="true">
+            <mobi:outputListItem group="true">Items</mobi:outputListItem>
+            <mobi:outputListItem styleClass="aritem">
+                <h:graphicImage library="images" style="width:40px"
+                    name="auction/icebreaker.png"/>
+                <p><strong>ICEbreaker</strong><br/>
+                <h:graphicImage library="images" style="width:20px"
+                    rendered="#{realityBean.bought.icebreaker}"
+                    name="button_bid_accept.gif"/>
+                <h:graphicImage library="images" style="width:20px"
+                    rendered="#{!realityBean.bought.icebreaker}"
+                    name="button_bid_decline.gif"/></p>
+            </mobi:outputListItem>
+            <mobi:outputListItem styleClass="aritem">
+                <h:graphicImage library="images" style="width:40px"
+                    name="auction/icecar.png"/>
+                <p><strong>ICEcar</strong><br/>
+                <h:graphicImage library="images" style="width:20px"
+                    rendered="#{realityBean.bought.icecar}"
+                    name="button_bid_accept.gif"/>
+                <h:graphicImage library="images" style="width:20px"
+                    rendered="#{!realityBean.bought.icecar}"
+                    name="button_bid_decline.gif"/></p>
+            </mobi:outputListItem>
+            <mobi:outputListItem styleClass="aritem">
+                <h:graphicImage library="images" style="width:40px"
+                    name="auction/iceskate.png"/>
+                <p><strong>ICEskate</strong><br/>
+                <h:graphicImage library="images" style="width:20px"
+                    rendered="#{realityBean.bought.iceskate}"
+                    name="button_bid_accept.gif"/>
+                <h:graphicImage library="images" style="width:20px"
+                    rendered="#{!realityBean.bought.iceskate}"
+                    name="button_bid_decline.gif"/></p>
+            </mobi:outputListItem>
+            <mobi:outputListItem styleClass="aritem">
+                <h:graphicImage library="images" style="width:40px"
+                    name="auction/icesailor.png"/>
+                <p><strong>ICEsailer</strong><br/>
+                <h:graphicImage library="images" style="width:20px"
+                    rendered="#{realityBean.bought.icesailer}"
+                    name="button_bid_accept.gif"/>
+                <h:graphicImage library="images" style="width:20px"
+                    rendered="#{!realityBean.bought.icesailer}"
+                    name="button_bid_decline.gif"/></p>
+            </mobi:outputListItem>
+        </mobi:outputList>
+
+    </h:form>
+
+
+</ui:composition>

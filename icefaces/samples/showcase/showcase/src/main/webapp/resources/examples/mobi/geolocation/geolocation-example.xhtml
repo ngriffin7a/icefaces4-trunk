@@ -1,0 +1,160 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:mobi="http://www.icefaces.org/icefaces/components/mobi"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                id="geoLocFrag">
+
+    <h:form id="geolocForm" styleClass="geolocpage">
+
+    <mobi:geolocation latitude="#{geoLocationBean.latitude}"
+                      longitude="#{geoLocationBean.longitude}"
+                      altitude="#{geoLocationBean.altitude}"
+                      direction="#{geoLocationBean.direction}"
+                      maximumAge="#{geoLocationBean.maximumAge}"
+                      timeout="#{geoLocationBean.timeout}"
+                      enableHighPrecision="#{geoLocationBean.enableHighPrecision}"
+                      continuousUpdates="#{geoLocationBean.continuousUpdates}"/>
+
+    <mobi:fieldsetGroup styleClass="intro">
+        <mobi:fieldsetRow>
+            Click the 'Locate Me' button below to calculate your current location and update the map. 
+            Various settings for the geolocation component can also be adjusted below.
+        </mobi:fieldsetRow>
+    </mobi:fieldsetGroup>
+    
+    <mobi:fieldsetGroup>
+        <mobi:fieldsetRow>
+            <div id="mapctr" style="position:relative">
+                <img id="map" src="#{resource['images:map.png']}"  width="#{mobiClient.handheldBrowser ? '260' : '360'}" height="#{mobiClient.handheldBrowser ? '130' : '180'}" class="center"/>
+                <div id="pointer" style="position: absolute;background-color: red;border-radius:1em;width:5px;height:5px"></div>
+            </div>
+            
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow style="text-align:center">
+            <h:commandButton value="Reset Values" 
+                actionListener="#{geoLocationBean.resetValues}"
+                style="width:45%;margin: 0 1%"/>
+            <h:commandButton value="Locate Me" style="width:45%; margin: 0 1%"/>
+        </mobi:fieldsetRow>
+    </mobi:fieldsetGroup>
+    
+    <h3>Geolocation Results:</h3>
+
+    <mobi:fieldsetGroup styleClass="results">
+        <mobi:fieldsetRow>
+            <label>Latitude:</label>
+            <h:outputText value="#{geoLocationBean.latitude}" />
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+            <label>Longitude:</label>
+            <h:outputText value="#{geoLocationBean.longitude}"/>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow rendered="#{geoLocationBean.direction gt 0.0}">
+            <label>Direction:</label>
+            <h:outputText value="#{geoLocationBean.direction}"/>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow rendered="#{geoLocationBean.altitude gt 0.0}">
+            <label>Altitude:</label>
+            <h:outputText value="#{geoLocationBean.altitude}"/>
+        </mobi:fieldsetRow>
+    </mobi:fieldsetGroup>
+
+    <h3>Geolocation Settings:</h3>
+        
+    <div>
+    <mobi:fieldsetGroup>
+        <mobi:fieldsetRow>
+            <h:outputLabel value="Continuous Updates:" for="highPrecision"/>
+            <mobi:flipswitch id="highPrecision"
+                             labelOn="true" labelOff="false"
+                             singleSubmit="true" style="float:right"
+                             valueChangeListener="#{geoLocationBean.continuousUpdatesChange}"
+                             value="#{geoLocationBean.continuousUpdates}"/>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+            <h:outputLabel value="enableHighPrecision:" for="highPrecise"/> 
+            <h:selectOneMenu id="highPrecise" value="#{geoLocationBean.enableHighPrecision}"
+                style="float:right">
+                <f:selectItem itemValue="true"/>
+                <f:selectItem itemValue="false"/>
+                <f:selectItem itemValue="asNeeded"/>
+                <f:ajax execute="@this" render="@form"/>
+            </h:selectOneMenu>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+            <div style="display:inline-block;max-width:50%">
+                <label>Timeout:</label>
+                <span style="font-size: 11px;float: left;clear:both;line-height:12px;">
+                    (longest allowable time for reading to arrive (0-x, seconds))
+                </span>
+            </div>
+            <ace:textEntry id="timeout" value="#{geoLocationBean.timeout}"
+                singleSubmit="true" type="number" style="float:right;max-width:45%"/>&#160;
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+            <div style="display:inline-block;max-width:50%">
+                <label>Maximum Age:</label>
+                <span style="font-size: 11px;float: left;clear:both;line-height:12px;">
+                    (oldest allowable cached Location reading (0-x, seconds))
+                </span>
+            </div>
+            <ace:textEntry id="maxAge" value="#{geoLocationBean.maximumAge}"
+                singleSubmit="true" type="number" style="float:right;max-width:45%"/>&#160;
+        </mobi:fieldsetRow>
+    </mobi:fieldsetGroup>
+    </div>
+    
+    </h:form>
+    <script type="text/javascript">
+
+        function showLocation() {
+            var lat = '#{geoLocationBean.latitude}';
+            var lon = '#{geoLocationBean.longitude}';
+            var image = document.getElementById('map');
+            var height = image.clientHeight;
+            var width = image.clientWidth;
+            var x = Math.floor(lon * width / 2 / 180 + (width / 2));
+            var y = Math.floor(-1 * lat * (height / 2) / 90 + (height / 2));
+            var pointer = document.getElementById('pointer');
+            pointer.style.left = ''+(x+image.offsetLeft)+'px';
+            pointer.style.top = ''+(y+image.offsetTop)+'px';
+            
+        }
+
+        function updateLocation(data) {
+            if (data.status == "success") {
+                showLocation();
+            }
+        }
+
+        #{mobiClient.androidBrowserOrWebView ? '' : 'showLocation();'}
+
+
+        jsf.ajax.addOnEvent(updateLocation);
+        ice.mobi.addListener(window, 'resize',showLocation);
+        ice.mobi.addListener(window, 'orientationchange',showLocation);
+
+    </script>
+
+
+</ui:composition>
