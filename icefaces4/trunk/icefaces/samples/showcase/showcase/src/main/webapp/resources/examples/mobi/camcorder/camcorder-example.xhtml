@@ -49,10 +49,8 @@
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
                 <ui:fragment rendered="#{camcorderBean.outputResource != null}">
-                    <!--<mobi:videoPlayer
-                            value="#{camcorderBean.outputResource}"
-                            linkLabel="Play" width="250" playsinline="true"
-                            controls="true"/>-->
+<video src="#{camcorderBean.outputResource.URL}" width="250" controls="controls" >
+</video>
                 </ui:fragment>
                 
             </mobi:fieldsetRow>
