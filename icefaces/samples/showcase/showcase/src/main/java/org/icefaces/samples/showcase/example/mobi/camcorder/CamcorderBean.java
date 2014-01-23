@@ -27,6 +27,9 @@ package org.icefaces.samples.showcase.example.mobi.camcorder;
  * the video file.
  */
 
+import org.icefaces.application.ResourceRegistry;
+import org.icefaces.ace.util.IceOutputResource;
+
 import org.icefaces.samples.showcase.util.FacesUtils;
 import org.icefaces.samples.showcase.util.DeviceInput;
 /*import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
@@ -127,6 +130,7 @@ public class CamcorderBean /*extends ExampleImpl<CamcorderBean>*/ implements
                     outputResource = DeviceInput.createResourceObject(
                             camcorderFile, UUID.randomUUID().toString(),
                             (String) camcorderImage.get(CONTENT_TYPE_KEY));
+                    registerAndGetPath("session", outputResource);
                 } catch (IOException ex) {
                     logger.warning("Error setting up video resource object");
                 }
@@ -171,4 +175,22 @@ public class CamcorderBean /*extends ExampleImpl<CamcorderBean>*/ implements
     public void setUploadMessage(String uploadMessage) {
         this.uploadMessage = uploadMessage;
     }
+
+    private String registerAndGetPath(String scope,
+                                      Resource iceResource) {
+        String registeredPath = "";
+        if (scope.equals("flash")) {
+            registeredPath = ResourceRegistry.addFlashResource(iceResource);
+        } else if (scope.equals("application")) {
+            registeredPath = ResourceRegistry.addApplicationResource(iceResource);
+        } else if (scope.equals("window"))
+            registeredPath = ResourceRegistry.addWindowResource(iceResource);
+        else if (scope.equals("view"))
+            registeredPath = ResourceRegistry.addViewResource(iceResource);
+        else if (scope.equals("session"))
+            registeredPath = ResourceRegistry.addSessionResource(iceResource);
+        return registeredPath;
+    }
+
+
 }
