@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import org.icefaces.mobi.api.IBaseComponent;
 import org.icefaces.mobi.api.IMobiComponent;
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 
 import java.lang.StringBuilder;
 import java.util.logging.Logger;

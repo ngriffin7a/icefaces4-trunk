@@ -1,6 +1,6 @@
 package org.icefaces.mobi.component.dataview;
 
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 /**
  * Created with IntelliJ IDEA.
  * User: Nils

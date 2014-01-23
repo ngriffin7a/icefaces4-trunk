@@ -35,7 +35,7 @@ import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.Utils;
 import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.EnvUtils;
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 
 public class CameraRenderer extends Renderer {
     private static final Logger logger = Logger.getLogger(CameraRenderer.class.getName());

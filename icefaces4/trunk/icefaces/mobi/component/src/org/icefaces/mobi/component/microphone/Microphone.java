@@ -18,7 +18,7 @@ package org.icefaces.mobi.component.microphone;
 
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.api.IDevice;
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 
 import javax.el.MethodExpression;
 import javax.faces.context.FacesContext;
