@@ -80,7 +80,9 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.writeAttribute(TYPE_ATTR, "button");
 		//writeStandardAttributes(writer, camcorder, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.camcorder('" + clientId + "', '', {postURL:'" + camcorder.getPostURL() + "'";
+		String script = "bridgeit.camcorder('" + clientId + "', '', {postURL:'" + camcorder.getPostURL() + "', ";
+        script += "cookies:{'JSESSIONID':'" + 
+                MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}";
 		int maxwidth = camcorder.getMaxwidth();
 		if (maxwidth > 0) script += ", maxwidth: " + maxwidth;
 		int maxheight = camcorder.getMaxheight();

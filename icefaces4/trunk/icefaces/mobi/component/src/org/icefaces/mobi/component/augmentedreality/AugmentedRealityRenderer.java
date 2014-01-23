@@ -112,8 +112,9 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
                     MobiJSFUtils.getPostURL(), null);;
             script = "ice.mobi.sx(this);";
         } else {*/
-            script = "bridgeit.augmentedReality( '" + clientId + "', '', {postURL:'" + MobiJSFUtils.getPostURL()
-                     + "', locations:{" + locationsString + "}});";
+            script = "bridgeit.augmentedReality( '" + clientId + "', '', {postURL:'" + MobiJSFUtils.getPostURL() + "',"
+			+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'},"
+			+ " locations:{" + locationsString + "}});";
         //}
         writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
          writer.startElement(HTML.SPAN_ELEM, uiComponent);
