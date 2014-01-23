@@ -11,6 +11,25 @@ ice.ace.DataTable.Paginator = function(table) {
         labels.next = cfg.nextLbl,
         labels.prev = cfg.prevLbl,
     this.container = container;
+
+    container.keyboardPagination = function(e) {
+        if (e.which == 34) {
+            e.preventDefault();
+            if (activeIndex < max) {
+                activeIndex++;
+                submit();
+            }
+        }
+        if (e.which == 33) {
+            e.preventDefault();
+            if (activeIndex > 1) {
+                activeIndex--;
+                submit();
+            }
+        }
+    };
+    ice.ace.jq(document.body).on('keydown', container.keyboardPagination);
+
     function initPageMarkup() {
         function getTemplateControlMarkup(keyword) {
             var markup = '';
@@ -114,7 +133,7 @@ ice.ace.DataTable.Paginator = function(table) {
                     ice.ace.jq(this).removeClass('ui-state-hover');
                 });
             }
-        };
+        }
 
         function addClickEvents(i, control) {
             function clickListener(e) {
@@ -167,7 +186,7 @@ ice.ace.DataTable.Paginator = function(table) {
                 else
                     control.on('click', clickListener);
             }
-        };
+        }
 
         container.children().filter(':not(.ui-paginator-current, .ui-paginator-rpp-options)').each(addHoverEvents);
         container.children().filter(':not(.ui-paginator-current)').each(addClickEvents);
@@ -235,9 +254,12 @@ ice.ace.DataTable.Paginator = function(table) {
         if (!cfg.disabled) initControlEvents();
         else initDisabledStyling();
     }
-}
+};
 
 ice.ace.DataTable.Paginator.prototype.destroy = function() {
+
+    ice.ace.jq(document.body).off('keydown', this.container.keyboardPagination);
+
     function removeEvents(container) {
         container.children().each(function(i, child) {
             child = ice.ace.jq(child);
@@ -247,4 +269,4 @@ ice.ace.DataTable.Paginator.prototype.destroy = function() {
     }
 
     removeEvents(this.container);
-}
+};
