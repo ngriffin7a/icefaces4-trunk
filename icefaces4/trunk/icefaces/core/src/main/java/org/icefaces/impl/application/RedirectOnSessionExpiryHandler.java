@@ -54,9 +54,10 @@ public class RedirectOnSessionExpiryHandler extends ExceptionHandlerWrapper {
 
         if (redirect) {
             PartialResponseWriter writer = fc.getPartialViewContext().getPartialResponseWriter();
+            String resolvedURI = fc.getApplication().getViewHandler().getResourceURL(fc, uri);
             try {
                 writer.startDocument();
-                writer.redirect(uri);
+                writer.redirect(resolvedURI);
                 writer.endDocument();
                 fc.responseComplete();
             } catch (IOException e) {
