@@ -49,10 +49,6 @@ import java.util.Map;
 })
 public class MicrophoneMeta extends UIComponentBaseMeta {
 
-    @Property(defaultValue = "Integer.MIN_VALUE", 
-            tlddoc = "The maxium length of audio clip in seconds.")
-    private int maxtime;
-
     @Property(defaultValue = "false", tlddoc = TLDConstants.DISABLED)
     private boolean disabled;
 
