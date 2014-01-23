@@ -30,6 +30,7 @@ import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.renderkit.ContactListCoreRenderer;
 import org.icefaces.impl.application.AuxUploadResourceHandler;
 import org.icefaces.mobi.util.CSSUtils;
+import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.ace.util.ClientDescriptor;
 
 import static org.icefaces.mobi.util.HTML.*;
@@ -84,7 +85,9 @@ public class FetchContactRenderer extends Renderer {
 		writer.writeAttribute(TYPE_ATTR, "button");
 		//writeStandardAttributes(writer, contactList, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.fetchContact('" + clientId + "', '', {postURL:'" + contactList.getPostURL() + "', fields: '" +contactList.getFields() + "'});";
+		String script = "bridgeit.fetchContact('" + clientId + "', '', {postURL:'" + contactList.getPostURL() + "', "
+			+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) + "'}, "
+			+ "fields: '" +contactList.getFields() + "'});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		writer.startElement(SPAN_ELEM, contactList);
 		writer.writeText(contactList.getButtonLabel());

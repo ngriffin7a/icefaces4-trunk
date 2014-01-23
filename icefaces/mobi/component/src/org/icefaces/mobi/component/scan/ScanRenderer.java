@@ -78,7 +78,8 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.writeAttribute(TYPE_ATTR, "button");
 		//writeStandardAttributes(writer, scan, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.scan('" + clientId + "', '', {postURL:'" + scan.getPostURL() + "'});";
+		String script = "bridgeit.scan('" + clientId + "', '', {postURL:'" + scan.getPostURL() + "', " 
+		+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		writer.startElement(SPAN_ELEM, scan);
 		writer.writeText(scan.getButtonLabel());
