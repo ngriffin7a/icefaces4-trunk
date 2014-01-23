@@ -2,7 +2,7 @@ package org.icefaces.mobi.component.dataview;
 
 import org.icefaces.mobi.util.Utils;
 import org.icefaces.mobi.model.dataview.*;
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;

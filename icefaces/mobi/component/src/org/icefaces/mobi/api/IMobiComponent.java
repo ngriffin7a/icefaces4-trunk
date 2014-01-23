@@ -16,7 +16,7 @@
 
 package org.icefaces.mobi.api;
 
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 
 public interface IMobiComponent extends IBaseComponent{
 

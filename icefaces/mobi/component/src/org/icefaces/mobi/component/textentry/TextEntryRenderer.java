@@ -17,7 +17,7 @@
 package org.icefaces.mobi.component.textentry;
 
 import org.icefaces.mobi.renderkit.InputRenderer;
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 import org.icefaces.mobi.util.ComponentUtils;
 import org.icefaces.mobi.util.HTML;
 import org.icefaces.mobi.util.JSONBuilder;

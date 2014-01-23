@@ -19,7 +19,7 @@ package org.icefaces.mobi.component.geolocation;
 import org.icefaces.mobi.util.HTML;
 import org.icefaces.mobi.renderkit.CoreRenderer;
 import org.icefaces.mobi.util.MobiJSFUtils;
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 
 import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;

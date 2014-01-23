@@ -22,7 +22,7 @@ import org.icefaces.mobi.util.Utils;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.mobi.util.CSSUtils;
-import org.icefaces.mobi.util.ClientDescriptor;
+import org.icefaces.ace.util.ClientDescriptor;
 
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;
@@ -198,7 +198,7 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
             requestMap.put(var, oldVar);
         }
 		String finalResult = result.toString();
-        return finalResult.substring(0,finalResult.length()-1); // remove last comma
+        return finalResult.length() > 0 ? finalResult.substring(0,finalResult.length()-1) : ""; // remove last comma
     }
 
     String iterateMarkers(FacesContext facesContext,
