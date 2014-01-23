@@ -95,27 +95,7 @@ public class Microphone extends MicrophoneBase implements IDevice{
     }
 
     public String getScript(String clientId, boolean auxUpload) {
-        final StringBuilder script = new StringBuilder();
-        if (auxUpload)  {
-            HashMap<String,String> params = new HashMap();
-            if (getMaxtime() > 0)  {
-                params.put("maxtime", String.valueOf(getMaxtime()));
-            }
-            script.append(MobiJSFUtils.getICEmobileSXScript(
-                    "microphone", null, this));
-        } else {
-            if (getMaxtime() != Integer.MIN_VALUE) {
-                script.append("ice.microphone( '")
-                .append(clientId)
-                .append(",'maxtime=")
-                .append(getMaxtime()).append("');");
-            } else {
-                script.append("ice.microphone( '")
-                .append(clientId)
-                .append("');");
-            }
-        }
-        return script.toString();
+		return "";
     }
 
 

@@ -115,7 +115,6 @@ public class GeolocationRenderer extends CoreRenderer {
         writer.writeAttribute(HTML.NAME_ATTR, clientId + "_field", null);
         writer.writeAttribute(HTML.VALUE_ATTR, "", null);
         boolean disabled = locator.isDisabled();
-        boolean singleSubmit = locator.isSingleSubmit();
         if (disabled) {
             writer.writeAttribute("disabled", "disabled", null);
         }
@@ -147,10 +146,6 @@ public class GeolocationRenderer extends CoreRenderer {
         /*    if (hasBehaviors) {
                 sb.append(this.buildAjaxRequest(facesContext, cbh, "activate"));
             } else */
-            if (singleSubmit) {
-                String ssCall = "ice.se(null, '" + clientId + "');";
-                sb.append(ssCall);
-            }
 
             writer.startElement(HTML.SPAN_ELEM, uiComponent);
             writer.writeAttribute("id", clientId + "_script", "id");
