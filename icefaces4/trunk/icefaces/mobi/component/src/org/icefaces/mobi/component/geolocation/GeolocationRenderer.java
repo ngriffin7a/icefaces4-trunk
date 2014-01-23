@@ -135,19 +135,22 @@ public class GeolocationRenderer extends CoreRenderer {
             int timeout = locator.getTimeout();
             boolean continuous = locator.isContinuousUpdates();
 
-            sb.append("bridgeit.geoTrack('").append(clientId).append("','',{postURL:'" + MobiJSFUtils.getPostURL() + "', " +
-				"strategy:'"+ (continuous? "continuous":"significant") +"', duration: " + ((float) locator.getMaximumAge() / 3600) + "});");
+            if (continuous) {
+                sb.append("ice.mobi.geolocation.watchLocation('").append(clientId).append("','");
+            } else {
+                sb.append("ice.mobi.geolocation.getLocation('").append(clientId).append("','");
+            }
 
-            //sb.append(includeHighPrecision).append("', '");
-            //sb.append(maxAge).append("', '").append(timeout).append("'); ");
+            sb.append(includeHighPrecision).append("', '");
+            sb.append(maxAge).append("', '").append(timeout).append("'); ");
 
         /*    if (hasBehaviors) {
                 sb.append(this.buildAjaxRequest(facesContext, cbh, "activate"));
-            } else 
+            } else */
             if (singleSubmit) {
                 String ssCall = "ice.se(null, '" + clientId + "');";
                 sb.append(ssCall);
-            }*/
+            }
 
             writer.startElement(HTML.SPAN_ELEM, uiComponent);
             writer.writeAttribute("id", clientId + "_script", "id");
