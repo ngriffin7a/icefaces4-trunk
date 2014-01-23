@@ -19,6 +19,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:util="http://java.sun.com/jsf/composite/components"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
       xmlns:mobi="http://www.icefaces.org/icefaces/components/mobi"
       xmlns:icecore="http://www.icefaces.org/icefaces/core"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -31,45 +32,62 @@
     </c:if>
 </h:head>
     <h:body>
+		<script type="text/javascript" src="http://bridgeit.github.io/bridgeit.js/src/bridgeit.js"></script>
          <f:metadata>
             <f:viewParam name="theme" value="#{themeBean.currentTheme}" /> 
             <f:viewParam name="simulator" value="#{themeBean.simulator}"/>
          </f:metadata>
-         <mobi:viewManager title="ICEmobile" 
+         <mobi:viewManager title="MOBI Components" 
              transitionType="#{viewManagerBean.transitionType}"
              headerStyle="#{viewManagerBean.headerStyle}"
              selected="#{viewManagerBean.view}"
              history="#{viewManagerBean.history}">
              
              <!-- SPLASH SCREEN -->
-             <mobi:view id="splash" splash="true" includeInMenu="false">
+             <!--<mobi:view id="splash" splash="true" includeInMenu="false">
                  <ui:include src="/resources/examples/mobile-splash.xhtml" />
-             </mobi:view>
+             </mobi:view>-->
              
              <!-- Mobi Components -->
              <!-- VIEW MANAGER -->
              <mobi:view id="viewmanager" title="View Manager" menuIcon="th-list"
-                navBarGroup="viewmanager" divider="Mobi Components">
+                navBarGroup="viewmanager" divider="Layout Components">
                  <ui:include src="/resources/examples/mobi/viewManager/viewmanager-example.xhtml" />
              </mobi:view>
              <mobi:view id="viewmanagerDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="viewmanager">
                 <ui:include src="/resources/examples/mobi/viewManager/viewmanager-desc.xhtml" />
              </mobi:view>
-             
-             <!-- ACE Components -->
-             <!-- ACCORDION -->
-             <mobi:view id="accordion" title="Accordion" menuIcon="reorder"
-                navBarGroup="accordion" divider="Ace Components">
-                 <ui:include src="/resources/examples/ace/accordionpanel/accordionPanel.xhtml" />
+
+             <!-- Native Components -->
+             <!-- AUGMENTED REALITY -->
+             <mobi:view id="augmentedreality" title="Augmented Reality" menuIcon=""
+                divider="Native Components">
+                 <ui:include src="/resources/examples/mobi/augmentedreality/augmentedreality-example.xhtml" />
              </mobi:view>
-             <mobi:view id="accordionDynamic" title="Dynamic" menuIcon="reorder"
-                 includeInMenu="false" navBarGroup="accordion">
-                <ui:include src="/resources/examples/ace/accordionpanel/accordionPanelDynamic.xhtml" />
+             <!-- CAMCORDER -->
+             <mobi:view id="camcorder" title="Camcorder" menuIcon="">
+                 <ui:include src="/resources/examples/mobi/camcorder/camcorder-example.xhtml" />
              </mobi:view>
-             <mobi:view id="accordionEffect" title="Effects" menuIcon="reorder"
-                 includeInMenu="false" navBarGroup="accordion">
-                <ui:include src="/resources/examples/ace/accordionpanel/accordionPanelEffect.xhtml" />
+             <!-- CAMERA -->
+             <mobi:view id="camera" title="Camera" menuIcon="">
+                 <ui:include src="/resources/examples/mobi/camera/camera-example.xhtml" />
+             </mobi:view>
+             <!-- FETCH CONTACT -->
+             <mobi:view id="fetchcontact" title="Fetch Contact" menuIcon="">
+                 <ui:include src="/resources/examples/mobi/fetchcontact/fetchcontact-example.xhtml" />
+             </mobi:view>
+             <!-- GEOLOCATION -->
+             <mobi:view id="geolocation" title="Geolocation" menuIcon="">
+                 <ui:include src="/resources/examples/mobi/geolocation/geolocation-example.xhtml" />
+             </mobi:view>
+             <!-- MICROPHONE -->
+             <mobi:view id="microphone" title="Microphone" menuIcon="">
+                 <ui:include src="/resources/examples/mobi/microphone/microphone-example.xhtml" />
+             </mobi:view>
+             <!-- SCAN -->
+             <mobi:view id="scan" title="Scan" menuIcon="">
+                 <ui:include src="/resources/examples/mobi/scan/scan-example.xhtml" />
              </mobi:view>
              
              

@@ -1,0 +1,62 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
+             xmlns:mobi="http://www.icefaces.org/icefaces/components/mobi">
+
+    <mobi:fieldsetGroup styleClass="exampleDescription">
+        <mobi:fieldsetRow>
+        <p>The fetchContact component will invoke the native contact list 
+            interface to fetch various fields for a selected contact from the 
+            device contact list database.The component 
+            renders a simple button that, when pressed, activates a native interface 
+            that allows the user to search the device contact list and select 
+            a contact. The desired contact information fields
+            to be retrieved can be specified with the 'fields' attribute. The selected contact list item information is then inserted 
+            into the calling form and the data is submitted to the server via a 
+            standard JSF form post.</p>
+
+        <p>
+            Contact list fields can be individually bound to separate bean fields, or as
+            a composite, comma-delimited key/value string via the 'value' attribute. 
+            A typical use of the fetchContact component is as follows:
+        </p>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+<pre>
+&lt;mobi:fetchContact id="contact" 
+    buttonLabel="Fetch Contact" 
+    fields="name, email, phone"
+    value="&#x2317;{bean.rawContact}"
+    name="&#x2317;{bean.name}"
+    email="&#x2317;{bean.email}"
+    phone="&#x2317;{bean.phone}"/&gt;
+</pre>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+
+        <p>Contact list access is only available if the application is running
+            in an ICEmobile device container or if ICEmobile SX has been registered, 
+            otherwise the component will display a disabled button. </p>
+        </mobi:fieldsetRow>
+       
+    </mobi:fieldsetGroup>
+
+</ui:composition>
