@@ -85,7 +85,9 @@ public class QRCodeResourceHandler extends ResourceHandlerWrapper  {
         markerStart = path.indexOf(RESOURCE_PREFIX);
         if (-1 == markerStart)  {
             path = externalContext.getRequestPathInfo();
-            markerStart = path.indexOf(RESOURCE_PREFIX);
+            if(path != null){
+                markerStart = path.indexOf(RESOURCE_PREFIX);
+            }
         }
         if (-1 == markerStart)  {
             return null;

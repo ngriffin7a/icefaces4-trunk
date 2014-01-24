@@ -667,9 +667,11 @@ public class EnvUtils {
 
 
     public static void createSessionOnPageLoad(FacesContext context) {
+
         final ExternalContext externalContext = context.getExternalContext();
         //create session if GET request
-        externalContext.getSession(externalContext.getRequestContentLength() == 0);
+        HttpServletRequest safeReq = getSafeRequest(context);
+        externalContext.getSession("GET".equalsIgnoreCase(safeReq.getMethod()));
     }
 
     public static boolean isSessionInvalid(FacesContext context) {
