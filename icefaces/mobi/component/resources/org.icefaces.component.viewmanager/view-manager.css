@@ -104,7 +104,7 @@ body.landscape .mobi-vm-header > h1 {
   -moz-transform: translateX(0%);
   -ms-transform: translateX(0%);
   -o-transform: translateX(0%);
-  tranform: translateX(0%);
+  transform: translateX(0%);
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -o-backface-visibility: hidden;
@@ -225,7 +225,7 @@ body.landscape .mobi-vm-header > h1 {
     -moz-transform: translateX(0%) !important;
     -ms-transform: translateX(0%) !important;
     -o-transform: translateX(0%) !important;
-    tranform: translateX(0%) !important;
+    transform: translateX(0%) !important;
     display: inline-block;
     opacity: 1 !important;
     width: 25%;
