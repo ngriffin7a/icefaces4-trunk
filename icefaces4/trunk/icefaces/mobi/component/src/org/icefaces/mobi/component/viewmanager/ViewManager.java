@@ -68,7 +68,6 @@ public class ViewManager extends ViewManagerBase {
             return;
         }
         if( history.size() > 1 && getHistory().contains(selected)){
-            System.out.println("slicing history " + getHistory().subList(0, getHistory().indexOf(selected)+1));
             Stack<String> newHistory = new Stack<String>();
             newHistory.addAll(getHistory().subList(0, getHistory().indexOf(selected)+1));
             setHistory(newHistory);
@@ -83,7 +82,6 @@ public class ViewManager extends ViewManagerBase {
         if( selected == null || selected.length() == 0 ){
             super.setSelected(ViewManager.MENU_ID);
         }
-        System.out.println(this + " ViewManager.getSelected() = " + selected);
         return selected;
     }
    
@@ -102,7 +100,6 @@ public class ViewManager extends ViewManagerBase {
         String view = context.getExternalContext().getRequestParameterMap()
             .get(this.getClientId()+"_selected");
         if( view != null && !view.equals(this.getSelected()) ){
-            System.out.println("ViewManager setting view="+view);
             this.setSelected(view);
         }
     }
@@ -116,11 +113,9 @@ public class ViewManager extends ViewManagerBase {
     }
     
     public View getView(String id){
-        System.out.println("getView() : " + id);
         List<UIComponent> children = this.getChildren();
         for( UIComponent child : children ){
             View view = (View)child;
-            System.out.println(id);
             if( view.getId().equals(id))
                 return view;
         }
@@ -131,7 +126,6 @@ public class ViewManager extends ViewManagerBase {
     public Stack<String> getHistory(){
         Stack<String> history = super.getHistory();
         if( history == null || history.size() == 0 ){
-            System.out.println("ViewManager.getHistory() setting first history '" + getSelected() + "'");
             history = new Stack<String>();
             history.add(getSelected());
             setHistory(history);
