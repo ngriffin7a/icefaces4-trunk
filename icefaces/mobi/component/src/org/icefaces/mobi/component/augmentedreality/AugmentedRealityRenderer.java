@@ -192,7 +192,7 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
             result.append(",");
             String itemIcon = (String) attrs.get(LOC_ICON);
             if (null != itemIcon)  {
-                result.append(URLEncoder.encode(urlBase + itemIcon));
+                result.append(itemIcon);
             }
 			result.append("'");
 			result.append(",");
