@@ -101,6 +101,12 @@ public class CssUrlMapper {
 	private String transformUrl(UrlOccurrence url) {
 
 		String path = url.getUrlChars().trim();
+		String query = null;
+        int queryIndex = path.indexOf("?");
+        if( queryIndex > -1 ){
+            query = path.substring(queryIndex);
+            path = path.substring(0,queryIndex);
+        }
 		
 		if (path.startsWith("http://") || path.startsWith("data:") || path.startsWith("#{resource")) { 
 			return url.toString(); // not a local resource or already in JSF format, do not modify
@@ -112,7 +118,9 @@ public class CssUrlMapper {
 			// trick to get a complete path and without ..'s
 			File tempFile = new File(this.file.getCanonicalPath());
 			File file = new File(tempFile.getParentFile(), path);
-			file = new File(file.getCanonicalPath());
+			System.out.println("file: " + file + ", path: " + path);
+            System.out.println("canonical path: " + file.getCanonicalPath());
+            file = new File(file.getCanonicalPath());
 			
 			if (this.relativePathDirectory == null) {
 				resourcePath = "/" + file.getName();
@@ -130,6 +138,7 @@ public class CssUrlMapper {
 			e.printStackTrace();
 		}
 		
-		return url.getLeadingChars() + "#{resource['" + this.libraryName + resourcePath + "']}" + url.getTrailingChars();
+        return url.getLeadingChars() + "#{resource['" + this.libraryName + resourcePath + "']}"
+            + (query != null ? query : "") + url.getTrailingChars();
 	}
 }
