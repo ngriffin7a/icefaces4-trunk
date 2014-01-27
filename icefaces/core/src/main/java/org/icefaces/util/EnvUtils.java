@@ -286,10 +286,21 @@ public class EnvUtils {
             try {
                 javax.portlet.PortletRequest portletRequest = (javax.portlet.PortletRequest) context.getExternalContext().getRequest();
                 HttpServletRequest httpPortletRequest = (HttpServletRequest) GetHttpServletRequest.invoke(PortalUtilClass, portletRequest);
-                return (HttpServletRequest) GetOriginalServletRequest.invoke(PortalUtilClass, httpPortletRequest);
+                HttpServletRequest realRequest =  (HttpServletRequest) GetOriginalServletRequest.invoke(PortalUtilClass, httpPortletRequest);
+                if( realRequest != null && realRequest.getClass().getName().equals("com.liferay.portal.kernel.portlet.RestrictPortletServletRequest")){
+                    //As of Liferay 6.1.2, things are different so we check for a specific type of request that indicates it's.
+                        Method meth = realRequest.getClass().getMethod("getRequest", new Class[0]);
+                        Object result = meth.invoke(realRequest);
+                    if(result != null){
+                        return (HttpServletRequest)result;
+                    }
+                }
+                return realRequest;
             } catch (InvocationTargetException e) {
                 return null;
             } catch (IllegalAccessException e) {
+                return null;
+            } catch (NoSuchMethodException e) {
                 return null;
             }
         }
