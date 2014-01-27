@@ -28,7 +28,9 @@ ice.ace.DataTable.Paginator = function(table) {
             }
         }
     };
-    ice.ace.jq(document.body).on('keydown', container.keyboardPagination);
+
+    this.tableContainer = ice.ace.jq(table.jqId);
+    this.tableContainer.on('keydown', container.keyboardPagination);
 
     function initPageMarkup() {
         function getTemplateControlMarkup(keyword) {
@@ -58,7 +60,7 @@ ice.ace.DataTable.Paginator = function(table) {
                 markup = '<a href="#" class="'+className+'"><span class="ui-icon ui-icon-seek-next">'+labels.next+'</span></a>';
             }
             else if (keyword == 'rowsPerPageDropdown' && cfg.rowsPerPageOptions) {
-                markup = '<select class="ui-paginator-rpp-options" title="Rows per page">';
+                markup = '<select class="ui-paginator-rpp-options" title="Rows per page" id="' + container.attr('id') + keyword + '">';
 
                 for (var i = 0; i < cfg.rowsPerPageOptions.length; i++) {
                     var value = cfg.rowsPerPageOptions[i],
@@ -258,7 +260,7 @@ ice.ace.DataTable.Paginator = function(table) {
 
 ice.ace.DataTable.Paginator.prototype.destroy = function() {
 
-    ice.ace.jq(document.body).off('keydown', this.container.keyboardPagination);
+    this.tableContainer.off('keydown', this.container.keyboardPagination);
 
     function removeEvents(container) {
         container.children().each(function(i, child) {
