@@ -163,6 +163,10 @@ public class CoalescingResource extends Resource {
             modified = true;
             resources = new ArrayList<Info>();
         }
+
+        public String toString() {
+            return resources.toString();
+        }
     }
 
     private String calculateDigest(Infos resourceInfos) {
