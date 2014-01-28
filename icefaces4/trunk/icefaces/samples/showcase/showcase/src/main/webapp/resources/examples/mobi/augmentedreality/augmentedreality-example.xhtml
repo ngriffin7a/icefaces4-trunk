@@ -51,7 +51,7 @@
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
         
-        <h:commandButton id="arSubmit"
+        <ace:pushButton id="arSubmit"
                                  styleClass="submit"
                                  actionListener="#{realityBean.processUploadedImage}"
                                  value="Submit"/>
@@ -150,8 +150,7 @@
                         markerLabel="#{marker.label}"
                         markerModel="#{marker.model}" />
                 </mobi:augmentedReality>
-                <h:commandButton
-                    value="Submit"/>
+                <ace:pushButton value="Submit"/>
                 </div>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
