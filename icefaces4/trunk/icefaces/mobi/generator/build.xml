@@ -59,7 +59,7 @@
     <java classname="org.icefaces.ace.generator.Generator"  classpathref="compile.run.classpath" fork="true"
     	classpath="${build}" failonerror="true">
 		<!-- the short name of the library is specified as the first attribute, the namespace as the second -->
-		<arg line="mobi http://www.icefaces.org/icefaces/components/mobi" />
+		<arg line="mobi http://www.icesoft.com/icefaces/mobile/component" />
         <sysproperty key="generator.tld.doc.display.name"
                      value="${generator.tld.doc.display.name}"/>
         <sysproperty key="generator.tld.doc.version"
