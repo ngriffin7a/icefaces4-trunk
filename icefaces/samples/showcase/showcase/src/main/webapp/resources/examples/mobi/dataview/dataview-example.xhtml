@@ -1,0 +1,118 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
+    <h:form id="frmDataview" styleClass="dataviewpage">
+        <style type="text/css">
+            table.innerBorder { border-collapse: collapse; }
+            table.innerBorder td, table.innerBorder th { border: 1px solid black; }
+            table.innerBorder tr:first-child th { border-top: 0; }
+            table.innerBorder tr:last-child td { border-bottom: 0; }
+            table.innerBorder tr td:first-child,
+            table.innerBorder tr th:first-child { border-left: 0; }
+            table.innerBorder tr td:last-child,
+            table.innerBorder tr th:last-child { border-right: 0; }
+
+            .footButton {
+                padding: .5em 5px;
+                width:17%;
+            }
+
+            .minCol {
+                min-width: 150px;
+            }
+        </style>
+
+        <mobi:dataView value="#{dataViewBean.cars}" var="car" activationMode="server"
+                       rowStripe="true">
+            <mobi:dataViewDetails>
+                <h:panelGrid columns="3" styleClass="innerBorder">
+                    <h:outputText value="Name"/>
+                    <h:outputText value="Manual"/>
+                    <h:outputText value="Cost"/>
+
+                    <h:outputText value="#{car.name}"/>
+                    <h:selectBooleanCheckbox value="#{car.manual}">
+                        <f:ajax execute="@this" render="@form" />
+                    </h:selectBooleanCheckbox>
+                    <h:inputText value="#{car.cost}">
+                        <f:ajax execute="@this" render="@form" />
+                    </h:inputText>
+                </h:panelGrid>
+            </mobi:dataViewDetails>
+
+            <mobi:dataViewColumns>
+                <mobi:dataViewColumn headerText="Model" value="#{car.name}" />
+
+                <mobi:dataViewColumn type="bool" headerText="Manual"
+                                     value="#{car.manual}" />
+
+                <mobi:dataViewColumn type="date" headerText="Release"
+                                     value="#{car.releaseDate}">
+                    <f:convertDateTime type="date" dateStyle="short" />
+                </mobi:dataViewColumn>
+
+                <mobi:dataViewColumn headerText="Cost" value="$ #{car.cost}"
+                                     rendered="#{dataViewBean.costColVis}" />
+
+                <mobi:dataViewColumn headerText="Weight" value="#{car.weight} lbs."
+                                     rendered="#{dataViewBean.weightColVis}" />
+
+                <mobi:dataViewColumn headerText="Acceleration" value="#{car.acceleration}"
+                                     rendered="#{dataViewBean.accelColVis}" />
+
+                <mobi:dataViewColumn headerText="MPG" value="#{car.mpg}"
+                                     rendered="#{dataViewBean.mpgColVis}" />
+
+                <mobi:dataViewColumn headerText="Lorem"
+                                     styleClass="minCol"
+                                     value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lectus lacus, varius."
+                                     rendered="#{dataViewBean.textColVis}" />
+                <mobi:dataViewColumn headerText="Lorem"
+                                     value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lectus lacus, varius."
+                                     rendered="#{dataViewBean.textColVis}" />
+                <mobi:dataViewColumn headerText="Lorem"
+                                     value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lectus lacus, varius."
+                                     rendered="#{dataViewBean.textColVis}" />
+            </mobi:dataViewColumns>
+        </mobi:dataView>
+        <ace:pushButton value="Cost"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleCostColVis}"
+                            buttonType="#{dataViewBean.costColVis ? 'important' : null}"/>
+        <ace:pushButton value="Weight"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleWeightColVis}"
+                            buttonType="#{dataViewBean.weightColVis ? 'important' : null}"/>
+        <ace:pushButton value="Accel"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleAccelColVis}"
+                            buttonType="#{dataViewBean.accelColVis ? 'important' : null}"/>
+        <ace:pushButton value="MPG"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleMpgColVis}"
+                            buttonType="#{dataViewBean.mpgColVis ? 'important' : null}"/>
+        <ace:pushButton value="Text"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleTextColVis}"
+                            buttonType="#{dataViewBean.textColVis ? 'important' : null}"/>
+    </h:form>
+</ui:composition>

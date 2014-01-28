@@ -1,0 +1,83 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
+             xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
+
+    <h:form id="flipswitchForm">
+        <mobi:fieldsetGroup>
+
+            <mobi:fieldsetRow>
+                <h:outputLabel for="cap" value="Auto-Capitalization"/>
+                <mobi:flipswitch id="cap" style="float:right"
+                                 labelOn="ON" labelOff="OFF"
+                                 singleSubmit="true"
+                                 valueChangeListener="#{flipSwitchBean.autoCapitalizationChange}"
+                                 value="#{flipSwitchBean.autoCapitalization}"/>&#160;
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+                <h:outputLabel for="cor" value="Auto-Correction"/>
+                <mobi:flipswitch id="cor" style="float:right"
+                                 labelOn="ON" labelOff="OFF"
+                                 singleSubmit="true"
+                                 value="#{flipSwitchBean.autoCorrection}"/>&#160;
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+                <h:outputLabel for="spell" value="Check Spelling"/>
+                <mobi:flipswitch id="spell" style="float:right"
+                                 labelOn="ON" labelOff="OFF"
+                                 singleSubmit="true"
+                                 value="#{flipSwitchBean.checkSpelling}"/>&#160;
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+                <h:outputLabel for="lock" value="Enable Caps Lock"/>
+                <mobi:flipswitch id="lock" style="float:right"
+                                 labelOn="ON" labelOff="OFF"
+                                 singleSubmit="true"
+                                 value="#{flipSwitchBean.enableCapsLock}"/>&#160;
+            </mobi:fieldsetRow>
+
+        </mobi:fieldsetGroup>
+
+    </h:form>
+
+    <h4><h:outputText value="Flip Switch Value Echo"/></h4>
+    <mobi:fieldsetGroup styleClass="results">
+        <mobi:fieldsetRow>
+            <h:outputLabel value="Auto-Capitalization"/>
+            <h:outputText  value="#{flipSwitchBean.autoCapitalization}"/>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+            <h:outputLabel value="Auto-Correction"/>
+            <h:outputText  value="#{flipSwitchBean.autoCorrection}"/>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+            <h:outputLabel value="Check Spelling"/>
+            <h:outputText  value="#{flipSwitchBean.checkSpelling}"/>
+        </mobi:fieldsetRow>
+        <mobi:fieldsetRow>
+            <h:outputLabel value="Enable Caps Lock"/>
+            <h:outputText  value="#{flipSwitchBean.enableCapsLock}"/>
+        </mobi:fieldsetRow>
+
+    </mobi:fieldsetGroup>
+
+
+</ui:composition>
