@@ -1,0 +1,89 @@
+<!--
+  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
+             xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
+
+    <h3>Date Time Spinners</h3>
+    <h:form id="dateSpinnerForm">
+        <mobi:fieldsetGroup>
+            <mobi:fieldsetRow>
+                <h:outputLabel for="useNative" value="Use Native:"/>
+                <mobi:flipswitch id="useNative" value="#{dateBean.useNative}" style="float:right">
+                    <ace:ajax render="dateSpinnerForm" execute="dateSpinnerForm"/>
+                </mobi:flipswitch>&#160;
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+                <h:outputLabel for="readonly" value="Read Only:"/>
+                <mobi:flipswitch id="readonly" value="#{dateBean.readonly}" style="float:right">
+                    <ace:ajax render="dateSpinnerForm" execute="dateSpinnerForm"/>
+                </mobi:flipswitch>&#160;
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+        
+        <mobi:fieldsetGroup>
+           <!-- date spinner -->
+            <mobi:fieldsetRow>
+                <h:outputLabel value="Date:" for="date"/>
+                <mobi:dateSpinner useNative="#{dateBean.useNative}" id="date"
+                                  readonly="#{dateBean.readonly}"
+                                 value="#{dateBean.dateInput}" 
+                                 style="float:right">
+                    <f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="#{dateBean.timeZone}"/>
+                </mobi:dateSpinner>&#160;
+            </mobi:fieldsetRow>
+            <!-- time spinner -->
+            <mobi:fieldsetRow>
+                <h:outputLabel value="Time:" for="time"/>
+                <mobi:timeSpinner id="time" useNative="#{dateBean.useNative}" timeZone="#{dateBean.timeZone}"
+                                 value="#{dateBean.timeInput}" readonly="#{dateBean.readonly}"
+                                 style="float:right">
+                </mobi:timeSpinner>&#160;
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+        
+        <ace:pushButton value="Submit" type="submit"
+            styleClass="submit"/>
+        
+        <h:messages style="margin-left:10px"/>
+
+        <h3 style="clear:both;padding-top:10px;">Date-Time Spinner Values</h3>
+        <mobi:fieldsetGroup styleClass="results">
+            <mobi:fieldsetRow>
+                <h:outputLabel value="Date:"/>
+                <h:outputText value="#{dateBean.dateInput}">
+                    <f:convertDateTime type="date" />
+                </h:outputText>
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+                <h:outputLabel value="Time:"/>
+                <h:outputText value="#{dateBean.timeInput}">
+                    <f:convertDateTime type="time" pattern="hh:mm a" timeZone="#{dateBean.timeZone}"/>
+                </h:outputText>
+            </mobi:fieldsetRow>
+    
+        </mobi:fieldsetGroup>
+        
+    </h:form>
+
+
+</ui:composition>
