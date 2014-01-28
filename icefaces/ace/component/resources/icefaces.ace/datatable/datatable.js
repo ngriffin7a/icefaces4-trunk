@@ -1269,7 +1269,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
         if (ie7) tableLayout();
 
         // Set Duplicate Sizing
-        var cssid = firefox ? 'global' : this.jqId.substr(1)+'_colSizes';
+        var cssid = firefox || chrome ? 'global' : this.jqId.substr(1)+'_colSizes';
 
         if (!ie7) {
             // must use global stylesheet as dynamic rule doesn't work reliably in FF
