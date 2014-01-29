@@ -51,8 +51,8 @@ public class DeviceResourceRenderer  extends Renderer implements javax.faces.eve
     public static final String CSS_LOCATION = "org.icefaces.component.skins";
     public static final String UTIL_RESOURCE =
             "org.icefaces.component.util";
-    public static final String RESOURCE_URL_ERROR = "RES_NOT_FOUND";
-    public static final String IOS_APP_ID = "485908934";
+    public static final String RESOURCE_URL_ERROR = "MOBI_RES_NOT_FOUND";
+    public static final String IOS_APP_ID = "727736414";
     
     public static final String META_CONTENTTYPE = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>";
     public static final String META_VIEWPORT = "<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>";
