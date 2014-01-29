@@ -1,0 +1,5 @@
+<targets database="farm.xml">
+  <target name="page3" >
+    <toggle name="topo" value="off" on="yield.obj" off="forecast.obj" scale="5.6" location="-340, -80, 100, 100" />
+  </target>
+</targets>

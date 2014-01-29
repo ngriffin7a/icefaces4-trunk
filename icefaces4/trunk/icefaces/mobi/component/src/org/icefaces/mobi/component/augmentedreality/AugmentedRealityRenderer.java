@@ -94,12 +94,12 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
                         (AugmentedRealityLocations) child;
                 locationsString = iterateLocations(facesContext, locations, ag.getUrlBase());
             }
-            /*if (child instanceof AugmentedRealityMarkers) {
+            if (child instanceof AugmentedRealityMarkers) {
                 AugmentedRealityMarkers markers =
                         (AugmentedRealityMarkers) child;
-                arParams += iterateMarkers(facesContext, markers);
-                arParams += "v=vuforia" + "&";
-            }*/
+                locationsString += iterateMarkers(facesContext, markers);
+                locationsString += "'v':'vuforia'";
+            }
         }
 
         String script;
@@ -220,13 +220,18 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
             Map<String,Object> attrs = markers.getAttributes();
             String markerLabel = (String) attrs.get(MARK_LABEL);
             String itemID = "_" + index;
-            result.append(markerLabel + itemID).append("=");
+			result.append("'");
+            result.append(markerLabel + itemID);
+            result.append("'");
+            result.append(":");
 
             String markerModel = (String) attrs.get(MARK_MODEL);
             if (null != markerModel)  {
-                result.append(URLEncoder.encode(markerModel));
+                result.append("'");
+                result.append(markerModel);
+                result.append("'");
             }
-            result.append("&");
+            result.append(",");
             requestMap.put(var, oldVar);
             index++;
         }

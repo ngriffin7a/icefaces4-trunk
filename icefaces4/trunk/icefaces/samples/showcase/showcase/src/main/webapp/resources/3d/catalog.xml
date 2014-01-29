@@ -1,0 +1,9 @@
+<targets database="mobileshowcase.xml">
+  <target name="page3" >
+    <toggle name="icecar" value="off" on="circlecheckon.obj" off="circlecheckoff.obj" scale="1.5" location="170.0, 174.0, 190.0, 164.0" />
+    <toggle name="iceskate" value="off" on="circlecheckon.obj" off="circlecheckoff.obj" scale="1.5" location="-294.0, -23.0, -274.0, -33.0" />
+    <toggle name="icesailer" value="off" on="circlecheckon.obj" off="circlecheckoff.obj" scale="1.5" location="-149.0, -72.0, -129.0, -82.0" />
+    <toggle name="icebreaker" value="off" on="circlecheckon.obj" off="circlecheckoff.obj" scale="1.5" location="220.0, -29.0, 240.0, -39.0" />
+    <button name="buy" model="buybutton.obj" scale="2.0" location="10.0, -140.0, 20.0, -150.0" />
+  </target>
+</targets>
