@@ -14,9 +14,9 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.mobi.component.videoplayer;
+package org.icefaces.ace.component.videoplayer;
 
-import org.icefaces.mobi.util.MobiJSFUtils;
+import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.ClientDescriptor;
 
 import java.util.logging.Logger;
@@ -29,6 +29,6 @@ public class VideoPlayer extends VideoPlayerBase{
     public static final String VIDEO_CLASS = "mobi-video";
 
     public ClientDescriptor getClient() {
-         return MobiJSFUtils.getClientDescriptor();
+         return Utils.getClientDescriptor();
     }
 }

@@ -13,11 +13,11 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.icefaces.mobi.util;
+package org.icefaces.ace.util;
 
-import static org.icefaces.mobi.util.Constants.SPACE;
-import static org.icefaces.mobi.util.HTML.CLASS_ATTR;
-import static org.icefaces.mobi.util.HTML.STYLE_ATTR;
+import static org.icefaces.ace.util.Constants.SPACE;
+import static org.icefaces.ace.util.HTML.CLASS_ATTR;
+import static org.icefaces.ace.util.HTML.STYLE_ATTR;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -114,7 +114,7 @@ public class MediaPlayerUtils {
                 .getExternalContext().getSession(false);
         if (null != session)  {
             registeredPath += ";jsessionid=" + 
-                    MobiJSFUtils.getSessionIdCookie(facesContext);
+                    Utils.getSessionIdCookie(facesContext);
         }
 
         return registeredPath;
@@ -163,7 +163,7 @@ public class MediaPlayerUtils {
         FacesContext context, String elem, String src) throws IOException{
         writer.endElement(elem);
         
-        ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
+        ClientDescriptor client = Utils.getClientDescriptor();
         // write inline image link
         String linkLabel = (String)uic.getAttributes().get("linkLabel");
         if (!client.isIOS() && linkLabel != null)  {

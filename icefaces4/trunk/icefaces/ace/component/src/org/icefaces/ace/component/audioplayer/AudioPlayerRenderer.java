@@ -13,10 +13,10 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.icefaces.mobi.component.audioplayer;
+package org.icefaces.ace.component.audioplayer;
 
-import static org.icefaces.mobi.util.HTML.ID_ATTR;
-import static org.icefaces.mobi.util.HTML.SPAN_ELEM;
+import static org.icefaces.ace.util.HTML.ID_ATTR;
+import static org.icefaces.ace.util.HTML.SPAN_ELEM;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -26,7 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
-import org.icefaces.mobi.util.MediaPlayerUtils;
+import org.icefaces.ace.util.MediaPlayerUtils;
 
 
 public class AudioPlayerRenderer extends Renderer {

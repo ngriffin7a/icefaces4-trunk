@@ -32,6 +32,7 @@ import javax.faces.context.ResponseWriter;
 import org.icefaces.ace.component.animation.AnimationBehavior;
 import org.icefaces.impl.util.DOMUtils;
 import org.icefaces.util.JavaScriptRunner;
+import org.icefaces.util.EnvUtils;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -536,4 +537,25 @@ public class Utils {
 	public static void registerLazyComponent(FacesContext facesContext, String clientId, String function) {
 		JavaScriptRunner.runScript(facesContext, "ice.ace.lazy.registry['"+clientId+"'] = function(){ return "+function+"};");
 	}
+
+    static String COOKIE_FORMAT = "org.icemobile.cookieformat";
+
+    public static String getSessionIdCookie() {
+        return getSessionIdCookie(FacesContext.getCurrentInstance());
+    }
+
+    public static String getSessionIdCookie(FacesContext facesContext) {
+        String sessionID = EnvUtils.getSafeSession(facesContext).getId();
+        String cookieFormat = (String) facesContext.getExternalContext()
+                .getInitParameterMap().get(COOKIE_FORMAT);
+        if (null == cookieFormat) {
+            // if we have more of these, implement EnvUtils for ICEmobile
+            return sessionID;
+        }
+        StringBuilder out = new StringBuilder();
+        Formatter cookieFormatter = new Formatter(out);
+        cookieFormatter.format(cookieFormat, sessionID);
+        cookieFormatter.close();
+        return out.toString();
+    }
 }

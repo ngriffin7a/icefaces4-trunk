@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.mobi.component.audioplayer;
+package org.icefaces.ace.component.audioplayer;
 
 
 import javax.faces.application.ResourceDependencies;
@@ -26,9 +26,9 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 @Component(
         tagName = "audioPlayer",
-        componentClass = "org.icefaces.mobi.component.audioplayer.AudioPlayer",
-        rendererClass = "org.icefaces.mobi.component.audioplayer.AudioPlayerRenderer",
-        generatedClass = "org.icefaces.mobi.component.audioplayer.AudioPlayerBase",
+        componentClass = "org.icefaces.ace.component.audioplayer.AudioPlayer",
+        rendererClass = "org.icefaces.ace.component.audioplayer.AudioPlayerRenderer",
+        generatedClass = "org.icefaces.ace.component.audioplayer.AudioPlayerBase",
         componentType = "org.icefaces.AudioPlayer",
         rendererType = "org.icefaces.AudioPlayerRenderer",
         extendsClass = "javax.faces.component.UIComponentBase",
