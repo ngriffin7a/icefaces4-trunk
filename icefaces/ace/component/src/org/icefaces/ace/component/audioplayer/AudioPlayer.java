@@ -14,9 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.mobi.component.audioplayer;
-
-import java.util.logging.Logger;
+package org.icefaces.ace.component.audioplayer;
 
 public class AudioPlayer extends AudioPlayerBase{
 

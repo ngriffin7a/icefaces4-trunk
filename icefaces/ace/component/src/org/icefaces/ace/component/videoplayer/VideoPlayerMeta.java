@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.mobi.component.videoplayer;
+package org.icefaces.ace.component.videoplayer;
 
 
 import org.icefaces.ace.meta.annotation.*;
@@ -24,9 +24,9 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 @Component(
         tagName = "videoPlayer",
-        componentClass = "org.icefaces.mobi.component.videoplayer.VideoPlayer",
-        rendererClass = "org.icefaces.mobi.component.videoplayer.VideoPlayerRenderer",
-        generatedClass = "org.icefaces.mobi.component.videoplayer.VideoPlayerBase",
+        componentClass = "org.icefaces.ace.component.videoplayer.VideoPlayer",
+        rendererClass = "org.icefaces.ace.component.videoplayer.VideoPlayerRenderer",
+        generatedClass = "org.icefaces.ace.component.videoplayer.VideoPlayerBase",
         componentType = "org.icefaces.VideoPlayer",
         rendererType = "org.icefaces.VideoPlayerRenderer",
         extendsClass = "javax.faces.component.UIComponentBase",
