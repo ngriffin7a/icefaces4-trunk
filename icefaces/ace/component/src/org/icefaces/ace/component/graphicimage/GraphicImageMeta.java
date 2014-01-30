@@ -35,9 +35,6 @@ import javax.faces.application.ResourceDependency;
                 " byte[] for images from database."
 )
 
-@ResourceDependencies({
-        @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
-})
 public class GraphicImageMeta {
     @Property(tlddoc = "Alternate textual discription as \"alt\" attribute for this image.")
     private String alt;

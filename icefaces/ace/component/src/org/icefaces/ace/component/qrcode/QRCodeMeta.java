@@ -35,9 +35,6 @@ import javax.faces.application.ResourceDependency;
         tlddoc = "qrcode displays a QR code value."
 )
 
-@ResourceDependencies({
-        @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
-})
 public class QRCodeMeta extends UIComponentBaseMeta {
 
     @Property(defaultValue = "false",
