@@ -80,7 +80,8 @@ public class ViewManager extends ViewManagerBase {
     public String getSelected(){
         String selected = super.getSelected();
         if( selected == null || selected.length() == 0 ){
-            super.setSelected(ViewManager.MENU_ID);
+            selected = ViewManager.MENU_ID;
+            super.setSelected(selected);
         }
         return selected;
     }
