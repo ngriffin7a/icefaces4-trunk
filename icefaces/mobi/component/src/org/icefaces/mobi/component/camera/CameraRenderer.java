@@ -111,17 +111,15 @@ public class CameraRenderer extends Renderer {
 		writer.startElement(SPAN_ELEM, camera);
 		writer.writeText(camera.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
-		writer.endElement(BUTTON_ELEM);
-        camera.setButtonLabel(oldLabel);
-
 		// themeroller support
 		writer.startElement("span", camera);
-		writer.writeAttribute("id", clientId + "_script");
 		writer.startElement("script", camera);
 		writer.writeAttribute("type", "text/javascript");
 		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
+		writer.endElement(BUTTON_ELEM);
+        camera.setButtonLabel(oldLabel);
     }
 
 }

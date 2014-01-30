@@ -92,16 +92,14 @@ public class MicrophoneRenderer extends Renderer {
 		writer.startElement(SPAN_ELEM, microphone);
 		writer.writeText(microphone.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
-		writer.endElement(BUTTON_ELEM);
-        microphone.setButtonLabel(oldLabel);
-
 		// themeroller support
 		writer.startElement("span", microphone);
-		writer.writeAttribute("id", clientId + "_script");
 		writer.startElement("script", microphone);
 		writer.writeAttribute("type", "text/javascript");
 		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
+		writer.endElement(BUTTON_ELEM);
+        microphone.setButtonLabel(oldLabel);
     }
 }

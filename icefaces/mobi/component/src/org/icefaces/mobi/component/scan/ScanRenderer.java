@@ -84,17 +84,15 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.startElement(SPAN_ELEM, scan);
 		writer.writeText(scan.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
-		writer.endElement(BUTTON_ELEM);
-        scan.setButtonLabel(oldLabel);
-
 		// themeroller support
 		writer.startElement("span", scan);
-		writer.writeAttribute("id", clientId + "_script");
 		writer.startElement("script", scan);
 		writer.writeAttribute("type", "text/javascript");
 		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
+		writer.endElement(BUTTON_ELEM);
+        scan.setButtonLabel(oldLabel);
     }
 
 
