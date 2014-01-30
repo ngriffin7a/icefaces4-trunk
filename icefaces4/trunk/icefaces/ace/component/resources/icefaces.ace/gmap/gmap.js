@@ -289,11 +289,15 @@ ice.ace.gMap.getGMapWrapper = function (id) {
         var wrapper = ice.ace.gMap.getGMapWrapper(ele);
         var marker = wrapper.markers[markerID];
         if (marker == null || marker.getMap() == null) {
-            if (options != null)
-                var markerOps = "({map:wrapper.getRealGMap(), position: new google.maps.LatLng(" + Lat + "," + Lon + "), " + options + "});";
-            else
-                var markerOps = "({map:wrapper.getRealGMap(), position: new google.maps.LatLng(" + Lat + "," + Lon + ")});";
-            var marker = new google.maps.Marker(eval(markerOps));
+            var markerOps;
+            if (options) {
+                markerOps = eval("({" + options + "})");
+            } else {
+                markerOps = {};
+            }
+            markerOps.map = wrapper.getRealGMap();
+            markerOps.position = new google.maps.LatLng(Lat, Lon);
+            var marker = new google.maps.Marker(markerOps);
             wrapper.markers[markerID] = marker;
         }
     }
