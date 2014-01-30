@@ -62,7 +62,7 @@
     right: auto;
     padding-left: 14px;
     max-width: 60px;
-    background-image: url('back.png');
+    background-image: url("#{resource['org.icefaces.component.viewmanager:back.png']}");
     background-color: transparent;
     background-position: 0 47%;
     background-repeat: no-repeat;
@@ -131,7 +131,7 @@
     list-style: none;
 }
 .mobi-vm-menu  ul > li > a {
-    background: url(list-arrow.png) no-repeat right center;
+    background: url("#{resource['org.icefaces.component.viewmanager:list-arrow.png']}") no-repeat right center;
     display: block;
     margin: -8px 0 -8px -10px;
     padding: 8px 32px 8px 10px;
