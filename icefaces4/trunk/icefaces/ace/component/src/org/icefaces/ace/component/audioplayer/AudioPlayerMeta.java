@@ -42,10 +42,10 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 public class AudioPlayerMeta extends UIComponentBaseMeta {
 
-    @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLE)
+    @Property(tlddoc = "Sets the CSS style definition to be applied to this component.")
      private String style;
 
-    @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLECLASS)
+    @Property(tlddoc = "Sets the CSS class to apply to this component.")
     private String styleClass;
 
     @Property(defaultValue = "auto", tlddoc = "Options for preloading the resource. Accepted values are " +
