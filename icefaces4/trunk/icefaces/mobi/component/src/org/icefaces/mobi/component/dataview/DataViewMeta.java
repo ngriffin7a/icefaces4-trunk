@@ -44,6 +44,7 @@ import javax.faces.application.ResourceDependency;
             "row of table region is activated, typically by a row tap."
 )
 @ResourceDependencies({
+	@ResourceDependency( library = "org.icefaces.component.dataview", name = "dataview.css" ),
     @ResourceDependency( library = "org.icefaces.component.util", name = "component.js" ),
 	@ResourceDependency( library = "org.icefaces.component.dataview", name = "dataview.js" )
 })

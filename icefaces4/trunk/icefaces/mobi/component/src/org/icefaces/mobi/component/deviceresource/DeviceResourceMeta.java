@@ -42,13 +42,13 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 public class DeviceResourceMeta extends UIComponentBaseMeta {
 
-    @Property(defaultValue="true", tlddoc = "Flag indicating whether to use " +
+    @Property(defaultValue="false", tlddoc = "Flag indicating whether to use " +
         "Smart App Banners on iOS. " +
         "If true (default), the deviceResource tag will cause IOS 6 to"
             +" render a Smart App Banner for the application, allowing the user to install ICEmobile SX,"
             +"  if it is not already installed, and open it, if the app is installed."
             +" If the user chooses to open the installed app, the session will be auto-registered.")   
-    private boolean includeIOSSmartAppBanner = true;
+    private boolean includeIOSSmartAppBanner = false;
 
     @Property(tlddoc = "Resource library name as also used by the " +   
             "h:outputStyleSheet component.")
