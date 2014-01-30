@@ -32,6 +32,11 @@
     </c:if>
 </h:head>
     <h:body>
+		<style type="text/css">
+			.icon-fetch-contact {
+				content: url("#{resource['css:images/fetch-contact-icon.png']}");
+			}
+		</style>
 		<script type="text/javascript" src="http://bridgeit.github.io/bridgeit.js/src/bridgeit.js"></script>
          <f:metadata>
             <f:viewParam name="theme" value="#{themeBean.currentTheme}" /> 
@@ -102,7 +107,7 @@
                  <ui:include src="/resources/examples/mobi/camera/camera-example.xhtml" />
              </mobi:view>
              <!-- FETCH CONTACT -->
-             <mobi:view id="fetchcontact" title="Fetch Contact" menuIcon="book">
+             <mobi:view id="fetchcontact" title="Fetch Contact" menuIcon="fetch-contact">
                  <ui:include src="/resources/examples/mobi/fetchcontact/fetchcontact-example.xhtml" />
              </mobi:view>
              <!-- MICROPHONE -->
