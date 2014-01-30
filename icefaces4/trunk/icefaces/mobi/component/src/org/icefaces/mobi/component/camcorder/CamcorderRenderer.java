@@ -92,16 +92,14 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.startElement(SPAN_ELEM, camcorder);
 		writer.writeText(camcorder.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
-		writer.endElement(BUTTON_ELEM);
-        camcorder.setButtonLabel(oldLabel);
-
 		// themeroller support
 		writer.startElement("span", camcorder);
-		writer.writeAttribute("id", clientId + "_script");
 		writer.startElement("script", camcorder);
 		writer.writeAttribute("type", "text/javascript");
 		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
+		writer.endElement(BUTTON_ELEM);
+        camcorder.setButtonLabel(oldLabel);
     }
 }
