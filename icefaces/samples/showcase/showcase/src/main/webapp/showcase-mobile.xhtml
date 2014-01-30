@@ -55,16 +55,31 @@
              
              <!-- Layout Components -->
              <!-- DATAVIEW -->
-             <mobi:view id="dataview" title="Data View" menuIcon="table" divider="Layout Components">
+             <mobi:view id="dataview" title="Data View" menuIcon="table" divider="Layout Components"
+				navBarGroup="dataview">
                  <ui:include src="/resources/examples/mobi/dataview/dataview-example.xhtml" />
              </mobi:view>
+             <mobi:view id="dataviewDocs" title="dataviewDocs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="dataview">
+                <ui:include src="/resources/examples/mobi/dataview/dataview-desc.xhtml" />
+             </mobi:view>
              <!-- FIELDSET -->
-             <mobi:view id="fieldset" title="Fieldset" menuIcon="minus">
+             <mobi:view id="fieldset" title="Fieldset" menuIcon="minus"
+				navBarGroup="fieldset">
                  <ui:include src="/resources/examples/mobi/fieldset/fieldset-example.xhtml" />
              </mobi:view>
+             <mobi:view id="fieldsetDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="fieldset">
+                <ui:include src="/resources/examples/mobi/fieldset/fieldset-desc.xhtml" />
+             </mobi:view>
              <!-- OUTPUT LIST -->
-             <mobi:view id="outputlist" title="Output List" menuIcon="align-justify">
+             <mobi:view id="outputlist" title="Output List" menuIcon="align-justify"
+				navBarGroup="outputlist">
                  <ui:include src="/resources/examples/mobi/outputlist/list-example.xhtml" />
+             </mobi:view>
+             <mobi:view id="outputlistDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="outputlist">
+                <ui:include src="/resources/examples/mobi/outputlist/list-desc.xhtml" />
              </mobi:view>
              <!-- VIEW MANAGER -->
              <mobi:view id="viewmanager" title="View Manager" menuIcon="th-list"
@@ -79,44 +94,88 @@
 
              <!-- Layout Components -->
              <!-- DATE AND TIME -->
-             <mobi:view id="dateandtime" title="Date and Time" menuIcon="time" divider="Input Components">
+             <mobi:view id="dateandtime" title="Date and Time" menuIcon="time" divider="Input Components"
+				navBarGroup="dateandtime">
                  <ui:include src="/resources/examples/mobi/datespinner/date-example.xhtml" />
              </mobi:view>
+             <mobi:view id="dateandtimeDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="dateandtime">
+                <ui:include src="/resources/examples/mobi/datespinner/date-desc.xhtml" />
+             </mobi:view>
              <!-- FLIP SWITCH -->
-             <mobi:view id="flipswitch" title="Flip Switch" menuIcon="off">
+             <mobi:view id="flipswitch" title="Flip Switch" menuIcon="off"
+				navBarGroup="flipswitch">
                  <ui:include src="/resources/examples/mobi/flipswitch/flip-switch-example.xhtml" />
              </mobi:view>
+             <mobi:view id="flipswitchDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="flipswitch">
+                <ui:include src="/resources/examples/mobi/flipswitch/flip-switch-desc.xhtml" />
+             </mobi:view>
              <!-- GEOLOCATION -->
-             <mobi:view id="geolocation" title="Geolocation" menuIcon="location-arrow">
+             <mobi:view id="geolocation" title="Geolocation" menuIcon="location-arrow"
+				navBarGroup="geolocation">
                  <ui:include src="/resources/examples/mobi/geolocation/geolocation-example.xhtml" />
+             </mobi:view>
+             <mobi:view id="geolocationDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="geolocation">
+                <ui:include src="/resources/examples/mobi/geolocation/geolocation-desc.xhtml" />
              </mobi:view>
 
 
              <!-- Native Components -->
              <!-- AUGMENTED REALITY -->
              <mobi:view id="augmentedreality" title="Augmented Reality" menuIcon="globe"
-                divider="Native Components">
+                divider="Native Components" navBarGroup="augmentedreality">
                  <ui:include src="/resources/examples/mobi/augmentedreality/augmentedreality-example.xhtml" />
              </mobi:view>
+             <mobi:view id="augmentedrealityDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="augmentedreality">
+                <ui:include src="/resources/examples/mobi/augmentedreality/augmentedreality-desc.xhtml" />
+             </mobi:view>
              <!-- CAMCORDER -->
-             <mobi:view id="camcorder" title="Camcorder" menuIcon="film">
+             <mobi:view id="camcorder" title="Camcorder" menuIcon="film"
+				navBarGroup="camcorder">
                  <ui:include src="/resources/examples/mobi/camcorder/camcorder-example.xhtml" />
              </mobi:view>
+             <mobi:view id="camcorderDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="camcorder">
+                <ui:include src="/resources/examples/mobi/camcorder/camcorder-desc.xhtml" />
+             </mobi:view>
              <!-- CAMERA -->
-             <mobi:view id="camera" title="Camera" menuIcon="camera">
+             <mobi:view id="camera" title="Camera" menuIcon="camera"
+				navBarGroup="camera">
                  <ui:include src="/resources/examples/mobi/camera/camera-example.xhtml" />
              </mobi:view>
+             <mobi:view id="cameraDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="camera">
+                <ui:include src="/resources/examples/mobi/camera/camera-desc.xhtml" />
+             </mobi:view>
              <!-- FETCH CONTACT -->
-             <mobi:view id="fetchcontact" title="Fetch Contact" menuIcon="fetch-contact">
+             <mobi:view id="fetchcontact" title="Fetch Contact" menuIcon="fetch-contact"
+				navBarGroup="fetchcontact">
                  <ui:include src="/resources/examples/mobi/fetchcontact/fetchcontact-example.xhtml" />
              </mobi:view>
+             <mobi:view id="fetchcontactDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="fetchcontact">
+                <ui:include src="/resources/examples/mobi/fetchcontact/fetchcontact-desc.xhtml" />
+             </mobi:view>
              <!-- MICROPHONE -->
-             <mobi:view id="microphone" title="Microphone" menuIcon="microphone">
+             <mobi:view id="microphone" title="Microphone" menuIcon="microphone"
+				navBarGroup="microphone">
                  <ui:include src="/resources/examples/mobi/microphone/microphone-example.xhtml" />
              </mobi:view>
+             <mobi:view id="microphoneDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="microphone">
+                <ui:include src="/resources/examples/mobi/microphone/microphone-desc.xhtml" />
+             </mobi:view>
              <!-- SCAN -->
-             <mobi:view id="scan" title="Scan" menuIcon="qrcode">
+             <mobi:view id="scan" title="Scan" menuIcon="qrcode"
+				navBarGroup="scan">
                  <ui:include src="/resources/examples/mobi/scan/scan-example.xhtml" />
+             </mobi:view>
+             <mobi:view id="scanDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="scan">
+                <ui:include src="/resources/examples/mobi/scan/scan-desc.xhtml" />
              </mobi:view>
              
              
