@@ -216,7 +216,7 @@
             <propertyset refid="build.properties"/>
         </subant>
 
-        <!-- Create the JavaDocs for core, ace, icepush and move them to the docs directory -->
+        <!-- Create the JavaDocs for core, ace, mobi, and icepush and move them to the docs directory -->
         <subant target="javadoc">
             <fileset dir="${bundle.dir.bin}/core" includes="build.xml"/>
         </subant>
@@ -226,12 +226,18 @@
             <fileset dir="${bundle.dir.bin}/ace/component" includes="build.xml"/>
         </subant>
         <move file="${bundle.dir.bin}/ace/component/build/doc/javadoc" tofile="${bundle.dir.bin}/docs/ace/api"/>
+
+        <subant target="javadoc">
+            <fileset dir="${bundle.dir.bin}/mobi/component" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/mobi/component/build/doc/javadoc" tofile="${bundle.dir.bin}/docs/mobi/api"/>
+
 		
        	<subant target="icepush-javadoc">
             <fileset dir="${bundle.dir.bin}" includes="build.xml"/>
        	</subant>
 
-        <!-- Create the TLD docs for icecore, ace move them to the docs directory -->
+        <!-- Create the TLD docs for icecore, ace, and mobi and move them to the docs directory -->
         <subant target="tlddoc">
             <fileset dir="${bundle.dir.bin}/core" includes="build.xml"/>
         </subant>
@@ -241,6 +247,11 @@
             <fileset dir="${bundle.dir.bin}/ace/component" includes="build.xml"/>
         </subant>
         <move file="${bundle.dir.bin}/ace/component/build/doc/tld" tofile="${bundle.dir.bin}/docs/ace/tld"/>
+
+        <subant target="tlddoc">
+            <fileset dir="${bundle.dir.bin}/mobi/component" includes="build.xml"/>
+        </subant>
+        <move file="${bundle.dir.bin}/mobi/component/build/doc/tld" tofile="${bundle.dir.bin}/docs/mobi/tld"/>
 
         <antcall target="if.not.ee.delete.bundle.bin.files" />
 
