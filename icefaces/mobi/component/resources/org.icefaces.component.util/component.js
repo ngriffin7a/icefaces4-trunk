@@ -2053,6 +2053,7 @@ ice.mobi.addListener(document, "touchstart", function(){});
         
         var contentHeight = currentHeight - 45; //adjust for header
         var currentView = getNodeForView(getCurrentView());
+        if (!currentView) return;
         if( currentView.querySelectorAll('.mobi-vm-nav-bar').length > 0 ){
             contentHeight -= 40; //adjust for nav bar if exists
         }
