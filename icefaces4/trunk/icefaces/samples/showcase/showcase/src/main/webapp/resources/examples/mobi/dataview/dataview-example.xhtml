@@ -34,13 +34,28 @@
             .footButton {
                 padding: .5em 5px;
                 width:17%;
+				display:inline;
             }
 
             .minCol {
                 min-width: 150px;
             }
         </style>
-
+        <ace:pushButton value="Cost"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleCostColVis}"/>
+        <ace:pushButton value="Weight"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleWeightColVis}"/>
+        <ace:pushButton value="Accel"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleAccelColVis}"/>
+        <ace:pushButton value="MPG"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleMpgColVis}"/>
+        <ace:pushButton value="Text"
+                            styleClass="footButton"
+                            actionListener="#{dataViewBean.toggleTextColVis}"/>
         <mobi:dataView value="#{dataViewBean.cars}" var="car" activationMode="server"
                        rowStripe="true">
             <mobi:dataViewDetails>
@@ -94,25 +109,5 @@
                                      rendered="#{dataViewBean.textColVis}" />
             </mobi:dataViewColumns>
         </mobi:dataView>
-        <ace:pushButton value="Cost"
-                            styleClass="footButton"
-                            actionListener="#{dataViewBean.toggleCostColVis}"
-                            buttonType="#{dataViewBean.costColVis ? 'important' : null}"/>
-        <ace:pushButton value="Weight"
-                            styleClass="footButton"
-                            actionListener="#{dataViewBean.toggleWeightColVis}"
-                            buttonType="#{dataViewBean.weightColVis ? 'important' : null}"/>
-        <ace:pushButton value="Accel"
-                            styleClass="footButton"
-                            actionListener="#{dataViewBean.toggleAccelColVis}"
-                            buttonType="#{dataViewBean.accelColVis ? 'important' : null}"/>
-        <ace:pushButton value="MPG"
-                            styleClass="footButton"
-                            actionListener="#{dataViewBean.toggleMpgColVis}"
-                            buttonType="#{dataViewBean.mpgColVis ? 'important' : null}"/>
-        <ace:pushButton value="Text"
-                            styleClass="footButton"
-                            actionListener="#{dataViewBean.toggleTextColVis}"
-                            buttonType="#{dataViewBean.textColVis ? 'important' : null}"/>
     </h:form>
 </ui:composition>
