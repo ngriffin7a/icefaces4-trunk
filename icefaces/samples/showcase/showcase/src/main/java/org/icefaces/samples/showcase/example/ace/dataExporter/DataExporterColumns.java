@@ -46,9 +46,9 @@ import java.util.Map;
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
                     "/example/ace/dataExporter/DataExporterColumns.java"),
             @ExampleResource(type = ResourceType.java,
-                    title="DataTableSort.java",
+                    title="DataTableBean.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/compat/dataTable/DataTableSort.java")
+                    "/example/ace/dataTable/DataTableBean.java")
         }
 )
 @ManagedBean(name= DataExporterColumns.BEAN_NAME)

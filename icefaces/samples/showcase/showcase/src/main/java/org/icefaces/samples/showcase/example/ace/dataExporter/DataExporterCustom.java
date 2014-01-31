@@ -69,6 +69,9 @@ public class DataExporterCustom extends ComponentExampleImpl<DataExporterCustom>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        if (null == carsData){
+            this.getRandomData();
+        }
     }
 	
 	public static List<CustomCar> getRandomData() {
