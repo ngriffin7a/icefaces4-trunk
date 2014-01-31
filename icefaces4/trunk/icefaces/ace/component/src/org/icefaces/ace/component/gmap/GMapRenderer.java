@@ -77,7 +77,7 @@ public class GMapRenderer extends CoreRenderer {
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.jq(function() {");
 		JSONBuilder jb;
-        if ((gmap.isLocateAddress() || !gmap.isIntialized()) && (gmap.getAddress() != null && gmap.getAddress().length() > 2)) {
+        if ((gmap.isLocateAddress() || !gmap.isInitialized()) && (gmap.getAddress() != null && gmap.getAddress().length() > 2)) {
 			jb = JSONBuilder.create();
 			jb.beginFunction("ice.ace.gMap.locateAddress").item(clientId).item(gmap.getAddress()).endFunction();
             writer.write(jb.toString());
@@ -103,7 +103,7 @@ public class GMapRenderer extends CoreRenderer {
         writer.write("});");
         writer.endElement("script");
         writer.endElement("span");
-        gmap.setIntialized(true);
+        gmap.setInitialized(true);
     }
 
     @Override

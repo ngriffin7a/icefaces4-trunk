@@ -64,7 +64,7 @@ public class GMapMeta extends UIPanelMeta {
     private boolean locateAddress;
 
     @Property(tlddoc = "Specifies whether the map has been initialized or not.", defaultValue = "false")
-    private boolean intialized;
+    private boolean initialized;
 
     @Property(tlddoc = "Address to locate.")
     private String address;
