@@ -50,7 +50,7 @@ public class FilterState {
         filteredColumn = filterMap.get(filteredId);
 
         if (filteredColumn != null)
-            saveState(filteredColumn, params.get(filteredId).toLowerCase());
+            saveState(filteredColumn, params.get(filteredId));
     }
 
     public void saveState(Column column) {

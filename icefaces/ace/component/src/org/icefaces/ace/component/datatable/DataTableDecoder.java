@@ -114,7 +114,7 @@ public class DataTableDecoder {
             // If in lazy case, just save change to filter input. Load method must account for the rest.
             Map<String,Column> filterMap = table.getFilterMap();
             filteredColumn = filterMap.get(filteredId);
-            if (filteredColumn != null) filteredColumn.setFilterValue(params.get(filteredId).toLowerCase());
+            if (filteredColumn != null) filteredColumn.setFilterValue(params.get(filteredId));
         } else {
             table.savedFilterState = new FilterState(context, table);
             table.applyFilters();
