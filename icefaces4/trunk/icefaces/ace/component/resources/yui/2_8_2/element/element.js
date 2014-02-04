@@ -252,7 +252,6 @@ YAHOO.util.Attribute.prototype = {
          * A key-value map of Attribute configurations
          * @property _configs
          * @protected (may be used by subclasses and augmentors)
-         * @private
          * @type {Object}
          */
         _configs: null,

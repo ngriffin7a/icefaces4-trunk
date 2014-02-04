@@ -318,17 +318,12 @@
         <element name="minify"/>
         <sequential>
             <java jar="${lib.dir}/js-compiler.jar" fork="yes">
+                <arg line="--jscomp_off misplacedTypeAnnotation"/>
+                <arg line="--jscomp_off uselessCode"/>
                 <arg line="--js"/>
                 <arg value="@{src}"/>
                 <arg value="--js_output_file"/>
                 <arg value="@{dest}"/>
-                <redirector >
-                    <outputfilterchain>
-                        <filterreader classname="org.apache.tools.ant.filters.LineContains">
-                            <param type="contains" value="ERROR"/>
-                        </filterreader>
-                    </outputfilterchain>
-                </redirector>
             </java>
         </sequential>
     </macrodef>
