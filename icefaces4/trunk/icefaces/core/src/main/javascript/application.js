@@ -415,11 +415,11 @@ if (!window.ice.icefaces) {
                     info(logger, 'received error message [code: ' + e.responseCode + ']: ' + e.responseText);
                     broadcast(perRequestServerErrorListeners, [ e.responseCode, e.responseText, containsXMLData(xmlContent) ? xmlContent : null]);
                 } else if (e.status == 'httpError') {
-                    warn(logger, 'HTTP error [code: ' + e.responseCode + ']: ' + e.description);
+                    warn(logger, 'HTTP error [code: ' + e.responseCode + ']: ' + e.description + '\n' + e.responseText);
                     broadcast(perRequestNetworkErrorListeners, [ e.responseCode, e.description]);
                 } else {
                     //If the error falls through the other conditions, just log it.
-                    error(logger, 'Error [status: ' + e.status + ' code: ' + e.responseCode + ']: ' + e.description);
+                    error(logger, 'Error [status: ' + e.status + ' code: ' + e.responseCode + ']: ' + e.description + '\n' + e.responseText);
                 }
             };
         }
