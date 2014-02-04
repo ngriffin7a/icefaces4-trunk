@@ -142,7 +142,7 @@
         units: ['hour','minute','second','millisec'],
         control: null,
 
-        /*
+        /**
          * Override the default settings for all instances of the time picker.
          * @param  settings  object - the new settings to use as defaults (anonymous object)
          * @return the manager object

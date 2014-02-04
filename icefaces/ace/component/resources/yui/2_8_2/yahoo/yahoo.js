@@ -439,7 +439,7 @@ YAHOO.env.ua = function() {
     return o;
 }();
 
-/*
+/**
  * Initializes the global by creating the default namespaces and applying
  * any new configuration information that is detected.  This is the setup
  * for env.
@@ -1021,7 +1021,7 @@ L.hasOwnProperty = (OP.hasOwnProperty) ?
 // new lang wins
 OB.augmentObject(L, OB, true);
 
-/*
+/**
  * An alias for <a href="YAHOO.lang.html">YAHOO.lang</a>
  * @class YAHOO.util.Lang
  */
