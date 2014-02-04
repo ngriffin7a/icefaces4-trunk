@@ -81,6 +81,15 @@
                  includeInMenu="false" navBarGroup="outputlist">
                 <ui:include src="/resources/examples/mobi/outputlist/list-desc.xhtml" />
              </mobi:view>
+             <!-- PAGE PANEL -->
+             <mobi:view id="pagepanel" title="Page Panel" menuIcon="mobile-phone"
+				navBarGroup="pagepanel">
+                 <ui:include src="/resources/examples/mobi/pagepanel/pagepanel-example.xhtml" />
+             </mobi:view>
+             <mobi:view id="pagepanelDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="pagepanel">
+                <ui:include src="/resources/examples/mobi/pagepanel/pagepanel-desc.xhtml" />
+             </mobi:view>
              <!-- VIEW MANAGER -->
              <mobi:view id="viewmanager" title="View Manager" menuIcon="th-list"
                 navBarGroup="viewmanager">
