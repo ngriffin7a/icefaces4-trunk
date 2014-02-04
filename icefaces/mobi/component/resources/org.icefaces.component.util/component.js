@@ -1245,7 +1245,7 @@ ice.mobi.geolocation = {
             ' highAccuracy: ' + geoParams.enableHighAccuracy);
 
         ice.mobi.geolocation.watchId = navigator.geolocation.watchPosition(
-                this.successCallback, this.errorCallback,
+                this.getSuccessCallback(pClientId), this.errorCallback,
                 geoParams );
 
         ice.mobi.addListener(window, 'deviceorientation', ice.mobi.geolocation.orientationCallback);
@@ -1277,17 +1277,22 @@ ice.mobi.geolocation = {
             ' timeout: ' + geoParams.timeout + '(ms)' +
             ' highAccuracy: ' + geoParams.enableHighAccuracy);
 
-       navigator.geolocation.getCurrentPosition(this.successCallback, this.errorCallback,
+       navigator.geolocation.getCurrentPosition(this.getSuccessCallback(pClientId), this.errorCallback,
                     geoParams );
 
         ice.mobi.addListener(window, 'deviceorientation', ice.mobi.geolocation.orientationCallback);
         ice.onElementRemove(pClientId, ice.mobi.geolocation.clearWatch);
     },
 
-    successCallback: function(pos) {
-        console.log('Position update for client: ' + ice.mobi.geolocation.clientId);
+	getSuccessCallback: function(id) {
+		var self = this;
+		return function(pos) { self.successCallback(pos,id) };
+	},
+
+    successCallback: function(pos, id) {
+        console.log('Position update for client: ' + id);
         try {
-            inputId = ice.mobi.geolocation.clientId + "_locHidden";
+            inputId = id + "_locHidden";
             ice.mobi.storeLocation(inputId, pos.coords);
 
         } catch(e) {

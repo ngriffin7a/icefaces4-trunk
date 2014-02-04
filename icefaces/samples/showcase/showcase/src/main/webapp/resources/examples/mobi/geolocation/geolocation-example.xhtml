@@ -26,7 +26,8 @@
 
     <h:form id="geolocForm" styleClass="geolocpage">
 
-    <mobi:geolocation latitude="#{geoLocationBean.latitude}"
+    <mobi:geolocation id="geolocation"
+                      latitude="#{geoLocationBean.latitude}"
                       longitude="#{geoLocationBean.longitude}"
                       altitude="#{geoLocationBean.altitude}"
                       direction="#{geoLocationBean.direction}"
@@ -84,10 +85,10 @@
     <div>
     <mobi:fieldsetGroup>
         <mobi:fieldsetRow>
-            <h:outputLabel value="Continuous Updates:" for="highPrecision"/>
-            <mobi:flipswitch id="highPrecision"
+            <h:outputLabel value="Continuous Updates:" for="continuousUpdates"/>
+            <mobi:flipswitch id="continuousUpdates"
                              labelOn="true" labelOff="false"
-                             singleSubmit="true" style="float:right"
+                             style="float:right"
                              valueChangeListener="#{geoLocationBean.continuousUpdatesChange}"
                              value="#{geoLocationBean.continuousUpdates}"/>
         </mobi:fieldsetRow>
@@ -109,7 +110,7 @@
                 </span>
             </div>
             <ace:textEntry id="timeout" value="#{geoLocationBean.timeout}"
-                singleSubmit="true" type="number" style="float:right;max-width:45%"/>&#160;
+                type="number" style="float:right;max-width:45%"/>&#160;
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
             <div style="display:inline-block;max-width:50%">
@@ -119,7 +120,7 @@
                 </span>
             </div>
             <ace:textEntry id="maxAge" value="#{geoLocationBean.maximumAge}"
-                singleSubmit="true" type="number" style="float:right;max-width:45%"/>&#160;
+                type="number" style="float:right;max-width:45%"/>&#160;
         </mobi:fieldsetRow>
     </mobi:fieldsetGroup>
     </div>
