@@ -68,7 +68,7 @@ public class GeoLocationBean /*extends ExampleImpl<GeoLocationBean>*/ implements
     private int timeout = 30;
     private int maximumAge = 3600;
     private String enableHighPrecision = "asNeeded";
-    private boolean continuousUpdates = true;
+    private boolean continuousUpdates = false;
 
     public GeoLocationBean() {
         //super(GeoLocationBean.class);
