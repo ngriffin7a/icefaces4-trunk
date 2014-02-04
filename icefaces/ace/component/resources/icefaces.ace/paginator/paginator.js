@@ -13,19 +13,34 @@ ice.ace.DataTable.Paginator = function(table) {
     this.container = container;
 
     container.keyboardPagination = function(e) {
-        if (e.which == 34) {
+        var keycode = e.which;
+        //page down or right arrow key
+        if (keycode == 34 || keycode == 39) {
             e.preventDefault();
             if (activeIndex < max) {
                 activeIndex++;
                 submit();
             }
         }
-        if (e.which == 33) {
+        //page up or left arrow key
+        if (keycode == 33 || keycode == 37) {
             e.preventDefault();
             if (activeIndex > 1) {
                 activeIndex--;
                 submit();
             }
+        }
+        //home key
+        if (keycode == 36) {
+            e.preventDefault();
+            activeIndex = 1;
+            submit();
+        }
+        //end key
+        if (keycode == 35) {
+            e.preventDefault();
+            activeIndex = max;
+            submit();
         }
     };
 
@@ -35,6 +50,7 @@ ice.ace.DataTable.Paginator = function(table) {
     function initPageMarkup() {
         function getTemplateControlMarkup(keyword) {
             var markup = '';
+            var currentPageButtonID = container.attr('id') + '_current_page';
 
             if (keyword == 'currentPageReport') {
                 markup = '<span class="ui-paginator-current">('+activeIndex+' of '+ max +')</span>';
@@ -42,22 +58,22 @@ ice.ace.DataTable.Paginator = function(table) {
             else if (keyword == 'firstPageLink') {
                 var className = 'ui-paginator-first ui-state-default ui-corner-all';
                 if (activeIndex == 1) className += ' ui-state-disabled';
-                markup = '<a href="#" class="'+className+'"><span class="ui-icon ui-icon-seek-first">'+labels.first+'</span></a>';
+                markup = '<a href="#" class="'+className+'" onclick="ice.setFocus(\'' + currentPageButtonID + '\');"><span class="ui-icon ui-icon-seek-first">'+labels.first+'</span></a>';
             }
             else if (keyword == 'lastPageLink') {
                 var className = 'ui-paginator-last ui-state-default ui-corner-all';
                 if (activeIndex == max) className += ' ui-state-disabled';
-                markup = '<a href="#" class="'+className+'"><span class="ui-icon ui-icon-seek-end">'+labels.last+'</span></a>';
+                markup = '<a href="#" class="'+className+'" onclick="ice.setFocus(\'' + currentPageButtonID + '\');"><span class="ui-icon ui-icon-seek-end">'+labels.last+'</span></a>';
             }
             else if (keyword == 'previousPageLink') {
                 var className = 'ui-paginator-previous ui-state-default ui-corner-all';
                 if (activeIndex == 1) className += ' ui-state-disabled';
-                markup = '<a href="#" class="'+className+'"><span class="ui-icon ui-icon-seek-prev">'+labels.prev+'</span></a>';
+                markup = '<a href="#" class="'+className+'" onclick="ice.setFocus(\'' + currentPageButtonID + '\');"><span class="ui-icon ui-icon-seek-prev">'+labels.prev+'</span></a>';
             }
             else if (keyword == 'nextPageLink') {
                 var className = 'ui-paginator-next ui-state-default ui-corner-all';
                 if (activeIndex == max) className += ' ui-state-disabled';
-                markup = '<a href="#" class="'+className+'"><span class="ui-icon ui-icon-seek-next">'+labels.next+'</span></a>';
+                markup = '<a href="#" class="'+className+'" onclick="ice.setFocus(\'' + currentPageButtonID + '\');"><span class="ui-icon ui-icon-seek-next">'+labels.next+'</span></a>';
             }
             else if (keyword == 'rowsPerPageDropdown' && cfg.rowsPerPageOptions) {
                 markup = '<select class="ui-paginator-rpp-options" title="Rows per page" id="' + container.attr('id') + keyword + '">';
@@ -88,10 +104,11 @@ ice.ace.DataTable.Paginator = function(table) {
                     startPage -= extraLinks;
 
                 for (var i = startPage; i <= (cfg.pageLinks + startPage - 1) && ((i-1) * cfg.rowsPerPage < cfg.totalRecords); i++) {
-                    if (i == activeIndex)
-                        markup += '<span class="ui-paginator-page ui-state-default ui-corner-all ui-paginator-current-page ui-state-active">'+i+'</span>';
+                    if (i == activeIndex) {
+                        markup += '<a  href="#" class="ui-paginator-page ui-state-default ui-corner-all ui-paginator-current-page ui-state-active" id="' + currentPageButtonID + '">'+i+'</a>';
+                    }
                     else
-                        markup += '<a href="#" class="ui-paginator-page ui-state-default ui-corner-all">'+i+'</a>';
+                        markup += '<a href="#" class="ui-paginator-page ui-state-default ui-corner-all" onclick="ice.setFocus(\'' + currentPageButtonID + '\');">'+i+'</a>';
 
                     // Only render a single page when non-positive integer is given for row count
                     if (cfg.rowsPerPage < 1) break;
