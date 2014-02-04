@@ -441,7 +441,6 @@ ice.ace.gMap.getGMapWrapper = function (id) {
         else {
             control = ice.ace.gMap.nameToControl(name);
             if (givenPosition != "none" || style != "none") {
-                i
                 if (givenPosition != "none" && style == "none") {
                     var position = ice.ace.gMap.textToPosition(givenPosition);
                     option = control + ":true," + control + "Options:{position:" + position + "}";
@@ -698,28 +697,35 @@ ice.ace.gMap.getGMapWrapper = function (id) {
         var overlay;
         var points = locationList.split(":");
         for (var i = 0; i < points.length; i++) {
-            points[i] = "new google.maps.LatLng" + points[i] + "";
+            points[i] = eval("new google.maps.LatLng" + points[i]);
         }
         switch (shape.toLowerCase()) {
             case "line":
             case "polyline":
-                var overlayOptions = (options != null && options.length > 0) ? "({map:map, path:[" + points + "], " + options + "})" : "({map:map, path:[" + points + "]})";
-                overlay = new google.maps.Polyline(eval(overlayOptions));
+                var overlayOptions = (options != null && options.length > 0) ? eval("({" + options + "})") : {};
+                overlayOptions.map = map;
+                overlayOptions.path = points;
+                overlay = new google.maps.Polyline(overlayOptions);
                 break;
             case "polygon":
-                var overlayOptions = (options != null && options.length > 0) ? "({map:map, paths:[" + points + "], " + options + "})" : "({map:map, paths:[" + points + "]})";
-                overlay = new google.maps.Polygon(eval(overlayOptions));
+                var overlayOptions = (options != null && options.length > 0) ? eval("({" + options + "})") : {};
+                overlayOptions.map = map;
+                overlayOptions.paths = points;
+                overlay = new google.maps.Polygon(overlayOptions);
                 break;
             case "rectangle":
                 //needs SW corner in first point, NE in second
-                var overlayOptions = (options != null && options.length > 0) ? "({map:map, bounds:new google.maps.LatLngBounds(" + points[0] +
-                    "," + points[1] + "), " + options + "})" : "({map:map, bounds:new google.maps.LatLngBounds(" + points[0] + "," + points[1] + ")})";
-                overlay = new google.maps.Rectangle(eval(overlayOptions));
+                var overlayOptions = (options != null && options.length > 0) ? eval("({" + options + "})") : {};
+                overlayOptions.map = map;
+                overlayOptions.bounds = new google.maps.LatLngBounds(points[0], points[1]);
+                overlay = new google.maps.Rectangle(overlayOptions);
                 break;
             case "circle":
                 //Requires radius option
-                var overlayOptions = (options != null && options.length > 0) ? "({map:map, center: " + points[0] + ", " + options + "})" : "({map:map, center: " + points[0] + "})";
-                overlay = new google.maps.Circle(eval(overlayOptions));
+                var overlayOptions = (options != null && options.length > 0) ? eval("({" + options + "})") : {};
+                overlayOptions.map = map;
+                overlayOptions.center = points[0];
+                overlay = new google.maps.Circle(overlayOptions);
                 break;
             default:
                 console.log("Not a valid shape");
