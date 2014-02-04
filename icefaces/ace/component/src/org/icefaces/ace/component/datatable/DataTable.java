@@ -1596,8 +1596,8 @@ public class DataTable extends DataTableBase implements Serializable {
         if (EnvUtils.isMyFaces()) {
             setDataModel(null);
             // Get / Regenerate cached data model.
-            getDataModel();
         }
+        getDataModel();
 
         PanelExpansion panelExpansion = getPanelExpansion();
         RowExpansion rowExpansion = getRowExpansion();
