@@ -20,6 +20,7 @@ import org.icefaces.apache.commons.fileupload.*;
 import org.icefaces.impl.application.WindowScopeManager;
 import org.icefaces.impl.context.DOMPartialViewContext;
 import org.icefaces.impl.util.CoreUtils;
+import org.icefaces.impl.util.Util;
 import org.icefaces.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.icefaces.apache.commons.fileupload.util.Streams;
 import org.icefaces.util.EnvUtils;
@@ -772,7 +773,8 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                             in.close();
                         }
                     } else if (file != null) {
-                        part.write(file.getAbsolutePath());
+                        Util.copyStream(part.getInputStream(),
+                            new FileOutputStream(file));
                         partsManualProgress.updateRead(size);
                     }
                 }
