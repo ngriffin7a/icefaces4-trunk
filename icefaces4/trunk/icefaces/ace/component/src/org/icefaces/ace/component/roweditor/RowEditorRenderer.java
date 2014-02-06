@@ -28,6 +28,7 @@
 package org.icefaces.ace.component.roweditor;
 
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.celleditor.CellEditor;
 import org.icefaces.ace.component.datatable.DataTable;
 import org.icefaces.ace.component.datatable.DataTableConstants;
 import org.icefaces.ace.event.RowEditCancelEvent;
@@ -37,6 +38,7 @@ import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.render.MandatoryResourceComponent;
 
+import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
@@ -107,12 +109,26 @@ public class RowEditorRenderer extends CoreRenderer {
             else if (params.containsKey(tableId + "_editCancel")) {
                 component.queueEvent(new RowEditCancelEvent(component, table.getRowData()));
 
+				for (Column c : table.getColumns()) {
+					revertInputs(c.getCellEditor().getFacet("input"));
+				}
+
                 for (Column c : table.getColumns())
                     state.removeActiveCellEditor(c.getCellEditor());
             }
         }
     }
 
+	private void revertInputs(UIComponent component) {
+		if (component instanceof EditableValueHolder) {
+			EditableValueHolder input = (EditableValueHolder) component;
+			input.setSubmittedValue(null);
+			input.setValid(true);
+		}
+		for (UIComponent child : component.getChildren()) {
+			revertInputs(child);
+		}
+	}
 
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
