@@ -105,7 +105,7 @@ ice.ace.DataTable.Paginator = function(table) {
 
                 for (var i = startPage; i <= (cfg.pageLinks + startPage - 1) && ((i-1) * cfg.rowsPerPage < cfg.totalRecords); i++) {
                     if (i == activeIndex) {
-                        markup += '<a  href="#" class="ui-paginator-page ui-state-default ui-corner-all ui-paginator-current-page ui-state-active" id="' + currentPageButtonID + '">'+i+'</a>';
+                        markup += '<a  href="#" class="ui-paginator-page ui-state-default ui-corner-all ui-paginator-current-page ui-state-active" style="cursor: default;" id="' + currentPageButtonID + '">'+i+'</a>';
                     }
                     else
                         markup += '<a href="#" class="ui-paginator-page ui-state-default ui-corner-all" onclick="ice.setFocus(\'' + currentPageButtonID + '\');">'+i+'</a>';
