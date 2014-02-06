@@ -45,6 +45,7 @@ import java.util.Map;
 )
 
 @ResourceDependencies({
+        @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
 })
 public class MicrophoneMeta extends UIComponentBaseMeta {
