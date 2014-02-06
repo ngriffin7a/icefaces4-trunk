@@ -36,6 +36,7 @@ import javax.faces.application.ResourceDependency;
 )
 
 @ResourceDependencies({
+        @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
 })
 public class AugmentedRealityMeta extends UIComponentBaseMeta  {
