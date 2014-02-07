@@ -21,7 +21,6 @@
     xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:ace="http://www.icefaces.org/icefaces/components"
     xmlns:ice="http://www.icesoft.com/icefaces/component"
-    xmlns:icecore="http://www.icefaces.org/icefaces/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
@@ -35,7 +34,6 @@
     <ui:param name="tldResources" value="#{contextMenuResources.tldResources}"/>
 
     <ui:define name="example">
-        <icecore:config mandatoryResource="dataTable" />
         <h:form id="form">
             <ace:panel style="text-align: center;">
                 <h:outputText id="txt" value="Right-click anywhere on this page to display the global menu"/>
