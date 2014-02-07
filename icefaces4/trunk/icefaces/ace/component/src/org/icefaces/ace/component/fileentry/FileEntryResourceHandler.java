@@ -773,8 +773,13 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                             in.close();
                         }
                     } else if (file != null) {
-                        Util.copyStream(part.getInputStream(),
-                            new FileOutputStream(file));
+                        try  {
+                            part.write(file.getAbsolutePath());
+                        } catch (Exception e)  {
+                            log.fine("FileEntryResourceHandler fallback copyStream " + e);
+                            Util.copyStream(part.getInputStream(),
+                                new FileOutputStream(file));
+                        }
                         partsManualProgress.updateRead(size);
                     }
                 }
