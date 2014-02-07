@@ -228,7 +228,6 @@ mobi.datespinner = {
     },
     dateSubmit: function(cfg, clientId) {
             this.cfg = cfg;
-            var singleSubmit = this.cfg.singleSubmit;
             var event = this.cfg.event;
             var hasBehaviors = false;
             var behaviors = this.cfg.behaviors;
@@ -237,10 +236,10 @@ mobi.datespinner = {
             }
             if (hasBehaviors) {
                 if (behaviors.change) {
-                    behaviors.change();
+                    ice.ace.ab(behaviors.change);
                 }
             }
-            if (!hasBehaviors && singleSubmit) {
+            if (!hasBehaviors) {
                 ice.se(event, clientId);
             }
     },

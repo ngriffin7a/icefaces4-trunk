@@ -151,7 +151,6 @@ mobi.timespinner = {
     },
     select:function (clientId, cfg) {
         this.cfg = cfg;
-        var singleSubmit = this.cfg.singleSubmit;
         var event = this.cfg.event;
         var hasBehaviors = false;
         var behaviors = this.cfg.behaviors;
@@ -163,10 +162,10 @@ mobi.timespinner = {
         inputEl.value = titleEl.childNodes[1].innerHTML;
         if (hasBehaviors) {
             if (behaviors.change) {
-                behaviors.change();
+                ice.ace.ab(behaviors.change);
             }
         }
-        if (!hasBehaviors && singleSubmit) {
+        if (!hasBehaviors) {
             ice.se(event, clientId);
         }
         this.close(clientId);

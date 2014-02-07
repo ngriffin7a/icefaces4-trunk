@@ -36,7 +36,6 @@ mobi.flipswitch = {
         this.id = clientId;
         this.cfg = cfg;
         this.flipperEl = cfg.elVal;
-        this.singleSubmit = cfg.singleSubmit;
         this.event = cfg.event;
 
         var hasBehaviors = false;
@@ -64,12 +63,9 @@ mobi.flipswitch = {
             if (thisEl){
                thisEl.value=value.toString();
             }
-            if (this.singleSubmit){
-                    ice.se(this.event, this.id);
-                }
             if (hasBehaviors){
                 if (this.cfg.behaviors.activate){
-                    this.cfg.behaviors.activate();
+                    ice.ace.ab(this.cfg.behaviors.activate);
                 }
             }
          }

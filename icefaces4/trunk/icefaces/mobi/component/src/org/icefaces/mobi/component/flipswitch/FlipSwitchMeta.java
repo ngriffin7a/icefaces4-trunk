@@ -41,6 +41,7 @@ import javax.faces.application.ResourceDependency;
 
 @ResourceDependencies({
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
+		@ResourceDependency(library = "icefaces.ace", name = "util/ace-jquery.js"),
 		@ResourceDependency(library = "org.icefaces.component.flipswitch", name = "flipswitch.js"),
 		@ResourceDependency(library = "org.icefaces.component.flipswitch", name = "flip-switch.css")
 })
