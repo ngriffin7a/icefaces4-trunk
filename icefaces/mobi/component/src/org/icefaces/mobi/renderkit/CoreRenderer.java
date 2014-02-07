@@ -388,7 +388,6 @@ public class CoreRenderer extends Renderer {
                }
                String domEvent = getDomEvent(event);
                sb.append(domEvent + ":");
-               sb.append("function() {");
                ClientBehaviorContext cbContext = ClientBehaviorContext.createClientBehaviorContext(context, (UIComponent) component, event, clientId, params);
                for(Iterator<ClientBehavior> behaviorIter = eventBehaviors.get(event).iterator(); behaviorIter.hasNext();) {
                    ClientBehavior behavior = behaviorIter.next();
@@ -397,7 +396,6 @@ public class CoreRenderer extends Renderer {
                        sb.append(script);
                    }
                }
-               sb.append("}");
                if(eventIterator.hasNext()) {
                    sb.append(",");
                }
