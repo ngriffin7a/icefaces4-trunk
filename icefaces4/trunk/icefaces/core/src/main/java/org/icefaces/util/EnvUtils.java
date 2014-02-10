@@ -1260,7 +1260,7 @@ class EnvConfig {
         deltaSubmit = decodeBoolean(initMap, EnvUtils.DELTA_SUBMT, false, info);
         focusManaged = decodeBoolean(initMap, EnvUtils.FOCUS_MANAGED, true, info);
         lazyPush = decodeBoolean(initMap, EnvUtils.LAZY_PUSH, true, info);
-        generateHeadUpdate = decodeBoolean(initMap, EnvUtils.GENERATE_HEAD_UPDATE, false, info);
+        generateHeadUpdate = decodeBoolean(initMap, EnvUtils.GENERATE_HEAD_UPDATE, true, info);
         includeScrollOffsets = decodeBoolean(initMap, EnvUtils.INCLUDE_SCROLL_OFFSETS, true, info);
         reloadOnUpdateFailure = decodeBoolean(initMap, EnvUtils.RELOAD_ON_UPDATE_FAILURE, false, info);
         sessionExpiredRedirectURI = decodeString(initMap, EnvUtils.SESSION_EXPIRED_REDIRECT_URI, null, info);
