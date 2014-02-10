@@ -110,7 +110,8 @@ public class RowEditorRenderer extends CoreRenderer {
                 component.queueEvent(new RowEditCancelEvent(component, table.getRowData()));
 
 				for (Column c : table.getColumns()) {
-					revertInputs(c.getCellEditor().getFacet("input"));
+					CellEditor ce = c.getCellEditor();
+					if (ce != null) revertInputs(ce.getFacet("input"));
 				}
 
                 for (Column c : table.getColumns())
@@ -120,6 +121,7 @@ public class RowEditorRenderer extends CoreRenderer {
     }
 
 	private void revertInputs(UIComponent component) {
+		if (component == null) return;
 		if (component instanceof EditableValueHolder) {
 			EditableValueHolder input = (EditableValueHolder) component;
 			input.setSubmittedValue(null);
