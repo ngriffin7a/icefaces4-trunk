@@ -57,7 +57,7 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 		var self = this;
 		$element.on('focus', function() {
 			$element.off('focus');
-			if (ice.ace.SelectMenu.Browser.IE) { $element.children().off('click'); }
+			$element.children().off('click');
 			if ($element.data("labelIsInField")) {
 				self.displayedValue.innerHTML = '&nbsp;';
 				$element.removeClass(self.cfg.inFieldLabelStyleClass);
@@ -69,24 +69,22 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 				self.updateNOW(self.content);
 			}
 		});
-		//if (ice.ace.SelectMenu.Browser.IE) {
-			$element.children().on('click', function(e) {
-				$element.off('focus');
-				$element.children().off('click');
-				if ($element.data("labelIsInField")) {
-					self.displayedValue.innerHTML = '&nbsp;';
-					$element.removeClass(self.cfg.inFieldLabelStyleClass);
-					$element.data("labelIsInField", false);
-					self.cfg.labelIsInField = false;
-				}
-				self.initialize(self.element, self.update, options, rowClass, highlightedRowClass, selectedRowClass, behaviors); 
-				e.stopPropagation();
-				e.preventDefault();
-				if (ice.ace.SelectMenu.Browser.IE) {
-					self.updateNOW(self.content);
-				}
-			});
-		//}
+        $element.children().on('click', function(e) {
+            $element.off('focus');
+            $element.children().off('click');
+            if ($element.data("labelIsInField")) {
+                self.displayedValue.innerHTML = '&nbsp;';
+                $element.removeClass(self.cfg.inFieldLabelStyleClass);
+                $element.data("labelIsInField", false);
+                self.cfg.labelIsInField = false;
+            }
+            self.initialize(self.element, self.update, options, rowClass, highlightedRowClass, selectedRowClass, behaviors);
+            e.stopPropagation();
+            e.preventDefault();
+            if (ice.ace.SelectMenu.Browser.IE) {
+                self.updateNOW(self.content);
+            }
+        });
 	}
 };
 
