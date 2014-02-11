@@ -42,7 +42,7 @@ public class PagePanelRenderer extends CoreRenderer {
         writer.startElement(HTML.DIV_ELEM, pagePanel);
 
         writer.writeAttribute(HTML.ID_ATTR, clientId + "_pgPnl", HTML.ID_ATTR);
-        writer.writeAttribute(HTML.CLASS_ATTR, "mobi-pagePanel", null);
+        writer.writeAttribute(HTML.CLASS_ATTR, "mobi-pagePanel ui-widget", null);
         PassThruAttributeWriter.renderNonBooleanAttributes(writer, pagePanel, pagePanel.getCommonAttributeNames());
 
         if (pagePanel.getStyle()!=null){
