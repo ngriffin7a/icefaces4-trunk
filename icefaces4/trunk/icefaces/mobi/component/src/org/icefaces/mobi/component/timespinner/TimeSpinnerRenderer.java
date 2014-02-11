@@ -291,7 +291,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
 
         writer.endElement("div");                                         //end of selection container
         writer.startElement("div", uiComponent);                          //button container for set or cancel
-        writer.writeAttribute("class", "mobi-time-submit-container", null);
+        writer.writeAttribute("class", "mobi-time-submit-container ui-widget-content", null);
         writer.startElement("input", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
         writer.writeAttribute("type", "button", "type");

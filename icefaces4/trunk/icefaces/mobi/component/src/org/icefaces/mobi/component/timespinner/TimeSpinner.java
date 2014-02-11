@@ -30,18 +30,18 @@ public class TimeSpinner extends TimeSpinnerBase {
     private static Logger logger = Logger.getLogger(TimeSpinner.class.getName());
     public static final String BLACKOUT_PNL_CLASS = "mobi-time-bg";
     public static final String BLACKOUT_PNL_INVISIBLE_CLASS = "mobi-time-bg-inv";
-    public static final String CONTAINER_CLASS = "mobi-time-container ui-widget ui-widget-content";
+    public static final String CONTAINER_CLASS = "mobi-time-container ui-widget ui-corner-all";
     public static final String CONTAINER_INVISIBLE_CLASS = "mobi-time-container-inv ui-widget ui-widget-content";
     public static final String INPUT_CLASS = "mobi-input-text";
     public static final String POP_UP_CLASS = "mobi-time-popup-btn";
-    public static final String TITLE_CLASS = "mobi-time-title-container ui-widget-content";
+    public static final String TITLE_CLASS = "mobi-time-title-container ui-widget-header";
     public static final String SELECT_CONT_CLASS = "mobi-time-select-container ui-widget-content";
     public static final String VALUE_CONT_CLASS = "mobi-time-select-value-cont";
     public static final String BUTTON_INC_CONT_CLASS = "mobi-time-btn-cont-incr";
-    public static final String BUTTON_INC_CLASS = "mobi-time-btn mobi-time-btn-incr";
+    public static final String BUTTON_INC_CLASS = "mobi-time-btn mobi-time-btn-incr ui-button ui-state-default";
     public static final String SEL_VALUE_CLASS = "mobi-time-select-value";
     public static final String BUTTON_DEC_CONT_CLASS = "mobi-time-btn-cont-decr";
-    public static final String BUTTON_DEC_CLASS = "mobi-time-btn mobi-time-btn-decr";
+    public static final String BUTTON_DEC_CLASS = "mobi-time-btn mobi-time-btn-decr ui-button ui-state-default";
 
     private Attribute[] commonAttributeNames = {
             new Attribute("size", null)
