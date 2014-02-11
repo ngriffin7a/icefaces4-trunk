@@ -31,18 +31,18 @@ public class DateSpinner extends DateSpinnerBase {
 
     public static final String BLACKOUT_PNL_CLASS = "mobi-date-bg";
     public static final String BLACKOUT_PNL_INVISIBLE_CLASS = "mobi-date-bg-inv";
-    public static final String CONTAINER_CLASS = "mobi-date-container ui-widget ui-widget-content";
+    public static final String CONTAINER_CLASS = "mobi-date-container ui-widget ui-corner-all";
     public static final String CONTAINER_INVISIBLE_CLASS = "mobi-date-container-inv ui-widget ui-widget-content";
     public static final String INPUT_CLASS = "mobi-input-text";
     public static final String POP_UP_CLASS = "mobi-date-popup-btn";
-    public static final String TITLE_CLASS = "mobi-date-title-container ui-widget-content";
+    public static final String TITLE_CLASS = "mobi-date-title-container ui-widget-header";
     public static final String SELECT_CONT_CLASS = "mobi-date-select-container ui-widget-content";
     public static final String VALUE_CONT_CLASS = "mobi-date-select-value-cont";
     public static final String BUTTON_INC_CONT_CLASS = "mobi-date-btn-cont-incr";
-    public static final String BUTTON_INC_CLASS = "mobi-date-btn mobi-date-btn-incr";
+    public static final String BUTTON_INC_CLASS = "mobi-date-btn mobi-date-btn-incr ui-button ui-state-default";
     public static final String SEL_VALUE_CLASS = "mobi-date-select-value";
     public static final String BUTTON_DEC_CONT_CLASS = "mobi-date-btn-cont-decr";
-    public static final String BUTTON_DEC_CLASS = "mobi-date-btn mobi-date-btn-decr";
+    public static final String BUTTON_DEC_CLASS = "mobi-date-btn mobi-date-btn-decr ui-button ui-state-default";
 
     private Attribute[] commonAttributeNames = {
             new Attribute("size", null)
