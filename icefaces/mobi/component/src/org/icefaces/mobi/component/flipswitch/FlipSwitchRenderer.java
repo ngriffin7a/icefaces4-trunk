@@ -121,13 +121,13 @@ public class FlipSwitchRenderer extends CoreRenderer {
         writer.startElement(HTML.SPAN_ELEM, null);
 
         boolean switchVal = (Boolean) flipswitch.getValue();
-        writer.writeAttribute("class", "mobi-flipswitch-txt-on" + (switchVal ? " ui-state-active" : "" ), null);
+        writer.writeAttribute("class", "mobi-flipswitch-txt-on ui-button ui-corner-all" + (switchVal ? " ui-state-active" : "" ), null);
         writer.write(labelOn);
         writer.endElement(HTML.SPAN_ELEM);
         writeHiddenField(uiComponent, clientId, writer, switchVal);
 
         writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute("class", "mobi-flipswitch-txt-off", null);
+        writer.writeAttribute("class", "mobi-flipswitch-txt-off ui-button ui-corner-all" + (!switchVal ? " ui-state-default" : "" ), null);
         writer.write(labelOff);
         writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.ANCHOR_ELEM);

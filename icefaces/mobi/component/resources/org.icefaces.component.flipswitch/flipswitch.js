@@ -49,13 +49,13 @@ mobi.flipswitch = {
             var offClass = this.flipperEl.children[2].className;
             if (oldClass.indexOf('-off ')>0){
             	this.flipperEl.className='mobi-flipswitch mobi-flipswitch-on ui-widget';
-            	this.flipperEl.children[0].className = 'mobi-flipswitch-txt-on ui-state-active';
-            	this.flipperEl.children[2].className = 'mobi-flipswitch-txt-off';
+            	this.flipperEl.children[0].className = 'mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-active';
+            	this.flipperEl.children[2].className = 'mobi-flipswitch-txt-off ui-button ui-corner-all';
                 value = true;
             }else{
              	this.flipperEl.className='mobi-flipswitch mobi-flipswitch-off ui-widget';
-             	this.flipperEl.children[0].className = 'mobi-flipswitch-txt-on';
-                this.flipperEl.children[2].className = 'mobi-flipswitch-txt-off';
+             	this.flipperEl.children[0].className = 'mobi-flipswitch-txt-on ui-button ui-corner-all';
+                this.flipperEl.children[2].className = 'mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default';
                	value = false;
             }
             var hidden = this.id+"_hidden";
