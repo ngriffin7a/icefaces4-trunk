@@ -18,8 +18,8 @@ package org.icefaces.mobi.component.fieldset;
 
 
 public class FieldSetRow extends FieldSetRowBase {
-	public static final String FIELDSETROW_CLASS = "mobi-fieldset-row";
-	public static final String FIELDSETGROUP_CLASS = "mobi-fieldset-row-group";
+	public static final String FIELDSETROW_CLASS = "mobi-fieldset-row ui-widget-content";
+	public static final String FIELDSETGROUP_CLASS = "mobi-fieldset-row-group ui-widget-header";
     
     public FieldSetRow() {
         super();

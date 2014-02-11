@@ -19,7 +19,7 @@ package org.icefaces.mobi.component.fieldset;
 
 public class FieldSetGroup extends FieldSetGroupBase {
 
-	public static final String FIELDSET_CLASS = "mobi-fieldset ui-field-contain";
+	public static final String FIELDSET_CLASS = "mobi-fieldset ui-field-contain ui-widget";
 	public static final String FIELDSETINSET_CLASS = "mobi-fieldset-inset";
 	
     public FieldSetGroup() {
