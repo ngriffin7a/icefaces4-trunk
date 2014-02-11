@@ -45,13 +45,6 @@
     background-color: rgba(0,0,0,.1);
 }
 
-/* inactive state */
-.mobi-flipswitch-off .mobi-flipswitch-txt-on, .mobi-flipswitch-on .mobi-flipswitch-txt-off {
-    color: transparent;
-    text-shadow: none;
-    margin: 1px;
-    width: 1.2em;
-}
 .mobi-flipswitch-txt-on, .mobi-flipswitch-txt-off {
     font-size: 15px;
     display: inline-block;
