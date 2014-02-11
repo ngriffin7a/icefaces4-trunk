@@ -26,7 +26,7 @@ public class PagePanel extends PagePanelBase {
     public static final String HEADER_CLASS = "mobi-pagePanel-header ui-widget-header";
     public static final String FOOTER_CLASS = "mobi-pagePanel-footer ui-widget-content ";
     public static final String BODY_CLASS = "mobi-pagePanel-body ui-widget-content";
-    public static final String CTR_CLASS = "mobi-pagePanel-ctr ui-widget";
+    public static final String CTR_CLASS = "mobi-pagePanel-ctr";
 
     // style classes to remove header footer margins
     public static final String BODY_NO_HEADER_CLASS = "mobi-pagePanel-body-noheader";
