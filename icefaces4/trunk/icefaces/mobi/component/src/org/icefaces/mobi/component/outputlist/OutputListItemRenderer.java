@@ -20,6 +20,7 @@ package org.icefaces.mobi.component.outputlist;
 import org.icefaces.mobi.util.HTML;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
@@ -62,7 +63,7 @@ public class OutputListItemRenderer extends Renderer {
             throws IOException {
         OutputListItem item = (OutputListItem) uiComponent;
         ResponseWriter writer = facesContext.getResponseWriter();
-        if (!item.isGroup()) writeArrowIcon(writer);
+        if (!item.isGroup() && (item.getChildren().size() == 1 && item.getChildren().get(0) instanceof HtmlCommandLink)) writeArrowIcon(writer);
         writer.endElement(HTML.DIV_ELEM);
         writer.endElement(HTML.LI_ELEM);
     }
