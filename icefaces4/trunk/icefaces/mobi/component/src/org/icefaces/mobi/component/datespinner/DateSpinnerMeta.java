@@ -45,7 +45,7 @@ import javax.faces.application.ResourceDependency;
 @ClientBehaviorHolder(events = {
         @ClientEvent(name = "change", javadoc = "Fired when a change is detected from date selection.",
                 tlddoc = "Fired when a change is detected in date selection.",
-                defaultRender = "@this", defaultExecute = "@all")
+                defaultRender = "@all", defaultExecute = "@this")
 }, defaultEvent = "change")
 public class DateSpinnerMeta extends UIInputMeta {
 
