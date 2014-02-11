@@ -46,7 +46,7 @@ import javax.faces.application.ResourceDependency;
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="change", javadoc="Fires when a change is detected in the time spinner.",
             tlddoc="Fires when a change is detected in the time spinner.",
-            defaultRender="@this", defaultExecute="@all")
+            defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="change")
 public class TimeSpinnerMeta extends UIInputMeta {
 

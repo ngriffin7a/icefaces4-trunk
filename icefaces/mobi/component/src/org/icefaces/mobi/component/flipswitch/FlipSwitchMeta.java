@@ -49,7 +49,7 @@ import javax.faces.application.ResourceDependency;
 	@ClientEvent(name="activate", 
 	        javadoc="Fired when flip switch has realized an onclick event.",
 	        tlddoc="Fired when the the flip switch has realized an onclick event",
-	        defaultRender="@this", defaultExecute="@all")
+	        defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="activate")
 public class FlipSwitchMeta extends UISelectBooleanMeta {
 
