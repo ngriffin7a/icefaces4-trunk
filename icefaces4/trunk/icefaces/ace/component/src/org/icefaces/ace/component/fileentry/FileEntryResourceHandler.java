@@ -779,6 +779,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                             log.fine("FileEntryResourceHandler fallback copyStream " + e);
                             Util.copyStream(part.getInputStream(),
                                 new FileOutputStream(file));
+                            part.delete();
                         }
                         partsManualProgress.updateRead(size);
                     }
