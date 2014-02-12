@@ -43,7 +43,7 @@ public class TreeDataFactory {
         LocationNodeImpl[] onCities = {
                 new LocationNodeImpl("Toronto",     "city",     1),
                 new LocationNodeImpl("Waterloo",    "city",     1),
-                new LocationNodeImpl("London",      "city",     1)
+                new LocationNodeImpl("Ottawa",      "city",     1)
         };
 
         LocationNodeImpl[] mbCities = {
@@ -60,8 +60,8 @@ public class TreeDataFactory {
 
         LocationNodeImpl[] qbCities = {
                 new LocationNodeImpl("Quebec City", "city",     1),
-                new LocationNodeImpl("Ottawa",      "city",     1),
                 new LocationNodeImpl("Montreal",    "city",     1)
+                new LocationNodeImpl("Gatineau",    "city",     1)
         };
 
         LocationNodeImpl[] nbCities = {
