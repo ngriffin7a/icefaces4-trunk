@@ -90,6 +90,7 @@ ice.ace.TableConf.prototype.init = function(id, cfg) {
     this.sortOrder = [];
 
     var dragConfig = {};
+    dragConfig.containment = "document";
 
     if (cfg.handle)
         dragConfig.handle = cfg.handle;
