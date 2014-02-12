@@ -60,7 +60,7 @@ public class TreeDataFactory {
 
         LocationNodeImpl[] qbCities = {
                 new LocationNodeImpl("Quebec City", "city",     1),
-                new LocationNodeImpl("Montreal",    "city",     1)
+                new LocationNodeImpl("Montreal",    "city",     1),
                 new LocationNodeImpl("Gatineau",    "city",     1)
         };
 
