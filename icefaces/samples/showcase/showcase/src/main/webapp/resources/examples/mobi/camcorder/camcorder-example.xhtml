@@ -37,12 +37,13 @@
                                 style="float:right"/>
                  &#160;
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+				<ace:pushButton id="camcorderUpload"
+									 styleClass="submit"
+									 actionListener="#{camcorderBean.processUploadedVideo}"
+									 value="Upload"/>
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-            
-        <ace:pushButton id="camcorderUpload"
-                             styleClass="submit"
-                             actionListener="#{camcorderBean.processUploadedVideo}"
-                             value="Upload"/>
                                  
         <h3>Uploaded Video</h3>
 

@@ -49,18 +49,19 @@
                 <ace:textEntry value="#{realityBean.label}" 
                         placeholder="Label" style="width:100%"/>
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+				<ace:pushButton id="arSubmit"
+										 styleClass="submit"
+										 actionListener="#{realityBean.processUploadedImage}"
+										 value="Submit"/>
+
+				<div style="margin:10px">#{realityBean.uploadMessage}</div>
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        
-        <ace:pushButton id="arSubmit"
-                                 styleClass="submit"
-                                 actionListener="#{realityBean.processUploadedImage}"
-                                 value="Submit"/>
-        
-        <div style="margin:10px">#{realityBean.uploadMessage}</div>
 
     </h:form>
 
-    <h:form styleClass="results">
+    <h:form>
 
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
@@ -102,7 +103,7 @@
                 Note that the view may take 30 seconds to display.)
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-<!--        
+
         <h3>Markers</h3>
 
         <mobi:fieldsetGroup>
@@ -119,12 +120,12 @@
                             itemValue="puz1"/>
                     <f:selectItem itemLabel="Puzzle Block 2"
                             itemValue="puz2"/>
--->
+
 <!--
                     <f:selectItem itemLabel="Image Targets"
                             itemValue="ice.targets"/>
 -->
-<!--
+
                     <f:selectItem itemLabel="AR Form"
                             itemValue="ice.arform"/>
                     <f:ajax execute="@this" render="@all"/>
@@ -156,7 +157,7 @@
                 </div>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
--->
+
                 
         <mobi:outputList rendered="#{realityBean.shopping}" inset="true">
             <mobi:outputListItem group="true">Items</mobi:outputListItem>

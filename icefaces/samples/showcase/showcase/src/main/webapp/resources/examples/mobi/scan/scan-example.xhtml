@@ -34,7 +34,7 @@
         </mobi:fieldsetGroup>
        
        <mobi:fieldsetGroup>
-            <mobi:fieldsetRow style="text-align:center">
+            <mobi:fieldsetRow>
                 <mobi:scan value="#{qrCodeBean.qrScanner}"
                            id="scanOne" style="width:50%"/>
             </mobi:fieldsetRow>
@@ -49,11 +49,12 @@
                             #{qrCodeBean.qrScanner}</h:outputLink>
                 </span>
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+				<ace:pushButton value="submit" styleClass="submit"
+									actionListener="#{qrCodeBean.checkCodeForUrl}"
+									/>
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        
-        <ace:pushButton value="submit" styleClass="submit"
-                            actionListener="#{qrCodeBean.checkCodeForUrl}"
-                            />
 
         <h3>QR Code Generator</h3>
         <mobi:fieldsetGroup>
@@ -65,10 +66,12 @@
                 <h:outputLabel value="QR Output: " styleClass="ui-input-text"/>
                 <ace:qrcode value="#{qrCodeBean.qrString}"/>
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+				<ace:pushButton value="Create" 
+											styleClass="submit" />
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
         
-        <ace:pushButton value="Create" 
-                                    styleClass="submit" />
     </h:form>
 
 

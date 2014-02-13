@@ -31,16 +31,17 @@
         </mobi:fieldsetGroup>
 
         <mobi:fieldsetGroup>
-            <mobi:fieldsetRow style="text-align:center">
+            <mobi:fieldsetRow>
                 <mobi:microphone duration="10" buttonLabel="Record Audio"
                                  captureMessageLabel="Audio captured"
                                  value="#{microphoneBean.audioFileMap}"/>
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+				<ace:pushButton styleClass="submit"
+								 actionListener="#{microphoneBean.processUploadedAudio}"
+								 value="Upload"/>
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        
-        <ace:pushButton styleClass="submit"
-                         actionListener="#{microphoneBean.processUploadedAudio}"
-                         value="Upload"/>
 
         <h3>Uploaded Audio</h3>
         
