@@ -97,6 +97,7 @@ public class ViewManagerRenderer extends Renderer{
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_back", null);
         writer.writeAttribute(HTML.CLASS_ATTR, "mobi-vm-back", null);
         writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.mobi.viewManager.goBack(this);", null);
+        writer.writeAttribute("data-backbutton-label", vm.getBackButtonLabel(), null);
         writer.writeAttribute(HTML.STYLE_ATTR, "display:none", null);
         writer.endElement(HTML.ANCHOR_ELEM);
         writer.endElement(HTML.DIV_ELEM);

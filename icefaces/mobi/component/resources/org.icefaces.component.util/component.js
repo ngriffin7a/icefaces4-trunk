@@ -2239,7 +2239,9 @@ ice.mobi.addListener(document, "touchstart", function(){});
                     if( prevView ){
                         backButton.style.display = "inline";
                         var title = prevView.getAttribute('data-title');
-                        backButton.innerHTML = title ? title : "Back";
+                        var backButtonLabel = backButton.getAttribute('data-backbutton-label') == 'mobi-view' ? 
+                                (title ? title : "Back") : backButton.getAttribute('data-backbutton-label');
+                        backButton.innerHTML = backButtonLabel;
                     }
                 }
             }

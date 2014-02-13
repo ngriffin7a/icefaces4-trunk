@@ -69,6 +69,10 @@ public class ViewManagerMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "The history stack")
     private Stack<String> history;
     
+    @Property(tlddoc = "If set, the back button label to display, if left to the default 'mobi-view' keyword, the back button label will"
+            + " be set to the associated view title. ", defaultValue = "mobi-view")
+    private String backButtonLabel;
+    
     
 
     
