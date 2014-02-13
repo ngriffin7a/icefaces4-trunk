@@ -125,7 +125,7 @@ ice.ace.Calendar.prototype.bindDateSelectListener = function() {
             }
         };
     }
-    if (!behavior && this.cfg.singleSubmit) {
+    if (!behavior) {
         this.cfg.onSelect = function(dateText, inst) {
             ice.se(null, _self.cfg.clientId);
         };
@@ -217,11 +217,6 @@ ice.ace.CalendarInit = function(options) {
                 input.bind('change', function() {
                     ice.setFocus();
                     ice.ace.ab(behavior);
-                });
-            } else if (options.singleSubmit) {
-                input.bind('change', function(event) {
-                    ice.setFocus();
-                    ice.se(event, id);
                 });
             }
         });
