@@ -30,8 +30,16 @@
 </h:head>
     <h:body>
 		<style type="text/css">
-			.icon-fetch-contact {
-				content: url("#{resource['css:images/fetch-contact-icon.png']}");
+			.icon-fetch-contact:before {
+				content: "\0040";
+				border: 1px solid;
+				border-left: 2px solid;
+			}
+			a:link, a:visited {
+				text-decoration: underline;
+			}
+			h3 {
+				margin-left:10px;
 			}
 		</style>
          <f:metadata>
