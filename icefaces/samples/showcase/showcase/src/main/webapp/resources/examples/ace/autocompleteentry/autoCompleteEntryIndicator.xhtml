@@ -56,7 +56,7 @@
                                   
                      <h:outputLabel for="positionIn" value="Indicator Position:"/>
                      <ace:simpleSelectOneMenu id="positionIn" value="#{autoCompleteEntryIndicatorBean.position}">
-						<f:ajax execute="@this" />
+                         <ace:ajax execute="@this" render="@all"/>
                         <f:selectItems value="#{positionBean.indicatorPositions}"/>
                      </ace:simpleSelectOneMenu>
                 </h:panelGrid>
