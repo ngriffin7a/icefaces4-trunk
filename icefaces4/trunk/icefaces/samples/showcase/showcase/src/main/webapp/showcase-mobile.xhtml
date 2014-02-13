@@ -50,8 +50,7 @@
              transitionType="#{viewManagerBean.transitionType}"
              headerStyle="#{viewManagerBean.headerStyle}"
              selected="#{viewManagerBean.view}"
-             history="#{viewManagerBean.history}"
-             backButtonLabel="Back">
+             history="#{viewManagerBean.history}">
              
              <!-- SPLASH SCREEN -->
              <mobi:view id="splash" splash="true" includeInMenu="false">
@@ -106,9 +105,9 @@
              </mobi:view>
 
 
-             <!-- Layout Components -->
+             <!-- Input and Output Components -->
              <!-- DATE AND TIME -->
-             <mobi:view id="dateandtime" title="Date and Time" menuIcon="time" divider="Input Components"
+             <mobi:view id="dateandtime" title="Date and Time" menuIcon="time" divider="Input and Output Components"
 				navBarGroup="dateandtime">
                  <ui:include src="/resources/examples/mobi/datespinner/date-example.xhtml" />
              </mobi:view>
@@ -133,6 +132,15 @@
              <mobi:view id="geolocationDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="geolocation">
                 <ui:include src="/resources/examples/mobi/geolocation/geolocation-desc.xhtml" />
+             </mobi:view>
+             <!-- QR CODE GENERATOR -->
+             <mobi:view id="qr" title="QR Code Generator" menuIcon="qrcode"
+				navBarGroup="qr">
+                 <ui:include src="/resources/examples/mobi/qr/qr-example.xhtml" />
+             </mobi:view>
+             <mobi:view id="qrDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="qr">
+                <ui:include src="/resources/examples/mobi/qr/qr-desc.xhtml" />
              </mobi:view>
 
 

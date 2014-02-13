@@ -21,7 +21,7 @@
              xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
-    <h:form prependId="false" id="qrForm">
+    <h:form prependId="false" id="scanForm">
 
        <h3>QR Code Scanner</h3>
        
@@ -39,6 +39,11 @@
                            id="scanOne" style="width:50%"/>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
+				<ace:pushButton value="submit" styleClass="submit"
+									actionListener="#{qrCodeBean.checkCodeForUrl}"
+									/>
+            </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
                 <label>QR Code:</label>
                 <br/>
                 <span style="display:block;max-width:#{mobiClient.handheldBrowser ? '270px' : '100%'};overflow:hidden;text-overflow:ellipsis">
@@ -48,27 +53,6 @@
                                   rendered="#{qrCodeBean.qrScannerUrl}">
                             #{qrCodeBean.qrScanner}</h:outputLink>
                 </span>
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-				<ace:pushButton value="submit" styleClass="submit"
-									actionListener="#{qrCodeBean.checkCodeForUrl}"
-									/>
-            </mobi:fieldsetRow>
-        </mobi:fieldsetGroup>
-
-        <h3>QR Code Generator</h3>
-        <mobi:fieldsetGroup>
-            <mobi:fieldsetRow>
-                <ace:textEntry type="text" value="#{qrCodeBean.qrString}" 
-                    label="Code Input:"/>
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                <h:outputLabel value="QR Output: " styleClass="ui-input-text"/>
-                <ace:qrcode value="#{qrCodeBean.qrString}"/>
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-				<ace:pushButton value="Create" 
-											styleClass="submit" />
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
         
