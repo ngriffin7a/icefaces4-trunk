@@ -122,7 +122,7 @@ ice.ace.Tooltip = function(id, cfg) {
 					ice.ace.DelegateTooltips[self.cfg.id][instanceId] = jqTargetComponent;
 					self.activeComponent = targetComponent;
 					self.currentTooltip = instanceId;
-					self.triggerDisplayListener( function() { var instance = ice.ace.DelegateTooltips[self.cfg.id][instanceId]; if (instance && self.currentTooltip == instanceId) instance.qtip('show'); }); 
+					setTimeout(function(){self.triggerDisplayListener( function() { var instance = ice.ace.DelegateTooltips[self.cfg.id][instanceId]; if (instance && self.currentTooltip == instanceId) instance.qtip('show'); }); }, self.cfg.show.delay);
 					self.activeComponent = '';
 				}
 			}
