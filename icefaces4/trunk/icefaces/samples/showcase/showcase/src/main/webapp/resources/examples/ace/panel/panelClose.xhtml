@@ -34,18 +34,21 @@
 
     <ui:define name="example">
         <h:form id="form">
-            <icecore:singleSubmit/>
+
             
             <h:panelGrid columns="3">
                 <h:outputLabel for="closeIn" value="Closable?"/>
-                <h:selectBooleanCheckbox id="closeIn" value="#{panelClose.closable}"/>
+                <h:selectBooleanCheckbox id="closeIn" value="#{panelClose.closable}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectBooleanCheckbox>
                 <ace:message for="closeIn"/>
                 
                 <h:outputLabel for="closeSpeed" value="Close Speed (milliseconds):"/>
                 <h:inputText id="closeSpeed" value="#{panelClose.speed}"
                              required="true" size="4" maxlength="4"
                              disabled="#{!panelClose.closable}">
-                     <f:validateLongRange minimum="100" maximum="5000"/>
+                    <f:validateLongRange minimum="100" maximum="5000"/>
+                    <f:ajax execute="@this" render="@all"/>
                 </h:inputText>
                 <ace:message id="closeSpeedMsg" for="closeSpeed"/>
             </h:panelGrid>

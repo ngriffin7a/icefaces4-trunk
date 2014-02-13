@@ -37,7 +37,7 @@
     <ui:define name="example">
         <h:form id="form">
             
-            <icecore:singleSubmit/>
+
             
             <ace:panel header="Tooltip Component Configuration Panel">
                 <h:panelGrid columns="2" styleClass="centeredPanelGridWithLeftJustifiedText">
@@ -101,7 +101,9 @@
                         </ace:simpleSelectOneMenu>
                        
                        <h:outputLabel id="tooltipBubbleLabel" for="tooltipBubbleSelector" value="Enable Tooltip Speech Bubble:" />
-                       <h:selectBooleanCheckbox id="tooltipBubbleSelector" value="#{tooltipOverviewBean.renderSpeechBuble}"/>    
+                       <h:selectBooleanCheckbox id="tooltipBubbleSelector" value="#{tooltipOverviewBean.renderSpeechBuble}">
+                           <f:ajax execute="@this" render="@all"/>
+                       </h:selectBooleanCheckbox>
                </h:panelGrid>
            </ace:panel>
            

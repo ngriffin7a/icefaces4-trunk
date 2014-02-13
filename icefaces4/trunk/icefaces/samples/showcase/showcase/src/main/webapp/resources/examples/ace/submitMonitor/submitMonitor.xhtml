@@ -38,7 +38,7 @@
         <h:panelGrid id="completeExample" columns="2" style="width: 100%;">
             <ace:panel id="configPanel" header="Configuration Panel" style="height: 300px;">
                 <h:form id="configForm">
-                    <icecore:singleSubmit/>
+
                     <h:panelGrid id="configGrid" columns="2" styleClass="centeredPanelWithBorderSpacingAndLeftJustifiedText">
                         <h:outputLabel id="forLabel" for="forSelector" value="Region to listen to:" />
                         <ace:simpleSelectOneMenu id="forSelector" value="#{submitMonitor.forSelection}" valueChangeListener="#{submitMonitor.sleep}">
@@ -58,19 +58,29 @@
                         </ace:simpleSelectOneMenu>
 
                         <h:outputLabel id="idleLabel" for="idleInput" value="Idle label:"/>
-                        <h:inputText id="idleInput" value="#{submitMonitor.idleLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+                        <h:inputText id="idleInput" value="#{submitMonitor.idleLabel}" valueChangeListener="#{submitMonitor.sleep}">
+                            <f:ajax execute="@this" render="@all"/>
+                        </h:inputText>
 
                         <h:outputLabel id="activeLabel" for="activeInput" value="Active label:"/>
-                        <h:inputText id="activeInput" value="#{submitMonitor.activeLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+                        <h:inputText id="activeInput" value="#{submitMonitor.activeLabel}" valueChangeListener="#{submitMonitor.sleep}">
+                            <f:ajax execute="@this" render="@all"/>
+                        </h:inputText>
 
                         <h:outputLabel id="serverErrorLabel" for="serverInput" value="Server error label:"/>
-                        <h:inputText id="serverInput" value="#{submitMonitor.serverErrorLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+                        <h:inputText id="serverInput" value="#{submitMonitor.serverErrorLabel}" valueChangeListener="#{submitMonitor.sleep}">
+                            <f:ajax execute="@this" render="@all"/>
+                        </h:inputText>
 
                         <h:outputLabel id="networkErrorLabel" for="networkInput" value="Network error label:"/>
-                        <h:inputText id="networkInput" value="#{submitMonitor.networkErrorLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+                        <h:inputText id="networkInput" value="#{submitMonitor.networkErrorLabel}" valueChangeListener="#{submitMonitor.sleep}">
+                            <f:ajax execute="@this" render="@all"/>
+                        </h:inputText>
 
                         <h:outputLabel id="sessionExpiredLabel" for="sessionInput" value="Session expired label:"/>
-                        <h:inputText id="sessionInput" value="#{submitMonitor.sessionExpiredLabel}" valueChangeListener="#{submitMonitor.sleep}"/>
+                        <h:inputText id="sessionInput" value="#{submitMonitor.sessionExpiredLabel}" valueChangeListener="#{submitMonitor.sleep}">
+                            <f:ajax execute="@this" render="@all"/>
+                        </h:inputText>
                     </h:panelGrid>
                 </h:form>
             </ace:panel>

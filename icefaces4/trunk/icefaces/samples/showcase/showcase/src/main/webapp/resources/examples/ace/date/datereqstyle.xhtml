@@ -34,7 +34,7 @@
 
     <ui:define name="example">
         <h:form id="form1">
-            <icecore:singleSubmit/>
+
             <ace:panel>
                 <h:panelGrid style="text-align: center;" width="100%">
                     <h:panelGroup>
@@ -78,7 +78,9 @@
                         <ace:message for="optColor"/>
                 </h:panelGrid>
 				<h:panelGroup>
-					<h:selectBooleanCheckbox id="useTheme" value="#{dateReqStyle.useTheme}" />
+					<h:selectBooleanCheckbox id="useTheme" value="#{dateReqStyle.useTheme}" >
+                        <f:ajax execute="@this" render="@all"/>
+					</h:selectBooleanCheckbox>
 					<h:outputLabel for="useTheme" value=" No custom styling (use theme)" />
 				</h:panelGroup>
             </ace:panel>

@@ -282,26 +282,6 @@ of "FacesEvent" would work.
     </tag>
 
     <tag>
-        <tag-name>singleSubmit</tag-name>
-        <description>
-            This tag allows form submission from just the component generating the event and then update the page with
-            any changes from all components (equivilant to &lt;f:ajax execute=&quot;@this&quot; render=&quot;@all&quot;&gt;).
-        </description>
-        <component>
-            <component-type>javax.faces.Output</component-type>
-            <renderer-type>org.icefaces.singleSubmit</renderer-type>
-        </component>
-        <attribute>
-            <description>
-                Perform a singleSubmit in reponse to blur events.
-            </description>
-            <name>submitOnBlur</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-    </tag>
-
-    <tag>
         <tag-name>submitOnEnter</tag-name>
         <description>
             This tag enables form submission when enter key is pressed.

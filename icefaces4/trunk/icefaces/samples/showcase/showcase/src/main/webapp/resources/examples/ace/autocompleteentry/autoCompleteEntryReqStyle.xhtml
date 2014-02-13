@@ -35,8 +35,6 @@
     <ui:define name="example">
         
         <h:form id="inputForm">
-            <icecore:singleSubmit/>
-            
             <ace:panel header="Color Customization">
                 <h:panelGrid width="100%" columns="3" columnClasses="col25,col25,col50"
                              cellpadding="6" cellspacing="6">
@@ -47,6 +45,7 @@
                             <f:selectItem itemValue="blueRS" itemLabel="Blue"/>
                             <f:selectItem itemValue="greenRS" itemLabel="Green"/>
                             <f:selectItem itemValue="redRS" itemLabel="Red"/>
+                            <f:ajax execute="@this" render="@all"/>
                         </ace:simpleSelectOneMenu>
                         <ace:message for="reqColor"/>
                     
@@ -57,11 +56,14 @@
                             <f:selectItem itemValue="blueRS" itemLabel="Blue"/>
                             <f:selectItem itemValue="greenRS" itemLabel="Green"/>
                             <f:selectItem itemValue="redRS" itemLabel="Red"/>
+                            <f:ajax execute="@this" render="@all"/>
                         </ace:simpleSelectOneMenu>
                         <ace:message for="optColor"/>
                 </h:panelGrid>
 				<h:panelGroup>
-					<h:selectBooleanCheckbox id="useTheme" value="#{autoCompleteEntryReqStyleBean.useTheme}" />
+					<h:selectBooleanCheckbox id="useTheme" value="#{autoCompleteEntryReqStyleBean.useTheme}">
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:selectBooleanCheckbox>
 					<h:outputLabel for="useTheme" value=" No custom styling (use theme)" />
 				</h:panelGroup>
             </ace:panel>

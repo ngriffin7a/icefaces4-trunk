@@ -34,17 +34,19 @@
 
     <ui:define name="example">
         <h:form id="form">
-            <icecore:singleSubmit/>
             <h:panelGrid columns="3">
                 <h:outputLabel for="scrollingIn" value="Enable Scrolling:"/>
-                <h:selectBooleanCheckbox id="scrollingIn" value="#{dataTableScrolling.scrolling}"/>
+                <h:selectBooleanCheckbox id="scrollingIn" value="#{dataTableScrolling.scrolling}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectBooleanCheckbox>
                 <ace:message id="scrollMsg" for="scrollingIn"/>
                 
                 <h:outputLabel for="heightIn" value="Table Height (in pixels):"/>
                 <h:inputText id="heightIn" value="#{dataTableScrolling.height}"
                              required="true" size="3" maxlength="3"
                              disabled="#{!dataTableScrolling.scrolling}">
-                     <f:validateLongRange minimum="50" maximum="500"/>
+                    <f:validateLongRange minimum="50" maximum="500"/>
+                    <f:ajax execute="@this" render="@all"/>
                 </h:inputText>
                 <ace:message id="heightMsg" for="heightIn"/>
             </h:panelGrid>

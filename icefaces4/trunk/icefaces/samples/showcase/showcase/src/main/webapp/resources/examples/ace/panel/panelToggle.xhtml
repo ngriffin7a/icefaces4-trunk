@@ -34,18 +34,21 @@
 
     <ui:define name="example">
         <h:form id="form">
-            <icecore:singleSubmit/>
+
             
             <h:panelGrid columns="3">
                 <h:outputLabel for="toggleIn" value="Toggleable?"/>
-                <h:selectBooleanCheckbox id="toggleIn" value="#{panelToggle.toggleable}"/>
+                <h:selectBooleanCheckbox id="toggleIn" value="#{panelToggle.toggleable}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectBooleanCheckbox>
                 <ace:message for="toggleIn"/>
                 
                 <h:outputLabel for="toggleSpeed" value="Toggle Speed (milliseconds):"/>
                 <h:inputText id="toggleSpeed" value="#{panelToggle.speed}"
                              required="true" size="4" maxlength="4"
                              disabled="#{!panelToggle.toggleable}">
-                     <f:validateLongRange minimum="100" maximum="5000"/>
+                    <f:validateLongRange minimum="100" maximum="5000"/>
+                    <f:ajax execute="@this" render="@all"/>
                 </h:inputText>
                 <ace:message id="toggleSpeedMsg" for="toggleSpeed"/>
             </h:panelGrid>

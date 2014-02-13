@@ -36,11 +36,15 @@
         
         <ace:panel id="inputPanel" header="Dialog customization panel">
             <h:form id="inputForm">
-                <icecore:singleSubmit/>
+
             <h:panelGrid columns="2" width="100%">
-                <h:selectBooleanCheckbox id="draggableSelector" value="#{modalDialogBean.draggable}"/>
+                <h:selectBooleanCheckbox id="draggableSelector" value="#{modalDialogBean.draggable}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectBooleanCheckbox>
                 <h:outputLabel for="draggableSelector" value="select me if you want to drag the dialog window around"/>
-                <h:selectBooleanCheckbox id="modalSelector" value="#{modalDialogBean.modal}"/>
+                <h:selectBooleanCheckbox id="modalSelector" value="#{modalDialogBean.modal}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectBooleanCheckbox>
                 <h:outputLabel for="modalSelector" value="select me if you want to make the dialog modal"/>
             </h:panelGrid>
             </h:form>

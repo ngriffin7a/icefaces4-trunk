@@ -36,8 +36,6 @@
     <ui:define name="example">
     <h:form id="form">
         
-            <icecore:singleSubmit/>
-            
             <ace:panel id="inputPanel" header="Confirmation Dialog Effects">
                 <h:panelGrid columns="2" styleClass="centeredPanelGridWithLeftJustifiedText">
                     <h:outputLabel id="onShowEffectLabel" for="onShowEffectSelector" value="Show effect:"/>
@@ -82,8 +80,12 @@
 								    closable="true">
 
                 <h:panelGrid width="100%" style="text-align: center;" columns="2" cellspacing="30">
-                    <h:commandButton id="yes" value="Yes" onclick="confirmation.hide();return false;"/>
-                    <h:commandButton id="no" value="No" onclick="confirmation.hide();return false;"/>
+                    <h:commandButton id="yes" value="Yes" onclick="confirmation.hide();return false;">
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:commandButton>
+                    <h:commandButton id="no" value="No" onclick="confirmation.hide();return false;">
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:commandButton>
                 </h:panelGrid>
 
             </ace:confirmationDialog>

@@ -34,27 +34,35 @@
 
     <ui:define name="example">
         <h:form id="form">
-            <icecore:singleSubmit/>
+
             
             <h:panelGrid columns="3">
                 <h:outputLabel for="headerOn" value="Enable Header:"/>
-                <h:selectBooleanCheckbox id="headerOn" value="#{panelHeader.headerEnable}"/>
+                <h:selectBooleanCheckbox id="headerOn" value="#{panelHeader.headerEnable}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectBooleanCheckbox>
                 <ace:message for="headerOn"/>
                 
                 <h:outputLabel for="headerIn" value="Header Text:"/>
                 <h:inputText id="headerIn" value="#{panelHeader.headerText}"
                              required="true" maxlength="255"
-                             disabled="#{!panelHeader.headerEnable}"/>
+                             disabled="#{!panelHeader.headerEnable}">
+                    <f:ajax execute="@this" render="@all"/>
+                             </h:inputText>
                 <ace:message id="headerInMsg" for="headerIn"/>
                 
                 <h:outputLabel for="footerOn" value="Enable Footer:"/>
-                <h:selectBooleanCheckbox id="footerOn" value="#{panelHeader.footerEnable}"/>
+                <h:selectBooleanCheckbox id="footerOn" value="#{panelHeader.footerEnable}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectBooleanCheckbox>
                 <ace:message for="footerOn"/>
                 
                 <h:outputLabel for="footerIn" value="Footer Text:"/>
                 <h:inputText id="footerIn" value="#{panelHeader.footerText}"
                              required="true" maxlength="255"
-                             disabled="#{!panelHeader.footerEnable}"/>
+                             disabled="#{!panelHeader.footerEnable}">
+                    <f:ajax execute="@this" render="@all"/>
+                             </h:inputText>
                 <ace:message id="footerInMsg" for="footerIn"/>                
             </h:panelGrid>
         </h:form>

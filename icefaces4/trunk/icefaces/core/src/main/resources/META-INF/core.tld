@@ -154,23 +154,6 @@ of "FacesEvent" would work.]]></description>
     </tag>
 
     <tag>
-        <description>
-            <![CDATA[This tag allows form submission from just the component generating the event and then update the page with any changes from all components (equivilant to &lt;f:ajax execute=&quot;@this&quot; render=&quot;@all&quot;&gt;).]]></description>
-        <name>singleSubmit</name>
-        <tag-class/>
-        <body-content>JSP</body-content>
-
-        <attribute>
-            <description><![CDATA[Perform a singleSubmit in reponse to blur events.]]></description>
-            <name>submitOnBlur</name>
-            <required>no</required>
-            <rtexprvalue>false</rtexprvalue>
-            <type>boolean</type>
-        </attribute>
-
-    </tag>
-
-    <tag>
         <description><![CDATA[ This tag can be used to configure the page to be notified when the browser back button is pressed.]]></description>
         <name>navigationNotifier</name>
         <tag-class/>

@@ -34,14 +34,18 @@
 
     <ui:define name="example">
         <h:form id="textEntryConfigForm">
-            <icecore:singleSubmit/>
+
             <ace:panel id="labelCustomizing" header="Label Customization">
                 <h:panelGrid width="50%" columns="2" cellpadding="6" cellspacing="6">
                      <h:outputLabel for="labelTextF" value="First Name Label Text:"/>
-                     <h:inputText id="labelTextF" value="#{textEntryLabelBean.firstLabelText}" maxlength="250"/>
+                     <h:inputText id="labelTextF" value="#{textEntryLabelBean.firstLabelText}" maxlength="250">
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:inputText>
                      
                      <h:outputLabel for="labelTextL" value="Last Name Label Text:"/>
-                     <h:inputText id="labelTextL" value="#{textEntryLabelBean.lastLabelText}" maxlength="250"/>
+                     <h:inputText id="labelTextL" value="#{textEntryLabelBean.lastLabelText}" maxlength="250">
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:inputText>
                      
                      <h:outputLabel for="positionIn" value="Label Position:"/>
                      <ace:simpleSelectOneMenu id="positionIn" value="#{textEntryLabelBean.labelPosition}">

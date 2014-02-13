@@ -34,7 +34,7 @@
 
     <ui:define name="example">
         <h:form id="form1">
-            <icecore:singleSubmit/>
+
             <ace:panel>
                 <h:panelGrid style="text-align: center;" width="100%">
                     <h:panelGroup>
@@ -46,7 +46,9 @@
                         </h:outputText>
                     </h:panelGroup>
                 	<h:panelGroup>
-                    	<h:selectBooleanCheckbox id="popupIn" value="#{datePopup.popup}"/>
+                    	<h:selectBooleanCheckbox id="popupIn" value="#{datePopup.popup}">
+                            <f:ajax execute="@this" render="@all"/>
+                    	</h:selectBooleanCheckbox>
                     	<h:outputLabel for="popupIn" value=" Display as Popup?"/>
                 	</h:panelGroup>
                 </h:panelGrid>

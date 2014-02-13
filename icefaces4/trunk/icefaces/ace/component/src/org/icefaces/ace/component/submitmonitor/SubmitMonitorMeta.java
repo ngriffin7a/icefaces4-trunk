@@ -44,7 +44,7 @@ import java.lang.String;
     tlddoc = "Monitors submits to the server, and indicates the status of " +
         "the submits, server and network connection, and session validity. " +
         "Examples of supported submit methods are: components doing full " +
-        "form submits, singleSubmit(s) such as via icecore:singleSubmit, " +
+        "form submits, " +
         "partialSubmit(s) by ice: components, f:ajax submits by h: " +
         "components, ace:ajax submits by ace: components, and direct use " +
         "of ICEfaces javascript submit APIs. " +

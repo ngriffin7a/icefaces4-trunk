@@ -34,13 +34,12 @@
 
     <ui:define name="example">
         <h:form id="form">
-            <icecore:singleSubmit/>
-            
             <ace:panel>
                 <h:panelGrid columns="3">
                     <h:outputLabel for="effectIn" value="Transition Effect:"/>
                     <h:selectOneRadio id="effectIn" required="true" value="#{contextMenuEffect.effectName}">
                         <f:selectItems value="#{contextMenuEffect.availableEffects}"/>
+                        <f:ajax execute="@this" render="@all"/>
                     </h:selectOneRadio>
                     <ace:message for="effectIn"/>
 
@@ -48,6 +47,7 @@
                     <h:inputText id="durationIn" value="#{contextMenuEffect.effectDuration}"
                                  required="true" size="4" maxlength="4">
                          <f:validateLongRange minimum="50" maximum="2000"/>
+                        <f:ajax execute="@this" render="@all"/>
                     </h:inputText>
                     <ace:message id="msg" for="durationIn"/>
                 </h:panelGrid>

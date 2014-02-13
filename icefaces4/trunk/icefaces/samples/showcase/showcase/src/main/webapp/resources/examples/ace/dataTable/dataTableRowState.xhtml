@@ -34,46 +34,73 @@
 
     <ui:define name="example">
         <h:form id="controls">
-            <icecore:singleSubmit/>
             <h:panelGroup id="selection" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
                 Selection<br/>
                 <h:commandButton id="enableSelectAll" value="Enable Selection For All"
-                        actionListener="#{dataTableRowState.enableAllSelection}"/><br/>
+                        actionListener="#{dataTableRowState.enableAllSelection}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton><br/>
                 <h:commandButton id="disableSelect" value="Disable Selection For Selected"
-                        actionListener="#{dataTableRowState.disableSelection}" /><br/>
+                        actionListener="#{dataTableRowState.disableSelection}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton><br/>
                 <h:commandButton id="disableSelectAll" value="Disable Selection For All"
-                        actionListener="#{dataTableRowState.disableAllSelection}" /><br/>
+                        actionListener="#{dataTableRowState.disableAllSelection}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton><br/>
             </h:panelGroup>
             <h:panelGroup id="visibility" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
                 Visibility<br/>
                 <h:commandButton id="enableVisAll" value="Enable Visibility For All"
-                        actionListener="#{dataTableRowState.enableAllVisibility}" /><br/>
+                        actionListener="#{dataTableRowState.enableAllVisibility}">
+                    <f:ajax execute="@this" render="@all"/>
+                        </h:commandButton><br/>
                 <h:commandButton id="disableVisAll" value="Disable Visibility For All"
-                        actionListener="#{dataTableRowState.disableAllVisibility}" /><br/>
+                        actionListener="#{dataTableRowState.disableAllVisibility}">
+                    <f:ajax execute="@this" render="@all"/>
+                        </h:commandButton><br/>
                 <h:commandButton id="disableVisSel" value="Disable Visibility For Selected"
-                        actionListener="#{dataTableRowState.disableVisibility}" /><br/>
+                        actionListener="#{dataTableRowState.disableVisibility}">
+                    <f:ajax execute="@this" render="@all"/>
+                        </h:commandButton><br/>
             </h:panelGroup>
             <h:panelGroup id="editability" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
                 Editability<br/>
                 <h:commandButton id="enableEditAll" value="Enable Editing For All"
-                        actionListener="#{dataTableRowState.enableAllEditing}" /><br/>
+                        actionListener="#{dataTableRowState.enableAllEditing}">
+                    <f:ajax execute="@this" render="@all"/>
+                        </h:commandButton><br/>
                 <h:commandButton id="enableEditSel" value="Enable Editing For Selected"
-                        actionListener="#{dataTableRowState.enableEditing}" /><br/>
+                        actionListener="#{dataTableRowState.enableEditing}">
+                    <f:ajax execute="@this" render="@all"/>
+                        </h:commandButton><br/>
                 <h:commandButton id="disableEditAll" value="Disable Editing For All"
-                        actionListener="#{dataTableRowState.disableAllEditing}" /><br/>
+                        actionListener="#{dataTableRowState.disableAllEditing}">
+                    <f:ajax execute="@this" render="@all"/>
+                        </h:commandButton><br/>
                 <h:commandButton id="disableEditSel" value="Disable Editing For Selected"
-                        actionListener="#{dataTableRowState.disableEditing}" /><br/>
+                        actionListener="#{dataTableRowState.disableEditing}">
+                    <f:ajax execute="@this" render="@all"/>
+                        </h:commandButton><br/>
             </h:panelGroup>
             <h:panelGroup id="editing" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
                 Editing<br/>
                 <h:commandButton id="startEditAll" value="Start Editing For All"
-                                 actionListener="#{dataTableRowState.startAllEditing}" /><br/>
+                                 actionListener="#{dataTableRowState.startAllEditing}">
+                    <f:ajax execute="@this" render="@all"/>
+                                 </h:commandButton><br/>
                 <h:commandButton id="startEditSel" value="Start Editing For Selected"
-                                 actionListener="#{dataTableRowState.startEditing}" /><br/>
+                                 actionListener="#{dataTableRowState.startEditing}">
+                    <f:ajax execute="@this" render="@all"/>
+                                 </h:commandButton><br/>
                 <h:commandButton id="stopEditAll" value="Stop Editing For All"
-                                 actionListener="#{dataTableRowState.stopAllEditing}" /><br/>
+                                 actionListener="#{dataTableRowState.stopAllEditing}">
+                    <f:ajax execute="@this" render="@all"/>
+                                 </h:commandButton><br/>
                 <h:commandButton id="stopEditSel" value="Stop Editing For Selected"
-                                 actionListener="#{dataTableRowState.stopEditing}" /><br/>
+                                 actionListener="#{dataTableRowState.stopEditing}">
+                    <f:ajax execute="@this" render="@all"/>
+                                 </h:commandButton><br/>
             </h:panelGroup>
             <h:panelGroup id="selectedRows" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
                 Currently Selected Rows<br/>
