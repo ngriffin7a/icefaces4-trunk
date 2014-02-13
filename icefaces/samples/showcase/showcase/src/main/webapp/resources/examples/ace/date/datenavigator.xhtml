@@ -35,7 +35,7 @@
     <ui:define name="example">
         
         <h:form id="form1">
-        	<icecore:singleSubmit/>
+
             <ace:panel>
                 <h:panelGrid style="text-align: center;" width="100%">
                     <h:panelGroup>
@@ -47,7 +47,9 @@
                         </h:outputText>
                 	</h:panelGroup>
                 	<h:panelGroup>
-                    	<h:selectBooleanCheckbox id="navigatorFlag" value="#{dateNavigator.enabled}" />
+                    	<h:selectBooleanCheckbox id="navigatorFlag" value="#{dateNavigator.enabled}">
+                            <f:ajax execute="@this" render="@all"/>
+                    	</h:selectBooleanCheckbox>
                     	<h:outputLabel for="navigatorFlag" value="Enable Dropdown Navigator?"/>
                 	</h:panelGroup>
                 </h:panelGrid>

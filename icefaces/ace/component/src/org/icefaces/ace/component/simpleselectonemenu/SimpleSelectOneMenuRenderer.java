@@ -126,8 +126,7 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		
 		writeLabelAndIndicatorAfter(labelAttributes);
 
-		if (org.icefaces.impl.util.Util.withinSingleSubmit(simpleSelectOneMenu) 
-			|| !simpleSelectOneMenu.getClientBehaviors().isEmpty()) {
+		if (!simpleSelectOneMenu.getClientBehaviors().isEmpty()) {
 			// script
 			JSONBuilder jb = JSONBuilder.create();
 			jb.beginMap()

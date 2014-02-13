@@ -34,7 +34,7 @@
 
     <ui:define name="example">
         <h:form id="form">
-            <icecore:singleSubmit/>
+
             <ace:panel>
                 <h:panelGrid style="text-align: center;" width="100%">
                     <h:panelGroup>
@@ -70,6 +70,7 @@
                     <f:selectItem itemValue="both" itemLabel="Time and Date"/>
                     <f:selectItem itemValue="time" itemLabel="Time Only"/>
                     <f:selectItem itemValue="date" itemLabel="Date Only"/>
+                    <f:ajax execute="@this" render="@all"/>
                 </h:selectOneRadio>
                 
                 <ace:dateTimeEntry id="cal"

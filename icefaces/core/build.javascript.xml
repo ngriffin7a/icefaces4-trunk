@@ -37,7 +37,6 @@
         <loadfile property="session-expiry-warning.js" srcFile="${src.dir}/session-expiry-warning.js"/>
         <loadfile property="clear-callbacks.js" srcFile="${src.dir}/clear-callbacks.js"/>
         <loadfile property="capture-submit.js" srcFile="${src.dir}/capture-submit.js"/>
-        <loadfile property="capture-single-submit.js" srcFile="${src.dir}/capture-single-submit.js"/>
         <loadfile property="fix-viewstate.js" srcFile="${src.dir}/fix-viewstate.js"/>
         <loadfile property="element-update.js" srcFile="${src.dir}/element-update.js"/>
         <loadfile property="element-remove.js" srcFile="${src.dir}/element-remove.js"/>
@@ -54,7 +53,6 @@
                 <filter token="session-expiry-warning" value="${session-expiry-warning.js}"/>
                 <filter token="clear-callbacks" value="${clear-callbacks.js}"/>
                 <filter token="capture-submit" value="${capture-submit.js}"/>
-                <filter token="capture-single-submit" value="${capture-single-submit.js}"/>
                 <filter token="fix-viewstate" value="${fix-viewstate.js}"/>
                 <filter token="element-update" value="${element-update.js}"/>
                 <filter token="element-remove" value="${element-remove.js}"/>

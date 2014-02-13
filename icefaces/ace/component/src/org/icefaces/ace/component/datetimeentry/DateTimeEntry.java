@@ -147,7 +147,7 @@ public class DateTimeEntry extends DateTimeEntryBase implements Focusable {
     }
 
     public boolean isSingleSubmit() {
-        return Utils.superValueIfSet(this, getStateHelper(), PropertyKeys.singleSubmit.name(), super.isSingleSubmit(), Util.withinSingleSubmit(this));
+        return Utils.superValueIfSet(this, getStateHelper(), PropertyKeys.singleSubmit.name(), super.isSingleSubmit(), false);
     }
 
     public String getFocusedElementId() {

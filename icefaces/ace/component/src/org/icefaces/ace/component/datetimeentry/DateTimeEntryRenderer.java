@@ -277,7 +277,6 @@ public class DateTimeEntryRenderer extends InputRenderer {
         json.entry("inFieldLabelStyleClass", IN_FIELD_LABEL_STYLE_CLASS);
         json.entry("labelIsInField", (Boolean) labelAttributes.get("labelIsInField"));
         json.entry("singleSubmit", dateTimeEntry.isSingleSubmit());
-        json.entry("withinSingleSubmit", Util.withinSingleSubmit(dateTimeEntry));
         json.entry("buttonText", dateTimeEntry.getButtonText());
         json.entry("ariaEnabled", EnvUtils.isAriaEnabled(context));
         json.entry("todayNowButtonsAlsoSelect", dateTimeEntry.isTodayNowButtonsAlsoSelect());

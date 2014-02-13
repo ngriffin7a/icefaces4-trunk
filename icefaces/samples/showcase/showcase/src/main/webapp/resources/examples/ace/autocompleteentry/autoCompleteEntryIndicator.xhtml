@@ -35,24 +35,28 @@
     <ui:define name="example">
         
         <h:form id="inputForm">
-            <icecore:singleSubmit/>
-            
             <ace:panel header="Indicator Customization">
                 <h:panelGrid width="60%" columns="2" cellpadding="6" cellspacing="6">
                      <h:outputLabel for="requiredIn" value="Required?"/>
-                     <h:selectBooleanCheckbox id="requiredIn" value="#{autoCompleteEntryIndicatorBean.required}"/>
+                     <h:selectBooleanCheckbox id="requiredIn" value="#{autoCompleteEntryIndicatorBean.required}">
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:selectBooleanCheckbox>
                      
                      <h:outputLabel for="requiredText" value="Required Indicator Text:"/>
                      <h:inputText id="requiredText" value="#{autoCompleteEntryIndicatorBean.requiredText}"
-                                  disabled="#{!autoCompleteEntryIndicatorBean.required}"/>
+                                  disabled="#{!autoCompleteEntryIndicatorBean.required}">
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:inputText>
                      
                      <h:outputLabel for="optionalText" value="Optional Indicator Text:"/>
                      <h:inputText id="optionalText" value="#{autoCompleteEntryIndicatorBean.optionalText}"
-                                  disabled="#{autoCompleteEntryIndicatorBean.required}"/>
+                                  disabled="#{autoCompleteEntryIndicatorBean.required}">
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:inputText>
                                   
                      <h:outputLabel for="positionIn" value="Indicator Position:"/>
                      <ace:simpleSelectOneMenu id="positionIn" value="#{autoCompleteEntryIndicatorBean.position}">
-						<ace:ajax execute="@this" />
+						<f:ajax execute="@this" />
                         <f:selectItems value="#{positionBean.indicatorPositions}"/>
                      </ace:simpleSelectOneMenu>
                 </h:panelGrid>
@@ -73,7 +77,7 @@
                                          label="Cities of the World:"
                                          labelPosition="left">
                         <f:selectItems value="#{autoCompleteEntryBean.cities}"/>
-						<ace:ajax event="blur" />
+						<ace:ajax event="blur" execute="@this"/>
                     </ace:autoCompleteEntry>
 					<ace:message for="autoComplete" />
                 </h:panelGrid>

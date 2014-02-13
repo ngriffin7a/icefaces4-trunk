@@ -50,10 +50,6 @@ ice.ace.Calendar = function(id, cfg) {
         this.configureTimePicker();
     }
 
-    if (this.cfg.withinSingleSubmit) {
-        ice.cancelSingleSubmit(this.cfg.clientId);
-    }
-
     //Initialize calendar
     if(!this.cfg.disabled) {
         if(hasTimePicker) {

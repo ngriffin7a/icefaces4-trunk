@@ -34,20 +34,26 @@
 
     <ui:define name="example">
         <h:form id="textEntryConfigForm">
-            <icecore:singleSubmit/>
+
             
             <ace:panel id="indicatorCustomizing" header="Indicator Customization" style="width: 100%;">
                 <h:panelGrid width="60%" columns="2" cellpadding="6" cellspacing="6">
                      <h:outputLabel for="requiredIn" value="Required?"/>
-                     <h:selectBooleanCheckbox id="requiredIn" value="#{textEntryIndicatorBean.required}"/>
+                     <h:selectBooleanCheckbox id="requiredIn" value="#{textEntryIndicatorBean.required}">
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:selectBooleanCheckbox>
                      
                      <h:outputLabel for="requiredText" value="Required Indicator Text:"/>
                      <h:inputText id="requiredText" value="#{textEntryIndicatorBean.requiredText}"
-                                  disabled="#{!textEntryIndicatorBean.required}"/>
+                                  disabled="#{!textEntryIndicatorBean.required}">
+                         <f:ajax execute="@this" render="@all"/>
+                                  </h:inputText>
                      
                      <h:outputLabel for="optionalText" value="Optional Indicator Text:"/>
                      <h:inputText id="optionalText" value="#{textEntryIndicatorBean.optionalText}"
-                                  disabled="#{textEntryIndicatorBean.required}"/>
+                                  disabled="#{textEntryIndicatorBean.required}">
+                         <f:ajax execute="@this" render="@all"/>
+                                  </h:inputText>
                                   
                      <h:outputLabel for="positionIn" value="Indicator Position:"/>
                      <ace:simpleSelectOneMenu id="positionIn" value="#{textEntryIndicatorBean.position}">

@@ -545,7 +545,6 @@ if (!window.ice.icefaces) {
         //include session-expiry-warning.js
         //include clear-callbacks.js
         //include capture-submit.js
-        //include capture-single-submit.js
         //include fix-viewstate.js
         //include element-update.js
         //include element-remove.js

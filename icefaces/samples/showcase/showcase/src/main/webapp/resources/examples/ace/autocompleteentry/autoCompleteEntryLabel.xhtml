@@ -35,12 +35,12 @@
     <ui:define name="example">
         
         <h:form id="inputForm">
-            <icecore:singleSubmit/>
-            
             <ace:panel header="Label Customization">
                 <h:panelGrid width="50%" columns="2" cellpadding="6" cellspacing="6">
                      <h:outputLabel for="labelText" value="Label Text:"/>
-                     <h:inputText id="labelText" value="#{autoCompleteEntryLabelBean.labelText}" maxlength="250"/>
+                     <h:inputText id="labelText" value="#{autoCompleteEntryLabelBean.labelText}" maxlength="250">
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:inputText>
                      
                      <h:outputLabel for="positionIn" value="Label Position:"/>
                      <ace:simpleSelectOneMenu id="positionIn" value="#{autoCompleteEntryLabelBean.labelPosition}">
@@ -60,6 +60,7 @@
                                          label="#{autoCompleteEntryLabelBean.labelText}"
                                          labelPosition="#{autoCompleteEntryLabelBean.labelPosition}">
                         <f:selectItems value="#{autoCompleteEntryBean.cities}"/>
+                        <f:ajax execute="@this" render="@all"/>
                     </ace:autoCompleteEntry>
                 </h:panelGrid>
             </ace:panel>

@@ -44,12 +44,12 @@
                                     <f:selectItem itemValue="pdf" itemLabel="PDF"/>
                                     <f:selectItem itemValue="xls" itemLabel="XLS"/>
                                     <f:selectItem itemValue="xml" itemLabel="XML"/>
+                                    <f:ajax execute="@this" render="@all"/>
                                 </h:selectOneRadio>
                         </h:panelGrid>
                     </h:form>
 
                     <h:form id="form2">
-                        <icecore:singleSubmit/>
                         <h:panelGrid columns="2">
                         <h:outputLabel for="exportIn" value="With Columns:"/>
                         <h:selectManyCheckbox id="exportIn" value="#{dataExporterColumns.chosenColumns}">
@@ -57,6 +57,7 @@
                                                     var="column"
                                                     itemLabel="#{column.key}"
                                                     itemValue="#{column.value}"/>
+                            <f:ajax execute="@this" render="@all"/>
                         </h:selectManyCheckbox>
                         </h:panelGrid>
                     </h:form>

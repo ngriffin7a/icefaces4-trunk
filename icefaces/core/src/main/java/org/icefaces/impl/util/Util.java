@@ -31,8 +31,6 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.zip.GZIPOutputStream;
 
-import org.icefaces.impl.renderkit.html_basic.SingleSubmitRenderer;
-
 public class Util {
     private static Logger log = Logger.getLogger(Util.class.getName());
     private static List DEFAULT_EXCLUSIONS = Arrays.asList(
@@ -118,25 +116,6 @@ public class Util {
         }
         return true;
     }
-
-    /**
-     * Determines whether the component is "under" singleSubmit.
-     *
-     * @param component to test for singleSubmit
-     * @return true if the component is under singleSubmit
-     */
-    public static boolean withinSingleSubmit(UIComponent component)  {
-        UIComponent parent = component;
-        while (null != parent)  {
-            if ( parent.getAttributes().containsKey(
-                    SingleSubmitRenderer.SINGLE_SUBMIT_MARKER) )  {
-                return true;
-            }
-            parent = parent.getParent();
-        }
-        return false;
-    }
-    
     
     // ICE-4342
     // Encode filename for Content-Disposition header; to be used in save file dialog;

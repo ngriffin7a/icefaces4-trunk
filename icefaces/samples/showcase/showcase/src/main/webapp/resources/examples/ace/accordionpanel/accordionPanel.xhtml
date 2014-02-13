@@ -36,7 +36,6 @@
 
     <ui:define name="example">
         <h:form id="form">
-            <icecore:singleSubmit />
             <ace:accordion id="accordion" collapsible="true" autoHeight="false">
                 <ace:accordionPane id="toDoList" title="My To Do List">
                         <h:selectManyCheckbox id="list" layout="pageDirection" selectedClass="selectedCheckBox" >
@@ -44,6 +43,7 @@
                                                     var="listItem"
                                                     itemValue="#{listItem.value}"
                                                     itemLabel="#{listItem.key}"/>
+                            <f:ajax execute="@this" render="@all"/>
                         </h:selectManyCheckbox>
                 </ace:accordionPane>
 
@@ -65,7 +65,7 @@
                     </ace:dataTable>
                 </ace:accordionPane>  
 
-                <ace:accordionPane id="picOfDay" title="Picture of the day">  
+                <ace:accordionPane id="picOfDay" title="Picture of the day">
                     <h:panelGrid style="text-align: center; width: 100%">
                         <h:graphicImage id="sampleImage" value="#{accordionPanelBean.image.path}" alt="#{accordionPanelBean.image.description}"/>
                     </h:panelGrid>
