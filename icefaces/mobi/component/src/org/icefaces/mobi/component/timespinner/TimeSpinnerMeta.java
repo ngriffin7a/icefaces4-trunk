@@ -41,7 +41,7 @@ import javax.faces.application.ResourceDependency;
 		@ResourceDependency(library = "org.icefaces.component.datespinner", name = "datespinner.css"),
 		@ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
 		@ResourceDependency(library = "icefaces.ace", name = "util/ace-jquery.js"),
-		@ResourceDependency(library = "org.icefaces.component.datespinner", name = "timespinner.js")
+		@ResourceDependency(library = "org.icefaces.component.timespinner", name = "timespinner.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="change", javadoc="Fires when a change is detected in the time spinner.",
