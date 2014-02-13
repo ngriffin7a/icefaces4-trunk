@@ -318,14 +318,12 @@
                             consoleLog('eventSinkFirstClick()  clicked on same element as first submit');
                             regularSink(e);
                             // checkbox in Firefox:  onclick, onchange, but in Chrome: onchange, onclick
-                            // If icecore:singleSubmit submits onchange, then onclick is trapped, and must
-                            //  return true or else it will revert what the onchange submitted.
                             return true;
                         }
 
                         consoleLog('eventSinkFirstClick()  calling original onclick');
                         // Might not be an onclick directly on that element, it might
-                        // have to bubble up, like with icecore:singleSubmit
+                        // have to bubble up
                         anticipatePossibleSecondSubmit = ANTICIPATED;
                         if (originalOnclick) {
                             return originalOnclick.call(element, e);

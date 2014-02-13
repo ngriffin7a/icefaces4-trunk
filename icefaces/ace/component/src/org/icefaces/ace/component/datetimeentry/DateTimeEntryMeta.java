@@ -190,11 +190,6 @@ public class DateTimeEntryMeta extends UIInputMeta {
             " is the maximum possible size of a date formatted by the date pattern.")
     private int size;
 
-    @Property(defaultValue = "false", tlddoc = "When singleSubmit is true, changing the value of this component will " +
-            "submit and execute this component only (equivalent to &lt;f:ajax execute=\"@this\" render=\"@all\"&gt;). " +
-            "When singleSubmit is false, no submit will occur. &lt;ace:ajax&gt; submit events have precedence over singleSubmit.")
-    private boolean singleSubmit;
-
     @Property(defaultValue = "", tlddoc = "The text to display on the trigger button. Use in conjunction with the showOn option set to \"button\" or \"both\". Default = \"\".")
     private String buttonText;
 

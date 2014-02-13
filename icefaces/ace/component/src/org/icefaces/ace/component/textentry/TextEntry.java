@@ -70,8 +70,7 @@ public class TextEntry extends TextEntryBase implements Focusable {
     };
 
     private Attribute[] booleanAttNames = {new Attribute("required", null),
-            new Attribute("immediate", null),
-            new Attribute("singleSubmit", null)};
+            new Attribute("immediate", null)};
 
 
     public Attribute[] getBooleanAttNames() {
