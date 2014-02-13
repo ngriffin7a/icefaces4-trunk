@@ -59,6 +59,7 @@ public class Util {
             }
         }
 		in.close();
+		out.close();
     }
 
     public static int copyStream(InputStream in, OutputStream out,
