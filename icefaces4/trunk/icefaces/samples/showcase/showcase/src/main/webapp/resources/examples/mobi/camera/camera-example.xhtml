@@ -39,12 +39,13 @@
                         maxheight="#{cameraBean.maxHeight}" style="float:right"/>
                 &#160;
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+				<ace:pushButton id="cameraUpload"
+								 styleClass="submit"
+								 actionListener="#{cameraBean.processUploadedImage}"
+								 value="Upload"/>
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        
-        <ace:pushButton id="cameraUpload"
-                         styleClass="submit"
-                         actionListener="#{cameraBean.processUploadedImage}"
-                         value="Upload"/>
                          
         <h3>Uploaded Image</h3>
 
@@ -75,9 +76,10 @@
                         label="Max height:"
                         type="number" value="#{cameraBean.maxHeight}" />
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+				<ace:pushButton value="Set Dimensions" styleClass="submit"/>
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        
-        <ace:pushButton value="Set Dimensions" styleClass="submit"/>
 
     </h:form>
 

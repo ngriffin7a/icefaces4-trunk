@@ -24,7 +24,7 @@
     <h:form id="contactForm">
     
         <mobi:fieldsetGroup>
-            <mobi:fieldsetRow style="text-align:center">
+            <mobi:fieldsetRow>
                 <mobi:fetchContact id="contact" 
                     buttonLabel="Fetch a Contact" 
                     fields="name, email, phone"
@@ -34,12 +34,13 @@
                     phone="#{contactsBean.phone}"
                     style="width:50%"/>
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+				<ace:pushButton
+									value="Submit"
+									type="submit"
+									styleClass="submit"/>
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        
-        <ace:pushButton
-                            value="Submit"
-                            type="submit"
-                            styleClass="submit"/>
                             
         <h3>Selected Contact</h3>
         <mobi:fieldsetGroup styleClass="results">
