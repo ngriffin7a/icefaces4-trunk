@@ -38,12 +38,12 @@
         <h:form id="form">
             <ace:tabSet id="sampleTabSet" clientSide="false">
                 <ace:tabPane id="toDoList" label="To Do List">
-                    <icecore:singleSubmit />
                     <h:selectManyCheckbox id="list" layout="pageDirection" selectedClass="selectedCheckBox" >
                                 <f:selectItems value="#{tabSet.toDoList}"
                                                     var="listItem"
                                                     itemValue="#{listItem.value}"
                                                     itemLabel="#{listItem.key}"/>
+                        <f:ajax execute="@this" render="@all"/>
                     </h:selectManyCheckbox>
                 </ace:tabPane>
                 <ace:tabPane id="shoppingList" label="Shopping List">
