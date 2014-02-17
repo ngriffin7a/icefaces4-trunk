@@ -844,8 +844,10 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 			google.maps.event.removeListener(event);
 		}
         wrapper.events[eventId] = google.maps.event.addDomListener(parent,eventType,function(){
-            var map = eval("ice.ace.gMap.getGMapWrapper('" + mapId + "').getRealGMap()");
-            var component = eval(componentToUse);
-            eval(script);
+            eval(
+                "var map = ice.ace.gMap.getGMapWrapper('" + mapId + "').getRealGMap();" +
+                "var component = " + componentToUse + ";" +
+                script
+            );
         });
     }
