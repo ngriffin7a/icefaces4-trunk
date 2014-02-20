@@ -1,0 +1,46 @@
+<!--
+  ~ Copyright 2004-2012 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view  contentType="text/html"/>
+<h:head>
+    <title>Dynamic Resource Component tests</title>
+</h:head>
+<h:body>
+    <h2>Dynamic Resource Component tests</h2>
+    <div>
+        <h3>Render types: button, link, and image, attachment</h3>
+        <ace:dynamicResource label="the resource" type="button" resource="#{Entry.filesystemResource}"/>
+        <ace:dynamicResource label="the resource" target="other-window" resource="#{Entry.filesystemResource}"/>
+        <ace:dynamicResource label="the resource" image="images/iceskate.png" resource="#{Entry.filesystemResource}"/>
+    </div>
+    <div>
+        <h3>Resource types: file system, dynamically generated</h3>
+        <ace:dynamicResource label="filesystem looked up resource" type="button" resource="#{Entry.filesystemResource}"/>
+        <ace:dynamicResource label="dynamically generated resource" type="button" resource="#{Entry.dynamicResource}"/>
+    </div>
+    <div>
+        <h3>Attachment with file name</h3>
+        <ace:dynamicResource label="filesystem looked up resource" attachment="true" fileName="bla.txt" resource="#{Entry.filesystemResource}"/>
+    </div>
+</h:body>
+</html>
+
