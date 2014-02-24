@@ -76,13 +76,6 @@ public class TimeSpinnerMeta extends UIInputMeta {
      @Property(tlddoc = "Sets this component to read only, so value cannot be changed.")
      private boolean readonly;
 
-     @Property(tlddoc = "When singleSubmit is \"true\", triggering an action on " +
-    		"this component will submit and execute only this component only (equivalent to" +
-    		" <f:ajax execute='@this' render='@all'> ). When singleSubmit is \"false\", triggering an " +
-    		"action on this component will submit and execute the full form that this component " +
-    		"is contained within.")
-     private boolean singleSubmit;
-
     @Property(defaultValue = "false", tlddoc = "Deterines if native time picker should be used when available.  Currently, native support is available for iOS5, iOS6, and BlackBerry devices.")
     private boolean useNative;
 
