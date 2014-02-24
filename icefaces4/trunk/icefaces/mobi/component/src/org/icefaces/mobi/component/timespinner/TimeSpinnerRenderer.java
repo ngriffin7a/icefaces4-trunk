@@ -73,7 +73,6 @@ public class TimeSpinnerRenderer extends InputRenderer {
         String clientId = spinner.getClientId(context);
         ClientBehaviorHolder cbh = (ClientBehaviorHolder) component;
         boolean hasBehaviors = !cbh.getClientBehaviors().isEmpty();
-        boolean singleSubmit = spinner.isSingleSubmit();
         String initialValue = ComponentUtils.getStringValueToRender(context, component);
         spinner.setTouchEnabled(Utils.isTouchEventEnabled(context));
 
@@ -110,7 +109,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
                 String event = spinner.getDefaultEventName(context);
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
                 writer.writeAttribute("onblur", cbhCall, null);
-            } else if (!readonly && !disabled && singleSubmit) {
+            } else if (!readonly && !disabled) {
                 writer.writeAttribute("onblur", "ice.se(event, this);", null);
             }
             writer.endElement("input");
@@ -296,11 +295,9 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
         writer.writeAttribute("type", "button", "type");
         writer.writeAttribute("value", "Set", null);
-        //prep for singleSubmit
-        boolean singleSubmit = timeEntry.isSingleSubmit();
+
         StringBuilder builder = new StringBuilder(255);
-        builder.append("mobi.timespinner.select('").append(clientId).append("',{ event: event,");
-        builder.append("singleSubmit: ").append(singleSubmit);
+        builder.append("mobi.timespinner.select('").append(clientId).append("',{ event: event");
         if (hasBehaviors) {
             String behaviors = this.encodeClientBehaviors(context, cbh, "change").toString();
             behaviors = behaviors.replace("\"", "\'");
