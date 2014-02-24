@@ -80,9 +80,6 @@ public class DateSpinnerMeta extends UIInputMeta {
     @Property(tlddoc = "Sets this component to read only, so value cannot be changed.")
     private boolean readonly;
 
-    @Property(tlddoc = "The tabindex of this component.")
-    private boolean singleSubmit;
-
     @Property(defaultValue = "false", tlddoc = "Determines if native date picker should be used when available.  Currently, native support is available for iOS5, iOS6, and BlackBerry devices.")
     private boolean useNative;
 

@@ -83,7 +83,6 @@ public class DateSpinnerRenderer extends InputRenderer {
         String clientId = spinner.getClientId(context);
         ClientBehaviorHolder cbh = (ClientBehaviorHolder) component;
         boolean hasBehaviors = !cbh.getClientBehaviors().isEmpty();
-        boolean singleSubmit = spinner.isSingleSubmit();
         spinner.setTouchEnabled(Utils.isTouchEventEnabled(context));
         String initialValue = ComponentUtils.getStringValueToRender(context, component);
         // detect if an iOS device
@@ -120,7 +119,7 @@ public class DateSpinnerRenderer extends InputRenderer {
                 String event = spinner.getDefaultEventName(context);
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
                 writer.writeAttribute("onblur", cbhCall, null);
-            } else if (!noJs && singleSubmit) {
+            } else if (!noJs) {
                 writer.writeAttribute("onblur", "ice.se(event, this);", null);
             }
             writer.endElement("input");
@@ -144,13 +143,11 @@ public class DateSpinnerRenderer extends InputRenderer {
         String eventStr = dateSpinner.isTouchEnabled() ?
                 TOUCH_START_EVENT : CLICK_EVENT;
         //prep for ajax submit
-        boolean singleSubmit = dateSpinner.isSingleSubmit();
         StringBuilder builder = new StringBuilder(255);
         StringBuilder builder2 = new StringBuilder(255);
         String inputCallStart = "mobi.datespinner.inputSubmit('";
         String jsCallStart = "mobi.datespinner.select('";
-        builder2.append(clientId).append("',{ event: event,");
-        builder2.append("singleSubmit: ").append(singleSubmit);
+        builder2.append(clientId).append("',{ event: event");
         if (hasBehaviors) {
             String behaviors = this.encodeClientBehaviors(context, cbh, "change").toString();
             behaviors = behaviors.replace("\"", "\'");
