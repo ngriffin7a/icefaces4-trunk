@@ -50,6 +50,7 @@ public abstract class AbstractMenu extends UIComponentBase {
                 UIComponent p = kid.getParent();
                 if (p != null) {
                     p.setInView(false);
+                    kid.setId(kid.getId());
                     kid.setParent(null);
                 }
                 getChildren().add(kid);
