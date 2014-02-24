@@ -18,10 +18,12 @@ package org.icefaces.demo.elementUpdate;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
 
 @ManagedBean(name = "InputBean")
 @SessionScoped
-public class InputBean {
+public class InputBean implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String className = "B";
     private String title = "A";
     private String lang = "en";

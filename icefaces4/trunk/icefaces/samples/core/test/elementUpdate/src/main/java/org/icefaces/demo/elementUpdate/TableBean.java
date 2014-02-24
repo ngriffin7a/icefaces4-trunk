@@ -18,11 +18,13 @@ package org.icefaces.demo.elementUpdate;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
 import java.util.Random;
 
 @ManagedBean(name = "TableBean")
 @SessionScoped
-public class TableBean {
+public class TableBean implements Serializable{
+    private static final long serialVersionUID = 1L;
     public int a, b, c, d, e, f;
 
     public TableBean() {
