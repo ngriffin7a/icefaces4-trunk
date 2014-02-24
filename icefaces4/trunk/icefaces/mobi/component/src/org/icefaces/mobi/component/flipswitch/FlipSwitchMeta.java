@@ -53,14 +53,6 @@ import javax.faces.application.ResourceDependency;
 }, defaultEvent="activate")
 public class FlipSwitchMeta extends UISelectBooleanMeta {
 
-    @Property(defaultValue = "false",
-            tlddoc = "When singleSubmit is \"true\", triggering an action on " +
-    		"this component will submit and execute only this component only (equivalent to" +
-    		" <f:ajax execute='@this' render='@all'> ). When singleSubmit is \"false\", triggering an " +
-    		"action on this component will submit and execute the full form that this component " +
-    		"is contained within.")
-    private boolean singleSubmit;
-
     @Property(tlddoc = "Sets the CSS style definition to be applied to this component.")
     private String style;
 

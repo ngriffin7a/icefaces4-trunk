@@ -101,7 +101,6 @@ public class FlipSwitchRenderer extends CoreRenderer {
         }
         StringBuilder builder = new StringBuilder(255);
         builder.append("mobi.flipswitch.init('").append(clientId).append("',{ event: event,elVal: this,");
-        builder.append("singleSubmit: ").append(flipswitch.isSingleSubmit());
 
         if (hasBehaviors){
             String behaviors = this.encodeClientBehaviors(facesContext, cbh, "click").toString();
