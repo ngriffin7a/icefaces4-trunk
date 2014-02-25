@@ -47,6 +47,7 @@ import org.icefaces.samples.showcase.example.ace.panel.PanelBean;
 import org.icefaces.samples.showcase.example.ace.printer.PrinterBean;
 import org.icefaces.samples.showcase.example.ace.progressbar.ProgressBarBean;
 import org.icefaces.samples.showcase.example.ace.pushButton.PushButtonBean;
+import org.icefaces.samples.showcase.example.ace.qrcode.QrcodeBean;
 import org.icefaces.samples.showcase.example.ace.radioButton.RadioButtonBean;
 import org.icefaces.samples.showcase.example.ace.resizable.ResizableBean;
 import org.icefaces.samples.showcase.example.ace.richtextentry.RichTextEntryBean;
@@ -101,6 +102,7 @@ import java.io.Serializable;
                 @MenuLink(title = "menu.ace.printer.title", exampleBeanName = PrinterBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.progressbar.title", exampleBeanName = ProgressBarBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.pushButton.title", exampleBeanName = PushButtonBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.qrcode.title", exampleBeanName = QrcodeBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.radioButton.title", exampleBeanName = RadioButtonBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.resizable.title", exampleBeanName = ResizableBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.richtextentry.title", exampleBeanName = RichTextEntryBean.BEAN_NAME),
