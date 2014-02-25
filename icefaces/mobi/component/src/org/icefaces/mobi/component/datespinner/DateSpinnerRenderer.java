@@ -294,14 +294,13 @@ public class DateSpinnerRenderer extends InputRenderer {
 
         writer.startElement("div", uiComponent);                          //button container for set or cancel
         writer.writeAttribute("class", "mobi-date-submit-container ui-widget-content", null);
-        writer.startElement("input", uiComponent);
+        writer.startElement("button", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
-        writer.writeAttribute("type", "button", "type");
-        writer.writeAttribute("value", "Set", null);
         if (!dateSpinner.isDisabled() && !dateSpinner.isReadonly()) {
-            writer.writeAttribute(CLICK_EVENT, jsCall, null);
+            writer.writeAttribute(CLICK_EVENT, jsCall + "return false;", null);
         }
-        writer.endElement("input");
+        writer.write("Set");
+        writer.endElement("button");
 
         writer.startElement("input", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
@@ -382,7 +381,7 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", DateSpinner.BUTTON_INC_CLASS, null);
         writer.writeAttribute("id", clientId + "_dUpBtn", null);
-        writer.writeAttribute(eventStr, "mobi.datespinner.dUp('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.datespinner.dUp('" + clientId + "');return false;", null);
         writePlusIcon(writer);
         writer.endElement("button");
 
@@ -398,7 +397,7 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", DateSpinner.BUTTON_DEC_CLASS, null);
         writer.writeAttribute("id", clientId + "_dDnBtn", null);
-        writer.writeAttribute(eventStr, "mobi.datespinner.dDn('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.datespinner.dDn('" + clientId + "');return false;", null);
         writeMinusIcon(writer);
         writer.endElement("button");
 
@@ -419,7 +418,7 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", DateSpinner.BUTTON_INC_CLASS, null);
         writer.writeAttribute("id", clientId + "_mUpBtn", null);
-        writer.writeAttribute(eventStr, "mobi.datespinner.mUp('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.datespinner.mUp('" + clientId + "');return false;", null);
         writePlusIcon(writer);
         writer.endElement("button");
 
@@ -435,7 +434,7 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", DateSpinner.BUTTON_DEC_CLASS, null);
         writer.writeAttribute("id", clientId + "_mDnBtn", null);
-        writer.writeAttribute(eventStr, "mobi.datespinner.mDn('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.datespinner.mDn('" + clientId + "');return false;", null);
         writeMinusIcon(writer);
         writer.endElement("button");
 
@@ -460,7 +459,7 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", DateSpinner.BUTTON_INC_CLASS, null);
         writer.writeAttribute("id", clientId + "_yUpBtn", null);
-        writer.writeAttribute(eventStr, "mobi.datespinner.yUp('" + clientId + "'," + yMin + "," + yMax + ");", null);
+        writer.writeAttribute(eventStr, "mobi.datespinner.yUp('" + clientId + "'," + yMin + "," + yMax + ");return false;", null);
         writePlusIcon(writer);
         writer.endElement("button");
 
@@ -476,7 +475,7 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", DateSpinner.BUTTON_DEC_CLASS, null);
         writer.writeAttribute("id", clientId + "_yDnBtn", null);
-        writer.writeAttribute(eventStr, "mobi.datespinner.yDn('" + clientId + "'," + yMin + "," + yMax + ");", null);
+        writer.writeAttribute(eventStr, "mobi.datespinner.yDn('" + clientId + "'," + yMin + "," + yMax + ");return false;", null);
         writeMinusIcon(writer);
         writer.endElement("button");
 
