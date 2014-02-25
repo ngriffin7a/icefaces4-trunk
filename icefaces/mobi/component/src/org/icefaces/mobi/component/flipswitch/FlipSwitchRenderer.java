@@ -100,7 +100,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
             writer.writeAttribute("disabled", "disabled", null);
         }
         StringBuilder builder = new StringBuilder(255);
-        builder.append("mobi.flipswitch.init('").append(clientId).append("',{ event: event,elVal: this,");
+        builder.append("mobi.flipswitch.init('").append(clientId).append("',{ event: event,elVal: this");
 
         if (hasBehaviors){
             String behaviors = this.encodeClientBehaviors(facesContext, cbh, "click").toString();
