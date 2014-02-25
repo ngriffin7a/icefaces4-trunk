@@ -209,7 +209,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", TimeSpinner.BUTTON_INC_CLASS, null);
         writer.writeAttribute("id", clientId + "_hrUpBtn", null);
-        writer.writeAttribute(eventStr, "mobi.timespinner.hrUp('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.timespinner.hrUp('" + clientId + "');return false;", null);
         writePlusIcon(writer);
         writer.endElement("button");
 
@@ -224,7 +224,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", TimeSpinner.BUTTON_DEC_CLASS, null);
         writer.writeAttribute("id", clientId + "_hrDnBtn", null);
-        writer.writeAttribute(eventStr, "mobi.timespinner.hrDn('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.timespinner.hrDn('" + clientId + "');return false;", null);
         writeMinusIcon(writer);
         writer.endElement("button");
         writer.endElement("div");                                         //end button decrement
@@ -237,7 +237,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", TimeSpinner.BUTTON_INC_CLASS, null);
         writer.writeAttribute("id", clientId + "_mUpBtn", null);
-        writer.writeAttribute(eventStr, "mobi.timespinner.mUp('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.timespinner.mUp('" + clientId + "');return false;", null);
         writePlusIcon(writer);
         writer.endElement("button");
         writer.endElement("div");                                         //end button incr
@@ -251,7 +251,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", TimeSpinner.BUTTON_DEC_CLASS, null);
         writer.writeAttribute("id", clientId + "_mDnBtn", null);
-        writer.writeAttribute(eventStr, "mobi.timespinner.mDn('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.timespinner.mDn('" + clientId + "');return false;", null);
         writeMinusIcon(writer);
         writer.endElement("button");
         writer.endElement("div");                                         //end button decrement
@@ -291,10 +291,9 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.endElement("div");                                         //end of selection container
         writer.startElement("div", uiComponent);                          //button container for set or cancel
         writer.writeAttribute("class", "mobi-time-submit-container ui-widget-content", null);
-        writer.startElement("input", uiComponent);
+        writer.startElement("button", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
         writer.writeAttribute("type", "button", "type");
-        writer.writeAttribute("value", "Set", null);
 
         StringBuilder builder = new StringBuilder(255);
         builder.append("mobi.timespinner.select('").append(clientId).append("',{ event: event");
@@ -306,9 +305,10 @@ public class TimeSpinnerRenderer extends InputRenderer {
         builder.append("});");
         String jsCall = builder.toString();
         if (!timeEntry.isDisabled() || !timeEntry.isReadonly()) {
-            writer.writeAttribute(CLICK_EVENT, jsCall, null);
+            writer.writeAttribute(CLICK_EVENT, jsCall+"return false;", null);
         }
-        writer.endElement("input");
+        writer.write("Set");
+        writer.endElement("button");
         writer.startElement("input", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
         writer.writeAttribute("type", "button", "type");
