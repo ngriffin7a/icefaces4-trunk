@@ -345,6 +345,10 @@ public class DateSpinnerRenderer extends InputRenderer {
         Object objVal;
         Converter converter = spinner.getConverter();
 
+        if(isValueBlank(submittedValue)) {
+            return null;
+        }
+
         //Delegate to user supplied converter if defined
         if (converter != null) {
             objVal = converter.getAsObject(context, spinner, submittedValue);
