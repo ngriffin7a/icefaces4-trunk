@@ -387,14 +387,19 @@ public class CoreRenderer extends Renderer {
                    event = eventDef;
                }
                String domEvent = getDomEvent(event);
-               sb.append(domEvent + ":");
                ClientBehaviorContext cbContext = ClientBehaviorContext.createClientBehaviorContext(context, (UIComponent) component, event, clientId, params);
+               StringBuilder sb2 = new StringBuilder(255);
                for(Iterator<ClientBehavior> behaviorIter = eventBehaviors.get(event).iterator(); behaviorIter.hasNext();) {
                    ClientBehavior behavior = behaviorIter.next();
                    String script = behavior.getScript(cbContext);
                    if(script != null) {
-                       sb.append(script);
+                       sb2.append(script);
                    }
+               }
+               String scripts = sb2.toString();
+               if (scripts.length() > 0) {
+                   sb.append(domEvent + ":");
+                   sb.append(scripts);
                }
                if(eventIterator.hasNext()) {
                    sb.append(",");
