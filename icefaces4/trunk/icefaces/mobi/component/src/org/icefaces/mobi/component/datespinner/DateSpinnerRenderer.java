@@ -91,8 +91,13 @@ public class DateSpinnerRenderer extends InputRenderer {
             writer.writeAttribute("type", "date", "type");
             writer.writeAttribute("id", clientId, null);
             writer.writeAttribute("name", clientId, null);
-            if (spinner.getStyle()!=null){
-                writer.writeAttribute(HTML.STYLE_ATTR, spinner.getStyle(), HTML.STYLE_ATTR);
+            String styleClass = spinner.getStyleClass();
+            String style = spinner.getStyle();
+            if (style!=null){
+                writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
+            }
+            if (styleClass!=null){
+                writer.writeAttribute(HTML.CLASS_ATTR, styleClass, HTML.CLASS_ATTR);
             }
             boolean disabled = spinner.isDisabled();
             boolean readonly = spinner.isReadonly();
@@ -166,8 +171,9 @@ public class DateSpinnerRenderer extends InputRenderer {
         //first do the input field and the button
         // build out first input field
         writer.startElement(HTML.SPAN_ELEM, uiComponent);
-        if (dateSpinner.getStyle() !=null){
-            writer.writeAttribute(HTML.STYLE_ATTR, dateSpinner.getStyle(), HTML.STYLE_ATTR);
+        String styleClass = dateSpinner.getStyleClass();
+        if (styleClass!=null){
+            writer.writeAttribute(HTML.CLASS_ATTR, styleClass, HTML.CLASS_ATTR);
         }
         writer.startElement("span", uiComponent);
         writer.writeAttribute("id", clientId, "id");
@@ -182,11 +188,11 @@ public class DateSpinnerRenderer extends InputRenderer {
         // apply class attribute and pass though attributes for style.
         PassThruAttributeWriter.renderNonBooleanAttributes(writer, uiComponent,
                 dateSpinner.getCommonAttributeNames());
-        StringBuilder classNames = new StringBuilder(DateSpinner.INPUT_CLASS);
-        Object checker = dateSpinner.getStyleClass();
-        if (null != checker) {
-            classNames.append(" ").append(dateSpinner.getStyleClass());
+        String style = dateSpinner.getStyle();
+        if (style!=null){
+            writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
         }
+        StringBuilder classNames = new StringBuilder(DateSpinner.INPUT_CLASS);
         writer.writeAttribute(HTML.CLASS_ATTR, classNames.toString(), HTML.CLASS_ATTR);
         if (value != null) {
             writer.writeAttribute("value", value, null);

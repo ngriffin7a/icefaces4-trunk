@@ -81,8 +81,13 @@ public class TimeSpinnerRenderer extends InputRenderer {
             writer.writeAttribute("type", "time", "type");
             writer.writeAttribute("id", clientId, null);
             writer.writeAttribute("name", clientId, null);
-            if (spinner.getStyle()!=null){
-                writer.writeAttribute(HTML.STYLE_ATTR, spinner.getStyle(), HTML.STYLE_ATTR);
+            String styleClass = spinner.getStyleClass();
+            String style = spinner.getStyle();
+            if (style!=null){
+                writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
+            }
+            if (styleClass!=null){
+                writer.writeAttribute(HTML.CLASS_ATTR, styleClass, HTML.CLASS_ATTR);
             }
             boolean disabled = spinner.isDisabled();
             boolean readonly = spinner.isReadonly();
@@ -138,8 +143,9 @@ public class TimeSpinnerRenderer extends InputRenderer {
         //first do the input field and the button
         // build out first input field
         writer.startElement(HTML.SPAN_ELEM, uiComponent);
-        if (timeEntry.getStyle()!=null){
-            writer.writeAttribute(HTML.STYLE_ATTR, timeEntry.getStyle(), HTML.STYLE_ATTR);
+        String styleClass = timeEntry.getStyleClass();
+        if (styleClass!=null){
+            writer.writeAttribute(HTML.CLASS_ATTR, styleClass, HTML.CLASS_ATTR);
         }
         writer.startElement("span", uiComponent);
         writer.writeAttribute("id", clientId, "id");
@@ -152,8 +158,11 @@ public class TimeSpinnerRenderer extends InputRenderer {
         PassThruAttributeWriter.renderNonBooleanAttributes(writer, uiComponent,
                 timeEntry.getCommonAttributeNames());
         // apply class attribute and pass though attributes for style.
-        StringBuilder classNames = new StringBuilder(TimeSpinner.INPUT_CLASS)
-                .append(" ").append(timeEntry.getStyleClass());
+        String style = timeEntry.getStyle();
+        if (style!=null){
+            writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
+        }
+        StringBuilder classNames = new StringBuilder(TimeSpinner.INPUT_CLASS);
         writer.writeAttribute("class", classNames.toString(), null);
         if (value != null) {
             writer.writeAttribute("value", value, null);
