@@ -71,4 +71,6 @@ public class FlipSwitchMeta extends UISelectBooleanMeta {
     @Property(defaultValue="OFF", tlddoc = "The label for the switch when \"false\". ")
     private String labelOff;    
 
+	@Property(tlddoc ="The current value of the simple component. The value to be rendered.")
+	private Boolean value;
 }

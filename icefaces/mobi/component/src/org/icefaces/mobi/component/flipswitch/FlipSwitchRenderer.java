@@ -144,9 +144,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
     }
 
     private boolean isChecked(String hiddenValue) {
-        return hiddenValue.equalsIgnoreCase("on") ||
-                hiddenValue.equalsIgnoreCase("yes") ||
-                hiddenValue.equalsIgnoreCase("true");
+        return hiddenValue.equalsIgnoreCase("true");
     }
 
     //forced converter support. It's either a boolean or string.
