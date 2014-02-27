@@ -41,7 +41,7 @@ ice.ace.pushbutton = function(clientId, cfg){
 };
 
 // Selectors
-ice.ace.pushbutton.prototype.buttonSelector = " > span > span > button";
+ice.ace.pushbutton.prototype.buttonSelector = " > span > button";
 
 ice.ace.pushbutton.prototype.unload = function() {
     this.button.off("click mousedown mouseup mouseenter focus blur mouseleave");
