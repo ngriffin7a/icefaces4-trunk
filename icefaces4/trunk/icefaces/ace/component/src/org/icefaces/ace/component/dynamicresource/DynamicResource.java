@@ -46,7 +46,20 @@ public class DynamicResource extends DynamicResourceBase {
                 setContentType(mimeType);
             }
 
-            this.requestPath = ResourceRegistry.addApplicationResource(this);
+            String scope = getScope();
+            if ("session".equals(scope)) {
+                this.requestPath = ResourceRegistry.addSessionResource(this);
+            } else if ("view".equals(scope)) {
+                this.requestPath = ResourceRegistry.addViewResource(this);
+            } else if ("flash".equals(scope)) {
+                this.requestPath = ResourceRegistry.addFlashResource(this);
+            } else if ("window".equals(scope)) {
+                this.requestPath = ResourceRegistry.addWindowResource(this);
+            } else if ("application".equals(scope)) {
+                this.requestPath = ResourceRegistry.addApplicationResource(this);
+            } else {
+                this.requestPath = ResourceRegistry.addSessionResource(this);
+            }
         }
 
         public InputStream getInputStream() throws IOException {
