@@ -31,6 +31,7 @@ import javax.faces.application.ResourceDependency;
         rendererType = "org.icefaces.OutputListItemsRenderer",
         extendsClass = "org.icefaces.impl.component.UISeriesBase",
         componentFamily = "org.icefaces.OutputListItems",
+        disinheritProperties = {"first","rowIndex","rows","varStatus"},
         tlddoc = "outputListItems is used within an outputList tag to group lists of items."
 )
 
