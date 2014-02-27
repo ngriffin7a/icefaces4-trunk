@@ -53,7 +53,7 @@ public class DataViewColumnMeta extends UIComponentBaseMeta {
                       "include : text, bool, date, image, markup.\n" +
                       "Text will render the String representation of the value object.\n" +
                       "Bool assumes the value object is a boolean type and renders a checkbox icon.\n"+
-                      "Date assumes the value object is a Date object and renders according to the required f:dateTimeConverter child component.\n"+
+                      "Date assumes the value object is a Date object and renders according to the required f:convertDateTime child component.\n"+
                       "Image assume the value is a representation of an image URL.\n"+
                       "Markup renders the String 'markup' attribute with the substring '{{value}}' replaced with the String representation of the value object.")
     ColumnType type;
