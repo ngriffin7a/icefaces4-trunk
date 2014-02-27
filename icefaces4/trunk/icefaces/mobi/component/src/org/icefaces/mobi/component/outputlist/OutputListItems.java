@@ -19,7 +19,4 @@ package org.icefaces.mobi.component.outputlist;
 
 public class OutputListItems extends OutputListItemsBase{
 
-       public OutputListItems() {
-        super();
-    }
 }
