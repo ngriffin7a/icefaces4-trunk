@@ -52,4 +52,8 @@ public class DynamicResourceMeta {
 
     @Property(tlddoc="The object of type com.icesoft.faces.context.Resource that will be used. It can be use to override the attachment, fileName, lastModified and mimeType attributes via the withOptions() method.")
     private Resource resource;
+
+    @Property(tlddoc="The scope in which the resource will be stored. The values can be 'flash', 'view', window', 'session', and 'application'. When not specified the 'session' scope is used.")
+    private String scope;
+
 }
