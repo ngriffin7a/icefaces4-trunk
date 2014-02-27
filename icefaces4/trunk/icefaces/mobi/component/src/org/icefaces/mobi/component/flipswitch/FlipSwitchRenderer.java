@@ -96,9 +96,6 @@ public class FlipSwitchRenderer extends CoreRenderer {
 //        String event = flipswitch.getDefaultEventName();
         boolean disabled = flipswitch.isDisabled();
         boolean readonly = flipswitch.isReadonly();
-        if (disabled) {
-            writer.writeAttribute("disabled", "disabled", null);
-        }
         StringBuilder builder = new StringBuilder(255);
         builder.append("mobi.flipswitch.init('").append(clientId).append("',{ event: event,elVal: this");
 
@@ -115,7 +112,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
         builder.append("}); return false; ");
 
         String jsCall = builder.toString();
-        if (!disabled | !readonly)writer.writeAttribute("onclick", jsCall, null);
+        if (!(disabled || readonly))writer.writeAttribute("onclick", jsCall, null);
         writer.writeAttribute("class", styleClass, "class");
         writer.startElement(HTML.SPAN_ELEM, null);
 
@@ -123,7 +120,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
         writer.writeAttribute("class", "mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-default" + (switchVal ? " ui-state-active" : "" ), null);
         writer.write(labelOn);
         writer.endElement(HTML.SPAN_ELEM);
-        writeHiddenField(uiComponent, clientId, writer, switchVal);
+        writeHiddenField(uiComponent, clientId, writer, switchVal, disabled);
 
         writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute("class", "mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default" + (!switchVal ? " ui-state-active" : "" ), null);
@@ -134,12 +131,15 @@ public class FlipSwitchRenderer extends CoreRenderer {
     }
 
     private void writeHiddenField(UIComponent uiComponent, String clientId,
-                                  ResponseWriter writer, boolean switchValue) throws IOException {
+                                  ResponseWriter writer, boolean switchValue, boolean disabled) throws IOException {
         writer.startElement("input", uiComponent);
         writer.writeAttribute("type", "hidden", null);
         writer.writeAttribute("name", clientId + "_hidden", null);
         writer.writeAttribute("id", clientId + "_hidden", null);
         writer.writeAttribute("value", switchValue, null);
+        if (disabled) {
+            writer.writeAttribute("disabled", "disabled", null);
+        }
         writer.endElement("input");
     }
 
