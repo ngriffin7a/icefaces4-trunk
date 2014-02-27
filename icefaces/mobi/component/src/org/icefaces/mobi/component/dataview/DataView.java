@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  * Date: 2013-04-01
  * Time: 10:47 AM
  */
-public class DataView extends DataViewBase implements IDataView, NamingContainer {
+public class DataView extends DataViewBase implements NamingContainer {
 
     private static Logger logger = Logger.getLogger(DataViewRenderer.class.getName());
 

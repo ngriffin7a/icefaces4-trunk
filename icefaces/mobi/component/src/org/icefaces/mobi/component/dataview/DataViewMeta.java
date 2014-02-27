@@ -45,6 +45,7 @@ import javax.faces.application.ResourceDependency;
 )
 @ResourceDependencies({
 	@ResourceDependency( library = "org.icefaces.component.dataview", name = "dataview.css" ),
+	@ResourceDependency(library = "org.icefaces.component.icons", name = "icons.css"),
     @ResourceDependency( library = "org.icefaces.component.util", name = "component.js" ),
 	@ResourceDependency( library = "org.icefaces.component.dataview", name = "dataview.js" )
 })
