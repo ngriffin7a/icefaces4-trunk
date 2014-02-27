@@ -1,6 +1,7 @@
 package org.icefaces.mobi.component.dataview;
 
 import org.icefaces.ace.meta.annotation.*;
+import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 import javax.faces.convert.Converter;
 
@@ -33,7 +34,7 @@ import javax.faces.convert.Converter;
         componentFamily = "org.icefaces.DataViewColumn",
         tlddoc = "DataViewColumns defines a column in the table region of the DataView component."
 )
-public class DataViewColumnMeta {
+public class DataViewColumnMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Define the text to render in the header of this column.")
     String headerText;
 

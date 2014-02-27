@@ -2,6 +2,7 @@ package org.icefaces.mobi.component.dataview;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 /**
  * Copyright 2010-2013 ICEsoft Technologies Canada Corp.
@@ -34,7 +35,7 @@ import org.icefaces.ace.meta.annotation.Property;
                 "either by its DataViewColumn child components or by attaching an implementation" +
                 "of DataViewColumnsModel to the 'value' attribute of this component."
 )
-public class DataViewColumnsMeta {
+public class DataViewColumnsMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Define the table model of the DataView component programatically with an implementation of DataViewColumnsModel.")
     Object value;
 }
