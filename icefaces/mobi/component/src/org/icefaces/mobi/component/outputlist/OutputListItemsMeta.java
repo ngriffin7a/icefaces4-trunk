@@ -41,10 +41,6 @@ import javax.faces.application.ResourceDependency;
 })
 public class OutputListItemsMeta extends UISeriesBaseMeta {
 
-    @Property(defaultValue="false",
-	      tlddoc = "Determines if inset padding is included around list group.")
-    private boolean inset;
-
      @Property(tlddoc = "Sets the CSS style definition to be applied to this component.")
      private String style;
 

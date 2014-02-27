@@ -22,9 +22,4 @@ public class OutputListItem extends OutputListItemBase {
     public static final String OUTPUTLISTITEMGROUP_CLASS="mobi-list-item mobi-list-item-group ui-widget-header ";
     public static final String OUTPUTLISTITEMDEFAULT_CLASS="mobi-list-item-default ";
     
-    public OutputListItem() {
-        super();
-    }
- 
-
 }
