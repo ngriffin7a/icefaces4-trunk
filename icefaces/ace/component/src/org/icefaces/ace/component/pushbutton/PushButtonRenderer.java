@@ -60,7 +60,6 @@ public class PushButtonRenderer extends CoreRenderer {
     public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = uiComponent.getClientId(facesContext);
-        String yuiBaseClass= "yui-button yui-push-button";
         PushButton pushButton = (PushButton) uiComponent;
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
         boolean disabled = pushButton.isDisabled();
@@ -77,10 +76,6 @@ public class PushButtonRenderer extends CoreRenderer {
                                     clientId, HTML.ONMOUSEOVER_ATTR);
 
         encodeRootStyle(writer, pushButton);
-
-        // first span
-		writer.startElement(HTML.SPAN_ELEM, null);
-		writer.writeAttribute(HTML.CLASS_ATTR, yuiBaseClass, null);
 
 		// second span
 		writer.startElement(HTML.SPAN_ELEM, null);
@@ -117,7 +112,6 @@ public class PushButtonRenderer extends CoreRenderer {
         ResponseWriter writer = facesContext.getResponseWriter();
         writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.BUTTON_ELEM);
-        writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.DIV_ELEM);
     }
