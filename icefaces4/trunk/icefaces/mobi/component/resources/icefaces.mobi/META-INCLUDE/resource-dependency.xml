@@ -16,68 +16,9 @@
   -->
 
 <dependencies>
-    <resource name="util/ace-jquery.js" library="icefaces.ace">
+    <resource name="component.js"  library="org.icefaces.component.util">
         <requires>
-            <resource name="util/combined.css"  library="icefaces.ace"/>
-        </requires>
-    </resource>
-
-    <resource name="util/combined.css"  library="icefaces.ace">
-        <requires>
-            <resource name="jquery/ui/jquery-ui.css" library="icefaces.ace"/>
             <resource name="theme.css" library="icefaces.ace"/>
-        </requires>
-    </resource>
-
-    <resource name="util/ace-components.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/ace-jquery.js" library="icefaces.ace"/>
-            <resource name="bridge.js" library="ice.core"/>
-        </requires>
-    </resource>
-    <resource name="richtextentry/richtextentry.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/ace-jquery.js" library="icefaces.ace"/>
-            <resource name="richtextentry/ckeditor/ckeditor.js" library="icefaces.ace"/>
-        </requires>
-    </resource>
-    <resource name="richtextentry/ckeditor/ckeditor.js" library="icefaces.ace">
-        <requires>
-            <resource name="richtextentry/ckeditor/ckeditor.mapping.js" library="icefaces.ace"/>
-        </requires>
-    </resource>
-    <resource name="chart/ace-chart.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/ace-jquery.js" library="icefaces.ace"/>
-        </requires>
-        <depends-on>
-            <resource name="chart/excanvas.js" library="icefaces.ace"/>
-        </depends-on>
-    </resource>
-    <resource name="util/ace-menu.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/ace-jquery.js" library="icefaces.ace"/>
-        </requires>
-    </resource>
-    <resource name="util/ace-datatable.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/ace-jquery.js" library="icefaces.ace"/>
-        </requires>
-    </resource>
-    <resource name="fileentry/fileEntry.css" library="icefaces.ace">
-        <requires>
-            <resource name="util/combined.css"  library="icefaces.ace"/>
-        </requires>
-    </resource>
-    <resource name="gmap/api.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/ace-components.js" library="icefaces.ace"/>
-        </requires>
-    </resource>
-    <resource name="fileentry/fileEntry.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/ace-components.js" library="icefaces.ace"/>
-            <resource name="fileentry/fileEntry.css" library="icefaces.ace"/>
         </requires>
     </resource>
 </dependencies>
