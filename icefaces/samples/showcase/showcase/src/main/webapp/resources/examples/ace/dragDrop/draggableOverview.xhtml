@@ -79,7 +79,7 @@
                         <h:outputLabel id="opacityLabel" for="gridMovementSelector" value="Opacity:"/>
                         <ace:simpleSelectOneMenu id="opacitySelector" value="#{draggableOverviewBean.opacity}" title="Set draggable component opacity during movment. Value must be between 0 and 1">
 							<ace:ajax execute="@this" />
-                            <f:selectItem itemValue="1" itemLabel="1"/>
+                            <f:selectItem itemValue="1.0" itemLabel="1"/>
                             <f:selectItem itemValue="0.5" itemLabel="0.5"/>
                             <f:selectItem itemValue="0.2" itemLabel="0.2"/>
                         </ace:simpleSelectOneMenu>
