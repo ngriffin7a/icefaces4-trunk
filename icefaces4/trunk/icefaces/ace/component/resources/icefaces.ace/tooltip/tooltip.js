@@ -120,10 +120,15 @@ ice.ace.Tooltip = function(id, cfg) {
 						openInstances[id].qtip('hide');
 					}
 					ice.ace.DelegateTooltips[self.cfg.id][instanceId] = jqTargetComponent;
-					self.activeComponent = targetComponent;
-					self.currentTooltip = instanceId;
-					setTimeout(function(){self.triggerDisplayListener( function() { var instance = ice.ace.DelegateTooltips[self.cfg.id][instanceId]; if (instance && self.currentTooltip == instanceId) instance.qtip('show'); }); }, self.cfg.show.delay);
-					self.activeComponent = '';
+					setTimeout(function(){
+						self.activeComponent = targetComponent;
+						self.currentTooltip = instanceId;
+						self.triggerDisplayListener(function() {
+							var instance = ice.ace.DelegateTooltips[self.cfg.id][instanceId];
+							if (instance && self.currentTooltip == instanceId) instance.qtip('show');
+						});
+						self.activeComponent = '';
+					}, self.cfg.show.delay);
 				}
 			}
 		});
