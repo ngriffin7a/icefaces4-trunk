@@ -21,4 +21,9 @@
             <resource name="theme.css" library="icefaces.ace"/>
         </requires>
     </resource>
+    <resource name="core/bridgeit.js"  library="icefaces.mobi">
+        <requires>
+            <resource name="util/ace-jquery.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
 </dependencies>
