@@ -220,6 +220,7 @@ ice.ace.ComboBox.prototype = {
             keyEvent = "keydown";
         }
 		ice.ace.jq(this.element).on(keyEvent, function(e) { self.onKeyPress.call(self, e); } );
+		ice.ace.jq(this.element).on("keyup", function(e) { self.hidden.value = self.element.value; } );
 		
 		// ajax behaviors
 		if (behaviors) {
@@ -352,7 +353,6 @@ ice.ace.ComboBox.prototype = {
 					event.preventDefault();
                     return;
 				default:
-					this.hidden.value = this.element.value;
 					if (this.showListOnInput) {
 						var self = this;
 						setTimeout(function(){self.clientSideModeUpdate();},50);
