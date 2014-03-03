@@ -43,6 +43,8 @@ import java.util.List;
         componentFamily = "org.icefaces.ace.ComboBox",
         componentType = "org.icefaces.ace.component.ComboBox",
 		rendererType    = "org.icefaces.ace.component.ComboBoxRenderer",
+        disinheritProperties = {"onclick","onblur", "onchange", "ondblclick", "onselect", "onmouseup", "onmousedown","onfocus", "onkeydown",
+                                 "onkeypress", "onkeyup", "onmousemove", "onmouseover", "onmouseout"},
         tlddoc = "A component that merges a select and an input field." +
                  "<p>For more information, see the " +
                  "<a href=\"http://wiki.icefaces.org/display/ICE/ComboBox\">ComboBox Wiki Documentation</a>."

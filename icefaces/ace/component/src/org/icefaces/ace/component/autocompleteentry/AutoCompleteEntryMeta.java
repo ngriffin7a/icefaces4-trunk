@@ -44,6 +44,8 @@ import java.util.List;
         componentFamily = "org.icefaces.ace.AutoCompleteEntry",
         componentType = "org.icefaces.ace.component.AutoCompleteEntry",
 		rendererType    = "org.icefaces.ace.component.AutoCompleteEntryRenderer",
+        disinheritProperties = {"onclick","onblur", "onchange", "ondblclick", "onselect", "onmouseup", "onmousedown","onfocus", "onkeydown",
+                                 "onkeypress", "onkeyup", "onmousemove", "onmouseover", "onmouseout"},
         tlddoc = "AutoCompleteEntry is a text input component that presents possible valid options as the user types. " +
 				"The options can be a list of SelectItem's specified in a child <f:selectItems /> tag. It is also possible " +
 				"to specify a list of arbitrary data objects (i.e. POJOs) through the listValue attribute. In this case, a facet " +

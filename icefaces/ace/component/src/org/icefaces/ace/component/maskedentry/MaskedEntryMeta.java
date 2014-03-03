@@ -37,6 +37,8 @@ import org.icefaces.resources.ICEResourceLibrary;
         extendsClass    = "javax.faces.component.html.HtmlInputText",
         componentType   = "org.icefaces.ace.component.MaskedEntry",
         rendererType    = "org.icefaces.ace.component.MaskedEntryRenderer",
+        disinheritProperties = {"onclick","onblur", "onchange", "ondblclick", "onselect", "onmouseup", "onmousedown","onfocus", "onkeydown",
+                                 "onkeypress", "onkeyup", "onmousemove", "onmouseover", "onmouseout"},
 		componentFamily = "org.icefaces.ace.MaskedEntry",
 		tlddoc = "MaskedEntry is an input component that forces text input to be entered according to a specified format." +
                  "<p>For more information, see the " +
