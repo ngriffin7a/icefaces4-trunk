@@ -270,12 +270,15 @@ public class DataViewRenderer extends Renderer {
 
         List<UIComponent> detailHolders = getDetailHolders(dataView.getDetails());
         Integer activeIndex = dataView.getActiveRowIndex();
+        String rowIndexVar = dataView.getRowIndexVar();
 
         for (IndexedIterator<Object> dataModelIterator = dataModel.iterator(); dataModelIterator.hasNext();) {
             Object rowData = dataModelIterator.next();
             int index = dataModelIterator.getIndex();
             // Init row context
             requestMap.put(var, rowData);
+            if (rowIndexVar != null)
+                requestMap.put(rowIndexVar, index);
 
             writer.startElement(HTML.TR_ELEM, null);
 
@@ -295,6 +298,8 @@ public class DataViewRenderer extends Renderer {
         }
 
         requestMap.remove(var);
+        if (rowIndexVar != null)
+            requestMap.remove(rowIndexVar);
 
         writer.endElement(HTML.TBODY_ELEM);
 
@@ -517,6 +522,7 @@ public class DataViewRenderer extends Renderer {
         // Init row context
         Integer index = dataView.getActiveRowIndex();
         String var = dataView.getVar();
+        String rowIndexVar = dataView.getRowIndexVar();
         ActivationMode activeMode = dataView.getActivationMode();
         boolean active = ActivationMode.client.equals(activeMode) || (ActivationMode.server.equals(activeMode) && index != null && index >= 0);
         Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
@@ -524,6 +530,7 @@ public class DataViewRenderer extends Renderer {
         if (index != null) {
             DataViewDataModel dataModel = dataView.getDataModel();
             requestMap.put(var, dataModel.getDataByIndex(index));
+            if (rowIndexVar != null) requestMap.put(rowIndexVar, index);
         }
 
         // Write detail region
@@ -547,6 +554,7 @@ public class DataViewRenderer extends Renderer {
         writer.endElement(HTML.DIV_ELEM);
 
         requestMap.remove(var);
+        if (rowIndexVar != null) requestMap.remove(rowIndexVar);
     }
 
     public boolean getRendersChildren() {
