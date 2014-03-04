@@ -79,7 +79,7 @@ public class DataViewMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc = "ActiveRowIndex property allows control of the row object index currently displayed in the detail region. " +
             "The detail region components instances are not updated until DataView.initDetailContext() is called. " +
-            "initDetailContext is regularly called within the component phase iterations.")
+            "initDetailContext is regularly called within the component phase iterations. A value of -1 (or any negative value) is interpreted as no row being active at that moment.")
     Integer activeRowIndex;
 
     @Property(defaultValue = "org.icefaces.mobi.component.dataview.ActivationMode.server",
