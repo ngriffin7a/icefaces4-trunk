@@ -47,11 +47,6 @@ public class DataViewColumn extends DataViewColumnBase implements ValueHolder {
                 return DataViewColumn.this.getFooterText();
             }
 
-            /* can't define arbitrary html in facelet attribute*/
-            public String getMarkup() {
-                return null;
-            }
-
             public String getType() {
                 return DataViewColumn.this.getType().toString();
             }

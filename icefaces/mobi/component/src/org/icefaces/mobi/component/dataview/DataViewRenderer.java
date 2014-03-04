@@ -318,9 +318,7 @@ public class DataViewRenderer extends Renderer {
 
         writer.startElement(HTML.TD_ELEM, null);
 
-        if (type.equals("markup"))
-            writer.write(column.getMarkup().replace("{{value}}", value.toString()));
-        else if (type.equals("bool")) {
+        if (type.equals("bool")) {
             colClass += " " + DataView.DATAVIEW_BOOL_COLUMN_CLASS;
             writer.startElement("i", null);
             if (value != null) {
