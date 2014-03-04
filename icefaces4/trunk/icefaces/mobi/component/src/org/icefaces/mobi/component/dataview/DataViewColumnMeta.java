@@ -50,17 +50,12 @@ public class DataViewColumnMeta extends UIComponentBaseMeta {
               defaultValueType = DefaultValueType.EXPRESSION,
               tlddoc = "Define the ColumnType of this column, determining how the " +
                       "'value' attribute of this component will be rendered. Valid options " +
-                      "include : text, bool, date, image, markup.\n" +
+                      "include : text, bool, date, image.\n" +
                       "Text will render the String representation of the value object.\n" +
                       "Bool assumes the value object is a boolean type and renders a checkbox icon.\n"+
                       "Date assumes the value object is a Date object and renders according to the required f:convertDateTime child component.\n"+
-                      "Image assume the value is a representation of an image URL.\n"+
-                      "Markup renders the String 'markup' attribute with the substring '{{value}}' replaced with the String representation of the value object.")
+                      "Image assume the value is a representation of an image URL.")
     ColumnType type;
-
-    @Property(tlddoc = "Define a String of arbitrary HTML markup to render (when 'type' is set to 'markup') " +
-            "replacing the substring {{value}} with the String representation of the 'value' attribute.")
-    String markup;
 
     @Property(expression = Expression.VALUE_EXPRESSION,
               tlddoc = "Define a ValueExpression whose resulting Object will be iteratively rendered in the table " +

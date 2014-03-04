@@ -21,5 +21,5 @@ package org.icefaces.mobi.component.dataview;
  * Time: 2:35 PM
  */
 public enum ColumnType {
-    text, bool, date, image, markup;
+    text, bool, date, image;
 }
