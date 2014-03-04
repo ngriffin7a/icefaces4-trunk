@@ -157,11 +157,14 @@ public class MediaPlayerUtils {
         if ((Boolean)uic.getAttributes().get("muted")){
             writer.writeAttribute("muted", "muted", null);
         }
+        //autoplay attribute
+        if ((Boolean)uic.getAttributes().get("autoplay")){
+            writer.writeAttribute("autoplay", "autoplay", null);
+        }
         //hashcode
         Object mediaObject = uic.getAttributes().get("value");
         if (mediaObject instanceof byte[]) {
 			writer.writeAttribute("data-hashcode", mediaObject.hashCode(), null);
-System.out.println("hash: " + mediaObject.hashCode());
 		}
     }
     
