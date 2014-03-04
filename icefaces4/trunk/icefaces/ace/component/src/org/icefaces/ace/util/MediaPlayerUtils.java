@@ -58,12 +58,12 @@ public class MediaPlayerUtils {
     }
     
     public static String processStaticSrc(FacesContext facesContext, Object o, String url) {
-        String value = String.valueOf(o);
+        String value = o != null ? String.valueOf(o) : null;
         // support url as an alias for value
-        if (value == null) {
+        if (value == null || "".equals(value)) {
             value = url;
         }
-        if (value != null) {
+        if (value != null && !"".equals(value)) {
             return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, value);
         } else {
             return "";
