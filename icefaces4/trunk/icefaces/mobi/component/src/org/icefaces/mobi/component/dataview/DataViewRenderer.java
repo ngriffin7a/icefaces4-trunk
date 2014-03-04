@@ -92,7 +92,6 @@ public class DataViewRenderer extends Renderer {
 
         writer.startElement(HTML.SCRIPT_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, HTML.SCRIPT_TYPE_TEXT_JAVASCRIPT, null);
-        writer.writeAttribute(HTML.ID_ATTR, dvId + "_js", null);
 
         boolean reactive = dataView.isReactiveColumnVisibility();
 
