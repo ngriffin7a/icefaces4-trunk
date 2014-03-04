@@ -60,6 +60,10 @@
         <component-class>org.icefaces.impl.component.DefaultAction</component-class>
     </component>
     <component>
+        <component-type>org.icefaces.impl.component.JSEventListener</component-type>
+        <component-class>org.icefaces.impl.component.JSEventListener</component-class>
+    </component>
+    <component>
         <component-type>org.icefaces.impl.component.IdleMonitor</component-type>
         <component-class>org.icefaces.impl.component.IdleMonitor</component-class>
     </component>

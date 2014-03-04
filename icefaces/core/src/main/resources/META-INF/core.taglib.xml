@@ -208,6 +208,40 @@
     </tag>
 
     <tag>
+        <tag-name>jsEventListener</tag-name>
+        <description>
+            This tag can be used to capture Javascript events.
+        </description>
+        <component>
+            <component-type>org.icefaces.impl.component.JSEventListener</component-type>
+        </component>
+        <attribute>
+            <description>
+                The ID of the component that should receive focus when loaded.
+            </description>
+            <name>for</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                The list of event names that should be captured.
+            </description>
+            <name>events</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                The name of a function that vetoes which events should or should not be handled.
+            </description>
+            <name>handler</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
         <tag-name>push</tag-name>
         <description>
             This tag can be used to configure push behavior on a per-view basis.
