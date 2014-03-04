@@ -157,6 +157,12 @@ public class MediaPlayerUtils {
         if ((Boolean)uic.getAttributes().get("muted")){
             writer.writeAttribute("muted", "muted", null);
         }
+        //hashcode
+        Object mediaObject = uic.getAttributes().get("value");
+        if (mediaObject instanceof byte[]) {
+			writer.writeAttribute("data-hashcode", mediaObject.hashCode(), null);
+System.out.println("hash: " + mediaObject.hashCode());
+		}
     }
     
     public static void encodeBaseMediaElementEnd(ResponseWriter writer, UIComponent uic, 
