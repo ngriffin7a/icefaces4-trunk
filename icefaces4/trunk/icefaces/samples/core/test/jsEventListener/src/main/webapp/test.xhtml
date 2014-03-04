@@ -1,0 +1,43 @@
+<!--
+  ~ Copyright 2004-2012 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view  contentType="text/html"/>
+<h:head>
+    <title>Dynamic Resource Component tests</title>
+    <h:outputScript name="handlers.js" />
+</h:head>
+<h:body>
+    <h:form>
+        <h5>'click' and 'keypress' events are captured by icecore:jsEventListener</h5>
+        <p>Switch focus to the button before before typing so that the button enclosed by icecore:jsEventListener receives first the events.</p>
+        <icecore:jsEventListener events="onclick, onkeypress" actionListener="#{Entry.captureEvent}">
+            <input type="button" value="test" id="test-button"/>
+        </icecore:jsEventListener>
+        <p>
+            <pre>
+                <h:outputText value="#{Entry.capturedEvents}"/>
+            </pre>
+        </p>
+    </h:form>
+</h:body>
+</html>
+
