@@ -37,6 +37,5 @@ public interface DataViewColumnModel {
     public TimeZone getTimeZone();
     public Locale getLocale();
     public boolean isRendered();
-    public Integer getReactivePriority();
     public String getStyleClass();
 }

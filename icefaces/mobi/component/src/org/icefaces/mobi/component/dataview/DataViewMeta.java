@@ -91,10 +91,4 @@ public class DataViewMeta extends UIComponentBaseMeta {
                       "and attributes supported for client encoding are limited, though growing with new releases and user desire." +
                       "Specifics can be found on our wiki at: http://www.icesoft.org/wiki/display/icemobile/DataView")
     ActivationMode activationMode;
-
-    @Property(defaultValue = "false",
-        defaultValueType = DefaultValueType.EXPRESSION,
-        tlddoc="Enabling causes the table region to display as many columns as possible in the given device width, " +
-                "hiding the remainder, following priority given with the 'reactivePriority' attribute of DataViewColumnModel.")
-    boolean reactiveColumnVisibility;
 }

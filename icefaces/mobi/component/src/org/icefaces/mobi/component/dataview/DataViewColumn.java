@@ -93,10 +93,6 @@ public class DataViewColumn extends DataViewColumnBase implements ValueHolder {
                 return DataViewColumn.this.isRendered();
             }
 
-            public Integer getReactivePriority() {
-                return DataViewColumn.this.getReactivePriority();
-            }
-
             public String getStyleClass() {
                 return DataViewColumn.this.getStyleClass();
             }

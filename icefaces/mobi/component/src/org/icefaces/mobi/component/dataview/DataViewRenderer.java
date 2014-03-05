@@ -93,11 +93,8 @@ public class DataViewRenderer extends Renderer {
         writer.startElement(HTML.SCRIPT_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, HTML.SCRIPT_TYPE_TEXT_JAVASCRIPT, null);
 
-        boolean reactive = dataView.isReactiveColumnVisibility();
-
         String cfg = "{";
         cfg += "active:'" + dataView.getActivationMode() + "'";
-        if (reactive) cfg = encodeColumnPriorities(cfg, dataView);
         cfg += "}";
 
         String js =
@@ -109,17 +106,6 @@ public class DataViewRenderer extends Renderer {
         writer.writeText(js, null);
         writer.endElement(HTML.SCRIPT_ELEM);
         writer.endElement(HTML.SPAN_ELEM);
-    }
-
-    private String encodeColumnPriorities(String cfg, DataView dataView) {
-        cfg += ", colvispri:[";
-        Integer[] priorities = dataView.getReactiveColumnPriorities();
-        for (int i = 0; i < priorities.length; i++) {
-            cfg += priorities[i];
-            if (i != priorities.length - 1) cfg += ',';
-        }
-        cfg += "]";
-        return cfg;
     }
 
     private void encodeColumns(FacesContext context,
