@@ -232,47 +232,4 @@ public class DataView extends DataViewBase implements NamingContainer {
     public ClientDescriptor getClient() {
         return Utils.getClientDescriptor();
     }
-
-    protected Integer[] getReactiveColumnPriorities() {
-        DataViewColumnsModel model = getColumns().getModel();
-        Integer[] priorities = new Integer[model.size()];
-        Integer highest = null;
-        List<Integer> unrenderedIntegers = new ArrayList<Integer>();
-
-        //Explicit priorities
-        for (IndexedIterator<DataViewColumnModel> columnIter = model.iterator(); columnIter.hasNext();) {
-            DataViewColumnModel columnModel = columnIter.next();
-            Integer pri = columnModel.getReactivePriority();
-            int index = columnIter.getIndex();
-            if (columnModel.isRendered()) {
-                priorities[index] = pri;
-                if (highest == null || (pri != null && pri > highest))
-                    highest = pri;
-            } else unrenderedIntegers.add(index);
-        }
-
-        //Second pass priorities
-        if (highest == null) highest = -1;
-        for (int i = 0; i < priorities.length; i++) {
-            Integer pri = priorities[i];
-            if (pri == null && !unrenderedIntegers.contains(i))
-                priorities[i] = ++highest;
-        }
-
-        //Remove null gaps if any
-        Integer[] finalPri = new Integer[model.size()];
-        int finalIndex = 0;
-        for (int i = 0; i < priorities.length; i++)
-            if (priorities[i] != null)
-                finalPri[finalIndex++] = priorities[i];
-
-        //Truncate
-        Integer[] trimPri = new Integer[finalIndex];
-        for (int i = 0; i < finalPri.length; i++)
-            if (finalPri[i] != null)
-                trimPri[i] = finalPri[i];
-            else break;
-
-        return trimPri;
-    }
 }

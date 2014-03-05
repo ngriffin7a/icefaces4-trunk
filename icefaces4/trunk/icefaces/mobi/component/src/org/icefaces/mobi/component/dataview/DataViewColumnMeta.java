@@ -41,11 +41,6 @@ public class DataViewColumnMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Define the text to render in the footer of this column.")
     String footerText;
 
-    @Property(tlddoc = "Define the order that columns are displayed when hiding columns in width constrained cases. " +
-            "Property has no effect unless the 'reactiveColumnVisibility' property of the DataView is enabled. If priority for a given " +
-            "column is unset, priority is assigned in the same order as page markup, following the column with the highest explicit priority.")
-    Integer reactivePriority;
-
     @Property(defaultValue = "org.icefaces.mobi.component.dataview.ColumnType.text",
               defaultValueType = DefaultValueType.EXPRESSION,
               tlddoc = "Define the ColumnType of this column, determining how the " +
