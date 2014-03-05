@@ -71,7 +71,7 @@ public class VideoPlayerRenderer extends Renderer {
         }
         //playsinline attribute
         if( videoPlayer.isPlaysinline() ){
-            writer.writeAttribute("webkit-playsinline", "yes", null);
+            writer.writeAttribute("webkit-playsinline", "true", null);
         }
     }
 
