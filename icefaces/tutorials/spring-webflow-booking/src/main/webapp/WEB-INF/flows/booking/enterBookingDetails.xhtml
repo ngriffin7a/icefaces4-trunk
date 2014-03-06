@@ -58,7 +58,9 @@
                                    mindate="#{booking.minCheckinDate}"
                                    required="true" requiredIndicator="*"
                                    pattern="MM-dd-yyyy" timeZone="EST"
-                                   renderAsPopup="true" singleSubmit="true"/>
+                                   renderAsPopup="true">
+                    <ace:ajax execute="@this" render="@all"/>
+                </ace:dateTimeEntry>
                 
                 <h:panelGroup styleClass="label">
                     <h:outputLabel for="checkoutDate" value="Check Out:"/>
@@ -68,7 +70,9 @@
                                    mindate="#{booking.minCheckoutDate}"
                                    required="true" requiredIndicator="*"
                                    pattern="MM-dd-yyyy" timeZone="EST"
-                                   renderAsPopup="true" singleSubmit="true"/>
+                                   renderAsPopup="true">
+                    <ace:ajax execute="@this" render="@all"/>
+                </ace:dateTimeEntry>
 
 
                 <h:panelGroup styleClass="label">
