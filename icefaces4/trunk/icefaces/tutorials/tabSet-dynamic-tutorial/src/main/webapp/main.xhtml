@@ -53,9 +53,12 @@
         </h:form>
         <br />
         <h:form id="addRemForm">
-            <icecore:singleSubmit/>
-            <h:commandButton value="#{msgs['content.button.addTab']}" actionListener="#{dynamic.addTab}" id="add"/>
-            <h:commandButton value="#{msgs['content.button.removeCurrent']}" actionListener="#{dynamic.removeCurrent}" id="remove"/>
+            <h:commandButton value="#{msgs['content.button.addTab']}" actionListener="#{dynamic.addTab}" id="add">
+                <f:ajax execute="@this" render="@all"/>
+            </h:commandButton>
+            <h:commandButton value="#{msgs['content.button.removeCurrent']}" actionListener="#{dynamic.removeCurrent}" id="remove">
+                <f:ajax execute="@this" render="@all"/>
+            </h:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>
