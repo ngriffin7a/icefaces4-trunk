@@ -253,7 +253,7 @@ ice.ace.util.addStyleSheet = function (sheetId, parentSelector) {
 	} else {
 		s.appendChild(document.createTextNode(""));
 	}
-    document.querySelector(parentSelector || "head").appendChild(s);
+    ice.ace.jq(parentSelector || "head").append(s);
 
     if (ice.ace.jq.browser.safari || ice.ace.jq.browser.chrome) // must title after insertion to prevent chrome bug
         setTimeout(function() { s.title = sheetId; }, 1000);
