@@ -129,7 +129,7 @@ public class DataTableConfigPanel extends ComponentExampleImpl<DataTableConfigPa
 	}
 
 	public void saveSettings(ActionEvent event) {
-		savedColumns = columns;
+		savedColumns = copyColumns(columns);
 		savedColumnOrder = columnOrder;
 		savedColumnHeaderOrder = columnHeaderOrder;
 	}
@@ -145,6 +145,16 @@ public class DataTableConfigPanel extends ComponentExampleImpl<DataTableConfigPa
 		columnOrder = getDefaultColumnOrder();
 		columnHeaderOrder = getDefaultColumnHeaderOrder();
 		carsData = new ArrayList<Car>(DataTableData.getDefaultData()); // for undoing sorting
+	}
+
+	private ColumnSettings[] copyColumns(ColumnSettings[] columns) {
+		int length = columns.length;
+		ColumnSettings[] copy = new ColumnSettings[length];
+		for (int i = 0; i < length; i++) {
+			ColumnSettings cs = columns[i];
+			copy[i] = new ColumnSettings(cs.rendered, cs.name, cs.sortPriority, cs.sortAscending);
+		}
+		return copy;
 	}
 
 	public static class ColumnSettings implements Serializable {

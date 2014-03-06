@@ -112,6 +112,10 @@ public class DataTableConfigPanelAdvanced extends ComponentExampleImpl<DataTable
 		order.add(4);
 		order.add(5);
 		order.add(6);
+		order.add(7);
+		order.add(8);
+		order.add(9);
+		order.add(10);
 		return order;
 	}
 
@@ -140,8 +144,8 @@ public class DataTableConfigPanelAdvanced extends ComponentExampleImpl<DataTable
 	}
 
 	public void saveSettings(ActionEvent event) {
-		savedColumns = columns;
-		savedHeaderColumns = headerColumns;
+		savedColumns = copyColumns(columns);
+		savedHeaderColumns = copyColumns(headerColumns);
 		savedColumnOrder = columnOrder;
 		savedColumnHeaderOrder = columnHeaderOrder;
 	}
@@ -159,6 +163,16 @@ public class DataTableConfigPanelAdvanced extends ComponentExampleImpl<DataTable
 		columnOrder = getDefaultColumnOrder();
 		columnHeaderOrder = getDefaultColumnHeaderOrder();
 		carsData = new ArrayList<Car>(DataTableData.getDefaultData()); // for undoing sorting
+	}
+
+	private ColumnSettings[] copyColumns(ColumnSettings[] columns) {
+		int length = columns.length;
+		ColumnSettings[] copy = new ColumnSettings[length];
+		for (int i = 0; i < length; i++) {
+			ColumnSettings cs = columns[i];
+			copy[i] = new ColumnSettings(cs.rendered, cs.name, cs.sortPriority, cs.sortAscending);
+		}
+		return copy;
 	}
 
 	public static class ColumnSettings implements Serializable {

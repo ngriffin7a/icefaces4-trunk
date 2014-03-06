@@ -94,25 +94,25 @@
 								sortAscending="#{dataTableConfigPanelAdvanced.columns[6].sortAscending}" />
                     </ace:row>
                 </ace:columnGroup>
-                        <ace:column>
+                        <ace:column rendered="#{dataTableConfigPanelAdvanced.columns[0].rendered}">
                             #{car.id}
                         </ace:column>
-                        <ace:column>
+                        <ace:column rendered="#{dataTableConfigPanelAdvanced.columns[1].rendered}">
                             #{car.name}
                         </ace:column>
-                        <ace:column>
+                        <ace:column rendered="#{dataTableConfigPanelAdvanced.columns[2].rendered}">
                             #{car.chassis}
                         </ace:column>
-                        <ace:column>
+                        <ace:column rendered="#{dataTableConfigPanelAdvanced.columns[3].rendered}">
                             #{car.weight}lbs.
                         </ace:column>
-                        <ace:column>
+                        <ace:column rendered="#{dataTableConfigPanelAdvanced.columns[4].rendered}">
                             #{car.acceleration}
                         </ace:column>
-                        <ace:column>
+                        <ace:column rendered="#{dataTableConfigPanelAdvanced.columns[5].rendered}">
                             #{car.mpg}
                         </ace:column>
-                        <ace:column>
+                        <ace:column rendered="#{dataTableConfigPanelAdvanced.columns[6].rendered}">
                             <h:outputText id="costCell" value="#{car.cost}">
                                 <f:convertNumber type="currency"
                                                  currencySymbol="$"
