@@ -18,18 +18,26 @@ package org.icefaces.samples.showcase.example.ace.chart;
 
 import org.icefaces.ace.component.chart.Axis;
 import org.icefaces.ace.component.chart.AxisType;
+import org.icefaces.ace.event.ChartImageExportEvent;
 import org.icefaces.ace.model.chart.CartesianSeries;
 import org.icefaces.ace.model.chart.DragConstraintAxis;
 import org.icefaces.samples.showcase.metadata.annotation.*;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.Resource;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.io.Serializable;
+import java.util.Map;
 
 @ComponentExample(
         parent = ChartBean.BEAN_NAME,
@@ -157,5 +165,39 @@ public class ChartCombinedBean extends ComponentExampleImpl<ChartCombinedBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+    }
+
+    private byte[] image;
+
+    public void saveImage(ChartImageExportEvent event) {
+        image = event.getBytes();
+    }
+
+    public Resource getSavedImage() {
+        return new Resource() {
+            public InputStream getInputStream() throws IOException {
+                return new ByteArrayInputStream(image);
+            }
+
+            public Map<String, String> getResponseHeaders() {
+                return Collections.EMPTY_MAP;
+            }
+
+            public String getRequestPath() {
+                return null;  
+            }
+
+            public URL getURL() {
+                return null;  
+            }
+
+            public boolean userAgentNeedsUpdate(FacesContext context) {
+                return true;
+            }
+        };
+    }
+
+    public boolean isImageSaved() {
+        return image != null && image.length > 0;
     }
 }

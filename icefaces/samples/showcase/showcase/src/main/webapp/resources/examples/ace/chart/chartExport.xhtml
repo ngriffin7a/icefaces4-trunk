@@ -35,9 +35,13 @@
 
     <ui:define name="example">
         <h:form id="exportForm">
-            <h:commandButton id="exportButton" value="Export as Image"
-                             disabled="#{chartExportBean.requestOldIE}"
-                             onclick="var img = ice.ace.jq('.chartExport'); exportChart.exportToImage(img); img.css('display','block'); return false;" />
+            <ace:dynamicResource rendered="#{chartCombinedBean.imageSaved}"
+                                 scope="session"
+                                 resource="#{chartCombinedBean.savedImage}"
+                                 fileName="chart.png"
+                                 attachment="true"
+                                 type="button"
+                                 label="Download chart"/>
 
             <ace:chart id="chart"
                        height="300"
@@ -55,8 +59,12 @@
                        highlighterLocation="N"
                        highlighterShowMarker="false"
                        highlighterBringSeriesToFront="true"
-                       widgetVar="exportChart" />
+                       widgetVar="exportChart"
+                       imageExportListener="#{chartCombinedBean.saveImage}"/>
         </h:form>
+        <script type="text/javascript">
+            setTimeout(function() {exportChart.exportToServer();}, 250);
+        </script>
 
         <h:graphicImage styleClass="chartExport" style="display: none;" />
     </ui:define>

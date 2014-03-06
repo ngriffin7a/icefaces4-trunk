@@ -226,7 +226,7 @@ ice.ace.Chart.prototype.exportToServer = function() {
     var options = {
             source: this.id,
             execute: '@this',
-            render: '@this'
+            render: '@all'
         };
 
     var params = {};
