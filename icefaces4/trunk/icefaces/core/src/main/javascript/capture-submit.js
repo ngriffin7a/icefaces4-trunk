@@ -52,32 +52,26 @@
 
     namespace.captureSubmit = function(id) {
         var f = document.getElementById(id);
-        //hijack browser form submit, instead submit through an Ajax request
-        f.nativeSubmit = f.submit;
-        f.submit = function() {
-            var theEvent = null;
-            if (typeof(event) != 'undefined') {
-                theEvent = event;
-            } else if (window.event) {
-                theEvent = window.event;
-            } else {
-                //very bizarre hack to extract parameters from high up
-                //on the call stack to obtain the current Event on Firefox
-                //this is sensitive to the depth of the call stack so
-                //it may eventually be necessary to walk up rather than
-                //test a specific caller
-                //a
-                var maybeCaller = null;
-                maybeCaller = arguments.callee.caller.caller;
-                if (null == maybeCaller) {
-                    maybeCaller = arguments.callee.caller;
+        if (f.enctype != 'multipart/form-data') {
+            //hijack browser form submit, instead submit through an Ajax request
+            f.nativeSubmit = f.submit;
+            f.submit = function() {
+                var theEvent;
+                if (window.event) {
+                    theEvent = window.event;
+                } else {
+                    //hack to extract parameters from high up
+                    //on the call stack to obtain the current Event on Firefox
+                    var maybeCaller = arguments.callee.caller;
+                    var originalEvent;
+                    while (!(maybeCaller && originalEvent && (originalEvent.target || originalEvent.srcElement))) {
+                        maybeCaller = maybeCaller.caller;
+                        originalEvent = maybeCaller.arguments[0];
+                    }
+                    theEvent = originalEvent;
                 }
-                var maybeEvent = maybeCaller.arguments[0];
-                if (typeof(maybeEvent.target) != 'undefined') {
-                    theEvent = maybeEvent;
-                }
+                submit(theEvent, f);
             }
-            submit(theEvent, f);
         };
         each(['onkeydown', 'onkeypress', 'onkeyup', 'onclick', 'ondblclick', 'onchange'], function(name) {
             f[name] = function(e) {
