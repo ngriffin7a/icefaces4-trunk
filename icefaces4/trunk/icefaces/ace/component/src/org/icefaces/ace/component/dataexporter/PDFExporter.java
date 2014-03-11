@@ -229,8 +229,17 @@ public class PDFExporter extends Exporter {
 			}
 		}
 
-        if (hasColumnFooter(columns) && includeFooters) {
-            addFacetColumns(pdfTable, columns, headerFont, ColumnType.FOOTER);
+        if (includeFooters) {
+			ColumnGroup columnGroup = getColumnGroupFooter(table);
+			if (columnGroup != null) {
+				List<Row> rows = getRows(columnGroup);
+				for (Row row : rows) {
+					List<UIColumn> rowColumns = getFooterRowColumnsToExport(row, table, excludeColumns);
+					addFacetColumns(pdfTable, rowColumns, headerFont, ColumnType.FOOTER);
+				}
+			} else if (hasColumnFooter(columns)) {
+				addFacetColumns(pdfTable, columns, headerFont, ColumnType.FOOTER);
+			}
         }
     	
     	table.setRowIndex(-1);
