@@ -21,6 +21,7 @@ import javax.faces.application.ResourceDependency;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 @Component(
         tagName = "fetchContact",
@@ -39,7 +40,7 @@ import org.icefaces.ace.meta.annotation.Property;
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
 })
 
-public class FetchContactMeta {
+public class FetchContactMeta extends UIComponentBaseMeta {
     
     @Property(tlddoc = "The button label. ", defaultValue="Fetch Contact")
     private String buttonLabel;

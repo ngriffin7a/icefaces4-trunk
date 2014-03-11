@@ -89,6 +89,12 @@ public class FetchContactRenderer extends Renderer {
 			+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) + "'}, "
 			+ "fields: '" +contactList.getFields() + "'});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
+		boolean disabled = contactList.isDisabled();
+		if (disabled) writer.writeAttribute(DISABLED_ATTR, "disabled");
+		String style = contactList.getStyle();
+		if (style != null) writer.writeAttribute(STYLE_ATTR, style);
+		String styleClass = contactList.getStyleClass();
+		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
 		writer.startElement(SPAN_ELEM, contactList);
 		writer.writeText(contactList.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
