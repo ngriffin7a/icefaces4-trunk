@@ -59,4 +59,7 @@ public class ScanMeta extends UIComponentBaseMeta {
 
     @Property(defaultValue="Scan Code", tlddoc="The button label for this component.")
     private String buttonLabel;
+
+	@Property(tlddoc="The current value of the component.")
+	private Object value;
 }
