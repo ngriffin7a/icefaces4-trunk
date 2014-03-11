@@ -17,11 +17,17 @@ package org.icefaces.ace.util;
 
 import java.io.Serializable;
 import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.icefaces.util.EnvUtils;
+import org.icefaces.impl.push.servlet.ProxyHttpServletRequest;
+import org.icefaces.impl.push.servlet.ProxyServletContext;
+import org.icefaces.impl.push.servlet.ProxySession;
 
 /**
  * A central client feature and detection class for ICEmobile. 
@@ -62,12 +68,12 @@ public class ClientDescriptor implements Serializable{
         updateSXRegistered(request);
         updateSimulator(request);
         //TODO use getSession(false)
-        request.getSession().setAttribute(SESSION_KEY, this);
+        EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).setAttribute(SESSION_KEY, this);
     }
     
     public static ClientDescriptor getInstance(HttpServletRequest request){
         //TODO use getSession(false)
-        ClientDescriptor cd = (ClientDescriptor)request.getSession().getAttribute(SESSION_KEY);
+        ClientDescriptor cd = (ClientDescriptor) EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).getAttribute(SESSION_KEY);
         String view = request.getParameter("view");
         //always update if user agent changed
         if( cd == null || cd.isUserAgentUpdateRequired(request) || view != null){
@@ -228,10 +234,10 @@ public class ClientDescriptor implements Serializable{
     }
 
     private void updateSimulator(HttpServletRequest request){
-        HttpSession session = request.getSession(false);
+        HttpSession session = EnvUtils.getSafeSession(FacesContext.getCurrentInstance());
         ServletContext servletContext = null;
         if (null != session)  {
-            servletContext = session.getServletContext();
+            servletContext = EnvUtils.getSafeContext(FacesContext.getCurrentInstance());
             String simulatorSetting = (String)
                 session.getAttribute(SIMULATOR_KEY);
             if ("true".equalsIgnoreCase(simulatorSetting))  {

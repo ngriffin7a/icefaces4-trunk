@@ -43,6 +43,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.icefaces.impl.push.servlet.ProxyHttpServletRequest;
+import org.icefaces.impl.push.servlet.ProxySession;
+
 public class Utils {
     public static void renderChildren(FacesContext facesContext,
                                       UIComponent component)
@@ -469,7 +472,7 @@ public class Utils {
 
     public static String getCloudPushId(HttpServletRequest request) {
         String cloudPushId = null;
-        cloudPushId = (String) request.getSession().getAttribute(
+        cloudPushId = (String) EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).getAttribute(
                 Constants.CLOUD_PUSH_KEY);
         return cloudPushId;
     }
@@ -524,7 +527,7 @@ public class Utils {
     }
 	
     public static HttpServletRequest getRequest(FacesContext facesContext){
-        return (HttpServletRequest)facesContext.getExternalContext().getRequest();
+        return (HttpServletRequest) EnvUtils.getSafeRequest(facesContext);
     }
         
     public static ClientDescriptor getClientDescriptor(){
