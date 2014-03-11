@@ -41,9 +41,6 @@ public class QRCodeMeta extends UIComponentBaseMeta {
             tlddoc = "Disables this component, so it does not receive focus or get submitted.")
     private boolean disabled;
 
-    @Property(tlddoc = "The tabindex of this component.")
-    private int tabindex;
-
      @Property(tlddoc = "Sets the CSS style definition to be applied to this component.")
      private String style;
 
