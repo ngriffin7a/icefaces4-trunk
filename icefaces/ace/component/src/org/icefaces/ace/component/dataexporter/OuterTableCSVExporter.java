@@ -123,9 +123,18 @@ public class OuterTableCSVExporter extends CSVExporter {
 			}
 		}
 
-        if (hasColumnFooter(columns) && includeFooters) {
-            addFacetColumns(builder, columns, ColumnType.FOOTER);
-        }
+    	if (includeFooters) {
+			ColumnGroup columnGroup = getColumnGroupFooter(table);
+			if (columnGroup != null) {
+				List<Row> rows = getRows(columnGroup);
+				for (Row row : rows) {
+					List<UIColumn> rowColumns = getFooterRowColumnsToExport(row, table, excludeColumns);
+					addFacetColumns(builder, rowColumns, ColumnType.FOOTER);
+				}
+			} else if (hasColumnFooter(columns)) {
+				addFacetColumns(builder, columns, ColumnType.FOOTER);
+			}
+		}
     	
     	table.setRowIndex(-1);
         

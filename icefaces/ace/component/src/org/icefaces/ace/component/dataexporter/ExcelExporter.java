@@ -133,9 +133,18 @@ public class ExcelExporter extends Exporter {
 			}
 		}
 
-        if (hasColumnFooter(columns) && includeFooters) {
-            addFacetColumns(sheet, columns, ColumnType.FOOTER, sheetRowIndex++);
-        }
+    	if (includeFooters) {
+			ColumnGroup columnGroup = getColumnGroupFooter(table);
+			if (columnGroup != null) {
+				List<org.icefaces.ace.component.row.Row> rows = getRows(columnGroup);
+				for (org.icefaces.ace.component.row.Row row : rows) {
+					List<UIColumn> rowColumns = getFooterRowColumnsToExport(row, table, excludeColumns);
+					addFacetColumns(sheet, rowColumns, ColumnType.FOOTER, sheetRowIndex++);
+				}
+			} else if (hasColumnFooter(columns)) {
+				addFacetColumns(sheet, columns, ColumnType.FOOTER, sheetRowIndex++);
+			}
+		}
     	
     	table.setRowIndex(-1);
     	

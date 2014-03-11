@@ -65,6 +65,7 @@ public abstract class Exporter {
 
 	protected static final Pattern HTML_TAG_PATTERN = Pattern.compile("\\<.*?\\>");
 	protected SpanningRows spanningRows = this.new SpanningRows();
+	protected SpanningRows spanningFooterRows = this.new SpanningRows();
 	protected String filename;
 	protected boolean pageOnly;
 	protected int[] excludeColumns;
@@ -143,6 +144,31 @@ public abstract class Exporter {
 		}
 		
 		return null;
+	}
+
+	protected ColumnGroup getColumnGroupFooter(UIData table) {
+	
+		for (UIComponent child : table.getChildren()) {
+			if (child instanceof ColumnGroup) {
+				if (shouldExcludeFromExport(child)) continue;
+				ColumnGroup columnGroup = (ColumnGroup) child;
+				if (columnGroup.getType() != null && columnGroup.getType().equalsIgnoreCase("footer"))
+					return columnGroup;
+			}
+		}
+		
+		return null;
+	}
+
+    protected boolean hasColumnFooter(List<UIColumn> columns) {
+        for (UIColumn column : columns) {
+            if (column.getFooter() != null) return true;
+			if (column instanceof Column) {
+				if (((Column) column).getFooterText() != null) return true;
+			}
+		}
+
+		return false;
 	}
 	
 	protected List<Row> getRows(ColumnGroup columnGroup) {
@@ -308,15 +334,75 @@ public abstract class Exporter {
         return columns;
     }
 
-    protected boolean hasColumnFooter(List<UIColumn> columns) {
-        for (UIColumn column : columns) {
-            if (column.getFooter() != null) return true;
-			if (column instanceof Column) {
-				if (((Column) column).getFooterText() != null) return true;
+	protected List<UIColumn> getFooterRowColumnsToExport(Row row, UIData table, int[] excludedColumns) {
+        List<UIColumn> columns = new ArrayList<UIColumn>();
+		ArrayList<UIColumn> rowColumns = new ArrayList<UIColumn>();
+        int columnIndex = -1;
+		int rowColumnIndex = 0;
+
+		SpanningRow spanningRow = spanningFooterRows.getNextRow(); // fetch the set of previous columns that span to this row
+        for (UIComponent child : row.getChildren()) {
+			if (child instanceof UIColumn) {
+				if (shouldExcludeFromExport(child)) continue;
+				UIColumn uiColumn = (UIColumn) child;
+				if (uiColumn.isRendered()) {
+					if (uiColumn instanceof Column) {
+
+						if (spanningRow != null) { // add previous columns that span multiple rows
+							int added = spanningRow.addColumnsTo(rowColumns, rowColumnIndex);
+							rowColumnIndex = rowColumnIndex + added;
+						}
+						Column column = (Column) uiColumn;
+						int colspan = column.getColspan();
+						int rowspan = column.getRowspan();
+						for (int i = 0; i < colspan; i++) {
+							rowColumns.add(column);
+							for (int j = 1; j < rowspan; j++) { // register which columns span multiple rows
+								spanningFooterRows.addColumn(column, j-1, rowColumnIndex);
+							}
+							rowColumnIndex++;
+						}
+					} else {
+						rowColumns.add(uiColumn);
+						rowColumnIndex++;
+					}
+				}
 			}
 		}
+		
+		if (spanningRow != null) spanningRow.addColumnsTo(rowColumns, rowColumnIndex);
+		rowColumnIndex = -1;
+		
+		for (UIComponent child : table.getChildren()) {
+            if (child instanceof UIColumn && !(child instanceof PanelExpansion)) {
+				if (shouldExcludeFromExport(child)) continue;
+                UIColumn column = (UIColumn) child;
+                columnIndex++;
 
-        return false;
+				boolean hasExpansionToggler = false;
+                for (UIComponent columnChild : column.getChildren())
+					if (columnChild instanceof ExpansionToggler) hasExpansionToggler = true;
+				if (hasExpansionToggler) {
+					rowColumnIndex++;
+					continue;
+				}
+				
+				if (column.isRendered()) {
+					rowColumnIndex++;
+					if (excludedColumns == null || Arrays.binarySearch(excludedColumns, columnIndex) < 0) {
+						if (rowColumnIndex < rowColumns.size()) {
+							UIColumn rowColumn = rowColumns.get(rowColumnIndex);
+							if (rowColumn != null) {
+								columns.add(rowColumn);
+								continue;
+							}
+						}
+						columns.add(new UIColumn());
+					}
+				}
+            }
+        }
+        return columns;
     }
 	
 	protected boolean shouldExcludeFromExport(UIComponent component) {
