@@ -21,9 +21,15 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Formatter;
+import javax.faces.context.FacesContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.icefaces.util.EnvUtils;
+import org.icefaces.impl.push.servlet.ProxyHttpServletRequest;
+import org.icefaces.impl.push.servlet.ProxyServletContext;
+import org.icefaces.impl.push.servlet.ProxySession;
 
 public class SXUtils {
 
@@ -109,8 +115,8 @@ public class SXUtils {
      */
     public static boolean isSXRegistered(HttpServletRequest request) {
         //JSP registration will 
-        return request.getSession().getAttribute(SESSION_KEY_SX_REGISTERED) == Boolean.TRUE
-                || request.getSession().getAttribute("iceAuxRequestMap") != null;
+        return EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).getAttribute(SESSION_KEY_SX_REGISTERED) == Boolean.TRUE
+                || EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).getAttribute("iceAuxRequestMap") != null;
     }
 
     /**
@@ -130,13 +136,13 @@ public class SXUtils {
     }
 
     public static void setSXSessionKeys(HttpServletRequest request) {
-        request.getSession().setAttribute(SESSION_KEY_SX_REGISTERED,
+        EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).setAttribute(SESSION_KEY_SX_REGISTERED,
                 Boolean.TRUE);
-        request.getSession().setAttribute(Constants.USER_AGENT_COOKIE,
+        EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).setAttribute(Constants.USER_AGENT_COOKIE,
                 USER_AGENT_SX_FULL);
         String cloudPushId = request.getParameter(Constants.CLOUD_PUSH_KEY);
         if (cloudPushId != null) {//TODO should cloudPushId be reset on uploads?
-            request.getSession().setAttribute(Constants.CLOUD_PUSH_KEY,
+            EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).setAttribute(Constants.CLOUD_PUSH_KEY,
                     cloudPushId);
         }
     }
@@ -149,7 +155,7 @@ public class SXUtils {
      * @return 0, if no upload in progress, else 1-99
      */
     public static int getAuxiliaryUploadProgress(HttpServletRequest request) {
-        Integer progress = (Integer)request.getSession().getAttribute(SX_UPLOAD_PROGRESS);
+        Integer progress = (Integer) EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).getAttribute(SX_UPLOAD_PROGRESS);
         if (null == progress) {
             return 0;
         }
@@ -169,10 +175,10 @@ public class SXUtils {
          * cleanup will be done through listeners
          */
         @SuppressWarnings("unchecked")
-        Map<String,File> map = (Map<String,File>) request.getSession().getAttribute(SX_UPLOAD);
+        Map<String,File> map = (Map<String,File>) EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).getAttribute(SX_UPLOAD);
         if (null == map) {
             map = new HashMap<String,File>();
-            request.getSession().setAttribute(SX_UPLOAD, map);
+            EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).setAttribute(SX_UPLOAD, map);
         } 
         return map;
     }
@@ -231,10 +237,10 @@ public class SXUtils {
     public static String getSessionIdCookie(HttpServletRequest request) {
         String sessionID = null;
         String cookieFormat = null;
-        HttpSession httpSession = request.getSession(false);
+        HttpSession httpSession = EnvUtils.getSafeSession(FacesContext.getCurrentInstance());
         if (null != httpSession) {
             sessionID = httpSession.getId();
-            cookieFormat = httpSession.getServletContext()
+            cookieFormat = EnvUtils.getSafeContext(FacesContext.getCurrentInstance())
                 .getInitParameter(COOKIE_FORMAT);
         } else {
             return sessionID;
@@ -252,7 +258,7 @@ public class SXUtils {
 
     public static Map<String,File> getSXUploadThumbMap(HttpServletRequest request){
         @SuppressWarnings("unchecked")
-        Map<String,File> map = (Map<String,File>)request.getSession().getAttribute(SX_THUMB_MAP);
+        Map<String,File> map = (Map<String,File>) EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).getAttribute(SX_THUMB_MAP);
         if( map == null ){
             map = new HashMap<String,File>();
         }
