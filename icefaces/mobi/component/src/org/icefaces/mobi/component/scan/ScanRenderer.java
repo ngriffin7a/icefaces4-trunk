@@ -81,6 +81,13 @@ public class ScanRenderer extends BaseInputRenderer {
 		String script = "bridgeit.scan('" + clientId + "', '', {postURL:'" + scan.getPostURL() + "', " 
 		+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
+		boolean disabled = scan.isDisabled();
+		if (disabled) writer.writeAttribute(DISABLED_ATTR, "disabled");
+		String style = scan.getStyle();
+		if (style != null) writer.writeAttribute(STYLE_ATTR, style);
+		String styleClass = scan.getStyleClass();
+		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
+		writer.writeAttribute(TABINDEX_ATTR, scan.getTabindex());
 		writer.startElement(SPAN_ELEM, scan);
 		writer.writeText(scan.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
