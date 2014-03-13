@@ -53,7 +53,9 @@ public class MediaPlayerUtils {
             src = processSrcAttribute(context, mediaObject, name, 
                 (String)comp.getAttributes().get("type"), scope, 
                 (String)comp.getAttributes().get("url"));
-        }
+        } else {
+			return (String)comp.getAttributes().get("url");
+		}
         return src;
     }
     
