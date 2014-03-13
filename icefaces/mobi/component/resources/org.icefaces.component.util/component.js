@@ -2290,7 +2290,7 @@ ice.mobi.addListener(document, "touchstart", function(){});
             }
             document.getElementById("mobi_vm_selected").value = view;
 
-            jsf.ajax.request(proxyFormId,event,{execute:'@form', render:'@all'});
+            jsf.ajax.request(proxyFormId,null,{execute:'@form', render:'@all'});
             return false;
         },
         goBack: function(src){

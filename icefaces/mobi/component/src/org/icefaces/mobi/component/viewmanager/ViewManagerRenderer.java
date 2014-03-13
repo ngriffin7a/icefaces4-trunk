@@ -87,7 +87,7 @@ public class ViewManagerRenderer extends Renderer{
         }
         writer.startElement(HTML.H1_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId + "_title", "pageTitle");
-        if( selected == null || selected.length() == 0 || ViewManager.MENU_ID.equals(selected))
+        if( selected == null || selected.length() == 0 || vm.getSelectedView() == null || ViewManager.MENU_ID.equals(selected))
             writer.write(vm.getTitle());
         else{
             writer.write(vm.getSelectedView().getTitle());
