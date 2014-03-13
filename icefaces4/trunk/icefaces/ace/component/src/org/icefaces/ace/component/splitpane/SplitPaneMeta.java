@@ -41,6 +41,7 @@ import javax.faces.component.UIComponent;
                 " Requires a left and right facet for two, side by side, panels." +
                 " Eventually will also be resizable.")
 @ResourceDependencies({
+        @ResourceDependency(library = "icefaces.ace", name = "util/ace-jquery.js"),
 		@ResourceDependency(library = "org.icefaces.component.splitpane", name = "splitpane.css"),
 		@ResourceDependency(library = "org.icefaces.component.splitpane", name = "splitpane.js")
 })

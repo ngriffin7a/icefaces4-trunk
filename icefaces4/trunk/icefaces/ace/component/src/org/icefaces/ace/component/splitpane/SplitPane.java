@@ -21,10 +21,10 @@ import org.icefaces.ace.util.ClientDescriptor;
 
 public class SplitPane extends SplitPaneBase implements ISplitPane {
 
-    public static final String SPLITPANE_BASE = "mobi-splitpane" ;
-    public static final String SPLITPANE_NONSCROLL = "mobi-splitpane-nonScrollable";
-    public static final String SPLITPANE_SCROLLABLE = "mobi-splitpane-scrollable";
-    public static final String SPLITPANE_DIVIDER = "mobi-splitpane-divider";
+    public static final String SPLITPANE_BASE_CSS = "ui-widget ace-splitpane" ;
+    public static final String SPLITPANE_NONSCROLL_CSS = "ui-widget-content ace-splitpane-nonScrollable";
+    public static final String SPLITPANE_SCROLLABLE_CSS = "ui-widget-content ace-splitpane-scrollable";
+    public static final String SPLITPANE_DIVIDER_CSS = "ace-splitpane-divider";
 
 
    // facet names that define the optionally defined layouts

@@ -14,21 +14,18 @@
  * governing permissions and limitations under the License.
  */
 
-.mobi-splitpane-nonScrollable {
+.ace-splitpane-nonScrollable {
     margin: 0;
     display:inline-block;
     vertical-align:top;
 }
-.mobi-splitpane-scrollable {   
+.ace-splitpane-scrollable {   
     margin:0;
-    overflow-y: auto;
     display:inline-block;
     vertical-align:top;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
-.mobi-splitpane-scrollable{
-    border-right: 1px solid #DDD;
-}
-.mobi-splitpane-scrollable:last-child{
+.ace-splitpane-scrollable:last-child{
     border-right: none;
 }

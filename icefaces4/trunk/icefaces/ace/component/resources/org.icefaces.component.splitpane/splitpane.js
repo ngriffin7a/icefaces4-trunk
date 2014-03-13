@@ -14,20 +14,17 @@
  * governing permissions and limitations under the License.
  */
 
-if (!window['mobi']) {
-    window.mobi = {};
-}
 if( !window['ice']){
     window.ice = {};
 }
-if (!window.ice['mobi']) {
-    window.ice.mobi = {};
+if (!window.ice['ace']) {
+    window.ice.ace = {};
 }
-ice.mobi.splitpane = {
+ice.ace.splitpane = {
     panels: {},
     initClient: function(clientId, cfgIn) {
         if (!this.panels[clientId]) {
-            this.panels[clientId] = ice.mobi.splitpane.Scrollable(clientId, cfgIn);
+            this.panels[clientId] = ice.ace.splitpane.Scrollable(clientId, cfgIn);
             this.panels[clientId].resize(clientId);
         } else {
             this.panels[clientId].resize(clientId);
@@ -63,17 +60,17 @@ ice.mobi.splitpane = {
         var leftNode = document.getElementById(clientId + "_left");
         var rightNode = document.getElementById(clientId + "_right");
         var resizeCall = function() {
-            ice.mobi.splitpane.resizeHt(clientId);
+            ice.ace.splitpane.resizeHt(clientId);
         };
         //
         if (cfgIn.width) {
             var width = cfgIn.width || -1;
             if (width > 0 && width < 99) {
                 leftNode.style.width = width + "%";
-                rightNode.style.width = (100 - width) + "%";
+                rightNode.style.width = (99 - width) + "%";
             }
         }
-        ice.mobi.splitpane.addListener(window, 'resize', resizeCall);
+        ice.ace.splitpane.addListener(window, 'resize', resizeCall);
 
         return {
             resize: function(elId) {
@@ -106,7 +103,7 @@ ice.mobi.splitpane = {
                 }
             },
             unload: function() {
-                ice.mobi.splitpane.removeListener(window, "resize", resizeCall);
+                ice.ace.splitpane.removeListener(window, "resize", resizeCall);
             }
         }
     }
