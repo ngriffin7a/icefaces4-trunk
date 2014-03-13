@@ -66,7 +66,7 @@ public class VideoPlayerMeta extends UIComponentBaseMeta {
     private boolean autoplay;
 
     @Property(defaultValue = "session", tlddoc="The JSF Resource scope of the object resolving from the \"value\" " +
-            "attribute. Possible values are \"flash\", \"request\", \"view\", \"session\", and \"application\". ")
+            "attribute. It is only applicable when using a byte array or an instance of IceOutputResource as the value. Possible values are \"flash\", \"request\", \"view\", \"session\", and \"application\". ")
     private String scope;
 
     @Property(tlddoc = "The name is used for JSF Resource registration. ")
