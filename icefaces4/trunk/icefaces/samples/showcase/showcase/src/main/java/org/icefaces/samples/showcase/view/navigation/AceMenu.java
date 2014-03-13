@@ -54,6 +54,7 @@ import org.icefaces.samples.showcase.example.ace.richtextentry.RichTextEntryBean
 import org.icefaces.samples.showcase.example.ace.selectmenu.SelectMenuBean;
 import org.icefaces.samples.showcase.example.ace.simpleselectonemenu.SimpleSelectOneMenuBean;
 import org.icefaces.samples.showcase.example.ace.slider.SliderBean;
+import org.icefaces.samples.showcase.example.ace.splitpane.SplitPaneBean;
 import org.icefaces.samples.showcase.example.ace.submitMonitor.SubmitMonitorBean;
 import org.icefaces.samples.showcase.example.ace.tab.TabSetBean;
 import org.icefaces.samples.showcase.example.ace.textAreaEntry.TextAreaEntryBean;
@@ -109,6 +110,7 @@ import java.io.Serializable;
 				@MenuLink(title = "menu.ace.selectmenu.title", exampleBeanName = SelectMenuBean.BEAN_NAME),
 				@MenuLink(title = "menu.ace.simpleselectonemenu.title", exampleBeanName = SimpleSelectOneMenuBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.slider.title", exampleBeanName = SliderBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.splitpane.title", exampleBeanName = SplitPaneBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.submitMonitor.title", exampleBeanName = SubmitMonitorBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.tabSet.title", exampleBeanName = TabSetBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.textEntry.title", exampleBeanName = TextEntryBean.BEAN_NAME),
