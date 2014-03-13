@@ -24,10 +24,10 @@ import org.icefaces.ace.util.HTML;
 import javax.faces.context.ResponseWriter;
 
 public class SplitPaneCoreRenderer {
-    public static final String SPLITPANE_BASE_CSS = "mobi-splitpane" ;
-    public static final String SPLITPANE_NONSCROLL_CSS = "mobi-splitpane-nonScrollable";
-    public static final String SPLITPANE_SCROLLABLE_CSS = "mobi-splitpane-scrollable";
-    public static final String SPLITPANE_DIVIDER_CSS = "mobi-splitpane-divider";
+    public static final String SPLITPANE_BASE_CSS = "ui-widget ace-splitpane" ;
+    public static final String SPLITPANE_NONSCROLL_CSS = "ui-widget-content ace-splitpane-nonScrollable";
+    public static final String SPLITPANE_SCROLLABLE_CSS = "ui-widget-content ace-splitpane-scrollable";
+    public static final String SPLITPANE_DIVIDER_CSS = "ace-splitpane-divider";
 
     private static final Logger logger =
             Logger.getLogger(SplitPaneCoreRenderer.class.toString());
@@ -49,7 +49,7 @@ public class SplitPaneCoreRenderer {
                 logger.fine(" input of ColumnDivider is invalid, setting it to default value");
             }
         }
-        int rightWidth = 100 - leftWidth;
+        int rightWidth = 99 - leftWidth;
         this.setLeftwidth(String.valueOf(leftWidth)+ "%");
         this.setRightwidth(String.valueOf(rightWidth) + "%");
         String userClass = component.getStyleClass();
@@ -98,10 +98,10 @@ public class SplitPaneCoreRenderer {
     public void encodeEnd(SplitPane pane, ResponseWriter writer)
             throws IOException{
         writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute(HTML.CLASS_ATTR, "mobi-hidden", null);
+        writer.writeAttribute(HTML.CLASS_ATTR, "ace-hidden", null);
         writer.startElement(HTML.SCRIPT_ELEM, null);
         writer.writeAttribute("type", "text/javascript", null);
-        StringBuilder sb = new StringBuilder("ice.mobi.splitpane.initClient('").append(pane.getClientId()).append("'");
+        StringBuilder sb = new StringBuilder("ice.ace.splitpane.initClient('").append(pane.getClientId()).append("'");
         sb.append(",{ scrollable: '").append(pane.isScrollable()).append("'");
      //   sb.append(", resize: ").append(pane.isResizable());
         int width = pane.getColumnDivider();
@@ -120,7 +120,7 @@ public class SplitPaneCoreRenderer {
         if (this.leftwidth != null){
             return "width:" +leftwidth+";";}
         else {
-            return "width: 30%;"; //default value
+            return "width: 25%;"; //default value
         }
     }
 
@@ -132,7 +132,7 @@ public class SplitPaneCoreRenderer {
         if (this.rightwidth !=null){
             return "width:" + rightwidth+";";
         } else {
-            return "width: 70%;";
+            return "width: 74%;";
         }
     }
 

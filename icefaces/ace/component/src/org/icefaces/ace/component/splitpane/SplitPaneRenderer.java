@@ -46,13 +46,13 @@ public class SplitPaneRenderer extends CoreRenderer {
         SplitPaneCoreRenderer renderer = new SplitPaneCoreRenderer();
         ResponseWriter writer = facesContext.getResponseWriter();
         renderer.encodeBegin(pane, writer);
-        if ((leftFacet!=null) && (rightFacet !=null)){
-           writeJavascriptFile(facesContext, uiComponent, JS_NAME, JS_MIN_NAME, JS_LIBRARY);
-        }
+
         renderer.encodePane(pane, writer, "left");
         Utils.renderChild(facesContext, leftFacet);
         renderer.encodePaneEnd(writer);
-        renderer.encodeColumnDivider(pane, writer) ;
+
+        renderer.encodeColumnDivider(pane, writer);
+
         renderer.encodePane(pane, writer, "right");
         Utils.renderChild(facesContext, rightFacet);
         renderer.encodePaneEnd(writer);
@@ -80,10 +80,10 @@ public class SplitPaneRenderer extends CoreRenderer {
         SplitPane pane = (SplitPane) uiComponent;
         String clientId = pane.getClientId(facesContext);
         writer.startElement("span", uiComponent);
-        writer.writeAttribute(HTML.CLASS_ATTR, "mobi-hidden", null);
+        writer.writeAttribute(HTML.CLASS_ATTR, "ace-hidden", null);
         writer.startElement("script", uiComponent);
         writer.writeAttribute("type", "text/javascript", null);
-        StringBuilder sb = new StringBuilder("ice.mobi.splitpane.initClient('").append(clientId).append("'");
+        StringBuilder sb = new StringBuilder("ice.ace.splitpane.initClient('").append(clientId).append("'");
         sb.append(",{ scrollable: '").append(pane.isScrollable()).append("'");
      //   sb.append(", resize: ").append(pane.isResizable()); not yet implemented.
         int width = pane.getColumnDivider();
