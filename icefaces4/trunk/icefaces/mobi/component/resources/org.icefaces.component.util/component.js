@@ -1652,6 +1652,7 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
             if (isTouchDevice) {
                 ice.mobi.addListener(element, "touchend", isRowEvent(rowTouchEnd));
                 ice.mobi.addListener(element, "touchstart", isRowEvent(rowTouchStart));
+                ice.mobi.addListener(element, "click", isRowEvent(activateRow));
             } else {
                 ice.mobi.addListener(element, "click", isRowEvent(activateRow));
             }
