@@ -51,7 +51,8 @@ public class ViewRenderer extends Renderer {
        writer.writeAttribute(HTML.CLASS_ATTR, "mobi-vm-view" + (view.isSplash() ? " mobi-vm-splash" : ""), null);
        writer.startElement(HTML.DIV_ELEM, null);
        writer.writeAttribute(HTML.ID_ATTR, view.getClientId()+"_content", null);
-       writer.writeAttribute(HTML.CLASS_ATTR, "mobi-vm-view-content", null);
+       writer.writeAttribute(HTML.CLASS_ATTR, "mobi-vm-view-content " + view.getStyleClass(), null);
+       writer.writeAttribute(HTML.STYLE_ATTR, view.getStyle(), null);
        writer.startElement(HTML.DIV_ELEM, null);
        writer.writeAttribute(HTML.ID_ATTR, view.getClientId()+"_inner", null);
     }

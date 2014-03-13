@@ -56,17 +56,17 @@ public class ViewManagerMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "The main header title")
     private String title;
     
-    @Property(tlddoc = "The selected view id", defaultValue = "mobiViewManagerMenu")
+    @Property(tlddoc = "The selected view id. It has to match the id of an existing child mobi:view component.", defaultValue = "mobiViewManagerMenu")
     private String selected;
     
-    @Property(tlddoc = "The inline CSS style applied to the header")
+    @Property(tlddoc = "The inline CSS style applied to the header.")
     private String headerStyle;
     
-    @Property(tlddoc = "The type of view transitons to apply [horizontal|vertical|flip|fade]", 
+    @Property(tlddoc = "The type of view transitons to apply [horizontal|vertical|flip|fade].", 
     		defaultValue = "horizontal")
     private String transitionType;
     
-    @Property(tlddoc = "The history stack")
+    @Property(tlddoc = "The history stack.")
     private Stack<String> history;
     
     @Property(tlddoc = "If set, the back button label to display, if left to the default 'mobi-view' keyword, the back button label will"

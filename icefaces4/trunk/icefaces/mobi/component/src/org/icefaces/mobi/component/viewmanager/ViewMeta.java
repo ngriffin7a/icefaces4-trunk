@@ -49,22 +49,22 @@ public class ViewMeta extends UIComponentBaseMeta {
     @Property(tlddoc = TLDConstants.STYLECLASS)
     private String styleClass;
     
-    @Property(tlddoc = "The menu icon type")
+    @Property(tlddoc = "The name of the icon to use for this view in the main menu. Possible values are Font Awesome icon names, without the prefix (e.g. 'fa-'). These names can be found on this page http://fortawesome.github.io/Font-Awesome/icons/ .")
     private String menuIcon;
     
-    @Property(tlddoc = "The page title")
+    @Property(tlddoc = "The title of this view.")
     private String title;
     
-    @Property(tlddoc = "Include the view in the main menu", defaultValue = "true")
+    @Property(tlddoc = "Flag to specify whether to include this view in the main menu.", defaultValue = "true")
     private boolean includeInMenu;
     
-    @Property(tlddoc = "The nav bar group that this view will be rendered for")
+    @Property(tlddoc = "The nav bar group that this view will be rendered for.")
     private String navBarGroup;
     
-    @Property(tlddoc = "The group divider to render before the menu item for this view")
+    @Property(tlddoc = "The title of the group divider that will be rendered before the menu item for this view.")
     private String divider;
     
-    @Property(tlddoc = "Show as the splash screen")
+    @Property(tlddoc = "Show this view as the splash screen.")
     private boolean splash;
 
     
