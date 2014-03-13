@@ -1,17 +1,5 @@
-package org.icefaces.ace.component.gmap;
-
-import org.icefaces.ace.renderkit.CoreRenderer;
-import org.icefaces.ace.util.JSONBuilder;
-import org.icefaces.render.MandatoryResourceComponent;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import javax.faces.FacesException;
-import java.io.IOException;
-
 /*
- * Copyright 2004-2012 ICEsoft Technologies Canada Corp.
+ * Copyright 2004-2014 ICEsoft Technologies Canada Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the
@@ -25,6 +13,18 @@ import java.io.IOException;
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+package org.icefaces.ace.component.gmap;
+
+import org.icefaces.ace.renderkit.CoreRenderer;
+import org.icefaces.ace.util.JSONBuilder;
+import org.icefaces.render.MandatoryResourceComponent;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.FacesException;
+import java.io.IOException;
 
 @MandatoryResourceComponent(tagName = "gMap", value = "org.icefaces.ace.component.gmap.GMap")
 public class GMapEventRenderer extends CoreRenderer {
