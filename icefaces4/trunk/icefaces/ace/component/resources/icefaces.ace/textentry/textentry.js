@@ -13,6 +13,7 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 ice.ace.TextEntry = function(id, cfg) {
     var jQ = ice.ace.jq;
     var inputId = id + "_input";
