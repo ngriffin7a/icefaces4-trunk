@@ -123,9 +123,8 @@ public class DateSpinnerRenderer extends InputRenderer {
             if (!noJs && hasBehaviors) {
                 String event = spinner.getDefaultEventName(context);
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
-                writer.writeAttribute("onblur", cbhCall, null);
-            } else if (!noJs) {
-                writer.writeAttribute("onblur", "ice.se(event, this);", null);
+                cbhCall = cbhCall.replace("\"", "\'");
+                writer.writeAttribute("onchange", "ice.ace.ab("+cbhCall+");", null);
             }
             writer.endElement("input");
         } else {
