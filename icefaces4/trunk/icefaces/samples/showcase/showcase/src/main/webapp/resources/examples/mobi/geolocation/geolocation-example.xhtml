@@ -84,22 +84,30 @@
     <div>
     <mobi:fieldsetGroup>
         <mobi:fieldsetRow>
-            <h:outputLabel value="Continuous Updates:" for="continuousUpdates"/>
-            <mobi:flipswitch id="continuousUpdates"
+            <span style="display:inline-block;max-width:50%;">
+                <h:outputLabel value="Continuous Updates:" for="continuousUpdates"/>
+            </span>
+            <span style="display:inline-block;max-width:50%;float:right;">
+                <mobi:flipswitch id="continuousUpdates"
                              labelOn="true" labelOff="false"
                              style="float:right"
                              valueChangeListener="#{geoLocationBean.continuousUpdatesChange}"
                              value="#{geoLocationBean.continuousUpdates}"/>
+            </span>
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
-            <h:outputLabel value="enableHighPrecision:" for="highPrecise"/> 
-            <h:selectOneMenu id="highPrecise" value="#{geoLocationBean.enableHighPrecision}"
-                style="float:right">
-                <f:selectItem itemValue="true"/>
-                <f:selectItem itemValue="false"/>
-                <f:selectItem itemValue="asNeeded"/>
-                <f:ajax execute="@this" render="@form"/>
-            </h:selectOneMenu>
+            <span style="display:inline-block;max-width:50%;">
+                <h:outputLabel value="Enable High Precision:" for="highPrecise"/> 
+            </span>
+            <span style="display:inline-block;max-width:50%;float:right;">
+				<h:selectOneMenu id="highPrecise" value="#{geoLocationBean.enableHighPrecision}"
+					style="float:right">
+					<f:selectItem itemValue="true"/>
+					<f:selectItem itemValue="false"/>
+					<f:selectItem itemValue="asNeeded"/>
+					<f:ajax execute="@this" render="@form"/>
+				</h:selectOneMenu>
+            </span>
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
             <div style="display:inline-block;max-width:50%">
