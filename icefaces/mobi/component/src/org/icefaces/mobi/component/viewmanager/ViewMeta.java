@@ -52,7 +52,7 @@ public class ViewMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "The name of the icon to use for this view in the main menu. Possible values are Font Awesome icon names, without the prefix (e.g. 'fa-'). These names can be found on this page http://fortawesome.github.io/Font-Awesome/icons/ .")
     private String menuIcon;
     
-    @Property(tlddoc = "The title of this view.")
+    @Property(tlddoc = "The title of this view.", defaultValue="(no title)")
     private String title;
     
     @Property(tlddoc = "Flag to specify whether to include this view in the main menu.", defaultValue = "true")
