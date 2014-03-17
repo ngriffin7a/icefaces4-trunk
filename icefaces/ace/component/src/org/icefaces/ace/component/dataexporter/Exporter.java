@@ -170,13 +170,17 @@ public abstract class Exporter {
 
 		return false;
 	}
-	
+
 	protected List<Row> getRows(ColumnGroup columnGroup) {
+		return getRows(columnGroup, false);
+	}
+	
+	protected List<Row> getRows(ColumnGroup columnGroup, boolean includeAll) {
 		List<Row> rows = new ArrayList<Row>();
 		
 		for (UIComponent child : columnGroup.getChildren()) {
 			if (child instanceof Row) {
-				if (shouldExcludeFromExport(child)) continue;
+				if (!includeAll && shouldExcludeFromExport(child)) continue;
 				Row row = (Row) child;
 				rows.add(row);
 			}

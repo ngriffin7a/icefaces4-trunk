@@ -258,7 +258,7 @@ public class XMLExporter extends Exporter {
 	protected List<String> getHeadersFromColumnGroup(ColumnGroup columnGroup, List<UIColumn> columns, DataTable data, int[] excludeColumns) {
 	
 		ArrayList<Row> rows = (ArrayList<Row>) getRows(columnGroup);
-		determineHeaderColumnOrdering(rows, data);
+		determineHeaderColumnOrdering(getRows(columnGroup, true), data);
 		int size = rows.size();
 		if (size > 0) {
 			List<UIColumn> rowColumns = new ArrayList<UIColumn>();
