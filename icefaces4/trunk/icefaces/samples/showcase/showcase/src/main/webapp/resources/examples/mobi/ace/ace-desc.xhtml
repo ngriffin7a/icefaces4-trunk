@@ -18,22 +18,14 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
-<h:form>
-    <mobi:fieldsetGroup>
-        <mobi:fieldsetRow styleClass="intro">
-            <header>
-                <h5>ICEfaces 4 Mobile Components Showcase</h5>
-            </header>
-            <body>
-    			
-    			<!-- <h:outputText escape="false" value="#{msgs[MobiSuiteOverview.description]}"/> -->
-    	
-    			
-	  	    </body>	
-        </mobi:fieldsetRow>
-    </mobi:fieldsetGroup>
 
- </h:form>
+    <mobi:fieldsetGroup styleClass="exampleDescription">
+        <p>The ACE Components provide a large number of additional rich components.</p>
+        <br/><p>Most ACE components are suitable for use on mobile devices, and support touch interfaces.</p>
+        <br/><p>ACE components can be intermixed with MOBI components as desired.</p>
+        <br/><br/><ace:linkButton href="./showcase.jsf" value="Click here to see the ACE Showcase"/>
+    </mobi:fieldsetGroup>
 
 </ui:composition>
