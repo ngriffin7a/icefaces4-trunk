@@ -1641,7 +1641,7 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
                 /* filter events for those bubbled from tr elems */
                 isRowEvent = function(callback) {
                     return function(e) {
-                        var tr = closest(e.srcElement, "tr");
+                        var tr = closest(e.srcElement || e.target, "tr");
                         if (tr && im.matches(tr, bodyRowSelector)) {
                             e.delegateTarget = tr;
                             callback(e);
