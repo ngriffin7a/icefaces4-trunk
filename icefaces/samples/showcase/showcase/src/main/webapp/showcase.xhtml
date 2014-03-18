@@ -52,6 +52,14 @@
                                                 styleClass="suiteLinkImageStyle"
                                                 title="ACE Components Showcase"/>
                         </h:link>
+                        <h:outputLink id="mobiSuiteLink"
+                                styleClass="mobiSuiteLink"
+                                value="showcase-mobile.jsf"  >
+                                <h:graphicImage value="#{navigationModel.componentGroup == mobiMenu.beanName ? '/resources/css/images/topBannerImages/mobi-on.png' : '/resources/css/images/topBannerImages/mobi-off.png' }"
+                                                alt="Mobile Components Showcase"
+                                                styleClass="suiteLinkImageStyle"
+                                                title="Mobile Components Showcase"/>
+                        </h:outputLink>
                     </h:panelGroup>
                 </h:panelGrid>
             </h:panelGroup>

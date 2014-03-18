@@ -27,22 +27,23 @@
     <title>ICEfaces Mobile Showcase</title>
     <mobi:deviceResource />
     <h:outputStylesheet library="ice.samples.showcase" name="showcase_mobile.css" media="screen"/>
+	<style type="text/css">
+		.icon-fetch-contact:before {
+	    	content: "\0040";
+			border: 1px solid;
+			border-left: 2px solid;
+		}
+		a:link, a:visited {
+			text-decoration: underline;
+		}
+		h3 {
+			margin-left:10px;
+		}
+	</style>
+       
 </h:head>
     <h:body>
-		<style type="text/css">
-			.icon-fetch-contact:before {
-				content: "\0040";
-				border: 1px solid;
-				border-left: 2px solid;
-			}
-			a:link, a:visited {
-				text-decoration: underline;
-			}
-			h3 {
-				margin-left:10px;
-			}
-		</style>
-         <f:metadata>
+  <f:metadata>
             <f:viewParam name="theme" value="#{themeBean.currentTheme}" /> 
             <f:viewParam name="simulator" value="#{themeBean.simulator}"/>
          </f:metadata>
@@ -53,7 +54,7 @@
              history="#{viewManagerBean.history}">
              
              <!-- SPLASH SCREEN -->
-             <mobi:view id="splash" splash="true" includeInMenu="false">
+             <mobi:view id="splash" splash="true" includeInMenu="false" title="Overview">
                  <ui:include src="/resources/examples/mobile-splash.xhtml" />
              </mobi:view>
              
@@ -191,6 +192,11 @@
                 <ui:include src="/resources/examples/mobi/scan/scan-desc.xhtml" />
              </mobi:view>
              
+            <!-- ACE SHOWCASE -->
+             <mobi:view id="acecomps" title="ACE Components" 
+                divider="ACE Components" navBarGroup="acecomps">
+                 <ui:include src="/resources/examples/mobi/ace/ace-desc.xhtml" />
+             </mobi:view>            
              
          </mobi:viewManager>
     </h:body>

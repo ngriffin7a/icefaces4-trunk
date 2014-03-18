@@ -18,6 +18,7 @@ package org.icefaces.samples.showcase.view.navigation;
 
 import org.icefaces.ace.event.AccordionPaneChangeEvent;
 import org.icefaces.samples.showcase.example.ace.overview.AceSuiteOverviewBean;
+import org.icefaces.samples.showcase.example.mobi.overview.MobiSuiteOverviewBean;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import org.icefaces.samples.showcase.metadata.context.Menu;
 import org.icefaces.samples.showcase.metadata.context.MenuLink;
@@ -262,7 +263,8 @@ public class NavigationController implements Serializable {
     }
 
     private boolean isContentAnExample(String exampleDescription) {
-        if (exampleDescription.equals(AceSuiteOverviewBean.BEAN_NAME)) {
+        if (exampleDescription.equals(AceSuiteOverviewBean.BEAN_NAME) ||
+        	exampleDescription.equals(MobiSuiteOverviewBean.BEAN_NAME)) {
             return false;
         } else {
             return true;
