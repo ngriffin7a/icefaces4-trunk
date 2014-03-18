@@ -52,9 +52,6 @@ public class SplitPaneMeta extends UIPanelMeta {
 
     @Property(defaultValue="25", tlddoc="An integer value representing the % of the total width assigned to the left pane.")
     private int columnDivider;
-	
-    @Property(tlddoc="Disables this component, so it does not receive focus or get submitted.", implementation=Implementation.GENERATE)
-    private boolean disabled;
 
     @Property(tlddoc="Page-wide unique identifier.", implementation=Implementation.GENERATE)
     private String id;
