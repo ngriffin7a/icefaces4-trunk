@@ -144,6 +144,8 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
 
                 Document oldDOM = writer.getOldDocument();
                 applyBrowserChanges(ec.getRequestParameterValuesMap(), oldDOM);
+                writer.setDocument(oldDOM);
+                writer.saveOldDocument();
 
                 UIViewRoot viewRoot = facesContext.getViewRoot();
                 List<DOMUtils.EditOperation> diffs = null;
