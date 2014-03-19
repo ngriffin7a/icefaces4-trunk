@@ -34,6 +34,9 @@
         <exception-handler-factory>
             org.icefaces.impl.application.ExtendedExceptionHandlerFactory
         </exception-handler-factory>
+        <client-window-factory>
+            org.icefaces.impl.application.CustomClientWindowFactory
+        </client-window-factory>
     </factory>
     <render-kit>
         <render-kit-id>HTML_BASIC</render-kit-id>

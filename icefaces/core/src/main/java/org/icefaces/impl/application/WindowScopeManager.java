@@ -22,6 +22,7 @@ import org.icefaces.impl.push.SessionViewManager;
 import org.icefaces.util.EnvUtils;
 
 import javax.annotation.PreDestroy;
+import javax.faces.FactoryFinder;
 import javax.faces.application.Application;
 import javax.faces.application.ResourceHandler;
 import javax.faces.component.UIViewRoot;
@@ -30,6 +31,9 @@ import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.*;
+import javax.faces.lifecycle.ClientWindow;
+import javax.faces.lifecycle.Lifecycle;
+import javax.faces.lifecycle.LifecycleFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -80,12 +84,18 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static ScopeMap lookupWindowScope(FacesContext context) {
+        if (context.getExternalContext().getClientWindow() == null) {
+            LifecycleFactory factory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+            Lifecycle lifecycle = factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
+            lifecycle.attachWindow(context);
+        }
+
         String id = lookupAssociatedWindowID(context.getExternalContext().getRequestMap());
         State state = getState(context);
         return state == null ? null : (ScopeMap) state.windowScopedMaps.get(id);
     }
 
-    public static String determineWindowID(FacesContext context) {
+    public static String determineWindowID(FacesContext context, boolean customWindowTracking) {
 
         // ICE-7749: By default, in portals, the ExternalContext.getSessionMap() returns a map of
         // values that are in PortletSession.PORTLET_SCOPE.  But for the synchronization monitor we
@@ -102,7 +112,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         synchronized (synchronizationMonitor) {
             State state = getState(context);
             ExternalContext externalContext = context.getExternalContext();
-            String id = externalContext.getRequestParameterMap().get("ice.window");
+            String id = customWindowTracking ? externalContext.getRequestParameterMap().get("ice.window") : externalContext.getClientWindow().getId();
             try {
                 for (Object scopeMap : new ArrayList(state.windowScopedMaps.values())) {
                     ScopeMap map = (ScopeMap) scopeMap;
@@ -156,7 +166,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
 
                     //unknown window scope, corresponding ScopeMap might have been erased when not used (no beans stored in it)
                     //most probably a postback received after the server or application was restarted
-                    ScopeMap scopeMap = new ScopeMap(context);
+                    ScopeMap scopeMap = new ScopeMap(id, context);
                     scopeMap.activate(state);
                     associateWindowID(scopeMap.id, requestMap);
                     return scopeMap.id;
@@ -169,7 +179,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         return "ice.dispose.window".equals(parameters.get("ice.submit.type"));
     }
 
-    private static synchronized String generateID() {
+    public static synchronized String generateID() {
         return seed + Long.toString(System.currentTimeMillis(), 36);
     }
 
@@ -288,16 +298,13 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static class ScopeMap extends HashMap {
-        private String id = generateID();
+        private String id;
         private long activateTimestamp = System.currentTimeMillis();
         private long deactivateTimestamp = -1;
         private boolean preDestroyInvoked;
 
-        public String getId() {
-            return id;
-        }
-
-        public ScopeMap(FacesContext facesContext) {
+        public ScopeMap(String id, FacesContext facesContext) {
+            this.id = id;
             boolean processingEvents = facesContext.isProcessingEvents();
             try {
                 facesContext.setProcessingEvents(true);
@@ -307,6 +314,14 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
                 facesContext.setProcessingEvents(processingEvents);
                 sharedMapLookupStrategy.associate(facesContext, id);
             }
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public ScopeMap(FacesContext facesContext) {
+            this(generateID(), facesContext);
         }
 
         private void disactivateIfUnused(FacesContext facesContext) {
@@ -357,7 +372,8 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static String lookupAssociatedWindowID(Map requestMap) {
-        return (String) requestMap.get(WindowScopeManager.class.getName());
+        ClientWindow clientWindow = FacesContext.getCurrentInstance().getExternalContext().getClientWindow();
+        return clientWindow == null ? null : clientWindow.getId();
     }
 
     public static void associateWindowIDToRequest(String id, FacesContext facesContext) {
@@ -561,7 +577,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         public void beforePhase(final PhaseEvent event) {
             FacesContext context = FacesContext.getCurrentInstance();
             try {
-                WindowScopeManager.determineWindowID(context);
+                WindowScopeManager.determineWindowID(context, false);
             } catch (Exception e) {
                 log.log(Level.FINE, "Unable to set up WindowScope ", e);
             }

@@ -23,6 +23,7 @@ import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIOutput;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.AbortProcessingException;
@@ -47,10 +48,10 @@ public class WindowAndViewIDSetup implements SystemEventListener {
         UIForm form = (UIForm) ((ComponentSystemEvent) event).getComponent();
         String componentId = form.getId() + ID_SUFFIX;
         FacesContext context = FacesContext.getCurrentInstance();
-        Map requestMap = context.getExternalContext().getRequestMap();
+        ExternalContext externalContext = context.getExternalContext();
 
-        final String windowID = WindowScopeManager.lookupAssociatedWindowID(requestMap);
-        final String viewID = BridgeSetup.getViewID(context.getExternalContext());
+        final String windowID = externalContext.getClientWindow().getId();
+        final String viewID = BridgeSetup.getViewID(externalContext);
         final WindowScopeManager.ScopeMap scopeMap = WindowScopeManager.lookupWindowScope(context);
 
         UIOutput output = new UIOutputWriter() {
