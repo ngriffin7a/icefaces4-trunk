@@ -84,12 +84,6 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static ScopeMap lookupWindowScope(FacesContext context) {
-        if (context.getExternalContext().getClientWindow() == null) {
-            LifecycleFactory factory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-            Lifecycle lifecycle = factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
-            lifecycle.attachWindow(context);
-        }
-
         String id = lookupAssociatedWindowID(context.getExternalContext().getRequestMap());
         State state = getState(context);
         return state == null ? null : (ScopeMap) state.windowScopedMaps.get(id);
@@ -577,7 +571,13 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         public void beforePhase(final PhaseEvent event) {
             FacesContext context = FacesContext.getCurrentInstance();
             try {
-                WindowScopeManager.determineWindowID(context, false);
+                boolean customWindowTracking = !"url".equals(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
+                String id = WindowScopeManager.determineWindowID(context, customWindowTracking);
+                if (customWindowTracking) {
+                    ClientWindow clientWindow = new CustomClientWindow(id);
+                    clientWindow.disableClientWindowRenderMode(context);
+                    context.getExternalContext().setClientWindow(clientWindow);
+                }
             } catch (Exception e) {
                 log.log(Level.FINE, "Unable to set up WindowScope ", e);
             }
@@ -657,5 +657,25 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     private static class SynchronizationMonitorObject implements Serializable {
+    }
+
+    private static class CustomClientWindow extends ClientWindow {
+        private final String id;
+
+        public CustomClientWindow(String id) {
+            this.id = id;
+        }
+
+        public Map<String, String> getQueryURLParameters(FacesContext context) {
+            return Collections.EMPTY_MAP;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void decode(FacesContext context) {
+
+        }
     }
 }
