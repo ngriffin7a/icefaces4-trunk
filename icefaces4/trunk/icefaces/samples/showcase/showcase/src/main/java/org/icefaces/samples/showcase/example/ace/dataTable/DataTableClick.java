@@ -11,11 +11,13 @@ import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -78,19 +80,19 @@ public class DataTableClick extends ComponentExampleImpl<DataTableClick> impleme
         super.initMetaData();
     }
 
-    public void toggleSelect(DataTableCellClickEvent event) {
-        RowState state = (RowState) FacesContext.getCurrentInstance()
-                                                .getExternalContext()
-                                                .getRequestMap().get(stateVar);
-
+	public void toggleSelect(AjaxBehaviorEvent event) {
+         RowState state = (RowState) FacesContext.getCurrentInstance()
+                                                 .getExternalContext()
+                                                 .getRequestMap().get(stateVar);
         state.setSelected(!state.isSelected());
     }
 
-    public void toggleEditor(DataTableCellClickEvent event) {
-        RowState state = (RowState) FacesContext.getCurrentInstance()
-                                                .getExternalContext()
-                                                .getRequestMap().get(stateVar);
-
+    public void toggleEditor(AjaxBehaviorEvent e) {
+         RowState state = (RowState) FacesContext.getCurrentInstance()
+                                                 .getExternalContext()
+                                                 .getRequestMap().get(stateVar);
+                                                 
+        DataTableCellClickEvent event = (DataTableCellClickEvent) e;
         CellEditor editor = event.getColumn().getCellEditor();
 
         if (editor != null) {
