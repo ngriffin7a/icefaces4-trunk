@@ -221,6 +221,10 @@ ice.ace.ComboBox.prototype = {
         }
 		ice.ace.jq(this.element).on(keyEvent, function(e) { self.onKeyPress.call(self, e); } );
 		ice.ace.jq(this.element).on("keyup", function(e) { self.hidden.value = self.element.value; } );
+		ice.ace.jq(this.update).on("mousedown", function(e) {
+			self.clickWithinBoundaries = true;
+			self.mouseDownObserver = setTimeout(function(){self.clickWithinBoundaries = false;}, 200);
+		});
 		
 		// ajax behaviors
 		if (behaviors) {
@@ -419,7 +423,6 @@ ice.ace.ComboBox.prototype = {
     },
 
     onClick: function(event) {
-		if (this.ieScrollbarFixObserver) clearTimeout(this.ieScrollbarFixObserver);
 		var $element = ice.ace.jq(event.currentTarget).closest('div');
 		var element = $element.get(0);
         this.index = element.autocompleteIndex;
@@ -445,26 +448,9 @@ ice.ace.ComboBox.prototype = {
     onBlur: function(event) {
 		var $box = this.root.find('.ui-combobox-value');
 		// check if last click was done on scrollbar
-		if (navigator.userAgent.indexOf("MSIE") >= 0) {
-			var n = this.height;
-			if (n!=null && n!='' && typeof n === 'number' && n % 1 == 0) {
-				var posx=0; var posy=0;
-				var e = window.event;
-				if (e.pageX || e.pageY) {
-					posx = e.pageX;
-					posy = e.pageY;
-				} else if (e.clientX || e.clientY) {
-					posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-					posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-				}
-				var widthX=$box.position().left+$box.width();
-				var heightX=$box.position().top+$box.height()+parseFloat(this.height)+10;
-				if ( this.active && (posx>$box.position().left && posx<=widthX) && (posy>$box.position().top && posy<heightX) ) {
-					var self = this;
-					this.ieScrollbarFixObserver = setTimeout(function(){self.element.focus();}, 200);
-					return;
-				}
-			}
+		if (this.clickWithinBoundaries) {
+			this.element.focus();
+			return;
 		}
 		var self = this;
         this.hideObserver = setTimeout(function () { // needed to make click events work
