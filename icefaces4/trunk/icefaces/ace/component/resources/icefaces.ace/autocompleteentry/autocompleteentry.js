@@ -243,7 +243,8 @@ ice.ace.Autocompleter.prototype = {
 						autoUp = true;
 				}
 			}
-			jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: '100%', maxHeight: this.height, overflow: "auto" });
+			var listWidth = jqElement.outerWidth() - (jqUpdate.outerWidth() - jqUpdate.width());
+			jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, width: listWidth, maxHeight: this.height, overflow: "auto" });
 			update.style.left = '0';
 			if (this.direction == 'up' || autoUp) {
 				var updateHeight = jqUpdate.height();
