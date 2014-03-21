@@ -26,14 +26,14 @@
     <h3>Date Time Spinners</h3>
     <h:form id="dateSpinnerForm">
         <mobi:fieldsetGroup>
-            <mobi:fieldsetRow>
-                <h:outputLabel for="useNative" value="Use Native:"/>
+            <mobi:fieldsetRow style="padding-bottom:15px;">
+                <h:outputLabel for="useNative" value="Use Native:" style="display:inline-block;margin-top:5px;"/>
                 <mobi:flipswitch id="useNative" value="#{dateBean.useNative}" style="float:right">
                     <ace:ajax render="dateSpinnerForm" execute="dateSpinnerForm"/>
                 </mobi:flipswitch>&#160;
             </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                <h:outputLabel for="readonly" value="Read Only:"/>
+            <mobi:fieldsetRow style="padding-bottom:15px;">
+                <h:outputLabel for="readonly" value="Read Only:" style="display:inline-block;margin-top:5px;"/>
                 <mobi:flipswitch id="readonly" value="#{dateBean.readonly}" style="float:right">
                     <ace:ajax render="dateSpinnerForm" execute="dateSpinnerForm"/>
                 </mobi:flipswitch>&#160;
