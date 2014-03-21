@@ -39,32 +39,33 @@
     text-overflow: ellipsis;
 }
         </style>
+    <h3 style="margin-top:1em;"><h:outputText value="Flip Switch Controls"/></h3>
         <mobi:fieldsetGroup>
 
-            <mobi:fieldsetRow>
-                <h:outputLabel for="cap" value="Auto-Capitalization"/>
+            <mobi:fieldsetRow style="padding-bottom:15px;">
+                <h:outputLabel for="cap" value="Auto-Capitalization" style="display:inline-block;margin-top:5px;"/>
                 <mobi:flipswitch id="cap" style="float:right"
                                  labelOn="ON" labelOff="OFF"
                                  singleSubmit="true"
                                  valueChangeListener="#{flipSwitchBean.autoCapitalizationChange}"
                                  value="#{flipSwitchBean.autoCapitalization}"><ace:ajax />&#160;</mobi:flipswitch>
             </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                <h:outputLabel for="cor" value="Auto-Correction"/>
+            <mobi:fieldsetRow style="padding-bottom:15px;">
+                <h:outputLabel for="cor" value="Auto-Correction" style="display:inline-block;margin-top:5px;"/>
                 <mobi:flipswitch id="cor" style="float:right"
                                  labelOn="ON" labelOff="OFF"
                                  singleSubmit="true"
                                  value="#{flipSwitchBean.autoCorrection}"><ace:ajax />&#160;</mobi:flipswitch>
             </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                <h:outputLabel for="spell" value="Check Spelling"/>
+            <mobi:fieldsetRow style="padding-bottom:15px;">
+                <h:outputLabel for="spell" value="Check Spelling" style="display:inline-block;margin-top:5px;"/>
                 <mobi:flipswitch id="spell" style="float:right"
                                  labelOn="ON" labelOff="OFF"
                                  singleSubmit="true"
                                  value="#{flipSwitchBean.checkSpelling}"><ace:ajax />&#160;</mobi:flipswitch>
             </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                <h:outputLabel for="lock" value="Enable Caps Lock"/>
+            <mobi:fieldsetRow style="padding-bottom:15px;">
+                <h:outputLabel for="lock" value="Enable Caps Lock" style="display:inline-block;margin-top:5px;"/>
                 <mobi:flipswitch id="lock" style="float:right"
                                  labelOn="ON" labelOff="OFF"
                                  singleSubmit="true"
@@ -75,7 +76,7 @@
 
     </h:form>
 
-    <h4><h:outputText value="Flip Switch Value Echo"/></h4>
+    <h3><h:outputText value="Flip Switch Value Echo"/></h3>
     <mobi:fieldsetGroup styleClass="results">
         <mobi:fieldsetRow>
             <h:outputLabel value="Auto-Capitalization"/>
