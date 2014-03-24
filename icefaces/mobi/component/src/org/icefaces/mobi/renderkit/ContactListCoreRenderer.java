@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.icefaces.mobi.api.IContactList;
 import org.icefaces.mobi.util.CSSUtils;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 public class ContactListCoreRenderer extends BaseCoreRenderer {
     

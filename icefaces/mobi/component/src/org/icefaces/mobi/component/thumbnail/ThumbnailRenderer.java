@@ -31,7 +31,7 @@ import org.icefaces.mobi.api.ThumbnailProvider;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.MobiJSFUtils;
 
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 import static org.icefaces.mobi.util.HTML.*;
 
 public class ThumbnailRenderer extends Renderer {

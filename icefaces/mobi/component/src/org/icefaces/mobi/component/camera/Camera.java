@@ -19,7 +19,7 @@ package org.icefaces.mobi.component.camera;
 import org.icefaces.mobi.api.ThumbnailProvider;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.api.IDevice;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 import javax.el.MethodExpression;
 

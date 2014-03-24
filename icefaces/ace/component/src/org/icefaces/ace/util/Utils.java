@@ -16,11 +16,8 @@
 
 package org.icefaces.ace.util;
 
-import java.beans.Beans;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
-import java.net.URLEncoder;
 
 import javax.el.ValueExpression;
 import javax.faces.component.*;
@@ -31,8 +28,10 @@ import javax.faces.context.ResponseWriter;
 
 import org.icefaces.ace.component.animation.AnimationBehavior;
 import org.icefaces.impl.util.DOMUtils;
+import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.JavaScriptRunner;
 import org.icefaces.util.EnvUtils;
+import org.icefaces.util.UserAgentInfo;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -42,9 +41,6 @@ import java.text.SimpleDateFormat;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-
-import org.icefaces.impl.push.servlet.ProxyHttpServletRequest;
-import org.icefaces.impl.push.servlet.ProxySession;
 
 public class Utils {
     public static void renderChildren(FacesContext facesContext,

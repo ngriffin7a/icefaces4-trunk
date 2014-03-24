@@ -38,7 +38,7 @@ import org.icefaces.mobi.util.MobiJSFConstants;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.PassThruAttributeWriter;
 import org.icefaces.mobi.util.CSSUtils;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 import org.icefaces.mobi.util.Constants;
 import org.icefaces.mobi.util.SXUtils;
 

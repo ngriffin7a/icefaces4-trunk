@@ -17,7 +17,7 @@
 package org.icefaces.ace.component.textentry;
 
 import org.icefaces.ace.renderkit.InputRenderer;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;

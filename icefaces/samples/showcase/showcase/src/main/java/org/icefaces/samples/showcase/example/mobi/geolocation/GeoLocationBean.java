@@ -20,7 +20,7 @@ package org.icefaces.samples.showcase.example.mobi.geolocation;
 import org.icefaces.mobi.util.MobiJSFUtils;
 //import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
 //import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

@@ -30,8 +30,7 @@ import javax.faces.context.ResponseWriter;
 import javax.servlet.http.HttpSession;
 
 import org.icefaces.application.ResourceRegistry;
-import org.icefaces.ace.util.IceOutputResource;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 public class MediaPlayerUtils {
 

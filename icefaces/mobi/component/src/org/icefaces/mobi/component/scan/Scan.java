@@ -19,7 +19,7 @@ package org.icefaces.mobi.component.scan;
 
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.api.IDevice;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;

@@ -17,7 +17,7 @@
 package org.icefaces.ace.component.splitpane;
 
 import org.icefaces.ace.util.Utils;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 public class SplitPane extends SplitPaneBase implements ISplitPane {
 

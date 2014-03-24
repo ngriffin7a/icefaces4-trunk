@@ -17,7 +17,7 @@
 package org.icefaces.mobi.util;
 
 import javax.servlet.http.HttpServletRequest;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 public class CSSUtils {
     
