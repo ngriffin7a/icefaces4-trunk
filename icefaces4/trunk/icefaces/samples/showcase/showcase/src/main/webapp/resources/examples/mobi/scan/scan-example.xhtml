@@ -46,7 +46,7 @@
             <mobi:fieldsetRow>
                 <label>QR Code:</label>
                 <br/>
-                <span style="display:block;max-width:#{mobiClient.handheldBrowser ? '270px' : '100%'};overflow:hidden;text-overflow:ellipsis">
+                <span style="display:block;max-width:#{iceBrowser.handheldBrowser ? '270px' : '100%'};overflow:hidden;text-overflow:ellipsis">
                     <h:outputText rendered="#{not qrCodeBean.qrScannerUrl}"
                                   value="#{qrCodeBean.qrScanner}"/>
                     <h:outputLink value="#{qrCodeBean.qrScanner}"

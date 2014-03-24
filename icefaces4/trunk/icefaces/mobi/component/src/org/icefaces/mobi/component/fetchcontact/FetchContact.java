@@ -17,7 +17,7 @@
 package org.icefaces.mobi.component.fetchcontact;
 
 import org.icefaces.mobi.util.MobiJSFUtils;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 import org.icefaces.mobi.api.IContactList;
 
 public class FetchContact extends FetchContactBase implements IContactList{

@@ -40,7 +40,7 @@ import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.impl.util.DOMUtils;
 import org.icefaces.util.EnvUtils;
 
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 public class MobiJSFUtils {
     

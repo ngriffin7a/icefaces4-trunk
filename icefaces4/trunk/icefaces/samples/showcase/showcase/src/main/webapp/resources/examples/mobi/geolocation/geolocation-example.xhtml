@@ -46,7 +46,7 @@
     <mobi:fieldsetGroup>
         <mobi:fieldsetRow>
             <div id="mapctr" style="position:relative">
-                <img id="map" src="#{resource['css:images/map.png']}"  width="#{mobiClient.handheldBrowser ? '260' : '360'}" height="#{mobiClient.handheldBrowser ? '130' : '180'}" class="center"/>
+                <img id="map" src="#{resource['css:images/map.png']}"  width="#{iceBrowser.handheldBrowser ? '260' : '360'}" height="#{iceBrowser.handheldBrowser ? '130' : '180'}" class="center"/>
                 <div id="pointer" style="position: absolute;background-color: red;border-radius:1em;width:5px;height:5px"></div>
             </div>
             
@@ -155,7 +155,7 @@
             }
         }
 
-        #{mobiClient.androidBrowserOrWebView ? '' : 'showLocation();'}
+        #{iceBrowser.androidBrowserOrWebView ? '' : 'showLocation();'}
 
 
         jsf.ajax.addOnEvent(updateLocation);

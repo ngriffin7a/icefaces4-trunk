@@ -14,35 +14,30 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.ace.util;
+package org.icefaces.util;
 
 import java.io.Serializable;
 import java.util.logging.Logger;
-import javax.faces.context.FacesContext;
 
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.icefaces.util.EnvUtils;
-import org.icefaces.impl.push.servlet.ProxyHttpServletRequest;
-import org.icefaces.impl.push.servlet.ProxyServletContext;
-import org.icefaces.impl.push.servlet.ProxySession;
-
 /**
- * A central client feature and detection class for ICEmobile. 
- * Will detect the OS and 
- *
+ * A central client feature and detection class for the browser.
  */
-public class ClientDescriptor implements Serializable{
+public class ClientDescriptor implements Serializable {
     
-    private final static String SESSION_KEY = "mobiClient";
+    private final static String SESSION_KEY = "iceBrowser";
     private final static String HEADER_ACCEPT = "Accept";
     private final static String HEADER_ACCEPT_BLACKBERRY_EMUL = "vnd.rim";  //found when emulating IE or FF on BB
     private final static String COOKIE_NAME_ICEMOBILE_CONTAINER = "com.icesoft.user-agent";
     private final static String COOKIE_VALUE_ICEMOBILE_CONTAINER = "HyperBrowser";
     private final static String SIMULATOR_KEY = "org.icemobile.simulator";
+    private final static String SESSION_KEY_SX_REGISTERED = "sxRegistered";
+
 
     private static Logger log = Logger.getLogger(ClientDescriptor.class.getName());
     
@@ -158,7 +153,11 @@ public class ClientDescriptor implements Serializable{
     public boolean isIE9Browser(){
         return _userAgentInfo.isIE9();
     }
-    
+
+    public boolean isIE9orLessBrowser() {
+        return _userAgentInfo.isIE9orLess();
+    }
+
     public boolean isIE10Browser(){
         return _userAgentInfo.isIE10();
     }
@@ -219,9 +218,21 @@ public class ClientDescriptor implements Serializable{
         String accept = request.getHeader(HEADER_ACCEPT);
         httpAccepted = (accept == null ? "" : accept.toLowerCase());
     }
-    
+
+    private static Cookie getCookie(String name, HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equalsIgnoreCase(name)) {
+                    return cookies[i];
+                }
+            }
+        }
+        return null;
+    }
+
     private void updateICEmobileContainer(HttpServletRequest request){
-        Cookie cookie = Utils.getCookie(COOKIE_NAME_ICEMOBILE_CONTAINER, request);
+        Cookie cookie = getCookie(COOKIE_NAME_ICEMOBILE_CONTAINER, request);
         if (null != cookie && cookie.getValue().startsWith(COOKIE_VALUE_ICEMOBILE_CONTAINER)) {
             icemobileContainer = true;
         }
@@ -229,9 +240,15 @@ public class ClientDescriptor implements Serializable{
             icemobileContainer = false;
         }
     }
-    
+
+    private static boolean isSXRegistered(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        return session.getAttribute(SESSION_KEY_SX_REGISTERED) == Boolean.TRUE
+                || session.getAttribute("iceAuxRequestMap") != null;
+    }
+
     private void updateSXRegistered(HttpServletRequest request){
-        sxRegistered = SXUtils.isSXRegistered(request);
+        sxRegistered = isSXRegistered(request);
     }
 
     private void updateSimulator(HttpServletRequest request){

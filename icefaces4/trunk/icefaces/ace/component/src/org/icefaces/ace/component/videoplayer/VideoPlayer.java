@@ -17,7 +17,7 @@
 package org.icefaces.ace.component.videoplayer;
 
 import org.icefaces.ace.util.Utils;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 import java.util.logging.Logger;
 

@@ -31,7 +31,7 @@ import org.icefaces.mobi.renderkit.ContactListCoreRenderer;
 import org.icefaces.impl.application.AuxUploadResourceHandler;
 import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.mobi.util.MobiJSFUtils;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 import static org.icefaces.mobi.util.HTML.*;
 

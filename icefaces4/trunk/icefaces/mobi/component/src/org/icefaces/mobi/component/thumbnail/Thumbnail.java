@@ -17,7 +17,7 @@
 package org.icefaces.mobi.component.thumbnail;
 
 import org.icefaces.mobi.util.MobiJSFUtils;
-import org.icefaces.ace.util.ClientDescriptor;
+import org.icefaces.util.ClientDescriptor;
 
 import javax.faces.component.StateHelper;
 import java.util.HashMap;
