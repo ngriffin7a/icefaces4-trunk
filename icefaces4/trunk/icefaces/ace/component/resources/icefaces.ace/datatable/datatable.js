@@ -2421,7 +2421,7 @@ ice.ace.DataTable.prototype.toggleExpansion = function (expanderElement) {
         expander.addClass('ui-icon-circle-triangle-e');
         row.removeClass('ui-expanded-row');
         removeTargets.fadeOut(function () {
-            ice.ace.jq(this).remove();
+            ice.ace.jq(this).css('display', 'none');
         });
         if ($this.cfg.scrollable) $this.setupScrolling();
         if (!expander.hasClass('ui-row-panel-toggler')) this.sendRowContractionRequest(row);
