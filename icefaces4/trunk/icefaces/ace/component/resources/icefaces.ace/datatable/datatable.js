@@ -207,7 +207,9 @@ ice.ace.DataTable = function (id, cfg) {
     if (oldInstance) {
         this.scrollLeft = oldInstance.scrollLeft;
         this.scrollTop = oldInstance.scrollTop;
-    }
+    } else {
+		this.newInstance = true;
+	}
 
     if (this.cfg.paginator)
         this.setupPaginator();
@@ -1398,7 +1400,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
         }*/
 
 
-        if (!ie7 && vScrollShown && bodyTable.parent().is(':scrollable(vertical)')) {
+        if (!ie7 && bodyTable.parent().is(':scrollable(vertical)')) {
             if (((firefox) || ((safari || chrome) && !mac) || (ie9 || ie8)) && !dupeCausesScrollChange) {
                 var offset = ice.ace.jq.getScrollWidth();
 
@@ -1469,6 +1471,11 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
             this.initializePinningState();
         }
     }
+	if (chrome && this.newInstance) {
+		this.newInstance = false;
+		var self = this;
+		setTimeout(function(){self.resizeScrolling()}, 100);
+	}
 }
 
 ice.ace.DataTable.prototype.initializePinningState = function() {
