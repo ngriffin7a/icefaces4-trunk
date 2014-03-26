@@ -183,7 +183,7 @@ public class TooltipRenderer extends CoreRenderer {
 				jb.entry("forDelegate", delegateComponent.getClientId(facesContext));
 				jb.entry("forComponent", tooltip.getFor());
 			} else {
-				throw new FacesException("Cannot find delegate component \"" + delegateId + "\" in view or it is not an instance of <ace:tooltipDelegate>.");
+				throw new FacesException("Cannot find delegate component \"" + delegateId + "\" in view or it is not an instance of <ace:delegate>.");
 			}
 			writer.write(jb.toString());
 			writer.write(",content:{text:");
