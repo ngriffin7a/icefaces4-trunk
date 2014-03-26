@@ -27,8 +27,8 @@
     <property name="meta.dir" location="./src/main/resources/META-INF"/>
     <property name="lib.dir" location="../lib"/>
     <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
-    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
-    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
+    <!-- <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/> -->
+	<!-- <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" /> -->
     <property name="build.dir" location="./build"/>
     <property name="classes.dir" location="${build.dir}/classes"/>
     <property name="dist.dir" location="${build.dir}/dist"/>
@@ -44,12 +44,7 @@
         <isset property="myfaces"/>
     </condition>
 
-    <!-- Check which JSF version to use and set the appropriate sub-directory  -->
-    <condition property="jsf.ver.dir" value="2.1" else="2.2">
-        <isset property="jsf21"/>
-    </condition>
-
-    <property name="jsf.lib.dir" value="${jsf.impl.dir}/${jsf.ver.dir}" />
+    <property name="jsf.lib.dir" value="${jsf.impl.dir}/2.2" />
     <echo message="JSF lib dir: ${jsf.lib.dir}"/>
 
 	<!-- Check if release.type is set, and if so append it after the tertiary value -->
@@ -141,11 +136,11 @@
         </sequential>
     </macrodef>
 
-    <target name="compile" depends="pre.compile" description="compile ICEfaces 2.0 classes">
+    <target name="compile" depends="pre.compile" description="compile ICEfaces classes">
         <javac srcdir="${java.dir}"
                destdir="${classes.dir}"
-               source="1.5"
-               target="1.5"
+               source="1.6"
+               target="1.6"
                debug="true"
                includeantruntime="false">
             <classpath>

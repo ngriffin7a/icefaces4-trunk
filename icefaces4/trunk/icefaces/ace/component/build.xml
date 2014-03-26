@@ -31,8 +31,8 @@
     <property name="lib.dir" location="../../lib"/>
     <property name="ace.lib.dir" location="${lib.dir}/ace"/>
     <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
-    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
-    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
+<!--    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
+    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />  -->
     <property name="src" location="src"/>
     <property name="resources" location="resources"/>
     <property name="meta-include"
@@ -88,12 +88,7 @@
         <isset property="myfaces"/>
     </condition>
 
-    <!-- Check which JSF version to use and set the appropriate sub-directory  -->
-    <condition property="jsf.ver.dir" value="2.1" else="2.2">
-        <isset property="jsf21"/>
-    </condition>
-
-    <property name="jsf.lib.dir" value="${jsf.impl.dir}/${jsf.ver.dir}" />
+    <property name="jsf.lib.dir" value="${jsf.impl.dir}/2.2" />
     <echo message="JSF lib dir: ${jsf.lib.dir}"/>
 
     <!-- Check if release.type is set, and if so append it after the tertiary value -->
