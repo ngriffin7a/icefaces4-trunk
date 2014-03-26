@@ -14,13 +14,6 @@
   ~ governing permissions and limitations under the License.
   -->
 
-<!--
-	!!! Special Note !!!
-	
-	Any updates made to this file must also be applied to the core.tld file.
-	These two files must be kept in sync.
--->
-
 
 <taglib xmlns="http://java.sun.com/xml/ns/javaee"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -28,7 +21,7 @@
         version="2.1">
     <description>
     </description>
-    <tlib-version>3.3.0</tlib-version>
+    <tlib-version>4.0.0</tlib-version>
     <short-name>icecore</short-name>
     <uri>http://icefaces.org/tld/core</uri>
     <listener>
@@ -154,7 +147,7 @@ of "FacesEvent" would work.]]></description>
     </tag>
 
     <tag>
-        <description><![CDATA[ This tag can be used to configure the page to be notified when the browser back button is pressed.]]></description>
+        <description><![CDATA[This tag can be used to configure the page to be notified when the browser back button is pressed.]]></description>
         <name>navigationNotifier</name>
         <tag-class/>
         <body-content>JSP</body-content>
@@ -169,4 +162,123 @@ of "FacesEvent" would work.]]></description>
 
     </tag>
 
+    <tag>
+        <description><![CDATA[The defaultAction tag can be used to initiate a form submit when a certain key is pressed. An action or an action listener can be defined to control which method to be invoked on the server side.]]></description>
+        <name>defaultAction</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[Use this attribute to specify the key-press that should be used for triggering the submit. The following predefined key names can be used: "Enter", "Esc", "Space", "PageUp", "PageDown", "PageUp", "LeftArrow", "UpArrow", "RightArrow", "DownArrow", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12".]]></description>
+            <name>key</name>
+            <required>no</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <description><![CDATA[Use this attribute to reference a bean method. The method is invoked when the defined key is pressed and no other component within the form doesn't capture the fired event.]]></description>
+            <name>action</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <description><![CDATA[Use this attribute to reference a bean method. The method is invoked when the defined key is pressed and no other component within the form doesn't capture the fired event.]]></description>
+            <name>actionListener</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        
+	</tag>        
+
+   <tag>
+        <description><![CDATA[***DRAFT*** The jsEventListener component allows you to capture javascript events and optionally sends a notification to server and fire an action event.]]></description>
+        <name>jsEventListener</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[List of "," separated events (e.g) events="click[, keydown, ...]".]]></description>
+            <name>events</name>
+            <required>no</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <description><![CDATA[Use this attribute to reference a bean method. The method is invoked when the defined key is pressed and no other component within the form doesn't capture the fired event.]]></description>
+            <name>action</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <description><![CDATA[Use this attribute to reference a bean method. The method is invoked when the defined key is pressed and no other component within the form doesn't capture the fired event.]]></description>
+            <name>actionListener</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        
+	</tag>       
+	
+   <tag>
+        <description><![CDATA[***DRAFT*** This component would provide a markup-based method of configuring the ICEfaces bridge "ice.onUserInactivity(interval, idleCallback, activeCallback)" function. 
+
+This container would provide necessary attributes to configure the userInactivity callback while also acting as an invisible container to other JSF components contained within it. Upon firing of the user inactivity callback, the component would make all of it's child components visible on the page.]]></description>
+        <name>IdleMonitor</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[Specifies the user inactivity threshold, in seconds.]]></description>
+            <name>interval</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.Integer</type>
+        </attribute>
+        
+	</tag>        
+
+   <tag>
+        <description><![CDATA[***DRAFT*** The focusManager component provides the following automatic focus setting behaviors when it is included inside a form component: 
+
+- The first visible (enabled) input element in the form has focus set on it initially. 
+- Alternatively, if there is an invalid component in the form (failed validation), the first visible (enabled) invalid component will receive focus instead. 
+- The application may also specify a component to have focus set on it via the "for" attribute.]]></description>
+        <name>focusManager</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[The ID of a focus-able component that the application would like to force focus to.]]></description>
+            <name>for</name>
+            <required>no</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+      
+	</tag>       
+
+   <tag>
+        <description><![CDATA[The redirect tag can be used to trigger a redirect immediately on page load, upon any user interaction causing a render of the tag, or at the server's discretion using push.]]></description>
+        <name>redirect</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[Allows control of the absolute or relative location to redirect to. This is a mandatory attribute specifying the href to redirect to. No redirect will happen while using an EL expression that evaluates to null or an empty string.]]></description>
+            <name>href</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+      
+	</tag>       
+
+	
 </taglib>
