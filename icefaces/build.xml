@@ -165,10 +165,8 @@
 				</fileset>
 				<fileset dir="${bundle.dir.bin}/lib">
 					<include name="junit*.jar"/>
-					<include name="junit*.jar"/>
-					<include name="commons-fileupload.jar"/>
 					<include name="tlddoc.jar"/>                
-					<include name="yui-compressor.jar"/>                
+					<include name="js-compiler.jar"/>                
 				</fileset>
 				<fileset dir="${bundle.dir.bin}/samples/dist">
 					<include name="basic.war"/>
@@ -181,6 +179,7 @@
 				 library and then try to remove it from the binary bundle. To try and avoid
 				 this we avoid failing on any error meaning it'll need to be manually removed
 				 when the bundle is built on a Windows machine. -->
+			<delete dir="${bundle.dir.bin}/mobi" failonerror="false"/>
 			<delete dir="${bundle.dir.bin}/ace" failonerror="false"/>
 			<delete dir="${bundle.dir.bin}/core"/>
 			<delete dir="${bundle.dir.bin}/test"/>
@@ -273,11 +272,6 @@
 
         <!-- Remove the following files and directories as they are not required for the source bundle -->
         <delete>
-            <fileset dir="${bundle.dir.src}/lib">
-                <include name="commons-fileupload.jar"/>
-            </fileset>
-        </delete>
-        <delete>
             <fileset dir="${bundle.dir.src}/lib/ace">
                 <include name="itext*.jar"/>
             </fileset>
@@ -289,13 +283,6 @@
                 <include name="build.packages.xml"/>
             </fileset>
         </delete>
-        <copy todir="${bundle.dir.src}/lib" failonerror="false">
-            <fileset dir="${bundle.dir.src}/icepush/lib">
-                <include name="jsp-api.jar" />
-                <include name="mail.jar" />
-            </fileset>
-        </copy>
-        <delete dir="${bundle.dir.src}/icepush/lib" />
 
         <delete dir="${bundle.dir.src}/icepush/samples"/>
 
@@ -305,8 +292,7 @@
         <delete dir="${bundle.dir.src}/samples/dist"/>
         <delete dir="${bundle.dir.src}/samples/core/test"/>        
         <delete dir="${bundle.dir.src}/samples/core/basic"/>
-        
-        <!-- Not yet ready to distribute the Liferay Faces Bridge yet. -->
+
         <delete dir="${bundle.dir.src}/lib/portlets/liferayfaces"/>
     </target>
 
