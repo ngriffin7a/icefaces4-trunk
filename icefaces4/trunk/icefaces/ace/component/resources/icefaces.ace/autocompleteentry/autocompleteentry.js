@@ -167,16 +167,24 @@ ice.ace.Autocompleter.prototype = {
         this.observer = null;
         this.element.setAttribute('autocomplete', 'off');
         ice.ace.jq(this.update).hide();
-		ice.ace.jq(this.element).data("labelIsInField", this.cfg.labelIsInField);
+        ice.ace.jq(this.element).data("labelIsInField", this.cfg.labelIsInField);
 		ice.ace.jq(this.element).on("blur", function(e) { self.onBlur.call(self, e); });
 		ice.ace.jq(this.element).on("focus", function(e) { self.onFocus.call(self, e); });
         var keyEvent = "keypress";
         if (ice.ace.Autocompleter.Browser.IE || ice.ace.Autocompleter.Browser.WebKit) {
             keyEvent = "keydown";
         } else {
-			ice.ace.jq(this.element).on("keyup", function(e) { if (!self.justSubmitted) { self.onKeyPress.call(self, e);} } );
+			ice.ace.jq(this.element).on("keyup", function(e) {
+                if (!self.justSubmitted) {
+                    self.onKeyPress.call(self, e);
+                }
+            });
 		}
-		ice.ace.jq(this.element).on(keyEvent, function(e) { self.onKeyPress.call(self, e); } );
+		ice.ace.jq(this.element).on(keyEvent, function(e) {
+            //remove 'keyup' callback if 'keypress' is fired
+            ice.ace.jq(self.element).off("keyup");
+            self.onKeyPress.call(self, e);
+        });
         // ICE-3830
         if (ice.ace.Autocompleter.Browser.IE || ice.ace.Autocompleter.Browser.WebKit)
 		ice.ace.jq(this.element).on("paste", function(e) { self.onPaste.call(self, e); });
@@ -599,10 +607,13 @@ ice.ace.Autocompleter.prototype = {
     markNext: function() {
         if (this.index == -1) {
             this.index++;
-            return;
+        } else {
+            if (this.index < this.entryCount - 1) {
+                this.index++
+            } else {
+                this.index = 0;
+            }
         }
-        if (this.index < this.entryCount - 1) this.index++
-        else this.index = 0;
     },
 
     getEntry: function(index) {
