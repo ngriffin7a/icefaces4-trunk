@@ -87,16 +87,6 @@
         <param-value>false</param-value>
     </context-param>
 
-    <!-- Specifying these listeners in this order as per http://issues.liferay.com/browse/FACES-1511.  Remove if you
-         are not using both the LiferayFaces Bridge and Mojarra. -->
-    <listener>
-    	<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-    </listener>
-
-    <listener>
-    	<listener-class>com.liferay.faces.bridge.servlet.BridgeSessionListener</listener-class>
-    </listener>
-
     <!-- Servlet declarations and mappings -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
