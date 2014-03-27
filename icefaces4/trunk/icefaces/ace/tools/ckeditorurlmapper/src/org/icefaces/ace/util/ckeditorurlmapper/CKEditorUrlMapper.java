@@ -84,9 +84,10 @@ public class CKEditorUrlMapper {
 			allResources.addAll(imageResources);
 
 			StringBuffer code = new StringBuffer();
-			code.append("window.CKEDITOR_GETURL = function(r) { var mappings = [");
+			code.append("(function() {\n\t var mappings = [");
 			Iterator<String> entries = allResources.iterator();
 			while (entries.hasNext()) {
+				code.append("\n\t\t");
 				String next = entries.next();
 				code.append("{i: \"");
 				code.append(toRelativeFolderPath(next));
@@ -97,7 +98,21 @@ public class CKEditorUrlMapper {
 					code.append(",");
 				}
 			}
-			code.append("]; if (r.indexOf('://') > -1) { var i = document.location.href.lastIndexOf('/'); r = r.substring(i + 1); }; for (var i = 0, l = mappings.length; i < l; i++) { var m = mappings[i]; if (m.i == r) { return m.o;} } return false; };");
+			code.append("\n\t];\n\n");
+			code.append("\twindow.CKEDITOR_GETURL = function(r) {\n");
+			code.append("\t\tif (r.indexOf('://') > -1) {\n");
+			code.append("\t\t\tvar i = document.location.href.lastIndexOf('/');\n");
+			code.append("\t\t\tr = r.substring(i + 1);\n");
+			code.append("\t\t\tr = r.replace(/\\?t=###REPLACE REVISION CODE###$/, '');\n");
+			code.append("\t\t\tr = r.replace(/.*ckeditor\\//, '');\n");
+			code.append("\t\t}\n\n");
+			code.append("\t\tfor (var i = 0, l = mappings.length; i < l; i++) {\n");
+			code.append("\t\t\tvar m = mappings[i];\n");
+			code.append("\t\t\tif (m.i == r) { return m.o;}\n");
+			code.append("\t\t}\n");
+			code.append("\t\treturn false;\n");
+			code.append("\t};\n");
+			code.append("})();");
 
 			PrintWriter out = new PrintWriter(LIB_ABSOLUTE_PATH + CKEDITOR_ROOT_DIR + CKEDITOR_MAPPING_JS);
 			out.println(code.toString());
