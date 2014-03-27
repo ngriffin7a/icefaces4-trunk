@@ -20,7 +20,7 @@
 
 <liferay-portlet-app>
     <portlet>
-        <portlet-name>chat-ice2-portlet</portlet-name>
+        <portlet-name>chat-ice-portlet</portlet-name>
         <instanceable>true</instanceable>
         <ajaxable>false</ajaxable>
     </portlet>
