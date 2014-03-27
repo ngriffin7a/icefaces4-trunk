@@ -242,7 +242,7 @@ public class ClientDescriptor implements Serializable {
     }
 
     private static boolean isSXRegistered(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+        HttpSession session = EnvUtils.getSafeSession(FacesContext.getCurrentInstance());
         return session.getAttribute(SESSION_KEY_SX_REGISTERED) == Boolean.TRUE
                 || session.getAttribute("iceAuxRequestMap") != null;
     }
