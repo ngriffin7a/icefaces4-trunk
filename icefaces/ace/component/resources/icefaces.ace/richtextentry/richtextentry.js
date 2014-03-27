@@ -23,7 +23,8 @@ CKEDITOR.plugins.add('aceSave', {
         var cmd = a.addCommand('save', {exec:ice.ace.richtextentry.CKsaveAjax})
         a.ui.addButton('AceSave', {
             label:'Save',
-            command:'save'
+            command:'save',
+			icon:'save'
         })
     }
 });
