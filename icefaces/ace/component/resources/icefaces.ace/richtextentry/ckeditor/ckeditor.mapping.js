@@ -357,7 +357,7 @@
 		if (r.indexOf('://') > -1) {
 			var i = document.location.href.lastIndexOf('/');
 			r = r.substring(i + 1);
-			r = r.replace(/\?t=###REPLACE REVISION CODE###$/, '');
+			r = r.replace(/\?t=7841b02$/, ''); // remove version code
 			r = r.replace(/.*ckeditor\//, '');
 		}
 
