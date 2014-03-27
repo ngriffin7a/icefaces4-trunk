@@ -128,7 +128,7 @@
         <servlet.api.version>3.0.1</servlet.api.version>
 
         <!-- Use with Liferay 6.2 -->
-        <liferayfaces.version>4.1.0-ga1-SNAPSHOT</liferayfaces.version>
+        <liferayfaces.version>4.2.0-m1</liferayfaces.version>
 
         <!-- When building samples for Pluto Portal -->
         <!-- <pluto.version>2.0.3</pluto.version> -->
@@ -214,6 +214,10 @@
         <repository>
             <id>apache.org</id>
             <url>https://repository.apache.org/content/repositories/snapshots</url>
+        </repository>
+        <repository>
+            <id>liferay.previews</id>
+            <url>https://repository.liferay.com/nexus/content/repositories/liferay-previews</url>
         </repository>
     </repositories>
 
