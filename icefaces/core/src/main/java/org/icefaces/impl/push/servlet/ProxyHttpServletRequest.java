@@ -16,8 +16,11 @@
 
 package org.icefaces.impl.push.servlet;
 
+import org.icefaces.util.EnvUtils;
+
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -148,7 +151,7 @@ public class ProxyHttpServletRequest implements HttpServletRequest {
         //Since servlet requests and portlet requests have different return values, we
         //check if there is a servlet version first.  If not, get the portlet version
         //and wrap it to make it look like a ServletInputStream.
-        Object result = getMethodAndInvoke(externalContext.getRequest(),"getInputStream");
+        Object result = getMethodAndInvoke(externalContext.getRequest(), "getInputStream");
         if( result != null ){
             return (javax.servlet.ServletInputStream)result;
         }
@@ -463,16 +466,22 @@ public class ProxyHttpServletRequest implements HttpServletRequest {
         return ;
     }
 
-    public Collection<Part> getParts() {
-        log.severe("ProxyHttpServletRequest unsupported operation");
-        if (true) throw new UnsupportedOperationException();
-        return null;
+    public Collection<Part> getParts() throws IOException, ServletException {
+        HttpServletRequest origRequest = EnvUtils.getOriginalServletRequest(facesContext);
+        if (origRequest == null) {
+            log.severe("ProxyHttpServletRequest unsupported operation");
+            throw new UnsupportedOperationException();
+        }
+        return origRequest.getParts();
     }
 
-    public  javax.servlet.http.Part getPart(String name)       throws java.lang.IllegalArgumentException {
-        log.severe("ProxyHttpServletRequest unsupported operation");
-        if (true) throw new UnsupportedOperationException();
-        return null;
+    public javax.servlet.http.Part getPart(String name) throws IOException, ServletException {
+        HttpServletRequest origRequest = EnvUtils.getOriginalServletRequest(facesContext);
+        if (origRequest == null) {
+            log.severe("ProxyHttpServletRequest unsupported operation");
+            throw new UnsupportedOperationException();
+        }
+        return origRequest.getPart(name);
     }
 
     /**
