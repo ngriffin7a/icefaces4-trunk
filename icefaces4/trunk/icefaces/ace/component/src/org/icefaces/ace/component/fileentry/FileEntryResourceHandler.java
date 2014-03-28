@@ -229,16 +229,20 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
         return wrapper;
     }
     
+
+
+    //ICE-8178: The old way of getting an instance of the BridgeContext was to retrieve it using a key value from
+    //the request map.  This mechanism has since been deprecated so we now reflectively call the static method
+    //getCurrentInstance() and use that.
     private static void setPortletRequestWrapper(Object wrappedRequest){
-        FacesContext fc = FacesContext.getCurrentInstance();
-        ExternalContext ec = fc.getExternalContext();
-        Map requestMap = ec.getRequestMap();
         try {
-            Object bridgeContext = requestMap.get("javax.portlet.faces.bridgeContext");
+            Class bridgeContextClass = Class.forName("com.liferay.faces.bridge.context.BridgeContext");
+            Method getInstanceMethod = bridgeContextClass.getMethod("getCurrentInstance");
+            Object bridgeContext = getInstanceMethod.invoke(null);
             Class requestClass = Class.forName("javax.portlet.PortletRequest");
             Class paramClasses[] = new Class[1];
             paramClasses[0] = requestClass;
-            Method setPortletRequestMethod = bridgeContext.getClass().getMethod("setPortletRequest", paramClasses);
+            Method setPortletRequestMethod = bridgeContextClass.getMethod("setPortletRequest", paramClasses);
             Object paramObj[] = new Object[1];
             paramObj[0] = wrappedRequest;
             setPortletRequestMethod.invoke(bridgeContext,paramObj);
