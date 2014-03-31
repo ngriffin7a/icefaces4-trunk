@@ -53,7 +53,7 @@ public class MenuItemMeta extends UICommandMeta {
     @Property(tlddoc = "Target type of url navigation.")
     private String target;
 
-    @Property(tlddoc = "Text to display additional information.")
+    @Property(tlddoc = "Text to display additional information. The text appears as a standard browser tooltip.")
     private String helpText;
 
     @Property(tlddoc = "Style of the menuitem label.")
