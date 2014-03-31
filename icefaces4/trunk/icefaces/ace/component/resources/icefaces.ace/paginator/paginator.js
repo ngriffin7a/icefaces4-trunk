@@ -19,6 +19,7 @@ ice.ace.DataTable.Paginator = function(table) {
     var cfg = table.cfg.paginator,
         container = ice.ace.jq(table.jqId + ' > .ui-paginator'),
         template = cfg.template || "{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}",
+        pageReportTemplate = cfg.pageReportTemplate || '\({currentPage} of {totalPages}\)',
         activeIndex = cfg.initialPage,
     // Maximum number of pages given total row count, if rowsPerPage zero set to 1.
         max = cfg.rowsPerPage == 0 || cfg.totalRecords < cfg.rowsPerPage ? 1 : Math.ceil(cfg.totalRecords / cfg.rowsPerPage);
@@ -69,7 +70,9 @@ ice.ace.DataTable.Paginator = function(table) {
             var currentPageButtonID = container.attr('id') + '_current_page';
 
             if (keyword == 'currentPageReport') {
-                markup = '<span class="ui-paginator-current">('+activeIndex+' of '+ max +')</span>';
+                markup = '<span class="ui-paginator-current">';
+                markup += pageReportTemplate.replace(new RegExp('({currentPage})', 'gi'), activeIndex).replace(new RegExp('({totalPages})', 'gi'), max);
+                markup += '</span>';
             }
             else if (keyword == 'firstPageLink') {
                 var className = 'ui-paginator-first ui-state-default ui-corner-all';
