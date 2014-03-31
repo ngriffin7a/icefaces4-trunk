@@ -293,7 +293,7 @@ public class DataTableMeta extends UIDataMeta {
     private String rowsPerPageTemplate;
 
     @Property(tlddoc = "Defines a coded string representing the layout of the text displaying" +
-            " the current page. Default is: \"{currentPage} of {totalPages}\".")
+            " the current page. The keywords available are {currentPage} and {totalPages}. Default is: \"({currentPage} of {totalPages})\".")
     private String currentPageReportTemplate;
 
     @Property(tlddoc = "Defines a coded string representing the controls available as part of" +
