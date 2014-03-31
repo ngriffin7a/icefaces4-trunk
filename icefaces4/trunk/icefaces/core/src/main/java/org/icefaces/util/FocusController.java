@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * Utility API for managing the element focus in the browser.
  */
 public class FocusController {
-    private static final Pattern ClientIdPattern = Pattern.compile("^(([\\w\\_]*)\\" + UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance()) + "([\\w\\_]*))*$");
+    private static final Pattern ClientIdPattern = Pattern.compile("^(([\\w\\_]*)\\" + UINamingContainer.getSeparatorChar(FacesContext.getCurrentInstance()) + "?([\\w\\_]*))*$");
 
     /**
      * Acquire the ID of the currently focused element in the browser.
