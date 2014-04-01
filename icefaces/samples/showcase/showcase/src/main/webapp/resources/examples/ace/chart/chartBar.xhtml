@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the
@@ -32,6 +32,18 @@
     <ui:param name="tldResources" value="#{chartResources.tldResources}"/>
 
     <ui:define name="example">
+
+       <h:form id="form" style="text-align: center">
+           <ace:panel header="#{msgs[example.ace.chart.bar.sample_title]} ">
+               <h:selectOneMenu id="selMnu" label="Select Chart Example:" labelPosition="top"
+                   valueChangeListener="#{chartBarBean.updateChart}" value="#{chartBarBean.example2}">
+                   <f:selectItems value="#{chartBarBean.examples}" var="ex"
+                              itemValue="#{ex}" itemLabel="#{msgs[ex.propsLookup]}"/>
+                   <f:ajax execute="@this" render="@all"/>
+               </h:selectOneMenu>
+           </ace:panel>
+        </h:form>
+
         <h:form id="canvasForm">
             <ace:chart id="chart"
                        animated="false"
@@ -39,7 +51,8 @@
                        xAxis="#{chartBarBean.xAxis}"
                        yAxes="#{chartBarBean.yAxes}"
                        stackSeries="false"
-                       legend="true"
+                       defaultSeriesColors="#{chartBarBean.customDefaultColor}"
+                       legend="#{chartBarBean.legend}"
                        legendPlacement="OUTSIDE_GRID"
                        highlighter="true"
                        highlighterLocation="N"

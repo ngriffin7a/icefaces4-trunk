@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ * Copyright 2004-2014 ICEsoft Technologies Canada Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the
@@ -26,12 +26,19 @@ import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
+import javax.faces.event.ValueChangeEvent;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
+import java.lang.Boolean;
+import java.lang.Override;
+import java.lang.String;
+import java.util.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @ComponentExample(
         parent = ChartBean.BEAN_NAME,
@@ -56,6 +63,13 @@ import java.util.List;
 public class ChartBarBean extends ComponentExampleImpl<ChartBarBean> implements Serializable {
     public static final String BEAN_NAME = "chartBarBean";
 
+    public boolean varyBarColor = false;
+    public boolean simple = true;
+    private boolean legend = true;
+    private String[] customDefaultColor = null;
+    BarChartExample[] examples;
+    private BarChartExample example;
+    private String example2 = "SIMPLE";
 
     public ChartBarBean() {
         super(ChartBarBean.class);
@@ -64,6 +78,23 @@ public class ChartBarBean extends ComponentExampleImpl<ChartBarBean> implements 
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+    }
+
+    public String getExample2() {
+        return example2;
+    }
+
+    public void setExample2(String example2) {
+        this.example2 = example2;
+    }
+
+    public void setExample(BarChartExample bce){
+        this.example = bce;
+    }
+
+
+    public BarChartExample[] getExamples(){
+        return BarChartExample.values();
     }
 
     private List<CartesianSeries> barData = new ArrayList<CartesianSeries>() {{
@@ -116,4 +147,76 @@ public class ChartBarBean extends ComponentExampleImpl<ChartBarBean> implements 
     public void setyAxes(Axis[] yAxes) {
         this.yAxes = yAxes;
     }
+
+    public String[] getCustomDefaultColor() {
+        return customDefaultColor;
+    }
+
+    public void setCustomDefaultColor(String[] customDefaultColor) {
+        this.customDefaultColor = customDefaultColor;
+    }
+
+    public void updateChart(ValueChangeEvent event){
+        CartesianSeries cs = (CartesianSeries)barData.get(0);
+        String newval = event.getNewValue().toString();
+        switch (BarChartExample.valueOf(newval)){
+            case SIMPLE :
+                cs.setVaryBarColor(Boolean.FALSE);
+                cs.setSeriesColors(null);
+                setLegend(true);
+                setCustomDefaultColor(null);
+                break;
+            case VARY_SIMPLE :
+                cs.setVaryBarColor(Boolean.TRUE);
+                cs.setSeriesColors(null);
+                setLegend(false);
+                setCustomDefaultColor(null);
+                break;
+            case VARY_CUSTOM :
+                cs.setVaryBarColor(Boolean.TRUE);
+                cs.setSeriesColors(new String[]{"#85802b", "#00749F", "#73C774", "#C7754C", "#17BDB8", "#f00"}) ;
+                setLegend(false);
+                setCustomDefaultColor(null);
+                break;
+            case SIMPLE_CUSTOM:
+                cs.setVaryBarColor(Boolean.FALSE);
+                setLegend(true);
+                setCustomDefaultColor(new String[]{"#85802b", "#00749F"});
+                break;
+        }
+    }
+
+    public boolean isLegend() {
+        return legend;
+    }
+
+    public void setLegend(boolean legend) {
+        this.legend = legend;
+    }
+
+    public boolean isSimple() {
+        return simple;
+    }
+
+    public void setSimple(boolean simple) {
+        this.simple = simple;
+    }
+
+    public enum BarChartExample {
+        SIMPLE_CUSTOM("example.ace.chart.bar.SIMPLE_CUSTOM"),
+        SIMPLE("example.ace.chart.bar.SIMPLE"),
+        VARY_SIMPLE("example.ace.chart.bar.VARY_SIMPLE"),
+        VARY_CUSTOM("example.ace.chart.bar.VARY_CUSTOM");
+
+        private String propsLookup;
+
+        private BarChartExample(String lookup){
+            this.propsLookup = lookup;
+        }
+
+        public String getPropsLookup(){
+            return this.propsLookup;
+        }
+    }
+
 }

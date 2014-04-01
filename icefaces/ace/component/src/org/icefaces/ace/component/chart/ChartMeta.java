@@ -106,6 +106,13 @@ public class ChartMeta extends UIComponentBaseMeta {
         defaultValue = "false", defaultValueType = DefaultValueType.EXPRESSION)
     private Boolean stackSeries;
 
+    @Property(tlddoc = "Allows users to specify default color series for all graphs, rather " +
+            "than by specifying per chart.  See \'seriesColors\' attribute in CartesianSeries " +
+            "to override the colors used per chart. If there are more series than colors, colors " +
+            "will wrap around and start at the beginning again. " +
+            "If empty will use default colors from jqPlot.")
+    private String[] defaultSeriesColors;
+
     @Property (tlddoc =
                 "Enables the draw animation behaviour of the chart. By default " +
                 "is enabled for all browsers but IE8 and lower for performance" +
