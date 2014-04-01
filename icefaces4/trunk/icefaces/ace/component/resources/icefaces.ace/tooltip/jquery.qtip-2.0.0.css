@@ -16,16 +16,16 @@
 	top: -28000px;
 	display: none;
 
-	max-width: 280px;
 	min-width: 50px;
 	
-	font-size: 10.5px;
 	line-height: 12px;
 
 	direction: ltr;
 
 	box-shadow: none;
 	padding: 0;
+
+	box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 }
 
 	.qtip-content{
@@ -381,7 +381,6 @@
 	color: white;
 	border: 0 solid transparent;
 
-	font-size: 11px;
 	font-family: 'Lucida Grande', sans-serif;
 	font-weight: bold;
 	line-height: 16px;
@@ -455,7 +454,6 @@
  */
 .qtip-bootstrap{
 	/** Taken from Bootstrap body */
-	font-size: 14px;
 	line-height: 20px;
 	color: #333333;
 
@@ -479,7 +477,6 @@
 		/** Taken from Bootstrap .popover-title */
 		padding: 8px 14px;
 		margin: 0;
-		font-size: 14px;
 		font-weight: normal;
 		line-height: 18px;
 		background-color: #f7f7f7;
@@ -535,7 +532,6 @@
 
 			/* Taken from Bootstrap .close */
 			float: right;
-			font-size: 20px;
 			font-weight: bold;
 			line-height: 18px;
 			color: #000000;
@@ -620,4 +616,19 @@
 
 .qtipmodal-ie6fix{
 	position: absolute !important;
+}
+
+/* ICEsoft custom extensions */
+
+.ice-ace-tooltip .ui-tooltip-content {
+	padding: 10px;
+
+	/* .ui-corner-all */
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+}
+
+.ice-ace-speechbubble {
+
 }
