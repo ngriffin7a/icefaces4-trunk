@@ -40,13 +40,8 @@
 
     <!-- Default to PortletFaces bridge but is checked and potentially changed to
          Liferay Faces in commmon-portlet.xml  -->
-<!--
-    <property name="bridge.lib.dir" location="${lib.dir}/portlets/portletfaces"/>
-    <property name="lib.portlet.dir" location="${bridge.lib.dir}"/>
 
-    <echo message="Bridge lib dir: ${bridge.lib.dir}"/>
-    <echo message="Portlet lib dir: ${lib.portlet.dir}"/>
--->
+    <property name="bridge.lib.dir" location="${lib.dir}/portlets/liferayfaces"/>
 
     <property name="java.dir" location="./src/main/java"/>
     <property name="res.dir" location="./src/main/resources"/>
@@ -100,12 +95,12 @@
     <patternset id="lib.distribute.ace" includes="commons-collections.jar itext-2.1.7.jar poi-3.7.jar ${lib.distribute.ace.includes}">
         <exclude name="*.jar"                   unless="ace"/>
     </patternset>
-<!--
+
     <patternset id="lib.distribute.portlet">
         <include name="*.jar"/>
         <exclude name="*.jar" unless="portlet"/>
     </patternset>
--->
+
     <patternset id="lib.compile.application" includes="${lib.compile.application.includes}"/>
 
     <patternset id="lib.distribute.application" includes="${lib.distribute.application.includes}"/>
@@ -184,10 +179,10 @@
                 <patternset refid="lib.distribute.ace"/>
             </lib>
             
-<!--            <lib dir="${lib.portlet.dir}">
+            <lib dir="${bridge.lib.dir}">
                 <patternset refid="lib.distribute.portlet"/>
             </lib>
-            -->
+
             <lib dir="${lib.application.dir}" erroronmissingdir="false">
                 <patternset refid="lib.distribute.application"/>
             </lib>
