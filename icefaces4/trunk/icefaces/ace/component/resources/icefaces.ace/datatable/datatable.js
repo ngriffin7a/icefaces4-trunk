@@ -1129,6 +1129,14 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
             }
         }
 
+		var pinnedColumns;
+		if (this.cfg.pinning) {
+			pinnedColumns = this.getPinnedColumns();
+			for (var i = 0; i < pinnedColumns.length; i++) {
+				this.unpinColumn(ice.ace.jq(pinnedColumns.get(i)).index() + 1);
+			}
+		}
+
         var safari = ice.ace.jq.browser.safari,
             chrome = ice.ace.jq.browser.chrome,
             mac = ice.ace.jq.browser.os == 'mac',
@@ -1469,6 +1477,9 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
         if (this.cfg.pinning) {
             this.pinningHolder = this.jqId + '_pinning';
             this.initializePinningState();
+			for (var i = 0; i < pinnedColumns.length; i++) {
+				this.pinColumn(ice.ace.jq(pinnedColumns.get(i)).index() + 1);
+			}
         }
     }
 	if (chrome && this.newInstance) {
