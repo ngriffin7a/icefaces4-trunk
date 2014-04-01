@@ -27,20 +27,13 @@
     <property name="parent.web.dir" location="${parent.dir}/src/main/webapp"/>
 
     <property name="base.portlet.dir" location="../../../lib/portlets"/>
-    <property name="portletfaces.lib.dir" location="${base.portlet.dir}/portletfaces"/>
-    <property name="liferayfaces.lib.dir" location="${base.portlet.dir}/liferayfaces"/>
+    <property name="bridge.lib.dir" location="${base.portlet.dir}/liferayfaces"/>
 
     <patternset id="portlet.jars">
         <include name="*.jar"/>
     </patternset>
 
     <patternset id="portlet.files"/>
-
-    <!-- Check which portlet bridge implementation to use and set the appropriate sub-directory. The
-         default is LiferayFaces but can be changed to PortletFaces by setting the portletfaces property. -->
-    <condition property="bridge.lib.dir" value="${portletfaces.lib.dir}" else="${liferayfaces.lib.dir}">
-        <isset property="portletfaces"/>
-    </condition>
 
     <target name="clean" depends="clean.parent.resources">
         <delete dir="${build.dir}"/>
@@ -52,9 +45,9 @@
         </delete>
     </target>
 
-    <!--If not using the PortletFaces Bridge, check to make sure that that the LiferayFaces Bridge libraries
-        are available in the proper location before attempting to build the portlet application.-->
-    <target name="liferayfaces.check" unless="portletfaces">
+    <!--Check to make sure that that the LiferayFaces Bridge libraries are available in the
+        proper location before attempting to build the portlet application.-->
+    <target name="liferayfaces.check">
 
         <fileset id="liferayfaces.libs.available" dir="${base.portlet.dir}" casesensitive="no">
             <include name="**/liferay-faces-*.jar"/>
