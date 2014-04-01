@@ -57,7 +57,7 @@ ice.ace.Tooltip = function(id, cfg) {
 		styleClasses += ' ice-ace-speechbubble'
 		showTip = true;
     }
-	styleClasses += ' ' + this.cfg.styleClass;
+	styleClasses += (this.cfg.styleClass ? ' ' + this.cfg.styleClass : '');
 	this.cfg.style = {widget:true, tip:{corner:showTip, width:12, height:12}};
 	var inlineStyle = this.cfg.inlineStyle;
 	
