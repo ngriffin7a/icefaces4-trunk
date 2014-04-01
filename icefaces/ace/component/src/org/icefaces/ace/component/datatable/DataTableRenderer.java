@@ -258,7 +258,7 @@ public class DataTableRenderer extends CoreRenderer {
         String rowIndexVar = tableContext.getRowIndexVar();
         String clientId = table.getClientId(context);
 
-        if (tableContext.isScrollable()) {
+        if (tableContext.isScrollable() && tableContext.isStaticHeaders()) {
             String scrollClass =
                     DataTableConstants.SCROLLABLE_X_CLASS + " " +
                             DataTableConstants.SCROLLABLE_BODY_CLASS;
@@ -306,7 +306,7 @@ public class DataTableRenderer extends CoreRenderer {
         if (rowIndexVar != null)
             context.getExternalContext().getRequestMap().remove(rowIndexVar);
 
-        if (tableContext.isScrollable()) {
+        if (tableContext.isScrollable() && tableContext.isStaticHeaders()) {
             table.setInDuplicateSegment(true);
             DataTableFootRenderer.encodeTableFoot(context, tableContext);
             table.setInDuplicateSegment(false);
