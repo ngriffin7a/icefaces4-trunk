@@ -51,7 +51,7 @@ ice.ace.Tooltip = function(id, cfg) {
         return;
     }
 	
-	var styleClasses = 'ui-widget-content asdf ice-ace-tooltip ui-corner-all';
+	var styleClasses = 'ui-widget-content ice-ace-tooltip ui-corner-all';
 	var showTip = false;
     if (this.cfg.speechBubble) {
 		styleClasses += ' ice-ace-speechbubble'
