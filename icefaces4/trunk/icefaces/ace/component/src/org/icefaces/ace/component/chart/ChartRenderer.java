@@ -36,10 +36,12 @@ import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.Map;
 
 @MandatoryResourceComponent(tagName="chart", value="org.icefaces.ace.component.chart.Chart")
 public class ChartRenderer extends CoreRenderer {
+    private static final Logger log = Logger.getLogger(ChartRenderer.class.getName());
     @Override
     public void	decode(FacesContext context, UIComponent component) {
         Chart chart = (Chart) component;
@@ -137,6 +139,7 @@ public class ChartRenderer extends CoreRenderer {
         Boolean zoom = component.isZoom();
         Boolean cursor = component.isCursor();
         Boolean showTooltip = component.isShowTooltip();
+        String [] seriesColors = component.getDefaultSeriesColors();
 
         String title = component.getTitle();
 
@@ -151,8 +154,9 @@ public class ChartRenderer extends CoreRenderer {
         // Build data arrays
         json.beginArray();
         if (data != null)
-            for (ChartSeries series : data)
+            for (ChartSeries series : data) {
                 json.item(series.getDataJSON(component).toString(), false);
+            }
         json.endArray();
 
 
@@ -163,7 +167,9 @@ public class ChartRenderer extends CoreRenderer {
         encodeLegendConfig(json, component);
         encodeHighlighterConfig(json, component);
         if (title != null) json.entry("title", title);
-        if (stacking) json.entry("stackSeries", true);
+        if  (seriesColors != null) {
+            json.entry("seriesColors", seriesColors);
+         }  //to be set into jqplot config object        if (stacking) json.entry("stackSeries", true);
         if (animated == null) json.entry("animate", "!ice.ace.jq.jqplot.use_excanvas", true);
         else if (animated) json.entry("animate", true);
         if (isAjaxClick(component))

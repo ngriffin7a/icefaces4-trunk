@@ -25,7 +25,7 @@ ice.ace.Chart = function (id, data, cfg) {
     this.cfg  = cfg;
     this.behaviors = cfg.behaviors;
     this.chart_region = ice.ace.jq(this.jqId+'_chart');
-
+    var overrideSeriesColors = this.cfg.defaultSeriesColors || null;
 
     // Clear existing ace plot instance.
     if (ice.ace.Charts[id]) {
@@ -38,6 +38,9 @@ ice.ace.Chart = function (id, data, cfg) {
     ice.ace.jq.jqplot.config.catchErrors = true;
     ice.ace.jq.jqplot.config.errorBorder = '1px solid #aaaaaa';
     this.plot = ice.ace.jq.jqplot(this.jqId.substring(1)+'_chart', data, cfg);
+    if (ice.ace.jq.jqplot && ice.ace.jq.jqplot.config && overrideSeriesColors){
+        ice.ace.jq.jqplot.config.seriesColors = overrideSeriesColors;
+    }
     ice.ace.Charts[id] = self;
     var $this = ice.ace.jq(this.jqId);
 

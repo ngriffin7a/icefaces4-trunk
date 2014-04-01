@@ -28,8 +28,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class CartesianSeries extends ChartSeries {
+    private static final Logger log = Logger.getLogger(CartesianSeries.class.getName());
     public static enum CartesianType implements ChartType {
         BAR,
         LINE;
@@ -51,16 +53,24 @@ public class CartesianSeries extends ChartSeries {
     String fillAxis; // x or y
     String fillColor; // CSS
     int fillAlpha; // 0 - 100 alpha
-    boolean highlightMouseOver;
-    boolean highlightMouseDown;
-    String[] highlightColors; // When rendering as bar, and varyBarColor = true, list of colors applied
-    int barMargin;
-    int barPadding;
-    int barWidth;
+
+    /* next two are for both bar and line */
+    boolean highlightMouseOver;  //True to highlight slice when mouseover
+    boolean highlightMouseDown;  //Ture to highlight when mouse button is pressed over a slice
+    String[] highlightColors; // an array of colors to use when highlighting a bar
+    /* REST OF Props are for Bar Graph only */
+    /* docs on jqplot say this next one is an arragy of colors to sue when highlighting a bar */
+    /* note that seriesColors is not attribute of rendering optiosn but is applied when varyBarColor is true */
+
+    int barMargin;  //number of pixels between groups of bars at adjacentaxis values
+    int barPadding; //number of pixels between adjacent bars at the same axis value
+
+    int barWidth; ///Width of the bar in pixels (auto by devaul)
     LinePattern linePattern;
-    Boolean horizontalBar;
+    Boolean horizontalBar; //when true have horizontal bars, default is false translates to barDirection of 'vertical' or 'horizontal'
     Boolean smooth;
-    boolean varyBarColor;
+    Boolean varyBarColor;
+    String[] seriesColors; //can override colors from options
     boolean waterfall;
     int groups;
 
@@ -226,32 +236,43 @@ public class CartesianSeries extends ChartSeries {
     public JSONBuilder getConfigJSON(UIComponent component) {
         JSONBuilder cfg = super.getConfigJSON(component);
         Chart chart = (Chart) component;
+        Boolean varyColor = getVaryBarColor();
         LinePattern pattern = getLinePattern();
 
+        boolean isBar = false;
         if (type != null) {
-            if (type.equals(CartesianType.BAR))
+            if (type.equals(CartesianType.BAR)){
+                isBar = type.equals(CartesianType.BAR);
                 cfg.entry("renderer", "ice.ace.jq.jqplot.BarRenderer", true) ;
-            else if (type.equals(CartesianType.LINE))
+            }
+            else if (type.equals(CartesianType.LINE))   {
                 cfg.entry("renderer", "ice.ace.jq.jqplot.LineRenderer", true) ;
+            }
         }
 
         if (hasPointLabelOptionSet()) encodePointLabelOptions(cfg);
 
-        if (hasRenderOptionsSet()) {
+        if (isBar && hasBarRenderOptionsSet()){
             cfg.beginMap("rendererOptions");
+            Boolean horiz = getHorizontalBar();
             Boolean fill = getFill();
-            Boolean horiz = isHorizontalBar();
-            Boolean smooth = getSmooth();
+            if (fill != null) cfg.entry("fill", fill);
+            if (varyColor != null) cfg.entry("varyBarColor", varyColor);
+            if (horiz != null) cfg.entry("barDirection", horiz ? "horizontal" : "vertical");
+            cfg.endMap();
 
+        } else if (hasLineRenderOptionsSet()){
+            cfg.beginMap("rendererOptions");
+            Boolean fill = getFill();    //not a property for BarRenderer or LineRenderer???
+            Boolean smooth = getSmooth();
             if (smooth != null) cfg.entry("smooth", smooth);
             if (fill != null) cfg.entry("fill", fill);
-            if (horiz != null) cfg.entry("barDirection", horiz ? "horizontal" : "vertical");
             cfg.endMap();
         }
 
-        if (pattern != null)
+        if (pattern != null){
             cfg.entry("linePattern", pattern.toString());
-
+        }
         Boolean dragable = getDragable();
         if (dragable != null && isConfiguredForDragging(chart)) {
             cfg.entry("isDragable", dragable);
@@ -369,8 +390,15 @@ public class CartesianSeries extends ChartSeries {
         return (pointLabels != null || pointLabelList != null || pointLabelTolerance != null || pointLabelStacked != null);
     }
 
+    private boolean hasLineRenderOptionsSet(){
+        return (getFill() !=null || getSmooth() !=null);
+    }
+
+    private boolean hasBarRenderOptionsSet(){
+        return (getVaryBarColor() != null || getHorizontalBar() !=null || getFill() !=null);
+    }
     private boolean hasRenderOptionsSet() {
-        return (getFill() != null || isHorizontalBar() != null || getSmooth() != null);
+        return (getFill() != null ||  getVaryBarColor() != null || getHorizontalBar() != null || getSmooth() != null);
     }
 
 
@@ -378,7 +406,7 @@ public class CartesianSeries extends ChartSeries {
      * Determine if this series is bar type, is it horizontal?
      * @return true if horizontal
      */
-    public Boolean isHorizontalBar() {
+    public Boolean getHorizontalBar() {
         return horizontalBar;
     }
 
@@ -523,5 +551,48 @@ public class CartesianSeries extends ChartSeries {
      */
     public void setSmooth(Boolean smooth) {
         this.smooth = smooth;
+    }
+
+    public Boolean getVaryBarColor() {
+        return varyBarColor;
+    }
+
+    /**
+     * Ture to color each bar of a series separately rather than have every bar of a given series the same color.
+     * If used for non-stacked multiple series bar plots, user should specify a separate 'seriesColors' array for each
+     * series.  Otherwise, erach series will set tehir bars tot he same color array.  This option has no Effect for
+     * stacked bar charts and is disabled.
+     * @param varyBarColor
+     */
+    public void setVaryBarColor(Boolean varyBarColor) {
+        this.varyBarColor = varyBarColor;
+    }
+
+    public int getBarWidth() {
+        return barWidth;
+    }
+
+    /**
+     * Width of the bar in pixels (auto by default).  null = calculated automatically.
+     * @param barWidth
+     */
+    public void setBarWidth(int barWidth) {
+        this.barWidth = barWidth;
+    }
+
+    public String[] getHighlightColors() {
+        return highlightColors;
+    }
+
+    public void setHighlightColors(String[] highlightColors) {
+        this.highlightColors = highlightColors;
+    }
+
+    public String[] getSeriesColors() {
+        return seriesColors;
+    }
+
+    public void setSeriesColors(String[] seriesColors) {
+        this.seriesColors = seriesColors;
     }
 }
