@@ -157,7 +157,7 @@ PROTOTYPE.render = function(show) {
 		/* ARIA specific attributes */
 		'role': 'alert',
 		'aria-live': 'polite',
-		'aria-atomic': FALSE,
+		//'aria-atomic': FALSE,
 		'aria-describedby': this._id + '-content',
 		'aria-hidden': TRUE
 	})
@@ -169,8 +169,8 @@ PROTOTYPE.render = function(show) {
 		// Create content element
 		elements.content = $('<div />', {
 			'class': NAMESPACE + '-content',
-			'id': this._id + '-content',
-			'aria-atomic': TRUE
+			'id': this._id + '-content'
+			//'aria-atomic': TRUE
 		})
 	);
 
@@ -659,8 +659,8 @@ PROTOTYPE._createTitle = function()
 	.append(
 		elements.title = $('<div />', {
 			'id': id,
-			'class': NAMESPACE + '-title',
-			'aria-atomic': TRUE
+			'class': NAMESPACE + '-title'
+			//'aria-atomic': TRUE
 		})
 	)
 	.insertBefore(elements.content)
