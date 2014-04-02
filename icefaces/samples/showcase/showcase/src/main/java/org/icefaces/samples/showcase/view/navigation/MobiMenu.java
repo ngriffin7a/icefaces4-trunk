@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 @Menu(
         title = "menu.mobi.title", menuLinks = {
-                @MenuLink(title = "menu.mobi.mobiSuiteOverview.title", isDefault = false, exampleBeanName = MobiSuiteOverviewBean.BEAN_NAME),
+                @MenuLink(title = "menu.mobi.mobiSuiteOverview.title", isDefault = false, exampleBeanName = MobiSuiteOverviewBean.BEAN_NAME)
         })
 
 @ManagedBean(name = MobiMenu.BEAN_NAME)
