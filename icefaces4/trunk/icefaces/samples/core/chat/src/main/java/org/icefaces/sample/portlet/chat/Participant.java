@@ -27,8 +27,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -120,14 +120,14 @@ public class Participant implements Serializable {
     @PreDestroy
     public void logout() {
         try {
+            ChatRoom cr = getChatRoom();
+            if (cr != null) {
+                cr.removeParticipant(this);
+            }
             PushRenderer.removeCurrentSession(ChatRoom.ROOM_RENDERER_NAME);
         } catch (Exception e) {
-            //Ignore any issues trying to remove ourselves from the session during logout as it
-            //could happen on a non-JSF thread when the session expires meaning there is no FacesContext available.
-        }
-        ChatRoom cr = getChatRoom();
-        if( cr != null ){
-            cr.removeParticipant(this);
+            //Not that concerned about errors when logging out.
+            log.log(Level.FINEST, "error logging out", e);
         }
         handle = null;
     }

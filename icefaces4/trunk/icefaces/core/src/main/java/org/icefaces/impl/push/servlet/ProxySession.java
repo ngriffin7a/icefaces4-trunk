@@ -51,6 +51,7 @@ public class ProxySession implements HttpSession {
     private static final Class[] getAttributeParamTypes = {String.class, Integer.TYPE};
     private static final Class[] setAttributeParamTypes = {String.class, Object.class, Integer.TYPE};
     private static final Class[] getAttributeNamesParamTypes = {Integer.TYPE};
+    private static final Class[] removeAttributeTypes = {String.class};
 
     public ProxySession(FacesContext facesContext) {
         this(facesContext,APPLICATION_SCOPE);
@@ -101,6 +102,10 @@ public class ProxySession implements HttpSession {
             Method meth = clazz.getMethod("getAttribute", getAttributeParamTypes);
             val = meth.invoke(sess, key, currentScope);
         } catch (Exception e) {
+            Throwable theCause = e.getCause();
+            if( theCause != null && theCause instanceof IllegalStateException){
+                throw (IllegalStateException)theCause;
+            }
             log.log(Level.WARNING, "could not get attribute " + key + " on PortletSession ", e);
         }
         return val;
@@ -114,6 +119,10 @@ public class ProxySession implements HttpSession {
             Method meth = clazz.getMethod("getAttributeNames", getAttributeNamesParamTypes);
             val = (Enumeration<String>)meth.invoke(sess, currentScope);
         } catch (Exception e) {
+            Throwable theCause = e.getCause();
+            if( theCause != null && theCause instanceof IllegalStateException){
+                throw (IllegalStateException)theCause;
+            }
             log.log(Level.WARNING, "could not get attribute names from PortletSession ", e);
         }
         return val;
@@ -199,9 +208,19 @@ public class ProxySession implements HttpSession {
         return val;
     }
 
-    public void removeAttribute(String s) {
-        log.severe("ProxySession unsupported operation");
-        throw new UnsupportedOperationException();
+    public void removeAttribute(String key) {
+        Object sess = facesContext.getExternalContext().getSession(true);
+        Class clazz = sess.getClass();
+        try {
+            Method meth = clazz.getMethod("removeAttribute", removeAttributeTypes);
+            meth.invoke(sess, key);
+        } catch (Exception e) {
+            Throwable theCause = e.getCause();
+            if( theCause != null && theCause instanceof IllegalStateException){
+                throw (IllegalStateException)theCause;
+            }
+            log.log(Level.WARNING, "could not remove attribute " + key + " on PortletSession ", e);
+        }
     }
 
     public void setAttribute(String key, Object val) {
@@ -211,6 +230,10 @@ public class ProxySession implements HttpSession {
             Method meth = clazz.getMethod("setAttribute", setAttributeParamTypes);
             meth.invoke(sess, key, val, APPLICATION_SCOPE);
         } catch (Exception e) {
+            Throwable theCause = e.getCause();
+            if( theCause != null && theCause instanceof IllegalStateException){
+                throw (IllegalStateException)theCause;
+            }
             log.log(Level.WARNING, "could not set attribute " + key + ", " + val + " on PortletSession ", e);
         }
     }

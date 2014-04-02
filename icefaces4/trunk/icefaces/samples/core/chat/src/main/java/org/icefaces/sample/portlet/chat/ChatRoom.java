@@ -16,6 +16,7 @@
 
 package org.icefaces.sample.portlet.chat;
 
+import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
 import org.icefaces.sample.portlet.chat.resources.ResourceUtil;
 
@@ -40,9 +41,10 @@ public class ChatRoom{
 
     private Map participants = Collections.synchronizedMap(new HashMap());
     private List messages = Collections.synchronizedList(new ArrayList());
-
+    private PortableRenderer portableRenderer;
 
     public ChatRoom() {
+        portableRenderer = PushRenderer.getPortableRenderer();
     }
 
     public void addParticipant(Participant participant) {
@@ -88,6 +90,7 @@ public class ChatRoom{
         if (participant != null && participant.getHandle() != null) {
             addMessage(new Message(participant, message));
             PushRenderer.render(ROOM_RENDERER_NAME);
+            portableRenderer.render(ROOM_RENDERER_NAME);
         }
     }
 
