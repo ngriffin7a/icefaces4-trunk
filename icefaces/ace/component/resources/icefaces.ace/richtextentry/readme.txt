@@ -3,10 +3,11 @@ Custom Modifications:
 *.css
 Modified occurrences of url() from using a plain path to a JSF resource expression path.
 
-ckeditor.mapping.js
+/ckeditor.mapping.js
 Added this file to specify a mapping from canonical resource names to correct JSF resource URLs.
 Modified mappings of *.md files to *.md.txt, so they have a known mime type
 
+/ckeditor.js
 /plugins/smiley/dialogs/smiley.js
 /plugins/wsc/dialogs/wsc.js
 /plugins/wsc/dialogs/wsc_ie.js
