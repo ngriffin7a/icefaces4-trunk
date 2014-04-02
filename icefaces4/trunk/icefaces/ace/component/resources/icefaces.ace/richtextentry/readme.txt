@@ -14,6 +14,9 @@ Modified mappings of *.md files to *.md.txt, so they have a known mime type
 /plugins/about/dialogs/about.js
 Modified paths to internal resources to invoke CKEDITOR.getUrl() first, in order to use correct JSF URLs.
 
+/ckeditor.js
+line 778, added object existence conditions in detach() function to avoid NPEs
+
 /samples
 Removed all resources under /samples and the directory itself.
 
