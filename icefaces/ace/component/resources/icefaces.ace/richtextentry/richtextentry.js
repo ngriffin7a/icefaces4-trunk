@@ -117,7 +117,5 @@ ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _ski
 			setTimeout(function(){if (instance.blurObserver) clearTimeout(instance.blurObserver);}, 190);
 		}
 		editorInstance.on('beforeCommandExec', onCommand);
-    } catch(e) {
-        alert(e);
-    }
+    } catch(e) {}
 };
