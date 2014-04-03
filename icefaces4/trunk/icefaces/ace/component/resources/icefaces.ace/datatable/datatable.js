@@ -365,6 +365,18 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
                 }, 400);
             }
         });
+
+    this.element.find(this.filterSelector).each(function (index, element) {
+        try {
+            element.addEventListener('input', function (event) {
+                if (this.value == '') {
+                    _self.filter(event);
+                }
+            }, false);
+        } catch (ex) {
+            //ignore failures in browsers that do not support the 'input' event or Element.addEventListener call
+        }
+    });
 }
 
 ice.ace.DataTable.prototype.setupPaginator = function () {
