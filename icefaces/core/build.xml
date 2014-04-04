@@ -27,8 +27,8 @@
     <property name="meta.dir" location="./src/main/resources/META-INF"/>
     <property name="lib.dir" location="../lib"/>
     <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
-    <!-- <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/> -->
-	<!-- <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" /> -->
+    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
+	<property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" />
     <property name="build.dir" location="./build"/>
     <property name="classes.dir" location="${build.dir}/classes"/>
     <property name="dist.dir" location="${build.dir}/dist"/>
