@@ -29,8 +29,8 @@
     <property name="lib.dir" location="${icefaces.base.dir}/lib"/>
     <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
 
-<!--    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
-    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" /> -->
+    <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
+    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" /> 
     
     <property name="lib.ace.dir" location="${lib.dir}/ace"/>
     <property name="lib.ace.dir.includes" value=""/>
@@ -87,11 +87,10 @@
         <exclude name="*.jar" unless="jsf"/>
     </patternset>
 
-<!--
     <patternset id="lib.myfaces.common">
         <exclude name="*.jar" unless="myfaces"/>
     </patternset>
--->
+
     <patternset id="lib.distribute.ace" includes="commons-collections.jar itext-2.1.7.jar poi-3.7.jar ${lib.distribute.ace.includes}">
         <exclude name="*.jar"                   unless="ace"/>
     </patternset>
@@ -132,11 +131,9 @@
                 <fileset dir="${jsf.lib.dir}">
                     <patternset refid="lib.compile"/>
                 </fileset>
-<!--
                 <fileset dir="${myfaces.common.dir}">
                     <patternset refid="lib.myfaces.common"/>
                 </fileset>
-                -->
                 <fileset dir="${lib.dir}" >
                     <patternset refid="lib.compile"/>
                 </fileset>
@@ -159,14 +156,12 @@
 
     <target name="war.basic" depends="compile">
 
-<!--
         <condition property="myfaces.common.include" value="true">
             <and>
                 <isset property="myfaces"/>
                 <isset property="jsf"/>
             </and>
         </condition>
--->
 
         <war basedir="${web.dir}"
              destfile="${dist.dir}/${ant.project.name}.war" 
@@ -190,10 +185,10 @@
                 <patternset refid="lib.distribute.jsf"/>
             </lib>
 
-<!--            <lib dir="${myfaces.common.dir}" erroronmissingdir="false">
+            <lib dir="${myfaces.common.dir}" erroronmissingdir="false">
                 <exclude name="*.jar" unless="myfaces.common.include"/>
             </lib>
--->
+
             <!-- Add the icefaces-ee-ext.jar only if it exists.  There are
                  two possible locations depending on the EE distribution
                  (src vs bin) so we look in both places.  In the src 
