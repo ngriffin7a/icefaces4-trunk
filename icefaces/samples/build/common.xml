@@ -38,9 +38,6 @@
     <property name="lib.compile.application.includes" value=""/>
     <property name="lib.distribute.application.includes" value=""/>
 
-    <!-- Default to PortletFaces bridge but is checked and potentially changed to
-         Liferay Faces in commmon-portlet.xml  -->
-
     <property name="bridge.lib.dir" location="${lib.dir}/portlets/liferayfaces"/>
 
     <property name="java.dir" location="./src/main/java"/>
@@ -56,7 +53,12 @@
     <property name="icefaces.lib.name" value="icefaces" />
     <property name="icefaces-ace.lib.name" value="icefaces-ace" />
 
-    <property name="jsf.lib.dir" value="${mojarra.lib.dir}/2.2" />
+    <!-- Check which JSF implementation to use and set the appropriate sub-directory  -->
+    <condition property="jsf.impl.dir" value="${myfaces.lib.dir}" else="${mojarra.lib.dir}">
+        <isset property="myfaces"/>
+    </condition>
+
+    <property name="jsf.lib.dir" value="${jsf.impl.dir}/2.2" />
     <echo message="JSF lib dir: ${jsf.lib.dir}"/>
 
     <patternset id="lib.compile">
