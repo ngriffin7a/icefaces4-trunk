@@ -41,6 +41,7 @@ import org.icefaces.ace.event.DragDropEvent;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.util.CoreComponentUtils;
 
 import org.icefaces.ace.util.JSONBuilder;
 
@@ -145,25 +146,11 @@ public class DroppableRenderer extends CoreRenderer {
 
     protected UIData findDatasource(FacesContext context, Droppable droppable, String datasourceId) {
         UIComponent datasource = droppable.findComponent(datasourceId);
-		if (datasource == null) datasource = findComponentCustom(context.getViewRoot(), datasourceId);
+		if (datasource == null) datasource = CoreComponentUtils.findComponentInView(context.getViewRoot(), datasourceId);
         
         if(datasource == null)
             throw new FacesException("Cannot find component \"" + datasourceId + "\" in view.");
         else
             return (UIData) datasource;
     }
-	
-	private static UIComponent findComponentCustom(UIComponent base, String id) {
-
-		String baseId = base.getId();
-		if (baseId != null && baseId.equals(id)) return base;
-		java.util.Iterator<UIComponent> children = base.getFacetsAndChildren();
-		UIComponent result = null;
-		while(children.hasNext()) {
-			UIComponent child = children.next();
-			result = findComponentCustom(child, id);
-			if (result != null) break;
-		}
-		return result;
-	}
 }

@@ -37,6 +37,7 @@ import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
+import org.icefaces.util.CoreComponentUtils;
 
 import java.util.List;
 
@@ -131,7 +132,7 @@ public class DialogRenderer extends CoreRenderer {
 		if (relativeTo != null) { // overrides position attribute above
 			UIComponent relativeToComponent = dialog.findComponent(relativeTo);
 			if(relativeToComponent == null) {
-				relativeToComponent = findComponentCustom(context.getViewRoot(), relativeTo);
+				relativeToComponent = CoreComponentUtils.findComponentInView(context.getViewRoot(), relativeTo);
 			}
 			if(relativeToComponent != null) {
 				jb.entry("relativeTo", relativeToComponent.getClientId(context));
@@ -186,16 +187,4 @@ public class DialogRenderer extends CoreRenderer {
     public boolean getRendersChildren() {
         return true;
     }
-	
-	private UIComponent findComponentCustom(UIComponent base, String id) {
-
-		if (base.getId() != null && base.getId().equals(id)) return base;
-		List<UIComponent> children = base.getChildren();
-		UIComponent result = null;
-		for (UIComponent child : children) {
-			result = findComponentCustom(child, id);
-			if (result != null) break;
-		}
-		return result;
-	}
 }

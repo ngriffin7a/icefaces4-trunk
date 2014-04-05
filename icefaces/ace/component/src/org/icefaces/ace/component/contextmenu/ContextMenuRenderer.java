@@ -48,6 +48,7 @@ import org.icefaces.ace.component.menuseparator.MenuSeparator;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.util.CoreComponentUtils;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
 
 		String delegateId = menu.getForDelegate();
 		if (delegateId != null) {
-			UIComponent delegateComponent = findComponentCustom(context.getViewRoot(), delegateId);
+			UIComponent delegateComponent = CoreComponentUtils.findComponentInView(context.getViewRoot(), delegateId);
 			if (delegateComponent != null) {
 				if (params.containsKey(clientId + "_activeComponent")) {
 					String activeComponentId = params.get(clientId + "_activeComponent");
@@ -117,7 +118,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
 			if (delegateId == null) {
 				json.entry("target", findTrigger(context, menu), true);
 			} else {
-				UIComponent delegateComponent = findComponentCustom(context.getViewRoot(), delegateId);
+				UIComponent delegateComponent = CoreComponentUtils.findComponentInView(context.getViewRoot(), delegateId);
 				if (delegateComponent != null && delegateComponent instanceof Delegate) {
 					json.entry("forDelegate", delegateComponent.getClientId(context));
 					json.entry("forComponent", menu.getFor());
@@ -259,19 +260,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
 
 		return trigger;
 	}
-	
-	private UIComponent findComponentCustom(UIComponent base, String id) {
-
-		if (base.getId() != null && base.getId().equals(id)) return base;
-		List<UIComponent> children = base.getChildren();
-		UIComponent result = null;
-		for (UIComponent child : children) {
-			result = findComponentCustom(child, id);
-			if (result != null) break;
-		}
-		return result;
-	}
-	
+		
 	private Object retrieveData(FacesContext context, UIComponent delegate, String activeComponentId, String expression) {
 		DataRetrievalVisitCallback callback = new DataRetrievalVisitCallback(activeComponentId, expression);
 		delegate.visitTree(VisitContext.createVisitContext(context, null, EnumSet.of(VisitHint.SKIP_TRANSIENT, VisitHint.SKIP_UNRENDERED)), callback);		
