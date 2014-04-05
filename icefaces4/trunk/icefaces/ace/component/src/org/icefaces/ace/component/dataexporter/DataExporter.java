@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import org.icefaces.ace.component.datatable.DataTable;
+import org.icefaces.util.CoreComponentUtils;
 
 public class DataExporter extends DataExporterBase {
 
@@ -50,7 +51,7 @@ public class DataExporter extends DataExporterBase {
 				}
 				
 				UIComponent targetComponent = event.getComponent().findComponent(getTarget());
-				if (targetComponent == null) targetComponent = findComponentCustom(facesContext.getViewRoot(), getTarget());
+				if (targetComponent == null) targetComponent = CoreComponentUtils.findComponentInView(facesContext.getViewRoot(), getTarget());
 				if (targetComponent == null) throw new FacesException("Cannot find component \"" + getTarget() + "\" in view.");
 				if (!(targetComponent instanceof DataTable)) throw new FacesException("Unsupported datasource target:\"" + targetComponent.getClass().getName() + "\", exporter must target a ACE DataTable.");
 				
@@ -74,18 +75,6 @@ public class DataExporter extends DataExporterBase {
 				}
 			}
         }
-	}
-
-	private UIComponent findComponentCustom(UIComponent base, String id) {
-
-		if (base.getId().equals(id)) return base;
-		java.util.List<UIComponent> children = base.getChildren();
-		UIComponent result = null;
-		for (UIComponent child : children) {
-			result = findComponentCustom(child, id);
-			if (result != null) break;
-		}
-		return result;
 	}
 	
 	public String getPath(String clientId) {

@@ -46,6 +46,7 @@ import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.ace.component.delegate.Delegate;
 import org.icefaces.util.EnvUtils;
+import org.icefaces.util.CoreComponentUtils;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -83,7 +84,7 @@ public class TooltipRenderer extends CoreRenderer {
 		tooltip.setStore(null);
 		String delegateId = tooltip.getForDelegate();
 		if (delegateId != null) {
-			UIComponent delegateComponent = findComponentCustom(facesContext.getViewRoot(), delegateId);
+			UIComponent delegateComponent = CoreComponentUtils.findComponentInView(facesContext.getViewRoot(), delegateId);
 			if (delegateComponent != null) {
 				if (params.containsKey(clientId + "_activeComponent")) {
 					String activeComponentId = params.get(clientId + "_activeComponent");
@@ -178,7 +179,7 @@ public class TooltipRenderer extends CoreRenderer {
 
 			writer.write("},");
 		} else if (delegateId != null) {
-			UIComponent delegateComponent = findComponentCustom(facesContext.getViewRoot(), delegateId);
+			UIComponent delegateComponent = CoreComponentUtils.findComponentInView(facesContext.getViewRoot(), delegateId);
 			if (delegateComponent != null && delegateComponent instanceof Delegate) {
 				jb.entry("forDelegate", delegateComponent.getClientId(facesContext));
 				jb.entry("forComponent", tooltip.getFor());
@@ -253,7 +254,7 @@ public class TooltipRenderer extends CoreRenderer {
 					String containerId = tooltip.getForContainer();
 					UIComponent container = null;
 					if (containerId != null) {
-						container = findComponentCustom(facesContext.getViewRoot(), containerId);
+						container = CoreComponentUtils.findComponentInView(facesContext.getViewRoot(), containerId);
 					}
 					if (container != null) {
 						return collectClientIds(facesContext, container, _for);
@@ -312,19 +313,7 @@ public class TooltipRenderer extends CoreRenderer {
 			return "function(){ice.ace.jq(this).hide(" + length + ");}";
 		return "function(){ice.ace.jq(this).hide();}";
 	}
-	
-	private UIComponent findComponentCustom(UIComponent base, String id) {
-
-		if (base.getId() != null && base.getId().equals(id)) return base;
-		List<UIComponent> children = base.getChildren();
-		UIComponent result = null;
-		for (UIComponent child : children) {
-			result = findComponentCustom(child, id);
-			if (result != null) break;
-		}
-		return result;
-	}
-	
+		
 	private ArrayList<String> collectClientIds(FacesContext context, UIComponent container, String id) {
 	
 		ArrayList<String> clientIds = new ArrayList<String>();
