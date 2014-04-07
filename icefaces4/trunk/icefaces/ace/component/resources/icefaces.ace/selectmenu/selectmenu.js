@@ -452,6 +452,8 @@ ice.ace.SelectMenu.prototype = {
     },
 
     onClick: function(event) {
+        if (this.hideObserver) clearTimeout(this.hideObserver);
+        if (this.blurObserver) clearTimeout(this.blurObserver);
 		if (this.ieScrollbarFixObserver) clearTimeout(this.ieScrollbarFixObserver);
 		var $element = ice.ace.jq(event.currentTarget).closest('div');
 		var element = $element.get(0);
@@ -471,8 +473,6 @@ ice.ace.SelectMenu.prototype = {
 				jqInteractiveElement.data("onBlurHandlerRegistered", true);
 			}
 		}
-		if (this.hideObserver) clearTimeout(this.hideObserver);
-		if (this.blurObserver) clearTimeout(this.blurObserver);
     },
 
     onBlur: function(event) {
