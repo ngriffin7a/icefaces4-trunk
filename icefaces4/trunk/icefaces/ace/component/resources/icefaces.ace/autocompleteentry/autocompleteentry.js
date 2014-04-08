@@ -185,6 +185,17 @@ ice.ace.Autocompleter.prototype = {
             ice.ace.jq(self.element).off("keyup");
             self.onKeyPress.call(self, e);
         });
+        //detect when IE's 'x' clear icon is pressed
+        try {
+            this.element.addEventListener('input', function (event) {
+                if (this.value == '') {
+                    self.getUpdatedChoices(false, event, -1);
+                }
+            }, false);
+        } catch (ex) {
+            //ignore failures in browsers that do not support the 'input' event or Element.addEventListener call
+        }
+
         // ICE-3830
         if (ice.ace.Autocompleter.Browser.IE || ice.ace.Autocompleter.Browser.WebKit)
 		ice.ace.jq(this.element).on("paste", function(e) { self.onPaste.call(self, e); });
