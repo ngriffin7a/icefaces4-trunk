@@ -101,29 +101,32 @@ public class ExcelExporter extends Exporter {
     	for (int i = first; i < rowsToExport; i++) {
     		table.setRowIndex(i);
 			boolean exportRow = true;
-			if (selectedRowsOnly) {
-				RowState rowState = rowStateMap.get(table.getRowData());
-				if (!rowState.isSelected()) exportRow = false;
+			RowState rowState = rowStateMap.get(table.getRowData());
+			if (selectedRowsOnly && !rowState.isSelected()) exportRow = false;
+			if (!"".equals(rowIndexVar)) {
+				facesContext.getExternalContext().getRequestMap().put(rowIndexVar, i);
 			}
+
+			Row row;
 			if (exportRow) {
-				if (!"".equals(rowIndexVar)) {
-					facesContext.getExternalContext().getRequestMap().put(rowIndexVar, i);
-				}
 				// 'before' conditional rows
 				List<org.icefaces.ace.component.row.Row> leadingRows = table.getConditionalRows(i, true);
 				for (org.icefaces.ace.component.row.Row r : leadingRows) {
-					Row row = sheet.createRow(sheetRowIndex++);
+					row = sheet.createRow(sheetRowIndex++);
 					exportConditionalRow(r, row);
 				}
 				
-				Row row = sheet.createRow(sheetRowIndex++);
+				row = sheet.createRow(sheetRowIndex++);
 				for (int j = 0; j < numberOfColumns; j++) {
 					addColumnValue(row, columns.get(j).getChildren(), j);
 				}
-				if (hasRowExpansion) {
-					sheetRowIndex = exportChildRows(facesContext, rootModel, rowStateMap, table, columns, "" + i, sheet, sheetRowIndex, numberOfColumns);
-				}
-				
+			}
+
+			if (hasRowExpansion) {
+				sheetRowIndex = exportChildRows(facesContext, rootModel, rowStateMap, table, columns, "" + i, sheet, sheetRowIndex, numberOfColumns);
+			}
+
+			if (exportRow) {				
 				// 'after' conditional rows
 				List<org.icefaces.ace.component.row.Row> tailingRows = table.getConditionalRows(i, false);
 				for (org.icefaces.ace.component.row.Row r : tailingRows) {
@@ -177,14 +180,16 @@ public class ExcelExporter extends Exporter {
                         .getRequestMap().put(rowVar, rowData);
                 if (rowIndexVar != null) context.getExternalContext()
                         .getRequestMap().put(rowIndexVar, rowData);
+				RowState rowState = rowStateMap.get(rootModel.getRowData());
 				
 				// export
-				Row row = sheet.createRow(sheetRowIndex++);
-				for (int j = 0; j < numberOfColumns; j++) {
-					addColumnValue(row, columns.get(j).getChildren(), j);
+				if (!(selectedRowsOnly && !rowState.isSelected())) {
+					Row row = sheet.createRow(sheetRowIndex++);
+					for (int j = 0; j < numberOfColumns; j++) {
+						addColumnValue(row, columns.get(j).getChildren(), j);
+					}
 				}
 				
-				RowState rowState = rowStateMap.get(rootModel.getRowData());
 				if (rowState.isExpanded() || !expandedOnly) {
 					
 					// recurse
