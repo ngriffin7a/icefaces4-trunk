@@ -23,9 +23,20 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
+import java.util.Map;
 
 @MandatoryResourceComponent(tagName = "gMap", value = "org.icefaces.ace.component.gmap.GMap")
 public class GMapInfoWindowRenderer extends CoreRenderer {
+
+    public void decode(FacesContext context, UIComponent component) {
+        String clientID = component.getClientId(context);
+        Map<String,String> parameterMap = context.getExternalContext().getRequestParameterMap();
+        if (clientID.equals(parameterMap.get("javax.faces.source"))) {
+            if ("close".equals(parameterMap.get(clientID))) {
+                component.setRendered(false);
+            }
+        }
+    }
 
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();

@@ -776,10 +776,13 @@ ice.ace.gMap.getGMapWrapper = function (id) {
     ice.ace.gMap.removeGWindow = function(mapId,winId){
         var wrapper = ice.ace.gMap.getGMapWrapper(mapId);
         var win = wrapper.infoWindows[winId];
-        if(win!=null)
+        if(win!=null) {
             win.close();
-        else
+            //let server know that window was closed
+            ice.ser(null, winId, function(param) { param(winId, 'close')});
+        } else {
             return;
+        }
         var newWindowArray = new Object();
         delete(wrapper.infoWindows[winId]);
         var newFreeWindowArray = new Object();
