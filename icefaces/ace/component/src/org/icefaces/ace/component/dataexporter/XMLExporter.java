@@ -94,14 +94,13 @@ public class XMLExporter extends Exporter {
     	for (int i = first; i < size; i++) {
     		table.setRowIndex(i);
 			boolean exportRow = true;
-			if (selectedRowsOnly) {
-				RowState rowState = rowStateMap.get(table.getRowData());
-				if (!rowState.isSelected()) exportRow = false;
+			RowState rowState = rowStateMap.get(table.getRowData());
+			if (selectedRowsOnly && !rowState.isSelected()) exportRow = false;
+			if (!"".equals(rowIndexVar)) {
+				facesContext.getExternalContext().getRequestMap().put(rowIndexVar, i);
 			}
+
 			if (exportRow) {
-				if (!"".equals(rowIndexVar)) {
-					facesContext.getExternalContext().getRequestMap().put(rowIndexVar, i);
-				}
 				// 'before' conditional rows
 				List<Row> leadingRows = table.getConditionalRows(i, true);
 				for (Row r : leadingRows) exportConditionalRow(builder, r, var, true);
@@ -109,10 +108,13 @@ public class XMLExporter extends Exporter {
 				builder.append("\t<" + var + ">\n");
 				addColumnValues(builder, columns, headers);
 				builder.append("\t</" + var + ">\n");
-				if (hasRowExpansion) {
-					exportChildRows(facesContext, rootModel, rowStateMap, table, columns, "" + i, builder, headers, var);
-				}
-				
+			}
+
+			if (hasRowExpansion) {
+				exportChildRows(facesContext, rootModel, rowStateMap, table, columns, "" + i, builder, headers, var);
+			}
+
+			if (exportRow) {				
 				// 'after' conditional rows
 				List<Row> tailingRows = table.getConditionalRows(i, false);
 				for (Row r : tailingRows) exportConditionalRow(builder, r, var, false);
@@ -151,13 +153,15 @@ public class XMLExporter extends Exporter {
                         .getRequestMap().put(rowVar, rowData);
                 if (rowIndexVar != null) context.getExternalContext()
                         .getRequestMap().put(rowIndexVar, rowData);
+				RowState rowState = rowStateMap.get(rootModel.getRowData());
 				
 				// export
-				builder.append("\t<" + var + ">\n");
-				addColumnValues(builder, columns, headers);
-				builder.append("\t</" + var + ">\n");
+				if (!(selectedRowsOnly && !rowState.isSelected())) {
+					builder.append("\t<" + var + ">\n");
+					addColumnValues(builder, columns, headers);
+					builder.append("\t</" + var + ">\n");
+				}
 				
-				RowState rowState = rowStateMap.get(rootModel.getRowData());
 				if (rowState.isExpanded() || !expandedOnly) {
 					
 					// recurse

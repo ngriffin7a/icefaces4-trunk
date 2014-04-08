@@ -204,14 +204,13 @@ public class PDFExporter extends Exporter {
     	for (int i = first; i < size; i++) {
     		table.setRowIndex(i);
 			boolean exportRow = true;
-			if (selectedRowsOnly) {
-				RowState rowState = rowStateMap.get(table.getRowData());
-				if (!rowState.isSelected()) exportRow = false;
+			RowState rowState = rowStateMap.get(table.getRowData());
+			if (selectedRowsOnly && !rowState.isSelected()) exportRow = false;
+			if (!"".equals(rowIndexVar)) {
+				facesContext.getExternalContext().getRequestMap().put(rowIndexVar, i);
 			}
+
 			if (exportRow) {
-				if (!"".equals(rowIndexVar)) {
-					facesContext.getExternalContext().getRequestMap().put(rowIndexVar, i);
-				}
 				// 'before' conditional rows
 				List<Row> leadingRows = table.getConditionalRows(i, true);
 				for (Row r : leadingRows) exportConditionalRow(r, pdfTable, font);
@@ -219,10 +218,13 @@ public class PDFExporter extends Exporter {
 				for (int j = 0; j < numberOfColumns; j++) {
 					addColumnValue(pdfTable, columns.get(j).getChildren(), j, font);
 				}
-				if (hasRowExpansion) {
-					exportChildRows(facesContext, rootModel, rowStateMap, table, columns, "" + i, pdfTable, numberOfColumns, font);
-				}
-				
+			}
+
+			if (hasRowExpansion) {
+				exportChildRows(facesContext, rootModel, rowStateMap, table, columns, "" + i, pdfTable, numberOfColumns, font);
+			}
+
+			if (exportRow) {				
 				// 'after' conditional rows
 				List<Row> tailingRows = table.getConditionalRows(i, false);
 				for (Row r : tailingRows) exportConditionalRow(r, pdfTable, font);
@@ -262,13 +264,15 @@ public class PDFExporter extends Exporter {
                         .getRequestMap().put(rowVar, rowData);
                 if (rowIndexVar != null) context.getExternalContext()
                         .getRequestMap().put(rowIndexVar, rowData);
+				RowState rowState = rowStateMap.get(rootModel.getRowData());
 				
 				// export
-				for (int j = 0; j < numberOfColumns; j++) {
-					addColumnValue(pdfTable, columns.get(j).getChildren(), j, font);
+				if (!(selectedRowsOnly && !rowState.isSelected())) {
+					for (int j = 0; j < numberOfColumns; j++) {
+						addColumnValue(pdfTable, columns.get(j).getChildren(), j, font);
+					}
 				}
 				
-				RowState rowState = rowStateMap.get(rootModel.getRowData());
 				if (rowState.isExpanded() || !expandedOnly) {
 					
 					// recurse
