@@ -344,12 +344,19 @@ ice.ace.DataTable.prototype.destroy = function() {
 
 ice.ace.DataTable.prototype.setupFilterEvents = function () {
     var _self = this;
+
+    // Don't run form level enter key handling
+    this.element.on('keypress', this.filterSelector, function (event) {
+        if (event.which == 13) {
+            event.stopPropagation();
+        }
+    });
+
     if (this.cfg.filterEvent == "enter")
         this.element.on('keypress', this.filterSelector, function (event) {
             event.stopPropagation();
             if (event.which == 13) {
                 _self.filter(event);
-                return false; // Don't run form level enter key handling
             }
         });
 
