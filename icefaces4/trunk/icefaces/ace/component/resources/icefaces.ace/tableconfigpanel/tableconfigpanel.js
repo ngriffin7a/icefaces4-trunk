@@ -130,7 +130,11 @@ ice.ace.TableConf.prototype.init = function(id, cfg) {
                     items:'>div.ui-tableconf-subtree:not(.ui-disabled)',
                     handle:'.ui-sortable-handle:not(.ui-disabled)'
                 });
-                this.$this.find('.'+cfg.sortableContainerIds[i]+'>div.ui-tableconf-subtree:not(.ui-disabled) .ui-sortable-handle:not(.ui-disabled)').disableSelection();
+                var handles = this.$this.find('.' + cfg.sortableContainerIds[i] + '>div.ui-tableconf-subtree:not(.ui-disabled) .ui-sortable-handle:not(.ui-disabled)');
+                handles.on('click', function(event) {
+                    event.preventDefault();
+                });
+                handles.disableSelection();
             }
         }
     }
