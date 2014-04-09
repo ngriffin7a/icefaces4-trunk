@@ -204,6 +204,10 @@ ice.ace.SelectMenu.prototype = {
             keyEvent = "keydown";
         }
 		ice.ace.jq(this.element).on(keyEvent, function(e) { self.onKeyPress.call(self, e); } );
+		ice.ace.jq(this.update).on("mousedown", function(e) {
+			self.clickWithinBoundaries = true;
+			self.mouseDownObserver = setTimeout(function(){self.clickWithinBoundaries = false;}, 200);
+		});
 		
 		// ajax behaviors
 		if (behaviors) {
@@ -454,7 +458,6 @@ ice.ace.SelectMenu.prototype = {
     onClick: function(event) {
         if (this.hideObserver) clearTimeout(this.hideObserver);
         if (this.blurObserver) clearTimeout(this.blurObserver);
-		if (this.ieScrollbarFixObserver) clearTimeout(this.ieScrollbarFixObserver);
 		var $element = ice.ace.jq(event.currentTarget).closest('div');
 		var element = $element.get(0);
         this.index = element.autocompleteIndex;
@@ -478,26 +481,9 @@ ice.ace.SelectMenu.prototype = {
     onBlur: function(event) {
         var element = ice.ace.jq(this.element);
 		// check if last click was done on scrollbar
-		if (navigator.userAgent.indexOf("MSIE") >= 0) {
-			var n = this.height;
-			if (n!=null && n!='' && typeof n === 'number' && n % 1 == 0) {
-				var posx=0; var posy=0;
-				var e = window.event;
-				if (e.pageX || e.pageY) {
-					posx = e.pageX;
-					posy = e.pageY;
-				} else if (e.clientX || e.clientY) {
-					posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-					posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-				}
-				var widthX=element.position().left+element.width();
-				var heightX=element.position().top+element.height()+parseFloat(this.height)+10;
-				if ( this.active && (posx>element.position().left && posx<=widthX) && (posy>element.position().top && posy<heightX) ) {
-					var self = this;
-					this.ieScrollbarFixObserver = setTimeout(function(){self.element.focus();}, 200);
-					return;
-				}
-			}
+		if (this.clickWithinBoundaries) {
+			this.element.focus();
+			return;
 		}
         if (ice.ace.jq.trim(this.displayedValue.innerHTML) == '&nbsp;' && this.cfg.inFieldLabel) {
 			this.displayedValue.innerHTML = this.replaceSpaces(this.cfg.inFieldLabel);
