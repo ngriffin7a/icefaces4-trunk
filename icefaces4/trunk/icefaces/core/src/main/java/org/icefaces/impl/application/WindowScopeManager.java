@@ -366,7 +366,23 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static String lookupAssociatedWindowID(Map requestMap) {
-        ClientWindow clientWindow = FacesContext.getCurrentInstance().getExternalContext().getClientWindow();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        ClientWindow clientWindow = externalContext.getClientWindow();
+        if (clientWindow == null) {
+            try {
+                boolean customWindowTracking = !"url".equals(externalContext.getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
+                String id = WindowScopeManager.determineWindowID(facesContext, customWindowTracking);
+                if (customWindowTracking) {
+                    clientWindow = new CustomClientWindow(id);
+                    clientWindow.disableClientWindowRenderMode(facesContext);
+                    externalContext.setClientWindow(clientWindow);
+                }
+            } catch (Exception e) {
+                log.log(Level.FINE, "Unable to set up WindowScope ", e);
+            }
+        }
+
         return clientWindow == null ? null : clientWindow.getId();
     }
 
@@ -570,17 +586,8 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
 
         public void beforePhase(final PhaseEvent event) {
             FacesContext context = FacesContext.getCurrentInstance();
-            try {
-                boolean customWindowTracking = !"url".equals(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
-                String id = WindowScopeManager.determineWindowID(context, customWindowTracking);
-                if (customWindowTracking) {
-                    ClientWindow clientWindow = new CustomClientWindow(id);
-                    clientWindow.disableClientWindowRenderMode(context);
-                    context.getExternalContext().setClientWindow(clientWindow);
-                }
-            } catch (Exception e) {
-                log.log(Level.FINE, "Unable to set up WindowScope ", e);
-            }
+            boolean customWindowTracking = !"url".equals(context.getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
+            WindowScopeManager.determineWindowID(context, customWindowTracking);
         }
 
         public PhaseId getPhaseId() {
