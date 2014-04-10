@@ -16,6 +16,7 @@ Modified paths to internal resources to invoke CKEDITOR.getUrl() first, in order
 
 /ckeditor.js
 line 778, added object existence conditions in detach() function to avoid NPEs
+line 904, set specific height when entering into source mode, in order to avoid collapsing the editable area
 
 /samples
 Removed all resources under /samples and the directory itself.
