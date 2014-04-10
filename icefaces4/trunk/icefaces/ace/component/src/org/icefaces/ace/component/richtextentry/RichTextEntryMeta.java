@@ -67,10 +67,10 @@ public class RichTextEntryMeta extends UIInputMeta {
     @Property(tlddoc = "The CSS style class of the editor.")
     private String styleClass;
 	
-    @Property(tlddoc = "The width of the editable area. It can be expressed in the following units: px, em, %. If no unit is specified, the value is assumed to be in pixels.", defaultValue="100%")
+    @Property(tlddoc = "The width of the entire editor. It can be expressed in px, em, and % units. If no unit is specified, the value is assumed to be in pixels.", defaultValue="100%")
     private String width;
 	
-    @Property(tlddoc = "The height of the editable area. It can be expressed in the following units: px, em, %. If no unit is specified, the value is assumed to be in pixels.", defaultValue="100%")
+    @Property(tlddoc = "The height of the editable area only. It can be expressed in px and em units (percent units (%) are not supported). If no unit is specified, the value is assumed to be in pixels.", defaultValue="200px")
     private String height;
 	
     @Property(tlddoc = "Specifies the type of toolbar. There are two valid values for this field (case sensitive): 'Default' and 'Basic'.", defaultValue="Default")
