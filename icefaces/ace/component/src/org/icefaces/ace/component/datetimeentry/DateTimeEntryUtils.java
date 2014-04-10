@@ -34,6 +34,7 @@ import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.*;
 
 /**
@@ -117,11 +118,20 @@ public class DateTimeEntryUtils {
 	private static Pattern zzzzpattern = Pattern.compile("z{4,}");
 	private static Pattern zpattern = Pattern.compile("z{1,3}");
 
-	public static String parseTimeZone(String pattern, Locale locale) {
+	public static String parseTimeZone(String pattern, Locale locale, TimeZone timeZone) {
 
-		String Z = (new SimpleDateFormat("Z", locale)).format(new Date());
-		String zzzz = (new SimpleDateFormat("zzzz", locale)).format(new Date());
-		String z = (new SimpleDateFormat("z", locale)).format(new Date());
+		SimpleDateFormat Zformat = new SimpleDateFormat("Z", locale);
+		SimpleDateFormat zzzzformat = new SimpleDateFormat("zzzz", locale);
+		SimpleDateFormat zformat = new SimpleDateFormat("z", locale);
+
+		Zformat.setTimeZone(timeZone);
+		zzzzformat.setTimeZone(timeZone);
+		zformat.setTimeZone(timeZone);
+
+		Date date = new Date();
+		String Z = Zformat.format(date);
+		String zzzz = zzzzformat.format(date);
+		String z = zformat.format(date);
 
 		String parsedValue;
 		Matcher Zmatcher = Zpattern.matcher(pattern);
