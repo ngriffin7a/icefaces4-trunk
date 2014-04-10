@@ -33,6 +33,9 @@ import java.util.Date;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 
+import java.util.Locale;
+import java.util.regex.*;
+
 /**
  * Utility class for calendar component
  */
@@ -108,5 +111,26 @@ public class DateTimeEntryUtils {
 			
 			return pattern;
 		}
+	}
+
+	private static Pattern Zpattern = Pattern.compile("Z+");
+	private static Pattern zzzzpattern = Pattern.compile("z{4,}");
+	private static Pattern zpattern = Pattern.compile("z{1,3}");
+
+	public static String parseTimeZone(String pattern, Locale locale) {
+
+		String Z = (new SimpleDateFormat("Z", locale)).format(new Date());
+		String zzzz = (new SimpleDateFormat("zzzz", locale)).format(new Date());
+		String z = (new SimpleDateFormat("z", locale)).format(new Date());
+
+		String parsedValue;
+		Matcher Zmatcher = Zpattern.matcher(pattern);
+		parsedValue = Zmatcher.replaceAll("'"+Z+"'");
+		Matcher zzzzmatcher = zzzzpattern.matcher(parsedValue);
+		parsedValue = zzzzmatcher.replaceAll("'"+zzzz+"'");
+		Matcher zmatcher = zpattern.matcher(parsedValue);
+		parsedValue = zmatcher.replaceAll("'"+z+"'");
+
+		return parsedValue;
 	}
 }
