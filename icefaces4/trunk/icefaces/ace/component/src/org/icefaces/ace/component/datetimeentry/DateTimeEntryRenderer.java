@@ -209,7 +209,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
             .entry("popup", dateTimeEntry.isPopup())
             .entry("locale", locale.toString())
             .entryNonNullValue("pattern", 
-                DateTimeEntryUtils.parseTimeZone(DateTimeEntryUtils.convertPattern(dateTimeEntry.getPattern()), locale));
+                DateTimeEntryUtils.parseTimeZone(DateTimeEntryUtils.convertPattern(dateTimeEntry.getPattern()), locale, dateTimeEntry.calculateTimeZone()));
 
         if(dateTimeEntry.getPages() != 1)
             json.entry("numberOfMonths", dateTimeEntry.getPages());
