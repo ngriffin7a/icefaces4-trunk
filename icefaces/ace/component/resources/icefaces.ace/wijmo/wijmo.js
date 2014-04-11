@@ -3889,7 +3889,7 @@ function wijmoASPNetParseOptions(o) {
 				}
 			}
 			
-			$(document).bind("click.wijmenudoc contextmenu.wijmenudoc", this._documentClickHandler); // ICE-8699
+			$(document).bind("click contextmenu.wijmenudoc", this._documentClickHandler); // ICE-8699
 		},
 		
 		_unregisterDocumentClickHandler: function() { // ICE-8699
