@@ -34,7 +34,7 @@
     <ui:define name="example">
 
        <h:form id="form" style="text-align: center">
-           <ace:panel header="#{msgs[example.ace.chart.bar.sample_title]} ">
+           <ace:panel header="#{msgs['example.ace.chart.bar.sample_title']} ">
                <h:selectOneMenu id="selMnu" label="Select Chart Example:" labelPosition="top"
                    valueChangeListener="#{chartBarBean.updateChart}" value="#{chartBarBean.example2}">
                    <f:selectItems value="#{chartBarBean.examples}" var="ex"
