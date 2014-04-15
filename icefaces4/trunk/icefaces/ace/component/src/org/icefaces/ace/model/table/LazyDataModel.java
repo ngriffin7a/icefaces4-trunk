@@ -70,7 +70,8 @@ public abstract class LazyDataModel<T> extends DataModel implements Serializable
     }
     
     public void setRowIndex(int rowIndex) {
-        this.rowIndex = (rowIndex % pageSize);
+		if (pageSize == 0) this.rowIndex = rowIndex;
+        else this.rowIndex = (rowIndex % pageSize);
     }
 
 	public Object getWrappedData() {
