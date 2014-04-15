@@ -156,7 +156,8 @@ ice.ace.Dialog = function(id, cfg) {
 
 ice.ace.Dialog.prototype.show = function() {
 	var self = this;
-    setTimeout(function(){self.jq.dialog('open');self.focusFirstInput();},1);
+    var focusOn = this.cfg.setFocus;
+    setTimeout(function(){self.jq.dialog('open');self.focusInput(focusOn);},1);
 };
 
 ice.ace.Dialog.prototype.hide = function() {
@@ -198,8 +199,12 @@ ice.ace.Dialog.prototype.ajaxHide = function() {
     }
 }
 
-ice.ace.Dialog.prototype.focusFirstInput = function() {
-    this.jq.find(':not(:submit):not(:button):input:visible:enabled:first').focus();
+ice.ace.Dialog.prototype.focusInput = function(id) {
+    if (id) {
+        document.getElementById(id).focus();
+    } else {
+        this.jq.find(':not(:submit):not(:button):input:visible:enabled:first').focus();
+    }
 };
 
 ice.ace.Dialog.browser = function() {

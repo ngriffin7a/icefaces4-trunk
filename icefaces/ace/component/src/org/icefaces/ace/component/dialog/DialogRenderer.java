@@ -29,16 +29,20 @@ package org.icefaces.ace.component.dialog;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.FacesException;
 
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.JSONBuilder;
+import org.icefaces.component.Focusable;
+import org.icefaces.impl.component.FocusManager;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.util.CoreComponentUtils;
 
+import java.util.Iterator;
 import java.util.List;
 
 @MandatoryResourceComponent(tagName="dialog", value="org.icefaces.ace.component.dialog.Dialog")
@@ -69,6 +73,19 @@ public class DialogRenderer extends CoreRenderer {
         String clientId = dialog.getClientId(context);
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
 
+        String setFocusID = "";
+            //set focus on the specified component
+        String focusFor = dialog.getSetFocus();
+        if (focusFor != null && !"".equals(focusFor)) {
+            UIComponent c = findComponent(dialog, focusFor);
+            if (c instanceof UIInput) {
+                setFocusID = c.getClientId(context);
+            }
+            if (c instanceof Focusable) {
+                setFocusID = ((Focusable) c).getFocusedElementId();
+            }
+        }
+
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
 
@@ -82,7 +99,8 @@ public class DialogRenderer extends CoreRenderer {
           .item(clientId + "_main")
           .beginMap()
           .entry("isVisible", dialog.isVisible())
-          .entry("minHeight", dialog.getMinHeight());
+          .entry("minHeight", dialog.getMinHeight())
+          .entry("setFocus", setFocusID);
 
         String styleClass = dialog.getStyleClass();
 		String style = dialog.getStyle();
@@ -186,5 +204,26 @@ public class DialogRenderer extends CoreRenderer {
     @Override
     public boolean getRendersChildren() {
         return true;
+    }
+
+    private static UIComponent findComponent(UIComponent base, String id) {
+        if (id.equals(base.getId()))
+            return base;
+
+        UIComponent kid;
+        UIComponent result = null;
+        Iterator<UIComponent> kids = base.getFacetsAndChildren();
+        while (kids.hasNext() && (result == null)) {
+            kid = kids.next();
+            if (id.equals(kid.getId())) {
+                result = kid;
+                break;
+            }
+            result = findComponent(kid, id);
+            if (result != null) {
+                break;
+            }
+        }
+        return result;
     }
 }

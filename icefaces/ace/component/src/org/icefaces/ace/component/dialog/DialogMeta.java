@@ -125,4 +125,8 @@ public class DialogMeta extends UIPanelMeta {
 	
 	@Property(tlddoc = "Specifies the jQuery selector(s) of the elements inside the dialog container that will be used as the drag handle(s). If this attribute isn't specified, any point of the dialog container can initiate the dragging action. The selectors are relative to the dialog's root element. When using multiple selectors, separate them by commas.")
 	String dragHandle;
+
+    @Property(tlddoc = "Specifies the ID of the component that should receive focus when the dialog is opened.")
+    String setFocus;
+
 }
