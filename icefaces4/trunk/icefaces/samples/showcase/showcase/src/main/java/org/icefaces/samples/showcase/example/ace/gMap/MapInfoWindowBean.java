@@ -17,13 +17,7 @@
 package org.icefaces.samples.showcase.example.ace.gMap;
 
 import javax.el.MethodExpression;
-import javax.faces.application.*;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.component.*;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import java.util.ArrayList;
 import javax.faces.bean.CustomScoped;
 import javax.annotation.PostConstruct;
 import org.icefaces.samples.showcase.metadata.annotation.*;
@@ -52,13 +46,13 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class MapInfoWindowBean extends ComponentExampleImpl<MapInfoWindowBean> implements Serializable{
 	public static final String BEAN_NAME = "infoWindowBean";
-	private boolean oneRendered = true;
-    private boolean twoRendered = false;
-    private boolean threeRendered = false;
-    private boolean fourRendered = false;
-    private boolean fiveRendered = false;
-    private boolean sixRendered = false;
-    private boolean sevenRendered = false;
+	private boolean oneDisabled = false;
+    private boolean twoDisabled = true;
+    private boolean threeDisabled = true;
+    private boolean fourDisabled = true;
+    private boolean fiveDisabled = true;
+    private boolean sixDisabled = true;
+    private boolean sevenDisabled = true;
     private String oneContent = "This infoWindow stands on its own, and uses the content attribute.";
     private String twoContent = "This infoWindow stands on its own, and nests its content.";
     private String threeContent = "This infoWindow is bound to a marker, will re-appear when the marker is clicked, and starts open.";
@@ -69,60 +63,60 @@ public class MapInfoWindowBean extends ComponentExampleImpl<MapInfoWindowBean> i
     private String selectedRender = "one";
     private String displayedValue = "This infoWindow stands on its own, and uses the content attribute.";
 
-    public boolean isOneRendered() {
-        return oneRendered;
+    public boolean isOneDisabled() {
+        return oneDisabled;
     }
 
-    public void setOneRendered(boolean oneRendered) {
-        this.oneRendered = oneRendered;
+    public void setOneDisabled(boolean oneDisabled) {
+        this.oneDisabled = oneDisabled;
     }
 
-    public boolean isTwoRendered() {
-        return twoRendered;
+    public boolean isTwoDisabled() {
+        return twoDisabled;
     }
 
-    public void setTwoRendered(boolean twoRendered) {
-        this.twoRendered = twoRendered;
+    public void setTwoDisabled(boolean twoDisabled) {
+        this.twoDisabled = twoDisabled;
     }
 
-    public boolean isThreeRendered() {
-        return threeRendered;
+    public boolean isThreeDisabled() {
+        return threeDisabled;
     }
 
-    public void setThreeRendered(boolean threeRendered) {
-        this.threeRendered = threeRendered;
+    public void setThreeDisabled(boolean threeDisabled) {
+        this.threeDisabled = threeDisabled;
     }
 
-    public boolean isFourRendered() {
-        return fourRendered;
+    public boolean isFourDisabled() {
+        return fourDisabled;
     }
 
-    public void setFourRendered(boolean fourRendered) {
-        this.fourRendered = fourRendered;
+    public void setFourDisabled(boolean fourDisabled) {
+        this.fourDisabled = fourDisabled;
     }
 
-    public boolean isFiveRendered() {
-        return fiveRendered;
+    public boolean isFiveDisabled() {
+        return fiveDisabled;
     }
 
-    public void setFiveRendered(boolean fiveRendered) {
-        this.fiveRendered = fiveRendered;
+    public void setFiveDisabled(boolean fiveDisabled) {
+        this.fiveDisabled = fiveDisabled;
     }
 
-    public boolean isSixRendered() {
-        return sixRendered;
+    public boolean isSixDisabled() {
+        return sixDisabled;
     }
 
-    public void setSixRendered(boolean sixRendered) {
-        this.sixRendered = sixRendered;
+    public void setSixDisabled(boolean sixDisabled) {
+        this.sixDisabled = sixDisabled;
     }
 
-    public boolean isSevenRendered() {
-        return sevenRendered;
+    public boolean isSevenDisabled() {
+        return sevenDisabled;
     }
 
-    public void setSevenRendered(boolean sevenRendered) {
-        this.sevenRendered = sevenRendered;
+    public void setSevenDisabled(boolean sevenDisabled) {
+        this.sevenDisabled = sevenDisabled;
     }
 
     public String getOneContent() {
@@ -187,33 +181,33 @@ public class MapInfoWindowBean extends ComponentExampleImpl<MapInfoWindowBean> i
 
     public void setSelectedRender(String selectedRender) {
         this.selectedRender = selectedRender;
-        oneRendered = false;
-        twoRendered = false;
-        threeRendered = false;
-        fourRendered = false;
-        fiveRendered = false;
-        sixRendered = false;
-        sevenRendered = false;
+        oneDisabled = true;
+        twoDisabled = true;
+        threeDisabled = true;
+        fourDisabled = true;
+        fiveDisabled = true;
+        sixDisabled = true;
+        sevenDisabled = true;
         if (selectedRender.equals("one")) {
-            oneRendered = true;
+            oneDisabled = false;
             displayedValue = oneContent;
         } else if (selectedRender.equals("two")) {
-            twoRendered = true;
+            twoDisabled = false;
             displayedValue = twoContent;
         } else if (selectedRender.equals("three")) {
-            threeRendered = true;
+            threeDisabled = false;
             displayedValue = threeContent;
         } else if (selectedRender.equals("four")) {
-            fourRendered = true;
+            fourDisabled = false;
             displayedValue = fourContent;
         } else if (selectedRender.equals("five")) {
-            fiveRendered = true;
+            fiveDisabled = false;
             displayedValue = fiveContent;
         } else if (selectedRender.equals("six")) {
-            sixRendered = true;
+            sixDisabled = false;
             displayedValue = sixContent;
         } else if (selectedRender.equals("seven")) {
-            sevenRendered = true;
+            sevenDisabled = false;
             displayedValue = sevenContent;
         }
     }

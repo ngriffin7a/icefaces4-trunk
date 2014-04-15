@@ -33,7 +33,7 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
         Map<String,String> parameterMap = context.getExternalContext().getRequestParameterMap();
         if (clientID.equals(parameterMap.get("javax.faces.source"))) {
             if ("close".equals(parameterMap.get(clientID))) {
-                component.setRendered(false);
+                ((GMapInfoWindow) component).setDisabled(true);
             }
         }
     }
