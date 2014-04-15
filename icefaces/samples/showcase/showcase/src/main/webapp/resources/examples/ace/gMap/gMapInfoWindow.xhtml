@@ -35,19 +35,19 @@
     <ui:define name="example">
 	<h:form id="MapForm">
     <ace:gMap id="gMap" style="width: 675px; height: 500px" latitude="0" longitude="0" >
-        <ace:gMapInfoWindow disabled="${!infoWindowBean.oneRendered}" content="${infoWindowBean.oneContent}" longitude="0" latitude="0" options="maxWidth:200"/>
-        <ace:gMapInfoWindow disabled="${!infoWindowBean.twoRendered}" longitude="0" latitude="0" options="maxWidth:200">${infoWindowBean.twoContent}</ace:gMapInfoWindow>
-        <ace:gMapMarker disabled="${!infoWindowBean.threeRendered}" latitude="0" longitude="0" options="draggable:true">
-            <ace:gMapInfoWindow disabled="${!infoWindowBean.threeRendered}" content="${infoWindowBean.threeContent}" showOnClick="true" startOpen="true" options="maxWidth:200"/>
+        <ace:gMapInfoWindow disabled="${infoWindowBean.oneDisabled}" content="${infoWindowBean.oneContent}" longitude="0" latitude="0" options="maxWidth:200"/>
+        <ace:gMapInfoWindow disabled="${infoWindowBean.twoDisabled}" longitude="0" latitude="0" options="maxWidth:200">${infoWindowBean.twoContent}</ace:gMapInfoWindow>
+        <ace:gMapMarker disabled="${infoWindowBean.threeDisabled}" latitude="0" longitude="0" options="draggable:true">
+            <ace:gMapInfoWindow disabled="${infoWindowBean.threeDisabled}" content="${infoWindowBean.threeContent}" showOnClick="true" startOpen="true" options="maxWidth:200"/>
         </ace:gMapMarker>
-        <ace:gMapMarker disabled="${!infoWindowBean.fourRendered}" latitude="0" longitude="0" options="draggable:true">
-            <ace:gMapInfoWindow disabled="${!infoWindowBean.fourRendered}" showOnClick="true" startOpen="false" options="maxWidth:200">${infoWindowBean.fourContent}</ace:gMapInfoWindow>
+        <ace:gMapMarker disabled="${infoWindowBean.fourDisabled}" latitude="0" longitude="0" options="draggable:true">
+            <ace:gMapInfoWindow disabled="${infoWindowBean.fourDisabled}" showOnClick="true" startOpen="false" options="maxWidth:200">${infoWindowBean.fourContent}</ace:gMapInfoWindow>
         </ace:gMapMarker>
-        <ace:gMapMarker disabled="${!infoWindowBean.fiveRendered}" latitude="0" longitude="0" options="draggable:true">
-            <ace:gMapInfoWindow disabled="${!infoWindowBean.fiveRendered}" showOnClick="false" startOpen="true" options="maxWidth:200">${infoWindowBean.fiveContent}</ace:gMapInfoWindow>
+        <ace:gMapMarker disabled="${infoWindowBean.fiveDisabled}" latitude="0" longitude="0" options="draggable:true">
+            <ace:gMapInfoWindow disabled="${infoWindowBean.fiveDisabled}" showOnClick="false" startOpen="true" options="maxWidth:200">${infoWindowBean.fiveContent}</ace:gMapInfoWindow>
         </ace:gMapMarker>
-        <ace:gMapInfoWindow disabled="${!infoWindowBean.sixRendered}" longitude="0" latitude="0" options="maxWidth:200"><img alt="gMapInfoWindow can also display more complex contents than text" src="http://www.icesoft.org/java/resource/images/icesoft-logo.png"/></ace:gMapInfoWindow>
-        <ace:gMapInfoWindow disabled="${!infoWindowBean.sevenRendered}" longitude="0" latitude="0" options="maxWidth:200"><ace:checkboxButton/><p>Other components can be nested as well.</p></ace:gMapInfoWindow>
+        <ace:gMapInfoWindow disabled="${infoWindowBean.sixDisabled}" longitude="0" latitude="0" options="maxWidth:200"><img alt="gMapInfoWindow can also display more complex contents than text" src="http://www.icesoft.org/java/resource/images/icesoft-logo.png"/></ace:gMapInfoWindow>
+        <ace:gMapInfoWindow disabled="${infoWindowBean.sevenDisabled}" longitude="0" latitude="0" options="maxWidth:200"><ace:checkboxButton/><p>Other components can be nested as well.</p></ace:gMapInfoWindow>
     </ace:gMap>
         <h:selectOneRadio value="${infoWindowBean.selectedRender}">
             <ace:ajax/>
