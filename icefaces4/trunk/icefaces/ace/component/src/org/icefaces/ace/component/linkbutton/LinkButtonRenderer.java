@@ -60,7 +60,7 @@ public class LinkButtonRenderer extends CoreRenderer {
 
         List <UIParameter> uiParams = Utils.captureParameters(linkButton);
         String clientId = uiComponent.getClientId(facesContext);
-        String value = (String)linkButton.getValue();
+        String value = linkButton.getValue().toString();
         Integer tabindex = linkButton.getTabindex();
         boolean disabled = linkButton.isDisabled();
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
@@ -140,7 +140,7 @@ public class LinkButtonRenderer extends CoreRenderer {
 
     private void encodeAriaAttributes(ResponseWriter writer, LinkButton button, boolean doAction) throws IOException {
         writer.writeAttribute(HTML.ROLE_ATTR, doAction ? "button" : "link", null);
-        writer.writeAttribute(HTML.ARIA_LABELLED_BY_ATTR, (String)button.getValue(), null);
+        writer.writeAttribute(HTML.ARIA_LABELLED_BY_ATTR, button.getValue().toString(), null);
 
         if (button.isDisabled()) {
             writer.writeAttribute(HTML.ARIA_DISABLED_ATTR, true, null);
