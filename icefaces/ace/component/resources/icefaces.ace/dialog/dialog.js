@@ -203,8 +203,12 @@ ice.ace.Dialog.prototype.focusInput = function(id) {
     if (id) {
         document.getElementById(id).focus();
     } else {
-        this.jq.find(':not(:submit):not(:button):input:visible:enabled:first').focus();
+        this.focusFirstInput();
     }
+};
+
+ice.ace.Dialog.prototype.focusFirstInput = function() {
+    this.jq.find(':not(:submit):not(:button):input:visible:enabled:first').focus();
 };
 
 ice.ace.Dialog.browser = function() {
