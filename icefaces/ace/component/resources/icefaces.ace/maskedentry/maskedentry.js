@@ -276,6 +276,12 @@
 					});
 
 				checkVal(); //Perform initial check for existing values
+				// ICE-8154: in-field label handling
+				if ($.trim(input.val()) == "" && settings.inFieldLabel) {
+					input.val(settings.inFieldLabel);
+					input.addClass(settings.inFieldLabelStyleClass);
+					input.data("labelIsInField", true);
+				}
 			});
 		}
 	});
