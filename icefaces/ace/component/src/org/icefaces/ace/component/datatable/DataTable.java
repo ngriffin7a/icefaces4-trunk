@@ -77,7 +77,6 @@ public class DataTable extends DataTableBase implements Serializable {
     private static Class SQL_RESULT = null;
 
     // Cached results
-    private Map<String, Column> filterMap;
     private TableConfigPanel panel;
     private RowStateMap stateMap;
     // Cache model instance as long as setRowIndex(-1) is not called, this is a Mojarra derived behaviour
@@ -1062,19 +1061,17 @@ public class DataTable extends DataTableBase implements Serializable {
     }
 
     protected Map<String,Column> getFilterMap() {
-        if (filterMap == null) {
-            filterMap = new HashMap<String,Column>();
-            ColumnGroup group = getColumnGroup("header");
-            if (group != null) {
-                for (UIComponent child : group.getChildren())
-                    if (child.isRendered()) for (UIComponent grandchild : child.getChildren())
-                        if (grandchild.isRendered() && grandchild.getValueExpression("filterBy") != null)
-                            filterMap.put(grandchild.getClientId(FacesContext.getCurrentInstance()) + "_filter", (Column)grandchild);
-            } else
-                for (Column column : getColumns())
-                    if (column.getValueExpression("filterBy") != null)
-                        filterMap.put(column.getClientId(FacesContext.getCurrentInstance()) + "_filter", column);
-        }
+        Map<String, Column> filterMap = new HashMap<String,Column>();
+        ColumnGroup group = getColumnGroup("header");
+        if (group != null) {
+            for (UIComponent child : group.getChildren())
+                if (child.isRendered()) for (UIComponent grandchild : child.getChildren())
+                    if (grandchild.isRendered() && grandchild.getValueExpression("filterBy") != null)
+                        filterMap.put(grandchild.getClientId(FacesContext.getCurrentInstance()) + "_filter", (Column)grandchild);
+        } else
+            for (Column column : getColumns())
+                if (column.getValueExpression("filterBy") != null)
+                    filterMap.put(column.getClientId(FacesContext.getCurrentInstance()) + "_filter", column);
         return filterMap;
     }
 
