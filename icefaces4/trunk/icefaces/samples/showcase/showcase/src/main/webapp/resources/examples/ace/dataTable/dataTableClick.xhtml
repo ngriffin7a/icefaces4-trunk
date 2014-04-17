@@ -44,6 +44,7 @@
                 }
             </style>
             <ace:messages />
+        <div style="overflow:auto;">
            <ace:dataTable id="carTable"
                           value="#{dataTableBean.carsData}"
                           var="car"
@@ -146,6 +147,7 @@
                     </ace:cellEditor>
                 </ace:column>
             </ace:dataTable>
+        </div>
         </h:form>
     </ui:define>
 </ui:composition>
