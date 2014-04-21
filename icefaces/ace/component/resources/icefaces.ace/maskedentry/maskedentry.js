@@ -247,6 +247,7 @@
                             input.val("");
                             input.removeClass(settings.inFieldLabelStyleClass);
                             input.data("labelIsInField", false);
+                            input.attr({name: input.attr("id")});
                         }
 						focusText = input.val();
 						var pos = checkVal();
@@ -267,6 +268,7 @@
                             input.val(settings.inFieldLabel);
                             input.addClass(settings.inFieldLabelStyleClass);
                             input.data("labelIsInField", true);
+                            input.attr({name: input.attr("id") + "_label"});
                         }
 					})
 					.bind("keydown.mask", keydownEvent)
@@ -281,6 +283,7 @@
 					input.val(settings.inFieldLabel);
 					input.addClass(settings.inFieldLabelStyleClass);
 					input.data("labelIsInField", true);
+					input.attr({name: input.attr("id") + "_label"});
 				}
 			});
 		}
