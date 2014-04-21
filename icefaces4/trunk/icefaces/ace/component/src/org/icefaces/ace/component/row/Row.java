@@ -52,7 +52,7 @@ public class Row extends RowBase {
      * @param index the index of the row being rendered
      * @return True if this conditional row should render.
      */
-    public boolean evaluateCondition(int index) {
+    public boolean evaluateCondition(int index, DataTable table) {
         String condition = this.getCondition();
         if (condition == null) return false;
 
@@ -61,7 +61,7 @@ public class Row extends RowBase {
                 predicate = new IntervalPredicate(getInterval());
             }
             else if (condition.equals("group")) {
-                predicate = new GroupPredicate(getValueExpression("groupBy"), getPos().equals("before"));
+                predicate = new GroupPredicate(getValueExpression("groupBy"), getPos().equals("before"), table);
             }
             else if (condition.equals("predicate"))
                 predicate = getPredicate();
@@ -93,11 +93,12 @@ public class Row extends RowBase {
         boolean before;
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ELContext elContext = facesContext.getELContext();
+        DataTable table;
 
-        public GroupPredicate(ValueExpression gb, boolean before) {
+        public GroupPredicate(ValueExpression gb, boolean before, DataTable table) {
             groupBy = gb;
             this.before = before;
-            findParentTable(facesContext);
+            this.table = table;
         }
 
         public boolean evaluate(Object object) {
@@ -126,21 +127,6 @@ public class Row extends RowBase {
                 else return true;
             }
         }
-    }
-
-    private DataTable table;
-    private DataTable findParentTable(FacesContext context) {
-        if (table == null) {
-            UIComponent parent = getParent();
-            while(parent != null)
-                if (parent instanceof DataTable) {
-                    table = (DataTable) parent;
-                    break;
-                }
-                else parent = parent.getParent();
-        }
-
-        return table;
     }
 
     public void resetRenderVariables() {
