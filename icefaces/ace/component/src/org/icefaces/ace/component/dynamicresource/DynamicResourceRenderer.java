@@ -64,7 +64,7 @@ public class DynamicResourceRenderer extends Renderer {
                 writer.writeAttribute(HTML.ID_ATTR, clientId, null);
 
                 String image = dynamicResource.getImage();
-                if (image != null) {
+                if (image != null && image.length() > 0) {
                     image = facesContext.getApplication().getResourceHandler().createResource(image).getRequestPath();
                     writer.startElement(HTML.IMG_ELEM, null);
                     writer.writeAttribute(HTML.SRC_ATTR, image, null);
