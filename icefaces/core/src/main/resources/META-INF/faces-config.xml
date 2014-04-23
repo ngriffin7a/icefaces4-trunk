@@ -96,6 +96,10 @@
         <resource-handler>org.icefaces.impl.application.SessionTimeoutMonitor</resource-handler>
         <el-resolver>org.icefaces.impl.application.WindowELResolver</el-resolver>
         <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.CheckDuplicateJars</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
             <system-event-listener-class>org.icefaces.impl.event.JavaScriptRunnerSetup</system-event-listener-class>
             <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
         </system-event-listener>
