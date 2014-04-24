@@ -91,8 +91,6 @@ public class Row extends RowBase {
     private class GroupPredicate implements Predicate {
         ValueExpression groupBy;
         boolean before;
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ELContext elContext = facesContext.getELContext();
         DataTable table;
 
         public GroupPredicate(ValueExpression gb, boolean before, DataTable table) {
@@ -104,6 +102,7 @@ public class Row extends RowBase {
         public boolean evaluate(Object object) {
             int currentIndex = table.getRowIndex();
             Integer index = (Integer) object;
+            ELContext elContext = FacesContext.getCurrentInstance().getELContext();
 
             table.setRowIndex(index);
             Object currentValue = groupBy.getValue(elContext);
