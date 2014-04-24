@@ -56,7 +56,11 @@ public class MaskedEntryRenderer extends InputRenderer {
         decodeBehaviors(context, maskedEntry);
 
 		String clientId = maskedEntry.getClientId(context) + "_field";
-		String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(clientId);
+        Map<String,String> requestParameterMap = context.getExternalContext().getRequestParameterMap();
+		String submittedValue = (String) requestParameterMap.get(clientId);
+        if (submittedValue == null && requestParameterMap.get(clientId + "_label") != null) {
+            submittedValue = "";
+        }
 
         if(submittedValue != null) {
             maskedEntry.setSubmittedValue(submittedValue);
