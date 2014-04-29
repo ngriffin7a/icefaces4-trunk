@@ -122,7 +122,8 @@ var switchToClientSideElementUpdateDetermination;
         //use for loop for speed
         for (var i = 0, l = elements.length; i < l; i++) {
             var e = elements[i];
-            var callback = e['data-onElementUpdate'];
+            var callback;
+			if (e) callback = e['data-onElementUpdate'];
             if (callback) {
                 var id = e.id;
                 try {
@@ -130,7 +131,7 @@ var switchToClientSideElementUpdateDetermination;
                 } catch (ex) {
                     warn(logger, 'onElementUpdate callback for [' + id + '] failed to run properly', ex);
                 } finally {
-                    e['data-onElementUpdate'] = null;
+                    if (e) e['data-onElementUpdate'] = null;
                 }
             }
         }
