@@ -14,6 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
+var startBlockingUI;
 (function() {
     var off = operator();
 
@@ -85,43 +86,46 @@
         return false;
     }
 
+    startBlockingUI = function() {
+        debug(logger, 'blocking UI');
+        var blockUIOverlay = Overlay();
+        var rollbacks = inject(['input', 'select', 'textarea', 'button', 'a'], [], function(result, type) {
+            return concatenate(result, asArray(collect(document.body.getElementsByTagName(type), function(e) {
+                var sink = eventSink(e);
+                var onkeypress = e.onkeypress;
+                var onkeyup = e.onkeyup;
+                var onkeydown = e.onkeydown;
+                var onclick = e.onclick;
+                e.onkeypress = sink;
+                e.onkeyup = sink;
+                e.onkeydown = sink;
+                e.onclick = sink;
+
+                return function() {
+                    try {
+                        e.onkeypress = onkeypress;
+                        e.onkeyup = onkeyup;
+                        e.onkeydown = onkeydown;
+                        e.onclick = onclick;
+                    } catch (ex) {
+                        //don't fail if element is not present anymore
+                    }
+                };
+            })));
+        });
+
+        return function() {
+            broadcast(rollbacks);
+            off(blockUIOverlay);
+            debug(logger, 'unblocked UI');
+        };
+    }
     var stopBlockingUI = noop;
     namespace.onBeforeSubmit(function(source, isClientRequest) {
         //Only block the UI for client-initiated requests (not push requests)
         //do not block submit triggered by the 'blur' event -- most probably it is issued by a partial submits
         if (isClientRequest && isBlockUIEnabled(source) && not(isBlurEvent())) {
-            debug(logger, 'blocking UI');
-            var blockUIOverlay = Overlay();
-            var rollbacks = inject(['input', 'select', 'textarea', 'button', 'a'], [], function(result, type) {
-                return concatenate(result, asArray(collect(document.body.getElementsByTagName(type), function(e) {
-                    var sink = eventSink(e);
-                    var onkeypress = e.onkeypress;
-                    var onkeyup = e.onkeyup;
-                    var onkeydown = e.onkeydown;
-                    var onclick = e.onclick;
-                    e.onkeypress = sink;
-                    e.onkeyup = sink;
-                    e.onkeydown = sink;
-                    e.onclick = sink;
-
-                    return function() {
-                        try {
-                            e.onkeypress = onkeypress;
-                            e.onkeyup = onkeyup;
-                            e.onkeydown = onkeydown;
-                            e.onclick = onclick;
-                        } catch (ex) {
-                            //don't fail if element is not present anymore
-                        }
-                    };
-                })));
-            });
-
-            stopBlockingUI = function() {
-                broadcast(rollbacks);
-                off(blockUIOverlay);
-                debug(logger, 'unblocked UI');
-            };
+            stopBlockingUI = startBlockingUI();
         } else {
             stopBlockingUI = noop;
         }

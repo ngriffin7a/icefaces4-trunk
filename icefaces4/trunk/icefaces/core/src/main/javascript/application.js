@@ -462,6 +462,7 @@ if (!window.ice.icefaces) {
         jsf.ajax.addOnEvent(logReceivedUpdates);
 
         //include submit.js
+        //include blockui.js
         namespace.se = singleSubmitExecuteThis;
         namespace.ser = singleSubmitExecuteThisRenderThis;
         namespace.submit = submit;
@@ -498,6 +499,9 @@ if (!window.ice.icefaces) {
                 }
                 if (configuration.clientSideElementUpdateDetermination) {
                     switchToClientSideElementUpdateDetermination();
+                }
+                if (configuration.blockUIOnSubmit) {
+                    onBeforeUnload(window, startBlockingUI);
                 }
                 setupDefaultIndicators(container, configuration);
                 clearEventHandlersOnUnload(container);
@@ -550,7 +554,6 @@ if (!window.ice.icefaces) {
         //include element-remove.js
         //include user-inactivity.js
         //include status.js
-        //include blockui.js
         //include fixjsf.js
     })(window.ice);
 }
