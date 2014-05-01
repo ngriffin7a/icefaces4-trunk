@@ -42,4 +42,6 @@ public interface IProxiableColumn extends IColumn {
     public int getCurrGroupLength();
     public void setCurrGroupLength(int currGroupLength);
     public boolean hasCellEditor();
+    public String getLazyColumnKey();
+    public void setLazyColumnKey(String lazyColumnKey);
 }

@@ -27,6 +27,7 @@ public class SortCriteria {
     private ValueExpression expression;
 	private String propertyName;
 	private boolean ascending;
+	private String columnKey = null;
 
 	
 	public SortCriteria(ValueExpression expression, boolean ascending) {
@@ -35,10 +36,23 @@ public class SortCriteria {
         this.propertyName = ComponentUtils.resolveField(expression);
 	}
 
+	public SortCriteria(ValueExpression expression, boolean ascending, String columnKey) {
+		this.expression = expression;
+		this.ascending = ascending;
+        this.propertyName = columnKey;
+	}
+
     public SortCriteria(ValueExpression expression, boolean ascending, Comparator<Object> comparator) {
         this.expression = expression;
         this.ascending = ascending;
         this.propertyName = ComponentUtils.resolveField(expression);
+        this.comparator = comparator;
+    }
+
+    public SortCriteria(ValueExpression expression, boolean ascending, Comparator<Object> comparator, String columnKey) {
+        this.expression = expression;
+        this.ascending = ascending;
+        this.propertyName = columnKey;
         this.comparator = comparator;
     }
 

@@ -1127,8 +1127,14 @@ public class DataTable extends DataTableBase implements Serializable {
         int i = 0;
         for (Column c : sortableColumns) {
             Comparator<Object> comp = c.getSortFunction();
-            if (comp == null) criterias[i] = new SortCriteria(c.getValueExpression("sortBy"), c.isSortAscending());
-            else criterias[i] = new SortCriteria(c.getValueExpression("sortBy"), c.isSortAscending(), comp);
+			String columnKey = c.getLazyColumnKey();
+			if (columnKey != null) {
+				if (comp == null) criterias[i] = new SortCriteria(c.getValueExpression("sortBy"), c.isSortAscending(), columnKey);
+				else criterias[i] = new SortCriteria(c.getValueExpression("sortBy"), c.isSortAscending(), comp, columnKey);
+			} else {
+				if (comp == null) criterias[i] = new SortCriteria(c.getValueExpression("sortBy"), c.isSortAscending());
+				else criterias[i] = new SortCriteria(c.getValueExpression("sortBy"), c.isSortAscending(), comp);
+			}
             i++;
         }
         return criterias;
@@ -1139,8 +1145,13 @@ public class DataTable extends DataTableBase implements Serializable {
         //TODO DONE filterBy
         for (IProxiableColumn c : getProxiedBodyColumns()) {
             String value = c.getFilterValue();
-            if (value != null && (value.length() > 0))
-                map.put(ComponentUtils.resolveField(c.getValueExpression("filterBy")), value);
+            if (value != null && (value.length() > 0)) {
+				String columnKey = c.getLazyColumnKey();
+				if (columnKey != null)
+					map.put(columnKey, value);
+				else
+					map.put(ComponentUtils.resolveField(c.getValueExpression("filterBy")), value);
+			}
         }
         return map;
     }
