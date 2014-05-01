@@ -428,7 +428,7 @@ public class DataTable extends DataTableBase implements Serializable {
             setFilteredData(processFilters(context));
         }
 
-        if (isApplyingSorts() && !isLazy()) {
+        if (isApplyingSorts()) {
             if (savedSortState != null)
                 savedSortState.apply(this);
             processSorting();
