@@ -96,7 +96,7 @@ public class DataTableRowRenderer {
                     encodeRegularCell(new CellRenderingContext(
                             context, cols, i, visibleIndex,
                             selectedColumnIds.contains(kid.getId()),
-                            innerTdDivRequired)
+                            innerTdDivRequired), userRowStyleClass
                     );
 					visibleIndex++;
                 }
@@ -185,7 +185,7 @@ public class DataTableRowRenderer {
         writer.endElement(HTML.TD_ELEM);
     }
 
-    private static void encodeRegularCell(CellRenderingContext cellContext) throws IOException {
+    private static void encodeRegularCell(CellRenderingContext cellContext, String userRowStyleClass) throws IOException {
         List<IProxiableColumn> columns = cellContext.columns;
         IProxiableColumn column = columns.get(cellContext.index);
         ResponseWriter writer = cellContext.context.getResponseWriter();
@@ -231,7 +231,7 @@ public class DataTableRowRenderer {
                 if (cellContext.selected)
                     columnStyleClass += " ui-state-active ui-selected";
 
-                writer.writeAttribute(HTML.CLASS_ATTR, columnStyleClass, null);
+                writer.writeAttribute(HTML.CLASS_ATTR, userRowStyleClass + " " + columnStyleClass, null);
 
                 if (cellContext.resizable) writer.startElement(HTML.DIV_ELEM, null);
             }
@@ -316,7 +316,7 @@ public class DataTableRowRenderer {
                         IProxiableColumn kid = cols.get(i);
                         if (kid.isRendered()) {
                             boolean cellSelected = false;
-                            encodeRegularCell(new CellRenderingContext(context, cols, i, visibleIndex, selectedColumnIds.contains(kid.getId()), false));
+                            encodeRegularCell(new CellRenderingContext(context, cols, i, visibleIndex, selectedColumnIds.contains(kid.getId()), false), "");
 							visibleIndex++;
                         }
                     }
