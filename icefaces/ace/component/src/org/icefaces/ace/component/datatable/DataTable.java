@@ -422,13 +422,13 @@ public class DataTable extends DataTableBase implements Serializable {
         if (savedSelectionChanges != null)
             savedSelectionChanges.apply(this);
 
-        if (isApplyingFilters()) {
+        if (isApplyingFilters() && !isLazy()) {
             if (savedFilterState != null)
                 savedFilterState.apply(this);
             setFilteredData(processFilters(context));
         }
 
-        if (isApplyingSorts()) {
+        if (isApplyingSorts() && !isLazy()) {
             if (savedSortState != null)
                 savedSortState.apply(this);
             processSorting();
