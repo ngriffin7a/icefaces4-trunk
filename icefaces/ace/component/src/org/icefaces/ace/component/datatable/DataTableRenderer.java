@@ -107,12 +107,12 @@ public class DataTableRenderer extends CoreRenderer {
 
         // If table did not decode this lifecycle (just added to view)
         // but has filters or sorting to process, do it now
-        if (!table.decoded && !table.isLazy()) {
+        if (!table.decoded) {
             if (table.isApplyingSorts()) {
                 table.processSorting();
             }
 
-            if (table.isApplyingFilters()) {
+            if (table.isApplyingFilters() && !table.isLazy()) {
                 table.setFilteredData(table.processFilters(context));
             }
         }
