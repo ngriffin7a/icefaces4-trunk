@@ -933,12 +933,14 @@ ice.ace.DataTable.prototype.setupSelectionHover = function () {
             var src = ice.ace.jq(e.currentTarget);
 
             src.siblings().removeClass('ui-state-hover');
+            src.siblings().children('td').removeClass('ui-state-hover');
 
             // Skip conditional rows and their cells
             if (src.hasClass('dt-cond-row') || src.parent().hasClass('dt-cond-row'))
                 return;
 
             src.addClass('ui-state-hover');
+            src.children('td').addClass('ui-state-hover');
 
             if (_self.isCellSelectionEnabled()) {
                 src.parent().siblings()
@@ -1561,7 +1563,6 @@ ice.ace.DataTable.prototype.repairPinnedColumn = function(i) {
             .css('border-bottom','0px')
             .css('border-left','1px solid') // correct previously removed border if removed due to pinning corrections
             .addClass('pinned')
-            .addClass('ui-widget-content')
             .find('> div').css('width', cellWidth).end()
             .first().css('border-top','0px').addClass('pinned');
 
@@ -1721,7 +1722,7 @@ ice.ace.DataTable.prototype.unpinColumn = function(i) {
         tbody.parent().unbind('scroll', this.columnPinScrollListener[i]);
 
     bodyCells.add(footCells).add(headCells).css('position','').css('height','')
-            .css('top','').css('left','').removeClass('pinned ui-widget-content')
+            .css('top','').css('left','').removeClass('pinned')
 
     if (safari || chrome) offsetWidth = offsetWidth + 1;
 
@@ -1810,7 +1811,6 @@ ice.ace.DataTable.prototype.pinColumn = function(i) {
             .css('border-bottom','0px solid')
             .css('border-left','1px solid') // correct previously removed border if removed due to pinning corrections
             .addClass('pinned')
-            .addClass('ui-widget-content')
             .find('> div').css('width', cellWidth).end()
             .first().css('border-top','0px solid');
 
