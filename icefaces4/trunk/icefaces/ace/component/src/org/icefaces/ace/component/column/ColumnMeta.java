@@ -64,6 +64,9 @@ public class ColumnMeta extends UIColumnMeta {
             "Comparator<Object> object that takes the sortBy values of this column as input.")
 	private Comparator sortFunction;
 
+	@Property(tlddoc="Specifies a string that will be used to identify this column when working in lazy mode. This string will be passed as a key of the filters map and will be returned from SortCriteria.getPropertyName() in the LazyDataModel.load() method. If this attribute is defined, then this value will be used instead of the value obtained by parsing the EL expressions of the sortyBy and filterBy attributes. This attribute is useful when using complex and/or dynamic EL expressions that can't be parsed nor resolved at render time, such as when using c:forEach to define the columns.")
+	private String lazyColumnKey;
+
 	@Property(expression = Expression.VALUE_EXPRESSION,
             tlddoc="Defines a ValueExpression of the value of this row to use when filtering this column. " +
                    "Setting this attribute, or the \"value\" attribute for a column enables filtering.")
