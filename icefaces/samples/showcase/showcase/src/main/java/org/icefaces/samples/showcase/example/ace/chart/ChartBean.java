@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ * Copyright 2004-2014 ICEsoft Technologies Canada Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the
@@ -68,6 +68,8 @@ import java.util.Random;
                 exampleBeanName = ChartPieBean.BEAN_NAME),
         @MenuLink(title = "menu.ace.chart.subMenu.combined",
                 exampleBeanName = ChartCombinedBean.BEAN_NAME),
+        @MenuLink(title = "menu.ace.chart.subMenu.color",
+                exampleBeanName = ChartColorBean.BEAN_NAME),
         @MenuLink(title = "menu.ace.chart.subMenu.dynamic",
                 exampleBeanName = ChartDynamicBean.BEAN_NAME),
         @MenuLink(title = "menu.ace.chart.subMenu.export",

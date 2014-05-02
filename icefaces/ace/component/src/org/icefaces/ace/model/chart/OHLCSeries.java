@@ -68,6 +68,14 @@ public class OHLCSeries extends ChartSeries {
         return json;
     }
 
+    public void encodeRendererOptions(JSONBuilder cfg){
+            cfg.beginMap("rendererOptions");
+            if (OHLCType.CANDLESTICK.equals(type))
+                cfg.entry("candleStick", true);
+            cfg.endMap();
+
+    }
+
     /**
      * Used by the ChartRenderer to produce a JSON representation of the data of this series.
      * @return the JSON object
@@ -81,10 +89,7 @@ public class OHLCSeries extends ChartSeries {
         cfg.entry("renderer", "ice.ace.jq.jqplot.OHLCRenderer", true);
 
         if (rendererOptionsSet()) {
-            cfg.beginMap("rendererOptions");
-            if (OHLCType.CANDLESTICK.equals(type))
-                cfg.entry("candleStick", true);
-            cfg.endMap();
+            encodeRendererOptions(cfg);
         }
 
         cfg.endMap();
