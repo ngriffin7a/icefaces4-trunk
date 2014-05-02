@@ -117,22 +117,9 @@ public class BubbleSeries extends ChartSeries {
         else throw new IllegalArgumentException("ace:chart - Bubble series coordinates can only be supplied as Date, Number or String.");
     }
 
-    /**
-     * Used by the ChartRenderer to produce a JSON representation of the data of this series.
-     * @return the JSON object
-     * @param component
-     */
-    @Override
-    public JSONBuilder getConfigJSON(UIComponent component) {
-        JSONBuilder cfg = super.getConfigJSON(component);
-
-        if (type != null) {
-            if (type.equals(BubbleType.BUBBLE))
-                cfg.entry("renderer", "ice.ace.jq.jqplot.BubbleRenderer", true);
-        }
-
-        if (hasRenderOptionsSet()) {
-            cfg.beginMap("rendererOptions");
+   public void encodeRendererOptions(JSONBuilder cfg){
+       // log.info(" encodeRendererOptions:-> hasBarRenderOptionsSet="+hasBarRenderOptionsSet());
+           cfg.beginMap("rendererOptions");
             if (bubbleGradients != null)
                 cfg.entry("bubbleGradients", bubbleGradients);
 
@@ -175,6 +162,24 @@ public class BubbleSeries extends ChartSeries {
             }
 
             cfg.endMap();
+    }
+
+    /**
+     * Used by the ChartRenderer to produce a JSON representation of the data of this series.
+     * @return the JSON object
+     * @param component
+     */
+    @Override
+    public JSONBuilder getConfigJSON(UIComponent component) {
+        JSONBuilder cfg = super.getConfigJSON(component);
+
+        if (type != null) {
+            if (type.equals(BubbleType.BUBBLE))
+                cfg.entry("renderer", "ice.ace.jq.jqplot.BubbleRenderer", true);
+        }
+
+        if (hasRenderOptionsSet()) {
+            encodeRendererOptions(cfg);
         }
 
         cfg.endMap();
