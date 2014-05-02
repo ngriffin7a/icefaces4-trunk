@@ -67,10 +67,7 @@ public class GaugeSeries extends ChartSeries {
         return data;
     }
 
-    @Override
-    public JSONBuilder getConfigJSON(UIComponent component) {
-        JSONBuilder cfg = super.getConfigJSON(component);
-        cfg.entry("renderer", "ice.ace.jq.jqplot.MeterGaugeRenderer", true);
+   public void encodeRendererOptions(JSONBuilder cfg){
         cfg.beginMap("rendererOptions");
 
         if (label != null)
@@ -155,6 +152,13 @@ public class GaugeSeries extends ChartSeries {
             cfg.entry("pegNeedle", pegNeedle);
 
         cfg.endMap();
+   }
+
+    @Override
+    public JSONBuilder getConfigJSON(UIComponent component) {
+        JSONBuilder cfg = super.getConfigJSON(component);
+        cfg.entry("renderer", "ice.ace.jq.jqplot.MeterGaugeRenderer", true);
+        encodeRendererOptions(cfg);
         cfg.endMap();
         return cfg;
     }

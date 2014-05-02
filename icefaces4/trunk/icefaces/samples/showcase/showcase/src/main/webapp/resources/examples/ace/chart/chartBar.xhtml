@@ -33,32 +33,47 @@
 
     <ui:define name="example">
 
-       <h:form id="form" style="text-align: center">
+       <h:form id="form" style="text-align: left">
            <ace:panel header="#{msgs['example.ace.chart.bar.sample_title']} ">
-               <h:selectOneMenu id="selMnu" label="Select Chart Example:" labelPosition="top"
-                   valueChangeListener="#{chartBarBean.updateChart}" value="#{chartBarBean.example2}">
-                   <f:selectItems value="#{chartBarBean.examples}" var="ex"
-                              itemValue="#{ex}" itemLabel="#{msgs[ex.propsLookup]}"/>
-                   <f:ajax execute="@this" render="@all"/>
-               </h:selectOneMenu>
+               <h:panelGrid columns="2">
+               <h:outputLabel for="widthEntry" value="#{msgs['example.ace.chart.bar.barWidth']}"/>
+                   <ace:sliderEntry id="widthEntry"
+                                clickableRail = "true"
+                                min="0"
+                                max="15"
+                                stepPercent="1"
+                                value="#{chartBarBean.barWidth}">
+                       <ace:ajax event="slideEnd" execute="@this" render="@all" listener="#{chartBarBean.updateChart}"/>
+                   </ace:sliderEntry>
+                   <h:outputLabel for="customColor" value="#{msgs['example.ace.chart.bar.colorOption']}"/>
+                   <h:selectOneMenu id="customColor" value="#{chartBarBean.chooseColorOption}" >
+                       <f:selectItem itemLabel="Use Default Colors" itemValue="default"/>
+                       <f:selectItem itemLabel="Use Custom Colors" itemValue="custom"/>
+                       <f:selectItem itemLabel="Vary Bar Color" itemValue="vary"/>
+                       <f:ajax execute="@this" render="@all" listener="#{chartBarBean.updateChart}"/>
+                   </h:selectOneMenu>
+                   <h:outputLabel for="stackSeries" value="#{msgs['example.ace.chart.bar.stackSeries']}"/>
+                   <h:selectBooleanCheckbox id="stackSeries" value="#{chartBarBean.stackSeries}">
+                       <f:ajax execute="@this" render="@all" listener="#{chartBarBean.updateChart}"/>
+                   </h:selectBooleanCheckbox>
+                </h:panelGrid>
            </ace:panel>
         </h:form>
 
         <h:form id="canvasForm">
-            <ace:chart id="chart"
-                       animated="false"
-                       value="#{chartBarBean.barData}"
-                       xAxis="#{chartBarBean.xAxis}"
-                       yAxes="#{chartBarBean.yAxes}"
-                       stackSeries="false"
-                       defaultSeriesColors="#{chartBarBean.customDefaultColor}"
-                       legend="#{chartBarBean.legend}"
-                       legendPlacement="OUTSIDE_GRID"
-                       highlighter="true"
-                       highlighterLocation="N"
-                       highlighterShowMarker="false"
-                       highlighterBringSeriesToFront="true"
-                       widgetVar="barChart" />
+             <ace:chart id="chart"
+                 animated="false"
+                 value="#{chartBarBean.barData}"
+                 yAxes="#{chartBarBean.yAxesH}"
+                 stackSeries="#{chartBarBean.stackSeries}"
+                 defaultSeriesColors="#{chartBarBean.customColors}"
+                 defaultSeriesConfig ="#{chartBarBean.model}"
+                 legend="#{chartBarBean.legend}"
+                 legendPlacement="INSIDE_GRID"
+                 highlighter="true"
+                 highlighterLocation="N"
+                 highlighterShowMarker="false"
+                 highlighterBringSeriesToFront="true" />
         </h:form>
     </ui:define>
 </ui:composition>

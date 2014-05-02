@@ -89,19 +89,8 @@ public class SectorSeries extends ChartSeries {
         return builder;
     }
 
-    @Override
-    public JSONBuilder getConfigJSON(UIComponent component) {
-        JSONBuilder cfg = super.getConfigJSON(component);
-
-        if (type != null) {
-            if (type.equals(SectorType.PIE))
-                cfg.entry("renderer", "ice.ace.jq.jqplot.PieRenderer", true) ;
-            else if (type.equals(SectorType.DONUT))
-                cfg.entry("renderer", "ice.ace.jq.jqplot.DonutRenderer", true) ;
-        }
-
-        if (hasRenderOptionsSet()) {
-            cfg.beginMap("rendererOptions");
+    public void encodeRendererOptions(JSONBuilder cfg){
+       cfg.beginMap("rendererOptions");
 
             String labels = getDataLabels();
             Integer sliceMargin = getSliceMargin();
@@ -118,6 +107,21 @@ public class SectorSeries extends ChartSeries {
                 cfg.entry("sliceMargin", sliceMargin);
 
             cfg.endMap();
+    }
+
+    @Override
+    public JSONBuilder getConfigJSON(UIComponent component) {
+        JSONBuilder cfg = super.getConfigJSON(component);
+
+        if (type != null) {
+            if (type.equals(SectorType.PIE))
+                cfg.entry("renderer", "ice.ace.jq.jqplot.PieRenderer", true) ;
+            else if (type.equals(SectorType.DONUT))
+                cfg.entry("renderer", "ice.ace.jq.jqplot.DonutRenderer", true) ;
+        }
+
+        if (hasRenderOptionsSet()) {
+            encodeRendererOptions(cfg);
         }
 
         cfg.endMap();

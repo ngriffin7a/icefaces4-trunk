@@ -57,6 +57,7 @@ public abstract class ChartSeries implements Serializable {
     Boolean useNegativeColors;
     String[] seriesColors;
 
+
     /**
      * Return the truth value of this series visibility.
      * @return series visibility truth value
@@ -442,58 +443,58 @@ public abstract class ChartSeries implements Serializable {
 
         cfg.beginMap();
 
-        if (show != null)
-            cfg.entry("show", show);
-
-        if (width != null)
-            cfg.entry("lineWidth",lineWidth);
-
+        if (show != null ) {
+            setInCfgObject(cfg, "show", show);
+        }
+        if (width != null){
+            setInCfgObject(cfg,"lineWidth",lineWidth);
+        }
         if (cap != null)
-            cfg.entry("lineCap", lineCap.toString());
+            setInCfgObject(cfg,"lineCap", lineCap.toString());
 
         if (join != null)
-            cfg.entry("lineJoin", lineJoin.toString());
+            setInCfgObject(cfg,"lineJoin", lineJoin.toString());
 
         if (label != null)
-            cfg.entry("label", label);
+            setInCfgObject(cfg,"label", label);
 
         if (xAxis != null)
-            cfg.entry("xaxis", "x"+xAxis+"axis");
+            setInCfgObject(cfg,"xaxis", "x"+xAxis+"axis");
 
         if (yAxis != null)
-            cfg.entry("yaxis", "y"+yAxis+"axis");
+            setInCfgObject(cfg, "yaxis", "y"+yAxis+"axis");
 
         if (useNegativeColors != null)
-            cfg.entry("useNegativeColors", useNegativeColors);
+            setInCfgObject(cfg,"useNegativeColors", useNegativeColors);
 
         if (showMarker != null)
-            cfg.entry("showMarker", showMarker);
+            setInCfgObject(cfg,"showMarker", showMarker);
 
         if (ftz != null)
-            cfg.entry("fillToZero", ftz);
+            setInCfgObject(cfg,"fillToZero", ftz);
 
         if (fill != null)
-            cfg.entry("fill", fill);
+            setInCfgObject(cfg,"fill", fill);
 
         if (shadow != null)
-            cfg.entry("shadow", shadow);
+            setInCfgObject(cfg,"shadow", shadow);
 
         if (shadowAlpha != null) {
             Double alphaPercentile = shadowAlpha.doubleValue() / 100d;
-            cfg.entry("shadowAlpha", alphaPercentile);
+            setInCfgObject(cfg,"shadowAlpha", alphaPercentile);
         }
 
         if (shadowDepth != null)
-            cfg.entry("shadowDepth", shadowDepth);
+            setInCfgObject(cfg,"shadowDepth", shadowDepth);
 
         if (shadowAngle != null)
-            cfg.entry("shadowAngle", shadowAngle);
+            setInCfgObject(cfg,"shadowAngle", shadowAngle);
 
         if (shadowOffset != null)
-            cfg.entry("shadowOffset", shadowOffset);
+            setInCfgObject(cfg,"shadowOffset", shadowOffset);
 
         if (fillAlpha != null) {
-            cfg.entry("fillAlpha",
+            setInCfgObject(cfg,"fillAlpha",
                     fillAlpha.doubleValue() / 100d);
         }
 
@@ -506,11 +507,39 @@ public abstract class ChartSeries implements Serializable {
 
         if (color != null)
             cfg.entry("color", color);
-
         return cfg;
     }
 
+    /**
+     * as each value is written to the seriesDefault object, put it in a list
+     * so that the series object doesn't double up and contain the same thing.
+     * @param cfg
+     * @param key
+     * @param value
+     */
+    protected void setInCfgObject(JSONBuilder cfg, String key, Boolean value){
+        cfg.entry(key, value);
+    }
+       /**
+     * as each value is written to the seriesDefault object, put it in a list
+     * so that the series object doesn't double up and contain the same thing.
+     * @param cfg
+     * @param key
+     * @param value
+     */
+    protected void setInCfgObject(JSONBuilder cfg, String key, String value){
+        cfg.entry(key, value);
+    }
+
+    protected void setInCfgObject(JSONBuilder cfg, String key, int value){
+        cfg.entry(key, value);
+    }
+   protected void setInCfgObject(JSONBuilder cfg, String key, double value){
+        cfg.entry(key, value);
+    }
     public abstract ChartType getDefaultType();
+
+    public abstract void encodeRendererOptions(JSONBuilder cfg);
 
     public void clear() {
         data.clear();
