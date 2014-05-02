@@ -107,7 +107,7 @@ public class ChartRenderer extends CoreRenderer {
     }
 
     private void processExport(Chart chart, String exportInput) {
-        if (chart.getImageExportListener() != null) {
+        if (chart.getImageExportListener() != null && exportInput != null && exportInput.length()>21) {
             exportInput = exportInput.substring(22); // remove "data:image/png;base64,"
             byte[] bytes = Base64.decode(exportInput);
             chart.queueEvent(new ChartImageExportEvent(chart, bytes));
