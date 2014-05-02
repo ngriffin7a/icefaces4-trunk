@@ -36,6 +36,7 @@ import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Map;
 
@@ -159,7 +160,6 @@ public class ChartRenderer extends CoreRenderer {
             }
         json.endArray();
 
-
         // Build configuration object
         json.beginMap();
         encodeAxesConfig(json, component);
@@ -169,7 +169,8 @@ public class ChartRenderer extends CoreRenderer {
         if (title != null) json.entry("title", title);
         if  (seriesColors != null) {
             json.entry("seriesColors", seriesColors);
-         }  //to be set into jqplot config object        if (stacking) json.entry("stackSeries", true);
+         }  //to be set into jqplot config object
+        if (stacking) json.entry("stackSeries", true);
         if (animated == null) json.entry("animate", "!ice.ace.jq.jqplot.use_excanvas", true);
         else if (animated) json.entry("animate", true);
         if (isAjaxClick(component))
@@ -194,7 +195,6 @@ public class ChartRenderer extends CoreRenderer {
         }
 
         json.endMap().endArray().endFunction();;
-
         writer.write(json.toString());
 
         writer.endElement(HTML.SCRIPT_ELEM);
@@ -223,40 +223,40 @@ public class ChartRenderer extends CoreRenderer {
             cfgBuilder.endMap();
         }
     }
-    
+
+
     private void encodeSeriesConfig(JSONBuilder cfg, Chart chart, ChartSeries defaults, List<ChartSeries> series) {
         // If defined, add default series config
-        if (defaults != null)
+        /* follow change done April 2014 as only use a default if one is defined.  Options for Line and Bar
+           are too different to allow first series to define defaults.  Previous implementation did not include
+           rendererOptions, so not that useful.
+         */
+        if (defaults != null) {
             cfg.entry("seriesDefaults", defaults.getConfigJSON(chart).toString(), true);
-        else if (series != null && series.size() > 0) {
-            try {
-                // Configure the default type of this plot as the type of the first series.
-                ChartSeries firstSeries = series.get(0);
-
-                // Get reference to class of Series- if init shorthand is used, the superclass must be accessed.
-                Class seriesClass = firstSeries.getClass().getSuperclass() != ChartSeries.class
-                        ? firstSeries.getClass().getSuperclass()
-                        : firstSeries.getClass();
-
-                ChartSeries dummySeries = ((ChartSeries)seriesClass.newInstance());
-
-                ChartSeries.ChartType firstSeriesType = firstSeries.getType();
-
-                // If the first series doesn't have a configured type, render the default type
-                dummySeries.setType(firstSeriesType != null ? firstSeriesType : dummySeries.getDefaultType());
-                cfg.entry("seriesDefaults", dummySeries.getConfigJSON(chart).toString(), true);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
         }
 
-        // If defined, add per-series config
+        // If defined, add per-series config but don't bother encoding first series as its default.
         cfg.beginArray("series");
-        if (series != null)
-            for (ChartSeries s : series)
-                cfg.item(s.getConfigJSON(chart).toString(), false);
+        if (series != null) {
+            int i=0;
+            for (ChartSeries s : series) {
+                if ( s!=defaults){
+                    //check to see if other series have type set
+                    if (s.getType()==null && defaults!=null && defaults.getType() !=null){
+                        s.setType(defaults.getType());
+                    }
+                }
+                /* if still null then set to default type.
+                 */
+                if (s.getType() ==null){
+                    s.setType(s.getDefaultType());
+                  //  log.warning("WARNING  chart type should be set in either a default Series or each series");
+                }
+                if (s != defaults){
+                    cfg.item(s.getConfigJSON(chart).toString(), false);
+                }
+            }
+        }
         cfg.endArray();
     }
 
