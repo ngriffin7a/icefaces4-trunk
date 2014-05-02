@@ -59,6 +59,9 @@ public class ThemeSymbolicResourceHandler extends ResourceHandlerWrapper {
             } else if (theme.equalsIgnoreCase("rime")) {
                 library = "icefaces.ace";
                 name = "themes/rime/theme.css";
+            } else if (theme.equalsIgnoreCase("none")) {
+                library = "icefaces.ace";
+                name = "themes/none/theme.css";
             } else {
                 library = "ace-" + theme;
                 name = "theme.css";
