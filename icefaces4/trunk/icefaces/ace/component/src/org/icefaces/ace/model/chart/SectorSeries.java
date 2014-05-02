@@ -27,10 +27,7 @@ public class SectorSeries extends ChartSeries {
     }
 
     public ChartType getDefaultType() {
-        if (getData() == null || getData().size() < 2)
-            return SectorType.PIE;
-        else
-            return SectorType.DONUT;
+        return SectorType.PIE;
     }
 
     Integer diameter; // pixels
