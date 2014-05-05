@@ -239,15 +239,22 @@ public class ChartRenderer extends CoreRenderer {
         cfg.beginArray("series");
         if (series != null) {
             int i=0;
+            ChartSeries.ChartType defaultType = null;
             for (ChartSeries s : series) {
+                if (i==0){
+                    defaultType = s.getType();
+                }
                 if ( s!=defaults){
                     //check to see if other series have type set
                     if (s.getType()==null && defaults!=null && defaults.getType() !=null){
                         s.setType(defaults.getType());
                     }
                 }
-                /* if still null then set to default type.
-                 */
+                /* if still null then set to first in series for backwards compatibility. */
+                if (s.getType()==null && defaultType!=null){
+                    s.setType(defaultType);
+                }
+                /* if still null then set to default type.      */
                 if (s.getType() ==null){
                     s.setType(s.getDefaultType());
                   //  log.warning("WARNING  chart type should be set in either a default Series or each series");

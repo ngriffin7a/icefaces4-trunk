@@ -35,6 +35,7 @@
         <h:form id="donutForm">
             <ace:chart id="chart"
                        animated="false"
+                       defaultSeriesConfig ="#{chartDonutBean.model}"
                        value="#{chartDonutBean.donutData}"
                        widgetVar="donutChart" />
         </h:form>
