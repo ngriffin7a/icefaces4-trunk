@@ -36,15 +36,19 @@
        <h:form id="form" style="text-align: left">
            <ace:panel header="#{msgs['example.ace.chart.bar.sample_title']} ">
                <h:panelGrid columns="2">
-               <h:outputLabel for="widthEntry" value="#{msgs['example.ace.chart.bar.barWidth']}"/>
-                   <ace:sliderEntry id="widthEntry"
+                   <h:outputLabel for="widthEntry" value="#{msgs['example.ace.chart.bar.barWidth']}"/>
+                   <h:panelGrid columns="3">
+                       <h:outputText  style="white-space:pre;" value="0  " />
+                       <ace:sliderEntry id="widthEntry"
                                 clickableRail = "true"
                                 min="0"
                                 max="15"
                                 stepPercent="1"
                                 value="#{chartBarBean.barWidth}">
-                       <ace:ajax event="slideEnd" execute="@this" render="@all" listener="#{chartBarBean.updateChart}"/>
-                   </ace:sliderEntry>
+                           <ace:ajax event="slideEnd" execute="@this" render="@all" listener="#{chartBarBean.updateChart}"/>
+                       </ace:sliderEntry>
+                       <h:outputText style="white-space:pre;" value="  15px"/>
+                   </h:panelGrid>
                    <h:outputLabel for="customColor" value="#{msgs['example.ace.chart.bar.colorOption']}"/>
                    <h:selectOneMenu id="customColor" value="#{chartBarBean.chooseColorOption}" >
                        <f:selectItem itemLabel="Use Default Colors" itemValue="default"/>
