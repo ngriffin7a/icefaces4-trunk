@@ -144,7 +144,7 @@ public class ChartBarBean extends ComponentExampleImpl<ChartBarBean> implements 
         return (ChartSeries)model;
     }
  	private boolean highlight, legend=true;
-    private int barWidth=0;
+    private int barWidth=10;
     private int barPadding=0;
     private int barMargin=0;
     private int shadowAngle=135;
