@@ -542,7 +542,8 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
                 // If the target of the event is not a layout element or
                 // the target is a child of a sortable-control do not process event.
                 if ((!(event.target.nodeName == 'SPAN') && !(event.target.nodeName == 'DIV') && !(event.target.nodeName == 'A')) ||
-                    ((target.closest('.ui-sortable-control').length > 0) && !selectionMade))
+                    ((target.closest('.ui-sortable-control').length > 0) && !selectionMade) ||
+                    (target.closest('.ui-pin-control').length > 0))
                     return;
 
                 _self.setupSortRequest(_self, ice.ace.jq(this), event, true);
