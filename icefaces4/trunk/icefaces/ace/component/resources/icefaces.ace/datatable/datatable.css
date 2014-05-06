@@ -217,7 +217,7 @@
 }
 
 .ui-datatable-scrollable-body {
-    overflow:auto;
+    overflow:scroll;
     *position: relative; /* IE7 nested table positioning fix */
     min-height: 0%; /* IE9 hover + scrolling error. description : http://blog.brianrichards.net/post/6721471926/ie9-hover-bug-workaround */
 }
