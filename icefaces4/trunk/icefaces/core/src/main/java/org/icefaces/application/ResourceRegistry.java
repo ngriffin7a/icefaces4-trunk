@@ -72,7 +72,14 @@ public class ResourceRegistry extends ResourceHandlerWrapper  {
 
     public void handleResourceRequest(FacesContext facesContext) throws IOException {
         ExternalContext externalContext = facesContext.getExternalContext();
-        Application application = facesContext.getApplication();
+
+        //do not process ICEpush requests
+        if (externalContext.getRequestParameterMap().containsKey("ice.push.browser")) {
+            wrapped.handleResourceRequest(facesContext);
+            return;
+        }
+
+
         String key = extractResourceId(facesContext);
         log.finest("extractResourceId: " + key);
 
