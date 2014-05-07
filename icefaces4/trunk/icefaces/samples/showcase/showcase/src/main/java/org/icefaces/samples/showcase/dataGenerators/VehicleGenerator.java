@@ -282,8 +282,8 @@ System.out.println("quantityToAdd: " + quantityToAdd + "  currentListSize: " + l
     { return (1+randomizer.nextInt(3)) * 5; }
 	
     private double generateMPG() 
-    { return Double.parseDouble(numberFormatter.format( ((double)(3+randomizer.nextInt(15))) + randomizer.nextDouble())); }
+    { return Double.valueOf((3 + randomizer.nextInt(15)) + randomizer.nextDouble());  }
 	
     private double generateCost() 
-    { return Double.parseDouble(numberFormatter.format( ((double)(2000+randomizer.nextInt(40000))) + randomizer.nextDouble()) ); }
+    { return Double.valueOf((2000 + randomizer.nextInt(40000)) + randomizer.nextDouble());}
 }
