@@ -25,6 +25,7 @@ import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import org.icefaces.samples.showcase.util.FacesUtils;
+import org.icefaces.util.EnvUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.Application;
@@ -58,6 +59,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class DataTableGrouping extends ComponentExampleImpl<DataTableGrouping> implements Serializable {
     public static final String BEAN_NAME = "dataTableGrouping";
+    private DataTable table;
     private List<Car> carsData;
 
     /////////////---- CONSTRUCTOR BEGIN
@@ -78,10 +80,31 @@ public class DataTableGrouping extends ComponentExampleImpl<DataTableGrouping> i
     /////////////---- GETTERS & SETTERS BEGIN
     public List<Car> getCarsData() { return carsData; }
     public void setCarsData(List<Car> carsData) { this.carsData = carsData; }
-    
+
+	public DataTable getTable() {
+		if (EnvUtils.isMyFaces()) {
+			return ((DataTableBindings)(FacesUtils.getManagedBean("dataTableBindings"))).getTable(this.getClass());
+		} else {
+			return table;
+		}
+	}
+
+	public void setTable(DataTable table) {
+		if (EnvUtils.isMyFaces()) {
+			((DataTableBindings)(FacesUtils.getManagedBean("dataTableBindings"))).setTable(this.getClass(), table);
+		} else {
+			this.table = table;
+		}
+	}
+
     /////////////---- METHOD INVOCATION VIA VIEW EL
     public double groupTotal(String groupProperty, String valueProperty, Object i) {
-        DataTable table = ((DataTableBindings)(FacesUtils.getManagedBean("dataTableBindings"))).getTable(this.getClass());
+        DataTable table;
+		if (EnvUtils.isMyFaces()) {
+			table = ((DataTableBindings)(FacesUtils.getManagedBean("dataTableBindings"))).getTable(this.getClass());
+		} else {
+			table = this.table;
+		}
         // Fix for bugged method invocation in early TC7 releases
         int index = (Integer) i;
 
