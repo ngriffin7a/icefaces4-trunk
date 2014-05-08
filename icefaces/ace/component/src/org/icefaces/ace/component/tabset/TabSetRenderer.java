@@ -38,6 +38,7 @@ import org.icefaces.render.MandatoryResourceComponent;
 @MandatoryResourceComponent(tagName="tabSet", value="org.icefaces.ace.component.tabset.TabSet")
 public class TabSetRenderer extends CoreRenderer {
     private static final String YUI_TABSET_INDEX = "yti";
+    private static final Random RANDOM = new Random();
     
     public boolean getRendersChildren() {
         return true;
@@ -315,7 +316,7 @@ public class TabSetRenderer extends CoreRenderer {
             encodeClientBehaviors(facesContext, tabSet, jb);
         jb.endMap().
         endFunction();
-        ScriptWriter.insertScript(facesContext, uiComponent, jb.toString());
+        ScriptWriter.insertScript(facesContext, uiComponent, jb.toString() + "//" + RANDOM.nextLong());
     }
 
     private void recursivelyRenderSafe(FacesContext facesContext,
