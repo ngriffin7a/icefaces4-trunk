@@ -43,6 +43,10 @@ public class DataTableBindings {
         this.tables = tables;
     }
 
+    public void setTable(Class c, DataTable table) {
+		tables.put(c, table);
+    }
+
     public DataTable getTable(Class c) {
         return tables.get(c);
     }
