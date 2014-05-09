@@ -35,6 +35,7 @@ import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.util.EnvUtils;
 
 import javax.faces.FacesException;
 import javax.faces.application.ProjectStage;
@@ -104,6 +105,14 @@ public class DataTableRenderer extends CoreRenderer {
 
         // Force regeneration of data model pre-render
         table.setModel(null);
+
+		// Make sure filters and sorting are applied in the current data model at this stage of the lifecycle
+		// when using Mojarra (in some scenarios, filters and sorting aren't being applied at this point).
+		if (!EnvUtils.isMyFaces()) {
+			table.setFilteredData(table.processFilters(context));
+			table.processSorting();
+			table.getDataModel();
+		}
 
         // If table did not decode this lifecycle (just added to view)
         // but has filters or sorting to process, do it now
