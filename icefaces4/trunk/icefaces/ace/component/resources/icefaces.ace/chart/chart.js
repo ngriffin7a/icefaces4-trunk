@@ -53,8 +53,8 @@ ice.ace.Chart = function (id, data, cfg) {
         );
 
     if (cfg.behaviors && cfg.behaviors.mouseOutData) {
-        $this.off("jqplotDataHighlight").on(
-                "jqplotDataHighlight",
+        $this.off("jqplotMouseLeave").on(
+                "jqplotMouseLeave",
                 function() {
                     ice.ace.ab(self.behaviors.mouseOutData);
                 }
@@ -62,8 +62,8 @@ ice.ace.Chart = function (id, data, cfg) {
     }
 
     if (cfg.behaviors && cfg.behaviors.mouseInData) {
-        $this.off("jqplotDataUnhighlight").on(
-                "jqplotDataUnhighlight",
+        $this.off("jqplotMouseEnter").on(
+                "jqplotMouseEnter",
                 function() {
                     ice.ace.ab(self.behaviors.mouseInData);
                 }
