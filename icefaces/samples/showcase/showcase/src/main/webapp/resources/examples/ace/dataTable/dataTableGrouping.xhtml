@@ -52,7 +52,7 @@
                            scrollable="true"
                            height="400"
                            rowIndexVar="index"
-                           binding="#{dataTableGrouping.table}" >
+                           binding="#{dataTableBindings.tables[dataTableGrouping.clazz]}" >
                 <ace:row condition="group" groupBy="#{car.chassis}" pos="before" styleClass="group-header">
                     <ace:column colspan="8">
                         #{car.chassis}
