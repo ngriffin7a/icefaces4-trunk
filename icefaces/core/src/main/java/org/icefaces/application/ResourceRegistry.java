@@ -36,6 +36,7 @@ import java.io.OutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
+import org.icefaces.impl.application.SessionAwareResourceHandlerWrapper;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.impl.util.Util;
 import org.icefaces.impl.application.WindowScopeManager;
@@ -49,7 +50,7 @@ import org.icefaces.impl.application.WindowScopeManager;
  *   expires.
  * </p>
  */
-public class ResourceRegistry extends ResourceHandlerWrapper  {
+public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
     private static Logger log = Logger.getLogger(ResourceRegistry.class.getName());
     private ResourceHandler wrapped;
 
@@ -69,17 +70,12 @@ public class ResourceRegistry extends ResourceHandlerWrapper  {
         return wrapped;
     }
 
+    public boolean isSessionAwareResourceRequest(FacesContext context) {
+        return wrapped.isResourceRequest(context);
+    }
 
-    public void handleResourceRequest(FacesContext facesContext) throws IOException {
+    public void handleSessionAwareResourceRequest(FacesContext facesContext) throws IOException {
         ExternalContext externalContext = facesContext.getExternalContext();
-
-        //do not process ICEpush requests
-        if (externalContext.getRequestParameterMap().containsKey("ice.push.browser")) {
-            wrapped.handleResourceRequest(facesContext);
-            return;
-        }
-
-
         String key = extractResourceId(facesContext);
         log.finest("extractResourceId: " + key);
 
