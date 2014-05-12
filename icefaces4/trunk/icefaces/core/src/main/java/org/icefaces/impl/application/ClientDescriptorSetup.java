@@ -23,8 +23,9 @@ import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
-public class ClientDescriptorSetup extends ResourceHandlerWrapper {
+public class ClientDescriptorSetup extends SessionAwareResourceHandlerWrapper {
     private static final String KEY = "iceBrowser";
     private ResourceHandler handler;
 
@@ -32,11 +33,15 @@ public class ClientDescriptorSetup extends ResourceHandlerWrapper {
         this.handler = handler;
     }
 
-    public boolean isResourceRequest(FacesContext context) {
+    public boolean isSessionAwareResourceRequest(FacesContext context) {
         HttpServletRequest servletRequest = EnvUtils.getSafeRequest(context);
         servletRequest.setAttribute(KEY, ClientDescriptor.getInstance(servletRequest));
 
-        return super.isResourceRequest(context);
+        return handler.isResourceRequest(context);
+    }
+
+    public void handleSessionAwareResourceRequest(FacesContext context) throws IOException {
+        handler.handleResourceRequest(context);
     }
 
     public ResourceHandler getWrapped() {
