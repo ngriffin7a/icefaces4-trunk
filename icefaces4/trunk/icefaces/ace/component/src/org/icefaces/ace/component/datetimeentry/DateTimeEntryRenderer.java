@@ -126,7 +126,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
             writer.writeAttribute("role", "textbox", null);
         }
 
-        String styleClasses = (themeForms() ? DateTimeEntry.INPUT_STYLE_CLASS : "") + getStateStyleClasses(dateTimeEntry);
+        String styleClasses = (themeForms() ? DateTimeEntry.INPUT_STYLE_CLASS : "");
         if(!isValueBlank(value)) {
             writer.writeAttribute("value", value, null);
         } else if (popup && !clientId.equals(iceFocus)) {
@@ -167,7 +167,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
                     put("readonly", compoent.isReadonly());
                     put("required", compoent.isRequired());
                     put("disabled", compoent.isDisabled());
-                    put("invalid", !compoent.isValid());
+                    put("invalid", false);
                 }};
                 writeAriaAttributes(ariaAttributes, labelAttributes);
             }
@@ -184,6 +184,25 @@ public class DateTimeEntryRenderer extends InputRenderer {
 
         domUpdateMap.put("styleClasses", styleClasses);
 		encodeScript(context, dateTimeEntry, value, labelAttributes, domUpdateMap);
+
+        writer.startElement("span", dateTimeEntry);
+        writer.writeAttribute("id", clientId + "_stateUpdate", null);
+		writer.startElement("script", null);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.write("(function(){var input = ice.ace.jq(ice.ace.escapeClientId('"+clientId+"') + ' > input');");
+		if (dateTimeEntry.isRequired()) {
+			writer.write("input.addClass('ui-state-required').removeClass('ui-state-optional');");
+		} else {
+			writer.write("input.addClass('ui-state-optional').removeClass('ui-state-required');");
+		}
+		if (!dateTimeEntry.isValid()) {
+			writer.write("input.addClass('ui-state-error').attr('aria-invalid', 'true');");
+		} else {
+			writer.write("input.removeClass('ui-state-error').removeAttr('aria-invalid');");
+		}
+		writer.write("})();");
+		writer.endElement("script");
+		writer.endElement("span");
 
         writer.endElement("span");
     }
