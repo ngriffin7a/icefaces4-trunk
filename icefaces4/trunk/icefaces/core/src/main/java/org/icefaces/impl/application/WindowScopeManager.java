@@ -96,6 +96,11 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         // are using here, it's initially put into PortletSession.APPLICATION_SCOPE so we need to
         // access it using our own session proxy which, with portlets, defaults to APPLICATION_SCOPE.
         HttpSession safeSession = EnvUtils.getSafeSession(context);
+        if (safeSession == null) {
+            //this method was called before the session was created (such as when application starts up)
+            return null;
+        }
+
         Object synchronizationMonitor = safeSession.getAttribute(SessionSynchronizationMonitor);
         if (synchronizationMonitor == null) {
             log.log(Level.FINE, "synchronization monitor not set by session listener");
@@ -368,22 +373,27 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     public static String lookupAssociatedWindowID(Map requestMap) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
-        ClientWindow clientWindow = externalContext.getClientWindow();
-        if (clientWindow == null) {
-            try {
-                boolean customWindowTracking = !"url".equals(externalContext.getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
-                String id = WindowScopeManager.determineWindowID(facesContext, customWindowTracking);
-                if (customWindowTracking) {
-                    clientWindow = new CustomClientWindow(id);
-                    clientWindow.disableClientWindowRenderMode(facesContext);
-                    externalContext.setClientWindow(clientWindow);
+        try {
+            ClientWindow clientWindow = externalContext.getClientWindow();
+            if (clientWindow == null) {
+                try {
+                    boolean customWindowTracking = !"url".equals(externalContext.getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
+                    String id = WindowScopeManager.determineWindowID(facesContext, customWindowTracking);
+                    if (customWindowTracking) {
+                        clientWindow = new CustomClientWindow(id);
+                        clientWindow.disableClientWindowRenderMode(facesContext);
+                        externalContext.setClientWindow(clientWindow);
+                    }
+                } catch (Exception e) {
+                    log.log(Level.FINE, "Unable to set up WindowScope ", e);
                 }
-            } catch (Exception e) {
-                log.log(Level.FINE, "Unable to set up WindowScope ", e);
             }
-        }
 
-        return clientWindow == null ? null : clientWindow.getId();
+            return clientWindow == null ? null : clientWindow.getId();
+        } catch (UnsupportedOperationException e) {
+            //exception thrown when ExternalContext.getClientWindow() is called during application startup
+            return null;
+        }
     }
 
     public static void associateWindowIDToRequest(String id, FacesContext facesContext) {
