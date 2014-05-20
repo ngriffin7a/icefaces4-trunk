@@ -142,7 +142,7 @@ public class FileEntryRenderer extends Renderer {
         writer.writeAttribute("id", config.getIdentifier(), "clientId");
         writer.writeAttribute("name", config.getIdentifier(), "clientId");
         if (!multiple) {
-            writer.writeAttribute("onkeydown", "var k = event.keyCode || event.charCode; if (k == 8 || k == 46) ice.ace.fileentry.clearFileSelection(this.parentNode.parentNode.id);", null);
+            writer.writeAttribute("onkeydown", "var k = event.keyCode || event.charCode; if (k == 8 || k == 46) ice.ace.fileentry.clearSingleFileSelection(this.parentNode.parentNode.id);", null);
         }
         if (multiple) {
             writer.writeAttribute("multiple", "multiple", "multiple");
