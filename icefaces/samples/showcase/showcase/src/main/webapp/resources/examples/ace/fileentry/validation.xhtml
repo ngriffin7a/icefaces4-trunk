@@ -29,41 +29,43 @@
     <ui:param name="subMenuTitle" value="#{msgs[fileEntry.subMenuTitle]}"/>
     <ui:param name="subMenuLinks" value="#{fileEntry.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{fileEntryValidation.exampleResource}"/>
-    
+
     <ui:param name="wikiResources" value="#{fileEntryResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{fileEntryResources.tldResources}"/>
 
     <ui:define name="example">
-        <h:form id="example-form">
-            <ace:panel>
+        <ace:panel>
+            <h:form id="example-form">
                 <h:panelGrid styleClass="centeredPanelGridWithBorderSpacing" columns="3">
-                        <h:outputText value="Select Max File Size:"/>
-                        <ace:sliderEntry id="slide-entry"
-                                                clickableRail="true"
-                                                min="0"
-                                                max="1024000"
-                                                stepPercent="10"
-                                                value="#{fileEntryValidation.maxFileSize}" style="_margin-left: 7px; _margin-right: 7px;">
-                                <ace:ajax event="slideEnd" execute="@this" render="@form" />
-                        </ace:sliderEntry>
-                        <h:outputText id="maxUploadSize" value=" #{(fileEntryValidation.maxFileSize/102400)*100} KB" style="font-weight: bold;"/>
-                    </h:panelGrid>
-           
-               <h:panelGrid styleClass="centeredPanelGrid">
-                    <ace:fileEntry id="file-entry"
-                                     maxFileSize="#{fileEntryValidation.maxFileSize}"
-                                     maxFileSizeMessage="#{fileEntryValidation.maxFileSizeMessage}"
-                                     required="true"
-                                     requiredMessage="You must select a file to upload"
-                                     label ="File Entry"/>
+                    <h:outputText value="Select Max File Size:"/>
+                    <ace:sliderEntry id="slide-entry"
+                                     clickableRail="true"
+                                     min="0"
+                                     max="1024000"
+                                     stepPercent="10"
+                                     value="#{fileEntryValidation.maxFileSize}"
+                                     style="_margin-left: 7px; _margin-right: 7px;">
+                        <ace:ajax event="slideEnd" execute="@this" render="@form"/>
+                    </ace:sliderEntry>
+                    <h:outputText id="maxUploadSize" value=" #{(fileEntryValidation.maxFileSize/102400)*100} KB"
+                                  style="font-weight: bold;"/>
                 </h:panelGrid>
-           
+            </h:form>
+            <h:form>
                 <h:panelGrid styleClass="centeredPanelGrid">
-                     <h:commandButton id="submit" type="submit" value="Send File"/>
-                     <ace:messages id="msgs"/>
+                    <ace:fileEntry id="file-entry"
+                                   maxFileSize="#{fileEntryValidation.maxFileSize}"
+                                   maxFileSizeMessage="#{fileEntryValidation.maxFileSizeMessage}"
+                                   required="true"
+                                   requiredMessage="You must select a file to upload"
+                                   label="File Entry"/>
                 </h:panelGrid>
-       </ace:panel>
-            
-        </h:form>
+
+                <h:panelGrid styleClass="centeredPanelGrid">
+                    <h:commandButton id="submit" type="submit" value="Send File"/>
+                    <ace:messages id="msgs"/>
+                </h:panelGrid>
+            </h:form>
+        </ace:panel>
     </ui:define>
 </ui:composition>
