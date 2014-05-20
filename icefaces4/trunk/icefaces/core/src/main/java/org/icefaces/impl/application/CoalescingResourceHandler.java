@@ -181,7 +181,7 @@ public class CoalescingResourceHandler extends ResourceHandlerWrapper {
                             nextResource != null && !isExternalResource(nextResource)) {
                         CoalescingResource.Info info = new CoalescingResource.Info(nextName, nextLibrary);
 
-                        if (!context.isPostback() || previousResourceInfos.resources.contains(info)) {
+                        if (!context.isPostback() || previousResourceInfos == null || previousResourceInfos.resources.contains(info)) {
                             resourceInfos.resources.add(info);
                         } else {
                             toBeReAdded.add(next);
