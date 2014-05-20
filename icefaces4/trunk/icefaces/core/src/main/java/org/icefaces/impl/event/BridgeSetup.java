@@ -50,14 +50,12 @@ public class BridgeSetup implements SystemEventListener {
     private final boolean standardFormSerialization;
     private final boolean reloadOnUpdateFailure;
     private final boolean deltaSubmit;
-    private final boolean focusManaged;
     private int seed = 0;
 
     public BridgeSetup() {
         FacesContext fc = FacesContext.getCurrentInstance();
         reloadOnUpdateFailure = EnvUtils.reloadOnUpdateFailure(fc);
         deltaSubmit = EnvUtils.isDeltaSubmit(fc);
-        focusManaged = EnvUtils.isFocusManaged(fc);
         standardFormSerialization = EnvUtils.isStandardFormSerialization(fc);
         fc.getExternalContext().getApplicationMap().put(BRIDGE_SETUP, this);
     }
@@ -162,7 +160,7 @@ public class BridgeSetup implements SystemEventListener {
                     writer.write(Boolean.toString(deltaSubmit));
                     writer.write(",");
                     writer.write("focusManaged: ");
-                    writer.write(Boolean.toString(focusManaged));
+                    writer.write(Boolean.toString(EnvUtils.isFocusManaged(context)));
                     writer.write(",");
                     writer.write("disableDefaultErrorPopups: ");
                     writer.write(Boolean.toString(EnvUtils.disableDefaultErrorPopups(context)));
