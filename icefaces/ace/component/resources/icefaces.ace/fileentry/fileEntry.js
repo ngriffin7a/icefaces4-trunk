@@ -512,5 +512,12 @@ ice.ace.fileentry = {
                 }
             }
         }
+    },
+
+    clearSingleFileSelection : function(clientId) {
+        var root = document.getElementById(clientId);
+        if (root && root.firstChild) {
+            root.firstChild.innerHTML = root.firstChild.innerHTML;
+        }
     }
 };
