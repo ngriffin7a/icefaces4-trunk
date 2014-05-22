@@ -35,6 +35,11 @@
 		value="#{dateTimeEntryResources.tldResources}" />
 
 	<ui:define name="example">
+		<style type="text/css">
+			.long-text-input input {
+				width: 10em;
+			}
+		</style>
 		<h:form id="form">
 			<ace:panel>
 				<h:panelGrid style="text-align: center;" width="100%">
@@ -61,7 +66,7 @@
 
 				<ace:dateTimeEntry id="cal" value="#{dateAjax.selectedDate}"
 					timeZone="Canada/Mountain" pattern="MMM/dd/yyyy"
-					renderAsPopup="#{dateAjax.popup}">
+					renderAsPopup="#{dateAjax.popup}" styleClass="long-text-input">
 					<ace:ajax event="dateSelect"
                                      listener="#{dateAjax.dateSelectListener}"
                                      render="selectedDate"/>
