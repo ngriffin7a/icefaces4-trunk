@@ -176,7 +176,9 @@ final public class NamespaceContextImplementation implements NamespaceContext {
     
     public void declarePrefix(String prefix, String namespaceURI) {
         prefix = prefix.intern();
-        namespaceURI = namespaceURI.intern();
+        if (namespaceURI != null) {
+            namespaceURI = namespaceURI.intern();
+        }
         
         // Ignore the "xml" or "xmlns" declarations
         if (prefix == "xml" || prefix == "xmlns")
