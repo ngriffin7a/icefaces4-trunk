@@ -35,9 +35,9 @@
     <ui:define name="example">
         <h:form id="form">
             <h:commandButton id="addSubmenu" value="Add Submenu" actionListener="#{menuDynamic.addSubmenu}"/>
-            <h:commandButton id="addItem" value="Add Item" actionListener="#{menuDynamic.addItem}"/>
-            <h:commandButton id="removeSubmenu" value="Remove Submenu" actionListener="#{menuDynamic.removeSubmenu}"/>
-            <h:commandButton id="removeItem" value="Remove Item" actionListener="#{menuDynamic.removeItem}"/>
+            <h:commandButton id="addItem" value="Add Item" actionListener="#{menuDynamic.addItem}" style="margin-left:10px;"/>
+            <h:commandButton id="removeSubmenu" value="Remove Submenu" actionListener="#{menuDynamic.removeSubmenu}" style="margin-left:10px;"/>
+            <h:commandButton id="removeItem" value="Remove Item" actionListener="#{menuDynamic.removeItem}" style="margin-left:10px;"/>
             
             <ace:menuBar id="mainBar" 
                                    model="#{menuDynamic.menuModel}"/>
