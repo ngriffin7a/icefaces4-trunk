@@ -288,6 +288,7 @@ public class DataTableHeadRenderer {
 
     private static void encodeSortControl(ResponseWriter writer, FacesContext context, DataTableRenderingContext tableContext, Column column) throws IOException {
         writer.startElement(HTML.SPAN_ELEM, null);
+        writer.writeAttribute(HTML.ID_ATTR, column.getClientId() + "_sortControl", null);
         writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_CONTROL_CLASS, null);
 
         // Write carats
