@@ -54,7 +54,7 @@ draggable:${gMapOptionsBean.draggable}, scrollwheel:${gMapOptionsBean.scrollWhee
             <h:selectBooleanCheckbox id="overviewMapControl" value="#{gMapOptionsBean.overviewControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
             <h:outputLabel for="panControl" value="Pan Control:"/>
             <h:selectBooleanCheckbox id="panControl" value="#{gMapOptionsBean.panControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
-            <h:outputLabel for="rotateControl" value="Rotate Control:"/>
+            <h:outputLabel for="rotateControl" value="*Rotate Control:"/>
             <h:selectBooleanCheckbox id="rotateControl" value="#{gMapOptionsBean.rotateControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
             <h:outputLabel for="scaleControl" value="Scale Control:"/>
             <h:selectBooleanCheckbox id="scaleControl" value="#{gMapOptionsBean.scaleControl}"><f:ajax render="@all"/></h:selectBooleanCheckbox>
@@ -109,7 +109,7 @@ draggable:${gMapOptionsBean.draggable}, scrollwheel:${gMapOptionsBean.scrollWhee
 		<br/>
 		
     <p>
-	Note: The 'rotate' control is currently not supported on all areas of a google map, and as such will only appear at maximum zoom in satellite or hybrid mode, in supported areas. At all other times, it will be invisible, even if enabled. To see it for yourself, try zooming in to the highest level on LA, San Francisco, or most other major American cities.
+	* Note that the 'rotate' control is not supported on all Google Maps locations. It will only appear at the maximum zoom level in streetview, satellite or hybrid mode (if supported on the location being viewed). At all other times, it won't be visible, even if enabled. To see it for yourself, try zooming to the maximum level in Los Angeles, New York, or most other major American cities. It will appear around the pan control.
 	<br/><br/>
 	Relevant section of the Google Maps API: <a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#MapOptions">Map Options</a></p>
 	</h:form>
