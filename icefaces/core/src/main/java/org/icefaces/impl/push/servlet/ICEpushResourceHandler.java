@@ -66,7 +66,7 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
     private static final ReentrantLock lock = new ReentrantLock();
     private static final Condition condition = lock.newCondition();
 
-    private AbstractICEpushResourceHandler resourceHandler;
+    private transient AbstractICEpushResourceHandler resourceHandler;
 
     public ICEpushResourceHandler(final ResourceHandler resourceHandler) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
