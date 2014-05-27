@@ -45,7 +45,7 @@
                 <h:inputText id="heightIn" value="#{dataTableScrolling.height}"
                              required="true" size="3" maxlength="3"
                              disabled="#{!dataTableScrolling.scrolling}">
-                    <f:validateLongRange minimum="50" maximum="500"/>
+                    <f:validateLongRange minimum="60" maximum="500"/>
                     <f:ajax execute="@this" render="@all"/>
                 </h:inputText>
                 <ace:message id="heightMsg" for="heightIn"/>
@@ -131,9 +131,7 @@
                                    styleClass="scrollingTable"
                                    value="#{dataTableScrolling.carsData}"
                                    var="car"
-                                   height="#{dataTableScrolling.height}"
-                                   paginator="true"
-                                   rows="10">
+                                   height="#{dataTableScrolling.height}">
                         <ace:column headerText="ID" footerText="ID">
                             <h:outputText  value="#{car.id}"/>
                             <h:outputText  value="#{car.id}"/>
