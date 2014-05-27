@@ -26,12 +26,12 @@ import org.icefaces.render.MandatoryResourceComponent;
 
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
-import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.event.PhaseId;
 import java.util.*;
 
 @MandatoryResourceComponent(tagName="dataExporter", value="org.icefaces.ace.component.dataexporter.DataExporter")
 public class DataExporterRenderer extends CoreRenderer {
+    private static Random RANDOM = new Random();
 
     @Override
     public void decode(FacesContext facesContext, UIComponent component) {
@@ -118,7 +118,7 @@ public class DataExporterRenderer extends CoreRenderer {
 		writer.writeAttribute("type", "text/javascript", null);
 		
 		// themeroller support
-		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();//" + RANDOM.nextLong());
 		
 		// load file
 		String path = exporter.getPath(clientId);
