@@ -171,7 +171,8 @@ ice.ace.Autocompleter.prototype = {
 		ice.ace.jq(this.element).on("blur", function(e) { self.onBlur.call(self, e); });
 		ice.ace.jq(this.element).on("focus", function(e) { self.onFocus.call(self, e); });
         var keyEvent = "keypress";
-        if (ice.ace.Autocompleter.Browser.IE || ice.ace.Autocompleter.Browser.WebKit) {
+        if (ice.ace.Autocompleter.Browser.IE || ice.ace.Autocompleter.Browser.WebKit
+			|| !!navigator.userAgent.match(/Trident.*rv\:11\./)) { // IE11
             keyEvent = "keydown";
         } else {
 			ice.ace.jq(this.element).on("keyup", function(e) {
@@ -865,11 +866,6 @@ ice.ace.Autocompleter.prototype = {
 	},
 	
 	isCharacterCode: function(keyCode) {
-		// IE11 uses different key codes, and many keys don't cause a keypress event
-		if (!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-			if (keyCode == 27) return false;
-			return true;
-		}
 		if (keyCode == 8 || keyCode == 46) return true; // backspace, del
 		if (keyCode >= 16 && keyCode <= 20) return false; // shift, ctrl, alt, pause, caps lock
 		if (keyCode >= 33 && keyCode <= 40) return false; // pg up, pg down, end, home, arrow keys
