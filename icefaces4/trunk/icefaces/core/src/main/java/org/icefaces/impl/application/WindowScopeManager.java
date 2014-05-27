@@ -574,7 +574,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             FacesContext facesContext = event.getFacesContext();
             ExternalContext externalContext = facesContext.getExternalContext();
             Map parameters = externalContext.getRequestParameterMap();
-            if (isDisposeWindowRequest(parameters)) {
+            if (event.getPhaseId() == PhaseId.RENDER_RESPONSE && isDisposeWindowRequest(parameters)) {
                 //shortcut the lifecycle to avoid running it with certain parts discarded or disposed
                 facesContext.responseComplete();
                 String windowID = (String) parameters.get("ice.window");
@@ -595,13 +595,15 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
 
         public void beforePhase(final PhaseEvent event) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            boolean customWindowTracking = !"url".equals(context.getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
-            WindowScopeManager.determineWindowID(context, customWindowTracking);
+            if (event.getPhaseId() == PhaseId.RESTORE_VIEW) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                boolean customWindowTracking = !"url".equals(context.getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
+                WindowScopeManager.determineWindowID(context, customWindowTracking);
+            }
         }
 
         public PhaseId getPhaseId() {
-            return PhaseId.RESTORE_VIEW;
+            return PhaseId.ANY_PHASE;
         }
     }
 
