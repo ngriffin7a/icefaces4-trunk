@@ -90,7 +90,8 @@
     //ICE-7188
     var formViewID;
     namespace.onBeforeSubmit(function(source) {
-        formViewID = lookupNamedInputElement(formOf(source), 'ice.view').value;
+        var inputElement = lookupNamedInputElement(formOf(source), 'ice.view');
+        formViewID = inputElement ? inputElement.value : null;
     });
     namespace.onAfterUpdate(function(updates) {
         ifViewStateUpdated(updates, function(viewState) {
