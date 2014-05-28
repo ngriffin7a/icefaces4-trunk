@@ -116,7 +116,9 @@ ice.ace.gMap.getGMapWrapper = function (id) {
                 layer[layerId].setMap(gmapWrapper.getRealGMap());
                 break;
             default:
-                console.log("ERROR: Not a valid layer type");
+                if (window.console) {
+                    window.console.log("ERROR: Not a valid layer type");
+                }
                 return;
         }//switch
     }
@@ -668,7 +670,9 @@ ice.ace.gMap.getGMapWrapper = function (id) {
                 service.getDistanceMatrix(eval(request), distanceCallback);
                 break;
             default:
-                console.log("Not a valid service name");
+                if (window.console) {
+                    window.console.log("Not a valid service name");
+                }
                 return;
         }//switch
     }
@@ -728,7 +732,9 @@ ice.ace.gMap.getGMapWrapper = function (id) {
                 overlay = new google.maps.Circle(overlayOptions);
                 break;
             default:
-                console.log("Not a valid shape");
+                if (window.console) {
+                    window.console.log("Not a valid shape");
+                }
                 return;
         }//switch
         ice.ace.gMap.getGMapWrapper(ele).overlays[overlayID] = overlay;
