@@ -46,7 +46,7 @@ ice.ace.checkboxbutton = function(clientId, options) {
 
     if (!options.disabled)
         ice.ace.jq(this.jqId).on("click", function () {
-            self.toggleCheckbox();
+            self.toggleCheckbox(true);
             if (self.isChecked()) {
                 ice.ace.checkboxbutton.toggleOthers(self.options, self.id)
             }
@@ -116,7 +116,7 @@ ice.ace.checkboxbutton.prototype.onAriaKeypress = function (e) {
     }
 }
 
-ice.ace.checkboxbutton.prototype.toggleCheckbox = function (e) {
+ice.ace.checkboxbutton.prototype.toggleCheckbox = function (activeButton) {
     var newValue = !this.isChecked();
 
     this.setChecked(newValue);
@@ -128,6 +128,7 @@ ice.ace.checkboxbutton.prototype.toggleCheckbox = function (e) {
     }
 
     if (this.options.behaviors && this.options.behaviors.activate) {
+		if (activeButton) ice.setFocus(this.id + '_button');
         ice.ace.ab(ice.ace.extendAjaxArgs(
             this.options.behaviors.activate,
             {params: this.options.uiParams}
