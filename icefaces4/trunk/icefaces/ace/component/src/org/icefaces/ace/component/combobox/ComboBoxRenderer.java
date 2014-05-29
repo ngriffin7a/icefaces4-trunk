@@ -148,6 +148,8 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("name", clientId + "_hidden", null);
         writer.writeAttribute("value", _value, null);
+		if (disabled) writer.writeAttribute("disabled", "disabled", null);
+		if (readonly) writer.writeAttribute("readonly", "readonly", null);
 		writer.endElement("input");
 		
 		// down arrow span
@@ -257,7 +259,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.writeText("(function() {", null);
 		writer.writeText("var instance = ice.ace.ComboBoxes[\"" + clientId + "\"];", null);
-		writer.writeText("instance.updateValue('"
+		writer.writeText("if (instance) instance.updateValue('"
 			+ escapeJavascriptString(getConvertedValueForClient(facesContext, comboBox, value))
 			+ "');", null);
 		writer.writeText("})();", null);
@@ -332,8 +334,8 @@ public class ComboBoxRenderer extends InputRenderer {
 			comboBox.setIndex(-1);
 
 			writer.endElement("div");
-			String call = "ice.ace.ComboBoxes[\"" + clientId +
-					"\"].setContent(ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_update')).get(0).firstChild.innerHTML);";
+			String call = "var instance = ice.ace.ComboBoxes[\"" + clientId +
+					"\"]; if (instance) instance.setContent(ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_update')).get(0).firstChild.innerHTML);";
 			encodeDynamicScript(facesContext, comboBox, call);
 			writer.endElement("div");
 		} else {
@@ -378,8 +380,8 @@ public class ComboBoxRenderer extends InputRenderer {
 					writer.endElement("div");
 				}
 				writer.endElement("div");
-				String call = "ice.ace.ComboBoxes[\"" + clientId +
-					"\"].setContent(ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_update')).get(0).firstChild.innerHTML);";
+				String call = "var instance = ice.ace.ComboBoxes[\"" + clientId +
+					"\"]; if (instance) instance.setContent(ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_update')).get(0).firstChild.innerHTML);";
 				encodeDynamicScript(facesContext, comboBox, call);
 				writer.endElement("div");
 			}
@@ -394,7 +396,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.startElement("span", null);
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		writer.writeText(call, null);
+		writer.writeText("(function() {" + call + "})();", null);
 		writer.endElement("script");
 		writer.endElement("span");
 	}
