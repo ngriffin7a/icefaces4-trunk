@@ -16,12 +16,13 @@
 
 if (!ice.ace.ComboBoxes) ice.ace.ComboBoxes = {};
 
-ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selectedRowClass, height, showListOnInput, behaviors, cfg, clientSideModeCfg, effects, placeholder) {
+ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selectedRowClass, height, showListOnInput, behaviors, cfg, clientSideModeCfg, effects, placeholder, disabled) {
 	this.id = id;
 	var isInitialized = false;
 	if (ice.ace.ComboBoxes[this.id] && ice.ace.ComboBoxes[this.id].initialized) isInitialized = true;
 	if (isInitialized) this.selectedIndex = ice.ace.ComboBoxes[this.id].selectedIndex;
 	ice.ace.ComboBoxes[this.id] = this;
+	if (disabled) return;
 	this.clientSideModeCfg = clientSideModeCfg;
 	this.height = height == 0 ? 'auto' : height;
 	this.direction = 'down';
@@ -83,11 +84,15 @@ ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selecte
 };
 
 ice.ace.ComboBox.setDimensionsOnly = function(id) {
+	var instance = new ice.ace.ComboBox(id, '', '', '', '', '', '', '', '', '', '', true)
 	var root = ice.ace.jq(ice.ace.escapeClientId(id));
 	var $box = root.find('.ui-combobox-value');
 	var $element = root.find('input');
 	var $downArrowButton = $box.find('div');
 	$element.css('width', $box.width() - $downArrowButton.outerWidth(true) - ($element.outerWidth(true) - $element.width()));
+	instance.element = $element.get(0);
+	instance.hidden = root.find('input[type=hidden]').get(0);
+	instance.cfg = {};
 	var downArrowButton = $downArrowButton.eq(0);
 	downArrowButton.css('height', $box.height());
 	var height = downArrowButton.height();
