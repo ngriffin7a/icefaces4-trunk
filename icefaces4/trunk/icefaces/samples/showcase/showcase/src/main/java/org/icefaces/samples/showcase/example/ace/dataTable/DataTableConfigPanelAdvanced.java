@@ -151,8 +151,8 @@ public class DataTableConfigPanelAdvanced extends ComponentExampleImpl<DataTable
 	}
 
 	public void restoreSavedSettings(ActionEvent event) {
-		columns = savedColumns;
-		headerColumns = savedHeaderColumns;
+		columns = copyColumns(savedColumns);
+		headerColumns = copyColumns(savedHeaderColumns);
 		columnOrder = savedColumnOrder;
 		columnHeaderOrder = savedColumnHeaderOrder;
 	}
