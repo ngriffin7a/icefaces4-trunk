@@ -86,7 +86,25 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     public static ScopeMap lookupWindowScope(FacesContext context) {
         String id = lookupAssociatedWindowID(context.getExternalContext().getRequestMap());
         State state = getState(context);
-        return state == null ? null : (ScopeMap) state.windowScopedMaps.get(id);
+        if (state == null)  {
+            return null;
+        } else {
+            ScopeMap map = (ScopeMap) state.windowScopedMaps.get(id);
+            //return the scope map even for requests that arrive after the dispose-window request was received
+            if (map == null) {
+                Iterator i = state.disposedWindowScopedMaps.iterator();
+                while (i.hasNext()) {
+                    ScopeMap next = (ScopeMap) i.next();
+                    if (next.id.equals(id)) {
+                        return next;
+                    }
+                }
+
+                return null;
+            } else {
+                return map;
+            }
+        }
     }
 
     public static String determineWindowID(FacesContext context, boolean customWindowTracking) {
