@@ -23,12 +23,9 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 import javax.el.ELContext;
+import javax.faces.application.*;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ExternalContext;
-import javax.faces.application.Application;
-import javax.faces.application.Resource;
-import javax.faces.application.ResourceHandler;
-import javax.faces.application.ResourceHandlerWrapper;
 import javax.servlet.http.HttpSession;
 
 import java.io.InputStream;
@@ -51,10 +48,16 @@ import org.icefaces.impl.application.WindowScopeManager;
  * </p>
  */
 public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
-    private static Logger log = Logger.getLogger(ResourceRegistry.class.getName());
+    private static final String VIEW_ID_PARAMETER = "ice.view";
+    private static final String JAVAX_FACES_VIEW_STATE = "javax.faces.ViewState";
+    private static final String WINDOW_ID_PARAMETER = "ice.window";
+    private static final String WINDOW_SCOPE = "w";
+    private static final String VIEW_SCOPE = "v";
+    private static final String SESSION_SCOPE = "s";
+    private static final String APPLICATION_SCOPE = "a";
+    private static final Logger log = Logger.getLogger(ResourceRegistry.class.getName());
     private ResourceHandler wrapped;
 
-    private static String CURRENT_KEY = "org.icefaces.resourceRegistry.resourceKey";
     private static String RESOURCE_PREFIX = "/javax.faces.resource/";
     private static String MAP_PREFIX = "org.icefaces.resource-";
     private static String BYTES_PREFIX = "bytes=";
@@ -78,6 +81,12 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
         ExternalContext externalContext = facesContext.getExternalContext();
         String key = extractResourceId(facesContext);
         log.finest("extractResourceId: " + key);
+
+        String viewID = externalContext.getRequestParameterMap().get(VIEW_ID_PARAMETER);
+        if (viewID != null) {
+            //restore view root with its associated view map
+            facesContext.getApplication().getViewHandler().restoreView(facesContext, viewID);
+        }
 
         boolean useRanges = false;
         int rangeStart = 0;
@@ -218,15 +227,36 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
         } else {
             key = prefix + UUID.randomUUID().toString();
         }
-        ResourceRegistryHolder holder =
-                new ResourceRegistryHolder(key, resource);
+        ResourceRegistryHolder holder = new ResourceRegistryHolder(key, resource);
         scopeMap.put(MAP_PREFIX + key, holder);
-        if ("s".equals(prefix))  {
-            EnvUtils.getSafeSession(FacesContext.getCurrentInstance()).setAttribute(MAP_PREFIX + key, holder);
-        }
+
+        FacesContext context = FacesContext.getCurrentInstance();
         String[] pathTemplate = EnvUtils.getPathTemplate();
         String path = pathTemplate[0] + key + pathTemplate[1];
-        path = FacesContext.getCurrentInstance().getExternalContext().encodeResourceURL(path);
+
+        if (SESSION_SCOPE == prefix)  {
+            EnvUtils.getSafeSession(context).setAttribute(MAP_PREFIX + key, holder);
+        }
+        if (WINDOW_SCOPE == prefix) {
+            String windowID = WindowScopeManager.lookupAssociatedWindowID(context.getExternalContext().getRequestMap());
+            if (path.indexOf('?') > 0) {
+                path = path + "&" + WINDOW_ID_PARAMETER + "=" + windowID;
+            } else {
+                path = path + "?" + WINDOW_ID_PARAMETER + "=" + windowID;
+            }
+        }
+        if (VIEW_SCOPE == prefix) {
+            String viewState = context.getApplication().getStateManager().getViewState(context);
+            String viewId = context.getViewRoot().getViewId();
+            if (path.indexOf('?') > 0) {
+                path = path + "&" + JAVAX_FACES_VIEW_STATE + "=" + viewState + "&" + VIEW_ID_PARAMETER + "=" + viewId;
+            } else {
+                path = path + "?" + JAVAX_FACES_VIEW_STATE + "=" + viewState + "&" + VIEW_ID_PARAMETER + "=" + viewId;
+            }
+        }
+
+        path = context.getExternalContext().encodeResourceURL(path);
+
         log.finest("\nresourceName: " + name + "\nkey: " + key + "\nholder: " + holder + "\npath: " + path);
         return path;
     }
@@ -318,7 +348,7 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
      * @return the requestPath of the resource
      */
     public static String addApplicationResource(Resource resource)  {
-        return addResource("a", FacesContext.getCurrentInstance()
+        return addResource(APPLICATION_SCOPE, FacesContext.getCurrentInstance()
                 .getExternalContext().getApplicationMap(), resource );
     }
 
@@ -331,19 +361,8 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
      * @return the requestPath of the resource
      */
     public static String addSessionResource(Resource resource)  {
-        return addResource("s", FacesContext.getCurrentInstance()
+        return addResource(SESSION_SCOPE, FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap(), resource );
-    }
-
-    /**
-     * Add the provided resource in flash scope.
-     *
-     * @param resource the resource
-     * @return the requestPath of the resource
-     */
-    public static String addFlashResource(Resource resource)  {
-        return addResource("f", FacesContext.getCurrentInstance()
-                .getExternalContext().getFlash(), resource );
     }
 
     /**
@@ -353,7 +372,7 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
      * @return the requestPath of the resource
      */
     public static String addViewResource(Resource resource)  {
-        return addResource("v", FacesContext.getCurrentInstance()
+        return addResource(VIEW_SCOPE, FacesContext.getCurrentInstance()
                 .getViewRoot().getViewMap(), resource );
     }
 
@@ -364,7 +383,7 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
      * @return the requestPath of the resource
      */
     public static String addWindowResource(Resource resource)  {
-        return addResource("w", WindowScopeManager.lookupWindowScope(
+        return addResource(WINDOW_SCOPE, WindowScopeManager.lookupWindowScope(
                 FacesContext.getCurrentInstance()), resource );
     }
 
