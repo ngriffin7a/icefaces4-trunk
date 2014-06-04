@@ -1833,7 +1833,10 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
 
             /* remove previous tbody conent and re-add in new order */
             var tbody = bodyRows[0].parentNode;
-            tbody.innerHTML = '';
+            Array.prototype.every.call(sortedRows, function(row) {
+                tbody.removeChild(row);
+                return true;
+            });
             Array.prototype.every.call(sortedRows, function(row) {
                 tbody.appendChild(row);
                 return true;
