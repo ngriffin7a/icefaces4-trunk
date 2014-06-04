@@ -22,6 +22,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 import javax.faces.application.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
@@ -45,14 +46,37 @@ public class Entry implements Serializable {
         return dynamic;
     }
 
-    private class TestResource extends Resource {
+    public Resource getDynamicResourceA() {
+        return new TestResource("dynamic resource test - A");
+    }
 
-        private TestResource(String name) {
+    public Resource getDynamicResourceB() {
+        return new TestResource("dynamic resource test - B");
+    }
+
+    public Resource getDynamicResourceC() {
+        return new TestResource("dynamic resource test - C");
+    }
+
+    public Resource getDynamicResourceD() {
+        return new TestResource("dynamic resource test - D");
+    }
+
+    private class TestResource extends Resource {
+        private String name = UUID.randomUUID().toString();
+        private String content;
+
+        private TestResource(String content) {
+            this.content = content;
             setContentType("text/plain");
         }
 
+        public String getResourceName() {
+            return name;
+        }
+
         public InputStream getInputStream() throws IOException {
-            return new ByteArrayInputStream("dynamic resource test".getBytes("UTF-8"));
+            return new ByteArrayInputStream(content.getBytes("UTF-8"));
         }
 
         public Map<String, String> getResponseHeaders() {

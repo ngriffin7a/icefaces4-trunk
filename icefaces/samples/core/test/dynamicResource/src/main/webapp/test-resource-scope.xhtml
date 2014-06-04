@@ -1,0 +1,48 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view  contentType="text/html"/>
+<h:head>
+    <title>Dynamic Resource Component tests</title>
+</h:head>
+<h:body>
+    <h2>Dynamic Resource Scoping tests</h2>
+    <div>
+        <ace:dynamicResource label="Application scoped resource" type="button" resource="#{Entry.dynamicResourceA}" scope="application"/>
+    </div>
+    <div>
+        <ace:dynamicResource label="Session scoped resource" type="button" resource="#{Entry.dynamicResourceB}" scope="session"/>
+    </div>
+    <div>
+        <ace:dynamicResource label="Window scoped resource" type="button" resource="#{Entry.dynamicResourceC}" scope="window"/>
+    </div>
+    <div>
+        <ace:dynamicResource label="View scoped resource" type="button" resource="#{Entry.dynamicResourceD}" scope="view"/>
+    </div>
+    <div>
+        <br/>
+
+        <a href="test.html">back to index page</a>
+    </div>
+</h:body>
+</html>
+
