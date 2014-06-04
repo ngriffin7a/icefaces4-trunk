@@ -67,8 +67,6 @@ public class DynamicResource extends DynamicResourceBase {
                 this.requestPath = ResourceRegistry.addSessionResource(this);
             } else if ("view".equals(scope)) {
                 this.requestPath = ResourceRegistry.addViewResource(this);
-            } else if ("flash".equals(scope)) {
-                this.requestPath = ResourceRegistry.addFlashResource(this);
             } else if ("window".equals(scope)) {
                 this.requestPath = ResourceRegistry.addWindowResource(this);
             } else if ("application".equals(scope)) {
