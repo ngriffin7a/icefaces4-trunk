@@ -336,7 +336,11 @@ ice.ace.List.prototype.itemDoubleClickHandler = function(e) {
             this.read('reorderings'),
             fromIndex);
 
-        if (to == undefined) return;
+        if (to == undefined) {
+			self.disableDoubleClickHandling = false;
+			self.disableClickHandling = false;
+			return;
+		}
 
         to.immigrantMessage = [];
         to.immigrantMessage.push(this.id);
