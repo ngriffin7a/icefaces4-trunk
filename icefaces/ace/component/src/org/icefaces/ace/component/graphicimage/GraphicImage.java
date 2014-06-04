@@ -87,9 +87,7 @@ public class GraphicImage extends GraphicImageBase {
     private String registerAndGetPath(String scope,
                                       IceOutputResource iceResource) {
         String registeredPath = "";
-        if (scope.equals("flash")) {
-            registeredPath = ResourceRegistry.addFlashResource(iceResource);
-        } else if (scope.equals("application")) {
+        if (scope.equals("application")) {
             registeredPath = ResourceRegistry.addApplicationResource(iceResource);
         } else if (scope.equals("window"))
             registeredPath = ResourceRegistry.addWindowResource(iceResource);
