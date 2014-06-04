@@ -15,6 +15,6 @@
 --%>
 
 <%
-response.sendRedirect("test.jsf");
+response.sendRedirect("test.html");
 %>
 
