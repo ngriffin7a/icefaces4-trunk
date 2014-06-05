@@ -110,3 +110,8 @@ This also overrides the indeterminate progress imagery. But the themes don't sup
 .ui-notificationbar.ui-widget-content table {
     color: inherit;
 }
+
+/* override demo_template.css paddings for <ul>, which affect menus */
+.content ul.wijmo-wijmenu-list {
+	padding: 0;
+}
