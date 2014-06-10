@@ -32,6 +32,9 @@
             org.icefaces.impl.application.RedirectOnSessionExpiryHandler$Factory
         </exception-handler-factory>
         <exception-handler-factory>
+            org.icefaces.impl.application.RedirectOnExceptionHandler$Factory
+        </exception-handler-factory>
+        <exception-handler-factory>
             org.icefaces.impl.application.ExtendedExceptionHandlerFactory
         </exception-handler-factory>
     </factory>

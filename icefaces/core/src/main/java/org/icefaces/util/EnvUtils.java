@@ -33,10 +33,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -76,6 +73,7 @@ public class EnvUtils {
     public static String CLIENT_SIDE_ELEMENT_UPDATE_DETERMINATION = "org.icefaces.clientSideElementUpdateDetermination";
     public static String ACE_FILE_ENTRY_REQUIRE_JAVASCRIPT = "org.icefaces.ace.fileEntry.requireJavascript";
     public static String PUBLIC_CONTEXT_PATH = "org.icefaces.publicContextPath";
+    public static String REDIRECT_ON_EXCEPTION_MAPPING = "org.icefaces.redirectOnExceptionMapping";
 
 
     //Parameters configurable using context parameters but only in compatibility mode
@@ -258,6 +256,8 @@ public class EnvUtils {
         JAVA_RESERVED_WORDS.add("volatile");
         JAVA_RESERVED_WORDS.add("while");
     }
+
+    private static Map<Class,String> REDIRECT_MAPPING;
 
     private static interface OriginalRequestGetter {
         public HttpServletRequest get(FacesContext context);
@@ -1198,6 +1198,34 @@ public class EnvUtils {
     public static boolean isFileEntryRequireJavascript(FacesContext facesContext) {
         return EnvConfig.getEnvConfig(facesContext).fileEntryRequireJavascript;
     }
+
+    public static Map<Class, String> getRedirectOnExceptionMapping(FacesContext facesContext) {
+        if (REDIRECT_MAPPING == null) {
+            REDIRECT_MAPPING = new HashMap<Class, String>();
+            String mappingString = EnvConfig.getEnvConfig(facesContext).redirectOnExceptionMapping;
+
+            if (mappingString != null && !mappingString.isEmpty()) {
+                String[] tuples = mappingString.split("\\s");
+                for (int i = 0; i < tuples.length; i++) {
+                    String s = tuples[i];
+                    if (s.isEmpty()) {
+                        continue;
+                    }
+                    String[] tuple = s.split("\\:\\:");
+                    String exceptionClassName = tuple[0];
+                    try {
+                        Class exceptionClass = Class.forName(exceptionClassName);
+                        String redirectURI = tuple[1];
+                        REDIRECT_MAPPING.put(exceptionClass, redirectURI);
+                    } catch (ClassNotFoundException e) {
+                        log.warning("Cannot find exception class " + exceptionClassName);
+                    }
+                }
+            }
+        }
+
+        return REDIRECT_MAPPING;
+    }
 }
 
 class EnvConfig {
@@ -1240,6 +1268,7 @@ class EnvConfig {
     public boolean clientSideElementUpdateDetermination;
     public boolean fileEntryRequireJavascript;
     public String publicContextPath;
+    public String redirectOnExceptionMapping;
 
     public EnvConfig(Map initMap) {
         init(initMap);
@@ -1282,6 +1311,7 @@ class EnvConfig {
         clientSideElementUpdateDetermination = decodeBoolean(initMap, EnvUtils.CLIENT_SIDE_ELEMENT_UPDATE_DETERMINATION, false, info);
         fileEntryRequireJavascript = decodeBoolean(initMap, EnvUtils.ACE_FILE_ENTRY_REQUIRE_JAVASCRIPT, true, info);
         publicContextPath = decodeString(initMap, EnvUtils.PUBLIC_CONTEXT_PATH, null, info);
+        redirectOnExceptionMapping = decodeString(initMap, EnvUtils.REDIRECT_ON_EXCEPTION_MAPPING, null, info);
 
         log.info("ICEfaces Configuration: \n" + info);
     }
