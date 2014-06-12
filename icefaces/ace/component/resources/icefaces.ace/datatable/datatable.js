@@ -260,6 +260,9 @@ ice.ace.DataTable = function (id, cfg) {
         var self = this;
         ice.onElementUpdate(this.id, function() { ice.ace.destroy(self.id); });
     }
+
+	if (this.cfg.paginator)
+		this.resizePaginator();
 }
 
 
@@ -1504,11 +1507,20 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
 			}
         }
     }
+
+	if (this.cfg.paginator)
+		this.resizePaginator();
+
 	if (chrome && this.newInstance) {
 		this.newInstance = false;
 		var self = this;
 		setTimeout(function(){self.resizeScrolling()}, 100);
 	}
+}
+
+ice.ace.DataTable.prototype.resizePaginator = function () {
+	var width = this.element.find('table').outerWidth();
+	this.element.find('.ui-paginator').css('width', width-6);
 }
 
 ice.ace.DataTable.prototype.initializePinningState = function() {
