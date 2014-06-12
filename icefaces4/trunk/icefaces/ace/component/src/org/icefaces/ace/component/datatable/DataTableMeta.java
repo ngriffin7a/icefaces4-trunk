@@ -150,7 +150,7 @@ public class DataTableMeta extends UIDataMeta {
 
     @Property(tlddoc = "Enables lazy loading. Lazy loading expects the 'value' property to reference " +
             "an instance of LazyDataModel, an interface to support incremental fetching of " +
-            "table entities.")
+            "table entities. Note that it is necessary that the data object implement custom hashCode() and equals() methods for advanced features to work correctly. see wiki for more information.")
     private boolean lazy;
 
     @Property(tlddoc = "Defines a tabindex to be shared by all keyboard navigable elements of the table. " +
@@ -175,7 +175,7 @@ public class DataTableMeta extends UIDataMeta {
     private boolean singleSort;
 
     @Property(tlddoc = "Defines a map of your row data objects to UI states. Row-level " +
-            "features (selection, expansion, etc.) are manipulable through this repository.")
+            "features (selection, expansion, etc.) are manipulable through this repository. Note that it is necessary that the data object implement custom hashCode() and equals() methods for advanced features to work correctly. see wiki for more information.")
     private RowStateMap stateMap;
 
     @Property(tlddoc = "Enable the decoding of child components during table feature " +
