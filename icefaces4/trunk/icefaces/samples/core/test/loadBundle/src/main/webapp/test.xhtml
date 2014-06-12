@@ -1,0 +1,53 @@
+<!--
+  ~ Copyright 2004-2012 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view  contentType="text/html"/>
+<h:head>
+    <title>Load Bundle test</title>
+</h:head>
+<h:body>
+    <h2>Test dynamic change of 'var', 'basename' and locale</h2>
+    <h:form id="form1" prependId="false">
+        <p>
+            <icecore:loadBundle var="#{Entry.varName}" basename="#{Entry.basenameName}"/>
+            <div>
+                <h:commandButton value="Toggle 'var' name" action="#{Entry.toggleVarName}"/>
+                - chosen 'var' name: <h:outputText value="#{Entry.varName}" />
+            </div>
+            <div>
+                <h:commandButton value="Toggle 'basename' name" action="#{Entry.toggleBasenameName}"/>
+                - chosen 'basename' name: <h:outputText value="#{Entry.basenameName}" />
+            </div>
+            <div>
+                <h:commandButton value="Toggle language" action="#{Entry.toggleLanguage}"/>
+                - chosen language: <h:outputText value="#{Entry.language}" />
+            </div>
+        </p>
+        <p>
+            'var' A: <h:outputText value="#{A.welcomeMessage}" />
+        </p>
+        <p>
+            'var' B: <h:outputText value="#{B.welcomeMessage}" />
+        </p>
+    </h:form>
+</h:body>
+</html>
+
