@@ -334,4 +334,29 @@ of "FacesEvent" would work.
         </attribute>
     </tag>
 
+    <tag>
+        <tag-name>loadBundle</tag-name>
+        <description>
+            This tag loads a resource bundle and saves it as a variable in the request scope.
+        </description>
+        <component>
+            <component-type>org.icefaces.impl.component.LoadBundle</component-type>
+        </component>
+        <attribute>
+            <description>
+                The name of the variable in request scope that the resources are saved to.
+            </description>
+            <name>var</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                The base name of the resource bundle.
+            </description>
+            <name>basename</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
 </facelet-taglib>

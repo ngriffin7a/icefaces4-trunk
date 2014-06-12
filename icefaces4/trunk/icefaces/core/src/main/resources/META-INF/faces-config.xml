@@ -74,6 +74,10 @@
         <component-type>org.icefaces.impl.component.FocusManager</component-type>
         <component-class>org.icefaces.impl.component.FocusManager</component-class>
     </component>
+    <component>
+        <component-type>org.icefaces.impl.component.LoadBundle</component-type>
+        <component-class>org.icefaces.impl.component.LoadBundle</component-class>
+    </component>
     <lifecycle>
         <phase-listener>org.icefaces.impl.event.DeltaSubmitPhaseListener</phase-listener>
         <phase-listener>org.icefaces.impl.event.FacesMessagesPhaseListener</phase-listener>
