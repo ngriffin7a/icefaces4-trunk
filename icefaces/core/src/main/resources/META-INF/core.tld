@@ -278,7 +278,27 @@ This container would provide necessary attributes to configure the userInactivit
             <type>java.lang.String</type>
         </attribute>
       
-	</tag>       
+	</tag>
 
-	
+    <tag>
+        <description><![CDATA[This tag loads a resource bundle and saves it as a variable in the request scope.]]></description>
+        <name>loadBundle</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <description><![CDATA[The name of the variable in request scope that the resources are saved to.]]></description>
+            <name>var</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The base name of the resource bundle.]]></description>
+            <name>basename</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
 </taglib>
