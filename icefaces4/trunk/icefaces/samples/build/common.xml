@@ -209,8 +209,9 @@
             <lib dir="${icefaces.base.dir}/samples/ace/themes">
                 <include name="*.jar" if="includeThemeJars"/>
             </lib>
-            
+
             <classes dir="${classes.dir}"/>
+            <classes dir="${java.dir}" includes="**/*.properties"/>
         </war>
         <unzip src="${dist.dir}/${ant.project.name}.war" dest="${dist.dir}/exploded"/>
         <copy file="${dist.dir}/${ant.project.name}.war" todir="${samples.dist.dir}"/>
