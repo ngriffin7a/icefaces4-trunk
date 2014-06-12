@@ -54,7 +54,11 @@ import org.icefaces.samples.showcase.util.FacesUtils;
                 @ExampleResource(type = ResourceType.java,
                         title="DataTableRowState.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/dataTable/DataTableRowState.java")
+                                "/example/ace/dataTable/DataTableRowState.java"),
+				@ExampleResource(type = ResourceType.java,
+						title="Car.java",
+						resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
+						"/example/ace/dataTable/Car.java")
         }
 )
 @ManagedBean(name= DataTableRowState.BEAN_NAME)
