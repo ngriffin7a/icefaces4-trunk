@@ -123,7 +123,7 @@ public class DataExporterRenderer extends CoreRenderer {
 		// load file
 		String path = exporter.getPath(clientId);
 		if (path != null) {
-			writer.write("ice.ace.DataExporters['" + clientId + "'].url('" + path + "');");
+			writer.write("\nice.ace.DataExporters['" + clientId + "'].url('" + path + "');");
 		}
 		
 		writer.endElement("script");
