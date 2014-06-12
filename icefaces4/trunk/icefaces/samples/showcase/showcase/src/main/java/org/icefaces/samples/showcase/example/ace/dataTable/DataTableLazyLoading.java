@@ -48,7 +48,11 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
             @ExampleResource(type = ResourceType.java,
                     title="DataTableLazyLoading.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableLazyLoading.java")
+                    "/example/ace/dataTable/DataTableLazyLoading.java"),
+            @ExampleResource(type = ResourceType.java,
+                    title="Car.java",
+                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
+                    "/example/ace/dataTable/Car.java")
         }
 )
 @ManagedBean(name= DataTableLazyLoading.BEAN_NAME)
