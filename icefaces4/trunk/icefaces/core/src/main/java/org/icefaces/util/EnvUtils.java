@@ -74,6 +74,7 @@ public class EnvUtils {
     public static String ACE_FILE_ENTRY_REQUIRE_JAVASCRIPT = "org.icefaces.ace.fileEntry.requireJavascript";
     public static String PUBLIC_CONTEXT_PATH = "org.icefaces.publicContextPath";
     public static String REDIRECT_ON_EXCEPTION_MAPPING = "org.icefaces.redirectOnExceptionMapping";
+    public static String NAMESPACE_PARAMETERS = "com.sun.faces.namespaceParameters";
 
 
     //Parameters configurable using context parameters but only in compatibility mode
@@ -1226,6 +1227,10 @@ public class EnvUtils {
 
         return REDIRECT_MAPPING;
     }
+
+    public static String getParameterNamespace(FacesContext context) {
+        return EnvConfig.getEnvConfig(context).namespaceParameters ? context.getViewRoot().getContainerClientId(context) : "";
+    }
 }
 
 class EnvConfig {
@@ -1269,6 +1274,7 @@ class EnvConfig {
     public boolean fileEntryRequireJavascript;
     public String publicContextPath;
     public String redirectOnExceptionMapping;
+    public boolean namespaceParameters;
 
     public EnvConfig(Map initMap) {
         init(initMap);
@@ -1277,6 +1283,7 @@ class EnvConfig {
     public void init(Map initMap) {
         StringBuilder info = new StringBuilder();
 
+        namespaceParameters = decodeBoolean(initMap, EnvUtils.NAMESPACE_PARAMETERS, false, info);
         autoRender = decodeBoolean(initMap, EnvUtils.ICEFACES_AUTO, true, info);
         autoId = decodeBoolean(initMap, EnvUtils.ICEFACES_AUTOID, true, info);
         ariaEnabled = decodeBoolean(initMap, EnvUtils.ARIA_ENABLED, true, info);

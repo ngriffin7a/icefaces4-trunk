@@ -655,7 +655,7 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         public void write(String str) throws IOException {
             if (EnvUtils.getStateMarker().equals(str) ) {
                 FacesContext fc = FacesContext.getCurrentInstance();
-                out.write("<input id=\"javax.faces.ViewState\" type=\"hidden\" autocomplete=\"off\" value=\"");
+                out.write("<input id=\"" + EnvUtils.getParameterNamespace(fc) + "javax.faces.ViewState\" type=\"hidden\" autocomplete=\"off\" value=\"");
                 out.write(fc.getApplication().getStateManager().getViewState(fc));
                 out.write("\" name=\"javax.faces.ViewState\"/>");
             } else {
