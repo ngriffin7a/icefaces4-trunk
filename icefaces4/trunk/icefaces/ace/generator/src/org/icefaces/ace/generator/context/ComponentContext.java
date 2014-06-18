@@ -103,16 +103,6 @@ public class ComponentContext extends MetaContext {
         processBehaviors(clazz);
     }
 
-    @Override
-    protected void furtherProcessProperty(Class clazz, PropertyValues propertyValues) {
-        if (propertyValues.isGeneratingProperty()) {
-            if (propertyValues.expression == Expression.METHOD_EXPRESSION) {
-                generateHandler = true;
-            }
-        }
-    }
-
-
     private void processFacets(Class clazz){
         for (Class declaredClass : clazz.getDeclaredClasses()) {
             if (declaredClass.isAnnotationPresent(Facets.class)) {

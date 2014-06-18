@@ -47,6 +47,7 @@ public class ComponentHandlerArtifact extends Artifact{
         if (!getComponentContext().isGenerateHandler()) return;
         startComponentClass(getMetaContext().getActiveClass(), component);
         addRules(getMetaContext().getGeneratingPropertyValuesSorted());
+		addBehaviors();
         endComponentClass();
 	}
     
@@ -57,10 +58,15 @@ public class ComponentHandlerArtifact extends Artifact{
         generatedComponentHandlerClass.append("package ");
         generatedComponentHandlerClass.append(Utility.getPackageNameOfClass(Utility.getGeneratedClassName(component)));
         generatedComponentHandlerClass.append(";\n\n");
+		generatedComponentHandlerClass.append("import javax.faces.component.UIComponent;\n");
+		generatedComponentHandlerClass.append("import javax.faces.context.FacesContext;\n");
         generatedComponentHandlerClass.append("import javax.faces.view.facelets.ComponentHandler;\n");
         generatedComponentHandlerClass.append("import javax.faces.view.facelets.ComponentConfig;\n");
         generatedComponentHandlerClass.append("import javax.faces.view.facelets.MetaRuleset;\n");
-        generatedComponentHandlerClass.append("import org.icefaces.facelets.tag.icefaces.core.MethodRule;\n\n");
+		generatedComponentHandlerClass.append("import javax.faces.view.facelets.FaceletContext;\n");
+        generatedComponentHandlerClass.append("import org.icefaces.facelets.tag.icefaces.core.MethodRule;\n");
+        generatedComponentHandlerClass.append("import org.icefaces.ace.api.IceClientBehaviorHolder;\n\n");
+		generatedComponentHandlerClass.append("import org.icefaces.ace.component.ajax.AjaxBehaviors;\n");
         generatedComponentHandlerClass.append("import java.util.EventObject;\n");
         generatedComponentHandlerClass.append("/*\n * ******* GENERATED CODE - DO NOT EDIT *******\n */\n");
         
@@ -114,5 +120,19 @@ public class ComponentHandlerArtifact extends Artifact{
         }
         generatedComponentHandlerClass.append("\t\n\t\treturn metaRuleset;\n");
         generatedComponentHandlerClass.append("\t}");
+    }
+
+    private void addBehaviors() {
+        generatedComponentHandlerClass.append("\n\n");
+        generatedComponentHandlerClass.append("\tpublic void onComponentPopulated(FaceletContext ctx, UIComponent c, UIComponent parent)  {\n");
+        generatedComponentHandlerClass.append("\t\tsuper.onComponentPopulated(ctx, c, parent);\n");
+		generatedComponentHandlerClass.append("\t\tif (c instanceof IceClientBehaviorHolder) {\n");
+        generatedComponentHandlerClass.append("\t\t\tFacesContext context = ctx.getFacesContext();\n");
+        generatedComponentHandlerClass.append("\t\t\tAjaxBehaviors ajaxBehaviors = AjaxBehaviors.getAjaxBehaviors(context, false);\n");
+        generatedComponentHandlerClass.append("\t\t\tif (ajaxBehaviors != null) {\n");
+        generatedComponentHandlerClass.append("\t\t\t\tajaxBehaviors.addBehaviors((IceClientBehaviorHolder)c);\n");
+        generatedComponentHandlerClass.append("\t\t\t}\n");
+        generatedComponentHandlerClass.append("\t\t}\n");
+        generatedComponentHandlerClass.append("\t}\n");
     }
 }
