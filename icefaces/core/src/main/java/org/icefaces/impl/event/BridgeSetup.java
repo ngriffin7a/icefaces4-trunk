@@ -176,7 +176,10 @@ public class BridgeSetup implements SystemEventListener {
                     writer.write(",");
                     writer.write("clientSideElementUpdateDetermination: ");
                     writer.write(Boolean.toString(EnvUtils.isClientSideElementUpdateDetermination(context)));
-                    writer.write("});");
+                    writer.write(",");
+                    writer.write("parameterPrefix: '");
+                    writer.write(EnvUtils.getParameterNamespace(context));
+                    writer.write("'});");
                     writer.endElement("script");
                     writer.endElement("span");
                 }
@@ -216,6 +219,7 @@ public class BridgeSetup implements SystemEventListener {
                         writer.write("ice.push.configuration.notifyURI=\"" + notifyResource.getRequestPath() + "\";");
                         writer.write("ice.push.configuration.addGroupMemberURI=\"" + addGroupMemberResource.getRequestPath() + "\";");
                         writer.write("ice.push.configuration.removeGroupMemberURI=\"" + removeGroupMemberResource.getRequestPath() + "\";");
+                        writer.write("ice.push.configuration.parameterPrefix=\"" + EnvUtils.getParameterNamespace(context) + "\";");
                         boolean isAuxUpload =
                                 EnvUtils.isAuxUploadBrowser(context);
                         if (isAuxUpload) {

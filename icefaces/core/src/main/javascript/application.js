@@ -178,13 +178,12 @@ if (!window.ice.icefaces) {
         }
 
         //function used to safely retrieve ViewState key element
-        function lookupViewStateElement(element) {
-            var e = lookupNamedInputElement(element, 'javax.faces.ViewState');
-            if (e) {
-                return e;
-            } else {
+        function lookupViewStateElement(form) {
+            return detect(form.getElementsByTagName('input'), function(input) {
+                return input.name && endsWith(input.name, 'javax.faces.ViewState');
+            }, function() {
                 throw 'cannot find javax.faces.ViewState input element';
-            }
+            });
         }
 
         function lookupViewState(element) {
@@ -243,14 +242,9 @@ if (!window.ice.icefaces) {
             return hiddenInput;
         }
 
-        function appendOrReplaceHiddenInputElement(form, name, value, defaultValue) {
-            var element = form[name];
-            if (!element) {
-                appendHiddenInputElement(form, name, value, defaultValue);
-            } else if (element.value != value) {
-                element.parentNode.removeChild(element);
-                appendHiddenInputElement(form, name, value, defaultValue);
-            }
+        function appendViewStateInputElement(form, viewState) {
+            var prefix = configurationOf(form).parameterPrefix;
+            appendHiddenInputElement(form, prefix + 'javax.faces.ViewState', viewState, viewState);
         }
 
         var viewIDs = [];
@@ -259,15 +253,17 @@ if (!window.ice.icefaces) {
             append(viewIDs, viewID);
             var formID = retrieveUpdateFormID(viewID);
             var form = lookupElementById(formID);
-            appendOrReplaceHiddenInputElement(form, 'ice.view', viewID);
-            appendOrReplaceHiddenInputElement(form, 'ice.window', namespace.window);
+            var parameterPrefix = configurationOf(form).parameterPrefix;
 
             //form is missing after navigating to a non-icefaces page
             if (form) {
                 try {
                     debug(logger, 'picking updates for view ' + viewID);
                     var options = {
+                        'com.sun.faces.namingContainerId': parameterPrefix,
                         'ice.submit.type': 'ice.push',
+                        'ice.view': viewID,
+                        'ice.window': namespace.window,
                         render: '@all'
                     };
                     jsf.ajax.request(form, null, options);
@@ -296,6 +292,7 @@ if (!window.ice.icefaces) {
                 var form = lookupElementById(singleSubmitFormID(viewID));
                 //form is missing after navigating to a non-icefaces page
                 if (form) {
+                    var prefix = configurationOf(form).parameterPrefix;
                     try {
                         //dispose is the final operation on this page, so no harm
                         //in modifying the action to remove CDI conversation id
@@ -304,9 +301,9 @@ if (!window.ice.icefaces) {
                         form.action = url.replace(/(\?|&)cid=[0-9]+/, "$1");
                         debug(logger, 'dispose window and associated views ' + viewIDs);
                         postSynchronously(client, form.action, function(query) {
-                            addNameValue(query, 'ice.submit.type', 'ice.dispose.window');
-                            addNameValue(query, 'ice.window', namespace.window);
-                            addNameValue(query, 'javax.faces.ViewState', lookupViewState(form));
+                            addNameValue(query, prefix + 'ice.submit.type', 'ice.dispose.window');
+                            addNameValue(query, prefix + 'ice.window', namespace.window);
+                            addNameValue(query, prefix + 'javax.faces.ViewState', lookupViewState(form));
                             each(viewIDs, curry(addNameValue, query, 'ice.view'));
                         }, FormPost, noop);
                     } catch (e) {

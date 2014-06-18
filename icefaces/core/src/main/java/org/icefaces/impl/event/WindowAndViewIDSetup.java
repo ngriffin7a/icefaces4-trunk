@@ -76,16 +76,18 @@ public class WindowAndViewIDSetup implements SystemEventListener {
                     return;
                 }
 
+                String prefix = EnvUtils.getParameterNamespace(context);
+
                 writer.startElement("input", this);
                 writer.writeAttribute("type", "hidden", null);
-                writer.writeAttribute("name", "ice.window", null);
+                writer.writeAttribute("name", prefix + "ice.window", null);
                 writer.writeAttribute("value", scopeMap.getId(), null);
                 writer.writeAttribute("autocomplete", "off", null);
                 writer.endElement("input");
 
                 writer.startElement("input", this);
                 writer.writeAttribute("type", "hidden", null);
-                writer.writeAttribute("name", "ice.view", null);
+                writer.writeAttribute("name", prefix + "ice.view", null);
                 writer.writeAttribute("value", viewID, null);
                 writer.writeAttribute("autocomplete", "off", null);
                 writer.endElement("input");

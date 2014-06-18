@@ -78,6 +78,20 @@ var singleSubmit;
         return execute;
     }
 
+    function fixAlreadyNamespacedOptions(parameterPrefix, options) {
+        var length = parameterPrefix.length;
+        var fixedOptions = {};
+        for (var p in options) {
+            if (startsWith(p, parameterPrefix)) {
+                fixedOptions[substring(p, length, p.length)] = options[p];
+            } else {
+                fixedOptions[p] = options[p];
+            }
+        }
+
+        return fixedOptions;
+    }
+
     singleSubmit = function(execute, render, event, element, additionalParameters, callbacks) {
         var viewID = viewIDOf(element);
         var form = document.getElementById(singleSubmitFormID(viewID));
@@ -136,11 +150,13 @@ var singleSubmit;
 
             var requestScopedSubmitEventBroadcaster = submitEventBroadcaster(onBeforeSubmitListeners, onBeforeUpdateListeners, onAfterUpdateListeners);
             var requestScopedSubmitErrorBroadcaster = submitErrorBroadcaster(onNetworkErrorListeners, onServerErrorListeners);
+            var parameterPrefix = configurationOf(element || form).parameterPrefix;
             var options = {
                 execute: execute,
                 render: render,
                 onevent: requestScopedSubmitEventBroadcaster,
                 onerror: requestScopedSubmitErrorBroadcaster,
+                'com.sun.faces.namingContainerId': parameterPrefix,
                 'ice.window': namespace.window,
                 'ice.view': viewID,
                 'ice.focus': currentFocus
@@ -163,7 +179,7 @@ var singleSubmit;
                 'view ID: ' + viewID,
                 'event type: ' + type(decoratedEvent)
             ], '\n'));
-            namespace.submitFunction(clonedElement, event, options);
+            namespace.submitFunction(clonedElement, event, fixAlreadyNamespacedOptions(parameterPrefix, options));
         } catch (e) {
             debug(logger, "singleSubmit failed " + e);
         } finally {
@@ -323,6 +339,7 @@ var singleSubmit;
                     curry(append, onServerErrorListeners)
                 );
             }
+            var parameterPrefix = configurationOf(element || f).parameterPrefix;
             var viewID = viewIDOf(element);
             var requestScopedSubmitEventBroadcaster = submitEventBroadcaster(onBeforeSubmitListeners, onBeforeUpdateListeners, onAfterUpdateListeners);
             var requestScopedSubmitErrorBroadcaster = submitErrorBroadcaster(onNetworkErrorListeners, onServerErrorListeners);
@@ -331,6 +348,7 @@ var singleSubmit;
                 render: render,
                 onevent: requestScopedSubmitEventBroadcaster,
                 onerror: requestScopedSubmitErrorBroadcaster,
+                'com.sun.faces.namingContainerId': parameterPrefix,
                 'ice.window': namespace.window,
                 'ice.view': viewID,
                 'ice.focus': currentFocus};
@@ -396,28 +414,29 @@ var singleSubmit;
 
                 append(appendedElements, deltaSubmitForm.appendChild(clonedElement));
 
-                function createHiddenInputInDeltaSubmitForm(name, value) {
-                    append(appendedElements, appendHiddenInputElement(deltaSubmitForm, name, value));
+                function addSubmitParameter(name, value) {
+                    options[name] = value;
                 }
+                addSubmitParameter('ice.deltasubmit.form', form.id);
+                addSubmitParameter(form.id, form.id);
 
                 try {
-                    createHiddenInputInDeltaSubmitForm('ice.deltasubmit.form', form.id);
-                    createHiddenInputInDeltaSubmitForm(form.id, form.id);
+                    addSubmitParameter('ice.deltasubmit.form', form.id);
                     each(addedParameters, splitStringParameter(function(name, value) {
-                        createHiddenInputInDeltaSubmitForm(addPrefix + name, value);
+                        addSubmitParameter(addPrefix + name, value);
                     }));
                     each(removedParameters, splitStringParameter(function(name, value) {
-                        createHiddenInputInDeltaSubmitForm(removePrefix + name, value);
+                        addSubmitParameter(removePrefix + name, value);
                     }));
 
-                    namespace.submitFunction(clonedElement, event, options);
+                    namespace.submitFunction(clonedElement, event, fixAlreadyNamespacedOptions(parameterPrefix, options));
                 } finally {
                     each(appendedElements, function(element) {
                         deltaSubmitForm.removeChild(element);
                     });
                 }
             } else {
-                namespace.submitFunction(element, event, options);
+                namespace.submitFunction(element, event, fixAlreadyNamespacedOptions(parameterPrefix, options));
             }
         }
     };

@@ -78,7 +78,7 @@
                         viewStateElement.value = viewState;
                     }
                 } catch (ex) {
-                    appendHiddenInputElement(form, 'javax.faces.ViewState', viewState, viewState);
+                    appendViewStateInputElement(form, viewState);
                     debug(logger, 'append missing "javax.faces.ViewState" input element to form["' + form.id + '"]');
                 }
             });
@@ -114,7 +114,7 @@
                 viewStateElement.value = viewState;
             }
         } catch (ex) {
-            appendHiddenInputElement(form, 'javax.faces.ViewState', viewState, viewState);
+            appendViewStateInputElement(form, viewState);
         }
     }
 

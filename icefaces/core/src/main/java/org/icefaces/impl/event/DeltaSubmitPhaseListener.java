@@ -65,7 +65,11 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
         ExternalContext externalContext = facesContext.getExternalContext();
         Map submittedParameters = externalContext.getRequestParameterValuesMap();
 
-        String[] deltaSubmitFormValues = (String[]) submittedParameters.get("ice.deltasubmit.form");
+        String parameterNamespace = EnvUtils.getParameterNamespace(facesContext);
+        String appendMarker = parameterNamespace + Append;
+        String subtractMarker = parameterNamespace + Subtract;
+
+        String[] deltaSubmitFormValues = (String[]) submittedParameters.get(parameterNamespace + "ice.deltasubmit.form");
         if (deltaSubmitFormValues == null) {
             //this is not a delta form submission
             return;
@@ -85,8 +89,8 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
             String patchKey = (String) entry.getKey();
             String[] values = (String[]) entry.getValue();
 
-            if (patchKey.startsWith(Append)) {
-                String key = patchKey.substring(6);
+            if (patchKey.startsWith(appendMarker)) {
+                String key = patchKey.substring(appendMarker.length());
                 String[] previousValues = (String[]) parameterValuesMap.get(key);
                 if (previousValues == null) {
                     parameterValuesMap.put(key, values);
@@ -96,8 +100,8 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
                     allValues.addAll(Arrays.asList(values));
                     parameterValuesMap.put(key, allValues.toArray(StringArray));
                 }
-            } else if (patchKey.startsWith(Subtract)) {
-                String key = patchKey.substring(6);
+            } else if (patchKey.startsWith(subtractMarker)) {
+                String key = patchKey.substring(subtractMarker.length());
                 String[] previousValues = (String[]) parameterValuesMap.get(key);
                 if (previousValues == null) {
                     log.fine("Missing previous parameters: " + key);
@@ -117,7 +121,7 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
                 }
             } else {
                 //add direct parameter only when does not participate in the parameter diffing
-                if (!submittedParameters.containsKey(Subtract + patchKey) && !submittedParameters.containsKey(Append + patchKey)) {
+                if (!submittedParameters.containsKey(subtractMarker + patchKey) && !submittedParameters.containsKey(appendMarker + patchKey)) {
                     parameterValuesMap.put(patchKey, values);
                 }
                 directParameters.add(patchKey);
@@ -131,16 +135,16 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
         while (directParameterIterator.hasNext()) {
             String parameterName = (String) directParameterIterator.next();
             //don't remove parameter when it also participates in the parameter diffing
-            if (!submittedParameters.containsKey(Append + parameterName)) {
+            if (!submittedParameters.containsKey(appendMarker + parameterName)) {
                 newPreviousParameters.remove(parameterName);
             }
         }
 
         Object request = externalContext.getRequest();
         if (EnvUtils.instanceofPortletRequest(request)) {
-            externalContext.setRequest(new DeltaPortletRequest((PortletRequest) request, parameterValuesMap));
+            externalContext.setRequest(new DeltaPortletRequest((PortletRequest) request, parameterValuesMap, parameterNamespace));
         } else {
-            externalContext.setRequest(new DeltaHttpServletRequest((HttpServletRequest) request, parameterValuesMap));
+            externalContext.setRequest(new DeltaHttpServletRequest((HttpServletRequest) request, parameterValuesMap, parameterNamespace));
         }
     }
 
@@ -298,9 +302,18 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
     private static class DeltaHttpServletRequest extends HttpServletRequestWrapper {
         private final Map parameterValuesMap;
 
-        public DeltaHttpServletRequest(HttpServletRequest originalRequest, Map parameterValuesMap) {
+        public DeltaHttpServletRequest(HttpServletRequest originalRequest, Map parameterValuesMap, final String parameterNamespace) {
             super(originalRequest);
-            this.parameterValuesMap = parameterValuesMap;
+            this.parameterValuesMap = new HashMap(parameterValuesMap) {
+                public Object get(Object o) {
+                    Object value = super.get(o);
+                    if (value == null) {
+                        //try namespacing the provided parameter
+                        value = super.get(parameterNamespace + o);
+                    }
+                    return value;
+                }
+            };
         }
 
         public String getParameter(String s) {
@@ -324,9 +337,18 @@ public class DeltaSubmitPhaseListener implements PhaseListener {
     private static class DeltaPortletRequest extends PortletRequestWrapper {
         private final Map parameterValuesMap;
 
-        public DeltaPortletRequest(PortletRequest originalRequest, Map parameterValuesMap) {
+        public DeltaPortletRequest(PortletRequest originalRequest, Map parameterValuesMap, final String parameterNamespace) {
             super(originalRequest);
-            this.parameterValuesMap = parameterValuesMap;
+            this.parameterValuesMap = new HashMap(parameterValuesMap) {
+                public Object get(Object o) {
+                    Object value = super.get(o);
+                    if (value == null) {
+                        //try namespacing the provided parameter
+                        value = super.get(parameterNamespace + o);
+                    }
+                    return value;
+                }
+            };
         }
 
         public String getParameter(String s) {
