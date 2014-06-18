@@ -33,7 +33,7 @@ public abstract class MetaContext {
 	protected Map<Field, PropertyValues> propertyValuesMap = new HashMap<Field, PropertyValues>();
     protected Map<String, Field> internalFieldsForComponentClass = new HashMap<String, Field>();
 
-	protected boolean generateHandler;
+	protected boolean generateHandler = true;
 	
     public Map<Field, PropertyValues> getPropertyValuesMap() {
 		return propertyValuesMap;
@@ -183,7 +183,6 @@ public abstract class MetaContext {
             /* if values end up being UNSET, then set them to default*/
             propertyValues.setDefaultValues();
             propertyValuesMap.put(field, propertyValues);
-            furtherProcessProperty(clazz, propertyValues);
             return true;
         } else if (field.isAnnotationPresent(org.icefaces.ace.meta.annotation.Field.class)) {
             internalFieldsForComponentClass.put(field.getName(), field);
@@ -196,10 +195,6 @@ public abstract class MetaContext {
     abstract protected boolean isAllowedPropertyOnlyType(OnlyType onlyType);
     abstract protected void setupArtifacts();
     abstract protected boolean isPropertyValueDisinherited(Class clazz, String name);
-
-
-    protected void furtherProcessProperty(Class clazz, PropertyValues propertyValues) {
-    }
 	
 	protected PropertyValues collectPropertyValues(String fieldName, Class clazz) {
         if (logger.isLoggable(Level.FINE)){

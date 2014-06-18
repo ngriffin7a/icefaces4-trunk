@@ -103,7 +103,16 @@ public class AjaxBehaviorHandler extends AjaxBehaviorHandlerBase implements Beha
         // then essentially inlines AjaxHandler.applyAttachedObject(-). It
         // seems to apply to both composite components and ClientBehaviorHolder(s)
 
+        // We leverage AjaxBehaviors to support the wrapping case.  We
+        // push/pop the AjaxBehavior instance on AjaxBehaviors so that
+        // child tags will have access to it.
+        FacesContext context = ctx.getFacesContext();
+        AjaxBehaviors ajaxBehaviors = AjaxBehaviors.getAjaxBehaviors(context, true);
+        ajaxBehaviors.pushBehavior(ctx, this, eventName); 
+
         nextHandler.apply(ctx, parent);
+
+        ajaxBehaviors.popBehavior();
     }
 
     // Applies a nested AjaxHandler by adding the AjaxBehavior to the
