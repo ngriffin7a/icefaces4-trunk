@@ -151,7 +151,12 @@ public class MaskedEntryRenderer extends InputRenderer {
             writer.writeAttribute("role", "textbox", null);
         }
 
-        String valueToRender = ComponentUtils.getStringValueToRender(context, maskedEntry);
+        String valueToRender = null;
+		if (maskedEntry.isValid()) {
+			valueToRender = ComponentUtils.getStringValueToRender(context, maskedEntry);
+		} else {
+			valueToRender = (String) maskedEntry.getSubmittedValue();
+		}
         boolean hasLabel = (Boolean) labelAttributes.get("hasLabel");
         String labelPosition = (String) labelAttributes.get("labelPosition");
         String label = (String) labelAttributes.get("label");
