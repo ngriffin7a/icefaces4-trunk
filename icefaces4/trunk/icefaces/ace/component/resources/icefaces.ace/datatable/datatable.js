@@ -1133,11 +1133,12 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
             _self.resizeScrolling()
         }, 100);
     }
-    else if (!_self.sizingHasWaited) {
+	// If noHiddenCheck=true then force at least on delayed resize (ICE-9571)
+    else if ((this.cfg.nohidden) && (!_self.sizingHasWaited)) {
         setTimeout(function () {
             _self.sizingHasWaited = true;
             _self.resizeScrolling()
-        }, 0);
+        }, 100);
     }
     else {
         var resizableTableParents = scrollableTable.parents('.ui-datatable-scrollable');
