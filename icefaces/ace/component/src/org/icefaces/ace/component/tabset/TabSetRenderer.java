@@ -316,7 +316,8 @@ public class TabSetRenderer extends CoreRenderer {
             encodeClientBehaviors(facesContext, tabSet, jb);
         jb.endMap().
         endFunction();
-        ScriptWriter.insertScript(facesContext, uiComponent, jb.toString() + "//" + RANDOM.nextLong());
+        String reEvaluate = tabSet.isClientSide() ? "" : ("//" + RANDOM.nextLong());
+        ScriptWriter.insertScript(facesContext, uiComponent, jb.toString() + reEvaluate);
     }
 
     private void recursivelyRenderSafe(FacesContext facesContext,
