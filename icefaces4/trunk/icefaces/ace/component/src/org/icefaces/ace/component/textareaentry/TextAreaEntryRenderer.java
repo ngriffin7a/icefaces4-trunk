@@ -102,7 +102,12 @@ public class TextAreaEntryRenderer extends InputRenderer {
 
         String iceFocus = (String) paramMap.get("ice.focus");
         String inFieldLabel = (String) labelAttributes.get("inFieldLabel");
-        String value = ComponentUtils.getStringValueToRender(context, component);
+        String value = null;
+		if (textAreaEntry.isValid()) {
+			value = ComponentUtils.getStringValueToRender(context, component);
+		} else {
+			value = (String) textAreaEntry.getSubmittedValue();
+		}
         String defaultClass = themeForms() ? TextAreaEntry.THEME_INPUT_CLASS : TextAreaEntry.PLAIN_INPUT_CLASS;
         defaultClass += getStateStyleClasses(textAreaEntry);
         if (isValueBlank(value) && !isValueBlank(inFieldLabel) && !clientId.equals(iceFocus)) {

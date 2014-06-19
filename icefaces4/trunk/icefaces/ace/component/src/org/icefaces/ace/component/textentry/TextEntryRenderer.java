@@ -107,7 +107,12 @@ public class TextEntryRenderer extends InputRenderer {
         writer.writeAttribute("autocapitalize", textEntry.getAutocapitalize(), null);
         String embeddedLabel = null;
         String nameToRender = clientId + "_input";
-        String valueToRender = textEntry.isRedisplay() ? ComponentUtils.getStringValueToRender(context, textEntry) : "";
+        String valueToRender = null;
+		if (textEntry.isValid()) {
+			valueToRender = textEntry.isRedisplay() ? ComponentUtils.getStringValueToRender(context, textEntry) : "";
+		} else {
+			valueToRender = (String) textEntry.getSubmittedValue();
+		}
         boolean hasLabel = (Boolean) labelAttributes.get("hasLabel");
         String labelPosition = (String) labelAttributes.get("labelPosition");
         String label = (String) labelAttributes.get("label");
