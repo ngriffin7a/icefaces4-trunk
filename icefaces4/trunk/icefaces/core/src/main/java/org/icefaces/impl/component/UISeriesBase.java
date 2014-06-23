@@ -16,6 +16,8 @@
 
 package org.icefaces.impl.component;
 
+import org.icefaces.util.EnvUtils;
+
 import javax.faces.FacesException;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
@@ -1206,7 +1208,9 @@ public class UISeriesBase extends HtmlDataTable implements SeriesStateHolder {
                 int index = getFirst();
                 for (UIComponent kid : getChildren()) {
                     if (!(kid instanceof UIColumn)) {
-                        setRowIndex(index++);
+                        if (!EnvUtils.isPartialStateSaving(context.getFacesContext())) {
+                            setRowIndex(index++);
+                        }
                         if (kid.visitTree(context, callback)) {
                             return true;
                         }
