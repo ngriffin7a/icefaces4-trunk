@@ -498,7 +498,9 @@ if (!window.ice.icefaces) {
                     switchToClientSideElementUpdateDetermination();
                 }
                 if (configuration.blockUIOnSubmit) {
-                    onBeforeUnload(window, startBlockingUI);
+                    onBeforeUnload(window, function() {
+                        startBlockingUI();
+                    });
                 }
                 setupDefaultIndicators(container, configuration);
                 clearEventHandlersOnUnload(container);
