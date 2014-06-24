@@ -89,11 +89,8 @@ public class DialogRenderer extends CoreRenderer {
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
 
-        writer.write("ice.ace.jq(function() {");
-
         JSONBuilder jb = JSONBuilder.create();
-        jb.initialiseWindowVar(resolveWidgetVar(dialog))
-          .beginFunction("ice.ace.create")
+        jb.beginFunction("ice.ace.create")
           .item("Dialog")
           .beginArray()
           .item(clientId + "_main")
@@ -167,9 +164,10 @@ public class DialogRenderer extends CoreRenderer {
         //Behaviors
         encodeClientBehaviors(context, dialog, jb);
 
-        jb.endMap().endArray().endFunction();
-		writer.write(jb.toString());
-		writer.write("});");
+        jb.endMap().endArray();
+		jb.item(clientId); // root id
+		jb.endFunction();
+		writer.write("ice.ace.lazy.registry['"+clientId+"'] = function(){ return "+jb.toString()+"};");
 
         writer.endElement("script");
     }

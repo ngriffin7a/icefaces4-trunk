@@ -35,10 +35,10 @@ ice.ace.escapeClientId = function(id) {
 };
 
 ice.ace.instance = function(id) {
-	var element = document.getElementById(id);
-	if (element.widget) return element.widget;
 	var lazy = ice.ace.lazy.registry[id];
 	if (lazy) return lazy();
+	var element = document.getElementById(id);
+	if (element.widget) return element.widget;
 	return null;
 }
 
@@ -53,11 +53,11 @@ ice.ace.destroy = function(id) {
     delete elem.widget;
 }
 
-ice.ace.lazy = function(name, args) {
-    var clientId = args[0], // lazy requires clientId is first arg
+ice.ace.lazy = function(name, args, rootId) {
+    var clientId = rootId ? rootId : args[0], // lazy requires clientId is first arg
         elem = document.getElementById(clientId);
 
-    if (elem.widget == undefined) {
+    if (ice.ace.lazy.registry[clientId]) {
 		delete ice.ace.lazy.registry[clientId];
         var component = ice.ace.create(name, args);
         return component;
