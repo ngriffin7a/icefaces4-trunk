@@ -1606,6 +1606,7 @@ public class DataTable extends DataTableBase implements Serializable {
             // Get / Regenerate cached data model.
         }
         getDataModel();
+        if (isLazy()) loadLazyData();
 
         PanelExpansion panelExpansion = getPanelExpansion();
         RowExpansion rowExpansion = getRowExpansion();
