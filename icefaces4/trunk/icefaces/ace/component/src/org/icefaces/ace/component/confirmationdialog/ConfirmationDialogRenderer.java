@@ -103,8 +103,7 @@ public class ConfirmationDialogRenderer extends CoreRenderer {
 		
 		JSONBuilder jb = JSONBuilder.create();
 		
-		jb.initialiseVar(this.resolveWidgetVar(dialog))
-          .beginFunction("ice.ace.create")
+		jb.beginFunction("ice.ace.lazy")
           .item("ConfirmDialog")
           .beginArray()
           .item(clientId)
@@ -145,7 +144,7 @@ public class ConfirmationDialogRenderer extends CoreRenderer {
         jb.entry("ariaEnabled", ariaEnabled);
         jb.endMap().endArray().endFunction();
 
-        writer.write(jb.toString());
+		writer.write("ice.ace.lazy.registry['"+clientId+"'] = function(){ return "+jb.toString()+"};");
 		writer.endElement("script");
 	}
 
