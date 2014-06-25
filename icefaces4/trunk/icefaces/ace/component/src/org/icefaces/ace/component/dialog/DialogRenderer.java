@@ -90,10 +90,10 @@ public class DialogRenderer extends CoreRenderer {
         writer.writeAttribute("type", "text/javascript", null);
 
         JSONBuilder jb = JSONBuilder.create();
-        jb.beginFunction("ice.ace.create")
+        jb.beginFunction("ice.ace.lazy")
           .item("Dialog")
           .beginArray()
-          .item(clientId + "_main")
+          .item(clientId)
           .beginMap()
           .entry("isVisible", dialog.isVisible())
           .entry("minHeight", dialog.getMinHeight())

@@ -53,16 +53,18 @@ ice.ace.destroy = function(id) {
     delete elem.widget;
 }
 
-ice.ace.lazy = function(name, args, rootId) {
-    var clientId = rootId ? rootId : args[0], // lazy requires clientId is first arg
+ice.ace.lazy = function(name, args) {
+    var clientId = args[0], // lazy requires clientId is first arg
         elem = document.getElementById(clientId);
 
     if (ice.ace.lazy.registry[clientId]) {
 		delete ice.ace.lazy.registry[clientId];
         var component = ice.ace.create(name, args);
         return component;
-    }
-    else
+    } else if (!elem.widget) {
+        var component = ice.ace.create(name, args);
+        return component;
+	} else
         return elem.widget;
 }
 
