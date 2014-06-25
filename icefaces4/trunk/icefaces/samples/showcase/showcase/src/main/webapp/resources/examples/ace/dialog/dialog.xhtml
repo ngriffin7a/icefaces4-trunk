@@ -37,12 +37,11 @@
     <ui:define name="example">
         
             <center>
-                <h:commandButton id="show" value="Show Dialog" onclick="sampleDialog.show();" type="button"/>
+                <h:commandButton id="show" value="Show Dialog" onclick="ice.ace.instance('dialog').show();" type="button"/>
             </center>
             
             <ace:dialog id="dialog"
                                header="A sample dialog overview example"
-                               widgetVar="sampleDialog"
                                closable="false"
                                modal="true"
                                draggable="false"
@@ -60,7 +59,7 @@
                     </h:panelGrid>
 
                     <h:panelGrid width="100%" style="text-align: center;">
-                        <h:commandButton id="submit" value="Click me once done with input" onclick="sampleDialog.hide();"/>
+                        <h:commandButton id="submit" value="Click me once done with input" onclick="ice.ace.instance('dialog').hide();"/>
                     </h:panelGrid>
                 </h:form>
                 
