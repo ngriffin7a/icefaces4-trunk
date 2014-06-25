@@ -50,7 +50,7 @@
             </h:form>
             <center>
 			<h:form id="bttnForm">
-                <h:commandButton id="show" value="Show Dialog"  onclick="sampleModalDialog.show();return false;"/>
+                <h:commandButton id="show" value="Show Dialog"  onclick="ice.ace.instance('dialog').show();return false;"/>
 			</h:form>
             </center>
             
@@ -58,7 +58,6 @@
 
         <ace:dialog id="dialog"
                            header="Dialog example"
-                           widgetVar="sampleModalDialog"
                            draggable="#{modalDialogBean.draggable}"
                            modal="#{modalDialogBean.modal}">
 

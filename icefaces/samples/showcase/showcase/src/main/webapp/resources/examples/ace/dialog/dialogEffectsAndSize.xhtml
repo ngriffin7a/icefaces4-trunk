@@ -88,14 +88,13 @@
             
                     <center>
                         <h:form id="bttnForm">
-                        <h:commandButton id="show" value="Show Dialog"  onclick="sampleDynamicDialog.show();return false;"/>
+                        <h:commandButton id="show" value="Show Dialog"  onclick="ice.ace.instance('dialog').show();return false;"/>
                         </h:form>
                     </center>
             </ace:panel>
             
             <ace:dialog id="dialog"
                                header="Dialog effects and size example"
-                               widgetVar="sampleDynamicDialog"
                                minWidth="#{dialogEffectsAndSizeBean.minWidth}"
                                minHeight="#{dialogEffectsAndSizeBean.minHeight}"
                                showEffect="#{dialogEffectsAndSizeBean.showEffect}"
