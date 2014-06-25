@@ -58,6 +58,7 @@ public class ConfirmationDialogRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId , null);
 		
 		writer.startElement("div", null);
+		writer.writeAttribute("style", "display:none", null);
 		String header = dialog.getHeader();
 		if(header != null) {
 			writer.writeAttribute("title", header, null);
