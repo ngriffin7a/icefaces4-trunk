@@ -205,6 +205,11 @@ ice.ace.CalendarInit = function(options) {
             return;
         }
 
+		ice.ace.lazy.registry[id] = function() {
+			if (trigger) trigger.remove();
+			return window[widgetVar] = create();
+		};
+
         input.one("focus", function() {
             if (behavior) {
                 input.bind('change', function() {

@@ -34,6 +34,7 @@ if (!window.ice['ace']) {
     window.ice.ace = {};
 }
 ice.ace.Dialog = function(id, cfg) {
+	id = id + "_main";
     var callee = arguments.callee, prevAceDialog = callee[id], jqo;
     if (prevAceDialog) {
         jqo = prevAceDialog.jq;
