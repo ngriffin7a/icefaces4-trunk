@@ -538,3 +538,31 @@ ice.ace.TableConf.prototype.submitTableConfig = function (target) {
 
     ice.ace.AjaxRequest(options);
 };
+
+ice.ace.TableConf.prototype.open = function() {
+	var panel = this.$this,
+		modal = panel.next('.ui-tableconf-modal');
+
+	panel.toggle();
+	modal.toggle();
+
+	if (panel.is(':not(:visible)'))
+		this.submitTableConfig(panel.find('.ui-tableconf-header').get(0));
+	else if (this.behaviors && this.behaviors.open)
+		ice.ace.ab(this.behaviors.open);
+
+	// Size the headers and body to line up. ordering, name, visibility, sorting
+	var maxWidth;
+	maxWidth = Math.max.apply(Math, panel.find('.ui-tableconf-body .ordering').
+			map(function(idx, elem) {return elem.offsetWidth;}).get());
+	if (maxWidth > 0) panel.find('.ui-tableconf-body .ordering').width(maxWidth);
+	maxWidth = Math.max.apply(Math, panel.find('.ui-tableconf-body .name').
+			map(function(idx, elem) {return elem.offsetWidth;}).get());
+	if (maxWidth > 0) panel.find('.ui-tableconf-body .name').width(maxWidth);
+	maxWidth = Math.max.apply(Math, panel.find('.ui-tableconf-body .visibility').
+			map(function(idx, elem) {return elem.offsetWidth;}).get());
+	if (maxWidth > 0) panel.find('.ui-tableconf-body .visibility').width(maxWidth);
+	maxWidth = Math.max.apply(Math, panel.find('.ui-tableconf-body .sorting').
+			map(function(idx, elem) {return elem.offsetWidth;}).get());
+	if (maxWidth > 0) panel.find('.ui-tableconf-body .sorting').width(maxWidth);
+};
