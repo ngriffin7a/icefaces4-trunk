@@ -30,7 +30,6 @@
     <property name="mojarra.lib.dir" location="${lib.dir}/mojarra"/>
 
     <property name="myfaces.lib.dir" location="${lib.dir}/myfaces"/>
-    <property name="myfaces.common.dir" value="${myfaces.lib.dir}/common" /> 
     
     <property name="lib.ace.dir" location="${lib.dir}/ace"/>
     <property name="lib.ace.dir.includes" value=""/>
@@ -133,9 +132,6 @@
                 <fileset dir="${jsf.lib.dir}">
                     <patternset refid="lib.compile"/>
                 </fileset>
-                <fileset dir="${myfaces.common.dir}">
-                    <patternset refid="lib.myfaces.common"/>
-                </fileset>
                 <fileset dir="${lib.dir}" >
                     <patternset refid="lib.compile"/>
                 </fileset>
@@ -185,10 +181,6 @@
             </lib>
             <lib dir="${jsf.lib.dir}" erroronmissingdir="false">
                 <patternset refid="lib.distribute.jsf"/>
-            </lib>
-
-            <lib dir="${myfaces.common.dir}" erroronmissingdir="false">
-                <exclude name="*.jar" unless="myfaces.common.include"/>
             </lib>
 
             <!-- Add the icefaces-ee-ext.jar only if it exists.  There are
