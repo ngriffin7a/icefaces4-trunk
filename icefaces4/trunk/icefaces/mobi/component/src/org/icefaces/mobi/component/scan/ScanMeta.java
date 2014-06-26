@@ -19,7 +19,7 @@ package org.icefaces.mobi.component.scan;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
-import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
+import org.icefaces.ace.meta.baseMeta.UIInputMeta;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
@@ -39,7 +39,7 @@ import javax.faces.application.ResourceDependency;
         @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
 })
-public class ScanMeta extends UIComponentBaseMeta {
+public class ScanMeta extends UIInputMeta {
 
     @Property(defaultValue = "false",
             tlddoc = org.icefaces.mobi.util.TLDConstants.DISABLED)
