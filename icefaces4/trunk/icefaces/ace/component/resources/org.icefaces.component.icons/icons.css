@@ -43,7 +43,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("#{resource['org.icefaces.component.icons:fontawesome-webfont.ttf']}") format('truetype');
+  src: url("#{resource['org.icefaces.component.icons:fontawesome-webfont.eot']}");
+  src: url("#{resource['org.icefaces.component.icons:fontawesome-webfont.eot']}?#iefix") format('embedded-opentype'), url("#{resource['org.icefaces.component.icons:fontawesome-webfont.woff']}") format('woff'), url("#{resource['org.icefaces.component.icons:fontawesome-webfont.ttf']}") format('truetype'), url("#{resource['org.icefaces.component.icons:fontawesome-webfont.svg']}") format('svg');
   font-weight: normal;
   font-style: normal;
 }
