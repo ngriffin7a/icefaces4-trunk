@@ -196,11 +196,14 @@ ice.ace.Dialog.prototype.ajaxHide = function() {
 }
 
 ice.ace.Dialog.prototype.focusInput = function(id) {
-    if (id) {
-        document.getElementById(id).focus();
-    } else {
-        this.focusFirstInput();
-    }
+	var self = this;
+	setTimeout(function() {
+		if (id) {
+			document.getElementById(id).focus();
+		} else {
+			self.focusFirstInput();
+		}
+	}, 150);
 };
 
 ice.ace.Dialog.prototype.focusFirstInput = function() {
