@@ -168,6 +168,7 @@ public class DialogRenderer extends CoreRenderer {
 		jb.item(clientId); // root id
 		jb.endFunction();
 		writer.write("ice.ace.lazy.registry['"+clientId+"'] = function(){ return "+jb.toString()+"};");
+		if (dialog.isVisible()) writer.write("ice.ace.instance('"+clientId+"').show();");
 
         writer.endElement("script");
     }

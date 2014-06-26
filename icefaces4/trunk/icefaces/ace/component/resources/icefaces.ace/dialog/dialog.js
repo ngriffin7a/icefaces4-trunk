@@ -147,16 +147,6 @@ ice.ace.Dialog = function(id, cfg) {
 //        this.jq.parent().appendTo(document.body);
 //    }
 
-    //Apply focus to first input initially
-    if (this.cfg.isVisible) {
-        this.jq.dialog("open");
-        var focusOn = this.cfg.setFocus;
-        var self = this;
-        setTimeout(function() {
-            self.focusInput(focusOn);
-        }, 150);
-    }
-
     callee[id] = this;
 };
 
