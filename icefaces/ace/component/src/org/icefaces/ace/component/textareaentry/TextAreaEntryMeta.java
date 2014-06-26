@@ -44,8 +44,11 @@ import org.icefaces.resources.ICEResourceLibrary;
 })
 @ClientBehaviorHolder(events = {
         @ClientEvent(name = "blur", javadoc = "Fired when the text input field loses focus (default event).",
-                tlddoc = "Fired when the text input field loses focus (default event).", defaultRender = "@all", defaultExecute = "@this")
-}, defaultEvent = "blur")
+                tlddoc = "Fired when the text input field loses focus (default event).", defaultRender = "@all", defaultExecute = "@this"),
+	@ClientEvent(name="valueChange", javadoc="Fired when the component detects value is changed.",
+            tlddoc="Fired when the component detects value is changed.",
+            defaultRender="@this", defaultExecute="@all")
+}, defaultEvent = "valueChange")
 public class TextAreaEntryMeta extends UIInputMeta {
 
     @Property(tlddoc = "Name of the widget variable to access client-side API.")

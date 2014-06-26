@@ -75,7 +75,7 @@ import java.util.List;
 		javadoc="Fired when the user gives a more definite input for this component either by clicking on an option from the list, or selecting an option with the keyboard, or pressing enter on the text field.",
 		tlddoc="Fired when the user gives a more definite input for this component either by clicking on an option from the list, or selecting an option with the keyboard, or pressing enter on the text field.",
 		defaultRender="@all", defaultExecute="@this" )},
-	defaultEvent="submit" )
+	defaultEvent="valueChange" )
 public class AutoCompleteEntryMeta extends HtmlInputTextMeta {
 	
     @Property(tlddoc = "Style class name of the container element.", defaultValue="")
