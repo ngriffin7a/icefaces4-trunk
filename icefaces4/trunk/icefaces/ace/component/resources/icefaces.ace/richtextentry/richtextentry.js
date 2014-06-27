@@ -100,12 +100,22 @@ ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _ski
         if (behaviors && behaviors.behaviors) {
 			if (behaviors.behaviors.save) editorInstance.ajaxSave = behaviors.behaviors.save;
 			if (behaviors.behaviors.blur) editorInstance.ajaxBlur = behaviors.behaviors.blur;
+			if (behaviors.behaviors.change) editorInstance.ajaxChange = behaviors.behaviors.change;
         }
+		editorInstance.initialData = editorInstance.getData();
 		var onBlur = function(e) {
 			var instance = CKEDITOR.instances[editor];
 			var textarea = document.getElementById(editor);
+			var data = instance.getData();
 			if (saveOnSubmit || instance.ajaxBlur) {
-				textarea.value = instance.getData();
+				textarea.value = data;
+			}
+			if (instance.ajaxChange) {
+				if (data != instance.initialData) {
+					textarea.value = data;
+					instance.initialData = data;
+					instance.changeObserver = setTimeout(function(){ice.ace.ab(instance.ajaxChange);}, 200);
+				}
 			}
 			if (instance.ajaxBlur) {
 				instance.blurObserver = setTimeout(function(){ice.ace.ab(instance.ajaxBlur);}, 200);
@@ -114,6 +124,7 @@ ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _ski
 		editorInstance.on('blur', onBlur);
 		var onCommand = function(e) {
 			var instance = CKEDITOR.instances[editor];
+			setTimeout(function(){if (instance.changeObserver) clearTimeout(instance.changeObserver);}, 190);
 			setTimeout(function(){if (instance.blurObserver) clearTimeout(instance.blurObserver);}, 190);
 		}
 		editorInstance.on('beforeCommandExec', onCommand);

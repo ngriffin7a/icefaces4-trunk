@@ -54,8 +54,11 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ClientEvent( name="blur",
 		javadoc="Fired any time the editor loses focus.",
 		tlddoc="Fired any time the editor loses focus.",
-		defaultRender="@all", defaultExecute="@this" )},
-	defaultEvent="save" )
+		defaultRender="@all", defaultExecute="@this" ),
+	@ClientEvent(name="valueChange", javadoc="Fired when the component detects value is changed.",
+            tlddoc="Fired when the component detects value is changed.",
+            defaultRender="@this", defaultExecute="@all")},
+	defaultEvent="valueChange" )
 public class RichTextEntryMeta extends UIInputMeta {
 
     @Property(tlddoc = "Specifies the language to be used for the user interface.", defaultValue="en")
