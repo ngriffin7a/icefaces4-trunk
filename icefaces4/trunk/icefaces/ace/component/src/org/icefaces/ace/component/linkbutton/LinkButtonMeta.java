@@ -47,8 +47,8 @@ import org.icefaces.resources.ICEResourceLibrary;
      @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
 })
 @ClientBehaviorHolder(events = {
-	@ClientEvent(name="activate", javadoc="Fired when the button is clicked or pressed by any other means (default event).", tlddoc="Fired when the button is clicked or pressed by any other means (default event).", defaultRender="@all", defaultExecute="@all")
-}, defaultEvent="activate")
+	@ClientEvent(name="action", javadoc="Fired when the button is clicked or pressed by any other means (default event).", tlddoc="Fired when the button is clicked or pressed by any other means (default event).", defaultRender="@all", defaultExecute="@all")
+}, defaultEvent="action")
 public class LinkButtonMeta extends UICommandMeta {
 
     @Property(tlddoc = "Href attribute of the anchor element. If specified and actionListener is absent, linkButton works " +

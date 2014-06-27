@@ -61,6 +61,7 @@ public class AjaxBehaviorHandler extends AjaxBehaviorHandlerBase implements Beha
         //System.out.println("AjaxBehaviorHandler.apply()  isCompositeComponent(parent): " + UIComponent.isCompositeComponent(parent));
 
         String eventName = getEventName();
+		if ("activate".equals(eventName)) eventName = "action";
         if (this.wrapping) {
             applyWrapping(ctx, parent, eventName);
         }  else {

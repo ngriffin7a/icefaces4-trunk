@@ -127,10 +127,10 @@ ice.ace.checkboxbutton.prototype.toggleCheckbox = function (activeButton) {
         ice.ace.jq(this.innerSpanSelector).attr("aria-checked", newValue);
     }
 
-    if (this.options.behaviors && this.options.behaviors.activate) {
+    if (this.options.behaviors && this.options.behaviors.action) {
 		if (activeButton) ice.setFocus(this.id + '_button');
         ice.ace.ab(ice.ace.extendAjaxArgs(
-            this.options.behaviors.activate,
+            this.options.behaviors.action,
             {params: this.options.uiParams}
         ));
     }

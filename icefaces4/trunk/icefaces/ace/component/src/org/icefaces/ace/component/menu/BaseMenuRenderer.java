@@ -111,11 +111,11 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 					Map<String,List<ClientBehavior>> behaviorEvents = menuItem.getClientBehaviors();
 					if(!behaviorEvents.isEmpty()) {
 						List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
-						for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get("activate").iterator(); behaviorIter.hasNext();) {
+						for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get("action").iterator(); behaviorIter.hasNext();) {
 							ClientBehavior behavior = behaviorIter.next();
 							if (behavior instanceof AjaxBehavior)
 								hasAjaxBehavior = true;
-							ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, menuItem, "activate", clientId, params);
+							ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, menuItem, "action", clientId, params);
 							String script = behavior.getScript(cbc);    //could be null if disabled
 
 							if(script != null) {

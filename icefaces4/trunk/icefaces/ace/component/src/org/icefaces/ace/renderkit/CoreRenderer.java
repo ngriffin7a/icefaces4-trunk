@@ -307,8 +307,6 @@ public class CoreRenderer extends Renderer {
 
         if (event.equalsIgnoreCase("valueChange"))       //editable value holders
             domEvent = "change";
-        else if(event.equalsIgnoreCase("action"))       //commands
-            domEvent = "click";
 
         return domEvent;
     }
