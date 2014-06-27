@@ -127,10 +127,10 @@ ice.ace.radiobutton.prototype.toggleCheckbox = function (activeButton) {
 
 	if (this.options.behaviors) {
 		if (newValue == true) {
-			if (this.options.behaviors.activate) {
+			if (this.options.behaviors.action) {
 				if (activeButton) ice.setFocus(this.id + '_button');
 				ice.ace.ab(ice.ace.extendAjaxArgs(
-					this.options.behaviors.activate,
+					this.options.behaviors.action,
 					{params: this.options.uiParams}
 				));
 			}

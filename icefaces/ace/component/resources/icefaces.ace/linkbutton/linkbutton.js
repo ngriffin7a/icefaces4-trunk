@@ -64,9 +64,9 @@ ice.ace.linkButton.prototype.onClick = function () {
         execute:"@all"
     };
 
-    if (this.cfg.behaviors && this.cfg.behaviors.activate) {
+    if (this.cfg.behaviors && this.cfg.behaviors.action) {
         ice.ace.ab(ice.ace.extendAjaxArgs(
-                this.cfg.behaviors.activate,
+                this.cfg.behaviors.action,
                 {params:this.cfg.uiParams}
         ));
     } else if (this.cfg.hasAction) {

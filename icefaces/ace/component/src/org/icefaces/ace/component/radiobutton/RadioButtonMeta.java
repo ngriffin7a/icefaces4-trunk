@@ -48,7 +48,7 @@ import org.icefaces.resources.ICEResourceLibrary;
     @ICEResourceDependency(name=ACEResourceNames.COMPONENTS_JS)
 })
 @ClientBehaviorHolder(events = {
-	@ClientEvent(name="activate",
+	@ClientEvent(name="action",
             javadoc="Fired when the button is clicked or pressed by any other means and changes to selected state (default event).",
             tlddoc="Fired when the button is clicked or pressed by any other means and changes to selected state (default event).",
             defaultRender="@all", defaultExecute="@all"), // defaultExecute is @all for updating other radio buttons
@@ -56,7 +56,7 @@ import org.icefaces.resources.ICEResourceLibrary;
             javadoc="Fired when the button is clicked or pressed by any other means and changes to not selected state.",
             tlddoc="Fired when the button is clicked or pressed by any other means and changes to not selected state.",
             defaultRender="@all", defaultExecute="@this")
-}, defaultEvent="activate")
+}, defaultEvent="action")
 public class RadioButtonMeta extends UISelectBooleanMeta {
 
     @Property(tlddoc="Label to be displayed for the button.")
