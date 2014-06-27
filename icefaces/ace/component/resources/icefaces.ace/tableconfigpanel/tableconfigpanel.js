@@ -539,7 +539,7 @@ ice.ace.TableConf.prototype.submitTableConfig = function (target) {
     ice.ace.AjaxRequest(options);
 };
 
-ice.ace.TableConf.prototype.open = function() {
+ice.ace.TableConf.prototype.show = function() {
 	var panel = this.$this,
 		modal = panel.next('.ui-tableconf-modal');
 
