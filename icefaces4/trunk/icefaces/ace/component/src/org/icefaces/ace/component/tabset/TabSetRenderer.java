@@ -116,7 +116,6 @@ public class TabSetRenderer extends CoreRenderer {
         //should ger rendered first, and then tabs
         if ("bottom".equals(orientation)) {
             writer.startElement(HTML.DIV_ELEM, null);
-                writer.writeAttribute(HTML.TABINDEX_ATTR, 0, HTML.TABINDEX_ATTR);
                 writer.writeAttribute(HTML.ID_ATTR, clientId+"cnt", HTML.ID_ATTR);
                 writer.writeAttribute(HTML.CLASS_ATTR, "yui-content ui-tabs-panel ui-widget-content ui-corner-top", HTML.CLASS_ATTR);
             writer.endElement(HTML.DIV_ELEM);
@@ -405,7 +404,6 @@ public class TabSetRenderer extends CoreRenderer {
             writer.writeAttribute(ARIA.ROLE_ATTR, ARIA.TAB_ROLE, ARIA.ROLE_ATTR);  
         }
         writer.writeAttribute(HTML.ID_ATTR, clientId+ "tab"+ index, HTML.ID_ATTR);
-        writer.writeAttribute(HTML.TABINDEX_ATTR, "0", HTML.TABINDEX_ATTR);
         writer.writeAttribute(HTML.CLASS_ATTR, "yui-navdiv", HTML.CLASS_ATTR);           
         writer.startElement("em", tab);
         writer.writeAttribute(HTML.ID_ATTR, clientId+ "Lbl", HTML.ID_ATTR); 
@@ -436,8 +434,7 @@ public class TabSetRenderer extends CoreRenderer {
         ResponseWriter writer = facesContext.getResponseWriter();
         writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
-        writer.writeAttribute(HTML.TABINDEX_ATTR, 0, HTML.TABINDEX_ATTR);
-		writer.writeAttribute(HTML.CLASS_ATTR, "ui-tabs-panel ui-widget-content ui-corner-bottom", HTML.CLASS_ATTR);
+        writer.writeAttribute(HTML.CLASS_ATTR, "ui-tabs-panel ui-widget-content ui-corner-bottom", HTML.CLASS_ATTR);
         if (EnvUtils.isAriaEnabled(facesContext)) {
             writer.writeAttribute(ARIA.ROLE_ATTR, ARIA.TABPANEL_ROLE, ARIA.ROLE_ATTR);  
         }
