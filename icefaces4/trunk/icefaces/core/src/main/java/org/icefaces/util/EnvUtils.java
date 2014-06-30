@@ -26,6 +26,7 @@ import org.icefaces.impl.push.servlet.ProxyServletContext;
 import org.icefaces.impl.push.servlet.ProxySession;
 
 import javax.faces.application.Resource;
+import javax.faces.component.NamingContainer;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -1229,7 +1230,8 @@ public class EnvUtils {
     }
 
     public static String getParameterNamespace(FacesContext context) {
-        return EnvConfig.getEnvConfig(context).namespaceParameters ? context.getViewRoot().getContainerClientId(context) : "";
+        return EnvConfig.getEnvConfig(context).namespaceParameters && (context.getViewRoot() instanceof NamingContainer)
+                ? context.getViewRoot().getContainerClientId(context) : "";
     }
 }
 
