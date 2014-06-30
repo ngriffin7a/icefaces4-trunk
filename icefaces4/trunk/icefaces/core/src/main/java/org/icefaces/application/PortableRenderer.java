@@ -37,4 +37,21 @@ public interface PortableRenderer {
      * that have their blocking connection paused.
      */
     void render(String group, PushOptions options);
+
+    /**
+     * All subsequently created views in the current session will be added to the specified group.
+     * Groups of sessions are automatically garbage collected when all member sessions have
+     * become invalid.
+     *
+     * @param groupName the name of the group to add the current session to
+     */
+    void addCurrentSession(final String groupName);
+
+    /**
+     * Remove the current views from the specified group.  Use of this method is
+     * optional as group membership is maintained automatically as clients leave.
+     *
+     * @param groupName the name of the group to remove the current view from
+     */
+    void removeCurrentSession(final String groupName);
 }

@@ -19,76 +19,124 @@ package org.icefaces.impl.application;
 import org.icefaces.util.EnvUtils;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
-public class LazyPushManager {
+public abstract class LazyPushManager {
+    private static final Logger LOGGER = Logger.getLogger(LazyPushManager.class.getName());
 
-    public static boolean enablePush(FacesContext context, String viewID) {
-        //If push is configured to be non-lazy either through the context param or the
-        //ice:config attribute, then we enable it.
-        if(!EnvUtils.isLazyPush(context)){
-            return true;
-        }
+    public static LazyPushManager get(final HttpSession session) {
+        return new LazyPushManager() {
+            protected State getState() {
+                State state = (State) session.getAttribute(LazyPushManager.class.getName());
+                if (state == null) {
+                    state = new State();
+                    session.setAttribute(LazyPushManager.class.getName(), state);
+                }
 
-        State state = getState(context);
-        if (state.sessionViewsEnabled) {
-            return true;
-        }
-
-        Integer no = (Integer) state.individualyRegisteredViews.get(viewID);
-        return no != null && no > 0;
-    }
-
-    public static void enablePushForView(FacesContext context, String viewID) {
-        State state = getState(context);
-        Integer no = (Integer) state.individualyRegisteredViews.get(viewID);
-        if (no == null) {
-            state.individualyRegisteredViews.put(viewID, 1);
-        } else {
-            state.individualyRegisteredViews.put(viewID, ++no);
-        }
-    }
-
-    public static void disablePushForView(FacesContext context, String viewID) {
-        State state = getState(context);
-        Integer no = (Integer) state.individualyRegisteredViews.get(viewID);
-        if (no != null) {
-            --no;
-
-            if (no > 0) {
-                state.individualyRegisteredViews.put(viewID, no);
-            } else {
-                state.individualyRegisteredViews.remove(viewID);
+                return state;
             }
+        };
+    }
+
+    public static LazyPushManager get(FacesContext context) {
+        final Map sessionMap = context.getExternalContext().getSessionMap();
+        return new LazyPushManager() {
+            protected State getState() {
+                if (sessionMap == null) {
+                    throw new IllegalStateException("The session was invalidated/expired.");
+                }
+                State state = (State) sessionMap.get(LazyPushManager.class.getName());
+                if (state == null) {
+                    state = new State();
+                    sessionMap.put(LazyPushManager.class.getName(), state);
+                }
+
+                return state;
+            }
+        };
+    }
+
+    public boolean enablePush(FacesContext context, String viewID) {
+        try {
+            //If push is configured to be non-lazy either through the context param or the
+            //ice:config attribute, then we enable it.
+            if(!EnvUtils.isLazyPush(context)){
+                return true;
+            }
+
+            State state = getState();
+            if (state.sessionViewsEnabled) {
+                return true;
+            }
+
+            Integer no = (Integer) state.individualyRegisteredViews.get(viewID);
+            return no != null && no > 0;
+        } catch (IllegalStateException e ) {
+            LOGGER.fine("The session was invalidated/expired.");
+            return false;
         }
     }
 
-    public static void enablePushForSessionViews(FacesContext context) {
-        State state = getState(context);
-        state.sessionViewsEnabled = true;
-    }
-
-    public static void disablePushForSessionViews(FacesContext context) {
-        State state = getState(context);
-        state.sessionViewsEnabled = false;
-    }
-
-    private static State getState(FacesContext context) {
-        Map sessionMap = context.getExternalContext().getSessionMap();
-        State state = (State) sessionMap.get(LazyPushManager.class.getName());
-        if (state == null) {
-            state = new State();
-            sessionMap.put(LazyPushManager.class.getName(), state);
+    public void enablePushForView(String viewID) {
+        try {
+            State state = getState();
+            Integer no = (Integer) state.individualyRegisteredViews.get(viewID);
+            if (no == null) {
+                state.individualyRegisteredViews.put(viewID, 1);
+            } else {
+                state.individualyRegisteredViews.put(viewID, ++no);
+            }
+        } catch (IllegalStateException e ) {
+            LOGGER.fine("The session was invalidated/expired.");
         }
-
-        return state;
     }
+
+    public void disablePushForView(String viewID) {
+        try {
+            State state = getState();
+            Integer no = (Integer) state.individualyRegisteredViews.get(viewID);
+            if (no != null) {
+                --no;
+
+                if (no > 0) {
+                    state.individualyRegisteredViews.put(viewID, no);
+                } else {
+                    state.individualyRegisteredViews.remove(viewID);
+                }
+            }
+        } catch (IllegalStateException e ) {
+            LOGGER.fine("The session was invalidated/expired.");
+        }
+    }
+
+    public void enablePushForSessionViews() {
+        try {
+            State state = getState();
+            state.sessionViewsEnabled = true;
+        } catch (IllegalStateException e ) {
+            LOGGER.fine("The session was invalidated/expired.");
+        }
+    }
+
+    public void disablePushForSessionViews() {
+        try {
+            State state = getState();
+            state.sessionViewsEnabled = false;
+        } catch (IllegalStateException e ) {
+            LOGGER.fine("The session was invalidated/expired.");
+        }
+    }
+
 
     //it is okay to serialize *static* inner classes: http://java.sun.com/javase/6/docs/platform/serialization/spec/serial-arch.html#7182
     private static class State implements Serializable {
         private boolean sessionViewsEnabled = false;
         private HashMap individualyRegisteredViews = new HashMap();
     }
+
+    protected abstract State getState();
 }
