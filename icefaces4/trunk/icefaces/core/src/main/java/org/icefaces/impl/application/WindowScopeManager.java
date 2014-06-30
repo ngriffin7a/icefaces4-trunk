@@ -601,7 +601,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
                     try {
                         String[] viewIDs = externalContext.getRequestParameterValuesMap().get("ice.view");
                         for (int i = 0; i < viewIDs.length; i++) {
-                            SessionViewManager.removeView(facesContext, viewIDs[i]);
+                            SessionViewManager.get(facesContext).removeView(viewIDs[i]);
                         }
                     } catch (RuntimeException e) {
                         //missing ice.view parameters means that none of the views within the page
