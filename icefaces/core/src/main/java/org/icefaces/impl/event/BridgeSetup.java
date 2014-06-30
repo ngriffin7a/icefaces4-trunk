@@ -22,6 +22,7 @@ import org.icefaces.impl.application.WindowScopeManager;
 import org.icefaces.impl.push.SessionViewManager;
 import org.icefaces.impl.push.servlet.ICEpushResourceHandler;
 import org.icefaces.util.EnvUtils;
+import org.icepush.PushContext;
 
 import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
@@ -33,6 +34,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.*;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -188,7 +192,7 @@ public class BridgeSetup implements SystemEventListener {
             attributes.put("name", "ICEfacesSetup.js");
             attributes.put("library", "ice.core");
             icefacesSetup.setTransient(true);
-            icefacesSetup.setId(viewID + "_icefaces_config");
+            icefacesSetup.setId('v' + viewID.replace(':', '_') + "_icefaces_config");
             bodyResources.add(icefacesSetup);
 
 
@@ -237,7 +241,7 @@ public class BridgeSetup implements SystemEventListener {
                     }
                 };
                 icepushSetup.setTransient(true);
-                icepushSetup.setId(viewID + "_icepush");
+                icepushSetup.setId('v' + viewID.replace(':', '-') + "_icepush");
                 bodyResources.add(icepushSetup);
             }
         } catch (Exception e) {
@@ -252,13 +256,18 @@ public class BridgeSetup implements SystemEventListener {
         final String viewIDParameter = externalContext.getRequestParameterMap().get("ice.view");
         //keep viewID sticky until page is unloaded
         BridgeSetup bridgeSetup = (BridgeSetup) externalContext.getApplicationMap().get(BRIDGE_SETUP);
-        final String viewID = viewIDParameter == null ? bridgeSetup.generateViewID() : viewIDParameter;
+        final String viewID = viewIDParameter == null ? bridgeSetup.generateViewID(externalContext) : viewIDParameter;
         //save the calculated view state key so that other parts of the framework will use the same key
         externalContext.getRequestMap().put(ViewState, viewID);
         return viewID;
     }
 
-    private String generateViewID() {
+    private String generateViewID(ExternalContext externalContext) {
+        if (EnvUtils.isICEpushPresent()) {
+            PushContext pushContext = PushContext.getInstance((ServletContext) externalContext.getContext());
+            return pushContext.createPushId((HttpServletRequest) externalContext.getRequest(), (HttpServletResponse) externalContext.getResponse());
+        }
+
         return "v" + Integer.toString(hashCode(), 36) + Integer.toString(++seed, 36);
     }
 

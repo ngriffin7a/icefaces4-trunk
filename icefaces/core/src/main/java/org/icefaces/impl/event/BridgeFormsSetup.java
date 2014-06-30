@@ -30,13 +30,13 @@ public class BridgeFormsSetup implements SystemEventListener {
     public void processEvent(final SystemEvent event) throws AbortProcessingException {
         FacesContext context = FacesContext.getCurrentInstance();
         UIComponent c = (UIComponent) event.getSource();
-        String viewID = BridgeSetup.getViewID(context.getExternalContext());
+        String viewID = BridgeSetup.getViewID(context.getExternalContext()).replace(':', '-');
         //add the form used by ice.retrieveUpdate function to retrieve the updates
         //use viewID and '-retrieve-update' suffix as element ID
-        addNewTransientForm(viewID + "-retrieve-update", c);
+        addNewTransientForm("v" + viewID + "-retrieve-update", c);
         //add the form used by ice.singleSubmit function for submitting event data
         //use viewID and '-single-submit' suffix as element ID
-        addNewTransientForm(viewID + "-single-submit", c);
+        addNewTransientForm("v" + viewID + "-single-submit", c);
     }
 
     public boolean isListenerForSource(final Object source) {

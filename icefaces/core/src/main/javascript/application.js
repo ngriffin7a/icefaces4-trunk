@@ -191,11 +191,11 @@ if (!window.ice.icefaces) {
         }
 
         function retrieveUpdateFormID(viewID) {
-            return viewID + '-retrieve-update';
+            return 'v' + viewID.replace(':', '-') + '-retrieve-update';
         }
 
         function singleSubmitFormID(viewID) {
-            return viewID + '-single-submit';
+            return 'v' + viewID.replace(':', '-') + '-single-submit';
         }
 
         eval(ice.importFrom('ice.lib.functional'));
