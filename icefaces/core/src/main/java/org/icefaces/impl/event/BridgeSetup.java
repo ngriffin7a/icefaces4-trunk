@@ -197,13 +197,13 @@ public class BridgeSetup implements SystemEventListener {
                     public void encode(ResponseWriter writer,
                                        FacesContext context) throws
                             IOException {
-                        SessionViewManager.addView(context, viewID);
+                        SessionViewManager.get(context).addView(viewID);
                         //need a span to make sure JSF bridge evaluates included script properly
                         writer.startElement("span", this);
                         writer.writeAttribute("id", this.getClientId(context), null);
                         writer.startElement("script", this);
                         writer.writeAttribute("type", "text/javascript", null);
-                        writer.write(LazyPushManager.enablePush(context, viewID) ? "ice.setupPush('" + viewID + "');" : "ice.unsetupPush('" + viewID + "');");
+                        writer.write(LazyPushManager.get(context).enablePush(context, viewID) ? "ice.setupPush('" + viewID + "');" : "ice.unsetupPush('" + viewID + "');");
                         ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
                         Resource blockingConnectionResource = resourceHandler.createResource(ICEpushResourceHandler.BLOCKING_CONNECTION_RESOURCE_NAME, null, "text/xml");
                         Resource createPushIdResource = resourceHandler.createResource(ICEpushResourceHandler.CREATE_PUSH_ID_RESOURCE_NAME, null, "text/plain");
