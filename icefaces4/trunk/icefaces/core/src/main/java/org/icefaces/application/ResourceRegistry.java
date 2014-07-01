@@ -26,6 +26,7 @@ import javax.el.ELContext;
 import javax.faces.application.*;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ExternalContext;
+import javax.faces.event.PhaseId;
 import javax.servlet.http.HttpSession;
 
 import java.io.InputStream;
@@ -85,6 +86,7 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
         String viewID = externalContext.getRequestParameterMap().get(VIEW_ID_PARAMETER);
         if (viewID != null) {
             //restore view root with its associated view map
+            facesContext.setCurrentPhaseId(PhaseId.RESTORE_VIEW);
             facesContext.getApplication().getViewHandler().restoreView(facesContext, viewID);
         }
 
