@@ -83,6 +83,7 @@ public class FetchContactRenderer extends Renderer {
 		writer.writeAttribute(ID_ATTR, clientId);
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
+		writer.writeAttribute(TABINDEX_ATTR, contactList.getTabindex());
 		//writeStandardAttributes(writer, contactList, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
 		String script = "bridgeit.fetchContact('" + clientId + "', '', {postURL:'" + contactList.getPostURL() + "', "
