@@ -78,6 +78,12 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.writeAttribute(ID_ATTR, clientId);
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
+		if (camcorder.isDisabled()) writer.writeAttribute(DISABLED_ATTR, "disabled");
+		String style = camcorder.getStyle();
+		if (style != null) writer.writeAttribute(STYLE_ATTR, style);
+		String styleClass = camcorder.getStyleClass();
+		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
+		writer.writeAttribute(TABINDEX_ATTR, camcorder.getTabindex());
 		//writeStandardAttributes(writer, camcorder, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
 		String script = "bridgeit.camcorder('" + clientId + "', '', {postURL:'" + camcorder.getPostURL() + "', ";
@@ -87,6 +93,8 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		if (maxwidth > 0) script += ", maxwidth: " + maxwidth;
 		int maxheight = camcorder.getMaxheight();
 		if (maxheight > 0) script += ", maxheight:" + maxheight;
+		int maxtime = camcorder.getMaxtime();
+		if (maxtime > 0) script += ", maxtime:" + maxtime;
 		script += "});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		writer.startElement(SPAN_ELEM, camcorder);
