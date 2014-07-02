@@ -52,6 +52,9 @@ public class FetchContactMeta extends UIComponentBaseMeta {
             tlddoc = org.icefaces.mobi.util.TLDConstants.DISABLED)
     private boolean disabled;
 
+    @Property( tlddoc = org.icefaces.mobi.util.TLDConstants.TABINDEX)
+    private int tabindex;
+
     @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLE)
     private String style;
 
