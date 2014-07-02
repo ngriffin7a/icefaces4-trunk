@@ -97,6 +97,12 @@ public class CameraRenderer extends Renderer {
 		writer.writeAttribute(ID_ATTR, clientId);
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
+		if (camera.isDisabled()) writer.writeAttribute(DISABLED_ATTR, "disabled");
+		String style = camera.getStyle();
+		if (style != null) writer.writeAttribute(STYLE_ATTR, style);
+		String styleClass = camera.getStyleClass();
+		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
+		writer.writeAttribute(TABINDEX_ATTR, camera.getTabindex());
 		//writeStandardAttributes(writer, camera, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
 		String script = "bridgeit.camera('" + clientId + "', '', {postURL:'" + camera.getPostURL() + "', ";
