@@ -14,7 +14,7 @@
   ~ governing permissions and limitations under the License.
   -->
 
-<project name="dynamic-columns-tutorial" default="servlet-profile">
+<project name="dynamic-columns" default="servlet-profile">
     <property file="build.properties"/>
     <import file="../common.xml"/>
 </project>
