@@ -63,15 +63,6 @@ public class GeolocationMeta extends UIComponentBaseMeta {
             tlddoc = org.icefaces.mobi.util.TLDConstants.DISABLED)
     private boolean disabled;
 
-    @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.TABINDEX)
-    private int tabindex;
-
-     @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLE)
-     private String style;
-
-     @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLECLASS)
-     private String styleClass;
-
 	      @Property(tlddoc = "Determines if the component will continuously update the position. If true, a listener is used to retrieve position from navigator.geolocation.watchPosition. If false, the component will fetch a one time update via navigator.gelocation.getCurrentPosition",
               defaultValue = "true")
     private boolean continuousUpdates;
