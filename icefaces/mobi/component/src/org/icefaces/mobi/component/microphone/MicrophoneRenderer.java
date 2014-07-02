@@ -84,6 +84,12 @@ public class MicrophoneRenderer extends Renderer {
 		writer.writeAttribute(ID_ATTR, clientId);
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
+		if (microphone.isDisabled()) writer.writeAttribute(DISABLED_ATTR, "disabled");
+		String style = microphone.getStyle();
+		if (style != null) writer.writeAttribute(STYLE_ATTR, style);
+		String styleClass = microphone.getStyleClass();
+		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
+		writer.writeAttribute(TABINDEX_ATTR, microphone.getTabindex());
 		//writeStandardAttributes(writer, microphone, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
 		String script = "bridgeit.microphone('" + clientId + "', '', {postURL:'" + microphone.getPostURL() + "', "
