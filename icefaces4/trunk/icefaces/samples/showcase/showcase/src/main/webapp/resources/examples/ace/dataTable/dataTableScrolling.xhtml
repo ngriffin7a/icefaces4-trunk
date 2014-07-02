@@ -113,7 +113,7 @@
         </h:form>
 
         <h:form id="form3" style="padding-top: 1em;">
-            <h:commandButton id="show" value="Show Table Popup" onclick="sampleDialog.show();" type="button"/>
+            <h:commandButton id="show" value="Show Table Popup" onclick="ice.ace.instance('form3:dialog').show();" type="button"/>
 
             <ace:dialog id="dialog"
                         header="Scrollable Table Sample"
