@@ -175,6 +175,9 @@ public class TLDBuilder extends XMLBuilder{
 					builder.append(event.tlddoc());
 					builder.append("</td><td>");
 					builder.append("".equals(event.argumentClass()) ? "javax.faces.event.AjaxBehaviorEvent" : event.argumentClass());
+                    builder.append("<td><td>");
+                    builder.append("The default execution scope of this event is "+event.defaultExecute()+
+                            " and the default render scope is "+event.defaultRender());
 					builder.append("</td></tr>");
 				}
 				builder.append("</table><i>Client events can be used with Client Behaviors and the ace:ajax tag.</i><br>");
