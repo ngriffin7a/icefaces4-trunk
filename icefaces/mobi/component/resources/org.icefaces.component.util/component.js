@@ -1547,6 +1547,7 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
             lastTouchTime;
 
         function headCellTouchStart(e) {
+			if (config.disabled) return;
             var cell = e.currentTarget;
             /* targetTouches[0] - ignore multi touch starting here */
             touchedHeadCellIndex[e.targetTouches[0].identifier] = getIndex(cell);
@@ -1558,6 +1559,7 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
         }
 
         function headCellTouchEnd(e) {
+			if (config.disabled) return;
             var touch = e.changedTouches[0],
                 cell = closest(document.elementFromPoint(touch.pageX, touch.pageY), 'th');
 
@@ -1593,6 +1595,7 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
 
         var touchedRowIndex = {};
         function rowTouchStart(e) {
+			if (config.disabled) return;
             var row = e.delegateTarget;
 
             touchedRowIndex[e.targetTouches[0].identifier] = {
@@ -1603,6 +1606,7 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
         }
 
         function rowTouchEnd(e) {
+			if (config.disabled) return;
             var row = closest(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY), 'tr'),
                 index = row.getAttribute("data-index"),
                 y = touchedRowIndex[e.changedTouches[0].identifier].y - e.changedTouches[0].pageY ,
@@ -1798,6 +1802,7 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
         }
 
         function sortColumn(event) {
+			if (config.disabled) return;
             var sortedRows, asc,
                 headCell = event.target,
                 ascendingClass = blankInicatorClass + ' icon-caret-up',
@@ -1853,18 +1858,26 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
         }
 
         function activateRow(event) {
+			if (config.disabled) return;
             var newIndex = event.delegateTarget.getAttribute('data-index'),
                 details = getNode('det'),
                 indexIn = getIndexInput(details);
 
-            event.delegateTarget.classList.add('ui-state-active');
+			var target = event.delegateTarget;
+			if (target.classList.contains('ui-state-active')) {
+				target.classList.remove('ui-state-active');
+				deactivateDetail();
+				return;
+			} else {
+				target.classList.add('ui-state-active');
+			}
 
-            var sib = event.delegateTarget.nextElementSibling,
-                removeActiveClass = function (s) { s.classList.remove('ui-state-active'); };
+			var sib = event.delegateTarget.nextElementSibling,
+				removeActiveClass = function (s) { s.classList.remove('ui-state-active'); };
 
-            while (sib != null) {removeActiveClass(sib); sib = sib.nextElementSibling;};
-            sib = event.delegateTarget.previousElementSibling;
-            while (sib != null) {removeActiveClass(sib); sib = sib.previousElementSibling;};
+			while (sib != null) {removeActiveClass(sib); sib = sib.nextElementSibling;};
+			sib = event.delegateTarget.previousElementSibling;
+			while (sib != null) {removeActiveClass(sib); sib = sib.previousElementSibling;};
 
             indexIn.setAttribute("value", newIndex);
             details.setAttribute("data-index", newIndex);
@@ -1889,13 +1902,20 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
 
         function update(newCfg){
             config = newCfg;
+			if (newCfg.disabled) {
+				deactivateDetail();
+				clearSort();
+			} else {
             initActivationEvents();
             initSortingEvents();
+			}
             initTableAlignment();
         }
 
-        initActivationEvents();
-        initSortingEvents();
+		if (!config.disabled) {
+			initActivationEvents();
+			initSortingEvents();
+		}
 
         /* first alignment needs to occur shortly after script eval
         *  else heights are miscalculated for following elems */
