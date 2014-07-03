@@ -130,8 +130,8 @@
             -->
             <h:form id="frm">
             <h:outputText value="Theme: "/>
-            <ace:themeSelect value="#{navigationModel.theme}">
-                <ace:ajax render="@all"/>
+            <ace:themeSelect value="#{theme.currentTheme}">
+                <ace:ajax execute="@this" render="@all"/>
             </ace:themeSelect>
             <ul>
             <ui:repeat id="menuLinks" var="menuLink"
@@ -172,6 +172,7 @@
                                         <h:outputText value="&gt; #{msgs[subMenuLink.title]}" escape="false" nospan="true"/>
                                         <f:attribute name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
                                         <f:attribute name="exp" value="#{subMenuLink.exampleBeanName}"/>
+                                        <f:ajax execute="@this"/>
                                     </h:commandLink>
                                     <!-- OLD APPROACH NOV 10/11
                                          We used to do a full page refresh and navigation on each sublink
