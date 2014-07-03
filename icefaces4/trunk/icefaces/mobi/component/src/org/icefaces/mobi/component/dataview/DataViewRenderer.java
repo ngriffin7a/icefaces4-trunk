@@ -91,6 +91,7 @@ public class DataViewRenderer extends Renderer {
 
         String cfg = "{";
         cfg += "active:'" + dataView.getActivationMode() + "'";
+        cfg += ",disabled:" + dataView.isDisabled();
         cfg += "}";
 
         String js =
