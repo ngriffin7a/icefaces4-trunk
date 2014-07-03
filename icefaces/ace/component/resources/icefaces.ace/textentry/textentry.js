@@ -92,6 +92,9 @@ ice.ace.TextEntry = function(id, cfg) {
     this.jq.blur(function() {
         ice.setFocus();
     });
+    this.jq.change(function() {
+        ice.setFocus();
+    });
     if (this.cfg.behaviors) {
         ice.ace.attachBehaviors(this.jq, this.cfg.behaviors);
     }

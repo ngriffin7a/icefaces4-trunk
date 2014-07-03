@@ -47,7 +47,7 @@ import org.icefaces.resources.ICEResourceLibrary;
                 tlddoc = "Fired when the text input field loses focus (default event).", defaultRender = "@all", defaultExecute = "@this"),
 	@ClientEvent(name="valueChange", javadoc="Fired when the component detects value is changed.",
             tlddoc="Fired when the component detects value is changed.",
-            defaultRender="@this", defaultExecute="@all")
+            defaultRender="@all", defaultExecute="@this")
 }, defaultEvent = "valueChange")
 public class TextEntryMeta extends HtmlInputTextMeta {
 

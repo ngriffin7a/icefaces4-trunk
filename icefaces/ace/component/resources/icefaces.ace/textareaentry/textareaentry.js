@@ -54,6 +54,9 @@ ice.ace.TextAreaEntry = function(id, cfg) {
     this.jq.blur(function() {
         ice.setFocus();
     });
+    this.jq.change(function() {
+        ice.setFocus();
+    });
     if (maxlength > 0) {
         this.jq.on("keyup change", function (e) {
             if (this.value.length > maxlength) {
