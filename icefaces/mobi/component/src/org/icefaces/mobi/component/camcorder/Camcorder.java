@@ -15,7 +15,6 @@
  */
 package org.icefaces.mobi.component.camcorder;
 
-import org.icefaces.mobi.api.ThumbnailProvider;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.api.IDevice;
 import org.icefaces.util.ClientDescriptor;
@@ -30,7 +29,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 
-public class Camcorder extends CamcorderBase implements IDevice, ThumbnailProvider{
+public class Camcorder extends CamcorderBase implements IDevice {
 
     public Camcorder() {
         super();

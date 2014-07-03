@@ -22,16 +22,6 @@ public interface IDevice extends IMobiComponent{
     
     public static final String DISABLED_STYLE_CLASS = " mobi-button-dis";
     public static final String FOR_MSG = "for component was not detected. ";
-    /*
-      <p> this attribute can be used to override the use of the native
-           camera and use the html5 input type="file" control instead.
-           Some caution should be used as this will only pertain to the
-           camera and camcorder integration and is not supported in all
-           devices as of yet.  iOS6 and some android device browsers are
-           supported, but it is left up to the developer to use at their
-           discretion </p>
-     */
-    public boolean isUseNative();
 
     /*
        <p> if the container is used for camera, user can specify a maxwidth
