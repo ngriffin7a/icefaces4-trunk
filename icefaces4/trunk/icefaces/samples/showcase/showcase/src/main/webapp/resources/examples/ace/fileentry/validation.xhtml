@@ -45,13 +45,13 @@
                                      stepPercent="10"
                                      value="#{fileEntryValidation.maxFileSize}"
                                      style="_margin-left: 7px; _margin-right: 7px;">
-                        <ace:ajax event="slideEnd" execute="@this" render="@form"/>
+                        <ace:ajax event="slideEnd" execute="@this" render="upload-form @form"/>
                     </ace:sliderEntry>
                     <h:outputText id="maxUploadSize" value=" #{(fileEntryValidation.maxFileSize/102400)*100} KB"
                                   style="font-weight: bold;"/>
                 </h:panelGrid>
             </h:form>
-            <h:form>
+            <h:form id="upload-form">
                 <h:panelGrid styleClass="centeredPanelGrid">
                     <ace:fileEntry id="file-entry"
                                    maxFileSize="#{fileEntryValidation.maxFileSize}"
