@@ -27,7 +27,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
-import org.icefaces.mobi.api.ThumbnailProvider;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.MobiJSFUtils;
 
@@ -57,12 +56,6 @@ public class ThumbnailRenderer extends Renderer {
         }
         String mFor = comp.getId();
         if (null != comp) {
-            if (comp instanceof ThumbnailProvider){
-                ThumbnailProvider tp = (ThumbnailProvider)comp;
-                if (tp.isUseNative()){
-                    return;
-                }
-            }
             mFor = comp.getClientId(facesContext);
             if (MobiJSFUtils.uploadInProgress(comp))  {
                thumbnail.setBaseClass(Thumbnail.CSS_DONE_CLASS);

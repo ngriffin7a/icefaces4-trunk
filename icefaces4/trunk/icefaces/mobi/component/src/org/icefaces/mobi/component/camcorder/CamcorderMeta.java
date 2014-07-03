@@ -87,10 +87,6 @@ public class CamcorderMeta extends UIComponentBaseMeta {
     	    tlddoc = TLDConstants.VALUECHANGELISTENER)
     private MethodExpression valueChangeListener;
 
-    @Property(defaultValue="false", tlddoc = "When this attribute is \"true\" an HTML5 input " +
-            "acceptType=\"video/*\" will be used when the ICEmobile container is not available. ")
-    private boolean useNative;
-
     @Property(defaultValue="Video Captured", tlddoc = "The message to be displayed on the button on a successful " +
             "video capture. ")
     private String captureMessageLabel;

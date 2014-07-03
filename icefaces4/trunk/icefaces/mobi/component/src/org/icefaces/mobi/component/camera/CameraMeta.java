@@ -83,10 +83,6 @@ public class CameraMeta extends UIComponentBaseMeta {
     @Property(defaultValue="false", tlddoc=TLDConstants.IMMEDIATE_INPUT)
     private boolean immediate;
 
-    @Property(defaultValue="false", tlddoc = "When this attribute is \"true\" an HTML5 input " +
-    		"acceptType=\"image/*\" will be used when the ICEmobile container is not available. ")
-    private boolean useNative;
-
     @Property(defaultValue="Photo Captured", tlddoc = "The message to be displayed on the button on a successful " +
             "image capture. ")
     private String captureMessageLabel;
