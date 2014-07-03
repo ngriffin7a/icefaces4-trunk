@@ -26,12 +26,20 @@ var restoreMonitorFocusChangesOnUpdate;
         debug(logger, 'persisted focus for element "' + id + '"');
     };
 
+    function isVisible(element) {
+        var invisibleParent = detect(parents(element), function(e) {
+            return e.style.visibility == 'hidden' || e.style.display == 'none';
+        });
+
+        return !invisibleParent;
+    }
+
     function setCaretTo(element, pos) {
         if (element.createTextRange) {
             var range = element.createTextRange();
             range.move("character", pos);
             range.select();
-        } else if (element.selectionStart || element.selectionStart == 0) {
+        } else if ((element.selectionStart || element.selectionStart == 0) && isVisible(element)) {
             element.setSelectionRange(pos, pos);
         }
     }
