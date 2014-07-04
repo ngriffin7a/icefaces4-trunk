@@ -86,12 +86,21 @@
         <body-content>JSP</body-content>
 
         <attribute>
-            <description><![CDATA[The push group name the current view should be added to.]]></description>
+            <description><![CDATA[The refresh interval in seconds.]]></description>
             <name>interval</name>
             <required>yes</required>
             <rtexprvalue>false</rtexprvalue>
             <type>java.lang.Long</type>
         </attribute>
+
+        <attribute>
+            <description><![CDATA[The length of time that the page will continue to be refreshed via Ajax for after initial page load, or reload, in minutes.<HR/>If the duration is not specified, the page will be continually refreshed until the user leaves the page.<HR/>A duration of -1 is equivalent to an infinite duration.<HR/>A duration of 0 is equivalent to disabling the control.]]></description>
+            <name>duration</name>
+            <required>no</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.Long</type>
+        </attribute>
+
 
     </tag>
 
