@@ -94,13 +94,12 @@
         </attribute>
 
         <attribute>
-            <description><![CDATA[The length of time that the page will continue to be refreshed via Ajax for after initial page load, or reload, in minutes.<HR/>If the duration is not specified, the page will be continually refreshed until the user leaves the page.<HR/>A duration of -1 is equivalent to an infinite duration.<HR/>A duration of 0 is equivalent to disabling the control.]]></description>
+            <description><![CDATA[The length of time that the page will continue to be refreshed via Ajax for after initial page load (or reload) in minutes.<p>If the duration is not specified, the page will be continually refreshed until the user leaves the page.</p><p>A duration of -1 is equivalent to an infinite duration.<p/><p>A duration of 0 is equivalent to disabling the control.</p>]]></description>
             <name>duration</name>
             <required>no</required>
             <rtexprvalue>false</rtexprvalue>
             <type>java.lang.Long</type>
         </attribute>
-
 
     </tag>
 
