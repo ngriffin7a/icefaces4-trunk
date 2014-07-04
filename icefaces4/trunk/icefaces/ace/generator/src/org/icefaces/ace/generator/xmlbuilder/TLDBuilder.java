@@ -165,7 +165,7 @@ public class TLDBuilder extends XMLBuilder{
 			if (events.length > 0) {
 				StringBuilder builder = new StringBuilder();
 				builder.append("<hr><table border='1' cellpadding='3' cellspacing='0' width='100%'>");
-				builder.append("<tr bgcolor='#CCCCFF' class='TableHeadingColor'><td colspan='3'><font size='+2'><b>Client Events</b></font></td></tr><tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Supported classes for argument</b></td><tr>");
+				builder.append("<tr bgcolor='#CCCCFF' class='TableHeadingColor'><td colspan='4'><font size='+2'><b>Client Events</b></font></td></tr><tr><td><b>Name</b></td><td><b>Description</b></td><td><b>Supported Classes for Argument</b></td><td><b>Default Event Scopes</b></td><tr>");
 
 				for (int i = 0; i < events.length; i++) {
 					builder.append("<tr><td>");
@@ -175,9 +175,9 @@ public class TLDBuilder extends XMLBuilder{
 					builder.append(event.tlddoc());
 					builder.append("</td><td>");
 					builder.append("".equals(event.argumentClass()) ? "javax.faces.event.AjaxBehaviorEvent" : event.argumentClass());
-                    builder.append("<td><td>");
-                    builder.append("The default execution scope of this event is "+event.defaultExecute()+
-                            " and the default render scope is "+event.defaultRender());
+                    builder.append("</td><td>");
+                    builder.append("execute="+event.defaultExecute()+
+                            " render="+event.defaultRender());
 					builder.append("</td></tr>");
 				}
 				builder.append("</table><i>Client events can be used with Client Behaviors and the ace:ajax tag.</i><br>");
