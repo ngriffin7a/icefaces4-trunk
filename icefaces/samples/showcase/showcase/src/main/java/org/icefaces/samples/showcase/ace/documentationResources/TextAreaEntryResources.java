@@ -36,7 +36,7 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
                 // TLD Resources
                 @ExampleResource(type = ResourceType.tld,
                     title="ace:textAreaEntry",
-                    resource = ResourceRootPath.FOR_ACE_TLD + "textAreaEntry.html")
+                    resource = ResourceRootPath.FOR_ACE_TLD + "TextAreaEntry.html")
         }
 )
 @ManagedBean(name= TextAreaEntryResources.BEAN_NAME)

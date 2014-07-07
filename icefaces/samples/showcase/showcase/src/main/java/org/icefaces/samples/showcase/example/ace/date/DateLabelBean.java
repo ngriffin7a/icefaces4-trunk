@@ -46,6 +46,10 @@ import java.util.Date;
                 @ExampleResource(type = ResourceType.java,
                         title = "DateLabelBean.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/date/DateLabelBean.java")
+                @ExampleResource(type = ResourceType.java,
+                        title="PositionBean.java",
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
+                        "/util/PositionBean.java")
         }
 )
 @ManagedBean(name = DateLabelBean.BEAN_NAME)

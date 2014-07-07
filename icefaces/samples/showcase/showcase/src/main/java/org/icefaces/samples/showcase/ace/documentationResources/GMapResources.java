@@ -31,7 +31,7 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
                 // WIKI Resources
                 @ExampleResource(type = ResourceType.wiki,
                     title="ace:gMap",
-                    resource = ResourceRootPath.FOR_WIKI + "gMap"),
+                    resource = ResourceRootPath.FOR_WIKI + "GMap"),
 
                 // TLD Resources
                 @ExampleResource(type = ResourceType.tld,
