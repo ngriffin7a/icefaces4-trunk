@@ -18,8 +18,13 @@ package org.icefaces.ace.generator.behavior;
 
 import org.icefaces.ace.generator.context.GeneratorContext;
 import org.icefaces.ace.meta.annotation.ClientEvent;
- 
+
+import java.lang.Exception;
+
 public class ClientBehaviorHolder extends Behavior {
+
+    private String missingDefaultEvent;
+    private boolean testMissingDefaultEvent;
 
 	public ClientBehaviorHolder() {
 		super(ClientBehaviorHolder.class);
@@ -45,11 +50,24 @@ public class ClientBehaviorHolder extends Behavior {
 		stringBuilder.append("import java.util.Collections;\n");
 	}	
 	
-	public void addCodeToComponent(StringBuilder output) {
+	public void addCodeToComponent(StringBuilder output) throws Exception {
 		org.icefaces.ace.meta.annotation.ClientBehaviorHolder anno = (org.icefaces.ace.meta.annotation.ClientBehaviorHolder)
 			GeneratorContext.getInstance().getActiveMetaContext().getActiveClass().getAnnotation(org.icefaces.ace.meta.annotation.ClientBehaviorHolder.class);
 		ClientEvent[] events = anno.events();
+//System.out.println(" DEFAULT EVENT ="+anno.defaultEvent());
+		/* if no default event specified, throw exception and stop generating */
+        this.testMissingDefaultEvent =  (null == anno.defaultEvent() || anno.defaultEvent().equals("") || anno.defaultEvent().length() < 1);
+        if (testMissingDefaultEvent) {
+//System.out.println(" NO DEFAULT EVENT SPECIFIED:- ");
+            if (events.length == 1)  {
+              //  System.out.println(" event="+events[0].name());
+                ClientEvent singleEvent = (ClientEvent)events[0];
+                this.missingDefaultEvent = singleEvent.name();
+            } else {
+                testMissingDefaultEvent = false;
+            }
 
+        }
         output.append("\n\tprivate static final Collection<String> eventNames =");
         output.append("\n\t\tCollections.unmodifiableCollection(Arrays.asList(");
         for (int i = 0; i < events.length; i++) {
@@ -78,7 +96,11 @@ public class ClientBehaviorHolder extends Behavior {
 		output.append("\n\t}\n");
 		
 		output.append("\n\tpublic String getDefaultEventName() {");
-		output.append("\n\t\treturn \"" + anno.defaultEvent() + "\";");
+        if (testMissingDefaultEvent && this.missingDefaultEvent != null){
+            output.append("\n\t\treturn \"" + missingDefaultEvent + "\";");
+        } else {
+		    output.append("\n\t\treturn \"" + anno.defaultEvent() + "\";");
+        }
 		output.append("\n\t}\n");
 
 		output.append("\n\tpublic String getDefaultRender(String event) {");

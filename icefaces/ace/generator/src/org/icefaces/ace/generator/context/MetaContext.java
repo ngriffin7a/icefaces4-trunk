@@ -144,18 +144,27 @@ public abstract class MetaContext {
     public void process() {
         if (isRelevantClass(getActiveClass())) {
             GeneratorContext.getInstance().setActiveMetaContext(this);
-            processAnnotation(getActiveClass());
+            try {
+                processAnnotation(getActiveClass());
+            }catch (Exception e){
+                e.printStackTrace();
+                System.exit(1);
+             }
             setupArtifacts();
             build();
         }
     }
 
-    protected void processAnnotation(Class clazz) {
+  /*  protected void processAnnotation(Class clazz) {
+        for (Field field : getDeclaredFields(clazz)) {
+            processPotentiallyIrrelevantField(clazz, field);
+        }
+    } */
+     protected void processAnnotation(Class clazz) throws Exception {
         for (Field field : getDeclaredFields(clazz)) {
             processPotentiallyIrrelevantField(clazz, field);
         }
     }
-
     /**
      * if it's used and not disinherited return true, if not return false;
      * @param clazz
@@ -175,7 +184,7 @@ public abstract class MetaContext {
             /* first check to see if this is a disinherited property */
             if (isPropertyValueDisinherited(clazz, field.getName())){
                 if (logger.isLoggable(Level.FINE)){
-                   logger.info("YAYAYAYAYAYAYA property="+ field.getName() +" is disinherited!!!!!");
+                   logger.info("property="+ field.getName() +" is disinherited!");
                 }
                 return false;
             }

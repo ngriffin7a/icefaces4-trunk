@@ -90,7 +90,7 @@ public class ComponentContext extends MetaContext {
     }
     
     @Override
-    protected void processAnnotation(Class clazz) {
+    protected void processAnnotation(Class clazz) throws Exception {
         //first have to get disinheritedprops to check the annotations to see if disinherited
         Component component = (Component) this.getActiveClass().getAnnotation(Component.class);
         String[] propsArr = component.disinheritProperties();
@@ -100,6 +100,30 @@ public class ComponentContext extends MetaContext {
         }
         super.processAnnotation(clazz);
         processFacets(clazz);
+         org.icefaces.ace.meta.annotation.ClientBehaviorHolder anno = (org.icefaces.ace.meta.annotation.ClientBehaviorHolder)
+			GeneratorContext.getInstance().getActiveMetaContext().getActiveClass().getAnnotation(org.icefaces.ace.meta.annotation.ClientBehaviorHolder.class);
+        if (null !=anno){
+            String defEvent = anno.defaultEvent();
+            if (logger.isLoggable(Level.FINE)){
+                logger.info(" DEFAULT EVENT="+defEvent);
+            }
+            if (null == defEvent || defEvent.equals("") || defEvent.length()<2 ){
+                if (logger.isLoggable(Level.FINE)){
+                    logger.info(" REQUIRE DEFAULT EVENT");
+                }
+                ClientEvent[] events = anno.events();
+                if (events.length>1){
+                   Exception newE = new Exception("REQUIRE DEFAULT EVENT");
+                   throw newE;
+                }
+                else if (logger.isLoggable(Level.FINE)){
+                    //the only event in the list is the default event
+                    ClientEvent e1 = events[0];
+                    logger.info(" missing defaultEvent so setting it to="+events[0].name());
+                }
+            }
+        }
+
         processBehaviors(clazz);
     }
 
