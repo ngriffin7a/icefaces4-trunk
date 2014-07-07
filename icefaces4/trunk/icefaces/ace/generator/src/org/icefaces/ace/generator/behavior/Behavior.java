@@ -56,7 +56,7 @@ public abstract class Behavior {
 		
 	}
 	
-	public void addCodeToComponent(StringBuilder stringBuilder ) {
+	public void addCodeToComponent(StringBuilder stringBuilder ) throws Exception{
 		
 	}
 	public void addImportsToTag(StringBuilder stringBuilder ) {

@@ -32,6 +32,7 @@ import org.icefaces.resources.ICEResourceLibrary;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
+import java.lang.RuntimeException;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Logger;
@@ -231,8 +232,16 @@ public class ComponentArtifact extends Artifact{
 
 
     private void endComponentClass(ComponentContext compCtx) {
+
         for (Behavior behavior: compCtx.getBehaviors()) {
-            behavior.addCodeToComponent(writer);
+            try {
+                System.out.println(" in try statement generating behaviors");
+                behavior.addCodeToComponent(writer);
+            } catch (Exception r){
+                System.out.println("Problem while processing component:-"+compCtx.getActiveClass().getName());
+                r.printStackTrace();
+                System.exit(1);
+            }
         }
         writer.append("\n}");
         createJavaFile();
