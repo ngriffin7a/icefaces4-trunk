@@ -38,7 +38,9 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
                 @ExampleResource(type = ResourceType.wiki,
                     title="ace:subMenu",
                     resource = ResourceRootPath.FOR_WIKI +"SubMenu"),
-
+                @ExampleResource(type = ResourceType.wiki,
+                    title="ace:multiColumnSubmenu",
+                    resource = ResourceRootPath.FOR_WIKI +"MultiColumnSubmenu"),
                 // TLD Resources
                 @ExampleResource(type = ResourceType.tld,
                     title="ace:menuBar",
@@ -48,7 +50,10 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
                     resource = ResourceRootPath.FOR_ACE_TLD + "menuItem.html"),
                 @ExampleResource(type = ResourceType.tld,
                     title="ace:subMenu",
-                    resource = ResourceRootPath.FOR_ACE_TLD +"submenu.html")
+                    resource = ResourceRootPath.FOR_ACE_TLD +"submenu.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:multiColumnSubmenu",
+                    resource = ResourceRootPath.FOR_ACE_TLD +"multiColumnSubmenu.html")
                 
         }
 )
