@@ -42,8 +42,7 @@ public abstract class LazyPushManager {
         };
     }
 
-    public static LazyPushManager get(FacesContext context) {
-        final Map sessionMap = context.getExternalContext().getSessionMap();
+    public static LazyPushManager get(final Map sessionMap) {
         return new LazyPushManager() {
             protected State getState() {
                 if (sessionMap == null) {
@@ -58,6 +57,11 @@ public abstract class LazyPushManager {
                 return state;
             }
         };
+    }
+
+    public static LazyPushManager get(FacesContext context) {
+        Map sessionMap = context.getExternalContext().getSessionMap();
+        return get(sessionMap);
     }
 
     public boolean enablePush(FacesContext context, String viewID) {
