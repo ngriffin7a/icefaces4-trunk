@@ -29,6 +29,8 @@ import org.icefaces.mobi.renderkit.BaseInputRenderer;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.CSSUtils;
+import org.icefaces.util.ClientDescriptor;
+import org.icefaces.util.EnvUtils;
 
 import static org.icefaces.mobi.util.HTML.*;
 
@@ -63,12 +65,21 @@ public class ScanRenderer extends BaseInputRenderer {
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
         Scan scan = (Scan) uiComponent;
+		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
+		String clientId = scan.getClientId();
+		UIComponent fallbackFacet = scan.getFacet("fallback");
+		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
+		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
+			writer.startElement(SPAN_ELEM, scan);
+			writer.writeAttribute(ID_ATTR, clientId);
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+			return;
+		}
         String oldLabel = scan.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(scan))  {
            scan.setButtonLabel(scan.getCaptureMessageLabel()) ;
         } 
-        ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
-        String clientId = scan.getClientId();
         StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         //ClientDescriptor cd = scan.getClient();
 		// button element

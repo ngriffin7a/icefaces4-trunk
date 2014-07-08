@@ -21,12 +21,14 @@ import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Expression;
 import org.icefaces.ace.meta.annotation.Implementation;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Facet;
+import org.icefaces.ace.meta.annotation.Facets;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 import org.icefaces.mobi.util.TLDConstants;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-
+import javax.faces.component.UIComponent;
 
 import javax.el.MethodExpression;
 import java.util.Map;
@@ -94,4 +96,9 @@ public class CamcorderMeta extends UIComponentBaseMeta {
     @Property(defaultValue="Camcorder", tlddoc = "The button label. ")
     private String buttonLabel;
 
+    @Facets
+    class FacetsMeta{
+        @Facet(tlddoc = "Allows rendering of nested components that are displayed if the BridgeIt app cannot be used, either due to running on an unsupported platform (such as desktop OS), or the BridgeIt app not being installed on the device.")
+        UIComponent fallback;
+    }
 }
