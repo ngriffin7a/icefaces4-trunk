@@ -84,12 +84,21 @@ public class CameraRenderer extends Renderer {
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
         throws IOException {
         Camera camera = (Camera) uiComponent;
+		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
+		String clientId = camera.getClientId();
+		UIComponent fallbackFacet = camera.getFacet("fallback");
+		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
+		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
+			writer.startElement(SPAN_ELEM, camera);
+			writer.writeAttribute(ID_ATTR, clientId);
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+			return;
+		}
         String oldLabel = camera.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(camera))  {
             camera.setButtonLabel(camera.getCaptureMessageLabel()) ;
         } 
-        ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
-        String clientId = camera.getClientId();
         //StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         ClientDescriptor cd = camera.getClient();
 		// button element

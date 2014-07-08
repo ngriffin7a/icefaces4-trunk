@@ -32,6 +32,7 @@ import org.icefaces.impl.application.AuxUploadResourceHandler;
 import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.util.ClientDescriptor;
+import org.icefaces.util.EnvUtils;
 
 import static org.icefaces.mobi.util.HTML.*;
 
@@ -74,8 +75,17 @@ public class FetchContactRenderer extends Renderer {
         }*/
         //writeStandardAttributes(writer, component, CSSUtils.STYLECLASS_BUTTON, CSSUtils.STYLECLASS_BUTTON_DISABLED);
         FetchContact contactList = (FetchContact) uiComponent;
-        ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
-        String clientId = contactList.getClientId();
+		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
+		String clientId = contactList.getClientId();
+		UIComponent fallbackFacet = contactList.getFacet("fallback");
+		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
+		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
+			writer.startElement(SPAN_ELEM, contactList);
+			writer.writeAttribute(ID_ATTR, clientId);
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+			return;
+		}
         StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         ClientDescriptor cd = contactList.getClient();
 		// button element

@@ -32,6 +32,7 @@ import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.HTML;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.CSSUtils;
+import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.EnvUtils;
 
 import static org.icefaces.mobi.util.HTML.*;
@@ -71,12 +72,21 @@ public class MicrophoneRenderer extends Renderer {
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
         Microphone microphone = (Microphone) uiComponent;
+		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
+		String clientId = microphone.getClientId();
+		UIComponent fallbackFacet = microphone.getFacet("fallback");
+		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
+		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
+			writer.startElement(SPAN_ELEM, microphone);
+			writer.writeAttribute(ID_ATTR, clientId);
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+			return;
+		}
         String oldLabel = microphone.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(microphone))  {
            microphone.setButtonLabel(microphone.getCaptureMessageLabel()) ;
         } 
-        ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
-        String clientId = microphone.getClientId();
         //StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         //ClientDescriptor cd = microphone.getClient();
 		// button element

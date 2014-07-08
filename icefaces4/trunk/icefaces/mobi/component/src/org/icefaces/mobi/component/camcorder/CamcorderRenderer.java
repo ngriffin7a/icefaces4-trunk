@@ -29,6 +29,8 @@ import org.icefaces.mobi.renderkit.BaseInputResourceRenderer;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.CSSUtils;
+import org.icefaces.util.ClientDescriptor;
+import org.icefaces.util.EnvUtils;
 
 import static org.icefaces.mobi.util.HTML.*;
 
@@ -65,12 +67,21 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
         Camcorder camcorder = (Camcorder) uiComponent;
+		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
+		String clientId = camcorder.getClientId();
+		UIComponent fallbackFacet = camcorder.getFacet("fallback");
+		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
+		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
+			writer.startElement(SPAN_ELEM, camcorder);
+			writer.writeAttribute(ID_ATTR, clientId);
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+			return;
+		}
         String oldLabel = camcorder.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(camcorder))  {
             camcorder.setButtonLabel(camcorder.getCaptureMessageLabel()) ;
         } 
-        ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
-        String clientId = camcorder.getClientId();
         //StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         //ClientDescriptor cd = camcorder.getClient();
 		// button element

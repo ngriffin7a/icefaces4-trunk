@@ -18,9 +18,12 @@ package org.icefaces.mobi.component.fetchcontact;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.UIComponent;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Facet;
+import org.icefaces.ace.meta.annotation.Facets;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 @Component(
@@ -72,4 +75,10 @@ public class FetchContactMeta extends UIComponentBaseMeta {
     
     @Property(tlddoc = "The email of the selected contact.")
     private String email;
+
+    @Facets
+    class FacetsMeta{
+        @Facet(tlddoc = "Allows rendering of nested components that are displayed if the BridgeIt app cannot be used, either due to running on an unsupported platform (such as desktop OS), or the BridgeIt app not being installed on the device.")
+        UIComponent fallback;
+    }
 }
