@@ -25,6 +25,7 @@
     <application>
 		<resource-handler>org.icefaces.mobi.renderkit.BridgeItResourceHandler</resource-handler>
         <resource-handler>org.icefaces.mobi.renderkit.MobiSymbolicResourceHandler</resource-handler>
+		<resource-handler>org.icefaces.mobi.component.geotrack.GeotrackResourceHandler</resource-handler>
     </application>
 
 </faces-config>
