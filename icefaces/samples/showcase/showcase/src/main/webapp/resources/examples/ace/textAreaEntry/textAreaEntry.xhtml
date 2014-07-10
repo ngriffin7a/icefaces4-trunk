@@ -39,11 +39,11 @@
             <ace:panel id="inputPanel" header="Enter Comments Below" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
                     <ace:textAreaEntry id="comment1Input" value="#{textAreaEntryBean.comment1}" label="Comments" labelPosition="inField" required="true" requiredIndicator=" (*)" indicatorPosition="labelRight">
-                        <ace:ajax render="@this comment1Output comment1Msg"/>
+                        <ace:ajax render="@this comment1Output comment1Msg" event="blur"/>
                     </ace:textAreaEntry>
                     
                     <ace:textAreaEntry id="comment2Input" value="#{textAreaEntryBean.comment2}" label="Additional Comments" labelPosition="inField" required="false" optionalIndicator=" (Opt.)" indicatorPosition="labelRight" resizable="false">
-                        <ace:ajax render="@this comment2Output comment2Msg"/>
+                        <ace:ajax render="@this comment2Output comment2Msg" event="blur"/>
                     </ace:textAreaEntry>
 
                 </h:panelGrid>

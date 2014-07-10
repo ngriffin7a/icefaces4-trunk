@@ -61,32 +61,32 @@
             <ace:panel id="personalInfoInputPanel" header="Personal Info">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
                     <ace:textEntry id="firstNameInput" value="#{textEntryLabelBean.firstName}" label="#{textEntryLabelBean.firstLabelText}" labelPosition="#{textEntryLabelBean.labelPosition}" required="true" requiredIndicator="(*)" indicatorPosition="right">
-                        <ace:ajax render="@this firstNameOutput firstNameMsg"/>
+                        <ace:ajax render="@this firstNameOutput firstNameMsg" event="blur"/>
                     </ace:textEntry>
                     
                     <ace:textEntry id="lastNameInput" value="#{textEntryLabelBean.lastName}" label="#{textEntryLabelBean.lastLabelText}" labelPosition="#{textEntryLabelBean.labelPosition}" required="true" requiredIndicator="(*)" indicatorPosition="right">
-                        <ace:ajax render="@this lastNameOutput lastNameMsg"/>
+                        <ace:ajax render="@this lastNameOutput lastNameMsg" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="address1Input" value="#{textEntryLabelBean.address1}" label="Apt./Suite #" labelPosition="#{textEntryLabelBean.labelPosition}" required="true" requiredIndicator="(*)" indicatorPosition="right">
-                        <ace:ajax render="@this address1Output address1Msg"/>
+                        <ace:ajax render="@this address1Output address1Msg" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="address2Input" value="#{textEntryLabelBean.address2}" label="Street Address" labelPosition="#{textEntryLabelBean.labelPosition}" required="false" optionalIndicator="(Opt.)" indicatorPosition="right">
-                        <ace:ajax render="@this address2Output"/>
+                        <ace:ajax render="@this address2Output" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="cityInput" value="#{textEntryLabelBean.city}" label="City" labelPosition="#{textEntryLabelBean.labelPosition}" required="true" requiredIndicator="(*)" indicatorPosition="right">
-                        <ace:ajax render="@this cityOutput cityMsg"/>
+                        <ace:ajax render="@this cityOutput cityMsg" event="blur"/>
                     </ace:textEntry>
                     
                     <ace:textEntry id="provinceInput" value="#{textEntryLabelBean.province}" label="Prov./State" labelPosition="#{textEntryLabelBean.labelPosition}" required="false" optionalIndicator="(Opt.)" indicatorPosition="right">
-                        <ace:ajax render="@this provinceOutput provinceMsg"/>
+                        <ace:ajax render="@this provinceOutput provinceMsg" event="blur"/>
                         <f:validateLength minimum="2"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="countryInput" value="#{textEntryLabelBean.country}" label="Country" labelPosition="#{textEntryLabelBean.labelPosition}" required="true" requiredIndicator="(*)" indicatorPosition="right">
-                        <ace:ajax render="@this countryOutput countryMsg"/>
+                        <ace:ajax render="@this countryOutput countryMsg" event="blur"/>
                     </ace:textEntry>
                 </h:panelGrid>
                 <h:panelGrid width="100%">

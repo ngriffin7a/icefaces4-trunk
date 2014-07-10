@@ -60,11 +60,11 @@
             <ace:panel id="inputPanel" header="Comments">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
                     <ace:textAreaEntry id="comment1Input" label="#{textAreaEntryLabelBean.comment1LabelText}" labelPosition="#{textAreaEntryLabelBean.labelPosition}" >
-                        <ace:ajax render="@this comment1Msg"/>
+                        <ace:ajax render="@this comment1Msg" event="blur"/>
                     </ace:textAreaEntry>
                     
                     <ace:textAreaEntry id="comment2Input" label="#{textAreaEntryLabelBean.comment2LabelText}" labelPosition="#{textAreaEntryLabelBean.labelPosition}" required="true" requiredIndicator="(*)" indicatorPosition="labelRight">
-                        <ace:ajax render="@this comment2Msg"/>
+                        <ace:ajax render="@this comment2Msg" event="blur"/>
                     </ace:textAreaEntry>
 
                 </h:panelGrid>

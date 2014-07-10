@@ -71,11 +71,11 @@
             <ace:panel id="personalInfoInputPanel" header="Personal Info" styleClass="#{textAreaEntryReqStyleBean.useTheme ? '' : 'required-styling-demo'}">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
                     <ace:textAreaEntry id="comment1Input" label="Comments" labelPosition="top" required="true" requiredIndicator="(*)" indicatorPosition="right" styleClass="#{textAreaEntryReqStyleBean.reqColor}">
-                        <ace:ajax render="@this comment1Msg"/>
+                        <ace:ajax render="@this comment1Msg" event="blur"/>
                     </ace:textAreaEntry>
                     
                     <ace:textAreaEntry id="comment2Input" label="Additional Comments" labelPosition="top" required="false" optionalIndicator="(Opt.)" indicatorPosition="right" styleClass="#{textAreaEntryReqStyleBean.optColor}">
-                        <ace:ajax render="@this comment2Msg"/>
+                        <ace:ajax render="@this comment2Msg" event="blur"/>
                     </ace:textAreaEntry>
 
                 </h:panelGrid>
