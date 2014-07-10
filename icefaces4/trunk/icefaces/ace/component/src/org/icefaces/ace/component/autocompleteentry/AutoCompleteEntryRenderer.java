@@ -157,6 +157,8 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
         writer.writeAttribute("type", "text", null);
 		String accesskey = autoCompleteEntry.getAccesskey();
 		if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
+		String tabindex = autoCompleteEntry.getTabindex();
+		if (tabindex != null) writer.writeAttribute("tabindex", tabindex, null);
 		writer.writeAttribute("name", inputClientId, null);
         if (ariaEnabled)
             writer.writeAttribute("role", "textbox", null);
