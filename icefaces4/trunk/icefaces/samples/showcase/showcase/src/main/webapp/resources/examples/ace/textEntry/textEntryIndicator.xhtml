@@ -72,7 +72,7 @@
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
                                    optionalIndicator="#{textEntryIndicatorBean.optionalText}"
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
-                        <ace:ajax render="@this firstNameOutput firstNameMsg"/>
+                        <ace:ajax render="@this firstNameOutput firstNameMsg" event="blur"/>
                     </ace:textEntry>
                     
                     <ace:textEntry id="lastNameInput" value="#{textEntryIndicatorBean.lastName}" label="Last Name" labelPosition="left"
@@ -80,7 +80,7 @@
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
                                    optionalIndicator="#{textEntryIndicatorBean.optionalText}"
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
-                        <ace:ajax render="@this lastNameOutput lastNameMsg"/>
+                        <ace:ajax render="@this lastNameOutput lastNameMsg" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="address1Input" value="#{textEntryIndicatorBean.address1}" label="Apt./Suite #" labelPosition="left"
@@ -88,7 +88,7 @@
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
                                    optionalIndicator="#{textEntryIndicatorBean.optionalText}"
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
-                        <ace:ajax render="@this address1Output address1Msg"/>
+                        <ace:ajax render="@this address1Output address1Msg" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="address2Input" value="#{textEntryIndicatorBean.address2}" label="Street Address" labelPosition="left"
@@ -96,7 +96,7 @@
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
                                    optionalIndicator="#{textEntryIndicatorBean.optionalText}"
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
-                        <ace:ajax render="@this address2Output address2Msg"/>
+                        <ace:ajax render="@this address2Output address2Msg" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="cityInput" value="#{textEntryIndicatorBean.city}" label="City" labelPosition="left"
@@ -104,7 +104,7 @@
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
                                    optionalIndicator="#{textEntryIndicatorBean.optionalText}"
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
-                        <ace:ajax render="@this cityOutput cityMsg"/>
+                        <ace:ajax render="@this cityOutput cityMsg" event="blur"/>
                     </ace:textEntry>
                     
                     <ace:textEntry id="provinceInput" value="#{textEntryIndicatorBean.province}" label="Prov./State" labelPosition="left"
@@ -112,7 +112,7 @@
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
                                    optionalIndicator="#{textEntryIndicatorBean.optionalText}"
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
-                        <ace:ajax render="@this provinceOutput provinceMsg"/>
+                        <ace:ajax render="@this provinceOutput provinceMsg" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="countryInput" value="#{textEntryIndicatorBean.country}" label="Country" labelPosition="left"
@@ -120,7 +120,7 @@
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
                                    optionalIndicator="#{textEntryIndicatorBean.optionalText}"
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
-                        <ace:ajax render="@this countryOutput countryMsg"/>
+                        <ace:ajax render="@this countryOutput countryMsg" event="blur"/>
                     </ace:textEntry>
                 </h:panelGrid>
                 <h:panelGrid width="100%">

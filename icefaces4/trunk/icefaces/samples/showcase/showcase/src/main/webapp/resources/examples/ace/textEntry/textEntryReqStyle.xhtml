@@ -74,7 +74,7 @@
                                    required="true" requiredIndicator="(Required)"
                                    indicatorPosition="right"
                                    styleClass="#{textEntryReqStyleBean.reqColor}">
-                        <ace:ajax render="@this firstNameOutput firstNameMsg"/>
+                        <ace:ajax render="@this firstNameOutput firstNameMsg" event="blur"/>
                     </ace:textEntry>
                     
                     <ace:textEntry id="lastNameInput" value="#{textEntryReqStyleBean.lastName}"
@@ -82,7 +82,7 @@
                                    required="true" requiredIndicator="(Required)"
                                    indicatorPosition="right"
                                    styleClass="#{textEntryReqStyleBean.reqColor}">
-                        <ace:ajax render="@this lastNameOutput lastNameMsg"/>
+                        <ace:ajax render="@this lastNameOutput lastNameMsg" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="address1Input" value="#{textEntryReqStyleBean.address1}"
@@ -90,7 +90,7 @@
                                    required="true" requiredIndicator="(Required)"
                                    indicatorPosition="right"
                                    styleClass="#{textEntryReqStyleBean.reqColor}">
-                        <ace:ajax render="@this address1Output address1Msg"/>
+                        <ace:ajax render="@this address1Output address1Msg" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="address2Input" value="#{textEntryReqStyleBean.address2}"
@@ -98,7 +98,7 @@
                                    required="false" optionalIndicator="(Optional)"
                                    indicatorPosition="right"
                                    styleClass="#{textEntryReqStyleBean.optColor}">
-                        <ace:ajax render="@this address2Output"/>
+                        <ace:ajax render="@this address2Output" event="blur"/>
                     </ace:textEntry>
 
                     <ace:textEntry id="cityInput" value="#{textEntryReqStyleBean.city}"
@@ -106,7 +106,7 @@
                                    required="true" requiredIndicator="(Required)"
                                    indicatorPosition="right"
                                    styleClass="#{textEntryReqStyleBean.reqColor}">
-                        <ace:ajax render="@this cityOutput cityMsg"/>
+                        <ace:ajax render="@this cityOutput cityMsg" event="blur"/>
                     </ace:textEntry>
                     
                     <ace:textEntry id="provinceInput" value="#{textEntryReqStyleBean.province}"
@@ -114,7 +114,7 @@
                                    required="false" optionalIndicator="(Optional)"
                                    indicatorPosition="right"
                                    styleClass="#{textEntryReqStyleBean.optColor}">
-                        <ace:ajax render="@this provinceOutput provinceMsg"/>
+                        <ace:ajax render="@this provinceOutput provinceMsg" event="blur"/>
                         <f:validateLength minimum="2"/>
                     </ace:textEntry>
 
@@ -123,7 +123,7 @@
                                    required="true" requiredIndicator="(Required)"
                                    indicatorPosition="right"
                                    styleClass="#{textEntryReqStyleBean.reqColor}">
-                        <ace:ajax render="@this countryOutput countryMsg"/>
+                        <ace:ajax render="@this countryOutput countryMsg" event="blur"/>
                     </ace:textEntry>
                 </h:panelGrid>
                 <h:panelGrid width="100%">
