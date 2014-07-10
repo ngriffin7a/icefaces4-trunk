@@ -43,8 +43,17 @@ import java.util.logging.Logger;
 
 public class DOMRenderKit extends RenderKitWrapper {
     private static Logger log = Logger.getLogger(DOMRenderKit.class.getName());
+    private MainEventListener mainEventListener = new MainEventListener();
     private RenderKit delegate;
     private boolean deltaSubmit;
+    private Renderer modifiedMessageRenderer = null;
+    private static final String MESSAGE = "javax.faces.Message";
+    private static final String MESSAGE_CLASS =
+            "org.icefaces.impl.renderkit.html_basic.MessageRenderer";
+    private Renderer modifiedMessagesRenderer = null;
+    private static final String MESSAGES = "javax.faces.Messages";
+    private static final String MESSAGES_CLASS =
+            "org.icefaces.impl.renderkit.html_basic.MessagesRenderer";
     private ArrayList<MandatoryResourceComponent> mandatoryResourceComponents = new ArrayList<MandatoryResourceComponent>();
     public static final String ACE_THEME_PARAM = "org.icefaces.ace.theme";
     public static final String ACE_HEAD_RENDERER_CLASSNAME = "org.icefaces.ace.renderkit.HeadRenderer";
@@ -60,6 +69,20 @@ public class DOMRenderKit extends RenderKitWrapper {
         this.delegate = delegate;
         FacesContext facesContext = FacesContext.getCurrentInstance();
         deltaSubmit = EnvUtils.isDeltaSubmit(facesContext);
+/*
+        try {
+            modifiedMessageRenderer = 
+                    (Renderer) Class.forName(MESSAGE_CLASS).newInstance();
+        } catch (Throwable t)  {
+            log.fine("No override for Message Renderer " + t.toString());
+        }
+        try {
+            modifiedMessagesRenderer = 
+                    (Renderer) Class.forName(MESSAGES_CLASS).newInstance();
+        } catch (Throwable t)  {
+            log.fine("No override for Messages Renderer " + t.toString());
+        }
+*/
     }
 
     public RenderKit getWrapped() {
@@ -146,6 +169,15 @@ public class DOMRenderKit extends RenderKitWrapper {
         if (renderer == null) {
             return renderer;
         }
+/*
+        String className = renderer.getClass().getName();
+        if (className.equals("com.sun.faces.renderkit.html_basic.MessageRenderer"))  {
+            return modifiedMessageRenderer;
+        }
+        if (className.equals("com.sun.faces.renderkit.html_basic.MessagesRenderer"))  {
+            return modifiedMessagesRenderer;
+        }
+*/
         return renderer;
     }
 

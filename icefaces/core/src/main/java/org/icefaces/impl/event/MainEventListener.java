@@ -29,80 +29,75 @@ import javax.faces.component.html.HtmlPanelGroup;
 import org.icefaces.util.EnvUtils;
 
 public class MainEventListener implements SystemEventListener  {
-    private static String RENDER_STARTED = MainEventListener.class.getName() + "-RENDER_STARTED";
+    private static String RENDER_STARTED = 
+            MainEventListener.class.getName() + "-RENDER_STARTED"; 
 
-    public boolean isListenerForSource(Object source) {
-        return true;
-    }
-
-    public void processEvent(SystemEvent event) {
+    public MainEventListener()  {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        final Application application = facesContext.getApplication();
         if (EnvUtils.isAutoId(facesContext))  {
-            ModifyID modifyID = new ModifyID();
-            application.subscribeToEvent(PostAddToViewEvent.class, modifyID);
-            application.subscribeToEvent(PreRenderViewEvent.class, modifyID);
+            facesContext.getApplication()
+                .subscribeToEvent(PostAddToViewEvent.class, this);
+            facesContext.getApplication()
+                .subscribeToEvent(PreRenderViewEvent.class, this);
         }
+        Application app = facesContext.getApplication();
 
         AjaxDisabledList disabledList = new AjaxDisabledList();
-        application.subscribeToEvent(PreRenderComponentEvent.class, disabledList);
+        app.subscribeToEvent(PreRenderComponentEvent.class, disabledList);
 
         if(EnvUtils.isMyFaces()){
             CommandLinkModifier clMod = new CommandLinkModifier();
-            application.subscribeToEvent(PreRenderComponentEvent.class, clMod);
+            app.subscribeToEvent(PreRenderComponentEvent.class, clMod);
         }
     }
 
-    public static class ModifyID implements  SystemEventListener {
-
-        public void processEvent(SystemEvent event)  {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            if (!EnvUtils.isICEfacesView(facesContext)) {
-                return;
-            }
-            if (event instanceof PreRenderViewEvent)  {
-                facesContext.getAttributes().put(RENDER_STARTED, RENDER_STARTED);
-                return;
-            }
-            if (null != facesContext.getAttributes().get(RENDER_STARTED))  {
-                //do not modify component IDs after rendering has begun
-                return;
-            }
-            UIComponent component = ((PostAddToViewEvent)event).getComponent();
-            String id = component.getId();
-            if (null == id)  {
-                return;
-            }
-            if (id.startsWith("j_id") && (shouldModifyId(component)))  {
-                id = "_" + id.substring(4);
-                component.setId(id);
-                component.getAttributes().put("id", id);
-            }
+    public void processEvent(SystemEvent event)  {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        if (!EnvUtils.isICEfacesView(facesContext)) {
+            return;
         }
-
-        public boolean isListenerForSource(Object source)  {
-            if (source instanceof UIViewRoot)  {
-                return true;
-            }
-            return shouldModifyId(source);
+        if (event instanceof PreRenderViewEvent)  {
+            facesContext.getAttributes().put(RENDER_STARTED, RENDER_STARTED);
+            return;
         }
-
-        public boolean shouldModifyId(Object source)  {
-            //Existing ice: components already output ids
-            final String name = source.getClass().getName();
-            if (name.startsWith("com.icesoft"))  {
-                return false;
-            }
-            //body is already a special case
-            if (name.equals("javax.faces.component.html.HtmlBody"))  {
-                return false;
-            }
-            boolean classCheck = (  (
-                    (source instanceof UIOutput) ||
-                            (source instanceof HtmlDataTable) ||
-                            (source instanceof HtmlPanelGroup) ||
-                            (source instanceof UICommand) ) && (!UIOutput.class.equals(source.getClass())) );
-            return classCheck;
+        if (null != facesContext.getAttributes().get(RENDER_STARTED))  {
+            //do not modify component IDs after rendering has begun
+            return;
         }
+        UIComponent component = ((PostAddToViewEvent)event).getComponent();
+        String id = component.getId();
+        if (null == id)  {
+            return;
+        }
+        if (id.startsWith("j_id") && (shouldModifyId(component)))  {
+            id = "_" + id.substring(4);
+            component.setId(id);
+            component.getAttributes().put("id", id);
+        }
+    }
+
+    public boolean isListenerForSource(Object source)  {
+        if (source instanceof UIViewRoot)  {
+            return true;
+        }
+        return shouldModifyId(source);
+    }
+
+    public boolean shouldModifyId(Object source)  {
+        //Existing ice: components already output ids
+        if (source.getClass().getName().startsWith("com.icesoft"))  {
+            return false;
+        }
+        //body is already a special case
+        if (source.getClass().getName().equals(
+                "javax.faces.component.html.HtmlBody"))  {
+            return false;
+        }
+        boolean classCheck = (  (
+            (source instanceof UIOutput) || 
+            (source instanceof HtmlDataTable) || 
+            (source instanceof HtmlPanelGroup) || 
+            (source instanceof UICommand) ) && (!UIOutput.class.equals(source.getClass())) );
+        return classCheck;
     }
 }
