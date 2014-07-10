@@ -36,6 +36,9 @@
         <script type="text/javascript">
             function begin()
             {
+				if (this.inProgress) return;
+				clientSideBar.setValue(clientSideBar.getValue() + 10);
+				this.inProgress = true;
                 this.progressInterval = setInterval (
                 function()
                 {
@@ -48,6 +51,7 @@
             {
                 clearInterval(this.progressInterval);
                 clientSideBar.setValue(0);
+				this.inProgress = false;
             }
         </script>
 
