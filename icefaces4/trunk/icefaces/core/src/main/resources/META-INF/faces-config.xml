@@ -148,6 +148,10 @@
             <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
         </system-event-listener>
         <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.event.MainEventListener</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
             <system-event-listener-class>org.icefaces.impl.application.CoalescingResourceHandler$RegisterListener</system-event-listener-class>
             <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
         </system-event-listener>
