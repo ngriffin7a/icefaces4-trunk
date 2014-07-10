@@ -32,6 +32,17 @@
     <ui:param name="tldResources" value="#{contextMenuResources.tldResources}"/>
 
     <ui:define name="example">
+		<style type="text/css">
+			.wijmo-wijmenu {
+				width: 250px;
+			}
+			.wijmo-wijmenu .wijmo-wijmenu-parent .wijmo-wijmenu-child {
+				width: 250px;
+			}
+			.wijmo-wijmenu .wijmo-wijmenu-child {
+				left: 250px;
+			}
+		</style>
         <h:form id="form">
 
 			<ace:delegate id="delegate">		
