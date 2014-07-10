@@ -94,8 +94,13 @@ public class GeoTrackResourceHandler extends ResourceHandlerWrapper {
         }
     }
 
+	public Resource getResource() {
+		if (resource == null) resource = createResource(UPLOAD_RESOURCE, LIB);
+		return resource;
+	}
+
     public void handleResourceRequest(FacesContext facesContext) throws IOException {
-		if (resource.getRequestPath().startsWith(getResourcePath(facesContext))) {
+		if (getResource().getRequestPath().startsWith(getResourcePath(facesContext))) {
 			// get id
 			ExternalContext externalContext = facesContext.getExternalContext();
 			Map<String, String> requestParameterMap = facesContext.getExternalContext().getRequestParameterMap();
