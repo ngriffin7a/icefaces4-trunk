@@ -39,22 +39,22 @@
             <ace:panel id="personalInfoInputPanel" header="Personal Info">
                 <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
                     <ace:textEntry id="firstNameInput" value="#{messageBean.firstName}" label="First Name" labelPosition="left">
-                        <ace:ajax render="firstNameMsg allMsgs" listener="#{messageBean.blurListener}"/>
+                        <ace:ajax event="blur" render="firstNameMsg allMsgs" listener="#{messageBean.blurListener}"/>
                     </ace:textEntry>
                     <ace:message id="firstNameMsg" for="firstNameInput" initEffect="bounce" changeEffect="explode"/>
 
                     <ace:textEntry id="lastNameInput" value="#{messageBean.lastName}" label="Last Name" labelPosition="left">
-                        <ace:ajax render="lastNameMsg allMsgs" listener="#{messageBean.blurListener}"/>
+                        <ace:ajax event="blur" render="lastNameMsg allMsgs" listener="#{messageBean.blurListener}"/>
                     </ace:textEntry>
                     <ace:message id="lastNameMsg" for="lastNameInput" initEffect="fade" changeEffect="size"/>
 
                     <ace:textEntry id="cityInput" value="#{messageBean.city}" label="City" labelPosition="left">
-                        <ace:ajax render="cityMsg allMsgs" listener="#{messageBean.blurListener}"/>
+                        <ace:ajax event="blur" render="cityMsg allMsgs" listener="#{messageBean.blurListener}"/>
                     </ace:textEntry>
                     <ace:message id="cityMsg" for="cityInput" initEffect="pulsate" changeEffect="scale"/>
 
                     <ace:textEntry id="countryInput" value="#{messageBean.country}" label="Country" labelPosition="left">
-                        <ace:ajax render="countryMsg allMsgs" listener="#{messageBean.blurListener}"/>
+                        <ace:ajax event="blur" render="countryMsg allMsgs" listener="#{messageBean.blurListener}"/>
                     </ace:textEntry>
                     <ace:message id="countryMsg" for="countryInput" initEffect="slide" changeEffect="shake"/>
                 </h:panelGrid>
