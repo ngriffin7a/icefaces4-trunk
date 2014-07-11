@@ -52,13 +52,6 @@ ice.ace.radiobutton = function(clientId, options) {
     if (options.ariaEnabled)
         ice.ace.jq(this.jqId).on("keypress", function(e) { self.onAriaKeypress(e); });
 		
-	if (this.isChecked()) {
-		this.addStateCSSClasses('checked');
-		ice.ace.radiobutton.toggleOthers(this.options, this.id)
-	} else {
-		this.removeStateCSSClasses('checked');
-	}
-
     var unload = function() {
         // Unload WidgetVar
         // Unload events
@@ -126,22 +119,19 @@ ice.ace.radiobutton.prototype.toggleCheckbox = function (activeButton) {
     }
 
 	if (this.options.behaviors) {
-		if (newValue == true) {
-			if (this.options.behaviors.action) {
-				if (activeButton) ice.setFocus(this.id + '_button');
-				ice.ace.ab(ice.ace.extendAjaxArgs(
-					this.options.behaviors.action,
-					{params: this.options.uiParams}
-				));
-			}
-		} else {
-			if (this.options.behaviors.deactivate) {
-				if (activeButton) ice.setFocus(this.id + '_button');
-				ice.ace.ab(ice.ace.extendAjaxArgs(
-					this.options.behaviors.deactivate,
-					{params: this.options.uiParams}
-				));
-			}
+		if (this.options.behaviors.action) {
+			if (activeButton) ice.setFocus(this.id + '_button');
+			ice.ace.ab(ice.ace.extendAjaxArgs(
+				this.options.behaviors.action,
+				{params: this.options.uiParams}
+			));
+		}
+		if (this.options.behaviors.deactivate) {
+			if (activeButton) ice.setFocus(this.id + '_button');
+			ice.ace.ab(ice.ace.extendAjaxArgs(
+				this.options.behaviors.deactivate,
+				{params: this.options.uiParams}
+			));
 		}
 	}
 };
@@ -156,7 +146,7 @@ ice.ace.radiobutton.toggleOthers = function (options, clientId) {
         groups[groupId] = groups[groupId] || {};
         for (id in groups[groupId]) {
             if (groups[groupId].hasOwnProperty(id) && id != clientId) {
-                widget = document.getElementById(id).widget;
+                widget = ice.ace.instance(id);
                 if (widget && widget.isChecked()) {
                     widget.toggleCheckbox();
                 }

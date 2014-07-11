@@ -534,7 +534,8 @@ public class Utils {
     }
 	
 	public static void registerLazyComponent(FacesContext facesContext, String clientId, String function) {
-		JavaScriptRunner.runScript(facesContext, "ice.ace.lazy.registry['"+clientId+"'] = function(){ return "+function+"};");
+		JavaScriptRunner.runScript(facesContext, 
+		"ice.ace.lazy.registry['"+clientId+"'] = function(){var w = document.getElementById('" + clientId + "').widget; if (w) return w; else return "+function+"};");
 	}
 
     static String COOKIE_FORMAT = "org.icemobile.cookieformat";

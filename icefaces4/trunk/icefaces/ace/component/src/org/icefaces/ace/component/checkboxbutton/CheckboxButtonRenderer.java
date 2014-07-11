@@ -153,13 +153,22 @@ public class CheckboxButtonRenderer extends CoreRenderer {
 
     private String getScript(FacesContext facesContext, ResponseWriter writer,
                               CheckboxButton checkbox, String clientId) throws IOException {
-        UIComponent groupComp = checkbox.getParent();
-        String groupId;
-        if (!(groupComp instanceof ButtonGroup)) {
-            groupId = (groupId = checkbox.getGroup()) == null ? "" : groupId.trim();
-            groupComp = groupId.length() > 0 ? checkbox.findComponent(groupId) : null;
-        }
-        groupId = groupComp instanceof ButtonGroup ? groupComp.getClientId(facesContext) : "";
+        UIComponent groupComp;
+        String groupId = checkbox.getGroup();
+		if (groupId != null) {
+			groupId = groupId.trim();
+			groupComp = checkbox.findComponent(groupId);
+			groupId = groupComp instanceof ButtonGroup ? groupComp.getClientId(facesContext) : "";
+		}
+		if (groupId == null || "".equals(groupId)) {
+			groupComp = findNearestButtonGroup(checkbox);
+			if (groupComp != null) {
+				groupId = ((ButtonGroup) groupComp).isMutuallyExclusive() ? groupComp.getClientId(facesContext) : "";
+			} else {
+				groupId = "";
+			}
+		}
+
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
         JSONBuilder jb = JSONBuilder.create();
         List<UIParameter> uiParamChildren = Utils.captureParameters(checkbox);
@@ -188,6 +197,14 @@ public class CheckboxButtonRenderer extends CoreRenderer {
 		
 		return jb.toString();
 	}
+
+	private ButtonGroup findNearestButtonGroup(UIComponent component) {
+		if (component == null) return null;
+		UIComponent parent = component.getParent();
+		if (parent == null) return null;
+		if (parent instanceof ButtonGroup) return (ButtonGroup) parent;
+		return findNearestButtonGroup(parent);
+	}
 	
     private void encodeScript(FacesContext facesContext, ResponseWriter writer,
                               CheckboxButton checkbox, String clientId, EventType type) throws IOException {
@@ -198,7 +215,7 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         else if (EventType.FOCUS.equals(type))
             eventType = HTML.ONFOCUS_ATTR;
 
-        writer.writeAttribute(eventType, getScript(facesContext, writer, checkbox, clientId), null);
+        writer.writeAttribute(eventType, "if (!document.getElementById('" + clientId + "').widget) "+ getScript(facesContext, writer, checkbox, clientId), null);
     }
 
     /**
