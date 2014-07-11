@@ -46,10 +46,8 @@ ice.ace.checkboxbutton = function(clientId, options) {
 
     if (!options.disabled)
         ice.ace.jq(this.jqId).on("click", function () {
+            ice.ace.checkboxbutton.toggleOthers(self.options, self.id);
             self.toggleCheckbox(true);
-            if (self.isChecked()) {
-                ice.ace.checkboxbutton.toggleOthers(self.options, self.id)
-            }
         });
 
     if (options.ariaEnabled)
@@ -118,6 +116,7 @@ ice.ace.checkboxbutton.prototype.onAriaKeypress = function (e) {
 
 ice.ace.checkboxbutton.prototype.toggleCheckbox = function (activeButton) {
     var newValue = !this.isChecked();
+	if (activeButton) newValue = true;
 
     this.setChecked(newValue);
     if (newValue == true) this.addStateCSSClasses('checked');
@@ -129,6 +128,7 @@ ice.ace.checkboxbutton.prototype.toggleCheckbox = function (activeButton) {
 
     if (this.options.behaviors && this.options.behaviors.action) {
 		if (activeButton) ice.setFocus(this.id + '_button');
+		else ice.setFocus('');
         ice.ace.ab(ice.ace.extendAjaxArgs(
             this.options.behaviors.action,
             {params: this.options.uiParams}
@@ -146,7 +146,7 @@ ice.ace.checkboxbutton.toggleOthers = function (options, clientId) {
         groups[groupId] = groups[groupId] || {};
         for (id in groups[groupId]) {
             if (groups[groupId].hasOwnProperty(id) && id != clientId) {
-                widget = document.getElementById(id).widget;
+                widget = ice.ace.instance(id);
                 if (widget && widget.isChecked()) {
                     widget.toggleCheckbox();
                 }
