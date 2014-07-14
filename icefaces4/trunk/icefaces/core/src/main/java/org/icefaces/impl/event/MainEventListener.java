@@ -94,6 +94,9 @@ public class MainEventListener implements SystemEventListener  {
                 return false;
             }
             //body is already a special case
+            if (name.equals("javax.faces.component.html.HtmlHead"))  {
+                return false;
+            }
             if (name.equals("javax.faces.component.html.HtmlBody"))  {
                 return false;
             }
