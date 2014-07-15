@@ -199,7 +199,7 @@ public class PushButtonRenderer extends CoreRenderer {
     private void encodeScript(FacesContext facesContext, ResponseWriter writer,
                               PushButton pushButton, String clientId, String event) throws IOException {
 		
-        writer.writeAttribute(event, getScript(facesContext, writer, pushButton, clientId), null);
+        writer.writeAttribute(event, "if (!document.getElementById('" + clientId + "').widget) "+ getScript(facesContext, writer, pushButton, clientId), null);
     }
 
     private boolean hasListener(PushButton pushButton) {
