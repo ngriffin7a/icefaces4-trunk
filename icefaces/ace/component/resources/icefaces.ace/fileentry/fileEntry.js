@@ -140,6 +140,7 @@ ice.ace.fileentry = {
     cancelFileSelection : function(inputElemId, trIds) {
         var index, elem;
         elem = document.getElementById(inputElemId);
+		var root = elem.parentNode.parentNode.parentNode.parentNode;
         if (elem) {
             elem.parentNode.removeChild(elem);
         }
@@ -149,6 +150,7 @@ ice.ace.fileentry = {
                 elem.parentNode.removeChild(elem);
             }
         }
+		ice.se(new Object(), root, function(p) {p(root.id+'_resetValid', 'true')});
     },
 
     arrayOfStrings : function(prefix, count) {

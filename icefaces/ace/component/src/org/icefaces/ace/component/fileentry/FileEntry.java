@@ -284,6 +284,11 @@ public class FileEntry extends FileEntryBase implements Focusable {
         return getClientId();
     }
 
+	private boolean isResetValidRequest(FacesContext facesContext) {
+		java.util.Map<String, String> requestMap = facesContext.getExternalContext().getRequestParameterMap();
+		return (requestMap.get(getClientId(facesContext)+"_resetValid") != null);
+	}
+
     @Override
     /**
      * Override to add the constraint that when immediate is true, then
@@ -298,6 +303,7 @@ public class FileEntry extends FileEntryBase implements Focusable {
 
     @Override
     public void processDecodes(FacesContext facesContext) {
+		if (isResetValidRequest(facesContext)) return;
         super.processDecodes(facesContext);
 
         if (isImmediateValidation()) {
@@ -307,6 +313,7 @@ public class FileEntry extends FileEntryBase implements Focusable {
 
     @Override
     public void processValidators(FacesContext facesContext) {
+		if (isResetValidRequest(facesContext)) return;
         super.processValidators(facesContext);
 
         if (!isImmediateValidation()) {
