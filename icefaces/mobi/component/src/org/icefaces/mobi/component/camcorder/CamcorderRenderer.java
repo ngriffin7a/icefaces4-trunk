@@ -124,7 +124,7 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		}
 		writer.startElement("script", camcorder);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("if (!bridgeit.isSupportedPlatform('camcorder')) {");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('camcorder') && document.getElementById('"+clientId+"_fallback')) {");
 		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
 		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
 		writer.writeText("}");

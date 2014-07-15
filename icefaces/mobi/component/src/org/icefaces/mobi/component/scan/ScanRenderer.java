@@ -115,7 +115,7 @@ public class ScanRenderer extends BaseInputRenderer {
 		}
 		writer.startElement("script", scan);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("if (!bridgeit.isSupportedPlatform('scan')) {");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('scan') && document.getElementById('"+clientId+"_fallback')) {");
 		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
 		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
 		writer.writeText("}");

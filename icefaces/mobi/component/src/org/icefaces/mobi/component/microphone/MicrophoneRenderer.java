@@ -121,7 +121,7 @@ public class MicrophoneRenderer extends Renderer {
 		}
 		writer.startElement("script", microphone);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("if (!bridgeit.isSupportedPlatform('microphone')) {");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('microphone') && document.getElementById('"+clientId+"_fallback')) {");
 		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
 		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
 		writer.writeText("}");
