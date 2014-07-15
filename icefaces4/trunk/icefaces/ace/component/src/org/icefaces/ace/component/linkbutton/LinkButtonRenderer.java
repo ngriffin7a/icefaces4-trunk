@@ -201,6 +201,6 @@ public class LinkButtonRenderer extends CoreRenderer {
                               List<UIParameter> uiParams, String clientId,
                               boolean doAction) throws IOException {
 
-        writer.writeAttribute(eventAttr, getScript(facesContext, writer, linkButton, uiParams, clientId, doAction), null);
+        writer.writeAttribute(eventAttr, "if (!document.getElementById('" + clientId + "').widget) "+ getScript(facesContext, writer, linkButton, uiParams, clientId, doAction), null);
     }
 }
