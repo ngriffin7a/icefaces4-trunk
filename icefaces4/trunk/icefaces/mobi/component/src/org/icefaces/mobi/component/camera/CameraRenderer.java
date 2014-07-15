@@ -139,7 +139,7 @@ public class CameraRenderer extends Renderer {
 		}
 		writer.startElement("script", camera);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("if (!bridgeit.isSupportedPlatform('camera')) {");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('camera') && document.getElementById('"+clientId+"_fallback')) {");
 		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
 		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
 		writer.writeText("}");

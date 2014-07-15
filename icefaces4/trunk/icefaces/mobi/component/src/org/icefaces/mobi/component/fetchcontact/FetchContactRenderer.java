@@ -122,7 +122,7 @@ public class FetchContactRenderer extends Renderer {
 		}
 		writer.startElement("script", contactList);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("if (!bridgeit.isSupportedPlatform('fetchContact')) {");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('fetchContact') && document.getElementById('"+clientId+"_fallback')) {");
 		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
 		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
 		writer.writeText("}");
