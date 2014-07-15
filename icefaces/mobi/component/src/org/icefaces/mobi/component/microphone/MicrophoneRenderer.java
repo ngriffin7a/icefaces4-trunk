@@ -74,15 +74,8 @@ public class MicrophoneRenderer extends Renderer {
         Microphone microphone = (Microphone) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = microphone.getClientId();
-		UIComponent fallbackFacet = microphone.getFacet("fallback");
-		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
-		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
-			writer.startElement(SPAN_ELEM, microphone);
-			writer.writeAttribute(ID_ATTR, clientId);
-			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
-			writer.endElement(SPAN_ELEM);
-			return;
-		}
+		writer.startElement(SPAN_ELEM, microphone);
+		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = microphone.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(microphone))  {
            microphone.setButtonLabel(microphone.getCaptureMessageLabel()) ;
@@ -91,7 +84,7 @@ public class MicrophoneRenderer extends Renderer {
         //ClientDescriptor cd = microphone.getClient();
 		// button element
 		writer.startElement(BUTTON_ELEM, microphone);
-		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(ID_ATTR, clientId + "_button");
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
 		if (microphone.isDisabled()) writer.writeAttribute(DISABLED_ATTR, "disabled");
@@ -108,14 +101,32 @@ public class MicrophoneRenderer extends Renderer {
 		writer.startElement(SPAN_ELEM, microphone);
 		writer.writeText(microphone.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
+
 		// themeroller support
 		writer.startElement("span", microphone);
 		writer.startElement("script", microphone);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
+
+		UIComponent fallbackFacet = microphone.getFacet("fallback");
+		if (fallbackFacet != null) {
+			writer.startElement(SPAN_ELEM, microphone);
+			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
+			writer.writeAttribute(STYLE_ATTR, "display:none;");
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+		}
+		writer.startElement("script", microphone);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('microphone')) {");
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
+		writer.writeText("}");
+		writer.endElement("script");
+		writer.endElement(SPAN_ELEM);
         microphone.setButtonLabel(oldLabel);
     }
 }

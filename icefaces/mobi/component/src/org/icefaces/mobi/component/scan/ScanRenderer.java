@@ -67,15 +67,8 @@ public class ScanRenderer extends BaseInputRenderer {
         Scan scan = (Scan) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = scan.getClientId();
-		UIComponent fallbackFacet = scan.getFacet("fallback");
-		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
-		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
-			writer.startElement(SPAN_ELEM, scan);
-			writer.writeAttribute(ID_ATTR, clientId);
-			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
-			writer.endElement(SPAN_ELEM);
-			return;
-		}
+		writer.startElement(SPAN_ELEM, scan);
+		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = scan.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(scan))  {
            scan.setButtonLabel(scan.getCaptureMessageLabel()) ;
@@ -84,7 +77,7 @@ public class ScanRenderer extends BaseInputRenderer {
         //ClientDescriptor cd = scan.getClient();
 		// button element
 		writer.startElement(BUTTON_ELEM, scan);
-		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(ID_ATTR, clientId + "_button");
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
 		//writeStandardAttributes(writer, scan, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
@@ -102,14 +95,32 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.startElement(SPAN_ELEM, scan);
 		writer.writeText(scan.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
+
 		// themeroller support
 		writer.startElement("span", scan);
 		writer.startElement("script", scan);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
+
+		UIComponent fallbackFacet = scan.getFacet("fallback");
+		if (fallbackFacet != null) {
+			writer.startElement(SPAN_ELEM, scan);
+			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
+			writer.writeAttribute(STYLE_ATTR, "display:none;");
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+		}
+		writer.startElement("script", scan);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('scan')) {");
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
+		writer.writeText("}");
+		writer.endElement("script");
+		writer.endElement(SPAN_ELEM);
         scan.setButtonLabel(oldLabel);
     }
 

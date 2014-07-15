@@ -77,20 +77,13 @@ public class FetchContactRenderer extends Renderer {
         FetchContact contactList = (FetchContact) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = contactList.getClientId();
-		UIComponent fallbackFacet = contactList.getFacet("fallback");
-		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
-		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
-			writer.startElement(SPAN_ELEM, contactList);
-			writer.writeAttribute(ID_ATTR, clientId);
-			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
-			writer.endElement(SPAN_ELEM);
-			return;
-		}
+		writer.startElement(SPAN_ELEM, contactList);
+		writer.writeAttribute(ID_ATTR, clientId);
         StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         ClientDescriptor cd = contactList.getClient();
 		// button element
 		writer.startElement(BUTTON_ELEM, contactList);
-		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(ID_ATTR, clientId + "_button");
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
 		writer.writeAttribute(TABINDEX_ATTR, contactList.getTabindex());
@@ -109,14 +102,32 @@ public class FetchContactRenderer extends Renderer {
 		writer.startElement(SPAN_ELEM, contactList);
 		writer.writeText(contactList.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
+
 		// themeroller support
 		writer.startElement("span", contactList);
 		writer.startElement("script", contactList);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
+
+		UIComponent fallbackFacet = contactList.getFacet("fallback");
+		if (fallbackFacet != null) {
+			writer.startElement(SPAN_ELEM, contactList);
+			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
+			writer.writeAttribute(STYLE_ATTR, "display:none;");
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+		}
+		writer.startElement("script", contactList);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('fetchContact')) {");
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
+		writer.writeText("}");
+		writer.endElement("script");
+		writer.endElement(SPAN_ELEM);
     }
 
 }
