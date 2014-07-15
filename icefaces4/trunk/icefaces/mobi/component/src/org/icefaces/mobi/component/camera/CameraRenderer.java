@@ -86,15 +86,8 @@ public class CameraRenderer extends Renderer {
         Camera camera = (Camera) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = camera.getClientId();
-		UIComponent fallbackFacet = camera.getFacet("fallback");
-		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
-		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
-			writer.startElement(SPAN_ELEM, camera);
-			writer.writeAttribute(ID_ATTR, clientId);
-			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
-			writer.endElement(SPAN_ELEM);
-			return;
-		}
+		writer.startElement(SPAN_ELEM, camera);
+		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = camera.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(camera))  {
             camera.setButtonLabel(camera.getCaptureMessageLabel()) ;
@@ -103,7 +96,7 @@ public class CameraRenderer extends Renderer {
         ClientDescriptor cd = camera.getClient();
 		// button element
 		writer.startElement(BUTTON_ELEM, camera);
-		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(ID_ATTR, clientId + "_button");
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
 		if (camera.isDisabled()) writer.writeAttribute(DISABLED_ATTR, "disabled");
@@ -126,14 +119,32 @@ public class CameraRenderer extends Renderer {
 		writer.startElement(SPAN_ELEM, camera);
 		writer.writeText(camera.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
+
 		// themeroller support
 		writer.startElement("span", camera);
 		writer.startElement("script", camera);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
+
+		UIComponent fallbackFacet = camera.getFacet("fallback");
+		if (fallbackFacet != null) {
+			writer.startElement(SPAN_ELEM, camera);
+			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
+			writer.writeAttribute(STYLE_ATTR, "display:none;");
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+		}
+		writer.startElement("script", camera);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('camera')) {");
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
+		writer.writeText("}");
+		writer.endElement("script");
+		writer.endElement(SPAN_ELEM);
         camera.setButtonLabel(oldLabel);
     }
 

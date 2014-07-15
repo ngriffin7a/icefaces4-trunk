@@ -69,15 +69,8 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
         Camcorder camcorder = (Camcorder) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = camcorder.getClientId();
-		UIComponent fallbackFacet = camcorder.getFacet("fallback");
-		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
-		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
-			writer.startElement(SPAN_ELEM, camcorder);
-			writer.writeAttribute(ID_ATTR, clientId);
-			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
-			writer.endElement(SPAN_ELEM);
-			return;
-		}
+		writer.startElement(SPAN_ELEM, camcorder);
+		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = camcorder.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(camcorder))  {
             camcorder.setButtonLabel(camcorder.getCaptureMessageLabel()) ;
@@ -86,7 +79,7 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
         //ClientDescriptor cd = camcorder.getClient();
 		// button element
 		writer.startElement(BUTTON_ELEM, camcorder);
-		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(ID_ATTR, clientId + "_button");
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
 		writer.writeAttribute(TYPE_ATTR, "button");
 		if (camcorder.isDisabled()) writer.writeAttribute(DISABLED_ATTR, "disabled");
@@ -111,14 +104,32 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.startElement(SPAN_ELEM, camcorder);
 		writer.writeText(camcorder.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
+
 		// themeroller support
 		writer.startElement("span", camcorder);
 		writer.startElement("script", camcorder);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
+
+		UIComponent fallbackFacet = camcorder.getFacet("fallback");
+		if (fallbackFacet != null) {
+			writer.startElement(SPAN_ELEM, camcorder);
+			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
+			writer.writeAttribute(STYLE_ATTR, "display:none;");
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+		}
+		writer.startElement("script", camcorder);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('camcorder')) {");
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
+		writer.writeText("}");
+		writer.endElement("script");
+		writer.endElement(SPAN_ELEM);
         camcorder.setButtonLabel(oldLabel);
     }
 }
