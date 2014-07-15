@@ -5499,6 +5499,16 @@ jQuery.extend({
 			}
 		}
 
+		// ICE-10037 copy canvas contexts
+		srcElements = srcElements || getAll( elem );
+		destElements = destElements || getAll( clone );
+
+		for ( i = 0; (node = srcElements[i]) != null; i++ ) {
+			if (node.tagName.toLowerCase() == 'canvas') {
+				destElements[i].getContext('2d').drawImage(node, 0, 0);
+			}
+		}
+
 		// Preserve script evaluation history
 		destElements = getAll( clone, "script" );
 		if ( destElements.length > 0 ) {

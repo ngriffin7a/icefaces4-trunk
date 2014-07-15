@@ -62,7 +62,13 @@
             }
         }
 
-        if (opt.printContainer) { doc.write($element.outer()); }
+        if (opt.printContainer) {
+			var container = ice.ace.jq(doc.createElement('div'));
+			container.html($element.clone());
+			container.find('script').remove();
+			doc.write('<body></body>');
+			doc.body.appendChild(container.get(0));
+		}
         else { $element.each( function() { doc.write($(this).html()); }); }
 
         doc.close();
