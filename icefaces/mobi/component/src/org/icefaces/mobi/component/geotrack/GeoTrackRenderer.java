@@ -65,8 +65,11 @@ public class GeoTrackRenderer extends CoreRenderer {
 		writer.writeAttribute(HTML.TABINDEX_ATTR, geotrack.getTabindex(), null);
 
 		String script = "bridgeit.geoTrack('" + clientId + "', '', {postURL:'" + GeoTrackResourceHandler.getPostURL();
-		script += "&_id=" + storeExpression(facesContext, geotrack) + "', ";
-        script += "strategy:'" + geotrack.getStrategy() + "', duration:" + geotrack.getDuration() + "});";
+		script += "&__id=" + storeExpression(facesContext, geotrack) + "', ";
+        script += "strategy:'" + geotrack.getStrategy() + "', duration:" + geotrack.getDuration();
+		String params = geotrack.getParameters();
+		if (params != null && !"".equals(params.trim())) script += ", " + params;
+		script += "});";
 		writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
 		writer.startElement(HTML.SPAN_ELEM, geotrack);
 		writer.write(geotrack.getButtonLabel());

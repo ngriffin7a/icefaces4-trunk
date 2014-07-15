@@ -38,7 +38,7 @@ import javax.faces.component.UIComponent;
     rendererType = "org.icefaces.GeoTrackRenderer",
     extendsClass = "javax.faces.component.UIComponentBase",
     componentFamily = "org.icefaces.GeoTrack",
-    tlddoc = "The geoTrack component renders a button that allows geotracking to be initiated through the bridgeit.js api."
+    tlddoc = "The geoTrack component renders a button that allows geotracking to be initiated through the bridgeit.js API. After Bridgeit geotracking is initiated, Bridget will send geoJSON data to the server as well as any custom parameters defined in the component tag. This data will be published to the application-scoped bean property specified by the attribute 'publish'. Because of the way the Bridgeit geotracking feature works, a user can be tracked for hours without necessarily having an active session. Because of this and because of the fact that the data is sent in a non-JSF request, only application-scoped beans are supported. The data sent by Bridgeit will be in JSON format with the geoJSON data stored in the 'data' property and the custom parameters stored in the 'parameters' property."
 )
 @ResourceDependencies({
         @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
@@ -46,7 +46,7 @@ import javax.faces.component.UIComponent;
 })
 public class GeoTrackMeta extends UIComponentBaseMeta {
 
-    @Property(tlddoc = "Three strategies are currently supported: 'continuous' where the location of the device will be uploaded as frequently as it changes (intended for testing only due to high power consumption), 'significant' where the location is uploaded when it changes significantly, and 'stop' to cease location tracking.", defaultValue="stop")
+    @Property(tlddoc = "Three strategies are currently supported: 'continuous' where the location of the device will be uploaded as frequently as it changes (intended for testing only due to high power consumption), 'significant' where the location is uploaded when it changes significantly, and 'stop' to cease location tracking.", defaultValue="continuous")
     private String strategy;
 
     @Property(tlddoc = "The duration in hours.", defaultValue="1")
@@ -68,8 +68,11 @@ public class GeoTrackMeta extends UIComponentBaseMeta {
     @Property(defaultValue="Geotrack", tlddoc="The label to be displayed on the button.")
     private String buttonLabel;
 
-	@Property(tlddoc="The application-scoped bean property where the geoJSON data will be published to.")
-	private Object publish;
+	@Property(tlddoc="The application-scoped bean property where the geoJSON data and other parameters will be published to.")
+	private String publish;
+
+    @Property(tlddoc="Custom parameters that will be echoed by Bridgeit whenever it sends geotracking data to the server. These parameters can be used to identify individual users, pages, etc. The parameters must be in JSON format, and the names should always start with the underscore character (e.g. \"_viewId: '/geotracking.jsf', _userId: '001'\").", defaultValue="")
+    private String parameters;
 
     @Facets
     class FacetsMeta{
