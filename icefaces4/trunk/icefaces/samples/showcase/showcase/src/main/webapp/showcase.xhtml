@@ -172,7 +172,6 @@
                                         <h:outputText value="&gt; #{msgs[subMenuLink.title]}" escape="false" nospan="true"/>
                                         <f:attribute name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
                                         <f:attribute name="exp" value="#{subMenuLink.exampleBeanName}"/>
-                                        <ace:ajax execute="@this"/>
                                     </h:commandLink>
                                     <!-- OLD APPROACH NOV 10/11
                                          We used to do a full page refresh and navigation on each sublink
