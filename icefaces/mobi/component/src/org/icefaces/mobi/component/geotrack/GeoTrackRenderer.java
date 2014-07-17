@@ -47,7 +47,7 @@ public class GeoTrackRenderer extends CoreRenderer {
 		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
 
 		writer.startElement(HTML.BUTTON_ELEM, geotrack);
-		writer.writeAttribute(HTML.ID_ATTR + "_button", clientId, null);
+		writer.writeAttribute(HTML.ID_ATTR, clientId + "_button", null);
 		writer.writeAttribute(HTML.NAME_ATTR, clientId + "_button", null);
 		writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
 		if (geotrack.isDisabled()) writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
