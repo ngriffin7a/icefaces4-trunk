@@ -43,18 +43,11 @@ public class GeoTrackRenderer extends CoreRenderer {
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = geotrack.getClientId();
 
-		UIComponent fallbackFacet = geotrack.getFacet("fallback");
-		ClientDescriptor client = MobiJSFUtils.getClientDescriptor();
-		if (fallbackFacet != null && (!EnvUtils.isAuxUploadBrowser(facesContext) || client.isDesktopBrowser())) {
-			writer.startElement(HTML.SPAN_ELEM, geotrack);
-			writer.writeAttribute(HTML.ID_ATTR, clientId, null);
-			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
-			writer.endElement(HTML.SPAN_ELEM);
-			return;
-		}
+		writer.startElement(HTML.SPAN_ELEM, geotrack);
+		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
 
 		writer.startElement(HTML.BUTTON_ELEM, geotrack);
-		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
+		writer.writeAttribute(HTML.ID_ATTR + "_button", clientId, null);
 		writer.writeAttribute(HTML.NAME_ATTR, clientId + "_button", null);
 		writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
 		if (geotrack.isDisabled()) writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
@@ -79,10 +72,27 @@ public class GeoTrackRenderer extends CoreRenderer {
 		writer.startElement("span", geotrack);
 		writer.startElement("script", geotrack);
 		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
+		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(HTML.BUTTON_ELEM);
+
+		UIComponent fallbackFacet = geotrack.getFacet("fallback");
+		if (fallbackFacet != null) {
+			writer.startElement(HTML.SPAN_ELEM, geotrack);
+			writer.writeAttribute(HTML.ID_ATTR, clientId + "_fallback", null);
+			writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(HTML.SPAN_ELEM);
+		}
+		writer.startElement("script", geotrack);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.writeText("if (!bridgeit.isSupportedPlatform('geoTrack') && document.getElementById('"+clientId+"_fallback')) {", null);
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';", null);
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';", null);
+		writer.writeText("}", null);
+		writer.endElement("script");
+		writer.endElement(HTML.SPAN_ELEM);
     }
 
 	private String storeExpression(FacesContext facesContext, GeoTrack geotrack) {
