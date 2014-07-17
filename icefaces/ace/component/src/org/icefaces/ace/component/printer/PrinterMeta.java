@@ -45,7 +45,7 @@ import org.icefaces.resources.ICEResourceLibrary;
     @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
 })
 @ClientBehaviorHolder(events = {
-	@ClientEvent(name="action", javadoc="Fired when the parent component is clicked or activated via the keyboard (default event).", tlddoc="Fired when the parent component is clicked or activated via the keyboard (default event).", defaultRender="@all", defaultExecute="@all")
+	@ClientEvent(name="action", javadoc="Fired when the parent component is clicked or activated via the keyboard (default event).", tlddoc="Fired when the parent component is clicked or activated via the keyboard (default event).", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="action")
 public class PrinterMeta extends UIComponentBaseMeta {
 

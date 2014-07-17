@@ -50,7 +50,7 @@ import org.icefaces.resources.ICEResourceLibrary;
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="valueChange", javadoc="Fired every time the value of the text input changes (default event).", 
-	tlddoc="Fired every time the value of the text input changes (default event). When pressing the ENTER key on the text field, this event will be fired as well, even if the value didn't actually change.", defaultRender="@all", defaultExecute="@all"),
+	tlddoc="Fired every time the value of the text input changes (default event). When pressing the ENTER key on the text field, this event will be fired as well, even if the value didn't actually change.", defaultRender="@all", defaultExecute="@this"),
     @ClientEvent(name = "keypress", defaultExecute = "@this", defaultRender = "@none", argumentClass = "org.icefaces.ace.event.KeyPressEvent",
                tlddoc = "Fired on a keypress event. Use only to read input char. Don't re-render or do JS-like event handling. Otherwise could cause focus and DOM update problems, losing both focus and value.",
               javadoc = "Fired on a keypress event. Use only to read input char. Don't re-render or do JS-like event handling. Otherwise could cause focus and DOM update problems, losing both focus and value."),

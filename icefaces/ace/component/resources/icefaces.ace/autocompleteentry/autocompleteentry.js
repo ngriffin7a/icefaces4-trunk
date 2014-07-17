@@ -781,7 +781,7 @@ ice.ace.Autocompleter.prototype = {
 				ajaxCfg.trigger = trigger;
 				ice.ace.ab(ajaxCfg);
 			} else if (!this.clientSideModeCfg) {
-				ice.s(event, this.element);
+				ice.se(event, this.element);
 			}
 		} else {
 			if (this.clientSideModeCfg) {
@@ -798,7 +798,7 @@ ice.ace.Autocompleter.prototype = {
 				}
 				ice.ace.ab(ajaxCfg);
 			} else if (!this.clientSideModeCfg) {
-				ice.s(event, this.element);
+				ice.se(event, this.element);
 			}
 		}
 		this.justSubmitted = true;
