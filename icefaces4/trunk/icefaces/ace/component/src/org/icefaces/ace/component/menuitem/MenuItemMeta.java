@@ -38,7 +38,7 @@ import org.icefaces.ace.api.IceClientBehaviorHolder;
                  "<a href=\"http://wiki.icefaces.org/display/ICE/MenuItem\">MenuItem Wiki Documentation</a>."
 )
 @ClientBehaviorHolder(events = {
-	@ClientEvent(name="action", javadoc="", tlddoc="Triggers when the menu item is clicked or selected by any other means.", defaultRender="@all", defaultExecute="@all")
+	@ClientEvent(name="action", javadoc="", tlddoc="Triggers when the menu item is clicked or selected by any other means.", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="action")
 public class MenuItemMeta extends UICommandMeta {
     @Property(tlddoc = "Url to be navigated when menuitem is clicked.")

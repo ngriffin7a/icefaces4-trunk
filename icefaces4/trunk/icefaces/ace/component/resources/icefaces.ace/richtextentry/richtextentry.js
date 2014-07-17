@@ -37,7 +37,7 @@ ice.ace.richtextentry.CKsaveAjax = function(editor) {
     if (editor.ajaxSave) {	
         ice.ace.ab(editor.ajaxSave);
     } else {
-        ice.s(nothingEvent, document.getElementById(editor.name));
+        ice.se(nothingEvent, document.getElementById(editor.name));
     }
 };
 

@@ -47,7 +47,7 @@ import org.icefaces.resources.ICEResourceLibrary;
      @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
 })
 @ClientBehaviorHolder(events = {
-	@ClientEvent(name="action", javadoc="Fired when the button is clicked or pressed by any other means (default event).", tlddoc="Fired when the button is clicked or pressed by any other means (default event).", defaultRender="@all", defaultExecute="@all")
+	@ClientEvent(name="action", javadoc="Fired when the button is clicked or pressed by any other means (default event).", tlddoc="Fired when the button is clicked or pressed by any other means (default event).", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="action")
 public class LinkButtonMeta extends UICommandMeta {
 
