@@ -38,7 +38,7 @@ import javax.faces.component.UIComponent;
     rendererType = "org.icefaces.GeoTrackRenderer",
     extendsClass = "javax.faces.component.UIComponentBase",
     componentFamily = "org.icefaces.GeoTrack",
-    tlddoc = "The geoTrack component renders a button that allows geotracking to be initiated through the bridgeit.js API. After Bridgeit geotracking is initiated, Bridget will send geoJSON data to the server as well as any custom parameters defined in the component tag. This data will be published to the application-scoped bean property specified by the attribute 'publish'. Because of the way the Bridgeit geotracking feature works, a user can be tracked for hours without necessarily having an active session. Because of this and because of the fact that the data is sent in a non-JSF request, only application-scoped beans are supported. The data sent by Bridgeit will be in JSON format with the geoJSON data stored in the 'data' property and the custom parameters stored in the 'parameters' property."
+    tlddoc = "The geoTrack component renders a button that allows geotracking to be initiated through the bridgeit.js API. After Bridgeit geotracking is initiated, Bridget will send geoJSON data to the server as well as any custom parameters defined in the component tag. This data will be published to the application-scoped bean property specified by the attribute 'publish'. Because of the way the Bridgeit geotracking feature works, a user can be tracked for hours without necessarily having an active session. Because of this and because of the fact that the data is sent in a non-JSF request, only application-scoped beans are supported. The data sent by Bridgeit will be in JSON format. The custom parameters will be under the 'properties' object."
 )
 @ResourceDependencies({
         @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
@@ -71,7 +71,7 @@ public class GeoTrackMeta extends UIComponentBaseMeta {
 	@Property(tlddoc="The application-scoped bean property where the geoJSON data and other parameters will be published to.")
 	private String publish;
 
-    @Property(tlddoc="Custom parameters that will be echoed by Bridgeit whenever it sends geotracking data to the server. These parameters can be used to identify individual users, pages, etc. The parameters must be in JSON format, and the names should always start with the underscore character (e.g. \"_viewId: '/geotracking.jsf', _userId: '001'\").", defaultValue="")
+    @Property(tlddoc="Custom parameters that will be echoed by Bridgeit whenever it sends geotracking data to the server. These parameters can be used to identify individual users, pages, etc. The parameters must be in correct JSON format (without the opening/closing brackets), and the names should always start with the underscore character (e.g. \"_viewId: '/geotracking.jsf', _userId: '001'\").", defaultValue="")
     private String parameters;
 
     @Facets

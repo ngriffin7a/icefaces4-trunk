@@ -48,11 +48,7 @@ import java.util.Map;
 import javax.el.ValueExpression;
 import javax.servlet.http.HttpSession;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class GeoTrackResourceHandler extends ResourceHandlerWrapper {
-    private static Logger log = Logger.getLogger(GeoTrackResourceHandler.class.getName());
     private static final byte[] NO_BYTES = new byte[0];
     private ResourceHandler handler;
 
@@ -116,10 +112,12 @@ public class GeoTrackResourceHandler extends ResourceHandlerWrapper {
 			ServletInputStream sis = request.getInputStream();
 			InputStreamReader isr = new InputStreamReader(sis);
 			BufferedReader br =  new BufferedReader(isr);
-			String data = br.readLine();
-			log.info("Data received: " + data);
-			java.util.Set<String> keys = requestParameterMap.keySet();
-			for (String key : keys) log.info("Parameter '" + key + "' -> " + requestParameterMap.get(key));
+			String line = br.readLine();
+			String data = "";
+			while (line != null) {
+				data += line;
+				line = br.readLine();
+			}
 
 			// get value expression
 			Map<String, Object> applicationMap = facesContext.getExternalContext().getApplicationMap();
