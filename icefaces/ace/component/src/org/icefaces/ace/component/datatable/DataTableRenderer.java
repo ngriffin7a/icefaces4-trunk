@@ -110,9 +110,9 @@ public class DataTableRenderer extends CoreRenderer {
 		// when using Mojarra (in some scenarios, filters and sorting aren't being applied at this point).
 		if (!EnvUtils.isMyFaces()) {
 			if (!table.isLazy()) table.setFilteredData(table.processFilters(context));
-			table.processSorting();
-			table.getDataModel();
 		}
+		table.processSorting();
+		table.getDataModel();
 
         // If table did not decode this lifecycle (just added to view)
         // but has filters or sorting to process, do it now
