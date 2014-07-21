@@ -299,9 +299,10 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.endElement("div");                                         //end of selection container
         writer.startElement("div", uiComponent);                          //button container for set or cancel
         writer.writeAttribute("class", "mobi-time-submit-container ui-widget-content", null);
-        writer.startElement("button", uiComponent);
+        writer.startElement("input", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
         writer.writeAttribute("type", "button", "type");
+        writer.writeAttribute("value", "Set", null);
 
         StringBuilder builder = new StringBuilder(255);
         builder.append("mobi.timespinner.select('").append(clientId).append("',{ event: event");
@@ -315,8 +316,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         if (!timeEntry.isDisabled() || !timeEntry.isReadonly()) {
             writer.writeAttribute(CLICK_EVENT, jsCall+"return false;", null);
         }
-        writer.write("Set");
-        writer.endElement("button");
+        writer.endElement("input");
         writer.startElement("input", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
         writer.writeAttribute("type", "button", "type");
