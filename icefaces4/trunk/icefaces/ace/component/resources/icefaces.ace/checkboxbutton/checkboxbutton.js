@@ -116,7 +116,6 @@ ice.ace.checkboxbutton.prototype.onAriaKeypress = function (e) {
 
 ice.ace.checkboxbutton.prototype.toggleCheckbox = function (activeButton) {
     var newValue = !this.isChecked();
-	if (activeButton) newValue = true;
 
     this.setChecked(newValue);
     if (newValue == true) this.addStateCSSClasses('checked');
