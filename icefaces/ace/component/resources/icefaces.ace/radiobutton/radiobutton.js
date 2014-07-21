@@ -119,19 +119,22 @@ ice.ace.radiobutton.prototype.toggleCheckbox = function (activeButton) {
     }
 
 	if (this.options.behaviors) {
-		if (this.options.behaviors.action) {
-			if (activeButton) ice.setFocus(this.id + '_button');
-			ice.ace.ab(ice.ace.extendAjaxArgs(
-				this.options.behaviors.action,
-				{params: this.options.uiParams}
-			));
-		}
-		if (this.options.behaviors.deactivate) {
-			if (activeButton) ice.setFocus(this.id + '_button');
-			ice.ace.ab(ice.ace.extendAjaxArgs(
-				this.options.behaviors.deactivate,
-				{params: this.options.uiParams}
-			));
+		if (newValue) {
+			if (this.options.behaviors.action) {
+				if (activeButton) ice.setFocus(this.id + '_button');
+				ice.ace.ab(ice.ace.extendAjaxArgs(
+					this.options.behaviors.action,
+					{params: this.options.uiParams}
+				));
+			}
+		} else {
+			if (this.options.behaviors.deactivate) {
+				if (activeButton) ice.setFocus(this.id + '_button');
+				ice.ace.ab(ice.ace.extendAjaxArgs(
+					this.options.behaviors.deactivate,
+					{params: this.options.uiParams}
+				));
+			}
 		}
 	}
 };
