@@ -44,10 +44,14 @@ public class NavigationNotifierHandler extends ResourceHandlerWrapper {
     }
 
     public Resource createResource(String resourceName) {
-        return super.createResource(resourceName);
+        return this.createResource(resourceName, null, null);
     }
 
     public Resource createResource(String resourceName, String libraryName) {
+        return this.createResource(resourceName, libraryName, null);
+    }
+
+    public Resource createResource(String resourceName, String libraryName, String contentType) {
         final Resource resource = super.createResource(resourceName, libraryName);
         if (RSH_JS.equals(resourceName)) {
             if (cachedRSHdotJS == null) {
@@ -66,10 +70,6 @@ public class NavigationNotifierHandler extends ResourceHandlerWrapper {
         } else {
             return resource;
         }
-    }
-
-    public Resource createResource(String resourceName, String libraryName, String contentType) {
-        return super.createResource(resourceName, libraryName, contentType);
     }
 
     private static byte[] readIntoByteArray(InputStream in) throws IOException {
