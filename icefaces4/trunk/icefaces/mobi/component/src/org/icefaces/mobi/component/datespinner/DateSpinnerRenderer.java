@@ -299,13 +299,14 @@ public class DateSpinnerRenderer extends InputRenderer {
 
         writer.startElement("div", uiComponent);                          //button container for set or cancel
         writer.writeAttribute("class", "mobi-date-submit-container ui-widget-content", null);
-        writer.startElement("button", uiComponent);
+        writer.startElement("input", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
+        writer.writeAttribute("type", "button", "type");
+        writer.writeAttribute("value", "Set", null);
         if (!dateSpinner.isDisabled() && !dateSpinner.isReadonly()) {
             writer.writeAttribute(CLICK_EVENT, jsCall + "return false;", null);
         }
-        writer.write("Set");
-        writer.endElement("button");
+        writer.endElement("input");
 
         writer.startElement("input", uiComponent);
         writer.writeAttribute("class", "mobi-button ui-btn-up-c", null);
