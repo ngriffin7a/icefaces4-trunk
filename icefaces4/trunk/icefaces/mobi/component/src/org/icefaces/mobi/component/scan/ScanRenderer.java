@@ -67,6 +67,7 @@ public class ScanRenderer extends BaseInputRenderer {
         Scan scan = (Scan) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = scan.getClientId();
+		UIComponent fallbackFacet = scan.getFacet("fallback");
 		writer.startElement(SPAN_ELEM, scan);
 		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = scan.getButtonLabel();
@@ -82,7 +83,8 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.writeAttribute(TYPE_ATTR, "button");
 		//writeStandardAttributes(writer, scan, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.scan('" + clientId + "', '', {postURL:'" + scan.getPostURL() + "', " 
+		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		String script = fallbackFacet + "bridgeit.scan('" + clientId + "', '', {postURL:'" + scan.getPostURL() + "', " 
 		+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		boolean disabled = scan.isDisabled();
@@ -105,7 +107,6 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
 
-		UIComponent fallbackFacet = scan.getFacet("fallback");
 		if (fallbackFacet != null) {
 			writer.startElement(SPAN_ELEM, scan);
 			writer.writeAttribute(ID_ATTR, clientId + "_fallback");

@@ -2353,3 +2353,15 @@ ice.mobi.addListener(document, "touchstart", function(){});
     }
 }(ice.mobi));
 
+ice.mobi.fallback = {};
+ice.mobi.fallback.setupLaunchFailed = function(regularId, fallbackId) {
+	bridgeit.launchFailed = function() {
+		document.getElementById(regularId).style.display = 'none';
+		document.getElementById(fallbackId).style.display = 'inline';
+		bridgeit.launchFailed = function() {};
+	};
+	var checkTimeout = setTimeout(function() {
+		clearTimeout(checkTimeout);
+		bridgeit.launchFailed = function() {};	
+	}, 3500);
+};

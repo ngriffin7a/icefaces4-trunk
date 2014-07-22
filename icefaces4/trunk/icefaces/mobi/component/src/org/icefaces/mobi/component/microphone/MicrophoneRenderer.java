@@ -74,6 +74,7 @@ public class MicrophoneRenderer extends Renderer {
         Microphone microphone = (Microphone) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = microphone.getClientId();
+		UIComponent fallbackFacet = microphone.getFacet("fallback");
 		writer.startElement(SPAN_ELEM, microphone);
 		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = microphone.getButtonLabel();
@@ -95,7 +96,8 @@ public class MicrophoneRenderer extends Renderer {
 		writer.writeAttribute(TABINDEX_ATTR, microphone.getTabindex());
 		//writeStandardAttributes(writer, microphone, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.microphone('" + clientId + "', '', {postURL:'" + microphone.getPostURL() + "', "
+		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		String script = fallbackFacet + "bridgeit.microphone('" + clientId + "', '', {postURL:'" + microphone.getPostURL() + "', "
         + "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		writer.startElement(SPAN_ELEM, microphone);
@@ -111,7 +113,6 @@ public class MicrophoneRenderer extends Renderer {
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
 
-		UIComponent fallbackFacet = microphone.getFacet("fallback");
 		if (fallbackFacet != null) {
 			writer.startElement(SPAN_ELEM, microphone);
 			writer.writeAttribute(ID_ATTR, clientId + "_fallback");

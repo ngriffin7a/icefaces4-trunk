@@ -69,6 +69,7 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
         Camcorder camcorder = (Camcorder) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = camcorder.getClientId();
+		UIComponent fallbackFacet = camcorder.getFacet("fallback");
 		writer.startElement(SPAN_ELEM, camcorder);
 		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = camcorder.getButtonLabel();
@@ -90,7 +91,8 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.writeAttribute(TABINDEX_ATTR, camcorder.getTabindex());
 		//writeStandardAttributes(writer, camcorder, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.camcorder('" + clientId + "', '', {postURL:'" + camcorder.getPostURL() + "', ";
+		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		String script = launchFailed + "bridgeit.camcorder('" + clientId + "', '', {postURL:'" + camcorder.getPostURL() + "', ";
         script += "cookies:{'JSESSIONID':'" + 
                 MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}";
 		int maxwidth = camcorder.getMaxwidth();
@@ -114,7 +116,6 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
 
-		UIComponent fallbackFacet = camcorder.getFacet("fallback");
 		if (fallbackFacet != null) {
 			writer.startElement(SPAN_ELEM, camcorder);
 			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
