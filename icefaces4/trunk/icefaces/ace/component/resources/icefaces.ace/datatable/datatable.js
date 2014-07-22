@@ -797,6 +797,8 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
 
                 // console.log('cell double click');
             }
+			if (window.getSelection) window.getSelection().removeAllRanges();
+			else if (document.selection) document.selection.empty();
         });
     };
 
