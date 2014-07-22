@@ -126,6 +126,8 @@ public class DateSpinnerRenderer extends InputRenderer {
                 cbhCall = cbhCall.replace("\"", "\'");
                 writer.writeAttribute("onchange", "ice.ace.ab("+cbhCall+");", null);
             }
+			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
+					((DateSpinner) component).getCommonAttributeNames());
             writer.endElement("input");
         } else {
             writeJavascriptFile(context, component, JS_NAME, JS_MIN_NAME, JS_LIBRARY);

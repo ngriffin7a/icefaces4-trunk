@@ -116,6 +116,8 @@ public class TimeSpinnerRenderer extends InputRenderer {
                 cbhCall = cbhCall.replace("\"", "\'");
                 writer.writeAttribute("onchange", "ice.ace.ab("+cbhCall+");", null);
             }
+			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
+					((TimeSpinner) component).getCommonAttributeNames());
             writer.endElement("input");
         } else {
             writeJavascriptFile(context, component, JS_NAME, JS_MIN_NAME, JS_LIBRARY);

@@ -58,7 +58,7 @@ public class DateSpinnerMeta extends UIInputMeta {
     @Property(defaultValue = "2020", tlddoc = "The last year to appear in the dateScroller.")
     private int yearEnd;
 
-    @Property(defaultValue = "15", tlddoc = "Width, in characters, of the input text field string containing the value of the selected date.")
+    @Property(defaultValue = "10", tlddoc = "Width, in characters, of the input text field string containing the value of the selected date.")
     private String size;
 
     @Property(tlddoc = "The locale to be used for labels and conversion.")
