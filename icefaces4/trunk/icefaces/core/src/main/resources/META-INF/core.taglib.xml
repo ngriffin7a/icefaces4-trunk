@@ -210,7 +210,7 @@
     <tag>
         <tag-name>jsEventListener</tag-name>
         <description>
-            This tag can be used to capture Javascript events.
+            This tag can be used to capture Javascript events and trigger JavaScript handlers or server-side action listeners.
         </description>
         <component>
             <component-type>org.icefaces.impl.component.JSEventListener</component-type>
@@ -225,7 +225,7 @@
         </attribute>
         <attribute>
             <description>
-                The list of event names that should be captured.
+                A comma-separated list of JavaScript event names that should be captured.
             </description>
             <name>events</name>
             <required>true</required>
@@ -233,7 +233,7 @@
         </attribute>
         <attribute>
             <description>
-                The name of a function that vetoes which events should or should not be handled.
+                The JavaScript callback function to be invoked when a registered event occurs.
             </description>
             <name>handler</name>
             <required>false</required>

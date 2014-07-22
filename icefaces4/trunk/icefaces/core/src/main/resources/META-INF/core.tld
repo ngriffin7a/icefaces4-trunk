@@ -203,21 +203,29 @@ of "FacesEvent" would work.]]></description>
 	</tag>        
 
    <tag>
-        <description><![CDATA[***DRAFT*** The jsEventListener component allows you to capture javascript events and optionally sends a notification to server and fire an action event.]]></description>
+        <description><![CDATA[The jsEventListener component allows you to listen for client-side JavaScript events and optionally trigger JavaScript handlers or server-side action listeners in response.]]></description>
         <name>jsEventListener</name>
         <tag-class/>
         <body-content>JSP</body-content>
 
         <attribute>
-            <description><![CDATA[List of "," separated events (e.g) events="click[, keydown, ...]".]]></description>
+            <description><![CDATA[List of "," separated events to listen for. (e.g) events="click[, keydown, ...]". Note that events will only be captured by this component if they have not been previously consumed by another element in the form.]]></description>
             <name>events</name>
+            <required>yes</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <description><![CDATA[The JavaScript callback function to be invoked when a registered event occurs.]]></description>
+            <name>handler</name>
             <required>no</required>
             <rtexprvalue>false</rtexprvalue>
             <type>java.lang.String</type>
         </attribute>
 
         <attribute>
-            <description><![CDATA[Use this attribute to reference a bean method. The method is invoked when the defined key is pressed and no other component within the form doesn't capture the fired event.]]></description>
+            <description><![CDATA[MethodExpression representing the application action to invoke when a registered event is captured by this component. The expression must evaluate to a public method that takes no parameters, and returns an Object (the toString() of which is called to derive the logical outcome) which is passed to the NavigationHandler for this application.]]></description>
             <name>action</name>
             <required>no</required>
             <rtexprvalue>true</rtexprvalue>
@@ -225,7 +233,7 @@ of "FacesEvent" would work.]]></description>
         </attribute>
 
         <attribute>
-            <description><![CDATA[Use this attribute to reference a bean method. The method is invoked when the defined key is pressed and no other component within the form doesn't capture the fired event.]]></description>
+            <description><![CDATA[MethodExpression representing an action listener method that will be notified when a registered event is captured by this component. The expression must evaluate to a public method that takes an ActionEvent parameter, with a return type of void, or to a public method that takes no arguments with a return type of void. In the latter case, the method has no way of easily knowing where the event came from, but this can be useful in cases where a notification is needed that "some action happened".]]></description>
             <name>actionListener</name>
             <required>no</required>
             <rtexprvalue>true</rtexprvalue>
