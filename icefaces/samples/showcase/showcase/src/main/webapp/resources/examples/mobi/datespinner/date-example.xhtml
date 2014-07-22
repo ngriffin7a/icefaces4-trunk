@@ -44,20 +44,23 @@
            <!-- date spinner -->
             <mobi:fieldsetRow>
                 <h:outputLabel value="Date:" for="date"/>
-                <mobi:dateSpinner useNative="#{dateBean.useNative}" id="date"
-                                  readonly="#{dateBean.readonly}"
-                                 value="#{dateBean.dateInput}" 
-                                 style="float:right">
-                    <f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="#{dateBean.timeZone}"/>
-                </mobi:dateSpinner>&#160;
+				<h:panelGroup style="float:right">
+					<mobi:dateSpinner useNative="#{dateBean.useNative}" id="date"
+									  readonly="#{dateBean.readonly}"
+									 value="#{dateBean.dateInput}">
+						<f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="#{dateBean.timeZone}"/>
+					</mobi:dateSpinner>&#160;
+				</h:panelGroup>
             </mobi:fieldsetRow>
             <!-- time spinner -->
             <mobi:fieldsetRow>
                 <h:outputLabel value="Time:" for="time"/>
-                <mobi:timeSpinner id="time" useNative="#{dateBean.useNative}" timeZone="#{dateBean.timeZone}"
-                                 value="#{dateBean.timeInput}" readonly="#{dateBean.readonly}"
-                                 style="float:right">
-                </mobi:timeSpinner>&#160;
+				<h:panelGroup style="float:right">
+					<mobi:timeSpinner id="time" useNative="#{dateBean.useNative}" timeZone="#{dateBean.timeZone}"
+									 value="#{dateBean.timeInput}" readonly="#{dateBean.readonly}"
+									 style="float:right">
+					</mobi:timeSpinner>&#160;
+				</h:panelGroup>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
 				<ace:pushButton value="Submit" type="submit"
