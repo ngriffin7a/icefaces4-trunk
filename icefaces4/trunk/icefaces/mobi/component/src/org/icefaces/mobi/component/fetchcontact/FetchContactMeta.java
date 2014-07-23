@@ -75,10 +75,4 @@ public class FetchContactMeta extends UIComponentBaseMeta {
     
     @Property(tlddoc = "The email of the selected contact.")
     private String email;
-
-    @Facets
-    class FacetsMeta{
-        @Facet(tlddoc = "Allows rendering of nested components that are displayed if the BridgeIt app cannot be used, either due to running on an unsupported platform (such as desktop OS), or the BridgeIt app not being installed on the device.")
-        UIComponent fallback;
-    }
 }
