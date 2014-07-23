@@ -27,7 +27,7 @@ import java.util.Map;
 
 @ICEResourceDependencies({
         @ICEResourceDependency(name = "navigation-notifier/blank.html"),
-        @ICEResourceDependency(name = "navigation-notifier/json2007.js"),
+        @ICEResourceDependency(name = "navigation-notifier/json2.js"),
         @ICEResourceDependency(name = "navigation-notifier/rsh.js")
 })
 public class NavigationNotifier extends UICommand {

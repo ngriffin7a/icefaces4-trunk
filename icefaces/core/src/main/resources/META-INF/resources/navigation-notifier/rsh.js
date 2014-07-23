@@ -672,11 +672,11 @@ window.historyStorage = {
         var serializedHashTable = this.toJSON(this.storageHash);
         this.storageField.value = serializedHashTable;
     },
-    /*Private: Bridges for our JSON implementations - both rely on 2007 JSON.org library - can be overridden by options bundle*/
+    /*Private: Bridges for our JSON implementations - both rely on https://github.com/douglascrockford/JSON-js library*/
     toJSON: function(o) {
-        return o.toJSONString();
+        return JSON.stringify(o);
     },
     fromJSON: function(s) {
-        return s.parseJSON();
+        return JSON.parse(s);
     }
 };
