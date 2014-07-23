@@ -45,9 +45,13 @@ public class NavigationNotifier extends UICommand {
         if (clientId.equals(source)) {
             queueEvent(new ActionEvent(this));
         }
+
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
+        //let CachingHeaderPhaseListener know that caching headers should not to be sent
+        context.getExternalContext().getRequestMap().put(this.getClass().getName(), true);
+
         ResponseWriter writer = context.getResponseWriter();
         String id = getClientId();
         writer.startElement("span", this);

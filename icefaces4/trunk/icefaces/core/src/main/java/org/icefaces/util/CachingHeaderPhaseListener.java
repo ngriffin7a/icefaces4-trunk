@@ -16,6 +16,8 @@
 
 package org.icefaces.util;
 
+import org.icefaces.impl.component.NavigationNotifier;
+
 import javax.annotation.PostConstruct;
 import javax.faces.FactoryFinder;
 import javax.faces.bean.ApplicationScoped;
@@ -50,23 +52,22 @@ public class CachingHeaderPhaseListener implements Serializable {
         Lifecycle lifecycle = factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
         lifecycle.addPhaseListener(new PhaseListener() {
             public void afterPhase(PhaseEvent phaseEvent) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            public void beforePhase(PhaseEvent phaseEvent) {
                 ExternalContext ec = phaseEvent.getFacesContext().getExternalContext();
                 Object responseObj = ec.getResponse();
 
                 //Attempting to add these headers to a PortletResponse that is not of type ResourceResponse results
                 //in the portlet bridge logging warnings.  So we avoid doing it in that particular scenario.
                 boolean avoidAddingHeaders = EnvUtils.instanceofPortletResponse(responseObj) &&
-                                             !EnvUtils.instanceofPortletResourceResponse(responseObj);
-
-                if (!avoidAddingHeaders) {
-                    ec.addResponseHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                        !EnvUtils.instanceofPortletResourceResponse(responseObj);
+                boolean navigationNotifierPresent = ec.getRequestMap().containsKey(NavigationNotifier.class.getName());
+                if (!avoidAddingHeaders && !navigationNotifierPresent) {
+                    ec.addResponseHeader("Cache-Control", "must-revalidate");
                     ec.addResponseHeader("Pragma", "no-cache");
                     ec.addResponseHeader("Expires", "0");
                 }
+            }
+
+            public void beforePhase(PhaseEvent phaseEvent) {
             }
 
             public PhaseId getPhaseId() {
