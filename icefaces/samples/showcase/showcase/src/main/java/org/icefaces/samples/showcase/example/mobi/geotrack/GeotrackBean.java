@@ -17,25 +17,45 @@
 package org.icefaces.samples.showcase.example.mobi.geotrack;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
+import javax.faces.event.ActionEvent;
 
 @ManagedBean(name = GeotrackBean.BEAN_NAME)
-@ApplicationScoped
+@SessionScoped
 public class GeotrackBean implements Serializable {
 
     public static final String BEAN_NAME = "geotrackBean";
 
-    private String data;
+    private String strategy = "continuous";
+    private String label = "Start tracking";
 
     public GeotrackBean() {
     }
 
-    public String getData() {
-        return data;
+    public String getStrategy() {
+        return strategy;
     }
 
-	public void setData(String data) {
-		this.data = data;
+	public void setStrategy(String strategy) {
+		this.strategy = strategy;
+	}
+
+    public String getLabel() {
+        return label;
+    }
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public void listener(ActionEvent event) {
+		if ("continuous".equalsIgnoreCase(strategy)) {
+			strategy = "stop";
+			label = "Stop tracking";
+		} else {
+			strategy = "continuous";
+			label = "Start tracking";
+		}
 	}
 }

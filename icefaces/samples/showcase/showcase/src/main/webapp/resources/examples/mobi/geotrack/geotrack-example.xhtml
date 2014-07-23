@@ -32,14 +32,15 @@
         
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-			<mobi:geoTrack buttonLabel="Start Tracking" publish="#{geotrackBean.data}" strategy="continuous"/>
-			<mobi:geoTrack buttonLabel="Stop Tracking" strategy="stop"/>
+			<h:commandLink actionListener="#{geotrackBean.listener}">
+			<mobi:geoTrack buttonLabel="#{geotrackBean.label}" publish="#{geotrackDataBean.data}" strategy="#{geotrackBean.strategy}"/>
+			</h:commandLink>
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
 				<h:outputText value="The geotracking data periodically sent by users browsing the application is displayed below."/>
 				<br />
-				<h:outputText id="geotrackData" value="#{geotrackBean.data}"/>
+				<h:outputText id="geotrackData" value="#{geotrackDataBean.data}"/>
 				<br />
 				<h:commandButton value="Refresh">
 					<f:ajax render="geotrackData" />
