@@ -86,7 +86,6 @@ public class CameraRenderer extends Renderer {
         Camera camera = (Camera) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = camera.getClientId();
-		UIComponent fallbackFacet = camera.getFacet("fallback");
 		writer.startElement(SPAN_ELEM, camera);
 		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = camera.getButtonLabel();
@@ -108,8 +107,7 @@ public class CameraRenderer extends Renderer {
 		writer.writeAttribute(TABINDEX_ATTR, camera.getTabindex());
 		//writeStandardAttributes(writer, camera, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
-		String script = launchFailed + "bridgeit.camera('" + clientId + "', '', {postURL:'" + camera.getPostURL() + "', ";
+		String script = "bridgeit.camera('" + clientId + "', '', {postURL:'" + camera.getPostURL() + "', ";
         script += "cookies:{'JSESSIONID':'" + 
                 MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}";
 		int maxwidth = camera.getMaxwidth();
@@ -131,20 +129,6 @@ public class CameraRenderer extends Renderer {
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
 
-		if (fallbackFacet != null) {
-			writer.startElement(SPAN_ELEM, camera);
-			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
-			writer.writeAttribute(STYLE_ATTR, "display:none;");
-			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
-			writer.endElement(SPAN_ELEM);
-		}
-		writer.startElement("script", camera);
-		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("if (!bridgeit.isSupportedPlatform('camera') && document.getElementById('"+clientId+"_fallback')) {");
-		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
-		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
-		writer.writeText("}");
-		writer.endElement("script");
 		writer.endElement(SPAN_ELEM);
         camera.setButtonLabel(oldLabel);
     }
