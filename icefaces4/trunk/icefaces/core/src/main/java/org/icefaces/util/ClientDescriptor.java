@@ -206,7 +206,7 @@ public class ClientDescriptor implements Serializable {
     private void updateUserAgent(HttpServletRequest request){
         String ua = request.getHeader("User-Agent");
         if( ua == null || ua.length() == 0 ){
-            log.warning("Could not detect device settings, user agent is null");
+            log.fine("Could not detect device settings, user agent is null");
         }
         else{
             userAgent = ua;
