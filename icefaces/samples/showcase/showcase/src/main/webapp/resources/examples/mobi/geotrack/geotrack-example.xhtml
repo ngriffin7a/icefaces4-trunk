@@ -32,7 +32,8 @@
         
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-			<mobi:geoTrack publish="#{geotrackBean.data}" strategy="continuous"/>
+			<mobi:geoTrack buttonLabel="Start Tracking" publish="#{geotrackBean.data}" strategy="continuous"/>
+			<mobi:geoTrack buttonLabel="Stop Tracking" strategy="stop"/>
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
