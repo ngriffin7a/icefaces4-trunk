@@ -406,7 +406,7 @@ ice.ace.Autocompleter.prototype = {
         if (this.active) this.render();
         if (this.observer) clearTimeout(this.observer);
 		var self = this;
-        this.observer = setTimeout(function() { self.onObserverEvent() }, adjustedDelay);
+        this.observer = setTimeout(function() { self.onObserverEvent(event) }, adjustedDelay);
     },
 
     onKeyDown: function(event) {
@@ -578,7 +578,7 @@ ice.ace.Autocompleter.prototype = {
         if (this.active) this.render();
         if (this.observer) clearTimeout(this.observer);
 		var self = this;
-        this.observer = setTimeout(function() { self.onObserverEvent(); }, this.delay);
+        this.observer = setTimeout(function() { self.onObserverEvent(event); }, this.delay);
         return;
     },
 
@@ -724,15 +724,15 @@ ice.ace.Autocompleter.prototype = {
 		ice.ace.jq(this.element).off();
     },
 
-    onObserverEvent: function() {
+    onObserverEvent: function(event) {
         this.changed = false;
         if (this.getToken().length >= this.options.minChars) {
             this.startIndicator();
-            this.getUpdatedChoices(false, undefined, -1);
+            this.getUpdatedChoices(false, event, -1);
         } else {
             this.active = false;
             this.hide();
-            this.getUpdatedChoices(false, undefined, -1);
+            this.getUpdatedChoices(false, event, -1);
         }
     },
 
@@ -758,7 +758,13 @@ ice.ace.Autocompleter.prototype = {
     },
 
     getUpdatedChoices: function(isHardSubmit, event, idx, trigger) {
-		if (this.element.value.length < this.minChars) return; // this.hide()
+		var minChars = this.minChars;
+		switch (event.keyCode) {
+			case ice.ace.Autocompleter.keys.KEY_BACKSPACE:
+			case ice.ace.Autocompleter.keys.KEY_DELETE:
+				minChars--;
+		}
+		if (this.element.value.length < minChars) return; // this.hide()
         if (!event) {
             event = new Object();
         }
