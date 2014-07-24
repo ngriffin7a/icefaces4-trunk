@@ -44,7 +44,7 @@
                 <ace:ajax execute="@this" render="@all" />
             </ace:selectMenu>
             <button type="button" onclick="window.location.reload();">Reload page</button>
-            <ace:panel rendered="#{focusManagerBean.renderInputs}">
+            <ace:panel>
                 <icecore:focusManager for="#{focusManagerBean.focusedComponent}">
                     <ul>
                         <li>A) <h:inputText id="A" name="a" value=""/></li>
