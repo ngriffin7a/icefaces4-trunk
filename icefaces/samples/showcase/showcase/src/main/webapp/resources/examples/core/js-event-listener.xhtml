@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{jsEventListenerBean.title}"/>
+    <ui:param name="description" value="#{jsEventListenerBean.description}"/>
+    <ui:param name="resourceValue" value="#{jsEventListenerBean.exampleResource}"/>
+    <ui:param name="wikiResources" value="#{jsEventListenerBeanResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{jsEventListenerBeanResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form>
+            <icecore:jsEventListener events="onclick, onkeypress" actionListener="#{jsEventListenerBean.captureEvent}">
+                    <p style="margin: 1em;">
+                        <input type="text" name="test" value=""/>
+                    </p>
+
+                    Captured Javascript Event
+                    <h:panelGrid columns="2" rendered="#{jsEventListenerBean.showActionDescription}">
+
+                        <h:outputLabel for="type" value="Event type:"/>
+                        <h:outputText id="type" value="#{jsEventListenerBean.actionEvent.type}"/>
+
+                        <h:outputLabel for="sourceElement" value="Source element:"/>
+                        <h:outputText id="sourceElement" value="#{jsEventListenerBean.actionEvent.sourceElement}"/>
+
+                        <h:outputLabel for="captured" value="Capturing element:"/>
+                        <h:outputText id="captured" value="#{jsEventListenerBean.actionEvent.captured}"/>
+
+                        <h:outputLabel for="target" value="Target element:"/>
+                        <h:outputText id="target" value="#{jsEventListenerBean.actionEvent.target}"/>
+
+                        <h:outputLabel for="keycode" value="Key code:"/>
+                        <h:outputText id="keycode" value="#{jsEventListenerBean.actionEvent.keycode}"/>
+
+                        <h:outputLabel for="shift" value="SHIFT modifier:"/>
+                        <h:outputText id="shift" value="#{jsEventListenerBean.actionEvent.shift}"/>
+
+                        <h:outputLabel for="ctrl" value="CTRL modifier:"/>
+                        <h:outputText id="ctrl" value="#{jsEventListenerBean.actionEvent.ctrl}"/>
+
+                        <h:outputLabel for="alt" value="ALT modifier:"/>
+                        <h:outputText id="alt" value="#{jsEventListenerBean.actionEvent.alt}"/>
+
+                        <h:outputLabel for="meta" value="META modifier:"/>
+                        <h:outputText id="meta" value="#{jsEventListenerBean.actionEvent.meta}"/>
+
+                        <h:outputLabel for="x" value="X coordinate:"/>
+                        <h:outputText id="x" value="#{jsEventListenerBean.actionEvent.x}"/>
+
+                        <h:outputLabel for="y" value="Y coordinate:"/>
+                        <h:outputText id="y" value="#{jsEventListenerBean.actionEvent.y}"/>
+                    </h:panelGrid>
+            </icecore:jsEventListener>
+        </h:form>
+    </ui:define>
+</ui:composition>
