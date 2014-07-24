@@ -43,12 +43,7 @@
                 <f:selectItem itemValue="C" itemLabel="C"/>
                 <ace:ajax execute="@this" render="@all" />
             </ace:selectMenu>
-            <h:panelGrid columns="2">
-                <ace:pushButton id="checkBox" value="#{focusManagerBean.renderInputs ? 'Hide entries' : 'Show entries'}" actionListener="#{focusManagerBean.toggleRenderInputs}" onclick="ice.setFocus('');">
-                    <ace:ajax execute="@this"/>
-                </ace:pushButton>
-                <button type="button" onclick="window.location.reload();">Reload page</button>
-            </h:panelGrid>
+            <button type="button" onclick="window.location.reload();">Reload page</button>
             <ace:panel rendered="#{focusManagerBean.renderInputs}">
                 <icecore:focusManager for="#{focusManagerBean.focusedComponent}">
                     <ul>
