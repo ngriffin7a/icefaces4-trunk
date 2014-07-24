@@ -29,10 +29,10 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:defaultAction",
+                        title = "icecore:jsEventListener",
                         resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/jsEventListener.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:defaultAction",
+                        title = "icecore:jsEventListener",
                         resource = "http://www.icesoft.org/wiki/display/ICE/jsEventListener")
         }
 )
