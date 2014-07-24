@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{navigationNotifierBean.title}"/>
+    <ui:param name="description" value="#{navigationNotifierBean.description}"/>
+    <ui:param name="resourceValue" value="#{navigationNotifierBean.exampleResource}"/>
+    <ui:param name="wikiResources" value="#{navigationNotifierBeanResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{navigationNotifierBeanResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h4>Page A</h4>
+        <a href="resources/examples/core/navigation-notifier-next.jsf" style="border: 1px solid grey;">Navigate
+            to the other page</a>
+        <h:form>
+            <icecore:navigationNotifier action="#{navigationNotifierBean.navigationDetected}"/>
+        </h:form>
+        <ace:panel id="result" rendered="#{navigationNotifierBean.navigationDetected}">
+            Back/forward navigation detected!
+        </ace:panel>
+    </ui:define>
+</ui:composition>
