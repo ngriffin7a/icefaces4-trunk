@@ -1279,7 +1279,8 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
         if (!ie7) {
             // Return overflow to visible so sizing doesn't have scrollbar errors
             if (dupeCausesScrollChange) {
-                bodyTable.parent().css('overflow', 'visible');
+                bodyTable.parent().css('overflow-x', 'auto');
+                bodyTable.parent().css('overflow-y', 'scroll');
             }
             if (dupeCausesBodyScrollChange) {
                 ice.ace.jq('html').css('overflow', 'hidden');
@@ -1361,7 +1362,8 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
 			// Get Duplicate Sizing
 			// Return overflow to visible so sizing doesn't have scrollbar errors
 			if (dupeCausesScrollChange) {
-				bodyTable.parent().css('overflow', 'visible');
+                bodyTable.parent().css('overflow-x', 'auto');
+                bodyTable.parent().css('overflow-y', 'scroll');
 			}
 			if (dupeCausesBodyScrollChange) {
 				ice.ace.jq('html').css('overflow', 'hidden');
@@ -1436,7 +1438,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
         }*/
 
 
-        if (!ie7 && bodyTable.parent().is(':scrollable(vertical)')) {
+        if (!ie7) {
             if (((firefox) || ((safari || chrome) && !mac) || (ie9 || ie8)) && !dupeCausesScrollChange) {
                 var offset = ice.ace.jq.getScrollWidth();
 
@@ -1448,7 +1450,8 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
             else if (dupeCausesScrollChange) {
                 /* Correct scrollbars added when unnecessary. */
                 if (safari || chrome || firefox || ie9) {
-                    bodyTable.parent().css('overflow', 'visible');
+					bodyTable.parent().css('overflow-x', 'auto');
+					bodyTable.parent().css('overflow-y', 'scroll');
                     headerTable.parent().css('overflow', 'visible');
                     footerTable.parent().css('overflow', 'visible');
                     headerTable.css('width', '100%');
@@ -1463,11 +1466,6 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
                 headerTable.find('tr th:last').css('padding-right', '');
                 footerTable.find('tr td:last').css('padding-right', '');
             }
-        } else {
-            headerTable.css('width','100%').parent().css('margin-right', '');
-            footerTable.css('width','100%').parent().css('margin-right', '');
-            headerTable.find('tr th:last').css('padding-right', '');
-            footerTable.find('tr td:last').css('padding-right', '');
         }
 
         // If the body of the table starts with a conditonal row, duplicate the first non
