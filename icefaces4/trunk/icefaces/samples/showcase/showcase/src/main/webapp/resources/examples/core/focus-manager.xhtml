@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{focusManagerBean.title}"/>
+    <ui:param name="description" value="#{focusManagerBean.description}"/>
+    <ui:param name="resourceValue" value="#{focusManagerBean.exampleResource}"/>
+    <ui:param name="wikiResources" value="#{focusManagerBeanResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{focusManagerBeanResources.tldResources}"/>
+
+    <ui:define name="example">
+        <style type="text/css">
+            .ui-button { padding: 0.15em; }
+        </style>
+
+        <h:form id="form">
+            <ace:selectMenu value="#{focusManagerBean.focusedComponent}" label="Focus on:" labelPosition="left">
+                <f:selectItem itemValue="" itemLabel="-"/>
+                <f:selectItem itemValue="A" itemLabel="A"/>
+                <f:selectItem itemValue="B" itemLabel="B"/>
+                <f:selectItem itemValue="C" itemLabel="C"/>
+                <ace:ajax execute="@this" render="@all" />
+            </ace:selectMenu>
+            <h:panelGrid columns="2">
+                <ace:pushButton id="checkBox" value="#{focusManagerBean.renderInputs ? 'Hide entries' : 'Show entries'}" actionListener="#{focusManagerBean.toggleRenderInputs}" onclick="ice.setFocus('');">
+                    <ace:ajax execute="@this"/>
+                </ace:pushButton>
+                <button type="button" onclick="window.location.reload();">Reload page</button>
+            </h:panelGrid>
+            <ace:panel rendered="#{focusManagerBean.renderInputs}">
+                <icecore:focusManager for="#{focusManagerBean.focusedComponent}">
+                    <ul>
+                        <li>A) <h:inputText id="A" name="a" value=""/></li>
+                        <li>B) <h:inputText id="B" name="b" value=""/></li>
+                        <li>C) <h:inputText id="C" name="c" value=""/></li>
+                    </ul>
+                </icecore:focusManager>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
