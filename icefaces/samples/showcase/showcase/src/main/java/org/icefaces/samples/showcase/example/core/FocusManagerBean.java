@@ -30,7 +30,7 @@ import java.io.Serializable;
 
 @ComponentExample(
         title = "Focus Manager Component",
-        description = "The <b>&lt;icecore:defaultAction&gt;</b> component allows users to execute actions triggered by key presses when no other component in the page will. The following key presses are wired to trigger default action: Enter, Esc, Left Arrow, F3. The rest of key presses are ignored.",
+        description = "The <b>&lt;icecore:focusManager&gt;</b> component manages where focus will be applied on page load.",
         example = "/resources/examples/core/focus-manager.xhtml"
 )
 
@@ -66,17 +66,5 @@ public class FocusManagerBean extends ComponentExampleImpl<FocusManagerBean> imp
 
     public void setFocusedComponent(String focusedComponent) {
         this.focusedComponent = focusedComponent;
-    }
-
-    public boolean getRenderInputs() {
-        return renderInputs;
-    }
-
-    public void setRenderInputs(boolean renderInputs) {
-        this.renderInputs = renderInputs;
-    }
-
-    public void toggleRenderInputs() {
-        this.renderInputs = !renderInputs;
     }
 }
