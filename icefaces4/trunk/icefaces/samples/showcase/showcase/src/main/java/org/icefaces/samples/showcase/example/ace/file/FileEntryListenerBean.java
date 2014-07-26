@@ -69,7 +69,6 @@ public class FileEntryListenerBean extends ComponentExampleImpl<FileEntryListene
         super.initMetaData();
     }
 
-    // Invalidate and delete any files not named test.txt
     public void customValidator(FileEntryEvent entryEvent) {
         FileEntryResults results = ((FileEntry)entryEvent.getComponent()).getResults();
         for (FileEntryResults.FileInfo file : results.getFiles()) {
