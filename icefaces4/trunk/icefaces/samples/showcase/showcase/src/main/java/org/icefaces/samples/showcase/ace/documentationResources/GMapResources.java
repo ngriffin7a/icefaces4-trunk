@@ -36,7 +36,32 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
                 // TLD Resources
                 @ExampleResource(type = ResourceType.tld,
                     title="ace:gMap",
-                    resource = ResourceRootPath.FOR_ACE_TLD + "gMap.html")
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMap.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:gMapAutocomplete",
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapAutocomplete.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:gMapControl",
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapControl.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:gMapEvent",
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapEvent.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:gMapInfoWindow",
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapInfoWindow.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:gMapLayer",
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapLayer.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:gMapMarker",
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapMarker.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:gMapOverlay",
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapOverlay.html"),
+                @ExampleResource(type = ResourceType.tld,
+                    title="ace:gMapServices",
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapServices.html")
+
                 
         }
 )
