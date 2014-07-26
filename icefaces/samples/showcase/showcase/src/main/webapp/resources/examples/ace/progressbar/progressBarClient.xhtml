@@ -37,12 +37,12 @@
             function begin()
             {
 				if (this.inProgress) return;
-				clientSideBar.setValue(clientSideBar.getValue() + 10);
+				ice.ace.instance('form:progressBar').setValue(ice.ace.instance('form:progressBar').getValue() + 10);
 				this.inProgress = true;
                 this.progressInterval = setInterval (
                 function()
                 {
-                    clientSideBar.setValue(clientSideBar.getValue() + 10);
+                    ice.ace.instance('form:progressBar').setValue(ice.ace.instance('form:progressBar').getValue() + 10);
                 }
                 , 2000);
             }
@@ -50,7 +50,7 @@
             function stop() 
             {
                 clearInterval(this.progressInterval);
-                clientSideBar.setValue(0);
+                ice.ace.instance('form:progressBar').setValue(0);
 				this.inProgress = false;
             }
         </script>
@@ -58,7 +58,7 @@
         <h:form id="form">
             
             <ace:panel>
-                <ace:progressBar id="progressBar" widgetVar="clientSideBar" />
+                <ace:progressBar id="progressBar" />
             </ace:panel>
             
             <h:panelGrid width="100%">

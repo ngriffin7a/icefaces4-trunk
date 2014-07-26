@@ -38,20 +38,19 @@
             
             <ace:panel>
                 <ace:progressBar id="clientAndServerProgressBar"
-                                             widgetVar="progressBar"
                                              value="#{progressBarClientAndServer.progressValue}"
                                              changeListener="#{progressBarClientAndServer.changeListener}"/>
             </ace:panel>
 
             <script type="text/javascript">
-            ice.ace.jq(function() {progressBar.setValue(0);});
+            ice.ace.jq(function() {ice.ace.instance('form:clientAndServerProgressBar').setValue(0);});
             function increase()
             {
-               progressBar.setValue(progressBar.getValue() + 10);
+               ice.ace.instance('form:clientAndServerProgressBar').setValue(ice.ace.instance('form:clientAndServerProgressBar').getValue() + 10);
             }
             function decrease()
             {
-                progressBar.setValue(progressBar.getValue() - 10);
+                ice.ace.instance('form:clientAndServerProgressBar').setValue(ice.ace.instance('form:clientAndServerProgressBar').getValue() - 10);
             }
         </script>
             
