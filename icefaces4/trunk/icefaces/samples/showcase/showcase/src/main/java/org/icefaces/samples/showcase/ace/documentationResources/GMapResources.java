@@ -36,7 +36,7 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
                 // TLD Resources
                 @ExampleResource(type = ResourceType.tld,
                     title="ace:gMap",
-                    resource = ResourceRootPath.FOR_ACE_TLD + "gMapBasic.html")
+                    resource = ResourceRootPath.FOR_ACE_TLD + "gMap.html")
                 
         }
 )
