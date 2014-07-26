@@ -36,12 +36,11 @@
         <h:form id="form">
             
             <h:panelGrid id="commandButtons" styleClass="centeredPanelGridWithBorderSpacing" columns="2">
-                <h:commandButton id="clientBttnShow" value="Show via client" onclick="myNoteBar.show();" type="button"/>
-                <h:commandButton id="clientBttnHide" value="Hide via client" onclick="myNoteBar.hide();" type="button"/>
+                <h:commandButton id="clientBttnShow" value="Show via client" onclick="ice.ace.instance('form:notificationPanelClient').show();" type="button"/>
+                <h:commandButton id="clientBttnHide" value="Hide via client" onclick="ice.ace.instance('form:notificationPanelClient').hide();" type="button"/>
             </h:panelGrid>
 		 
             <ace:notificationPanel id="notificationPanelClient"
-                                                     widgetVar="myNoteBar"
                                                      position="top"
                                                      effect="slide" effectSpeed="slow"
                                                      >
