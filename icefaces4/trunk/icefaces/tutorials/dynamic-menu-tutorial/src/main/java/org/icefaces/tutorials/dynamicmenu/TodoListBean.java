@@ -39,11 +39,6 @@ import java.util.List;
 
 public class TodoListBean implements Serializable {
 
-	private MenuModel defaultMenu;
-	private MenuModel newMenu;
-	private MenuModel inProgressMenu;
-	private MenuModel stoppedMenu;
-	private MenuModel doneMenu;
 	private List<Item> items;
 	private Item selectedItem = null;
 	
@@ -53,7 +48,6 @@ public class TodoListBean implements Serializable {
 		items.add(new Item("Sample task B"));
 		items.add(new Item("Sample task C"));
 		items.add(new Item("Sample task D"));
-		constructMenus();
 	}
 
     public List<Item> getItems() {
@@ -64,118 +58,134 @@ public class TodoListBean implements Serializable {
         this.items = items;
     }
 	
-	private void constructMenus() {
+	private MenuModel constructMenu(String menuType) {
 	
 		ELContext elContext = FacesContext.getCurrentInstance().getELContext();
 		ExpressionFactory expressionFactory = FacesContext.getCurrentInstance().getApplication().getExpressionFactory();
 		
-		// default menu
-		defaultMenu = new DefaultMenuModel();
+		if ("new".equals(menuType)) {
+			// 'New' menu
+			MenuModel newMenu = new DefaultMenuModel();
+			
+			Submenu newSubmenu = new Submenu();
+			newSubmenu.setLabel("Menu");
+			newMenu.addSubmenu(newSubmenu);
+			
+			MenuItem newStart = new MenuItem();
+			newStart.setId("start");			
+			newStart.setValue("Start");
+			newStart.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.start}", null, new Class[] { ActionEvent.class })));
+			addAjaxBehaviorTo(newStart);
+			newSubmenu.getChildren().add(newStart);
+			
+			MenuItem newDone = new MenuItem();
+			newDone.setId("new-done");			
+			newDone.setValue("Done");
+			newDone.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.done}", null, new Class[] { ActionEvent.class })));
+			addAjaxBehaviorTo(newDone);
+			newSubmenu.getChildren().add(newDone);	
+
+			return newMenu;
+
+		} else if ("inprogress".equals(menuType)) {
+			// 'In Progress' menu
+			MenuModel inProgressMenu = new DefaultMenuModel();
+			
+			Submenu inProgressSubmenu = new Submenu();
+			inProgressSubmenu.setLabel("Menu");
+			inProgressMenu.addSubmenu(inProgressSubmenu);
+			
+			MenuItem inProgressStop = new MenuItem();
+			inProgressStop.setId("stop");			
+			inProgressStop.setValue("Stop");
+			inProgressStop.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.stop}", null, new Class[] { ActionEvent.class })));
+			addAjaxBehaviorTo(inProgressStop);
+			inProgressSubmenu.getChildren().add(inProgressStop);
+			
+			MenuItem inProgressDone = new MenuItem();
+			inProgressDone.setId("inprogress-done");			
+			inProgressDone.setValue("Done");
+			inProgressDone.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.done}", null, new Class[] { ActionEvent.class })));
+			addAjaxBehaviorTo(inProgressDone);
+			inProgressSubmenu.getChildren().add(inProgressDone);
+
+			return inProgressMenu;
 		
-		Submenu defaultSubmenu = new Submenu();
-		defaultSubmenu.setLabel("Menu");
-		defaultMenu.addSubmenu(defaultSubmenu);
+		} else if ("stopped".equals(menuType)) {
+			// 'Stopped' menu
+			MenuModel stoppedMenu = new DefaultMenuModel();
+			
+			Submenu stoppedSubmenu = new Submenu();
+			stoppedSubmenu.setLabel("Menu");
+			stoppedMenu.addSubmenu(stoppedSubmenu);
+			
+			MenuItem stoppedRestart = new MenuItem();
+			stoppedRestart.setId("restart");			
+			stoppedRestart.setValue("Restart");
+			stoppedRestart.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.start}", null, new Class[] { ActionEvent.class })));
+			addAjaxBehaviorTo(stoppedRestart);
+			stoppedSubmenu.getChildren().add(stoppedRestart);
+			
+			MenuItem stoppedDone = new MenuItem();
+			stoppedDone.setId("stopped-done");			
+			stoppedDone.setValue("Done");
+			stoppedDone.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.done}", null, new Class[] { ActionEvent.class })));
+			addAjaxBehaviorTo(stoppedDone);
+			stoppedSubmenu.getChildren().add(stoppedDone);
+
+			return stoppedMenu;
 		
-		// 'New' menu
-		newMenu = new DefaultMenuModel();
-		
-		Submenu newSubmenu = new Submenu();
-		newSubmenu.setLabel("Menu");
-		newMenu.addSubmenu(newSubmenu);
-		
-		MenuItem newStart = new MenuItem();
-		newStart.setId("start");			
-		newStart.setValue("Start");
-		newStart.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.start}", null, new Class[] { ActionEvent.class })));
-		addAjaxBehaviorTo(newStart);
-		newSubmenu.getChildren().add(newStart);
-		
-		MenuItem newDone = new MenuItem();
-		newDone.setId("new-done");			
-		newDone.setValue("Done");
-		newDone.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.done}", null, new Class[] { ActionEvent.class })));
-		addAjaxBehaviorTo(newDone);
-		newSubmenu.getChildren().add(newDone);	
-		
-		// 'In Progress' menu
-		inProgressMenu = new DefaultMenuModel();
-		
-		Submenu inProgressSubmenu = new Submenu();
-		inProgressSubmenu.setLabel("Menu");
-		inProgressMenu.addSubmenu(inProgressSubmenu);
-		
-		MenuItem inProgressStop = new MenuItem();
-		inProgressStop.setId("stop");			
-		inProgressStop.setValue("Stop");
-		inProgressStop.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.stop}", null, new Class[] { ActionEvent.class })));
-		addAjaxBehaviorTo(inProgressStop);
-		inProgressSubmenu.getChildren().add(inProgressStop);
-		
-		MenuItem inProgressDone = new MenuItem();
-		inProgressDone.setId("inprogress-done");			
-		inProgressDone.setValue("Done");
-		inProgressDone.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.done}", null, new Class[] { ActionEvent.class })));
-		addAjaxBehaviorTo(inProgressDone);
-		inProgressSubmenu.getChildren().add(inProgressDone);
-		
-		// 'Stopped' menu
-		stoppedMenu = new DefaultMenuModel();
-		
-		Submenu stoppedSubmenu = new Submenu();
-		stoppedSubmenu.setLabel("Menu");
-		stoppedMenu.addSubmenu(stoppedSubmenu);
-		
-		MenuItem stoppedRestart = new MenuItem();
-		stoppedRestart.setId("restart");			
-		stoppedRestart.setValue("Restart");
-		stoppedRestart.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.start}", null, new Class[] { ActionEvent.class })));
-		addAjaxBehaviorTo(stoppedRestart);
-		stoppedSubmenu.getChildren().add(stoppedRestart);
-		
-		MenuItem stoppedDone = new MenuItem();
-		stoppedDone.setId("stopped-done");			
-		stoppedDone.setValue("Done");
-		stoppedDone.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.done}", null, new Class[] { ActionEvent.class })));
-		addAjaxBehaviorTo(stoppedDone);
-		stoppedSubmenu.getChildren().add(stoppedDone);
-		
-		// 'Done' menu
-		doneMenu = new DefaultMenuModel();
-		
-		Submenu doneSubmenu = new Submenu();
-		doneSubmenu.setLabel("Menu");
-		doneMenu.addSubmenu(doneSubmenu);
-		
-		MenuItem doneRemove = new MenuItem();
-		doneRemove.setId("remove");			
-		doneRemove.setValue("Remove");
-		doneRemove.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.remove}", null, new Class[] { ActionEvent.class })));
-		addAjaxBehaviorTo(doneRemove);
-		doneSubmenu.getChildren().add(doneRemove);
+		} else if ("done".equals(menuType)) {
+			// 'Done' menu
+			MenuModel doneMenu = new DefaultMenuModel();
+			
+			Submenu doneSubmenu = new Submenu();
+			doneSubmenu.setLabel("Menu");
+			doneMenu.addSubmenu(doneSubmenu);
+			
+			MenuItem doneRemove = new MenuItem();
+			doneRemove.setId("remove");			
+			doneRemove.setValue("Remove");
+			doneRemove.addActionListener(new MethodExpressionActionListener(expressionFactory.createMethodExpression(elContext, "#{todoListBean.remove}", null, new Class[] { ActionEvent.class })));
+			addAjaxBehaviorTo(doneRemove);
+			doneSubmenu.getChildren().add(doneRemove);
+
+			return doneMenu;
+
+		} else {
+			// default menu
+			MenuModel defaultMenu = new DefaultMenuModel();
+			
+			Submenu defaultSubmenu = new Submenu();
+			defaultSubmenu.setLabel("Menu");
+			defaultMenu.addSubmenu(defaultSubmenu);
+
+			return defaultMenu;
+		}
 	}
 	
 	private void addAjaxBehaviorTo(MenuItem menuItem) {
 		AjaxBehavior ajaxBehavior = new AjaxBehavior();
 		ajaxBehavior.setExecute("@form");
 		ajaxBehavior.setRender("@form");
-		menuItem.addClientBehavior("activate", ajaxBehavior);
+		menuItem.addClientBehavior("action", ajaxBehavior);
 	}
 	
     public MenuModel getMenu() {
 		
 		if (selectedItem == null) {
-			return defaultMenu;
+			return constructMenu("default");
 		} else if ("New".equals(selectedItem.getStatus())) {
-			return newMenu;
+			return constructMenu("new");
 		} else if ("In Progress".equals(selectedItem.getStatus())) {
-			return inProgressMenu;
+			return constructMenu("inprogress");
 		} else if ("Stopped".equals(selectedItem.getStatus())) {
-			return stoppedMenu;
+			return constructMenu("stopped");
 		} else if ("Done".equals(selectedItem.getStatus())) {
-			return doneMenu;
+			return constructMenu("done");
 		}
 		
-        return defaultMenu;
+        return constructMenu("default");
     }
 	
 	public void rowSelectListener(SelectEvent event) {
