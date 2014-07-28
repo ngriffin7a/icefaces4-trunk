@@ -63,7 +63,7 @@
                        imageExportListener="#{chartCombinedBean.saveImage}"/>
         </h:form>
         <script type="text/javascript">
-            setTimeout(function() {exportChart.exportToServer();}, 250);
+            setTimeout(function() {ice.ace.instance('exportForm:chart').exportToServer();}, 250);
         </script>
 
     </ui:define>
