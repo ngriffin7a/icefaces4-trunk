@@ -264,10 +264,8 @@ public class SelectMenuRenderer extends InputRenderer {
             //set index to 0, so child components can get client id from selectMenu component
             selectMenu.setIndex(0);
 
-            boolean first = true;
             while (matches.hasNext()) {
 				requestMap.put(listVar, matches.next());
-                boolean last = !matches.hasNext();
 				Object value = itemValue.getValue(elContext);
 				boolean disabled = false;
 				
@@ -279,8 +277,6 @@ public class SelectMenuRenderer extends InputRenderer {
 
 				writer.startElement("div", null);
 				if (ariaEnabled) writer.writeAttribute("role", "option", null);
-                if (first) styleClass += " ui-corner-tl ui-corner-tr";
-                if (last) styleClass += " ui-corner-bl ui-corner-br";
 				if (disabled) styleClass += " ui-state-disabled";
 
                 writer.writeAttribute("class", styleClass, null);
@@ -307,7 +303,6 @@ public class SelectMenuRenderer extends InputRenderer {
 				writer.endElement("div");
 				
 				requestMap.remove(listVar);
-                first = false;
             }
             selectMenu.setIndex(-1);
 
