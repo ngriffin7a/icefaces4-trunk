@@ -28,20 +28,21 @@
 </h:head>
 <h:body>
     <div style="margin: 1em;">
-    <h:form>
-        <ace:selectMenu value="#{coreMenu.example}">
-            <f:selectItem itemValue="default-action" itemLabel="icecore:defaultAction" />
-            <f:selectItem itemValue="js-event-listener" itemLabel="icecore:jsEventListener" />
-            <f:selectItem itemValue="focus-manager" itemLabel="icecore:focusManager" />
-            <f:selectItem itemValue="idle-monitor" itemLabel="icecore:idleMonitor" />
-            <f:selectItem itemValue="navigation-notifier" itemLabel="icecore:navigationNotifier" />
-            <f:selectItem itemValue="push" itemLabel="icecore:push" />
-            <f:selectItem itemValue="load-bundle" itemLabel="icecore:loadBundle" />
-            <ace:ajax />
-        </ace:selectMenu>
-    </h:form>
+        <h:form>
+            <ace:selectMenu value="#{coreMenu.example}">
+                <f:selectItem itemValue="default-action" itemLabel="icecore:defaultAction"/>
+                <f:selectItem itemValue="js-event-listener" itemLabel="icecore:jsEventListener"/>
+                <f:selectItem itemValue="focus-manager" itemLabel="icecore:focusManager"/>
+                <f:selectItem itemValue="idle-monitor" itemLabel="icecore:idleMonitor"/>
+                <f:selectItem itemValue="navigation-notifier" itemLabel="icecore:navigationNotifier"/>
+                <f:selectItem itemValue="push" itemLabel="icecore:push"/>
+                <f:selectItem itemValue="load-bundle" itemLabel="icecore:loadBundle"/>
+                <f:selectItem itemValue="redirect" itemLabel="icecore:redirect"/>
+                <ace:ajax/>
+            </ace:selectMenu>
+        </h:form>
     </div>
 
-    <ui:include src="/resources/examples/core/#{coreMenu.example}.xhtml" />
+    <ui:include src="/resources/examples/core/#{coreMenu.example}.xhtml"/>
 </h:body>
 </html>
