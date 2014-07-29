@@ -274,7 +274,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", TimeSpinner.BUTTON_INC_CLASS, null);
         writer.writeAttribute("id", clientId + "_ampmUpBtn", null);
-        writer.writeAttribute(eventStr, "mobi.timespinner.ampmToggle('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.timespinner.ampmToggle('" + clientId + "');return false;", null);
         writePlusIcon(writer);
         writer.endElement("button");
         writer.endElement("div");                                         //end button incr
@@ -292,7 +292,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.startElement("button", uiComponent);
         writer.writeAttribute("class", TimeSpinner.BUTTON_DEC_CLASS, null);
         writer.writeAttribute("id", clientId + "_ampmBtn", null);
-        writer.writeAttribute(eventStr, "mobi.timespinner.ampmToggle('" + clientId + "');", null);
+        writer.writeAttribute(eventStr, "mobi.timespinner.ampmToggle('" + clientId + "');return false;", null);
         writeMinusIcon(writer);
         writer.endElement("button");
         writer.endElement("div");                                         //end button decrement
