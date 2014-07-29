@@ -190,6 +190,7 @@ public class SelectMenuRenderer extends InputRenderer {
             .item("ui-state-hover")
 			.item("ui-state-active")
             .item(selectMenu.getHeight())
+            .item(selectMenu.getDirection())
             .beginMap()
             .entry("p", ""); // dummy property
             encodeClientBehaviors(facesContext, selectMenu, jb);
