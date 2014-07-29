@@ -30,18 +30,18 @@ import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 
 @ComponentExample(
-        title = "DefaultAction Component",
-        description = "The <b>&lt;icecore:defaultAction&gt;</b> component allows users to execute actions triggered by key presses when no other component in the page will. The following key presses are wired to trigger default action: Enter, Esc, Left Arrow, F3. The rest of key presses are ignored.",
+        title = "Redirect Component",
+        description = "The <b>&lt;icecore:redirect&gt;</b> component triggers a redirect immediately on page load, upon any user interaction causing a render of the tag, or at the server's discretion using push.",
         example = "/resources/examples/core/redirect.xhtml"
 )
 
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="autoCompleteEntry.xhtml",
+                        title="redirect.xhtml",
                         resource = "/resources/examples/core/redirect.xhtml"),
                 @ExampleResource(type = ResourceType.java,
-                        title="AutoCompleteEntryBean.java",
+                        title="RedirectBean.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/RedirectBean.java"),
         }
 )
