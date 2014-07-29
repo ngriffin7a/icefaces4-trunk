@@ -31,7 +31,7 @@ import java.util.*;
 
 @MandatoryResourceComponent(tagName="dataExporter", value="org.icefaces.ace.component.dataexporter.DataExporter")
 public class DataExporterRenderer extends CoreRenderer {
-    private static Random RANDOM = new Random();
+    private static final Random RANDOM = new Random();
 
     @Override
     public void decode(FacesContext facesContext, UIComponent component) {
