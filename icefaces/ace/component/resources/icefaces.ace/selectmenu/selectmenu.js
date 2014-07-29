@@ -231,6 +231,8 @@ ice.ace.SelectMenu.prototype = {
 			update.style.position = 'absolute';
 			var jqElement = ice.ace.jq(element);
 			var jqUpdate = ice.ace.jq(update);
+			var top = this.root.find(".ui-selectmenu-list > div > div:first-child");
+			var bottom = this.root.find(".ui-selectmenu-list > div > div:last-child");
 			var pos = jqElement.offset();
 			var autoUp = false;
 			if (this.direction == 'auto') {
@@ -255,6 +257,8 @@ ice.ace.SelectMenu.prototype = {
 				update.style.left = element.offsetLeft + "px";
 				update.style.top = (element.offsetTop - updateHeight) + "px";
 				element.style.position = savedPos;
+				top.removeClass("ui-corner-bl ui-corner-br").addClass("ui-corner-tl ui-corner-tr");
+				bottom.removeClass("ui-corner-tl ui-corner-tr ui-corner-bl ui-corner-br");
 			} else {
 				jqUpdate.css({ position: "absolute", marginTop: 0, marginLeft: 0, maxHeight: this.height, overflow: "auto" });
 				var savedPos = element.style.position;
@@ -262,6 +266,8 @@ ice.ace.SelectMenu.prototype = {
 				update.style.left = element.offsetLeft + "px";
 				update.style.top = (element.offsetTop + element.offsetHeight - 1) + "px";
 				element.style.position = savedPos;
+				top.removeClass("ui-corner-tl ui-corner-tr ui-corner-bl ui-corner-br");
+				bottom.removeClass("ui-corner-tl ui-corner-tr").addClass("ui-corner-bl ui-corner-br");
 			}
 		}
 	},
