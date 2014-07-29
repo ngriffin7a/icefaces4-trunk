@@ -21,6 +21,7 @@ import org.icefaces.mobi.renderkit.CoreRenderer;
 
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
@@ -44,11 +45,12 @@ public class OutputListItemsRenderer extends CoreRenderer {
 
         if (list.getVar() != null) {
             list.setRowIndex(-1);
+			char separatorChar = UINamingContainer.getSeparatorChar(facesContext);
             for (int i = 0; i < list.getRowCount(); i++) {
                 //assume that if it's a list of items then it's grouped
                 list.setRowIndex(i);
                 writer.startElement(HTML.LI_ELEM, null);
-                writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
+                writer.writeAttribute(HTML.ID_ATTR, clientId + separatorChar + i, HTML.ID_ATTR);
                 String userDefinedClass = list.getStyleClass();
                 String styleClass = OutputListItem.OUTPUTLISTITEM_CLASS;
                 if (userDefinedClass != null) {
