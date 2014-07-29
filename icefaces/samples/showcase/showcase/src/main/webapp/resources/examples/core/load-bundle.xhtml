@@ -24,11 +24,11 @@
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
-    <ui:param name="title" value="#{defaultActionBean.title}"/>
-    <ui:param name="description" value="#{defaultActionBean.description}"/>
-    <ui:param name="resourceValue" value="#{defaultActionBean.exampleResource}"/>
-    <ui:param name="wikiResources" value="#{defaultActionBeanResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{defaultActionBeanResources.tldResources}"/>
+    <ui:param name="title" value="#{loadBundleBean.title}"/>
+    <ui:param name="description" value="#{loadBundleBean.description}"/>
+    <ui:param name="resourceValue" value="#{loadBundleBean.exampleResource}"/>
+    <ui:param name="wikiResources" value="#{loadBundleBeanResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{loadBundleBeanResources.tldResources}"/>
 
     <ui:define name="example">
         <icecore:loadBundle var="theBundle" basename="org.icefaces.samples.showcase.view.resources.loadBundleTest"/>
