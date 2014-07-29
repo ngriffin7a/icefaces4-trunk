@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{pushBean.title}"/>
+    <ui:param name="description" value="#{pushBean.description}"/>
+    <ui:param name="resourceValue" value="#{pushBean.exampleResource}"/>
+    <ui:param name="wikiResources" value="#{pushBeanResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{pushBeanResources.tldResources}"/>
+
+    <ui:define name="example">
+        <icecore:push group="demo"/>
+        <h:form>
+            <ace:selectMenu value="#{pushBean.strategyIndex}" label="Select push strategy:" labelPosition="left"
+                            actionListener="#{pushBean.updateStrategy}">
+                <f:selectItem itemValue="0" itemLabel="-"/>
+                <f:selectItem itemValue="1" itemLabel="Update page every second"/>
+                <f:selectItem itemValue="2" itemLabel="Update page every 2 seconds 5 times"/>
+                <f:selectItem itemValue="3" itemLabel="Update page once after 3 second delay"/>
+                <ace:ajax execute="@this" render="@all"/>
+            </ace:selectMenu>
+            <ace:panel>
+                <ace:chart id="chart"
+                           animated="false"
+                           value="#{pushBean.barData}"
+                           stackSeries="false"
+                           defaultAxesConfig="#{pushBean.defaultAxis}"
+                           xAxis="#{pushBean.axisX}"
+                           yAxis="#{pushBean.axisY}"
+                           legend="true"
+                           legendPlacement="OUTSIDE_GRID"
+                           highlighter="true"
+                           highlighterLocation="N"
+                           highlighterShowMarker="false"
+                           highlighterBringSeriesToFront="true"
+                           widgetVar="barChart"/>
+
+                <ace:dataTable id="table"
+                               value="#{pushBean.items}"
+                               var="item"
+                               paginatorPosition="bottom"
+                               rows="10">
+                    <ace:column headerText="A">
+                        <h:outputText value="#{item.a}"/>
+                    </ace:column>
+                    <ace:column headerText="B">
+                        <h:outputText value="#{item.b}"/>
+                    </ace:column>
+                    <ace:column headerText="C">
+                        <h:outputText value="#{item.c}"/>
+                    </ace:column>
+                    <ace:column headerText="D">
+                        <h:outputText value="#{item.d}"/>
+                    </ace:column>
+                </ace:dataTable>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
