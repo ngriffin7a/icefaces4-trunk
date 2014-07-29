@@ -53,7 +53,7 @@ extends UIComponentBase {
     }
 
     @Override
-    public void encodeAll(final FacesContext facesContext)
+    public void encodeBegin(final FacesContext facesContext)
     throws IOException {
         String _href = getHref();
         if (_href != null && _href.trim().length() != 0) {
