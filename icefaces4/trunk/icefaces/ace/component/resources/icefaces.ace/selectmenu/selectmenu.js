@@ -16,14 +16,14 @@
 
 if (!ice.ace.SelectMenus) ice.ace.SelectMenus = {};
 
-ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selectedRowClass, height, behaviors, cfg, effects) {
+ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selectedRowClass, height, direction, behaviors, cfg, effects) {
 	this.id = id;
 	var isInitialized = false;
 	if (ice.ace.SelectMenus[this.id] && ice.ace.SelectMenus[this.id].initialized) isInitialized = true;
 	if (isInitialized) this.selectedIndex = ice.ace.SelectMenus[this.id].selectedIndex;
 	ice.ace.SelectMenus[this.id] = this;
 	this.height = height == 0 ? 'auto' : height;
-	this.direction = 'down';
+	this.direction = direction;
 	var options = {};
 	this.root = ice.ace.jq(ice.ace.escapeClientId(this.id));
 	var $element = this.root.find('.ui-selectmenu-value');

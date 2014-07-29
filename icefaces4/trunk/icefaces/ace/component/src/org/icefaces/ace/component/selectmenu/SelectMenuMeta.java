@@ -133,6 +133,9 @@ public class SelectMenuMeta extends UIInputMeta {
 
 	@Property(tlddoc="Length of time in milliseconds the hide effect will last for.", defaultValue="150")
 	private int hideEffectLength;
+
+    @Property(tlddoc = "Direction in which to show the list of possible matches. Possible values are \"up\", \"down\", and \"auto\".", defaultValue="auto")
+    private String direction;
 	
     @Field()
     private List itemList;
