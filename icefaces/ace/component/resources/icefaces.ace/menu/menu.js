@@ -270,6 +270,7 @@ ice.ace.Menu = function(id, cfg) {
 
     this.jq.wijmenu(this.cfg);
 	ice.ace.jq(this.jqId).attr('style', '');
+	this.jq.wijmenu('refresh');
 
     this.element = this.jq.parent().parent();       //overlay element
     this.element.css('z-index', this.cfg.zindex);
