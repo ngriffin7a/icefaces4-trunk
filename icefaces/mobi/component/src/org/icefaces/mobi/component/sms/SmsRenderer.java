@@ -1,0 +1,111 @@
+/*
+ * Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+package org.icefaces.mobi.component.sms;
+
+import org.icefaces.impl.util.CoreUtils;
+import org.icefaces.mobi.util.HTML;
+import org.icefaces.mobi.renderkit.CoreRenderer;
+import org.icefaces.mobi.util.MobiJSFUtils;
+import org.icefaces.util.ClientDescriptor;
+import org.icefaces.util.EnvUtils;
+
+import javax.el.ValueExpression;
+import javax.faces.application.ProjectStage;
+import javax.faces.application.Resource;
+import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.render.Renderer;
+import java.io.IOException;
+import java.util.Map;
+
+public class SmsRenderer extends CoreRenderer {
+
+    public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
+        Sms sms = (Sms) uiComponent;
+        ResponseWriter writer = facesContext.getResponseWriter();
+        String clientId = sms.getClientId();
+
+		writer.startElement(HTML.SPAN_ELEM, sms);
+		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
+
+		writer.startElement(HTML.BUTTON_ELEM, sms);
+		writer.writeAttribute(HTML.ID_ATTR, clientId + "_button", null);
+		writer.writeAttribute(HTML.NAME_ATTR, clientId + "_button", null);
+		writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
+		if (sms.isDisabled()) writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
+		String style = sms.getStyle();
+		if (style != null) writer.writeAttribute(HTML.STYLE_ATTR, style, null);
+		String styleClass = sms.getStyleClass();
+		if (styleClass != null) writer.writeAttribute(HTML.CLASS_ATTR, styleClass, null);
+		writer.writeAttribute(HTML.TABINDEX_ATTR, sms.getTabindex(), null);
+		String script = "bridgeit.sms('" + clientId + "', {number:'" + escapeString(sms.getNumber()) + "', message:'" + escapeString(sms.getMessage()) + "'});";
+		writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
+		writer.startElement(HTML.SPAN_ELEM, sms);
+		writer.write(sms.getButtonLabel());
+		writer.endElement(HTML.SPAN_ELEM);
+
+		// themeroller support
+		writer.startElement("span", sms);
+		writer.startElement("script", sms);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
+		writer.endElement("script");
+		writer.endElement("span");
+		writer.endElement(HTML.BUTTON_ELEM);
+
+		writer.endElement(HTML.SPAN_ELEM);
+    }
+
+    public static String escapeString(String value) {
+        StringBuilder sb = new StringBuilder();
+        char c;
+        for (int idx = 0; idx < value.length(); idx++) {
+            c = value.charAt(idx);
+            switch (c) {
+                case '\\':
+                    sb.append("\\\\");
+                    break;
+                case '\"':
+                    sb.append("\\\"");
+                    break;
+                case '\b':
+                    sb.append("\\b");
+                    break;
+                case '\f':
+                    sb.append("\\f");
+                    break;
+                case '\n':
+                    sb.append("\\n");
+                    break;
+                case '\r':
+                    sb.append("\\r");
+                    break;
+                case '\t':
+                    sb.append("\\t");
+                    break;
+				case '\'':
+                    sb.append("\\'");
+                    break;
+                default:
+                    sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+}
