@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{refreshBean.title}"/>
+    <ui:param name="description" value="#{refreshBean.description}"/>
+    <ui:param name="resourceValue" value="#{refreshBean.exampleResource}"/>
+    <ui:param name="wikiResources" value="#{refreshBeanResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{refreshBeanResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form>
+            <ace:selectMenu value="#{refreshBean.interval}" label="Interval:" labelPosition="left">
+                <f:selectItem itemValue="1" itemLabel="1 second" />
+                <f:selectItem itemValue="2" itemLabel="2 seconds" />
+                <f:selectItem itemValue="5" itemLabel="5 seconds" />
+                <f:selectItem itemValue="10" itemLabel="10 seconds" />
+                <ace:ajax />
+            </ace:selectMenu>
+            <ace:selectMenu value="#{refreshBean.duration}" label="Duration:" labelPosition="left">
+                <f:selectItem itemValue="1" itemLabel="1 minute" />
+                <f:selectItem itemValue="2" itemLabel="2 minutes" />
+                <f:selectItem itemValue="-1" itemLabel="forever" />
+                <ace:ajax />
+            </ace:selectMenu>
+        </h:form>
+        <icecore:refresh interval="#{refreshBean.interval}" duration="#{refreshBean.duration}"/>
+        <ace:panel>
+            Time: <h:outputText value="#{refreshBean.currentTime}"/>
+        </ace:panel>
+    </ui:define>
+</ui:composition>
