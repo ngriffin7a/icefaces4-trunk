@@ -50,7 +50,6 @@ import java.util.Date;
 @ViewScoped
 public class RefreshBean extends ComponentExampleImpl<RefreshBean> implements Serializable {
     private static SimpleDateFormat FORMATTER = new SimpleDateFormat("hh:mm:ss");
-    private boolean refreshEnabled = false;
     private int interval = 2;
     private int duration = 1;
 
@@ -61,14 +60,6 @@ public class RefreshBean extends ComponentExampleImpl<RefreshBean> implements Se
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-    }
-
-    public boolean getRefreshEnabled() {
-        return refreshEnabled;
-    }
-
-    public void setRefreshEnabled(boolean refreshEnabled) {
-        this.refreshEnabled = refreshEnabled;
     }
 
     public int getInterval() {
