@@ -218,6 +218,15 @@
                  includeInMenu="false" navBarGroup="scan">
                 <ui:include src="/resources/examples/mobi/scan/scan-desc.xhtml" />
              </mobi:view>
+             <!-- SMS -->
+             <mobi:view id="sms" title="Sms" menuIcon="comment"
+				navBarGroup="sms">
+                 <ui:include src="/resources/examples/mobi/sms/sms-example.xhtml" />
+             </mobi:view>
+             <mobi:view id="smsDocs" title="Docs" menuIcon="book"
+                 includeInMenu="false" navBarGroup="sms">
+                <ui:include src="/resources/examples/mobi/sms/sms-desc.xhtml" />
+             </mobi:view>
              
             <!-- ACE SHOWCASE -->
              <mobi:view id="acecomps" title="ACE Components" 
