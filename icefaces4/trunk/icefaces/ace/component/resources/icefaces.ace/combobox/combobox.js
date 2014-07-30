@@ -345,6 +345,7 @@ ice.ace.ComboBox.prototype = {
 					ice.setFocus('');
 					return;
                 case ice.ace.ComboBox.keys.KEY_RETURN:
+					this.updateHiddenValue();
                     this.getUpdatedChoices(true, event, -1);
 					event.stopPropagation();
 					event.preventDefault();
@@ -374,6 +375,7 @@ ice.ace.ComboBox.prototype = {
 					ice.setFocus('');
 					return;
                 case ice.ace.ComboBox.keys.KEY_RETURN:
+					this.updateHiddenValue();
 					var idx = this.selectEntry();
 					this.getUpdatedChoices(true, event, idx);
 					this.hide();
@@ -942,6 +944,20 @@ ice.ace.ComboBox.prototype = {
 			}
 		}
 		if (!found) this.selectedIndex = -1;
+	},
+
+	updateHiddenValue: function() {
+		var size = this.$content.length;
+		for (var i = 0; i < size; i++) {
+			var entry = this.getEntryFromContent(i);
+			if (entry) {
+				var labelRoot = ice.ace.jq(entry).children('.'+ice.ace.ComboBox.LABEL_CLASS).get(0);
+				if (labelRoot && (ice.ace.jq.trim(this.element.value) == ice.ace.jq.trim(ice.ace.ComboBox.collectTextNodesIgnoreClass(labelRoot, ice.ace.ComboBox.IGNORE_CLASS)))) {
+					this.hidden.value = ice.ace.ComboBox.collectTextNodesIgnoreClass(entry, ice.ace.ComboBox.LABEL_CLASS);
+					break;
+				}
+			}
+		}
 	},
 	
 	showEffect: function(update) {
