@@ -54,7 +54,7 @@ public class SmsRenderer extends CoreRenderer {
 		String styleClass = sms.getStyleClass();
 		if (styleClass != null) writer.writeAttribute(HTML.CLASS_ATTR, styleClass, null);
 		writer.writeAttribute(HTML.TABINDEX_ATTR, sms.getTabindex(), null);
-		String script = "bridgeit.sms('" + clientId + "', {number:'" + escapeString(sms.getNumber()) + "', message:'" + escapeString(sms.getMessage()) + "'});";
+		String script = "bridgeit.sms('" + escapeString(sms.getNumber()) + "', '" + escapeString(sms.getMessage()) + "');";
 		writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
 		writer.startElement(HTML.SPAN_ELEM, sms);
 		writer.write(sms.getButtonLabel());
