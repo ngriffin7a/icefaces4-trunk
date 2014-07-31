@@ -273,7 +273,11 @@ ice.ace.Menu = function(id, cfg) {
 	this.jq.wijmenu('refresh');
 
     this.element = this.jq.parent().parent();       //overlay element
-    this.element.css('z-index', this.cfg.zindex);
+	if (this.cfg.mode == 'sliding') {
+		this.element.parent().parent().parent().parent().css('z-index', this.cfg.zindex);
+	} else {
+		this.element.css('z-index', this.cfg.zindex);
+	}
 
     if(this.cfg.style)
         this.element.attr('style', this.cfg.style);
