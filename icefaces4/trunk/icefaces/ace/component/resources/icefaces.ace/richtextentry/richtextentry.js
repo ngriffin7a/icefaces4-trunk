@@ -80,7 +80,25 @@ ice.ace.richtextentry.getToolbar = function(toolbar) {
 ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _skin, _height, _width, _customConfig, saveOnSubmit, isReadOnly, hashCode, behaviors) {
     CKEDITOR.config.defaultLanguage = lang;
 	CKEDITOR.config.language = lang;
-    _skin = 'moono';
+	switch (_skin) {
+		case 'moono':
+		case 'moonocolor':
+		case 'office2013':
+		case 'kama':
+			break;
+		case 'moonoblue':
+			_skin = 'Moono_blue';
+			break;
+		case 'moonodark':
+			_skin = 'moono-dark';
+			break;
+		case 'bootstrap':
+			_skin = 'bootstrapck';
+			break;
+		default:
+			_skin = 'moono';
+			break;
+	}
     CKEDITOR.config.skin = _skin;
 
     try {
