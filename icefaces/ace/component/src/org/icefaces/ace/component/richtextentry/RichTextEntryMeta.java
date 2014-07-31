@@ -82,7 +82,7 @@ public class RichTextEntryMeta extends UIInputMeta {
     @Property(tlddoc = "This attribute defines the path of the custom config file, the path is relative to the web app.")
     private String customConfigPath;
 
-    @Property(tlddoc = "Specify the pre-defined skin for the editor. Possible values are 'moono'.", defaultValue="moono")
+    @Property(tlddoc = "Specify the pre-defined skin for the editor. Possible values are 'moono', 'moonocolor', 'moonodark', 'moonoblue', 'office2013', 'kama', and 'bootstrap'.", defaultValue="moono")
     private String skin;
 	
     @Property(tlddoc = "Boolean value to disable the editor functions.", defaultValue="false")
