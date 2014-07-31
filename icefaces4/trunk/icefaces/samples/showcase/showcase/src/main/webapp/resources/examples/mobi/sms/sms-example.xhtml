@@ -32,17 +32,15 @@
         
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-				<h:outputLabel for="smsNumber" value="Phone Number:"/>
-				<h:inputText value="#{smsBean.number}">
-					<f:ajax render="@form" />
-				</h:inputText>
+				<ace:textEntry id="smsNumber" value="#{smsBean.number}" label="Phone Number:" labelPosition="left">
+					<ace:ajax render="@form" />
+				</ace:textEntry>
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<h:outputLabel for="smsMessage" value="Message:"/>
-				<h:inputText value="#{smsBean.message}">
-					<f:ajax render="@form" />
-				</h:inputText>
+				<ace:textEntry id="smsMessage" value="#{smsBean.message}" label="Message:" labelPosition="left">
+					<ace:ajax render="@form" />
+				</ace:textEntry>
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
