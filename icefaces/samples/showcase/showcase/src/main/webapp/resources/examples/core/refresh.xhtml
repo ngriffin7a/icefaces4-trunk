@@ -29,6 +29,7 @@
     <ui:param name="tldResources" value="#{refreshBeanResources.tldResources}"/>
 
     <ui:define name="example">
+        <icecore:refresh interval="#{refreshBean.interval}" duration="#{refreshBean.duration}"/>
         <h:form>
             <ace:selectMenu value="#{refreshBean.interval}" label="Interval:" labelPosition="left">
                 <f:selectItem itemValue="1" itemLabel="1 second" />
@@ -44,7 +45,6 @@
                 <ace:ajax />
             </ace:selectMenu>
         </h:form>
-        <icecore:refresh interval="#{refreshBean.interval}" duration="#{refreshBean.duration}"/>
         <ace:panel>
             Time: <h:outputText value="#{refreshBean.currentTime}"/>
         </ace:panel>
