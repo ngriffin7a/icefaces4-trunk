@@ -170,9 +170,11 @@ public class DataViewRenderer extends Renderer {
                 if (column.getHeaderText() != null)
                     writer.write(column.getHeaderText());
 
-                writer.startElement("i", null);
-                writer.writeAttribute(HTML.CLASS_ATTR, DataView.DATAVIEW_SORT_INDICATOR_CLASS, null);
-                writer.endElement("i");
+                if (column.isSortable()) {
+                    writer.startElement("i", null);
+                    writer.writeAttribute(HTML.CLASS_ATTR, DataView.DATAVIEW_SORT_INDICATOR_CLASS, null);
+                    writer.endElement("i");
+                }
                 writer.endElement(HTML.TH_ELEM);
             }
         }
