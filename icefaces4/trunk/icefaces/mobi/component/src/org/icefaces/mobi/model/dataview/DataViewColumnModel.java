@@ -23,6 +23,7 @@ import java.util.TimeZone;
 public interface DataViewColumnModel {
     public String getHeaderText();
     public String getFooterText();
+    public boolean isSortable();
     public String getType();
     public String getDateType();
     public String getDatePattern();

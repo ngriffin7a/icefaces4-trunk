@@ -37,6 +37,9 @@ public class DataViewColumnMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Define the text to render in the footer of this column.")
     String footerText;
 
+    @Property(tlddoc = "Define if the column is sortable.", defaultValue = "true")
+    boolean sortable;
+
     @Property(defaultValue = "org.icefaces.mobi.component.dataview.ColumnType.text",
               defaultValueType = DefaultValueType.EXPRESSION,
               tlddoc = "Define the ColumnType of this column, determining how the " +

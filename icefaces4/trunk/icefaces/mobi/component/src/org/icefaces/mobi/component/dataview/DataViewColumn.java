@@ -43,6 +43,10 @@ public class DataViewColumn extends DataViewColumnBase implements ValueHolder {
                 return DataViewColumn.this.getFooterText();
             }
 
+            public boolean isSortable() {
+                return DataViewColumn.this.isSortable();
+            }
+
             public String getType() {
                 return DataViewColumn.this.getType().toString();
             }

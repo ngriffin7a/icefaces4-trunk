@@ -1783,7 +1783,9 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
             sortCriteria = [];
             Array.prototype.every.call(getNode('headcells'), function(c) {
                     var indi = c.querySelector(indicatorSelector);
-                    indi.className = blankInicatorClass;
+                    if (indi) {
+                        indi.className = blankInicatorClass;
+                    }
                     return true;
                 });
 
@@ -1806,9 +1808,15 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
             var sortedRows, asc,
                 headCell = event.target,
                 ascendingClass = blankInicatorClass + ' icon-caret-up',
-                descendingClass = blankInicatorClass + ' icon-caret-down',
-                ascIndi = headCell.querySelector(indicatorSelector),
-                ascClass = ascIndi.className;
+                descendingClass = blankInicatorClass + ' icon-caret-down';
+
+            var ascIndi = headCell.querySelector(indicatorSelector);
+            if (!ascIndi) {
+                //non-sortable column
+                return;
+            }
+
+            var ascClass = ascIndi.className;
 
             /* find col index */
             var columnIndex = getIndex(headCell);
@@ -1827,7 +1835,9 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
             Array.prototype.filter.call(getNode('headcells'), function (c) {return sortedIndexes.indexOf(getIndex(c)) == -1;})
                 .every(function(c) {
                     var indi = c.querySelector(indicatorSelector);
-                    indi.className = blankInicatorClass;
+                    if (indi) {
+                        indi.className = blankInicatorClass;
+                    }
                     return true;
                 });
 
