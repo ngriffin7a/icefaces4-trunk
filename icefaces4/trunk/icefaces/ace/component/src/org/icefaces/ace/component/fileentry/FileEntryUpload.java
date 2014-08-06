@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.fileentry;
 
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.apache.commons.fileupload.*;
 import org.icefaces.impl.application.WindowScopeManager;
 import org.icefaces.impl.context.DOMPartialViewContext;
@@ -25,15 +26,15 @@ import org.icefaces.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.icefaces.apache.commons.fileupload.util.Streams;
 import org.icefaces.util.EnvUtils;
 
-import javax.faces.application.ProjectStage;
+import javax.faces.application.*;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.PartialViewContext;
 import javax.faces.context.FacesContext;
-import javax.faces.application.FacesMessage;
+import javax.faces.event.PhaseEvent;
+import javax.faces.event.PhaseId;
+import javax.faces.event.PhaseListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import javax.faces.application.ResourceHandlerWrapper;
-import javax.faces.application.ResourceHandler;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -44,51 +45,49 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.lang.reflect.*;
 
-public class FileEntryResourceHandler extends ResourceHandlerWrapper {
+public class FileEntryUpload implements PhaseListener {
     private static Logger log = Logger.getLogger(FileEntry.class.getName()+".multipart");
-    private ResourceHandler wrapped;
-
-    public FileEntryResourceHandler(ResourceHandler wrapped)  {
-        this.wrapped = wrapped;
-        log.fine("FileEntryResourceHandler  wrapped: " + wrapped);
-    }
-
-    public ResourceHandler getWrapped() {
-        return wrapped;
-    }
-
     private static int counter;
 
     @Override
-    public boolean isResourceRequest(FacesContext facesContext) {
+    public void beforePhase(PhaseEvent event) {
+    }
+
+    @Override
+    public PhaseId getPhaseId() {
+        return PhaseId.RESTORE_VIEW;
+    }
+
+    @Override
+    public void afterPhase(PhaseEvent event) {
+        FacesContext facesContext = event.getFacesContext();
         ExternalContext externalContext = facesContext.getExternalContext();
         Object requestObject = facesContext.getExternalContext().getRequest();
         HttpServletRequest request = EnvUtils.getSafeRequest(facesContext);
         Object fileEntryMarker = request.getParameter(FileEntryFormSubmit.FILE_ENTRY_MULTIPART_MARKER);  // String "true"
-        log.finest("FileEntryResourceHandler  fileEntryMarker: " + fileEntryMarker +
+        log.finest("FileEntryUpload  fileEntryMarker: " + fileEntryMarker +
             "  requireJS: " + EnvUtils.isFileEntryRequireJavascript(facesContext) + "  this: " + this + "  count: " + counter++);
         if (fileEntryMarker == null && EnvUtils.isFileEntryRequireJavascript(facesContext)) {
-            return wrapped.isResourceRequest(facesContext);
+            return;
         }
 
         String reqContentType = externalContext.getRequestContentType();
         boolean contentTypeNotMultipart = ( (null == reqContentType) ||
                 !reqContentType.startsWith("multipart") );
         log.finest(
-            "FileEntryResourceHandler\n" +
+            "FileEntryUpload\n" +
             "  requestContextPath: " + externalContext.getRequestContextPath() + "\n" +
             "  requestPathInfo   : " + externalContext.getRequestPathInfo() + "\n" +
             "  requestContentType: " + reqContentType + "\n" +
             "  multipart         : " + (!contentTypeNotMultipart));
         if (contentTypeNotMultipart)  {
-            return wrapped.isResourceRequest(facesContext);
+            return;
         }
 
         boolean isPortlet = EnvUtils.instanceofPortletRequest(requestObject);
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        log.finer("FileEntryResourceHandler\n" +
+        log.finer("FileEntryUpload\n" +
             "  isMultipart: " + isMultipart + "\n" +
             "  isPortlet: " + isPortlet);
 
@@ -98,7 +97,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
             String extCharEnc = externalContext.getRequestCharacterEncoding();
             String iceHandlerCharEnc = org.icefaces.impl.util.CharacterEncodingHandler.calculateCharacterEncoding(facesContext);
             String resolvedCharacterEncoding = (reqCharEnc != null) ? reqCharEnc : ((extCharEnc != null) ? extCharEnc : (iceHandlerCharEnc));
-            log.finer("FileEntryResourceHandler\n" +
+            log.finer("FileEntryUpload\n" +
                 "  requestContentLength: " + requestContentLength + "\n" +
                 "  request.getCharacterEncoding: " + reqCharEnc + "\n" +
                 "  externalContext.getRequestCharacterEncoding: " + extCharEnc + "\n" +
@@ -126,7 +125,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
             try {
 				if (partClass != null) {
 					Collection<javax.servlet.http.Part> parts = request.getParts();
-					log.finer("FileEntryResourceHandler  Parts size: " + parts.size());
+					log.finer("FileEntryUpload  Parts size: " + parts.size());
 					PartsManualProgress partsManualProgress = new PartsManualProgress(
 						(ProgressListener) progressListenerResourcePusher,
 						requestContentLength);
@@ -146,7 +145,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                 }
                 uploader.setProgressListener(progressListenerResourcePusher);
                 FileItemIterator iter = uploader.getItemIterator(request);
-                log.finer("FileEntryResourceHandler  Commons FileUpload has data: " + iter.hasNext());
+                log.finer("FileEntryUpload  Commons FileUpload has data: " + iter.hasNext());
                 while (iter.hasNext()) {
                     handleMultipartPortion(facesContext,
                         resolvedCharacterEncoding, clientId2Results,
@@ -185,7 +184,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                 List<String> parameterList = parameterListMap.get(key);
                 if (key.equals(FileEntryFormSubmit.FILE_ENTRY_AJAX_RESPONSE_MARKER)) {
                     ajaxResponse = true;
-                    log.finest("FileEntryResourceHandler  ajaxResponse: " + parameterList);
+                    log.finest("FileEntryUpload  ajaxResponse: " + parameterList);
                 }
                 String[] values = new String[parameterList.size()];
                 values = parameterList.toArray(values);
@@ -202,7 +201,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                 }
                 facesContext.getExternalContext().setRequest(wrapper);
 
-                log.finer("FileEntryResourceHandler  determined partial/ajax request: " + ajaxResponse);
+                log.finer("FileEntryUpload  determined partial/ajax request: " + ajaxResponse);
                 PartialViewContext pvc = facesContext.getPartialViewContext();
                 if (pvc instanceof DOMPartialViewContext) {
                     ((DOMPartialViewContext) pvc).setAjaxRequest(ajaxResponse);
@@ -210,8 +209,6 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                 pvc.setPartialRequest(ajaxResponse);
             }
         }
-
-        return wrapped.isResourceRequest(facesContext);
     }
 
     private static Object getPortletRequestWrapper(Object requestObject, Map map){
@@ -290,7 +287,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
         valueStream.close();
 
         String name = mf.getFieldName();
-        log.finer("FileEntryResourceHandler  Form field name: " + name + "  value: " + value);
+        log.finer("FileEntryUpload  Form field name: " + name + "  value: " + value);
 
         List<String> parameterList = parameterListMap.get(name);
         if (parameterList == null) {
@@ -313,9 +310,8 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
         FileEntryResults results = null;
         FileEntryCallback callback = null;
         FileEntryResults.FileInfo fileInfo = null;
-        FileEntryConfig config = null;
-
         File file = null;
+        FileEntry fileEntry = null;
         long[] fileSizeRead = new long[] {0L};
         FileEntryStatus status = FileEntryStatuses.UPLOADING;
 
@@ -344,16 +340,17 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
             // When no file name is given, that means the user did
             // not upload a file
             if (fileName != null && fileName.length() > 0) {
-                String identifier = fieldName;
-                config = FileEntry.retrieveConfigFromPreviousLifecycle(facesContext, identifier);
-                if (config != null) {
-                    // config being null might be indicative of a non-ICEfaces' file upload component in the form
-                    log.fine("File    config: " + config);
+                String fileEntryID = facesContext.getExternalContext().getRequestParameterMap().get("file-entry-id");
+                fileEntry = (FileEntry) ComponentUtils.findComponent(facesContext.getViewRoot(), fileEntryID);
 
-                    results = clientId2Results.get(config.getClientId());
+                if (fileEntry != null) {
+                    // fileEntry being null might be indicative of a non-ICEfaces' file upload component in the form
+                    log.fine("File    fileEntry: " + fileEntry);
+
+                    results = clientId2Results.get(fileEntry.getClientId());
                     if (results == null) {
-                        results = new FileEntryResults(config.isViaCallback());
-                        clientId2Results.put(config.getClientId(), results);
+                        results = new FileEntryResults(fileEntry.isViaCallback());
+                        clientId2Results.put(fileEntry.getClientId(), results);
                     }
                     log.fine("File    results: " + results);
 
@@ -361,14 +358,14 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                     fileInfo.begin(fileName, contentType);
 
                     pushResourceSetup.setPushResourcePathAndGroupName(
-                            facesContext, config.getProgressResourceName(),
-                            config.getProgressGroupName());
+                            facesContext, fileEntry.getProgressResourceName(facesContext),
+                            fileEntry.getProgressGroupName(facesContext));
 
-                    if (config.isViaCallback()) {
-                        callback = clientId2Callbacks.get(config.getClientId());
+                    if (fileEntry.isViaCallback()) {
+                        callback = clientId2Callbacks.get(fileEntry.getClientId());
                         if (callback == null) {
                             try {
-                                callback = evaluateCallback(facesContext, config);
+                                callback = evaluateCallback(facesContext, fileEntry);
                             } catch(javax.el.ELException e) {
                                 throw new CallbackException(e);
                             }
@@ -376,9 +373,9 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                     }
                     log.fine("File    callback: " + callback);
 
-                    long availableTotalSize = results.getAvailableTotalSize(config.getMaxTotalSize());
-                    long availableFileSize = config.getMaxFileSize();
-                    int maxFileCount = config.getMaxFileCount();
+                    long availableTotalSize = results.getAvailableTotalSize(fileEntry.getMaxTotalSize());
+                    long availableFileSize = fileEntry.getMaxFileSize();
+                    int maxFileCount = fileEntry.getMaxFileCount();
                     log.finer(
                         "File    availableTotalSize: " + availableTotalSize + "\n" +
                         "File    availableFileSize: " + availableFileSize + "\n" +
@@ -405,8 +402,8 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                             }
                         }
                         else {
-                            String folder = calculateFolder(facesContext, config);
-                            file = makeFile(config, folder, fileName);
+                            String folder = calculateFolder(facesContext, fileEntry);
+                            file = makeFile(fileEntry, folder, fileName);
                             log.fine("File    file: " + file);
                         }
                         
@@ -431,7 +428,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
         catch(CallbackException e) {
             status = FileEntryStatuses.PROBLEM_WITH_CALLBACK;
             handleCallbackException(
-                facesContext, config.getClientId(), e.getCause());
+                facesContext, fileEntry.getClientId(), e.getCause());
         }
         catch(Exception e) {
             log.fine("File    Exception: " + e);
@@ -465,7 +462,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                     status = FileEntryStatuses.PROBLEM_WITH_CALLBACK;
                     fileInfo.postfail(status);
                     handleCallbackException(
-                            facesContext, config.getClientId(), e);
+                            facesContext, fileEntry.getClientId(), e);
                 }
             }
             log.fine("File    Added completed file");
@@ -474,8 +471,8 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
     }
 
     protected static FileEntryCallback evaluateCallback(
-            FacesContext facesContext, FileEntryConfig config) {
-        String callbackEL = config.getCallbackEL();
+            FacesContext facesContext, FileEntry fileEntry) {
+        String callbackEL = fileEntry.getCallbackEL();
         log.finer("File    evaluateCallback()  callbackEL: " + callbackEL);
         FileEntryCallback callback = null;
         try {
@@ -485,7 +482,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
             if (callbackEL != null && callback == null &&
                     facesContext.isProjectStage(ProjectStage.Development)) {
                 log.warning("For the fileEntry component with the clientId " +
-                        "of '" + config.getClientId() + "', the callback " +
+                        "of '" + fileEntry.getClientId() + "', the callback " +
                         "property is set but resolves to null. This might " +
                         "indicate an application error. The uploaded file " +
                         "will be saved to the server file-system.");
@@ -493,7 +490,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
         } catch(javax.el.ELException e) {
             if (facesContext.isProjectStage(ProjectStage.Development)) {
                 log.log(Level.SEVERE, "For the fileEntry component with the " +
-                        "clientId of '" + config.getClientId() + "'", e);
+                        "clientId of '" + fileEntry.getClientId() + "'", e);
             }
             throw e;
         }
@@ -510,15 +507,15 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
     }
 
     protected static String calculateFolder(
-            FacesContext facesContext, FileEntryConfig config) {
+            FacesContext facesContext, FileEntry fileEntry) {
         String folder = null;
         // absolutePath takes precedence over relativePath
-        if (config.getAbsolutePath() != null && config.getAbsolutePath().length() > 0) {
-            folder = config.getAbsolutePath();
+        if (fileEntry.getAbsolutePath() != null && fileEntry.getAbsolutePath().length() > 0) {
+            folder = fileEntry.getAbsolutePath();
             log.finer("File    Using absolutePath: " + folder);
         }
         else {
-            folder = CoreUtils.getRealPath(facesContext, config.getRelativePath());
+            folder = CoreUtils.getRealPath(facesContext, fileEntry.getRelativePath());
             log.finer("File    Using relativePath: " + folder);
         }
         if (folder == null) {
@@ -526,7 +523,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
             folder = "";
         }
 
-        if (config.isUseSessionSubdir()) {
+        if (fileEntry.isUseSessionSubdir()) {
             String sessionId = CoreUtils.getSessionId(facesContext);
             if (sessionId != null && sessionId.length() > 0) {
                 String FILE_SEPARATOR = System.getProperty("file.separator");
@@ -541,13 +538,13 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
     }
     
     protected static File makeFile(
-            FileEntryConfig config, String folder, String fileName)
+            FileEntry fileEntry, String folder, String fileName)
             throws IOException {
         File file = null;
         File folderFile = new File(folder);
         if (!folderFile.exists())
             folderFile.mkdirs();
-        if (config.isUseOriginalFilename()) {
+        if (fileEntry.isUseOriginalFilename()) {
             file = new File(folderFile, fileName);
             log.finer("File    original  file: " + file);
         }
@@ -780,7 +777,7 @@ public class FileEntryResourceHandler extends ResourceHandlerWrapper {
                         try  {
                             part.write(file.getAbsolutePath());
                         } catch (Exception e)  {
-                            log.fine("FileEntryResourceHandler fallback copyStream " + e);
+                            log.fine("FileEntryUpload fallback copyStream " + e);
                             Util.copyStream(part.getInputStream(),
                                 new FileOutputStream(file));
                             part.delete();

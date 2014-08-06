@@ -48,9 +48,7 @@ public class FileEntryRenderer extends Renderer {
         FileEntry fileEntry = (FileEntry) uiComponent;
         String clientId = uiComponent.getClientId(facesContext);
         log.finer("FileEntryRenderer.encode  clientId: " + clientId);
-        
-        FileEntryConfig config = fileEntry.storeConfigForNextLifecycle(facesContext, clientId);
-        
+
         ResponseWriter writer = facesContext.getResponseWriter();
         writer.startElement("div", uiComponent);
         writer.writeAttribute("id", clientId, "clientId");
@@ -139,8 +137,10 @@ public class FileEntryRenderer extends Renderer {
         }
         writer.startElement("input", null);
         writer.writeAttribute("type", "file", "type");
-        writer.writeAttribute("id", config.getIdentifier(), "clientId");
-        writer.writeAttribute("name", config.getIdentifier(), "clientId");
+
+        String identifier = FileEntry.getGloballyUniqueComponentIdentifier(facesContext, fileEntry.getClientId());
+        writer.writeAttribute("id", identifier, "clientId");
+        writer.writeAttribute("name", identifier, "clientId");
         if (!multiple) {
             writer.writeAttribute("onkeydown", "var k = event.keyCode || event.charCode; if (k == 8 || k == 46) ice.ace.fileentry.clearSingleFileSelection(this.parentNode.parentNode.id);", null);
         }
