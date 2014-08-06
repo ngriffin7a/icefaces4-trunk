@@ -23,13 +23,15 @@
         <after>ICEfacesCore</after>
     </ordering>
     <application>
-        <resource-handler>org.icefaces.ace.component.fileentry.FileEntryResourceHandler</resource-handler>
         <resource-handler>org.icefaces.ace.component.richtextentry.RichTextEntryResourceHandler</resource-handler>
 		<resource-handler>org.icefaces.ace.component.gmap.GMapResourceHandler</resource-handler>
         <resource-handler>org.icefaces.ace.component.themeselect.ThemeSymbolicResourceHandler</resource-handler>
         <resource-handler>org.icefaces.ace.renderkit.AceSymbolicResourceHandler</resource-handler>
 		<resource-handler>org.icefaces.ace.component.qrcode.generator.QRCodeResourceHandler</resource-handler>
     </application>
+    <lifecycle>
+        <phase-listener>org.icefaces.ace.component.fileentry.FileEntryUpload</phase-listener>
+    </lifecycle>
    <factory>
         <partial-view-context-factory>
             org.icefaces.ace.context.AutoUpdateCallbackPartialViewContextFactory

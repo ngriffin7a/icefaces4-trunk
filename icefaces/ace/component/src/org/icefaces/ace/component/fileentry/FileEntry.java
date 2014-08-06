@@ -22,6 +22,7 @@ import org.icefaces.component.Focusable;
 import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.util.JavaScriptRunner;
 
+import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ProjectStage;
 import javax.faces.context.FacesContext;
@@ -104,68 +105,31 @@ public class FileEntry extends FileEntryBase implements Focusable {
         return id;
     }
 
-    /**
-     * Used by FileEntryRenderer to save config for FileEntryPhaseListener
-     * to use on the next postback
-     */
-    FileEntryConfig storeConfigForNextLifecycle(FacesContext facesContext,
-            String clientId) {
-        String resName = null;
-        String groupName = null;
+    public String getCallbackEL() {
+        javax.el.ValueExpression callbackExpression = getValueExpression("callback");
+        return callbackExpression == null ? null : callbackExpression.getExpressionString();
+    }
+
+    public boolean isViaCallback() {
+        return getCallbackEL() != null;
+    }
+
+    public String getProgressResourceName(FacesContext context) {
         if (PushUtils.isPushPresent()) {
             UIForm form = Utils.findParentForm(this);
-            resName = PushUtils.getProgressResourceName(facesContext, form);
-            groupName = PushUtils.getPushGroupName(facesContext, form);
+            return PushUtils.getProgressResourceName(context, form);
+        } else {
+            return null;
         }
-
-        String identifier = getGloballyUniqueComponentIdentifier(
-                facesContext, clientId);
-        javax.el.ValueExpression callbackExpression =
-                getValueExpression("callback");
-        String callbackEL = callbackExpression == null ? null :
-                callbackExpression.getExpressionString();
-        FileEntryConfig config = new FileEntryConfig(
-            identifier,
-            clientId,
-            getAbsolutePath(),
-            getRelativePath(),
-            isUseSessionSubdir(),
-            isUseOriginalFilename(),
-            callbackEL,
-            getMaxTotalSize(),
-            getMaxFileSize(),
-            getMaxFileCount(),
-            isRequired(),
-            resName,
-            groupName);
-        log.finer("FileEntry.storeConfigForNextLifecycle()  config: " + config);
-        Object sessionObj = facesContext.getExternalContext().getSession(false);
-        if (sessionObj != null) {
-            synchronized(sessionObj) {
-                Map<String,Object> map =
-                    facesContext.getExternalContext().getSessionMap();
-                map.put(identifier, config);
-            }
-        }
-        return config;
     }
-    
-    /**
-     * Used by FileEntryPhaseListener to retrieve config saved away by 
-     * FileEntryRenderer in previous lifecycle
-     */
-    static FileEntryConfig retrieveConfigFromPreviousLifecycle(
-            FacesContext facesContext, String identifier) {
-        FileEntryConfig config = null;
-        Object sessionObj = facesContext.getExternalContext().getSession(false);
-        if (sessionObj != null) {
-            synchronized(sessionObj) {
-                Map<String,Object> map =
-                    facesContext.getExternalContext().getSessionMap();
-                config = (FileEntryConfig) map.get(identifier);
-            }
+
+    public String getProgressGroupName(FacesContext context) {
+        if (PushUtils.isPushPresent()) {
+            UIForm form = Utils.findParentForm(this);
+            return PushUtils.getPushGroupName(context, form);
+        } else {
+            return null;
         }
-        return config;
     }
 
     /**
