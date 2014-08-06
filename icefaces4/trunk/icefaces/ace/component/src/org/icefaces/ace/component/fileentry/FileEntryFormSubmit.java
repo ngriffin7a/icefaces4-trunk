@@ -73,11 +73,12 @@ public class FileEntryFormSubmit implements SystemEventListener {
 
         // See if there is at least one FileEntry component in the form,
         // which should alter the form submission method.
-        if (!foundFileEntry(form)) {
-            log.finer("FileEntryFormSubmit  !foundFileEntry");
+        final FileEntry fileEntry = findFileEntry(form);
+        if (fileEntry == null) {
+            log.finer("FileEntryFormSubmit  !findFileEntry");
             return;
         }
-        log.finer("FileEntryFormSubmit  foundFileEntry!");
+        log.finer("FileEntryFormSubmit  findFileEntry!");
 
         forceAjaxOnView(context);
         form.getAttributes().put(FormSubmit.DISABLE_CAPTURE_SUBMIT, "true");
@@ -101,8 +102,8 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 ExternalContext externalContext = context.getExternalContext();
                 String encodedPartialActionURL = externalContext.encodePartialActionURL(actionURL);
                 log.finer("RENDER ENCODED_URL  clientId: " + clientId + "  encodedPartialActionURL: " + encodedPartialActionURL);
+                ResponseWriter writer = context.getResponseWriter();
                 if (encodedPartialActionURL != null) {
-                    ResponseWriter writer = context.getResponseWriter();
                     writer.startElement(HTML.INPUT_ELEM, this);
                     writer.writeAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_HIDDEN, null);
                     writer.writeAttribute(HTML.ID_ATTR, clientId, "clientId");
@@ -110,6 +111,11 @@ public class FileEntryFormSubmit implements SystemEventListener {
                     writer.writeAttribute(HTML.VALUE_ATTR, encodedPartialActionURL, "clientId");
                     writer.endElement(HTML.INPUT_ELEM);
                 }
+                writer.startElement(HTML.INPUT_ELEM, this);
+                writer.writeAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_HIDDEN, null);
+                writer.writeAttribute(HTML.NAME_ATTR, "file-entry-id", null);
+                writer.writeAttribute(HTML.VALUE_ATTR, fileEntry.getId(), null);
+                writer.endElement(HTML.INPUT_ELEM);
             }
             public void encodeEnd(FacesContext context) throws IOException {
             }
@@ -142,18 +148,19 @@ public class FileEntryFormSubmit implements SystemEventListener {
         form.getChildren().add(2, output);
     }
     
-    private static boolean foundFileEntry(UIComponent parent) {
+    private static FileEntry findFileEntry(UIComponent parent) {
         Iterator<UIComponent> kids = parent.getFacetsAndChildren();
         while (kids.hasNext()) {
             UIComponent kid = kids.next();
             if (kid instanceof FileEntry) {
-                return true;
+                return (FileEntry) kid;
             }
-            if (foundFileEntry(kid)) {
-                return true;
+            final FileEntry grandKid = findFileEntry(kid);
+            if (grandKid != null) {
+                return grandKid;
             }
         }
-        return false;
+        return null;
     }
 
     public boolean isListenerForSource(Object source) {
