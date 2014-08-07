@@ -2322,9 +2322,10 @@ ice.mobi.addListener(document, "touchstart", function(){});
             else if( toNode ){
                 toNode.setAttribute('data-selected', 'true');
             }
-            document.getElementById("mobi_vm_selected").value = view;
-
-            jsf.ajax.request(proxyFormId,null,{execute:'@form', render:'@all'});
+            var submittingElement = document.getElementById("mobi_vm_selected");
+            submittingElement.value = view;
+            var formId = ice.mobi.formOf(submittingElement);
+            jsf.ajax.request(formId,null,{execute:'@form', render:'@all'});
             return false;
         },
         goBack: function(src){
