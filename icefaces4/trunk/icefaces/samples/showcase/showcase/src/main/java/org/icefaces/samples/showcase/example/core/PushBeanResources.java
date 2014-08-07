@@ -29,10 +29,10 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:navigationNotifier",
+                        title = "icecore:push",
                         resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/push.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:navigationNotifier",
+                        title = "icecore:push",
                         resource = "http://www.icesoft.org/wiki/display/ICE/push")
         }
 )

@@ -29,7 +29,7 @@ import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 
 @ComponentExample(
-        title = "DefaultAction Component",
+        title = "Idle Monitor Component",
         description = "The <b>icecore:idleMonitor</b> renders the enclosed markup when the user has not interacted with the page for a defined period of time. The rendered markup is hidden when user resumes the activity. In this example you need to stop using the page for 10 seconds in order to see the warning.",
         example = "/resources/examples/core/default-action.xhtml"
 )
@@ -37,10 +37,10 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="autoCompleteEntry.xhtml",
+                        title="idle-monitor.xhtml",
                         resource = "/resources/examples/core/idle-monitor.xhtml"),
                 @ExampleResource(type = ResourceType.java,
-                        title="AutoCompleteEntryBean.java",
+                        title="IdleMonitorBean.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/IdleMonitorBean.java"),
         }
 )

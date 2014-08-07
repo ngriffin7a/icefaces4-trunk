@@ -33,7 +33,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 @ComponentExample(
-        title = "DefaultAction Component",
+        title = "Load Bundle Component",
         description = "The <b>&lt;icecore:loadBundle&gt;</b> component allows the loading of a resource bundle to be used for locale specific messages. The defined bundle is completely dynamic, meaning that if any of its attribute change at any time there will be no need to reload the page, session or application.",
         example = "/resources/examples/core/load-bundle.xhtml"
 )

@@ -30,21 +30,21 @@ import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 
 @ComponentExample(
-        title = "DefaultAction Component",
-        description = "The <b>&lt;icecore:defaultAction&gt;</b> component allows users to execute actions triggered by key presses when no other component in the page will. The following key presses are wired to trigger default action: Enter, Esc, Left Arrow, F3. The rest of key presses are ignored.",
+        title = "Navigation Notifier Component",
+        description = "The <b>icecore:navigationNotifier</b> component will notify the application when the page shown in the browser was rendered as a result of a browser navigation by using 'back' or 'forward' browser buttons.",
         example = "/resources/examples/core/default-action.xhtml"
 )
 
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="autoCompleteEntry.xhtml",
+                        title="navigation-notifier.xhtml",
                         resource = "/resources/examples/core/navigation-notifier.xhtml"),
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="autoCompleteEntry.xhtml",
+                        title="navigation-notifier-next.xhtml",
                         resource = "/resources/examples/core/navigation-notifier-next.xhtml"),
                 @ExampleResource(type = ResourceType.java,
-                        title="AutoCompleteEntryBean.java",
+                        title="NavigationNotifierBean.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/NavigationNotifierBean.java"),
         }
 )

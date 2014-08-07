@@ -37,10 +37,10 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="autoCompleteEntry.xhtml",
+                        title="focus-manager.xhtml",
                         resource = "/resources/examples/core/focus-manager.xhtml"),
                 @ExampleResource(type = ResourceType.java,
-                        title="AutoCompleteEntryBean.java",
+                        title="FocusManagerBean.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/FocusManagerBean.java"),
         }
 )
