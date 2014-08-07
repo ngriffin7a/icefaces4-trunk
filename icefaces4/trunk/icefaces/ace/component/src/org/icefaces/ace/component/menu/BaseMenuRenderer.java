@@ -128,7 +128,7 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 					command.append("}; ");
 					
 					if (!hasAjaxBehavior && (menuItem.getActionExpression() != null || menuItem.getActionListeners().length > 0)) {
-						command.append("self.id = '" + clientId + "'; ice.se(event, self");
+						command.append("self.id = '" + clientId + "'; ice.s(event, self");
 						
 						StringBuilder parameters = new StringBuilder();
 						parameters.append(",function(p){");
