@@ -38,10 +38,10 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="autoCompleteEntry.xhtml",
+                        title="default-action.xhtml",
                         resource = "/resources/examples/core/default-action.xhtml"),
                 @ExampleResource(type = ResourceType.java,
-                        title="AutoCompleteEntryBean.java",
+                        title="DefaultActionBean.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/DefaultActionBean.java"),
         }
 )

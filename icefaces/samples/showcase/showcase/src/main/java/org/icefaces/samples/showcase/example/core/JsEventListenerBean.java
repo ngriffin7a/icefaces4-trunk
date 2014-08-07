@@ -32,7 +32,7 @@ import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 
 @ComponentExample(
-        title = "JSEventListener Component",
+        title = "Javascript Event Listener Component",
         description = "The <b>&lt;icecore:jsEventListener&gt;</b> component can be used to capture Javascript events and then notify a server side defined action listener. In this example only 'click' and 'keypress' events are captured.",
         example = "/resources/examples/core/js-event-listener.xhtml"
 )
@@ -40,10 +40,10 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="autoCompleteEntry.xhtml",
+                        title="js-event-listener.xhtml",
                         resource = "/resources/examples/core/js-event-listener.xhtml"),
                 @ExampleResource(type = ResourceType.java,
-                        title="AutoCompleteEntryBean.java",
+                        title="JsEventListenerBean.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/JsEventListenerBean.java"),
         }
 )

@@ -40,7 +40,7 @@ import java.util.TimerTask;
 
 @ComponentExample(
         title = "Push Component",
-        description = "The <b>&lt;icecore:defaultAction&gt;</b> component allows users to execute actions triggered by key presses when no other component in the page will. The following key presses are wired to trigger default action: Enter, Esc, Left Arrow, F3. The rest of key presses are ignored.",
+        description = "The <b>icecore:push</b> component allows the configuration of Ajax Push behavior on a per-view basis.",
         example = "/resources/examples/core/push.xhtml"
 )
 
