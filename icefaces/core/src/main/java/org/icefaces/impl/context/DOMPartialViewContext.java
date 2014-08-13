@@ -56,9 +56,9 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
     private static final Pattern OPTION_TAG =
             Pattern.compile("<option ([^>]*)>");
     private static final Pattern OPTION_VALUE =
-            Pattern.compile("value=\"([^\"]*)\"");
+            Pattern.compile("value=\\\"([^\"]*)\\\"");
     private static final Pattern OPTION_SELECTED =
-            Pattern.compile("(selected=\"[^\"]*\")");
+            Pattern.compile("(selected=\\\"[^\"]*\\\")");
     public static final String CUSTOM_UPDATE = "ice.customUpdate";
     public static final String DATA_ELEMENTUPDATE = "data-elementupdate";
     private static Method resetValuesMethod;
@@ -620,7 +620,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                     Node optionBodyNode = selectElement.getFirstChild();
 
                     if (optionBodyNode != null) {
-                        String optionBody =  Matcher.quoteReplacement(optionBodyNode.getNodeValue());
+                        String optionBody =  optionBodyNode.getNodeValue();
 
                         //Should be constant, but may vary with JSF implementation
                         String SELECTED = "selected=\"true\"";
@@ -654,7 +654,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                                             " " + selected, "");
                                 }
                             }
-                            tagMatcher.appendReplacement(outBuffer, optionTag);
+                            tagMatcher.appendReplacement(outBuffer, optionTag.replace("\"", "\\\""));
                         }
                         tagMatcher.appendTail(outBuffer);
                         optionBodyNode.setNodeValue(outBuffer.toString());
