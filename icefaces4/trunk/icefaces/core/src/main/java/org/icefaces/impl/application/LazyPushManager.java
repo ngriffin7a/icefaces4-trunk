@@ -34,7 +34,11 @@ public abstract class LazyPushManager {
                 State state = (State) session.getAttribute(LazyPushManager.class.getName());
                 if (state == null) {
                     state = new State();
-                    session.setAttribute(LazyPushManager.class.getName(), state);
+                    try {
+                        session.setAttribute(LazyPushManager.class.getName(), state);
+                    } catch (UnsupportedOperationException e) {
+                        LOGGER.fine("Cannot update LazyPushManager's state, session has expired.");
+                    }
                 }
 
                 return state;
@@ -51,7 +55,11 @@ public abstract class LazyPushManager {
                 State state = (State) sessionMap.get(LazyPushManager.class.getName());
                 if (state == null) {
                     state = new State();
-                    sessionMap.put(LazyPushManager.class.getName(), state);
+                    try {
+                        sessionMap.put(LazyPushManager.class.getName(), state);
+                    } catch (UnsupportedOperationException e) {
+                        LOGGER.fine("Cannot update LazyPushManager's state, session has expired.");
+                    }
                 }
 
                 return state;
