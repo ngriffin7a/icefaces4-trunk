@@ -3623,7 +3623,7 @@ function wijmoASPNetParseOptions(o) {
 				switch (event) {
 					case "click":
 						$(document).off(event + namespace, o.trigger).on(event + namespace, o.trigger, function (e) {
-							if (o.mode !== "popup") {
+							if (o.mode !== "popup" && !menuContainer.is(':visible')) {
 								self._displaySubmenu(e, triggerEle, menuContainer);
 								self._registerDocumentClickHandler(); // ICE-8699
 								if (o.menuComponent) { // ICE-8568
@@ -3661,7 +3661,7 @@ function wijmoASPNetParseOptions(o) {
 				switch (event) {
 					case "click":
 						triggerEle.bind(event + namespace, function (e) {
-							if (o.mode !== "popup") {
+							if (o.mode !== "popup" && !menuContainer.is(':visible')) {
 								self._displaySubmenu(e, triggerEle, menuContainer);
 								self._registerDocumentClickHandler(); // ICE-8699
 							}
