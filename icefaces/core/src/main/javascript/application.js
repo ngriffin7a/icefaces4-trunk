@@ -422,8 +422,10 @@ if (!window.ice.icefaces) {
         }
 
         //setup page scoped submit event broadcasters
-        jsf.ajax.addOnEvent(submitEventBroadcaster(beforeSubmitListeners, beforeUpdateListeners, afterUpdateListeners));
-        jsf.ajax.addOnError(submitErrorBroadcaster(networkErrorListeners, serverErrorListeners, sessionExpired));
+        namespace.submitCallback = submitEventBroadcaster(beforeSubmitListeners, beforeUpdateListeners, afterUpdateListeners);
+        jsf.ajax.addOnEvent(namespace.submitCallback);
+        namespace.errorCallback = submitErrorBroadcaster(networkErrorListeners, serverErrorListeners, sessionExpired);
+        jsf.ajax.addOnError(namespace.errorCallback);
 
         var eventInProgress;
         //setup submit error logging
