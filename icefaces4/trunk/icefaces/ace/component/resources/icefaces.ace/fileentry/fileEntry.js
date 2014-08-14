@@ -193,6 +193,27 @@ ice.ace.fileentry = {
                 var serializer = new XMLSerializer();
                 responseText = serializer.serializeToString(d);
             }
+
+            if (d.getElementsByTagName("error-name").length > 0) {
+                ice.errorCallback({
+                    status: 'serverError',
+                    responseCode: 500,
+                    description: 'Server Exception',
+                    'responseText': responseText
+                });
+                return;
+            }
+            if (d.getElementsByTagName("html").length > 0) {
+                ice.errorCallback({
+                    status: 'httpError',
+                    responseCode: 500,
+                    description: 'Server Error',
+                    responseText: responseText
+                });
+                return;
+            }
+
+
             ice.ace.fileentry.response(d, responseText, context);
         }
         
@@ -206,8 +227,20 @@ ice.ace.fileentry = {
         request.status = 200;
         request.responseText = responseText;
         request.responseXML = responseXML;
-        
+
+        ice.submitCallback({
+            source: context.element,
+            status: 'complete',
+            'responseXML': responseXML
+        });
+
         jsf.ajax.response(request, context);
+
+        ice.submitCallback({
+            source: context.element,
+            status: 'success',
+            'responseXML': responseXML
+        });
     },
     
     captureFormOnsubmit : function(formId, iframeId, progressPushId, progressResourcePath) {
@@ -228,6 +261,10 @@ ice.ace.fileentry = {
         }
 
         f.onsubmit = function(event) {
+            ice.submitCallback({
+                source: f,
+                status: 'begin'
+            });
             ice.ace.fileentry.formOnsubmit(event, f, iframeId, progressPushId);
         };
     },
