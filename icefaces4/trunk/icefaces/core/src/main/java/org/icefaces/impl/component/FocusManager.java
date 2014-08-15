@@ -17,6 +17,7 @@
 package org.icefaces.impl.component;
 
 import org.icefaces.component.Focusable;
+import org.icefaces.util.FocusController;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
@@ -53,13 +54,14 @@ public class FocusManager extends UIComponentBase {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement("span", this);
         writer.writeAttribute("id", getClientId(context), null);
-        //apply focus only if not already specified in the browser
-        String iceFocus = context.getExternalContext().getRequestParameterMap().get("ice.focus");
-        if (iceFocus == null) {
-            Map attributes = context.getAttributes();
-            UIComponent source = null;
-            UIInput invalidUIInput = (UIInput) attributes.get(DetectInvalidChild.class.getName());
-            if (invalidUIInput == null) {
+
+        UIComponent source = null;
+        Map attributes = context.getAttributes();
+        UIInput invalidUIInput = (UIInput) attributes.get(DetectInvalidChild.class.getName());
+        if (invalidUIInput == null) {
+            //apply focus only if not already specified in the browser
+            String iceFocus = context.getExternalContext().getRequestParameterMap().get("ice.focus");
+            if (iceFocus == null || "".equals(iceFocus)) {
                 //set focus on the specified component
                 String focusFor = getFor();
                 if (focusFor != null && !"".equals(focusFor)) {
@@ -84,30 +86,33 @@ public class FocusManager extends UIComponentBase {
                         queue.addAll(c.getChildren());
                     }
                 }
-            } else {
-                source = invalidUIInput;
             }
-
-            if (source != null) {
-                writer.startElement("script", null);
-                writer.writeAttribute("type", "text/javascript", null);
-
-                String id;
-                if (source instanceof Focusable) {
-                    id = ((Focusable) source).getFocusedElementId();
-                } else {
-                    id = source.getClientId(context);
-                }
-
-                writer.writeText("try { ice.applyFocus('", null);
-                writer.writeText(id, null);
-                writer.writeText("'); } catch (ex) {ice.log.warn(ice.logger, 'failed to focus element ", null);
-                writer.writeText(id, null);
-                writer.writeText("'); }//", null);
-                writer.writeText(RANDOM.nextLong(), null);
-                writer.endElement("script");
-            }
+        } else {
+            source = invalidUIInput;
         }
+
+        if (source != null) {
+            writer.startElement("script", null);
+            writer.writeAttribute("type", "text/javascript", null);
+
+            String id;
+            if (source instanceof Focusable) {
+                id = ((Focusable) source).getFocusedElementId();
+            } else {
+                id = source.getClientId(context);
+            }
+
+            FocusController.setFocus(context, id);
+
+            writer.writeText("try { ice.applyFocus('", null);
+            writer.writeText(id, null);
+            writer.writeText("'); } catch (ex) {ice.log.warn(ice.logger, 'failed to focus element ", null);
+            writer.writeText(id, null);
+            writer.writeText("'); }//", null);
+            writer.writeText(RANDOM.nextLong(), null);
+            writer.endElement("script");
+        }
+
         writer.endElement("span");
     }
 
