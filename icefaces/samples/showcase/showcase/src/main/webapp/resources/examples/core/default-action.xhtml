@@ -30,13 +30,22 @@
 
     <ui:define name="example">
         <ace:panel>
-                <h:form id="form">
-                    <input type="text" name="test" value=""/>
-                    <icecore:defaultAction actionListener="#{defaultActionBean.pressedEnter}" key="Enter"/>
-                    <icecore:defaultAction actionListener="#{defaultActionBean.pressedEsc}" key="Esc"/>
-                    <icecore:defaultAction actionListener="#{defaultActionBean.pressedLeftArrow}" key="LeftArrow"/>
-                    <icecore:defaultAction actionListener="#{defaultActionBean.pressedF3}" key="F3"/>
-                </h:form>
+            <h:form id="form">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="i" value="input:"/>
+                    <input id="i" type="text" name="test" value=""/>
+                    <h:outputLabel for="A" value="h:inputText:"/>
+                    <h:inputText id="A" value="#{defaultActionBean.a}"/>
+                    <h:outputLabel for="B" value="ace:textEntry:"/>
+                    <ace:textEntry id="B" value="#{defaultActionBean.b}"/>
+                    <h:outputLabel for="C" value="h:commandButton:"/>
+                    <h:commandButton id="C" value="button"/>
+                </h:panelGrid>
+                <icecore:defaultAction actionListener="#{defaultActionBean.pressedEnter}" key="Enter"/>
+                <icecore:defaultAction actionListener="#{defaultActionBean.pressedEsc}" key="Esc"/>
+                <icecore:defaultAction actionListener="#{defaultActionBean.pressedLeftArrow}" key="LeftArrow"/>
+                <icecore:defaultAction actionListener="#{defaultActionBean.pressedF3}" key="F3"/>
+            </h:form>
             <ace:panel rendered="#{defaultActionBean.showActionDescription}">
                 <h:outputText value="Default action triggered on #{defaultActionBean.actionDescription}"/>
             </ace:panel>
