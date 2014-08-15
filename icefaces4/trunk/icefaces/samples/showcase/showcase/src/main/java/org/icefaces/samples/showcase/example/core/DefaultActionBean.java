@@ -50,6 +50,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class DefaultActionBean  extends ComponentExampleImpl<DefaultActionBean> implements Serializable {
     private String actionDescription;
+    private String a, b, c = "";
 
     public DefaultActionBean() {
         super(DefaultActionBean.class);
@@ -84,4 +85,27 @@ public class DefaultActionBean  extends ComponentExampleImpl<DefaultActionBean> 
         return actionDescription != null;
     }
 
+    public String getA() {
+        return a;
+    }
+
+    public void setA(String a) {
+        this.a = a;
+    }
+
+    public String getB() {
+        return b;
+    }
+
+    public void setB(String b) {
+        this.b = b;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public void setC(String c) {
+        this.c = c;
+    }
 }
