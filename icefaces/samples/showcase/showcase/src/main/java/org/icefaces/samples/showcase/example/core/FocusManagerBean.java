@@ -30,7 +30,7 @@ import java.io.Serializable;
 
 @ComponentExample(
         title = "Focus Manager Component",
-        description = "The <b>&lt;icecore:focusManager&gt;</b> component manages where focus will be applied on page load.",
+        description = "The <b>&lt;icecore:focusManager&gt;</b> component manages where focus will be applied on page load. The focus will move to the first invalid component, in this case when the required field is not filled in.",
         example = "/resources/examples/core/focus-manager.xhtml"
 )
 
@@ -49,7 +49,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class FocusManagerBean extends ComponentExampleImpl<FocusManagerBean> implements Serializable {
     private String focusedComponent = "";
-    private boolean renderInputs = true;
+    private String a, b, c, d = "";
 
     public FocusManagerBean() {
         super(FocusManagerBean.class);
@@ -66,5 +66,37 @@ public class FocusManagerBean extends ComponentExampleImpl<FocusManagerBean> imp
 
     public void setFocusedComponent(String focusedComponent) {
         this.focusedComponent = focusedComponent;
+    }
+
+    public String getA() {
+        return a;
+    }
+
+    public void setA(String a) {
+        this.a = a;
+    }
+
+    public String getB() {
+        return b;
+    }
+
+    public void setB(String b) {
+        this.b = b;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public void setC(String c) {
+        this.c = c;
+    }
+
+    public String getD() {
+        return d;
+    }
+
+    public void setD(String d) {
+        this.d = d;
     }
 }
