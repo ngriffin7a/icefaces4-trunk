@@ -31,6 +31,7 @@
     <ui:define name="example">
         <style type="text/css">
             .ui-button { padding: 0.15em; }
+            .required-input { color: red; }
         </style>
 
         <h:form id="form">
@@ -39,16 +40,30 @@
                 <f:selectItem itemValue="A" itemLabel="A"/>
                 <f:selectItem itemValue="B" itemLabel="B"/>
                 <f:selectItem itemValue="C" itemLabel="C"/>
-                <ace:ajax execute="@this" render="@all" />
             </ace:selectMenu>
             <button type="button" onclick="window.location.reload();">Reload page</button>
             <ace:panel>
                 <icecore:focusManager for="#{focusManagerBean.focusedComponent}">
-                    <ul>
-                        <li>A) <h:inputText id="A" name="a" value=""/></li>
-                        <li>B) <h:inputText id="B" name="b" value=""/></li>
-                        <li>C) <h:inputText id="C" name="c" value=""/></li>
-                    </ul>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="A" value="A: "/>
+                        <ace:textEntry id="A" value="#{focusManagerBean.a}"/>
+                        <h:outputLabel for="B" value="B: "/>
+                        <ace:textEntry id="B" value="#{focusManagerBean.b}"/>
+                        <h:outputLabel for="C" value="C: "/>
+                        <ace:textEntry id="C" value="#{focusManagerBean.c}"
+                                       required="true" requiredIndicator="(Required)"
+                                       indicatorPosition="right"
+                                       styleClass="required-input">
+                        </ace:textEntry>
+                        <h:outputLabel for="D" value="D: "/>
+                        <ace:textEntry id="D" value="#{focusManagerBean.d}"
+                                       required="true" requiredIndicator="(Required)"
+                                       indicatorPosition="right"
+                                       styleClass="required-input">
+                        </ace:textEntry>
+                        <div/>
+                        <h:commandButton value="Submit"/>
+                    </h:panelGrid>
                 </icecore:focusManager>
             </ace:panel>
         </h:form>
