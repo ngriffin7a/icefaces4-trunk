@@ -92,9 +92,9 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             ScopeMap map = (ScopeMap) state.windowScopedMaps.get(id);
             //return the scope map even for requests that arrive after the dispose-window request was received
             if (map == null) {
-                Iterator i = state.disposedWindowScopedMaps.iterator();
-                while (i.hasNext()) {
-                    ScopeMap next = (ScopeMap) i.next();
+                //ICE-10174: iterate over a copy of the disposed scopes for thread safety.
+                for (Object scopeMap : new ArrayList(state.disposedWindowScopedMaps)) {
+                    ScopeMap next = (ScopeMap)scopeMap;
                     if (next.id.equals(id)) {
                         return next;
                     }
