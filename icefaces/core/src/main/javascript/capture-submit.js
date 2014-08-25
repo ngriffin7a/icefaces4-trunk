@@ -17,7 +17,7 @@
 (function() {
     namespace.captureKeypress = function(id, keyMap) {
         var f = document.getElementById(id);
-        f.onkeypress = function(ev) {
+        var captureKeypress = function(ev) {
             var e = $event(ev, f);
             var element = triggeredBy(e);
             var type = toLowerCase(element.nodeName);
@@ -48,6 +48,11 @@
                 return true;
             }
         };
+        if (f.addEventListener) {
+            f.addEventListener('keydown', captureKeypress, true);
+        } else {
+            f.attachEvent('onkeydown', captureKeypress);
+        }
     };
 
     namespace.captureSubmit = function(id) {
