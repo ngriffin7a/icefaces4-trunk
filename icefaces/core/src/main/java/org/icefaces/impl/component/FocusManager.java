@@ -61,7 +61,7 @@ public class FocusManager extends UIComponentBase {
         if (invalidUIInput == null) {
             //apply focus only if not already specified in the browser
             String iceFocus = context.getExternalContext().getRequestParameterMap().get("ice.focus");
-            if (iceFocus == null || "".equals(iceFocus)) {
+            if (iceFocus == null) {
                 //set focus on the specified component
                 String focusFor = getFor();
                 if (focusFor != null && !"".equals(focusFor)) {
