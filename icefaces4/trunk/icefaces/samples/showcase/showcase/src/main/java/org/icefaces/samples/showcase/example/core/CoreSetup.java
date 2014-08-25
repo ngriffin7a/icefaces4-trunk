@@ -21,10 +21,11 @@ import org.icefaces.samples.showcase.view.navigation.NavigationModel;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 
 @ManagedBean
 @ViewScoped
-public class CoreSetup {
+public class CoreSetup implements Serializable {
     @ManagedProperty(value = "#{navigationModel}")
     private NavigationModel model;
     private boolean invoked = false;
