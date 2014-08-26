@@ -54,9 +54,6 @@ import java.util.Map;
 })
 public class CamcorderMeta extends UIComponentBaseMeta {
 
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc = "The maxium length of video clip in seconds. ")
-    private int maxtime;
-
     @Property(defaultValue = "false", tlddoc = TLDConstants.DISABLED)
     private boolean disabled;
 
@@ -68,14 +65,6 @@ public class CamcorderMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc = TLDConstants.STYLECLASS)
     private String styleClass;
-
-    @Property(defaultValue = "Integer.MIN_VALUE",
-            tlddoc = "The maximum width in pixels of the recorded video. ")
-    private int maxwidth;
-
-    @Property(defaultValue = "Integer.MIN_VALUE",
-            tlddoc = "The maxium height in pixels of the recorded video. ")
-    private int maxheight;
 
     @Property(tlddoc = "The map object for the uploaded contents. Must resolve to a java.util.Map<String,Object>. " +
             "The uploaded file will be available in the map with the key of \"file\". ")
