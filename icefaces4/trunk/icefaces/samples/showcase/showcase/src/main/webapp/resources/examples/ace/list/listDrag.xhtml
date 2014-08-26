@@ -73,6 +73,7 @@
                     }
                 </style>
                 <h:panelGrid id="panelGridTwo" columns="4" cellspacing="10" style="margin:0 auto 0 auto;">
+                    <h:panelGroup></h:panelGroup>
                     <ace:list id="secondList" value="#{backing.oneWaySourceList}"
                               dropGroup="textGroup"
                               selection="true"
@@ -89,7 +90,8 @@
                               bodyStyle="height:100px;width:150px;"
                               styleClass="inlineList">
                         <ace:ajax event="migrate" />
-                     </ace:list>
+                    </ace:list>
+                    <h:panelGroup></h:panelGroup>
                 </h:panelGrid>
             </h:panelGroup>
         </h:form>
