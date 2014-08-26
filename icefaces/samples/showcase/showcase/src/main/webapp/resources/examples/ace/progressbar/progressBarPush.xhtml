@@ -67,7 +67,7 @@
                                        disabled="#{!longtask.taskRunning}">
                             <h:graphicImage id="pauseImg" value="#{progressBarPush.pauseImage.path}" alt="#{progressBarPush.pauseImage.description}"/>
                         </h:commandLink>
-                    
+                        <h:panelGroup rendered="#{longtask.taskRunning}"/>
                    </h:panelGrid>
                 </h:panelGrid>
             </ace:panel>
