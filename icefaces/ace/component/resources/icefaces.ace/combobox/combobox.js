@@ -221,7 +221,8 @@ ice.ace.ComboBox.prototype = {
 			});
 		}
         var keyEvent = "keypress";
-        if (ice.ace.ComboBox.Browser.IE || ice.ace.ComboBox.Browser.WebKit) {
+        if (ice.ace.ComboBox.Browser.IE || ice.ace.ComboBox.Browser.WebKit
+			|| !!navigator.userAgent.match(/Trident.*rv\:11\./)) { // IE11
             keyEvent = "keydown";
         }
 		ice.ace.jq(this.element).on(keyEvent, function(e) { self.onKeyPress.call(self, e); } );
