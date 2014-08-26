@@ -16,7 +16,6 @@
 package org.icefaces.mobi.component.camcorder;
 
 import org.icefaces.mobi.util.MobiJSFUtils;
-import org.icefaces.mobi.api.IDevice;
 import org.icefaces.util.ClientDescriptor;
 
 import javax.el.MethodExpression;
@@ -29,7 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 
-public class Camcorder extends CamcorderBase implements IDevice {
+public class Camcorder extends CamcorderBase {
 
     public Camcorder() {
         super();
@@ -66,47 +65,11 @@ public class Camcorder extends CamcorderBase implements IDevice {
          super.queueEvent(event);
     }
     public String getScript( String clientId, boolean auxUpload) {
-         int width = getMaxwidth() ;
-         int height = getMaxheight();
-         int maxtime = getMaxtime();
           String script;
         if (auxUpload)  {
             script = MobiJSFUtils.getICEmobileSXScript("camcorder", this);
         } else {
-            //default value of unset in params is Integer.MIN_VALUE
             String params = "'" + clientId + "'";
-            //only commonality between iPhone and android is duration or maxTime
-            //simplify this scripting when devices have this implemented and is final api
-            int unset = Integer.MIN_VALUE;
-            int numParams = 0;
-            String attributeSeparator = "&";
-            if (maxtime != unset || width != unset || height != unset) {
-                params += ",'";
-            }
-            if (maxtime != unset) {
-                if (numParams > 0) {
-                    params += attributeSeparator;
-                }
-                params += "maxtime=" + maxtime;
-                numParams++;
-            }
-            if (width != Integer.MIN_VALUE) {
-                if (numParams > 0) {
-                    params += attributeSeparator;
-                }
-                params += "maxwidth=" + width;
-                numParams++;
-            }
-            if (height != Integer.MIN_VALUE) {
-                if (numParams > 0) {
-                    params += attributeSeparator;
-                }
-                params += "maxheight=" + height;
-                numParams++;
-            }
-            if (numParams > 0) {
-                params += "'";
-            }
             script = "ice.camcorder(" + params + ");";
         }
         return script;
