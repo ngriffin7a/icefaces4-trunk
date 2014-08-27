@@ -352,9 +352,13 @@ window.dhtmlHistory = {
             : historyStorage.hideStyles
             );
         var iframeID = "rshHistoryFrame";
-        var iframeHTML = '<iframe frameborder="0" id="' + iframeID + '" style="' + styles + '" src="blank.html?' + initialHash + '"></iframe>';
-        document.write(iframeHTML);
-        this.iframe = document.getElementById(iframeID);
+        var iframeNode= document.body.appendChild(document.createElement('iframe'));
+        iframeNode.setAttribute('frameborder', '0');
+        iframeNode.setAttribute('style', styles);
+        iframeNode.setAttribute('id', iframeID);
+        iframeNode.setAttribute('src', "blank.html?' + initialHash + '");
+
+        this.iframe = iframeNode;
     },
 
     /*Private: Create Opera-specific DOM nodes and overrides*/
