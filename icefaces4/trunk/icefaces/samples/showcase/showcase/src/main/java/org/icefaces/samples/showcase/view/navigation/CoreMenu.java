@@ -18,10 +18,11 @@ package org.icefaces.samples.showcase.view.navigation;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
 
 @ManagedBean
 @SessionScoped
-public class CoreMenu {
+public class CoreMenu implements Serializable {
     private String example = "default-action";
 
     public String getExample() {
