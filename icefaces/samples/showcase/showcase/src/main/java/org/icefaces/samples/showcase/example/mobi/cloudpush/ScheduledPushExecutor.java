@@ -52,8 +52,10 @@ public class ScheduledPushExecutor implements Serializable {
 
     @PreDestroy
     public void shutdown() {
-        timerThreadPool.purge();
-        timerThreadPool.shutdownNow();
+        if( timerThreadPool != null ){
+            timerThreadPool.purge();
+            timerThreadPool.shutdownNow();
+        }
     }
 
 }
