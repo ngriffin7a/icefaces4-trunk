@@ -42,7 +42,7 @@ import java.io.Serializable;
                         resource = "/resources/examples/core/redirect.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="RedirectBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/RedirectBean.java"),
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/RedirectBean.java")
         }
 )
 

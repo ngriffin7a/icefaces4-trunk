@@ -51,7 +51,7 @@ import java.util.TimerTask;
                         resource = "/resources/examples/core/push.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="PushBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/PushBean.java"),
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/PushBean.java")
         }
 )
 
