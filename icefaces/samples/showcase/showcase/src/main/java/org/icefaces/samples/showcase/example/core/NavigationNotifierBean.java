@@ -45,7 +45,7 @@ import java.io.Serializable;
                         resource = "/resources/examples/core/navigation-notifier-next.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="NavigationNotifierBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/NavigationNotifierBean.java"),
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/NavigationNotifierBean.java")
         }
 )
 

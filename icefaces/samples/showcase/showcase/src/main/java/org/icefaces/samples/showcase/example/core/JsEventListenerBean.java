@@ -44,7 +44,7 @@ import java.io.Serializable;
                         resource = "/resources/examples/core/js-event-listener.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="JsEventListenerBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/JsEventListenerBean.java"),
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/JsEventListenerBean.java")
         }
 )
 

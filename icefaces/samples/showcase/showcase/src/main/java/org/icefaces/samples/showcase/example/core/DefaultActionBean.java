@@ -42,7 +42,7 @@ import java.io.Serializable;
                         resource = "/resources/examples/core/default-action.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="DefaultActionBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/DefaultActionBean.java"),
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/DefaultActionBean.java")
         }
 )
 

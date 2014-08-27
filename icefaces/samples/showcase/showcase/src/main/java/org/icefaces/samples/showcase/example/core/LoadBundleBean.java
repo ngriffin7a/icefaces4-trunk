@@ -45,7 +45,7 @@ import java.util.Locale;
                         resource = "/resources/examples/core/load-bundle.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="LoadBundleBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/LoadBundleBean.java"),
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/LoadBundleBean.java")
         }
 )
 
