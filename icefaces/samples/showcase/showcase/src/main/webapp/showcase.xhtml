@@ -84,11 +84,10 @@
         <!--
         ~ ACCORDION PANEL MAIN MENU IMPLEMENTATION UNDER CONSTRUCTION
          -->
-        <ui:remove>
         <h2>#{msgs[navigationModel.currentComponentGroup.title]}</h2>
         
         <h:form>
-            <ace:accordion effect="bounceslide" dynamic="true" paneChangeListener="#{navigationController.onMenuPaneChange}" activeIndex="#{navigationModel.activePaneIndex}">
+            <ace:accordion effect="bounceslide" paneChangeListener="#{navigationController.onMenuPaneChange}" activeIndex="#{navigationModel.activePaneIndex}">
                 <c:forEach items="#{navigationModel.currentComponentGroup.menuLinks}" var="menuLink">
                     <ace:accordionPane title="#{msgs[menuLink.title]}">
                         <f:attribute name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
@@ -118,7 +117,7 @@
         <!--
         ~ ACCORDION PANEL MAIN MENU IMPLEMENTATION END
          -->
-         </ui:remove>
+         <ui:remove>
          <!--
         ~ Regular menu via links (swap ui:remove with accordion implementation to activate, also uncomment code responsible for animation effect firing in NavigaionController.navigate(String, String))
          -->
@@ -197,6 +196,7 @@
             </ui:repeat>
             </ul>
             </h:form>
+         </ui:remove>
     </ui:define>
 
     <ui:define name="component-example">
