@@ -21,6 +21,7 @@ import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
 import org.icefaces.ace.meta.annotation.ClientEvent;
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Required;
 import org.icefaces.ace.meta.annotation.Facet;
 import org.icefaces.ace.meta.annotation.Facets;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
@@ -62,9 +63,9 @@ public class SmsMeta extends UIComponentBaseMeta {
     @Property(defaultValue="SMS", tlddoc="The label to be displayed on the button.")
     private String buttonLabel;
 
-    @Property(tlddoc="The phone number to send the message to.")
+    @Property(required=Required.yes, tlddoc="The phone number to send the message to.")
     private String number;
 
-    @Property(tlddoc="The message to send.")
+    @Property(required=Required.yes, tlddoc="The message to send.")
     private String message;
 }

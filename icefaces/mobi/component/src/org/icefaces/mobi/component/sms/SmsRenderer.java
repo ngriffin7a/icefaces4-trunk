@@ -29,18 +29,20 @@ import javax.faces.application.Resource;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class SmsRenderer extends CoreRenderer {
+    private static final Logger logger = Logger.getLogger(SmsRenderer.class.getName());
 
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
         Sms sms = (Sms) uiComponent;
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = sms.getClientId();
-
 		writer.startElement(HTML.SPAN_ELEM, sms);
 		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
 
@@ -54,8 +56,14 @@ public class SmsRenderer extends CoreRenderer {
 		String styleClass = sms.getStyleClass();
 		if (styleClass != null) writer.writeAttribute(HTML.CLASS_ATTR, styleClass, null);
 		writer.writeAttribute(HTML.TABINDEX_ATTR, sms.getTabindex(), null);
-		String script = "bridgeit.sms('" + escapeString(sms.getNumber()) + "', '" + escapeString(sms.getMessage()) + "');";
-		writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
+        try {
+		    String script = "bridgeit.sms('" + escapeString(sms.getNumber()) + "', '" + escapeString(sms.getMessage()) + "');";
+		    writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
+        } catch (Exception e){
+            logger.info("ERROR: mobi:sms requires non null number and message attributes");
+            FacesMessage fm = new FacesMessage(" ERROR: mobi:sms requires non null values for number and message attributes") ;
+            facesContext.addMessage(clientId, fm);
+        }
 		writer.startElement(HTML.SPAN_ELEM, sms);
 		writer.write(sms.getButtonLabel());
 		writer.endElement(HTML.SPAN_ELEM);
