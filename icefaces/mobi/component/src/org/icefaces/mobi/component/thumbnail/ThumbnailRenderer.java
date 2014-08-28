@@ -37,6 +37,13 @@ public class ThumbnailRenderer extends Renderer {
     private static final Logger logger =
             Logger.getLogger(ThumbnailRenderer.class.toString());
 
+    public void decode(FacesContext facesContext, UIComponent uiComponent) {
+        Thumbnail thumbnail = (Thumbnail) uiComponent;
+        String clientId = thumbnail.getClientId();
+		java.util.Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
+		String data = (String) requestMap.get(clientId + "_data");
+		thumbnail.setData(data);
+    }
 
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
@@ -105,11 +112,20 @@ public class ThumbnailRenderer extends Renderer {
         writer.writeAttribute(WIDTH_ATTR, "64", null);
         writer.writeAttribute(HEIGHT_ATTR, "64", null);
         writer.writeAttribute(ID_ATTR, thumbId, null);
+		String data = component.getData();
+		if (data != null) writer.writeAttribute(SRC_ATTR, data, null);
         writer.endElement(IMG_ELEM);
+
+		writer.startElement(INPUT_ELEM, component);
+		writer.writeAttribute(TYPE_ATTR, "hidden", null);
+		writer.writeAttribute(ID_ATTR, clientId + "_data", null);
+		writer.writeAttribute(NAME_ATTR, clientId + "_data", null);
+        writer.endElement(INPUT_ELEM);
+
 		writer.startElement("script", component);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write("if (!window['thumbnails"+mFor+"']) window['thumbnails"+mFor+"'] = {};");
-		writer.write("window['thumbnails"+mFor+"']['"+thumbId+"'] = '"+thumbId+"';");
+		writer.write("window['thumbnails"+mFor+"']['"+thumbId+"'] = '"+clientId+"_data';");
 		writer.endElement("script");
         writer.endElement(SPAN_ELEM);
     }

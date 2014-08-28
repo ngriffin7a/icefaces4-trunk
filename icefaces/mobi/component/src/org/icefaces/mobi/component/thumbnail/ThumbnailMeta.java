@@ -18,6 +18,7 @@ package org.icefaces.mobi.component.thumbnail;
 
 
 import org.icefaces.ace.meta.annotation.Component;
+import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.meta.annotation.Property;
 import org.icefaces.ace.meta.annotation.Required;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
@@ -55,4 +56,6 @@ public class ThumbnailMeta extends UIComponentBaseMeta {
                tlddoc = "The id of camera or camcorder component the thumbnail is associated with.")
     private String For;
 
+	@Field
+	private String data;
 }
