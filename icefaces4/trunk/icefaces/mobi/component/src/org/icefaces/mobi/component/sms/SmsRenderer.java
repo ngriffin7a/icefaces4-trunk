@@ -50,16 +50,17 @@ public class SmsRenderer extends CoreRenderer {
 		writer.writeAttribute(HTML.ID_ATTR, clientId + "_button", null);
 		writer.writeAttribute(HTML.NAME_ATTR, clientId + "_button", null);
 		writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
-		if (sms.isDisabled()) writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
 		String style = sms.getStyle();
 		if (style != null) writer.writeAttribute(HTML.STYLE_ATTR, style, null);
 		String styleClass = sms.getStyleClass();
 		if (styleClass != null) writer.writeAttribute(HTML.CLASS_ATTR, styleClass, null);
 		writer.writeAttribute(HTML.TABINDEX_ATTR, sms.getTabindex(), null);
         try {
+            if (sms.isDisabled()) writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
 		    String script = "bridgeit.sms('" + escapeString(sms.getNumber()) + "', '" + escapeString(sms.getMessage()) + "');";
 		    writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
         } catch (Exception e){
+            writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
             logger.info("ERROR: mobi:sms requires non null number and message attributes");
             FacesMessage fm = new FacesMessage(" ERROR: mobi:sms requires non null values for number and message attributes") ;
             facesContext.addMessage(clientId, fm);
