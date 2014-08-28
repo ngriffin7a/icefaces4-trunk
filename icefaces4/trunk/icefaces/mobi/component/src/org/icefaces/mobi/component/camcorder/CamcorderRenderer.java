@@ -89,7 +89,7 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
 		writer.writeAttribute(TABINDEX_ATTR, camcorder.getTabindex());
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.camcorder('" + clientId + "', '', {postURL:'" + camcorder.getPostURL() + "', ";
+		String script = "bridgeit.camcorder('" + clientId + "', 'callback"+clientId+"', {postURL:'" + camcorder.getPostURL() + "', ";
         script += "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}";
 		script += "});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
@@ -97,11 +97,13 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.writeText(camcorder.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
 
-		// themeroller support
+		// themeroller and thumbnails support
 		writer.startElement("span", camcorder);
 		writer.startElement("script", camcorder);
 		writer.writeAttribute("type", "text/javascript");
 		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
+		writer.writeText("if (!window['thumbnails"+clientId+"']) window['thumbnails"+clientId+"'] = {};");
+		writer.writeText("window['callback"+clientId+"'] = function(arg) {for (t in window['thumbnails"+clientId+"']) { var e = document.getElementById(t); if (e) e.src = arg.preview;}};");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);

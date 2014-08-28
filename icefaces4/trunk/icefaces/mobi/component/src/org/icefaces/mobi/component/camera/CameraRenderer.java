@@ -107,7 +107,7 @@ public class CameraRenderer extends Renderer {
 		writer.writeAttribute(TABINDEX_ATTR, camera.getTabindex());
 		//writeStandardAttributes(writer, camera, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.camera('" + clientId + "', '', {postURL:'" + camera.getPostURL() + "', ";
+		String script = "bridgeit.camera('" + clientId + "', 'callback"+clientId+"', {postURL:'" + camera.getPostURL() + "', ";
         script += "cookies:{'JSESSIONID':'" + 
                 MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}";
 		int maxwidth = camera.getMaxwidth();
@@ -120,11 +120,13 @@ public class CameraRenderer extends Renderer {
 		writer.writeText(camera.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
 
-		// themeroller support
+		// themeroller and thumbnails support
 		writer.startElement("span", camera);
 		writer.startElement("script", camera);
 		writer.writeAttribute("type", "text/javascript");
 		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
+		writer.writeText("if (!window['thumbnails"+clientId+"']) window['thumbnails"+clientId+"'] = {};");
+		writer.writeText("window['callback"+clientId+"'] = function(arg) {for (t in window['thumbnails"+clientId+"']) { var e = document.getElementById(t); if (e) e.src = arg.preview;}};");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
