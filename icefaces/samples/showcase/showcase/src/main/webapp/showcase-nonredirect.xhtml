@@ -90,7 +90,6 @@
                                      value="#{navigationModel.currentComponentExample.subMenuLinks}"
                                      style="font-size: 8pt;">
                             <h:column>
-                                <ui:param name="beanName" value="#{subMenuLink.exampleBeanName}.title"/>
                                 <h:commandLink actionListener="#{navigationController.navigate}"
                                                title="#{msgs[subMenuLink.title]}"
                                                disabled="#{subMenuLink.disabled}"
@@ -148,7 +147,6 @@
                                                var="subMenuLink"
                                                value="#{navigationModel.currentComponentExample.subMenuLinks}">
                                         <li style="padding-left: 15px;">
-                                            <ui:param name="beanName" value="#{subMenuLink.exampleBeanName}.title"/>
                                             <h:commandLink id="subLink"
                                                            actionListener="#{navigationController.navigate}"
                                                            title="#{msgs[subMenuLink.title]}"
