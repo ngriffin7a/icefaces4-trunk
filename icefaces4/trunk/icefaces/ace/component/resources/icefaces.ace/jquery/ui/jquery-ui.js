@@ -8507,6 +8507,7 @@
                 if (inst.settings.ariaEnabled) {
                     inst.dpDiv.attr("aria-hidden", true);
                 }
+                inst.dpDiv.attr('style', 'display:none;'); // ICE-10190
                 var onClose = this._get(inst, 'onClose');
                 if (onClose)
                     onClose.apply((inst.input ? inst.input[0] : null),
@@ -9557,6 +9558,7 @@
             if (options.ariaEnabled) {
                 $.datepicker.dpDiv.attr("aria-hidden", true);
             }
+            $.datepicker.dpDiv.attr('style', 'display:none;'); // ICE-10190
             $(document).mousedown($.datepicker._checkExternalClick).
                     find('body').append($.datepicker.dpDiv);
             $.datepicker.initialized = true;

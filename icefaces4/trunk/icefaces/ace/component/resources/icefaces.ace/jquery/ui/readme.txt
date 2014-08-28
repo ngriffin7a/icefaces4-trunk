@@ -18,3 +18,4 @@ ICE-9392: REGRESSION:  ace:dateTimeEntry - Clicking Today button closes popup.
 ICE-9147: added support for header facet in ace:dialog
 ICE-9579: commented out code to programatically set datepicker width
 ICE-9001: added support for 'handle' attribute to Dialog widget
+ICE-10190: fix to hide the datepicker root/placeholder node when aria-hidden="true"
