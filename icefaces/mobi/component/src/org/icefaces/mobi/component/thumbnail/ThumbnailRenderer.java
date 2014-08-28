@@ -71,10 +71,10 @@ public class ThumbnailRenderer extends Renderer {
              thumbnail.setMFor(mFor);
         }
 		ResponseWriter writer = facesContext.getResponseWriter();
-        encode(thumbnail, writer);
+        encode(thumbnail, writer, comp.getClientId(facesContext));
     }
 
-    public void encode(Thumbnail component, ResponseWriter writer) throws IOException {
+    public void encode(Thumbnail component, ResponseWriter writer, String mFor) throws IOException {
 
 		
         String clientId = component.getClientId();
@@ -106,6 +106,11 @@ public class ThumbnailRenderer extends Renderer {
         writer.writeAttribute(HEIGHT_ATTR, "64", null);
         writer.writeAttribute(ID_ATTR, thumbId, null);
         writer.endElement(IMG_ELEM);
+		writer.startElement("script", component);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.write("if (!window['thumbnails"+mFor+"']) window['thumbnails"+mFor+"'] = {};");
+		writer.write("window['thumbnails"+mFor+"']['"+thumbId+"'] = '"+thumbId+"';");
+		writer.endElement("script");
         writer.endElement(SPAN_ELEM);
     }
 }
