@@ -103,7 +103,7 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.writeAttribute("type", "text/javascript");
 		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
 		writer.writeText("if (!window['thumbnails"+clientId+"']) window['thumbnails"+clientId+"'] = {};");
-		writer.writeText("window['callback"+clientId+"'] = function(arg) {for (t in window['thumbnails"+clientId+"']) { var e = document.getElementById(t); if (e) e.src = arg.preview;}};");
+		writer.writeText("window['callback"+clientId+"'] = function(arg) {for (t in window['thumbnails"+clientId+"']) { var e = document.getElementById(t); if (e) e.src = arg.preview; try {document.getElementById(window['thumbnails"+clientId+"'][t]).value = arg.preview;} catch (e) {} }};");
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
