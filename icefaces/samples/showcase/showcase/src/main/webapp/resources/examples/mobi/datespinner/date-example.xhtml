@@ -73,14 +73,14 @@
         <h3 style="clear:both;padding-top:10px;">Date-Time Spinner Values</h3>
         <mobi:fieldsetGroup styleClass="results">
             <mobi:fieldsetRow>
-                <h:outputLabel value="Date:"/>
-                <h:outputText value="#{dateBean.dateInput}">
+                <h:outputLabel for="outDate" value="Date:"/>
+                <h:outputText id="outDate" value="#{dateBean.dateInput}">
                     <f:convertDateTime type="date" />
                 </h:outputText>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <h:outputLabel value="Time:"/>
-                <h:outputText value="#{dateBean.timeInput}">
+                <h:outputLabel for="outTime" value="Time:"/>
+                <h:outputText id="outTime" value="#{dateBean.timeInput}">
                     <f:convertDateTime type="time" pattern="hh:mm a" timeZone="#{dateBean.timeZone}"/>
                 </h:outputText>
             </mobi:fieldsetRow>
