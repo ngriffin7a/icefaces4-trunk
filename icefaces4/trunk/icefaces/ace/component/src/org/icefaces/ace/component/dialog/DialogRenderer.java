@@ -35,6 +35,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.FacesException;
 
 import org.icefaces.ace.renderkit.CoreRenderer;
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.component.Focusable;
 import org.icefaces.impl.component.FocusManager;
@@ -61,6 +62,7 @@ public class DialogRenderer extends CoreRenderer {
 
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, null);
+        ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
         encodeMarkup(context, dialog);
         encodeScript(context, dialog);
