@@ -180,6 +180,7 @@ ice.ace.Autocompleter.prototype = {
                     self.onKeyPress.call(self, e);
                 }
             });
+			ice.ace.jq(this.element).attr("onkeyup", function() { self.onKeyPress.call(self, e); });
 		}
 		ice.ace.jq(this.element).on(keyEvent, function(e) {
             //remove 'keyup' callback if 'keypress' is fired
