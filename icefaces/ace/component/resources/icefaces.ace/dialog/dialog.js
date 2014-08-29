@@ -33,8 +33,8 @@
 if (!window.ice['ace']) {
     window.ice.ace = {};
 }
-ice.ace.Dialog = function(id, cfg) {
-	id = id + "_main";
+ice.ace.Dialog = function(parentID, cfg) {
+	var id = parentID + "_main";
     var callee = arguments.callee, prevAceDialog = callee[id], jqo;
     if (prevAceDialog) {
         jqo = prevAceDialog.jq;
@@ -116,8 +116,10 @@ ice.ace.Dialog = function(id, cfg) {
 	var style = dialogParent.attr('style');
 	dialogParent.attr('style', style + ';' + this.cfg.dialogStyle);
 
-    ice.onElementRemove(id, function() {
-        _self.jq.dialog('close');
+    ice.onElementUpdate(parentID, function() {
+        if (_self.jq.is(':hidden')) {
+            _self.jq.dialog('close');
+        }
     });
 
     //Event handlers
