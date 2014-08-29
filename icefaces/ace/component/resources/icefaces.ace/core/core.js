@@ -38,7 +38,7 @@ ice.ace.instance = function(id) {
 	var lazy = ice.ace.lazy.registry[id];
 	if (lazy) return lazy();
 	var element = document.getElementById(id);
-	if (element.widget) return element.widget;
+	if (element && element.widget) return element.widget;
 	return null;
 }
 
