@@ -42,7 +42,13 @@
                 this.progressInterval = setInterval (
                 function()
                 {
-                    ice.ace.instance('form:progressBar').setValue(ice.ace.instance('form:progressBar').getValue() + 10);
+                    var instance = ice.ace.instance('form:progressBar');
+                    if (instance) {
+                        instance.setValue(instance.getValue() + 10);
+                    } else {
+                        //page content was modified, progress bar is not present in the page anymore
+                        stop();
+                    }
                 }
                 , 2000);
             }
@@ -50,7 +56,10 @@
             function stop() 
             {
                 clearInterval(this.progressInterval);
-                ice.ace.instance('form:progressBar').setValue(0);
+                var instance = ice.ace.instance('form:progressBar');
+                if(instance) {
+                    instance.setValue(0);
+                }
 				this.inProgress = false;
             }
         </script>
