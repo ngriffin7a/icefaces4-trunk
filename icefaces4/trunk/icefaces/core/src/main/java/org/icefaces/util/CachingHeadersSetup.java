@@ -22,12 +22,15 @@ import javax.annotation.PostConstruct;
 import javax.faces.FactoryFinder;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIOutput;
+import javax.faces.component.UIViewRoot;
+import javax.faces.component.html.HtmlBody;
 import javax.faces.context.ExternalContext;
-import javax.faces.event.PhaseEvent;
-import javax.faces.event.PhaseId;
-import javax.faces.event.PhaseListener;
+import javax.faces.context.FacesContext;
+import javax.faces.event.*;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -43,36 +46,36 @@ import java.io.Serializable;
  * the user, this could cause JS errors if DOM diff attempts to narrow a response
  * to a region that is not in the client DOM.
  */
-@ManagedBean(eager = true)
-@ApplicationScoped
-public class CachingHeaderPhaseListener implements Serializable {
-    @PostConstruct
-    private void initialize() {
-        LifecycleFactory factory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-        Lifecycle lifecycle = factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
-        lifecycle.addPhaseListener(new PhaseListener() {
-            public void afterPhase(PhaseEvent phaseEvent) {
-                ExternalContext ec = phaseEvent.getFacesContext().getExternalContext();
+public class CachingHeadersSetup implements SystemEventListener {
+
+    public void processEvent(SystemEvent event) throws AbortProcessingException {
+        UIOutput setupCachingHeaders = new UIOutput() {
+            public void encodeBegin(FacesContext context) throws IOException {
+                ExternalContext ec = context.getExternalContext();
                 Object responseObj = ec.getResponse();
 
                 //Attempting to add these headers to a PortletResponse that is not of type ResourceResponse results
                 //in the portlet bridge logging warnings.  So we avoid doing it in that particular scenario.
                 boolean avoidAddingHeaders = EnvUtils.instanceofPortletResponse(responseObj) &&
                         !EnvUtils.instanceofPortletResourceResponse(responseObj);
-                boolean navigationNotifierPresent = ec.getRequestMap().containsKey(NavigationNotifier.class.getName());
-                if (!avoidAddingHeaders && !navigationNotifierPresent) {
-                    ec.addResponseHeader("Cache-Control", "must-revalidate");
-                    ec.addResponseHeader("Pragma", "no-cache");
-                    ec.addResponseHeader("Expires", "0");
+                if (!avoidAddingHeaders && !isNavigationNotifierPresent(context)) {
+                    ec.setResponseHeader("Cache-Control", "private, no-store, max-age=0, no-cache, must-revalidate");
+                    ec.setResponseHeader("Pragma", "no-cache");
+                    ec.setResponseHeader("Expires", "Fri, 01 Jan 1990 00:00:00 GMT");
                 }
             }
+        };
+        setupCachingHeaders.setTransient(true);
 
-            public void beforePhase(PhaseEvent phaseEvent) {
-            }
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getViewRoot().addComponentResource(context, setupCachingHeaders, "body");
+    }
 
-            public PhaseId getPhaseId() {
-                return PhaseId.RENDER_RESPONSE;
-            }
-        });
+    public boolean isListenerForSource(Object source) {
+        return source instanceof UIViewRoot;
+    }
+
+    private boolean isNavigationNotifierPresent(FacesContext context) {
+        return context.getExternalContext().getRequestMap().containsKey(NavigationNotifier.class.getName());
     }
 }

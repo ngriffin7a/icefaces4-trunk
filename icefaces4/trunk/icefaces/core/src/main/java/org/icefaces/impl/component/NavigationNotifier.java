@@ -19,9 +19,14 @@ package org.icefaces.impl.component;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import javax.faces.component.UICommand;
+import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.convert.Converter;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.SystemEvent;
+import javax.faces.event.SystemEventListener;
 import java.io.IOException;
 import java.util.Map;
 
@@ -32,6 +37,8 @@ import java.util.Map;
 })
 public class NavigationNotifier extends UICommand {
     public NavigationNotifier() {
+        //let CachingHeadersSetup know that caching headers should not to be sent
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(this.getClass().getName(), true);
     }
 
     public String getFamily() {
@@ -45,12 +52,9 @@ public class NavigationNotifier extends UICommand {
         if (clientId.equals(source)) {
             queueEvent(new ActionEvent(this));
         }
-
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
-        //let CachingHeaderPhaseListener know that caching headers should not to be sent
-        context.getExternalContext().getRequestMap().put(this.getClass().getName(), true);
 
         ResponseWriter writer = context.getResponseWriter();
         String id = getClientId();

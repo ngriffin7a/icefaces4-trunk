@@ -171,6 +171,10 @@
             <system-event-listener-class>org.icefaces.impl.event.SessionExpiryWarning</system-event-listener-class>
             <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
         </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.util.CachingHeadersSetup</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+        </system-event-listener>
         <!-- MainEventListener, AjaxDisabledList and DebugTagListener are added programatically -->
     </application>
     <render-kit>
