@@ -117,9 +117,7 @@ ice.ace.Dialog = function(parentID, cfg) {
 	dialogParent.attr('style', style + ';' + this.cfg.dialogStyle);
 
     ice.onElementUpdate(parentID, function() {
-        if (_self.jq.is(':hidden')) {
-            _self.jq.dialog('close');
-        }
+        _self.jq.dialog('close');
     });
 
     //Event handlers
