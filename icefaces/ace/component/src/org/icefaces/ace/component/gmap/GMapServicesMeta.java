@@ -45,16 +45,16 @@ import org.icefaces.resources.ICEResourceLibrary;
 })
 public class GMapServicesMeta extends UIPanelMeta {
 
-    @Property(tlddoc = "The name of the service type you want to create. Valid entries are: 'Directions', 'Elevation', 'MaxZoom', 'Distance' (Case insensitive).")
+    @Property(tlddoc = "The name of the service type you want to create. Valid entries are: 'Directions', 'Elevation', 'MaxZoom', and 'Distance' (Case insensitive).")
     private String name;
 
     @Property(tlddoc = "The points that the service is applied to. Format is (lat,long) or, for Directions and Distance only, a standard address. Separate points with ':'.")
     private String points;
 
-    @Property(tlddoc = "Additional options to be sent to the service. Check google maps API for more specifics at https://developers.google.com/maps/documentation/javascript/reference. Form is attribute:'value'.", defaultValue = "travelMode:'DRIVING'")
+    @Property(tlddoc = "Additional options to be sent to the service. Check google maps API for more specifics at https://developers.google.com/maps/documentation/javascript/reference. Format is \"attribute:'value', attribute:'value'\".", defaultValue = "travelMode:'DRIVING'")
     private String options;
 
-    @Property(tlddoc = "Id of the div you with to set text directions in. null or none to clear.", defaultValue = "none")
+    @Property(tlddoc = "Id of the div element to fill with the results, such as text directions, etc. Set to null or 'none' to clear.", defaultValue = "none")
     private String div;
 
 }

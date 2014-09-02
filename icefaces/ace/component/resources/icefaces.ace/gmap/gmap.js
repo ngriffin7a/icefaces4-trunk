@@ -654,6 +654,7 @@ ice.ace.gMap.getGMapWrapper = function (id) {
             case "distancematrix":
             case "distancematrixservice":
                 //Required options: travelMode, 2 points/addresses
+				if (!points[1]) break;
                 service = new google.maps.DistanceMatrixService();
                 var origin = (points[0].charAt(0) == "(") ? "origins: [new google.maps.LatLng" + points[0] + "], " : "origins: [\"" + points[0] + "\"], ";
                 var destination = (points[1].charAt(0) == "(") ? "destinations: [new google.maps.LatLng" + points[1] + "], " : "destinations: [\"" + points[1] + "\"], ";
