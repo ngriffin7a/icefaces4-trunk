@@ -1893,6 +1893,11 @@ public class DataTable extends DataTableBase implements Serializable {
         String clientId;
         UIComponent namingContainer = findParentNamingContainer(this, false);
         if (namingContainer != null) {
+			// ICE-9578 workaround for issue with MyFaces and javax.faces.PARTIAL_STATE_SAVING=false {
+			if (context.getRenderKit() == null) {
+				context.getViewRoot().setRenderKitId(javax.faces.render.RenderKitFactory.HTML_BASIC_RENDER_KIT);
+			}
+			// ICE-9578 }
             String containerClientId = namingContainer.getContainerClientId(context);
             if (containerClientId != null) {
                 if (!containerClientId.equals(lastContainerClientId)) {
