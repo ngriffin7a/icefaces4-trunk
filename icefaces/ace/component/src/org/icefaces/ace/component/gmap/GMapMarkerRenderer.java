@@ -99,6 +99,14 @@ public class GMapMarkerRenderer extends CoreRenderer {
 			writer.write(jb.toString());
         }
         writer.write("});");
+		writer.write("ice.onElementRemove(\"" + clientId + "_marker\", function() {");
+		jb = JSONBuilder.create();
+		jb.beginFunction("ice.ace.gMap.removeMarker")
+			.item(marker.getParent().getClientId(context))
+			.item(clientId)
+		.endFunction();
+		writer.write(jb.toString());
+		writer.write("});");
         writer.endElement("script");
         writer.endElement("span");
     }
