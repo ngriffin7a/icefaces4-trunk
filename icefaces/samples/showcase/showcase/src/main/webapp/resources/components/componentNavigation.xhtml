@@ -21,17 +21,16 @@
     <!--
      ~  <ui:repeat var="menuLink" ... > is used below to create links dynamically from the array navigationModel.currentComponentGroup.menuLinks
      -->
-    <h:link title="#{msgs[cc.attrs.menuLink.title]}"
-            outcome="showcase"
+    <h:commandLink value="#{msgs[cc.attrs.menuLink.title]}"
+            title="#{msgs[cc.attrs.menuLink.title]}"
+            actionListener="#{navigationController.navigate}"
             disabled="#{cc.attrs.menuLink.disabled}"
-            class="#{mainSelected}"
-            includeViewParams="true">
-        <f:param name="grp"
-                 value="#{navigationModel.currentComponentGroup.beanName}"/>
-        <f:param name="exp"
-                 value="#{cc.attrs.menuLink.exampleBeanName}"/>
-        #{msgs[cc.attrs.menuLink.title]}
-    </h:link>
+            class="#{mainSelected}">
+        <f:attribute name="grp"
+                     value="#{navigationModel.currentComponentGroup.beanName}"/>
+        <f:attribute name="exp"
+                     value="#{cc.attrs.menuLink.exampleBeanName}"/>
+    </h:commandLink>
 
     <h:panelGroup rendered="#{'selected' eq mainSelected}">
         <ul>
