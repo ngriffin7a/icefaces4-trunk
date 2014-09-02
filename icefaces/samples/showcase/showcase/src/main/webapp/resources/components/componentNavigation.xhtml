@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
+
+<composite:interface>
+    <composite:attribute name="menuLink"
+                         type="org.icefaces.samples.showcase.metadata.context.MenuLink"
+                         required="true"/>
+</composite:interface>
+
+<composite:implementation>
+
+<li>
+    <c:set var="mainSelected"
+           value="#{(navigationModel.currentComponentExample['class']['package'] == window[cc.attrs.menuLink.exampleBeanName]['class']['package']) ||
+                    (navigationModel.componentExample == null and cc.attrs.menuLink['default']) ? 'selected' : '' }"/>
+    <!--
+     ~  <ui:repeat var="menuLink" ... > is used below to create links dynamically from the array navigationModel.currentComponentGroup.menuLinks
+     -->
+    <h:link title="#{msgs[cc.attrs.menuLink.title]}"
+            outcome="showcase"
+            disabled="#{cc.attrs.menuLink.disabled}"
+            class="#{mainSelected}"
+            includeViewParams="true">
+        <f:param name="grp"
+                 value="#{navigationModel.currentComponentGroup.beanName}"/>
+        <f:param name="exp"
+                 value="#{cc.attrs.menuLink.exampleBeanName}"/>
+        #{msgs[cc.attrs.menuLink.title]}
+    </h:link>
+
+    <h:panelGroup rendered="#{'selected' eq mainSelected}">
+        <ul>
+            <ui:repeat var="subMenuLink"
+                       value="#{navigationModel.currentComponentExample.subMenuLinks}">
+                <li style="padding-left: 5px;">
+                    <h:commandLink actionListener="#{navigationController.navigate}"
+                                   title="#{msgs[subMenuLink.title]}"
+                                   disabled="#{subMenuLink.disabled}"
+                                   class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
+                                                       (navigationModel.componentExample eq null and subMenuLink['default'])
+                                                       ? 'selected'
+                                                       : ''}">
+                        <h:outputText value="&gt; #{msgs[subMenuLink.title]}"
+                                      escape="false" nospan="true"/>
+                        <f:attribute name="grp"
+                                     value="#{navigationModel.currentComponentGroup.beanName}"/>
+                        <f:attribute name="exp"
+                                     value="#{subMenuLink.exampleBeanName}"/>
+                    </h:commandLink>
+                    <!-- OLD APPROACH NOV 10/11
+                         We used to do a full page refresh and navigation on each sublink
+                         Now for smoother integration with portlets we want to use a normal commandLink (above)
+                         This means each subdemo won't be bookmarkable though -->
+                    <!--
+                    <h:link title="#{msgs[subMenuLink.title]}"
+                            outcome="showcase"
+                            disabled="#{subMenuLink.disabled}"
+                            includeViewParams="true"
+                            class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
+                                     (navigationModel.componentExample eq null and subMenuLink['default'])
+                                   ? 'selected'
+                                   : ''}">
+                        <f:param name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
+                        <f:param name="exp" value="#{subMenuLink.exampleBeanName}"/>
+                        > #{msgs[subMenuLink.title]}
+                    </h:link>
+                    -->
+                </li>
+            </ui:repeat>
+        </ul>
+    </h:panelGroup>
+</li>
+
+</composite:implementation>
+
+</html>
