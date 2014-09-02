@@ -115,3 +115,13 @@ This also overrides the indeterminate progress imagery. But the themes don't sup
 .content ul.wijmo-wijmenu-list {
 	padding: 0;
 }
+
+.menuContainer .ui-accordion-content {
+    font-size: 10pt;
+    padding: 10px 10px;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.menuContainer .ui-accordion-header a{
+    font-size: 10pt;
+}

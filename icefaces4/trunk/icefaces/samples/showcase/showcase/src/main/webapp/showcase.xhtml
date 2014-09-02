@@ -22,6 +22,7 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:showcase="http://java.sun.com/jsf/composite/components"
                 template="/resources/templates/main-template.xhtml">
 
     <ui:define name="metadata">
@@ -81,122 +82,126 @@
     </ui:define>
 
     <ui:define name="suite-menu">
-        <!--
-        ~ ACCORDION PANEL MAIN MENU IMPLEMENTATION UNDER CONSTRUCTION
-         -->
-        <ui:remove>
+
         <h2>#{msgs[navigationModel.currentComponentGroup.title]}</h2>
-        
+
         <h:form>
-            <ace:accordion effect="bounceslide" dynamic="true" paneChangeListener="#{navigationController.onMenuPaneChange}" activeIndex="#{navigationModel.activePaneIndex}">
-                <c:forEach items="#{navigationModel.currentComponentGroup.menuLinks}" var="menuLink">
-                    <ace:accordionPane title="#{msgs[menuLink.title]}">
-                        <f:attribute name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
-                        <f:attribute name="exp" value="#{menuLink.exampleBeanName}"/>
-                        <!--Command link implementation below can be replaced via row select listener -->
-                        <h:dataTable var="subMenuLink"
-                                      value="#{navigationModel.currentComponentExample.subMenuLinks}"
-                                      style="font-size: 8pt;">
-                            <h:column>
-                                <h:commandLink actionListener="#{navigationController.navigate}"
-                                                            title="#{msgs[subMenuLink.title]}"
-                                                            disabled="#{subMenuLink.disabled}"
-                                                            class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
-                                                                    (navigationModel.componentExample eq null and subMenuLink['default'])
-                                                                    ? 'selected'
-                                                                    : ''}">
-                                    <h:outputText value="#{msgs[subMenuLink.title]}"/>
-                                    <f:attribute name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
-                                    <f:attribute name="exp" value="#{subMenuLink.exampleBeanName}"/>
-                                </h:commandLink>
-                            </h:column>
-                        </h:dataTable>
-                    </ace:accordionPane>
-            </c:forEach>
-        </ace:accordion>
+            <ace:accordion effect="bounceslide"
+                           activeIndex="#{navigationModel.activePaneIndex}"
+                           autoHeight="false">
+                <ace:accordionPane title="#{msgs['menu.ace.aceSuiteOverview.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[0]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.ajax.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[1]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.input.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[2]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[3]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[4]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[5]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[6]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[7]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[8]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.buttons.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[9]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[10]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[11]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[12]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[13]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[14]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.menus.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[15]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[16]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[17]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[18]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[14]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[19]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[20]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.selection.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[21]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[22]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[19]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[20]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.dialogs.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[23]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[24]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[25]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[26]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.containers.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[27]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[22]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[28]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[29]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[30]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[31]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.file.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[32]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.messages.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[33]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[34]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.datatable.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[35]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[36]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.charts.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[37]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.mapping.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[38]}"/>
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.media.title']}">
+                    <ul>
+
+                    </ul>
+                </ace:accordionPane>
+                <ace:accordionPane title="#{msgs['menu.ace.group.misc.title']}">
+                    <ul>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[39]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[40]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[41]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[42]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[43]}"/>
+                        <showcase:componentNavigation menuLink="#{navigationModel.currentComponentGroup.menuLinks[44]}"/>
+                    </ul>
+                </ace:accordionPane>
+            </ace:accordion>
         </h:form>
-        <!--
-        ~ ACCORDION PANEL MAIN MENU IMPLEMENTATION END
-         -->
-         </ui:remove>
-         <!--
-        ~ Regular menu via links (swap ui:remove with accordion implementation to activate, also uncomment code responsible for animation effect firing in NavigaionController.navigate(String, String))
-         -->
-         
-        <h2>#{msgs[navigationModel.currentComponentGroup.title]}</h2>
-            <!--
-                    ~ navigationModel.currentComponentGroup.menuLinks - is an array with links to all showcases in a suite
-            -->
-            <h:form id="frm">
-            <h:outputText value="Theme: "/>
-            <ace:themeSelect value="#{theme.currentTheme}">
-                <ace:ajax execute="@this" render="@all"/>
-            </ace:themeSelect>
-            <ul>
-            <ui:repeat id="menuLinks" var="menuLink"
-                       value="#{navigationModel.currentComponentGroup.menuLinks}">
-                <li>
-                    <c:set var="mainSelected"
-                                value="#{(navigationModel.currentComponentExample['class']['package'] == window[menuLink.exampleBeanName]['class']['package']) ||
-                                (navigationModel.componentExample == null and menuLink['default']) ? 'selected' : '' }"/>
-                   <!--
-                    ~  <ui:repeat var="menuLink" ... > is used below to create links dynamically from the array navigationModel.currentComponentGroup.menuLinks
-                    -->      
-					<h:link id="link"
-							title="#{msgs[menuLink.title]}"
-							outcome="showcase"
-							disabled="#{menuLink.disabled}"
-							class="#{mainSelected}"
-							includeViewParams="true">
-                        <f:param name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
-                        <f:param name="exp" value="#{menuLink.exampleBeanName}"/>
-                        #{msgs[menuLink.title]}
-                    </h:link>
-                    
-                    <h:panelGroup rendered="#{'selected' eq mainSelected}">
-                        <ul>
-                        <ui:repeat id="subMenuLinks" 
-								   var="subMenuLink"
-                                   value="#{navigationModel.currentComponentExample.subMenuLinks}">
-                                <li style="padding-left: 15px;">
-                                    <h:commandLink id="subLink"
-												   actionListener="#{navigationController.navigate}"
-                                                   title="#{msgs[subMenuLink.title]}"
-                                                   disabled="#{subMenuLink.disabled}"
-                                                   class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
-                                                            (navigationModel.componentExample eq null and subMenuLink['default'])
-                                                            ? 'selected'
-                                                            : ''}">
-                                        <h:outputText value="&gt; #{msgs[subMenuLink.title]}" escape="false" nospan="true"/>
-                                        <f:attribute name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
-                                        <f:attribute name="exp" value="#{subMenuLink.exampleBeanName}"/>
-                                    </h:commandLink>
-                                    <!-- OLD APPROACH NOV 10/11
-                                         We used to do a full page refresh and navigation on each sublink
-                                         Now for smoother integration with portlets we want to use a normal commandLink (above)
-                                         This means each subdemo won't be bookmarkable though -->
-                                    <!--
-                                    <h:link title="#{msgs[subMenuLink.title]}" 
-                                            outcome="showcase" 
-                                            disabled="#{subMenuLink.disabled}"
-                                            includeViewParams="true"
-                                            class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
-                                                     (navigationModel.componentExample eq null and subMenuLink['default'])
-                                                   ? 'selected'
-                                                   : ''}">
-                                        <f:param name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
-                                        <f:param name="exp" value="#{subMenuLink.exampleBeanName}"/>
-                                        > #{msgs[subMenuLink.title]}
-                                    </h:link>
-                                    -->
-                                </li>
-                        </ui:repeat>
-                        </ul>
-                    </h:panelGroup>
-                </li>
-            </ui:repeat>
-            </ul>
-            </h:form>
+
     </ui:define>
 
     <ui:define name="component-example">
