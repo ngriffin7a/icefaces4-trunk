@@ -16,15 +16,16 @@
 
 package org.icefaces.samples.showcase.metadata.annotation;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-/**
- *
- */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Menu {
-   String title();
-   MenuLink[] menuLinks() default {};
-   SearchSelectItem[] searchSelectItems() default {};
+public @interface SearchSelectItem {
+
+    String labelTag();
+    String labelExample();
+    String value();
 }

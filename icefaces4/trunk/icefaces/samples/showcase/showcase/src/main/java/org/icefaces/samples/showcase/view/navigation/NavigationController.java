@@ -31,6 +31,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URLEncoder;
@@ -61,6 +62,13 @@ public class NavigationController implements Serializable {
 
         navigate(newGroup == null ? null : newGroup.toString(),
                 newExample == null ? null : newExample.toString());
+    }
+
+    /**
+     * Navigation from search component.
+     */
+    public void navigate(ValueChangeEvent event) {
+        navigate(null,event.getNewValue().toString());
     }
 
     public void onMenuPaneChange(AccordionPaneChangeEvent event) {
