@@ -125,3 +125,7 @@ This also overrides the indeterminate progress imagery. But the themes don't sup
 .menuContainer .ui-accordion-header a{
     font-size: 10pt;
 }
+
+#searchForm .ui-widget-content, #searchForm .ui-state-active{
+    font-size: 8pt;
+}

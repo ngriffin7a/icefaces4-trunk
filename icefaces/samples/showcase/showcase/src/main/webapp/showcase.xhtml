@@ -83,7 +83,16 @@
 
     <ui:define name="suite-menu">
 
-        <h2>#{msgs[navigationModel.currentComponentGroup.title]}</h2>
+        <h:form id="searchForm">
+            <ace:autoCompleteEntry value="#{navigationModel.searchValue}"
+                                   valueChangeListener="#{navigationController.navigate}"
+                                   placeholder="Search"
+                                   filterMatchMode="contains"
+                                   width="180"
+                                   style="font-size: 8pt;">
+                <f:selectItems value="#{navigationModel.currentComponentGroup.searchSelectItems}"/>
+            </ace:autoCompleteEntry>
+        </h:form>
 
         <h:form>
             <ace:accordion effect="bounceslide"

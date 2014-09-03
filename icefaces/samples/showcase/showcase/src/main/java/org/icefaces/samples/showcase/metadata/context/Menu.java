@@ -16,6 +16,10 @@
 
 package org.icefaces.samples.showcase.metadata.context;
 
+import org.icefaces.samples.showcase.metadata.annotation.SearchSelectItem;
+import org.icefaces.samples.showcase.util.FacesUtils;
+
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -26,10 +30,12 @@ public class Menu<T> implements ContextBase, Serializable {
     protected String title;
     protected MenuLink defaultExample;
     protected ArrayList<MenuLink> menuLinks;
+    protected ArrayList<SelectItem> searchSelectItems;
 
-   public Menu(Class<T> parentClass) {
+    public Menu(Class<T> parentClass) {
         this.parentClass = parentClass;
         menuLinks = new ArrayList<MenuLink>();
+        searchSelectItems = new ArrayList<SelectItem>();
     }
 
     public void initMetaData() {
@@ -50,11 +56,21 @@ public class Menu<T> implements ContextBase, Serializable {
                     defaultExample = menuLink;
                 }
             }
+            org.icefaces.samples.showcase.metadata.annotation.SearchSelectItem[] menuSearch = menu.searchSelectItems();
+            SelectItem selectItem;
+            for (SearchSelectItem searchSelectItem : menuSearch) {
+                selectItem = new SelectItem(searchSelectItem.value(), FacesUtils.getJSFMessageResourceString("msgs", searchSelectItem.labelTag()) + " - " + FacesUtils.getJSFMessageResourceString("msgs", searchSelectItem.labelExample()));
+                searchSelectItems.add(selectItem);
+            }
         }
     }
 
     public ArrayList<MenuLink> getMenuLinks() {
         return menuLinks;
+    }
+
+    public ArrayList<SelectItem> getSearchSelectItems() {
+        return searchSelectItems;
     }
 
     public MenuLink getDefaultExample() {

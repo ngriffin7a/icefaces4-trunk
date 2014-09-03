@@ -381,4 +381,11 @@ public class FacesUtils implements Serializable{
         	failedRedirect.printStackTrace();
         }
     }
+
+    public static String getJSFMessageResourceString(String bundleVar,
+   			String key) {
+   		FacesContext context = FacesContext.getCurrentInstance();
+   		return context.getApplication().getResourceBundle(context, bundleVar)
+   				.getString(key);
+   	}
 }
