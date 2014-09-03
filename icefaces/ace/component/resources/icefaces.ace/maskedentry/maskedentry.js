@@ -223,7 +223,7 @@
 							lastMatch = i;
 						}
 					}
-					if (!allow && lastMatch + 1 < partialPosition && !input.data("labelIsInField")) {
+					if (!allow && lastMatch + 1 <= partialPosition && !input.data("labelIsInField")) {
 						input.val("");
 						clearBuffer(0, len);
 					} else if (allow || lastMatch + 1 >= partialPosition) {
@@ -274,7 +274,9 @@
 					.bind("keydown.mask", keydownEvent)
 					.bind("keypress.mask", keypressEvent)
 					.bind(pasteEventName, function() {
-						setTimeout(function() { input.caret(checkVal(true)); }, 0);
+						setTimeout(function() {
+                            input.caret(checkVal(false));
+                        }, 0);
 					});
 
 				checkVal(); //Perform initial check for existing values
