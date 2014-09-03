@@ -57,7 +57,8 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
         String text = (String) requestMap.get(clientId + "_input");
 		String oldText = (String) autoCompleteEntry.getText();
 		boolean textChanged = false;
-		
+
+        autoCompleteEntry.setSubmittedValue(text);
         if (text != null) {
 			if (autoCompleteEntry.isCaseSensitive()) {
 				if (!text.equals(oldText)) {
