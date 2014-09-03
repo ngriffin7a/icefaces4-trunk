@@ -86,7 +86,7 @@ public class VideoPlayerMeta extends UIComponentBaseMeta {
             "this attribute is present thelink will appear with this text as the label.")
     private String linkLabel;
 
-    @Property(defaultValue = "false", tlddoc=" audio will be muted if true. Default is false")
+    @Property(defaultValue = "false", tlddoc=" audio will be muted if true for html5 compliant desktop browsers only. Default is false")
     private boolean muted;
 
     @Field
