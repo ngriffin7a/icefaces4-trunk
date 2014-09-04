@@ -85,14 +85,13 @@
 
         <h:form id="searchForm">
             <ace:comboBox valueChangeListener="#{navigationController.navigate}"
-                          resetValues="true"
                           placeholder="Search"
                           filterMatchMode="contains"
                           width="190"
                           style="font-size: 8pt;"
                           required="true">
                 <f:selectItems value="#{navigationModel.currentComponentGroup.searchSelectItems}"/>
-                <ace:ajax />
+                <ace:ajax resetValues="true"/>
             </ace:comboBox>
         </h:form>
 
