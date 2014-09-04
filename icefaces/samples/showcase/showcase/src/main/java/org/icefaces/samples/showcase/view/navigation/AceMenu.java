@@ -17,23 +17,34 @@
 package org.icefaces.samples.showcase.view.navigation;
 
 import org.icefaces.samples.showcase.example.ace.accordionpanel.AccordionPanelBean;
+import org.icefaces.samples.showcase.example.ace.accordionpanel.AccordionPanelDynamicBean;
+import org.icefaces.samples.showcase.example.ace.accordionpanel.AccordionPanelEffectBean;
 import org.icefaces.samples.showcase.example.ace.animation.AnimationBean;
 import org.icefaces.samples.showcase.example.ace.autocompleteentry.*;
 import org.icefaces.samples.showcase.example.ace.breadcrumbmenu.BreadcrumbMenuBean;
 import org.icefaces.samples.showcase.example.ace.buttonGroup.ButtonGroupBean;
-import org.icefaces.samples.showcase.example.ace.chart.ChartBean;
+import org.icefaces.samples.showcase.example.ace.chart.*;
 import org.icefaces.samples.showcase.example.ace.checkboxButton.CheckboxButtonBean;
 import org.icefaces.samples.showcase.example.ace.checkboxButton.CheckboxButtonCustomBean;
 import org.icefaces.samples.showcase.example.ace.combobox.*;
 import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogBean;
+import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogEffectBean;
+import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogModalBean;
 import org.icefaces.samples.showcase.example.ace.contextMenu.*;
-import org.icefaces.samples.showcase.example.ace.dataExporter.DataExporterBean;
-import org.icefaces.samples.showcase.example.ace.dataTable.DataTableBean;
+import org.icefaces.samples.showcase.example.ace.dataExporter.*;
+import org.icefaces.samples.showcase.example.ace.dataTable.*;
 import org.icefaces.samples.showcase.example.ace.date.*;
 import org.icefaces.samples.showcase.example.ace.dialog.DialogBean;
+import org.icefaces.samples.showcase.example.ace.dialog.DialogEffectsAndSizeBean;
+import org.icefaces.samples.showcase.example.ace.dialog.ModalDialogBean;
+import org.icefaces.samples.showcase.example.ace.dragDrop.DataTableIntegrationBean;
 import org.icefaces.samples.showcase.example.ace.dragDrop.DragDropOverviewBean;
+import org.icefaces.samples.showcase.example.ace.dragDrop.DraggableOverviewBean;
 import org.icefaces.samples.showcase.example.ace.file.FileEntryBean;
-import org.icefaces.samples.showcase.example.ace.gMap.MapBean;
+import org.icefaces.samples.showcase.example.ace.file.FileEntryCallbackBean;
+import org.icefaces.samples.showcase.example.ace.file.FileEntryListenerBean;
+import org.icefaces.samples.showcase.example.ace.file.FileEntryValidationOptionsBean;
+import org.icefaces.samples.showcase.example.ace.gMap.*;
 import org.icefaces.samples.showcase.example.ace.linkButton.LinkButtonBean;
 import org.icefaces.samples.showcase.example.ace.list.*;
 import org.icefaces.samples.showcase.example.ace.maskedEntry.MaskedEntryBean;
@@ -46,15 +57,17 @@ import org.icefaces.samples.showcase.example.ace.menuButton.MenuButtonBean;
 import org.icefaces.samples.showcase.example.ace.message.MessageBean;
 import org.icefaces.samples.showcase.example.ace.growlmessages.GrowlMessagesBean;
 import org.icefaces.samples.showcase.example.ace.notificationpanel.NotificationPanelBean;
+import org.icefaces.samples.showcase.example.ace.notificationpanel.NotificationPanelClientBean;
 import org.icefaces.samples.showcase.example.ace.overview.AceSuiteOverviewBean;
-import org.icefaces.samples.showcase.example.ace.panel.PanelBean;
+import org.icefaces.samples.showcase.example.ace.panel.*;
 import org.icefaces.samples.showcase.example.ace.printer.PrinterBean;
-import org.icefaces.samples.showcase.example.ace.progressbar.ProgressBarBean;
+import org.icefaces.samples.showcase.example.ace.progressbar.*;
 import org.icefaces.samples.showcase.example.ace.pushButton.PushButtonBean;
 import org.icefaces.samples.showcase.example.ace.qrcode.QrcodeBean;
 import org.icefaces.samples.showcase.example.ace.radioButton.RadioButtonBean;
 import org.icefaces.samples.showcase.example.ace.radioButton.RadioButtonCustomBean;
 import org.icefaces.samples.showcase.example.ace.resizable.ResizableBean;
+import org.icefaces.samples.showcase.example.ace.resizable.ResizeListenerBean;
 import org.icefaces.samples.showcase.example.ace.richtextentry.RichTextEntryBean;
 import org.icefaces.samples.showcase.example.ace.selectmenu.*;
 import org.icefaces.samples.showcase.example.ace.simpleselectonemenu.SimpleSelectOneMenuBean;
@@ -67,14 +80,19 @@ import org.icefaces.samples.showcase.example.ace.slider.SliderListener;
 import org.icefaces.samples.showcase.example.ace.slider.SliderSubmitionExample;
 import org.icefaces.samples.showcase.example.ace.splitpane.SplitPaneBean;
 import org.icefaces.samples.showcase.example.ace.submitMonitor.SubmitMonitorBean;
+import org.icefaces.samples.showcase.example.ace.tab.TabClientSideBean;
+import org.icefaces.samples.showcase.example.ace.tab.TabProxyBean;
+import org.icefaces.samples.showcase.example.ace.tab.TabServerSideBean;
 import org.icefaces.samples.showcase.example.ace.tab.TabSetBean;
 import org.icefaces.samples.showcase.example.ace.textAreaEntry.TextAreaEntryBean;
 import org.icefaces.samples.showcase.example.ace.textAreaEntry.TextAreaEntryIndicatorBean;
 import org.icefaces.samples.showcase.example.ace.textAreaEntry.TextAreaEntryLabelBean;
 import org.icefaces.samples.showcase.example.ace.textAreaEntry.TextAreaEntryReqStyleBean;
 import org.icefaces.samples.showcase.example.ace.textEntry.*;
+import org.icefaces.samples.showcase.example.ace.tooltip.DelegateTooltipBean;
+import org.icefaces.samples.showcase.example.ace.tooltip.GlobalTooltipBean;
 import org.icefaces.samples.showcase.example.ace.tooltip.TooltipOverviewBean;
-import org.icefaces.samples.showcase.example.ace.tree.TreeBean;
+import org.icefaces.samples.showcase.example.ace.tree.*;
 import org.icefaces.samples.showcase.metadata.annotation.Menu;
 import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.annotation.SearchSelectItem;
@@ -258,8 +276,130 @@ import java.io.Serializable;
                 @SearchSelectItem(labelTag = "menu.ace.list.title", labelExample = "menu.ace.list.subMenu.dual", value = ListDualBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.list.title", labelExample = "menu.ace.list.subMenu.multi", value = ListMultiBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.list.title", labelExample = "menu.ace.list.subMenu.block", value = ListBlockBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.list.title", labelExample = "menu.ace.list.subMenu.blockComplex", value = ListBlockComplexBean.BEAN_NAME)
-        })
+                @SearchSelectItem(labelTag = "menu.ace.list.title", labelExample = "menu.ace.list.subMenu.blockComplex", value = ListBlockComplexBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.main", value = DialogBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.effectsAndSize", value = DialogEffectsAndSizeBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.modalDialog", value = ModalDialogBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.main", value = ConfirmationDialogBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.modal", value = ConfirmationDialogModalBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.effect", value = ConfirmationDialogEffectBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.notificationpanel.title", labelExample = "menu.ace.notificationpanel.subMenu.main", value = NotificationPanelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.notificationpanel.title", labelExample = "menu.ace.notificationpanel.subMenu.clientSide", value = NotificationPanelClientBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.main", value = TooltipOverviewBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.globalTooltip", value = GlobalTooltipBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.delegateTooltip", value = DelegateTooltipBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.main", value = AccordionPanelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.dynamic", value = AccordionPanelDynamicBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.effect", value = AccordionPanelEffectBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.main", value = PanelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.header", value = PanelHeader.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.toggle", value = PanelToggle.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.close", value = PanelClose.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.listener", value = PanelListener.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.menu", value = PanelMenu.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.splitpane.title", labelExample = "menu.ace.splitpane.subMenu.main", value = SplitPaneBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.main", value = TabSetBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.clientSide", value = TabClientSideBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.serverSide", value = TabServerSideBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.proxy", value = TabProxyBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.main", value = TreeBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.lazy", value = TreeLazyBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.client", value = TreeClientBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.reorder", value = TreeReorderBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.selection", value = TreeSelectionBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.main", value = FileEntryBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.listener", value = FileEntryListenerBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.validation", value = FileEntryValidationOptionsBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.callback", value = FileEntryCallbackBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.message.title", labelExample = "menu.ace.message.subMenu.main", value = MessageBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.growlmessages.title", labelExample = "menu.ace.growlmessages.subMenu.main", value = GrowlMessagesBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.main", value = DataTableBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.click", value = DataTableClick.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.columnReordering", value = DataTableColumnReordering.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.columnResizing", value = DataTableColumnResizing.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.stackable", value = DataTableStackable.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.dynamicColumns", value = DataTableDynamicColumns.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.filtering", value = DataTableFiltering.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.find", value = DataTableFind.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.grouping", value = DataTableGrouping.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.lazyLoading", value = DataTableLazyLoading.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.multiRowHeader", value = DataTableMultiRowHeader.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.paginator", value = DataTablePaginator.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.panelexpansion", value = DataTablePanelExpansion.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.pinning", value = DataTablePinning.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.rowexpansion", value = DataTableRowExpansion.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.listener", value = DataTableListener.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.rowstate", value = DataTableRowState.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.rowEditing", value = DataTableRowEditing.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.selector", value = DataTableSelector.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.scrolling", value = DataTableScrolling.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.sorting", value = DataTableSorting.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.configpanel", value = DataTableConfigPanel.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.configpaneladvanced", value = DataTableConfigPanelAdvanced.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.dataExporter.title", labelExample = "menu.ace.dataExporter.subMenu.main", value = DataExporterBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataExporter.title", labelExample = "menu.ace.dataExporter.subMenu.columns", value = DataExporterColumns.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataExporter.title", labelExample = "menu.ace.dataExporter.subMenu.rows", value = DataExporterRows.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataExporter.title", labelExample = "menu.ace.dataExporter.subMenu.excludeFromExport", value = ExcludeFromExport.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dataExporter.title", labelExample = "menu.ace.dataExporter.subMenu.custom", value = DataExporterCustom.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.main", value = ChartBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.bar", value = ChartBarBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.bubble", value = ChartBubbleBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.candlestick", value = ChartCandlestickBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.donut", value = ChartDonutBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.gauge", value = ChartGaugeBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.line", value = ChartLineBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.pie", value = ChartPieBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.combined", value = ChartCombinedBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.color", value = ChartColorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.dynamic", value = ChartDynamicBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.export", value = ChartExportBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.overview", value = MapBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.autocomplete", value = MapAutocompleteBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.control", value = MapControlBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.direction", value = MapDirectionBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.event", value = MapEventBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.infowindow", value = MapInfoWindowBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.layer", value = MapLayerBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.marker", value = MapMarkerBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.options", value = MapOptionsBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.overlay", value = MapOverlayBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.animation.title", labelExample = "menu.ace.animation.subMenu.main", value = AnimationBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.maskedEntry.title", labelExample = "menu.ace.dragDrop.subMenu.main", value = DragDropOverviewBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.maskedEntry.title", labelExample = "menu.ace.dragDrop.subMenu.draggable", value = DraggableOverviewBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.maskedEntry.title", labelExample = "menu.ace.dragDrop.subMenu.dataTableIntegration", value = DataTableIntegrationBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.printer.title", labelExample = "menu.ace.printer.subMenu.main", value = PrinterBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.progressbar.title", labelExample = "menu.ace.progressbar.subMenu.main", value = ProgressBarBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.progressbar.title", labelExample = "menu.ace.progressbar.subMenu.polling", value = ProgressBarPolling.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.progressbar.title", labelExample = "menu.ace.progressbar.subMenu.push", value = ProgressBarPush.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.progressbar.title", labelExample = "menu.ace.progressbar.subMenu.client", value = ProgressBarClient.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.progressbar.title", labelExample = "menu.ace.progressbar.subMenu.clientAndServer", value = ProgressBarClientAndServer.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.qrcode.title", labelExample = "menu.ace.qrcode.subMenu.main", value = QrcodeBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.maskedEntry.title", labelExample = "menu.ace.resizable.subMenu.main", value = ResizableBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.maskedEntry.title", labelExample = "menu.ace.resizable.subMenu.resizeListener", value = ResizeListenerBean.BEAN_NAME)
+        }
+)
 @ManagedBean(name = AceMenu.BEAN_NAME)
 @ApplicationScoped
 public class AceMenu extends org.icefaces.samples.showcase.metadata.context.Menu<AceMenu>

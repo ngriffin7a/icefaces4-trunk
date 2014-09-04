@@ -50,7 +50,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
         }
 )
 @Menu(
-	title = "menu.ace.progressbar.subMenu.title",
+	title = "menu.ace.tooltip.subMenu.title",
 	menuLinks = {
 	         @MenuLink(title = "menu.ace.tooltip.subMenu.main", isDefault = true, exampleBeanName = TooltipOverviewBean.BEAN_NAME)
                         ,@MenuLink(title = "menu.ace.tooltip.subMenu.globalTooltip", exampleBeanName = GlobalTooltipBean.BEAN_NAME)
