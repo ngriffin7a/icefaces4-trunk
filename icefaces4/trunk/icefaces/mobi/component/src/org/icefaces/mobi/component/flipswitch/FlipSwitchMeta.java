@@ -46,11 +46,11 @@ import javax.faces.application.ResourceDependency;
 		@ResourceDependency(library = "org.icefaces.component.flipswitch", name = "flip-switch.css")
 })
 @ClientBehaviorHolder(events = {
-	@ClientEvent(name="activate", 
+	@ClientEvent(name="action", 
 	        javadoc="Fired when flip switch has realized an onclick event.",
 	        tlddoc="Fired when the the flip switch has realized an onclick event",
 	        defaultRender="@all", defaultExecute="@this")
-}, defaultEvent="activate")
+}, defaultEvent="action")
 public class FlipSwitchMeta extends UISelectBooleanMeta {
 
     @Property(tlddoc = "Sets the CSS style definition to be applied to this component.")
