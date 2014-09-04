@@ -57,8 +57,6 @@ public class NavigationModel implements Serializable {
     private int activePaneIndex = DEFAULT_MENU_TAB_INDEX;
 
     private String theme;
-
-    private String searchValue;
     
     public NavigationModel() {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -147,13 +145,5 @@ public class NavigationModel implements Serializable {
 
     public void setTheme(String theme) {
         this.theme = theme;
-    }
-
-    public String getSearchValue() {
-        return searchValue;
-    }
-
-    public void setSearchValue(String searchValue) {
-        this.searchValue = searchValue;
     }
 }
