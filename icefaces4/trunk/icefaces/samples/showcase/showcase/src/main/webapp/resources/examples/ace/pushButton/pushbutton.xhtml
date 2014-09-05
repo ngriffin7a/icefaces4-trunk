@@ -40,6 +40,7 @@
                     <ace:pushButton id="pushBttnAction"
                                     value="Go to LinkButton example"
                                     action="#{pushButton.executeAction}">
+                        <ace:ajax execute="@all" render="@all" onSuccess="updateAddressBarURL('aceMenu','linkButton');" />
                         <f:param name="grp" value="aceMenu"/>
                         <f:param name="exp" value="linkButton" />
                     </ace:pushButton>
