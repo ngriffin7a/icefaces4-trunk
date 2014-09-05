@@ -90,7 +90,7 @@
                                      value="#{navigationModel.currentComponentExample.subMenuLinks}"
                                      style="font-size: 8pt;">
                             <h:column>
-                                <h:commandLink actionListener="#{navigationController.navigate}"
+                                <h:commandLink actionListener="#{navigationController.navigateActionListener}"
                                                title="#{msgs[subMenuLink.title]}"
                                                disabled="#{subMenuLink.disabled}"
                                                class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
@@ -148,7 +148,7 @@
                                                value="#{navigationModel.currentComponentExample.subMenuLinks}">
                                         <li style="padding-left: 15px;">
                                             <h:commandLink id="subLink"
-                                                           actionListener="#{navigationController.navigate}"
+                                                           actionListener="#{navigationController.navigateActionListener}"
                                                            title="#{msgs[subMenuLink.title]}"
                                                            disabled="#{subMenuLink.disabled}"
                                                            class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||

@@ -62,6 +62,7 @@ public class ListSelectionMiniBean extends ComponentExampleImpl<ListSelectionMin
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 
 

@@ -59,6 +59,7 @@ public class MenuEvents extends ComponentExampleImpl<MenuEvents> implements Seri
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 
     public String getMessage() { return message; }

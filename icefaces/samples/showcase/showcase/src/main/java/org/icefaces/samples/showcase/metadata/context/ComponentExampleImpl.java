@@ -45,6 +45,7 @@ public class ComponentExampleImpl<T> implements ComponentExample, ExampleResourc
 
     private String subMenuTitle;
     private ArrayList<MenuLink> subMenuLinks;
+    private int group;
     
 //  private Effect effect;
 
@@ -202,4 +203,13 @@ public class ComponentExampleImpl<T> implements ComponentExample, ExampleResourc
 //            effect.setFired(false);
 //        }
 //    }
+
+
+    public int getGroup() {
+        return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
+    }
 }

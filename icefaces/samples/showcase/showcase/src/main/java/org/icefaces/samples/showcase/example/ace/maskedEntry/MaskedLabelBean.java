@@ -111,5 +111,6 @@ public class MaskedLabelBean extends ComponentExampleImpl<MaskedLabelBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 }

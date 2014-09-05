@@ -98,5 +98,6 @@ public class AutoCompleteEntryIndicatorBean extends ComponentExampleImpl<AutoCom
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 }

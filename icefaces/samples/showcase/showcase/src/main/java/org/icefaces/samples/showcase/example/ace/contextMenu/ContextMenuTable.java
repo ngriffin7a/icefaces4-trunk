@@ -55,5 +55,6 @@ public class ContextMenuTable extends ComponentExampleImpl<ContextMenuTable> imp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 }

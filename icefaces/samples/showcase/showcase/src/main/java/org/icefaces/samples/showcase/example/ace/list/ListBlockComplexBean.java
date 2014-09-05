@@ -62,5 +62,6 @@ public class ListBlockComplexBean extends ComponentExampleImpl<ListBlockComplexB
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 }

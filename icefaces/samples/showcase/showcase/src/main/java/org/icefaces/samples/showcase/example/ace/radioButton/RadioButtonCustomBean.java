@@ -73,5 +73,6 @@ public class RadioButtonCustomBean extends ComponentExampleImpl<RadioButtonCusto
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(3);
     }
 }

@@ -112,6 +112,7 @@ public class MaskedReqStyleBean extends ComponentExampleImpl<MaskedReqStyleBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 	
 	private boolean useTheme = false;

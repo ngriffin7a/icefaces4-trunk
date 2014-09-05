@@ -73,6 +73,7 @@ public class TextAreaEntryBean extends ComponentExampleImpl<TextAreaEntryBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 
     public String getComment1() {

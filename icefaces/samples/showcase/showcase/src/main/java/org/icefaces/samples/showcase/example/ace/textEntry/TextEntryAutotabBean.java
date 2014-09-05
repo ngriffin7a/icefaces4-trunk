@@ -128,5 +128,6 @@ public class TextEntryAutotabBean extends ComponentExampleImpl<TextEntryAutotabB
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 }

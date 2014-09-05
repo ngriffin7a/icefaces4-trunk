@@ -59,6 +59,7 @@ public class ContextMenuDelegate extends ComponentExampleImpl<ContextMenuDelegat
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 	
 	private Object data;

@@ -67,6 +67,7 @@ public class SliderListener extends ComponentExampleImpl<SliderListener> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 
     private void initializeInstanceVariables()

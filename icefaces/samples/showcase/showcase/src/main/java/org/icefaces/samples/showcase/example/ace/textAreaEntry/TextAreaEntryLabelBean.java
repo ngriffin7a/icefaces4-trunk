@@ -84,5 +84,6 @@ public class TextAreaEntryLabelBean extends ComponentExampleImpl<TextAreaEntryLa
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 }

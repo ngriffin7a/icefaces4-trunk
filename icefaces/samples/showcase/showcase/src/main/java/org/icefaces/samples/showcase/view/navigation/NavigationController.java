@@ -57,7 +57,7 @@ public class NavigationController implements Serializable {
      * Approach to navigation that will try to grab f:attributes that were specified on a command component
      * This is meant to be used with a commandLink
      */
-    public void navigate(ActionEvent event) {
+    public void navigateActionListener(ActionEvent event) {
         Object newGroup = FacesUtils.getFAttribute(event, NavigationModel.GROUP_PARAM);
         Object newExample = FacesUtils.getFAttribute(event, NavigationModel.EXAMPLE_PARAM);
 
@@ -68,7 +68,7 @@ public class NavigationController implements Serializable {
     /**
      * Navigation from search component.
      */
-    public void navigate(ValueChangeEvent event) {
+    public void navigateValueChangeListener(ValueChangeEvent event) {
         navigate(null, event.getNewValue().toString());
         NavigationModel navigationModel = (NavigationModel)
                 FacesUtils.getManagedBean(NavigationModel.BEAN_NAME);

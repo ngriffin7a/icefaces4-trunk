@@ -83,6 +83,7 @@ public class MenuBarBean extends ComponentExampleImpl<MenuBarBean> implements Se
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 
     public void fireAction(ActionEvent event)

@@ -66,6 +66,7 @@ public class DateLocaleBean extends ComponentExampleImpl<DateLocaleBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 
     public String getLocale() {

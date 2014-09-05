@@ -114,7 +114,7 @@ public class SimpleSelectOneMenuBean extends ComponentExampleImpl< SimpleSelectO
 		quebecCities.add(new SelectItem("Montreal"));
 		quebecCities.add(new SelectItem("Quebec City"));
 		quebecCities.add(new SelectItem("Sherbrooke"));
-		quebecCities.add(new SelectItem("Trois Rivières"));
+		quebecCities.add(new SelectItem("Trois Riviï¿½res"));
 		newfoundlandCities = new ArrayList<SelectItem>();
 		newfoundlandCities.add(new SelectItem(""));
 		newfoundlandCities.add(new SelectItem("Corner Brook"));
@@ -160,6 +160,7 @@ public class SimpleSelectOneMenuBean extends ComponentExampleImpl< SimpleSelectO
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 
 	private String province = "";

@@ -50,5 +50,6 @@ public class MenuBarMultiColumn extends ComponentExampleImpl<MenuBarMultiColumn>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 }

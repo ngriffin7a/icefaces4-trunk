@@ -23,10 +23,11 @@
      -->
     <h:commandLink value="#{msgs[cc.attrs.menuLink.title]}"
             title="#{msgs[cc.attrs.menuLink.title]}"
-            actionListener="#{navigationController.navigate}"
+            actionListener="#{navigationController.navigateActionListener}"
             disabled="#{cc.attrs.menuLink.disabled}"
             class="#{mainSelected}"
             onclick="updateAddressBarURL('#{navigationModel.currentComponentGroup.beanName}','#{cc.attrs.menuLink.exampleBeanName}');">
+        <f:ajax render="container"/>
         <f:attribute name="grp"
                      value="#{navigationModel.currentComponentGroup.beanName}"/>
         <f:attribute name="exp"
@@ -38,7 +39,7 @@
             <ui:repeat var="subMenuLink"
                        value="#{navigationModel.currentComponentExample.subMenuLinks}">
                 <li style="padding-left: 5px;">
-                    <h:commandLink actionListener="#{navigationController.navigate}"
+                    <h:commandLink actionListener="#{navigationController.navigateActionListener}"
                                    title="#{msgs[subMenuLink.title]}"
                                    disabled="#{subMenuLink.disabled}"
                                    class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
@@ -52,6 +53,7 @@
                                      value="#{navigationModel.currentComponentGroup.beanName}"/>
                         <f:attribute name="exp"
                                      value="#{subMenuLink.exampleBeanName}"/>
+                        <f:ajax render="container"/>
                     </h:commandLink>
                     <!-- OLD APPROACH NOV 10/11
                          We used to do a full page refresh and navigation on each sublink

@@ -62,6 +62,7 @@ public class ListBlockBean extends ComponentExampleImpl<ListBlockBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 
     List<SelectItem> stringList = new ArrayList<SelectItem>() {{

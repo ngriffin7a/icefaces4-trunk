@@ -50,5 +50,6 @@ public class ContextMenuMultiColumn extends ComponentExampleImpl<ContextMenuMult
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 }

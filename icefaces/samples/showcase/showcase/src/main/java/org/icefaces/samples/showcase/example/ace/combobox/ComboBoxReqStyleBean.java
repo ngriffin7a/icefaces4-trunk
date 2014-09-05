@@ -87,6 +87,7 @@ public class ComboBoxReqStyleBean extends ComponentExampleImpl<ComboBoxReqStyleB
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 	
 	private boolean useTheme = false;

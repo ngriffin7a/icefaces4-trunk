@@ -87,6 +87,7 @@ public class SimpleSelectOneMenuReqStyleBean extends ComponentExampleImpl<Simple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 	
 	private boolean useTheme = false;
