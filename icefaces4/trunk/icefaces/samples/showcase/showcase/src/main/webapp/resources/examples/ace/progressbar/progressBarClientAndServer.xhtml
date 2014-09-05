@@ -35,7 +35,6 @@
     <ui:define name="example">
 
         <h:form id="form">
-            
             <ace:panel>
                 <ace:progressBar id="clientAndServerProgressBar"
                                              value="#{progressBarClientAndServer.progressValue}"
@@ -43,7 +42,6 @@
             </ace:panel>
 
             <script type="text/javascript">
-            ice.ace.jq(function() {ice.ace.instance('form:clientAndServerProgressBar').setValue(0);});
             function increase()
             {
                ice.ace.instance('form:clientAndServerProgressBar').setValue(ice.ace.instance('form:clientAndServerProgressBar').getValue() + 10);
