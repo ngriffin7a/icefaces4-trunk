@@ -67,11 +67,16 @@ public class ProgressBarClientAndServer extends ComponentExampleImpl<ProgressBar
     /////////////---- EVENT LISTENERS BEGIN
     public void changeListener(ProgressBarChangeEvent event) 
     {
+         progressValue= (int)event.getPercentage();
          message = (int)event.getPercentage() + "%";
     }
     /////////////---- GETTERS & SETTERS BEGIN
     public int getProgressValue() { return progressValue; }
     public void setProgressValue(int progressValue) { this.progressValue = progressValue; }
     public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+
 }
