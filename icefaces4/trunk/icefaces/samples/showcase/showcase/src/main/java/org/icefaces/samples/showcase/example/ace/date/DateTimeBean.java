@@ -128,6 +128,7 @@ public class DateTimeBean extends ComponentExampleImpl<DateTimeBean> implements
 	@PostConstruct
 	public void initMetaData() {
 		super.initMetaData();
+        setGroup(2);
 	}
 
 	public void typeChanged(ValueChangeEvent event) {

@@ -95,6 +95,7 @@ public class AutoCompleteEntryLabelBean extends ComponentExampleImpl<AutoComplet
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
     
     public void positionChanged(ValueChangeEvent event) {

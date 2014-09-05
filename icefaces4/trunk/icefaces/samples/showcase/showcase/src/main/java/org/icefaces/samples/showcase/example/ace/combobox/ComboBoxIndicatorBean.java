@@ -98,5 +98,6 @@ public class ComboBoxIndicatorBean extends ComponentExampleImpl<ComboBoxIndicato
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 }

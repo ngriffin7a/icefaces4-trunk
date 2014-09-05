@@ -72,6 +72,7 @@ public class ListSelectionBean extends ComponentExampleImpl<ListSelectionBean> {
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 
     public List<SelectItem> getStringList() {

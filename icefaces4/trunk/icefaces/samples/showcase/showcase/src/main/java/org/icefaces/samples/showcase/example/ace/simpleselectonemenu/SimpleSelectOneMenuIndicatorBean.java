@@ -98,5 +98,6 @@ public class SimpleSelectOneMenuIndicatorBean extends ComponentExampleImpl<Simpl
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 }

@@ -84,7 +84,7 @@
     <ui:define name="suite-menu">
 
         <h:form id="searchForm">
-            <ace:comboBox valueChangeListener="#{navigationController.navigate}"
+            <ace:comboBox valueChangeListener="#{navigationController.navigateValueChangeListener}"
                           placeholder="Search"
                           filterMatchMode="contains"
                           width="190"
@@ -97,7 +97,7 @@
 
         <h:form>
             <ace:accordion effect="bounceslide"
-                           activeIndex="#{navigationModel.activePaneIndex}"
+                           activeIndex="#{navigationModel.currentComponentExample.group}"
                            autoHeight="false">
                 <ace:accordionPane title="#{msgs['menu.ace.aceSuiteOverview.title']}">
                     <ul>

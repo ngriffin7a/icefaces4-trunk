@@ -60,6 +60,7 @@ public class SliderSubmitionExample extends ComponentExampleImpl<SliderSubmition
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 
     public int getAutoValue() {

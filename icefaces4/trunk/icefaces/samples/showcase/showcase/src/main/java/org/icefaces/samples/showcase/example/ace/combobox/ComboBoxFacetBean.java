@@ -102,6 +102,7 @@ public class ComboBoxFacetBean extends ComponentExampleImpl< ComboBoxFacetBean >
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 
 	private String textColor = "";

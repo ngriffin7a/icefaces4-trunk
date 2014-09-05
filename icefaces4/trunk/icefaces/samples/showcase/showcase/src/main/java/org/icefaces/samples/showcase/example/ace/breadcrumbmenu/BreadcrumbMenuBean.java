@@ -65,6 +65,7 @@ public class BreadcrumbMenuBean extends ComponentExampleImpl<BreadcrumbMenuBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 	
 	// The demo logic itself is in BreadcrumbMenuViewScopedBean.java

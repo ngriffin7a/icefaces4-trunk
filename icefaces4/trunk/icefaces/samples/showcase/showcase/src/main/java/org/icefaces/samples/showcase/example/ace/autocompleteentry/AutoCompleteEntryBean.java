@@ -92,6 +92,7 @@ public class AutoCompleteEntryBean extends ComponentExampleImpl<AutoCompleteEntr
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 
 	public List<SelectItem> cities;

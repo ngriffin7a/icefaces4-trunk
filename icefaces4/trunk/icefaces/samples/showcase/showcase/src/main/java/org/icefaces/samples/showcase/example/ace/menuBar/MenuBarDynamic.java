@@ -55,5 +55,6 @@ public class MenuBarDynamic extends ComponentExampleImpl<MenuBarDynamic> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 }

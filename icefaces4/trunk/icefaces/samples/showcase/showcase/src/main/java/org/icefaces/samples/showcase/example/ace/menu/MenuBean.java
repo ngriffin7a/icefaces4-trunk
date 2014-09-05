@@ -85,6 +85,7 @@ public class MenuBean extends ComponentExampleImpl<MenuBean> implements Serializ
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 
     /////////////---- ACTION LISTENER

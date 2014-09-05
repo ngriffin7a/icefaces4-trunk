@@ -109,6 +109,7 @@ public class DateMinMaxBean extends ComponentExampleImpl<DateMinMaxBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
     
     public void submitMinMax(ActionEvent event) {

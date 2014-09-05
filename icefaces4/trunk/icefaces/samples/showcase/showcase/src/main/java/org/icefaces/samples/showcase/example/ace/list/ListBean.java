@@ -95,6 +95,7 @@ public class ListBean extends ComponentExampleImpl<ListBean> implements Serializ
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 
     List<SelectItem> stringList = new ArrayList<SelectItem>() {{

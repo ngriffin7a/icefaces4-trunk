@@ -66,6 +66,7 @@ public class MenuEffect extends ComponentExampleImpl<MenuEffect> implements Seri
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
 
     private LinkedHashMap<String, String> populateAvailableEffects()

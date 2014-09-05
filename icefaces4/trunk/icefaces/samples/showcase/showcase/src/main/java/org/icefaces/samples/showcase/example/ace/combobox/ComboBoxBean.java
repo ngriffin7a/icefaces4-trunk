@@ -110,7 +110,7 @@ public class ComboBoxBean extends ComponentExampleImpl< ComboBoxBean > implement
 		quebecCities.add(new SelectItem("Montreal"));
 		quebecCities.add(new SelectItem("Quebec City"));
 		quebecCities.add(new SelectItem("Sherbrooke"));
-		quebecCities.add(new SelectItem("Trois Rivières"));
+		quebecCities.add(new SelectItem("Trois Riviï¿½res"));
 		newfoundlandCities = new ArrayList<SelectItem>();
 		newfoundlandCities.add(new SelectItem("Corner Brook"));
 		newfoundlandCities.add(new SelectItem("St. John's"));
@@ -149,6 +149,7 @@ public class ComboBoxBean extends ComponentExampleImpl< ComboBoxBean > implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(5);
     }
 
 	private String province = "";

@@ -71,6 +71,7 @@ public class RadioButtonBean extends ComponentExampleImpl<RadioButtonBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(3);
     }
 
     public boolean isSelected1() {

@@ -77,6 +77,7 @@ public class SliderBean extends ComponentExampleImpl<SliderBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(2);
     }
 
     private void initialaziInstanceVariables() {

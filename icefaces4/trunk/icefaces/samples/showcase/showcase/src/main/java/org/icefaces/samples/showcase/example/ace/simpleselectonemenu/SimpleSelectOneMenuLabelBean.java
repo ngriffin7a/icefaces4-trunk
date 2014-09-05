@@ -102,6 +102,7 @@ public class SimpleSelectOneMenuLabelBean extends ComponentExampleImpl<SimpleSel
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(4);
     }
     
     public void positionChanged(ValueChangeEvent event) {

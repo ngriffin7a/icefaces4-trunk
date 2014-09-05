@@ -77,6 +77,7 @@ public class MenuButtonBean extends ComponentExampleImpl<MenuButtonBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(3);
     }
 
     /////////////---- ACTION LISTENERS BEGIN
