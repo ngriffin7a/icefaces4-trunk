@@ -25,7 +25,8 @@
             title="#{msgs[cc.attrs.menuLink.title]}"
             actionListener="#{navigationController.navigate}"
             disabled="#{cc.attrs.menuLink.disabled}"
-            class="#{mainSelected}">
+            class="#{mainSelected}"
+            onclick="updateAddressBarURL('#{navigationModel.currentComponentGroup.beanName}','#{cc.attrs.menuLink.exampleBeanName}');">
         <f:attribute name="grp"
                      value="#{navigationModel.currentComponentGroup.beanName}"/>
         <f:attribute name="exp"
@@ -43,7 +44,8 @@
                                    class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
                                                        (navigationModel.componentExample eq null and subMenuLink['default'])
                                                        ? 'selected'
-                                                       : ''}">
+                                                       : ''}"
+                                   onclick="updateAddressBarURL('#{navigationModel.currentComponentGroup.beanName}','#{subMenuLink.exampleBeanName}');">
                         <h:outputText value="&gt; #{msgs[subMenuLink.title]}"
                                       escape="false" nospan="true"/>
                         <f:attribute name="grp"
