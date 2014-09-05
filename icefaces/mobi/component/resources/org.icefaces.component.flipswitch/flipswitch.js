@@ -64,8 +64,8 @@ mobi.flipswitch = {
                thisEl.value=value.toString();
             }
             if (hasBehaviors){
-                if (this.cfg.behaviors.activate){
-                    ice.ace.ab(this.cfg.behaviors.activate);
+                if (this.cfg.behaviors.click){
+                    ice.ace.ab(this.cfg.behaviors.click);
                 }
             }
          }
