@@ -23,6 +23,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import org.icefaces.samples.showcase.metadata.context.Menu;
 import org.icefaces.samples.showcase.metadata.context.MenuLink;
 import org.icefaces.samples.showcase.util.FacesUtils;
+import org.icefaces.util.JavaScriptRunner;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.bean.ApplicationScoped;
@@ -68,7 +69,10 @@ public class NavigationController implements Serializable {
      * Navigation from search component.
      */
     public void navigate(ValueChangeEvent event) {
-        navigate(null,event.getNewValue().toString());
+        navigate(null, event.getNewValue().toString());
+        NavigationModel navigationModel = (NavigationModel)
+                FacesUtils.getManagedBean(NavigationModel.BEAN_NAME);
+        JavaScriptRunner.runScript(FacesContext.getCurrentInstance(), "updateAddressBarURL('" + navigationModel.getComponentGroup() + "','" + event.getNewValue().toString() + "');");
     }
 
     public void onMenuPaneChange(AccordionPaneChangeEvent event) {
