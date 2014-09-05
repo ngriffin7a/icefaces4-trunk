@@ -224,7 +224,9 @@ ice.ace.ComboBox.prototype = {
         if (ice.ace.ComboBox.Browser.IE || ice.ace.ComboBox.Browser.WebKit
 			|| !!navigator.userAgent.match(/Trident.*rv\:11\./)) { // IE11
             keyEvent = "keydown";
-        }
+        } else {
+			ice.ace.jq(this.element).attr("onkeyup", "if (event.keyCode != 13) return; var self = ice.ace.ComboBoxes['"+this.id+"']; self.onKeyPress.call(self, event);");
+		}
 		ice.ace.jq(this.element).on(keyEvent, function(e) { self.onKeyPress.call(self, e); } );
 		ice.ace.jq(this.element).on("keyup", function(e) { self.hidden.value = self.element.value; } );
 		ice.ace.jq(this.update).on("mousedown", function(e) {
