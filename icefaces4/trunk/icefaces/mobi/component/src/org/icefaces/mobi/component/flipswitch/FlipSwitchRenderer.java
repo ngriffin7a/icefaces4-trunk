@@ -100,7 +100,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
         builder.append("mobi.flipswitch.init('").append(clientId).append("',{ event: event,elVal: this");
 
         if (hasBehaviors){
-            String behaviors = this.encodeClientBehaviors(facesContext, cbh, "click").toString();
+            String behaviors = this.encodeClientBehaviors(facesContext, cbh, "action").toString();
             behaviors = behaviors.replace("\"", "\'");
             builder.append(behaviors);
         }
