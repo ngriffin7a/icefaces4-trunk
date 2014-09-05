@@ -109,7 +109,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
             logger.finest("Transformer Prime hack active");
             builder.append(", transHack: 'true'");
         }
-        builder.append("}); return false; ");
+        builder.append("}); this.focus(); return false; ");
 
         String jsCall = builder.toString();
         if (!(disabled || readonly))writer.writeAttribute("onclick", jsCall, null);
