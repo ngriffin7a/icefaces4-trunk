@@ -290,7 +290,6 @@ ice.ace.Autocompleter.prototype = {
             }
 		  var self = this;
             if (this.iefix) setTimeout(function() { self.fixIEOverlapping.call(self) }, 50);
-            this.element.focus();
         } catch (e) {
             //logger.info(e);
         }
@@ -928,7 +927,6 @@ ice.ace.Autocompleter.prototype = {
 			this.updateChoices(text);
 			this.show();
 			this.render();
-			this.element.focus();
 		}
 		else { // give time to IE7/8 to have nodes ready when the full form has been updated
 			var self = this;
