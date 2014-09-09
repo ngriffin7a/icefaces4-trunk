@@ -16,10 +16,15 @@
 
 package org.icefaces.impl.component;
 
+import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
+
 import javax.faces.component.UICommand;
+import javax.faces.component.UIOutput;
+import javax.faces.component.UIViewRoot;
 import javax.faces.component.ValueHolder;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
@@ -31,14 +36,10 @@ import java.io.IOException;
 import java.util.Map;
 
 @ICEResourceDependencies({
-        @ICEResourceDependency(name = "navigation-notifier/blank.html"),
-        @ICEResourceDependency(name = "navigation-notifier/json2.js"),
-        @ICEResourceDependency(name = "navigation-notifier/rsh.js")
+        @ICEResourceDependency(name = "navigation-notifier/navigation-notifier.js")
 })
 public class NavigationNotifier extends UICommand {
     public NavigationNotifier() {
-        //let CachingHeadersSetup know that caching headers should not to be sent
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(this.getClass().getName(), true);
     }
 
     public String getFamily() {
@@ -46,7 +47,8 @@ public class NavigationNotifier extends UICommand {
     }
 
     public void decode(FacesContext context) {
-        Map requestParameterMap = context.getExternalContext().getRequestParameterMap();
+        final ExternalContext externalContext = context.getExternalContext();
+        Map requestParameterMap = externalContext.getRequestParameterMap();
         String source = String.valueOf(requestParameterMap.get("javax.faces.source"));
         String clientId = getClientId();
         if (clientId.equals(source)) {
@@ -55,11 +57,8 @@ public class NavigationNotifier extends UICommand {
     }
 
     public void encodeBegin(FacesContext context) throws IOException {
-
         ResponseWriter writer = context.getResponseWriter();
         String id = getClientId();
-        writer.startElement("span", this);
-        writer.writeAttribute("id", id + "_notifier", null);
 
         writer.startElement("input", this);
         writer.writeAttribute("id", id, null);
@@ -68,28 +67,34 @@ public class NavigationNotifier extends UICommand {
         writer.writeAttribute("autocomplete", "off", null);
         writer.writeAttribute("value", "", null);
         writer.endElement("input");
+    }
 
-        writer.startElement("form", this);
-        writer.writeAttribute("id", "rshStorageForm", null);
-        writer.writeAttribute("style", "left:-1000px;top:-1000px;width:1px;height:1px;border:0;position:absolute;", null);
-        writer.startElement("textarea", this);
-        writer.writeAttribute("id", "rshStorageField", null);
-        writer.writeAttribute("style", "left:-1000px;top:-1000px;width:1px;height:1px;border:0;position:absolute;", null);
-        writer.endElement("textarea");
-        writer.endElement("form");
+    public static class Setup implements SystemEventListener {
+        public void processEvent(SystemEvent event) throws AbortProcessingException {
+            final FacesContext context = FacesContext.getCurrentInstance();
+            final UIViewRoot root = context.getViewRoot();
+            final NavigationNotifier navigationNotifier = (NavigationNotifier) event.getSource();
+            UIOutput setupComponent = new UIOutput() {
+                public void encodeBegin(FacesContext context) throws IOException {
+                    ResponseWriter writer = context.getResponseWriter();
+                    String id = navigationNotifier.getClientId();
+                    writer.startElement("span", this);
 
-        writer.startElement("script", this);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.write("window.dhtmlHistory.create();\n");
-        writer.write("var init = function(newLocation, historyData) {\n");
-        writer.write("dhtmlHistory.initialize();\n");
-        writer.write("dhtmlHistory.addListener(function(newLocation, historyData) {\n");
-        writer.write("ice.se(null, '" + id + "');\n");
-        writer.write("});\n");
-        writer.write("};\n");
-        writer.write("if (window.addEventListener) { window.addEventListener('load', init, false) } else { window.attachEvent('onload', init); }");
-        writer.endElement("script");
+                    writer.writeAttribute("id", id + "_notifier", null);
+                    writer.startElement("script", this);
+                    writer.writeAttribute("type", "text/javascript", null);
+                    writer.write("ice.setupNavigationNotifier('" + id + "');");
+                    writer.endElement("script");
 
-        writer.endElement("span");
+                    writer.endElement("span");
+                }
+            };
+            setupComponent.setTransient(true);
+            root.addComponentResource(context, setupComponent, "body");
+        }
+
+        public boolean isListenerForSource(Object source) {
+            return source instanceof NavigationNotifier;
+        }
     }
 }

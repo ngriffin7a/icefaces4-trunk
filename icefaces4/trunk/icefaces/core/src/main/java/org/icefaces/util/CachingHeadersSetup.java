@@ -58,7 +58,7 @@ public class CachingHeadersSetup implements SystemEventListener {
                 //in the portlet bridge logging warnings.  So we avoid doing it in that particular scenario.
                 boolean avoidAddingHeaders = EnvUtils.instanceofPortletResponse(responseObj) &&
                         !EnvUtils.instanceofPortletResourceResponse(responseObj);
-                if (!avoidAddingHeaders && !isNavigationNotifierPresent(context)) {
+                if (!avoidAddingHeaders) {
                     ec.setResponseHeader("Cache-Control", "private, no-store, max-age=0, no-cache, must-revalidate");
                     ec.setResponseHeader("Pragma", "no-cache");
                     ec.setResponseHeader("Expires", "Fri, 01 Jan 1990 00:00:00 GMT");
@@ -73,9 +73,5 @@ public class CachingHeadersSetup implements SystemEventListener {
 
     public boolean isListenerForSource(Object source) {
         return source instanceof UIViewRoot;
-    }
-
-    private boolean isNavigationNotifierPresent(FacesContext context) {
-        return context.getExternalContext().getRequestMap().containsKey(NavigationNotifier.class.getName());
     }
 }

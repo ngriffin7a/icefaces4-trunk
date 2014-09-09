@@ -96,7 +96,6 @@
         <resource-handler>org.icefaces.impl.push.DynamicResourceDispatcher</resource-handler>
         <resource-handler>org.icefaces.application.ResourceRegistry</resource-handler>
         <resource-handler>org.icefaces.impl.application.WindowScopeManager</resource-handler>
-        <resource-handler>org.icefaces.impl.component.NavigationNotifierHandler</resource-handler>
         <resource-handler>org.icefaces.impl.event.BridgeSymbolicResourceHandler</resource-handler>
         <resource-handler>org.icefaces.impl.application.ClientDescriptorSetup</resource-handler>
         <!-- SessionTimeoutMonitor needs be the last in the list of resource handlers so that it executes first. -->
@@ -157,6 +156,10 @@
         </system-event-listener>
         <system-event-listener>
             <system-event-listener-class>org.icefaces.impl.component.DefaultAction$AttachToForm</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.impl.component.NavigationNotifier$Setup</system-event-listener-class>
             <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
         </system-event-listener>
         <system-event-listener>
