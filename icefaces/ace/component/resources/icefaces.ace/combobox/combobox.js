@@ -32,6 +32,7 @@ ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selecte
 	var $box = this.root.find('.ui-combobox-value');
 	var $element = this.root.find('input[type=text]');
 	this.element = $element.get(0);
+	this.element.submitOnEnter = 'disabled';
 	this.element.id = this.id + "_input";
 	this.hidden = this.root.find('input[type=hidden]').get(0);
 	var $downArrowButton = $box.find('div');

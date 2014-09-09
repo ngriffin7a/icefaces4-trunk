@@ -37,6 +37,7 @@ ice.ace.Autocompleter = function(id, updateId, rowClass, selectedRowClass, delay
 	var $element = this.root.find('input[name="'+this.id+'_input"]');
 	this.element = $element.get(0);
 	this.element.id = this.id + "_input";
+	this.element.submitOnEnter = 'disabled';
 	this.update = ice.ace.jq(ice.ace.escapeClientId(updateId)).get(0);
 	this.effects = effects;
 	if (placeholder && !('placeholder' in document.createElement('input'))) { // if 'placeholder' isn't supported, use label inField
