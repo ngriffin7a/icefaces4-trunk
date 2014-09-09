@@ -53,7 +53,7 @@
                                      value="#{navigationModel.currentComponentGroup.beanName}"/>
                         <f:attribute name="exp"
                                      value="#{subMenuLink.exampleBeanName}"/>
-                        <f:ajax render="container"/>
+                        <f:ajax render="@all"/>
                     </h:commandLink>
                     <!-- OLD APPROACH NOV 10/11
                          We used to do a full page refresh and navigation on each sublink
