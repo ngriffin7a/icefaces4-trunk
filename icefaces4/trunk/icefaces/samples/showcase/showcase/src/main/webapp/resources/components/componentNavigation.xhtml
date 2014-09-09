@@ -27,7 +27,7 @@
             disabled="#{cc.attrs.menuLink.disabled}"
             class="#{mainSelected}"
             onclick="updateAddressBarURL('#{navigationModel.currentComponentGroup.beanName}','#{cc.attrs.menuLink.exampleBeanName}');">
-        <f:ajax render="container"/>
+        <f:ajax render="@all"/>
         <f:attribute name="grp"
                      value="#{navigationModel.currentComponentGroup.beanName}"/>
         <f:attribute name="exp"
