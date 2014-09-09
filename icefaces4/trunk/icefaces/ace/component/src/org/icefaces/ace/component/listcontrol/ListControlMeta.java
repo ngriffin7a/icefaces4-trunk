@@ -20,12 +20,16 @@ import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.DefaultValueType;
 import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Facet;
+import org.icefaces.ace.meta.annotation.Facets;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
+
+import javax.faces.component.UIComponent;
 
 @Component(
     tagName = "listControl",
@@ -80,20 +84,20 @@ public class ListControlMeta extends UIComponentBaseMeta {
             defaultValueType = DefaultValueType.STRING_LITERAL)
     private String controlClass;
 
-    @Property(tlddoc="Style class to apply to the header DIV element.",
+    @Property(tlddoc="Style class to apply to the header DIV element. Will only apply if header facet is present",
             defaultValue = "ui-state-default",
             defaultValueType = DefaultValueType.STRING_LITERAL)
     private String headerClass;
 
-    @Property(tlddoc="Style class to apply to the footer DIV element.",
+    @Property(tlddoc="Style class to apply to the footer DIV element. Will only apply if footer facet is present ",
             defaultValue = "ui-widget-content",
             defaultValueType = DefaultValueType.STRING_LITERAL)
     private String footerClass;
 
-    @Property(tlddoc="Style rules to apply to the header DIV element.")
+    @Property(tlddoc="Style rules to apply to the header DIV element if header facet is present.")
     private String headerStyle;
 
-    @Property(tlddoc="Style rules to apply to the footer DIV element.")
+    @Property(tlddoc="Style rules to apply to the footer DIV element if footer facet is present.")
     private String footerStyle;
 
     @Property(tlddoc="Style rules to apply to the container DIV element.")
@@ -120,6 +124,13 @@ public class ListControlMeta extends UIComponentBaseMeta {
     )
     private DualListPosition position;
 
+    @Facets
+    class FacetsMeta {
+        @Facet
+        UIComponent header;
+        @Facet
+        UIComponent footer;
+    }
     // Object to prevent circular dependency during meta generation
     @Field
     Object renderContext;
