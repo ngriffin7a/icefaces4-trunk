@@ -237,27 +237,27 @@ public class ChartRenderer extends CoreRenderer {
 
         // If defined, add per-series config but don't bother encoding first series as its default.
         cfg.beginArray("series");
+        ChartSeries.ChartType defaultType = null;
         if (series != null) {
             int i=0;
-            ChartSeries.ChartType defaultType = null;
             for (ChartSeries s : series) {
-                if (i==0){
+                if (i==0 && s.getType() !=null){
                     defaultType = s.getType();
                 }
-                if ( s!=defaults){
+                if ( s!=defaults && s.getType()==null){
                     //check to see if other series have type set
-                    if (s.getType()==null && defaults!=null && defaults.getType() !=null){
+                    if ( defaults!=null && defaults.getType() !=null){
                         s.setType(defaults.getType());
                     }
-                }
-                /* if still null then set to first in series for backwards compatibility. */
-                if (s.getType()==null && defaultType!=null){
-                    s.setType(defaultType);
-                }
-                /* if still null then set to default type.      */
-                if (s.getType() ==null){
-                    s.setType(s.getDefaultType());
+                   /* if still null then set to first in series for backwards compatibility. */
+                    else if ( defaults==null && defaultType!=null){
+                        s.setType(defaultType);
+                    }
+                    else {
+                       /* if still null then set to default type.      */
+                        s.setType(s.getDefaultType());
                   //  log.warning("WARNING  chart type should be set in either a default Series or each series");
+                    }
                 }
                 if (s != defaults){
                     cfg.item(s.getConfigJSON(chart).toString(), false);
