@@ -79,6 +79,11 @@
         <param-value>AIzaSyAATyWVqT2qNusNGmcVTyQ0QmymkpU-B5o&amp;libraries=places</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>org.icefaces.mandatoryResourceConfiguration</param-name>
+        <param-value>gMap</param-value>
+    </context-param>
+
 	<!-- Enable resource coalescing for this application -->
 	<context-param>
         <description>Resource Coalescing will automatically combine required resources for the initial page load into single .css and .js files</description>
@@ -86,7 +91,7 @@
         <param-value>true</param-value>
   </context-param>
 
-	
+
     <!-- Servlet declarations and mappings -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
