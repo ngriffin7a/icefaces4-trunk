@@ -25,7 +25,7 @@ import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
 @ComponentExample(
-        parent = DynamicResourceAdvancedBean.BEAN_NAME,
+        parent = DynamicResourceBean.BEAN_NAME,
         title = "example.ace.dynamicResource.advanced.title",
         description = "example.ace.dynamicResource.advanced.description",
         example = "/resources/examples/ace/dynamicResource/dynamicResourceAdvanced.xhtml"
