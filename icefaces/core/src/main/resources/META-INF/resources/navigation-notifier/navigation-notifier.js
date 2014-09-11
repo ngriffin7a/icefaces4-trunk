@@ -19,41 +19,48 @@
     eval(ice.importFrom('ice.lib.oo'));
     eval(ice.importFrom('ice.lib.window'));
 
+    var PreviousPageUnloadTime = 'previous-unload-timestamp';
+    var PreviousPageTimestamp = 'previous-timestamp';
+    var PreviousPageURL = 'previous-url';
+
     function now() {
         return (new Date()).getTime();
     }
 
-    function updateTimestamp() {
-        var state = window.history.state;
-        if (!state) {
-            state = {};
-        }
-        state.timestamp = now();
-        window.history.replaceState(state, document.title, document.location.href);
+    function timestampHistoryPosition() {
+        window.history.replaceState(now(), null, null);
     }
 
-    var resourceLoadTimestamp = now();
+    var pageLoadTime = now();
     var setupInvoked = false;
     ice.setupNavigationNotifier = function(id) {
         //skip setup if already invoked or HTML5 features are not present
         if (setupInvoked || !window.history.replaceState) return;
 
-        if (window.history.state && window.history.state.timestamp) {
-            var timestamp = Number(window.history.state.timestamp);
-            console.info('delta timestamp = ' + (resourceLoadTimestamp - timestamp));
-            if (timestamp + 500 > resourceLoadTimestamp) {
-                //page reloaded
-            } else {
+        if (window.history.state) {
+            var pageTimestamp = Number(window.history.state);
+
+            var previousPageTimestamp = Number(window.localStorage[PreviousPageTimestamp]);
+            var previousPageUnloadTime = Number(window.localStorage[PreviousPageUnloadTime]);
+            var previousURL = window.localStorage[PreviousPageURL];
+
+            var isReload =
+                (previousURL == document.location.href) && (previousPageTimestamp == pageTimestamp) && (pageLoadTime - previousPageUnloadTime < 700);
+            if (!isReload) {
                 //back/forward detected
                 ice.s(null, id);
             }
-            //update timestamp right before unloading page
-            onUnload(window, updateTimestamp);
-            updateTimestamp();
         } else {
             //fresh load
-            updateTimestamp();
+            timestampHistoryPosition();
         }
+
+        //update timestamp right before unloading page
+        onUnload(window, function() {
+            window.localStorage[PreviousPageUnloadTime] = String(now());
+            window.localStorage[PreviousPageTimestamp] = window.history.state;
+            window.localStorage[PreviousPageURL] = document.location.href;
+        });
 
         setupInvoked = true;
     };
