@@ -16,10 +16,12 @@
 
 package org.icefaces.samples.showcase.view.navigation;
 
+import org.icefaces.samples.showcase.example.ace.ajax.AjaxBean;
 import org.icefaces.samples.showcase.example.ace.accordionpanel.AccordionPanelBean;
 import org.icefaces.samples.showcase.example.ace.accordionpanel.AccordionPanelDynamicBean;
 import org.icefaces.samples.showcase.example.ace.accordionpanel.AccordionPanelEffectBean;
 import org.icefaces.samples.showcase.example.ace.animation.AnimationBean;
+import org.icefaces.samples.showcase.example.ace.audioPlayer.AudioPlayerBean;
 import org.icefaces.samples.showcase.example.ace.autocompleteentry.*;
 import org.icefaces.samples.showcase.example.ace.breadcrumbmenu.BreadcrumbMenuBean;
 import org.icefaces.samples.showcase.example.ace.buttonGroup.ButtonGroupBean;
@@ -33,6 +35,10 @@ import org.icefaces.samples.showcase.example.ace.confirmationdialog.Confirmation
 import org.icefaces.samples.showcase.example.ace.contextMenu.*;
 import org.icefaces.samples.showcase.example.ace.dataExporter.*;
 import org.icefaces.samples.showcase.example.ace.dataTable.*;
+import org.icefaces.samples.showcase.example.ace.cellEditor.CellEditorBean;
+import org.icefaces.samples.showcase.example.ace.columnGroup.ColumnGroupBean;
+import org.icefaces.samples.showcase.example.ace.rowExpansion.RowExpansionBean;
+import org.icefaces.samples.showcase.example.ace.tableConfigPanel.TableConfigPanelBean;
 import org.icefaces.samples.showcase.example.ace.date.*;
 import org.icefaces.samples.showcase.example.ace.dialog.DialogBean;
 import org.icefaces.samples.showcase.example.ace.dialog.DialogEffectsAndSizeBean;
@@ -40,11 +46,13 @@ import org.icefaces.samples.showcase.example.ace.dialog.ModalDialogBean;
 import org.icefaces.samples.showcase.example.ace.dragDrop.DataTableIntegrationBean;
 import org.icefaces.samples.showcase.example.ace.dragDrop.DragDropOverviewBean;
 import org.icefaces.samples.showcase.example.ace.dragDrop.DraggableOverviewBean;
+import org.icefaces.samples.showcase.example.ace.dynamicResource.DynamicResourceBean;
 import org.icefaces.samples.showcase.example.ace.file.FileEntryBean;
 import org.icefaces.samples.showcase.example.ace.file.FileEntryCallbackBean;
 import org.icefaces.samples.showcase.example.ace.file.FileEntryListenerBean;
 import org.icefaces.samples.showcase.example.ace.file.FileEntryValidationOptionsBean;
 import org.icefaces.samples.showcase.example.ace.gMap.*;
+import org.icefaces.samples.showcase.example.ace.graphicImage.GraphicImageBean;
 import org.icefaces.samples.showcase.example.ace.linkButton.LinkButtonBean;
 import org.icefaces.samples.showcase.example.ace.list.*;
 import org.icefaces.samples.showcase.example.ace.maskedEntry.MaskedEntryBean;
@@ -54,7 +62,10 @@ import org.icefaces.samples.showcase.example.ace.maskedEntry.MaskedReqStyleBean;
 import org.icefaces.samples.showcase.example.ace.menu.*;
 import org.icefaces.samples.showcase.example.ace.menuBar.*;
 import org.icefaces.samples.showcase.example.ace.menuButton.MenuButtonBean;
+import org.icefaces.samples.showcase.example.ace.menuSeparator.MenuSeparatorBean;
+import org.icefaces.samples.showcase.example.ace.multiColumnSubmenu.MultiColumnSubmenuBean;
 import org.icefaces.samples.showcase.example.ace.message.MessageBean;
+import org.icefaces.samples.showcase.example.ace.messages.MessagesBean;
 import org.icefaces.samples.showcase.example.ace.growlmessages.GrowlMessagesBean;
 import org.icefaces.samples.showcase.example.ace.notificationpanel.NotificationPanelBean;
 import org.icefaces.samples.showcase.example.ace.notificationpanel.NotificationPanelClientBean;
@@ -89,10 +100,12 @@ import org.icefaces.samples.showcase.example.ace.textAreaEntry.TextAreaEntryIndi
 import org.icefaces.samples.showcase.example.ace.textAreaEntry.TextAreaEntryLabelBean;
 import org.icefaces.samples.showcase.example.ace.textAreaEntry.TextAreaEntryReqStyleBean;
 import org.icefaces.samples.showcase.example.ace.textEntry.*;
+import org.icefaces.samples.showcase.example.ace.themeSelect.ThemeSelectBean;
 import org.icefaces.samples.showcase.example.ace.tooltip.DelegateTooltipBean;
 import org.icefaces.samples.showcase.example.ace.tooltip.GlobalTooltipBean;
 import org.icefaces.samples.showcase.example.ace.tooltip.TooltipOverviewBean;
 import org.icefaces.samples.showcase.example.ace.tree.*;
+import org.icefaces.samples.showcase.example.ace.videoPlayer.VideoPlayerBean;
 import org.icefaces.samples.showcase.metadata.annotation.Menu;
 import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.annotation.SearchSelectItem;
@@ -107,6 +120,7 @@ import java.io.Serializable;
         menuLinks = {
                 @MenuLink(title = "menu.ace.aceSuiteOverview.title", isDefault = true, exampleBeanName = AceSuiteOverviewBean.BEAN_NAME),
 
+                @MenuLink(title = "menu.ace.ajax.title", exampleBeanName = AjaxBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.submitMonitor.title", exampleBeanName = SubmitMonitorBean.BEAN_NAME),
 
                 @MenuLink(title = "menu.ace.autocompleteentry.title", exampleBeanName = AutoCompleteEntryBean.BEAN_NAME),
@@ -128,6 +142,8 @@ import java.io.Serializable;
                 @MenuLink(title = "menu.ace.contextMenu.title", exampleBeanName = ContextMenuBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.menu.title", exampleBeanName = MenuBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.menuBar.title", exampleBeanName = MenuBarBean.BEAN_NAME),
+				@MenuLink(title = "menu.ace.menuSeparator.title", exampleBeanName = MenuSeparatorBean.BEAN_NAME),
+				@MenuLink(title = "menu.ace.multiColumnSubmenu.title", exampleBeanName = MultiColumnSubmenuBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.selectmenu.title", exampleBeanName = SelectMenuBean.BEAN_NAME),
     			@MenuLink(title = "menu.ace.simpleselectonemenu.title", exampleBeanName = SimpleSelectOneMenuBean.BEAN_NAME),
 
@@ -145,24 +161,35 @@ import java.io.Serializable;
                 @MenuLink(title = "menu.ace.tabSet.title", exampleBeanName = TabSetBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.tree.title", exampleBeanName = TreeBean.BEAN_NAME),
 
+                @MenuLink(title = "menu.ace.dynamicResource.title", exampleBeanName = DynamicResourceBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.fileentry.title", exampleBeanName = FileEntryBean.BEAN_NAME),
 
                 @MenuLink(title = "menu.ace.message.title", exampleBeanName = MessageBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.messages.title", exampleBeanName = MessagesBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.growlmessages.title", exampleBeanName = GrowlMessagesBean.BEAN_NAME),
 
+                @MenuLink(title = "menu.ace.cellEditor.title", exampleBeanName = CellEditorBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.columnGroup.title", exampleBeanName = ColumnGroupBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.dataTable.title", exampleBeanName = DataTableBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.dataExporter.title", exampleBeanName = DataExporterBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.rowExpansion.title", exampleBeanName = RowExpansionBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.tableConfigPanel.title", exampleBeanName = TableConfigPanelBean.BEAN_NAME),
 
                 @MenuLink(title = "menu.ace.chart.title", exampleBeanName = ChartBean.BEAN_NAME),
 
                 @MenuLink(title = "menu.ace.gMap.title", exampleBeanName = MapBean.BEAN_NAME),
+
+                @MenuLink(title = "menu.ace.audioPlayer.title", exampleBeanName = AudioPlayerBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.graphicImage.title", exampleBeanName = GraphicImageBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.videoPlayer.title", exampleBeanName = VideoPlayerBean.BEAN_NAME),
 
                 @MenuLink(title = "menu.ace.animation.title", exampleBeanName = AnimationBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.dragDrop.title", exampleBeanName = DragDropOverviewBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.printer.title", exampleBeanName = PrinterBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.progressbar.title", exampleBeanName = ProgressBarBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.qrcode.title", exampleBeanName = QrcodeBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.resizable.title", exampleBeanName = ResizableBean.BEAN_NAME)},
+                @MenuLink(title = "menu.ace.resizable.title", exampleBeanName = ResizableBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.themeSelect.title", exampleBeanName = ThemeSelectBean.BEAN_NAME)},
         searchSelectItems = {
                 @SearchSelectItem(labelTag = "menu.ace.aceSuiteOverview.title", labelExample = "menu.ace.aceSuiteOverview.subMenu.main", value = AceSuiteOverviewBean.BEAN_NAME),
 

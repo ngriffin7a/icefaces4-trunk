@@ -30,22 +30,22 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
 
                 // WIKI Resources
                 @ExampleResource(type = ResourceType.wiki,
-                        title="ace:message",
-                        resource = ResourceRootPath.FOR_WIKI + "Message"),
+                        title="ace:messages",
+                        resource = ResourceRootPath.FOR_WIKI + "Messages"),
 
                 // TLD Resources
                 @ExampleResource(type = ResourceType.tld,
-                        title="ace:message",
-                        resource = ResourceRootPath.FOR_ACE_TLD + "message.html")
+                        title="ace:messages",
+                        resource = ResourceRootPath.FOR_ACE_TLD + "messages.html")
         }
 )
-@ManagedBean(name= MessageResources.BEAN_NAME)
+@ManagedBean(name= MessagesResources.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MessageResources extends ComponentExampleImpl<MessageResources> implements Serializable {
-    public static final String BEAN_NAME = "messageResources";
-    public MessageResources()
+public class MessagesResources extends ComponentExampleImpl<MessagesResources> implements Serializable {
+    public static final String BEAN_NAME = "messagesResources";
+    public MessagesResources()
     {
-        super(MessageResources.class);
+        super(MessagesResources.class);
     }
 
     @PostConstruct
