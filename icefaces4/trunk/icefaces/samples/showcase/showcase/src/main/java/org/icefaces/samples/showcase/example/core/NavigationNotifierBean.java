@@ -20,6 +20,8 @@ import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
+import org.icefaces.samples.showcase.metadata.annotation.Menu;
+import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
@@ -48,10 +50,16 @@ import java.io.Serializable;
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/NavigationNotifierBean.java")
         }
 )
-
+@Menu(
+    title = "menu.core.navigationNotifierBean.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.core.navigationNotifierBean.subMenu.main", isDefault = true, exampleBeanName = NavigationNotifierBean.BEAN_NAME)
+    }
+)
 @ManagedBean
 @ViewScoped
 public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotifierBean> implements Serializable {
+    public static final String BEAN_NAME = "navigationNotifierBean";
     private boolean navigationDetected;
 
     public NavigationNotifierBean() {

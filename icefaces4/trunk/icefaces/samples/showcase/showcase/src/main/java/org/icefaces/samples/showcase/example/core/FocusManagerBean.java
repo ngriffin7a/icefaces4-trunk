@@ -20,6 +20,8 @@ import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
+import org.icefaces.samples.showcase.metadata.annotation.Menu;
+import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
@@ -44,10 +46,16 @@ import java.io.Serializable;
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/FocusManagerBean.java")
         }
 )
-
+@Menu(
+    title = "menu.core.focusManagerBean.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.core.focusManagerBean.subMenu.main", isDefault = true, exampleBeanName = FocusManagerBean.BEAN_NAME)
+    }
+)
 @ManagedBean
 @CustomScoped(value = "#{window}")
 public class FocusManagerBean extends ComponentExampleImpl<FocusManagerBean> implements Serializable {
+    public static final String BEAN_NAME = "focusManagerBean";
     private String focusedComponent = "";
     private String a, b, c, d = "";
 

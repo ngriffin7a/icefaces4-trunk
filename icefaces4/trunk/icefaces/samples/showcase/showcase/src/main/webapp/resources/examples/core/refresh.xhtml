@@ -24,6 +24,8 @@
                 template="/resources/templates/content-template.xhtml">
     <ui:param name="title" value="#{refreshBean.title}"/>
     <ui:param name="description" value="#{refreshBean.description}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[refreshBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{refreshBean.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{refreshBean.exampleResource}"/>
     <ui:param name="wikiResources" value="#{refreshBeanResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{refreshBeanResources.tldResources}"/>

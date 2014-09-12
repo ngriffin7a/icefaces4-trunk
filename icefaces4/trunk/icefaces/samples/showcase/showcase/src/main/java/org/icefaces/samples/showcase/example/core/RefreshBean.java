@@ -20,7 +20,10 @@ import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
+import org.icefaces.samples.showcase.metadata.annotation.Menu;
+import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import org.icefaces.samples.showcase.metadata.annotation.Menu;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -45,10 +48,16 @@ import java.util.Date;
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/RefreshBean.java")
         }
 )
-
+@Menu(
+    title = "menu.core.refreshBean.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.core.refreshBean.subMenu.main", isDefault = true, exampleBeanName = RefreshBean.BEAN_NAME)
+    }
+)
 @ManagedBean
 @ViewScoped
 public class RefreshBean extends ComponentExampleImpl<RefreshBean> implements Serializable {
+    public static final String BEAN_NAME = "refreshBean";
     private static SimpleDateFormat FORMATTER = new SimpleDateFormat("hh:mm:ss");
     private int interval = 2;
     private int duration = 1;

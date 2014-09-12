@@ -117,6 +117,7 @@ import org.icefaces.samples.showcase.example.ace.videoPlayer.VideoPlayerBean;
 import org.icefaces.samples.showcase.metadata.annotation.Menu;
 import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.annotation.SearchSelectItem;
+import org.icefaces.samples.showcase.example.core.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
@@ -205,7 +206,17 @@ import java.io.Serializable;
                 @MenuLink(title = "menu.ace.progressbar.title", exampleBeanName = ProgressBarBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.qrcode.title", exampleBeanName = QrcodeBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.resizable.title", exampleBeanName = ResizableBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.themeSelect.title", exampleBeanName = ThemeSelectBean.BEAN_NAME)},
+                @MenuLink(title = "menu.ace.themeSelect.title", exampleBeanName = ThemeSelectBean.BEAN_NAME),
+
+                @MenuLink(title = "menu.core.defaultActionBean.title", exampleBeanName = DefaultActionBean.BEAN_NAME),
+                @MenuLink(title = "menu.core.focusManagerBean.title", exampleBeanName = FocusManagerBean.BEAN_NAME),
+                @MenuLink(title = "menu.core.idleMonitorBean.title", exampleBeanName = IdleMonitorBean.BEAN_NAME),
+                @MenuLink(title = "menu.core.jsEventListenerBean.title", exampleBeanName = JsEventListenerBean.BEAN_NAME),
+                @MenuLink(title = "menu.core.loadBundleBean.title", exampleBeanName = LoadBundleBean.BEAN_NAME),
+                @MenuLink(title = "menu.core.navigationNotifierBean.title", exampleBeanName = NavigationNotifierBean.BEAN_NAME),
+                @MenuLink(title = "menu.core.pushBean.title", exampleBeanName = PushBean.BEAN_NAME),
+                @MenuLink(title = "menu.core.redirectBean.title", exampleBeanName = RedirectBean.BEAN_NAME),
+                @MenuLink(title = "menu.core.refreshBean.title", exampleBeanName = RefreshBean.BEAN_NAME)},
         searchSelectItems = {
                 @SearchSelectItem(labelTag = "menu.ace.aceSuiteOverview.title", labelExample = "menu.ace.aceSuiteOverview.subMenu.main", value = AceSuiteOverviewBean.BEAN_NAME),
 

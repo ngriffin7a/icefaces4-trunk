@@ -25,6 +25,8 @@ import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
+import org.icefaces.samples.showcase.metadata.annotation.Menu;
+import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
@@ -54,10 +56,16 @@ import java.util.TimerTask;
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/PushBean.java")
         }
 )
-
+@Menu(
+    title = "menu.core.pushBean.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.core.pushBean.subMenu.main", isDefault = true, exampleBeanName = PushBean.BEAN_NAME)
+    }
+)
 @ManagedBean
 @ViewScoped
 public class PushBean extends ComponentExampleImpl<PushBean> implements Serializable {
+    public static final String BEAN_NAME = "pushBean";
     private final static String DEMO = "demo";
     private final static Random randomizer = new Random(System.currentTimeMillis());
     private final Timer timer = new Timer();

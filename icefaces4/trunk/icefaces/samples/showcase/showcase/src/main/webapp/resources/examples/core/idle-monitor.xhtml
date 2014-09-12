@@ -24,6 +24,8 @@
                 template="/resources/templates/content-template.xhtml">
     <ui:param name="title" value="#{idleMonitorBean.title}"/>
     <ui:param name="description" value="#{idleMonitorBean.description}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[idleMonitorBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{idleMonitorBean.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{idleMonitorBean.exampleResource}"/>
     <ui:param name="wikiResources" value="#{idleMonitorBeanResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{idleMonitorBeanResources.tldResources}"/>

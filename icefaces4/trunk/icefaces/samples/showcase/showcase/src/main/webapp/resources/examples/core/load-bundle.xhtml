@@ -24,6 +24,8 @@
                 template="/resources/templates/content-template.xhtml">
     <ui:param name="title" value="#{loadBundleBean.title}"/>
     <ui:param name="description" value="#{loadBundleBean.description}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[loadBundleBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{loadBundleBean.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{loadBundleBean.exampleResource}"/>
     <ui:param name="wikiResources" value="#{loadBundleBeanResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{loadBundleBeanResources.tldResources}"/>

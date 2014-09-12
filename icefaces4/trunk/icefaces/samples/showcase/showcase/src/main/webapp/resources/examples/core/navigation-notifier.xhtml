@@ -24,6 +24,8 @@
                 template="/resources/templates/content-template.xhtml">
     <ui:param name="title" value="#{navigationNotifierBean.title}"/>
     <ui:param name="description" value="#{navigationNotifierBean.description}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[navigationNotifierBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{navigationNotifierBean.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{navigationNotifierBean.exampleResource}"/>
     <ui:param name="wikiResources" value="#{navigationNotifierBeanResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{navigationNotifierBeanResources.tldResources}"/>
