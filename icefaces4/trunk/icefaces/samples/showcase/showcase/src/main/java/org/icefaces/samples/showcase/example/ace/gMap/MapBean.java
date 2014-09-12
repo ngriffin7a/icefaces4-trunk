@@ -55,24 +55,8 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
     menuLinks = {
         @MenuLink(title = "menu.ace.gMap.subMenu.overview",
                 isDefault = true, exampleBeanName = MapBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.gMap.subMenu.autocomplete",
-                exampleBeanName = MapAutocompleteBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.gMap.subMenu.control",
-                exampleBeanName = MapControlBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.gMap.subMenu.direction",
-                exampleBeanName = MapDirectionBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.gMap.subMenu.event",
-                exampleBeanName = MapEventBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.gMap.subMenu.infowindow",
-                exampleBeanName = MapInfoWindowBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.gMap.subMenu.layer",
-                exampleBeanName = MapLayerBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.gMap.subMenu.marker",
-                exampleBeanName = MapMarkerBean.BEAN_NAME),
         @MenuLink(title = "menu.ace.gMap.subMenu.options",
-                exampleBeanName = MapOptionsBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.gMap.subMenu.overlay",
-                exampleBeanName = MapOverlayBean.BEAN_NAME)
+                exampleBeanName = MapOptionsBean.BEAN_NAME)
     }
 )
 

@@ -25,20 +25,22 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[overlayBean.title]}"/>
-    <ui:param name="description" value="#{msgs[overlayBean.description]}"/>
-    <ui:param name="resourceValue" value="#{overlayBean.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[gMapOverlayBean.title]}"/>
+    <ui:param name="description" value="#{msgs[gMapOverlayBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[gMapOverlayBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{gMapOverlayBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{gMapOverlayBean.exampleResource}"/>
 
-    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{gMapOverlayResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapOverlayResources.tldResources}"/>
 
     <ui:define name="example">
     <ace:gMap id="gMapOverlay"  style="width: 675px; height: 500px" latitude="0" longitude="0" zoomLevel="3">
-        <ace:gMapOverlay shape="${overlayBean.shape}" points="${overlayBean.points}" options="${overlayBean.options}"/>
+        <ace:gMapOverlay shape="${gMapOverlayBean.shape}" points="${gMapOverlayBean.points}" options="${gMapOverlayBean.options}"/>
     </ace:gMap>
 	<br/>
     <h:form id="inputForm">
-        <ace:simpleSelectOneMenu id="locationSelector" value="#{overlayBean.shape}">
+        <ace:simpleSelectOneMenu id="locationSelector" value="#{gMapOverlayBean.shape}">
         <ace:ajax event="valueChange" render="@all"/>
         <f:selectItem itemValue="polyline" itemLabel="Line"/>
         <f:selectItem itemValue="polygon" itemLabel="Polygon"/>
@@ -46,10 +48,10 @@
         <f:selectItem itemValue="circle" itemLabel="Circle"/>
     </ace:simpleSelectOneMenu>
         <h:outputLabel for="optionsIn" value="Options:"/>
-        <h:inputText  id="optionsIn" size="50" value="${overlayBean.options}"/>
+        <h:inputText  id="optionsIn" size="50" value="${gMapOverlayBean.options}"/>
         <br/>
         <h:outputLabel for="pointsIn" value="Points:"/>
-        <h:inputText  size="75" id="pointsIn" value="${overlayBean.points}"/>
+        <h:inputText  size="75" id="pointsIn" value="${gMapOverlayBean.points}"/>
 		<br/>
 		<h:commandButton value="Submit" type="submit"/>
         <p>Line and Polygon will use all points given to them to create a shape.

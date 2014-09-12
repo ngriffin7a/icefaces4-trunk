@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.gMap;
+package org.icefaces.samples.showcase.example.ace.gMapEvent;
 
 import javax.el.MethodExpression;
 import javax.faces.application.*;
@@ -33,26 +33,31 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ComponentExample(
-        parent = MapBean.BEAN_NAME,
-        title = "example.ace.gMap.event.title",
-        description = "example.ace.gMap.event.description",
-        example = "/resources/examples/ace/gMap/gMapEvent.xhtml"
+        title = "example.ace.gMapEvent.title",
+        description = "example.ace.gMapEvent.description",
+        example = "/resources/examples/ace/gMapEvent/gMapEvent.xhtml"
 )
 @ExampleResources(
         resources ={
             // xhtml
             @ExampleResource(type = ResourceType.xhtml,
                     title="gMapEvent.xhtml",
-                    resource = "/resources/examples/ace/gMap/gMapEvent.xhtml")
+                    resource = "/resources/examples/ace/gMapEvent/gMapEvent.xhtml")
         }
 )
-@ManagedBean(name= MapEventBean.BEAN_NAME)
+@Menu(
+    title = "menu.ace.gMapEvent.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.ace.gMapEvent.subMenu.main", isDefault = true, exampleBeanName = GMapEventBean.BEAN_NAME)
+    }
+)
+@ManagedBean(name= GMapEventBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MapEventBean extends ComponentExampleImpl<MapEventBean> implements Serializable{
-	public static final String BEAN_NAME = "eventBean";
+public class GMapEventBean extends ComponentExampleImpl<GMapEventBean> implements Serializable{
+	public static final String BEAN_NAME = "gMapEventBean";
 
-	public MapEventBean() {
-        super(MapEventBean.class);
+	public GMapEventBean() {
+        super(GMapEventBean.class);
     }
 	@PostConstruct
     public void initMetaData() {

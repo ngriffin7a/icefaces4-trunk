@@ -25,30 +25,32 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[markerBean.title]}"/>
-    <ui:param name="description" value="#{msgs[markerBean.description]}"/>
-    <ui:param name="resourceValue" value="#{markerBean.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[gMapMarkerBean.title]}"/>
+    <ui:param name="description" value="#{msgs[gMapMarkerBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[gMapMarkerBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{gMapMarkerBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{gMapMarkerBean.exampleResource}"/>
 
-    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{gMapMarkerResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapMarkerResources.tldResources}"/>
 
     <ui:define name="example">
 	
     <ace:gMap id="gMapMarker"  style="width: 675px; height: 500px" latitude="0" longitude="0" zoomLevel="3">
-        <ace:gMapMarker id="marker1" latitude="#{markerBean.latList[0]}" longitude="#{markerBean.longList[0]}" options="#{markerBean.optionsList[0]}"/>
-        <ace:gMapMarker id="marker2" latitude="#{markerBean.latList[1]}" longitude="#{markerBean.longList[1]}" options="#{markerBean.optionsList[1]}"/>
-        <ace:gMapMarker id="marker3" latitude="#{markerBean.latList[2]}" longitude="#{markerBean.longList[2]}" options="#{markerBean.optionsList[2]}"/>
+        <ace:gMapMarker id="marker1" latitude="#{gMapMarkerBean.latList[0]}" longitude="#{gMapMarkerBean.longList[0]}" options="#{gMapMarkerBean.optionsList[0]}"/>
+        <ace:gMapMarker id="marker2" latitude="#{gMapMarkerBean.latList[1]}" longitude="#{gMapMarkerBean.longList[1]}" options="#{gMapMarkerBean.optionsList[1]}"/>
+        <ace:gMapMarker id="marker3" latitude="#{gMapMarkerBean.latList[2]}" longitude="#{gMapMarkerBean.longList[2]}" options="#{gMapMarkerBean.optionsList[2]}"/>
     </ace:gMap>
 	<br/>
     <h:form id="markerList">
     <h:panelGrid columns="4" border="1" rules="rows" id="grid">
         <h:outputText/><h:outputText value="Latitude"/><h:outputText value="Longitude"/><h:outputText value="Options"/>
-        <pre style="font-family: Verdana, Arial, sans serif;">1:  </pre><h:inputText id="latitude1" value="#{markerBean.latList[0]}"/>
-        <h:inputText id="longitude1" value="#{markerBean.longList[0]}"/><h:inputText id="options1" value="#{markerBean.optionsList[0]}"/>
-        <pre style="font-family: Verdana, Arial, sans serif;">2:  </pre><h:inputText id="latitude2" value="#{markerBean.latList[1]}"/>
-        <h:inputText id="longitude2" value="#{markerBean.longList[1]}"/><h:inputText id="options2" value="#{markerBean.optionsList[1]}"/>
-        <pre style="font-family: Verdana, Arial, sans serif;">3:  </pre><h:inputText id="latitude3" value="#{markerBean.latList[2]}"/>
-        <h:inputText id="longitude3" value="#{markerBean.longList[2]}"/><h:inputText id="options3" value="#{markerBean.optionsList[2]}"/>
+        <pre style="font-family: Verdana, Arial, sans serif;">1:  </pre><h:inputText id="latitude1" value="#{gMapMarkerBean.latList[0]}"/>
+        <h:inputText id="longitude1" value="#{gMapMarkerBean.longList[0]}"/><h:inputText id="options1" value="#{gMapMarkerBean.optionsList[0]}"/>
+        <pre style="font-family: Verdana, Arial, sans serif;">2:  </pre><h:inputText id="latitude2" value="#{gMapMarkerBean.latList[1]}"/>
+        <h:inputText id="longitude2" value="#{gMapMarkerBean.longList[1]}"/><h:inputText id="options2" value="#{gMapMarkerBean.optionsList[1]}"/>
+        <pre style="font-family: Verdana, Arial, sans serif;">3:  </pre><h:inputText id="latitude3" value="#{gMapMarkerBean.latList[2]}"/>
+        <h:inputText id="longitude3" value="#{gMapMarkerBean.longList[2]}"/><h:inputText id="options3" value="#{gMapMarkerBean.optionsList[2]}"/>
     </h:panelGrid>
 	<br/>
 	<h:commandButton value="Submit" type="submit"/>

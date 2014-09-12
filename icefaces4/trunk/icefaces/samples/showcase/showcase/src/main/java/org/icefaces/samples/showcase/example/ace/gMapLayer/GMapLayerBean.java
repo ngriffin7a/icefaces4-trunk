@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.gMap;
+package org.icefaces.samples.showcase.example.ace.gMapLayer;
 
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
@@ -33,27 +33,32 @@ import org.icefaces.samples.showcase.metadata.annotation.*;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 @ComponentExample(
-        parent = MapBean.BEAN_NAME,
-        title = "example.ace.gMap.layer.title",
-        description = "example.ace.gMap.layer.description",
-        example = "/resources/examples/ace/gMap/gMapLayer.xhtml"
+        title = "example.ace.gMapLayer.title",
+        description = "example.ace.gMapLayer.description",
+        example = "/resources/examples/ace/gMapLayer/gMapLayer.xhtml"
 )
 @ExampleResources(
         resources ={
             // xhtml
             @ExampleResource(type = ResourceType.xhtml,
                     title="gMapLayer.xhtml",
-                    resource = "/resources/examples/ace/gMap/gMapLayer.xhtml"),
+                    resource = "/resources/examples/ace/gMapLayer/gMapLayer.xhtml"),
             // Java Source
             @ExampleResource(type = ResourceType.java,
-                    title="MapLayerBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMap/MapLayerBean.java")
+                    title="GMapLayerBean.java",
+                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapLayer/GMapLayerBean.java")
         }
 )
-@ManagedBean(name= MapLayerBean.BEAN_NAME)
+@Menu(
+    title = "menu.ace.gMapLayer.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.ace.gMapLayer.subMenu.main", isDefault = true, exampleBeanName = GMapLayerBean.BEAN_NAME)
+    }
+)
+@ManagedBean(name= GMapLayerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MapLayerBean extends ComponentExampleImpl<MapLayerBean> implements Serializable{
-    public static final String BEAN_NAME = "layerBean";
+public class GMapLayerBean extends ComponentExampleImpl<GMapLayerBean> implements Serializable{
+    public static final String BEAN_NAME = "gMapLayerBean";
 	private boolean bikeLayer = false;
     private boolean kmlLayer = false;
     private boolean trafficLayer = false;
@@ -63,8 +68,8 @@ public class MapLayerBean extends ComponentExampleImpl<MapLayerBean> implements 
     private double lat = 40.7142;
     private double lon = -74.0064;
 
-	public MapLayerBean() {
-        super(MapLayerBean.class);
+	public GMapLayerBean() {
+        super(GMapLayerBean.class);
     }
 	
     public boolean isBikeLayer() {

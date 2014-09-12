@@ -25,22 +25,24 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[directionBean.title]}"/>
-    <ui:param name="description" value="#{msgs[directionBean.description]}"/>
-    <ui:param name="resourceValue" value="#{directionBean.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[gMapServicesBean.title]}"/>
+    <ui:param name="description" value="#{msgs[gMapServicesBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[gMapServicesBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{gMapServicesBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{gMapServicesBean.exampleResource}"/>
 
-    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{gMapServicesResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapServicesResources.tldResources}"/>
 
     <ui:define name="example">
     <ace:gMap id="gMapDirections"  style="width: 675px; height: 500px" latitude="0" longitude="0" zoomLevel="3">
-        <ace:gMapServices name="Directions" points="${directionBean.points}" options="travelMode:'${directionBean.travelMode}',${directionBean.options}" div="directionsOut"/>
+        <ace:gMapServices name="Directions" points="${gMapServicesBean.points}" options="travelMode:'${gMapServicesBean.travelMode}',${gMapServicesBean.options}" div="directionsOut"/>
     </ace:gMap>
 	<br/>
     <h:form id="inputForm">
         <h:outputLabel for="optionsIn" value="Options:"/>
-        <h:inputText  id="optionsIn" value="${directionBean.options}"/>
-        <ace:simpleSelectOneMenu id="travelModeSelector" value="${directionBean.travelMode}">
+        <h:inputText  id="optionsIn" value="${gMapServicesBean.options}"/>
+        <ace:simpleSelectOneMenu id="travelModeSelector" value="${gMapServicesBean.travelMode}">
             <ace:ajax event="valueChange" render="@all"/>
             <f:selectItem itemValue="DRIVING" itemLabel="Driving"/>
             <f:selectItem itemValue="WALKING" itemLabel="Walking"/>
@@ -49,7 +51,7 @@
         </ace:simpleSelectOneMenu>
         <br/>
         <h:outputLabel for="pointsIn" value="Points:"/>
-        <h:inputText  size="75" id="pointsIn" value="${directionBean.points}"/>
+        <h:inputText  size="75" id="pointsIn" value="${gMapServicesBean.points}"/>
 		<br/>
 		<h:commandButton value="Submit" type="submit"/>
     </h:form>

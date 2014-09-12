@@ -25,23 +25,25 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[layerBean.title]}"/>
-    <ui:param name="description" value="#{msgs[layerBean.description]}"/>
-    <ui:param name="resourceValue" value="#{layerBean.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[gMapLayerBean.title]}"/>
+    <ui:param name="description" value="#{msgs[gMapLayerBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[gMapLayerBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{gMapLayerBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{gMapLayerBean.exampleResource}"/>
 
-    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{gMapLayerResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapLayerResources.tldResources}"/>
 
     <ui:define name="example">
-    <ace:gMap id="gMapLayer"  style="width: 675px; height: 500px" zoomLevel="16" latitude="${layerBean.lat}" longitude="${layerBean.lon}">
-        <ace:gMapLayer id="BikeLayer" layerType="Bicycling" visible="${layerBean.bikeLayer}"/>
-        <ace:gMapLayer id="TrafficLayer" layerType="Traffic" visible="${layerBean.trafficLayer}"/>
-        <ace:gMapLayer id="TransitLayer" layerType="Transit" visible="${layerBean.transitLayer}"/>
-        <ace:gMapLayer id="KMLLayer" layerType="KML" visible="${layerBean.kmlLayer}" url="${layerBean.kmlURL}"/>
+    <ace:gMap id="gMapLayer"  style="width: 675px; height: 500px" zoomLevel="16" latitude="${gMapLayerBean.lat}" longitude="${gMapLayerBean.lon}">
+        <ace:gMapLayer id="BikeLayer" layerType="Bicycling" visible="${gMapLayerBean.bikeLayer}"/>
+        <ace:gMapLayer id="TrafficLayer" layerType="Traffic" visible="${gMapLayerBean.trafficLayer}"/>
+        <ace:gMapLayer id="TransitLayer" layerType="Transit" visible="${gMapLayerBean.transitLayer}"/>
+        <ace:gMapLayer id="KMLLayer" layerType="KML" visible="${gMapLayerBean.kmlLayer}" url="${gMapLayerBean.kmlURL}"/>
     </ace:gMap>
 	<br/>
     <h:form id="input">
-        <h:selectOneRadio id="layerButtons" value="#{layerBean.chosenLayer}" name="RadioGroup">
+        <h:selectOneRadio id="layerButtons" value="#{gMapLayerBean.chosenLayer}" name="RadioGroup">
             <f:ajax event="valueChange" render="@all"/>
             <f:selectItem id="biking" itemLabel="Biking" itemValue="Biking"/>
             <f:selectItem id="traffic" itemLabel="Traffic" itemValue="Traffic"/>
@@ -53,10 +55,10 @@
                    closable="false"
                    toggleable="false"
                    collapsed="false"
-                   visible="${layerBean.kmlLayer}"
+                   visible="${gMapLayerBean.kmlLayer}"
                    >
             <h:outputLabel for="kmlLayer" value="Options for KML"/>
-            <h:inputText id="kmlLayer" value="${layerBean.kmlURL}" size="60"><f:ajax render="@all"/></h:inputText>
+            <h:inputText id="kmlLayer" value="${gMapLayerBean.kmlURL}" size="60"><f:ajax render="@all"/></h:inputText>
             <br/><br/>
             <p>Use the above textbox to submit a URL to render a KML Map layer from. A few examples:<br/>
                 http://coinatlantic.ca/kmlfiles/EnvironmentCanadaAtlantic/ECHydrometricNL.kml - Envirnoment Canada Realtime Hydroelectric<br/>

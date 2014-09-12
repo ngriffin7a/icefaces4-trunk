@@ -25,22 +25,24 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[autocompleteBean.title]}"/>
-    <ui:param name="description" value="#{msgs[autocompleteBean.description]}"/>
-    <ui:param name="resourceValue" value="#{autocompleteBean.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[gMapAutoCompleteBean.title]}"/>
+    <ui:param name="description" value="#{msgs[gMapAutoCompleteBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[gMapAutoCompleteBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{gMapAutoCompleteBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{gMapAutoCompleteBean.exampleResource}"/>
 
-    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{gMapAutoCompleteResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapAutoCompleteResources.tldResources}"/>
 
     <ui:define name="example">
     <h:form id="input">
-    <ace:gMap style="width: 675px; height: 500px" id="gMap"><ace:gMapAutocomplete style="xAlign:left" window="${autocompleteBean.showWindow}" address="${autocompleteBean.address}" types="${autocompleteBean.types}" url="${autocompleteBean.url}"/></ace:gMap>
+    <ace:gMap style="width: 675px; height: 500px" id="gMap"><ace:gMapAutocomplete style="xAlign:left" window="${gMapAutoCompleteBean.showWindow}" address="${gMapAutoCompleteBean.address}" types="${gMapAutoCompleteBean.types}" url="${gMapAutoCompleteBean.url}"/></ace:gMap>
         <br/>
         <h:outputLabel for="displayWindow" value="Display window:"/>
-		<h:selectBooleanCheckbox value="${autocompleteBean.showWindow}" id="displayWindow"><ace:ajax/></h:selectBooleanCheckbox><br/>
-        <h:outputText value="Address: ${autocompleteBean.address}"/><br/>
-        <h:outputText value="Types: ${autocompleteBean.types}"/><br/>
-        <h:outputLabel for="link" value="Google page link(Only click after supplying location):"/> <h:outputLink id="link" style="color:blue;" value="${autocompleteBean.url}">Link</h:outputLink>
+		<h:selectBooleanCheckbox value="${gMapAutoCompleteBean.showWindow}" id="displayWindow"><ace:ajax/></h:selectBooleanCheckbox><br/>
+        <h:outputText value="Address: ${gMapAutoCompleteBean.address}"/><br/>
+        <h:outputText value="Types: ${gMapAutoCompleteBean.types}"/><br/>
+        <h:outputLabel for="link" value="Google page link(Only click after supplying location):"/> <h:outputLink id="link" style="color:blue;" value="${gMapAutoCompleteBean.url}">Link</h:outputLink>
     </h:form>
 	<p>Relevant sections of the Google Maps API: <a style="color:blue;" href="https://developers.google.com/maps/documentation/javascript/reference#Autocomplete">Autocomplete</a> 
 	<br/><b>NOTE:</b> In order to use this subcomponent, the places library must be loaded. The easiest way to accomplish this is by appending '&amp;amp;libraries=places' to the gMap key in the application's web.xml. 

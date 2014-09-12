@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.gMap;
+package org.icefaces.samples.showcase.example.ace.gMapInfoWindow;
 
 import javax.el.MethodExpression;
 import javax.faces.bean.ManagedBean;
@@ -25,27 +25,32 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import java.io.Serializable;
 
 @ComponentExample(
-        parent = MapBean.BEAN_NAME,
-        title = "example.ace.gMap.infowindow.title",
-        description = "example.ace.gMap.infowindow.description",
-        example = "/resources/examples/ace/gMap/gMapInfoWindow.xhtml"
+        title = "example.ace.gMapInfoWindow.title",
+        description = "example.ace.gMapInfoWindow.description",
+        example = "/resources/examples/ace/gMapInfoWindow/gMapInfoWindow.xhtml"
 )
 @ExampleResources(
         resources ={
             // xhtml
             @ExampleResource(type = ResourceType.xhtml,
                     title="gMapInfoWindow.xhtml",
-                    resource = "/resources/examples/ace/gMap/gMapInfoWindow.xhtml"),
+                    resource = "/resources/examples/ace/gMapInfoWindow/gMapInfoWindow.xhtml"),
             // Java Source
             @ExampleResource(type = ResourceType.java,
                     title="MapInfoWindowBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMap/MapInfoWindowBean.java")
+                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapInfoWindow/MapInfoWindowBean.java")
         }
 )
-@ManagedBean(name= MapInfoWindowBean.BEAN_NAME)
+@Menu(
+    title = "menu.ace.gMapInfoWindow.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.ace.gMapInfoWindow.subMenu.main", isDefault = true, exampleBeanName = GMapInfoWindowBean.BEAN_NAME)
+    }
+)
+@ManagedBean(name= GMapInfoWindowBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MapInfoWindowBean extends ComponentExampleImpl<MapInfoWindowBean> implements Serializable{
-	public static final String BEAN_NAME = "infoWindowBean";
+public class GMapInfoWindowBean extends ComponentExampleImpl<GMapInfoWindowBean> implements Serializable{
+	public static final String BEAN_NAME = "gMapInfoWindowBean";
 	private boolean oneDisabled = false;
     private boolean twoDisabled = true;
     private boolean threeDisabled = true;
@@ -234,8 +239,8 @@ public class MapInfoWindowBean extends ComponentExampleImpl<MapInfoWindowBean> i
            sevenContent = displayedValue;
         }
     }
-	public MapInfoWindowBean() {
-        super(MapInfoWindowBean.class);
+	public GMapInfoWindowBean() {
+        super(GMapInfoWindowBean.class);
     }
 	@PostConstruct
     public void initMetaData() {
