@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.gMap;
+package org.icefaces.samples.showcase.example.ace.gMapMarker;
 
 import javax.el.MethodExpression;
 import javax.faces.application.*;
@@ -31,33 +31,38 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import java.io.Serializable;
 
 @ComponentExample(
-        parent = MapBean.BEAN_NAME,
-        title = "example.ace.gMap.marker.title",
-        description = "example.ace.gMap.marker.description",
-        example = "/resources/examples/ace/gMap/gMapMarker.xhtml"
+        title = "example.ace.gMapMarker.title",
+        description = "example.ace.gMapMarker.description",
+        example = "/resources/examples/ace/gMapMarker/gMapMarker.xhtml"
 )
 @ExampleResources(
         resources ={
             // xhtml
             @ExampleResource(type = ResourceType.xhtml,
                     title="gMapMarker.xhtml",
-                    resource = "/resources/examples/ace/gMap/gMapMarker.xhtml"),
+                    resource = "/resources/examples/ace/gMapMarker/gMapMarker.xhtml"),
             // Java Source
             @ExampleResource(type = ResourceType.java,
-                    title="MapMarkerBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMap/MapMarkerBean.java")
+                    title="GMapMarkerBean.java",
+                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapMarker/GMapMarkerBean.java")
         }
 )
-@ManagedBean(name= MapMarkerBean.BEAN_NAME)
+@Menu(
+    title = "menu.ace.gMapMarker.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.ace.gMapMarker.subMenu.main", isDefault = true, exampleBeanName = GMapMarkerBean.BEAN_NAME)
+    }
+)
+@ManagedBean(name= GMapMarkerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MapMarkerBean extends ComponentExampleImpl<MapMarkerBean> implements Serializable {
-	public static final String BEAN_NAME = "markerBean";
+public class GMapMarkerBean extends ComponentExampleImpl<GMapMarkerBean> implements Serializable {
+	public static final String BEAN_NAME = "gMapMarkerBean";
     private Double[] latList = {0.0,7.5,-10.0};
     private Double[] longList = {0.0,7.5,-10.0};
     private String[] optionsList = {"title:'Hover mouse over this marker to see title'","raiseOnDrag:false,draggable:true","draggable:true"};
 
-	public MapMarkerBean() {
-        super(MapMarkerBean.class);
+	public GMapMarkerBean() {
+        super(GMapMarkerBean.class);
     }
 	
     public Double[] getLatList() {

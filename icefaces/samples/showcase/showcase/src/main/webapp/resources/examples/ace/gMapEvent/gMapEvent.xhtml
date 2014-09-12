@@ -25,12 +25,14 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[eventBean.title]}"/>
-    <ui:param name="description" value="#{msgs[eventBean.description]}"/>
-    <ui:param name="resourceValue" value="#{eventBean.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[gMapEventBean.title]}"/>
+    <ui:param name="description" value="#{msgs[gMapEventBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[gMapEventBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{gMapEventBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{gMapEventBean.exampleResource}"/>
 
-    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{gMapEventResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{gMapEventResources.tldResources}"/>
 
     <ui:define name="example">
     

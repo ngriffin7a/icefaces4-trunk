@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.gMap;
+package org.icefaces.samples.showcase.example.ace.gMapControl;
 
 import javax.el.MethodExpression;
 import javax.faces.application.*;
@@ -33,27 +33,32 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ComponentExample(
-        parent = MapBean.BEAN_NAME,
-        title = "example.ace.gMap.control.title",
-        description = "example.ace.gMap.control.description",
-        example = "/resources/examples/ace/gMap/gMapControl.xhtml"
+        title = "example.ace.gMapControl.title",
+        description = "example.ace.gMapControl.description",
+        example = "/resources/examples/ace/gMapControl/gMapControl.xhtml"
 )
 @ExampleResources(
         resources ={
             // xhtml
             @ExampleResource(type = ResourceType.xhtml,
                     title="gMapControl.xhtml",
-                    resource = "/resources/examples/ace/gMap/gMapControl.xhtml"),
+                    resource = "/resources/examples/ace/gMapControl/gMapControl.xhtml"),
             // Java Source
             @ExampleResource(type = ResourceType.java,
-                    title="MapControlBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMap/MapControlBean.java")
+                    title="GMapControlBean.java",
+                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapControl/GMapControlBean.java")
         }
 )
-@ManagedBean(name= MapControlBean.BEAN_NAME)
+@Menu(
+    title = "menu.ace.gMapControl.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.ace.gMapControl.subMenu.main", isDefault = true, exampleBeanName = GMapControlBean.BEAN_NAME)
+    }
+)
+@ManagedBean(name= GMapControlBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MapControlBean extends ComponentExampleImpl<MapControlBean> implements Serializable{
-	public static final String BEAN_NAME = "controlBean";
+public class GMapControlBean extends ComponentExampleImpl<GMapControlBean> implements Serializable{
+	public static final String BEAN_NAME = "gMapControlBean";
 	private String zoomStyle="DEFAULT";
     private String typeStyle="HORIZONTAL_BAR";
     private boolean type = false;
@@ -210,8 +215,8 @@ public class MapControlBean extends ComponentExampleImpl<MapControlBean> impleme
     public void setZoomLocation(String zoomLocation) {
         this.zoomLocation = zoomLocation;
     }
-	public MapControlBean() {
-        super(MapControlBean.class);
+	public GMapControlBean() {
+        super(GMapControlBean.class);
     }
 	@PostConstruct
     public void initMetaData() {

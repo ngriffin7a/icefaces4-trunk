@@ -52,6 +52,14 @@ import org.icefaces.samples.showcase.example.ace.file.FileEntryCallbackBean;
 import org.icefaces.samples.showcase.example.ace.file.FileEntryListenerBean;
 import org.icefaces.samples.showcase.example.ace.file.FileEntryValidationOptionsBean;
 import org.icefaces.samples.showcase.example.ace.gMap.*;
+import org.icefaces.samples.showcase.example.ace.gMapAutoComplete.GMapAutoCompleteBean;
+import org.icefaces.samples.showcase.example.ace.gMapControl.GMapControlBean;
+import org.icefaces.samples.showcase.example.ace.gMapEvent.GMapEventBean;
+import org.icefaces.samples.showcase.example.ace.gMapInfoWindow.GMapInfoWindowBean;
+import org.icefaces.samples.showcase.example.ace.gMapLayer.GMapLayerBean;
+import org.icefaces.samples.showcase.example.ace.gMapMarker.GMapMarkerBean;
+import org.icefaces.samples.showcase.example.ace.gMapOverlay.GMapOverlayBean;
+import org.icefaces.samples.showcase.example.ace.gMapServices.GMapServicesBean;
 import org.icefaces.samples.showcase.example.ace.graphicImage.GraphicImageBean;
 import org.icefaces.samples.showcase.example.ace.linkButton.LinkButtonBean;
 import org.icefaces.samples.showcase.example.ace.list.*;
@@ -178,6 +186,14 @@ import java.io.Serializable;
                 @MenuLink(title = "menu.ace.chart.title", exampleBeanName = ChartBean.BEAN_NAME),
 
                 @MenuLink(title = "menu.ace.gMap.title", exampleBeanName = MapBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMapAutoComplete.title", exampleBeanName = GMapAutoCompleteBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMapControl.title", exampleBeanName = GMapControlBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMapEvent.title", exampleBeanName = GMapEventBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMapInfoWindow.title", exampleBeanName = GMapInfoWindowBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMapLayer.title", exampleBeanName = GMapLayerBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMapMarker.title", exampleBeanName = GMapMarkerBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMapOverlay.title", exampleBeanName = GMapOverlayBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMapServices.title", exampleBeanName = GMapServicesBean.BEAN_NAME),
 
                 @MenuLink(title = "menu.ace.audioPlayer.title", exampleBeanName = AudioPlayerBean.BEAN_NAME),
                 @MenuLink(title = "menu.ace.graphicImage.title", exampleBeanName = GraphicImageBean.BEAN_NAME),
@@ -397,15 +413,15 @@ import java.io.Serializable;
                 @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.export", value = ChartExportBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.overview", value = MapBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.autocomplete", value = MapAutocompleteBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.control", value = MapControlBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.direction", value = MapDirectionBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.event", value = MapEventBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.infowindow", value = MapInfoWindowBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.layer", value = MapLayerBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.marker", value = MapMarkerBean.BEAN_NAME),
+                //@SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.autocomplete", value = MapAutocompleteBean.BEAN_NAME),
+                //@SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.control", value = MapControlBean.BEAN_NAME),
+                //@SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.direction", value = MapDirectionBean.BEAN_NAME),
+                //@SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.event", value = MapEventBean.BEAN_NAME),
+                //@SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.infowindow", value = MapInfoWindowBean.BEAN_NAME),
+                //@SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.layer", value = MapLayerBean.BEAN_NAME),
+                //@SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.marker", value = MapMarkerBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.options", value = MapOptionsBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.overlay", value = MapOverlayBean.BEAN_NAME),
+                //@SearchSelectItem(labelTag = "menu.ace.gMap.title", labelExample = "menu.ace.gMap.subMenu.overlay", value = MapOverlayBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.animation.title", labelExample = "menu.ace.animation.subMenu.main", value = AnimationBean.BEAN_NAME),
 

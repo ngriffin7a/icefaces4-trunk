@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.gMap;
+package org.icefaces.samples.showcase.example.ace.gMapServices;
 
 import javax.el.MethodExpression;
 import javax.faces.application.*;
@@ -30,34 +30,39 @@ import org.icefaces.samples.showcase.metadata.annotation.*;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import java.io.Serializable;
 @ComponentExample(
-        parent = MapBean.BEAN_NAME,
-        title = "example.ace.gMap.direction.title",
-        description = "example.ace.gMap.direction.description",
-        example = "/resources/examples/ace/gMap/gMapDirections.xhtml"
+        title = "example.ace.gMapServices.title",
+        description = "example.ace.gMapServices.description",
+        example = "/resources/examples/ace/gMapServices/gMapServices.xhtml"
 )
 @ExampleResources(
         resources ={
             // xhtml
             @ExampleResource(type = ResourceType.xhtml,
-                    title="gMapDirections.xhtml",
-                    resource = "/resources/examples/ace/gMap/gMapDirections.xhtml"),
+                    title="gMapServices.xhtml",
+                    resource = "/resources/examples/ace/gMapServices/gMapServices.xhtml"),
             // Java Source
             @ExampleResource(type = ResourceType.java,
-                    title="MapDirectionBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMap/MapDirectionBean.java")
+                    title="GMapServicesBean.java",
+                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapServices/GMapServicesBean.java")
         }
 )
-@ManagedBean(name= MapDirectionBean.BEAN_NAME)
+@Menu(
+    title = "menu.ace.gMapServices.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.ace.gMapServices.subMenu.main", isDefault = true, exampleBeanName = GMapServicesBean.BEAN_NAME)
+    }
+)
+@ManagedBean(name= GMapServicesBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MapDirectionBean extends ComponentExampleImpl<MapDirectionBean> implements Serializable{
-	public static final String BEAN_NAME = "directionBean";
+public class GMapServicesBean extends ComponentExampleImpl<GMapServicesBean> implements Serializable{
+	public static final String BEAN_NAME = "gMapServicesBean";
 
     private String points="Regent's Park, London: Kingston upon Thames";
     private String options="optimizeWaypoints:true";
     private String travelMode="DRIVING";
 
-	public MapDirectionBean() {
-        super(MapDirectionBean.class);
+	public GMapServicesBean() {
+        super(GMapServicesBean.class);
     }
 	
     public String getPoints() {
