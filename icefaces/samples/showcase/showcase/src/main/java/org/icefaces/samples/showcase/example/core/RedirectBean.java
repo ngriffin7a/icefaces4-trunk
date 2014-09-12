@@ -20,6 +20,8 @@ import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
+import org.icefaces.samples.showcase.metadata.annotation.Menu;
+import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
@@ -45,10 +47,16 @@ import java.io.Serializable;
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/RedirectBean.java")
         }
 )
-
+@Menu(
+    title = "menu.core.redirectBean.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.core.redirectBean.subMenu.main", isDefault = true, exampleBeanName = RedirectBean.BEAN_NAME)
+    }
+)
 @ManagedBean
 @ViewScoped
 public class RedirectBean extends ComponentExampleImpl<RedirectBean> implements Serializable {
+    public static final String BEAN_NAME = "redirectBean";
     private boolean renderRedirect;
 
     public RedirectBean() {

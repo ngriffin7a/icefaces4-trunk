@@ -24,6 +24,8 @@
                 template="/resources/templates/content-template.xhtml">
     <ui:param name="title" value="#{focusManagerBean.title}"/>
     <ui:param name="description" value="#{focusManagerBean.description}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[focusManagerBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{focusManagerBean.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{focusManagerBean.exampleResource}"/>
     <ui:param name="wikiResources" value="#{focusManagerBeanResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{focusManagerBeanResources.tldResources}"/>

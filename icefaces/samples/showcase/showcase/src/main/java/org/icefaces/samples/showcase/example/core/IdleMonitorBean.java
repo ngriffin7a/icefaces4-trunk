@@ -20,6 +20,8 @@ import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
+import org.icefaces.samples.showcase.metadata.annotation.Menu;
+import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
@@ -44,10 +46,16 @@ import java.io.Serializable;
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/IdleMonitorBean.java")
         }
 )
-
+@Menu(
+    title = "menu.core.idleMonitorBean.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.core.idleMonitorBean.subMenu.main", isDefault = true, exampleBeanName = IdleMonitorBean.BEAN_NAME)
+    }
+)
 @ManagedBean
 @CustomScoped(value = "#{window}")
 public class IdleMonitorBean extends ComponentExampleImpl<IdleMonitorBean> implements Serializable {
+    public static final String BEAN_NAME = "idleMonitorBean";
     private String actionDescription;
 
     public IdleMonitorBean() {

@@ -24,6 +24,8 @@
                 template="/resources/templates/content-template.xhtml">
     <ui:param name="title" value="#{defaultActionBean.title}"/>
     <ui:param name="description" value="#{defaultActionBean.description}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[defaultActionBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{defaultActionBean.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{defaultActionBean.exampleResource}"/>
     <ui:param name="wikiResources" value="#{defaultActionBeanResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{defaultActionBeanResources.tldResources}"/>

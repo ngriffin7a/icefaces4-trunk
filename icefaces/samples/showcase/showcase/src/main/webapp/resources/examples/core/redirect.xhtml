@@ -24,6 +24,8 @@
                 template="/resources/templates/content-template.xhtml">
     <ui:param name="title" value="#{redirectBean.title}"/>
     <ui:param name="description" value="#{redirectBean.description}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[redirectBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{redirectBean.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{redirectBean.exampleResource}"/>
     <ui:param name="wikiResources" value="#{redirectBeanResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{redirectBeanResources.tldResources}"/>

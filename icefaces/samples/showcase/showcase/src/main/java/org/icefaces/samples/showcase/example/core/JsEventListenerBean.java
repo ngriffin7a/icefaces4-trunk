@@ -21,6 +21,8 @@ import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
 import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
+import org.icefaces.samples.showcase.metadata.annotation.Menu;
+import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
@@ -47,11 +49,16 @@ import java.io.Serializable;
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/JsEventListenerBean.java")
         }
 )
-
-
+@Menu(
+    title = "menu.core.jsEventListenerBean.subMenu.title", 
+    menuLinks = {
+        @MenuLink(title = "menu.core.jsEventListenerBean.subMenu.main", isDefault = true, exampleBeanName = JsEventListenerBean.BEAN_NAME)
+    }
+)
 @ManagedBean
 @CustomScoped(value = "#{window}")
 public class JsEventListenerBean extends ComponentExampleImpl<JsEventListenerBean> implements Serializable {
+    public static final String BEAN_NAME = "jsEventListenerBean";
     private JSEventListener.JSEvent actionEvent;
 
     public JsEventListenerBean() {
