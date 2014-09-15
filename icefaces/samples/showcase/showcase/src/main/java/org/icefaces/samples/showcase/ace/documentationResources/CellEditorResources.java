@@ -31,12 +31,18 @@ import java.io.Serializable;
         resources ={
             // WIKI Resources
             @ExampleResource(type = ResourceType.wiki,
-                title="ace:CellEditor",
+                title="ace:cellEditor",
                 resource = ResourceRootPath.FOR_WIKI + "CellEditor"),
+            @ExampleResource(type = ResourceType.wiki,
+                title="ace:rowEditor",
+                resource = ResourceRootPath.FOR_WIKI + "RowEditor"),
             // TLD Resources
             @ExampleResource(type = ResourceType.tld,
-                title="ace:CellEditor",
-                resource = ResourceRootPath.FOR_ACE_TLD + "cellEditor.html")
+                title="ace:cellEditor",
+                resource = ResourceRootPath.FOR_ACE_TLD + "cellEditor.html"),
+            @ExampleResource(type = ResourceType.tld,
+                title="ace:rowEditor",
+                resource = ResourceRootPath.FOR_ACE_TLD + "rowEditor.html")
         }
 )
 

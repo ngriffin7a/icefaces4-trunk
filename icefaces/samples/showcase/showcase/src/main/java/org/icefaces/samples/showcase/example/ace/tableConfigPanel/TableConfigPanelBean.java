@@ -24,6 +24,13 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+
+import javax.faces.event.ActionEvent;
+
 @ComponentExample(
         title = "example.ace.tableConfigPanel.title",
         description = "example.ace.tableConfigPanel.description",
@@ -60,6 +67,7 @@ public class TableConfigPanelBean extends ComponentExampleImpl<TableConfigPanelB
     
     public TableConfigPanelBean() {
         super(TableConfigPanelBean.class);
+        carsData = new ArrayList<Car>(DataTableData.getDefaultData());
 		setGroup(1);
     }
     
@@ -68,23 +76,140 @@ public class TableConfigPanelBean extends ComponentExampleImpl<TableConfigPanelB
         super.initMetaData();
     }
 
-    private String firstName;
-    private String lastName;
+    private List<Car> carsData;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public List<Car> getCarsData() { return carsData; }
+    public void setCarsData(List<Car> carsData) { this.carsData = carsData; }
+	
+	private ColumnSettings[] savedColumns = getDefaultColumns();
+	private ColumnSettings[] columns = getDefaultColumns();
+	private List<Integer> savedColumnOrder = getDefaultColumnOrder();
+	private List<Integer> columnOrder = getDefaultColumnOrder();
+	private List<Integer> savedColumnHeaderOrder = getDefaultColumnHeaderOrder();
+	private List<Integer> columnHeaderOrder = getDefaultColumnHeaderOrder();
+	
+	private ColumnSettings[] getDefaultColumns() {
+		return new ColumnSettings[] { new ColumnSettings(true, "ID", null, false),
+			new ColumnSettings(true, "Name", null, false), new ColumnSettings(true, "Chassis", null, false), new ColumnSettings(true, "Weight", null, false),
+			new ColumnSettings(true, "Accel", null, false), new ColumnSettings(true, "MPG", null, false), new ColumnSettings(true, "Cost", null, false)};
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	private List<Integer> getDefaultColumnOrder() {
+		List<Integer> order = new ArrayList<Integer>();
+		order.add(0);
+		order.add(1);
+		order.add(2);
+		order.add(3);
+		order.add(4);
+		order.add(5);
+		order.add(6);
+		return order;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	private List<Integer> getDefaultColumnHeaderOrder() {
+		List<Integer> order = new ArrayList<Integer>();
+		order.add(0);
+		order.add(1);
+		order.add(2);
+		order.add(3);
+		order.add(4);
+		order.add(5);
+		order.add(6);
+		return order;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    
+	public ColumnSettings[] getColumns() {
+		return columns;
+	}
+
+	public List<Integer> getColumnOrder() {
+		return columnOrder;
+	}
+
+	public void setColumnOrder(List<Integer> columnOrder) {
+		this.columnOrder = columnOrder;
+	}
+
+	public List<Integer> getColumnHeaderOrder() {
+		return columnHeaderOrder;
+	}
+
+	public void setColumnHeaderOrder(List<Integer> columnHeaderOrder) {
+		this.columnHeaderOrder = columnHeaderOrder;
+	}
+
+	public void saveSettings(ActionEvent event) {
+		savedColumns = copyColumns(columns);
+		savedColumnOrder = columnOrder;
+		savedColumnHeaderOrder = columnHeaderOrder;
+	}
+
+	public void restoreSavedSettings(ActionEvent event) {
+		columns = copyColumns(savedColumns);
+		columnOrder = savedColumnOrder;
+		columnHeaderOrder = savedColumnHeaderOrder;
+	}
+
+	public void restoreDefaultSettings(ActionEvent event) {
+		columns = getDefaultColumns();
+		columnOrder = getDefaultColumnOrder();
+		columnHeaderOrder = getDefaultColumnHeaderOrder();
+		carsData = new ArrayList<Car>(DataTableData.getDefaultData()); // for undoing sorting
+	}
+
+	private ColumnSettings[] copyColumns(ColumnSettings[] columns) {
+		int length = columns.length;
+		ColumnSettings[] copy = new ColumnSettings[length];
+		for (int i = 0; i < length; i++) {
+			ColumnSettings cs = columns[i];
+			copy[i] = new ColumnSettings(cs.rendered, cs.name, cs.sortPriority, cs.sortAscending);
+		}
+		return copy;
+	}
+
+	public static class ColumnSettings implements Serializable {
+		private boolean rendered;
+		private String name;
+		private Integer sortPriority;
+		private boolean sortAscending;
+
+		public ColumnSettings(boolean rendered, String name, Integer sortPriority, boolean sortAscending) {
+			this.rendered = rendered;
+			this.name = name;
+			this.sortPriority = sortPriority;
+			this.sortAscending = sortAscending;
+		}
+
+		public boolean isRendered() {
+			return rendered;
+		}
+
+		public void setRendered(boolean rendered) {
+			this.rendered = rendered;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public Integer getSortPriority() {
+			return sortPriority;
+		}
+
+		public void setSortPriority(Integer sortPriority) {
+			this.sortPriority = sortPriority;
+		}
+
+		public boolean isSortAscending() {
+			return sortAscending;
+		}
+
+		public void setSortAscending(boolean sortAscending) {
+			this.sortAscending = sortAscending;
+		}
+	}
 }

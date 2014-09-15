@@ -23,12 +23,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
-import java.text.Format;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import javax.faces.event.ActionEvent;
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
 @ComponentExample(
         title = "example.ace.columnGroup.title",
@@ -59,19 +58,10 @@ import javax.faces.event.ActionEvent;
 @CustomScoped(value = "#{window}")
 public class ColumnGroupBean extends ComponentExampleImpl<ColumnGroupBean> implements Serializable {
     public static final String BEAN_NAME = "columnGroupBean";
-    
-    private Format formatter;
-    private String message;
-    private List<String> list;
-    public final String DEFAULT_MESSAGE = "please click on a button and select any menu item without icon";
-    public final int MAX_LIST_SIZE = 5;
-    
-    /////////////---- CONSTRUCTORS BEGIN
+
     public ColumnGroupBean() {
         super(ColumnGroupBean.class);
-        formatter = new SimpleDateFormat("HH:mm:ss");
-        list = new ArrayList<String>(MAX_LIST_SIZE);
-        list.add(DEFAULT_MESSAGE);
+        this.cars = new ArrayList<Car>(DataTableData.getDefaultData());
     }
     
     @PostConstruct
@@ -80,27 +70,9 @@ public class ColumnGroupBean extends ComponentExampleImpl<ColumnGroupBean> imple
         setGroup(4);
     }
 
-    /////////////---- ACTION LISTENERS BEGIN
-    public void fireAction(ActionEvent event) 
-    {
-        String [] results = event.getComponent().getParent().getClientId().split(":");
-        message= results[results.length-1].toUpperCase() + " > ";
-        results = event.getComponent().getClientId().split(":");
-        message += results[results.length-1].toUpperCase();
-        message += " - selected @ "+formatter.format(new Date()) + " (server time)";
-        
-        if(list.get(0).equals(DEFAULT_MESSAGE)) {
-            list.clear(); 
-        }
-        if (list.size()<MAX_LIST_SIZE) {
-            list.add(message);
-        }
-        else {
-            list.clear();
-            list.add(message);
-        }
-    }
-    /////////////---- GETTERS & SETTERS BEGIN
-    public List<String> getList() { return list; }
-    public void setList(List<String> list) { this.list = list; }
+    private List<Car> cars;
+
+    public List<Car> getCars() { return cars; }
+    public void setCars(List<Car> cars) { this.cars = cars; }
+
 }
