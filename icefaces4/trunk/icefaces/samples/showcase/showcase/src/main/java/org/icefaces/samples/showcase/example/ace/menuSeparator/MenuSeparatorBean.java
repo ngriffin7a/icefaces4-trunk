@@ -60,18 +60,8 @@ import javax.faces.event.ActionEvent;
 public class MenuSeparatorBean extends ComponentExampleImpl<MenuSeparatorBean> implements Serializable {
     public static final String BEAN_NAME = "menuSeparatorBean";
     
-    private Format formatter;
-    private String message;
-    private List<String> list;
-    public final String DEFAULT_MESSAGE = "please click on a button and select any menu item without icon";
-    public final int MAX_LIST_SIZE = 5;
-    
-    /////////////---- CONSTRUCTORS BEGIN
     public MenuSeparatorBean() {
         super(MenuSeparatorBean.class);
-        formatter = new SimpleDateFormat("HH:mm:ss");
-        list = new ArrayList<String>(MAX_LIST_SIZE);
-        list.add(DEFAULT_MESSAGE);
     }
     
     @PostConstruct
@@ -80,27 +70,13 @@ public class MenuSeparatorBean extends ComponentExampleImpl<MenuSeparatorBean> i
         setGroup(4);
     }
 
-    /////////////---- ACTION LISTENERS BEGIN
-    public void fireAction(ActionEvent event) 
-    {
-        String [] results = event.getComponent().getParent().getClientId().split(":");
-        message= results[results.length-1].toUpperCase() + " > ";
-        results = event.getComponent().getClientId().split(":");
-        message += results[results.length-1].toUpperCase();
-        message += " - selected @ "+formatter.format(new Date()) + " (server time)";
-        
-        if(list.get(0).equals(DEFAULT_MESSAGE)) {
-            list.clear(); 
-        }
-        if (list.size()<MAX_LIST_SIZE) {
-            list.add(message);
-        }
-        else {
-            list.clear();
-            list.add(message);
-        }
-    }
-    /////////////---- GETTERS & SETTERS BEGIN
-    public List<String> getList() { return list; }
-    public void setList(List<String> list) { this.list = list; }
+	private boolean displaySeparators = true;
+
+	public boolean isDisplaySeparators() {
+		return displaySeparators;
+	}
+
+	public void setDisplaySeparators(boolean displaySeparators) {
+		this.displaySeparators = displaySeparators;
+	}
 }

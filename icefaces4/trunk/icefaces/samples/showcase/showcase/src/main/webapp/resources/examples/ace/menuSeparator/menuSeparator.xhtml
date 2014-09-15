@@ -36,5 +36,56 @@
 
     <ui:define name="example">
 
+		<h:form id="form">
+
+			<h:outputLabel for="toggle" value="Display menu separators: "/>
+			<h:selectBooleanCheckbox id="toggle" value="#{menuSeparatorBean.displaySeparators}">
+				<f:ajax render="@form" />
+			</h:selectBooleanCheckbox>
+
+			<ace:menu type="plain" id="exampleMenu" >
+					<ace:menuItem id="new"
+								  value="New" 
+								  icon="ui-icon">
+					</ace:menuItem>
+					<ace:menuItem   id="open"
+									value="Open"
+									icon="ui-icon">
+					</ace:menuItem>
+					<ace:menuItem id="save"
+								  value="Save"
+								  icon="ui-icon ui-icon-disk">
+					</ace:menuItem>
+					<ace:menuItem id="delete"
+								  value="Delete"
+								  icon="ui-icon ui-icon-close">
+					</ace:menuItem>
+
+					<ace:menuSeparator rendered="#{menuSeparatorBean.displaySeparators}" />
+
+					<ace:menuItem id="horizontal"
+								  value="Horizontal"
+								  icon="ui-icon">
+					</ace:menuItem>
+					<ace:menuItem id="vertical"
+								  value="Vertical"
+								  icon="ui-icon">
+					</ace:menuItem>
+					<ace:menuItem id="fill"
+								  value="Fill"
+								  icon="ui-icon">
+					</ace:menuItem>
+
+					<ace:menuSeparator rendered="#{menuSeparatorBean.displaySeparators}" />
+
+					<ace:menuItem value="ICEfaces" url="http://www.icefaces.org" target="_blank" icon="ui-icon ui-icon-home"/>
+					<ace:menuItem value="ICEpush" url="http://www.icepush.org" target="_blank" icon="ui-icon ui-icon-home"/>
+					<ace:menuItem value="ICEpdf" url="http://www.icepdf.org" target="_blank" icon="ui-icon ui-icon-home"/>
+					<ace:menuItem value="ICEsoft" url="http://www.icesoft.com" target="_blank" icon="ui-icon ui-icon-home"/>
+
+			</ace:menu>
+
+		</h:form>
+
     </ui:define>
 </ui:composition>
