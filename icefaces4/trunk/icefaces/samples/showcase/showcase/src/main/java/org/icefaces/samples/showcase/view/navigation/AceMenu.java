@@ -287,7 +287,7 @@ import java.io.Serializable;
                 @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.component", value = ContextMenuComponent.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.table", value = ContextMenuTable.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.effect", value = ContextMenuEffect.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.multicolumn", value = ContextMenuMultiColumn.BEAN_NAME),
+
                 @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.delegate", value = ContextMenuDelegate.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.main", value = MenuBean.BEAN_NAME),
@@ -300,7 +300,6 @@ import java.io.Serializable;
                 @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.effect", value = MenuBarEffect.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.click", value = MenuBarClick.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.dynamic", value = MenuBarDynamic.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.multicolumn", value = MenuBarMultiColumn.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.main", value = SelectMenuBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.facet", value = SelectMenuFacetBean.BEAN_NAME),
