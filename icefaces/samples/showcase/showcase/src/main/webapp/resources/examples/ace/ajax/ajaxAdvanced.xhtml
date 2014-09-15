@@ -34,5 +34,55 @@
 
     <ui:define name="example">
 
+		<h:form id="ajaxAdvancedForm">
+
+            <ace:panel id="ajaxAdvancedSettings" header="Settings" style="width: 100%;">
+                <h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
+					<h:outputText value="Update values: "/>
+					<h:selectOneRadio value="#{ajaxAdvancedBean.event}">
+						<f:ajax render="ajaxAdvancedSlider" />
+						<f:selectItem itemLabel="after releasing handle" itemValue="slideEnd" />
+						<f:selectItem itemLabel="as the handle is moved" itemValue="slide" />
+					</h:selectOneRadio>
+					<h:outputLabel for="updateCelsius" value="Update Celsius value: " />
+					<h:selectBooleanCheckbox id="updateCelsius" value="#{ajaxAdvancedBean.updateCelsius}">
+						<f:ajax render="ajaxAdvancedSlider" />
+					</h:selectBooleanCheckbox>
+					<h:outputLabel for="updateFahrenheit" value="Update Fahrenheit value: " />
+					<h:selectBooleanCheckbox id="updateFahrenheit" value="#{ajaxAdvancedBean.updateFahrenheit}">
+						<f:ajax render="ajaxAdvancedSlider" />
+					</h:selectBooleanCheckbox>
+					<h:outputLabel for="updateKelvin" value="Update Kelvin value: " />
+					<h:selectBooleanCheckbox id="updateKelvin" value="#{ajaxAdvancedBean.updateKelvin}">
+						<f:ajax render="ajaxAdvancedSlider" />
+					</h:selectBooleanCheckbox>
+				</h:panelGrid>
+            </ace:panel>
+
+            <ace:panel id="ajaxAdvancedInput" header="Input" style="width: 100%;">
+					<h:outputText value="Enter temperature: "/>
+					<ace:sliderEntry id="ajaxAdvancedSlider"
+									 axis="x"
+									 clickableRail="true"
+									 length="300"
+									 min="-50"
+									 max="50"
+									 value="#{ajaxAdvancedBean.sliderValue}">
+						<ace:ajax event="slideEnd" execute="@this" render="empty #{ajaxAdvancedBean.updateCelsius ? 'celsius ' : ' '} #{ajaxAdvancedBean.updateFahrenheit ? 'fahrenheit ' : ' '} #{ajaxAdvancedBean.updateKelvin ? 'kelvin' : ' '}" disabled="#{ajaxAdvancedBean.event ne 'slideEnd'}" />
+						<ace:ajax event="slide" execute="@this" render="empty #{ajaxAdvancedBean.updateCelsius ? 'celsius ' : ' '} #{ajaxAdvancedBean.updateFahrenheit ? 'fahrenheit ' : ' '} #{ajaxAdvancedBean.updateKelvin ? 'kelvin' : ' '}" disabled="#{ajaxAdvancedBean.event ne 'slide'}" />
+					</ace:sliderEntry>
+					<h:panelGrid width="60%" columns="3" cellpadding="20" cellspacing="20">
+						<h:outputText value="Celsius (&#176;C)"/>
+						<h:outputText value="Fahrenheit (&#176;F)"/>
+						<h:outputText value="Kelvin (&#176;K)"/>
+						<h:outputText id="celsius" value="#{ajaxAdvancedBean.sliderValue}"/>
+						<h:outputText id="fahrenheit" value="#{((ajaxAdvancedBean.sliderValue * 9)/5) + 32}"/>
+						<h:outputText id="kelvin" value="#{ajaxAdvancedBean.sliderValue + 273}"/>
+					</h:panelGrid>
+					<h:outputText id="empty" value=""/>
+            </ace:panel>
+
+		</h:form>
+
     </ui:define>
 </ui:composition>

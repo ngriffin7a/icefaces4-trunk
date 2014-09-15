@@ -58,22 +58,49 @@ public class AjaxAdvancedBean extends ComponentExampleImpl<AjaxAdvancedBean> imp
         super.initMetaData();
     }
 
-    private boolean draggable;
-    private boolean modal;
+	private String event = "slideEnd";
+    private int sliderValue = 0;
+	private boolean updateCelsius = true;
+	private boolean updateFahrenheit = true;
+	private boolean updateKelvin = true;
 
-    public boolean isDraggable() {
-        return draggable;
+    public String getEvent() {
+        return event;
     }
 
-    public void setDraggable(boolean draggable) {
-        this.draggable = draggable;
+    public void setEvent(String event) {
+        this.event = event;
     }
 
-    public boolean isModal() {
-        return modal;
+    public int getSliderValue() {
+        return sliderValue;
     }
 
-    public void setModal(boolean modal) {
-        this.modal = modal;
+    public void setSliderValue(int sliderValue) {
+        this.sliderValue = sliderValue;
+    }
+
+    public boolean getUpdateCelsius() {
+        return updateCelsius;
+    }
+
+    public void setUpdateCelsius(boolean updateCelsius) {
+        this.updateCelsius = updateCelsius;
+    }
+
+    public boolean getUpdateFahrenheit() {
+        return updateFahrenheit;
+    }
+
+    public void setUpdateFahrenheit(boolean updateFahrenheit) {
+        this.updateFahrenheit = updateFahrenheit;
+    }
+
+    public boolean getUpdateKelvin() {
+        return updateKelvin;
+    }
+
+    public void setUpdateKelvin(boolean updateKelvin) {
+        this.updateKelvin = updateKelvin;
     }
 }
