@@ -58,22 +58,31 @@ public class AjaxCallbacksBean extends ComponentExampleImpl<AjaxCallbacksBean> i
         super.initMetaData();
     }
 
-    private boolean draggable;
-    private boolean modal;
+	private boolean value1 = true;
+	private boolean value2 = true;
+	private boolean value3 = true;
 
-    public boolean isDraggable() {
-        return draggable;
+    public boolean getValue1() {
+        return value1;
     }
 
-    public void setDraggable(boolean draggable) {
-        this.draggable = draggable;
+    public void setValue1(boolean value1) {
+        this.value1 = value1;
     }
 
-    public boolean isModal() {
-        return modal;
+    public boolean getValue2() {
+        return value2;
     }
 
-    public void setModal(boolean modal) {
-        this.modal = modal;
+    public void setValue2(boolean value2) {
+        this.value2 = value2;
+    }
+
+    public boolean getValue3() {
+        return value3;
+    }
+
+    public void setValue3(boolean value3) {
+        this.value3 = value3;
     }
 }

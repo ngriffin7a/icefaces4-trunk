@@ -70,23 +70,40 @@ public class AjaxBean extends ComponentExampleImpl<AjaxBean> implements Serializ
         super.initMetaData();
     }
 
-    private String firstName;
-    private String lastName;
+    private boolean ajaxEnabled = true;
+    private String textValue;
+    private String selectValue;
+    private int sliderValue;
 
-    public String getFirstName() {
-        return firstName;
+    public boolean getAjaxEnabled() {
+        return ajaxEnabled;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setAjaxEnabled(boolean ajaxEnabled) {
+        this.ajaxEnabled = ajaxEnabled;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getTextValue() {
+        return textValue;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setTextValue(String textValue) {
+        this.textValue = textValue;
     }
-    
+
+    public String getSelectValue() {
+        return selectValue;
+    }
+
+    public void setSelectValue(String selectValue) {
+        this.selectValue = selectValue;
+    }
+
+    public int getSliderValue() {
+        return sliderValue;
+    }
+
+    public void setSliderValue(int sliderValue) {
+        this.sliderValue = sliderValue;
+    }
 }

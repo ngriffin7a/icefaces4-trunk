@@ -34,5 +34,48 @@
 
     <ui:define name="example">
 
+		<h:form id="ajaxCallbacksStartForm">
+            <ace:panel id="ajaxCallbacksStart" header="onStart" style="width: 100%;">
+				<h:outputText value="The onStart attribute fires BEFORE the request is sent to the server. Toggle the checkbox button below to see an alert message appear before the value is updated. If the value returned in the attribute script is not true, the request will be aborted. This callback gets passed the 'cfg' argument, containing the ajax request configuration to be modified before the request is sent." />
+				<br /><br />
+				<h:outputLabel value="Uncheck this box to abort the request: " />
+				<input id="allowRequest" type="checkbox" checked="checked" />
+				<h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
+					<ace:checkboxButton id="ajaxCallbacksButton1" value="#{ajaxCallbacksBean.value1}">
+						 <ace:ajax execute="@this" render="output1" onStart="var p = document.getElementById('allowRequest').checked; if (p) alert('This message appears before the request is made to the server.'); else alert('The request has been aborted. The value won\'t be updated.'); return p;"/>
+					</ace:checkboxButton>
+					<h:outputText id="output1" value="#{ajaxCallbacksBean.value1}" />
+				</h:panelGrid>
+            </ace:panel>
+		</h:form>
+		<h:form id="ajaxCallbacksSuccessForm">
+            <ace:panel id="ajaxCallbacksSuccess" header="onSuccess" style="width: 100%;">
+				<h:outputText value="The onSuccess attribute fires AFTER the request is sent to the server and is successful. Toggle the checkbox button below to see an alert message appear after the value is updated. This callback gets passed the 'data' argument, containing the XML content of the entire JSF response." />
+				<h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
+					 <ace:checkboxButton id="ajaxCallbacksButton1" value="#{ajaxCallbacksBean.value2}">
+						 <ace:ajax execute="@form" render="@form" onSuccess="alert('If you see this message, the ajax request was successful.');" />
+					 </ace:checkboxButton>
+					<h:outputText id="output2" value="#{ajaxCallbacksBean.value2}" />
+				</h:panelGrid>
+            </ace:panel>
+		</h:form>
+		<h:form id="ajaxCallbacksErrorForm">
+            <ace:panel id="ajaxCallbacksError" header="onError" style="width: 100%;">
+				<h:outputText value="The onError attribute fires AFTER the request is sent to the server and there was an error of some sort. This callback gets passed the 'status' and 'error' arguments, containing the returned server status code and error message, respectively." />
+            </ace:panel>
+		</h:form>
+		<h:form id="ajaxCallbacksCompleteForm">
+            <ace:panel id="ajaxCallbacksComplete" header="onComplete" style="width: 100%;">
+				<h:outputText value="The onSuccess attribute fires AFTER the request is sent to the server. It fires after the onComplete and onError callbacks. It fires whether the request was successful or not. Toggle the checkbox button below to see an alert message appear after the value is updated and after the onSucess callback is executed. This callback gets passed the 'args' argument, containing ACE callback parameters such as 'validationFailed'." />
+				<h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
+					 <ace:checkboxButton id="ajaxCallbacksButton1" value="#{ajaxCallbacksBean.value3}">
+						 <ace:ajax execute="@form" render="@form" onSuccess="alert('This is the onSuccess callback.');" onComplete="alert('This is the onComplete callback.');"/>
+					 </ace:checkboxButton>
+					<h:outputText id="output3" value="#{ajaxCallbacksBean.value3}" />
+				</h:panelGrid>
+            </ace:panel>
+		</h:form>
+		
+
     </ui:define>
 </ui:composition>

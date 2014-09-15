@@ -36,5 +36,49 @@
 
     <ui:define name="example">
 
+		<h:form id="ajaxForm">
+
+            <ace:panel id="ajaxSettings" header="Settings" style="width: 100%;">
+				 <h:outputLabel for="ajaxEnabled" value="Enable Ajax? "/>
+				 <ace:checkboxButton id="ajaxEnabled" value="#{ajaxBean.ajaxEnabled}">
+					 <ace:ajax execute="@all" render="@all"/>
+				 </ace:checkboxButton>
+            </ace:panel>
+
+            <ace:panel id="ajaxInput" header="Input" style="width: 100%;">
+                <h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
+					<ace:textEntry id="ajaxText" value="#{ajaxBean.textValue}">
+						<ace:ajax disabled="#{!ajaxBean.ajaxEnabled}" />
+					</ace:textEntry>
+					<h:outputText value="#{ajaxBean.textValue}"/>
+
+					<ace:simpleSelectOneMenu id="ajaxSelect" value="#{ajaxBean.selectValue}">
+						<ace:ajax disabled="#{!ajaxBean.ajaxEnabled}" />
+						<f:selectItem itemLabel="item1" itemValue="item1" />
+						<f:selectItem itemLabel="item2" itemValue="item2" />
+						<f:selectItem itemLabel="item3" itemValue="item3" />
+						<f:selectItem itemLabel="item4" itemValue="item4" />
+						<f:selectItem itemLabel="item5" itemValue="item5" />
+					</ace:simpleSelectOneMenu>
+					<h:outputText value="#{ajaxBean.selectValue}"/>
+
+					<ace:sliderEntry id="ajaxSlider"
+									 axis="x"
+									 clickableRail="true"
+									 length="300"
+									 min="0"
+									 max="100"
+									 value="#{ajaxBean.sliderValue}">
+						<ace:ajax disabled="#{!ajaxBean.ajaxEnabled}" />
+					</ace:sliderEntry>
+					<h:outputText value="#{ajaxBean.sliderValue}"/>
+
+					<h:commandButton value="Submit" />
+					<h:outputText value="" />
+                </h:panelGrid>
+            </ace:panel>
+
+		</h:form>
+
     </ui:define>
 </ui:composition>
