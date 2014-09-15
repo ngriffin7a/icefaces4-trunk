@@ -30,6 +30,9 @@
     <listener>
         <listener-class>org.icefaces.impl.application.SessionExpiredListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>org.icefaces.impl.application.WindowScopeManager$SetupTimer</listener-class>
+    </listener>
 
     <tag>
         <description><![CDATA[This tag can be used to adjust behaviour on a per-page basis.
