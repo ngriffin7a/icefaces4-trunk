@@ -56,6 +56,7 @@ public class AjaxCallbacksBean extends ComponentExampleImpl<AjaxCallbacksBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(1);
     }
 
 	private boolean value1 = true;

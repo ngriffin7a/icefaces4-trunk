@@ -67,7 +67,7 @@ public class ColumnGroupBean extends ComponentExampleImpl<ColumnGroupBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
+        setGroup(10);
     }
 
     private List<Car> cars;

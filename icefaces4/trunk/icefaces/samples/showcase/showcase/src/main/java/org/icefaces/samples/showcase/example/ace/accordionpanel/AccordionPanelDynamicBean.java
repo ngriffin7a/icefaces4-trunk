@@ -66,6 +66,7 @@ public class AccordionPanelDynamicBean extends ComponentExampleImpl<AccordionPan
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 
     ////////////////////////////////////////////ON TAB CHANGE EVENT BEGIN/////////////////////////////////////////////////

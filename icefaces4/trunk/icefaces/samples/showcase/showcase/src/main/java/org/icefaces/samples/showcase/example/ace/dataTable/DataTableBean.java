@@ -94,6 +94,7 @@ public class DataTableBean extends ComponentExampleImpl<DataTableBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(10);
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

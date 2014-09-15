@@ -56,6 +56,7 @@ public class DynamicResourceAdvancedBean extends ComponentExampleImpl<DynamicRes
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(8);
     }
 
     private boolean draggable;

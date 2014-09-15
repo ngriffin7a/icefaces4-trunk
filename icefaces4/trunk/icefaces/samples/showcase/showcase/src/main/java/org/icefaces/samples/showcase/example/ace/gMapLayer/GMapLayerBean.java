@@ -174,5 +174,6 @@ public class GMapLayerBean extends ComponentExampleImpl<GMapLayerBean> implement
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(12);
     }
 }

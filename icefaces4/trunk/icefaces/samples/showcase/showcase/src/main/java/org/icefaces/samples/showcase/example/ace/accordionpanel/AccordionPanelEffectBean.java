@@ -56,5 +56,6 @@ public class AccordionPanelEffectBean extends ComponentExampleImpl<AccordionPane
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 }

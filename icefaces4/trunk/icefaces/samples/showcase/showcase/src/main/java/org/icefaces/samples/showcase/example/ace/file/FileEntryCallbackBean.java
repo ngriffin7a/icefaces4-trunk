@@ -65,6 +65,7 @@ public class FileEntryCallbackBean extends
 	@PostConstruct
 	public void initMetaData() {
 		super.initMetaData();
+        setGroup(8);
 	}
 
 	// Executed before the upload starts

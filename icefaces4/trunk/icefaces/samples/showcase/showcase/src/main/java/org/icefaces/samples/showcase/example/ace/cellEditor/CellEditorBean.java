@@ -67,7 +67,7 @@ public class CellEditorBean extends ComponentExampleImpl<CellEditorBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
+        setGroup(10);
     }
 
     private List<Car> cars;

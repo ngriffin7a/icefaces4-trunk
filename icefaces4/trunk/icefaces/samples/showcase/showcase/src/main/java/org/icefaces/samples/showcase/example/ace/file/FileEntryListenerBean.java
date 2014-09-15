@@ -67,6 +67,7 @@ public class FileEntryListenerBean extends ComponentExampleImpl<FileEntryListene
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(8);
     }
 
     public void customValidator(FileEntryEvent entryEvent) {

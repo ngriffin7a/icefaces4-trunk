@@ -64,6 +64,7 @@ public class DataTablePanelExpansion extends ComponentExampleImpl<DataTablePanel
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(10);
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

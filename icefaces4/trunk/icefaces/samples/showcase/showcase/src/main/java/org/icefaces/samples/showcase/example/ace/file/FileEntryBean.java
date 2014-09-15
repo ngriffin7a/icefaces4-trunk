@@ -75,6 +75,7 @@ public class FileEntryBean extends ComponentExampleImpl<FileEntryBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(8);
     }
 
     public void sampleListener(FileEntryEvent e) {

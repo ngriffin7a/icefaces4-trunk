@@ -70,6 +70,7 @@ public class DataExporterBean extends ComponentExampleImpl<DataExporterBean> imp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(10);
     }
 
     public String getType() { return type; }

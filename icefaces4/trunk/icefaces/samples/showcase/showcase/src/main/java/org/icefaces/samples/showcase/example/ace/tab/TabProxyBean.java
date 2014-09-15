@@ -107,6 +107,7 @@ public class TabProxyBean extends ComponentExampleImpl<TabProxyBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 
     public void setOptions(HashMap<String, Integer> options) {

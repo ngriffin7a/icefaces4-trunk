@@ -69,6 +69,7 @@ public class DataExporterColumns extends ComponentExampleImpl<DataExporterColumn
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(10);
     }
 
     /////////////---- PRIVATE METHODS BEGIN

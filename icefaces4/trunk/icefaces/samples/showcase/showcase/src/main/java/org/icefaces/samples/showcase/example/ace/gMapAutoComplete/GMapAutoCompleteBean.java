@@ -99,5 +99,6 @@ public class GMapAutoCompleteBean extends ComponentExampleImpl<GMapAutoCompleteB
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(12);
     }
 }

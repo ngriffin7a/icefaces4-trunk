@@ -77,6 +77,7 @@ public class ChartDonutBean extends ComponentExampleImpl<ChartDonutBean> impleme
     public void initMetaData() {
         super.initMetaData();
         model.setType(SectorType.DONUT);
+        setGroup(11);
     }
     
     public List<SectorSeries> getDonutData() {

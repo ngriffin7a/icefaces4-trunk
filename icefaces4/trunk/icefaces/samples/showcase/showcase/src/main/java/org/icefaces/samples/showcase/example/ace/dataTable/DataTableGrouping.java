@@ -73,6 +73,7 @@ public class DataTableGrouping extends ComponentExampleImpl<DataTableGrouping> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(10);
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

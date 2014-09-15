@@ -71,6 +71,7 @@ public class DialogBean extends ComponentExampleImpl<DialogBean> implements Seri
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(6);
     }
 
     public String getFirstName() {

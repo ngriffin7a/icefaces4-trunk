@@ -80,6 +80,7 @@ public class AccordionPanelBean extends ComponentExampleImpl<AccordionPanelBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 
     private ArrayList<Item> populateListWithItems()
