@@ -25,18 +25,18 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[dataTableMultiRowHeader.title]}"/>
-    <ui:param name="description" value="#{msgs[dataTableMultiRowHeader.description]}"/>
-    <ui:param name="resourceValue" value="#{dataTableMultiRowHeader.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[columnGroupBean.title]}"/>
+    <ui:param name="description" value="#{msgs[columnGroupBean.description]}"/>
+    <ui:param name="resourceValue" value="#{columnGroupBean.exampleResource}"/>
     
-    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{columnGroupResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{columnGroupResources.tldResources}"/>
 
     <ui:define name="example">
         <h:form id="form">
             
             <ace:dataTable id="carTableMultiRowHeader"
-                           value="#{dataTableMultiRowHeader.cars}"
+                           value="#{columnGroupBean.cars}"
                            var="car"
                            rows="15"
                            scrollable="true"

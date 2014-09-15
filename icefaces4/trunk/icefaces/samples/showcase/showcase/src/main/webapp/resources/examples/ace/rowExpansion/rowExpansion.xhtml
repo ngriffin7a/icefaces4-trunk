@@ -25,17 +25,17 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[dataTableRowExpansion.title]}"/>
-    <ui:param name="description" value="#{msgs[dataTableRowExpansion.description]}"/>
-    <ui:param name="resourceValue" value="#{dataTableRowExpansion.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[rowExpansionBean.title]}"/>
+    <ui:param name="description" value="#{msgs[rowExpansionBean.description]}"/>
+    <ui:param name="resourceValue" value="#{rowExpansionBean.exampleResource}"/>
     
-    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{rowExpansionResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{rowExpansionResources.tldResources}"/>
 
     <ui:define name="example">
         <h:form id="form">
            <ace:dataTable id="carTableRowExpansion"
-                        value="#{dataTableRowExpansion.carsData}"
+                        value="#{rowExpansionBean.carsData}"
                         var="car"
                         rows="10">
                    <ace:column id="exp">

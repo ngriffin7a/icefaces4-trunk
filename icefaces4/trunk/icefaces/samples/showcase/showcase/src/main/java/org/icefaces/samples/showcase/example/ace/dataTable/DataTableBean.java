@@ -69,19 +69,14 @@ import java.util.List;
             @MenuLink(title = "menu.ace.dataTable.subMenu.find", exampleBeanName = DataTableFind.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.grouping", exampleBeanName = DataTableGrouping.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.lazyLoading", exampleBeanName = DataTableLazyLoading.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.multiRowHeader", exampleBeanName = DataTableMultiRowHeader.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.paginator", exampleBeanName = DataTablePaginator.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.panelexpansion", exampleBeanName = DataTablePanelExpansion.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.pinning", exampleBeanName = DataTablePinning.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.rowexpansion", exampleBeanName = DataTableRowExpansion.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.listener", exampleBeanName = DataTableListener.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.rowstate", exampleBeanName = DataTableRowState.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.rowEditing", exampleBeanName = DataTableRowEditing.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.selector", exampleBeanName = DataTableSelector.BEAN_NAME),
             @MenuLink(title = "menu.ace.dataTable.subMenu.scrolling", exampleBeanName = DataTableScrolling.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.sorting", exampleBeanName = DataTableSorting.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.configpanel", exampleBeanName = DataTableConfigPanel.BEAN_NAME),
-			@MenuLink(title = "menu.ace.dataTable.subMenu.configpaneladvanced", exampleBeanName = DataTableConfigPanelAdvanced.BEAN_NAME)
+            @MenuLink(title = "menu.ace.dataTable.subMenu.sorting", exampleBeanName = DataTableSorting.BEAN_NAME)
     }
 )
 @ManagedBean(name= DataTableBean.BEAN_NAME)

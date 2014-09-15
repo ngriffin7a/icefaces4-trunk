@@ -25,18 +25,18 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[dataTableRowEditing.title]}"/>
-    <ui:param name="description" value="#{msgs[dataTableRowEditing.description]}"/>
-    <ui:param name="resourceValue" value="#{dataTableRowEditing.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[cellEditorBean.title]}"/>
+    <ui:param name="description" value="#{msgs[cellEditorBean.description]}"/>
+    <ui:param name="resourceValue" value="#{cellEditorBean.exampleResource}"/>
     
-    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{cellEditorResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{cellEditorResources.tldResources}"/>
 
     <ui:define name="example">
         <h:form id="form">
 
            <ace:dataTable id="carTable"
-                                    value="#{dataTableRowEditing.cars}"
+                                    value="#{cellEditorBean.cars}"
                                     var="car">
                <ace:ajax event="editSubmit" render="facesMsgs"/>
                

@@ -33,10 +33,16 @@ import java.io.Serializable;
             @ExampleResource(type = ResourceType.wiki,
                 title="ace:columnGroup",
                 resource = ResourceRootPath.FOR_WIKI + "ColumnGroup"),
+            @ExampleResource(type = ResourceType.wiki,
+                title="ace:row",
+                resource = ResourceRootPath.FOR_WIKI + "Row"),
             // TLD Resources
             @ExampleResource(type = ResourceType.tld,
                 title="ace:columnGroup",
-                resource = ResourceRootPath.FOR_ACE_TLD + "columnGroup.html")
+                resource = ResourceRootPath.FOR_ACE_TLD + "columnGroup.html"),
+            @ExampleResource(type = ResourceType.tld,
+                title="ace:row",
+                resource = ResourceRootPath.FOR_ACE_TLD + "row.html")
         }
 )
 

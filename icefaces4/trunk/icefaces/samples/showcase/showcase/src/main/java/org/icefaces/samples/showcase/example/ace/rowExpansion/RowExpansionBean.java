@@ -23,12 +23,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.faces.event.ActionEvent;
+
+import java.util.*;
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+import org.icefaces.samples.showcase.util.SimpleEntry;
 
 @ComponentExample(
         title = "example.ace.rowExpansion.title",
@@ -60,18 +59,9 @@ import javax.faces.event.ActionEvent;
 public class RowExpansionBean extends ComponentExampleImpl<RowExpansionBean> implements Serializable {
     public static final String BEAN_NAME = "rowExpansionBean";
     
-    private Format formatter;
-    private String message;
-    private List<String> list;
-    public final String DEFAULT_MESSAGE = "please click on a button and select any menu item without icon";
-    public final int MAX_LIST_SIZE = 5;
-    
-    /////////////---- CONSTRUCTORS BEGIN
     public RowExpansionBean() {
         super(RowExpansionBean.class);
-        formatter = new SimpleDateFormat("HH:mm:ss");
-        list = new ArrayList<String>(MAX_LIST_SIZE);
-        list.add(DEFAULT_MESSAGE);
+        generateCarsData();
     }
     
     @PostConstruct
@@ -80,27 +70,20 @@ public class RowExpansionBean extends ComponentExampleImpl<RowExpansionBean> imp
         setGroup(4);
     }
 
-    /////////////---- ACTION LISTENERS BEGIN
-    public void fireAction(ActionEvent event) 
-    {
-        String [] results = event.getComponent().getParent().getClientId().split(":");
-        message= results[results.length-1].toUpperCase() + " > ";
-        results = event.getComponent().getClientId().split(":");
-        message += results[results.length-1].toUpperCase();
-        message += " - selected @ "+formatter.format(new Date()) + " (server time)";
-        
-        if(list.get(0).equals(DEFAULT_MESSAGE)) {
-            list.clear(); 
-        }
-        if (list.size()<MAX_LIST_SIZE) {
-            list.add(message);
-        }
-        else {
-            list.clear();
-            list.add(message);
+    ArrayList<Map.Entry<Car,List>> carsData = null;
+
+    private void generateCarsData() {
+        carsData = new ArrayList<Map.Entry<Car, List>>();
+        for (Car c : DataTableData.getDefaultData()) {
+            ArrayList<Map.Entry<Car, List>> detailData = new ArrayList<Map.Entry<Car, List>>();
+            detailData.add(new SimpleEntry(new Car(c.getId()+1000, c.getName()+
+                " Custom Spec", c.getChassis(), c.getColor(), c.getYear(),
+                c.getWeight(), c.getAcceleration()*2, c.getMpg()/2,
+                c.getCost()*3), null));
+            carsData.add(new SimpleEntry(c, detailData));
         }
     }
-    /////////////---- GETTERS & SETTERS BEGIN
-    public List<String> getList() { return list; }
-    public void setList(List<String> list) { this.list = list; }
+
+    public ArrayList<Map.Entry<Car,List>> getCarsData() { return carsData;}
+    public void setCarsData(ArrayList<Map.Entry<Car,List>> carsData) {this.carsData = carsData;}
 }
