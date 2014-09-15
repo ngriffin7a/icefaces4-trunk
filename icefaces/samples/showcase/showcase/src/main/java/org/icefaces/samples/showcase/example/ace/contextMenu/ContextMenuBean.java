@@ -49,8 +49,6 @@ import java.io.Serializable;
                     exampleBeanName = ContextMenuTable.BEAN_NAME),
 	        @MenuLink(title = "menu.ace.contextMenu.subMenu.effect",
                     exampleBeanName = ContextMenuEffect.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.contextMenu.subMenu.multicolumn",
-                    exampleBeanName = ContextMenuMultiColumn.BEAN_NAME),
 	        @MenuLink(title = "menu.ace.contextMenu.subMenu.delegate",
                     exampleBeanName = ContextMenuDelegate.BEAN_NAME)
     }

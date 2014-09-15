@@ -23,12 +23,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.faces.event.ActionEvent;
 
 @ComponentExample(
         title = "example.ace.multiColumnSubmenu.title",
@@ -60,18 +54,8 @@ import javax.faces.event.ActionEvent;
 public class MultiColumnSubmenuBean extends ComponentExampleImpl<MultiColumnSubmenuBean> implements Serializable {
     public static final String BEAN_NAME = "multiColumnSubmenuBean";
     
-    private Format formatter;
-    private String message;
-    private List<String> list;
-    public final String DEFAULT_MESSAGE = "please click on a button and select any menu item without icon";
-    public final int MAX_LIST_SIZE = 5;
-    
-    /////////////---- CONSTRUCTORS BEGIN
     public MultiColumnSubmenuBean() {
         super(MultiColumnSubmenuBean.class);
-        formatter = new SimpleDateFormat("HH:mm:ss");
-        list = new ArrayList<String>(MAX_LIST_SIZE);
-        list.add(DEFAULT_MESSAGE);
     }
     
     @PostConstruct
@@ -79,28 +63,4 @@ public class MultiColumnSubmenuBean extends ComponentExampleImpl<MultiColumnSubm
         super.initMetaData();
         setGroup(4);
     }
-
-    /////////////---- ACTION LISTENERS BEGIN
-    public void fireAction(ActionEvent event) 
-    {
-        String [] results = event.getComponent().getParent().getClientId().split(":");
-        message= results[results.length-1].toUpperCase() + " > ";
-        results = event.getComponent().getClientId().split(":");
-        message += results[results.length-1].toUpperCase();
-        message += " - selected @ "+formatter.format(new Date()) + " (server time)";
-        
-        if(list.get(0).equals(DEFAULT_MESSAGE)) {
-            list.clear(); 
-        }
-        if (list.size()<MAX_LIST_SIZE) {
-            list.add(message);
-        }
-        else {
-            list.clear();
-            list.add(message);
-        }
-    }
-    /////////////---- GETTERS & SETTERS BEGIN
-    public List<String> getList() { return list; }
-    public void setList(List<String> list) { this.list = list; }
 }
