@@ -88,5 +88,6 @@ public class FileEntryValidationOptionsBean extends ComponentExampleImpl<FileEnt
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(8);
     }
 }

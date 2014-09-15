@@ -77,7 +77,7 @@ public class AudioPlayerBean extends ComponentExampleImpl<AudioPlayerBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(3);
+        setGroup(13);
     }
 
     /////////////---- ACTION LISTENERS BEGIN

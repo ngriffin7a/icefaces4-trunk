@@ -74,6 +74,7 @@ public class PanelBean extends ComponentExampleImpl<PanelBean> implements Serial
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 
     public boolean getCollapsed() { return collapsed; }

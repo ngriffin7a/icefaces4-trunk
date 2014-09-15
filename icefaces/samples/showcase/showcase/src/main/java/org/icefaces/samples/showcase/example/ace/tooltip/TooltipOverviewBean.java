@@ -82,6 +82,7 @@ public class TooltipOverviewBean extends ComponentExampleImpl<TooltipOverviewBea
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(6);
     }
     /////////////---- GETTERS & SETTERS BEGIN
     public String getTooltipEffect() { return tooltipEffect; }

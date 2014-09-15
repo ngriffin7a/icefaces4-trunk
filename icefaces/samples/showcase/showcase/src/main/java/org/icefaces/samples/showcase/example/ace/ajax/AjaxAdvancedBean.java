@@ -56,6 +56,7 @@ public class AjaxAdvancedBean extends ComponentExampleImpl<AjaxAdvancedBean> imp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(1);
     }
 
 	private String event = "slideEnd";

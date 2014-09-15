@@ -66,6 +66,7 @@ public class DynamicResourceBean extends ComponentExampleImpl<DynamicResourceBea
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(8);
     }
 
     private String firstName;

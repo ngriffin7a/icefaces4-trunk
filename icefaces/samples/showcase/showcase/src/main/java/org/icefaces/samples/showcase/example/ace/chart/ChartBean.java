@@ -162,5 +162,6 @@ public class ChartBean extends ComponentExampleImpl<ChartBean> implements Serial
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(11);
     }    
 }

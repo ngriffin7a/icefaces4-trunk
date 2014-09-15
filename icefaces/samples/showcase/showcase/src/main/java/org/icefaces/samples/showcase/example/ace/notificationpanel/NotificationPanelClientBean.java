@@ -49,5 +49,6 @@ public class NotificationPanelClientBean extends ComponentExampleImpl<Notificati
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(6);
     }
 }

@@ -63,6 +63,7 @@ public class DialogEffectsAndSizeBean extends ComponentExampleImpl<DialogEffects
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(6);
     }
 
     public String getHideEffect() {

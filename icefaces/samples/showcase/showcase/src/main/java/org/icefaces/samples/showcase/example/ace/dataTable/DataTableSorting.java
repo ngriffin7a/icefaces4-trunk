@@ -55,5 +55,6 @@ public class DataTableSorting extends ComponentExampleImpl<DataTableSorting> imp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(10);
     }
 }

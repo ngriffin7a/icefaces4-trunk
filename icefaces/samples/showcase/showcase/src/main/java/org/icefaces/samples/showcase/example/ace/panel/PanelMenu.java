@@ -51,5 +51,6 @@ public class PanelMenu extends ComponentExampleImpl<PanelMenu> implements Serial
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 }

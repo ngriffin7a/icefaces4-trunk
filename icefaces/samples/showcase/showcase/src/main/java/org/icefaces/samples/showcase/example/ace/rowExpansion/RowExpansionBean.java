@@ -67,7 +67,7 @@ public class RowExpansionBean extends ComponentExampleImpl<RowExpansionBean> imp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
+        setGroup(10);
     }
 
     ArrayList<Map.Entry<Car,List>> carsData = null;

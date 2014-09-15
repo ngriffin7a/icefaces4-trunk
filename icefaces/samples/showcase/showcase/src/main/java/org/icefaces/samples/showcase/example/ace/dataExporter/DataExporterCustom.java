@@ -72,6 +72,7 @@ public class DataExporterCustom extends ComponentExampleImpl<DataExporterCustom>
         if (null == carsData){
             this.getRandomData();
         }
+        setGroup(10);
     }
 	
 	public static List<CustomCar> getRandomData() {

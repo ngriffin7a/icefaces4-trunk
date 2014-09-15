@@ -53,5 +53,6 @@ public class GlobalTooltipBean extends ComponentExampleImpl<GlobalTooltipBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(6);
     }
 }

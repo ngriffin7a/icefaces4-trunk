@@ -96,5 +96,6 @@ public class ChartBubbleBean extends ComponentExampleImpl<ChartBubbleBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(11);
     }
 }

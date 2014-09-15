@@ -77,7 +77,7 @@ public class VideoPlayerBean extends ComponentExampleImpl<VideoPlayerBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(3);
+        setGroup(13);
     }
 
     /////////////---- ACTION LISTENERS BEGIN

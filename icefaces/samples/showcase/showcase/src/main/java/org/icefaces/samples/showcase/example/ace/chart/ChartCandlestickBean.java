@@ -158,5 +158,6 @@ public class ChartCandlestickBean extends ComponentExampleImpl<ChartCandlestickB
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(11);
     }
 }

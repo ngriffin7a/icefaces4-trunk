@@ -82,6 +82,7 @@ public class MessageBean extends ComponentExampleImpl<MessageBean> implements Se
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(9);
     }
 
     public String getFirstName() {

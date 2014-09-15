@@ -61,5 +61,6 @@ public class SplitPaneBean extends ComponentExampleImpl< SplitPaneBean > impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 }

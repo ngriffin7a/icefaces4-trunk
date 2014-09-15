@@ -221,5 +221,6 @@ public class GMapControlBean extends ComponentExampleImpl<GMapControlBean> imple
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(12);
     }
 }

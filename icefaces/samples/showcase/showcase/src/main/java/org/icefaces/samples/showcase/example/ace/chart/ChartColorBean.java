@@ -86,6 +86,7 @@ public class ChartColorBean extends ComponentExampleImpl<ChartColorBean> impleme
         super.initMetaData();
         calculatePieData();
         createModels();
+        setGroup(11);
     }
     private void calculatePieData(){
         int totalApples = 0;

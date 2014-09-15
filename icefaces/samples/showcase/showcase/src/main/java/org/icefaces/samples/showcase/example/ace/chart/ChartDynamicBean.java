@@ -120,8 +120,8 @@ public class ChartDynamicBean extends ComponentExampleImpl<ChartDynamicBean> imp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-
         setupSelection();
+        setGroup(11);
     }
 
     public void setupSelection() {

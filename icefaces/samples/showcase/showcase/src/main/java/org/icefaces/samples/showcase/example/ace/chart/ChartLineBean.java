@@ -63,6 +63,7 @@ public class ChartLineBean extends ComponentExampleImpl<ChartLineBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(11);
     }
 
     private List<CartesianSeries> lineData = new ArrayList<CartesianSeries>() {{

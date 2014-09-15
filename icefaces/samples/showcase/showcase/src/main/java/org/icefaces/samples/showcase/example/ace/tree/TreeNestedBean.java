@@ -72,5 +72,6 @@ public class TreeNestedBean extends ComponentExampleImpl<TreeNestedBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 }

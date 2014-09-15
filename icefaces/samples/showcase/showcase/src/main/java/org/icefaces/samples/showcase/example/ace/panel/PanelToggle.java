@@ -59,6 +59,7 @@ public class PanelToggle extends ComponentExampleImpl<PanelToggle> implements Se
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+        setGroup(7);
     }
 
     public boolean getToggleable() { return toggleable; }
