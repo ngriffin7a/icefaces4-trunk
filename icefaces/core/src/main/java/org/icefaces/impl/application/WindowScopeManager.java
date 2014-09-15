@@ -34,6 +34,8 @@ import javax.faces.event.*;
 import javax.faces.lifecycle.ClientWindow;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -245,7 +247,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
     }
 
-    public static synchronized void disposeWindow(final FacesContext context, String id, Timer timer) {
+    public static synchronized void disposeWindow(final FacesContext context, String id) {
         final State state = getState(context);
         ScopeMap scopeMap = (ScopeMap) state.windowScopedMaps.get(id);
         //verify if the ScopeMap is present
@@ -260,6 +262,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             long windowScopeExpiration = EnvUtils.getWindowScopeExpiration(context);
             //copy session beans before they're cleared on FacesContext.release()
             final Map session = new HashMap(context.getExternalContext().getSessionMap());
+            Timer timer = (Timer) context.getExternalContext().getApplicationMap().get(SetupTimer.class);
             timer.schedule(new AllWindowsClosedNotifier(state, session), windowScopeExpiration * 2);
         }
 
@@ -570,22 +573,22 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
     }
 
+    public static class SetupTimer implements ServletContextListener {
+        private Timer timer;
+
+        public void contextInitialized(ServletContextEvent servletContextEvent) {
+            timer = new Timer("WindowScopeManager timer", true);
+            servletContextEvent.getServletContext().setAttribute(SetupTimer.class.getName(), timer);
+        }
+
+        public void contextDestroyed(ServletContextEvent servletContextEvent) {
+            timer.cancel();
+        }
+    }
+
     public static class DetermineOrDisposeScope implements PhaseListener {
-        private Timer timer = new Timer("WindowScopeManager timer", true);
 
         public DetermineOrDisposeScope() {
-            FacesContext context = FacesContext.getCurrentInstance();
-            Application application = context.getApplication();
-            //shutdown timer
-            application.subscribeToEvent(PreDestroyApplicationEvent.class, new SystemEventListener() {
-                public boolean isListenerForSource(Object source) {
-                    return true;
-                }
-
-                public void processEvent(SystemEvent event) {
-                    timer.cancel();
-                }
-            });
         }
 
         public void afterPhase(final PhaseEvent event) {
@@ -596,7 +599,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
                 //shortcut the lifecycle to avoid running it with certain parts discarded or disposed
                 facesContext.responseComplete();
                 String windowID = (String) parameters.get("ice.window");
-                disposeWindow(facesContext, windowID, timer);
+                disposeWindow(facesContext, windowID);
                 if (EnvUtils.isICEpushPresent()) {
                     try {
                         String[] viewIDs = externalContext.getRequestParameterValuesMap().get("ice.view");
