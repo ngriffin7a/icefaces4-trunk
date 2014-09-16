@@ -36,5 +36,14 @@
 
     <ui:define name="example">
 
+		<h:form id="form">
+            <ace:panel id="themePanel" header="Theme Selection" style="width: 100%;">
+				<h:outputText value="Select new theme: "/>
+				<ace:themeSelect value="#{navigationModel.theme}">
+					<ace:ajax render="@all"/>
+				</ace:themeSelect>
+			</ace:panel>
+		</h:form>
+
     </ui:define>
 </ui:composition>

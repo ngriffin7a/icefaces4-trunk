@@ -36,5 +36,47 @@
 
     <ui:define name="example">
 
+		<h:form id="form">
+
+            <ace:panel id="videoPlayerPanel" header="Video Player" style="width: 100%;">
+                <h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
+                    <h:outputLabel for="value" value="Illusion video: "/>
+                    <h:selectOneMenu id="value" value="#{videoPlayerBean.value}">
+						<f:ajax render="videoPlayer" />
+                        <f:selectItem itemLabel="Illusion 1" itemValue="./resources/media/illusion1.mp4"/>
+                        <f:selectItem itemLabel="Illusion 2" itemValue="./resources/media/illusion2.mp4"/>
+                        <f:selectItem itemLabel="Illusion 3" itemValue="./resources/media/illusion3.mp4"/>
+                        <f:selectItem itemLabel="Illusion 4" itemValue="./resources/media/illusion4.mp4"/>
+                        <f:selectItem itemLabel="Illusion 5" itemValue="./resources/media/illusion5.mp4"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel for="autoplay" value="Autoplay: "/>
+                    <h:selectBooleanCheckbox id="autoplay" value="#{videoPlayerBean.autoplay}">
+						<f:ajax render="videoPlayer" />
+                    </h:selectBooleanCheckbox>
+
+                    <h:outputLabel for="loop" value="Loop: "/>
+                    <h:selectBooleanCheckbox id="loop" value="#{videoPlayerBean.loop}">
+						<f:ajax render="videoPlayer" />
+                    </h:selectBooleanCheckbox>
+
+                    <h:outputLabel for="newwindow" value="Play in new window: "/>
+                    <h:selectBooleanCheckbox id="newwindow" value="#{videoPlayerBean.newWindow}">
+						<f:ajax render="videoPlayer" />
+                    </h:selectBooleanCheckbox>
+				</h:panelGrid>
+
+            <ace:videoPlayer id="videoPlayer"
+                             value="#{videoPlayerBean.value}"
+                             type="audio/mpeg"
+                             linkLabel="#{!videoPlayerBean.newWindow ? '' : 'Click here to load video clip in new window.'}"
+                             autoplay="#{!videoPlayerBean.newWindow ? videoPlayerBean.autoplay : false}"
+                             controls="#{!videoPlayerBean.newWindow}"
+                             loop="#{videoPlayerBean.loop}"/>
+            </ace:panel>
+
+		</h:form>
+
     </ui:define>
+
 </ui:composition>
