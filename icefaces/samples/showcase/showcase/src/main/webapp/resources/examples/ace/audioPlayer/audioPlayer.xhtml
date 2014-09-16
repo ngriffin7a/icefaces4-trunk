@@ -36,5 +36,52 @@
 
     <ui:define name="example">
 
+		<h:form id="form">
+
+            <ace:panel id="ajaxAdvancedSettings" header="Settings" style="width: 100%;">
+                <h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
+                    <h:outputLabel for="value" value="Sound clip: "/>
+                    <h:selectOneMenu id="value" value="#{audioPlayerBean.value}">
+						<f:ajax render="audioPlayer" />
+                        <f:selectItem itemLabel="Canary" itemValue="./resources/media/canary.mp3"/>
+                        <f:selectItem itemLabel="Crow" itemValue="./resources/media/crow.mp3"/>
+                        <f:selectItem itemLabel="Duck" itemValue="./resources/media/duck.mp3"/>
+                        <f:selectItem itemLabel="Owl" itemValue="./resources/media/owl.mp3"/>
+                        <f:selectItem itemLabel="Seagull" itemValue="./resources/media/seagull.mp3"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel for="autoplay" value="Autoplay: "/>
+                    <h:selectBooleanCheckbox id="autoplay" value="#{audioPlayerBean.autoplay}">
+						<f:ajax render="audioPlayer" />
+                    </h:selectBooleanCheckbox>
+
+                    <h:outputLabel for="loop" value="Loop: "/>
+                    <h:selectBooleanCheckbox id="loop" value="#{audioPlayerBean.loop}">
+						<f:ajax render="audioPlayer" />
+                    </h:selectBooleanCheckbox>
+
+                    <h:outputLabel for="muted" value="Muted: "/>
+                    <h:selectBooleanCheckbox id="muted" value="#{audioPlayerBean.muted}">
+						<f:ajax render="audioPlayer" />
+                    </h:selectBooleanCheckbox>
+
+                    <h:outputLabel for="newwindow" value="Play in new window: "/>
+                    <h:selectBooleanCheckbox id="newwindow" value="#{audioPlayerBean.newWindow}">
+						<f:ajax render="audioPlayer" />
+                    </h:selectBooleanCheckbox>
+				</h:panelGrid>
+
+            <ace:audioPlayer id="audioPlayer"
+                             value="#{audioPlayerBean.value}"
+                             type="audio/mpeg"
+                             linkLabel="#{!audioPlayerBean.newWindow ? '' : 'Click here to load sound clip in new window.'}"
+                             autoplay="#{!audioPlayerBean.newWindow ? audioPlayerBean.autoplay : false}"
+                             controls="#{!audioPlayerBean.newWindow}"
+                             loop="#{audioPlayerBean.loop}"
+                             muted="#{audioPlayerBean.muted}"/>
+            </ace:panel>
+
+		</h:form>
+
     </ui:define>
 </ui:composition>
