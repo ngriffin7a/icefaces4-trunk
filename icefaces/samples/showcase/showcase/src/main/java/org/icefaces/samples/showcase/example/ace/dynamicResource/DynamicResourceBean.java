@@ -24,6 +24,18 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
+import javax.faces.application.Resource;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import java.net.URL;
+import javax.faces.context.FacesContext;
+
 @ComponentExample(
         title = "example.ace.dynamicResource.title",
         description = "example.ace.dynamicResource.description",
@@ -54,8 +66,7 @@ import java.io.Serializable;
 )
 @ManagedBean(name= DynamicResourceBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DynamicResourceBean extends ComponentExampleImpl<DynamicResourceBean> implements Serializable 
-{
+public class DynamicResourceBean extends ComponentExampleImpl<DynamicResourceBean> implements Serializable {
     public static final String BEAN_NAME = "dynamicResourceBean";
     
     public DynamicResourceBean() {
@@ -67,25 +78,91 @@ public class DynamicResourceBean extends ComponentExampleImpl<DynamicResourceBea
     public void initMetaData() {
         super.initMetaData();
         setGroup(8);
+		String resourcePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/media/icemobile.pdf");
+		File file = new File(resourcePath);
+		try {
+			this.resource = new MyResource(readIntoByteArray(new FileInputStream(file)));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			this.resource = new MyResource(new byte[0]);
+		}
     }
 
-    private String firstName;
-    private String lastName;
+	private Resource resource;
+	private String label = "Click here to download";
+	private String type = "link";
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public Resource getResource() {
+		return resource;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getLabel() {
+		return label;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+    private static byte[] readIntoByteArray(InputStream in) throws IOException {
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        while ((bytesRead = in.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+        }
+        out.flush();
+
+        return out.toByteArray();
     }
-    
+	
+	public class MyResource extends Resource implements java.io.Serializable {
+
+		private String path = "";
+		private HashMap<String, String> headers;
+		private byte[] bytes;
+		
+		public MyResource(byte[] bytes) {
+			this.bytes = bytes;
+			this.headers = new HashMap<String, String>();
+		}
+		
+		public InputStream getInputStream() {
+			return new ByteArrayInputStream(this.bytes);
+		}
+
+		public String getRequestPath() {
+			return path;
+		}
+		
+		public void setRequestPath(String path) {
+			this.path = path;
+		}
+
+		public Map<String, String> getResponseHeaders() {
+			return headers;
+		}
+
+		public URL	getURL() {
+			return null;
+		}
+
+		public boolean userAgentNeedsUpdate(FacesContext context) {
+			return false;
+		}
+	}
 }
