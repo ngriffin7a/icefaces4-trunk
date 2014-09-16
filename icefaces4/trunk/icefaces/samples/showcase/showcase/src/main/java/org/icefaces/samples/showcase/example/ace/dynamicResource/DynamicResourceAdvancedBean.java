@@ -59,22 +59,31 @@ public class DynamicResourceAdvancedBean extends ComponentExampleImpl<DynamicRes
         setGroup(8);
     }
 
-    private boolean draggable;
-    private boolean modal;
+	private String fileName = "icemobile.pdf";
+	private String mimeType = "application/pdf";
+	private boolean attachment = true;
 
-    public boolean isDraggable() {
-        return draggable;
-    }
+	public String getFileName() {
+		return fileName;
+	}
 
-    public void setDraggable(boolean draggable) {
-        this.draggable = draggable;
-    }
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-    public boolean isModal() {
-        return modal;
-    }
+	public String getMimeType() {
+		return mimeType;
+	}
 
-    public void setModal(boolean modal) {
-        this.modal = modal;
-    }
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
+	}
+
+	public boolean isAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(boolean attachment) {
+		this.attachment = attachment;
+	}
 }

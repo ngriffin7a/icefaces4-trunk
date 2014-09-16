@@ -36,5 +36,36 @@
 
     <ui:define name="example">
 
+		<h:form id="form">
+
+            <ace:panel id="dynamicResourcePanel" header="Dynamic Resource" style="width: 100%;">
+				<h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
+					<h:outputLabel for="label" value="Enter label: " />
+					<h:inputText id="label" value="#{dynamicResourceBean.label}">
+						<f:ajax render="@form" />
+					</h:inputText>
+
+					<h:outputLabel for="type" value="Choose Type: " />
+					<h:selectOneRadio id="type" value="#{dynamicResourceBean.type}">
+						<f:ajax render="@form" />
+						<f:selectItem itemValue="link" itemLabel="Link" />
+						<f:selectItem itemValue="image" itemLabel="Image" />
+						<f:selectItem itemValue="button" itemLabel="Button" />
+					</h:selectOneRadio>
+
+					<ace:dynamicResource id="dynamicResource"
+						resource="#{dynamicResourceBean.resource}" 
+						label="#{dynamicResourceBean.label}" 
+						fileName="icemobile.pdf" 
+						attachment="false" 
+						mimeType="application/pdf" 
+						image="#{dynamicResourceBean.type eq 'image' ? 'css/images/download-button.gif' : ''}" 
+						type="#{dynamicResourceBean.type}" />
+					<h:outputText value=""/>
+				</h:panelGrid>
+			</ace:panel>
+
+		</h:form>
+
     </ui:define>
 </ui:composition>
