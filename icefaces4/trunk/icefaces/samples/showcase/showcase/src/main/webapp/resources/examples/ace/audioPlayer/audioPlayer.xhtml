@@ -38,9 +38,9 @@
 
 		<h:form id="form">
 
-            <ace:panel id="ajaxAdvancedSettings" header="Settings" style="width: 100%;">
+            <ace:panel id="audioPlayerPanel" header="Audio Player" style="width: 100%;">
                 <h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
-                    <h:outputLabel for="value" value="Sound clip: "/>
+                    <h:outputLabel for="value" value="Bird sound: "/>
                     <h:selectOneMenu id="value" value="#{audioPlayerBean.value}">
 						<f:ajax render="audioPlayer" />
                         <f:selectItem itemLabel="Canary" itemValue="./resources/media/canary.mp3"/>

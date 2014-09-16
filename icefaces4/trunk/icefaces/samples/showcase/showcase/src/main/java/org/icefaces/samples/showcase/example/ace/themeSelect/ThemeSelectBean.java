@@ -60,47 +60,13 @@ import javax.faces.event.ActionEvent;
 public class ThemeSelectBean extends ComponentExampleImpl<ThemeSelectBean> implements Serializable {
     public static final String BEAN_NAME = "themeSelectBean";
     
-    private Format formatter;
-    private String message;
-    private List<String> list;
-    public final String DEFAULT_MESSAGE = "please click on a button and select any menu item without icon";
-    public final int MAX_LIST_SIZE = 5;
-    
-    /////////////---- CONSTRUCTORS BEGIN
     public ThemeSelectBean() {
         super(ThemeSelectBean.class);
-        formatter = new SimpleDateFormat("HH:mm:ss");
-        list = new ArrayList<String>(MAX_LIST_SIZE);
-        list.add(DEFAULT_MESSAGE);
     }
     
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(3);
+        setGroup(14);
     }
-
-    /////////////---- ACTION LISTENERS BEGIN
-    public void fireAction(ActionEvent event) 
-    {
-        String [] results = event.getComponent().getParent().getClientId().split(":");
-        message= results[results.length-1].toUpperCase() + " > ";
-        results = event.getComponent().getClientId().split(":");
-        message += results[results.length-1].toUpperCase();
-        message += " - selected @ "+formatter.format(new Date()) + " (server time)";
-        
-        if(list.get(0).equals(DEFAULT_MESSAGE)) {
-            list.clear(); 
-        }
-        if (list.size()<MAX_LIST_SIZE) {
-            list.add(message);
-        }
-        else {
-            list.clear();
-            list.add(message);
-        }
-    }
-    /////////////---- GETTERS & SETTERS BEGIN
-    public List<String> getList() { return list; }
-    public void setList(List<String> list) { this.list = list; }
 }

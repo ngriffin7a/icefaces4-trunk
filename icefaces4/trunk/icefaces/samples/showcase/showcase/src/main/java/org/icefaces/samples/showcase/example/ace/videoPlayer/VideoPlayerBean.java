@@ -60,18 +60,8 @@ import javax.faces.event.ActionEvent;
 public class VideoPlayerBean extends ComponentExampleImpl<VideoPlayerBean> implements Serializable {
     public static final String BEAN_NAME = "videoPlayerBean";
     
-    private Format formatter;
-    private String message;
-    private List<String> list;
-    public final String DEFAULT_MESSAGE = "please click on a button and select any menu item without icon";
-    public final int MAX_LIST_SIZE = 5;
-    
-    /////////////---- CONSTRUCTORS BEGIN
     public VideoPlayerBean() {
         super(VideoPlayerBean.class);
-        formatter = new SimpleDateFormat("HH:mm:ss");
-        list = new ArrayList<String>(MAX_LIST_SIZE);
-        list.add(DEFAULT_MESSAGE);
     }
     
     @PostConstruct
@@ -80,27 +70,50 @@ public class VideoPlayerBean extends ComponentExampleImpl<VideoPlayerBean> imple
         setGroup(13);
     }
 
-    /////////////---- ACTION LISTENERS BEGIN
-    public void fireAction(ActionEvent event) 
-    {
-        String [] results = event.getComponent().getParent().getClientId().split(":");
-        message= results[results.length-1].toUpperCase() + " > ";
-        results = event.getComponent().getClientId().split(":");
-        message += results[results.length-1].toUpperCase();
-        message += " - selected @ "+formatter.format(new Date()) + " (server time)";
-        
-        if(list.get(0).equals(DEFAULT_MESSAGE)) {
-            list.clear(); 
-        }
-        if (list.size()<MAX_LIST_SIZE) {
-            list.add(message);
-        }
-        else {
-            list.clear();
-            list.add(message);
-        }
+    private boolean autoplay = false;
+    private boolean newWindow = false;
+    private boolean loop = false;
+
+    private String linkLabel = null;
+    private String value = "./resources/media/illusion1.mp4";
+
+    public String getValue() {
+        return value;
     }
-    /////////////---- GETTERS & SETTERS BEGIN
-    public List<String> getList() { return list; }
-    public void setList(List<String> list) { this.list = list; }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public boolean isAutoplay() {
+        return autoplay;
+    }
+
+    public void setAutoplay(boolean autoplay) {
+        this.autoplay = autoplay;
+    }
+
+    public boolean isNewWindow() {
+        return newWindow;
+    }
+
+    public void setNewWindow(boolean newWindow) {
+        this.newWindow = newWindow;
+    }
+
+    public boolean isLoop() {
+        return loop;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
+
+    public String getLinkLabel() {
+        return linkLabel;
+    }
+
+    public void setLinkLabel(String linkLabel) {
+        this.linkLabel = linkLabel;
+    }
 }
