@@ -138,7 +138,7 @@ public class FileEntryRenderer extends Renderer {
         writer.startElement("input", null);
         writer.writeAttribute("type", "file", "type");
 
-        String identifier = FileEntry.getGloballyUniqueComponentIdentifier(facesContext, fileEntry.getClientId());
+        String identifier = fileEntry.getClientId(facesContext);
         writer.writeAttribute("id", identifier, "clientId");
         writer.writeAttribute("name", identifier, "clientId");
         if (!multiple) {

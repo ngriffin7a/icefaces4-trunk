@@ -97,8 +97,7 @@ class PushUtils {
      * @return Resource name
      */
     static String getProgressResourceName(FacesContext context, UIComponent comp) {
-        String identifier = FileEntry.getGloballyUniqueComponentIdentifier(
-                context, comp.getClientId(context));
+        String identifier = comp.getClientId(context);
         return PROGRESS_PREFIX + identifier + ".txt";
     }
 
@@ -181,8 +180,7 @@ class PushUtils {
                 comp.getClientId(context);
         String groupName = (String) comp.getAttributes().get(attribKey);
         if (groupName == null) {
-            String identifier = FileEntry.getGloballyUniqueComponentIdentifier(
-                    context, comp.getClientId(context));
+            String identifier = comp.getClientId(context);
             log.finer("PushUtils.getPushGroupName()  groupName was null - identifier: " + identifier);
             groupName = PROGRESS_GROUP_NAME_PREFIX + identifier;
             comp.getAttributes().put(attribKey, groupName);
