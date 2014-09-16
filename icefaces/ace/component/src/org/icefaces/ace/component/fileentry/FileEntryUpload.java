@@ -316,27 +316,25 @@ public class FileEntryUpload implements PhaseListener {
         FileEntryStatus status = FileEntryStatuses.UPLOADING;
 
         log.fine("vvvvvvvvvvvvvvv");
-        try {
-            String name = item.getFileName();
-            String fieldName = item.getFieldName();
-            String contentType = item.getContentType();
-            log.fine(
+        String name = item.getFileName();
+        String fieldName = item.getFieldName();
+        String contentType = item.getContentType();
+        log.fine(
                 "File  name: " + name + "\n" +
-                "File  fieldName: " + fieldName + "\n" +
-                "File  contentType: " + contentType);
-
-            // Remove \ escaping for ; ' "
-            // IE gives us the whole path on the client, but we just
-            //  want the client end file name, not the path
-            String fileName = null;
-            if (name != null && name.length() > 0) {
-                fileName = name.replace("\\;", ";");
-                fileName = fileName.replace("\\'", "'");
-                fileName = fileName.replace("\\\"", "\"");
-                fileName = trimInternetExplorerPath(fileName);
-            }
-            log.fine("File    IE adjusted fileName: " + fileName);
-            
+                        "File  fieldName: " + fieldName + "\n" +
+                        "File  contentType: " + contentType);
+        // Remove \ escaping for ; ' "
+        // IE gives us the whole path on the client, but we just
+        //  want the client end file name, not the path
+        String fileName = null;
+        if (name != null && name.length() > 0) {
+            fileName = name.replace("\\;", ";");
+            fileName = fileName.replace("\\'", "'");
+            fileName = fileName.replace("\\\"", "\"");
+            fileName = trimInternetExplorerPath(fileName);
+        }
+        log.fine("File    IE adjusted fileName: " + fileName);
+        try {
             // When no file name is given, that means the user did
             // not upload a file
             if (fileName != null && fileName.length() > 0) {
@@ -344,13 +342,14 @@ public class FileEntryUpload implements PhaseListener {
                 fileEntry = (FileEntry) ComponentUtils.findComponent(facesContext.getViewRoot(), fileEntryID);
 
                 if (fileEntry != null) {
+                    final String clientId = fieldName;
                     // fileEntry being null might be indicative of a non-ICEfaces' file upload component in the form
                     log.fine("File    fileEntry: " + fileEntry);
 
-                    results = clientId2Results.get(fileEntry.getClientId());
+                    results = clientId2Results.get(clientId);
                     if (results == null) {
                         results = new FileEntryResults(fileEntry.isViaCallback());
-                        clientId2Results.put(fileEntry.getClientId(), results);
+                        clientId2Results.put(clientId, results);
                     }
                     log.fine("File    results: " + results);
 
@@ -362,7 +361,7 @@ public class FileEntryUpload implements PhaseListener {
                             fileEntry.getProgressGroupName(facesContext));
 
                     if (fileEntry.isViaCallback()) {
-                        callback = clientId2Callbacks.get(fileEntry.getClientId());
+                        callback = clientId2Callbacks.get(clientId);
                         if (callback == null) {
                             try {
                                 callback = evaluateCallback(facesContext, fileEntry);

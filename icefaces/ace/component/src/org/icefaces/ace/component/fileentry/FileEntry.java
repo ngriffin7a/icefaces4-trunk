@@ -67,44 +67,6 @@ public class FileEntry extends FileEntryBase implements Focusable {
         setResults(null);
     }
 
-    /**
-     * Apparently, the view id changes, if you try to get it early in
-     * the lifecycle. So, you can only call this method later on, while 
-     * rendering. As such, it's only really applicable from storeConfig(-)
-     * 
-     * By definition, this method must encode both the clientId and the
-     * view id, so that both parts can be extracted out by the
-     * FileEntryPhaseListener. It's used as a key into the session map, to 
-     * store the FileEntryConfig. As well, it has to be a valid HTML form 
-     * field id and name. From the HTML 4 and XHTML 1 specs: ID and NAME 
-     * tokens must begin with a letter ([A-Za-z]) and may be followed by any 
-     * number of letters, digits ([0-9]), hyphens ("-"), underscores ("_"), 
-     * colons (":"), and periods (".").
-     * 
-     * TODO
-     * An alternative implementation, that would not rely on the view
-     * id, would involve using a sequence number in the session, so that new
-     * fileEntry components would take a sequence number from the session, 
-     * and then hold onto that, using state saving. There might even be a 
-     * way to use view or page scope, to hold the identifier, using the 
-     * clientId as a key, so that if the fileEntry component is removed and 
-     * re-added to the view, it would retain the original identifier.
-     * 
-     * TODO
-     * One way to remove some of the necessity for always consistent 
-     * identifiers is for a phase listener to remove the config at the 
-     * beginning of the lifecycle, so that if it's stored under a new 
-     * identifier at the end of the lifecycle, then the old one is not leaked. 
-     */
-    static String getGloballyUniqueComponentIdentifier(
-            FacesContext facesContext, String clientId) {
-        String viewId = BridgeSetup.getViewID(facesContext.getExternalContext());
-        // I couldn't find a character that's valid in an HTML id/name, but 
-        // not in a clientId, do just going with a double colon delimiter.
-        String id = clientId + "::" + viewId;
-        return id;
-    }
-
     public String getCallbackEL() {
         javax.el.ValueExpression callbackExpression = getValueExpression("callback");
         return callbackExpression == null ? null : callbackExpression.getExpressionString();
