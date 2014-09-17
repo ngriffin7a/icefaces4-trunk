@@ -73,7 +73,12 @@ public class ViewManagerMeta extends UIComponentBaseMeta {
             + " be set to the associated view title. ", defaultValue = "mobi-view")
     private String backButtonLabel;
     
-    
+    @Property(tlddoc = "Render the views client side. If set to true, the views will be fully rendered, and fully client side navigation will be possible.",
+        defaultValue = "false")
+    private boolean clientSide;
+
+    @Property(tlddoc = "The style to apply to all shaded bar elements in the ViewManager, such as the header and menu dividers.")
+    private String barStyle;
 
     
 }

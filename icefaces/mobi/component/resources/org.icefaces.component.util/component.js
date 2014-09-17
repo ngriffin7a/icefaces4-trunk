@@ -2082,41 +2082,48 @@ ice.mobi.addListener(document, "touchstart", function(){});
     }
 
     function refreshViewDimensions(){
-        console.log('refreshViewDimensions()');
-        if ((window.innerWidth != currentWidth) || (window.innerHeight != currentHeight)){
+        //console.log('refreshViewDimensions()');
+         document.body.style.overflowY = 'hidden';
+
+ if ((window.innerWidth != currentWidth) || (window.innerHeight != currentHeight)){
             currentWidth = window.innerWidth;
             currentHeight = window.innerHeight;
             var orient = (currentWidth < currentHeight) ? 'portrait' : 'landscape';
             setOrientation(orient);
         }
         
-        var contentHeight = currentHeight - 45; //adjust for header
+        var contentHeight = currentHeight - 39; //adjust for header
         var currentView = getNodeForView(getCurrentView());
-        if (!currentView) return;
-        if( currentView.querySelectorAll('.mobi-vm-nav-bar').length > 0 ){
-            contentHeight -= 40; //adjust for nav bar if exists
+        if( currentView ){
+            if( currentView.querySelectorAll('.mobi-vm-nav-bar').length > 0 ){
+                contentHeight -= 40; //adjust for nav bar if exists
+            }
+            var contentNode = currentView.querySelectorAll('.mobi-vm-view-content')[0];
+            if( contentNode ){
+                contentNode.style.height = '' + contentHeight + 'px';
+                //ice.log.debug(ice.log, 'set view content height to ' + contentHeight);
+            }
+            else{
+                console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find content node for view = ' + currentView.id);
+            }
         }
-        var contentNode = currentView.querySelectorAll('.mobi-vm-view-content')[0];
-        if( contentNode ){
-            contentNode.style.height = '' + contentHeight + 'px';
-            console.log('set view content height to ' + contentHeight);
-        }
-        else
-            console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find content node for view = ' + currentView.id);
-        var menuNode = document.querySelectorAll('.mobi-vm-menu')[0];
+        var menuNode = document.querySelector('.mobi-vm-menu');
         if( menuNode ){
-            menuNode.style.height = '' + (currentHeight - 45) + 'px';
-            console.log('set menu height to ' + (currentHeight - 45));
+            menuNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
+        }
+        var splashNode = document.querySelector('.mobi-vm-splash');
+        if( splashNode ){
+            splashNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
         }
         else
             console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find menu node');
 
     }
-
+    
     function getTransitionFunctions(reverse){
         if( 'horizontal' == transitionType ){
             return [function(from,to){
-                setTransform(to, 'translateX(' + (reverse ? '-' : '')
+                setTransform(to, 'translateX(' + (reverse ? '-' : '') 
                         + window.innerWidth +    'px)');
             },function(from,to){
                 setTransform(from, 'translateX(' + (reverse ? '100%' : '-100%') + ')');
@@ -2125,7 +2132,7 @@ ice.mobi.addListener(document, "touchstart", function(){});
         }
         else if( 'vertical' == transitionType ){
             return [function(from,to){
-                setTransform(to, 'translateY(' + (reverse ? '-' : '')
+                setTransform(to, 'translateY(' + (reverse ? '-' : '') 
                         + window.innerWidth +    'px)');
             },function(from,to){
                 setTransform(from, 'translateY(' + (reverse ? '100%' : '-100%') + ')');
@@ -2212,7 +2219,7 @@ ice.mobi.addListener(document, "touchstart", function(){});
         elem.removeEventListener('transitionEnd', f, false);
     }
     function updateViews(fromNode, toNode, reverse){
-        console.log('updateViews() enter');
+        //ice.log.debug(ice.log, 'updateViews() enter');
         if( supportsTransitions() ){
             var transitions = getTransitionFunctions(reverse);
             transitions[0](fromNode,toNode);
@@ -2220,10 +2227,10 @@ ice.mobi.addListener(document, "touchstart", function(){});
             setTransitionDuration(toNode, '');
             setTimeout(transitionComplete, transitionDuration);
             setTimeout(function(){
-                console.log('transition() for transition supported');
+                //ice.log.debug(ice.log, 'transition() for transition supported');
                 transitions[1](fromNode,toNode);
             }, 0);
-        }
+        } 
         else{
             toNode.style.left = "100%";
             scrollTo(0, 1);
@@ -2233,20 +2240,20 @@ ice.mobi.addListener(document, "touchstart", function(){});
             var timer = setInterval(transition, 0);
 
             function transition(){
-                console.log('transition() for transition unsupported');
+                //ice.log.debug(ice.log, 'transition() for transition unsupported');
                 percent -= 20;
                 if (percent <= 0){
                     percent = 0;
                     clearInterval(timer);
                     transitionComplete();
                 }
-                fromNode.style.left = (reverse ? (100-percent) : (percent-100)) + "%";
-                toNode.style.left = (reverse ? -percent : percent) + "%";
+                fromNode.style.left = (reverse ? (100-percent) : (percent-100)) + "%"; 
+                toNode.style.left = (reverse ? -percent : percent) + "%"; 
             }
         }
-
+        
         function transitionComplete(){
-            console.log('transitionComplete');
+            //ice.log.debug(ice.log, 'transitionComplete');
             if( fromNode )
                 fromNode.removeAttribute('data-selected');
             checkTimer = setTimeout(refreshViewDimensions, 0);
@@ -2254,12 +2261,13 @@ ice.mobi.addListener(document, "touchstart", function(){});
             if( fromNode )
                 removeTransitionEndListener(fromNode, transitionComplete);
         }
-        console.log('updateViews() exit');
+        //ice.log.debug(ice.log, 'updateViews() exit');
     }
     function refreshBackButton(toNode){
-        console.log('refreshBackButton()');
+        //ice.log.debug(ice.log, 'refreshBackButton()');
         var headerNode = document.querySelectorAll('.mobi-vm-header')[0];
         var backButton = headerNode.children[1];
+        
         var selected = getCurrentView();
         if (backButton){
             if( viewHistory.length == 1 ){
@@ -2272,10 +2280,11 @@ ice.mobi.addListener(document, "touchstart", function(){});
                     var prevView = getNodeForView(prev);
                     if( prevView ){
                         backButton.style.display = "inline";
-                        var title = prevView.getAttribute('data-title');
-                        var backButtonLabel = backButton.getAttribute('data-backbutton-label') == 'mobi-view' ? 
-                                (title ? title : "Back") : backButton.getAttribute('data-backbutton-label');
-                        backButton.innerHTML = backButtonLabel;
+                        var title = prevView.getAttribute('data-title'),
+                            backButtonLabel = backButton.getAttribute('data-backbutton-label') == 'mobi-view' ? 
+                                (title ? title : "Back") : backButton.getAttribute('data-backbutton-label'),
+                            backButtonText = backButton.querySelector('.mobi-vm-back-text');
+                        backButtonText.innerHTML = backButtonLabel;
                     }
                 }
             }
@@ -2287,7 +2296,7 @@ ice.mobi.addListener(document, "touchstart", function(){});
         refreshViewDimensions();
     }
     function refreshView(toNode){
-        console.log('refreshView()');
+        //ice.log.debug(ice.log, 'refreshView()');
         var headerNode = document.querySelectorAll('.mobi-vm-header')[0];
         var titleNode = headerNode.firstChild;
         var title = toNode.getAttribute('data-title');
@@ -2295,72 +2304,96 @@ ice.mobi.addListener(document, "touchstart", function(){});
             titleNode.innerHTML = title;
         }
         refreshBackButton();
-
+        
     }
     function viewHasNavBar(view){
         return view.querySelectorAll('.mobi-vm-nav-bar').length > 0;
     }
+    
+    function indexOfView(view){
+        var views = document.querySelectorAll('.mobi-vm-view');
+        for( var i = 0 ; i < views.length ; i++ ){
+            if( views[i].getAttribute('data-view') === view ){
+                return i;
+            }
+        }
+        return -1;
+    }
 
+    function isClientSide(){
+        var root = document.querySelector('.mobi-vm'),
+            clientAttr = root ? root.getAttribute('data-clientside') : null;
+        return clientAttr ? clientAttr == 'true' : false;
+    }
+    
     im.viewManager = {
-        showView: function(view){
-            console.log('showView(' + view + ') current');
+        showView: function(view, event){
+            //ice.log.debug(ice.log, 'showView(' + view + ') current');
             var currentView = getCurrentView();
             if( view == currentView ){
                 return;
             }
-            var index = viewHistory.indexOf(view);
-            var reverse = index != -1 ;
-            if (reverse){
-                viewHistory.splice(index);
+            var views = document.querySelectorAll('.mobi-vm-view'),
+                toNode = getNodeForView(view),
+                toIndex = indexOfView(view),
+                fromNode = getNodeForView(currentView),
+                fromIndex = indexOfView(currentView);
+            if (viewHistory.indexOf(view) > -1){
+                viewHistory.splice(viewHistory.indexOf(view));
             }
-            var fromNode = getNodeForView(currentView);
-            var toNode = getNodeForView(view);
-            viewHistory.push(toNode.getAttribute('data-view'));
+            viewHistory.push(view);
             if( toNode && fromNode ){
-                setTimeout(updateViews, 0, fromNode, toNode, reverse);
+                setTimeout(updateViews, 0, fromNode, toNode, toIndex < fromIndex);
             }
             else if( toNode ){
                 toNode.setAttribute('data-selected', 'true');
             }
-            var submittingElement = document.getElementById("mobi_vm_selected");
-            submittingElement.value = view;
-            var formId = ice.mobi.formOf(submittingElement);
-            jsf.ajax.request(formId,null,{execute:'@form', render:'@all'});
+            document.getElementById("mobi_vm_selected").value = view;
+            if( isClientSide() ){
+                im.resizeAllContainers();
+            }
+            else{
+                jsf.ajax.request(proxyFormId,event,{execute:'@form', render:'@all'});
+            }
+            
             return false;
         },
-        goBack: function(src){
+        goBack: function(event){
             var goTo = viewHistory.slice(-2,-1)[0];
             if( goTo != undefined ){
-                im.viewManager.showView(goTo);
+                im.viewManager.showView(goTo, event);
             }
             else{
                 console.error('ViewManager.goBack() invalid state history = ' + viewHistory);
             }
-        },
-        goToMenu: function(){
-            im.viewManager.showView(menuId);
         },
         setState: function(transition, formId, vHistory){
             if( vHistory.length < 1 ){
                 console.error('invalid empty history added to ViewManager.setState() aborting');
                 return;
             }
-            var view = vHistory[vHistory.length-1];
+            var view = vHistory[vHistory.length-1],
+                       currentView = getCurrentView();
             transitionType = transition;
             proxyFormId = formId;
             viewHistory = vHistory;
-            if( view != getCurrentView()){
+            if( !currentView ){
+                  document.querySelector('.mobi-vm-header').firstChild.innerHTML = document.querySelector('.mobi-vm').getAttribute('data-title');
+                  document.querySelector('.mobi-vm-menu').setAttribute('data-selected', 'true');
+            }
+            else if( view != currentView){
                 var toNode = getNodeForView(view);
                 if( toNode ){
                     toNode.setAttribute('data-selected', 'true');
                     document.getElementById("mobi_vm_selected").value = view;
                 }
             }
+            
             refreshBackButtonAndViewDimensions();
             ice.mobi.addListener(window, 'resize', refreshViewDimensions);
             ice.mobi.addListener(window, 'orientationchange', refreshViewDimensions);
         }
-
+        
     }
 }(ice.mobi));
 
