@@ -62,7 +62,11 @@ public class ViewRenderer extends Renderer {
     }
 
     public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException {
-        Utils.renderChildren(facesContext, uiComponent);
+        View view = (View)uiComponent;
+        ViewManager vm = (ViewManager)(uiComponent.getParent());
+        if( vm.isClientSide() || view.isSplash() || vm.getSelectedView() == view ){
+            Utils.renderChildren(facesContext, uiComponent);
+        }
     }
 
 
@@ -98,15 +102,16 @@ public class ViewRenderer extends Renderer {
         String icon, String title)
         throws IOException{
         writer.startElement(HTML.ANCHOR_ELEM, null);
+        /*
         if( active ){
             writer.writeAttribute(HTML.CLASS_ATTR, "active", null);
-        }
+        }*/
         writer.writeAttribute(HTML.STYLE_ATTR, "width: " + width, null);
-        if( !active )
-            writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.mobi.viewManager.showView('" + view + "');", null);
+        //if( !active )
+            writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.mobi.viewManager.showView('" + view + "', event);", null);
         if( icon != null ){
             writer.startElement("i",null);
-            writer.writeAttribute(HTML.CLASS_ATTR, "icon-" + icon, null);
+            writer.writeAttribute(HTML.CLASS_ATTR, "fa fa-" + icon, null);
             writer.endElement("i");
         }
         writer.write(title);
