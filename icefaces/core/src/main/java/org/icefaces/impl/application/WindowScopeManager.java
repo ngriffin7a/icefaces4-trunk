@@ -262,7 +262,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             long windowScopeExpiration = EnvUtils.getWindowScopeExpiration(context);
             //copy session beans before they're cleared on FacesContext.release()
             final Map session = new HashMap(context.getExternalContext().getSessionMap());
-            Timer timer = (Timer) context.getExternalContext().getApplicationMap().get(SetupTimer.class);
+            Timer timer = (Timer) context.getExternalContext().getApplicationMap().get(SetupTimer.class.getName());
             timer.schedule(new AllWindowsClosedNotifier(state, session), windowScopeExpiration * 2);
         }
 
