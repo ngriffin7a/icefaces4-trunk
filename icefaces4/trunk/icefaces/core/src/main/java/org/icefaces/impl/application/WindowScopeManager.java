@@ -97,7 +97,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
                 //ICE-10174: iterate over a copy of the disposed scopes for thread safety.
                 for (Object scopeMap : new ArrayList(state.disposedWindowScopedMaps)) {
                     ScopeMap next = (ScopeMap)scopeMap;
-                    if (next.id.equals(id)) {
+                    if (next.id != null && next.id.equals(id)) {
                         return next;
                     }
                 }
