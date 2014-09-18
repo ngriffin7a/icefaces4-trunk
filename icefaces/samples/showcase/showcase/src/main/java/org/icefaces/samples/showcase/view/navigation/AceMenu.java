@@ -123,100 +123,104 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 @Menu(
         title = "menu.ace.title",
         menuLinks = {
-                @MenuLink(title = "menu.ace.aceSuiteOverview.title", isDefault = true, exampleBeanName = AceSuiteOverviewBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.aceSuiteOverview.title", isDefault = true, exampleBeanName = AceSuiteOverviewBean.BEAN_NAME, group=1, beanClass=AceSuiteOverviewBean.class),
 
-                @MenuLink(title = "menu.ace.ajax.title", exampleBeanName = AjaxBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.submitMonitor.title", exampleBeanName = SubmitMonitorBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.ajax.title", exampleBeanName = AjaxBean.BEAN_NAME, group=2, beanClass=AjaxBean.class),
+                @MenuLink(title = "menu.ace.submitMonitor.title", exampleBeanName = SubmitMonitorBean.BEAN_NAME, group=2, beanClass=SubmitMonitorBean.class),
 
-                @MenuLink(title = "menu.ace.autocompleteentry.title", exampleBeanName = AutoCompleteEntryBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.dateentry.title", exampleBeanName = DateEntryBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.maskedEntry.title", exampleBeanName = MaskedEntryBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.richtextentry.title", exampleBeanName = RichTextEntryBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.slider.title", exampleBeanName = SliderBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.textEntry.title", exampleBeanName = TextEntryBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.textAreaEntry.title", exampleBeanName = TextAreaEntryBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.autocompleteentry.title", exampleBeanName = AutoCompleteEntryBean.BEAN_NAME, group=3, beanClass=AutoCompleteEntryBean.class),
+                @MenuLink(title = "menu.ace.dateentry.title", exampleBeanName = DateEntryBean.BEAN_NAME, group=3, beanClass=DateEntryBean.class),
+                @MenuLink(title = "menu.ace.maskedEntry.title", exampleBeanName = MaskedEntryBean.BEAN_NAME, group=3, beanClass=MaskedEntryBean.class),
+                @MenuLink(title = "menu.ace.richtextentry.title", exampleBeanName = RichTextEntryBean.BEAN_NAME, group=3, beanClass=RichTextEntryBean.class),
+                @MenuLink(title = "menu.ace.slider.title", exampleBeanName = SliderBean.BEAN_NAME, group=3, beanClass=SliderBean.class),
+                @MenuLink(title = "menu.ace.textEntry.title", exampleBeanName = TextEntryBean.BEAN_NAME, group=3, beanClass=TextEntryBean.class),
+                @MenuLink(title = "menu.ace.textAreaEntry.title", exampleBeanName = TextAreaEntryBean.BEAN_NAME, group=3, beanClass=TextAreaEntryBean.class),
 
-                @MenuLink(title = "menu.ace.buttonGroup.title", exampleBeanName = ButtonGroupBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.checkboxButton.title", exampleBeanName = CheckboxButtonBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.linkButton.title", exampleBeanName = LinkButtonBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.pushButton.title", exampleBeanName = PushButtonBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.radioButton.title", exampleBeanName = RadioButtonBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.menuButton.title", exampleBeanName = MenuButtonBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.buttonGroup.title", exampleBeanName = ButtonGroupBean.BEAN_NAME, group=4, beanClass=ButtonGroupBean.class),
+                @MenuLink(title = "menu.ace.checkboxButton.title", exampleBeanName = CheckboxButtonBean.BEAN_NAME, group=4, beanClass=CheckboxButtonBean.class),
+                @MenuLink(title = "menu.ace.linkButton.title", exampleBeanName = LinkButtonBean.BEAN_NAME, group=4, beanClass=LinkButtonBean.class),
+                @MenuLink(title = "menu.ace.pushButton.title", exampleBeanName = PushButtonBean.BEAN_NAME, group=4, beanClass=PushButtonBean.class),
+                @MenuLink(title = "menu.ace.radioButton.title", exampleBeanName = RadioButtonBean.BEAN_NAME, group=4, beanClass=RadioButtonBean.class),
+                @MenuLink(title = "menu.ace.menuButton.title", exampleBeanName = MenuButtonBean.BEAN_NAME, group=4, beanClass=MenuButtonBean.class),
 
-                @MenuLink(title = "menu.ace.breadcrumbmenu.title", exampleBeanName = BreadcrumbMenuBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.contextMenu.title", exampleBeanName = ContextMenuBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.menu.title", exampleBeanName = MenuBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.menuBar.title", exampleBeanName = MenuBarBean.BEAN_NAME),
-				@MenuLink(title = "menu.ace.menuSeparator.title", exampleBeanName = MenuSeparatorBean.BEAN_NAME),
-				@MenuLink(title = "menu.ace.multiColumnSubmenu.title", exampleBeanName = MultiColumnSubmenuBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.selectmenu.title", exampleBeanName = SelectMenuBean.BEAN_NAME),
-    			@MenuLink(title = "menu.ace.simpleselectonemenu.title", exampleBeanName = SimpleSelectOneMenuBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.breadcrumbmenu.title", exampleBeanName = BreadcrumbMenuBean.BEAN_NAME, group=5, beanClass=BreadcrumbMenuBean.class),
+                @MenuLink(title = "menu.ace.contextMenu.title", exampleBeanName = ContextMenuBean.BEAN_NAME, group=5, beanClass=ContextMenuBean.class),
+                @MenuLink(title = "menu.ace.menu.title", exampleBeanName = MenuBean.BEAN_NAME, group=5, beanClass=MenuBean.class),
+                @MenuLink(title = "menu.ace.menuBar.title", exampleBeanName = MenuBarBean.BEAN_NAME, group=5, beanClass=MenuBarBean.class),
+				@MenuLink(title = "menu.ace.menuSeparator.title", exampleBeanName = MenuSeparatorBean.BEAN_NAME, group=5, beanClass=MenuSeparatorBean.class),
+				@MenuLink(title = "menu.ace.multiColumnSubmenu.title", exampleBeanName = MultiColumnSubmenuBean.BEAN_NAME, group=5, beanClass=MultiColumnSubmenuBean.class),
+                @MenuLink(title = "menu.ace.selectmenu.title", exampleBeanName = SelectMenuBean.BEAN_NAME, group=5, beanClass=SelectMenuBean.class),
+    			@MenuLink(title = "menu.ace.simpleselectonemenu.title", exampleBeanName = SimpleSelectOneMenuBean.BEAN_NAME, group=5, beanClass=SimpleSelectOneMenuBean.class),
 
-                @MenuLink(title = "menu.ace.combobox.title", exampleBeanName = ComboBoxBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.list.title", exampleBeanName = ListBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.combobox.title", exampleBeanName = ComboBoxBean.BEAN_NAME, group=6, beanClass=ComboBoxBean.class),
+                @MenuLink(title = "menu.ace.list.title", exampleBeanName = ListBean.BEAN_NAME, group=6, beanClass=ListBean.class),
 
-                @MenuLink(title = "menu.ace.dialog.title", exampleBeanName = DialogBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.confirmationdialog.title", exampleBeanName = ConfirmationDialogBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.notificationpanel.title", exampleBeanName = NotificationPanelBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.tooltip.title", exampleBeanName = TooltipOverviewBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.dialog.title", exampleBeanName = DialogBean.BEAN_NAME, group=7, beanClass=DialogBean.class),
+                @MenuLink(title = "menu.ace.confirmationdialog.title", exampleBeanName = ConfirmationDialogBean.BEAN_NAME, group=7, beanClass=ConfirmationDialogBean.class),
+                @MenuLink(title = "menu.ace.notificationpanel.title", exampleBeanName = NotificationPanelBean.BEAN_NAME, group=7, beanClass=NotificationPanelBean.class),
+                @MenuLink(title = "menu.ace.tooltip.title", exampleBeanName = TooltipOverviewBean.BEAN_NAME, group=7, beanClass=TooltipOverviewBean.class),
 
-                @MenuLink(title = "menu.ace.accordionpanel.title", exampleBeanName = AccordionPanelBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.panel.title", exampleBeanName = PanelBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.splitpane.title", exampleBeanName = SplitPaneBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.tabSet.title", exampleBeanName = TabSetBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.tree.title", exampleBeanName = TreeBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.accordionpanel.title", exampleBeanName = AccordionPanelBean.BEAN_NAME, group=8, beanClass=AccordionPanelBean.class),
+                @MenuLink(title = "menu.ace.panel.title", exampleBeanName = PanelBean.BEAN_NAME, group=8, beanClass=PanelBean.class),
+                @MenuLink(title = "menu.ace.splitpane.title", exampleBeanName = SplitPaneBean.BEAN_NAME, group=8, beanClass=SplitPaneBean.class),
+                @MenuLink(title = "menu.ace.tabSet.title", exampleBeanName = TabSetBean.BEAN_NAME, group=8, beanClass=TabSetBean.class),
+                @MenuLink(title = "menu.ace.tree.title", exampleBeanName = TreeBean.BEAN_NAME, group=8, beanClass=TreeBean.class),
 
-                @MenuLink(title = "menu.ace.dynamicResource.title", exampleBeanName = DynamicResourceBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.fileentry.title", exampleBeanName = FileEntryBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.dynamicResource.title", exampleBeanName = DynamicResourceBean.BEAN_NAME, group=9, beanClass=DynamicResourceBean.class),
+                @MenuLink(title = "menu.ace.fileentry.title", exampleBeanName = FileEntryBean.BEAN_NAME, group=9, beanClass=FileEntryBean.class),
 
-                @MenuLink(title = "menu.ace.message.title", exampleBeanName = MessageBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.messages.title", exampleBeanName = MessagesBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.growlmessages.title", exampleBeanName = GrowlMessagesBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.message.title", exampleBeanName = MessageBean.BEAN_NAME, group=10, beanClass=MessageBean.class),
+                @MenuLink(title = "menu.ace.messages.title", exampleBeanName = MessagesBean.BEAN_NAME, group=10, beanClass=MessagesBean.class),
+                @MenuLink(title = "menu.ace.growlmessages.title", exampleBeanName = GrowlMessagesBean.BEAN_NAME, group=10, beanClass=GrowlMessagesBean.class),
 
-                @MenuLink(title = "menu.ace.cellEditor.title", exampleBeanName = CellEditorBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.columnGroup.title", exampleBeanName = ColumnGroupBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.dataTable.title", exampleBeanName = DataTableBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.dataExporter.title", exampleBeanName = DataExporterBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.rowExpansion.title", exampleBeanName = RowExpansionBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.tableConfigPanel.title", exampleBeanName = TableConfigPanelBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.cellEditor.title", exampleBeanName = CellEditorBean.BEAN_NAME, group=11, beanClass=CellEditorBean.class),
+                @MenuLink(title = "menu.ace.columnGroup.title", exampleBeanName = ColumnGroupBean.BEAN_NAME, group=11, beanClass=ColumnGroupBean.class),
+                @MenuLink(title = "menu.ace.dataTable.title", exampleBeanName = DataTableBean.BEAN_NAME, group=11, beanClass=DataTableBean.class),
+                @MenuLink(title = "menu.ace.dataExporter.title", exampleBeanName = DataExporterBean.BEAN_NAME, group=11, beanClass=DataExporterBean.class),
+                @MenuLink(title = "menu.ace.rowExpansion.title", exampleBeanName = RowExpansionBean.BEAN_NAME, group=11, beanClass=RowExpansionBean.class),
+                @MenuLink(title = "menu.ace.tableConfigPanel.title", exampleBeanName = TableConfigPanelBean.BEAN_NAME, group=11, beanClass=TableConfigPanelBean.class),
 
-                @MenuLink(title = "menu.ace.chart.title", exampleBeanName = ChartBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.chart.title", exampleBeanName = ChartBean.BEAN_NAME, group=12, beanClass=ChartBean.class),
 
-                @MenuLink(title = "menu.ace.gMap.title", exampleBeanName = MapBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.gMapAutoComplete.title", exampleBeanName = GMapAutoCompleteBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.gMapControl.title", exampleBeanName = GMapControlBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.gMapEvent.title", exampleBeanName = GMapEventBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.gMapInfoWindow.title", exampleBeanName = GMapInfoWindowBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.gMapLayer.title", exampleBeanName = GMapLayerBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.gMapMarker.title", exampleBeanName = GMapMarkerBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.gMapOverlay.title", exampleBeanName = GMapOverlayBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.gMapServices.title", exampleBeanName = GMapServicesBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.gMap.title", exampleBeanName = MapBean.BEAN_NAME, group=13, beanClass=MapBean.class),
+                @MenuLink(title = "menu.ace.gMapAutoComplete.title", exampleBeanName = GMapAutoCompleteBean.BEAN_NAME, group=13, beanClass=GMapAutoCompleteBean.class),
+                @MenuLink(title = "menu.ace.gMapControl.title", exampleBeanName = GMapControlBean.BEAN_NAME, group=13, beanClass=GMapControlBean.class),
+                @MenuLink(title = "menu.ace.gMapEvent.title", exampleBeanName = GMapEventBean.BEAN_NAME, group=13, beanClass=GMapEventBean.class),
+                @MenuLink(title = "menu.ace.gMapInfoWindow.title", exampleBeanName = GMapInfoWindowBean.BEAN_NAME, group=13, beanClass=GMapInfoWindowBean.class),
+                @MenuLink(title = "menu.ace.gMapLayer.title", exampleBeanName = GMapLayerBean.BEAN_NAME, group=13, beanClass=GMapLayerBean.class),
+                @MenuLink(title = "menu.ace.gMapMarker.title", exampleBeanName = GMapMarkerBean.BEAN_NAME, group=13, beanClass=GMapMarkerBean.class),
+                @MenuLink(title = "menu.ace.gMapOverlay.title", exampleBeanName = GMapOverlayBean.BEAN_NAME, group=13, beanClass=GMapOverlayBean.class),
+                @MenuLink(title = "menu.ace.gMapServices.title", exampleBeanName = GMapServicesBean.BEAN_NAME, group=13, beanClass=GMapServicesBean.class),
 
-                @MenuLink(title = "menu.ace.audioPlayer.title", exampleBeanName = AudioPlayerBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.graphicImage.title", exampleBeanName = GraphicImageBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.videoPlayer.title", exampleBeanName = VideoPlayerBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.audioPlayer.title", exampleBeanName = AudioPlayerBean.BEAN_NAME, group=14, beanClass=AudioPlayerBean.class),
+                @MenuLink(title = "menu.ace.graphicImage.title", exampleBeanName = GraphicImageBean.BEAN_NAME, group=14, beanClass=GraphicImageBean.class),
+                @MenuLink(title = "menu.ace.videoPlayer.title", exampleBeanName = VideoPlayerBean.BEAN_NAME, group=14, beanClass=VideoPlayerBean.class),
 
-                @MenuLink(title = "menu.ace.animation.title", exampleBeanName = AnimationBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.dragDrop.title", exampleBeanName = DragDropOverviewBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.printer.title", exampleBeanName = PrinterBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.progressbar.title", exampleBeanName = ProgressBarBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.qrcode.title", exampleBeanName = QrcodeBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.resizable.title", exampleBeanName = ResizableBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.themeSelect.title", exampleBeanName = ThemeSelectBean.BEAN_NAME),
+                @MenuLink(title = "menu.ace.animation.title", exampleBeanName = AnimationBean.BEAN_NAME, group=15, beanClass=AnimationBean.class),
+                @MenuLink(title = "menu.ace.dragDrop.title", exampleBeanName = DragDropOverviewBean.BEAN_NAME, group=15, beanClass=DragDropOverviewBean.class),
+                @MenuLink(title = "menu.ace.printer.title", exampleBeanName = PrinterBean.BEAN_NAME, group=15, beanClass=PrinterBean.class),
+                @MenuLink(title = "menu.ace.progressbar.title", exampleBeanName = ProgressBarBean.BEAN_NAME, group=15, beanClass=ProgressBarBean.class),
+                @MenuLink(title = "menu.ace.qrcode.title", exampleBeanName = QrcodeBean.BEAN_NAME, group=15, beanClass=QrcodeBean.class),
+                @MenuLink(title = "menu.ace.resizable.title", exampleBeanName = ResizableBean.BEAN_NAME, group=15, beanClass=ResizableBean.class),
+                @MenuLink(title = "menu.ace.themeSelect.title", exampleBeanName = ThemeSelectBean.BEAN_NAME, group=15, beanClass=ThemeSelectBean.class),
 
-                @MenuLink(title = "menu.core.defaultActionBean.title", exampleBeanName = DefaultActionBean.BEAN_NAME),
-                @MenuLink(title = "menu.core.focusManagerBean.title", exampleBeanName = FocusManagerBean.BEAN_NAME),
-                @MenuLink(title = "menu.core.idleMonitorBean.title", exampleBeanName = IdleMonitorBean.BEAN_NAME),
-                @MenuLink(title = "menu.core.jsEventListenerBean.title", exampleBeanName = JsEventListenerBean.BEAN_NAME),
-                @MenuLink(title = "menu.core.loadBundleBean.title", exampleBeanName = LoadBundleBean.BEAN_NAME),
-                @MenuLink(title = "menu.core.navigationNotifierBean.title", exampleBeanName = NavigationNotifierBean.BEAN_NAME),
-                @MenuLink(title = "menu.core.pushBean.title", exampleBeanName = PushBean.BEAN_NAME),
-                @MenuLink(title = "menu.core.redirectBean.title", exampleBeanName = RedirectBean.BEAN_NAME),
-                @MenuLink(title = "menu.core.refreshBean.title", exampleBeanName = RefreshBean.BEAN_NAME)},
+                @MenuLink(title = "menu.core.defaultActionBean.title", exampleBeanName = DefaultActionBean.BEAN_NAME, group=0, beanClass=DefaultActionBean.class),
+                @MenuLink(title = "menu.core.focusManagerBean.title", exampleBeanName = FocusManagerBean.BEAN_NAME, group=0, beanClass=FocusManagerBean.class),
+                @MenuLink(title = "menu.core.idleMonitorBean.title", exampleBeanName = IdleMonitorBean.BEAN_NAME, group=0, beanClass=IdleMonitorBean.class),
+                @MenuLink(title = "menu.core.jsEventListenerBean.title", exampleBeanName = JsEventListenerBean.BEAN_NAME, group=0, beanClass=JsEventListenerBean.class),
+                @MenuLink(title = "menu.core.loadBundleBean.title", exampleBeanName = LoadBundleBean.BEAN_NAME, group=0, beanClass=LoadBundleBean.class),
+                @MenuLink(title = "menu.core.navigationNotifierBean.title", exampleBeanName = NavigationNotifierBean.BEAN_NAME, group=0, beanClass=NavigationNotifierBean.class),
+                @MenuLink(title = "menu.core.pushBean.title", exampleBeanName = PushBean.BEAN_NAME, group=0, beanClass=PushBean.class),
+                @MenuLink(title = "menu.core.redirectBean.title", exampleBeanName = RedirectBean.BEAN_NAME, group=0, beanClass=RedirectBean.class),
+                @MenuLink(title = "menu.core.refreshBean.title", exampleBeanName = RefreshBean.BEAN_NAME, group=0, beanClass=RefreshBean.class)},
         searchSelectItems = {
                 @SearchSelectItem(labelTag = "menu.ace.aceSuiteOverview.title", labelExample = "menu.ace.aceSuiteOverview.subMenu.main", value = AceSuiteOverviewBean.BEAN_NAME),
 
@@ -455,6 +459,16 @@ public class AceMenu extends org.icefaces.samples.showcase.metadata.context.Menu
 
     public static final String BEAN_NAME = "aceMenu";
 
+	private boolean initialized = false;
+	private Map<String, Integer> groupsMap = new HashMap<String, Integer>() {
+
+		public Integer put(String k, Integer v) {
+			if (initialized) return v; // prevent overriding values by components bound to this map
+			return super.put(k, v);
+		}
+	};
+	private List<List<org.icefaces.samples.showcase.metadata.context.MenuLink>> groups;
+
     public AceMenu() {
         super(AceMenu.class);
     }
@@ -462,9 +476,42 @@ public class AceMenu extends org.icefaces.samples.showcase.metadata.context.Menu
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+		Menu menu =	AceMenu.class.getAnnotation(Menu.class);
+		MenuLink[] menuLinks = menu.menuLinks();
+		int highestGroup = 0;
+		for (MenuLink link : menuLinks) {
+			groupsMap.put(link.exampleBeanName(), link.group());
+			if (link.group() > highestGroup) highestGroup = link.group();
+			Class linkClass = link.beanClass();
+			java.lang.annotation.Annotation annotation = linkClass.getAnnotation(Menu.class);
+			if (annotation != null && annotation instanceof Menu) {
+				Menu submenu = (Menu) annotation;
+				MenuLink[] submenuLinks = submenu.menuLinks();
+				for (MenuLink sublink : submenuLinks) {
+					groupsMap.put(sublink.exampleBeanName(), link.group());
+				}
+			}
+		}
+		initialized = true;
+		groups = new ArrayList<List<org.icefaces.samples.showcase.metadata.context.MenuLink>>(highestGroup);
+		for(int i = 0; i <= highestGroup; i++) {
+			groups.add(new ArrayList<org.icefaces.samples.showcase.metadata.context.MenuLink>());
+		}
+		ArrayList<org.icefaces.samples.showcase.metadata.context.MenuLink> menuLinksList = getMenuLinks();
+		for (org.icefaces.samples.showcase.metadata.context.MenuLink link : menuLinksList) {
+			groups.get(link.getGroup()).add(link);
+		}
     }
 
     public String getBeanName() {
         return BEAN_NAME;
     }
+
+	public Map<String, Integer> getGroupsMap() {
+		return groupsMap;
+	}
+
+	public List<List<org.icefaces.samples.showcase.metadata.context.MenuLink>> getGroups() {
+		return groups;
+	}
 }

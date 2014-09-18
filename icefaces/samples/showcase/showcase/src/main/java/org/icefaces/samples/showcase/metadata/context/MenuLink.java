@@ -25,13 +25,15 @@ public class MenuLink implements Serializable {
     private boolean isDefault;
     private boolean isNew;
     private String exampleBeanName;
+	private int group = -1;
 
-    public MenuLink(String title, boolean aDefault, boolean aNew, boolean isDisabled, String exampleBeanName) {
+    public MenuLink(String title, boolean aDefault, boolean aNew, boolean isDisabled, String exampleBeanName, int group) {
         this.title = title;
         this.isDisabled = isDisabled;
         isDefault = aDefault;
         isNew = aNew;
         this.exampleBeanName = exampleBeanName;
+		this.group = group;
     }
 
     public String getTitle() {
@@ -53,4 +55,8 @@ public class MenuLink implements Serializable {
     public String getExampleBeanName() {
         return exampleBeanName;
     }
+
+	public int getGroup() {
+		return group;
+	}
 }
