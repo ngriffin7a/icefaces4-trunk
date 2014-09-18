@@ -123,7 +123,7 @@ public class ComponentExampleImpl<T> implements ComponentExample, ExampleResourc
             MenuLink menuLink;
             for (org.icefaces.samples.showcase.metadata.annotation.MenuLink link : menuLinks )
             {
-                menuLink = new MenuLink(link.title(), link.isDefault(), link.isNew(), link.isDisabled(), link.exampleBeanName());
+                menuLink = new MenuLink(link.title(), link.isDefault(), link.isNew(), link.isDisabled(), link.exampleBeanName(), link.group());
                 subMenuLinks.add(menuLink);
             }
         }

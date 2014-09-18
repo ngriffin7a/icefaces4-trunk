@@ -33,4 +33,6 @@ public @interface MenuLink {
     boolean isDisabled() default false;
     boolean isNew() default false;
     String exampleBeanName();
+    int group() default -1;
+    Class<?> beanClass() default Object.class;
 }
