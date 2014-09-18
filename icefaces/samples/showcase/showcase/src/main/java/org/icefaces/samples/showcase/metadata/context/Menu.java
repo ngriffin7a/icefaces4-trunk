@@ -50,7 +50,7 @@ public class Menu<T> implements ContextBase, Serializable {
             MenuLink menuLink;
             for (org.icefaces.samples.showcase.metadata.annotation.MenuLink link : menuExample) {
                 menuLink = new MenuLink(link.title(), link.isDefault(),
-                        link.isNew(), link.isDisabled(), link.exampleBeanName(), link.group());
+                        link.isNew(), link.isDisabled(), link.isFullPageLoad(), link.exampleBeanName(), link.group());
                 menuLinks.add(menuLink);
                 if (menuLink.isDefault()){
                     defaultExample = menuLink;

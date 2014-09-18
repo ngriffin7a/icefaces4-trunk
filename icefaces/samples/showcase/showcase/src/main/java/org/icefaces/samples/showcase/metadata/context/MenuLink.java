@@ -24,14 +24,16 @@ public class MenuLink implements Serializable {
     private boolean isDisabled;
     private boolean isDefault;
     private boolean isNew;
+    private boolean isFullPageLoad;
     private String exampleBeanName;
 	private int group = -1;
 
-    public MenuLink(String title, boolean aDefault, boolean aNew, boolean isDisabled, String exampleBeanName, int group) {
+    public MenuLink(String title, boolean aDefault, boolean aNew, boolean isDisabled, boolean isFullPageLoad, String exampleBeanName, int group) {
         this.title = title;
         this.isDisabled = isDisabled;
         isDefault = aDefault;
         isNew = aNew;
+		this.isFullPageLoad = isFullPageLoad;
         this.exampleBeanName = exampleBeanName;
 		this.group = group;
     }
@@ -50,6 +52,10 @@ public class MenuLink implements Serializable {
 
     public boolean isNew() {
         return isNew;
+    }
+
+    public boolean isFullPageLoad() {
+        return isFullPageLoad;
     }
 
     public String getExampleBeanName() {
