@@ -138,7 +138,6 @@ public class TextEntryReqStyleBean extends ComponentExampleImpl<TextEntryReqStyl
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 	
 	private boolean useTheme = false;

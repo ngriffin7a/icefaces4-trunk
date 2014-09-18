@@ -63,7 +63,6 @@ public class DatePagesBean extends ComponentExampleImpl<DatePagesBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
     public void dateSelectListener(DateSelectEvent event) {

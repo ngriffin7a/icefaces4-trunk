@@ -142,7 +142,6 @@ public class MapBean extends ComponentExampleImpl<MapBean> implements Serializab
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(12);
     }
 	
 }

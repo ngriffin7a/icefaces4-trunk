@@ -66,7 +66,6 @@ public class RichTextEntryBean extends ComponentExampleImpl< RichTextEntryBean >
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
     public String getText() {

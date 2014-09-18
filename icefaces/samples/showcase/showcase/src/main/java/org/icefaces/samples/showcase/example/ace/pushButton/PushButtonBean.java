@@ -74,7 +74,6 @@ public class PushButtonBean extends ComponentExampleImpl<PushButtonBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(3);
     }
 
     public String executeAction() {

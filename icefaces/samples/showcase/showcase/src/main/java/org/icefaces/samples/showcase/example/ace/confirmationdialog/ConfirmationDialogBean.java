@@ -68,7 +68,6 @@ public class ConfirmationDialogBean extends ComponentExampleImpl<ConfirmationDia
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(6);
     }
 
     public void yes(ActionEvent actionEvent) {

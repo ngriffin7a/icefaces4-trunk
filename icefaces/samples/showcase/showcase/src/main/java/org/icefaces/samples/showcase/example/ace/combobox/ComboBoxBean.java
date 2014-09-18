@@ -149,7 +149,6 @@ public class ComboBoxBean extends ComponentExampleImpl< ComboBoxBean > implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(5);
     }
 
 	private String province = "";

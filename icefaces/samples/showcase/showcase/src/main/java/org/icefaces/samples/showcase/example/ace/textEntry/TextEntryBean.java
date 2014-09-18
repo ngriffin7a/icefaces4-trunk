@@ -80,7 +80,6 @@ public class TextEntryBean extends ComponentExampleImpl<TextEntryBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
     public String getFirstName() {

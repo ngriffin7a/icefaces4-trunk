@@ -69,7 +69,6 @@ public class AutoCompleteEntryLazyBean extends ComponentExampleImpl<AutoComplete
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
 	private String selectedText = null; // Text the user is typing in

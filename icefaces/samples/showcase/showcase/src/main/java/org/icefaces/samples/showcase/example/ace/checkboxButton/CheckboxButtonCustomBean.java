@@ -58,6 +58,5 @@ public class CheckboxButtonCustomBean extends ComponentExampleImpl<CheckboxButto
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(3);
     }
 }

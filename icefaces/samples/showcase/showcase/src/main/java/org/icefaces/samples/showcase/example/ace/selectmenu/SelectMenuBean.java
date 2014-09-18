@@ -148,7 +148,6 @@ public class SelectMenuBean extends ComponentExampleImpl< SelectMenuBean > imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 
 	private String province = "";

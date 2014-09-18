@@ -63,7 +63,6 @@ public class TableConfigPanelAdvancedBean extends ComponentExampleImpl<TableConf
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     private List<Car> carsData;

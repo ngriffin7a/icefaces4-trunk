@@ -62,7 +62,6 @@ public class ModalDialogBean extends ComponentExampleImpl<ModalDialogBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(6);
     }
 
     public boolean isDraggable() {

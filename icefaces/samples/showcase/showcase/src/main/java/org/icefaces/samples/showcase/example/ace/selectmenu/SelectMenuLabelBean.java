@@ -91,7 +91,6 @@ public class SelectMenuLabelBean extends ComponentExampleImpl<SelectMenuLabelBea
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
     
     public void positionChanged(ValueChangeEvent event) {

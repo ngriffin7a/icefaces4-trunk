@@ -81,6 +81,5 @@ public class ChartPieBean extends ComponentExampleImpl<ChartPieBean> implements 
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(11);
     }
 }

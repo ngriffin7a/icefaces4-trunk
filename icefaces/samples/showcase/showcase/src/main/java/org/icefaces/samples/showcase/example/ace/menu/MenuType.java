@@ -71,7 +71,6 @@ public class MenuType extends ComponentExampleImpl<MenuType> implements Serializ
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 
     public void fireAction(ActionEvent event)

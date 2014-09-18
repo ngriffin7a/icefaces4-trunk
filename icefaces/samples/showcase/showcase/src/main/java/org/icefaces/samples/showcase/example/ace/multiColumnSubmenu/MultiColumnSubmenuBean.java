@@ -61,6 +61,5 @@ public class MultiColumnSubmenuBean extends ComponentExampleImpl<MultiColumnSubm
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 }

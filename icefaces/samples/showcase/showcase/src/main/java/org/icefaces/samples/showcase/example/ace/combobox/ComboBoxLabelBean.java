@@ -91,7 +91,6 @@ public class ComboBoxLabelBean extends ComponentExampleImpl<ComboBoxLabelBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(5);
     }
     
     public void positionChanged(ValueChangeEvent event) {

@@ -75,7 +75,6 @@ public class MaskedEntryBean extends ComponentExampleImpl<MaskedEntryBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
     public String getDob() {

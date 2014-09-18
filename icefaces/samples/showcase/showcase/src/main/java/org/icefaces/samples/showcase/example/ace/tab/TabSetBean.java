@@ -82,7 +82,6 @@ public class TabSetBean extends ComponentExampleImpl<TabSetBean> implements Seri
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(7);
     }
 
     private void initializeInstanceVariables()

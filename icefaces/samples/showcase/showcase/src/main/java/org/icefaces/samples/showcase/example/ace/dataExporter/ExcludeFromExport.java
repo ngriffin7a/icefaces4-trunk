@@ -64,7 +64,6 @@ public class ExcludeFromExport extends ComponentExampleImpl<ExcludeFromExport> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     /////////////---- PRIVATE METHODS BEGIN

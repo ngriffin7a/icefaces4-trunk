@@ -61,7 +61,6 @@ public class ListReorderAjaxBean extends ComponentExampleImpl<ListReorderAjaxBea
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(5);
     }
 
     List<SelectItem> ajaxStringList = new ArrayList<SelectItem>() {{

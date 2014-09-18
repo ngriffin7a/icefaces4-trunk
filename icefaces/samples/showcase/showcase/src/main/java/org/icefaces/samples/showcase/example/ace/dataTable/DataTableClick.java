@@ -78,7 +78,6 @@ public class DataTableClick extends ComponentExampleImpl<DataTableClick> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
 	public void toggleSelect(AjaxBehaviorEvent event) {

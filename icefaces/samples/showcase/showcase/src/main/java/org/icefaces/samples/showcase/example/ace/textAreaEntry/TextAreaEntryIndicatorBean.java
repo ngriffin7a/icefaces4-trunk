@@ -95,7 +95,6 @@ public class TextAreaEntryIndicatorBean extends ComponentExampleImpl<TextAreaEnt
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
 }

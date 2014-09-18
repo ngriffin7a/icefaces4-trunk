@@ -68,7 +68,7 @@ public class TableConfigPanelBean extends ComponentExampleImpl<TableConfigPanelB
     public TableConfigPanelBean() {
         super(TableConfigPanelBean.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-		setGroup(10);    }
+    }
     
     @PostConstruct
     public void initMetaData() {

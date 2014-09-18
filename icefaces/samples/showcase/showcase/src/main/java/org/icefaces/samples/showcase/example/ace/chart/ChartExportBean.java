@@ -67,7 +67,6 @@ public class ChartExportBean extends ComponentExampleImpl<ChartExportBean> imple
         ExternalContext ec = context.getExternalContext();
         String ua = ec.getRequestHeaderMap().get("user-agent");
         requestOldIE = ua.contains("MSIE 7.0;") || ua.contains("MSIE 8.0;") ;
-        setGroup(11);
     }
 
     public boolean isRequestOldIE() {

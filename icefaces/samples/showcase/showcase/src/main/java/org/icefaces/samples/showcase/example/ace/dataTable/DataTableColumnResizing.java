@@ -66,7 +66,6 @@ public class DataTableColumnResizing extends ComponentExampleImpl<DataTableColum
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

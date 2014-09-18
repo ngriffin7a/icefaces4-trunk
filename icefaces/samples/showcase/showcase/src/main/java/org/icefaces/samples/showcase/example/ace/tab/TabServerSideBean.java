@@ -80,6 +80,5 @@ public class TabServerSideBean extends ComponentExampleImpl<TabServerSideBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(7);
     }
 }

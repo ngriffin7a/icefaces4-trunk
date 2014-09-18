@@ -66,7 +66,6 @@ public class DateAjaxBean extends ComponentExampleImpl<DateAjaxBean> implements 
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
     public void dateSelectListener(DateSelectEvent event) {

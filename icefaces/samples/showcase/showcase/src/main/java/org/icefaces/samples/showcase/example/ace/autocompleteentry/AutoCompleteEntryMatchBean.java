@@ -59,7 +59,6 @@ public class AutoCompleteEntryMatchBean extends ComponentExampleImpl<AutoComplet
     
     public AutoCompleteEntryMatchBean() { 
         super(AutoCompleteEntryMatchBean.class);
-        setGroup(2);
     }
     
     public String getSelectedText() {

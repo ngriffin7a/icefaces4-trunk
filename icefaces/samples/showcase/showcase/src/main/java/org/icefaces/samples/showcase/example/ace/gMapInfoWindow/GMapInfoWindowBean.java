@@ -245,6 +245,5 @@ public class GMapInfoWindowBean extends ComponentExampleImpl<GMapInfoWindowBean>
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(12);
     }
 }

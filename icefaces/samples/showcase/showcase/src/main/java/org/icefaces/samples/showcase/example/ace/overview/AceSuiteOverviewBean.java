@@ -71,6 +71,5 @@ public class AceSuiteOverviewBean extends ComponentExampleImpl<AceSuiteOverviewB
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(0);
     }
 }

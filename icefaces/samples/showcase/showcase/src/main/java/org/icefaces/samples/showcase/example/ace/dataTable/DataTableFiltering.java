@@ -69,7 +69,6 @@ public class DataTableFiltering extends ComponentExampleImpl<DataTableFiltering>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

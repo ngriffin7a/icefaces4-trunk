@@ -67,7 +67,6 @@ public class SubmitMonitorBean extends ComponentExampleImpl<SubmitMonitorBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(1);
     }
 
     private void initialiseInstanceVariables() {

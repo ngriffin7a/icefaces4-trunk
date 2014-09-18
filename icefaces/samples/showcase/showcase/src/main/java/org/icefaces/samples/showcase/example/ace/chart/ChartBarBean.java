@@ -85,7 +85,6 @@ public class ChartBarBean extends ComponentExampleImpl<ChartBarBean> implements 
     public void initMetaData() {
         super.initMetaData();
         initModel();
-        setGroup(11);
     }
 
     public void initModel(){

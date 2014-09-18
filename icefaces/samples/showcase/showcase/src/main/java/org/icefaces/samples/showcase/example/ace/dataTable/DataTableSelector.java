@@ -78,7 +78,6 @@ public class DataTableSelector extends ComponentExampleImpl<DataTableSelector> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     /////////////---- VALUE CHANGE LISTENERS BEGIN

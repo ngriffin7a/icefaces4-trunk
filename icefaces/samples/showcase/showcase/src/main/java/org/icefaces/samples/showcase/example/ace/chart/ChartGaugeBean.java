@@ -75,6 +75,5 @@ public class ChartGaugeBean extends ComponentExampleImpl<ChartGaugeBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(11);
     }
 }

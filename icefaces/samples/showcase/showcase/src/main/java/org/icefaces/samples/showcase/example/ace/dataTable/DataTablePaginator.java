@@ -72,7 +72,6 @@ public class DataTablePaginator extends ComponentExampleImpl<DataTablePaginator>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

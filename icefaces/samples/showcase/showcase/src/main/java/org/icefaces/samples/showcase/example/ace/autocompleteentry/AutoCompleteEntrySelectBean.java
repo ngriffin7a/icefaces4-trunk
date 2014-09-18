@@ -70,6 +70,5 @@ public class AutoCompleteEntrySelectBean extends ComponentExampleImpl<AutoComple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 }

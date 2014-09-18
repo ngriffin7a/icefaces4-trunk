@@ -79,7 +79,6 @@ public class GrowlMessagesBean extends ComponentExampleImpl<GrowlMessagesBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(9);
     }
 
     public String getAutoHide() {

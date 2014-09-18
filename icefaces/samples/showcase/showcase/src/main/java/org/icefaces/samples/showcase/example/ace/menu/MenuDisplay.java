@@ -50,6 +50,5 @@ public class MenuDisplay extends ComponentExampleImpl<MenuDisplay> implements Se
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 }

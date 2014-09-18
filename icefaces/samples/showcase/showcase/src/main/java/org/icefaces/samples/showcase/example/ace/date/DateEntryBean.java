@@ -96,6 +96,5 @@ public class DateEntryBean extends ComponentExampleImpl<DateEntryBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 }

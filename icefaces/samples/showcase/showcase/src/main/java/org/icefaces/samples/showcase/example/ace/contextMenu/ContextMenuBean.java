@@ -65,6 +65,5 @@ public class ContextMenuBean extends ComponentExampleImpl<ContextMenuBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 }

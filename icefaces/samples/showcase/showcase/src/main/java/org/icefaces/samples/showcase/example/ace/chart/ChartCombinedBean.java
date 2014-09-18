@@ -165,7 +165,6 @@ public class ChartCombinedBean extends ComponentExampleImpl<ChartCombinedBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(11);
     }
 
     private byte[] image;

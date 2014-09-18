@@ -65,7 +65,6 @@ public class DataTableScrolling extends ComponentExampleImpl<DataTableScrolling>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     /////////////---- GETTERS & SETTERS BEGIN
