@@ -32,6 +32,7 @@ public @interface MenuLink {
     boolean isDefault() default false;
     boolean isDisabled() default false;
     boolean isNew() default false;
+    boolean isFullPageLoad() default false;
     String exampleBeanName();
     int group() default -1;
     Class<?> beanClass() default Object.class;
