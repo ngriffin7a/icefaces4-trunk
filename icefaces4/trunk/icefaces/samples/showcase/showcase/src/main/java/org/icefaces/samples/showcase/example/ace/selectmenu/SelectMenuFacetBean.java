@@ -97,7 +97,6 @@ public class SelectMenuFacetBean extends ComponentExampleImpl< SelectMenuFacetBe
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 
 	private String textColor = "";

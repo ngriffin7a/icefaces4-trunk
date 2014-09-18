@@ -64,7 +64,6 @@ public class PanelListener extends ComponentExampleImpl<PanelListener> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(7);
     }
 
     public String getStatusMessage() { return statusMessage; }

@@ -60,7 +60,6 @@ public class ListMultiBean extends ComponentExampleImpl<ListMultiBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(5);
     }
 
     List<SelectItem> stringList = new ArrayList<SelectItem>() {{

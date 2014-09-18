@@ -67,6 +67,5 @@ public class GraphicImageBean extends ComponentExampleImpl<GraphicImageBean> imp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(13);
     }
 }

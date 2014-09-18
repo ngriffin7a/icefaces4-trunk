@@ -61,7 +61,6 @@ public class DelegateTooltipBean extends ComponentExampleImpl<DelegateTooltipBea
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(6);
     }
 	
 	private Object data;

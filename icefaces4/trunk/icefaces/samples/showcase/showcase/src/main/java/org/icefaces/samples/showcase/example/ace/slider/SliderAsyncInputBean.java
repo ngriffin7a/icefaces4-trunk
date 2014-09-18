@@ -60,7 +60,6 @@ public class SliderAsyncInputBean extends ComponentExampleImpl<SliderAsyncInputB
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
     public void sliderValueChanged(ValueChangeEvent e)

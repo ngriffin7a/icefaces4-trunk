@@ -139,7 +139,6 @@ public class ComboBoxFilteringBean extends ComponentExampleImpl< ComboBoxFilteri
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(5);
     }
 
 	private String province = "";

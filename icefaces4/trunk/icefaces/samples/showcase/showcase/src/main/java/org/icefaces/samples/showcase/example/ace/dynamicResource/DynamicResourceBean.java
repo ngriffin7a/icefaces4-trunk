@@ -71,13 +71,11 @@ public class DynamicResourceBean extends ComponentExampleImpl<DynamicResourceBea
     
     public DynamicResourceBean() {
         super(DynamicResourceBean.class);
-		setGroup(8);
     }
     
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(8);
 		String resourcePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/media/icemobile.pdf");
 		File file = new File(resourcePath);
 		try {

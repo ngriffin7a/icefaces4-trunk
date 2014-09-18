@@ -91,6 +91,5 @@ public class GMapOverlayBean extends ComponentExampleImpl<GMapOverlayBean> imple
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(12);
     }
 }

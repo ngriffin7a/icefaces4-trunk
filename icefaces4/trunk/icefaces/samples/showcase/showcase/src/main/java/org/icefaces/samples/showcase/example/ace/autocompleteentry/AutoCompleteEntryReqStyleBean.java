@@ -87,7 +87,6 @@ public class AutoCompleteEntryReqStyleBean extends ComponentExampleImpl<AutoComp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 	
 	private boolean useTheme = false;

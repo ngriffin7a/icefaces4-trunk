@@ -160,7 +160,6 @@ public class SimpleSelectOneMenuBean extends ComponentExampleImpl< SimpleSelectO
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 
 	private String province = "";

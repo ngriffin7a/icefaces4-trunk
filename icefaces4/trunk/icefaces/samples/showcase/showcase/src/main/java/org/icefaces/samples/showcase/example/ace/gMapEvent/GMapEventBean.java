@@ -62,6 +62,5 @@ public class GMapEventBean extends ComponentExampleImpl<GMapEventBean> implement
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(12);
     }
 }

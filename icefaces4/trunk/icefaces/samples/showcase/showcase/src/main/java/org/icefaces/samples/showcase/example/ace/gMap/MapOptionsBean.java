@@ -205,6 +205,5 @@ public class MapOptionsBean extends ComponentExampleImpl<MapOptionsBean> impleme
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(12);
     }
 }

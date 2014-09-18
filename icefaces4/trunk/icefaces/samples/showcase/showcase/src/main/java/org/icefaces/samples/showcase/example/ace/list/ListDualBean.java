@@ -75,7 +75,6 @@ public class ListDualBean extends ComponentExampleImpl<ListDualBean> implements 
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(5);
     }
     
     public String[] getAvailablePositions() {

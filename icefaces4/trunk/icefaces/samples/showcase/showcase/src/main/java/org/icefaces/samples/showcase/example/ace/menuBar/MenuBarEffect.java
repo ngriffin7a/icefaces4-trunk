@@ -65,7 +65,6 @@ public class MenuBarEffect extends ComponentExampleImpl<MenuBarEffect> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 
     private LinkedHashMap<String, String> populateAvailableEffects()

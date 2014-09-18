@@ -67,7 +67,6 @@ public class MenuSeparatorBean extends ComponentExampleImpl<MenuSeparatorBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 
 	private boolean displaySeparators = true;

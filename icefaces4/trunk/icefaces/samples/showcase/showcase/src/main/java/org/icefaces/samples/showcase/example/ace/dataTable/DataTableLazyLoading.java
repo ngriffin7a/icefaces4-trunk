@@ -157,7 +157,6 @@ public class DataTableLazyLoading extends ComponentExampleImpl<DataTableLazyLoad
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     public LazyDataModel<Car> getCarsData() { return carsData; }

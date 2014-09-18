@@ -67,6 +67,5 @@ public class ThemeSelectBean extends ComponentExampleImpl<ThemeSelectBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(14);
     }
 }

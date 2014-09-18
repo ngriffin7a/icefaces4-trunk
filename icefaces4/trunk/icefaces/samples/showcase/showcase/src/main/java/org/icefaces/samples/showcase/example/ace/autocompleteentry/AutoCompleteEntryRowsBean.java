@@ -58,7 +58,6 @@ public class AutoCompleteEntryRowsBean extends ComponentExampleImpl<AutoComplete
     
     public AutoCompleteEntryRowsBean() { 
         super(AutoCompleteEntryRowsBean.class);
-        setGroup(2);
     }
     
     public String getSelectedText() {

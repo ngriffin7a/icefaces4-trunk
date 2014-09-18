@@ -77,7 +77,6 @@ public class ButtonGroupBean extends ComponentExampleImpl<ButtonGroupBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(3);
     }
 
     public boolean isCb1() {

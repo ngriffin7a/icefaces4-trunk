@@ -59,7 +59,6 @@ public class MenuBarClick extends ComponentExampleImpl<MenuBarClick> implements 
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(4);
     }
 
     public boolean getClickToDisplay() { return clickToDisplay; }

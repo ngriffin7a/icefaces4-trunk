@@ -67,7 +67,6 @@ public class AutoCompleteEntryFacetBean extends ComponentExampleImpl<AutoComplet
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
 	public List<City> cities;

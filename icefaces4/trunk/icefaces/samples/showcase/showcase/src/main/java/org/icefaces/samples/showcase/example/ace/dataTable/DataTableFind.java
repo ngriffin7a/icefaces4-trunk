@@ -98,7 +98,6 @@ public class DataTableFind extends ComponentExampleImpl<DataTableFind> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     public void find(javax.faces.event.ActionEvent e) {

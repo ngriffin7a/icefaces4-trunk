@@ -62,7 +62,6 @@ public class AjaxBean extends ComponentExampleImpl<AjaxBean> implements Serializ
     
     public AjaxBean() {
         super(AjaxBean.class);
-		setGroup(1);
     }
     
     @PostConstruct

@@ -62,7 +62,6 @@ public class DatePopupBean extends ComponentExampleImpl<DatePopupBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
     public Date getSelectedDate() {

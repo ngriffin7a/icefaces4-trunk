@@ -72,7 +72,6 @@ public class NotificationPanelBean extends ComponentExampleImpl<NotificationPane
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(6);
     }
 
    public void showAppropriateButton(ActionEvent e)

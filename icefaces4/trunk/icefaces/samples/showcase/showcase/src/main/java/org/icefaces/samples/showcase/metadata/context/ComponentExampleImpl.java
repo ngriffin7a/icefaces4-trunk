@@ -203,13 +203,4 @@ public class ComponentExampleImpl<T> implements ComponentExample, ExampleResourc
 //            effect.setFired(false);
 //        }
 //    }
-
-
-    public int getGroup() {
-        return group;
-    }
-
-    public void setGroup(int group) {
-        this.group = group;
-    }
 }

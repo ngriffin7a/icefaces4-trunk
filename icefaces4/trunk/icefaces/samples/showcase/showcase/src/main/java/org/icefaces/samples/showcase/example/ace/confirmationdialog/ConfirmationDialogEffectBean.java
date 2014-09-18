@@ -68,7 +68,6 @@ public class ConfirmationDialogEffectBean extends ComponentExampleImpl<Confirmat
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(6);
     }
 
         private LinkedHashMap<String, String> initializeDialogShowEffects()

@@ -72,7 +72,6 @@ public class ListSelectionAjaxBean extends ComponentExampleImpl<ListSelectionAja
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(5);
     }
 
     public List<SelectItem> getAjaxStringList() {

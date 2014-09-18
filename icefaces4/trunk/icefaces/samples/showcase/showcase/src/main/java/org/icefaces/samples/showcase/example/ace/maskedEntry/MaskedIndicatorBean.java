@@ -134,6 +134,5 @@ public class MaskedIndicatorBean extends ComponentExampleImpl<MaskedIndicatorBea
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 }

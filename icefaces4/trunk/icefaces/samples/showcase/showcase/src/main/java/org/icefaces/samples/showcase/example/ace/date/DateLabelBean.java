@@ -92,7 +92,6 @@ public class DateLabelBean extends ComponentExampleImpl<DateLabelBean> implement
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 
     public void positionChanged(ValueChangeEvent event) {

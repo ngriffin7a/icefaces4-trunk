@@ -59,7 +59,6 @@ public class PanelClose extends ComponentExampleImpl<PanelClose> implements Seri
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(7);
     }
 
     public boolean getClosable() { return closable; }

@@ -96,7 +96,6 @@ public class DataTableDynamicColumns extends ComponentExampleImpl<DataTableDynam
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     public List<Car> getCars() {

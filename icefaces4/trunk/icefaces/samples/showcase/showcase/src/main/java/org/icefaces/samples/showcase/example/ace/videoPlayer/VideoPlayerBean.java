@@ -67,7 +67,6 @@ public class VideoPlayerBean extends ComponentExampleImpl<VideoPlayerBean> imple
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(13);
     }
 
     private boolean autoplay = false;

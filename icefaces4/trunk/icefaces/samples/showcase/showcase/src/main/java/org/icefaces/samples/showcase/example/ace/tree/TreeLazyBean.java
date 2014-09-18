@@ -86,7 +86,6 @@ public class TreeLazyBean extends ComponentExampleImpl<TreeLazyBean> implements 
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(7);
     }
 
 }

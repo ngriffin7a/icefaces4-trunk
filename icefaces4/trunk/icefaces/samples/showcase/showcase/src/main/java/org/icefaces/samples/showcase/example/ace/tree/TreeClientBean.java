@@ -72,7 +72,6 @@ public class TreeClientBean extends ComponentExampleImpl<TreeClientBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(7);
     }
 
     public List<LocationNodeImpl> getTreeRoots() {

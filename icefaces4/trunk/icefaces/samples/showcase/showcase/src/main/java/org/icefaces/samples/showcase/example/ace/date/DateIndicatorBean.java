@@ -105,6 +105,5 @@ public class DateIndicatorBean extends ComponentExampleImpl<DateIndicatorBean> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 }

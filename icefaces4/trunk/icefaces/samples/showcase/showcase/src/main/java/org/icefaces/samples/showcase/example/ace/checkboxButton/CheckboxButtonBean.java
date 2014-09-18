@@ -70,7 +70,6 @@ public class CheckboxButtonBean extends ComponentExampleImpl<CheckboxButtonBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(3);
     }
 
     public boolean isSelected() {

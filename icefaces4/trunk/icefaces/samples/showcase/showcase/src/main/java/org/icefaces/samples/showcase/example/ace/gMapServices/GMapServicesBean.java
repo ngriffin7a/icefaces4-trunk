@@ -91,6 +91,5 @@ public class GMapServicesBean extends ComponentExampleImpl<GMapServicesBean> imp
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(12);
     }
 }

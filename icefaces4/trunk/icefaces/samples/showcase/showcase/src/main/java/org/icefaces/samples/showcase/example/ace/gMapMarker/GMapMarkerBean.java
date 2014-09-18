@@ -91,6 +91,5 @@ public class GMapMarkerBean extends ComponentExampleImpl<GMapMarkerBean> impleme
 	@PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(12);
     }
 }

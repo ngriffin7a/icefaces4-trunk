@@ -87,7 +87,6 @@ public class TreeBean extends ComponentExampleImpl<TreeBean> implements Serializ
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(7);
     }
 
     public List<LocationNodeImpl> getTreeRoots() {

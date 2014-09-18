@@ -147,6 +147,5 @@ public class TextEntryLabelBean extends ComponentExampleImpl<TextEntryLabelBean>
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(2);
     }
 }

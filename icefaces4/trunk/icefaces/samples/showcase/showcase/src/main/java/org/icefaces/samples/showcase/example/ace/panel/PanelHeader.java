@@ -61,7 +61,6 @@ public class PanelHeader extends ComponentExampleImpl<PanelHeader> implements Se
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(7);
     }
 
     public boolean getHeaderEnable() { return headerEnable; }

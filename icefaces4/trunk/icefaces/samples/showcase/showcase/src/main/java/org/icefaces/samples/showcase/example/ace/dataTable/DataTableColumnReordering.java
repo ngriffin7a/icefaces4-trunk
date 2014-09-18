@@ -68,7 +68,6 @@ public class DataTableColumnReordering extends ComponentExampleImpl<DataTableCol
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     public List<Car> getCars() {

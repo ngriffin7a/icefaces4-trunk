@@ -51,7 +51,6 @@ public class ConfirmationDialogModalBean extends ComponentExampleImpl<Confirmati
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(6);
     }
 
 	private String outcome = null;

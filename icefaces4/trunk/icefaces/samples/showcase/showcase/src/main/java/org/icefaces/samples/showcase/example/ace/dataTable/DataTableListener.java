@@ -71,7 +71,6 @@ public class DataTableListener extends ComponentExampleImpl<DataTableListener> i
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-        setGroup(10);
     }
 
     /////////////---- EVENT LISTENERS BEGIN
