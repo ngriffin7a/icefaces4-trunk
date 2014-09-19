@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.focusManager;
 
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -29,18 +29,18 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:jsEventListener",
-                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/jsEventListener.html"),
+                        title = "icecore:focusManager",
+                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/focusManager.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:jsEventListener",
-                        resource = "http://www.icesoft.org/wiki/display/ICE/jsEventListener")
+                        title = "icecore:focusManager",
+                        resource = "http://www.icesoft.org/wiki/display/ICE/focusManager")
         }
 )
 @ManagedBean
 @ApplicationScoped
-public class JsEventListenerBeanResources extends ComponentExampleImpl<JsEventListenerBeanResources> implements Serializable {
-    public JsEventListenerBeanResources() {
-        super(JsEventListenerBeanResources.class);
+public class FocusManagerBeanResources extends ComponentExampleImpl<FocusManagerBeanResources> implements Serializable {
+    public FocusManagerBeanResources() {
+        super(FocusManagerBeanResources.class);
     }
 
     @PostConstruct

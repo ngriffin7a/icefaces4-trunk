@@ -117,7 +117,15 @@ import org.icefaces.samples.showcase.example.ace.videoPlayer.VideoPlayerBean;
 import org.icefaces.samples.showcase.metadata.annotation.Menu;
 import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.annotation.SearchSelectItem;
-import org.icefaces.samples.showcase.example.core.*;
+import org.icefaces.samples.showcase.example.core.defaultAction.*;
+import org.icefaces.samples.showcase.example.core.focusManager.*;
+import org.icefaces.samples.showcase.example.core.idleMonitor.*;
+import org.icefaces.samples.showcase.example.core.jsEventListener.*;
+import org.icefaces.samples.showcase.example.core.loadBundle.*;
+import org.icefaces.samples.showcase.example.core.navigationNotifier.*;
+import org.icefaces.samples.showcase.example.core.push.*;
+import org.icefaces.samples.showcase.example.core.redirect.*;
+import org.icefaces.samples.showcase.example.core.refresh.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;

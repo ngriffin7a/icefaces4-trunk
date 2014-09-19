@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.idleMonitor;
 
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -29,18 +29,18 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:redirect",
-                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/redirect.html"),
+                        title = "icecore:idleMonitor",
+                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/idleMonitor.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:redirect",
-                        resource = "http://www.icesoft.org/wiki/display/ICE/redirect")
+                        title = "icecore:idleMonitor",
+                        resource = "http://www.icesoft.org/wiki/display/ICE/idleMonitor")
         }
 )
 @ManagedBean
 @ApplicationScoped
-public class RedirectBeanResources extends ComponentExampleImpl<RedirectBeanResources> implements Serializable {
-    public RedirectBeanResources() {
-        super(RedirectBeanResources.class);
+public class IdleMonitorBeanResources extends ComponentExampleImpl<IdleMonitorBeanResources> implements Serializable {
+    public IdleMonitorBeanResources() {
+        super(IdleMonitorBeanResources.class);
     }
 
     @PostConstruct

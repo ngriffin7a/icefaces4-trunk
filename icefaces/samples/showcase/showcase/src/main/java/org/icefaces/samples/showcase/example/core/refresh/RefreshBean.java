@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.refresh;
 
 import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
@@ -27,7 +27,7 @@ import org.icefaces.samples.showcase.metadata.annotation.Menu;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.CustomScoped;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,8 +54,8 @@ import java.util.Date;
         @MenuLink(title = "menu.core.refreshBean.subMenu.main", isDefault = true, exampleBeanName = RefreshBean.BEAN_NAME)
     }
 )
-@ManagedBean
-@ViewScoped
+@ManagedBean(name = RefreshBean.BEAN_NAME)
+@CustomScoped(value = "#{window}")
 public class RefreshBean extends ComponentExampleImpl<RefreshBean> implements Serializable {
     public static final String BEAN_NAME = "refreshBean";
     private static SimpleDateFormat FORMATTER = new SimpleDateFormat("hh:mm:ss");

@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.push;
 
 import org.icefaces.ace.component.chart.Axis;
 import org.icefaces.ace.component.chart.AxisType;
@@ -32,7 +32,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.CustomScoped;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,8 +62,8 @@ import java.util.TimerTask;
         @MenuLink(title = "menu.core.pushBean.subMenu.main", isDefault = true, exampleBeanName = PushBean.BEAN_NAME)
     }
 )
-@ManagedBean
-@ViewScoped
+@ManagedBean(name = PushBean.BEAN_NAME)
+@CustomScoped(value = "#{window}")
 public class PushBean extends ComponentExampleImpl<PushBean> implements Serializable {
     public static final String BEAN_NAME = "pushBean";
     private final static String DEMO = "demo";

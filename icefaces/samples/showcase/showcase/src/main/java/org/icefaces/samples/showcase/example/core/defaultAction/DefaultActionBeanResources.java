@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.defaultAction;
 
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -29,18 +29,18 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:refresh",
-                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/refresh.html"),
+                        title = "icecore:defaultAction",
+                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/defaultAction.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:refresh",
-                        resource = "http://www.icesoft.org/wiki/display/ICE/refresh")
+                        title = "icecore:defaultAction",
+                        resource = "http://www.icesoft.org/wiki/display/ICE/defaultAction")
         }
 )
 @ManagedBean
 @ApplicationScoped
-public class RefreshBeanResources extends ComponentExampleImpl<RefreshBeanResources> implements Serializable {
-    public RefreshBeanResources() {
-        super(RefreshBeanResources.class);
+public class DefaultActionBeanResources extends ComponentExampleImpl<DefaultActionBeanResources> implements Serializable {
+    public DefaultActionBeanResources() {
+        super(DefaultActionBeanResources.class);
     }
 
     @PostConstruct
