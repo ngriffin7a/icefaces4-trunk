@@ -139,6 +139,7 @@
             var lat = '#{geoLocationBean.latitude}';
             var lon = '#{geoLocationBean.longitude}';
             var image = document.getElementById('map');
+            if (!image) return;
             var height = image.clientHeight;
             var width = image.clientWidth;
             var x = Math.floor(lon * width / 2 / 180 + (width / 2));
