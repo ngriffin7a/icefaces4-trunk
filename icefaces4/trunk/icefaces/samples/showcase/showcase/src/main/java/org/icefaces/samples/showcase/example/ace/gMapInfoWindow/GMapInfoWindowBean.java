@@ -37,8 +37,8 @@ import java.io.Serializable;
                     resource = "/resources/examples/ace/gMapInfoWindow/gMapInfoWindow.xhtml"),
             // Java Source
             @ExampleResource(type = ResourceType.java,
-                    title="MapInfoWindowBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapInfoWindow/MapInfoWindowBean.java")
+                    title="GMapInfoWindowBean.java",
+                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapInfoWindow/GMapInfoWindowBean.java")
         }
 )
 @Menu(
