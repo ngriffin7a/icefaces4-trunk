@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.focusManager;
 
 import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
@@ -25,43 +25,42 @@ import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 
 @ComponentExample(
-        title = "DefaultAction Component",
-        description = "The <b>&lt;icecore:defaultAction&gt;</b> component allows users to execute actions triggered by key presses when no other component in the page will. The following key presses are wired to trigger default action: Enter, Esc, Left Arrow, F3. The rest of key presses are ignored.",
-        example = "/resources/examples/core/default-action.xhtml"
+        title = "Focus Manager Component",
+        description = "The <b>&lt;icecore:focusManager&gt;</b> component manages where focus will be applied on page load. The focus will move to the first invalid component, in this case when the required field is not filled in.",
+        example = "/resources/examples/core/focus-manager.xhtml"
 )
 
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.xhtml,
-                        title="default-action.xhtml",
-                        resource = "/resources/examples/core/default-action.xhtml"),
+                        title="focus-manager.xhtml",
+                        resource = "/resources/examples/core/focus-manager.xhtml"),
                 @ExampleResource(type = ResourceType.java,
-                        title="DefaultActionBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/DefaultActionBean.java")
+                        title="FocusManagerBean.java",
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/FocusManagerBean.java")
         }
 )
 @Menu(
-    title = "menu.core.defaultActionBean.subMenu.title", 
+    title = "menu.core.focusManagerBean.subMenu.title", 
     menuLinks = {
-        @MenuLink(title = "menu.core.defaultActionBean.subMenu.main", isDefault = true, exampleBeanName = DefaultActionBean.BEAN_NAME)
+        @MenuLink(title = "menu.core.focusManagerBean.subMenu.main", isDefault = true, exampleBeanName = FocusManagerBean.BEAN_NAME)
     }
 )
-@ManagedBean
+@ManagedBean(name = FocusManagerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DefaultActionBean  extends ComponentExampleImpl<DefaultActionBean> implements Serializable {
-    public static final String BEAN_NAME = "defaultActionBean";
-    private String actionDescription;
-    private String a, b, c = "";
+public class FocusManagerBean extends ComponentExampleImpl<FocusManagerBean> implements Serializable {
+    public static final String BEAN_NAME = "focusManagerBean";
+    private String focusedComponent = "";
+    private String a, b, c, d = "";
 
-    public DefaultActionBean() {
-        super(DefaultActionBean.class);
+    public FocusManagerBean() {
+        super(FocusManagerBean.class);
     }
 
     @PostConstruct
@@ -69,28 +68,12 @@ public class DefaultActionBean  extends ComponentExampleImpl<DefaultActionBean> 
         super.initMetaData();
     }
 
-    public String getActionDescription() {
-        return actionDescription;
+    public String getFocusedComponent() {
+        return focusedComponent;
     }
 
-    public void pressedEsc(ActionEvent e) {
-        actionDescription = "Esc key press";
-    }
-
-    public void pressedEnter(ActionEvent e) {
-        actionDescription = "Enter key press.";
-    }
-
-    public void pressedLeftArrow(ActionEvent e) {
-        actionDescription = "Left Arrow key press.";
-    }
-
-    public void pressedF3(ActionEvent e) {
-        actionDescription = "F3 key press.";
-    }
-
-    public boolean getShowActionDescription() {
-        return actionDescription != null;
+    public void setFocusedComponent(String focusedComponent) {
+        this.focusedComponent = focusedComponent;
     }
 
     public String getA() {
@@ -115,5 +98,13 @@ public class DefaultActionBean  extends ComponentExampleImpl<DefaultActionBean> 
 
     public void setC(String c) {
         this.c = c;
+    }
+
+    public String getD() {
+        return d;
+    }
+
+    public void setD(String d) {
+        this.d = d;
     }
 }

@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.jsEventListener;
 
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -29,18 +29,18 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:loadBundle",
-                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/loadBundle.html"),
+                        title = "icecore:jsEventListener",
+                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/jsEventListener.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:loadBundle",
-                        resource = "http://www.icesoft.org/wiki/display/ICE/loadBundle")
+                        title = "icecore:jsEventListener",
+                        resource = "http://www.icesoft.org/wiki/display/ICE/jsEventListener")
         }
 )
 @ManagedBean
 @ApplicationScoped
-public class LoadBundleBeanResources extends ComponentExampleImpl<LoadBundleBeanResources> implements Serializable {
-    public LoadBundleBeanResources() {
-        super(LoadBundleBeanResources.class);
+public class JsEventListenerBeanResources extends ComponentExampleImpl<JsEventListenerBeanResources> implements Serializable {
+    public JsEventListenerBeanResources() {
+        super(JsEventListenerBeanResources.class);
     }
 
     @PostConstruct

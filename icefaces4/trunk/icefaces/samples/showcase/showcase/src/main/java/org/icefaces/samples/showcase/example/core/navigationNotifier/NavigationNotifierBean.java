@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.navigationNotifier;
 
 import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
@@ -34,7 +34,7 @@ import java.io.Serializable;
 @ComponentExample(
         title = "Navigation Notifier Component",
         description = "The <b>icecore:navigationNotifier</b> component will notify the application when the page shown in the browser was rendered as a result of a browser navigation by using 'back' or 'forward' browser buttons.",
-        example = "/resources/examples/core/default-action.xhtml"
+        example = "/resources/examples/core/navigation-notifier.xhtml"
 )
 
 @ExampleResources(
@@ -56,8 +56,8 @@ import java.io.Serializable;
         @MenuLink(title = "menu.core.navigationNotifierBean.subMenu.main", isDefault = true, exampleBeanName = NavigationNotifierBean.BEAN_NAME)
     }
 )
-@ManagedBean
-@ViewScoped
+@ManagedBean(name = NavigationNotifierBean.BEAN_NAME)
+@CustomScoped(value = "#{window}")
 public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotifierBean> implements Serializable {
     public static final String BEAN_NAME = "navigationNotifierBean";
     private boolean navigationDetected;

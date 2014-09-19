@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.navigationNotifier;
 
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -29,18 +29,18 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:idleMonitor",
-                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/idleMonitor.html"),
+                        title = "icecore:navigationNotifier",
+                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/navigationNotifier.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:idleMonitor",
-                        resource = "http://www.icesoft.org/wiki/display/ICE/idleMonitor")
+                        title = "icecore:navigationNotifier",
+                        resource = "http://www.icesoft.org/wiki/display/ICE/navigationNotifier")
         }
 )
 @ManagedBean
 @ApplicationScoped
-public class IdleMonitorBeanResources extends ComponentExampleImpl<IdleMonitorBeanResources> implements Serializable {
-    public IdleMonitorBeanResources() {
-        super(IdleMonitorBeanResources.class);
+public class NavigationNotifierBeanResources extends ComponentExampleImpl<NavigationNotifierBeanResources> implements Serializable {
+    public NavigationNotifierBeanResources() {
+        super(NavigationNotifierBeanResources.class);
     }
 
     @PostConstruct

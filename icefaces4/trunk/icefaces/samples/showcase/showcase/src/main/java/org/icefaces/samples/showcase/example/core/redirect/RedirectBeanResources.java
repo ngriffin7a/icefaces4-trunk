@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.redirect;
 
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -29,18 +29,18 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:navigationNotifier",
-                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/navigationNotifier.html"),
+                        title = "icecore:redirect",
+                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/redirect.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:navigationNotifier",
-                        resource = "http://www.icesoft.org/wiki/display/ICE/navigationNotifier")
+                        title = "icecore:redirect",
+                        resource = "http://www.icesoft.org/wiki/display/ICE/redirect")
         }
 )
 @ManagedBean
 @ApplicationScoped
-public class NavigationNotifierBeanResources extends ComponentExampleImpl<NavigationNotifierBeanResources> implements Serializable {
-    public NavigationNotifierBeanResources() {
-        super(NavigationNotifierBeanResources.class);
+public class RedirectBeanResources extends ComponentExampleImpl<RedirectBeanResources> implements Serializable {
+    public RedirectBeanResources() {
+        super(RedirectBeanResources.class);
     }
 
     @PostConstruct

@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.refresh;
 
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -29,18 +29,18 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:focusManager",
-                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/focusManager.html"),
+                        title = "icecore:refresh",
+                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/refresh.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:focusManager",
-                        resource = "http://www.icesoft.org/wiki/display/ICE/focusManager")
+                        title = "icecore:refresh",
+                        resource = "http://www.icesoft.org/wiki/display/ICE/refresh")
         }
 )
 @ManagedBean
 @ApplicationScoped
-public class FocusManagerBeanResources extends ComponentExampleImpl<FocusManagerBeanResources> implements Serializable {
-    public FocusManagerBeanResources() {
-        super(FocusManagerBeanResources.class);
+public class RefreshBeanResources extends ComponentExampleImpl<RefreshBeanResources> implements Serializable {
+    public RefreshBeanResources() {
+        super(RefreshBeanResources.class);
     }
 
     @PostConstruct

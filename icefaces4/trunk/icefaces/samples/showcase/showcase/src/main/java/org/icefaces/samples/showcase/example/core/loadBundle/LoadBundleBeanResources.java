@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.loadBundle;
 
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -29,18 +29,18 @@ import java.io.Serializable;
 @ExampleResources(
         resources = {
                 @ExampleResource(type = ResourceType.tld,
-                        title = "icecore:defaultAction",
-                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/defaultAction.html"),
+                        title = "icecore:loadBundle",
+                        resource = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/loadBundle.html"),
                 @ExampleResource(type = ResourceType.wiki,
-                        title = "icecore:defaultAction",
-                        resource = "http://www.icesoft.org/wiki/display/ICE/defaultAction")
+                        title = "icecore:loadBundle",
+                        resource = "http://www.icesoft.org/wiki/display/ICE/loadBundle")
         }
 )
 @ManagedBean
 @ApplicationScoped
-public class DefaultActionBeanResources extends ComponentExampleImpl<DefaultActionBeanResources> implements Serializable {
-    public DefaultActionBeanResources() {
-        super(DefaultActionBeanResources.class);
+public class LoadBundleBeanResources extends ComponentExampleImpl<LoadBundleBeanResources> implements Serializable {
+    public LoadBundleBeanResources() {
+        super(LoadBundleBeanResources.class);
     }
 
     @PostConstruct

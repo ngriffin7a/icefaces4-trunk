@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.coreSetup;
 
 import org.icefaces.samples.showcase.view.navigation.NavigationModel;
 

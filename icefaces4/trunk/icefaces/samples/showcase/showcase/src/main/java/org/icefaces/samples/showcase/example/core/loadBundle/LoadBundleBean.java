@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.loadBundle;
 
 import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
@@ -56,8 +56,8 @@ import java.util.Locale;
         @MenuLink(title = "menu.core.loadBundleBean.subMenu.main", isDefault = true, exampleBeanName = LoadBundleBean.BEAN_NAME)
     }
 )
-@ManagedBean
-@ViewScoped
+@ManagedBean(name = LoadBundleBean.BEAN_NAME)
+@CustomScoped(value = "#{window}")
 public class LoadBundleBean extends ComponentExampleImpl<LoadBundleBean> implements Serializable {
     public static final String BEAN_NAME = "loadBundleBean";
     private String language = "en";

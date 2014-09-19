@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core;
+package org.icefaces.samples.showcase.example.core.jsEventListener;
 
 import org.icefaces.impl.component.JSEventListener;
 import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
@@ -55,7 +55,7 @@ import java.io.Serializable;
         @MenuLink(title = "menu.core.jsEventListenerBean.subMenu.main", isDefault = true, exampleBeanName = JsEventListenerBean.BEAN_NAME)
     }
 )
-@ManagedBean
+@ManagedBean(name = JsEventListenerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
 public class JsEventListenerBean extends ComponentExampleImpl<JsEventListenerBean> implements Serializable {
     public static final String BEAN_NAME = "jsEventListenerBean";
