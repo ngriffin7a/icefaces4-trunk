@@ -43,7 +43,7 @@ import java.io.Serializable;
                         resource = "/resources/examples/core/idle-monitor.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="IdleMonitorBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/IdleMonitorBean.java")
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/idleMonitor/IdleMonitorBean.java")
         }
 )
 @Menu(

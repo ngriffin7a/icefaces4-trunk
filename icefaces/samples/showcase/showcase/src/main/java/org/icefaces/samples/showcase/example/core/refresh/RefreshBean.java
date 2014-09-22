@@ -45,7 +45,7 @@ import java.util.Date;
                         resource = "/resources/examples/core/refresh.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="RefreshBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/RefreshBean.java")
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/refresh/RefreshBean.java")
         }
 )
 @Menu(
