@@ -43,7 +43,7 @@ import java.io.Serializable;
                         resource = "/resources/examples/core/focus-manager.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="FocusManagerBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/FocusManagerBean.java")
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/focusManager/FocusManagerBean.java")
         }
 )
 @Menu(
