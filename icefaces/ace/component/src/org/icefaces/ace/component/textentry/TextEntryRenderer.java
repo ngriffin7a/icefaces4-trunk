@@ -172,7 +172,9 @@ public class TextEntryRenderer extends InputRenderer {
           .entryNonNullValue("embeddedLabel", embeddedLabel)
           .entry("autoTab", textEntry.isAutoTab() && textEntry.getMaxlength() > 0)
           .entry("secret", textEntry.isSecret())
-          .entry("originalType", type);
+          .entry("originalType", type)
+          .entry("indicatorPosition", indicatorPosition)
+          .entry("labelPosition", labelPosition);
 
         encodeClientBehaviors(context, textEntry, jb);
 
@@ -180,18 +182,20 @@ public class TextEntryRenderer extends InputRenderer {
             jb.entry("theme", false);
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(indicatorPosition).append(labelPosition);
-        jb.entry("hashCode", sb.toString().hashCode());
-
         jb.endMap().endArray().endFunction();
-        writer.writeAttribute("onfocus", jb.toString(), null);
+		String script = jb.toString();
+        writer.writeAttribute("onfocus", script, null);
 
         writer.endElement("input");
 
         writeLabelAndIndicatorAfter(labelAttributes);
 
         writer.endElement("span");
+
+		writer.startElement("span", null);
+        writer.writeAttribute("style", "display:none;", null);
+		writer.writeAttribute("data-hashcode", script.hashCode(), null);
+		writer.endElement("span");
 
         writer.endElement("span");
 	}
