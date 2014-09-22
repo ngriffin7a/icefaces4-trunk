@@ -59,17 +59,16 @@ import java.util.HashMap;
 public class MessagesBean extends ComponentExampleImpl<MessagesBean> implements Serializable {
     public static final String BEAN_NAME = "messagesBean";
 
-    private String firstName;
-    private String lastName;
-    private String city;
-    private String province;
-    private String country;
+    private String fullName;
+    private String dateOfBirth;
+    private String major;
+    private String workingSince;
 
     private static HashMap<String, Integer> severityMap = new HashMap<String, Integer>() {{
-            put("First Name", 0);
-            put("Last Name", 1);
-            put("City", 2);
-            put("Country", 3);
+            put("Full Name", 3);
+            put("Date of Birth", 2);
+            put("Major", 1);
+            put("Working Since", 0);
         }
         private static final long serialVersionUID = 6584997908723158778L;
     };
@@ -84,44 +83,36 @@ public class MessagesBean extends ComponentExampleImpl<MessagesBean> implements 
         super.initMetaData();
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getCity() {
-        return city;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public String getProvince() {
-        return province;
+    public String getMajor() {
+        return major;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setMajor(String major) {
+        this.major = major;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getWorkingSince() {
+        return workingSince;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setWorkingSince(String workingSince) {
+        this.workingSince = workingSince;
     }
 
     public void blurListener(AjaxBehaviorEvent event) {

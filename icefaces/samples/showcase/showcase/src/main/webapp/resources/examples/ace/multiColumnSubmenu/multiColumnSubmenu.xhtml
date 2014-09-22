@@ -38,11 +38,11 @@
 
         <h:form id="form">
             
-            <ace:panel style="text-align: center;">
-                <h:outputText id="txt" value="Right-click anywhere on this page to display a context menu with a multi-column submenu."/>
+            <ace:panel id="contextMenuPanel" style="text-align: center;">
+                <h:outputText id="txt" value="Right-click anywhere on this panel to display a context menu with a multi-column submenu."/>
             </ace:panel>
 			
-            <ace:contextMenu id="contextMenu" effect="slide" effectDuration="200">
+            <ace:contextMenu id="contextMenu" effect="slide" effectDuration="200" for="contextMenuPanel">
                 <ace:menuItem value="Homepage" icon="ui-icon ui-icon-extlink" url="http://www.icefaces.org" target="_blank"/>
                 <ace:submenu id="edit" label="Edit" icon="ui-icon ui-icon-pencil">  
                      <ace:menuItem id="cut" value="Cut"/>
