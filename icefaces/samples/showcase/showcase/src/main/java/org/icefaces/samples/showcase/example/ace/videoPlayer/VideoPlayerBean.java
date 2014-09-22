@@ -74,7 +74,7 @@ public class VideoPlayerBean extends ComponentExampleImpl<VideoPlayerBean> imple
     private boolean loop = false;
 
     private String linkLabel = null;
-    private String value = "./resources/media/illusion1.mp4";
+    private String value = "./resources/media/penrosetriangle.mp4";
 
     public String getValue() {
         return value;
