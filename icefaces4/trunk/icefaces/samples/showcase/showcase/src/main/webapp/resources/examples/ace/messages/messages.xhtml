@@ -35,28 +35,28 @@
     <ui:param name="tldResources" value="#{messagesResources.tldResources}"/>
 
     <ui:define name="example">
-        <h:form id="messageDemoForm">
-            <ace:panel id="personalInfoInputPanel" header="Personal Info">
-                <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
-                    <ace:textEntry id="firstNameInput" value="#{messagesBean.firstName}" label="First Name" labelPosition="left">
-                        <ace:ajax event="blur" render="firstNameMsg allMsgs" listener="#{messagesBean.blurListener}"/>
+        <h:form id="form">
+            <ace:panel id="employeeInfoInputPanel" header="Employee Info">
+                <h:panelGrid id="employeeInputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
+                    <ace:textEntry id="fullNameInput" value="#{messagesBean.fullName}" label="Full Name" labelPosition="left">
+                        <ace:ajax event="blur" render="allMsgs" listener="#{messagesBean.blurListener}"/>
                     </ace:textEntry>
 
-                    <ace:textEntry id="lastNameInput" value="#{messagesBean.lastName}" label="Last Name" labelPosition="left">
-                        <ace:ajax event="blur" render="lastNameMsg allMsgs" listener="#{messagesBean.blurListener}"/>
+                    <ace:textEntry id="dateOfBirthInput" value="#{messagesBean.dateOfBirth}" label="Date of Birth" labelPosition="left">
+                        <ace:ajax event="blur" render="allMsgs" listener="#{messagesBean.blurListener}"/>
                     </ace:textEntry>
 
-                    <ace:textEntry id="cityInput" value="#{messagesBean.city}" label="City" labelPosition="left">
-                        <ace:ajax event="blur" render="cityMsg allMsgs" listener="#{messagesBean.blurListener}"/>
+                    <ace:textEntry id="majorInput" value="#{messagesBean.major}" label="Major" labelPosition="left">
+                        <ace:ajax event="blur" render="allMsgs" listener="#{messagesBean.blurListener}"/>
                     </ace:textEntry>
 
-                    <ace:textEntry id="countryInput" value="#{messagesBean.country}" label="Country" labelPosition="left">
-                        <ace:ajax event="blur" render="countryMsg allMsgs" listener="#{messagesBean.blurListener}"/>
+                    <ace:textEntry id="workingSinceInput" value="#{messagesBean.workingSince}" label="Working Since" labelPosition="left">
+                        <ace:ajax event="blur" render="allMsgs" listener="#{messagesBean.blurListener}"/>
                     </ace:textEntry>
                 </h:panelGrid>
             </ace:panel>
 
-            <ace:panel id="personalInfoOutputPanel" header="All Faces Messages">
+            <ace:panel id="employeeInfoOutputPanel" header="All Faces Messages">
                 <ace:messages id="allMsgs" initEffect="highlight" changeEffect="puff"/>
             </ace:panel>
         </h:form>
