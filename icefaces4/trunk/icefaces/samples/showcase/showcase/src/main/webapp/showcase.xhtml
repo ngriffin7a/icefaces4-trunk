@@ -86,14 +86,14 @@
             <ace:accordion effect="slide"
                            activeIndex="#{aceMenu.groupsMap[navigationModel.componentExample]}"
                            autoHeight="false">
-                <ace:accordionPane title="#{msgs['menu.core.group.title']}">
+                <ace:accordionPane title="#{msgs['menu.ace.aceSuiteOverview.title']}">
                     <ul>
 						<c:forEach var="link" items="#{aceMenu.groups[0]}">
 							<showcase:componentNavigation menuLink="#{link}"/>
 						</c:forEach>
                     </ul>
                 </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.aceSuiteOverview.title']}">
+                <ace:accordionPane title="#{msgs['menu.core.group.title']}">
                     <ul>
 						<c:forEach var="link" items="#{aceMenu.groups[1]}">
 							<showcase:componentNavigation menuLink="#{link}"/>
@@ -121,35 +121,35 @@
 						</c:forEach>
                     </ul>
                 </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.menus.title']}">
+                <ace:accordionPane title="#{msgs['menu.ace.group.selection.title']}">
                     <ul>
 						<c:forEach var="link" items="#{aceMenu.groups[5]}">
 							<showcase:componentNavigation menuLink="#{link}"/>
 						</c:forEach>
                     </ul>
                 </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.selection.title']}">
+                <ace:accordionPane title="#{msgs['menu.ace.group.datatable.title']}">
                     <ul>
 						<c:forEach var="link" items="#{aceMenu.groups[6]}">
 							<showcase:componentNavigation menuLink="#{link}"/>
 						</c:forEach>
                     </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.dialogs.title']}">
+                </ace:accordionPane>              
+                <ace:accordionPane title="#{msgs['menu.ace.group.containers.title']}">
                     <ul>
 						<c:forEach var="link" items="#{aceMenu.groups[7]}">
 							<showcase:componentNavigation menuLink="#{link}"/>
 						</c:forEach>
                     </ul>
                 </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.containers.title']}">
+                <ace:accordionPane title="#{msgs['menu.ace.group.dialogs.title']}">
                     <ul>
 						<c:forEach var="link" items="#{aceMenu.groups[8]}">
 							<showcase:componentNavigation menuLink="#{link}"/>
 						</c:forEach>
                     </ul>
                 </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.file.title']}">
+                <ace:accordionPane title="#{msgs['menu.ace.group.menus.title']}">
                     <ul>
 						<c:forEach var="link" items="#{aceMenu.groups[9]}">
 							<showcase:componentNavigation menuLink="#{link}"/>
@@ -163,7 +163,7 @@
 						</c:forEach>
                     </ul>
                 </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.datatable.title']}">
+                <ace:accordionPane title="#{msgs['menu.ace.group.file.title']}">
                     <ul>
 						<c:forEach var="link" items="#{aceMenu.groups[11]}">
 							<showcase:componentNavigation menuLink="#{link}"/>

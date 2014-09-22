@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+ * Copyright 2004-2014 ICEsoft Technologies Canada Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the
@@ -141,62 +141,77 @@ import java.util.ArrayList;
 
 		// Populate the left-hand menu with demo categories and component demos
         menuLinks = {
-                @MenuLink(title = "menu.ace.aceSuiteOverview.title", isDefault = true, exampleBeanName = AceSuiteOverviewBean.BEAN_NAME, group=1, beanClass=AceSuiteOverviewBean.class),
+
+                @MenuLink(title = "menu.ace.aceSuiteOverview.title", isDefault = true, exampleBeanName = AceSuiteOverviewBean.BEAN_NAME, group=0, beanClass=AceSuiteOverviewBean.class),
+
+                @MenuLink(title = "menu.core.defaultActionBean.title", exampleBeanName = DefaultActionBean.BEAN_NAME, group=1, beanClass=DefaultActionBean.class),
+                @MenuLink(title = "menu.core.focusManagerBean.title", exampleBeanName = FocusManagerBean.BEAN_NAME, group=1, beanClass=FocusManagerBean.class),
+                @MenuLink(title = "menu.core.idleMonitorBean.title", exampleBeanName = IdleMonitorBean.BEAN_NAME, group=1, beanClass=IdleMonitorBean.class),
+                @MenuLink(title = "menu.core.jsEventListenerBean.title", exampleBeanName = JsEventListenerBean.BEAN_NAME, group=1, beanClass=JsEventListenerBean.class),
+                @MenuLink(title = "menu.core.loadBundleBean.title", exampleBeanName = LoadBundleBean.BEAN_NAME, group=1, beanClass=LoadBundleBean.class),
+                @MenuLink(title = "menu.core.navigationNotifierBean.title", exampleBeanName = NavigationNotifierBean.BEAN_NAME, group=1, beanClass=NavigationNotifierBean.class),
+                @MenuLink(title = "menu.core.pushBean.title", exampleBeanName = PushBean.BEAN_NAME, group=1, beanClass=PushBean.class),
+                @MenuLink(title = "menu.core.redirectBean.title", exampleBeanName = RedirectBean.BEAN_NAME, group=1, beanClass=RedirectBean.class),
+                @MenuLink(title = "menu.core.refreshBean.title", exampleBeanName = RefreshBean.BEAN_NAME, group=1, beanClass=RefreshBean.class),
 
                 @MenuLink(title = "menu.ace.ajax.title", exampleBeanName = AjaxBean.BEAN_NAME, group=2, beanClass=AjaxBean.class),
                 @MenuLink(title = "menu.ace.submitMonitor.title", exampleBeanName = SubmitMonitorBean.BEAN_NAME, group=2, beanClass=SubmitMonitorBean.class),
 
-                @MenuLink(title = "menu.ace.autocompleteentry.title", exampleBeanName = AutoCompleteEntryBean.BEAN_NAME, group=3, beanClass=AutoCompleteEntryBean.class),
-                @MenuLink(title = "menu.ace.dateentry.title", exampleBeanName = DateEntryBean.BEAN_NAME, group=3, beanClass=DateEntryBean.class),
-                @MenuLink(title = "menu.ace.maskedEntry.title", exampleBeanName = MaskedEntryBean.BEAN_NAME, group=3, beanClass=MaskedEntryBean.class),
-                @MenuLink(title = "menu.ace.richtextentry.title", exampleBeanName = RichTextEntryBean.BEAN_NAME, group=3, beanClass=RichTextEntryBean.class),
-                @MenuLink(title = "menu.ace.slider.title", exampleBeanName = SliderBean.BEAN_NAME, group=3, beanClass=SliderBean.class),
                 @MenuLink(title = "menu.ace.textEntry.title", exampleBeanName = TextEntryBean.BEAN_NAME, group=3, beanClass=TextEntryBean.class),
                 @MenuLink(title = "menu.ace.textAreaEntry.title", exampleBeanName = TextAreaEntryBean.BEAN_NAME, group=3, beanClass=TextAreaEntryBean.class),
+                @MenuLink(title = "menu.ace.maskedEntry.title", exampleBeanName = MaskedEntryBean.BEAN_NAME, group=3, beanClass=MaskedEntryBean.class),
+                @MenuLink(title = "menu.ace.autocompleteentry.title", exampleBeanName = AutoCompleteEntryBean.BEAN_NAME, group=3, beanClass=AutoCompleteEntryBean.class),
+                @MenuLink(title = "menu.ace.dateentry.title", exampleBeanName = DateEntryBean.BEAN_NAME, group=3, beanClass=DateEntryBean.class),
+                @MenuLink(title = "menu.ace.richtextentry.title", exampleBeanName = RichTextEntryBean.BEAN_NAME, group=3, beanClass=RichTextEntryBean.class),
+                @MenuLink(title = "menu.ace.slider.title", exampleBeanName = SliderBean.BEAN_NAME, group=3, beanClass=SliderBean.class),
 
-                @MenuLink(title = "menu.ace.buttonGroup.title", exampleBeanName = ButtonGroupBean.BEAN_NAME, group=4, beanClass=ButtonGroupBean.class),
-                @MenuLink(title = "menu.ace.checkboxButton.title", exampleBeanName = CheckboxButtonBean.BEAN_NAME, group=4, beanClass=CheckboxButtonBean.class),
-                @MenuLink(title = "menu.ace.linkButton.title", exampleBeanName = LinkButtonBean.BEAN_NAME, group=4, beanClass=LinkButtonBean.class),
                 @MenuLink(title = "menu.ace.pushButton.title", exampleBeanName = PushButtonBean.BEAN_NAME, group=4, beanClass=PushButtonBean.class),
+                @MenuLink(title = "menu.ace.linkButton.title", exampleBeanName = LinkButtonBean.BEAN_NAME, group=4, beanClass=LinkButtonBean.class),
+                @MenuLink(title = "menu.ace.checkboxButton.title", exampleBeanName = CheckboxButtonBean.BEAN_NAME, group=4, beanClass=CheckboxButtonBean.class),
                 @MenuLink(title = "menu.ace.radioButton.title", exampleBeanName = RadioButtonBean.BEAN_NAME, group=4, beanClass=RadioButtonBean.class),
+                @MenuLink(title = "menu.ace.buttonGroup.title", exampleBeanName = ButtonGroupBean.BEAN_NAME, group=4, beanClass=ButtonGroupBean.class),
                 @MenuLink(title = "menu.ace.menuButton.title", exampleBeanName = MenuButtonBean.BEAN_NAME, group=4, beanClass=MenuButtonBean.class),
 
-                @MenuLink(title = "menu.ace.breadcrumbmenu.title", exampleBeanName = BreadcrumbMenuBean.BEAN_NAME, group=5, beanClass=BreadcrumbMenuBean.class),
-                @MenuLink(title = "menu.ace.contextMenu.title", exampleBeanName = ContextMenuBean.BEAN_NAME, group=5, beanClass=ContextMenuBean.class),
-                @MenuLink(title = "menu.ace.menu.title", exampleBeanName = MenuBean.BEAN_NAME, group=5, beanClass=MenuBean.class),
-                @MenuLink(title = "menu.ace.menuBar.title", exampleBeanName = MenuBarBean.BEAN_NAME, group=5, beanClass=MenuBarBean.class),
-				@MenuLink(title = "menu.ace.menuSeparator.title", exampleBeanName = MenuSeparatorBean.BEAN_NAME, group=5, beanClass=MenuSeparatorBean.class),
-				@MenuLink(title = "menu.ace.multiColumnSubmenu.title", exampleBeanName = MultiColumnSubmenuBean.BEAN_NAME, group=5, beanClass=MultiColumnSubmenuBean.class),
+                @MenuLink(title = "menu.ace.autocompleteentry.title", exampleBeanName = AutoCompleteEntryBean.BEAN_NAME, group=5, beanClass=AutoCompleteEntryBean.class),
+                @MenuLink(title = "menu.ace.combobox.title", exampleBeanName = ComboBoxBean.BEAN_NAME, group=5, beanClass=ComboBoxBean.class),
+                @MenuLink(title = "menu.ace.list.title", exampleBeanName = ListBean.BEAN_NAME, group=5, beanClass=ListBean.class),
                 @MenuLink(title = "menu.ace.selectmenu.title", exampleBeanName = SelectMenuBean.BEAN_NAME, group=5, beanClass=SelectMenuBean.class),
-    			@MenuLink(title = "menu.ace.simpleselectonemenu.title", exampleBeanName = SimpleSelectOneMenuBean.BEAN_NAME, group=5, beanClass=SimpleSelectOneMenuBean.class),
+                @MenuLink(title = "menu.ace.simpleselectonemenu.title", exampleBeanName = SimpleSelectOneMenuBean.BEAN_NAME, group=5, beanClass=SimpleSelectOneMenuBean.class),
 
-                @MenuLink(title = "menu.ace.combobox.title", exampleBeanName = ComboBoxBean.BEAN_NAME, group=6, beanClass=ComboBoxBean.class),
-                @MenuLink(title = "menu.ace.list.title", exampleBeanName = ListBean.BEAN_NAME, group=6, beanClass=ListBean.class),
+                @MenuLink(title = "menu.ace.dataTable.title", exampleBeanName = DataTableBean.BEAN_NAME, group=6, beanClass=DataTableBean.class),
+                @MenuLink(title = "menu.ace.rowExpansion.title", exampleBeanName = RowExpansionBean.BEAN_NAME, group=6, beanClass=RowExpansionBean.class),
+                @MenuLink(title = "menu.ace.columnGroup.title", exampleBeanName = ColumnGroupBean.BEAN_NAME, group=6, beanClass=ColumnGroupBean.class),
+                @MenuLink(title = "menu.ace.cellEditor.title", exampleBeanName = CellEditorBean.BEAN_NAME, group=6, beanClass=CellEditorBean.class),
+                @MenuLink(title = "menu.ace.tableConfigPanel.title", exampleBeanName = TableConfigPanelBean.BEAN_NAME, group=6, beanClass=TableConfigPanelBean.class),
+                @MenuLink(title = "menu.ace.dataExporter.title", exampleBeanName = DataExporterBean.BEAN_NAME, group=6, beanClass=DataExporterBean.class),
 
-                @MenuLink(title = "menu.ace.dialog.title", exampleBeanName = DialogBean.BEAN_NAME, group=7, beanClass=DialogBean.class),
-                @MenuLink(title = "menu.ace.confirmationdialog.title", exampleBeanName = ConfirmationDialogBean.BEAN_NAME, group=7, beanClass=ConfirmationDialogBean.class),
-                @MenuLink(title = "menu.ace.notificationpanel.title", exampleBeanName = NotificationPanelBean.BEAN_NAME, group=7, beanClass=NotificationPanelBean.class),
-                @MenuLink(title = "menu.ace.tooltip.title", exampleBeanName = TooltipOverviewBean.BEAN_NAME, group=7, beanClass=TooltipOverviewBean.class),
+                @MenuLink(title = "menu.ace.panel.title", exampleBeanName = PanelBean.BEAN_NAME, group=7, beanClass=PanelBean.class),
+                @MenuLink(title = "menu.ace.accordionpanel.title", exampleBeanName = AccordionPanelBean.BEAN_NAME, group=7, beanClass=AccordionPanelBean.class),
+                @MenuLink(title = "menu.ace.tabSet.title", exampleBeanName = TabSetBean.BEAN_NAME, group=7, beanClass=TabSetBean.class),
+                @MenuLink(title = "menu.ace.tree.title", exampleBeanName = TreeBean.BEAN_NAME, group=7, beanClass=TreeBean.class),
+                @MenuLink(title = "menu.ace.splitpane.title", exampleBeanName = SplitPaneBean.BEAN_NAME, group=7, beanClass=SplitPaneBean.class),
 
-                @MenuLink(title = "menu.ace.accordionpanel.title", exampleBeanName = AccordionPanelBean.BEAN_NAME, group=8, beanClass=AccordionPanelBean.class),
-                @MenuLink(title = "menu.ace.panel.title", exampleBeanName = PanelBean.BEAN_NAME, group=8, beanClass=PanelBean.class),
-                @MenuLink(title = "menu.ace.splitpane.title", exampleBeanName = SplitPaneBean.BEAN_NAME, group=8, beanClass=SplitPaneBean.class),
-                @MenuLink(title = "menu.ace.tabSet.title", exampleBeanName = TabSetBean.BEAN_NAME, group=8, beanClass=TabSetBean.class),
-                @MenuLink(title = "menu.ace.tree.title", exampleBeanName = TreeBean.BEAN_NAME, group=8, beanClass=TreeBean.class),
+                @MenuLink(title = "menu.ace.dialog.title", exampleBeanName = DialogBean.BEAN_NAME, group=8, beanClass=DialogBean.class),
+                @MenuLink(title = "menu.ace.confirmationdialog.title", exampleBeanName = ConfirmationDialogBean.BEAN_NAME, group=8, beanClass=ConfirmationDialogBean.class),
+                @MenuLink(title = "menu.ace.notificationpanel.title", exampleBeanName = NotificationPanelBean.BEAN_NAME, group=8, beanClass=NotificationPanelBean.class),
+                @MenuLink(title = "menu.ace.tooltip.title", exampleBeanName = TooltipOverviewBean.BEAN_NAME, group=8, beanClass=TooltipOverviewBean.class),
 
-                @MenuLink(title = "menu.ace.dynamicResource.title", exampleBeanName = DynamicResourceBean.BEAN_NAME, group=9, beanClass=DynamicResourceBean.class),
-                @MenuLink(title = "menu.ace.fileentry.title", exampleBeanName = FileEntryBean.BEAN_NAME, group=9, beanClass=FileEntryBean.class),
+                @MenuLink(title = "menu.ace.menu.title", exampleBeanName = MenuBean.BEAN_NAME, group=9, beanClass=MenuBean.class),
+                @MenuLink(title = "menu.ace.menuBar.title", exampleBeanName = MenuBarBean.BEAN_NAME, group=9, beanClass=MenuBarBean.class),
+                @MenuLink(title = "menu.ace.menuButton.title", exampleBeanName = MenuButtonBean.BEAN_NAME, group=9, beanClass=MenuButtonBean.class),
+                @MenuLink(title = "menu.ace.contextMenu.title", exampleBeanName = ContextMenuBean.BEAN_NAME, group=9, beanClass=ContextMenuBean.class),
+				@MenuLink(title = "menu.ace.multiColumnSubmenu.title", exampleBeanName = MultiColumnSubmenuBean.BEAN_NAME, group=9, beanClass=MultiColumnSubmenuBean.class),
+				@MenuLink(title = "menu.ace.menuSeparator.title", exampleBeanName = MenuSeparatorBean.BEAN_NAME, group=9, beanClass=MenuSeparatorBean.class),
+                @MenuLink(title = "menu.ace.breadcrumbmenu.title", exampleBeanName = BreadcrumbMenuBean.BEAN_NAME, group=9, beanClass=BreadcrumbMenuBean.class),
+                @MenuLink(title = "menu.ace.selectmenu.title", exampleBeanName = SelectMenuBean.BEAN_NAME, group=9, beanClass=SelectMenuBean.class),
+                @MenuLink(title = "menu.ace.simpleselectonemenu.title", exampleBeanName = SimpleSelectOneMenuBean.BEAN_NAME, group=9, beanClass=SimpleSelectOneMenuBean.class),
 
                 @MenuLink(title = "menu.ace.message.title", exampleBeanName = MessageBean.BEAN_NAME, group=10, beanClass=MessageBean.class),
                 @MenuLink(title = "menu.ace.messages.title", exampleBeanName = MessagesBean.BEAN_NAME, group=10, beanClass=MessagesBean.class),
                 @MenuLink(title = "menu.ace.growlmessages.title", exampleBeanName = GrowlMessagesBean.BEAN_NAME, group=10, beanClass=GrowlMessagesBean.class),
 
-                @MenuLink(title = "menu.ace.cellEditor.title", exampleBeanName = CellEditorBean.BEAN_NAME, group=11, beanClass=CellEditorBean.class),
-                @MenuLink(title = "menu.ace.columnGroup.title", exampleBeanName = ColumnGroupBean.BEAN_NAME, group=11, beanClass=ColumnGroupBean.class),
-                @MenuLink(title = "menu.ace.dataTable.title", exampleBeanName = DataTableBean.BEAN_NAME, group=11, beanClass=DataTableBean.class),
-                @MenuLink(title = "menu.ace.dataExporter.title", exampleBeanName = DataExporterBean.BEAN_NAME, group=11, beanClass=DataExporterBean.class),
-                @MenuLink(title = "menu.ace.rowExpansion.title", exampleBeanName = RowExpansionBean.BEAN_NAME, group=11, beanClass=RowExpansionBean.class),
-                @MenuLink(title = "menu.ace.tableConfigPanel.title", exampleBeanName = TableConfigPanelBean.BEAN_NAME, group=11, beanClass=TableConfigPanelBean.class),
+                @MenuLink(title = "menu.ace.dynamicResource.title", exampleBeanName = DynamicResourceBean.BEAN_NAME, group=11, beanClass=DynamicResourceBean.class),
+                @MenuLink(title = "menu.ace.fileentry.title", exampleBeanName = FileEntryBean.BEAN_NAME, group=11, beanClass=FileEntryBean.class),
 
                 @MenuLink(title = "menu.ace.chart.title", exampleBeanName = ChartBean.BEAN_NAME, group=12, beanClass=ChartBean.class),
 
@@ -220,26 +235,45 @@ import java.util.ArrayList;
                 @MenuLink(title = "menu.ace.progressbar.title", exampleBeanName = ProgressBarBean.BEAN_NAME, group=15, beanClass=ProgressBarBean.class),
                 @MenuLink(title = "menu.ace.qrcode.title", exampleBeanName = QrcodeBean.BEAN_NAME, group=15, beanClass=QrcodeBean.class),
                 @MenuLink(title = "menu.ace.resizable.title", exampleBeanName = ResizableBean.BEAN_NAME, group=15, beanClass=ResizableBean.class),
-                @MenuLink(title = "menu.ace.themeSelect.title", exampleBeanName = ThemeSelectBean.BEAN_NAME, group=15, beanClass=ThemeSelectBean.class),
+                @MenuLink(title = "menu.ace.themeSelect.title", exampleBeanName = ThemeSelectBean.BEAN_NAME, group=15, beanClass=ThemeSelectBean.class) 
+    	},
 
-                @MenuLink(title = "menu.core.defaultActionBean.title", exampleBeanName = DefaultActionBean.BEAN_NAME, group=0, beanClass=DefaultActionBean.class),
-                @MenuLink(title = "menu.core.focusManagerBean.title", exampleBeanName = FocusManagerBean.BEAN_NAME, group=0, beanClass=FocusManagerBean.class),
-                @MenuLink(title = "menu.core.idleMonitorBean.title", exampleBeanName = IdleMonitorBean.BEAN_NAME, group=0, beanClass=IdleMonitorBean.class),
-                @MenuLink(title = "menu.core.jsEventListenerBean.title", exampleBeanName = JsEventListenerBean.BEAN_NAME, group=0, beanClass=JsEventListenerBean.class),
-                @MenuLink(title = "menu.core.loadBundleBean.title", exampleBeanName = LoadBundleBean.BEAN_NAME, group=0, beanClass=LoadBundleBean.class),
-                @MenuLink(title = "menu.core.navigationNotifierBean.title", exampleBeanName = NavigationNotifierBean.BEAN_NAME, group=0, beanClass=NavigationNotifierBean.class),
-                @MenuLink(title = "menu.core.pushBean.title", exampleBeanName = PushBean.BEAN_NAME, group=0, beanClass=PushBean.class),
-                @MenuLink(title = "menu.core.redirectBean.title", exampleBeanName = RedirectBean.BEAN_NAME, group=0, beanClass=RedirectBean.class),
-                @MenuLink(title = "menu.core.refreshBean.title", exampleBeanName = RefreshBean.BEAN_NAME, group=0, beanClass=RefreshBean.class)},
 
 		// Populate the search data structure with component-names, demo names, and alternative/street names for components
         searchSelectItems = {
+                @SearchSelectItem(labelTag = "menu.ace.aceSuiteOverview.title", labelExample = "menu.ace.aceSuiteOverview.subMenu.main", value = AceSuiteOverviewBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.core.defaultActionBean.title", labelExample = "menu.core.defaultActionBean.subMenu.main", value = DefaultActionBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.focusManagerBean.title", labelExample = "menu.core.focusManagerBean.subMenu.main", value = FocusManagerBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.idleMonitorBean.title", labelExample = "menu.core.idleMonitorBean.subMenu.main", value = IdleMonitorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.jsEventListenerBean.title", labelExample = "menu.core.jsEventListenerBean.subMenu.main", value = JsEventListenerBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.jsEventListenerBean.altSearch1", labelExample = "menu.core.jsEventListenerBean.title", value = JsEventListenerBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.loadBundleBean.title", labelExample = "menu.core.loadBundleBean.subMenu.main", value = LoadBundleBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.navigationNotifierBean.title", labelExample = "menu.core.navigationNotifierBean.subMenu.main", value = NavigationNotifierBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.navigationNotifierBean.altSearch1", labelExample = "menu.core.navigationNotifierBean.title", value = NavigationNotifierBean.BEAN_NAME),               
+                @SearchSelectItem(labelTag = "menu.core.pushBean.title", labelExample = "menu.core.pushBean.subMenu.main", value = PushBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.redirectBean.title", labelExample = "menu.core.redirectBean.subMenu.main", value = RedirectBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.core.refreshBean.title", labelExample = "menu.core.refreshBean.subMenu.main", value = RefreshBean.BEAN_NAME),
+
+
                 @SearchSelectItem(labelTag = "menu.ace.ajax.title", labelExample = "menu.ace.ajax.subMenu.main", value = AjaxBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.ajax.altSearch1", labelExample = "menu.ace.ajax.title", value = AjaxBean.BEAN_NAME),
 
-                @SearchSelectItem(labelTag = "menu.ace.aceSuiteOverview.title", labelExample = "menu.ace.aceSuiteOverview.subMenu.main", value = AceSuiteOverviewBean.BEAN_NAME),
-
                 @SearchSelectItem(labelTag = "menu.ace.submitMonitor.title", labelExample = "menu.ace.submitMonitor.subMenu.main", value = SubmitMonitorBean.BEAN_NAME),
+
+
+                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.main", value = TextEntryBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.autotab", value = TextEntryAutotabBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.label", value = TextEntryLabelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.indicator", value = TextEntryIndicatorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.reqStyle", value = TextEntryReqStyleBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textEntry.altSearch1", labelExample = "menu.ace.textEntry.title", value = TextEntryBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.title", labelExample = "menu.ace.textAreaEntry.subMenu.main", value = TextAreaEntryBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.title", labelExample = "menu.ace.textAreaEntry.subMenu.label", value = TextAreaEntryLabelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.title", labelExample = "menu.ace.textAreaEntry.subMenu.indicator", value = TextAreaEntryIndicatorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.title", labelExample = "menu.ace.textAreaEntry.subMenu.reqStyle", value = TextAreaEntryReqStyleBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.altSearch1", labelExample = "menu.ace.textAreaEntry.title", value = TextAreaEntryBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.autocompleteentry.title", labelExample = "menu.ace.autocompleteentry.subMenu.main", value = AutoCompleteEntryBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.autocompleteentry.title", labelExample = "menu.ace.autocompleteentry.subMenu.select", value = AutoCompleteEntrySelectBean.BEAN_NAME),
@@ -269,8 +303,7 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.maskedEntry.title", labelExample = "menu.ace.maskedEntry.subMenu.indicator", value = MaskedIndicatorBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.maskedEntry.title", labelExample = "menu.ace.maskedEntry.subMenu.reqStyle", value = MaskedReqStyleBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.maskedEntry.altSearch1", labelExample = "menu.ace.maskedEntry.title", value = MaskedEntryBean.BEAN_NAME),
-               
-
+            
                 @SearchSelectItem(labelTag = "menu.ace.richtextentry.title", labelExample = "menu.ace.richtextentry.subMenu.main", value = RichTextEntryBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.slider.title", labelExample = "menu.ace.slider.subMenu.main", value = SliderBean.BEAN_NAME),
@@ -278,18 +311,6 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.slider.title", labelExample = "menu.ace.slider.subMenu.listener", value = SliderListener.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.slider.title", labelExample = "menu.ace.slider.subMenu.submitionExample", value = SliderSubmitionExample.BEAN_NAME),
 
-                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.main", value = TextEntryBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.autotab", value = TextEntryAutotabBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.label", value = TextEntryLabelBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.indicator", value = TextEntryIndicatorBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.reqStyle", value = TextEntryReqStyleBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textEntry.altSearch1", labelExample = "menu.ace.textEntry.title", value = TextEntryBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.title", labelExample = "menu.ace.textAreaEntry.subMenu.main", value = TextAreaEntryBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.title", labelExample = "menu.ace.textAreaEntry.subMenu.label", value = TextAreaEntryLabelBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.title", labelExample = "menu.ace.textAreaEntry.subMenu.indicator", value = TextAreaEntryIndicatorBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.title", labelExample = "menu.ace.textAreaEntry.subMenu.reqStyle", value = TextAreaEntryReqStyleBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.textAreaEntry.altSearch1", labelExample = "menu.ace.textAreaEntry.title", value = TextAreaEntryBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.buttonGroup.title", labelExample = "menu.ace.buttonGroup.subMenu.main", value = ButtonGroupBean.BEAN_NAME),
 
@@ -306,41 +327,6 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.radioButton.title", labelExample = "menu.ace.radioButton.subMenu.custom", value = RadioButtonCustomBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.menuButton.title", labelExample = "menu.ace.menuButton.subMenu.main", value = MenuButtonBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.breadcrumbmenu.title", labelExample = "menu.ace.breadcrumbmenu.submenu.main", value = BreadcrumbMenuBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.main", value = ContextMenuBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.component", value = ContextMenuComponent.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.table", value = ContextMenuTable.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.effect", value = ContextMenuEffect.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.delegate", value = ContextMenuDelegate.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.main", value = MenuBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.type", value = MenuType.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.events", value = MenuEvents.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.effect", value = MenuEffect.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.display", value = MenuDisplay.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.main", value = MenuBarBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.effect", value = MenuBarEffect.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.click", value = MenuBarClick.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.dynamic", value = MenuBarDynamic.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.main", value = SelectMenuBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.facet", value = SelectMenuFacetBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.label", value = SelectMenuLabelBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.indicator", value = SelectMenuIndicatorBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.reqStyle", value = SelectMenuReqStyleBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.selectmenu.altSearch1", labelExample = "menu.ace.selectmenu.title", value = SelectMenuBean.BEAN_NAME),              
-
-                @SearchSelectItem(labelTag = "menu.ace.menuSeparator.title", labelExample = "menu.ace.menuSeparator.subMenu.main", value = MenuSeparatorBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.multiColumnSubmenu.title", labelExample = "menu.ace.multiColumnSubmenu.subMenu.main", value = MultiColumnSubmenuBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.simpleselectonemenu.title", labelExample = "menu.ace.simpleselectonemenu.subMenu.main", value = SimpleSelectOneMenuBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.simpleselectonemenu.title", labelExample = "menu.ace.simpleselectonemenu.subMenu.label", value = SimpleSelectOneMenuLabelBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.simpleselectonemenu.title", labelExample = "menu.ace.simpleselectonemenu.subMenu.indicator", value = SimpleSelectOneMenuIndicatorBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.simpleselectonemenu.title", labelExample = "menu.ace.simpleselectonemenu.subMenu.reqStyle", value = SimpleSelectOneMenuReqStyleBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.combobox.title", labelExample = "menu.ace.combobox.subMenu.main", value = ComboBoxBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.combobox.title", labelExample = "menu.ace.combobox.subMenu.facet", value = ComboBoxFacetBean.BEAN_NAME),
@@ -361,57 +347,6 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.list.title", labelExample = "menu.ace.list.subMenu.block", value = ListBlockBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.list.title", labelExample = "menu.ace.list.subMenu.blockComplex", value = ListBlockComplexBean.BEAN_NAME),
 
-                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.main", value = DialogBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.effectsAndSize", value = DialogEffectsAndSizeBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.modalDialog", value = ModalDialogBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.dialog.altSearch1", labelExample = "menu.ace.dialog.title", value = DialogBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.main", value = ConfirmationDialogBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.modal", value = ConfirmationDialogModalBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.effect", value = ConfirmationDialogEffectBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.notificationpanel.title", labelExample = "menu.ace.notificationpanel.subMenu.main", value = NotificationPanelBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.notificationpanel.title", labelExample = "menu.ace.notificationpanel.subMenu.clientSide", value = NotificationPanelClientBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.main", value = TooltipOverviewBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.globalTooltip", value = GlobalTooltipBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.delegateTooltip", value = DelegateTooltipBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.main", value = AccordionPanelBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.dynamic", value = AccordionPanelDynamicBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.effect", value = AccordionPanelEffectBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.main", value = PanelBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.header", value = PanelHeader.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.toggle", value = PanelToggle.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.close", value = PanelClose.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.listener", value = PanelListener.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.menu", value = PanelMenu.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.splitpane.title", labelExample = "menu.ace.splitpane.subMenu.main", value = SplitPaneBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.main", value = TabSetBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.clientSide", value = TabClientSideBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.serverSide", value = TabServerSideBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.proxy", value = TabProxyBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.main", value = TreeBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.lazy", value = TreeLazyBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.client", value = TreeClientBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.reorder", value = TreeReorderBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.selection", value = TreeSelectionBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.dynamicResource.title", labelExample = "menu.ace.dynamicResource.subMenu.main", value = DynamicResourceBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.dynamicResource.altSearch1", labelExample = "menu.ace.dynamicResource.title", value = DynamicResourceBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.main", value = FileEntryBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.listener", value = FileEntryListenerBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.validation", value = FileEntryValidationOptionsBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.callback", value = FileEntryCallbackBean.BEAN_NAME),
-
-                @SearchSelectItem(labelTag = "menu.ace.message.title", labelExample = "menu.ace.message.subMenu.main", value = MessageBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.messages.title", labelExample = "menu.ace.messages.subMenu.main", value = MessagesBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.growlmessages.title", labelExample = "menu.ace.growlmessages.subMenu.main", value = GrowlMessagesBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.main", value = DataTableBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.dataTable.title", labelExample = "menu.ace.dataTable.subMenu.click", value = DataTableClick.BEAN_NAME),
@@ -446,6 +381,97 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.dataExporter.title", labelExample = "menu.ace.dataExporter.subMenu.rows", value = DataExporterRows.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.dataExporter.title", labelExample = "menu.ace.dataExporter.subMenu.excludeFromExport", value = ExcludeFromExport.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.dataExporter.title", labelExample = "menu.ace.dataExporter.subMenu.custom", value = DataExporterCustom.BEAN_NAME),
+
+
+                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.main", value = AccordionPanelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.dynamic", value = AccordionPanelDynamicBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.accordionpanel.title", labelExample = "menu.ace.accordionpanel.subMenu.effect", value = AccordionPanelEffectBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.main", value = PanelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.header", value = PanelHeader.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.toggle", value = PanelToggle.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.close", value = PanelClose.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.listener", value = PanelListener.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.menu", value = PanelMenu.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.splitpane.title", labelExample = "menu.ace.splitpane.subMenu.main", value = SplitPaneBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.main", value = TabSetBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.clientSide", value = TabClientSideBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.serverSide", value = TabServerSideBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tabSet.title", labelExample = "menu.ace.tabSet.subMenu.proxy", value = TabProxyBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.main", value = TreeBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.lazy", value = TreeLazyBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.client", value = TreeClientBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.reorder", value = TreeReorderBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tree.title", labelExample = "menu.ace.tree.subMenu.selection", value = TreeSelectionBean.BEAN_NAME),
+
+
+                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.main", value = DialogBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.effectsAndSize", value = DialogEffectsAndSizeBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dialog.title", labelExample = "menu.ace.dialog.subMenu.modalDialog", value = ModalDialogBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dialog.altSearch1", labelExample = "menu.ace.dialog.title", value = DialogBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.main", value = ConfirmationDialogBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.modal", value = ConfirmationDialogModalBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.confirmationdialog.title", labelExample = "menu.ace.confirmationdialog.subMenu.effect", value = ConfirmationDialogEffectBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.notificationpanel.title", labelExample = "menu.ace.notificationpanel.subMenu.main", value = NotificationPanelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.notificationpanel.title", labelExample = "menu.ace.notificationpanel.subMenu.clientSide", value = NotificationPanelClientBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.main", value = TooltipOverviewBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.globalTooltip", value = GlobalTooltipBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.tooltip.title", labelExample = "menu.ace.tooltip.subMenu.delegateTooltip", value = DelegateTooltipBean.BEAN_NAME),
+
+
+                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.main", value = MenuBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.type", value = MenuType.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.events", value = MenuEvents.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.effect", value = MenuEffect.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.menu.title", labelExample = "menu.ace.menu.subMenu.display", value = MenuDisplay.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.main", value = MenuBarBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.effect", value = MenuBarEffect.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.click", value = MenuBarClick.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.menuBar.title", labelExample = "menu.ace.menuBar.subMenu.dynamic", value = MenuBarDynamic.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.main", value = ContextMenuBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.component", value = ContextMenuComponent.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.table", value = ContextMenuTable.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.effect", value = ContextMenuEffect.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.contextMenu.title", labelExample = "menu.ace.contextMenu.subMenu.delegate", value = ContextMenuDelegate.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.menuSeparator.title", labelExample = "menu.ace.menuSeparator.subMenu.main", value = MenuSeparatorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.multiColumnSubmenu.title", labelExample = "menu.ace.multiColumnSubmenu.subMenu.main", value = MultiColumnSubmenuBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.breadcrumbmenu.title", labelExample = "menu.ace.breadcrumbmenu.submenu.main", value = BreadcrumbMenuBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.main", value = SelectMenuBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.facet", value = SelectMenuFacetBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.label", value = SelectMenuLabelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.indicator", value = SelectMenuIndicatorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.selectmenu.title", labelExample = "menu.ace.selectmenu.subMenu.reqStyle", value = SelectMenuReqStyleBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.selectmenu.altSearch1", labelExample = "menu.ace.selectmenu.title", value = SelectMenuBean.BEAN_NAME),              
+
+                @SearchSelectItem(labelTag = "menu.ace.simpleselectonemenu.title", labelExample = "menu.ace.simpleselectonemenu.subMenu.main", value = SimpleSelectOneMenuBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.simpleselectonemenu.title", labelExample = "menu.ace.simpleselectonemenu.subMenu.label", value = SimpleSelectOneMenuLabelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.simpleselectonemenu.title", labelExample = "menu.ace.simpleselectonemenu.subMenu.indicator", value = SimpleSelectOneMenuIndicatorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.simpleselectonemenu.title", labelExample = "menu.ace.simpleselectonemenu.subMenu.reqStyle", value = SimpleSelectOneMenuReqStyleBean.BEAN_NAME),
+
+
+                @SearchSelectItem(labelTag = "menu.ace.message.title", labelExample = "menu.ace.message.subMenu.main", value = MessageBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.messages.title", labelExample = "menu.ace.messages.subMenu.main", value = MessagesBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.growlmessages.title", labelExample = "menu.ace.growlmessages.subMenu.main", value = GrowlMessagesBean.BEAN_NAME),
+
+
+                @SearchSelectItem(labelTag = "menu.ace.dynamicResource.title", labelExample = "menu.ace.dynamicResource.subMenu.main", value = DynamicResourceBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.dynamicResource.altSearch1", labelExample = "menu.ace.dynamicResource.title", value = DynamicResourceBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.main", value = FileEntryBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.listener", value = FileEntryListenerBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.validation", value = FileEntryValidationOptionsBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.fileentry.title", labelExample = "menu.ace.fileentry.subMenu.callback", value = FileEntryCallbackBean.BEAN_NAME),
+
 
                 @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.main", value = ChartBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.bar", value = ChartBarBean.BEAN_NAME),
@@ -497,21 +523,8 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.resizable.title", labelExample = "menu.ace.resizable.subMenu.main", value = ResizableBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.resizable.title", labelExample = "menu.ace.resizable.subMenu.resizeListener", value = ResizeListenerBean.BEAN_NAME),
 
-                @SearchSelectItem(labelTag = "menu.ace.themeSelect.title", labelExample = "menu.ace.themeSelect.subMenu.main", value = ThemeSelectBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.themeSelect.title", labelExample = "menu.ace.themeSelect.subMenu.main", value = ThemeSelectBean.BEAN_NAME)
                 
-                @SearchSelectItem(labelTag = "menu.core.defaultActionBean.title", labelExample = "menu.core.defaultActionBean.subMenu.main", value = DefaultActionBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.focusManagerBean.title", labelExample = "menu.core.focusManagerBean.subMenu.main", value = FocusManagerBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.idleMonitorBean.title", labelExample = "menu.core.idleMonitorBean.subMenu.main", value = IdleMonitorBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.jsEventListenerBean.title", labelExample = "menu.core.jsEventListenerBean.subMenu.main", value = JsEventListenerBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.jsEventListenerBean.altSearch1", labelExample = "menu.core.jsEventListenerBean.title", value = JsEventListenerBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.loadBundleBean.title", labelExample = "menu.core.loadBundleBean.subMenu.main", value = LoadBundleBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.navigationNotifierBean.title", labelExample = "menu.core.navigationNotifierBean.subMenu.main", value = NavigationNotifierBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.navigationNotifierBean.altSearch1", labelExample = "menu.core.navigationNotifierBean.title", value = NavigationNotifierBean.BEAN_NAME),               
-                @SearchSelectItem(labelTag = "menu.core.pushBean.title", labelExample = "menu.core.pushBean.subMenu.main", value = PushBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.redirectBean.title", labelExample = "menu.core.redirectBean.subMenu.main", value = RedirectBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.core.refreshBean.title", labelExample = "menu.core.refreshBean.subMenu.main", value = RefreshBean.BEAN_NAME)
-
-
         }
 )
 @ManagedBean(name = AceMenu.BEAN_NAME)
