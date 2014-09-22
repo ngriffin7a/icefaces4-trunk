@@ -91,42 +91,32 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         if (state == null)  {
             return null;
         } else {
-            ScopeMap map = (ScopeMap) state.windowScopedMaps.get(id);
-            //return the scope map even for requests that arrive after the dispose-window request was received
-            if (map == null) {
-                //ICE-10174: iterate over a copy of the disposed scopes for thread safety.
-                for (Object scopeMap : new ArrayList(state.disposedWindowScopedMaps)) {
-                    ScopeMap next = (ScopeMap)scopeMap;
-                    if (next.id != null && next.id.equals(id)) {
-                        return next;
-                    }
-                }
+            Object synchronizationMonitor = getSynchronizationObject(context);
 
-                return null;
-            } else {
-                return map;
+            //ICE-10174, ICE-10254
+            synchronized (synchronizationMonitor) {
+                ScopeMap map = (ScopeMap) state.windowScopedMaps.get(id);
+                //return the scope map even for requests that arrive after the dispose-window request was received
+                if (map == null) {
+                    for (Object scopeMap : state.disposedWindowScopedMaps) {
+                        ScopeMap next = (ScopeMap) scopeMap;
+                        if (next.id != null && next.id.equals(id)) {
+                            return next;
+                        }
+                    }
+
+                    return null;
+                } else {
+                    return map;
+                }
             }
         }
     }
 
     public static String determineWindowID(FacesContext context, boolean customWindowTracking) {
+        Object synchronizationMonitor = getSynchronizationObject(context);
+        if (synchronizationMonitor == null) return null;
 
-        // ICE-7749: By default, in portals, the ExternalContext.getSessionMap() returns a map of
-        // values that are in PortletSession.PORTLET_SCOPE.  But for the synchronization monitor we
-        // are using here, it's initially put into PortletSession.APPLICATION_SCOPE so we need to
-        // access it using our own session proxy which, with portlets, defaults to APPLICATION_SCOPE.
-        HttpSession safeSession = EnvUtils.getSafeSession(context);
-        if (safeSession == null) {
-            //this method was called before the session was created (such as when application starts up)
-            return null;
-        }
-
-        Object synchronizationMonitor = safeSession.getAttribute(SessionSynchronizationMonitor);
-        if (synchronizationMonitor == null) {
-            log.log(Level.FINE, "synchronization monitor not set by session listener");
-            synchronizationMonitor = new SynchronizationMonitorObject();
-            safeSession.setAttribute(SessionSynchronizationMonitor, synchronizationMonitor);
-        }
 
         synchronized (synchronizationMonitor) {
             State state = getState(context);
@@ -194,6 +184,26 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
     }
 
+    private static Object getSynchronizationObject(FacesContext context) {
+        // ICE-7749: By default, in portals, the ExternalContext.getSessionMap() returns a map of
+        // values that are in PortletSession.PORTLET_SCOPE.  But for the synchronization monitor we
+        // are using here, it's initially put into PortletSession.APPLICATION_SCOPE so we need to
+        // access it using our own session proxy which, with portlets, defaults to APPLICATION_SCOPE.
+        HttpSession safeSession = EnvUtils.getSafeSession(context);
+        if (safeSession == null) {
+            //this method was called before the session was created (such as when application starts up)
+            return null;
+        }
+
+        Object synchronizationMonitor = safeSession.getAttribute(SessionSynchronizationMonitor);
+        if (synchronizationMonitor == null) {
+            log.log(Level.FINE, "synchronization monitor not set by session listener");
+            synchronizationMonitor = new SynchronizationMonitorObject();
+            safeSession.setAttribute(SessionSynchronizationMonitor, synchronizationMonitor);
+        }
+        return synchronizationMonitor;
+    }
+
     private static boolean isDisposeWindowRequest(Map parameters) {
         return "ice.dispose.window".equals(parameters.get("ice.submit.type"));
     }
@@ -247,26 +257,30 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
     }
 
-    public static synchronized void disposeWindow(final FacesContext context, String id) {
-        final State state = getState(context);
-        ScopeMap scopeMap = (ScopeMap) state.windowScopedMaps.get(id);
-        //verify if the ScopeMap is present
-        //it's possible to have dispose-window request arriving after an application restart or re-deploy
-        if (scopeMap != null) {
-            scopeMap.disactivate(state);
-            scopeMap.discardIfExpired(context);
-        }
+    public static void disposeWindow(final FacesContext context, String id) {
+        Object synchronizationMonitor = getSynchronizationObject(context);
 
-        //notify annotated scope beans that all windows were closed
-        if (state.windowScopedMaps.isEmpty()) {
-            long windowScopeExpiration = EnvUtils.getWindowScopeExpiration(context);
-            //copy session beans before they're cleared on FacesContext.release()
-            final Map session = new HashMap(context.getExternalContext().getSessionMap());
-            Timer timer = (Timer) context.getExternalContext().getApplicationMap().get(SetupTimer.class.getName());
-            timer.schedule(new AllWindowsClosedNotifier(state, session), windowScopeExpiration * 2);
-        }
+        synchronized (synchronizationMonitor) {
+            final State state = getState(context);
+            ScopeMap scopeMap = (ScopeMap) state.windowScopedMaps.get(id);
+            //verify if the ScopeMap is present
+            //it's possible to have dispose-window request arriving after an application restart or re-deploy
+            if (scopeMap != null) {
+                scopeMap.disactivate(state);
+                scopeMap.discardIfExpired(context);
+            }
 
-        disposeViewScopeBeans(context);
+            //notify annotated scope beans that all windows were closed
+            if (state.windowScopedMaps.isEmpty()) {
+                long windowScopeExpiration = EnvUtils.getWindowScopeExpiration(context);
+                //copy session beans before they're cleared on FacesContext.release()
+                final Map session = new HashMap(context.getExternalContext().getSessionMap());
+                Timer timer = (Timer) context.getExternalContext().getApplicationMap().get(SetupTimer.class.getName());
+                timer.schedule(new AllWindowsClosedNotifier(state, session), windowScopeExpiration * 2);
+            }
+
+            disposeViewScopeBeans(context);
+        }
     }
 
     private static void disposeViewScopeBeans(FacesContext facesContext) {
