@@ -142,8 +142,15 @@ public class AccordionRenderer extends CoreRenderer {
           .endFunction();
 
         writer.write(jb.toString());
-		
 		writer.endElement("script");
+
+		writer.startElement("span", null);
+		writer.writeAttribute("id", clientId + "_activeIndexScript", null);
+		writer.startElement("script", null);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.write("(function() {var i = ice.ace.instance('"+clientId+"'); if (i) i.setActiveIndex("+activeIndex+");})();");
+		writer.endElement("script");
+		writer.endElement("span");
 	}
 
 	protected void encodeStateHolder(FacesContext context, Accordion accordionPanel) throws IOException {

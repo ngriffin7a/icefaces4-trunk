@@ -106,3 +106,7 @@ ice.ace.AccordionPanel.prototype.select = function(index) {
 ice.ace.AccordionPanel.prototype.collapseAll = function() {
     this.jq.accordion('activate', false);
 };
+
+ice.ace.AccordionPanel.prototype.setActiveIndex = function(index) {
+    this.jq.accordion('option', 'active', index);
+}
