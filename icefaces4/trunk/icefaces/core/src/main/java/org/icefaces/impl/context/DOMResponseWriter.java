@@ -564,13 +564,17 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
     }
 
     private static byte[] serializeDocument(Document document) throws IOException {
-        byte[] data;
-        DOMDocumentSerializer serializer = new DOMDocumentSerializer();
-        ByteArrayOutputStream out = new ByteArrayOutputStream(10000);
-        serializer.setOutputStream(out);
-        serializer.serialize(document);
-        data = out.toByteArray();
-        return data;
+        if (document == null) {
+            return new byte[0];
+        } else {
+            byte[] data;
+            DOMDocumentSerializer serializer = new DOMDocumentSerializer();
+            ByteArrayOutputStream out = new ByteArrayOutputStream(10000);
+            serializer.setOutputStream(out);
+            serializer.serialize(document);
+            data = out.toByteArray();
+            return data;
+        }
     }
 
     public Document getOldDocument() {
@@ -597,13 +601,17 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
     }
 
     private static Document deserializeDocument(byte[] data) throws FastInfosetException, IOException {
-        Document document = DOMUtils.getNewDocument();
-        //FastInfoset does not tolerate stray xmlns declarations
-        document.setStrictErrorChecking(false);
-        DOMDocumentParser parser = new DOMDocumentParser();
-        ByteArrayInputStream in = new ByteArrayInputStream(data);
-        parser.parse(document, in);
-        return document;
+        if (data.length == 0) {
+            return null;
+        } else {
+            Document document = DOMUtils.getNewDocument();
+            //FastInfoset does not tolerate stray xmlns declarations
+            document.setStrictErrorChecking(false);
+            DOMDocumentParser parser = new DOMDocumentParser();
+            ByteArrayInputStream in = new ByteArrayInputStream(data);
+            parser.parse(document, in);
+            return document;
+        }
     }
 
     public Node getCursorParent() {
