@@ -46,19 +46,22 @@
 					<h:outputLabel for="fileName" value="Enter file name: " />
 					<h:inputText id="fileName" value="#{dynamicResourceAdvancedBean.fileName}">
 						<f:ajax render="@form" />
+						<f:ajax render="dynamicResource" event="keyup" />
 					</h:inputText>
 
-					<h:outputLabel for="mimeType" value="Enter MIME type: " />
-					<h:inputText id="mimeType" value="#{dynamicResourceAdvancedBean.mimeType}">
+					<h:outputLabel for="target" value="Open in... " />
+					<h:selectOneRadio id="target" value="#{dynamicResourceAdvancedBean.target}">
 						<f:ajax render="@form" />
-					</h:inputText>
+						<f:selectItem itemValue="_blank" itemLabel="new window" />
+						<f:selectItem itemValue="_self" itemLabel="same window" />
+					</h:selectOneRadio>
 
 					<ace:dynamicResource id="dynamicResource"
 						resource="#{dynamicResourceBean.resource}" 
 						label="Download resource" 
 						fileName="#{dynamicResourceAdvancedBean.fileName}" 
 						attachment="#{dynamicResourceAdvancedBean.attachment}" 
-						mimeType="#{dynamicResourceAdvancedBean.mimeType}" 
+						target="#{dynamicResourceAdvancedBean.target}" 
 						image="css/images/download-button.gif" 
 						type="image" />
 					<h:outputText value=""/>

@@ -59,7 +59,7 @@ public class DynamicResourceAdvancedBean extends ComponentExampleImpl<DynamicRes
     }
 
 	private String fileName = "icemobile.pdf";
-	private String mimeType = "application/pdf";
+	private String target = "_blank";
 	private boolean attachment = true;
 
 	public String getFileName() {
@@ -70,12 +70,12 @@ public class DynamicResourceAdvancedBean extends ComponentExampleImpl<DynamicRes
 		this.fileName = fileName;
 	}
 
-	public String getMimeType() {
-		return mimeType;
+	public String getTarget() {
+		return target;
 	}
 
-	public void setMimeType(String mimeType) {
-		this.mimeType = mimeType;
+	public void setTarget(String target) {
+		this.target = target;
 	}
 
 	public boolean isAttachment() {
