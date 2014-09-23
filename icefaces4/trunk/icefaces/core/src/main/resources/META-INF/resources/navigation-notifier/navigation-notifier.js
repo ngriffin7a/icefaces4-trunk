@@ -19,16 +19,30 @@
     eval(ice.importFrom('ice.lib.oo'));
     eval(ice.importFrom('ice.lib.window'));
 
-    var PreviousPageUnloadTime = 'previous-unload-timestamp';
-    var PreviousPageTimestamp = 'previous-timestamp';
-    var PreviousPageURL = 'previous-url';
+    var PreviousPageUnloadTime = 'ice.previous-unload-timestamp';
+    var PreviousPageTimestamp = 'ice.previous-timestamp';
+    var PreviousPageURL = 'ice.previous-url';
+    var TimestampKey = 'ice.timestamp'
 
     function now() {
         return (new Date()).getTime();
     }
 
+    function clone(o) {
+        var c = 'function' === typeof o.pop ? [] : {};
+        for (var name in o) {
+            if(o.hasOwnProperty(name)) {
+                c[name] = o[name];
+            }
+        }
+
+        return c;
+    }
+
     function timestampHistoryPosition() {
-        window.history.replaceState(now(), null, null);
+        var state = window.history.state ? clone(window.history.state) : {};
+        state[TimestampKey] = now();
+        window.history.replaceState(state, null, location.href);
     }
 
     var pageLoadTime = now();
@@ -37,8 +51,8 @@
         //skip setup if already invoked or HTML5 features are not present
         if (setupInvoked || !window.history.replaceState) return;
 
-        if (window.history.state) {
-            var pageTimestamp = Number(window.history.state);
+        if (window.history.state && window.history.state[TimestampKey]) {
+            var pageTimestamp = Number(window.history.state[TimestampKey]);
 
             var previousPageTimestamp = Number(window.localStorage[PreviousPageTimestamp]);
             var previousPageUnloadTime = Number(window.localStorage[PreviousPageUnloadTime]);
@@ -58,7 +72,7 @@
         //update timestamp right before unloading page
         onUnload(window, function() {
             window.localStorage[PreviousPageUnloadTime] = String(now());
-            window.localStorage[PreviousPageTimestamp] = window.history.state;
+            window.localStorage[PreviousPageTimestamp] = window.history.state[TimestampKey];
             window.localStorage[PreviousPageURL] = document.location.href;
         });
 
