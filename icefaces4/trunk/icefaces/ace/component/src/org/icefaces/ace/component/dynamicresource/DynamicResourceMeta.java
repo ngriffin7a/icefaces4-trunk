@@ -54,7 +54,7 @@ public class DynamicResourceMeta {
     @Property(tlddoc="If true, specifies that the resource should be downloaded as an attachment. See also the resource attribute.")
     private boolean attachment;
 
-    @Property(tlddoc="Value of the target attribute when resource is rendered as a link. Default is \"_blank\".")
+    @Property(tlddoc="Value of the target attribute when resource is rendered as a link and image.", defaultValue="_blank")
     private String target;
 
     @Property(tlddoc="The mime-type for the resource. If not specified, and available from the backing Resource, the Resource's mime-type will be used. See also the resource attribute.")
