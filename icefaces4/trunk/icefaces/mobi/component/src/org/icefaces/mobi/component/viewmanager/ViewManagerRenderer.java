@@ -131,7 +131,7 @@ public class ViewManagerRenderer extends Renderer{
                 }
                 writer.startElement(HTML.LI_ELEM, null);
                 writer.startElement(HTML.ANCHOR_ELEM, null);
-                writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.mobi.viewManager.showView('" + view.getId() + "');", null);
+                writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.mobi.viewManager.showView('" + view.getId() + "', event);", null);
                 if( view.getMenuIcon() != null ){
                     writer.startElement("i", null);
                     writer.writeAttribute(HTML.CLASS_ATTR, "mobi-vm-menu-icon fa fa-" + view.getMenuIcon(), null);
