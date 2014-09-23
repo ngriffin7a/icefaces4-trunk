@@ -26,6 +26,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.application.Application;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIViewRoot;
@@ -65,6 +66,7 @@ import java.io.Serializable;
 public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotifierBean> implements Serializable {
     public static final String BEAN_NAME = "navigationNotifierBean";
     private boolean navigationDetected;
+    private Application app;
     private SystemEventListener resetState = new SystemEventListener() {
         public void processEvent(SystemEvent event) throws AbortProcessingException {
             navigationDetected = false;
@@ -77,7 +79,8 @@ public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotif
 
     public NavigationNotifierBean() {
         super(NavigationNotifierBean.class);
-        FacesContext.getCurrentInstance().getApplication().subscribeToEvent(PreValidateEvent.class, resetState);
+        app = FacesContext.getCurrentInstance().getApplication();
+        app.subscribeToEvent(PreValidateEvent.class, resetState);
     }
 
     @PostConstruct
@@ -100,6 +103,6 @@ public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotif
 
     @PreDestroy
     public void reset() {
-        FacesContext.getCurrentInstance().getApplication().unsubscribeFromEvent(PreValidateEvent.class, resetState);
+        app.unsubscribeFromEvent(PreValidateEvent.class, resetState);
     }
 }
