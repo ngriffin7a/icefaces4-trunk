@@ -25,10 +25,14 @@ import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
+import javax.faces.event.*;
 import javax.faces.view.ViewScoped;
+import java.awt.event.ComponentEvent;
 import java.io.Serializable;
 
 @ComponentExample(
@@ -61,9 +65,19 @@ import java.io.Serializable;
 public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotifierBean> implements Serializable {
     public static final String BEAN_NAME = "navigationNotifierBean";
     private boolean navigationDetected;
+    private SystemEventListener resetState = new SystemEventListener() {
+        public void processEvent(SystemEvent event) throws AbortProcessingException {
+            navigationDetected = false;
+        }
+
+        public boolean isListenerForSource(Object source) {
+            return source instanceof UIViewRoot;
+        }
+    };
 
     public NavigationNotifierBean() {
         super(NavigationNotifierBean.class);
+        FacesContext.getCurrentInstance().getApplication().subscribeToEvent(PreValidateEvent.class, resetState);
     }
 
     @PostConstruct
@@ -77,5 +91,15 @@ public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotif
 
     public boolean getNavigationDetected() {
         return navigationDetected;
+    }
+
+    public String getNavigateBackURI() {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?grp=aceMenu&exp=navigationNotifierBean");
+    }
+
+    @PreDestroy
+    public void reset() {
+        FacesContext.getCurrentInstance().getApplication().unsubscribeFromEvent(PreValidateEvent.class, resetState);
     }
 }
