@@ -922,17 +922,17 @@ if (window.addEventListener) {
                     name : name,
                     value : value
                 };
-                if ("!r" === name.substring(0,2))  {
+                  if (name && "!r" === name.substring(0,2))  {
                     //need to implement iteration over the full set
                     //of response values
                     sxEvent.response = value;
                     sxEvent.name = "";
                     sxEvent.value = "";
-                }
-                if (ice.mobi.deviceCommandCallback)  {
+                  }
+                  if (ice.mobi.deviceCommandCallback)  {
                     ice.mobi.deviceCommandCallback(sxEvent);
                     ice.mobi.deviceCommandCallback = null;
-                }
+                  }
             }, 1);
         }
     }, false);
@@ -1386,6 +1386,10 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
         }
 
         function getScrollableContainer(element) {
+            if (!element){
+            //    console.log("getScrollablecontainer NO ELEMENT SO return BODY");
+                return document.body;
+            }
             var height = element.clientHeight,
                 parent = element.parentNode;
 
@@ -1530,6 +1534,10 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
              height of all following elements */
             var container = getScrollableContainer(element),
                 bottomResize = function() {
+                    if (!container){
+                     //   console.log (" NO CONTAINER SO RETURN");
+                        return;
+                    }
                     fullHeight -= (container.scrollHeight - container.clientHeight);
                     if( isNumber(fullHeight)){
                         if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i))
