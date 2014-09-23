@@ -252,20 +252,21 @@ public class BridgeSetup implements SystemEventListener {
         return bodyResources;
     }
 
-    private static String assignViewID(ExternalContext externalContext) {
+    private static String assignViewID(FacesContext context) {
+        final ExternalContext externalContext = context.getExternalContext();
         final String viewIDParameter = externalContext.getRequestParameterMap().get("ice.view");
         //keep viewID sticky until page is unloaded
         BridgeSetup bridgeSetup = (BridgeSetup) externalContext.getApplicationMap().get(BRIDGE_SETUP);
-        final String viewID = viewIDParameter == null ? bridgeSetup.generateViewID(externalContext) : viewIDParameter;
+        final String viewID = viewIDParameter == null ? bridgeSetup.generateViewID(context) : viewIDParameter;
         //save the calculated view state key so that other parts of the framework will use the same key
         externalContext.getRequestMap().put(ViewState, viewID);
         return viewID;
     }
 
-    private String generateViewID(ExternalContext externalContext) {
+    private String generateViewID(FacesContext context) {
         if (EnvUtils.isICEpushPresent()) {
-            PushContext pushContext = PushContext.getInstance((ServletContext) externalContext.getContext());
-            return pushContext.createPushId((HttpServletRequest) externalContext.getRequest(), (HttpServletResponse) externalContext.getResponse());
+            PushContext pushContext = PushContext.getInstance(EnvUtils.getSafeContext(context));
+            return pushContext.createPushId(EnvUtils.getSafeRequest(context), EnvUtils.getSafeResponse(context));
         }
 
         return "v" + Integer.toString(hashCode(), 36) + Integer.toString(++seed, 36);
@@ -288,7 +289,7 @@ public class BridgeSetup implements SystemEventListener {
 
         //assign viewId as soon as possible
         public void beforePhase(PhaseEvent event) {
-            assignViewID(event.getFacesContext().getExternalContext());
+            assignViewID(event.getFacesContext());
         }
 
         public PhaseId getPhaseId() {
