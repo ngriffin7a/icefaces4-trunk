@@ -33,7 +33,7 @@
     <ui:define name="example">
         <icecore:loadBundle var="theBundle" basename="org.icefaces.samples.showcase.view.resources.loadBundleTest"/>
         <h:form>
-            <ace:selectMenu value="#{loadBundleBean.language}" label="Change locale:"  labelPosition="left">
+            <ace:selectMenu value="#{loadBundleViewScopeBean.language}" label="Change locale:"  labelPosition="left">
                 <f:selectItem itemValue="en" itemLabel="English" />
                 <f:selectItem itemValue="fr" itemLabel="Francais" />
                 <f:selectItem itemValue="it" itemLabel="Italiano" />

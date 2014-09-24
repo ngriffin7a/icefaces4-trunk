@@ -28,7 +28,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 
 @ComponentExample(
@@ -44,7 +43,10 @@ import java.io.Serializable;
                         resource = "/resources/examples/core/redirect.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="RedirectBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/redirect/RedirectBean.java")
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/redirect/RedirectBean.java"),
+                @ExampleResource(type = ResourceType.java,
+                        title="RedirectViewScopeBean.java",
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/redirect/RedirectViewScopeBean.java")
         }
 )
 @Menu(
@@ -59,8 +61,6 @@ public class RedirectBean extends ComponentExampleImpl<RedirectBean> implements 
     public static final String BEAN_NAME = "redirectBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private boolean renderRedirect;
-
     public RedirectBean() {
         super(RedirectBean.class);
     }
@@ -68,13 +68,5 @@ public class RedirectBean extends ComponentExampleImpl<RedirectBean> implements 
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-    }
-
-    public boolean getRenderRedirect() {
-        return renderRedirect;
-    }
-
-    public void setRenderRedirect(boolean renderRedirect) {
-        this.renderRedirect = renderRedirect;
     }
 }

@@ -29,8 +29,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.CustomScoped;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @ComponentExample(
         title = "Refresh Component",
@@ -45,7 +43,10 @@ import java.util.Date;
                         resource = "/resources/examples/core/refresh.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="RefreshBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/refresh/RefreshBean.java")
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/refresh/RefreshBean.java"),
+                @ExampleResource(type = ResourceType.java,
+                        title="RefreshViewScopeBean.java",
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/refresh/RefreshViewScopeBean.java")
         }
 )
 @Menu(
@@ -60,10 +61,6 @@ public class RefreshBean extends ComponentExampleImpl<RefreshBean> implements Se
     public static final String BEAN_NAME = "refreshBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private static SimpleDateFormat FORMATTER = new SimpleDateFormat("hh:mm:ss");
-    private int interval = 2;
-    private int duration = 1;
-
     public RefreshBean() {
         super(RefreshBean.class);
     }
@@ -71,25 +68,5 @@ public class RefreshBean extends ComponentExampleImpl<RefreshBean> implements Se
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-    }
-
-    public int getInterval() {
-        return interval;
-    }
-
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public String getCurrentTime() {
-        return FORMATTER.format(new Date());
     }
 }

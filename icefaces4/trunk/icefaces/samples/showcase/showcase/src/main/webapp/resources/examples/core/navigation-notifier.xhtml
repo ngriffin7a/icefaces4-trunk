@@ -35,9 +35,9 @@
         <a href="resources/examples/core/navigation-notifier-next.jsf" style="border: 1px solid grey;">Navigate
             to the other page</a>
         <h:form>
-            <icecore:navigationNotifier action="#{navigationNotifierBean.navigationDetected}"/>
+            <icecore:navigationNotifier action="#{navigationNotifierViewScopeBean.navigationDetected}"/>
         </h:form>
-        <ace:panel id="result" rendered="#{navigationNotifierBean.navigationDetected}">
+        <ace:panel id="result" rendered="#{navigationNotifierViewScopeBean.navigationDetected}">
             Back/forward navigation detected!
         </ace:panel>
     </ui:define>

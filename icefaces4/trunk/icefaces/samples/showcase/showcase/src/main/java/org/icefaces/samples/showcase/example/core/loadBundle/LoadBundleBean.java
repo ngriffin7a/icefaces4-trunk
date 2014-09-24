@@ -27,12 +27,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
-import java.util.Locale;
 
 @ComponentExample(
         title = "Load Bundle Component",
@@ -47,7 +42,10 @@ import java.util.Locale;
                         resource = "/resources/examples/core/load-bundle.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="LoadBundleBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/loadBundle/LoadBundleBean.java")
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/loadBundle/LoadBundleBean.java"),
+                @ExampleResource(type = ResourceType.java,
+                        title="LoadBundleViewScopeBean.java",
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/loadBundle/LoadBundleViewScopeBean.java")
         }
 )
 @Menu(
@@ -62,8 +60,6 @@ public class LoadBundleBean extends ComponentExampleImpl<LoadBundleBean> impleme
     public static final String BEAN_NAME = "loadBundleBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private String language = "en";
-
     public LoadBundleBean() {
         super(LoadBundleBean.class);
     }
@@ -71,22 +67,5 @@ public class LoadBundleBean extends ComponentExampleImpl<LoadBundleBean> impleme
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-
-        UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-        if ("en".equals(language)) {
-            viewRoot.setLocale(Locale.ENGLISH);
-        } else if ("fr".equals(language)) {
-            viewRoot.setLocale(Locale.FRENCH);
-        } else if ("it".equals(language)) {
-            viewRoot.setLocale(Locale.ITALIAN);
-        }
     }
 }
