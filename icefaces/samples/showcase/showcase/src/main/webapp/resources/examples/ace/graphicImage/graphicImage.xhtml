@@ -37,10 +37,13 @@
     <ui:define name="example">
 		<h:form id="form">
 			<ace:panel id="graphicImagePanel" header="Images" style="width: 100%;">
-				<h:panelGrid width="60%" columns="3" cellpadding="20" cellspacing="20">
+				<h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
 					<ace:graphicImage url="http://www.icesoft.org/java/resource/images/icefaces.png" />
-					<ace:graphicImage url="http://www.icesoft.org/java/resource/images/icemobile.png" />
-					<ace:graphicImage url="http://www.icesoft.org/java/resource/images/icepdf.png" />
+					<h:outputText value="Image loaded via URL" />
+					<ace:graphicImage value="#{graphicImageBean.byteArrayImage}" />
+					<h:outputText value="Image loaded via byte array" />
+					<ace:graphicImage value="#{graphicImageBean.resourceImage}" id="resourceGraphicImage" />
+					<h:outputText value="Image loaded via IceOutputResource" />
 				</h:panelGrid>
 			</ace:panel>
 		</h:form>
