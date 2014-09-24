@@ -71,8 +71,8 @@
     <ui:define name="suite-menu">
 
         <h:form id="searchForm">
-            <ace:comboBox valueChangeListener="#{navigationController.navigateValueChangeListener}"
-                          placeholder="Search"
+            <ace:comboBox valueChangeListener="#{navigationController.navigateValueChangeListener}" id="searchBox"
+                          placeholder="Search" value="#{navigationController.emptyValue}"
                           filterMatchMode="contains"
                           width="190"
                           style="font-size: 8pt;"
