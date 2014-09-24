@@ -10,7 +10,7 @@ function clone(o) {
 }
 
 function restoreURL(e) {
-    if (e.state) {
+    if (e.state && e.state.src) {
         location.href = e.state.src;
     }
 }
