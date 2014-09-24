@@ -18,8 +18,6 @@ package org.icefaces.ace.component.videoplayer;
 
 
 import org.icefaces.ace.meta.annotation.*;
-import javax.faces.application.ResourceDependencies;
-import javax.faces.application.ResourceDependency;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 @Component(
@@ -34,9 +32,7 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
         tlddoc = "videoPlayer renders a video player to play back videos. " +
                 "The component can be bound to a variety of source types. "
 )
-@ResourceDependencies({
-        @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
-})
+
 
 public class VideoPlayerMeta extends UIComponentBaseMeta {
 
