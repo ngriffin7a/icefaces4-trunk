@@ -17,8 +17,6 @@
 package org.icefaces.ace.component.audioplayer;
 
 
-import javax.faces.application.ResourceDependencies;
-import javax.faces.application.ResourceDependency;
 
 import org.icefaces.ace.meta.annotation.*;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
@@ -36,9 +34,6 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
         tlddoc = "This component renders an HTML5 audio element. The component can be bound to a variety of source types. " +
         		"Playback options can be controlled. JSF Resource management options are also available. "
 )
-@ResourceDependencies({
-        @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
-})
 
 public class AudioPlayerMeta extends UIComponentBaseMeta {
 
