@@ -26,6 +26,13 @@ import org.icefaces.ace.generator.utils.Utility;
 import org.icefaces.ace.generator.utils.PropertyValues;
 import org.icefaces.ace.meta.annotation.TagHandler;
 import org.icefaces.ace.meta.annotation.TagHandlerType;
+import org.icefaces.resources.ICEBrowserDependency;
+import org.icefaces.resources.ICEResourceDependencies;
+import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
+
+import javax.faces.application.ResourceDependencies;
+import javax.faces.application.ResourceDependency;
 
 public class TagHandlerArtifact extends Artifact{
     private StringBuilder generatedTagHandlerClass;
@@ -60,7 +67,7 @@ public class TagHandlerArtifact extends Artifact{
     private void startTagHandlerClass(Class clazz, TagHandler tagHandler) {
         //initialize
         generatedTagHandlerClass = new StringBuilder();
-        
+
 		String className = Utility.getGeneratedClassName(tagHandler);
         int classIndicator = className.lastIndexOf(".");
         generatedTagHandlerClass.append("package ");
@@ -68,9 +75,48 @@ public class TagHandlerArtifact extends Artifact{
         generatedTagHandlerClass.append(";\n\n");
 		generatedTagHandlerClass.append("import javax.faces.view.facelets.TagAttribute;\n");
 
+        if (!tagHandler.behaviorId().equals(TagHandler.EMPTY)) {
+      System.out.println(" behavior id is not empty = "+tagHandler.behaviorId().toString());
+          if (clazz.isAnnotationPresent(ICEResourceDependencies.class) ||
+              clazz.isAnnotationPresent(ICEResourceDependency.class)) {
+                  generatedTagHandlerClass.append("import org.icefaces.resources.ICEResourceDependencies;\n");
+                  generatedTagHandlerClass.append("import org.icefaces.resources.ICEResourceDependency;\n\n");
+                  generatedTagHandlerClass.append("import org.icefaces.resources.ICEBrowserDependency;\n\n");
+                  generatedTagHandlerClass.append("import org.icefaces.resources.BrowserType;\n\n");
+              }
+          }
+              if (clazz.isAnnotationPresent(ICEResourceLibrary.class)) {
+                  generatedTagHandlerClass.append("import org.icefaces.resources.ICEResourceLibrary;\n\n");
+              }
+              if (clazz.isAnnotationPresent(ResourceDependencies.class) ||
+                  clazz.isAnnotationPresent(ResourceDependency.class)) {
+                  generatedTagHandlerClass.append("import javax.faces.application.ResourceDependencies;\n");
+                  generatedTagHandlerClass.append("import javax.faces.application.ResourceDependency;\n\n");
+              }
+
         generatedTagHandlerClass.append("/*\n * ******* GENERATED CODE - DO NOT EDIT *******\n */\n");
         generatedTagHandlerClass.append(Utility.getJavaDocComment(tagHandler.javadoc(), tagHandler.tlddoc()));
-
+// the tagHandler like animation can have resource dependencies as well
+       if (clazz.isAnnotationPresent(ICEResourceLibrary.class)) {
+            StringBuilder sb = writeICEResourceLibrary(clazz);
+            System.out.println(" !!!!! sb ="+sb.toString());
+            generatedTagHandlerClass.append(sb.toString());
+        }
+       if (clazz.isAnnotationPresent(ICEResourceDependencies.class)) {
+            StringBuilder sb = writeResourceDependencies(clazz);
+            generatedTagHandlerClass.append(sb.toString());
+        } else if (clazz.isAnnotationPresent(ICEResourceDependency.class)) {
+            ICEResourceDependency rd = (ICEResourceDependency) clazz.getAnnotation(ICEResourceDependency.class);
+            generatedTagHandlerClass.append("@ICEResourceDependency(name=\"" + rd.name() + "\",library=\"" + rd.library() + "\",target=\"" + rd.target() + "\")\n");
+        }
+        // copy @ResourceDependency annotations
+        if (clazz.isAnnotationPresent(ResourceDependencies.class)) {
+            StringBuilder sb = writeEachResource(clazz);
+            generatedTagHandlerClass.append(sb.toString());
+        } else if (clazz.isAnnotationPresent(ResourceDependency.class)) {
+            ResourceDependency rd = (ResourceDependency) clazz.getAnnotation(ResourceDependency.class);
+            generatedTagHandlerClass.append("@ResourceDependency(name=\"" + rd.name() + "\",library=\"" + rd.library() + "\",target=\"" + rd.target() + "\")\n\n");
+        }
         generatedTagHandlerClass.append("public class ");
         generatedTagHandlerClass.append(className.substring(classIndicator+1));
         generatedTagHandlerClass.append(" extends ");

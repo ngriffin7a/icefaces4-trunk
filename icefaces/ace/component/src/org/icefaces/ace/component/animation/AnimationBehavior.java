@@ -29,10 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @FacesBehavior("org.icefaces.ace.animation.Animation")
-@ICEResourceDependencies({
-	@ICEResourceDependency(library="icefaces.ace", name="util/ace-jquery.js"),
-	@ICEResourceDependency(library="icefaces.ace", name="util/ace-components.js")
-})
 public class AnimationBehavior extends BehaviorBase {
     public final static String BEHAVIOR_ID = "org.icefaces.ace.animation.Animation";
     private String effectsLib = "ice.ace.animation.";

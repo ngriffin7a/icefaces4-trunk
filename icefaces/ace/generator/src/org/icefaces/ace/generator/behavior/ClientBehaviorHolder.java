@@ -54,13 +54,10 @@ public class ClientBehaviorHolder extends Behavior {
 		org.icefaces.ace.meta.annotation.ClientBehaviorHolder anno = (org.icefaces.ace.meta.annotation.ClientBehaviorHolder)
 			GeneratorContext.getInstance().getActiveMetaContext().getActiveClass().getAnnotation(org.icefaces.ace.meta.annotation.ClientBehaviorHolder.class);
 		ClientEvent[] events = anno.events();
-//System.out.println(" DEFAULT EVENT ="+anno.defaultEvent());
 		/* if no default event specified, throw exception and stop generating */
         this.testMissingDefaultEvent =  (null == anno.defaultEvent() || anno.defaultEvent().equals("") || anno.defaultEvent().length() < 1);
         if (testMissingDefaultEvent) {
-//System.out.println(" NO DEFAULT EVENT SPECIFIED:- ");
             if (events.length == 1)  {
-              //  System.out.println(" event="+events[0].name());
                 ClientEvent singleEvent = (ClientEvent)events[0];
                 this.missingDefaultEvent = singleEvent.name();
             } else {

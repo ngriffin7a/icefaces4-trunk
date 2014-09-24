@@ -21,6 +21,10 @@ import org.icefaces.ace.meta.annotation.Property;
 import org.icefaces.ace.meta.annotation.TagHandlerType;
 import org.icefaces.ace.meta.annotation.Required;
 import org.icefaces.ace.meta.annotation.Implementation;
+import org.icefaces.ace.resources.ACEResourceNames;
+import org.icefaces.resources.ICEResourceDependencies;
+import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
 
 @TagHandler(
     tagName = "animation",
@@ -34,6 +38,10 @@ import org.icefaces.ace.meta.annotation.Implementation;
                  "<p>For more information, see the " +
                  "<a href=\"http://wiki.icefaces.org/display/ICE/Animation\">Animation Wiki Documentation</a>."
 )
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
+@ICEResourceDependencies({
+        @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+})
 public class AnimationBehaviorHandlerMeta {
 
     @Property(required=Required.no, tlddoc="(Deprecated) Boolean value that specifies whether to run the application or not.")
