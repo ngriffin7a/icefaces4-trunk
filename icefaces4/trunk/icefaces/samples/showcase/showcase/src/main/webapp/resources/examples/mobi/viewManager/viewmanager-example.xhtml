@@ -54,6 +54,12 @@
                     <!-- f:selectItem itemLabel="Page Turn" itemValue="pageturn"/-->
                 </h:selectOneMenu>
             </mobi:fieldsetRow>
+            <mobi:fieldsetRow>
+                <h:outputLabel value="Bar CSS Style:" for="barStyle" styleClass="ui-input-text"/>
+                <h:inputText id="barStyle" value="#{viewManagerBean.barStyle}">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:inputText>
+            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
         
     </h:form>
