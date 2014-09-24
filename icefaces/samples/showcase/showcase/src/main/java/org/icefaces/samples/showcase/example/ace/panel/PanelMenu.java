@@ -43,6 +43,7 @@ import java.io.Serializable;
 public class PanelMenu extends ComponentExampleImpl<PanelMenu> implements Serializable {
 
     public static final String BEAN_NAME = "panelMenu";
+	public String getBeanName() { return BEAN_NAME; }
 
     public PanelMenu() {
         super(PanelMenu.class);

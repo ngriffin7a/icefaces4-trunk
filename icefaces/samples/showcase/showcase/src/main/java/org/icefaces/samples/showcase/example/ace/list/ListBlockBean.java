@@ -54,6 +54,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ListBlockBean extends ComponentExampleImpl<ListBlockBean> implements Serializable {
     public static final String BEAN_NAME = "listBlockBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ListBlockBean() {
         super(ListBlockBean.class);

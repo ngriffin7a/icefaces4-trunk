@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class ModalDialogBean extends ComponentExampleImpl<ModalDialogBean> implements Serializable
 {
     public static final String BEAN_NAME = "modalDialogBean";
+	public String getBeanName() { return BEAN_NAME; }
     private boolean draggable;
     private boolean modal;
 

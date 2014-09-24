@@ -51,6 +51,7 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class DateReqStyleBean extends ComponentExampleImpl<DateReqStyleBean> implements Serializable {
     public static final String BEAN_NAME = "dateReqStyle";
+	public String getBeanName() { return BEAN_NAME; }
     
     private Date selectedDate1 = new Date(System.currentTimeMillis());
     private Date selectedDate2 = new Date(System.currentTimeMillis());

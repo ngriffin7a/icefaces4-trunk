@@ -59,6 +59,7 @@ import org.icefaces.samples.showcase.util.FacesUtils;
 public class ProgressBarPush extends ComponentExampleImpl<ProgressBarPush> implements Serializable {
     
     public static final String BEAN_NAME = "progressBarPush";
+	public String getBeanName() { return BEAN_NAME; }
     
     private ImageSet.ImageInfo playImage;
     private ImageSet.ImageInfo stopImage;

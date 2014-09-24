@@ -52,6 +52,7 @@ import java.io.Serializable;
 public class ResizableBean extends ComponentExampleImpl<ResizableBean> implements Serializable
 {
     public static final String BEAN_NAME = "resizableBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public ResizableBean()
     {

@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class DynamicResourceAdvancedBean extends ComponentExampleImpl<DynamicResourceAdvancedBean> implements Serializable
 {
     public static final String BEAN_NAME = "dynamicResourceAdvancedBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public DynamicResourceAdvancedBean() {
         super(DynamicResourceAdvancedBean.class);

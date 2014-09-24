@@ -57,6 +57,7 @@ import javax.faces.application.FacesMessage;
 public class ComboBoxFacetBean extends ComponentExampleImpl< ComboBoxFacetBean > implements Serializable {
 
     public static final String BEAN_NAME = "comboBoxFacetBean";
+	public String getBeanName() { return BEAN_NAME; }
 	
 	private List<Color> textColors;
 	private List<Color> backgroundColors;

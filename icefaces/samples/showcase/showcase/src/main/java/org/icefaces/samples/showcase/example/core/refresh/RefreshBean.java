@@ -58,6 +58,8 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class RefreshBean extends ComponentExampleImpl<RefreshBean> implements Serializable {
     public static final String BEAN_NAME = "refreshBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private static SimpleDateFormat FORMATTER = new SimpleDateFormat("hh:mm:ss");
     private int interval = 2;
     private int duration = 1;

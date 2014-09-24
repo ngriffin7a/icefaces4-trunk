@@ -50,6 +50,7 @@ import org.icefaces.ace.event.DateSelectEvent;
 @CustomScoped(value = "#{window}")
 public class DatePagesBean extends ComponentExampleImpl<DatePagesBean> implements Serializable {
     public static final String BEAN_NAME = "datePages";
+	public String getBeanName() { return BEAN_NAME; }
 
     private Date selectedDate;
     private int pages;

@@ -59,6 +59,7 @@ import javax.faces.event.ActionEvent;
 @CustomScoped(value = "#{window}")
 public class MenuButtonBean extends ComponentExampleImpl<MenuButtonBean> implements Serializable {
     public static final String BEAN_NAME = "menuButtonBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private Format formatter;
     private String message;

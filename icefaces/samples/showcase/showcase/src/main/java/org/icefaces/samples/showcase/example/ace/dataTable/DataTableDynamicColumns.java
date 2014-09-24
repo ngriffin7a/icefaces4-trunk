@@ -56,6 +56,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class DataTableDynamicColumns extends ComponentExampleImpl<DataTableDynamicColumns> implements Serializable {
     public static final String BEAN_NAME = "dataTableDynamicColumns";
+	public String getBeanName() { return BEAN_NAME; }
     private List<Car> cars;
     private List<Integer> ordering = new ArrayList<Integer>();
     private List<ColumnModel> columns = new ArrayList<ColumnModel>() {{

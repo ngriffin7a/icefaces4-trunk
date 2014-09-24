@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class TextAreaEntryLabelBean extends ComponentExampleImpl<TextAreaEntryLabelBean> implements Serializable
 {
     public static final String BEAN_NAME = "textAreaEntryLabelBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String comment1LabelText = "Comments";
     private String comment2LabelText = "Additional Comments";

@@ -58,6 +58,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 @CustomScoped(value = "#{window}")
 public class CellEditorBean extends ComponentExampleImpl<CellEditorBean> implements Serializable {
     public static final String BEAN_NAME = "cellEditorBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public CellEditorBean() {
         super(CellEditorBean.class);

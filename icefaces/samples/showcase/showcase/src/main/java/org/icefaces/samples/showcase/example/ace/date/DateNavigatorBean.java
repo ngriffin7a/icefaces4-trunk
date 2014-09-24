@@ -52,6 +52,7 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class DateNavigatorBean extends ComponentExampleImpl<DateNavigatorBean> implements Serializable {
     public static final String BEAN_NAME = "dateNavigator";
+	public String getBeanName() { return BEAN_NAME; }
 
     private Date selectedDate = new Date(System.currentTimeMillis());
     private boolean enabled = true;

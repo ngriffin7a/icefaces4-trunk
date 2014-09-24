@@ -55,6 +55,7 @@ import java.util.Map;
 @CustomScoped(value = "#{window}")
 public class DataExporterColumns extends ComponentExampleImpl<DataExporterColumns> implements Serializable {
     public static final String BEAN_NAME = "dataExporterColumns";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String[] chosenColumns;
     private String chosenColumnsString;

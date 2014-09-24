@@ -48,6 +48,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class MenuBarClick extends ComponentExampleImpl<MenuBarClick> implements Serializable {
     public static final String BEAN_NAME = "aceMenuBarClick";
+	public String getBeanName() { return BEAN_NAME; }
     private boolean clickToDisplay;
     
     public MenuBarClick() {

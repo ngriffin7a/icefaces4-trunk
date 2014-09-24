@@ -52,7 +52,8 @@ import java.io.Serializable;
 public class ComboBoxIndicatorBean extends ComponentExampleImpl<ComboBoxIndicatorBean> implements Serializable
 {
     public static final String BEAN_NAME = "comboBoxIndicatorBean";
-    
+	public String getBeanName() { return BEAN_NAME; }
+
     private boolean required = true;
     private String requiredText = "This field is required.";
     private String optionalText = "Not mandatory.";

@@ -42,6 +42,8 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class BreadcrumbMenuResources extends ComponentExampleImpl<BreadcrumbMenuResources> implements Serializable {
     public static final String BEAN_NAME = "breadcrumbMenuResources";
+	public String getBeanName() { return BEAN_NAME; }
+
     public BreadcrumbMenuResources()
     {
         super(BreadcrumbMenuResources.class);

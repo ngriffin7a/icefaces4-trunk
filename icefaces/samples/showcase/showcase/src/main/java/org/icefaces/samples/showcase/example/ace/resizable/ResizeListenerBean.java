@@ -55,6 +55,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 public class ResizeListenerBean extends ComponentExampleImpl<ResizeListenerBean> implements Serializable
 {
     public static final String BEAN_NAME = "resizeListenerBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String resizeParameters;
     private String imageLocation;
     private boolean showImage;

@@ -55,6 +55,7 @@ import java.util.Map;
 @CustomScoped(value = "#{window}")
 public class GMapEventBean extends ComponentExampleImpl<GMapEventBean> implements Serializable{
 	public static final String BEAN_NAME = "gMapEventBean";
+	public String getBeanName() { return BEAN_NAME; }
 
 	public GMapEventBean() {
         super(GMapEventBean.class);

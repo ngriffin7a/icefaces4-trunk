@@ -60,6 +60,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 @CustomScoped(value = "#{window}")
 public class ProgressBarBean extends ComponentExampleImpl<ProgressBarBean> implements Serializable {
     public static final String BEAN_NAME = "progressBarBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private ArrayList<ImageSet.ImageInfo> imagesOfCars;
     private Integer progressValue;

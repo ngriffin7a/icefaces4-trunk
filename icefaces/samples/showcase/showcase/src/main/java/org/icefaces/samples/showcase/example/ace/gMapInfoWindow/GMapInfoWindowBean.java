@@ -51,6 +51,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class GMapInfoWindowBean extends ComponentExampleImpl<GMapInfoWindowBean> implements Serializable{
 	public static final String BEAN_NAME = "gMapInfoWindowBean";
+	public String getBeanName() { return BEAN_NAME; }
 	private boolean oneDisabled = false;
     private boolean twoDisabled = true;
     private boolean threeDisabled = true;

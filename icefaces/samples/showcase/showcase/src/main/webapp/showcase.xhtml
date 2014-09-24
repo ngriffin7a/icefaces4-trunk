@@ -84,7 +84,7 @@
 
         <h:form>
             <ace:accordion effect="slide"
-                           activeIndex="#{aceMenu.groupsMap[navigationModel.componentExample]}"
+                           activeIndex="#{aceMenu.groupsMap[navigationModel.currentComponentExample.beanName]}"
                            autoHeight="false">
                 <ace:accordionPane title="#{msgs['menu.ace.aceSuiteOverview.title']}">
                     <ul>

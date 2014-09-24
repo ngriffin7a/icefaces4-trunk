@@ -62,6 +62,7 @@ import java.util.List;
 public class DragDropOverviewBean extends ComponentExampleImpl<DragDropOverviewBean> implements Serializable
 {
     public static final String BEAN_NAME = "dragDropOverviewBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<DragDropItem> items;
     

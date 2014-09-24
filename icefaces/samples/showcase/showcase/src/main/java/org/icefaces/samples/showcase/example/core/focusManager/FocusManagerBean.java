@@ -56,6 +56,8 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class FocusManagerBean extends ComponentExampleImpl<FocusManagerBean> implements Serializable {
     public static final String BEAN_NAME = "focusManagerBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private String focusedComponent = "";
     private String a, b, c, d = "";
 

@@ -59,6 +59,7 @@ import javax.faces.event.ActionEvent;
 @CustomScoped(value = "#{window}")
 public class MenuSeparatorBean extends ComponentExampleImpl<MenuSeparatorBean> implements Serializable {
     public static final String BEAN_NAME = "menuSeparatorBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public MenuSeparatorBean() {
         super(MenuSeparatorBean.class);

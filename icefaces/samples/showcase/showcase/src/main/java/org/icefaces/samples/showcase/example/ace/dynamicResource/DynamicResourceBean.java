@@ -68,6 +68,7 @@ import javax.faces.context.FacesContext;
 @CustomScoped(value = "#{window}")
 public class DynamicResourceBean extends ComponentExampleImpl<DynamicResourceBean> implements Serializable {
     public static final String BEAN_NAME = "dynamicResourceBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public DynamicResourceBean() {
         super(DynamicResourceBean.class);

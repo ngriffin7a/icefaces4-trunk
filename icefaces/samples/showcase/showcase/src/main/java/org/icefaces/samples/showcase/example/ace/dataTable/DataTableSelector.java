@@ -57,6 +57,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class DataTableSelector extends ComponentExampleImpl<DataTableSelector> implements Serializable {
     public static final String BEAN_NAME = "dataTableSelector";
+	public String getBeanName() { return BEAN_NAME; }
 
     private static final SelectItem[] AVAILABLE_MODES = { new SelectItem("single", "Single Row"),
                                                           new SelectItem("multiple", "Multiple Rows"),

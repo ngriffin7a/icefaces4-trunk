@@ -64,6 +64,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 public class PushButtonBean extends ComponentExampleImpl<PushButtonBean> implements Serializable {
 
     public static final String BEAN_NAME = "pushButton";
+	public String getBeanName() { return BEAN_NAME; }
     ImageSet.ImageInfo currentImage;
     
     public PushButtonBean() {

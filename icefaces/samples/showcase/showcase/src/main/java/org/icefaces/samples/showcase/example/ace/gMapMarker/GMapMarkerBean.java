@@ -57,6 +57,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class GMapMarkerBean extends ComponentExampleImpl<GMapMarkerBean> implements Serializable {
 	public static final String BEAN_NAME = "gMapMarkerBean";
+	public String getBeanName() { return BEAN_NAME; }
     private Double[] latList = {0.0,7.5,-10.0};
     private Double[] longList = {0.0,7.5,-10.0};
     private String[] optionsList = {"title:'Hover mouse over this marker to see title'","raiseOnDrag:false,draggable:true","draggable:true"};

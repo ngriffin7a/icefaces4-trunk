@@ -189,6 +189,8 @@ public class ComponentExampleImpl<T> implements ComponentExample, ExampleResourc
     public String getSubMenuTitle() {
         return subMenuTitle;
     }
+
+	public String getBeanName() { return ""; }
     
 //    public Effect getEffect() {
 //        return effect;

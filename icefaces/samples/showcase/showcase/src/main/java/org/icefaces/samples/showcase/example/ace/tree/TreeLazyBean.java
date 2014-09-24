@@ -51,6 +51,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class TreeLazyBean extends ComponentExampleImpl<TreeLazyBean> implements Serializable {
     public static final String BEAN_NAME = "treeLazyBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     private NodeStateMap stateMap;
     private LazyNodeDataModel<LocationNodeImpl> lazyModel = new ExampleLazyModel();

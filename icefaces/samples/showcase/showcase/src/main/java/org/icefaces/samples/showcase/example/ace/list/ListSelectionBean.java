@@ -56,6 +56,7 @@ import java.util.Set;
 @CustomScoped(value = "#{window}")
 public class ListSelectionBean extends ComponentExampleImpl<ListSelectionBean> {
     public static final String BEAN_NAME = "listSelectionBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<SelectItem> stringList = new ArrayList<SelectItem>() {{
         for (String s : DataTableData.CHASSIS_ALL) {

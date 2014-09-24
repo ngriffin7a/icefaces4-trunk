@@ -49,6 +49,7 @@ import org.icefaces.ace.event.ProgressBarChangeEvent;
 public class ProgressBarClientAndServer extends ComponentExampleImpl<ProgressBarClientAndServer> implements Serializable {
 
     public static final String BEAN_NAME = "progressBarClientAndServer";
+	public String getBeanName() { return BEAN_NAME; }
     private int progressValue;
     private String message;
     /////////////---- CONSTRUCTOR BEGIN

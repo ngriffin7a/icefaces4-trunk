@@ -52,6 +52,7 @@ import java.io.Serializable;
 public class ComboBoxReqStyleBean extends ComponentExampleImpl<ComboBoxReqStyleBean> implements Serializable
 {
     public static final String BEAN_NAME = "comboBoxReqStyleBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String selectedText1, selectedText2;
     private String reqColor = "redRS";

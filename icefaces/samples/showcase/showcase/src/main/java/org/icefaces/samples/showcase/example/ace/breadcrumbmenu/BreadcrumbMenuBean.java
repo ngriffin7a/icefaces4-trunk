@@ -55,6 +55,7 @@ import java.io.Serializable;
 @CustomScoped(value="#{window}")
 public class BreadcrumbMenuBean extends ComponentExampleImpl<BreadcrumbMenuBean> implements Serializable {
     public static final String BEAN_NAME = "breadcrumbMenuBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     private static final long serialVersionUID = -6406396460390676389L;
 

@@ -56,6 +56,7 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class ContextMenuEffect extends ComponentExampleImpl<ContextMenuEffect> implements Serializable {
     public static final String BEAN_NAME = "contextMenuEffect";
+	public String getBeanName() { return BEAN_NAME; }
     
     private SelectItem[] availableEffects = { new SelectItem("bounce", "Bounce"),
                                               new SelectItem("clip", "Clip"),

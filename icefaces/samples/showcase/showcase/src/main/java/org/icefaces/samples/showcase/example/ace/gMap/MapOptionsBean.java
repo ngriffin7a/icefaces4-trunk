@@ -53,6 +53,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 @CustomScoped(value = "#{window}")
 public class MapOptionsBean extends ComponentExampleImpl<MapOptionsBean> implements Serializable {
 	public static final String BEAN_NAME = "gMapOptionsBean";
+	public String getBeanName() { return BEAN_NAME; }
     private boolean typeControl=true;
     private boolean overviewControl=true;
     private boolean panControl=true;

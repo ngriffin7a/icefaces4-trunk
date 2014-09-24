@@ -64,6 +64,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
 @CustomScoped(value = "#{window}")
 public class AccordionPanelBean extends ComponentExampleImpl<AccordionPanelBean> implements Serializable {
     public static final String BEAN_NAME = "accordionPanelBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<Item> items;
     private ImageSet.ImageInfo image;

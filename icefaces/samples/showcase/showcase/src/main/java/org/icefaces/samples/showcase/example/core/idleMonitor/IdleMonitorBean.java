@@ -56,6 +56,8 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class IdleMonitorBean extends ComponentExampleImpl<IdleMonitorBean> implements Serializable {
     public static final String BEAN_NAME = "idleMonitorBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private String actionDescription;
 
     public IdleMonitorBean() {

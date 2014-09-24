@@ -64,6 +64,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 @CustomScoped(value = "#{window}")
 public class MapBean extends ComponentExampleImpl<MapBean> implements Serializable{
 	public static final String BEAN_NAME = "mapBean";
+	public String getBeanName() { return BEAN_NAME; }
     
 	private double lat = 51.0453246;
 	private double lon = -114.05810120000001;

@@ -57,6 +57,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class DataTableDynamic extends ComponentExampleImpl<DataTableDynamic> implements Serializable {
     public static final String BEAN_NAME = "dataTableDynamic";
+	public String getBeanName() { return BEAN_NAME; }
     private static final int BULK_ADD_NUMBER = 5;
     private int bulkNumber = BULK_ADD_NUMBER;
     private ArrayList<Car> carsData;

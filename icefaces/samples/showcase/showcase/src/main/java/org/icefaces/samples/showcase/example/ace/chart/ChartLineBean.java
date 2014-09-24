@@ -55,6 +55,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ChartLineBean extends ComponentExampleImpl<ChartLineBean> implements Serializable {
     public static final String BEAN_NAME = "chartLineBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ChartLineBean() {
         super(ChartLineBean.class);

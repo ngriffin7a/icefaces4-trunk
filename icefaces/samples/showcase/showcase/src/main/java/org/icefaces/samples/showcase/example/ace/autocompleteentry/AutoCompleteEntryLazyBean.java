@@ -60,6 +60,7 @@ import org.icefaces.ace.event.TextChangeEvent;
 public class AutoCompleteEntryLazyBean extends ComponentExampleImpl<AutoCompleteEntryLazyBean> implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryLazyBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public AutoCompleteEntryLazyBean() 
     {

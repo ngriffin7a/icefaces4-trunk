@@ -53,6 +53,7 @@ public class FileEntryValidationOptionsBean extends ComponentExampleImpl<FileEnt
         implements Serializable {
 
     public static final String BEAN_NAME = "fileEntryValidation";
+	public String getBeanName() { return BEAN_NAME; }
 
     private boolean maxFileSizeSet = false;
     private Integer maxFileSize = 0;

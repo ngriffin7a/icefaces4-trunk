@@ -54,6 +54,7 @@ import org.icefaces.ace.event.ToggleEvent;
 public class PanelListener extends ComponentExampleImpl<PanelListener> implements Serializable {
 
     public static final String BEAN_NAME = "panelListener";
+	public String getBeanName() { return BEAN_NAME; }
     private Format formatter = new SimpleDateFormat("HH:mm:ss");
     private String statusMessage = "No status yet.";
     

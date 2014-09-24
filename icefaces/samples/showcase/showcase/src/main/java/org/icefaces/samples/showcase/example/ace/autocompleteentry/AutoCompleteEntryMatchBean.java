@@ -52,6 +52,7 @@ import java.io.Serializable;
 public class AutoCompleteEntryMatchBean extends ComponentExampleImpl<AutoCompleteEntryMatchBean> implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryMatchBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String selectedText;
     private String filterMode = "startsWith";

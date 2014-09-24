@@ -58,6 +58,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 @CustomScoped(value = "#{window}")
 public class ColumnGroupBean extends ComponentExampleImpl<ColumnGroupBean> implements Serializable {
     public static final String BEAN_NAME = "columnGroupBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ColumnGroupBean() {
         super(ColumnGroupBean.class);

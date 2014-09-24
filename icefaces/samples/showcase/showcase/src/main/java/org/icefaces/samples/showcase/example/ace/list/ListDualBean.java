@@ -53,6 +53,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ListDualBean extends ComponentExampleImpl<ListDualBean> implements Serializable {
     public static final String BEAN_NAME = "listDualBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private static final String[] AVAILABLE_POSITIONS = new String[] {
         "ALL", "BOTH", "TOP", "BOTTOM", "MIDDLE"

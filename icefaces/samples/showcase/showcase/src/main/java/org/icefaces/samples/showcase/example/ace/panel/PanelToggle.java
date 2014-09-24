@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class PanelToggle extends ComponentExampleImpl<PanelToggle> implements Serializable {
 
     public static final String BEAN_NAME = "panelToggle";
+	public String getBeanName() { return BEAN_NAME; }
 
     private boolean toggleable = true;
     private int speed = 700;

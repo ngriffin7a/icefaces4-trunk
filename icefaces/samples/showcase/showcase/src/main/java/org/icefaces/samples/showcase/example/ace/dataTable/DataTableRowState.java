@@ -65,6 +65,7 @@ import org.icefaces.samples.showcase.util.FacesUtils;
 @CustomScoped(value = "#{window}")
 public class DataTableRowState extends ComponentExampleImpl<DataTableRowState> implements Serializable {
     public static final String BEAN_NAME = "dataTableRowState";
+	public String getBeanName() { return BEAN_NAME; }
 
     private RowStateMap stateMap = new RowStateMap();
     private List<Car> selection;

@@ -52,6 +52,7 @@ import javax.faces.model.SelectItem;
 @CustomScoped(value = "#{window}")
 public class DataTablePaginator extends ComponentExampleImpl<DataTablePaginator> implements Serializable {
     public static final String BEAN_NAME = "dataTablePaginator";
+	public String getBeanName() { return BEAN_NAME; }
     
     private static final SelectItem[] POSITION_AVAILABLE = { new SelectItem("bottom", "Bottom"),
                                                            new SelectItem("top", "Top"),

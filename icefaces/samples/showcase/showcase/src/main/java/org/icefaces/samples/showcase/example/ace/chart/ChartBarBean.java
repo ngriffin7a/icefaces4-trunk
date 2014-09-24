@@ -65,6 +65,8 @@ import java.util.Map;
 @CustomScoped(value = "#{window}")
 public class ChartBarBean extends ComponentExampleImpl<ChartBarBean> implements Serializable {
     public static final String BEAN_NAME = "chartBarBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private final String[] colorSet = new String[]{"#85802b", "#00749F", "#73C774", "#C7754C"};
     private final String[] firstColorSet = new String[]{"#f00", "#4b0", "#b40", "#ff0", "#fb0"} ;
 

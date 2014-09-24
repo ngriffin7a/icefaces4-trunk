@@ -59,6 +59,8 @@ import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 public class ButtonGroupBean extends ComponentExampleImpl<ButtonGroupBean> implements Serializable {
 
     public static final String BEAN_NAME = "buttonGroup";
+	public String getBeanName() { return BEAN_NAME; }
+
     private boolean cb1 = false;
 	private boolean cb2 = false;
 	private boolean cb3 = false;

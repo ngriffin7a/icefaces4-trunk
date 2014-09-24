@@ -47,7 +47,8 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class DataTableSorting extends ComponentExampleImpl<DataTableSorting> implements Serializable {
     public static final String BEAN_NAME = "dataTableSorting";
-    
+	public String getBeanName() { return BEAN_NAME; }
+
     public DataTableSorting() {
         super(DataTableSorting.class);
     }

@@ -59,6 +59,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class ConfirmationDialogBean extends ComponentExampleImpl<ConfirmationDialogBean> implements Serializable {
     public static final String BEAN_NAME = "confirmationDialogBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String outcome = null;
 
     public ConfirmationDialogBean() {

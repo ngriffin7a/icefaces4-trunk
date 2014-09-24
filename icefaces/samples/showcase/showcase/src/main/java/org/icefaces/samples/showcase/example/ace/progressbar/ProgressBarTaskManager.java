@@ -33,6 +33,7 @@ import org.icefaces.samples.showcase.util.FacesUtils;
 @CustomScoped(value = "#{window}")
 public class ProgressBarTaskManager implements Serializable {
 	public static final String BEAN_NAME = "longtask";
+	public String getBeanName() { return BEAN_NAME; }
 
 	public static final String PUSH_GROUP = "ourUser"
 			+ System.currentTimeMillis();

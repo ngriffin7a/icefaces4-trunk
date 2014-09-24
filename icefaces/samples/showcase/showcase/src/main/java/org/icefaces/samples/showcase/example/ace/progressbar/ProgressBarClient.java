@@ -44,6 +44,7 @@ import java.io.Serializable;
 public class ProgressBarClient extends ComponentExampleImpl<ProgressBarClient> implements Serializable {
 
     public static final String BEAN_NAME = "progressBarClient";
+	public String getBeanName() { return BEAN_NAME; }
     
     public ProgressBarClient() {
         super(ProgressBarClient.class);

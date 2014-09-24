@@ -59,6 +59,7 @@ import javax.faces.event.ActionEvent;
 @CustomScoped(value = "#{window}")
 public class GraphicImageBean extends ComponentExampleImpl<GraphicImageBean> implements Serializable {
     public static final String BEAN_NAME = "graphicImageBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public GraphicImageBean() {
         super(GraphicImageBean.class);

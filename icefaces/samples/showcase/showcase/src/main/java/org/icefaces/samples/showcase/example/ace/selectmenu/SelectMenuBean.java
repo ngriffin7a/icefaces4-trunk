@@ -61,6 +61,7 @@ import java.util.*;
 public class SelectMenuBean extends ComponentExampleImpl< SelectMenuBean > implements Serializable {
 
     public static final String BEAN_NAME = "selectMenuBean";
+	public String getBeanName() { return BEAN_NAME; }
 	
 	private List<SelectItem> britishColumbiaCities;
 	private List<SelectItem> albertaCities;

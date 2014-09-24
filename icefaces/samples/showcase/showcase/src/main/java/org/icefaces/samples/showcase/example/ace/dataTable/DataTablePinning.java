@@ -54,6 +54,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class DataTablePinning extends ComponentExampleImpl<DataTablePinning> implements Serializable {
     public static final String BEAN_NAME = "dataTablePinning";
+	public String getBeanName() { return BEAN_NAME; }
 
     private List<Car> carsData;
     private Integer[] pinOrder;

@@ -69,6 +69,7 @@ import org.icefaces.samples.showcase.example.ace.accordionpanel.Item;
 public class TabSetBean extends ComponentExampleImpl<TabSetBean> implements Serializable 
 {
     public static final String BEAN_NAME = "tabSet";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<Item> items;
     private ImageSet.ImageInfo image;

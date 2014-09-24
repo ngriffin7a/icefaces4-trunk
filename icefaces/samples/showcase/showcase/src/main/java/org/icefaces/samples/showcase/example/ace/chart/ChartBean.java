@@ -81,6 +81,7 @@ import java.util.Random;
 @CustomScoped(value = "#{window}")
 public class ChartBean extends ComponentExampleImpl<ChartBean> implements Serializable {
     public static final String BEAN_NAME = "chartBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private Random randomizer = new Random(System.currentTimeMillis());
     

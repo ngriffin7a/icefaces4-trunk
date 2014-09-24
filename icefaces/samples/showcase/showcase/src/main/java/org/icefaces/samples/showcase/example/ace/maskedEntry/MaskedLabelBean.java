@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class MaskedLabelBean extends ComponentExampleImpl<MaskedLabelBean> implements Serializable
 {
     public static final String BEAN_NAME = "maskedLabelBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String labelText = "Masked DOB:";
     private String labelPosition = "left";

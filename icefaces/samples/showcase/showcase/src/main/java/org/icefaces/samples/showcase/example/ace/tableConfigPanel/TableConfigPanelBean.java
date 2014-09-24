@@ -64,6 +64,7 @@ import javax.faces.event.ActionEvent;
 public class TableConfigPanelBean extends ComponentExampleImpl<TableConfigPanelBean> implements Serializable 
 {
     public static final String BEAN_NAME = "tableConfigPanelBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public TableConfigPanelBean() {
         super(TableConfigPanelBean.class);

@@ -54,6 +54,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class DataTablePanelExpansion extends ComponentExampleImpl<DataTablePanelExpansion> implements Serializable {
     public static final String BEAN_NAME = "dataTablePanelExpansion";
+	public String getBeanName() { return BEAN_NAME; }
     private List<Car> carsData;
     /////////////---- CONSTRUCTOR BEGIN
     public DataTablePanelExpansion() {

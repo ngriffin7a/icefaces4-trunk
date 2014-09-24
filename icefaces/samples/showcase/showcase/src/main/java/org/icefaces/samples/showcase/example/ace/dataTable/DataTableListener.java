@@ -54,6 +54,7 @@ import org.icefaces.ace.event.UnselectEvent;
 @CustomScoped(value = "#{window}")
 public class DataTableListener extends ComponentExampleImpl<DataTableListener> implements Serializable {
     public static final String BEAN_NAME = "dataTableListener";
+	public String getBeanName() { return BEAN_NAME; }
     
     private static final int EVENT_SIZE = 5;
     

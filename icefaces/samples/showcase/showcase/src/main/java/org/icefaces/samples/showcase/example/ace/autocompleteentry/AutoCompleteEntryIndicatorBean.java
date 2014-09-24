@@ -52,6 +52,7 @@ import java.io.Serializable;
 public class AutoCompleteEntryIndicatorBean extends ComponentExampleImpl<AutoCompleteEntryIndicatorBean> implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryIndicatorBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private boolean required = true;
     private String requiredText = "This field is required.";

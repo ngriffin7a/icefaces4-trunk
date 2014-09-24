@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class AjaxCallbacksBean extends ComponentExampleImpl<AjaxCallbacksBean> implements Serializable
 {
     public static final String BEAN_NAME = "ajaxCallbacksBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public AjaxCallbacksBean() {
         super(AjaxCallbacksBean.class);

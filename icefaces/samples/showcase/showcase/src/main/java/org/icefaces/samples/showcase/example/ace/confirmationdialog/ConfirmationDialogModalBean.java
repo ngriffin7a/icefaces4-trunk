@@ -43,6 +43,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class ConfirmationDialogModalBean extends ComponentExampleImpl<ConfirmationDialogModalBean> implements Serializable {
     public static final String BEAN_NAME = "confirmationDialogModalBean";
+	public String getBeanName() { return BEAN_NAME; }
 	
     public ConfirmationDialogModalBean() {
         super(ConfirmationDialogModalBean.class);

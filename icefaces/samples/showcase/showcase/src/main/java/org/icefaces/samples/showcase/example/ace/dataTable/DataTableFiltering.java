@@ -52,6 +52,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 @CustomScoped(value = "#{window}")
 public class DataTableFiltering extends ComponentExampleImpl<DataTableFiltering> implements Serializable {
     public static final String BEAN_NAME = "dataTableFiltering";
+	public String getBeanName() { return BEAN_NAME; }
     private List<Car> carsData;
     private List<SelectItem> accelOptions = new ArrayList<SelectItem>() {{
         add(new SelectItem(""));

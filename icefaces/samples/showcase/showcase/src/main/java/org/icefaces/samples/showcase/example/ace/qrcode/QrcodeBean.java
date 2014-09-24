@@ -51,6 +51,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class QrcodeBean extends ComponentExampleImpl< QrcodeBean > implements Serializable {
     public static final String BEAN_NAME = "qrcodeBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     // input string for qr image generation.
     private String qrString = "test string";

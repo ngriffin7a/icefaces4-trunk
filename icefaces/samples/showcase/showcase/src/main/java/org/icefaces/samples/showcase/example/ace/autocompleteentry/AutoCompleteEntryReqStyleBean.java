@@ -52,6 +52,7 @@ import java.io.Serializable;
 public class AutoCompleteEntryReqStyleBean extends ComponentExampleImpl<AutoCompleteEntryReqStyleBean> implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryReqStyleBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String selectedText1, selectedText2;
     private String reqColor = "redRS";

@@ -57,6 +57,8 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class DefaultActionBean  extends ComponentExampleImpl<DefaultActionBean> implements Serializable {
     public static final String BEAN_NAME = "defaultActionBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private String actionDescription;
     private String a, b, c = "";
 

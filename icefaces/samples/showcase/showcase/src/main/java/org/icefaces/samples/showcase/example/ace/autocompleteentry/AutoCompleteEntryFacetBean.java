@@ -58,6 +58,7 @@ import javax.faces.context.FacesContext;
 public class AutoCompleteEntryFacetBean extends ComponentExampleImpl<AutoCompleteEntryFacetBean> implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryFacetBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public AutoCompleteEntryFacetBean() 
     {

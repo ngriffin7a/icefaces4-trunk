@@ -52,6 +52,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ChartBubbleBean extends ComponentExampleImpl<ChartBubbleBean> implements Serializable {
     public static final String BEAN_NAME = "chartBubbleBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public List<BubbleSeries> bubbleData = new ArrayList<BubbleSeries>() {{
         add(new BubbleSeries() {{

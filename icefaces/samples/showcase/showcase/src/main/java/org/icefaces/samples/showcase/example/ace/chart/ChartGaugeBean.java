@@ -52,6 +52,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ChartGaugeBean extends ComponentExampleImpl<ChartGaugeBean> implements Serializable {
     public static final String BEAN_NAME = "chartGaugeBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public List<GaugeSeries> gaugeData = new ArrayList<GaugeSeries>() {{
         add(new GaugeSeries(5) {{

@@ -55,6 +55,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 @CustomScoped(value = "#{window}")
 public class PrinterBean extends ComponentExampleImpl< PrinterBean > implements Serializable {
     public static final String BEAN_NAME = "printerBean";
+	public String getBeanName() { return BEAN_NAME; }
     private ImageSet.ImageInfo image;
     private List<Car> cars;
     private ImageSet.ImageInfo printerIcon;

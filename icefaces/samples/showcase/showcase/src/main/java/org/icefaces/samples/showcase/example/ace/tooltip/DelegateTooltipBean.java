@@ -53,6 +53,7 @@ import java.io.Serializable;
 public class DelegateTooltipBean extends ComponentExampleImpl<DelegateTooltipBean> implements Serializable {
 
     public static final String BEAN_NAME = "delegateTooltipBean";
+	public String getBeanName() { return BEAN_NAME; }
     /////////////---- CONSTRUCTOR BEGIN
     public DelegateTooltipBean() {
         super(DelegateTooltipBean.class);

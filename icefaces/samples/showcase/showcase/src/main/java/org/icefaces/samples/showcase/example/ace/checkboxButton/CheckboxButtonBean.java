@@ -61,6 +61,7 @@ import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 public class CheckboxButtonBean extends ComponentExampleImpl<CheckboxButtonBean> implements Serializable {
 
     public static final String BEAN_NAME = "checkboxButton";
+	public String getBeanName() { return BEAN_NAME; }
     private boolean selected = true;
 
     public CheckboxButtonBean() {

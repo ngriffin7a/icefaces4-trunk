@@ -42,6 +42,7 @@ import java.io.Serializable;
 public class NotificationPanelClientBean extends ComponentExampleImpl<NotificationPanelClientBean> implements Serializable
 {
     public static final String BEAN_NAME = "notificationPanelClient";
+	public String getBeanName() { return BEAN_NAME; }
     
     public NotificationPanelClientBean()
     { super(NotificationPanelClientBean.class); }

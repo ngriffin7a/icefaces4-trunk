@@ -52,6 +52,8 @@ import java.io.Serializable;
 public class ChartDonutBean extends ComponentExampleImpl<ChartDonutBean> implements Serializable
 {
     public static final String BEAN_NAME = "chartDonutBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private SectorSeries model = new SectorSeries();
     
     private List<SectorSeries> donutData = new ArrayList<SectorSeries>() {{

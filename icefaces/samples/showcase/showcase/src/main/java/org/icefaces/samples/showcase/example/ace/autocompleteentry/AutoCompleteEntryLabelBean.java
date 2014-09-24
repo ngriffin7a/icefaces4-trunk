@@ -58,6 +58,7 @@ import java.io.Serializable;
 public class AutoCompleteEntryLabelBean extends ComponentExampleImpl<AutoCompleteEntryLabelBean> implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryLabelBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     private String selectedText;    
     private String labelText = "Cities of the World:";

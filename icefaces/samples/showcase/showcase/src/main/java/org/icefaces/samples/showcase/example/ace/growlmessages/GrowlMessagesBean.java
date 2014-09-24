@@ -61,6 +61,7 @@ import java.util.Iterator;
 @CustomScoped(value = "#{window}")
 public class GrowlMessagesBean extends ComponentExampleImpl<GrowlMessagesBean> implements Serializable {
     public static final String BEAN_NAME = "growlMessagesBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     private String autoHide = "true";
     private boolean closeAll = true;

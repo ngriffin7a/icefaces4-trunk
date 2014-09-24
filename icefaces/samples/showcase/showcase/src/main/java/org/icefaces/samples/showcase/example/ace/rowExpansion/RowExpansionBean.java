@@ -58,6 +58,7 @@ import org.icefaces.samples.showcase.util.SimpleEntry;
 @CustomScoped(value = "#{window}")
 public class RowExpansionBean extends ComponentExampleImpl<RowExpansionBean> implements Serializable {
     public static final String BEAN_NAME = "rowExpansionBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public RowExpansionBean() {
         super(RowExpansionBean.class);

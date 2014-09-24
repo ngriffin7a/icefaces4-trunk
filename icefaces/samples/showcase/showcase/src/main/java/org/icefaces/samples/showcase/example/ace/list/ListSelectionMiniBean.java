@@ -54,6 +54,7 @@ import java.util.*;
 @CustomScoped(value = "#{window}")
 public class ListSelectionMiniBean extends ComponentExampleImpl<ListSelectionMiniBean> {
     public static final String BEAN_NAME = "listSelectionMiniBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ListSelectionMiniBean() {
         super(ListSelectionMiniBean.class);

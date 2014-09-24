@@ -62,6 +62,7 @@ import java.util.Map;
 public class ChartCombinedBean extends ComponentExampleImpl<ChartCombinedBean> implements Serializable
 {
     public static final String BEAN_NAME = "chartCombinedBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<CartesianSeries> barData = new ArrayList<CartesianSeries>() {{
         add(new CartesianSeries() {{

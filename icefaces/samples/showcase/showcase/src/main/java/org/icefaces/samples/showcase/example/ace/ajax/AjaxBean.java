@@ -59,6 +59,7 @@ import java.io.Serializable;
 public class AjaxBean extends ComponentExampleImpl<AjaxBean> implements Serializable 
 {
     public static final String BEAN_NAME = "ajaxBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public AjaxBean() {
         super(AjaxBean.class);

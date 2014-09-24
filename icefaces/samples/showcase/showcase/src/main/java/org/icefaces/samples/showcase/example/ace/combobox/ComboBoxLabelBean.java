@@ -54,6 +54,7 @@ import java.io.Serializable;
 public class ComboBoxLabelBean extends ComponentExampleImpl<ComboBoxLabelBean> implements Serializable
 {
     public static final String BEAN_NAME = "comboBoxLabelBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     private String selectedText;    
     private String labelText = "Select province:";

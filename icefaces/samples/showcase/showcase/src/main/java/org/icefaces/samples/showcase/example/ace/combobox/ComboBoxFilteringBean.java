@@ -52,6 +52,7 @@ import java.util.*;
 public class ComboBoxFilteringBean extends ComponentExampleImpl< ComboBoxFilteringBean > implements Serializable {
 
     public static final String BEAN_NAME = "comboBoxFilteringBean";
+	public String getBeanName() { return BEAN_NAME; }
 	
 	private List<SelectItem> britishColumbiaCities;
 	private List<SelectItem> albertaCities;

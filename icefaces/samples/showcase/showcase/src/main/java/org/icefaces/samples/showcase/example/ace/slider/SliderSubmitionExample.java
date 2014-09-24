@@ -50,6 +50,7 @@ import java.io.Serializable;
 public class SliderSubmitionExample extends ComponentExampleImpl<SliderSubmitionExample> implements Serializable {
     
     public static final String BEAN_NAME = "sliderSubmitionExample";
+	public String getBeanName() { return BEAN_NAME; }
     private int autoValue;
     private int manualValue;
     

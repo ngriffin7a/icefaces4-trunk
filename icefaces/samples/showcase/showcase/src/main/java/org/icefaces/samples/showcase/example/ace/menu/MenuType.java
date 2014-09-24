@@ -53,6 +53,7 @@ import javax.faces.event.ActionEvent;
 @CustomScoped(value = "#{window}")
 public class MenuType extends ComponentExampleImpl<MenuType> implements Serializable {
     public static final String BEAN_NAME = "menuType";
+	public String getBeanName() { return BEAN_NAME; }
     public final String DEFAULT_MESSAGE = "please select any menu item on the left";
     public final int MAX_LIST_SIZE = 10;
     

@@ -58,6 +58,7 @@ import java.io.Serializable;
 public class LoggerBean extends ComponentExampleImpl<LoggerBean> implements Serializable {
 
     public static final String BEAN_NAME = "logger";
+	public String getBeanName() { return BEAN_NAME; }
 
     private boolean rendered = false;
     private String category = "logBugz";

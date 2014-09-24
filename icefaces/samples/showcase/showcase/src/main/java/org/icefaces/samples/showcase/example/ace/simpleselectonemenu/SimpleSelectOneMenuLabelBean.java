@@ -55,6 +55,7 @@ import java.io.Serializable;
 public class SimpleSelectOneMenuLabelBean extends ComponentExampleImpl<SimpleSelectOneMenuLabelBean> implements Serializable
 {
     public static final String BEAN_NAME = "simpleSelectOneMenuLabelBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     private String selectedText;    
     private String labelText = "Select province:";

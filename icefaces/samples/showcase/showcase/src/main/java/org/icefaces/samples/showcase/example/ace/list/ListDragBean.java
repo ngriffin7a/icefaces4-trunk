@@ -53,6 +53,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ListDragBean extends ComponentExampleImpl<ListDragBean> implements Serializable {
     public static final String BEAN_NAME = "listDragBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ListDragBean() {
         super(ListDragBean.class);

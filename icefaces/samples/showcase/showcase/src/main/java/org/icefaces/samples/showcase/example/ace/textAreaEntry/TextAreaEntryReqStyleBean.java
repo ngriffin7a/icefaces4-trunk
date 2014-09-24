@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class TextAreaEntryReqStyleBean extends ComponentExampleImpl<TextAreaEntryReqStyleBean> implements Serializable
 {
     public static final String BEAN_NAME = "textAreaEntryReqStyleBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String reqColor = "redRS";
     private String optColor = "greenRS";
