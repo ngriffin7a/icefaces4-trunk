@@ -72,7 +72,7 @@ public class NavigationController implements Serializable {
         navigate(null, event.getNewValue().toString());
         NavigationModel navigationModel = (NavigationModel)
                 FacesUtils.getManagedBean(NavigationModel.BEAN_NAME);
-        JavaScriptRunner.runScript(FacesContext.getCurrentInstance(), "updateAddressBarURL('" + navigationModel.getComponentGroup() + "','" + event.getNewValue().toString() + "');");
+        JavaScriptRunner.runScript(FacesContext.getCurrentInstance(), "updateAddressBarURL('" + navigationModel.getComponentGroup() + "','" + event.getNewValue().toString() + "');document.getElementById('searchForm:searchBox_input').value = '';");
     }
 
     public void onMenuPaneChange(AccordionPaneChangeEvent event) {
@@ -282,4 +282,7 @@ public class NavigationController implements Serializable {
             return true;
         }
     }
+
+    public String getEmptyValue() {return null;}
+    public void setEmptyValue(String s) {}
 }
