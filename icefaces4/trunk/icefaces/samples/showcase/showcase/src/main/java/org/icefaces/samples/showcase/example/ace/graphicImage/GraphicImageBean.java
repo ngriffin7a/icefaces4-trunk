@@ -30,6 +30,18 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.event.ActionEvent;
 
+import org.icefaces.ace.util.IceOutputResource;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import java.net.URL;
+import javax.faces.context.FacesContext;
+
 @ComponentExample(
         title = "example.ace.graphicImage.title",
         description = "example.ace.graphicImage.description",
@@ -68,5 +80,57 @@ public class GraphicImageBean extends ComponentExampleImpl<GraphicImageBean> imp
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+		// byte array image
+		String resourcePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/media/icemobile.png");
+		File file = new File(resourcePath);
+		try {
+			this.byteArrayImage = readIntoByteArray(new FileInputStream(file));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			this.byteArrayImage = new byte[0];
+		}
+		// IceOutputResource image
+		resourcePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/media/icepdf.png");
+		file = new File(resourcePath);
+		try {
+			this.resourceImage = new IceOutputResource("resourceGraphicImage", readIntoByteArray(new FileInputStream(file)), "image/png");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			this.resourceImage = new IceOutputResource("resourceGraphicImage", new byte[0], "image/png");
+		}
+    }
+
+	private IceOutputResource resourceImage;
+	private byte[] byteArrayImage;
+
+	public IceOutputResource getResourceImage() {
+		return resourceImage;
+	}
+
+	public void setResourceImage(IceOutputResource resourceImage) {
+		this.resourceImage = resourceImage;
+	}
+
+	public byte[] getByteArrayImage() {
+		return byteArrayImage;
+	}
+
+	public void setByteArrayImage(byte[] byteArrayImage) {
+		this.byteArrayImage = byteArrayImage;
+	}
+
+    private static byte[] readIntoByteArray(InputStream in) throws IOException {
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        while ((bytesRead = in.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+        }
+        out.flush();
+
+        return out.toByteArray();
     }
 }
