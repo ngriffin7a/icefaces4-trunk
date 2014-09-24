@@ -37,7 +37,7 @@ public class ViewManagerBean implements Serializable {
             Logger.getLogger(ViewManagerBean.class.toString());
             
     private String transitionType = "horizontal";
-    private String headerStyle;
+    private String barStyle;
     private String view = null;
     private Stack<String> history;
 
@@ -51,14 +51,6 @@ public class ViewManagerBean implements Serializable {
 
     public void setTransitionType(String transitionType) {
         this.transitionType = transitionType;
-    }
-
-    public String getHeaderStyle() {
-        return headerStyle;
-    }
-
-    public void setHeaderStyle(String headerStyle) {
-        this.headerStyle = headerStyle;
     }
 
     public String getView() {
@@ -76,6 +68,15 @@ public class ViewManagerBean implements Serializable {
     public void setHistory(Stack<String> history) {
         this.history = history;
     }
+    
+    public String getBarStyle() {
+        return barStyle;
+    }
+
+    public void setBarStyle(String barStyle) {
+        this.barStyle = barStyle;
+    }
+
 
  }
 

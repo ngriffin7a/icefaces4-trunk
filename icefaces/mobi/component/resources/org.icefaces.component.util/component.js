@@ -301,6 +301,9 @@ ice.mobi.ready = function (callback) {
 ice.mobi.escapeJsfId = function(id) {
     return id.replace(/:/g,"\\:");
 }
+ice.mobi.windowHeight = function(){
+    return window.innerHeight || document.documentElement.clientHeight;
+}
 ice.mobi.addListener= function(obj, event, fnc){
     if (obj.addEventListener){
         obj.addEventListener(event, fnc, false);
@@ -309,7 +312,10 @@ ice.mobi.addListener= function(obj, event, fnc){
     } else {
         ice.log.debug(ice.log, 'WARNING:- this browser does not support addEventListener or attachEvent');
     }
-} ;
+};
+ice.mobi.isNumber = function(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
 ice.mobi.removeListener= function(obj, event, fnc){
     if (obj.addEventListener){
         obj.removeEventListener(event, fnc, false);
@@ -2093,9 +2099,9 @@ ice.mobi.addListener(document, "touchstart", function(){});
         //console.log('refreshViewDimensions()');
          document.body.style.overflowY = 'hidden';
 
- if ((window.innerWidth != currentWidth) || (window.innerHeight != currentHeight)){
+         if ((window.innerWidth != currentWidth) || (ice.mobi.windowHeight() != currentHeight)){
             currentWidth = window.innerWidth;
-            currentHeight = window.innerHeight;
+            currentHeight = ice.mobi.windowHeight();
             var orient = (currentWidth < currentHeight) ? 'portrait' : 'landscape';
             setOrientation(orient);
         }
