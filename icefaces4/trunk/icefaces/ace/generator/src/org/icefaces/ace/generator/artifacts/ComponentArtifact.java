@@ -107,35 +107,13 @@ public class ComponentArtifact extends Artifact{
 
         // copy @ResourceDependency annotations
         if (clazz.isAnnotationPresent(ICEResourceLibrary.class)) {
-            ICEResourceLibrary lib = (ICEResourceLibrary)clazz.getAnnotation(ICEResourceLibrary.class);
-
-            writer.append("@ICEResourceLibrary(\"");
-            writer.append(lib.value());
-            writer.append("\")\n");
+            StringBuilder sb = writeICEResourceLibrary(clazz);
+            System.out.println(" !!!!! sb ="+sb.toString());
+            writer.append(sb.toString());
         }
-
         if (clazz.isAnnotationPresent(ICEResourceDependencies.class)) {
-            writer.append("@ICEResourceDependencies({\n");
-
-            ICEResourceDependencies rd = (ICEResourceDependencies) clazz.getAnnotation(ICEResourceDependencies.class);
-            ICEResourceDependency[] rds = rd.value();
-            int rdsLength = rds.length;
-            for (int i = 0; i < rdsLength; i++) {
-                String overrideString = getOverrideString(rds[i]);
-
-                writer.append(
-                        "\t@ICEResourceDependency(name=\"" + rds[i].name() + "\"," +
-                        "library=\"" + rds[i].library() +  "\"," +
-                        "target=\"" + rds[i].target() + "\"," +
-                        "browser=BrowserType." + rds[i].browser().toString() + "," +
-                        "browserOverride=" + overrideString + ")");
-                if (i < (rdsLength-1)) {
-                    writer.append(",");
-                }
-                writer.append("\n");
-            }
-
-            writer.append("})\n");
+            StringBuilder sb = writeResourceDependencies(clazz);
+            writer.append(sb.toString());
         } else if (clazz.isAnnotationPresent(ICEResourceDependency.class)) {
             ICEResourceDependency rd = (ICEResourceDependency) clazz.getAnnotation(ICEResourceDependency.class);
             writer.append("@ICEResourceDependency(name=\"" + rd.name() + "\",library=\"" + rd.library() + "\",target=\"" + rd.target() + "\")\n");
@@ -143,22 +121,8 @@ public class ComponentArtifact extends Artifact{
 
         // copy @ResourceDependency annotations
         if (clazz.isAnnotationPresent(ResourceDependencies.class)) {
-            writer.append("\n");
-            writer.append("@ResourceDependencies({\n");
-
-            ResourceDependencies rd = (ResourceDependencies) clazz.getAnnotation(ResourceDependencies.class);
-            ResourceDependency[] rds = rd.value();
-            int rdsLength = rds.length;
-            for (int i = 0; i < rdsLength; i++) {
-                writer.append("\t@ResourceDependency(name=\"" + rds[i].name() + "\",library=\"" + rds[i].library() + "\",target=\"" + rds[i].target() + "\")");
-                if (i < (rdsLength-1)) {
-                    writer.append(",");
-                }
-                writer.append("\n");
-            }
-
-            writer.append("})");
-            writer.append("\n\n");
+            StringBuilder sb = writeEachResource(clazz);
+            writer.append(sb.toString());
         } else if (clazz.isAnnotationPresent(ResourceDependency.class)) {
             ResourceDependency rd = (ResourceDependency) clazz.getAnnotation(ResourceDependency.class);
             writer.append("@ResourceDependency(name=\"" + rd.name() + "\",library=\"" + rd.library() + "\",target=\"" + rd.target() + "\")\n\n");
@@ -205,29 +169,6 @@ public class ComponentArtifact extends Artifact{
         writer.append("\n\tpublic String getFamily() {\n\t\treturn \"");
         writer.append(Utility.getFamily(component));
         writer.append("\";\n\t}\n\n");
-    }
-
-    private String getOverrideString(ICEResourceDependency rd) {
-        String ret = "{";
-        ICEBrowserDependency[] overrides = rd.browserOverride();
-
-        if (overrides.length > 0) {
-            ICEBrowserDependency bd;
-            for (int i = 0; i < overrides.length; i++) {
-                bd = overrides[i];
-                ret += "\t@ICEBrowserDependency(name=\"" + bd.name() + "\"," +
-                            "library=\"" + bd.library() +  "\"," +
-                            "target=\"" + bd.target() + "\"," +
-                            "browser=BrowserType." + bd.browser().toString() + ")";
-                if (i == overrides.length - 1)
-                    ret += "\n";
-                else
-                    ret += ",\n";
-            }
-            ret += "}";
-        } else ret = "{}";
-
-        return ret;
     }
 
 
@@ -465,8 +406,8 @@ public class ComponentArtifact extends Artifact{
             // be handled for various cases. primitives must have a default of some kind
             // and Strings have to return null (not "null") to work.
             String defaultValue = prop.defaultValue;
-            logger.info("Evaluating field name: " + varName + ", isPRIMITIVE " +
-                    isPrimitive + ", defaultValue:[" + defaultValue + "], isNull:" + (defaultValue == null));
+           /* logger.info("Evaluating field name: " + varName + ", isPRIMITIVE " +
+                    isPrimitive + ", defaultValue:[" + defaultValue + "], isNull:" + (defaultValue == null)); */
 
             if (isPrimitive && (defaultValue == null || defaultValue.equals("") || defaultValue.equals("null"))) {
                 defaultValue = GeneratorContext.PrimitiveDefaults.get( prop.field.getType().toString().trim() );
