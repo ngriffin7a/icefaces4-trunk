@@ -31,16 +31,16 @@
     <ui:param name="tldResources" value="#{refreshBeanResources.tldResources}"/>
 
     <ui:define name="example">
-        <icecore:refresh interval="#{refreshBean.interval}" duration="#{refreshBean.duration}"/>
+        <icecore:refresh interval="#{refreshViewScopeBean.interval}" duration="#{refreshViewScopeBean.duration}"/>
         <h:form>
-            <ace:selectMenu value="#{refreshBean.interval}" label="Interval:" labelPosition="left">
+            <ace:selectMenu value="#{refreshViewScopeBean.interval}" label="Interval:" labelPosition="left">
                 <f:selectItem itemValue="1" itemLabel="1 second" />
                 <f:selectItem itemValue="2" itemLabel="2 seconds" />
                 <f:selectItem itemValue="5" itemLabel="5 seconds" />
                 <f:selectItem itemValue="10" itemLabel="10 seconds" />
                 <ace:ajax />
             </ace:selectMenu>
-            <ace:selectMenu value="#{refreshBean.duration}" label="Duration:" labelPosition="left">
+            <ace:selectMenu value="#{refreshViewScopeBean.duration}" label="Duration:" labelPosition="left">
                 <f:selectItem itemValue="1" itemLabel="1 minute" />
                 <f:selectItem itemValue="2" itemLabel="2 minutes" />
                 <f:selectItem itemValue="-1" itemLabel="forever" />
@@ -48,7 +48,7 @@
             </ace:selectMenu>
         </h:form>
         <ace:panel>
-            Time: <h:outputText value="#{refreshBean.currentTime}"/>
+            Time: <h:outputText value="#{refreshViewScopeBean.currentTime}"/>
         </ace:panel>
     </ui:define>
 </ui:composition>

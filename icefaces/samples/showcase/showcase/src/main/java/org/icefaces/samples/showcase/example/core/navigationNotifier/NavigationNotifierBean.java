@@ -25,15 +25,8 @@ import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.faces.application.Application;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
-import javax.faces.event.*;
-import javax.faces.view.ViewScoped;
-import java.awt.event.ComponentEvent;
 import java.io.Serializable;
 
 @ComponentExample(
@@ -52,7 +45,10 @@ import java.io.Serializable;
                         resource = "/resources/examples/core/navigation-notifier-next.xhtml"),
                 @ExampleResource(type = ResourceType.java,
                         title="NavigationNotifierBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/navigationNotifier/NavigationNotifierBean.java")
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/navigationNotifier/NavigationNotifierBean.java"),
+                @ExampleResource(type = ResourceType.java,
+                        title="NavigationNotifierViewScopeBean.java",
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/navigationNotifier/NavigationNotifierViewScopeBean.java")
         }
 )
 @Menu(
@@ -67,44 +63,12 @@ public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotif
     public static final String BEAN_NAME = "navigationNotifierBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private boolean navigationDetected;
-    private Application app;
-    private SystemEventListener resetState = new SystemEventListener() {
-        public void processEvent(SystemEvent event) throws AbortProcessingException {
-            navigationDetected = false;
-        }
-
-        public boolean isListenerForSource(Object source) {
-            return source instanceof UIViewRoot;
-        }
-    };
-
     public NavigationNotifierBean() {
         super(NavigationNotifierBean.class);
-        app = FacesContext.getCurrentInstance().getApplication();
-        app.subscribeToEvent(PreValidateEvent.class, resetState);
     }
 
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
-    }
-
-    public void navigationDetected() {
-        navigationDetected = true;
-    }
-
-    public boolean getNavigationDetected() {
-        return navigationDetected;
-    }
-
-    public String getNavigateBackURI() {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?grp=aceMenu&exp=navigationNotifierBean");
-    }
-
-    @PreDestroy
-    public void reset() {
-        app.unsubscribeFromEvent(PreValidateEvent.class, resetState);
     }
 }

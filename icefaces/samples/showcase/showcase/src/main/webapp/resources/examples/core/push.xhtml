@@ -33,8 +33,8 @@
     <ui:define name="example">
         <icecore:push group="demo"/>
         <h:form>
-            <ace:selectMenu value="#{pushBean.strategyIndex}" label="Select push strategy:" labelPosition="left"
-                            actionListener="#{pushBean.updateStrategy}">
+            <ace:selectMenu value="#{pushViewScopeBean.strategyIndex}" label="Select push strategy:" labelPosition="left"
+                            actionListener="#{pushViewScopeBean.updateStrategy}">
                 <f:selectItem itemValue="0" itemLabel="-"/>
                 <f:selectItem itemValue="1" itemLabel="Update page every second"/>
                 <f:selectItem itemValue="2" itemLabel="Update page every 2 seconds 5 times"/>
@@ -44,11 +44,11 @@
             <ace:panel>
                 <ace:chart id="chart"
                            animated="false"
-                           value="#{pushBean.barData}"
+                           value="#{pushViewScopeBean.barData}"
                            stackSeries="false"
-                           defaultAxesConfig="#{pushBean.defaultAxis}"
-                           xAxis="#{pushBean.axisX}"
-                           yAxis="#{pushBean.axisY}"
+                           defaultAxesConfig="#{pushViewScopeBean.defaultAxis}"
+                           xAxis="#{pushViewScopeBean.axisX}"
+                           yAxis="#{pushViewScopeBean.axisY}"
                            legend="true"
                            legendPlacement="OUTSIDE_GRID"
                            highlighter="true"
@@ -58,7 +58,7 @@
                            widgetVar="barChart"/>
 
                 <ace:dataTable id="table"
-                               value="#{pushBean.items}"
+                               value="#{pushViewScopeBean.items}"
                                var="item"
                                paginatorPosition="bottom"
                                rows="10">

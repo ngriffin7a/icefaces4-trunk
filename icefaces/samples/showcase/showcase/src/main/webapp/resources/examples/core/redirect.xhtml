@@ -33,11 +33,11 @@
     <ui:define name="example">
         <h4>Page A</h4>
         <h:form>
-            <h:selectBooleanCheckbox value="#{redirectBean.renderRedirect}">
+            <h:selectBooleanCheckbox value="#{redirectViewScopeBean.renderRedirect}">
                 <f:ajax render="@all"/>
             </h:selectBooleanCheckbox>
             render icecore:redirect component to navigate to other page
         </h:form>
-        <icecore:redirect href="resources/examples/core/redirect-next.jsf"  rendered="#{redirectBean.renderRedirect}"/>
+        <icecore:redirect href="resources/examples/core/redirect-next.jsf"  rendered="#{redirectViewScopeBean.renderRedirect}"/>
     </ui:define>
 </ui:composition>
