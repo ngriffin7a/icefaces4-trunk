@@ -56,6 +56,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 @CustomScoped(value = "#{window}")
 public class RichTextEntryBean extends ComponentExampleImpl< RichTextEntryBean > implements Serializable {
     public static final String BEAN_NAME = "richTextEntryBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String text = "";
     
     public RichTextEntryBean() 

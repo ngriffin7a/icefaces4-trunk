@@ -81,6 +81,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ListBean extends ComponentExampleImpl<ListBean> implements Serializable {
     public static final String BEAN_NAME = "listBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ListBean() {
         super(ListBean.class);

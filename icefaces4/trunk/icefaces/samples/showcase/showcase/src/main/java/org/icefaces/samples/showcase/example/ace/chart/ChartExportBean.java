@@ -54,6 +54,8 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class ChartExportBean extends ComponentExampleImpl<ChartExportBean> implements Serializable {
     public static final String BEAN_NAME = "chartExportBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     boolean requestOldIE;
 
     public ChartExportBean() {

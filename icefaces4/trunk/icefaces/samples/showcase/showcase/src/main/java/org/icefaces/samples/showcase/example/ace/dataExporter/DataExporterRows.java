@@ -51,6 +51,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 @CustomScoped(value = "#{window}")
 public class DataExporterRows extends ComponentExampleImpl<DataExporterRows> implements Serializable {
     public static final String BEAN_NAME = "dataExporterRows";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String type;
     private ArrayList<Car> cars;

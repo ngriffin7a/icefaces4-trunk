@@ -60,6 +60,7 @@ import java.util.List;
 public class ChartDynamicBean extends ComponentExampleImpl<ChartDynamicBean> implements Serializable
 {
     public static final String BEAN_NAME = "chartDynamicBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private RowStateMap rowStateMap = new RowStateMap();
     private Integer[][] tableData = new Integer[][] {

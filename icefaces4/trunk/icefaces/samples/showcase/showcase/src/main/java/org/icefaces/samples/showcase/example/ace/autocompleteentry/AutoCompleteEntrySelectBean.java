@@ -52,6 +52,7 @@ import java.io.Serializable;
 public class AutoCompleteEntrySelectBean extends ComponentExampleImpl<AutoCompleteEntrySelectBean> implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntrySelectBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String selectedText;
     

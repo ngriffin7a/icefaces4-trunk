@@ -54,6 +54,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 public class TableConfigPanelAdvancedBean extends ComponentExampleImpl<TableConfigPanelAdvancedBean> implements Serializable
 {
     public static final String BEAN_NAME = "tableConfigPanelAdvancedBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public TableConfigPanelAdvancedBean() {
         super(TableConfigPanelAdvancedBean.class);

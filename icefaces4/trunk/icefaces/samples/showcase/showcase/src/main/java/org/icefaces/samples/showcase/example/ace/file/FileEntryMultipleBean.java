@@ -54,6 +54,7 @@ resources ={
 public class FileEntryMultipleBean extends ComponentExampleImpl<FileEntryMultipleBean> implements Serializable {
 
     public static final String BEAN_NAME = "fileEntryMultiple";
+	public String getBeanName() { return BEAN_NAME; }
 
     private Integer maxFileCount = 0;
     private String maxFileCountMessage = "The total number of selected files exceeds the allowed maximum.";

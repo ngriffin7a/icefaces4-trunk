@@ -62,6 +62,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
 public class TooltipOverviewBean extends ComponentExampleImpl<TooltipOverviewBean> implements Serializable {
     
     public static final String BEAN_NAME = "tooltipOverviewBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String tooltipEffect = "slide";
     private Integer tooltipShowDelay = 500;
     private Integer tooltipHideDelay = 500;

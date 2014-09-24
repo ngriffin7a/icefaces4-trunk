@@ -57,6 +57,7 @@ import org.icefaces.samples.showcase.util.FacesUtils;
 @CustomScoped(value = "#{window}")
 public class MenuDynamic extends ComponentExampleImpl<MenuDynamic> implements Serializable {
     public static final String BEAN_NAME = "menuDynamic";
+	public String getBeanName() { return BEAN_NAME; }
     
     private MenuModel menuModel;
     private int itemCount = 1;

@@ -48,6 +48,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class MenuEvents extends ComponentExampleImpl<MenuEvents> implements Serializable {
     public static final String BEAN_NAME = "menuEvents";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String message;
     private String currentColor = "black";

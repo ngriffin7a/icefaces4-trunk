@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class MaskedIndicatorBean extends ComponentExampleImpl<MaskedIndicatorBean> implements Serializable
 {
     public static final String BEAN_NAME = "maskedIndicatorBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private boolean required = true;
     private String requiredText = "This field is required.";

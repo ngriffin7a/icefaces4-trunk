@@ -59,6 +59,7 @@ import org.icefaces.ace.component.dataexporter.InnerTableCSVExporter;
 @CustomScoped(value = "#{window}")
 public class DataExporterCustom extends ComponentExampleImpl<DataExporterCustom> implements Serializable {
 	public static final String BEAN_NAME = "dataExporterCustom";
+	public String getBeanName() { return BEAN_NAME; }
 	
 	private static final String OUTER_TABLE_ID = "carTable";
 	

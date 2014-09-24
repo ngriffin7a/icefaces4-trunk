@@ -48,6 +48,7 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class AccordionPanelEffectBean extends ComponentExampleImpl<AccordionPanelEffectBean> implements Serializable {
     public static final String BEAN_NAME = "accordionPanelEffectBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public AccordionPanelEffectBean() {
         super(AccordionPanelEffectBean.class);

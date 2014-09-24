@@ -56,6 +56,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 @CustomScoped(value = "#{window}")
 public class SliderListener extends ComponentExampleImpl<SliderListener> implements Serializable {
     public static final String BEAN_NAME = "sliderListener";
+	public String getBeanName() { return BEAN_NAME; }
     private int sliderValue;
     private ImageSet.ImageInfo image;
 

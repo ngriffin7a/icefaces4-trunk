@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class MaskedReqStyleBean extends ComponentExampleImpl<MaskedReqStyleBean> implements Serializable
 {
     public static final String BEAN_NAME = "maskedReqStyleBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String reqColor = "redRS";
     private String optColor = "greenRS";

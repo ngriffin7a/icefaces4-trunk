@@ -49,6 +49,7 @@ import java.io.Serializable;
 public class TextEntryAutotabBean extends ComponentExampleImpl<TextEntryAutotabBean> implements Serializable
 {
     public static final String BEAN_NAME = "textEntryAutotabBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private int firstNameLength = 5;
     private int lastNameLength = 15;

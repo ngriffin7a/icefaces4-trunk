@@ -55,6 +55,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class TreeSelectionBean extends ComponentExampleImpl<TreeSelectionBean> implements Serializable {
     public static final String BEAN_NAME = "treeSelectionBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public TreeSelectionBean() {
         super(TreeSelectionBean.class);

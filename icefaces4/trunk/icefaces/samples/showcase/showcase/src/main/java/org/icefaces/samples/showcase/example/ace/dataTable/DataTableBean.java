@@ -83,6 +83,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class DataTableBean extends ComponentExampleImpl<DataTableBean> implements Serializable {
     public static final String BEAN_NAME = "dataTableBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<Car> carsData;
     /////////////---- CONSTRUCTOR BEGIN

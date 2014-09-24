@@ -65,6 +65,8 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class NavigationNotifierBean extends ComponentExampleImpl<NavigationNotifierBean> implements Serializable {
     public static final String BEAN_NAME = "navigationNotifierBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private boolean navigationDetected;
     private Application app;
     private SystemEventListener resetState = new SystemEventListener() {

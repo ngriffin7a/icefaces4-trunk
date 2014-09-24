@@ -53,6 +53,7 @@ import java.io.Serializable;
 public class ChartCandlestickBean extends ComponentExampleImpl<ChartCandlestickBean> implements Serializable
 {
     public static final String BEAN_NAME = "chartCandlestickBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<OHLCSeries> ohlcData = new ArrayList<OHLCSeries>() {{
         add(new OHLCSeries(){{

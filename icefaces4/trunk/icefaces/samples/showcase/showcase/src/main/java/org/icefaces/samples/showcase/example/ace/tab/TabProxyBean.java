@@ -55,6 +55,7 @@ public class TabProxyBean extends ComponentExampleImpl<TabProxyBean>
         implements Serializable {
 
     public static final String BEAN_NAME = "tabProxy";
+	public String getBeanName() { return BEAN_NAME; }
 
     private String exampleText = "";
     private boolean invalidSwitch = false;

@@ -53,6 +53,7 @@ import java.util.Calendar;
 @CustomScoped(value = "#{window}")
 public class DateMinMaxBean extends ComponentExampleImpl<DateMinMaxBean> implements Serializable {
     public static final String BEAN_NAME = "dateMinMax";
+	public String getBeanName() { return BEAN_NAME; }
     
     private Date selectedDate = new Date(System.currentTimeMillis());
     private Date minDate = new Date(System.currentTimeMillis());

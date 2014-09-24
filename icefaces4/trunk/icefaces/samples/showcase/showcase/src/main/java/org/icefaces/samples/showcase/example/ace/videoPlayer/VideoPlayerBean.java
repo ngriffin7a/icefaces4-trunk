@@ -59,6 +59,7 @@ import javax.faces.event.ActionEvent;
 @CustomScoped(value = "#{window}")
 public class VideoPlayerBean extends ComponentExampleImpl<VideoPlayerBean> implements Serializable {
     public static final String BEAN_NAME = "videoPlayerBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public VideoPlayerBean() {
         super(VideoPlayerBean.class);

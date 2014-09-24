@@ -52,6 +52,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ListMultiBean extends ComponentExampleImpl<ListMultiBean> implements Serializable {
     public static final String BEAN_NAME = "listMultiBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ListMultiBean() {
         super(ListMultiBean.class);

@@ -42,6 +42,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class MenuDisplay extends ComponentExampleImpl<MenuDisplay> implements Serializable {
     public static final String BEAN_NAME = "menuDisplay";
+	public String getBeanName() { return BEAN_NAME; }
     
     public MenuDisplay() {
         super(MenuDisplay.class);

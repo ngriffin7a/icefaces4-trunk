@@ -61,6 +61,7 @@ import java.io.Serializable;
 public class MaskedEntryBean extends ComponentExampleImpl<MaskedEntryBean> implements Serializable
 {
     public static final String BEAN_NAME = "maskedEntryBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String dob;
     private String workPhone;

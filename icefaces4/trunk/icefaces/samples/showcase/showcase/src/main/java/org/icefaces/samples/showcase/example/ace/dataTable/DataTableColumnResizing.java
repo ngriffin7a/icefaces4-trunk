@@ -54,6 +54,7 @@ import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData
 @CustomScoped(value = "#{window}")
 public class DataTableColumnResizing extends ComponentExampleImpl<DataTableColumnResizing> implements Serializable {
     public static final String BEAN_NAME = "dataTableColumnResizing";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<Car> cars;
     /////////////---- CONSTRUCTOR BEGIN

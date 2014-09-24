@@ -50,6 +50,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class TreeNestedBean extends ComponentExampleImpl<TreeNestedBean> implements Serializable {
     public static final String BEAN_NAME = "treeNestedBean";
+	public String getBeanName() { return BEAN_NAME; }
     private List<LocationNodeImpl> treeRoots;
     private List<LocationNodeImpl> outerTree = new ArrayList<LocationNodeImpl>() {{
         add(new LocationNodeImpl("One","default",0));

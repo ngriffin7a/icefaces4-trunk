@@ -61,6 +61,7 @@ import java.io.Serializable;
 public class TextAreaEntryBean extends ComponentExampleImpl<TextAreaEntryBean> implements Serializable
 {
     public static final String BEAN_NAME = "textAreaEntryBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String comment1;
     private String comment2;

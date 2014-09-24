@@ -53,6 +53,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class AudioPlayerBean extends ComponentExampleImpl<AudioPlayerBean> implements Serializable {
     public static final String BEAN_NAME = "audioPlayerBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public AudioPlayerBean() {
         super(AudioPlayerBean.class);

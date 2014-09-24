@@ -55,6 +55,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class DataTableStackable extends ComponentExampleImpl<DataTableStackable> implements Serializable {
     public static final String BEAN_NAME = "dataTableStackable";
+	public String getBeanName() { return BEAN_NAME; }
     private List<Car> carsData;
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableStackable() {

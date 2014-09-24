@@ -62,6 +62,7 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
 public class AceSuiteOverviewBean extends ComponentExampleImpl<AceSuiteOverviewBean> implements Serializable 
 {
     public static final String BEAN_NAME = "aceSuiteOverview";
+	public String getBeanName() { return BEAN_NAME; }
     
     public AceSuiteOverviewBean() 
     {

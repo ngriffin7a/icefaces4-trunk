@@ -45,6 +45,7 @@ import java.io.Serializable;
 public class GlobalTooltipBean extends ComponentExampleImpl<GlobalTooltipBean> implements Serializable {
 
     public static final String BEAN_NAME = "globalTooltipBean";
+	public String getBeanName() { return BEAN_NAME; }
     /////////////---- CONSTRUCTOR BEGIN
     public GlobalTooltipBean() {
         super(GlobalTooltipBean.class);

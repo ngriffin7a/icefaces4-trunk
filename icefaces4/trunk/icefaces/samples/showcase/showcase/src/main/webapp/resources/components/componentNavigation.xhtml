@@ -77,7 +77,7 @@
 							<h:commandLink actionListener="#{navigationController.navigateActionListener}"
 										   title="#{msgs[subMenuLink.title]}"
 										   disabled="#{subMenuLink.disabled}"
-										   class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
+										   class="#{(subMenuLink.exampleBeanName eq navigationModel.currentComponentExample.beanName) ||
 															   (navigationModel.componentExample eq null and subMenuLink['default'])
 															   ? 'selected'
 															   : ''}"

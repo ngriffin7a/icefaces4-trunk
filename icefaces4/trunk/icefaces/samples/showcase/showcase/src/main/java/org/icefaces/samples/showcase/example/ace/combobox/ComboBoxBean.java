@@ -62,6 +62,7 @@ import java.util.*;
 public class ComboBoxBean extends ComponentExampleImpl< ComboBoxBean > implements Serializable {
 
     public static final String BEAN_NAME = "comboBoxBean";
+	public String getBeanName() { return BEAN_NAME; }
 	
 	private List<SelectItem> britishColumbiaCities;
 	private List<SelectItem> albertaCities;

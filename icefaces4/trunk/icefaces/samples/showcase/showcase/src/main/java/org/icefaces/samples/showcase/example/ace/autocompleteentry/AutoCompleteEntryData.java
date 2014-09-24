@@ -43,6 +43,7 @@ import javax.faces.model.SelectItem;
 public class AutoCompleteEntryData implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryData";
+	public String getBeanName() { return BEAN_NAME; }
 	
     public static final String CITIES_FILENAME = "World_Cities_Location_table.txt";
 	public static final String RESOURCE_PATH = "/resources/autocompleteentry/";

@@ -81,6 +81,7 @@ import javax.faces.context.FacesContext;
 public class AutoCompleteEntryBean extends ComponentExampleImpl<AutoCompleteEntryBean> implements Serializable 
 {
     public static final String BEAN_NAME = "autoCompleteEntryBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public static final String CITIES_FILENAME = "City-Names.txt";
 	public static final String RESOURCE_PATH = "/resources/selectinputtext/";

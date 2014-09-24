@@ -52,6 +52,7 @@ public class FileEntryCallbackBean extends
 		ComponentExampleImpl<FileEntryCallbackBean> implements
 		FileEntryCallback, Serializable {
 	public static final String BEAN_NAME = "fileEntryCallback";
+	public String getBeanName() { return BEAN_NAME; }
 	private static Logger logger = Logger.getLogger(FileEntryCallbackBean.class
 			.getName());
 	private static transient MessageDigest digest;

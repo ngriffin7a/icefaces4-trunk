@@ -52,6 +52,7 @@ import java.util.*;
 public class SelectMenuFacetBean extends ComponentExampleImpl< SelectMenuFacetBean > implements Serializable {
 
     public static final String BEAN_NAME = "selectMenuFacetBean";
+	public String getBeanName() { return BEAN_NAME; }
 	
 	private List<Color> textColors;
 	private List<Color> backgroundColors;

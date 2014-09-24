@@ -48,6 +48,7 @@ import java.util.LinkedHashMap;
 @CustomScoped(value = "#{window}")
 public class MenuBarEffect extends ComponentExampleImpl<MenuBarEffect> implements Serializable {
     public static final String BEAN_NAME = "menuBarEffect";
+	public String getBeanName() { return BEAN_NAME; }
     public static final String DEFAULT_EFFECT = "Slide";
     
     private LinkedHashMap <String, String> availableEffects;

@@ -57,6 +57,8 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class RedirectBean extends ComponentExampleImpl<RedirectBean> implements Serializable {
     public static final String BEAN_NAME = "redirectBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private boolean renderRedirect;
 
     public RedirectBean() {

@@ -50,6 +50,7 @@ public class SubmitMonitorBean extends ComponentExampleImpl<SubmitMonitorBean>
         implements Serializable {
 
     public static final String BEAN_NAME = "submitMonitor";
+	public String getBeanName() { return BEAN_NAME; }
     private String forSelection;
     private String blockSelection;
     private String idleLabel;

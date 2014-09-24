@@ -56,6 +56,7 @@ import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData
 public class DataTableColumnReordering extends ComponentExampleImpl<DataTableColumnReordering> implements Serializable
 {
     public static final String BEAN_NAME = "dataTableColumnReordering";
+	public String getBeanName() { return BEAN_NAME; }
     private List<Car> cars;
     private List<Integer> ordering = new ArrayList<Integer>();
 

@@ -60,6 +60,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class DataExporterBean extends ComponentExampleImpl<DataExporterBean> implements Serializable {
     public static final String BEAN_NAME = "dataExporterBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String type;
 
     public DataExporterBean() {

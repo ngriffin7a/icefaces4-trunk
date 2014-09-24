@@ -58,6 +58,7 @@ import java.util.HashMap;
 @CustomScoped(value = "#{window}")
 public class MessageBean extends ComponentExampleImpl<MessageBean> implements Serializable {
     public static final String BEAN_NAME = "messageBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     private String firstName;
     private String lastName;

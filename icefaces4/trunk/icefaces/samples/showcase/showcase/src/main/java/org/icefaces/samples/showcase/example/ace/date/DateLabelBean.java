@@ -56,6 +56,7 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class DateLabelBean extends ComponentExampleImpl<DateLabelBean> implements Serializable {
     public static final String BEAN_NAME = "dateLabel";
+	public String getBeanName() { return BEAN_NAME; }
 
     private Date selectedDate = new Date(System.currentTimeMillis());
     private String labelText = "Selected Date:";

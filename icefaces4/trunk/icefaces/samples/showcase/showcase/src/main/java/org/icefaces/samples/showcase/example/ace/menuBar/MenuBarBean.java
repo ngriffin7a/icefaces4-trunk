@@ -67,6 +67,7 @@ public class MenuBarBean extends ComponentExampleImpl<MenuBarBean> implements Se
 {
 
     public static final String BEAN_NAME = "menuBarBean";
+	public String getBeanName() { return BEAN_NAME; }
     public final String MENU_BAR_ID = "menuBar";
     private final String PATH_SEPARATOR = " > ";
     private String message;

@@ -60,6 +60,7 @@ import org.icefaces.samples.showcase.util.FacesUtils;
 @CustomScoped(value = "#{window}")
 public class DataTableFind extends ComponentExampleImpl<DataTableFind> implements Serializable {
     public static final String BEAN_NAME = "aceDataTableFind";
+	public String getBeanName() { return BEAN_NAME; }
 
     public String selectedEffectType = "default";
     public String selectedSearchMode = "contains";

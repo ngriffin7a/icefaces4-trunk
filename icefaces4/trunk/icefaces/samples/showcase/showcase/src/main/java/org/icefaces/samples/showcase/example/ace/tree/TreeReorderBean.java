@@ -55,6 +55,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class TreeReorderBean extends ComponentExampleImpl<TreeReorderBean> implements Serializable {
     public static final String BEAN_NAME = "treeReorderBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public TreeReorderBean() {
         super(TreeReorderBean.class);

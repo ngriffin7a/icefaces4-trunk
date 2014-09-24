@@ -68,6 +68,7 @@ import java.util.Date;
 public class MenuBean extends ComponentExampleImpl<MenuBean> implements Serializable {
     
     public static final String BEAN_NAME = "menuBean";
+	public String getBeanName() { return BEAN_NAME; }
     public final String DEFAULT_MESSAGE = "please select any menu item on the left";
     public final int MAX_LIST_SIZE = 17;
     private Format formatter;

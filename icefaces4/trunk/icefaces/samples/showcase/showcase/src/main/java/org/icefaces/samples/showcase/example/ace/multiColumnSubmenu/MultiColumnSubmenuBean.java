@@ -53,6 +53,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class MultiColumnSubmenuBean extends ComponentExampleImpl<MultiColumnSubmenuBean> implements Serializable {
     public static final String BEAN_NAME = "multiColumnSubmenuBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public MultiColumnSubmenuBean() {
         super(MultiColumnSubmenuBean.class);

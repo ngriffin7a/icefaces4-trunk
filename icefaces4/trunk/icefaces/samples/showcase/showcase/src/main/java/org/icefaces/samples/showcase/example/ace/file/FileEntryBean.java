@@ -64,6 +64,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 public class FileEntryBean extends ComponentExampleImpl<FileEntryBean> implements Serializable {
 
     public static final String BEAN_NAME = "fileEntry";
+	public String getBeanName() { return BEAN_NAME; }
     private List<UploadedFile> fileData = new ArrayList<UploadedFile>();
     private String totalFiles;
     private String totalSize;

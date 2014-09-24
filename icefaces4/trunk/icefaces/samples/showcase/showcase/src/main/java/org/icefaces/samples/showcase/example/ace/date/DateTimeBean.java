@@ -44,6 +44,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 public class DateTimeBean extends ComponentExampleImpl<DateTimeBean> implements
 		Serializable {
 	public static final String BEAN_NAME = "dateTime";
+	public String getBeanName() { return BEAN_NAME; }
 
 	private static final String PATTERN_DATE = "MM/dd/yyyy";
 	private static final String PATTERN_TIME = "h:mm:ss a";

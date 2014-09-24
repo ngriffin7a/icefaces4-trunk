@@ -59,6 +59,7 @@ import javax.faces.event.ActionEvent;
 @CustomScoped(value = "#{window}")
 public class ThemeSelectBean extends ComponentExampleImpl<ThemeSelectBean> implements Serializable {
     public static final String BEAN_NAME = "themeSelectBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public ThemeSelectBean() {
         super(ThemeSelectBean.class);

@@ -50,6 +50,7 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class DatePopupBean extends ComponentExampleImpl<DatePopupBean> implements Serializable {
     public static final String BEAN_NAME = "datePopup";
+	public String getBeanName() { return BEAN_NAME; }
 
     private Date selectedDate = new Date(System.currentTimeMillis());
     private boolean popup = true;

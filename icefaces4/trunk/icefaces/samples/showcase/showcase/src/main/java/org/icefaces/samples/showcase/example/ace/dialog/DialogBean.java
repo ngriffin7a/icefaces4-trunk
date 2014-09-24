@@ -59,6 +59,7 @@ import java.io.Serializable;
 public class DialogBean extends ComponentExampleImpl<DialogBean> implements Serializable 
 {
     public static final String BEAN_NAME = "dialogBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String firstName;
     private String lastName;
     

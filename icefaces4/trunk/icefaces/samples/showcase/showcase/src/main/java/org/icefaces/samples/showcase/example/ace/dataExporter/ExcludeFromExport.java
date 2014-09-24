@@ -50,6 +50,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 @CustomScoped(value = "#{window}")
 public class ExcludeFromExport extends ComponentExampleImpl<ExcludeFromExport> implements Serializable {
     public static final String BEAN_NAME = "excludeFromExport";
+	public String getBeanName() { return BEAN_NAME; }
     
     private ArrayList<Car> cars;
     private String type;

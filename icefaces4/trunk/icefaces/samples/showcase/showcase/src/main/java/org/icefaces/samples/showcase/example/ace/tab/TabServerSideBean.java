@@ -51,6 +51,7 @@ public class TabServerSideBean extends ComponentExampleImpl<TabServerSideBean>
         implements Serializable {
 
     public static final String BEAN_NAME = "tabServerSide";
+	public String getBeanName() { return BEAN_NAME; }
 
     private boolean fastTabs = true; // Add delay (large image, backend wait etc.) to tab loading make tabset difference clear
 

@@ -57,6 +57,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class NotificationPanelBean extends ComponentExampleImpl<NotificationPanelBean> implements Serializable {
     public static final String BEAN_NAME = "notificationPanelBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String imageLocation;
     private String imageAlt;

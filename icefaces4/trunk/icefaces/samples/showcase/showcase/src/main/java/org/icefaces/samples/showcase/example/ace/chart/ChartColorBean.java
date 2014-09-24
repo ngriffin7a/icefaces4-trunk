@@ -64,6 +64,8 @@ import java.util.Map;
 @CustomScoped(value = "#{window}")
 public class ChartColorBean extends ComponentExampleImpl<ChartColorBean> implements Serializable {
     public static final String BEAN_NAME = "chartColorBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     String [] ticks = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
     private List<SectorSeries> pieData = new ArrayList<SectorSeries>();
     private List<CartesianSeries> fillData = new ArrayList<CartesianSeries>();

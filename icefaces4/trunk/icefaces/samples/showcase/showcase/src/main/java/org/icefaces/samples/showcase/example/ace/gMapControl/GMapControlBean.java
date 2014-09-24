@@ -59,6 +59,7 @@ import java.util.Map;
 @CustomScoped(value = "#{window}")
 public class GMapControlBean extends ComponentExampleImpl<GMapControlBean> implements Serializable{
 	public static final String BEAN_NAME = "gMapControlBean";
+	public String getBeanName() { return BEAN_NAME; }
 	private String zoomStyle="DEFAULT";
     private String typeStyle="HORIZONTAL_BAR";
     private boolean type = false;

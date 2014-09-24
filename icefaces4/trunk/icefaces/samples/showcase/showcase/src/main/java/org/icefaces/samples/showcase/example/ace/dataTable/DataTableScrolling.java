@@ -52,6 +52,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class DataTableScrolling extends ComponentExampleImpl<DataTableScrolling> implements Serializable {
     public static final String BEAN_NAME = "dataTableScrolling";
+	public String getBeanName() { return BEAN_NAME; }
     
     private boolean scrolling = true;
     private int height = 200;

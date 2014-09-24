@@ -55,6 +55,7 @@ public class FileEntryFailPopBean extends ComponentExampleImpl<FileEntryFailPopB
         implements Serializable {
 
     public static final String BEAN_NAME = "fileEntryFailPop";
+	public String getBeanName() { return BEAN_NAME; }
 
     private boolean useListener;
     private String popupMessage;

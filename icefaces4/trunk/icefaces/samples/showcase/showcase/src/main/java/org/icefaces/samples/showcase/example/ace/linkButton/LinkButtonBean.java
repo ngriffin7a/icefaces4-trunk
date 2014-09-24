@@ -65,6 +65,7 @@ import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
 public class LinkButtonBean extends ComponentExampleImpl<LinkButtonBean> implements Serializable {
 
     public static final String BEAN_NAME = "linkButton";
+	public String getBeanName() { return BEAN_NAME; }
     private String staticNavigation;
     ImageSet.ImageInfo currentImage;
     

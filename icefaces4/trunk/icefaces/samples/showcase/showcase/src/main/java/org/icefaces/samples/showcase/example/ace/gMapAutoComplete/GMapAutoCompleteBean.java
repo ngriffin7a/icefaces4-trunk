@@ -57,6 +57,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class GMapAutoCompleteBean extends ComponentExampleImpl<GMapAutoCompleteBean> implements Serializable{
 	public static final String BEAN_NAME = "gMapAutoCompleteBean";
+	public String getBeanName() { return BEAN_NAME; }
 	private boolean showWindow = false;
     private String address,types;
 	private String url = "https://maps.google.com/maps/place";

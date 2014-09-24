@@ -54,6 +54,7 @@ import java.io.Serializable;
 public class TabClientSideBean extends ComponentExampleImpl<TabClientSideBean> implements Serializable {
 
     public static final String BEAN_NAME = "tabClientSide";
+	public String getBeanName() { return BEAN_NAME; }
 
     public TabClientSideBean() {
         super(TabClientSideBean.class);

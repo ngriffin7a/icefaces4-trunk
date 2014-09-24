@@ -54,6 +54,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class TreeClientBean extends ComponentExampleImpl<TreeClientBean> implements Serializable {
     public static final String BEAN_NAME = "treeClientBean";
+	public String getBeanName() { return BEAN_NAME; }
     private List<LocationNodeImpl> treeRoots = TreeDataFactory.getTreeRoots();
 
     private NodeStateCreationCallback contractProvinceInit = new NodeStateCreationCallback() {

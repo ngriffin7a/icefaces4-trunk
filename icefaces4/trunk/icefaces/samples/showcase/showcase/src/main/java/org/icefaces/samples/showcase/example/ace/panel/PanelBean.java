@@ -64,6 +64,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class PanelBean extends ComponentExampleImpl<PanelBean> implements Serializable {
     public static final String BEAN_NAME = "panelBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private boolean collapsed = false;
 

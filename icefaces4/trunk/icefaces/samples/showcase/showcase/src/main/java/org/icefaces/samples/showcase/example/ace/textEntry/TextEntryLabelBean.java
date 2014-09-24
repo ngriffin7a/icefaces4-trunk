@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class TextEntryLabelBean extends ComponentExampleImpl<TextEntryLabelBean> implements Serializable
 {
     public static final String BEAN_NAME = "textEntryLabelBean";
+
     
     private String firstLabelText = "First Name";
     private String lastLabelText = "Last Name";

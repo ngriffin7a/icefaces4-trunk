@@ -50,6 +50,7 @@ import java.io.Serializable;
 public class ChartPieBean extends ComponentExampleImpl<ChartPieBean> implements Serializable
 {
     public static final String BEAN_NAME = "chartPieBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private List<SectorSeries> pieData = new ArrayList<SectorSeries>() {{
         add(new SectorSeries() {{

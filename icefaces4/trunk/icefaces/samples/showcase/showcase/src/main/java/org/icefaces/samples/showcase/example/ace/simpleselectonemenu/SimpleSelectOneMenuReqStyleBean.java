@@ -52,7 +52,8 @@ import java.io.Serializable;
 public class SimpleSelectOneMenuReqStyleBean extends ComponentExampleImpl<SimpleSelectOneMenuReqStyleBean> implements Serializable
 {
     public static final String BEAN_NAME = "simpleSelectOneMenuReqStyleBean";
-    
+	public String getBeanName() { return BEAN_NAME; }
+
     private String selectedText1, selectedText2;
     private String reqColor = "redRS";
     private String optColor = "greenRS";

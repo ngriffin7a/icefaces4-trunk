@@ -50,6 +50,7 @@ import java.io.Serializable;
 public class DraggableOverviewBean extends ComponentExampleImpl<DraggableOverviewBean> implements Serializable
 {
     public static final String BEAN_NAME = "draggableOverviewBean";
+	public String getBeanName() { return BEAN_NAME; }
     private ImageSet.ImageInfo image;
     
     private String axisMovementConstraint;

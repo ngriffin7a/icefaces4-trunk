@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class TextEntryIndicatorBean extends ComponentExampleImpl<TextEntryIndicatorBean> implements Serializable
 {
     public static final String BEAN_NAME = "textEntryIndicatorBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private boolean required = true;
     private String requiredText = "This field is required.";

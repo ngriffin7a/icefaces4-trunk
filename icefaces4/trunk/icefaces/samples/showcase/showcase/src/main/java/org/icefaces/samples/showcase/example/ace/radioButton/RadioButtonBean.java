@@ -61,6 +61,7 @@ import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 public class RadioButtonBean extends ComponentExampleImpl<RadioButtonBean> implements Serializable {
 
     public static final String BEAN_NAME = "radioButton";
+	public String getBeanName() { return BEAN_NAME; }
     private boolean selected1 = true;
 	private boolean selected2 = false;
 

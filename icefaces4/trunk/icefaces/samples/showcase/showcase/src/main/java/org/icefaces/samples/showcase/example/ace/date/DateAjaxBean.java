@@ -53,6 +53,7 @@ import org.icefaces.ace.event.DateTextChangeEvent;
 @CustomScoped(value = "#{window}")
 public class DateAjaxBean extends ComponentExampleImpl<DateAjaxBean> implements Serializable {
     public static final String BEAN_NAME = "dateAjax";
+	public String getBeanName() { return BEAN_NAME; }
     
     private Date selectedDate = new Date(System.currentTimeMillis());
     private boolean popup;

@@ -66,6 +66,8 @@ import java.util.TimerTask;
 @CustomScoped(value = "#{window}")
 public class PushBean extends ComponentExampleImpl<PushBean> implements Serializable {
     public static final String BEAN_NAME = "pushBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private final static String DEMO = "demo";
     private final static Random randomizer = new Random(System.currentTimeMillis());
     private final Timer timer = new Timer();

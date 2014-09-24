@@ -49,6 +49,7 @@ import java.util.LinkedHashMap;
 @CustomScoped(value = "#{window}")
 public class ConfirmationDialogEffectBean extends ComponentExampleImpl<ConfirmationDialogEffectBean> implements Serializable {
     public static final String BEAN_NAME = "confirmationDialogEffectBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String showEffect;
     private String hideEffect;
     private String outcome;

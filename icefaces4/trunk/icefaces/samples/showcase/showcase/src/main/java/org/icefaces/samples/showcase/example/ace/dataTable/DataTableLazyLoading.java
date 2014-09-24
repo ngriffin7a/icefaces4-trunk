@@ -60,6 +60,7 @@ import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 public class DataTableLazyLoading extends ComponentExampleImpl<DataTableLazyLoading> implements Serializable 
 {
     public static final String BEAN_NAME = "dataTableLazyLoading";
+	public String getBeanName() { return BEAN_NAME; }
 
     private static final ContainsFilterConstraint CONTAINS = new ContainsFilterConstraint();
     private static final int COUNT = 300000;

@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class DialogEffectsAndSizeBean extends ComponentExampleImpl<DialogEffectsAndSizeBean> implements Serializable
 {
     public static final String BEAN_NAME = "dialogEffectsAndSizeBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String showEffect;
     private String hideEffect;
     private int minWidth;

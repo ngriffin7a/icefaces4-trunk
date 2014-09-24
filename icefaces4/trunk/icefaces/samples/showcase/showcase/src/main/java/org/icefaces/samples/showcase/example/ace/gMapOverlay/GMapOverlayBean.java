@@ -57,6 +57,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class GMapOverlayBean extends ComponentExampleImpl<GMapOverlayBean> implements Serializable{
 	public static final String BEAN_NAME = "gMapOverlayBean";
+	public String getBeanName() { return BEAN_NAME; }
     private String shape="polygon";
     private String points="(0,0):(30,20):(0,40)";
     private String options="editable:true, strokeColor:'navy'";

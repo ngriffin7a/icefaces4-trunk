@@ -59,6 +59,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 @CustomScoped(value = "#{window}")
 public class GMapLayerBean extends ComponentExampleImpl<GMapLayerBean> implements Serializable{
     public static final String BEAN_NAME = "gMapLayerBean";
+	public String getBeanName() { return BEAN_NAME; }
 	private boolean bikeLayer = false;
     private boolean kmlLayer = false;
     private boolean trafficLayer = false;

@@ -52,6 +52,7 @@ import java.io.Serializable;
 public class AutoCompleteEntryRowsBean extends ComponentExampleImpl<AutoCompleteEntryRowsBean> implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryRowsBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String selectedText;
     private int rows = 6;

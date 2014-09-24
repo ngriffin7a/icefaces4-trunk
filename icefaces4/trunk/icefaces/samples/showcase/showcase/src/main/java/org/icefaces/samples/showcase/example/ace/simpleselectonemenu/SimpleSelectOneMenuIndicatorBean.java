@@ -52,6 +52,7 @@ import java.io.Serializable;
 public class SimpleSelectOneMenuIndicatorBean extends ComponentExampleImpl<SimpleSelectOneMenuIndicatorBean> implements Serializable
 {
     public static final String BEAN_NAME = "simpleSelectOneMenuIndicatorBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private boolean required = true;
     private String requiredText = "This field is required.";

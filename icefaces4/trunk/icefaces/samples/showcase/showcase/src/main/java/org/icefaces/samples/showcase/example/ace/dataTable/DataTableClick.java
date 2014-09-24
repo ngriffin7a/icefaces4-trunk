@@ -69,6 +69,7 @@ import java.util.ArrayList;
 @CustomScoped(value = "#{window}")
 public class DataTableClick extends ComponentExampleImpl<DataTableClick> implements Serializable {
     public static final String BEAN_NAME = "dataTableClick";
+	public String getBeanName() { return BEAN_NAME; }
     public String stateVar = "state";
 
     public DataTableClick() {

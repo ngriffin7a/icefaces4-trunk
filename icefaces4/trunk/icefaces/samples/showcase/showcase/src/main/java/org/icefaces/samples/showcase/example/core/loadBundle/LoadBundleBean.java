@@ -60,6 +60,8 @@ import java.util.Locale;
 @CustomScoped(value = "#{window}")
 public class LoadBundleBean extends ComponentExampleImpl<LoadBundleBean> implements Serializable {
     public static final String BEAN_NAME = "loadBundleBean";
+	public String getBeanName() { return BEAN_NAME; }
+
     private String language = "en";
 
     public LoadBundleBean() {

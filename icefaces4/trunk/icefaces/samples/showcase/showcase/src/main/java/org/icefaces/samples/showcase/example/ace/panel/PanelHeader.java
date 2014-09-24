@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class PanelHeader extends ComponentExampleImpl<PanelHeader> implements Serializable {
 
     public static final String BEAN_NAME = "panelHeader";
+	public String getBeanName() { return BEAN_NAME; }
     
     private boolean headerEnable = true;
     private boolean footerEnable = true;

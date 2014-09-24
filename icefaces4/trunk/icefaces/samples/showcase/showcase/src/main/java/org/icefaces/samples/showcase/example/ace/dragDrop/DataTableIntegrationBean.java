@@ -57,6 +57,7 @@ import org.icefaces.samples.showcase.example.ace.dragDrop.DragDropItem;
 public class DataTableIntegrationBean extends ComponentExampleImpl<DataTableIntegrationBean> implements Serializable
 {
    public static final String BEAN_NAME = "dataTableIntegrationBean";
+	public String getBeanName() { return BEAN_NAME; }
    
    private List<DragDropItem> availableItems;
    private List<DragDropItem> purchasedItems;

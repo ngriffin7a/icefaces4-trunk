@@ -59,6 +59,7 @@ public class SliderBean extends ComponentExampleImpl<SliderBean>
         implements Serializable {
 
     public static final String BEAN_NAME = "slider";
+	public String getBeanName() { return BEAN_NAME; }
     private String axis;
     private boolean clickableRail;
     private String length;

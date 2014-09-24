@@ -48,6 +48,7 @@ import java.io.Serializable;
 public class PanelClose extends ComponentExampleImpl<PanelClose> implements Serializable {
 
     public static final String BEAN_NAME = "panelClose";
+	public String getBeanName() { return BEAN_NAME; }
     
     private boolean closable = true;
     private int speed = 700;

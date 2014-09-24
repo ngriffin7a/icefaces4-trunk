@@ -47,6 +47,7 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class DateLocaleBean extends ComponentExampleImpl<DateLocaleBean> implements Serializable {
     public static final String BEAN_NAME = "dateLocale";
+	public String getBeanName() { return BEAN_NAME; }
 
     private Date selectedDate = new Date(System.currentTimeMillis());
     private String locale;

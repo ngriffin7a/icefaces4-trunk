@@ -29,6 +29,7 @@ import javax.faces.bean.ManagedBean;
 @ApplicationScoped
 public class LongTaskPool implements Serializable {
     public static final String BEAN_NAME = "longTaskPool";
+	public String getBeanName() { return BEAN_NAME; }
     
     private ExecutorService threadPool;
     

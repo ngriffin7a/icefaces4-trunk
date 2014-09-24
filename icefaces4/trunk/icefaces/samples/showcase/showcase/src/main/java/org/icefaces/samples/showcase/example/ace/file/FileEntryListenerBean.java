@@ -59,6 +59,7 @@ resources ={
 public class FileEntryListenerBean extends ComponentExampleImpl<FileEntryListenerBean> implements Serializable 
 {
     public static final String BEAN_NAME = "fileEntryListener";
+	public String getBeanName() { return BEAN_NAME; }
 
     public FileEntryListenerBean() {
         super(FileEntryListenerBean.class);

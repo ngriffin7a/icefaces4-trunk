@@ -65,6 +65,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class RadioButtonCustomBean extends ComponentExampleImpl<RadioButtonCustomBean> implements Serializable {
     public static final String BEAN_NAME = "radioButtonCustom";
+	public String getBeanName() { return BEAN_NAME; }
 
     public RadioButtonCustomBean() {
         super(RadioButtonCustomBean.class);

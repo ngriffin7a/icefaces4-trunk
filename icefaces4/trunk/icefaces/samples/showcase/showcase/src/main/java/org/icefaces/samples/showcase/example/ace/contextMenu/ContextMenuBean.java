@@ -57,6 +57,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class ContextMenuBean extends ComponentExampleImpl<ContextMenuBean> implements Serializable {
     public static final String BEAN_NAME = "contextMenuBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ContextMenuBean() {
         super(ContextMenuBean.class);

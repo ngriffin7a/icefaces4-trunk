@@ -51,6 +51,7 @@ import javax.faces.event.ValueChangeEvent;
 public class ProgressBarPolling extends ComponentExampleImpl<ProgressBarPolling> implements Serializable {
 
     public static final String BEAN_NAME = "progressBarPolling";
+	public String getBeanName() { return BEAN_NAME; }
     private ArrayList<UploadObject> pendingUploads;
     private ArrayList<UploadObject> uploads;
     private String selection;

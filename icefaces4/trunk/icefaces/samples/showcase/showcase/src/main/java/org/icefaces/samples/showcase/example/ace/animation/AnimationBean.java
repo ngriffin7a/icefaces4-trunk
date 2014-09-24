@@ -47,6 +47,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class AnimationBean extends ComponentExampleImpl<AnimationBean> implements Serializable {
     public static final String BEAN_NAME = "animationBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public AnimationBean() 
     {

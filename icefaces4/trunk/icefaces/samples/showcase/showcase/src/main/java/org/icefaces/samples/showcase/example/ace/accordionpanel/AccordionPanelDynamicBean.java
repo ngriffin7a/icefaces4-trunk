@@ -51,6 +51,7 @@ import org.icefaces.ace.event.AccordionPaneChangeEvent;
 public class AccordionPanelDynamicBean extends ComponentExampleImpl<AccordionPanelDynamicBean> implements Serializable 
 {
     public static final String BEAN_NAME = "accordionPanelDynamicBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private ArrayList<ImageSet.ImageInfo> imagesOfCars;
     private ArrayList<ImageSet.ImageInfo> imagesOfElectronicDevices;

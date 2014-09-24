@@ -56,6 +56,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class GMapServicesBean extends ComponentExampleImpl<GMapServicesBean> implements Serializable{
 	public static final String BEAN_NAME = "gMapServicesBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     private String points="Regent's Park, London: Kingston upon Thames";
     private String options="optimizeWaypoints:true";

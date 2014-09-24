@@ -50,6 +50,7 @@ import javax.faces.event.ValueChangeEvent;
 @CustomScoped(value = "#{window}")
 public class SliderAsyncInputBean extends ComponentExampleImpl<SliderAsyncInputBean> implements Serializable {
     public static final String BEAN_NAME = "sliderAsyncInput";
+	public String getBeanName() { return BEAN_NAME; }
     private int sliderValue = 0;
     private boolean render = false;
 

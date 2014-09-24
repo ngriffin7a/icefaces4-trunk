@@ -53,6 +53,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class ListReorderAjaxBean extends ComponentExampleImpl<ListReorderAjaxBean> implements Serializable {
     public static final String BEAN_NAME = "listReorderAjaxBean";
+	public String getBeanName() { return BEAN_NAME; }
 
     public ListReorderAjaxBean() {
         super(ListReorderAjaxBean.class);

@@ -50,6 +50,7 @@ import java.io.Serializable;
 @CustomScoped(value = "#{window}")
 public class CheckboxButtonCustomBean extends ComponentExampleImpl<CheckboxButtonCustomBean> implements Serializable {
     public static final String BEAN_NAME = "checkboxButtonCustom";
+	public String getBeanName() { return BEAN_NAME; }
 
     public CheckboxButtonCustomBean() {
         super(CheckboxButtonCustomBean.class);

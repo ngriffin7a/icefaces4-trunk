@@ -52,6 +52,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class SplitPaneBean extends ComponentExampleImpl< SplitPaneBean > implements Serializable {
     public static final String BEAN_NAME = "splitPaneBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     public SplitPaneBean() 
     {

@@ -58,6 +58,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class DataTableGrouping extends ComponentExampleImpl<DataTableGrouping> implements Serializable {
     public static final String BEAN_NAME = "dataTableGrouping";
+	public String getBeanName() { return BEAN_NAME; }
     private List<Car> carsData;
 
     /////////////---- CONSTRUCTOR BEGIN
