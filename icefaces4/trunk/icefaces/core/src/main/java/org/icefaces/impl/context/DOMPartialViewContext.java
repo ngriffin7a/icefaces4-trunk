@@ -182,6 +182,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                     }
                     if (renderIds == null || renderIds.isEmpty()) {
                     } else {
+
                         DOMPartialRenderCallback visitor = renderSubtrees(viewRoot, renderIds);
                         diffs = visitor.getDiffs();
                         documentOperations = visitor.getDocumentOperations();
@@ -807,7 +808,12 @@ class DOMPartialRenderCallback implements VisitCallback {
         final String clientId = component.getClientId(facesContext);
         DOMResponseWriter domWriter = (DOMResponseWriter)
                 facesContext.getResponseWriter();
-        Node oldSubtree = domWriter.getOldDocument().getElementById(clientId);
+        final Document oldDocument = domWriter.getOldDocument();
+        if (oldDocument == null) {
+            throw new RuntimeException("The partial submit does not contain javax.faces.ViewState key.");
+        }
+
+        Node oldSubtree = oldDocument.getElementById(clientId);
         if (null == oldSubtree) {
             log.fine("DOM Subtree rendering for " + clientId +
                     " could not be found and is reverting to standard rendering.");
