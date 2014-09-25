@@ -57,12 +57,18 @@ public class SmsRenderer extends CoreRenderer {
 		writer.writeAttribute(HTML.TABINDEX_ATTR, sms.getTabindex(), null);
         try {
             if (sms.isDisabled()) writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
-		    String script = "bridgeit.sms('" + escapeString(sms.getNumber()) + "', '" + escapeString(sms.getMessage()) + "');";
+			String numberInputId = sms.getNumberInputId();
+			String number = numberInputId != null ? "document.getElementById('" + numberInputId + "').value"
+				: "'" + escapeString(sms.getNumber()) + "'";
+			String messageInputId = sms.getMessageInputId();
+			String message = messageInputId != null ? "document.getElementById('" + messageInputId + "').value"
+				: "'" + escapeString(sms.getMessage()) + "'";
+		    String script = "bridgeit.sms(" + number + ", " + message + ");";
 		    writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
         } catch (Exception e){
             writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
-            logger.info("ERROR: mobi:sms requires non null number and message attributes");
-            FacesMessage fm = new FacesMessage(" ERROR: mobi:sms requires non null values for number and message attributes") ;
+            logger.info("ERROR: mobi:sms requires non null number and message attributes. Consider using numberInputId and messageInputId instead.");
+            FacesMessage fm = new FacesMessage(" ERROR: mobi:sms requires non null values for number and message attributes. Consider using numberInputId and messageInputId instead.") ;
             facesContext.addMessage(clientId, fm);
         }
 		writer.startElement(HTML.SPAN_ELEM, sms);
