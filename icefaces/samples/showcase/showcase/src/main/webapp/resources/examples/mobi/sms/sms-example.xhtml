@@ -32,19 +32,17 @@
         
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-				<ace:textEntry id="smsNumber" value="#{smsBean.number}" label="Phone Number:" labelPosition="left">
-					<ace:ajax render="@form" />
-				</ace:textEntry>
+				<label for="smsNumber">Phone Number: </label>
+				<input type="text" id="smsNumber" />
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<ace:textEntry id="smsMessage" value="#{smsBean.message}" label="Message:" labelPosition="left">
-					<ace:ajax render="@form" />
-				</ace:textEntry>
+				<label for="smsMessage" style="vertical-align: top;">Message: </label>
+				<textarea type="text" id="smsMessage" />
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<mobi:sms id="smsButton" message="#{smsBean.message}" number="#{smsBean.number}"/>
+				<mobi:sms id="smsButton" messageInputId="smsMessage" numberInputId="smsNumber"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
