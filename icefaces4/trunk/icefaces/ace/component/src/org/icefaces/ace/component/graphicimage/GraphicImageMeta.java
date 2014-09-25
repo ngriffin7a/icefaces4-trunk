@@ -49,7 +49,7 @@ public class GraphicImageMeta {
     @Property(tlddoc = "Override for the \"src\" attribute of this image.")
     private String src;
 
-    @Property(tlddoc = "Value of the image, which can be byte[], String filename, or Resource.")
+    @Property(tlddoc = "The value of the image, which can be of type String (to specify a URL), byte[], or IceOutputResource.")
     private Object value;
 
     @Property(tlddoc = "Equivalent to the \"src\" attribute.")
