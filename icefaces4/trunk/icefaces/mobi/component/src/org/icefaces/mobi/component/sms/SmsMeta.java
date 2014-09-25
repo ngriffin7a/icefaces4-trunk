@@ -68,4 +68,10 @@ public class SmsMeta extends UIComponentBaseMeta {
 
     @Property(required=Required.yes, tlddoc="The message to send.")
     private String message;
+
+    @Property(required=Required.yes, tlddoc="The client-side id of the input or textarea element that contains the phone number to send the message to. This attribute takes precedence over the 'number' attribute. It's recommended to use this client-side approach.")
+    private String numberInputId;
+
+    @Property(required=Required.yes, tlddoc="The client-side id of the input or textarea element that contains the message to send. This attribute takes precedence over the 'message' attribute. It's recommended to use this client-side approach.")
+    private String messageInputId;
 }
