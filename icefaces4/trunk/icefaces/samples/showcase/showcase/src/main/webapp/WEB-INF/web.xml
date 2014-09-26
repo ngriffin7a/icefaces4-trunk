@@ -34,8 +34,8 @@
 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
-        <!--<param-value>Production</param-value>-->
+			<param-value>Development</param-value>
+        <!-- <param-value>Production</param-value> -->
     </context-param>
 
     <context-param>
@@ -139,6 +139,9 @@
         <mime-type>application/xml</mime-type>
     </mime-mapping>
 
+	<!-- These mime types are used by FontAwesome fonts, which are required by the 
+		mobi and ace components for icons.
+	-->
     <mime-mapping>
         <extension>ttf</extension>
         <mime-type>application/octet-stream</mime-type>
@@ -153,6 +156,22 @@
         <extension>eot</extension>
         <mime-type>application/octet-stream</mime-type>
     </mime-mapping>
+
+	<!--
+		These mime types are used by the CKeditor JS component, which is included in 
+		ace:richTextEntry.
+	-->
+    <mime-mapping>
+        <extension>scss</extension>
+        <mime-type>application/octet-stream</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>md</extension>
+        <mime-type>application/octet-stream</mime-type>
+    </mime-mapping>
+
+
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
