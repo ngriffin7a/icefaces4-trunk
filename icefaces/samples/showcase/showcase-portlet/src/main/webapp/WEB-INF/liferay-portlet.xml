@@ -284,12 +284,6 @@
         <ajaxable>false</ajaxable>
     </portlet>
     <portlet>
-        <portlet-name>contextMenuMultiColumn</portlet-name>
-        <instanceable>false</instanceable>
-        <requires-namespaced-parameters>false</requires-namespaced-parameters>
-        <ajaxable>false</ajaxable>
-    </portlet>
-    <portlet>
         <portlet-name>contextMenuTable</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
@@ -338,7 +332,7 @@
         <ajaxable>false</ajaxable>
     </portlet>
     <portlet>
-        <portlet-name>dataTableConfigPanel</portlet-name>
+        <portlet-name>tableConfigPanel</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <ajaxable>false</ajaxable>
@@ -380,7 +374,7 @@
         <ajaxable>false</ajaxable>
     </portlet>
     <portlet>
-        <portlet-name>dataTableMultiRowHeader</portlet-name>
+        <portlet-name>columnGroup</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <ajaxable>false</ajaxable>
@@ -410,13 +404,13 @@
         <ajaxable>false</ajaxable>
     </portlet>
     <portlet>
-        <portlet-name>dataTableRowEditing</portlet-name>
+        <portlet-name>cellEditor</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <ajaxable>false</ajaxable>
     </portlet>
     <portlet>
-        <portlet-name>dataTableRowExpansion</portlet-name>
+        <portlet-name>rowExpansion</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <ajaxable>false</ajaxable>
@@ -584,7 +578,7 @@
         <ajaxable>false</ajaxable>
     </portlet>
     <portlet>
-        <portlet-name>gMapAutocomplete</portlet-name>
+        <portlet-name>gMapAutoComplete</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <ajaxable>false</ajaxable>
@@ -605,7 +599,7 @@
     </portlet>
 
     <portlet>
-        <portlet-name>gMapDirections</portlet-name>
+        <portlet-name>gMapServices</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <ajaxable>false</ajaxable>
@@ -817,12 +811,6 @@
         <ajaxable>false</ajaxable>
     </portlet>
     <portlet>
-        <portlet-name>menuBarMultiColumn</portlet-name>
-        <instanceable>false</instanceable>
-        <requires-namespaced-parameters>false</requires-namespaced-parameters>
-        <ajaxable>false</ajaxable>
-    </portlet>
-    <portlet>
         <portlet-name>menuButton</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
@@ -834,7 +822,12 @@
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <ajaxable>false</ajaxable>
     </portlet>
-
+    <portlet>
+        <portlet-name>multiColumnSubmenu</portlet-name>
+        <instanceable>false</instanceable>
+        <requires-namespaced-parameters>false</requires-namespaced-parameters>
+        <ajaxable>false</ajaxable>
+    </portlet>
     <portlet>
         <portlet-name>notificationPanel</portlet-name>
         <instanceable>false</instanceable>
