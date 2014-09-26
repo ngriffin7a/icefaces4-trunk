@@ -71,7 +71,7 @@ public class TreeBean extends ComponentExampleImpl<TreeBean> implements Serializ
     private List<LocationNodeImpl> treeRoots = TreeDataFactory.getTreeRoots();
     private NodeStateMap stateMap;
 
-    private NodeStateCreationCallback contractProvinceInit = new NodeStateCreationCallback() {
+    private transient NodeStateCreationCallback contractProvinceInit = new NodeStateCreationCallback() {
         public NodeState initializeState(NodeState newState, Object node) {
             LocationNodeImpl loc = (LocationNodeImpl) node;
             if (loc.getType().equals("country"))
