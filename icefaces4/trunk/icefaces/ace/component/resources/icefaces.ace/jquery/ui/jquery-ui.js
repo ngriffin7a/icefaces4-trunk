@@ -4614,6 +4614,9 @@
             if ( key == "active" ) {
                 this.activate( value );
             }
+            if ( key == "activeNoEvent" ) { // ICE-10261
+                this.activateNoEvent( value );
+            }
             if ( key == "icons" ) {
                 this._destroyIcons();
                 if ( value ) {
@@ -4711,6 +4714,16 @@
             return this;
         },
 
+        activateNoEvent: function( index ) { // ICE-10261
+            // TODO this gets called on init, changing the option without an explicit call for that
+            this.options.active = index;
+            // call clickHandler with custom event
+            var active = this._findActive( index )[ 0 ];
+            this._clickHandler( { target: active }, active, true );
+
+            return this;
+        },
+
         _findActive: function( selector ) {
             return selector
                     ? typeof selector === "number"
@@ -4722,7 +4735,7 @@
         },
 
         // TODO isn't event.target enough? why the separate target argument?
-        _clickHandler: function( event, target ) {
+        _clickHandler: function( event, target, noEvent ) { // ICE-10261
             var options = this.options;
             if ( options.disabled ) {
                 return;
@@ -4784,7 +4797,7 @@
             // when the call to ._toggle() comes after the class changes
             // it causes a very odd bug in IE 8 (see #6720)
             this.active = clickedIsActive ? $([]) : clicked;
-            this._toggle( toShow, toHide, data, clickedIsActive, down );
+            this._toggle( toShow, toHide, data, clickedIsActive, down, noEvent ); // ICE-10261
 
             // switch classes
             active
@@ -4808,7 +4821,7 @@
             return;
         },
 
-        _toggle: function( toShow, toHide, data, clickedIsActive, down ) {
+        _toggle: function( toShow, toHide, data, clickedIsActive, down, noEvent ) { // ICE-10261
             var self = this,
                     options = self.options;
             var ariaEnabled = this.options.ariaEnabled;
@@ -4825,7 +4838,7 @@
             };
 
             // trigger changestart event
-            self._trigger( "changestart", null, self.data );
+            if (!noEvent) self._trigger( "changestart", null, self.data ); // ICE-10261
 
             // count elements to animate
             self.running = toHide.size() === 0 ? toShow.size() : toHide.size();
@@ -4914,8 +4927,8 @@
                         "aria-expanded": function () { return ariaEnabled ? "true" : undefined; },
                         "aria-selected": function () { return ariaEnabled ? "true" : undefined; },
                         tabIndex: 0
-                    })
-                    .focus();
+                    });
+            if (!noEvent) toShow.prev().focus(); // ICE-10261
         },
 
         _completed: function( cancel ) {
