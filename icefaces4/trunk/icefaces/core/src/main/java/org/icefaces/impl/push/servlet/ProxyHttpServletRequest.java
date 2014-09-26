@@ -212,14 +212,13 @@ public class ProxyHttpServletRequest implements HttpServletRequest {
         return null;
     }
 
-    public  java.lang.String getRemoteAddr()  {
-        log.warning("cannot get remote address from portlet request");
+    public java.lang.String getRemoteAddr()  {
+        log.fine("cannot get remote address from portlet request");
         return null;
     }
 
-    public  java.lang.String getRemoteHost()  {
-        log.severe("ProxyHttpServletRequest unsupported operation");
-        if (true) throw new UnsupportedOperationException();
+    public java.lang.String getRemoteHost()  {
+        log.fine("cannot get remote host from portlet request");
         return null;
     }
 
