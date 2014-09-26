@@ -19,3 +19,4 @@ ICE-9147: added support for header facet in ace:dialog
 ICE-9579: commented out code to programatically set datepicker width
 ICE-9001: added support for 'handle' attribute to Dialog widget
 ICE-10190: fix to hide the datepicker root/placeholder node when aria-hidden="true"
+ICE-10261: added 'activeNoEvent' option to the Accordion widget to allow activating an accordion pane without triggering the 'changestart' event and without focusing on the pane header
