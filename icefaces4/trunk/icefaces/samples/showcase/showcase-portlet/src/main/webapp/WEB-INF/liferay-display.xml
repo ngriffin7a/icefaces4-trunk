@@ -85,27 +85,27 @@
                 <portlet id="dataExporterRows"/>
             </category>
             <category name="Datatable">
+                <portlet id="cellEditor"/>
+                <portlet id="columnGroup"/>
                 <portlet id="dataTable"/>
                 <portlet id="dataTableColumnReordering"/>
-                <portlet id="dataTableConfigPanel"/>
                 <portlet id="dataTableDynamicColumns"/>
                 <portlet id="dataTableFiltering"/>
                 <portlet id="dataTableFind"/>
                 <portlet id="dataTableGrouping"/>
                 <portlet id="dataTableLazyLoading"/>
                 <portlet id="dataTableListener"/>
-                <portlet id="dataTableMultiRowHeader"/>
                 <portlet id="dataTablePaginator"/>
                 <portlet id="dataTablePanelExpansion"/>
                 <portlet id="dataTablePinning"/>
                 <portlet id="dataTableResizableColumns"/>
-                <portlet id="dataTableRowEditing"/>
-                <portlet id="dataTableRowExpansion"/>
                 <portlet id="dataTableRowState"/>
                 <portlet id="dataTableScrolling"/>
                 <portlet id="dataTableSelector"/>
                 <portlet id="dataTableSorting"/>
                 <portlet id="dataTableStackable"/>
+                <portlet id="rowExpansion"/>
+                <portlet id="tableConfigPanel"/>
             </category>
             <category name="Date">
                 <portlet id="dateAjax"/>
@@ -133,16 +133,16 @@
                 <portlet id="fileEntryValidation"/>
             </category>
             <category name="GMap">
-                <portlet id="gMapAutocomplete"/>
+                <portlet id="gMapAutoComplete"/>
                 <portlet id="gMapBasic"/>
                 <portlet id="gMapControl"/>
-                <portlet id="gMapDirections"/>
                 <portlet id="gMapEvent"/>
                 <portlet id="gMapInfoWindow"/>
                 <portlet id="gMapLayer"/>
                 <portlet id="gMapMarker"/>
                 <portlet id="gMapOptions"/>
                 <portlet id="gMapOverlay"/>
+                <portlet id="gMapServices"/>
             </category>
             <category name="List">
                 <portlet id="list"/>
@@ -161,7 +161,6 @@
                 <portlet id="contextMenu"/>
                 <portlet id="contextMenuComponent"/>
                 <portlet id="contextMenuEffect"/>
-                <portlet id="contextMenuMultiColumn"/>
                 <portlet id="contextMenuTable"/>
                 <portlet id="menu"/>
                 <portlet id="menuDisplay"/>
@@ -173,8 +172,8 @@
                 <portlet id="menuBarClick"/>
                 <portlet id="menuBarDynamic"/>
                 <portlet id="menuBarEffect"/>
-                <portlet id="menuBarMultiColumn"/>
                 <portlet id="menuButton"/>
+                <portlet id="multiColumnSubmenu"/>
                 <portlet id="selectMenu"/>
                 <portlet id="selectMenuFacet"/>
                 <portlet id="selectMenuIndicator"/>

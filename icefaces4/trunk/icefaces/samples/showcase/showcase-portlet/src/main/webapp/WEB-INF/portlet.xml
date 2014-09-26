@@ -870,27 +870,6 @@
         </portlet-info>
     </portlet>
     <portlet>
-        <portlet-name>contextMenuMultiColumn</portlet-name>
-        <display-name>Context Menu Multi Column</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
-        <init-param>
-            <name>javax.portlet.faces.defaultViewId.view</name>
-            <value>/portlet-view.xhtml</value>
-        </init-param>
-        <init-param>
-            <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/contextMenu/contextMenuMultiColumn.xhtml</value>
-        </init-param>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>view</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Context Menu Multi Column</title>
-            <keywords>ICEfaces Component Suite Showcase ACE Context Menu Multi Column</keywords>
-        </portlet-info>
-    </portlet>
-    <portlet>
         <portlet-name>contextMenuTable</portlet-name>
         <display-name>Context Menu Table</display-name>
         <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
@@ -1059,7 +1038,7 @@
         </portlet-info>
     </portlet>
     <portlet>
-        <portlet-name>dataTableConfigPanel</portlet-name>
+        <portlet-name>tableConfigPanel</portlet-name>
         <display-name>Data Table Config Panel</display-name>
         <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
         <init-param>
@@ -1068,7 +1047,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/dataTable/dataTableConfigPanel.xhtml</value>
+            <value>/resources/examples/ace/tableConfigPanel/tableConfigPanel.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1208,7 +1187,7 @@
         </portlet-info>
     </portlet>
     <portlet>
-        <portlet-name>dataTableMultiRowHeader</portlet-name>
+        <portlet-name>columnGroup</portlet-name>
         <display-name>Data Table Multi Row Header</display-name>
         <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
         <init-param>
@@ -1217,7 +1196,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/dataTable/dataTableMultiRowHeader.xhtml</value>
+            <value>/resources/examples/ace/columnGroup/columnGroup.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1313,7 +1292,7 @@
         </portlet-info>
     </portlet>
     <portlet>
-        <portlet-name>dataTableRowEditing</portlet-name>
+        <portlet-name>cellEditor</portlet-name>
         <display-name>Data Table Row Editing</display-name>
         <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
         <init-param>
@@ -1322,7 +1301,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/dataTable/dataTableRowEditing.xhtml</value>
+            <value>/resources/examples/ace/cellEditor/cellEditor.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1334,7 +1313,7 @@
         </portlet-info>
     </portlet>
     <portlet>
-        <portlet-name>dataTableRowExpansion</portlet-name>
+        <portlet-name>rowExpansion</portlet-name>
         <display-name>Data Table Row Expansion</display-name>
         <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
         <init-param>
@@ -1343,7 +1322,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/dataTable/dataTableRowExpansion.xhtml</value>
+            <value>/resources/examples/ace/rowExpansion/rowExpansion.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1924,7 +1903,7 @@
     </portlet>
 
     <portlet>
-        <portlet-name>gMapAutocomplete</portlet-name>
+        <portlet-name>gMapAutoComplete</portlet-name>
         <display-name>GMap Autocomplete</display-name>
         <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
         <init-param>
@@ -1933,7 +1912,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/gMap/gMapAutocomplete.xhtml</value>
+            <value>/resources/examples/ace/gMapAutoComplete/gMapAutoComplete.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1977,7 +1956,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/gMap/gMapControl.xhtml</value>
+            <value>/resources/examples/ace/gMapControl/gMapControl.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1990,7 +1969,7 @@
     </portlet>
 
     <portlet>
-        <portlet-name>gMapDirections</portlet-name>
+        <portlet-name>gMapServices</portlet-name>
         <display-name>GMap Directions</display-name>
         <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
         <init-param>
@@ -1999,7 +1978,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/gMap/gMapDirections.xhtml</value>
+            <value>/resources/examples/ace/gMapServices/gMapServices.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -2021,7 +2000,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/gMap/gMapEvent.xhtml</value>
+            <value>/resources/examples/ace/gMapEvent/gMapEvent.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -2043,7 +2022,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/gMap/gMapInfoWindow.xhtml</value>
+            <value>/resources/examples/ace/gMapInfoWindow/gMapInfoWindow.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -2065,7 +2044,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/gMap/gMapLayer.xhtml</value>
+            <value>/resources/examples/ace/gMapLayer/gMapLayer.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -2087,7 +2066,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/gMap/gMapMarker.xhtml</value>
+            <value>/resources/examples/ace/gMapMarker/gMapMarker.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -2131,7 +2110,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/gMap/gMapOverlay.xhtml</value>
+            <value>/resources/examples/ace/gMapOverlay/gMapOverlay.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
@@ -2698,27 +2677,6 @@
         </portlet-info>
     </portlet>
     <portlet>
-        <portlet-name>menuBarMultiColumn</portlet-name>
-        <display-name>Menu Bar Multi Column</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
-        <init-param>
-            <name>javax.portlet.faces.defaultViewId.view</name>
-            <value>/portlet-view.xhtml</value>
-        </init-param>
-        <init-param>
-            <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/menuBar/menuBarMultiColumn.xhtml</value>
-        </init-param>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>view</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Menu Bar MultiColumn</title>
-            <keywords>ICEfaces Component Suite Showcase ACE Menu Bar MultiColumn</keywords>
-        </portlet-info>
-    </portlet>
-    <portlet>
         <portlet-name>menuButton</portlet-name>
         <display-name>Menu Button</display-name>
         <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
@@ -2761,7 +2719,27 @@
             <keywords>ICEfaces ACE Component Showcase Message</keywords>
         </portlet-info>
     </portlet>
-
+    <portlet>
+        <portlet-name>multiColumnSubmenu</portlet-name>
+        <display-name>Context Menu Multi Column</display-name>
+        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <init-param>
+            <name>javax.portlet.faces.defaultViewId.view</name>
+            <value>/portlet-view.xhtml</value>
+        </init-param>
+        <init-param>
+            <name>org.icefaces.demo.viewPath</name>
+            <value>/resources/examples/ace/multiColumnSubmenu/multiColumnSubmenu.xhtml</value>
+        </init-param>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Context Menu Multi Column</title>
+            <keywords>ICEfaces Component Suite Showcase ACE Context Menu Multi Column</keywords>
+        </portlet-info>
+    </portlet>
     <portlet>
         <portlet-name>notificationPanel</portlet-name>
         <display-name>Notification Panel</display-name>
