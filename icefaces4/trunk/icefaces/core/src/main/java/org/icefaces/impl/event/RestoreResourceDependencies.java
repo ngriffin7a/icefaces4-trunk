@@ -22,6 +22,8 @@ import org.icefaces.util.UserAgentContext;
 import javax.faces.application.ResourceHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.component.visit.VisitHint;
@@ -44,27 +46,40 @@ public class RestoreResourceDependencies implements SystemEventListener {
 
         viewRoot.visitTree(visitContext, new VisitCallback() {
             public VisitResult visit(VisitContext context, UIComponent target) {
-                VisitResult result = VisitResult.ACCEPT;
-                Class<UIComponent> compClass = (Class<UIComponent>) target.getClass();
+                collectResourceDependencies(target, uaContext, facesContext);
 
-                ICEResourceDependencies resourceDependencies = compClass.getAnnotation(ICEResourceDependencies.class);
-                ICEResourceDependency resourceDependency = compClass.getAnnotation(ICEResourceDependency.class);
-                ICEResourceLibrary library = compClass.getAnnotation(ICEResourceLibrary.class);
-
-                if (resourceDependencies != null) {
-                    for (ICEResourceDependency resDep : resourceDependencies.value()) {
-                        ResourceInfo resInfo = ICEResourceUtils.getResourceInfo(uaContext, resDep, library);
-                        if (resInfo != null) addResourceDependency(facesContext, resInfo);
+                if (target instanceof ClientBehaviorHolder) {
+                    Map<String, List<ClientBehavior>> behaviorMap = ((ClientBehaviorHolder) target).getClientBehaviors();
+                    if (behaviorMap != null) {
+                        for (List<ClientBehavior> behaviours: behaviorMap.values()) {
+                            for (ClientBehavior behaviour: behaviours) {
+                                collectResourceDependencies(behaviour, uaContext, facesContext);
+                            }
+                        }
                     }
                 }
-
-                ResourceInfo resInfo = ICEResourceUtils.getResourceInfo(uaContext, resourceDependency, library);
-                if (resInfo != null)
-                    addResourceDependency(facesContext, resInfo);
-
-                return result;
+                return VisitResult.ACCEPT;
             }
         });
+    }
+
+    private void collectResourceDependencies(Object target, UserAgentContext uaContext, FacesContext facesContext) {
+        Class<UIComponent> compClass = (Class<UIComponent>) target.getClass();
+
+        ICEResourceDependencies resourceDependencies = compClass.getAnnotation(ICEResourceDependencies.class);
+        ICEResourceDependency resourceDependency = compClass.getAnnotation(ICEResourceDependency.class);
+        ICEResourceLibrary library = compClass.getAnnotation(ICEResourceLibrary.class);
+
+        if (resourceDependencies != null) {
+            for (ICEResourceDependency resDep : resourceDependencies.value()) {
+                ResourceInfo resInfo = ICEResourceUtils.getResourceInfo(uaContext, resDep, library);
+                if (resInfo != null) addResourceDependency(facesContext, resInfo);
+            }
+        }
+
+        ResourceInfo resInfo = ICEResourceUtils.getResourceInfo(uaContext, resourceDependency, library);
+        if (resInfo != null)
+            addResourceDependency(facesContext, resInfo);
     }
 
     private void addResourceDependency(FacesContext context, ResourceInfo resourceInfo) {
