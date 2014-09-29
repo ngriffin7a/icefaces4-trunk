@@ -37,10 +37,10 @@
     <ui:define name="example">
         
             <center>
-                <h:commandButton id="show" value="Show Dialog" onclick="ice.ace.instance('dialog').show();" type="button"/>
+                <h:commandButton id="show" value="Show Dialog" onclick="ice.ace.instance('#{dialog.clientId}').show();" type="button"/>
             </center>
             
-            <ace:dialog id="dialog"
+            <ace:dialog id="dialog" binding="#{dialog}"
                                header="A sample dialog overview example"
                                closable="false"
                                modal="true"
