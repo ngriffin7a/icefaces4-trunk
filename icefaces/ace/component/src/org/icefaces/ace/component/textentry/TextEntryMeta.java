@@ -111,7 +111,7 @@ public class TextEntryMeta extends HtmlInputTextMeta {
             "Applicable only to type \"number\". ")
     private int step;
 
-    @Property(defaultValue = "false", tlddoc="If true, when the user types a string into this field, a row of asterisks will displayed instead of the text the user types.")
+    @Property(defaultValue = "false", tlddoc="If true, when the user types a string into this field, a row of asterisks will be  displayed instead of the text the user typed.")
     private boolean secret;
 
     @Property(defaultValue = "true", tlddoc="If false, the component will not redisplay its value when the page reloads.")
