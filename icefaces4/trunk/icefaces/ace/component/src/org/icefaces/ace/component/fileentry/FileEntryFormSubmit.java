@@ -21,6 +21,7 @@ import org.icefaces.util.EnvUtils;
 import org.icefaces.impl.event.FormSubmit;
 import org.icefaces.impl.context.ICEFacesContextFactory;
 
+import javax.faces.component.UINamingContainer;
 import javax.faces.event.SystemEventListener;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.AbortProcessingException;
@@ -30,6 +31,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIForm;
+import javax.faces.render.ResponseStateManager;
 import java.util.Iterator;
 import java.util.Map;
 import java.io.IOException;
@@ -95,10 +97,10 @@ public class FileEntryFormSubmit implements SystemEventListener {
 
                 String clientId = getClientId(context);
                 String viewId = context.getViewRoot().getViewId();
-                String actionURL = context.getApplication().getViewHandler().
-                    getActionURL(context, viewId);
+                String actionURL = context.getApplication().getViewHandler().getActionURL(context, viewId);
                 String prefix = actionURL.contains("?") ? "&" : "?";
-                actionURL = actionURL + prefix + FILE_ENTRY_MULTIPART_MARKER + "=true";
+                actionURL += prefix + FILE_ENTRY_MULTIPART_MARKER + "=true";
+                actionURL += "&" + ResponseStateManager.VIEW_STATE_PARAM + "=" + context.getApplication().getStateManager().getViewState(context);
                 ExternalContext externalContext = context.getExternalContext();
                 String encodedPartialActionURL = externalContext.encodePartialActionURL(actionURL);
                 log.finer("RENDER ENCODED_URL  clientId: " + clientId + "  encodedPartialActionURL: " + encodedPartialActionURL);
