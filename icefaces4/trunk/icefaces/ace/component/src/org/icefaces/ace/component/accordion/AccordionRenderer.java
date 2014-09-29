@@ -148,7 +148,7 @@ public class AccordionRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId + "_activeIndexScript", null);
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("(function() {var i = ice.ace.instance('"+clientId+"'); if (i) i.setActiveIndex("+activeIndex+");})();");
+		writer.write("(function() {var i = ice.ace.instance('"+clientId+"'); if (i) i.setActiveIndex("+(activeIndex < 0 ? "false" : "" + activeIndex)+");})();");
 		writer.endElement("script");
 		writer.endElement("span");
 	}
@@ -157,13 +157,14 @@ public class AccordionRenderer extends CoreRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = accordionPanel.getClientId(context);
 		String stateHolderId = clientId + "_active"; 
+		int activeIndex = accordionPanel.getActiveIndex();
 		
 		writer.startElement("input", null);
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("id", stateHolderId, null);
         writer.writeAttribute("name", stateHolderId, null);
         writer.writeAttribute("autocomplete", "off", null);
-		writer.writeAttribute("value", accordionPanel.getActiveIndex(), null);
+		writer.writeAttribute("value", activeIndex < 0 ? "false" : "" + activeIndex, null);
 		writer.endElement("input");
 	}
 	
