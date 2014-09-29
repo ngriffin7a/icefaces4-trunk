@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2004-2013 ICEsoft Technologies Canada Corp.
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the
@@ -19,18 +19,27 @@
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
-<h:form>
-    <mobi:fieldsetGroup>
-        <mobi:fieldsetRow styleClass="intro">
+
+    <mobi:fieldsetGroup >
+        <mobi:fieldsetRow styleClass="intro" >  
             <header>
-                <h5>ICEfaces 4 Mobile Components Showcase</h5>
+                <h3>ICEfaces Mobile Components Showcase</h3>
             </header>
-    			
-    			<!-- <h:outputText escape="false" value="#{msgs[MobiSuiteOverview.description]}"/> -->
-    	
         </mobi:fieldsetRow>
     </mobi:fieldsetGroup>
-
- </h:form>
-
+    <mobi:fieldsetGroup>
+        <mobi:fieldsetRow >  
+    				<p>ICEfaces Mobile (MOBI) components provide mobile-specific component functionality including:<br/><br/>
+    				<ul><li><strong>Layout and Navigation</strong> controls that simplify mobile UI layouts, and give you a variety of ways to present and navigate content. Adaptive page layouts automatically adjust to different classes of devices, from desktops and tablets, to smartphones, so you can design pages that are automatically optimized for different form factors.</li>
+    				<li><strong>Dynamic Input and Selection</strong> controls that interactively collect data from the user, including button, date/time spinner, flip-switch, and geolocation, to name a few. HTML5 input types are leveraged where supported, with JavaScript controls substituted on platforms where they are not.</li>
+    				<li><strong>Native</strong> controls that provide access to device features like the camera and microphone. These controls work in conjunction with the <h:outputLink  href="http://bridgeit.mobi/">BridgeIt Utility App.</h:outputLink> to provide cross-platform hybrid web/native app. capabilities right from your web applications.</li></ul></p>
+         </mobi:fieldsetRow>
+    </mobi:fieldsetGroup>
+    <mobi:fieldsetGroup>
+        <mobi:fieldsetRow >  
+    				<p>The MOBI components provide powerful mobile-specific functionality that when combined with the ACE and ICECORE components provide a comprehensive JSF component solution for desktop and mobile web-applications.</p><br/>
+    				<p>See the <a href="./showcase.jsf">Desktop Showcase</a> for more information.</p>
+         </mobi:fieldsetRow>
+    </mobi:fieldsetGroup>
+                        	
 </ui:composition>
