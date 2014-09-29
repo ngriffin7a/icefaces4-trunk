@@ -88,12 +88,12 @@
             
                     <center>
                         <h:form id="bttnForm">
-                        <h:commandButton id="show" value="Show Dialog"  onclick="ice.ace.instance('dialog').show();return false;"/>
+                        <h:commandButton id="show" value="Show Dialog"  onclick="ice.ace.instance('#{dialog.clientId}').show();return false;"/>
                         </h:form>
                     </center>
             </ace:panel>
             
-            <ace:dialog id="dialog"
+            <ace:dialog id="dialog" binding="#{dialog}"
                                header="Dialog effects and size example"
                                minWidth="#{dialogEffectsAndSizeBean.minWidth}"
                                minHeight="#{dialogEffectsAndSizeBean.minHeight}"

@@ -37,11 +37,11 @@
     <ui:define name="example">
         <h:form id="form">
             <h:panelGrid styleClass="centeredPanelGrid">
-                <h:commandButton id="save" value="Save" onclick="ice.ace.instance('form:confirmDialog').show();return false;" type="button"/>
+                <h:commandButton id="save" value="Save" onclick="ice.ace.instance('#{confirmDialog.clientId}').show();return false;" type="button"/>
                 <h:outputText id="outcome" value="#{confirmationDialogBean.outcome}" rendered="#{confirmationDialogBean.outcome != null}"/>
             </h:panelGrid>
 
-            <ace:confirmationDialog id="confirmDialog"
+            <ace:confirmationDialog id="confirmDialog" binding="#{confirmDialog}"
 								    message="Are you sure about this?"
 								    header="Confirmation"
 								    width="250"
@@ -49,8 +49,8 @@
 								    closable="true"
 								    position="center">
                 <h:panelGrid columns="2" styleClass="centeredPanelGrid">
-                    <h:commandButton id="yes" value="Yes" onclick="ice.ace.instance('form:confirmDialog').hide();" actionListener="#{confirmationDialogBean.yes}"/>
-                    <h:commandButton id="no" value="No" onclick="ice.ace.instance('form:confirmDialog').hide();" actionListener="#{confirmationDialogBean.no}" />
+                    <h:commandButton id="yes" value="Yes" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide();" actionListener="#{confirmationDialogBean.yes}"/>
+                    <h:commandButton id="no" value="No" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide();" actionListener="#{confirmationDialogBean.no}" />
                 </h:panelGrid>
             </ace:confirmationDialog>
         </h:form>
