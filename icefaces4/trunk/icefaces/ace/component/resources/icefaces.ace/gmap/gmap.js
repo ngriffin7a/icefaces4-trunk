@@ -363,6 +363,7 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 		}
 		var init = function() {
 			ice.ace.jq(input).off('keypress').on('keypress', function(e) {if (e.keyCode == 13 || e.which == 13) return false;});
+			input.submitOnEnter = 'disabled';
 			var autocomplete = new google.maps.places.Autocomplete(input);
 			var map = ice.ace.gMap.getGMapWrapper(mapId).getRealGMap();
 			if(windowRender){
