@@ -264,7 +264,7 @@ public class FileEntryUpload implements PhaseListener {
                     resolvedCharacterEncoding, mf);
         } else {
             uploadFile(facesContext, clientId2Results, clientId2Callbacks,
-                pushResourceSetup, buffer, mf);
+                pushResourceSetup, buffer, mf, parameterListMap);
         }
         if (partsManualProgress != null) {
             partsManualProgress.nextChunk();
@@ -306,7 +306,7 @@ public class FileEntryUpload implements PhaseListener {
             Map<String, FileEntryResults> clientId2Results,
             Map<String, FileEntryCallback> clientId2Callbacks,
             PushResourceSetup pushResourceSetup,
-            byte[] buffer, MultipartFile item) {
+            byte[] buffer, MultipartFile item, Map<String, List<String>> parameterListMap) {
         FileEntryResults results = null;
         FileEntryCallback callback = null;
         FileEntryResults.FileInfo fileInfo = null;
@@ -338,7 +338,7 @@ public class FileEntryUpload implements PhaseListener {
             // When no file name is given, that means the user did
             // not upload a file
             if (fileName != null && fileName.length() > 0) {
-                String fileEntryID = facesContext.getExternalContext().getRequestParameterMap().get("file-entry-id");
+                String fileEntryID = parameterListMap.containsKey("file-entry-id") ? parameterListMap.get("file-entry-id").get(0) : null;
                 fileEntry = (FileEntry) ComponentUtils.findComponent(facesContext.getViewRoot(), fileEntryID);
 
                 if (fileEntry != null) {
