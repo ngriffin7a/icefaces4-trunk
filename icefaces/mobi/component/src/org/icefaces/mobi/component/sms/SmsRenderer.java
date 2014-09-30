@@ -20,6 +20,7 @@ import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.mobi.util.HTML;
 import org.icefaces.mobi.renderkit.CoreRenderer;
 import org.icefaces.mobi.util.MobiJSFUtils;
+import org.icefaces.mobi.util.ComponentUtils;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.EnvUtils;
 
@@ -57,12 +58,8 @@ public class SmsRenderer extends CoreRenderer {
 		writer.writeAttribute(HTML.TABINDEX_ATTR, sms.getTabindex(), null);
         try {
             if (sms.isDisabled()) writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
-			String numberInputId = sms.getNumberInputId();
-			String number = numberInputId != null ? "document.getElementById('" + numberInputId + "').value"
-				: "'" + escapeString(sms.getNumber()) + "'";
-			String messageInputId = sms.getMessageInputId();
-			String message = messageInputId != null ? "document.getElementById('" + messageInputId + "').value"
-				: "'" + escapeString(sms.getMessage()) + "'";
+			String number = determineNumber(sms);
+			String message = determineMessage(sms);
 		    String script = "bridgeit.sms(" + number + ", " + message + ");";
 		    writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
         } catch (Exception e){
@@ -86,6 +83,44 @@ public class SmsRenderer extends CoreRenderer {
 
 		writer.endElement(HTML.SPAN_ELEM);
     }
+
+	private String determineNumber(Sms sms) {
+		String numberInputId = sms.getNumberInputId();
+		String number = numberInputId != null ? "document.getElementById('" + determineId(numberInputId) + "').value"
+			: "'" + escapeString(sms.getNumber()) + "'";
+		return number;
+	}
+
+	private String determineMessage(Sms sms) {
+		String messageInputId = sms.getMessageInputId();
+		String message = messageInputId != null ? "document.getElementById('" + determineId(messageInputId) + "').value"
+			: "'" + escapeString(sms.getMessage()) + "'";
+		return message;
+	}
+
+	private String determineId(String id) {
+		String result;
+		UIComponent component = ComponentUtils.findComponent(FacesContext.getCurrentInstance().getViewRoot(), id);
+		if (component != null) {
+			String clientId = component.getClientId(FacesContext.getCurrentInstance());
+			if (component instanceof org.icefaces.ace.component.autocompleteentry.AutoCompleteEntry) {
+				result = clientId + "_input";
+			} else if (component instanceof org.icefaces.ace.component.combobox.ComboBox) {
+				result = clientId + "_input";
+			} else if (component instanceof org.icefaces.ace.component.maskedentry.MaskedEntry) {
+				result = clientId + "_field";
+			} else if (component instanceof org.icefaces.ace.component.textareaentry.TextAreaEntry) {
+				result = clientId + "_input";
+			} else if (component instanceof org.icefaces.ace.component.textentry.TextEntry) {
+				result = clientId + "_input";
+			} else {
+				result = clientId;
+			}
+		} else {
+			result = id;
+		}
+		return result;
+	}
 
     public static String escapeString(String value) {
         StringBuilder sb = new StringBuilder();
