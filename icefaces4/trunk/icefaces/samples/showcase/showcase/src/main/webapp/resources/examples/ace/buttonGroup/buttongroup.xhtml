@@ -36,18 +36,18 @@
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
             <ace:panel>
-				<ace:buttonGroup header="Using ace:radioButton" mutuallyExclusive="true">
+				<ace:buttonGroup id="radioGroup" header="Using ace:radioButton" mutuallyExclusive="true">
 					<ace:radioButton id="radio1" value="#{buttonGroup.r1}">
-						<ace:ajax execute="@form" event="activate" render="@form"/>
+						<ace:ajax execute="radioGroup" event="activate" render="@form"/>
 					</ace:radioButton>
 					<ace:radioButton id="radio2" value="#{buttonGroup.r2}">
-						<ace:ajax execute="@form" event="activate" render="@form"/>
+						<ace:ajax execute="radioGroup" event="activate" render="@form"/>
 					</ace:radioButton>
 					<ace:radioButton id="radio3" value="#{buttonGroup.r3}">
-						<ace:ajax execute="@form" event="activate" render="@form"/>
+						<ace:ajax execute="radioGroup" event="activate" render="@form"/>
 					</ace:radioButton>
 					<ace:radioButton id="radio4" value="#{buttonGroup.r4}">
-						<ace:ajax execute="@form" event="activate" render="@form"/>
+						<ace:ajax execute="radioGroup" event="activate" render="@form"/>
 					</ace:radioButton>
 				</ace:buttonGroup>
                 The selected radio is:
