@@ -78,7 +78,9 @@ public class DialogRenderer extends CoreRenderer {
         String setFocusID = "";
             //set focus on the specified component
         String focusFor = dialog.getSetFocus();
-        if (focusFor != null && !"".equals(focusFor)) {
+        if ("none".equalsIgnoreCase(focusFor)) {
+            setFocusID = "**none";
+        } else if (focusFor != null && !"".equals(focusFor)) {
             UIComponent c = findComponent(dialog, focusFor);
             if (c instanceof UIInput) {
                 setFocusID = c.getClientId(context);
