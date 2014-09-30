@@ -13,8 +13,13 @@
   ~ express or implied. See the License for the specific language
   ~ governing permissions and limitations under the License.
   --%>
-
+<%@page import="org.icefaces.util.UserAgentInfo"%>
 <%
-    response.sendRedirect("showcase.jsf");
+    UserAgentInfo ua = new UserAgentInfo(request.getHeader("User-Agent"));
+    if( ua.isMobileBrowser() && !ua.isTabletBrowser()){
+        response.sendRedirect("./showcase-mobile.jsf");
+    }  else {
+        response.sendRedirect("showcase.jsf");
+    }
 %>
 
