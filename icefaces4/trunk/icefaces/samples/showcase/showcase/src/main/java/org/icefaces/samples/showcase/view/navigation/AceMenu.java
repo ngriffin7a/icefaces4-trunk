@@ -264,6 +264,7 @@ import java.util.ArrayList;
 
                 @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.main", value = TextEntryBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.autotab", value = TextEntryAutotabBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.secret", value = TextEntrySecretBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.label", value = TextEntryLabelBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.indicator", value = TextEntryIndicatorBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.textEntry.title", labelExample = "menu.ace.textEntry.subMenu.reqStyle", value = TextEntryReqStyleBean.BEAN_NAME),
