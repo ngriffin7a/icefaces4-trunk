@@ -153,7 +153,12 @@ ice.ace.Dialog = function(parentID, cfg) {
 ice.ace.Dialog.prototype.show = function() {
 	var self = this;
     var focusOn = this.cfg.setFocus;
-    setTimeout(function(){self.jq.dialog('open');self.focusInput(focusOn);},1);
+    setTimeout(function() {
+        self.jq.dialog('open');
+        if ('**none' != focusOn) {
+            self.focusInput(focusOn);
+        }
+    }, 1);
 };
 
 ice.ace.Dialog.prototype.hide = function() {
