@@ -70,14 +70,22 @@ public class TextEntryMeta extends HtmlInputTextMeta {
 
     @Property(tlddoc = "When true the component will automatically tab to the next component once the maxLength number of characters have been entered.")
     private boolean autoTab;
+
+    @Property(defaultValue = "false", tlddoc="If true, when the user types a string into this field, a row of asterisks will be  displayed instead of the text the user typed.")
+    private boolean secret;
+
+    @Property(defaultValue = "true", tlddoc="If false, the component will not redisplay its value when the page reloads.")
+    private boolean redisplay;
 	
 	// ----------------------------------------
 	// ----- imported from mobi:inputText -----
 	// ----------------------------------------
 
-    @Property(defaultValue = "text", tlddoc = "The type attribute for the input element. " +
+    @Property(defaultValue = "text", tlddoc = "The html5 type attribute for the input element. " +
     		"Currently supports text, phone, url, email, number, date, time, datetime.  Depending " +
-    		"on device capability, a type-specific keyboard may be displayed. ")
+    		"on browser and/or device capability, a type-specific keyboard may be displayed and various other " +
+            "attributes may apply for the html5 input element. It is up to the developer to ensure that " +
+            "the browsers and devices they are targetting are supported properly. ")
     private String type;
 
     @Property(tlddoc = "The HTML5 placeholder attribute represents a short hint" +
@@ -85,35 +93,35 @@ public class TextEntryMeta extends HtmlInputTextMeta {
     		"when the input element has no value.")
     private String placeholder;
 
-    @Property(tlddoc = "The pattern attribute specifies a regular expression against which " +
+    @Property(tlddoc = "The html5 pattern attribute specifies a regular expression against which " +
     		"the control's value, or, when the multiple attribute applies and is set, " +
     		"the control's values, are to be checked. ")
     private String pattern;
 
     @Property(defaultValue = "off",
-            tlddoc = "Capitalize the first character of the field.")
+            tlddoc = "An html5 feature of mobile browser capability which will capitalize the first character of the field.")
     private String autocapitalize;
 
     @Property(defaultValue = "off",
-            tlddoc = "Correct spelling errors in the field.")
+            tlddoc = "The autocorrect is an html5 attribute that may correct spelling errors in the field if supported in the browser")
     private String autocorrect;
 
     @Property(defaultValue = "3", tlddoc = "Magnifying glass for webkit used to show last three searches on a search field.")
     private int results;
     
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="Minimum value, only applicable to type number.")
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="Minimum value is an html5 passthrough attribute and" +
+            " only applicable to type number.  " +
+            "Will not be rendered if not present.")
     private int min;
 
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="Maximum value, only applicable to type number.")
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="Maximum value is an html5 passthrough attribute, and " +
+            " only applicable to type number. " +
+            " Will not be rendered if attribute is not present")
     private int max;
     
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="The step to increase/decrease the value of the number input. " +
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="The html5 step attributeto increase/decrease the value of the number input. " +
+            "Requires min and max atribute. " +
             "Applicable only to type \"number\". ")
     private int step;
 
-    @Property(defaultValue = "false", tlddoc="If true, when the user types a string into this field, a row of asterisks will be  displayed instead of the text the user typed.")
-    private boolean secret;
-
-    @Property(defaultValue = "true", tlddoc="If false, the component will not redisplay its value when the page reloads.")
-    private boolean redisplay;
 }
