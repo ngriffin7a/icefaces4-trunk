@@ -427,6 +427,24 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 					});
 				}
 			});
+			var address = input.value;
+			if (address) {
+				var initGeocoder = new google.maps.Geocoder();
+				initGeocoder.geocode({ 'address': address }, function (results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						var result = results[0];
+						if (result.geometry.viewport) {
+							map.fitBounds(result.geometry.viewport);
+						} else {
+							map.setCenter(result.geometry.location);
+						}
+						var initSplitOffset = offset.split(",");
+						var initXOffset = initSplitOffset[0];
+						var initYOffset = initSplitOffset[1];
+						map.panBy(eval(initXOffset),eval(initYOffset));
+					}
+				});
+			}
 		}
 		if (focus) {
 			setTimeout(init, 100);
