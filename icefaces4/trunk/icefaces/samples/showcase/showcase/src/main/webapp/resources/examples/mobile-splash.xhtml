@@ -21,10 +21,8 @@
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
     <mobi:fieldsetGroup >
-        <mobi:fieldsetRow styleClass="intro" >  
-            <header>
+        <mobi:fieldsetRow styleClass="ui-widget-header ui-panel ui-panel-title" >
                 <h3>ICEfaces Mobile Components Showcase</h3>
-            </header>
         </mobi:fieldsetRow>
     </mobi:fieldsetGroup>
     <mobi:fieldsetGroup>
@@ -38,8 +36,10 @@
     <mobi:fieldsetGroup>
         <mobi:fieldsetRow >  
     				<p>The MOBI components provide powerful mobile-specific functionality that when combined with the ACE and ICECORE components provide a comprehensive JSF component solution for desktop and mobile web-applications.</p><br/>
-    				<p>See the <a href="./showcase.jsf">Desktop Showcase</a> for more information.</p>
+    				<p>See the <a class="ui-link showLink" href="./showcase.jsf">Desktop Showcase</a> for more information.</p>
          </mobi:fieldsetRow>
     </mobi:fieldsetGroup>
-                        	
+    <mobi:fieldsetRow>
+        #{viewManagerBean.view}
+    </mobi:fieldsetRow>
 </ui:composition>
