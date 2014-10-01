@@ -17,6 +17,8 @@
 package org.icefaces.ace.component.fileentry;
 
 import org.icefaces.ace.util.HTML;
+import org.icefaces.impl.application.WindowScopeManager;
+import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.impl.event.FormSubmit;
 import org.icefaces.impl.context.ICEFacesContextFactory;
@@ -98,11 +100,22 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 String clientId = getClientId(context);
                 String viewId = context.getViewRoot().getViewId();
                 String actionURL = context.getApplication().getViewHandler().getActionURL(context, viewId);
-                String prefix = actionURL.contains("?") ? "&" : "?";
-                actionURL += prefix + FILE_ENTRY_MULTIPART_MARKER + "=true";
-                actionURL += "&" + ResponseStateManager.VIEW_STATE_PARAM + "=" + context.getApplication().getStateManager().getViewState(context);
                 ExternalContext externalContext = context.getExternalContext();
-                String encodedPartialActionURL = externalContext.encodePartialActionURL(actionURL);
+
+                StringBuffer url = new StringBuffer(actionURL);
+                url.append(actionURL.contains("?") ? "&" : "?");
+                url.append(FILE_ENTRY_MULTIPART_MARKER);
+                url.append("=true");
+                url.append("&");
+                url.append(ResponseStateManager.VIEW_STATE_PARAM);
+                url.append("=");
+                url.append(context.getApplication().getStateManager().getViewState(context));
+                url.append("&ice.window=");
+                url.append(externalContext.getClientWindow().getId());
+                url.append("&ice.view=");
+                url.append(BridgeSetup.getViewID(externalContext));
+
+                String encodedPartialActionURL = externalContext.encodePartialActionURL(url.toString());
                 log.finer("RENDER ENCODED_URL  clientId: " + clientId + "  encodedPartialActionURL: " + encodedPartialActionURL);
                 ResponseWriter writer = context.getResponseWriter();
                 if (encodedPartialActionURL != null) {
