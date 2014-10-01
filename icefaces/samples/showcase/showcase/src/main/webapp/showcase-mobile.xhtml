@@ -18,10 +18,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:util="http://java.sun.com/jsf/composite/components"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
       xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
-      xmlns:icecore="http://www.icefaces.org/icefaces/core"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <title>ICEfaces Mobile Showcase</title>
@@ -35,6 +32,10 @@
             }
             a:link, a:visited {
                 text-decoration: underline;
+            }
+            .showLink {
+                color: #262DDB;
+                text-decoration: underline !important;
             }
             h3 {
                 margin-left:10px;
@@ -63,7 +64,7 @@
              history="#{viewManagerBean.history}">
              
              <!-- SPLASH SCREEN -->
-             <mobi:view id="splash" splash="true" includeInMenu="false" title="Overview">
+             <mobi:view id="splash" divider="Mobile Overview"  title="Overview" navBarGroup="splash">
                  <ui:include src="/resources/examples/mobile-splash.xhtml" />
              </mobi:view>
              
