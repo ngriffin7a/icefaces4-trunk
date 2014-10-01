@@ -41,9 +41,6 @@ import java.util.logging.Logger;
 public class FlipSwitchRenderer extends CoreRenderer {
 
     private static final Logger logger = Logger.getLogger(FlipSwitchRenderer.class.getName());
-    private static final String JS_NAME = "flipswitch.js";
-    private static final String JS_MIN_NAME = "flipswitch-min.js";
-    private static final String JS_LIBRARY = "org.icefaces.component.flipswitch";
 
     // The decode method, in the renderer, is responsible for taking the values
     // 
@@ -77,7 +74,6 @@ public class FlipSwitchRenderer extends CoreRenderer {
         ClientBehaviorHolder cbh = (ClientBehaviorHolder)uiComponent;
         boolean hasBehaviors = !cbh.getClientBehaviors().isEmpty();
 
-        writeJavascriptFile(facesContext, uiComponent, JS_NAME, JS_MIN_NAME, JS_LIBRARY);
         writer.startElement(HTML.ANCHOR_ELEM, uiComponent);
         writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
         writer.writeAttribute(HTML.NAME_ATTR, clientId, HTML.NAME_ATTR);
