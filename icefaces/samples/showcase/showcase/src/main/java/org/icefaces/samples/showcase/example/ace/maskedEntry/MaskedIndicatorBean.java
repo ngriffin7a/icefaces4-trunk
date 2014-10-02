@@ -22,6 +22,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 
 @ComponentExample(
@@ -102,6 +103,10 @@ public class MaskedIndicatorBean extends ComponentExampleImpl<MaskedIndicatorBea
 
     public void setRequired(boolean required) {
         this.required = required;
+    }
+
+    public void applyRequired(ValueChangeEvent e) {
+        this.required = (Boolean) e.getNewValue();
     }
     
     public void setRequiredText(String requiredText) {
