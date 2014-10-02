@@ -26,6 +26,7 @@ import org.icefaces.ace.event.DateSelectEvent;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -66,7 +67,11 @@ public class DateIndicatorBean extends ComponentExampleImpl<DateIndicatorBean> i
     public Date getSelectedDate() {
         return selectedDate;
     }
-    
+
+    public void applyRequired(ValueChangeEvent e) {
+        required = (Boolean) e.getNewValue();
+    }
+
     public boolean getRequired() {
         return required;
     }

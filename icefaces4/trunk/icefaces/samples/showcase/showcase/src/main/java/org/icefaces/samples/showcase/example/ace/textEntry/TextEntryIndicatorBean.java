@@ -22,6 +22,7 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 
 @ComponentExample(
@@ -64,6 +65,10 @@ public class TextEntryIndicatorBean extends ComponentExampleImpl<TextEntryIndica
     
     public TextEntryIndicatorBean() {
         super(TextEntryIndicatorBean.class);
+    }
+
+    public void applyRequired(ValueChangeEvent e) {
+        required = (Boolean) e.getNewValue();
     }
     
     public boolean getRequired() {

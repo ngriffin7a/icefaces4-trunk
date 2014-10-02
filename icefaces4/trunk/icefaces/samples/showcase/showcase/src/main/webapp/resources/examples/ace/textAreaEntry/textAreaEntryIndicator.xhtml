@@ -33,12 +33,10 @@
 
     <ui:define name="example">
         <h:form id="textEntryConfigForm">
-
-            
             <ace:panel id="indicatorCustomizing" header="Indicator Customization" style="width: 100%;">
                 <h:panelGrid width="60%" columns="2" cellpadding="6" cellspacing="6">
                      <h:outputLabel for="requiredIn" value="Required?"/>
-                     <h:selectBooleanCheckbox id="requiredIn" value="#{textAreaEntryIndicatorBean.required}">
+                     <h:selectBooleanCheckbox id="requiredIn" value="#{textAreaEntryIndicatorBean.required}" valueChangeListener="#{textAreaEntryIndicatorBean.applyRequired}" immediate="true">
                          <f:ajax execute="@all" render="@all"/>
                      </h:selectBooleanCheckbox>
                      
@@ -61,9 +59,6 @@
                      </ace:simpleSelectOneMenu>
                 </h:panelGrid>
             </ace:panel>
-        </h:form>
-		
-		<h:form id="textEntryForm">
             <ace:panel id="inputPanel" header="Comments">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
                     <ace:textAreaEntry id="comment1Input" label="Comments" labelPosition="left"
