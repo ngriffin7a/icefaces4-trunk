@@ -27,6 +27,9 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.icefaces.mobi.util.MobiJSFUtils;
+import org.icefaces.util.ClientDescriptor;
+
 @ManagedBean(name = ViewManagerBean.BEAN_NAME)
 @SessionScoped
 public class ViewManagerBean implements Serializable {
@@ -38,11 +41,16 @@ public class ViewManagerBean implements Serializable {
             
     private String transitionType = "horizontal";
     private String barStyle;
-    private String view = "splash";
+    private String view = null;
     private Stack<String> history;
 
     public ViewManagerBean() {
         history = new Stack<String>();
+        /** this next few lines will not work for portlets for obvious reason */
+        ClientDescriptor cd = MobiJSFUtils.getClientDescriptor();
+        if (cd.isDesktopBrowser() || cd.isTabletBrowser()){
+            this.view="splash";
+        }
     }
 
     public String getTransitionType() {
