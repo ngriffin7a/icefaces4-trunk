@@ -178,12 +178,6 @@ public class ViewManagerRenderer extends Renderer{
         writer.write(state);
         writer.endElement(HTML.SCRIPT_ELEM);
         
-        if( ViewManager.TRANSITION_TYPE_FLIP.equals(vm.getTransitionType()) ){
-            writer.startElement(HTML.STYLE_ATTR, null);
-            writer.write(".mobi-vm  > div > div:not(.mobi-vm-header) {transform: rotateY(180deg);}");
-            writer.endElement(HTML.STYLE_ATTR);
-        }
-        
         writer.endElement(HTML.SPAN_ELEM);
     	writer.endElement(HTML.DIV_ELEM);
     }
