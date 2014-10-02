@@ -18,7 +18,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
     <h:form id="frmDataview" styleClass="dataviewpage">
         <style type="text/css">
@@ -41,19 +40,19 @@
                 min-width: 150px;
             }
         </style>
-        <ace:pushButton value="Cost"
+        <h:commandButton value="Cost"
                             styleClass="footButton"
                             actionListener="#{dataViewBean.toggleCostColVis}"/>
-        <ace:pushButton value="Weight"
+        <h:commandButton value="Weight"
                             styleClass="footButton"
                             actionListener="#{dataViewBean.toggleWeightColVis}"/>
-        <ace:pushButton value="Accel"
+        <h:commandButton value="Accel"
                             styleClass="footButton"
                             actionListener="#{dataViewBean.toggleAccelColVis}"/>
-        <ace:pushButton value="MPG"
+        <h:commandButton value="MPG"
                             styleClass="footButton"
                             actionListener="#{dataViewBean.toggleMpgColVis}"/>
-        <ace:pushButton value="Text"
+        <h:commandButton value="Text"
                             styleClass="footButton"
                             actionListener="#{dataViewBean.toggleTextColVis}"/>
         <mobi:dataView value="#{dataViewBean.cars}" var="car" activationMode="server"

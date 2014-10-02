@@ -18,8 +18,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:icecore="http://www.icefaces.org/icefaces/core"
-                xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 id="geoLocFrag">
@@ -52,8 +50,8 @@
             
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
-            <ace:pushButton value="Locate Me" style="display:inline-block;"/>
-            <ace:pushButton value="Reset Values" 
+            <h:commandButton value="Locate Me" style="display:inline-block;"/>
+            <h:commandButton value="Reset Values"
                 actionListener="#{geoLocationBean.resetValues}" style="display:inline-block;margin-left:10px;"/>
         </mobi:fieldsetRow>
     </mobi:fieldsetGroup>
@@ -116,7 +114,7 @@
                     (longest allowable time for reading to arrive (0-x, seconds))
                 </span>
             </div>
-            <ace:textEntry id="timeout" value="#{geoLocationBean.timeout}"
+            <h:inputText id="timeout" value="#{geoLocationBean.timeout}"
                 type="number" style="float:right;max-width:45%"/>&#160;
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
@@ -126,7 +124,7 @@
                     (oldest allowable cached Location reading (0-x, seconds))
                 </span>
             </div>
-            <ace:textEntry id="maxAge" value="#{geoLocationBean.maximumAge}"
+            <h:inputText id="maxAge" value="#{geoLocationBean.maximumAge}"
                 type="number" style="float:right;max-width:45%"/>&#160;
         </mobi:fieldsetRow>
     </mobi:fieldsetGroup>

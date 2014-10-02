@@ -18,7 +18,6 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
-             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
 
@@ -61,10 +60,10 @@
             <mobi:fieldsetRow>
                 <mobi:cloudPush />
 				<br/><br/>
-                <ace:pushButton value="Priority Push"
+                <h:commandButton value="Priority Push"
                         actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
 				<br/>
-                <ace:pushButton value="Simple Push" 
+                <h:commandButton value="Simple Push"
                         actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
@@ -95,7 +94,7 @@
 				var div = document.getElementById('cloudPush_inner');
 				var messageDiv = document.createElement('div');
 				messageDiv.style.cssText = 'top:0;left:0;border:1px solid #f00;background-color:#fff;color:#f00;overflow:auto;font-weight:bold;font-size:large;margin:10px;padding:10px;';
-				var message = document.createTextNode("Note: Your platform does not support this feature. This demo won't be functional.");
+				var message = document.createTextNode("PAGENote: Your platform does not support this feature. This demo won't be functional.");
 				messageDiv.appendChild(message);
 				div.insertBefore(messageDiv, div.firstChild);
 			}

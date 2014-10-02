@@ -50,7 +50,8 @@
                 font-size: 12px;
             }
         </style>
-
+        <!-- until ICE-10294 is resolved, must load bridgeit here as workaround -->
+        <script type="application/x-javascript" src="http://bridgeit.github.io/bridgeit.js/src/bridgeit.js?v=4_0_0_141001"></script>
     </h:head>
     <f:metadata>
         <f:viewParam name="theme" value="#{themeBean.currentTheme}" />
@@ -64,15 +65,19 @@
              history="#{viewManagerBean.history}">
              
              <!-- SPLASH SCREEN -->
-             <mobi:view id="splash" divider="Mobile Overview"  title="Overview" navBarGroup="splash">
-                 <ui:include src="/resources/examples/mobile-splash.xhtml" />
+             <mobi:view id="splash" splash="true" includeInMenu="false" title="Overview">
+                 <c:if test="#{viewManagerBean.view eq 'splash'}">
+                     <ui:include src="/resources/examples/mobile-splash.xhtml" />
+                 </c:if>
              </mobi:view>
              
              <!-- Layout Components -->
              <!-- DATAVIEW -->
              <mobi:view id="dataview" title="Data View" menuIcon="table" divider="Layout Components"
 				navBarGroup="dataview">
-                 <ui:include src="/resources/examples/mobi/dataview/dataview-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'dataview'}">
+                     <ui:include src="/resources/examples/mobi/dataview/dataview-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="dataviewDocs" title="dataviewDocs" menuIcon="book"
                  includeInMenu="false" navBarGroup="dataview">
@@ -81,7 +86,9 @@
              <!-- FIELDSET -->
              <mobi:view id="fieldset" title="Fieldset" menuIcon="minus"
 				navBarGroup="fieldset">
-                 <ui:include src="/resources/examples/mobi/fieldset/fieldset-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'fieldset'}">
+                     <ui:include src="/resources/examples/mobi/fieldset/fieldset-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="fieldsetDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="fieldset">
@@ -90,7 +97,9 @@
              <!-- OUTPUT LIST -->
              <mobi:view id="outputlist" title="Output List" menuIcon="align-justify"
 				navBarGroup="outputlist">
-                 <ui:include src="/resources/examples/mobi/outputlist/list-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'outputlist'}">
+                     <ui:include src="/resources/examples/mobi/outputlist/list-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="outputlistDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="outputlist">
@@ -99,7 +108,9 @@
              <!-- PAGE PANEL -->
              <mobi:view id="pagepanel" title="Page Panel" menuIcon="mobile-phone"
 				navBarGroup="pagepanel">
-                 <ui:include src="/resources/examples/mobi/pagepanel/pagepanel-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'pagepanel'}">
+                     <ui:include src="/resources/examples/mobi/pagepanel/pagepanel-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="pagepanelDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="pagepanel">
@@ -108,7 +119,9 @@
              <!-- VIEW MANAGER -->
              <mobi:view id="viewmanager" title="View Manager" menuIcon="th-list"
                 navBarGroup="viewmanager">
-                 <ui:include src="/resources/examples/mobi/viewManager/viewmanager-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'viewmanager'}">
+                     <ui:include src="/resources/examples/mobi/viewManager/viewmanager-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="viewmanagerDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="viewmanager">
@@ -117,7 +130,9 @@
              <!-- SMALL VIEW / LARGE VIEW -->
              <mobi:view id="viewsize" title="Small View / Large View" menuIcon="mobile-phone"
 				navBarGroup="viewsize">
-                 <ui:include src="/resources/examples/mobi/viewsize/viewsize-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'viewsize'}">
+                     <ui:include src="/resources/examples/mobi/viewsize/viewsize-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="viewsizeDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="viewsize">
@@ -129,7 +144,9 @@
              <!-- DATE AND TIME -->
              <mobi:view id="dateandtime" title="Date and Time" menuIcon="time" divider="Input Components"
 				navBarGroup="dateandtime">
-                 <ui:include src="/resources/examples/mobi/datespinner/date-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'dateandtime'}">
+                     <ui:include src="/resources/examples/mobi/datespinner/date-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="dateandtimeDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="dateandtime">
@@ -138,7 +155,9 @@
              <!-- FLIP SWITCH -->
              <mobi:view id="flipswitch" title="Flip Switch" menuIcon="off"
 				navBarGroup="flipswitch">
-                 <ui:include src="/resources/examples/mobi/flipswitch/flip-switch-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'flipswitch'}">
+                     <ui:include src="/resources/examples/mobi/flipswitch/flip-switch-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="flipswitchDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="flipswitch">
@@ -147,7 +166,9 @@
              <!-- GEOLOCATION -->
              <mobi:view id="geolocation" title="Geolocation" menuIcon="location-arrow"
 				navBarGroup="geolocation">
-                 <ui:include src="/resources/examples/mobi/geolocation/geolocation-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'geolocation'}">
+                     <ui:include src="/resources/examples/mobi/geolocation/geolocation-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="geolocationDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="geolocation">
@@ -159,7 +180,9 @@
              <!-- AUGMENTED REALITY -->
              <mobi:view id="augmentedreality" title="Augmented Reality" menuIcon="globe"
                 divider="Native Components" navBarGroup="augmentedreality">
-                 <ui:include src="/resources/examples/mobi/augmentedreality/augmentedreality-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'augmentedreality'}">
+                     <ui:include src="/resources/examples/mobi/augmentedreality/augmentedreality-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="augmentedrealityDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="augmentedreality">
@@ -168,7 +191,9 @@
              <!-- CAMCORDER -->
              <mobi:view id="camcorder" title="Camcorder" menuIcon="film"
 				navBarGroup="camcorder">
-                 <ui:include src="/resources/examples/mobi/camcorder/camcorder-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'camcorder'}">
+                     <ui:include src="/resources/examples/mobi/camcorder/camcorder-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="camcorderDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="camcorder">
@@ -177,7 +202,9 @@
              <!-- CAMERA -->
              <mobi:view id="camera" title="Camera" menuIcon="camera"
 				navBarGroup="camera">
-                 <ui:include src="/resources/examples/mobi/camera/camera-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'camera'}">
+                     <ui:include src="/resources/examples/mobi/camera/camera-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="cameraDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="camera">
@@ -186,7 +213,9 @@
              <!-- CLOUD PUSH -->
              <mobi:view id="cloudPush" title="Cloud Push" menuIcon="cloud-download"
 				navBarGroup="cloudpush">
-                 <ui:include src="/resources/examples/mobi/cloudpush/cloudpush-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'cloudPush'}">
+                     <ui:include src="/resources/examples/mobi/cloudpush/cloudpush-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="cloudPushDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="cloudpush">
@@ -195,7 +224,9 @@
              <!-- FETCH CONTACT -->
              <mobi:view id="fetchcontact" title="Fetch Contact" menuIcon="fetch-contact"
 				navBarGroup="fetchcontact">
-                 <ui:include src="/resources/examples/mobi/fetchcontact/fetchcontact-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'fetchcontact'}">
+                     <ui:include src="/resources/examples/mobi/fetchcontact/fetchcontact-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="fetchcontactDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="fetchcontact">
@@ -204,16 +235,20 @@
              <!-- GEOTRACK -->
              <mobi:view id="geotrack" title="Geotrack" menuIcon="location-arrow"
 				navBarGroup="geotrack">
-                 <ui:include src="/resources/examples/mobi/geotrack/geotrack-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'geotrack'}">
+                     <ui:include src="/resources/examples/mobi/geotrack/geotrack-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="geotrackDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="geotrack">
-                <ui:include src="/resources/examples/mobi/geotrack/geotrack-desc.xhtml" />
+                 <ui:include src="/resources/examples/mobi/geotrack/geotrack-desc.xhtml" />
              </mobi:view>
              <!-- MICROPHONE -->
              <mobi:view id="microphone" title="Microphone" menuIcon="microphone"
 				navBarGroup="microphone">
-                 <ui:include src="/resources/examples/mobi/microphone/microphone-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'microphone'}">
+                     <ui:include src="/resources/examples/mobi/microphone/microphone-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="microphoneDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="microphone">
@@ -222,7 +257,9 @@
              <!-- SCAN -->
              <mobi:view id="scan" title="Scan" menuIcon="qrcode"
 				navBarGroup="scan">
-                 <ui:include src="/resources/examples/mobi/scan/scan-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'scan'}">
+                     <ui:include src="/resources/examples/mobi/scan/scan-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="scanDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="scan">
@@ -231,7 +268,9 @@
              <!-- SMS -->
              <mobi:view id="sms" title="Sms" menuIcon="comment"
 				navBarGroup="sms">
-                 <ui:include src="/resources/examples/mobi/sms/sms-example.xhtml" />
+                 <c:if test="#{viewManagerBean.view eq 'sms'}">
+                    <ui:include src="/resources/examples/mobi/sms/sms-example.xhtml" />
+                 </c:if>
              </mobi:view>
              <mobi:view id="smsDocs" title="Docs" menuIcon="book"
                  includeInMenu="false" navBarGroup="sms">
