@@ -38,7 +38,7 @@ public class ViewManagerBean implements Serializable {
             
     private String transitionType = "horizontal";
     private String barStyle;
-    private String view = null;
+    private String view = "splash";
     private Stack<String> history;
 
     public ViewManagerBean() {
@@ -76,7 +76,6 @@ public class ViewManagerBean implements Serializable {
     public void setBarStyle(String barStyle) {
         this.barStyle = barStyle;
     }
-
 
  }
 
