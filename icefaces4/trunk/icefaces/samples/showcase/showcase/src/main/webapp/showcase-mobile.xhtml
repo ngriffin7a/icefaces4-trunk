@@ -18,6 +18,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
       xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
@@ -51,13 +52,14 @@
             }
         </style>
         <!-- until ICE-10294 is resolved, must load bridgeit here as workaround -->
-        <script type="application/x-javascript" src="http://bridgeit.github.io/bridgeit.js/src/bridgeit.js?v=4_0_0_141001"></script>
+
     </h:head>
     <f:metadata>
         <f:viewParam name="theme" value="#{themeBean.currentTheme}" />
         <f:viewParam name="simulator" value="#{themeBean.simulator}"/>
     </f:metadata>
     <h:body>
+         <icecore:config mandatoryResource="camera"/>
          <mobi:viewManager title="Mobile Showcase"
              transitionType="#{viewManagerBean.transitionType}"
              barStyle="#{viewManagerBean.barStyle}"
