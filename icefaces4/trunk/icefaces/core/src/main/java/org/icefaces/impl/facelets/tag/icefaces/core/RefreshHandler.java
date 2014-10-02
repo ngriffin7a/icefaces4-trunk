@@ -18,11 +18,9 @@ package org.icefaces.impl.facelets.tag.icefaces.core;
 
 import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.impl.util.CoreUtils;
-import org.icefaces.util.EnvUtils;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.view.facelets.FaceletContext;
@@ -43,10 +41,8 @@ public class RefreshHandler extends TagHandler {
             FacesContext context = FacesContext.getCurrentInstance();
             UIOutput refreshSetup = new RefreshSetupOutput(
                 getInterval(ctx), getDuration(ctx), disabled);
-            UIViewRoot viewRoot = context.getViewRoot();
             refreshSetup.setTransient(true);
-            refreshSetup.setId(viewRoot.createUniqueId(context, "_setupRefresh"));
-            viewRoot.addComponentResource(context, refreshSetup, "body");
+            parent.getChildren().add(refreshSetup);
         }
     }
 

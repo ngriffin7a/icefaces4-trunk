@@ -19,11 +19,9 @@ package org.icefaces.impl.component;
 import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.util.JavaScriptRunner;
 
-import javax.faces.component.UICommand;
-import javax.faces.component.UIOutput;
-import javax.faces.component.UIViewRoot;
-import javax.faces.component.ValueHolder;
+import javax.faces.component.*;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -90,11 +88,27 @@ public class NavigationNotifier extends UICommand {
                 }
             };
             setupComponent.setTransient(true);
-            root.addComponentResource(context, setupComponent, "body");
+            UIForm form = getContainingForm(navigationNotifier);
+            form.getParent().getChildren().add(setupComponent);
         }
 
         public boolean isListenerForSource(Object source) {
             return source instanceof NavigationNotifier;
         }
+    }
+
+    public static UIForm getContainingForm(UIComponent component)  {
+        if (component instanceof UIForm)  {
+            return (UIForm) component;
+        }
+        UIComponent parent = component.getParent();
+        while ( (!(parent instanceof UIForm)) &&
+                (!(parent instanceof UIViewRoot)) )  {
+            parent = parent.getParent();
+        }
+        if (parent instanceof UIForm)  {
+            return (UIForm) parent;
+        }
+        return null;
     }
 }

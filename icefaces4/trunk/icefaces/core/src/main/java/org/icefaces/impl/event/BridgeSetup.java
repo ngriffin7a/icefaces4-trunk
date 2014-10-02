@@ -24,7 +24,6 @@ import org.icefaces.impl.push.servlet.ICEpushResourceHandler;
 import org.icefaces.util.EnvUtils;
 import org.icepush.PushContext;
 
-import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.component.UIComponent;
@@ -34,9 +33,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.*;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,9 +90,10 @@ public class BridgeSetup implements SystemEventListener {
             root.addComponentResource(context, headResource, "head");
         }
 
+        UIComponent body = findBody(root);
         List<UIComponent> bodyResources = getBodyResources(context);
         for (UIComponent bodyResource : bodyResources) {
-            root.addComponentResource(context, bodyResource, "body");
+            body.getChildren().add(0, bodyResource);
         }
     }
 
@@ -108,6 +105,18 @@ public class BridgeSetup implements SystemEventListener {
     public static BridgeSetup getBridgeSetup(FacesContext facesContext) {
         return (BridgeSetup) facesContext.getExternalContext().
                 getApplicationMap().get(BRIDGE_SETUP);
+    }
+
+    private UIComponent findBody(UIViewRoot root) {
+        List<UIComponent> children = root.getChildren();
+        for (UIComponent c : children) {
+            String rendererType = c.getRendererType();
+            if ("javax.faces.Body".equals(rendererType)) {
+                return c;
+            }
+        }
+
+        throw new RuntimeException("Cannot find h:body component in this page.");
     }
 
     private List<UIComponent> getHeadResources(FacesContext context) {
