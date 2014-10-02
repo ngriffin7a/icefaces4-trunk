@@ -33,12 +33,11 @@
     <ui:param name="tldResources" value="#{autoCompleteEntryResources.tldResources}"/>
 
     <ui:define name="example">
-        
         <h:form id="inputForm">
             <ace:panel header="Indicator Customization">
                 <h:panelGrid width="60%" columns="2" cellpadding="6" cellspacing="6">
                      <h:outputLabel for="requiredIn" value="Required?"/>
-                     <h:selectBooleanCheckbox id="requiredIn" value="#{autoCompleteEntryIndicatorBean.required}">
+                     <h:selectBooleanCheckbox id="requiredIn" value="#{autoCompleteEntryIndicatorBean.required}" valueChangeListener="#{autoCompleteEntryIndicatorBean.applyRequired}" immediate="true">
                          <f:ajax execute="@all" render="@all"/>
                      </h:selectBooleanCheckbox>
                      
@@ -61,9 +60,6 @@
                      </ace:simpleSelectOneMenu>
                 </h:panelGrid>
             </ace:panel>
-        </h:form>
-        
-        <h:form id="demoForm">
             <ace:panel header="Autocomplete Entry">
                 <h:panelGrid width="100%" columns="1">
                     <ace:autoCompleteEntry id="autoComplete"

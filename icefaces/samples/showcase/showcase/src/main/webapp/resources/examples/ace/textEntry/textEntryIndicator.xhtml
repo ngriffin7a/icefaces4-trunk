@@ -16,55 +16,49 @@
   -->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:c="http://java.sun.com/jsp/jstl/core"
-    xmlns:ace="http://www.icefaces.org/icefaces/components"
-    xmlns:ice="http://www.icesoft.com/icefaces/component"
-    xmlns:icecore="http://www.icefaces.org/icefaces/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    template="/resources/templates/content-template.xhtml">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
 
     <ui:param name="title" value="#{msgs[textEntryIndicatorBean.title]}"/>
     <ui:param name="description" value="#{msgs[textEntryIndicatorBean.description]}"/>
     <ui:param name="resourceValue" value="#{textEntryIndicatorBean.exampleResource}"/>
-    
     <ui:param name="wikiResources" value="#{textEntryResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{textEntryResources.tldResources}"/>
 
     <ui:define name="example">
         <h:form id="textEntryConfigForm">
-
-            
             <ace:panel id="indicatorCustomizing" header="Indicator Customization" style="width: 100%;">
                 <h:panelGrid width="60%" columns="2" cellpadding="6" cellspacing="6">
-                     <h:outputLabel for="requiredIn" value="Required?"/>
-                     <h:selectBooleanCheckbox id="requiredIn" value="#{textEntryIndicatorBean.required}">
-                         <f:ajax execute="@all" render="@all"/>
-                     </h:selectBooleanCheckbox>
-                     
-                     <h:outputLabel for="requiredText" value="Required Indicator Text:"/>
-                     <h:inputText id="requiredText" value="#{textEntryIndicatorBean.requiredText}"
-                                  disabled="#{!textEntryIndicatorBean.required}">
-                         <f:ajax execute="@this" render="@all"/>
-                                  </h:inputText>
-                     
-                     <h:outputLabel for="optionalText" value="Optional Indicator Text:"/>
-                     <h:inputText id="optionalText" value="#{textEntryIndicatorBean.optionalText}"
-                                  disabled="#{textEntryIndicatorBean.required}">
-                         <f:ajax execute="@this" render="@all"/>
-                                  </h:inputText>
-                                  
-                     <h:outputLabel for="positionIn" value="Indicator Position:"/>
-                     <ace:simpleSelectOneMenu id="positionIn" value="#{textEntryIndicatorBean.position}">
-						<ace:ajax execute="@this" />
+                    <h:outputLabel for="requiredIn" value="Required?"/>
+                    <h:selectBooleanCheckbox id="requiredIn" value="#{textEntryIndicatorBean.required}" valueChangeListener="#{textEntryIndicatorBean.applyRequired}" immediate="true">
+                        <f:ajax execute="@all" render="@all"/>
+                    </h:selectBooleanCheckbox>
+
+                    <h:outputLabel for="requiredText" value="Required Indicator Text:"/>
+                    <h:inputText id="requiredText" value="#{textEntryIndicatorBean.requiredText}"
+                                 disabled="#{!textEntryIndicatorBean.required}">
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:inputText>
+
+                    <h:outputLabel for="optionalText" value="Optional Indicator Text:"/>
+                    <h:inputText id="optionalText" value="#{textEntryIndicatorBean.optionalText}"
+                                 disabled="#{textEntryIndicatorBean.required}">
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:inputText>
+
+                    <h:outputLabel for="positionIn" value="Indicator Position:"/>
+                    <ace:simpleSelectOneMenu id="positionIn" value="#{textEntryIndicatorBean.position}">
+                        <ace:ajax execute="@this" />
                         <f:selectItems value="#{positionBean.indicatorPositions}"/>
-                     </ace:simpleSelectOneMenu>
+                    </ace:simpleSelectOneMenu>
                 </h:panelGrid>
             </ace:panel>
-        </h:form>
-
-        <h:form id="textEntryForm">
             <ace:panel id="personalInfoInputPanel" header="Personal Info">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
                     <ace:textEntry id="firstNameInput" value="#{textEntryIndicatorBean.firstName}" label="First Name" labelPosition="left"
@@ -74,7 +68,7 @@
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
                         <ace:ajax render="@this firstNameOutput firstNameMsg" event="blur"/>
                     </ace:textEntry>
-                    
+
                     <ace:textEntry id="lastNameInput" value="#{textEntryIndicatorBean.lastName}" label="Last Name" labelPosition="left"
                                    required="#{textEntryIndicatorBean.required}"
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
@@ -106,7 +100,7 @@
                                    indicatorPosition="#{textEntryIndicatorBean.position}">
                         <ace:ajax render="@this cityOutput cityMsg" event="blur"/>
                     </ace:textEntry>
-                    
+
                     <ace:textEntry id="provinceInput" value="#{textEntryIndicatorBean.province}" label="Prov./State" labelPosition="left"
                                    required="#{textEntryIndicatorBean.required}"
                                    requiredIndicator="#{textEntryIndicatorBean.requiredText}"
@@ -127,13 +121,13 @@
                     <ace:message id="firstNameMsg" for="firstNameInput"/>
                     <ace:message id="lastNameMsg" for="lastNameInput"/>
                     <ace:message id="address1Msg" for="address1Input"/>
-					<ace:message id="address2Msg" for="address2Input"/>
+                    <ace:message id="address2Msg" for="address2Input"/>
                     <ace:message id="cityMsg" for="cityInput"/>
                     <ace:message id="provinceMsg" for="provinceInput"/>
                     <ace:message id="countryMsg" for="countryInput"/>
                 </h:panelGrid>
             </ace:panel>
-            
+
             <ace:panel id="personalInfoOutputPanel" header="Entered data">
                 <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
                     <h:outputText id="firstNameOutput" value="first name: #{textEntryIndicatorBean.firstName}"/>
@@ -146,7 +140,6 @@
                 </h:panelGrid>
             </ace:panel>
         </h:form>
-        
     </ui:define>
 </ui:composition>
 
