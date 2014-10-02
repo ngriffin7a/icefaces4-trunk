@@ -18,7 +18,6 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
-             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
 
@@ -46,11 +45,11 @@
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <ace:textEntry value="#{realityBean.label}" 
+                <h:inputText value="#{realityBean.label}"
                         placeholder="Label" style="width:100%"/>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<ace:pushButton id="arSubmit"
+				<h:commandButton id="arSubmit"
 										 styleClass="submit"
 										 actionListener="#{realityBean.processUploadedImage}"
 										 value="Submit"/>
@@ -153,7 +152,7 @@
                         markerLabel="#{marker.label}"
                         markerModel="#{marker.model}" />
                 </mobi:augmentedReality>
-                <ace:pushButton value="Submit"/>
+                <h:commandButton value="Submit"/>
                 </div>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>

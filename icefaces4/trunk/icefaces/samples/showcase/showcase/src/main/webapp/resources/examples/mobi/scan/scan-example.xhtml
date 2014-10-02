@@ -18,7 +18,6 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
-             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
     <h:form prependId="false" id="scanForm">
@@ -39,7 +38,7 @@
                            id="scanOne" style="width:50%"/>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<ace:pushButton value="submit" styleClass="submit"
+				<h:commandButton value="submit" styleClass="submit"
 									actionListener="#{qrCodeBean.checkCodeForUrl}"
 									/>
             </mobi:fieldsetRow>

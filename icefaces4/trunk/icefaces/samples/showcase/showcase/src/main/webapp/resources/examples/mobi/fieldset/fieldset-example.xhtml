@@ -18,7 +18,6 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
-             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
     <h:form id="frmFieldset">
@@ -34,25 +33,25 @@
                 Information
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <ace:textEntry id="songs" value="2500" label="Songs" labelPosition="left"/>
+                <h:inputText id="songs" value="2500" label="Songs" labelPosition="left"/>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow >
-                <ace:textEntry id="videos" value="5" label="Videos" labelPosition="left"/>
+                <h:inputText id="videos" value="5" label="Videos" labelPosition="left"/>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <ace:textEntry id="photos" value="621" label="Photos" labelPosition="left"/>
+                <h:inputText id="photos" value="621" label="Photos" labelPosition="left"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow >
-                <ace:textEntry id="first" value="John" label="First Name" labelPosition="left"/>
+                <h:inputText id="first" value="John" label="First Name" labelPosition="left"/>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow >
-                <ace:textEntry id="last" value="Doe" label="Last Name" labelPosition="left"/>
+                <h:inputText id="last" value="Doe" label="Last Name" labelPosition="left"/>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <ace:textEntry id="address" value="123 Fake St." label="Address" labelPosition="left"/>
+                <h:inputText id="address" value="123 Fake St." label="Address" labelPosition="left"/>
             </mobi:fieldsetRow>
 
         </mobi:fieldsetGroup>

@@ -18,7 +18,6 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
-             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
     <h:form>
@@ -27,7 +26,7 @@
                 The page panel component can be used render a header/body/footer layout that usually uses the entire available screen.
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<ace:linkButton href="./resources/examples/mobi/pagepanel/pagepanel.jsf" value="Click here to load a page panel on a separate page."/>
+				<h:commandLink styleClass="ui-link showLink" href="./resources/examples/mobi/pagepanel/pagepanel.jsf" value="Click here to load a page panel on a separate page."/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 

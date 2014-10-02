@@ -40,7 +40,7 @@
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<ace:pushButton id="cameraUpload"
+				<h:commandButton id="cameraUpload"
 								 styleClass="submit"
 								 actionListener="#{cameraBean.processUploadedImage}"
 								 value="Upload"/>
@@ -67,17 +67,17 @@
                 Set the maximum width and height dimensions for the photo
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <ace:textEntry id="maxWidth" placeholder="max width" 
+                <ace:textEntry id="maxWidth" placeholder="max width"
                         label="Max width:"
                         type="number" value="#{cameraBean.maxWidth}" />
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <ace:textEntry id="maxHeight" placeholder="max height" 
+                <ace:textEntry id="maxHeight" placeholder="max height"
                         label="Max height:"
                         type="number" value="#{cameraBean.maxHeight}" />
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<ace:pushButton value="Set Dimensions" styleClass="submit"/>
+				<h:commandButton value="Set Dimensions" styleClass="submit"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
