@@ -2391,7 +2391,7 @@ ice.mobi.addListener(document, "touchstart", function(){});
             transitionType = transition;
             proxyFormId = formId;
             viewHistory = vHistory;
-            if( !currentView ){
+            if( !currentView && !view ){
                   document.querySelector('.mobi-vm-header').firstChild.innerHTML = document.querySelector('.mobi-vm').getAttribute('data-title');
                   document.querySelector('.mobi-vm-menu').setAttribute('data-selected', 'true');
             }
