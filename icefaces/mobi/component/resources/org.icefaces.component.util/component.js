@@ -2125,12 +2125,13 @@ ice.mobi.addListener(document, "touchstart", function(){});
         if( menuNode ){
             menuNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
         }
+        else
+            console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find menu node');
+        
         var splashNode = document.querySelector('.mobi-vm-splash');
         if( splashNode ){
             splashNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
         }
-        else
-            console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find menu node');
 
     }
     
