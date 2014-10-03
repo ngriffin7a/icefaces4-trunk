@@ -100,48 +100,6 @@ public class MaskedEntryMeta extends HtmlInputTextMeta {
 	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Code describing the language used in the generated markup for this component.")
 	private String lang;
 
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when this element loses focus.")
-	private String onblur;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when this element loses focus and its value has been modified since gaining focus.")
-	private String onchange;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a pointer button is clicked over this element.")
-	private String onclick;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a pointer button is double clicked over this element.")
-	private String ondblclick;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when this element receives focus.")
-	private String onfocus;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a key is pressed down over this element.")
-	private String onkeydown;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a key is pressed and released over this element.")
-	private String onkeypress;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a key is released over this element.")
-	private String onkeyup;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a pointer button is pressed down over this element.")
-	private String onmousedown;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a pointer button is moved within this element.")
-	private String onmousemove;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a pointer button is moved away from this element.")
-	private String onmouseout;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a pointer button is moved onto this element.")
-	private String onmouseover;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when a pointer button is released over this element.")
-	private String onmouseup;
-
-	@Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "Javascript code executed when text within this element is selected by the user.")
-	private String onselect;
-
     @Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "The number of characters used to determine the width of this field.")
     private int size;
 
