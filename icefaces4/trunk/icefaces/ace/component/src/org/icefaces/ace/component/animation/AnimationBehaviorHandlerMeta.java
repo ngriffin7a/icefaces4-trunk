@@ -44,9 +44,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 })
 public class AnimationBehaviorHandlerMeta {
 
-    @Property(required=Required.no, tlddoc="(Deprecated) Boolean value that specifies whether to run the application or not.")
-    private boolean run;
-
     @Property(required=Required.no, tlddoc="The name of the effect, when using pre-defined effects like 'fade' and 'highlight'. Use 'anim' for free-form animations or simply omit this attribute.")
     private String name;
 
