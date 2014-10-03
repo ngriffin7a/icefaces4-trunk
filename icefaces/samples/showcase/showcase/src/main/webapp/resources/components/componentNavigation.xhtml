@@ -26,6 +26,7 @@
 			<h:outputLink value="/showcase/showcase.jsf"
 					title="#{msgs[cc.attrs.menuLink.title]}"
 					disabled="#{cc.attrs.menuLink.disabled}"
+					rendered="#{!('selected' eq mainSelected)}"
 					class="#{mainSelected}">
 				<h:outputText value="#{msgs[cc.attrs.menuLink.title]}"
 							  escape="false" nospan="true"/>
@@ -41,6 +42,7 @@
 					actionListener="#{navigationController.navigateActionListener}"
 					disabled="#{cc.attrs.menuLink.disabled}"
 					class="#{mainSelected}"
+					rendered="#{!('selected' eq mainSelected)}"
 					onclick="updateAddressBarURL('#{navigationModel.currentComponentGroup.beanName}','#{cc.attrs.menuLink.exampleBeanName}');">
 				<f:ajax render="@all"/>
 				<f:attribute name="grp"
@@ -51,11 +53,11 @@
 		</c:when>
 	</c:choose>
 
-    <h:panelGroup rendered="#{'selected' eq mainSelected}">
+    <ace:panel style="border: none; padding: 0em; font-size: 0.9em;" header="#{msgs[cc.attrs.menuLink.title]}" rendered="#{'selected' eq mainSelected}">
         <ul>
             <ui:repeat var="subMenuLink"
                        value="#{navigationModel.currentComponentExample.subMenuLinks}">
-                <li style="padding-left: 5px;">
+                <li style="padding-left: 0px;">
 					<c:choose>
 						<c:when test="#{cc.attrs.menuLink.fullPageLoad}">
 							<h:outputLink value="/showcase/showcase.jsf"
@@ -65,7 +67,7 @@
 															   (navigationModel.componentExample eq null and subMenuLink['default'])
 															   ? 'selected'
 															   : ''}">
-								<h:outputText value="&gt; #{msgs[subMenuLink.title]}"
+								<h:outputText style="font-size: 1em;" value="#{msgs[subMenuLink.title]}"
 											  escape="false" nospan="true"/>
 								<f:param name="grp"
 											 value="#{navigationModel.currentComponentGroup.beanName}"/>
@@ -82,7 +84,7 @@
 															   ? 'selected'
 															   : ''}"
 										   onclick="updateAddressBarURL('#{navigationModel.currentComponentGroup.beanName}','#{subMenuLink.exampleBeanName}');">
-								<h:outputText value="&gt; #{msgs[subMenuLink.title]}"
+								<h:outputText style="font-size: 0.9em;" value="#{msgs[subMenuLink.title]}"
 											  escape="false" nospan="true"/>
 								<f:attribute name="grp"
 											 value="#{navigationModel.currentComponentGroup.beanName}"/>
@@ -92,28 +94,10 @@
 							</h:commandLink>
 						</c:when>
 					</c:choose>
-                    <!-- OLD APPROACH NOV 10/11
-                         We used to do a full page refresh and navigation on each sublink
-                         Now for smoother integration with portlets we want to use a normal commandLink (above)
-                         This means each subdemo won't be bookmarkable though -->
-                    <!--
-                    <h:link title="#{msgs[subMenuLink.title]}"
-                            outcome="showcase"
-                            disabled="#{subMenuLink.disabled}"
-                            includeViewParams="true"
-                            class="#{(subMenuLink.exampleBeanName eq navigationModel.componentExample) ||
-                                     (navigationModel.componentExample eq null and subMenuLink['default'])
-                                   ? 'selected'
-                                   : ''}">
-                        <f:param name="grp" value="#{navigationModel.currentComponentGroup.beanName}"/>
-                        <f:param name="exp" value="#{subMenuLink.exampleBeanName}"/>
-                        > #{msgs[subMenuLink.title]}
-                    </h:link>
-                    -->
                 </li>
             </ui:repeat>
         </ul>
-    </h:panelGroup>
+    </ace:panel>
 </li>
 
 </composite:implementation>

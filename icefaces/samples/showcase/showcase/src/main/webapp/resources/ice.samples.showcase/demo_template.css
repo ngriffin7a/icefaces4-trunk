@@ -180,7 +180,7 @@ a:link, a:visited {
 	vertical-align: top;
 	display: inline-block;
     margin-right: 10px;
-    width: 230px;
+    width: 235px; 
     font-size: 10pt;
 }
 
@@ -195,7 +195,7 @@ a:link, a:visited {
 	border-radius:5px;
     background-color: #F1F1F1;
     margin-bottom: 10px;
-    padding: 16px 19px;    
+    padding: 10px 10px;    
 }
 #searchForm {
     border-bottom: 1px solid #DEDEDB;
