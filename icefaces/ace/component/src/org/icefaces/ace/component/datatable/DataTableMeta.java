@@ -330,9 +330,6 @@ public class DataTableMeta extends UIDataMeta {
     /* ##################################################################### */
     /* ########################## Scrolling Prop. ########################## */
     /* ##################################################################### */
-    @Property(tlddoc = "Defines a fixed height for the scrollable table in pixels. Deprecated; superseded by scrollHeight.")
-    private Integer height;
-
     @Property(tlddoc = "Defines a fixed height for the scrollable table in pixels.",
             defaultValue = "100", defaultValueType = DefaultValueType.EXPRESSION)
     private Integer scrollHeight;
@@ -351,14 +348,6 @@ public class DataTableMeta extends UIDataMeta {
             "in IE7, the CSS/DOM engine doesn't suport the dynamic adjustments required for this feature and" +
             "instead the feature uses a fixed, equal size for each column of the table.")
     private boolean scrollable;
-
-    @Property(tlddoc = "Enables the table to insert additional rows as scrolling reaches the bottom of the table. " +
-            "The 'rows' property configures the number of new rows to be loaded. \n" +
-            "Note: This feature is deprecated as of version 3.1 and is not supported. \n" +
-            "This property will be removed in a future release.")
-    private boolean liveScroll;
-
-
 
 
 

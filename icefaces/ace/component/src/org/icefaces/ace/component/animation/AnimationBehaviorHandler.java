@@ -82,7 +82,6 @@ public class AnimationBehaviorHandler extends AnimationBehaviorHandlerBase {
     	
     	Application application = context.getFacesContext().getApplication();
     	AnimationBehavior effectBehavior = (AnimationBehavior)application.createBehavior(AnimationBehavior.BEHAVIOR_ID);
-    	setAttribute(context, run, effectBehavior, Boolean.class);
     	setAttribute(context, effectObject, effectBehavior, Effect.class);   
     	setAttribute(context, name, effectBehavior, String.class);      	
     	setAttribute(context, to, effectBehavior, String.class);

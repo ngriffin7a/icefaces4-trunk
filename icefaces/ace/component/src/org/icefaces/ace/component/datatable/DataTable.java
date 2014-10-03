@@ -102,7 +102,9 @@ public class DataTable extends DataTableBase implements Serializable {
     /*#######################################################################*/
     /*###################### Overridden API #################################*/
     /*#######################################################################*/
-    @Override
+
+/*  Removed (ICE-10297).
+	@Override
     public Integer getScrollHeight() {
         Integer height = super.getHeight();
         Map clientValues = (Map) getStateHelper().get("scrollHeight_rowValues");
@@ -113,6 +115,7 @@ public class DataTable extends DataTableBase implements Serializable {
         // Else return the value of scrollHeight
         return super.getScrollHeight();
     }
+*/
 
     @Override
     public RowStateMap getStateMap() {

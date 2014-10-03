@@ -85,9 +85,5 @@ public class AccordionMeta extends UIPanelMeta {
 	@Property(tlddoc="Server side listener to invoke when active pane changes", expression= Expression.METHOD_EXPRESSION, methodExpressionArgument="org.icefaces.ace.event.AccordionPaneChangeEvent")
 	private MethodExpression paneChangeListener;
 	
-	@Property(tlddoc="<strong>Deprecated</strong>. Defines the toggle mode. (This attribute is now deprecated. Every pane change will produce a request, and the contents of the panes will be updated if they differ from previous content.)", defaultValue="false")
-	private boolean dynamic;
 	
-	@Property(tlddoc="<strong>Deprecated</strong>. Defines if activating a dynamic pane should load the contents from server again. (This attribute is now deprecated. Every pane change will produce a request, and the contents of the panes will be updated if they differ from previous content.)", defaultValue="true")
-	private boolean cache;
 }

@@ -398,7 +398,6 @@ public class DataTableRenderer extends CoreRenderer {
         if (pinning) json.entry("pinning",true);
         if (scroll) {
             json.entry("scrollable", true);
-            json.entry("liveScroll", table.isLiveScroll());
             json.entry("scrollStep", table.getRows());
             json.entry("scrollLimit", table.getRowCount());
             json.entry("scrollIE8Like7", scrollIE8Like7);
