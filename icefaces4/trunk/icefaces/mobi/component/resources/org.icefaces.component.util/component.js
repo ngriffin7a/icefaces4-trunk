@@ -2164,9 +2164,12 @@ ice.mobi.addListener(document, "touchstart", function(){});
         }
         else if( 'fade' == transitionType ){
             return [function(from,to){
+				setTransform(to, 'none');
                 setOpacity(to, '0');
             },function(from,to){
+				setTransform(from, 'none');
                 setOpacity(from, '0');
+				setTransform(to, 'none');
                 setOpacity(to, '1');
             }];
         }
