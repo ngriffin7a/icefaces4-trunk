@@ -74,8 +74,8 @@
             <ace:comboBox valueChangeListener="#{navigationController.navigateValueChangeListener}" id="searchBox"
                           placeholder="Search" value="#{navigationController.emptyValue}"
                           filterMatchMode="contains"
-                          width="190"
                           style="font-size: 8pt;"
+                          width="212"
                           required="true">
                 <f:selectItems value="#{navigationModel.currentComponentGroup.searchSelectItems}"/>
                 <ace:ajax resetValues="true"/>
@@ -84,6 +84,7 @@
 
         <h:form>
             <ace:accordion effect="slide"
+            			   collapsible="true"
                            activeIndex="#{aceMenu.groupsMap[navigationModel.currentComponentExample.beanName]}"
                            autoHeight="false">
                 <ace:accordionPane title="#{msgs['menu.ace.aceSuiteOverview.title']}">
