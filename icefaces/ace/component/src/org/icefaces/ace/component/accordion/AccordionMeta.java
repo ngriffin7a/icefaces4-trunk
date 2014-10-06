@@ -43,6 +43,7 @@ import javax.el.MethodExpression;
 @ICEResourceDependencies({
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
 	@ICEResourceDependency(name = "accordion/accordion.js")
 })
 @ClientBehaviorHolder(events = {
