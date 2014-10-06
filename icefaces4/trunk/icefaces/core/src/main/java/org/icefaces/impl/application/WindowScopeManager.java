@@ -606,19 +606,27 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
 
         public void afterPhase(final PhaseEvent event) {
-            FacesContext facesContext = event.getFacesContext();
-            ExternalContext externalContext = facesContext.getExternalContext();
+        }
+
+        public void beforePhase(final PhaseEvent event) {
+            FacesContext context = event.getFacesContext();
+            if (event.getPhaseId() == PhaseId.RESTORE_VIEW) {
+                boolean customWindowTracking = !"url".equals(context.getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
+                WindowScopeManager.determineWindowID(context, customWindowTracking);
+            }
+
+            ExternalContext externalContext = context.getExternalContext();
             Map parameters = externalContext.getRequestParameterMap();
             if (event.getPhaseId() == PhaseId.RENDER_RESPONSE && isDisposeWindowRequest(parameters)) {
                 //shortcut the lifecycle to avoid running it with certain parts discarded or disposed
-                facesContext.responseComplete();
+                context.responseComplete();
                 String windowID = (String) parameters.get("ice.window");
-                disposeWindow(facesContext, windowID);
+                disposeWindow(context, windowID);
                 if (EnvUtils.isICEpushPresent()) {
                     try {
                         String[] viewIDs = externalContext.getRequestParameterValuesMap().get("ice.view");
                         for (int i = 0; i < viewIDs.length; i++) {
-                            SessionViewManager.get(facesContext).removeView(viewIDs[i]);
+                            SessionViewManager.get(context).removeView(viewIDs[i]);
                         }
                     } catch (RuntimeException e) {
                         //missing ice.view parameters means that none of the views within the page
@@ -626,14 +634,6 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
                         log.log(Level.FINE, "Exception during dispose-window ", e);
                     }
                 }
-            }
-        }
-
-        public void beforePhase(final PhaseEvent event) {
-            if (event.getPhaseId() == PhaseId.RESTORE_VIEW) {
-                FacesContext context = FacesContext.getCurrentInstance();
-                boolean customWindowTracking = !"url".equals(context.getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
-                WindowScopeManager.determineWindowID(context, customWindowTracking);
             }
         }
 
