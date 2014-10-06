@@ -56,7 +56,9 @@ import java.util.List;
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-	@ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "autocompleteentry/autocompleteentry.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent( name="submit",

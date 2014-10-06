@@ -29,6 +29,7 @@ import org.icefaces.ace.api.IceClientBehaviorHolder;
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
 import javax.el.ValueExpression;
 import javax.el.MethodExpression;
 
@@ -49,8 +50,11 @@ import java.util.List;
                  "<p>For more information, see the " +
                  "<a href=\"http://wiki.icefaces.org/display/ICE/ComboBox\">ComboBox Wiki Documentation</a>."
 )
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-	@ICEResourceDependency(library = ACEResourceNames.ACE_LIBRARY, name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "combobox/combobox.js"),
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent( name="valueChange",

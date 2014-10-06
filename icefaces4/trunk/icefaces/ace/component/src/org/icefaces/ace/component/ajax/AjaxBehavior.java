@@ -27,9 +27,6 @@
  */
 package org.icefaces.ace.component.ajax;
 
-import org.icefaces.resources.ICEResourceDependencies;
-import org.icefaces.resources.ICEResourceDependency;
-
 import javax.el.ELContext;
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponentBase;
@@ -40,9 +37,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.BehaviorListener;
 import java.util.*;
 
-@ICEResourceDependencies({
-	@ICEResourceDependency(library="icefaces.ace", name="util/ace-jquery.js")
-})
 @FacesBehavior("org.icefaces.ace.component.AjaxBehavior")
 public class AjaxBehavior extends ClientBehaviorBase {
     static enum Property {

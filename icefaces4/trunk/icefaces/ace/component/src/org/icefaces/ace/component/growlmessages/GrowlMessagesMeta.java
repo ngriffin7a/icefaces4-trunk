@@ -37,7 +37,10 @@ import org.icefaces.resources.ICEResourceLibrary;
         tlddoc = "Display Faces messages in a Growl container positioned on one of the four corners of the browser window.")
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-        @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "growlmessages/jquery.jgrowl.js"),
+	@ICEResourceDependency(name = "growlmessages/growlmessages.js")
 })
 public class GrowlMessagesMeta extends UIMessagesMeta {
 

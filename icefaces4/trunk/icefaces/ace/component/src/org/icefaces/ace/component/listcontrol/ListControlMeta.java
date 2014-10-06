@@ -48,7 +48,10 @@ import javax.faces.component.UIComponent;
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-    @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "json/json2.js"),
+	@ICEResourceDependency(name = "listcontrol/listcontrol.js")
 })
 public class ListControlMeta extends UIComponentBaseMeta {
     @Property(tlddoc="Style class to apply to the container DIV element.",

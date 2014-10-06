@@ -47,7 +47,10 @@ import org.icefaces.resources.ICEResourceLibrary;
         )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-    @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+	@ICEResourceDependency(name = "resizable/resizable.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="resize", javadoc="Fired at the end of a resize operation (default event).", tlddoc="Fired at the end of a resize operation (default event).", defaultRender="@all", defaultExecute="@this")

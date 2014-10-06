@@ -18,6 +18,8 @@ package org.icefaces.ace.component.animation;
 
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
+import org.icefaces.ace.resources.ACEResourceNames;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
@@ -28,6 +30,13 @@ import javax.faces.context.FacesContext;
 import java.util.HashMap;
 import java.util.Map;
 
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
+@ICEResourceDependencies({
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+	@ICEResourceDependency(name = "animation/animation.js")
+})
 @FacesBehavior("org.icefaces.ace.animation.Animation")
 public class AnimationBehavior extends BehaviorBase {
     public final static String BEHAVIOR_ID = "org.icefaces.ace.animation.Animation";

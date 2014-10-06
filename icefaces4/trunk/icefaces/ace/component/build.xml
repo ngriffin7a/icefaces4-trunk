@@ -54,18 +54,18 @@
     <property name="ace-yui.js.base" value="${resources}/icefaces.ace/util/ace-yui"/>
     <property name="ace-yui.js" location="${ace-yui.js.base}.js"/>
     <property name="ace-yui.js.uncompressed" location="${ace-yui.js.base}.uncompressed.js"/>
-    <property name="ace-jquery.js.base" value="${resources}/icefaces.ace/util/ace-jquery"/>
-    <property name="ace-jquery.js" location="${ace-jquery.js.base}.js"/>
-    <property name="ace-jquery.js.uncompressed" location="${ace-jquery.js.base}.uncompressed.js"/>
+    <property name="ace-core.js.base" value="${resources}/icefaces.ace/util/ace-core"/>
+    <property name="ace-core.js" location="${ace-core.js.base}.js"/>
+    <property name="ace-core.js.uncompressed" location="${ace-core.js.base}.uncompressed.js"/>
+    <property name="ace-jquery-ui.js.base" value="${resources}/icefaces.ace/util/ace-jquery-ui"/>
+    <property name="ace-jquery-ui.js" location="${ace-jquery-ui.js.base}.js"/>
+    <property name="ace-jquery-ui.js.uncompressed" location="${ace-jquery-ui.js.base}.uncompressed.js"/>
     <property name="ace-datatable.js.base" value="${resources}/icefaces.ace/util/ace-datatable"/>
     <property name="ace-datatable.js" location="${ace-datatable.js.base}.js"/>
     <property name="ace-datatable.js.uncompressed" location="${ace-datatable.js.base}.uncompressed.js"/>
     <property name="ace-menu.js.base" value="${resources}/icefaces.ace/util/ace-menu"/>
     <property name="ace-menu.js" location="${ace-menu.js.base}.js"/>
     <property name="ace-menu.js.uncompressed" location="${ace-menu.js.base}.uncompressed.js"/>
-    <property name="ace-components.js.base" value="${resources}/icefaces.ace/util/ace-components"/>
-    <property name="ace-components.js" location="${ace-components.js.base}.js"/>
-    <property name="ace-components.js.uncompressed" location="${ace-components.js.base}.uncompressed.js"/>
     <property name="ace-chart.js.base" location="${resources}/icefaces.ace/chart/ace-chart"/>
     <property name="ace-chart.js" location="${ace-chart.js.base}.js"/>
     <property name="ace-chart.js.uncompressed" location="${ace-chart.js.base}.uncompressed.js"/>
@@ -206,19 +206,22 @@
                 <file name="icefaces.ace/tabset/tabset.js"/>
             </filelist>
         </concat>
-        <!-- ace-jquery.js -->
-        <available file="${ace-jquery.js.uncompressed}" property="ace-jquery.js.uncompressed.present"/>
-        <delete file="${ace-jquery.js.uncompressed}" verbose="${ace-jquery.js.uncompressed.present}"/>
-        <concat destfile="${ace-jquery.js.uncompressed}" force="true" fixlastline="true">
+        <!-- ace-core.js -->
+        <available file="${ace-core.js.uncompressed}" property="ace-core.js.uncompressed.present"/>
+        <delete file="${ace-core.js.uncompressed}" verbose="${ace-core.js.uncompressed.present}"/>
+        <concat destfile="${ace-core.js.uncompressed}" force="true" fixlastline="true">
             <filelist dir="${resources}">
-                <file name="icefaces.ace/jquery/jquery.js"/>
-                <file name="icefaces.ace/jquery/ui/jquery-ui.js"/>
-                <file name="icefaces.ace/jquery/ui/jquery.ui.touch-punch.js"/>
                 <file name="icefaces.ace/core/core.js"/>
                 <file name="icefaces.ace/util/util.js"/>
-                <file name="icefaces.ace/json/json2.js"/>
-                <file name="icefaces.ace/util/blockui.js"/>
-                <file name="icefaces.ace/simpleselectonemenu/simpleselectonemenu.js"/>
+            </filelist>
+        </concat>
+        <!-- ace-jquery-iu.js -->
+        <available file="${ace-jquery-ui.js.uncompressed}" property="ace-jquery-ui.js.uncompressed.present"/>
+        <delete file="${ace-jquery-ui.js.uncompressed}" verbose="${ace-jquery-ui.js.uncompressed.present}"/>
+        <concat destfile="${ace-jquery-ui.js.uncompressed}" force="true" fixlastline="true">
+            <filelist dir="${resources}">
+                <file name="icefaces.ace/jquery/ui/jquery-ui.js"/>
+                <file name="icefaces.ace/jquery/ui/jquery.ui.touch-punch.js"/>
             </filelist>
         </concat>
         <!-- ace-datatable.js -->
@@ -239,47 +242,6 @@
             <filelist dir="${resources}">
                 <file name="icefaces.ace/wijmo/wijmo.js"/>
                 <file name="icefaces.ace/menu/menu.js"/>
-            </filelist>
-        </concat>
-        <!-- ace-components.js -->
-        <available file="${ace-components.js.uncompressed}" property="ace-components.js.uncompressed.present"/>
-        <delete file="${ace-components.js.uncompressed}" verbose="${ace-components.js.uncompressed.present}"/>
-        <concat destfile="${ace-components.js.uncompressed}" force="true" fixlastline="true">
-            <filelist dir="${resources}">
-                <file name="icefaces.ace/radiobutton/radiobutton.js"/>
-                <file name="icefaces.ace/checkboxbutton/checkboxbutton.js"/>
-                <file name="icefaces.ace/datetimeentry/jquery-ui-timepicker-addon.js"/>
-                <file name="icefaces.ace/datetimeentry/datetimeentry.js"/>
-                <file name="icefaces.ace/maskedentry/maskedentry.js"/>
-                <file name="icefaces.ace/textentry/textentry.js"/>
-                <file name="icefaces.ace/textareaentry/textareaentry.js"/>
-                <file name="icefaces.ace/dialog/dialog.js"/>
-                <file name="icefaces.ace/dnd/dragdrop.js"/>
-                <file name="icefaces.ace/progressbar/progressbar.js"/>
-                <file name="icefaces.ace/pushbutton/pushbutton.js"/>
-                <file name="icefaces.ace/resizable/resizable.js"/>
-                <file name="icefaces.ace/sliderentry/slider.js"/>
-                <file name="icefaces.ace/confirmationdialog/confirmationdialog.js"/>
-                <file name="icefaces.ace/panel/panel.js"/>
-                <file name="icefaces.ace/linkbutton/linkbutton.js"/>
-                <file name="icefaces.ace/list/list.js"/>
-                <file name="icefaces.ace/listcontrol/listcontrol.js"/>
-                <file name="icefaces.ace/animation/animation.js"/>
-                <file name="icefaces.ace/accordion/accordion.js"/>
-                <file name="icefaces.ace/notificationpanel/notificationpanel.js"/>
-                <file name="icefaces.ace/printer/printer.js"/>
-                <file name="icefaces.ace/tooltip/jquery.qtip-2.0.0.js"/>
-                <file name="icefaces.ace/tooltip/tooltip.js"/>
-                <file name="icefaces.ace/gmap/gmap.js"/>
-                <file name="icefaces.ace/tree/tree.js"/>
-                <file name="icefaces.ace/submitmonitor/submitmonitor.js"/>
-                <file name="icefaces.ace/autocompleteentry/autocompleteentry.js"/>
-                <file name="icefaces.ace/combobox/combobox.js"/>
-                <file name="icefaces.ace/selectmenu/selectmenu.js"/>
-                <file name="icefaces.ace/themeselect/themeselect.js"/>
-                <file name="icefaces.ace/messages/messages.js"/>
-                <file name="icefaces.ace/growlmessages/jquery.jgrowl.js"/>
-                <file name="icefaces.ace/growlmessages/growlmessages.js"/>
             </filelist>
         </concat>
         <!-- ace-chart.js -->
@@ -326,14 +288,14 @@
     <target name="res-js-compress" depends="res-js-combine" unless="no-compress">
         <echo message="Compressing ace-yui.js"/>
         <minify src="${ace-yui.js.uncompressed}" dest="${ace-yui.js}"/>
-        <echo message="Compressing ace-jquery.js"/>
-        <minify src="${ace-jquery.js.uncompressed}" dest="${ace-jquery.js}"/>
+        <echo message="Compressing ace-core.js"/>
+        <minify src="${ace-core.js.uncompressed}" dest="${ace-core.js}"/>
+        <echo message="Compressing ace-jquery-ui.js"/>
+        <minify src="${ace-jquery-ui.js.uncompressed}" dest="${ace-jquery-ui.js}"/>
         <echo message="Compressing ace-datatable.js"/>
         <minify src="${ace-datatable.js.uncompressed}" dest="${ace-datatable.js}"/>
         <echo message="Compressing ace-menu.js"/>
         <minify src="${ace-menu.js.uncompressed}" dest="${ace-menu.js}"/>
-        <echo message="Compressing ace-components.js"/>
-        <minify src="${ace-components.js.uncompressed}" dest="${ace-components.js}"/>
         <echo message="Compressing ace-chart.js"/>
         <minify src="${ace-chart.js.uncompressed}" dest="${ace-chart.js}"/>
     </target>
@@ -342,13 +304,13 @@
         <echo message="Not compressing combined javascript code"/>
         <copy file="${ace-yui.js.uncompressed}" tofile="${ace-yui.js}" overwrite="yes">
         </copy>
-        <copy file="${ace-jquery.js.uncompressed}" tofile="${ace-jquery.js}" overwrite="yes">
+        <copy file="${ace-core.js.uncompressed}" tofile="${ace-core.js}" overwrite="yes">
+        </copy>
+        <copy file="${ace-jquery-ui.js.uncompressed}" tofile="${ace-jquery-ui.js}" overwrite="yes">
         </copy>
         <copy file="${ace-datatable.js.uncompressed}" tofile="${ace-datatable.js}" overwrite="yes">
         </copy>
         <copy file="${ace-menu.js.uncompressed}" tofile="${ace-menu.js}" overwrite="yes">
-        </copy>
-        <copy file="${ace-components.js.uncompressed}" tofile="${ace-components.js}" overwrite="yes">
         </copy>
         <copy file="${ace-chart.js.uncompressed}" tofile="${ace-chart.js}" overwrite="yes">
         </copy>
@@ -564,14 +526,14 @@
         <delete file="${ace-yui.js.uncompressed}"/>
         <delete file="${ace-yui.js}"/>
         <delete file="${resources}/icefaces.ace/util/combined.css"/>
-        <delete file="${ace-jquery.js.uncompressed}"/>
-        <delete file="${ace-jquery.js}"/>
+        <delete file="${ace-core.js.uncompressed}"/>
+        <delete file="${ace-core.js}"/>
+        <delete file="${ace-jquery-ui.js.uncompressed}"/>
+        <delete file="${ace-jquery-ui.js}"/>
         <delete file="${ace-datatable.js.uncompressed}"/>
         <delete file="${ace-datatable.js}"/>
         <delete file="${ace-menu.js.uncompressed}"/>
         <delete file="${ace-menu.js}"/>
-        <delete file="${ace-components.js.uncompressed}"/>
-        <delete file="${ace-components.js}"/>
         <delete file="${ace-chart.js.uncompressed}"/>
         <delete file="${ace-chart.js}"/>
     </target>

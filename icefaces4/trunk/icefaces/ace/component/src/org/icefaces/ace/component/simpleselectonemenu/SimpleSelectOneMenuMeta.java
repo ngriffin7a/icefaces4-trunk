@@ -27,6 +27,8 @@ import org.icefaces.ace.api.IceClientBehaviorHolder;
 
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
+import org.icefaces.ace.resources.ACEResourceNames;
 import javax.el.ValueExpression;
 import javax.el.MethodExpression;
 
@@ -45,8 +47,11 @@ import java.util.List;
                  "<p>For more information, see the " +
                  "<a href=\"http://wiki.icefaces.org/display/ICE/SimpleSelectOneMenu\">SimpleSelectOneMenu Wiki Documentation</a>."
 )
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-	@ICEResourceDependency(library = "icefaces.ace", name = "util/ace-jquery.js")
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "simpleselectonemenu/simpleselectonemenu.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent( name="valueChange",

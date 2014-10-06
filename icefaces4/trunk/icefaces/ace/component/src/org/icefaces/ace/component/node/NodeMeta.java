@@ -22,6 +22,7 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
 
 @Component(
         tagName = "node",
@@ -33,9 +34,11 @@ import org.icefaces.resources.ICEResourceDependency;
         tlddoc = "Defines the contents of a node of the parent tree. Multiple nodes of different types " +
                 "can be rendered by the same tree by matching the ace:tree 'type' property." +
                 "<p>For more information, see the <a href=\"http://wiki.icefaces.org/display/ICE/Tree\">Node Wiki Documentation</a>.</p>")
-
-@ICEResourceDependency(library = ACEResourceNames.ACE_LIBRARY,
-                       name = ACEResourceNames.JQUERY_JS)
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
+@ICEResourceDependencies({
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js")
+})
 public class NodeMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "The String value that if equal to the value of the 'type' attribute of the tree, " +
             "indicates this ace:node and its contents will be the one rendered for the given node data object. " +

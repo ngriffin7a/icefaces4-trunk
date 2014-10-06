@@ -44,7 +44,10 @@ import org.icefaces.resources.ICEResourceLibrary;
         )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-    @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/blockui.js"),
+	@ICEResourceDependency(name = "panel/panel.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="toggle", javadoc="Fired when the toggle button is activated to expand or compress the panel (default event).",

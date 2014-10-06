@@ -20,6 +20,10 @@ import org.icefaces.ace.meta.annotation.TagHandler;
 import org.icefaces.ace.meta.annotation.Property;
 import org.icefaces.ace.meta.annotation.TagHandlerType;
 import org.icefaces.ace.meta.annotation.Required;
+import org.icefaces.resources.ICEResourceDependencies;
+import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
+import org.icefaces.ace.resources.ACEResourceNames;
 
 import javax.el.MethodExpression;
 
@@ -35,6 +39,11 @@ import javax.el.MethodExpression;
                  "<p>For more information, see the " +
                  "<a href=\"http://wiki.icefaces.org/display/ICE/Ajax\">Ajax Wiki Documentation</a>."
 )
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
+@ICEResourceDependencies({
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js")
+})
 public class AjaxBehaviorHandlerMeta {
 
 	@Property(required=Required.no, tlddoc="Method to process in partial request.")

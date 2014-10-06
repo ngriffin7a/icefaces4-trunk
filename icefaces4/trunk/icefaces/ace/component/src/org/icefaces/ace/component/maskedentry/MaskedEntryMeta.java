@@ -46,7 +46,9 @@ import org.icefaces.resources.ICEResourceLibrary;
         )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-    @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+    @ICEResourceDependency(name = "maskedentry/maskedentry.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="valueChange", javadoc="Fired every time the value of the text input changes (default event).", 

@@ -45,7 +45,10 @@ import javax.el.ValueExpression;
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-        @ICEResourceDependency(name = "util/ace-menu.js")
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+    @ICEResourceDependency(name = "util/ace-menu.js")
 })
 public class ContextMenuMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Javascript variable name of the wrapped widget.")
