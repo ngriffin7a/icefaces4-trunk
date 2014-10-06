@@ -537,7 +537,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 
 	}
 	
-	private boolean isHardSubmit(FacesContext facesContext, UIComponent component) {
+	public static boolean isHardSubmit(FacesContext facesContext, UIComponent component) {
 		Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
 		String clientId = component.getClientId(facesContext);
 		KeyEvent keyEvent = new KeyEvent(component, requestMap);

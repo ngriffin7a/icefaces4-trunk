@@ -28,6 +28,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.el.MethodExpression;
 import java.util.*;
 
@@ -154,15 +155,23 @@ public class AutoCompleteEntry extends AutoCompleteEntryBase implements NamingCo
     }
 	
     public void broadcast(FacesEvent event) throws AbortProcessingException {
-        super.broadcast(event);
-
-        if (event != null && event instanceof TextChangeEvent) {
-            
-            MethodExpression method = getTextChangeListener();
-            if (method != null) {
-                method.invoke(getFacesContext().getELContext(), new Object[]{event});
-            }
-        }
+        if (event != null) {
+			if (event instanceof ValueChangeEvent) {
+				if (AutoCompleteEntryRenderer.isHardSubmit(getFacesContext(), this)) {
+					super.broadcast(event);
+				}
+			} else if (event instanceof TextChangeEvent) {				
+				MethodExpression method = getTextChangeListener();
+				if (method != null) {
+					super.broadcast(event);
+					method.invoke(getFacesContext().getELContext(), new Object[]{event});
+				}
+			} else {
+				super.broadcast(event);
+			}
+        } else {
+			super.broadcast(event);
+		}
     }
 
     public String getFocusedElementId() {
