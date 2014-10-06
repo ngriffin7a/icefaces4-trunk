@@ -43,7 +43,8 @@ public class AceSymbolicResourceHandler extends ResourceHandlerWrapper {
         if (uncompress && libraryName != null &&
                 ((libraryName.equals("icefaces.ace") &&
                         (resourceName.equals("util/ace-yui.js") ||
-                                resourceName.equals("util/ace-jquery.js") ||
+                                resourceName.equals("util/ace-core.js") ||
+                                resourceName.equals("util/ace-jquery-ui.js") ||
                                 resourceName.equals("util/ace-datatable.js") ||
                                 resourceName.equals("util/ace-menu.js") ||
                                 resourceName.equals("util/ace-components.js") ||

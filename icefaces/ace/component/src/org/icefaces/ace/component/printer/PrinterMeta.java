@@ -42,7 +42,9 @@ import org.icefaces.resources.ICEResourceLibrary;
         )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-    @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "printer/printer.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="action", javadoc="Fired when the parent component is clicked or activated via the keyboard (default event).", tlddoc="Fired when the parent component is clicked or activated via the keyboard (default event).", defaultRender="@all", defaultExecute="@this")

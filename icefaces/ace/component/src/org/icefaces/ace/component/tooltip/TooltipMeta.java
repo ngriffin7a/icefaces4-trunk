@@ -40,7 +40,10 @@ import javax.el.ValueExpression;
         )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-     @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "tooltip/jquery.qtip-2.0.0.js"),
+	@ICEResourceDependency(name = "tooltip/tooltip.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="display", javadoc="Fired before the tooltip is shown (default event).", tlddoc="Fired before the tooltip is shown (default event).", defaultRender="@all", defaultExecute="@this")

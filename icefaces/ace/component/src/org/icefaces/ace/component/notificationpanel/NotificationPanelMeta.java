@@ -43,7 +43,10 @@ import org.icefaces.resources.ICEResourceLibrary;
                  "<p>For more information, see the <a href=\"http://wiki.icefaces.org/display/ICE/NotificationPanel\">NotificationPanel Wiki Documentation</a>.")
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-        @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+	@ICEResourceDependency(name = "notificationpanel/notificationpanel.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="close", tlddoc="Fired when the panel is closed (default event).", defaultRender="@all", defaultExecute="@this"),

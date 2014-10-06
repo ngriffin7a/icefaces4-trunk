@@ -42,7 +42,10 @@ import org.icefaces.resources.ICEResourceLibrary;
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-        @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name="gmap/api.js"),
+	@ICEResourceDependency(name = "gmap/gmap.js")
 })
 
 public class GMapAutocompleteMeta extends UIPanelMeta {

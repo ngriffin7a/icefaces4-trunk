@@ -36,7 +36,8 @@ import org.icefaces.resources.ICEResourceLibrary;
         tlddoc = "")
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-        @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js")
 })
 public class ButtonGroupMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "If true, only one button in the group can be selected at one time, selecting a new button deselects the previously selected one.", defaultValue = "false")

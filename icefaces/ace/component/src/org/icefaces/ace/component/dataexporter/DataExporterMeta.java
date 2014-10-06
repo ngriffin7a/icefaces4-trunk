@@ -50,7 +50,10 @@ import org.icefaces.resources.ICEResourceLibrary;
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-     @ICEResourceDependency(name="util/ace-datatable.js")
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+	@ICEResourceDependency(name="util/ace-datatable.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="action", javadoc="Triggers when the button is clicked or pressed by any other means. By default, both this data exporter component and the target table are executed in this ajax request.", tlddoc="Triggers when the button is clicked or pressed by any other means. By default, both this data exporter component and the target table are executed in this ajax request.", defaultRender="@all", defaultExecute="@this")

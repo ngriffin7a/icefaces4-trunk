@@ -42,7 +42,11 @@ import org.icefaces.resources.ICEResourceLibrary;
                 "<a href=\"http://wiki.icefaces.org/display/ICE/DateTimeEntry\">DateTimeEntry Wiki Documentation</a>.")
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-     @ICEResourceDependency(name=ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+	@ICEResourceDependency(name = "datetimeentry/jquery-ui-timepicker-addon.js"),
+	@ICEResourceDependency(name = "datetimeentry/datetimeentry.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="dateSelect", javadoc="Fired when a date is selected from the calendar (default event).", tlddoc="Fired when a date is selected from the calendar (default event).", defaultRender="@all", defaultExecute="@this", argumentClass="org.icefaces.ace.event.DateSelectEvent"),

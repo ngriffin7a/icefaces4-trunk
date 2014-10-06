@@ -42,7 +42,9 @@ import org.icefaces.resources.ICEResourceLibrary;
 
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-     @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "textentry/textentry.js")
 })
 @ClientBehaviorHolder(events = {
         @ClientEvent(name = "blur", javadoc = "Fired when the text input field loses focus (default event).",

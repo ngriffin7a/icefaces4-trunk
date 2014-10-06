@@ -44,7 +44,10 @@ import org.icefaces.resources.ICEResourceLibrary;
                  "<p>For more information, see the <a href=\"http://wiki.icefaces.org/display/ICE/ProgressBar\">ProgressBar Wiki Documentation</a>.")
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-    @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+	@ICEResourceDependency(name = "progressbar/progressbar.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="complete", javadoc="Fired when the value of the progressbar reaches the maximum value (default event).", tlddoc="Fired when the value of the progressbar reaches the maximum value (default event).", defaultRender="@all", defaultExecute="@this"),

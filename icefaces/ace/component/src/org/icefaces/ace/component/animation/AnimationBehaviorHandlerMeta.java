@@ -40,7 +40,10 @@ import org.icefaces.resources.ICEResourceLibrary;
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-        @ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS)
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+	@ICEResourceDependency(name = "animation/animation.js")
 })
 public class AnimationBehaviorHandlerMeta {
 

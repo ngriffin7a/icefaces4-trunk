@@ -72,8 +72,8 @@ import java.util.List;
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
-    @ICEResourceDependency(name = ACEResourceNames.JQUERY_JS),
-	@ICEResourceDependency(name = ACEResourceNames.COMPONENTS_JS),
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
     @ICEResourceDependency(name = "util/ace-yui.js")
 })
 @ClientBehaviorHolder(events = {
