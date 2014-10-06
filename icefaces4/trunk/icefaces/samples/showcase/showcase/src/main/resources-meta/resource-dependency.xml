@@ -47,10 +47,5 @@
             <resource name="jsf.js" library="javax.faces"/>
         </requires>
     </resource>
-    <resource name="util/ace-jquery.js" library="icefaces.ace">
-        <requires>
-            <resource name="jsf.js" library="javax.faces"/>
-        </requires>
-    </resource>
 </dependencies>
 

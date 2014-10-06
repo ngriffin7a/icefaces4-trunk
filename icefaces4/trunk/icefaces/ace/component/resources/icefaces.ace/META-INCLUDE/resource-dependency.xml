@@ -16,11 +16,6 @@
   -->
 
 <dependencies>
-    <resource name="jquery/jquery.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/combined.css"  library="icefaces.ace"/>
-        </requires>
-    </resource>
 
     <resource name="util/ace-jquery-ui.js" library="icefaces.ace">
         <requires>
@@ -30,7 +25,9 @@
 
     <resource name="util/ace-core.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-jquery-ui.js"  library="icefaces.ace"/>
+            <resource name="bridge.js" library="ice.core"/>
+            <resource name="jquery/jquery.js" library="icefaces.ace"/>
+            <resource name="util/combined.css" library="icefaces.ace"/>
         </requires>
     </resource>
 
@@ -41,21 +38,57 @@
         </requires>
     </resource>
 
+    <resource name="util/blockui.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+
+    <resource name="accordion/accordion.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js"  library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="util/ace-menu.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js"  library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="panel/panel.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
+            <resource name="util/blockui.js"  library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="tabSet/tabset.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
+            <resource name="util/ace-yui.js"/>
+        </requires>
+    </resource>
+
     <resource name="richtextentry/richtextentry.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
             <resource name="jquery/jquery.js" library="icefaces.ace"/>
             <resource name="richtextentry/ckeditor/ckeditor.js" library="icefaces.ace"/>
         </requires>
     </resource>
     <resource name="richtextentry/ckeditor/ckeditor.js" library="icefaces.ace">
         <requires>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
             <resource name="richtextentry/ckeditor/ckeditor.mapping.js" library="icefaces.ace"/>
         </requires>
     </resource>
     <resource name="chart/ace-chart.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
             <resource name="jquery/jquery.js" library="icefaces.ace"/>
         </requires>
         <depends-on>
@@ -64,14 +97,14 @@
     </resource>
     <resource name="util/ace-menu.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
             <resource name="jquery/jquery.js" library="icefaces.ace"/>
             <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
         </requires>
     </resource>
     <resource name="util/ace-datatable.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
             <resource name="jquery/jquery.js" library="icefaces.ace"/>
         </requires>
     </resource>
