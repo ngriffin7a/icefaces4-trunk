@@ -23,9 +23,11 @@ import org.icefaces.ace.meta.annotation.JSP;
 import org.icefaces.ace.meta.annotation.Property;
 import org.icefaces.ace.meta.annotation.Implementation;
 import org.icefaces.ace.meta.baseMeta.UIPanelMeta;
+import org.icefaces.ace.resources.ACEResourceNames;
+import org.icefaces.resources.ICEResourceDependencies;
+import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
 
-import javax.faces.application.ResourceDependencies;
-import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 
 @Component(
@@ -41,11 +43,11 @@ import javax.faces.component.UIComponent;
                 "page layout.  It can be scrollable, have columnDivider at certain location. " +
                 " Requires a left and right facet for two, side by side, panels." +
                 " Eventually will also be resizable.")
-@ResourceDependencies({
-        @ResourceDependency(library = "icefaces.ace", name = "util/ace-core.js"),
-        @ResourceDependency(library = "icefaces.ace", name = "jquery/jquery.js"),
-		@ResourceDependency(library = "org.icefaces.component.splitpane", name = "splitpane.css"),
-		@ResourceDependency(library = "org.icefaces.component.splitpane", name = "splitpane.js")
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
+@ICEResourceDependencies({
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "splitpane/splitpane.js")
 })
 public class SplitPaneMeta extends UIPanelMeta {
     @Property(defaultValue="true", tlddoc="Determines if the contents of this panel are both scrollable.")
