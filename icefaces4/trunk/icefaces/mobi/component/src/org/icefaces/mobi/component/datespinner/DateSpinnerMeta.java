@@ -40,7 +40,6 @@ import javax.faces.application.ResourceDependency;
 		@ResourceDependency(library = "org.icefaces.component.datespinner", name = "datespinner.css"),
 		@ResourceDependency(library = "org.icefaces.component.icons", name = "icons.css"),
 		@ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
-		@ResourceDependency(library = "icefaces.ace", name = "util/ace-jquery.js"),
 		@ResourceDependency(library = "org.icefaces.component.datespinner", name = "datespinner.js")
 })
 @ClientBehaviorHolder(events = {
