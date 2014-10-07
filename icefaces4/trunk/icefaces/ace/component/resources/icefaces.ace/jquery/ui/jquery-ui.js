@@ -331,7 +331,7 @@
         }
     });
 
-})( jQuery );
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Widget 1.8.24
  *
@@ -603,7 +603,7 @@
         }
     };
 
-})( jQuery );
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Mouse 1.8.24
  *
@@ -774,7 +774,7 @@
         _mouseCapture: function(event) { return true; }
     });
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Position 1.8.24
  *
@@ -1921,7 +1921,7 @@
         }
     });
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Droppable 1.8.24
  *
@@ -2222,7 +2222,7 @@
         }
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Resizable 1.8.24
  *
@@ -3029,7 +3029,7 @@
         return !isNaN(parseInt(value, 10));
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Selectable 1.8.24
  *
@@ -3296,7 +3296,7 @@
         version: "1.8.24"
     });
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Sortable 1.8.24
  *
@@ -4390,7 +4390,7 @@
         version: "1.8.24"
     });
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Accordion 1.8.24
  *
@@ -5047,7 +5047,7 @@
         }
     });
 
-})( jQuery );
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Autocomplete 1.8.24
  *
@@ -9601,7 +9601,7 @@
 // Add another global to avoid noConflict issues with inline event handlers
     window['DP_jQuery_' + dpuuid] = $;
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Progressbar 1.8.24
  *
@@ -9715,7 +9715,7 @@
         version: "1.8.24"
     });
 
-})( jQuery );
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects 1.8.24
  *
@@ -10327,7 +10327,7 @@
         };
     });
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Blind 1.8.24
  *
@@ -10376,7 +10376,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Bounce 1.8.24
  *
@@ -10454,7 +10454,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Clip 1.8.24
  *
@@ -10508,7 +10508,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Drop 1.8.24
  *
@@ -10558,7 +10558,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Explode 1.8.24
  *
@@ -10637,7 +10637,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Fade 1.8.24
  *
@@ -10669,7 +10669,7 @@
         });
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Fold 1.8.24
  *
@@ -10725,7 +10725,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Highlight 1.8.24
  *
@@ -10775,7 +10775,7 @@
         });
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Pulsate 1.8.24
  *
@@ -10826,7 +10826,7 @@
         });
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Scale 1.8.24
  *
@@ -11004,7 +11004,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Shake 1.8.24
  *
@@ -11061,7 +11061,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Slide 1.8.24
  *
@@ -11111,7 +11111,7 @@
 
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
 /*!
  * jQuery UI Effects Transfer 1.8.24
  *
@@ -11156,4 +11156,4 @@
         });
     };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);

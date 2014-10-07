@@ -157,4 +157,4 @@
     _mouseInit.call(self);
   };
 
-})(jQuery);
+})(jQuery || ice.ace.jq);
