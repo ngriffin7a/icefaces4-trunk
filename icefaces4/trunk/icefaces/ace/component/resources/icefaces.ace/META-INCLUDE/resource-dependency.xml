@@ -17,17 +17,18 @@
 
 <dependencies>
 
-    <resource name="util/ace-jquery-ui.js" library="icefaces.ace">
-        <requires>
-            <resource name="jquery/jquery.js"  library="icefaces.ace"/>
-        </requires>
-    </resource>
 
     <resource name="util/ace-core.js" library="icefaces.ace">
         <requires>
             <resource name="bridge.js" library="ice.core"/>
             <resource name="jquery/jquery.js" library="icefaces.ace"/>
             <resource name="util/combined.css" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="util/blockui.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
         </requires>
     </resource>
 
@@ -38,12 +39,14 @@
         </requires>
     </resource>
 
-    <resource name="util/blockui.js" library="icefaces.ace">
+    <resource name="util/ace-jquery-ui.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js"  library="icefaces.ace"/>
+            <resource name="jquery/jquery.js"  library="icefaces.ace"/>
         </requires>
     </resource>
 
+
+	<!-- This section contains an extry for each ACE component that utilizes a JS resource. -->
 
     <resource name="accordion/accordion.js" library="icefaces.ace">
         <requires>
@@ -52,10 +55,144 @@
         </requires>
     </resource>
 
+    <resource name="animation/animation.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js"  library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="autocompleteentry/autocompleteentry.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="chart/ace-chart.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="chart/excanvas.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="checkboxbutton/checkboxbutton.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="combobox/combobox.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="confirmationdialog/confirmationdialog.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
     <resource name="util/ace-menu.js" library="icefaces.ace">
         <requires>
             <resource name="util/ace-core.js"  library="icefaces.ace"/>
             <resource name="util/ace-jquery-ui.js"  library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="util/ace-datatable.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="datetimeentry/jquery-ui-timepicker-addon.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="datetimeentry/datetimeentry.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="datetimeentry/jquery-ui-timepicker-addon.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="dialog/dialog.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="dnd/dragdrop.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="fileentry/fileEntry.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="fileentry/fileEntry.css" library="icefaces.ace"/>
+        </requires>
+    </resource>
+    <resource name="fileentry/fileEntry.css" library="icefaces.ace">
+        <requires>
+            <resource name="util/combined.css" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="gmap/gmap.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="gmap/gmap-api.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="growlmessages/jquery.jgrowl.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+    <resource name="growlmessages/growlmessages.js" library="icefaces.ace">
+        <requires>
+            <resource name="growlmessages/jquery.jgrowl.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="linkbutton/linkbutton.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="list/list.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="maskedentry/maskedentry.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="messages/messages.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="notificationpanel/notificationpanel.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
         </requires>
     </resource>
 
@@ -66,51 +203,122 @@
         </requires>
     </resource>
 
-    <resource name="tabSet/tabset.js" library="icefaces.ace">
+    <resource name="printer/printer.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js"  library="icefaces.ace"/>
-            <resource name="util/ace-yui.js"/>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="progressbar/progressbar.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="pushbutton/pushbutton.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="radiobutton/radiobutton.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="resizable/resizable.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
         </requires>
     </resource>
 
     <resource name="richtextentry/richtextentry.js" library="icefaces.ace">
         <requires>
             <resource name="util/ace-core.js"  library="icefaces.ace"/>
-            <resource name="jquery/jquery.js" library="icefaces.ace"/>
             <resource name="richtextentry/ckeditor/ckeditor.js" library="icefaces.ace"/>
         </requires>
     </resource>
     <resource name="richtextentry/ckeditor/ckeditor.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js"  library="icefaces.ace"/>
             <resource name="richtextentry/ckeditor/ckeditor.mapping.js" library="icefaces.ace"/>
         </requires>
     </resource>
-    <resource name="chart/ace-chart.js" library="icefaces.ace">
+
+    <resource name="selectmenu/selectmenu.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js"  library="icefaces.ace"/>
-            <resource name="jquery/jquery.js" library="icefaces.ace"/>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
         </requires>
-        <depends-on>
-            <resource name="chart/excanvas.js" library="icefaces.ace"/>
-        </depends-on>
     </resource>
-    <resource name="util/ace-menu.js" library="icefaces.ace">
+
+    <resource name="simpleselectonemenu/simpleselectonemenu.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js"  library="icefaces.ace"/>
-            <resource name="jquery/jquery.js" library="icefaces.ace"/>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="sliderentry/slider.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
             <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
         </requires>
     </resource>
-    <resource name="util/ace-datatable.js" library="icefaces.ace">
+
+    <resource name="splitpane/splitpane.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js"  library="icefaces.ace"/>
-            <resource name="jquery/jquery.js" library="icefaces.ace"/>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="splitpane/splitpane.css" library="icefaces.ace"/>
         </requires>
     </resource>
-    <resource name="fileentry/fileEntry.css" library="icefaces.ace">
+
+	<resource name="submitmonitor/submitmonitor.js" library="icefaces.ace">
         <requires>
-            <resource name="util/combined.css"  library="icefaces.ace"/>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
         </requires>
     </resource>
+
+    <resource name="util/ace-tabset.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="textareaentry/textareaentry.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="textentry/textentry.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="themeselect/themeselect.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="tooltip/jquery.qtip-2.0.0.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+    <resource name="tooltip/tooltip.js" library="icefaces.ace">
+        <requires>
+            <resource name="tooltip/jquery.qtip-2.0.0.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+    <resource name="tree/tree.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+
+
 </dependencies>
