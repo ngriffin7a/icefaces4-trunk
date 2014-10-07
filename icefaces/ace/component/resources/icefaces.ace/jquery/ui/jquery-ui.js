@@ -1082,7 +1082,7 @@
         support.fractions = offsetTotal > 21 && offsetTotal < 22;
     })();
 
-}( jQuery ));
+}( jQuery || ice.ace.jq ));
 /*!
  * jQuery UI Draggable 1.8.24
  *
@@ -5494,7 +5494,7 @@
         }
     });
 
-}( jQuery ));
+}( jQuery || ice.ace.jq ));
 
 /*
  * jQuery UI Menu (not officially released)
@@ -5678,7 +5678,7 @@
         }
     });
 
-}(jQuery));
+}(jQuery || ice.ace.jq));
 /*!
  * jQuery UI Button 1.8.24
  *
@@ -6092,7 +6092,7 @@
         }
     });
 
-}( jQuery ) );
+}( jQuery || ice.ace.jq ) );
 /*!
  * jQuery UI Dialog 1.8.24
  *
@@ -6980,7 +6980,7 @@
         }
     });
 
-}(jQuery));
+}(jQuery || ice.ace.jq));
 /*!
  * jQuery UI Slider 1.8.24
  *
@@ -7655,7 +7655,7 @@
         version: "1.8.24"
     });
 
-}(jQuery));
+}(jQuery || ice.ace.jq));
 /*!
  * jQuery UI Datepicker 1.8.24
  *
@@ -9725,7 +9725,7 @@
  *
  * http://docs.jquery.com/UI/Effects/
  */
-;jQuery.effects || (function($, undefined) {
+;(jQuery || ice.ace.jq).effects || (function($, undefined) {
 
     $.effects = {};
 
