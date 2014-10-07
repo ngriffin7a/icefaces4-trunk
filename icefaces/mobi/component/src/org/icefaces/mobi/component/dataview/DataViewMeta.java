@@ -23,6 +23,7 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
+
 @Component(
     tagName = "dataView",
     componentClass = "org.icefaces.mobi.component.dataview.DataView",
@@ -39,9 +40,12 @@ import javax.faces.application.ResourceDependency;
             "row of table region is activated, typically by a row tap."
 )
 @ResourceDependencies({
+    @ResourceDependency(library="icefaces.ace", name = "util/ace-core.js"),
+	@ResourceDependency(library="icefaces.ace", name = "jquery/jquery.js"),
 	@ResourceDependency( library = "org.icefaces.component.dataview", name = "dataview.css" ),
 	@ResourceDependency(library = "org.icefaces.component.icons", name = "icons.css"),
     @ResourceDependency( library = "org.icefaces.component.util", name = "component.js" ),
+    @ResourceDependency( library = "org.icefaces.component.dataview", name="dataviewcontroller.js"),
 	@ResourceDependency( library = "org.icefaces.component.dataview", name = "dataview.js" )
 })
 public class DataViewMeta extends UIComponentBaseMeta {

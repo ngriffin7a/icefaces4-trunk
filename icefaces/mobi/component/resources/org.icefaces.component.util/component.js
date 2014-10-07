@@ -15,7 +15,7 @@
  */
 
 /* HTML 5 Element ClassList attribute */
-if (typeof document !== "undefined" && !("classList" in document.createElement("a"))) {
+/*if (typeof document !== "undefined" && !("classList" in document.createElement("a"))) {
 
     (function (view) {
 
@@ -176,7 +176,7 @@ if (typeof document !== "undefined" && !("classList" in document.createElement("
         }
 
     }(self));
-}
+} */
 
 /* ECMAScript 5 bind */
 if (!Function.prototype.bind) {
@@ -274,12 +274,12 @@ if (!window.console) {
         };
     }
 }
-ice.mobi.BUTTON_UNPRESSED = " ui-btn-up-c";
+/*ice.mobi.BUTTON_UNPRESSED = " ui-btn-up-c";
 ice.mobi.BUTTON_PRESSED = " ui-btn-down-c";
 mobi.BEHAVIOR_EVENT_PARAM = "javax.faces.behavior.event";
-mobi.PARTIAL_EVENT_PARAM = "javax.faces.partial.event";
+mobi.PARTIAL_EVENT_PARAM = "javax.faces.partial.event"; */
 /* utilities*/
-ice.mobi.swapClasses = function(aNode, c1, c2){
+/*ice.mobi.swapClasses = function(aNode, c1, c2){
     if (!aNode.className){
         aNode.className = c2;
     }else if (ice.mobi.hasClass(aNode, c1)) {
@@ -297,7 +297,7 @@ ice.mobi.ready = function (callback) {
     } else {
         window.attachEvent('onload', callback);
     }
-};
+}; */
 ice.mobi.escapeJsfId = function(id) {
     return id.replace(/:/g,"\\:");
 }
@@ -324,7 +324,7 @@ ice.mobi.removeListener= function(obj, event, fnc){
     } else {
         ice.log.debug(ice.log, 'WARNING cannot remove listener for event='+event+' node='+obj);
     }
-};
+}; /*
 ice.mobi.hasClass = function(ele, remove_cls) {
     return ele.className.replace( /(?:^|\s)remove_cls(?!\S)/ , '' );
 };
@@ -339,9 +339,9 @@ mobi.findForm = function (sourceId) {
     }
     ice.log.debug(ice.log, 'parent form node =' + node.name);
     return node;
-};
+}; */
 /* copied from icemobile.js in jsp project for menuButton so can use same js */
-ice.formOf = function formOf(element) {
+/*ice.formOf = function formOf(element) {
     var parent = element;
     while (null != parent) {
         if ("form" == parent.nodeName.toLowerCase()) {
@@ -361,7 +361,8 @@ ice.mobi.findFormFromNode = function (sourcenode) {
     }
     return node;
 };
-
+ */
+/** used by dataview **/
 ice.mobi.matches = function(elem, selector) {
     var impl = elem.webkitMatchesSelector || elem.msMatchesSelector || elem.mozMatchesSelector;
     if( impl && impl.bind ){
@@ -372,201 +373,8 @@ ice.mobi.matches = function(elem, selector) {
     }
 };
 
-mobi.AjaxRequest = function (cfg) {
 
-    if (cfg.onstart && !cfg.onstart.call(this, cfg)) {
-        return;//cancel request
-    }
-    var form = mobi.findForm(cfg.source);
-    var source = (typeof cfg.source == 'string') ? document.getElementById(cfg.source) : cfg.source;
-    if (!source) {
-        if (cfg.node) {
-            source = cfg.node;
-            source.id = cfg.source;
-        }
-    }
-    if (form.length == 0) {
-        form = source.form;
-        ice.log.debug(ice.log, "had to find form via element form length = " + form.length);
-    }
-    if (form.length == 0) {
-        form = document.forms[0]; //just return first form in the page
-        ice.log.debug(ice.log, 'had to find first form on page');
-    }
-    var jsfExecute = cfg.execute || '@all';
-    var jsfRender = cfg.render || '@all';
-
-    ice.fullSubmit(jsfExecute, jsfRender, null, source || form[0], function (parameter) {
-        if (cfg.event) {
-            parameter(mobi.BEHAVIOR_EVENT_PARAM, cfg.event);
-
-            var domEvent = cfg.event;
-            if (cfg.event == 'valueChange') {
-                domEvent = 'change';
-            } else if (cfg.event == 'action') {
-                domEvent = 'click';
-            }
-
-            parameter(mobi.PARTIAL_EVENT_PARAM, domEvent);
-        } else {
-            parameter(cfg.source, cfg.source);
-        }
-
-        if (cfg.params) {
-            var cfgParams = cfg.params;
-            for (var p in cfgParams) {
-                parameter(p, cfgParams[p]);
-            }
-        }
-    }, function (onBeforeSubmit, onBeforeUpdate, onAfterUpdate, onNetworkError,
-                 onServerError) {
-        var context = {};
-        onAfterUpdate(function (responseXML) {
-            if (cfg.onsuccess && !cfg.onsuccess.call(context, responseXML, null /*status*/, null /*xhr*/)) {
-                return;
-            }
-        });
-        if (cfg.oncomplete) {
-            onAfterUpdate(function (responseXML) {
-                cfg.oncomplete.call(context, null /*xhr*/, null /*status*/, context.args);
-            });
-        }
-        if (cfg.onerror) {
-            onNetworkError(function (responseCode, errorDescription) {
-                cfg.onerror.call(context, null /*xhr*/, responseCode /*status*/, errorDescription /*error description*/)
-            });
-            onServerError(function (responseCode, responseText) {
-                cfg.onerror.call(context, null /*xhr*/, responseCode /*status*/, responseText /*error description*/)
-            });
-        }
-    });
-};
-ice.mobi.extendAjaxArguments = function(callArguments, options) {
-    // Return a modified copy of the original arguments instead of modifying the original.
-    // The cb arguments, being a configured property of the component will live past this request.
-    callArguments = ice.mobi.clone(callArguments);
-
-    var params     = options.params,
-        execute    = options.execute,
-        render     = options.render,
-        node       = options.node,
-        onstart    = options.onstart,
-        onerror    = options.onerror,
-        onsuccess  = options.onsuccess,
-        oncomplete = options.oncomplete;
-
-    if (params) {
-        if (callArguments['params'])
-            ice.mobi.extend(callArguments['params'], params);
-        else
-            callArguments['params'] = params;
-    }
-
-    if (execute) {
-        if (callArguments['execute'])
-            callArguments['execute'] = callArguments['execute'] + " " + execute;
-        else
-            callArguments['execute'] = execute;
-    }
-
-    if (render) {
-        if (callArguments['render'])
-            callArguments['render'] = callArguments['render'] + " " + render;
-        else
-            callArguments['render'] = render;
-    }
-
-    if (node) {
-        callArguments['node'] = node;
-    }
-
-    if (onstart) {
-        if (callArguments['onstart']) {
-            var existingStartCall = callArguments['onstart'];
-            callArguments['onstart'] = function(xhr) {
-                existingStartCall(xhr);
-                onstart(xhr);
-            }
-        } else {
-            callArguments['onstart'] = onstart;
-        }
-    }
-
-    if (onerror) {
-        if (callArguments['onerror']) {
-            var existingErrorCall = callArguments['onerror'];
-            callArguments['onerror'] = function(xhr, status, error) {
-                existingErrorCall(xhr, status, error);
-                onerror(xhr, status, error);
-            }
-        } else {
-            callArguments['onerror'] = onerror;
-        }
-    }
-
-    if (onsuccess) {
-        if (callArguments['onsuccess']) {
-            var existingSuccessCall = callArguments['onsuccess'];
-            callArguments['onsuccess'] = function(data, status, xhr, args) {
-                existingSuccessCall(data, status, xhr, args);
-                onsuccess(data, status, xhr, args);
-            }
-        } else {
-            callArguments['onsuccess'] = onsuccess;
-        }
-    }
-
-    if (oncomplete) {
-        if (callArguments['oncomplete']) {
-            var existingCompleteCall = callArguments['oncomplete'];
-            callArguments['oncomplete'] = function(xhr, status, args) {
-                existingCompleteCall(xhr, status, args);
-                oncomplete(xhr, status, args);
-            }
-        } else {
-            callArguments['oncomplete'] = oncomplete;
-        }
-    }
-
-    return callArguments;
-};
-ice.mobi.clone = function(obj) {
-    // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj) return obj;
-
-    // Handle Date
-    if (obj instanceof Date) {
-        var copy = new Date();
-        copy.setTime(obj.getTime());
-        return copy;
-    }
-
-    // Handle Array
-    if (obj instanceof Array) {
-        var copy = [];
-        var len;
-        for (var i = 0, len = obj.length; i < len; ++i) {
-            copy[i] = ice.mobi.clone(obj[i]);
-        }
-        return copy;
-    }
-
-    // Handle Object
-    if (obj instanceof Object) {
-        var copy = {};
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = ice.mobi.clone(obj[attr]);
-        }
-        return copy;
-    }
-
-    throw new Error("Unable to copy obj! Its type isn't supported.");
-};
-ice.mobi.ab = function(cfg) { mobi.AjaxRequest(cfg); };
-ice.mobi.extend = function(targetObject, sourceObject) {
-    for (var attrname in sourceObject) { targetObject[attrname] = sourceObject[attrname]; }
-}
-mobi.registerAuxUpload = function (sessionid, uploadURL) {
+/*mobi.registerAuxUpload = function (sessionid, uploadURL) {
 
     var splashClause = ice.mobi.impl.getSplashClause();
 
@@ -588,7 +396,7 @@ mobi.registerAuxUpload = function (sessionid, uploadURL) {
         auxiframe.setAttribute("src", sxURL);
         document.body.appendChild(auxiframe);
     }
-};
+};  */
 ice.mobi.panelCenter = function(clientId, cfg){
     var paneNode = document.getElementById(clientId);
     var containerElem = cfg.containerElem || null;
@@ -698,7 +506,7 @@ mobi._windowWidth = function () {
     return windowWidth;
 };
 
-ice.mobi.serialize = function(form, typed) {
+/*ice.mobi.serialize = function(form, typed) {
     var els = form.elements;
     var len = els.length;
     var qString = [];
@@ -758,16 +566,16 @@ ice.mobi.serialize = function(form, typed) {
     }
     // concatenate the array
     return qString.join("");
-}
-
+}*/
+/*
 function html5getViewState(form) {
     if (!form) {
         throw new Error("jsf.getViewState:  form must be set");
     }
     return ice.mobi.serialize(form, false);
-}
+}  */
 
-function html5handleResponse(context, data) {
+/* function html5handleResponse(context, data) {
     if (null == context.sourceid) {
         //was not a jsf upload
         return;
@@ -780,9 +588,9 @@ function html5handleResponse(context, data) {
     jsfResponse.responseXML = xmlDoc;
     jsf.ajax.response(jsfResponse, context);
 
-}
+}  */
 
-function html5submitFunction(element, event, options) {
+/*function html5submitFunction(element, event, options) {
     var source = event ? event.target : element;
     source = source ? source : element;
     var form = element;
@@ -942,85 +750,8 @@ if (window.addEventListener) {
             }, 1);
         }
     }, false);
-}
-/* javascript for mobi:commandButton component put into component.js as per MOBI-200 */
-ice.mobi.button = {
-    select: function(clientId, event, cfg) {
-        //get class and add the pressed state
-        var me = document.getElementById(clientId);
-        if (cfg.pDisabled){
-            return; // no change on which button can be selected
-        }
-        var curClass = me.className;
-  //      console.log("curClass="+curClass);
-        if (ice.mobi.hasClass(me, ice.mobi.BUTTON_UNPRESSED )){
-            var newCls = me.className.replace('up','down');
-            me.className = newCls;
-        } else {
-            //what to do?  we always will render it this way...
-        }
-        //check if it's part of a commandButtonGroup
-        if (cfg.groupId){
-            var groupElem = document.getElementById(cfg.groupId+"_hidden");
-            if (groupElem){
-            //    console.log("for groupId "+cfg.groupId+" value is "+clientId);
-                groupElem.value = clientId; //update group to this button selected
-            }
-        }
-        var params = cfg.params || null;
+} */
 
-        //otherwise, just check for behaviors, singleSubmit and go
-        var singleSubmit = cfg.singleSubmit || false;
-        var behaviors = cfg.behaviors || null;
-        var event = event || window.event;
-        var keyCall = function(xhr, status, args) {ice.mobi.button.unSelect(clientId, curClass);};
-        var options = {
-            onsuccess: keyCall,
-            source : clientId
-        };
-        if (behaviors && behaviors.click){
-            /* does not yet support mobi ajax for panelConf or submitNotification need to modify first */
-            /* need to rework AjaxBehaviorRenderer before I can combine the options and cfg */
-             behaviors.click();
-            /* once I rework mobi ajax support will be able to support all the callbacks in next call */
-            //ice.mobi.ab(ice.mobi.extendAjaxArguments(behaviors, options));
-        }else{
-            if (singleSubmit){
-                options.execute="@this";
-            } else {
-                options.execute="@all";
-            }
-            if (params !=null){
-                options.params = params;
-            }else {
-                options.params = {};
-            }
-            options.render = "@all";
-            if (cfg.pcId) {
-              //  console.log("throw control to panelConfirmation id="+cfg.pcId);
-                ice.mobi.panelConf.init(cfg.pcId, clientId, cfg, options);
-                return;
-             }
-             if (cfg.snId) {
-                 ice.mobi.submitnotify.open(cfg.snId, clientId, cfg, options);
-                 return;
-             }
-            //if here, then no panelConfirmation as this action is responsible for submit
-             else {
-                 mobi.AjaxRequest(options);
-            }
-        }
-    },
-    unSelect: function(clientId, classNm){
-        var elem = document.getElementById(clientId);
-        if( elem ){
-            var oldClass = elem.className;
-            elem.className=oldClass.replace('down','up');
-          //  console.log('id='+clientId+' unSelect call back -> class='+document.getElementById(clientId).className);
-        }
-        
-    }
-};
 
 ice.mobi.formOf = function(element) {
     var parent = element;
@@ -1032,7 +763,7 @@ ice.mobi.formOf = function(element) {
     }
 }
 
-ice.mobi.getDeviceCommand = function()  {
+/*ice.mobi.getDeviceCommand = function()  {
     var sxkey = "#icemobilesx";
     var sxlen = sxkey.length;
     var locHash = "" + window.location.hash;
@@ -1040,9 +771,9 @@ ice.mobi.getDeviceCommand = function()  {
         return locHash.substring(sxlen + 1);
     }
     return null;
-}
+}  */
 
-ice.mobi.sx = function (element, uploadURL) {
+/*ice.mobi.sx = function (element, uploadURL) {
     var ampchar = String.fromCharCode(38);
     var form = ice.mobi.formOf(element);
     var formAction = form.getAttribute("action");
@@ -1111,16 +842,16 @@ ice.mobi.sx = function (element, uploadURL) {
             "&p=" + escape(ice.mobi.serialize(form, false));
 
     window.location = sxURL;
-}
+} */
 
-ice.mobi.impl.getSplashClause = function()  {
+/*ice.mobi.impl.getSplashClause = function()  {
     var splashClause = "";
     if (null != ice.mobi.splashImageURL)  {
         var splashImage = "i=" + escape(ice.mobi.splashImageURL);
         splashClause = "&s=" + escape(splashImage);
     }
     return splashClause;
-}
+} */
 
 ice.mobi.unpackDeviceResponse = function (data)  {
     var result = {};
@@ -1142,7 +873,7 @@ ice.mobi.unpackDeviceResponse = function (data)  {
     return result;
 }
 
-ice.mobi.invoke = function(element)  {
+/*ice.mobi.invoke = function(element)  {
     var command = element.getAttribute("data-command");
     if (ice[command])  {
         var params = element.getAttribute("data-params");
@@ -1154,7 +885,7 @@ ice.mobi.invoke = function(element)  {
     } else {
         ice.mobi.sx(element);
     }
-}
+} */
 
 ice.mobi.setInput = function(target, name, value, vtype)  {
     var hiddenID = name + "-hid";
@@ -1342,645 +1073,6 @@ ice.mobi.addStyleSheet = function (sheetId, parentSelector) {
     return ice.mobi.getStyleSheet(sheetId);
 };
 
-(function(im) {
-    var isTouchDevice = 'ontouchstart' in document.documentElement,
-        indicatorSelector = "i.mobi-dv-si",
-        blankInicatorClass = 'mobi-dv-si';
-    function DataView(clientId, cfg) {
-        function hideAddressBar() {
-            if(!window.location.hash) {
-                window.scrollTo(0, 0);
-            }
-        }
-        if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
-            ice.mobi.addListener(window, "load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
-            ice.mobi.addListener(window, "orientationchange", hideAddressBar );
-        }
-
-        var config = cfg,
-            selectorId = '#' + im.escapeJsfId(clientId),
-            bodyRowSelector = selectorId + ' > .mobi-dv-mst > div > .mobi-dv-body > tbody > tr',
-            headCellSelector = selectorId + ' > .mobi-dv-mst > .mobi-dv-head > thead > tr > th';
-
-        function getNode(elem) {
-            var footCellSelector = selectorId + ' > .mobi-dv-mst > .mobi-dv-foot > tfoot > tr > td',
-                firstRowSelector = bodyRowSelector + ':first-child',
-                detailsSelector = selectorId + ' > .mobi-dv-det',
-                headSelector = selectorId + ' > .mobi-dv-mst > .mobi-dv-head > thead',
-                footSelector = selectorId + ' > .mobi-dv-mst > .mobi-dv-foot > tfoot',
-                bodyDivSelector = selectorId + ' > .mobi-dv-mst > div';
-
-            switch (elem) {
-                case 'det': return document.querySelector(detailsSelector);
-                case 'head': return document.querySelector(headSelector);
-                case 'foot': return document.querySelector(footSelector);
-                case 'body': return document.querySelector(bodyDivSelector);
-                case 'elem': return document.getElementById(clientId);
-                case 'headcells': return document.querySelectorAll(headCellSelector);
-                case 'bodyrows': return document.querySelectorAll(bodyRowSelector);
-                case 'firstrow': return document.querySelector(firstRowSelector);
-                case 'footcells': return document.querySelectorAll(footCellSelector);
-            }
-        }
-
-        function closest(start, target) {
-            var t = start;
-            while (t && t != document&& !im.matches(t,target))
-                t = t.parentNode;
-
-            return t == document ? null : t;
-        }
-
-        function getScrollableContainer(element) {
-            if (!element){
-            //    console.log("getScrollablecontainer NO ELEMENT SO return BODY");
-                return document.body;
-            }
-            var height = element.clientHeight,
-                parent = element.parentNode;
-
-            while (parent != null && parent.scrollHeight == parent.clientHeight)
-                parent = parent.parentNode;
-
-            return parent;
-        }
-
-        function getIndexInput(details) {
-            var r = Array.prototype.filter.call(details.children, function(n) {
-                return n.nodeName.toLowerCase() == "input" && n.getAttribute('name') == clientId+'_active';
-            });
-            return r[0];
-        }
-
-        function initTableAlignment() {
-            var dupeHead = document.querySelector(selectorId + ' > .mobi-dv-mst > div > .mobi-dv-body > thead'),
-                dupeHeadCells = document.querySelectorAll(selectorId + ' > .mobi-dv-mst > div > .mobi-dv-body > thead > tr > th'),
-                dupeFoot = document.querySelector(selectorId + ' > .mobi-dv-mst > div > .mobi-dv-body > tfoot'),
-                dupeFootCells = document.querySelectorAll(selectorId + ' > .mobi-dv-mst > div > .mobi-dv-body > tfoot > tr > td'),
-                head = getNode('head'),
-                headCells = getNode('headcells'),
-                foot = getNode('foot'),
-                footCells = getNode('footcells'),
-                bodyDivWrapper = getNode('body'),
-                firstrow = getNode('firstrow'),
-                sheet = im.getStyleSheet(clientId + '_colvis');
-
-            if (!sheet) sheet = im.addStyleSheet(clientId + '_colvis', selectorId);;
-
-            var firstRowBodyCells = Array.prototype.filter.call(firstrow.children, function(val){
-                return val.nodeName.toLowerCase() == "td"; /* remove hidden input */
-            });
-
-            if( window.getComputedStyle ){
-                var frbcWidths = Array.prototype.map.call(
-                    firstRowBodyCells,
-                    function(n) {
-                        var compd = document.defaultView.getComputedStyle(n, null);
-                        return n.clientWidth - Math.round(parseFloat(compd.paddingLeft)) - Math.round(parseFloat(compd.paddingRight));
-                });
-
-                /* fix body column widths */
-                for (var i = 0; i < frbcWidths.length; i++) {
-                    if( sheet.insertRule ){
-                        sheet.insertRule(selectorId + " ." + firstRowBodyCells[i].classList[0] + " { width: "+frbcWidths[i] + 'px'+"; }", 0);
-                    }
-                }
-
-                var dupeHeadCellWidths = Array.prototype.map.call(
-                    dupeHeadCells,
-                    function(n) {
-                        var compd = document.defaultView.getComputedStyle(n, null);
-                        return n.clientWidth - Math.round(parseFloat(compd.paddingLeft)) - Math.round(parseFloat(compd.paddingRight));
-                    });
-
-                var dupeFootCellWidths = Array.prototype.map.call(
-                    dupeFootCells,
-                    function(n) {
-                        var compd = document.defaultView.getComputedStyle(n, null);
-                        return n.clientWidth - Math.round(parseFloat(compd.paddingLeft)) - Math.round(parseFloat(compd.paddingRight));
-                    });
-
-                /* copy head col widths from duplicate header */
-                for (var i = 0; i < dupeHeadCellWidths.length; i++) {
-                    headCells[i].style.width = dupeHeadCellWidths[i] + 'px';
-                }
-
-                /* copy foot col widths from duplicate footer */
-                if (footCells.length > 0)
-                    for (var i = 0; i < dupeFootCellWidths.length; i++) {
-                        footCells[i].style.width = dupeFootCellWidths[i] + 'px';
-                    }
-            }
-
-            if (config.colvispri) setupColumnVisibiltyRules(firstrow.children);
-
-            /* hide duplicate header */
-            setTimeout(function() {
-                if (dupeHead) dupeHead.style.display = 'none';
-                if (dupeFoot) dupeFoot.style.display = 'none';
-            }, 50) /* hiding instantly broke scrolling when init'ing the first time on landscape ipad */
-
-            recalcScrollHeight(head, foot, bodyDivWrapper);
-        }
-
-        function setupColumnVisibiltyRules(firstRowCells) {
-            var minDevWidth = firstRowCells[0].getBoundingClientRect().left;
-            var colVisSheet = im.getStyleSheet(clientId + '_colvis');
-            var hideRule = '@media only all {';
-
-            if (!colVisSheet) colVisSheet = im.addStyleSheet(clientId + '_colvis', selectorId);
-
-            var prioritizedCells = config.colvispri.map(function(pri, i) {
-               var index = config.colvispri.indexOf(i);
-               return index > -1 ? firstRowCells[index] : undefined;
-            }).filter(function(cell) { return cell != undefined});
-
-            for (var i = 0; i < prioritizedCells.length; i++) {
-                var columnClassname = Array.prototype.filter.call(
-                        prioritizedCells[i].classList,
-                        function(name) {if (name.indexOf('mobi-dv-c') != -1) return true;}
-                    )[0];
-
-                minDevWidth += prioritizedCells[i].clientWidth;
-
-                // add column conditional visibility rule
-                hideRule += 'th.'+columnClassname+', td.'+columnClassname;
-                if (i != (prioritizedCells.length - 1)) hideRule += ', ';
-                if( colVisSheet.insertRule )
-                    colVisSheet.insertRule('@media screen and (min-width: '+minDevWidth+'px) { td.'+columnClassname+', th.'+columnClassname+' { display: table-cell; }}', 0);
-            }
-
-            hideRule += '{ display:none; }}';
-            if( colVisSheet.insertRule )
-                colVisSheet.insertRule(hideRule, 0);
-        }
-
-        /* arguments optional to avoid lookup */
-        function recalcScrollHeight(inHead, inFoot, inDivWrap) {
-            /* set scroll body to maximum height, reserving space for head / foot */
-            var head = inHead ? inHead : getNode('head'),
-                foot = inFoot ? inFoot : getNode('foot'),
-                bodyDivWrapper = inDivWrap ? inDivWrap : getNode('body'),
-                element = getNode('elem');
-
-            // Exit if dataview has been removed from page.
-            if (!element) return;
-
-            var dim = element.getBoundingClientRect(),
-                maxHeight = window.innerHeight - dim.top,
-                headHeight = head ? head.clientHeight : 0,
-                footHeight = foot ? foot.clientHeight : 0,
-                fullHeight = maxHeight - headHeight - footHeight - 1;
-
-            /* set height to full visible size of parent */
-            if( isNumber(fullHeight) )
-                bodyDivWrapper.style.height = fullHeight + 'px';
-
-            /* set height to full visible size of parent minus
-             height of all following elements */
-            var container = getScrollableContainer(element),
-                bottomResize = function() {
-                    if (!container){
-                     //   console.log (" NO CONTAINER SO RETURN");
-                        return;
-                    }
-                    fullHeight -= (container.scrollHeight - container.clientHeight);
-                    if( isNumber(fullHeight)){
-                        if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i))
-                            fullHeight += 60;
-                        bodyDivWrapper.style.height = fullHeight + 'px';
-                    }
-                };
-
-            if (container) bottomResize();
-        }
-
-        var touchedHeadCellIndex = {},
-            touchedFirstCell = false,
-            pendingSortClick,
-            lastTouchTime;
-
-        function headCellTouchStart(e) {
-			if (config.disabled) return;
-            var cell = e.currentTarget;
-            /* targetTouches[0] - ignore multi touch starting here */
-            touchedHeadCellIndex[e.targetTouches[0].identifier] = getIndex(cell);
-            if (im.matches(cell,headCellSelector+":first-child"))
-                touchedFirstCell = true;
-
-            /*prevent scrolling due to drags */
-            e.preventDefault();
-        }
-
-        function headCellTouchEnd(e) {
-			if (config.disabled) return;
-            var touch = e.changedTouches[0],
-                cell = closest(document.elementFromPoint(touch.pageX, touch.pageY), 'th');
-
-            /* do jump scroll to top */
-            if (lastTouchTime && (new Date().getTime() - lastTouchTime < 300)) {
-                clearTimeout(pendingSortClick);
-                getNode('body').scrollTop = 0;
-            } else {
-                /* do sorting or drag behaviors */
-                if (cell) {
-                    var index = getIndex(cell);
-                    // clear sort if dragged from first to last cell
-                    if (touchedFirstCell && im.matches(cell,headCellSelector+":last-child")) {
-                        clearSort();
-                    } else if (index == touchedHeadCellIndex[touch.identifier])
-                        // delay sort to see if jump scroll tap occurs
-                        var sort = sortColumn;
-                        pendingSortClick = setTimeout(function () {sort(e);}, 320);
-                } else {
-                    // dragged from header cell to top 25 px of detail region - close region
-                    var detTop = getNode('det').getBoundingClientRect().top;
-
-                    if (touch.pageY < detTop + 25) {
-                        deactivateDetail();
-                    }
-                }
-            }
-
-            lastTouchTime = new Date().getTime();
-            touchedFirstCell = false;
-            touchedHeadCellIndex[touch.identifier] = undefined;
-        }
-
-        var touchedRowIndex = {};
-        function rowTouchStart(e) {
-			if (config.disabled) return;
-            var row = e.delegateTarget;
-
-            touchedRowIndex[e.targetTouches[0].identifier] = {
-                i : row.getAttribute("data-index"),
-                y : e.targetTouches[0].pageY,
-                x : e.targetTouches[0].pageX
-            };
-        }
-
-        function rowTouchEnd(e) {
-			if (config.disabled) return;
-            var row = closest(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY), 'tr'),
-                index = row.getAttribute("data-index"),
-                y = touchedRowIndex[e.changedTouches[0].identifier].y - e.changedTouches[0].pageY ,
-                x = touchedRowIndex[e.changedTouches[0].identifier].x - e.changedTouches[0].pageX;
-
-            /* prevent input when scrolling rows or drag in wide cell*/
-            y = y > -25 && y < 25;
-            x = x > -25 && y < 25;
-
-            if (index == touchedRowIndex[e.changedTouches[0].identifier].i && y && x){
-                tapFlash(e.delegateTarget);
-
-                if (e.delegateTarget.classList.contains('ui-state-active'))
-                    deactivateDetail()
-                else activateRow(e);
-            }
-
-            touchedRowIndex[e.changedTouches[0].identifier] = null;
-        }
-
-        function initSortingEvents() {
-            var headCells = getNode('headcells');
-            for (var i = 0; i < headCells.length; ++i) {
-                var cell = headCells[i];
-                if (isTouchDevice) {
-                    ice.mobi.addListener(cell, "touchend", headCellTouchEnd);
-                    ice.mobi.addListener(cell, "touchstart", headCellTouchStart);
-                } else {
-                    ice.mobi.addListener(cell, "click", sortColumn);
-                }
-            }
-        }
-
-        function initActivationEvents() {
-            var element = getNode('elem'),
-                /* filter events for those bubbled from tr elems */
-                isRowEvent = function(callback) {
-                    return function(e) {
-                        var tr = closest(e.srcElement || e.target, "tr");
-                        if (tr && im.matches(tr, bodyRowSelector)) {
-                            e.delegateTarget = tr;
-                            callback(e);
-                        }
-                    };
-                }
-
-            if (isTouchDevice) {
-                ice.mobi.addListener(element, "touchend", isRowEvent(rowTouchEnd));
-                ice.mobi.addListener(element, "touchstart", isRowEvent(rowTouchStart));
-                ice.mobi.addListener(element, "click", isRowEvent(activateRow));
-            } else {
-                ice.mobi.addListener(element, "click", isRowEvent(activateRow));
-            }
-        }
-
-        function processUpdateStr(dir) {
-            var valueParts = dir.split('|');
-            var details = getNode('det');
-
-            /* lookup elem by id and apply updates */
-            for (var i = 0; i < valueParts.length; i++) {
-                var v = valueParts[i].split('='),
-                        elem = details.querySelector('[id$='+im.escapeJsfId(v[0])+']'),
-                        dir = v[1],
-                        value;
-
-                switch (dir) {
-                    case 'html':
-                        elem.innerHTML = v[2];
-                        break;
-
-                    case 'attr':
-                        if (v[2] == 'checked') {
-                            if (v[3] == 'true') elem.checked = true;
-                            else elem.checked = false;
-                        } else {
-                            elem.setAttribute(v[2], v[3]);
-                        }
-                        break;
-
-                    default :
-                        value = '';
-                        break;
-                }
-            };
-        }
-
-        var sortCriteria = [];
-        function isNumber(n) {
-            return !isNaN(parseFloat(n)) && isFinite(n);
-        }
-
-        function isDate(n) {
-            return !isNaN(Date.parse(n));
-        }
-
-        function isCheckboxCol(n) {
-            return n.className.indexOf('mobi-dv-bool') != -1;
-        }
-
-        function getRowComparator() {
-            var firstrow = getNode('firstrow');
-
-            function getValueComparator(cri) {
-                var firstRowVal = firstrow.children[cri.index].innerHTML;
-                var ascending = cri.ascending ? 1 : -1;
-
-                if (isNumber(firstRowVal))
-                    return function(a,b) {
-                        return (a.children[cri.index].innerHTML
-                            - b.children[cri.index].innerHTML) * ascending;
-                    }
-                if (isDate(firstRowVal))
-                    return function(a,b) {
-                        var av = new Date(a.children[cri.index].innerHTML),
-                            bv = new Date(b.children[cri.index].innerHTML);
-
-                        if (av > bv) return 1 * ascending;
-                        else if (bv > av) return -1 * ascending;
-                        return 0;
-                    }
-                if (isCheckboxCol(firstrow.children[cri.index]))
-                /* checkmark markup is shorter - reverse string sort */
-                    return function(a,b) {
-                        var av = a.children[cri.index].innerHTML,
-                            bv =  b.children[cri.index].innerHTML;
-
-                        if (av < bv) return 1 * ascending;
-                        else if (bv < av) return -1 * ascending;
-                        return 0;
-                    }
-                else
-                /* fall back to string comparison */
-                    return function(a,b) {
-                        var av = a.children[cri.index].innerHTML,
-                            bv =  b.children[cri.index].innerHTML;
-
-                        if (av > bv) return 1 * ascending;
-                        else if (bv > av) return -1 * ascending;
-                        return 0;
-                    }
-            }
-
-            return sortCriteria.map(getValueComparator)
-                    .reduceRight(function(comp1, comp2) {
-                if (comp1 == undefined) return function(a,b) { return comp2(a, b); }
-                else return function(a,b) {
-                    var v = comp2(a, b);
-                    if (v != 0) return v;
-                    else return comp1(a, b);
-                }
-            });
-        }
-
-        function getIndex(elem) {
-            var columnIndex = 0, sib = elem;
-            while( (sib = sib.previousSibling) != null )
-                columnIndex++;
-            return columnIndex;
-        }
-
-        function deactivateDetail() {
-            var det = getNode('det');
-            det.removeAttribute('data-index');
-            getIndexInput(det).setAttribute('value', '-1');
-            Array.prototype.every.call(getNode('bodyrows'), function(e) {
-                e.classList.remove('ui-state-active');
-                return true
-            });
-            recalcScrollHeight();
-        }
-
-        function clearSort() {
-            sortCriteria = [];
-            Array.prototype.every.call(getNode('headcells'), function(c) {
-                    var indi = c.querySelector(indicatorSelector);
-                    if (indi) {
-                        indi.className = blankInicatorClass;
-                    }
-                    return true;
-                });
-
-            var bodyRows = getNode('bodyrows'),
-                tbody = bodyRows[0].parentNode;
-
-            /* return rows to 'natural ordering' */
-            bodyRows = Array.prototype.map.call(bodyRows, function(r) {return r;})
-                .sort(function(a,b) { return a.getAttribute('data-index') - b.getAttribute('data-index');});
-
-            tbody.innerHTML = '';
-            bodyRows.every(function(row) {
-                tbody.appendChild(row);
-                return true;
-            });
-        }
-
-        function sortColumn(event) {
-			if (config.disabled) return;
-            var sortedRows, asc,
-                headCell = event.target,
-                ascendingClass = blankInicatorClass + ' icon-caret-up',
-                descendingClass = blankInicatorClass + ' icon-caret-down';
-
-            var ascIndi = headCell.querySelector(indicatorSelector);
-            if (!ascIndi) {
-                //non-sortable column
-                return;
-            }
-
-            var ascClass = ascIndi.className;
-
-            /* find col index */
-            var columnIndex = getIndex(headCell);
-
-            /* set ascending flag and indicator */
-            asc = ascClass == descendingClass || ascClass == blankInicatorClass;
-            ascIndi.className = asc ? ascendingClass : descendingClass;
-
-            // sortCriteria = sortCriteria.filter(function(c) { return c.index != columnIndex});
-
-            // forced single sort
-            sortCriteria = [{ascending : asc, index : columnIndex}];
-
-            /* remove indicator from other cols */
-            var sortedIndexes = sortCriteria.map(function(c) {return c.index});
-            Array.prototype.filter.call(getNode('headcells'), function (c) {return sortedIndexes.indexOf(getIndex(c)) == -1;})
-                .every(function(c) {
-                    var indi = c.querySelector(indicatorSelector);
-                    if (indi) {
-                        indi.className = blankInicatorClass;
-                    }
-                    return true;
-                });
-
-            var bodyRows = getNode('bodyrows');
-            /* return bodyRows NodeList as Array for sorting */
-            sortedRows = Array.prototype.map.call(bodyRows, function(row) { return row; });
-            sortedRows = sortedRows.sort(getRowComparator());
-
-            /* remove previous tbody conent and re-add in new order */
-            var tbody = bodyRows[0].parentNode;
-            Array.prototype.every.call(sortedRows, function(row) {
-                tbody.removeChild(row);
-                return true;
-            });
-            Array.prototype.every.call(sortedRows, function(row) {
-                tbody.appendChild(row);
-                return true;
-            });
-        }
-
-        function tapFlash(elem) {
-            elem.style.backgroundColor = '#194FDB';
-            elem.style.backgroundImage = 'none';
-            setTimeout(function() {
-                elem.style.backgroundColor = '';
-                elem.style.backgroundImage = '';
-            }, 100);
-        }
-
-        function activateRow(event) {
-			if (config.disabled) return;
-            var newIndex = event.delegateTarget.getAttribute('data-index'),
-                details = getNode('det'),
-                indexIn = getIndexInput(details);
-
-			var target = event.delegateTarget;
-			if (target.classList.contains('ui-state-active')) {
-				target.classList.remove('ui-state-active');
-				deactivateDetail();
-				return;
-			} else {
-				target.classList.add('ui-state-active');
-			}
-
-			var sib = event.delegateTarget.nextElementSibling,
-				removeActiveClass = function (s) { s.classList.remove('ui-state-active'); };
-
-			while (sib != null) {removeActiveClass(sib); sib = sib.nextElementSibling;};
-			sib = event.delegateTarget.previousElementSibling;
-			while (sib != null) {removeActiveClass(sib); sib = sib.previousElementSibling;};
-
-            indexIn.setAttribute("value", newIndex);
-            details.setAttribute("data-index", newIndex);
-
-            if (config.active == 'client') {
-                var newValue = event.delegateTarget.getAttribute('data-state');
-
-                processUpdateStr(newValue);
-
-                // if vertical orientation
-                recalcScrollHeight();
-            } else {
-                var options = {
-                    source : clientId,
-                    execute : '@this',
-                    render : '@this'
-                };
-
-                im.ab(options);
-            }
-        }
-
-        function update(newCfg){
-            config = newCfg;
-			if (newCfg.disabled) {
-				deactivateDetail();
-				clearSort();
-			} else {
-            initActivationEvents();
-            initSortingEvents();
-			}
-            initTableAlignment();
-        }
-
-		if (!config.disabled) {
-			initActivationEvents();
-			initSortingEvents();
-		}
-
-        /* first alignment needs to occur shortly after script eval
-        *  else heights are miscalculated for following elems */
-        setTimeout(initTableAlignment, 100);
-
-        /* resize height adjust */
-        ice.mobi.addListener(window, "resize", function() {
-            // Timeout to prevent double recalc when resize is due to orientation
-            if (!oriChange) {
-                setTimeout(function() {
-                    if (!oriChange) {
-                        recalcScrollHeight();
-                    }
-                },100);
-            }
-        });
-
-        var oriChange = false;
-        ice.mobi.addListener(window, "orientationchange", function() {
-            oriChange = true;
-
-            setTimeout(function() { recalcScrollHeight(); },500);
-            // prevent resize-init'd height recalcs for the next 200ms
-            setTimeout(function() { oriChange = false; },2000);
-        });
-
-        /* Instance API */
-        return { update: update }
-    }
-
-    im.dataView = {
-        instances: {},
-        create: function(clientId, cfg) {
-            if (this.instances[clientId]) this.instances[clientId].update(cfg);
-            else this.instances[clientId] = DataView(clientId, cfg);
-
-            return this.instances[clientId];
-        }
-    }
-
-})(ice.mobi);
 
 /* touch active state support */
 ice.mobi.addListener(document, "touchstart", function(){});
@@ -2018,402 +1110,6 @@ ice.mobi.addListener(document, "touchstart", function(){});
         ice.mobi.addListener(window,"resize",ice.mobi.sizePagePanelsToViewPort);
     }
 }());
-
-//view manager
-(function(im){
-    var viewHistory =  [];
-    var transitionType = 'horizontal'; //horizontal, vertical
-    var currentWidth = 0;
-    var currentHeight = 0;
-    var proxyFormId;
-    var transitionDuration = 100;
-    var vendor = (function () {
-        if( !window.getComputedStyle ){
-            return '';
-        }
-        var styles = window.getComputedStyle(document.documentElement, ''),
-          pre = (Array.prototype.slice
-            .call(styles)
-            .join('')
-            .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
-          )[1],
-          dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
-        return {
-          dom: dom,
-          lowercase: pre,
-          css: '-' + pre + '-',
-          js: pre[0].toUpperCase() + pre.substr(1)
-        };
-      })();
-    var vendorPrefix = vendor.lowercase;
-
-    function getCurrentView(){
-        var views = document.querySelectorAll('.mobi-vm-view');
-        for( var i = 0 ; i < views.length ; i++ ){
-            var selected = views[i].getAttribute('data-selected');
-            if( selected == "true" ){
-                return views[i].getAttribute('data-view');
-            }
-        }
-    }
-    function getNodeForView(view){
-        var views = document.querySelectorAll('.mobi-vm-view');
-        for( var i = 0 ; i < views.length ; i++ ){
-            var viewId = views[i].getAttribute('data-view');
-            if( viewId ==  view ){
-                return views[i];
-            }
-        }
-    }
-    function supportsTransitions(){
-        var b = document.body || document.documentElement;
-        var s = b.style;
-        var p = 'transition';
-        if(typeof s[p] == 'string') {return true; }
-
-        var v = ['Moz', 'Webkit', 'Khtml', 'O', 'ms'];
-        p = p.charAt(0).toUpperCase() + p.substr(1);
-        for(var i=0; i<v.length; i++) {
-          if(typeof s[v[i] + p] == 'string') { return true; }
-        }
-        return false;
-    }
-    function setOrientation(orient){
-        document.body.setAttribute("data-orient", orient);
-        if (orient == 'portrait'){
-            document.body.classList.remove('landscape');
-            document.body.classList.add('portrait');
-        }
-        else if (orient == 'landscape'){
-            document.body.classList.remove('portrait');
-            document.body.classList.add('landscape');
-        }
-        else{
-            document.body.classList.remove('portrait');
-            document.body.classList.remove('landscape');
-        }
-        setTimeout(scrollTo, 100, 0, 1);
-    }
-
-    function refreshViewDimensions(){
-        //console.log('refreshViewDimensions()');
-         document.body.style.overflowY = 'hidden';
-
-         if ((window.innerWidth != currentWidth) || (ice.mobi.windowHeight() != currentHeight)){
-            currentWidth = window.innerWidth;
-            currentHeight = ice.mobi.windowHeight();
-            var orient = (currentWidth < currentHeight) ? 'portrait' : 'landscape';
-            setOrientation(orient);
-        }
-        
-        var contentHeight = currentHeight - 39; //adjust for header
-        var currentView = getNodeForView(getCurrentView());
-        if( currentView ){
-            if( currentView.querySelectorAll('.mobi-vm-nav-bar').length > 0 ){
-                contentHeight -= 40; //adjust for nav bar if exists
-            }
-            var contentNode = currentView.querySelectorAll('.mobi-vm-view-content')[0];
-            if( contentNode ){
-                contentNode.style.height = '' + contentHeight + 'px';
-                //ice.log.debug(ice.log, 'set view content height to ' + contentHeight);
-            }
-            else{
-                console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find content node for view = ' + currentView.id);
-            }
-        }
-        var menuNode = document.querySelector('.mobi-vm-menu');
-        if( menuNode ){
-            menuNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
-        }
-        else
-            console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find menu node');
-        
-        var splashNode = document.querySelector('.mobi-vm-splash');
-        if( splashNode ){
-            splashNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
-        }
-
-    }
-    
-    function getTransitionFunctions(reverse){
-        if( 'horizontal' == transitionType ){
-            return [function(from,to){
-                setTransform(to, 'translateX(' + (reverse ? '-' : '') 
-                        + window.innerWidth +    'px)');
-            },function(from,to){
-                setTransform(from, 'translateX(' + (reverse ? '100%' : '-100%') + ')');
-                setTransform(to, 'translateX(0%)');
-            }];
-        }
-        else if( 'vertical' == transitionType ){
-            return [function(from,to){
-                setTransform(to, 'translateY(' + (reverse ? '-' : '') 
-                        + window.innerWidth +    'px)');
-            },function(from,to){
-                setTransform(from, 'translateY(' + (reverse ? '100%' : '-100%') + ')');
-                setTransform(to, 'translateY(0%)');
-            }];
-        }
-        else if( 'flip' == transitionType ){
-            return [function(from,to){
-                setTransform(to, 'rotateY(' + (reverse ? '-' : '') + '180deg)');
-            },function(from,to){
-                setTransform(from, 'rotateY(' + (reverse ? '180deg' : '-180deg') + ')');
-                setTransform(to, 'rotateY(0deg)');
-            }];
-        }
-        else if( 'fade' == transitionType ){
-            return [function(from,to){
-				setTransform(to, 'none');
-                setOpacity(to, '0');
-            },function(from,to){
-				setTransform(from, 'none');
-                setOpacity(from, '0');
-				setTransform(to, 'none');
-                setOpacity(to, '1');
-            }];
-        }
-        else if( 'pageturn' == transitionType ){
-            return [function(from,to){
-                var parent = to.parentNode;
-                parent.style.webkitPerspective = 1100;
-                parent.style.webkitPerspectiveOrigin = '50% 50%';
-                var fromMirror = document.createElement('div');
-                fromMirror.id = '_' + from.id;
-                fromMirror.style.width = '50%';
-                fromMirror.style.height = '100%';
-                fromMirror.style.position = 'absolute';
-                fromMirror.style.top = '0px';
-                fromMirror.style.right = '0px';
-                fromMirror.style.webkitTransformStyle = 'preserve-3d';
-                fromMirror.innerHTML = from.innerHTML;
-                fromMirror.style.webkitTransform = 'rotateY(180deg)';
-                to.parentNode.appendChild(fromMirror);
-                from.style.display = 'none';
-                parent.style.webkitTransitionProperty = '-webkit-transform';
-                parent.style.webkitTransitionDuration = '1000ms';
-                parent.style.webkitTransitionTimingFunction = 'ease';
-                parent.style.webkitTransformOrigin = 'left';
-                parent.style.webkitTransform = 'rotateY(-180deg)';
-            },function(from,to){
-                var fromMirror = document.getElementById('_'+from.id);
-                var parent = to.parentNode;
-                parent.removeChild(fromMirror);
-                parent.style.webkitTransform = 'none';
-                parent.style.webkitTransitionProperty = 'none';
-                parent.style.webkitPerspective = 'none';
-                parent.style.webkitPerspectiveOrigin = '';
-            }];
-        }
-    }
-    function transitionFunction(prop, toStart, from, toEnd){
-        return {prop:prop, toStart: toStart, from: from, toEnd: toEnd};
-    }
-    function setTransitionDuration(elem, val){
-        if( vendorPrefix )
-            elem.style[''+ vendorPrefix + 'TransitionDuration'] = val;
-        elem.style.transitionDuration = val;
-    }
-    function setTransform(elem, transform){
-        elem.style.transitionDuration = transitionDuration;
-        if( vendorPrefix ){
-            elem.style[''+ vendorPrefix + 'TransitionDuration'] = transitionDuration;
-            elem.style[''+ vendorPrefix + 'Transform'] = transform;
-        }
-        elem.style.transform = transform;
-    }
-    function setOpacity(elem, val){
-        elem.style.transitionDuration = transitionDuration;
-        elem.style.opacity = val;
-    }
-    function setTransitionEndListener(elem, f){
-        if( vendorPrefix )
-            elem.addEventListener(''+ vendorPrefix + 'TransitionEnd', f, false);
-        elem.addEventListener('transitionEnd', f, false);
-    }
-    function removeTransitionEndListener(elem, f){
-        if( vendorPrefix )
-            elem.removeEventListener(''+ vendorPrefix + 'TransitionEnd', f, false);
-        elem.removeEventListener('transitionEnd', f, false);
-    }
-    function updateViews(fromNode, toNode, reverse){
-        //ice.log.debug(ice.log, 'updateViews() enter');
-        if( supportsTransitions() ){
-            var transitions = getTransitionFunctions(reverse);
-            transitions[0](fromNode,toNode);
-            toNode.setAttribute('data-selected', 'true');
-            setTransitionDuration(toNode, '');
-            setTimeout(transitionComplete, transitionDuration);
-            setTimeout(function(){
-                //ice.log.debug(ice.log, 'transition() for transition supported');
-                transitions[1](fromNode,toNode);
-            }, 0);
-        } 
-        else{
-            toNode.style.left = "100%";
-            scrollTo(0, 1);
-            toNode.setAttribute('data-selected', 'true');
-            var percent = 100;
-            transition();
-            var timer = setInterval(transition, 0);
-
-            function transition(){
-                //ice.log.debug(ice.log, 'transition() for transition unsupported');
-                percent -= 20;
-                if (percent <= 0){
-                    percent = 0;
-                    clearInterval(timer);
-                    transitionComplete();
-                }
-                fromNode.style.left = (reverse ? (100-percent) : (percent-100)) + "%"; 
-                toNode.style.left = (reverse ? -percent : percent) + "%"; 
-            }
-        }
-        
-        function transitionComplete(){
-            //ice.log.debug(ice.log, 'transitionComplete');
-            if( fromNode )
-                fromNode.removeAttribute('data-selected');
-            checkTimer = setTimeout(refreshViewDimensions, 0);
-            setTimeout(refreshView, 0, toNode);
-            if( fromNode )
-                removeTransitionEndListener(fromNode, transitionComplete);
-        }
-        //ice.log.debug(ice.log, 'updateViews() exit');
-    }
-    function refreshBackButton(toNode){
-        //ice.log.debug(ice.log, 'refreshBackButton()');
-        var headerNode = document.querySelectorAll('.mobi-vm-header')[0];
-        var backButton = headerNode.children[1];
-        
-        var selected = getCurrentView();
-        if (backButton){
-            if( viewHistory.length == 1 ){
-                backButton.style.display = "none";
-                return;
-            }
-            else{
-                var prev = viewHistory[viewHistory.length-2];
-                if (prev ){
-                    var prevView = getNodeForView(prev);
-                    if( prevView ){
-                        backButton.style.display = "inline";
-                        var title = prevView.getAttribute('data-title'),
-                            backButtonLabel = backButton.getAttribute('data-backbutton-label') == 'mobi-view' ? 
-                                (title ? title : "Back") : backButton.getAttribute('data-backbutton-label'),
-                            backButtonText = backButton.querySelector('.mobi-vm-back-text');
-                        backButtonText.innerHTML = backButtonLabel;
-                    }
-                }
-            }
-        }
-    }
-    function refreshBackButtonAndViewDimensions(){
-        var currentView = getNodeForView(getCurrentView());
-        refreshBackButton(currentView);
-        refreshViewDimensions();
-    }
-    function refreshView(toNode){
-        //ice.log.debug(ice.log, 'refreshView()');
-        var headerNode = document.querySelectorAll('.mobi-vm-header')[0];
-        var titleNode = headerNode.firstChild;
-        var title = toNode.getAttribute('data-title');
-        if (title){
-            titleNode.innerHTML = title;
-        }
-        refreshBackButton();
-        
-    }
-    function viewHasNavBar(view){
-        return view.querySelectorAll('.mobi-vm-nav-bar').length > 0;
-    }
-    
-    function indexOfView(view){
-        var views = document.querySelectorAll('.mobi-vm-view');
-        for( var i = 0 ; i < views.length ; i++ ){
-            if( views[i].getAttribute('data-view') === view ){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    function isClientSide(){
-        var root = document.querySelector('.mobi-vm'),
-            clientAttr = root ? root.getAttribute('data-clientside') : null;
-        return clientAttr ? clientAttr == 'true' : false;
-    }
-    
-    im.viewManager = {
-        showView: function(view, event){
-            //ice.log.debug(ice.log, 'showView(' + view + ') current');
-            var currentView = getCurrentView();
-            if( view == currentView ){
-                return;
-            }
-            var views = document.querySelectorAll('.mobi-vm-view'),
-                toNode = getNodeForView(view),
-                toIndex = indexOfView(view),
-                fromNode = getNodeForView(currentView),
-                fromIndex = indexOfView(currentView);
-            if (viewHistory.indexOf(view) > -1){
-                viewHistory.splice(viewHistory.indexOf(view));
-            }
-            viewHistory.push(view);
-            if( toNode && fromNode ){
-                setTimeout(updateViews, 0, fromNode, toNode, toIndex < fromIndex);
-            }
-            else if( toNode ){
-                toNode.setAttribute('data-selected', 'true');
-            }
-            document.getElementById("mobi_vm_selected").value = view;
-            if( isClientSide() ){
-                im.resizeAllContainers();
-            }
-            else{
-                jsf.ajax.request(proxyFormId,event,{execute:'@form', render:'@all'});
-            }
-            
-            return false;
-        },
-        goBack: function(event){
-            var goTo = viewHistory.slice(-2,-1)[0];
-            if( goTo != undefined ){
-                im.viewManager.showView(goTo, event);
-            }
-            else{
-                console.error('ViewManager.goBack() invalid state history = ' + viewHistory);
-            }
-        },
-        setState: function(transition, formId, vHistory){
-            if( vHistory.length < 1 ){
-                console.error('invalid empty history added to ViewManager.setState() aborting');
-                return;
-            }
-            var view = vHistory[vHistory.length-1],
-                       currentView = getCurrentView();
-            transitionType = transition;
-            proxyFormId = formId;
-            viewHistory = vHistory;
-            if( !currentView && !view ){
-                  document.querySelector('.mobi-vm-header').firstChild.innerHTML = document.querySelector('.mobi-vm').getAttribute('data-title');
-                  document.querySelector('.mobi-vm-menu').setAttribute('data-selected', 'true');
-            }
-            else if( view != currentView){
-                var toNode = getNodeForView(view);
-                if( toNode ){
-                    toNode.setAttribute('data-selected', 'true');
-                    document.getElementById("mobi_vm_selected").value = view;
-                }
-            }
-            
-            refreshBackButtonAndViewDimensions();
-            ice.mobi.addListener(window, 'resize', refreshViewDimensions);
-            ice.mobi.addListener(window, 'orientationchange', refreshViewDimensions);
-        }
-        
-    }
-}(ice.mobi));
 
 ice.mobi.fallback = {};
 ice.mobi.fallback.setupLaunchFailed = function(regularId, fallbackId) {

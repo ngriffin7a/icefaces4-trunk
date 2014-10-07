@@ -42,6 +42,7 @@ import javax.faces.component.UIComponent;
     tlddoc = "The mobi:sms component renders a button that allows sending an SMS message, using the bridgeit app."
 )
 @ResourceDependencies({
+        @ResourceDependency(library="icefaces.ace", name = "jquery/jquery.js"),
         @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
 })
