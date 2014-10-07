@@ -74,7 +74,9 @@ import java.util.List;
 @ICEResourceDependencies({
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
-    @ICEResourceDependency(name = "util/ace-yui.js")
+    @ICEResourceDependency(name = "util/ace-yui.js"),
+    @ICEResourceDependency(name = "tabset/tabset.js")
+
 })
 @ClientBehaviorHolder(events = {
     @ClientEvent(name="clientSideTabChange",
