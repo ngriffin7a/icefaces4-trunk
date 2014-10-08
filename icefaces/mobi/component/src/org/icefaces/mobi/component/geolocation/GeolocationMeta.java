@@ -40,11 +40,9 @@ import javax.faces.application.ResourceDependency;
         " html5 navigator API."
 )
 @ResourceDependencies({
-                          @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
-                      })
-/*@ClientBehaviorHolder(events = {
-    @ClientEvent(name = "activate", javadoc = "...", tlddoc = "...", defaultRender = "@this", defaultExecute = "@all")
-}, defaultEvent = "activate") */
+    @ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
+    @ResourceDependency(library = "org.icefaces.component.geolocation", name = "geolocation.js")
+})
 public class GeolocationMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc = "Latitude of mobile device in decimal degrees.")
