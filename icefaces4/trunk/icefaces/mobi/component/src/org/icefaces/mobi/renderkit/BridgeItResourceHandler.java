@@ -18,37 +18,38 @@ package org.icefaces.mobi.renderkit;
 
 import org.icefaces.impl.util.Base64;
 import org.icefaces.impl.util.Util;
-import org.icefaces.util.EnvUtils;
 
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.PreRenderViewEvent;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class BridgeItResourceHandler extends ResourceHandlerWrapper {
+    private static final String DEFAULT_BRIDGEIT_JS_URI = "http://api.bridgeit.mobi/bridgeit/v1.x-latest/bridgeit.js";
+    private static String BRIDGEIT_JS_URI = "org.icefaces.mobi.bridgeit.javaScriptURI";
 	private static final String BRIDGEIT_API = "core/bridgeit.js";
 	private static final String ICEFACES_MOBI_LIB = "icefaces.mobi";
     private static final byte[] NO_BYTES = new byte[0];
     private ResourceHandler handler;
-    private Resource apiJS = null;
+    private Resource apiJS;
+    private String uri;
 
     public BridgeItResourceHandler(ResourceHandler handler) {
         this.handler = handler;
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        uri = context.getExternalContext().getInitParameter(BRIDGEIT_JS_URI);
+        if (uri == null || uri.trim().length() == 0) {
+            uri = DEFAULT_BRIDGEIT_JS_URI;
+        }
     }
 
     public ResourceHandler getWrapped() {
@@ -66,8 +67,9 @@ public class BridgeItResourceHandler extends ResourceHandlerWrapper {
     public Resource createResource(String resourceName, String libraryName, String contentType) {
         if (BRIDGEIT_API.equals(resourceName)) {
             if (apiJS == null) {
-                    apiJS = recreateResource(super.createResource(resourceName, ICEFACES_MOBI_LIB),
-                            "http://bridgeit.github.io/bridgeit.js/src/bridgeit.js");
+                FacesContext context = FacesContext.getCurrentInstance();
+                String resolvedURI = context.getApplication().getViewHandler().getResourceURL(context, uri);
+                        apiJS = recreateResource(super.createResource(resourceName, ICEFACES_MOBI_LIB), resolvedURI);
             }
             return apiJS;
         } else {
