@@ -34,6 +34,11 @@
             <resource name="dataview.js" library="org.icefaces.component.dataview"/>
         </requires>
     </resource>
+    <resource name="geolocation.js" library="org.icefaces.component.geolocation">
+        <requires>
+            <resource name="component.js" library="org.icefaces.component.util"/>
+        </requires>
+    </resource>
     <resource name="core/bridgeit.js"  library="icefaces.mobi">
         <requires>
             <resource name="util/ace-jquery.js" library="icefaces.ace"/>
