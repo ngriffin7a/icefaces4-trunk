@@ -150,7 +150,7 @@
     <resource name="gmap/gmap.js" library="icefaces.ace">
         <requires>
             <resource name="util/ace-core.js" library="icefaces.ace"/>
-            <resource name="gmap/gmap-api.js" library="icefaces.ace"/>
+            <resource name="gmap/api.js" library="icefaces.ace"/>
         </requires>
     </resource>
 
