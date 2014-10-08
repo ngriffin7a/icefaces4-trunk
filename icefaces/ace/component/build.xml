@@ -51,9 +51,9 @@
     <property name="smartsprites.basedir" location="../tools/smartsprites"/>
 
     <!-- combined resources -->
-    <property name="ace-yui.js.base" value="${resources}/icefaces.ace/util/ace-yui"/>
-    <property name="ace-yui.js" location="${ace-yui.js.base}.js"/>
-    <property name="ace-yui.js.uncompressed" location="${ace-yui.js.base}.uncompressed.js"/>
+    <property name="ace-tabset.js.base" value="${resources}/icefaces.ace/util/ace-tabset"/>
+    <property name="ace-tabset.js" location="${ace-tabset.js.base}.js"/>
+    <property name="ace-tabset.js.uncompressed" location="${ace-tabset.js.base}.uncompressed.js"/>
     <property name="ace-core.js.base" value="${resources}/icefaces.ace/util/ace-core"/>
     <property name="ace-core.js" location="${ace-core.js.base}.js"/>
     <property name="ace-core.js.uncompressed" location="${ace-core.js.base}.uncompressed.js"/>
@@ -192,17 +192,17 @@
     </target>
 
     <target name="res-js-combine">
-        <!-- ace-yui.js -->
-        <available file="${ace-yui.js.uncompressed}" property="ace-yui.js.uncompressed.present"/>
-        <delete file="${ace-yui.js.uncompressed}" verbose="${ace-yui.js.uncompressed.present}"/>
-        <concat destfile="${ace-yui.js.uncompressed}" force="true" fixlastline="true">
+        <!-- ace-tabset.js -->
+        <available file="${ace-tabset.js.uncompressed}" property="ace-tabset.js.uncompressed.present"/>
+        <delete file="${ace-tabset.js.uncompressed}" verbose="${ace-tabset.js.uncompressed.present}"/>
+        <concat destfile="${ace-tabset.js.uncompressed}" force="true" fixlastline="true">
             <filelist dir="${resources}">
                 <file name="yui/2_8_2/yahoo/yahoo.js"/>
                 <file name="yui/2_8_2/dom/dom.js"/>
                 <file name="yui/2_8_2/event/event.js"/>
                 <file name="yui/2_8_2/element/element.js"/>
                 <file name="yui/2_8_2/tabview/tabview.js"/>
-                <file name="icefaces.ace/util/component.js"/>
+                <file name="icefaces.ace/tabset/component.js"/> 
                 <file name="icefaces.ace/tabset/tabset.js"/>
             </filelist>
         </concat>
@@ -286,8 +286,8 @@
     </macrodef>
 
     <target name="res-js-compress" depends="res-js-combine" unless="no-compress">
-        <echo message="Compressing ace-yui.js"/>
-        <minify src="${ace-yui.js.uncompressed}" dest="${ace-yui.js}"/>
+        <echo message="Compressing ace-tabset.js"/>
+        <minify src="${ace-tabset.js.uncompressed}" dest="${ace-tabset.js}"/>
         <echo message="Compressing ace-core.js"/>
         <minify src="${ace-core.js.uncompressed}" dest="${ace-core.js}"/>
         <echo message="Compressing ace-jquery-ui.js"/>
@@ -302,7 +302,7 @@
 
     <target name="res-js-no-compress" depends="res-js-combine" if="no-compress">
         <echo message="Not compressing combined javascript code"/>
-        <copy file="${ace-yui.js.uncompressed}" tofile="${ace-yui.js}" overwrite="yes">
+        <copy file="${ace-tabset.js.uncompressed}" tofile="${ace-tabset.js}" overwrite="yes">
         </copy>
         <copy file="${ace-core.js.uncompressed}" tofile="${ace-core.js}" overwrite="yes">
         </copy>
@@ -523,8 +523,8 @@
         <delete dir="${dist}"/>
         <antcall target="clean-skins"/>
         <subant buildpath="${cssurlmapper.rootdir}" target="clean"/>
-        <delete file="${ace-yui.js.uncompressed}"/>
-        <delete file="${ace-yui.js}"/>
+        <delete file="${ace-tabset.js.uncompressed}"/>
+        <delete file="${ace-tabset.js}"/>
         <delete file="${resources}/icefaces.ace/util/combined.css"/>
         <delete file="${ace-core.js.uncompressed}"/>
         <delete file="${ace-core.js}"/>
