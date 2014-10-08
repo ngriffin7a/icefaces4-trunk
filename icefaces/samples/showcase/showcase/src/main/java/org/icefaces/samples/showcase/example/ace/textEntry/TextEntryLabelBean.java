@@ -64,7 +64,9 @@ public class TextEntryLabelBean extends ComponentExampleImpl<TextEntryLabelBean>
     public TextEntryLabelBean() {
         super(TextEntryLabelBean.class);
     }
-    
+
+    public String getBeanName() { return BEAN_NAME; }
+
     public String getFirstLabelText() {
         return firstLabelText;
     }
