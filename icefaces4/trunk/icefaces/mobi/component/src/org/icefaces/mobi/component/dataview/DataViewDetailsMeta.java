@@ -26,8 +26,8 @@ import org.icefaces.ace.meta.annotation.Component;
         extendsClass = "javax.faces.component.UIComponentBase",
         componentFamily = "org.icefaces.DataViewDetails",
         tlddoc = "The child components of this component define the region to be displayed when a row object of DataView " +
-                "table region is activated. When DataView 'activationMode' is set to 'server' the child components of this " +
-                "region may be arbitrary JSF components. When 'activationMode' is set to 'client' the child components of this " +
+                "table region is activated. When DataView uses ajax, the child components of this " +
+                "region may be arbitrary JSF components. When DataView doesn't use ajax, the child components of this " +
                 "region are prerendered and have their dynamic attributes cached on the client to allow instanteous activation. " +
                 "Client activation mode is restricted to particular components and only particular attributes of these components " +
                 "may be dynamic, the specifics are documented on our wiki."

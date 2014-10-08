@@ -39,7 +39,10 @@ import org.icefaces.ace.meta.annotation.ClientEvent;
             "defined with the required DataViewColumns component child, and a detail region for " +
             "extensive viewing (and editing) of the row objects of the table model. The detail region" +
             "is defined with the DataViewDetails child component and it's contents are displayed when a " +
-            "row of table region is activated, typically by a row tap."
+            "row of table region is activated, typically by a row tap." +
+			"When using ajax, the detail region may contain arbitrary JSF components and is dynamically rendered with the ajax " + "request. When not using ajax, the detail region display logic is done entirely in the client, from " +
+			"an existing rendering of the details region for each row. The components " +
+			"and attributes supported for client-mode rendering are limited, mostly consisting of the standard h:* components."
 )
 @ResourceDependencies({
     @ResourceDependency(library="icefaces.ace", name = "util/ace-core.js"),
