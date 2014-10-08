@@ -298,6 +298,13 @@
         <minify src="${ace-menu.js.uncompressed}" dest="${ace-menu.js}"/>
         <echo message="Compressing ace-chart.js"/>
         <minify src="${ace-chart.js.uncompressed}" dest="${ace-chart.js}"/>
+        <echo message="Compressing jquery.js"/>
+        <minify src="${resources}/icefaces.ace/jquery/jquery.js" dest="${resources}/icefaces.ace/jquery/jquery.compressed.js"/>
+        <echo message="Compressing other javascript resources"/>
+        <minify src="${resources}/icefaces.ace/accordion/accordion.js" dest="${resources}/icefaces.ace/accordion/accordion.compressed.js"/>
+        <minify src="${resources}/icefaces.ace/animation/animation.js" dest="${resources}/icefaces.ace/animation/animation.compressed.js"/>
+        <minify src="${resources}/icefaces.ace/autocompleteentry/autocompleteentry.js" dest="${resources}/icefaces.ace/autocompleteentry/autocompleteentry.compressed.js"/>
+        
     </target>
 
     <target name="res-js-no-compress" depends="res-js-combine" if="no-compress">
@@ -536,6 +543,9 @@
         <delete file="${ace-menu.js}"/>
         <delete file="${ace-chart.js.uncompressed}"/>
         <delete file="${ace-chart.js}"/>
+		<delete>
+			<fileset dir="${resources}/icefaces.ace/" includes="**/*.compressed.js"/>
+		</delete>
     </target>
 
     <target name="skins"

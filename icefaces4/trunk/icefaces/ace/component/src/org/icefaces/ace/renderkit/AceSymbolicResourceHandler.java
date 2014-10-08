@@ -51,6 +51,14 @@ public class AceSymbolicResourceHandler extends ResourceHandlerWrapper {
                                 resourceName.equals("chart/ace-chart.js"))))) {
             String uncompressedResourceName = resourceName.replaceAll("\\.", ".uncompressed.");
             return super.createResource(uncompressedResourceName, libraryName, contentType);
+		} else if (!uncompress && libraryName != null &&
+                ((libraryName.equals("icefaces.ace") &&
+					(resourceName.equals("jquery/jquery.js") ||
+                                resourceName.equals("accordion/accordion.js") ||
+                                resourceName.equals("animation/animation.js") ||
+                                resourceName.equals("autocompleteentry/autocompleteentry.js"))))) {
+            String compressedResourceName = resourceName.replaceAll("\\.", ".compressed.");
+            return super.createResource(compressedResourceName, libraryName, contentType);
         } else {
             return super.createResource(resourceName, libraryName, contentType);
         }
