@@ -22,6 +22,8 @@ import org.icefaces.ace.meta.annotation.Property;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
+import org.icefaces.ace.meta.annotation.ClientEvent;
 
 
 @Component(
@@ -48,6 +50,12 @@ import javax.faces.application.ResourceDependency;
     @ResourceDependency( library = "org.icefaces.component.dataview", name="dataviewcontroller.js"),
 	@ResourceDependency( library = "org.icefaces.component.dataview", name = "dataview.js" )
 })
+@ClientBehaviorHolder(events = {
+	@ClientEvent(name="select", 
+	        javadoc="Fired when a row is selected. It enables server-side updates of the details area.",
+	        tlddoc="Fired when a row is selected. It enables server-side updates of the details area.",
+	        defaultRender="@all", defaultExecute="@this")
+}, defaultEvent="select")
 public class DataViewMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Disables this component, so it does not receive focus or get submitted.")
     boolean disabled;
@@ -80,14 +88,4 @@ public class DataViewMeta extends UIComponentBaseMeta {
             "The detail region components instances are not updated until DataView.initDetailContext() is called. " +
             "initDetailContext is regularly called within the component phase iterations. A value of -1 (or any negative value) is interpreted as no row being active at that moment.")
     Integer activeRowIndex;
-
-    @Property(defaultValue = "org.icefaces.mobi.component.dataview.ActivationMode.server",
-              defaultValueType = DefaultValueType.EXPRESSION,
-              tlddoc = "This enumeration defines the operation of the detail region. When set to 'server' (the default) " +
-                      "the detail region may contain arbitrary JSF components and is rendered by an ajax request. " +
-                      "When set to 'client' an activation 'renders' the detail region by updating, entirely on the client, " +
-                      "an existing rendering with the dynamic attributes unique to an iterative rendering. The components " +
-                      "and attributes supported for client encoding are limited, though growing with new releases and user desire." +
-                      "Specifics can be found on our wiki at: http://www.icesoft.org/wiki/display/icemobile/DataView")
-    ActivationMode activationMode;
 }
