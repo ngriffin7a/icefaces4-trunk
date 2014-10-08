@@ -56,8 +56,44 @@ public class AceSymbolicResourceHandler extends ResourceHandlerWrapper {
 					(resourceName.equals("jquery/jquery.js") ||
                                 resourceName.equals("accordion/accordion.js") ||
                                 resourceName.equals("animation/animation.js") ||
-                                resourceName.equals("autocompleteentry/autocompleteentry.js"))))) {
-            String compressedResourceName = resourceName.replaceAll("\\.", ".compressed.");
+                                resourceName.equals("autocompleteentry/autocompleteentry.js") ||
+                                resourceName.equals("checkboxbutton/checkboxbutton.js") ||
+                                resourceName.equals("combobox/combobox.js") ||
+                                resourceName.equals("confirmationdialog/confirmationdialog.js") ||
+                                resourceName.equals("datetimeentry/datetimeentry.js") ||
+                                resourceName.equals("datetimeentry/jquery-ui-timepicker-addon.js") ||
+                                resourceName.equals("dialog/dialog.js") ||
+                                resourceName.equals("dnd/dragdrop.js") ||
+                                resourceName.equals("fileEntry/fileEntry.js") ||
+                                resourceName.equals("gmap/gmap.js") ||
+                                resourceName.equals("growlmessages/growlmessages.js") ||
+                                resourceName.equals("growlmessages/jquery.jgrowl.js") ||
+                                resourceName.equals("linkbutton/linkbutton.js") ||
+                                resourceName.equals("list/list.js") ||
+                                resourceName.equals("listcontrol/listcontrol.js") ||
+                                resourceName.equals("maskedentry/maskedentry.js") ||
+                                resourceName.equals("messages/messages.js") ||
+                                resourceName.equals("notificationpanel/notificationpanel.js") ||
+                                resourceName.equals("panel/panel.js") ||
+                                resourceName.equals("printer/printer.js") ||
+                                resourceName.equals("progressbar/progressbar.js") ||
+                                resourceName.equals("pushbutton/pushbutton.js") ||
+                                resourceName.equals("radiobutton/radiobutton.js") ||
+                                resourceName.equals("resizable/resizable.js") ||
+                                resourceName.equals("richtextentry/richtextentry.js") ||
+                                resourceName.equals("selectmenu/selectmenu.js") ||
+                                resourceName.equals("simpleselectonemenu/simpleselectonemenu.js") ||
+                                resourceName.equals("sliderentry/slider.js") ||
+                                resourceName.equals("splitpane/splitpane.js") ||
+                                resourceName.equals("submitmonitor/submitmonitor.js") ||
+                                resourceName.equals("textareaentry/textareaentry.js") ||
+                                resourceName.equals("textentry/textentry.js") ||
+                                resourceName.equals("themeselect/themeselect.js") ||
+                                resourceName.equals("tooltip/tooltip.js") ||
+                                resourceName.equals("tooltip/jquery.qtip-2.0.0.js") ||
+                                resourceName.equals("tree/tree.js") ||
+                                resourceName.equals("util/blockui.js"))))) {
+            String compressedResourceName = resourceName.replaceAll("\\.js$", ".c.js");
             return super.createResource(compressedResourceName, libraryName, contentType);
         } else {
             return super.createResource(resourceName, libraryName, contentType);

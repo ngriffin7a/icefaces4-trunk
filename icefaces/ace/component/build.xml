@@ -298,13 +298,49 @@
         <minify src="${ace-menu.js.uncompressed}" dest="${ace-menu.js}"/>
         <echo message="Compressing ace-chart.js"/>
         <minify src="${ace-chart.js.uncompressed}" dest="${ace-chart.js}"/>
-        <echo message="Compressing jquery.js"/>
-        <minify src="${resources}/icefaces.ace/jquery/jquery.js" dest="${resources}/icefaces.ace/jquery/jquery.compressed.js"/>
-        <echo message="Compressing other javascript resources"/>
-        <minify src="${resources}/icefaces.ace/accordion/accordion.js" dest="${resources}/icefaces.ace/accordion/accordion.compressed.js"/>
-        <minify src="${resources}/icefaces.ace/animation/animation.js" dest="${resources}/icefaces.ace/animation/animation.compressed.js"/>
-        <minify src="${resources}/icefaces.ace/autocompleteentry/autocompleteentry.js" dest="${resources}/icefaces.ace/autocompleteentry/autocompleteentry.compressed.js"/>
-        
+		<echo message="Compressing jquery.js"/>
+		<minify src="${resources}/icefaces.ace/jquery/jquery.js" dest="${resources}/icefaces.ace/jquery/jquery.c.js"/>
+		<echo message="Compressing other javascript resources"/>
+		<minify src="${resources}/icefaces.ace/accordion/accordion.js" dest="${resources}/icefaces.ace/accordion/accordion.c.js"/>
+		<minify src="${resources}/icefaces.ace/animation/animation.js" dest="${resources}/icefaces.ace/animation/animation.c.js"/>
+		<minify src="${resources}/icefaces.ace/autocompleteentry/autocompleteentry.js" dest="${resources}/icefaces.ace/autocompleteentry/autocompleteentry.c.js"/>
+		<minify src="${resources}/icefaces.ace/combobox/combobox.js" dest="${resources}/icefaces.ace/combobox/combobox.c.js"/>
+		<minify src="${resources}/icefaces.ace/checkboxbutton/checkboxbutton.js" dest="${resources}/icefaces.ace/checkboxbutton/checkboxbutton.c.js"/>
+		<minify src="${resources}/icefaces.ace/confirmationdialog/confirmationdialog.js" dest="${resources}/icefaces.ace/confirmationdialog/confirmationdialog.c.js"/>
+		<minify src="${resources}/icefaces.ace/datetimeentry/datetimeentry.js" dest="${resources}/icefaces.ace/datetimeentry/datetimeentry.c.js"/>
+		<minify src="${resources}/icefaces.ace/datetimeentry/jquery-ui-timepicker-addon.js" dest="${resources}/icefaces.ace/datetimeentry/jquery-ui-timepicker-addon.c.js"/>
+		<minify src="${resources}/icefaces.ace/dialog/dialog.js" dest="${resources}/icefaces.ace/dialog/dialog.c.js"/>
+		<minify src="${resources}/icefaces.ace/dnd/dragdrop.js" dest="${resources}/icefaces.ace/dnd/dragdrop.c.js"/>
+		<minify src="${resources}/icefaces.ace/fileEntry/fileEntry.js" dest="${resources}/icefaces.ace/fileEntry/fileEntry.c.js"/>
+		<minify src="${resources}/icefaces.ace/gmap/gmap.js" dest="${resources}/icefaces.ace/gmap/gmap.c.js"/>
+		<minify src="${resources}/icefaces.ace/growlmessages/growlmessages.js" dest="${resources}/icefaces.ace/growlmessages/growlmessages.c.js"/>
+		<minify src="${resources}/icefaces.ace/growlmessages/jquery.jgrowl.js" dest="${resources}/icefaces.ace/growlmessages/jquery.jgrowl.c.js"/>
+		<minify src="${resources}/icefaces.ace/linkbutton/linkbutton.js" dest="${resources}/icefaces.ace/linkbutton/linkbutton.c.js"/>
+		<minify src="${resources}/icefaces.ace/list/list.js" dest="${resources}/icefaces.ace/list/list.c.js"/>
+		<minify src="${resources}/icefaces.ace/listcontrol/listcontrol.js" dest="${resources}/icefaces.ace/listcontrol/listcontrol.c.js"/>
+		<minify src="${resources}/icefaces.ace/maskedentry/maskedentry.js" dest="${resources}/icefaces.ace/maskedentry/maskedentry.c.js"/>
+		<minify src="${resources}/icefaces.ace/messages/messages.js" dest="${resources}/icefaces.ace/messages/messages.c.js"/>
+		<minify src="${resources}/icefaces.ace/notificationpanel/notificationpanel.js" dest="${resources}/icefaces.ace/notificationpanel/notificationpanel.c.js"/>
+		<minify src="${resources}/icefaces.ace/panel/panel.js" dest="${resources}/icefaces.ace/panel/panel.c.js"/>
+		<minify src="${resources}/icefaces.ace/printer/printer.js" dest="${resources}/icefaces.ace/printer/printer.c.js"/>
+		<minify src="${resources}/icefaces.ace/progressbar/progressbar.js" dest="${resources}/icefaces.ace/progressbar/progressbar.c.js"/>
+		<minify src="${resources}/icefaces.ace/pushbutton/pushbutton.js" dest="${resources}/icefaces.ace/pushbutton/pushbutton.c.js"/>
+		<minify src="${resources}/icefaces.ace/radiobutton/radiobutton.js" dest="${resources}/icefaces.ace/radiobutton/radiobutton.c.js"/>
+		<minify src="${resources}/icefaces.ace/resizable/resizable.js" dest="${resources}/icefaces.ace/resizable/resizable.c.js"/>
+		<minify src="${resources}/icefaces.ace/richtextentry/richtextentry.js" dest="${resources}/icefaces.ace/richtextentry/richtextentry.c.js"/>
+		<minify src="${resources}/icefaces.ace/selectmenu/selectmenu.js" dest="${resources}/icefaces.ace/selectmenu/selectmenu.c.js"/>
+		<minify src="${resources}/icefaces.ace/simpleselectonemenu/simpleselectonemenu.js" dest="${resources}/icefaces.ace/simpleselectonemenu/simpleselectonemenu.c.js"/>
+		<minify src="${resources}/icefaces.ace/sliderentry/slider.js" dest="${resources}/icefaces.ace/sliderentry/slider.c.js"/>
+		<minify src="${resources}/icefaces.ace/splitpane/splitpane.js" dest="${resources}/icefaces.ace/splitpane/splitpane.c.js"/>
+		<minify src="${resources}/icefaces.ace/submitmonitor/submitmonitor.js" dest="${resources}/icefaces.ace/submitmonitor/submitmonitor.c.js"/>
+		<minify src="${resources}/icefaces.ace/textareaentry/textareaentry.js" dest="${resources}/icefaces.ace/textareaentry/textareaentry.c.js"/>
+		<minify src="${resources}/icefaces.ace/textentry/textentry.js" dest="${resources}/icefaces.ace/textentry/textentry.c.js"/>
+		<minify src="${resources}/icefaces.ace/themeselect/themeselect.js" dest="${resources}/icefaces.ace/themeselect/themeselect.c.js"/>
+		<minify src="${resources}/icefaces.ace/tooltip/tooltip.js" dest="${resources}/icefaces.ace/tooltip/tooltip.c.js"/>
+		<minify src="${resources}/icefaces.ace/tooltip/jquery.qtip-2.0.0.js" dest="${resources}/icefaces.ace/tooltip/jquery.qtip-2.0.0.c.js"/>
+		<minify src="${resources}/icefaces.ace/tree/tree.js" dest="${resources}/icefaces.ace/tree/tree.c.js"/>
+		<minify src="${resources}/icefaces.ace/util/blockui.js" dest="${resources}/icefaces.ace/util/blockui.c.js"/>
+
     </target>
 
     <target name="res-js-no-compress" depends="res-js-combine" if="no-compress">
@@ -544,7 +580,7 @@
         <delete file="${ace-chart.js.uncompressed}"/>
         <delete file="${ace-chart.js}"/>
 		<delete>
-			<fileset dir="${resources}/icefaces.ace/" includes="**/*.compressed.js"/>
+			<fileset dir="${resources}/icefaces.ace/" includes="**/*.c.js"/>
 		</delete>
     </target>
 
