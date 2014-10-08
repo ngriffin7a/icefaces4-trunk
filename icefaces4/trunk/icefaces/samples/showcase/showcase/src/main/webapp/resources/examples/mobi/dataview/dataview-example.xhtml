@@ -55,8 +55,8 @@
         <h:commandButton value="Text"
                             styleClass="footButton"
                             actionListener="#{dataViewBean.toggleTextColVis}"/>
-        <mobi:dataView value="#{dataViewBean.cars}" var="car" activationMode="server"
-                       rowStripe="true">
+        <mobi:dataView value="#{dataViewBean.cars}" var="car" rowStripe="true">
+			<ace:ajax />
             <mobi:dataViewDetails>
                 <h:panelGrid columns="3" styleClass="innerBorder">
                     <h:outputText value="Name"/>
