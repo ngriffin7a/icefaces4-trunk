@@ -24,6 +24,7 @@ import org.icefaces.mobi.model.dataview.DataViewColumnModel;
 import org.icefaces.mobi.model.dataview.DataViewColumnsModel;
 import org.icefaces.mobi.model.dataview.DataViewDataModel;
 import org.icefaces.mobi.model.dataview.IndexedIterator;
+import org.icefaces.mobi.renderkit.CoreRenderer;
 
 import javax.el.ELContext;
 import javax.el.ValueExpression;
@@ -31,7 +32,6 @@ import javax.faces.component.*;
 import javax.faces.component.html.*;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.Renderer;
 import java.io.IOException;
 import java.io.OptionalDataException;
 import java.text.DateFormat;
@@ -39,8 +39,16 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class DataViewRenderer extends Renderer {
+public class DataViewRenderer extends CoreRenderer {
     private static final Logger logger = Logger.getLogger(DataViewRenderer.class.getName());
+
+	public void decode(FacesContext facesContext, UIComponent uiComponent) {
+		Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
+		Object sourceId = requestMap.get("ice.event.captured");
+		if (sourceId != null && sourceId.toString().equals(uiComponent.getClientId(facesContext))) { 
+			decodeBehaviors(facesContext, (DataView) uiComponent);
+		}
+	}
 
     @Override
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
@@ -89,9 +97,11 @@ public class DataViewRenderer extends Renderer {
         writer.startElement(HTML.SCRIPT_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, HTML.SCRIPT_TYPE_TEXT_JAVASCRIPT, null);
 
+		String activationMode = dataView.getClientBehaviors().isEmpty() ? "client" : "server";
         String cfg = "{";
-        cfg += "active:'" + dataView.getActivationMode() + "'";
+        cfg += "active:'" + activationMode + "'";
         cfg += ",disabled:" + dataView.isDisabled();
+		cfg += encodeClientBehaviors(context, dataView, "action").toString();
         cfg += "}";
 
         String js =
@@ -272,7 +282,7 @@ public class DataViewRenderer extends Renderer {
             if (activeIndex != null && activeIndex.equals(index))
                 writer.writeAttribute(HTML.CLASS_ATTR, DataView.DATAVIEW_ROW_ACTIVE_CLASS, null);
 
-            if (ActivationMode.client.equals(dataView.getActivationMode()))
+            if (dataView.getClientBehaviors().isEmpty())
                 writer.writeAttribute("data-state", encodeRowDetailString(context, dvId, detailHolders), null);
 
             for (IndexedIterator<DataViewColumnModel> columnModelIterator = columnModel.iterator(); columnModelIterator.hasNext();)
@@ -505,8 +515,8 @@ public class DataViewRenderer extends Renderer {
         Integer index = dataView.getActiveRowIndex();
         String var = dataView.getVar();
         String rowIndexVar = dataView.getRowIndexVar();
-        ActivationMode activeMode = dataView.getActivationMode();
-        boolean active = ActivationMode.client.equals(activeMode) || (ActivationMode.server.equals(activeMode) && index != null && index >= 0);
+        String activationMode = dataView.getClientBehaviors().isEmpty() ? "client" : "server";
+        boolean active = "client".equals(activationMode) || ("server".equals(activationMode) && index != null && index >= 0);
         Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
 
         if (index != null && index >= 0) {

@@ -67,7 +67,7 @@ public class DataView extends DataViewBase implements NamingContainer {
         pushComponentToEL(facesContext, null);
 
         /* Decode new index early to alter server state to match sent client state*/
-        if (!decodedActive && ActivationMode.client.equals(getActivationMode())
+        if (!decodedActive && getClientBehaviors().isEmpty()
                 && !context.getFacesContext().getCurrentPhaseId().equals(PhaseId.RESTORE_VIEW)) {
             decodeIndex(facesContext);
         }
@@ -129,7 +129,7 @@ public class DataView extends DataViewBase implements NamingContainer {
 
     @Override
     public void processDecodes(FacesContext context) {
-        if (ActivationMode.client.equals(getActivationMode()) && !decodedActive) {
+        if (getClientBehaviors().isEmpty() && !decodedActive) {
             decodeIndex(context);
         }
 
@@ -153,7 +153,7 @@ public class DataView extends DataViewBase implements NamingContainer {
         clearDetailContext(context);
 
         /* if not post-restore restoreState overwrites new active index */
-        if (ActivationMode.client.equals(getActivationMode()) && !decodedActive) {
+        if (getClientBehaviors().isEmpty() && !decodedActive) {
             decodeIndex(context);
         }
     }

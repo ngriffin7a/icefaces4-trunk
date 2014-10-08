@@ -586,14 +586,8 @@
                 // if vertical orientation
                 recalcScrollHeight();
             } else {
-                var options = {
-                    source : clientId,
-                    execute : '@this',
-                    render : '@this'
-                };
-
-              //  im.ab(options);
-                ice.ace.ab(options);
+				if (config.behaviors && config.behaviors.select)
+					ice.ace.ab(config.behaviors.select);
             }
         }
 
