@@ -22,6 +22,7 @@ ice.ace.TextEntry = function(id, cfg) {
     this.cfg = cfg;
     this.jqId = ice.ace.escapeClientId(id) + " input.ui-textentry";
     this.jq = jQ(this.jqId);
+	var self = this;
 	
 	if (cfg.embeddedLabel) { // execute this when component is lazy loaded
 		if (this.jq.attr("name") == labelName) {
@@ -37,16 +38,7 @@ ice.ace.TextEntry = function(id, cfg) {
             function(e) {
                 var curLength = this.value.length + 1, maxLength = this.maxLength;
                 var nextTabElement = ice.ace.TextEntry.nextTabElement(this);
-                /*
-                 console.log("id: ", this.id);
-                 console.log("value: ", this.value);
-                 console.log("value.length: ", this.value.length);
-                 console.log("maxLength: ", maxLength);
-                 console.log("charCode: ", e.charCode);
-                 console.log("keyCode: ", e.keyCode);
-                 console.log("which: ", e.which);
-                 //            console.dir(e);
-                 */
+
                 if (curLength < maxLength || !nextTabElement) {
                     return;
                 }
@@ -57,11 +49,20 @@ ice.ace.TextEntry = function(id, cfg) {
                 if (curLength == maxLength) {
                     this.value += String.fromCharCode(e.which);
                 }
-                /*
-                 console.log("value: ", this.value);
-                 console.log("value.length: ", this.value.length);
-                 */
+
+				ice.setFocus();
                 nextTabElement.focus();
+
+				if (ice.ace.jq.browser.msie || ice.ace.jq.browser.webkit) {
+					if (self.cfg.behaviors) {
+						if (self.cfg.behaviors.blur) {
+							ice.ace.ab(self.cfg.behaviors.blur);
+						}
+						if (self.cfg.behaviors.change) {
+							ice.ace.ab(self.cfg.behaviors.change);
+						}
+					}
+				}
             }
         );
     }
