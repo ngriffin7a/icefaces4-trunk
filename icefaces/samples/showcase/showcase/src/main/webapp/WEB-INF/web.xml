@@ -34,8 +34,12 @@
 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-			<param-value>Development</param-value>
-        <!-- <param-value>Production</param-value> -->
+        	<param-value>Production</param-value> 
+
+        	<!-- Use Development mode for debugging, results in uncompressed resources being loaded.
+        	<param-value>Development</param-value>
+        	-->
+
     </context-param>
 
     <context-param>
@@ -83,7 +87,7 @@
 	<context-param>
         <description>Resource Coalescing will automatically combine required resources for the initial page load into single .css and .js files</description>
         <param-name>org.icefaces.coalesceResources</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
   </context-param>
 
 

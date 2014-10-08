@@ -42,10 +42,5 @@
             <resource name="showcase_styles.css" library="ice.samples.showcase"/>
         </requires>
     </resource>
-    <resource name="bridge.js">
-        <requires>
-            <resource name="jsf.js" library="javax.faces"/>
-        </requires>
-    </resource>
 </dependencies>
 
