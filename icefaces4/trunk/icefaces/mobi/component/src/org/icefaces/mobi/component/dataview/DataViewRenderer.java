@@ -529,12 +529,12 @@ public class DataViewRenderer extends CoreRenderer {
         writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, dvId + "_det", null);
         writer.writeAttribute(HTML.CLASS_ATTR, DataView.DATAVIEW_DETAIL_CLASS, null);
-        writer.writeAttribute("data-index", index, null);
 
         if (details != null && active)
             details.encodeAll(context);
 
         writer.startElement(HTML.INPUT_ELEM, null);
+        writer.writeAttribute(HTML.ID_ATTR, dvId + "_active", null);
         writer.writeAttribute(HTML.NAME_ATTR, dvId + "_active", null);
         writer.writeAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_HIDDEN, null);
         if (index == null)
@@ -542,6 +542,13 @@ public class DataViewRenderer extends CoreRenderer {
         else
             writer.writeAttribute(HTML.VALUE_ATTR, index, null);
         writer.endElement(HTML.INPUT_ELEM);
+
+		writer.startElement(HTML.SPAN_ELEM, null);
+		writer.writeAttribute(HTML.ID_ATTR, dvId + "_indexScript", null);
+		writer.startElement(HTML.SCRIPT_ELEM, null);
+		writer.writeText("document.getElementById('"+dvId+"_det"+"').setAttribute('data-index',"+index+");", null);
+		writer.endElement(HTML.SCRIPT_ELEM);
+		writer.endElement(HTML.SPAN_ELEM);
 
         writer.endElement(HTML.DIV_ELEM);
 
