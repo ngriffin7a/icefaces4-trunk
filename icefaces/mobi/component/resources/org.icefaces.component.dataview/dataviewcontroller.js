@@ -456,7 +456,6 @@
 
         function deactivateDetail() {
             var det = getNode('det');
-            det.removeAttribute('data-index');
             getIndexInput(det).setAttribute('value', '-1');
             Array.prototype.every.call(getNode('bodyrows'), function(e) {
                 e.classList.remove('ui-state-active');
@@ -576,7 +575,6 @@
 			while (sib != null) {removeActiveClass(sib); sib = sib.previousElementSibling;};
 
             indexIn.setAttribute("value", newIndex);
-            details.setAttribute("data-index", newIndex);
 
             if (config.active == 'client') {
                 var newValue = event.delegateTarget.getAttribute('data-state');
