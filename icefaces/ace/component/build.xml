@@ -311,7 +311,7 @@
 		<minify src="${resources}/icefaces.ace/datetimeentry/jquery-ui-timepicker-addon.js" dest="${resources}/icefaces.ace/datetimeentry/jquery-ui-timepicker-addon.c.js"/>
 		<minify src="${resources}/icefaces.ace/dialog/dialog.js" dest="${resources}/icefaces.ace/dialog/dialog.c.js"/>
 		<minify src="${resources}/icefaces.ace/dnd/dragdrop.js" dest="${resources}/icefaces.ace/dnd/dragdrop.c.js"/>
-		<minify src="${resources}/icefaces.ace/fileEntry/fileEntry.js" dest="${resources}/icefaces.ace/fileEntry/fileEntry.c.js"/>
+		<minify src="${resources}/icefaces.ace/fileentry/fileEntry.js" dest="${resources}/icefaces.ace/fileEntry/fileEntry.c.js"/>
 		<minify src="${resources}/icefaces.ace/gmap/gmap.js" dest="${resources}/icefaces.ace/gmap/gmap.c.js"/>
 		<minify src="${resources}/icefaces.ace/growlmessages/growlmessages.js" dest="${resources}/icefaces.ace/growlmessages/growlmessages.c.js"/>
 		<minify src="${resources}/icefaces.ace/growlmessages/jquery.jgrowl.js" dest="${resources}/icefaces.ace/growlmessages/jquery.jgrowl.c.js"/>
