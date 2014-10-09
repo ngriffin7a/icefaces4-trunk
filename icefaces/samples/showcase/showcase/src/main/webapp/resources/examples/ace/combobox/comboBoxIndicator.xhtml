@@ -39,7 +39,7 @@
                 <h:panelGrid width="60%" columns="2" cellpadding="6" cellspacing="6">
                      <h:outputLabel for="requiredIn" value="Required?"/>
                      <h:selectBooleanCheckbox id="requiredIn" value="#{comboBoxIndicatorBean.required}">
-                         <f:ajax execute="@all" render="@all"/>
+                         <f:ajax execute="@form" render="@all"/>
                      </h:selectBooleanCheckbox>
                      
                      <h:outputLabel for="requiredText" value="Required Indicator Text:"/>
