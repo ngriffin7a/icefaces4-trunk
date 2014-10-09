@@ -53,7 +53,7 @@ ice.ace.TextEntry = function(id, cfg) {
 				ice.setFocus();
                 nextTabElement.focus();
 
-				if (ice.ace.jq.browser.msie || ice.ace.jq.browser.webkit) {
+				if (ice.ace.jq.browser.msie || ice.ace.jq.browser.webkit || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
 					if (self.cfg.behaviors) {
 						if (self.cfg.behaviors.blur) {
 							ice.ace.ab(self.cfg.behaviors.blur);
