@@ -120,13 +120,6 @@ public class AugmentedRealityRenderer extends BaseInputRenderer  {
          writer.startElement(HTML.SPAN_ELEM, uiComponent);
          writer.writeText(buttonValue, null);
         writer.endElement(HTML.SPAN_ELEM);
-		// themeroller support
-		writer.startElement("span", ag);
-		writer.startElement("script", ag);
-		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "')).button();");
-		writer.endElement("script");
-		writer.endElement("span");
         writer.endElement(HTML.BUTTON_ELEM);
      }
 

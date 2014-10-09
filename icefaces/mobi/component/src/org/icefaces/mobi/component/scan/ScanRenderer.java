@@ -97,13 +97,6 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.writeText(scan.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
 
-		// themeroller support
-		writer.startElement("span", scan);
-		writer.startElement("script", scan);
-		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
-		writer.endElement("script");
-		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
 
 		writer.endElement(SPAN_ELEM);
