@@ -68,13 +68,6 @@ public class GeoTrackRenderer extends CoreRenderer {
 		writer.write(geotrack.getButtonLabel());
 		writer.endElement(HTML.SPAN_ELEM);
 
-		// themeroller support
-		writer.startElement("span", geotrack);
-		writer.startElement("script", geotrack);
-		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_button')).button();");
-		writer.endElement("script");
-		writer.endElement("span");
 		writer.endElement(HTML.BUTTON_ELEM);
 
 		writer.endElement(HTML.SPAN_ELEM);

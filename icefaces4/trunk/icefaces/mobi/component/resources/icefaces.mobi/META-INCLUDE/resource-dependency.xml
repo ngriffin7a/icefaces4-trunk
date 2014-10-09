@@ -39,9 +39,4 @@
             <resource name="component.js" library="org.icefaces.component.util"/>
         </requires>
     </resource>
-    <resource name="core/bridgeit.js"  library="icefaces.mobi">
-        <requires>
-            <resource name="jquery/jquery.js" library="icefaces.ace"/>
-        </requires>
-    </resource>
 </dependencies>

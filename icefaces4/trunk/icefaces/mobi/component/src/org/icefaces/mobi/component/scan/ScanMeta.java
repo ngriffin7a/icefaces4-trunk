@@ -39,7 +39,6 @@ import javax.faces.component.UIComponent;
 )
 
 @ResourceDependencies({
-        @ResourceDependency(library="icefaces.ace", name = "jquery/jquery.js"),
         @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
 })
