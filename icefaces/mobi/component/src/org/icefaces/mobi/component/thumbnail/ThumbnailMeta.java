@@ -38,7 +38,7 @@ import javax.faces.application.ResourceDependency;
         tlddoc = "thumbnail provides a thumbnail image to a camera or camcorder component.")
 
 @ResourceDependencies({
-		@ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
+		@ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
 })
 public class ThumbnailMeta extends UIComponentBaseMeta {
 

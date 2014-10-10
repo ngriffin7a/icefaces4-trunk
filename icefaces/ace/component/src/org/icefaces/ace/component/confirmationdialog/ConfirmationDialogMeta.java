@@ -43,7 +43,7 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
 	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
-	@ICEResourceDependency(name = "confirmationdialog/confirmationdialog.js"),
+	@ICEResourceDependency(name = "confirmationdialog/confirmationdialog.js")
 })
 
 public class ConfirmationDialogMeta extends UIPanelMeta {
