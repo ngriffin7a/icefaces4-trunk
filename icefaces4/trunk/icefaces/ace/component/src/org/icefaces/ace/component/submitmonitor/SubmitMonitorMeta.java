@@ -60,7 +60,7 @@ import java.lang.String;
 @ICEResourceDependencies({
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
-	@ICEResourceDependency(name = "submitmonitor/submitmonitor.js"),
+	@ICEResourceDependency(name = "submitmonitor/submitmonitor.js")
 })
 public class SubmitMonitorMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Label to be displayed on the submitMonitor when no " +

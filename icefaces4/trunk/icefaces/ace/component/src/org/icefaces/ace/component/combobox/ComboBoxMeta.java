@@ -54,7 +54,7 @@ import java.util.List;
 @ICEResourceDependencies({
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
-	@ICEResourceDependency(name = "combobox/combobox.js"),
+	@ICEResourceDependency(name = "combobox/combobox.js")
 })
 @ClientBehaviorHolder(events = {
 	@ClientEvent( name="valueChange",
