@@ -157,21 +157,22 @@
             consoleLog('Overlay  function to cleanup overlay and clone  addElements(sets false): ' + addElements);
             addElements = false;
             if (overlay) {
-                try { overlay.parentNode.removeChild(overlay); }
-                catch (e) { //ignore, the overlay does not match the document after a html/body level update
+                try {
+                    overlay.parentNode.removeChild(overlay);
+                } catch (e) { //ignore, the overlay does not match the document after a html/body level update
                 }
             }
             if (cloneToRemove) {
-                try { cloneToRemove.remove(); }
-                catch (e) { //ignore, the cloneToRemove does not match the document after a html/body level update
+                try {
+                    cloneToRemove.remove();
+                } catch (e) { //ignore, the cloneToRemove does not match the document after a html/body level update
                 }
             }
             if (revertElem) {
                 try {
                     revertElem.css('z-index', revertZIndex);
                     revertElem.css('display', 'none');
-                }
-                catch (e) { //ignore, the cloneToRemove does not match the document after a html/body level update
+                } catch (e) { //ignore, the cloneToRemove does not match the document after a html/body level update
                 }
             }
         };
@@ -185,15 +186,19 @@
         consoleLog('stopBlockingUI NOOP');
     };
     consoleLog('stopBlockingUI = NOOP  from  init');
-    var stopBlockingUI = NOOP;
 
     if (!ice.ace) ice.ace = {};
 
     var uniqueCounter = 0;
+    var beforeSubmit = [];
+    var beforeUpdate = [];
+    var cleanBeforeSubmit = [];
+    var cleanBeforeUpdate = [];
 
     ice.ace.SubmitMonitor = function (id, cfg) {
         var jqId = ice.ace.escapeClientId(cfg.id);
         var uniqueId = uniqueCounter++;
+        var stopBlockingUI = NOOP;
 
         function isMonitoringElement(source) {
             consoleLog('Monitor '+uniqueId+'>'+jqId+'  isMonitoringElement  monitorFor: ' + cfg.monitorFor + '  source.id: ' + (source ? source.id : '<null>'));
@@ -381,7 +386,6 @@
 
         var CLEANUP_UNNECESSARY = 0, CLEANUP_PENDING = 1, CLEANUP_ACKNOWLEDGED = 2;
         var cleanup = CLEANUP_UNNECESSARY;
-        var cleanBeforeSubmit = null, cleanBeforeUpdate = null, cleanServerError = null, cleanNetworkError = null;
 
         function handleCleanup(isBeforeSubmit) {
             if (cleanup == CLEANUP_ACKNOWLEDGED) {
@@ -392,13 +396,15 @@
                 consoleLog('Monitor '+uniqueId+'>'+jqId+'  handleCleanup  CLEANUP PENDING -> ACKNOWLEDGED');
                 setTimeout(function() {
                     consoleLog('Monitor '+uniqueId+'>'+jqId+'  handleCleanup  setTimeout cleanup');
-                    if (cleanBeforeSubmit) {
-                        cleanBeforeSubmit();
-                        cleanBeforeSubmit = null;
+                    if (cleanBeforeSubmit[uniqueId]) {
+                        cleanBeforeSubmit[uniqueId]();
+                        cleanBeforeSubmit[uniqueId] = null;
+                        beforeSubmit[uniqueId] = null;
                     }
-                    if (cleanBeforeUpdate) {
-                        cleanBeforeUpdate();
-                        cleanBeforeUpdate = null;
+                    if (cleanBeforeUpdate[uniqueId]) {
+                        cleanBeforeUpdate[uniqueId]();
+                        cleanBeforeUpdate[uniqueId] = null;
+                        beforeUpdate[uniqueId] = null;
                     }
                     if (cleanServerError) {
                         cleanServerError();
@@ -421,7 +427,7 @@
             consoleLog('Monitor '+uniqueId+'>'+jqId+'  onElementUpdate  -> CLEANUP_PENDING');
         });
 
-        cleanBeforeSubmit = window.ice.onBeforeSubmit(function(source, isClientRequest) {
+        beforeSubmit.push(function(source, isClientRequest) {
             if (handleCleanup(true)) {
                 return;
             }
@@ -453,7 +459,7 @@
             changeState(IDLE);
         };
 
-        cleanBeforeUpdate = window.ice.onBeforeUpdate(function(xmlContent, source) {
+        beforeUpdate.push(function(xmlContent, source) {
             if (handleCleanup(false)) {
                 return;
             }
@@ -484,7 +490,7 @@
             }
         });
 
-        cleanServerError = window.ice.onServerError(function() {
+        var cleanServerError = window.ice.onServerError(function() {
             if (handleCleanup(false)) {
                 return;
             }
@@ -492,7 +498,7 @@
             changeState(SERVER_ERROR);
         });
 
-        cleanNetworkError = window.ice.onNetworkError(function() {
+        var cleanNetworkError = window.ice.onNetworkError(function() {
             if (handleCleanup(false)) {
                 return;
             }
@@ -500,18 +506,24 @@
             changeState(NETWORK_ERROR);
         });
 
-        /*
-        window.ice.onSessionExpiry(function() {
-            //consoleLog('Monitor '+uniqueId+'>'+jqId+'  onSessionExpiry');
-            if (handleCleanup(false)) {
-                return;
-            }
-            //consoleLog('Monitor '+uniqueId+'>'+jqId+'  onSessionExpiry  Handling');
-            anticipatePossibleSecondSubmit = UNANTICIPATED;
-            changeState(SESSION_EXPIRED);
-        });
-        */
-
         changeState(IDLE);
-    }
+    };
+
+    window.ice.onBeforeSubmit(function(source, isClientRequest) {
+        for (var i = 0, l = beforeSubmit.length; i < l; i++) {
+            var callback = beforeSubmit[i];
+            if (callback) {
+                cleanBeforeSubmit[i] = callback(source, isClientRequest);
+            }
+        }
+    });
+
+    window.ice.onBeforeUpdate(function(xmlContent, source) {
+        for (var l = beforeUpdate.length, i = l - 1; i > -1; i--) {
+            var callback = beforeUpdate[i];
+            if (callback) {
+                cleanBeforeUpdate[i] = callback(xmlContent, source);
+            }
+        }
+    });
 })();
