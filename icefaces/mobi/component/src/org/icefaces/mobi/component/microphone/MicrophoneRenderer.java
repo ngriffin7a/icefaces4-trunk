@@ -103,6 +103,14 @@ public class MicrophoneRenderer extends Renderer {
 		writer.writeText(microphone.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
 
+		// themeroller support
+		writer.startElement("span", microphone);
+		writer.startElement("script", microphone);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("new ice.mobi.button('"+clientId+"_button');");
+		writer.endElement("script");
+		writer.endElement("span");
+
 		writer.endElement(BUTTON_ELEM);
 
 		writer.endElement(SPAN_ELEM);

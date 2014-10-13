@@ -42,6 +42,13 @@ public class CloudPushRenderer extends Renderer {
 		writer.startElement(SPAN_ELEM, cloudPush);
 		writer.writeText(cloudPush.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
+		// themeroller support
+		writer.startElement("span", cloudPush);
+		writer.startElement("script", cloudPush);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("new ice.mobi.button('"+clientId+"');");
+		writer.endElement("script");
+		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
     }
 }

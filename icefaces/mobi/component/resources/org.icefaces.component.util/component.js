@@ -376,3 +376,37 @@ ice.mobi.fallback.setupLaunchFailed = function(regularId, fallbackId) {
 		bridgeit.launchFailed = function() {};	
 	}, 3500);
 };
+
+
+ice.mobi.button = function(id) {
+	var self = this;
+	this.buttonElement = document.getElementById(id);
+	var baseClasses = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
+
+	this.addClass(baseClasses);
+	this.buttonElement.setAttribute('role', 'button');
+	this.buttonElement.firstChild.className = 'ui-button-text';
+
+	if (this.buttonElement.disabled) {
+		this.addClass('ui-state-disabled');
+	} else {
+		this.buttonElement.onmouseenter = function(e) {	self.addClass('ui-state-hover'); };
+		this.buttonElement.onmouseleave = function(e) {	self.removeClass('ui-state-hover');self.removeClass('ui-state-active'); };
+		this.buttonElement.onfocus = function(e) { self.addClass('ui-state-focus'); };
+		this.buttonElement.onblur = function(e) { self.removeClass('ui-state-focus'); };
+		this.buttonElement.onmousedown = function(e) { self.addClass('ui-state-active'); };
+		this.buttonElement.onmouseup = function(e) { self.removeClass('ui-state-active'); };
+		this.buttonElement.onkeydown = function(e) { 
+			if ( e.keyCode == 32 || e.keyCode == 13 ) {
+				self.addClass('ui-state-active');
+			}
+		};
+		this.buttonElement.onkeyup = function(e) { self.removeClass('ui-state-active'); };
+	}
+};
+ice.mobi.button.prototype.addClass = function(className) {
+	this.buttonElement.className += ' ' + className;
+};
+ice.mobi.button.prototype.removeClass = function(className) {
+	this.buttonElement.className = this.buttonElement.className.replace(new RegExp('(?:^|\\\s)'+className+'(?!\\\S)','g') , '');
+};

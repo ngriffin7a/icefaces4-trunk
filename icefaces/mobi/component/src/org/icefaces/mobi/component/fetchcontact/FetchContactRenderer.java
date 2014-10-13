@@ -104,6 +104,14 @@ public class FetchContactRenderer extends Renderer {
 		writer.writeText(contactList.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
 
+		// themeroller support
+		writer.startElement("span", contactList);
+		writer.startElement("script", contactList);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("new ice.mobi.button('"+clientId+"_button');");
+		writer.endElement("script");
+		writer.endElement("span");
+
 		writer.endElement(BUTTON_ELEM);
 
 		writer.endElement(SPAN_ELEM);
