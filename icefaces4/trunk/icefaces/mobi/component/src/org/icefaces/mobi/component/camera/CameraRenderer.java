@@ -124,6 +124,7 @@ public class CameraRenderer extends Renderer {
 		writer.startElement("span", camera);
 		writer.startElement("script", camera);
 		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("new ice.mobi.button('"+clientId+"_button');");
 		writer.writeText("if (!window['thumbnails"+clientId+"']) window['thumbnails"+clientId+"'] = {};");
 		writer.writeText("window['callback"+clientId+"'] = function(arg) {for (t in window['thumbnails"+clientId+"']) { var e = document.getElementById(t); if (e) e.src = arg.preview; try {document.getElementById(window['thumbnails"+clientId+"'][t]).value = arg.preview;} catch (e) {} }};");
         writer.endElement("script");
