@@ -37,6 +37,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.BehaviorListener;
 import java.util.*;
 
+import org.icefaces.resources.ICEResourceDependencies;
+import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
+import org.icefaces.ace.resources.ACEResourceNames;
+
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
+@ICEResourceDependencies({
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js")
+})
 @FacesBehavior("org.icefaces.ace.component.AjaxBehavior")
 public class AjaxBehavior extends ClientBehaviorBase {
     static enum Property {
