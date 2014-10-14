@@ -234,7 +234,9 @@ ice.ace.CalendarInit = function(options) {
             initEltSet = initEltSet.add(trigger);
         }
         if (ice.ace.jq.inArray(showOn, ["focus","both"]) >= 0) {
-            input.one("focus", initAndShow);
+            setTimeout(function(){
+                input.one("focus", initAndShow);
+            }, 350);
             initEltSet = initEltSet.add(input);
         }
 
