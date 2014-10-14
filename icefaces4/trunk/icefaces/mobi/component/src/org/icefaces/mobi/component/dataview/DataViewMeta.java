@@ -45,8 +45,6 @@ import org.icefaces.ace.meta.annotation.ClientEvent;
 			"and attributes supported for client-mode rendering are limited, mostly consisting of the standard h:* components."
 )
 @ResourceDependencies({
-    @ResourceDependency(library="icefaces.ace", name = "util/ace-core.js"),
-	@ResourceDependency(library="icefaces.ace", name = "jquery/jquery.js"),
 	@ResourceDependency( library = "org.icefaces.component.dataview", name = "dataview.css" ),
 	@ResourceDependency(library = "org.icefaces.component.icons", name = "icons.css"),
     @ResourceDependency( library = "org.icefaces.component.util", name = "component.js" ),
