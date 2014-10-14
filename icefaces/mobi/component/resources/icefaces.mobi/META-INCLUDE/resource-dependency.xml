@@ -28,8 +28,6 @@
     </resource>
     <resource name="dataviewcontroller.js" library="org.icefaces.component.dataview">
         <requires>
-            <resource name="jquery/jquery.js"  library="icefaces.ace"/>
-            <resource name="util/ace-core.js" library="icefaces.ace"/>
             <resource name="component.js" library="org.icefaces.component.util"/>
             <resource name="dataview.js" library="org.icefaces.component.dataview"/>
         </requires>
