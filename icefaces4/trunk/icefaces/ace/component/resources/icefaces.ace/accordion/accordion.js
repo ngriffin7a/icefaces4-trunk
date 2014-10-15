@@ -108,7 +108,6 @@ ice.ace.AccordionPanel.prototype.collapseAll = function() {
 };
 
 ice.ace.AccordionPanel.prototype.setActiveIndex = function(index) {
-	if (typeof index == 'boolean') return;
 	if (this.jq.accordion("option", "active") == index) return;
     this.jq.accordion('option', 'activeNoEvent', index);
 }
