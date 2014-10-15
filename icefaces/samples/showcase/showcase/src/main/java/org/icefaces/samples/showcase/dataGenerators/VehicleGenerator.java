@@ -70,7 +70,6 @@ public class VehicleGenerator implements Serializable
     {
         while (quantityToAdd > 0) {
             final int addThisRound = Math.min(list.size(), quantityToAdd);
-System.out.println("quantityToAdd: " + quantityToAdd + "  currentListSize: " + list.size());
 
             for (int i = 0; i < addThisRound; i++, quantityToAdd--) {
                 //add Car from the begining of the list to the end of it
