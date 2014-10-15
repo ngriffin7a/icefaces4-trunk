@@ -65,12 +65,12 @@
                 <br/>
                 
                 <center>
-                    <h:commandButton id="show" value="Display Dialog"  onclick="ice.ace.instance('#{confirmDialog.clientId}').show();return false;"/>
+                    <h:commandButton id="show" value="Display Dialog"  onclick="ice.ace.instance('#{confirmDialogEffect.clientId}').show();return false;"/>
                 </center>
             </ace:panel>
         </h:form>
         <h:form id="form2">
-            <ace:confirmationDialog id="confirmDialog" binding="#{confirmDialog}"
+            <ace:confirmationDialog id="confirmDialog" binding="#{confirmDialogEffect}"
 								    showEffect="#{confirmationDialogEffectBean.showEffect}"
 								    hideEffect="#{confirmationDialogEffectBean.hideEffect}"
 								    header="Confirmation Dialog"
@@ -79,10 +79,10 @@
 								    closable="true">
 
                 <h:panelGrid width="100%" style="text-align: center;" columns="2" cellspacing="30">
-                    <h:commandButton id="yes" value="Yes" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide();return false;">
+                    <h:commandButton id="yes" value="Yes" onclick="ice.ace.instance('#{confirmDialogEffect.clientId}').hide();return false;">
                         <f:ajax execute="@this" render="@all"/>
                     </h:commandButton>
-                    <h:commandButton id="no" value="No" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide();return false;">
+                    <h:commandButton id="no" value="No" onclick="ice.ace.instance('#{confirmDialogEffect.clientId}').hide();return false;">
                         <f:ajax execute="@this" render="@all"/>
                     </h:commandButton>
                 </h:panelGrid>

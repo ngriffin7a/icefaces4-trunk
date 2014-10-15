@@ -36,10 +36,10 @@
     <ui:define name="example">
         <h:form id="form">
             <h:panelGrid width="100%" style="text-align: center;">
-                <h:commandButton id="show" value="Display dialog" onclick="ice.ace.instance('#{confirmDialog.clientId}').show()" type="button"/>
+                <h:commandButton id="show" value="Display dialog" onclick="ice.ace.instance('#{confirmDialogModal.clientId}').show()" type="button"/>
             </h:panelGrid>
         
-            <ace:confirmationDialog id="confirmDialog" binding="#{confirmDialog}"
+            <ace:confirmationDialog id="confirmDialog" binding="#{confirmDialogModal}"
 									modal="true"
 									message="This is a modal dialog"
 									header="Modal Dialog"
@@ -49,8 +49,8 @@
 									closeOnEscape="false">
                 
                 <h:panelGrid width="100%" style="text-align: center;" columns="2" cellspacing="30">
-                    <h:commandButton id="yes" value="Yes" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide()"/>
-                    <h:commandButton id="no" value="No" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide()"/>
+                    <h:commandButton id="yes" value="Yes" onclick="ice.ace.instance('#{confirmDialogModal.clientId}').hide()"/>
+                    <h:commandButton id="no" value="No" onclick="ice.ace.instance('#{confirmDialogModal.clientId}').hide()"/>
                 </h:panelGrid>
             </ace:confirmationDialog>
 
