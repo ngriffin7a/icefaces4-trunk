@@ -40,12 +40,16 @@ public class MobiSymbolicResourceHandler extends ResourceHandlerWrapper {
 
     public Resource createResource(String resourceName, String libraryName, String contentType) {
         boolean uncompress = FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development);
-        if (uncompress && libraryName != null &&
-                ((libraryName.equals("icefaces.mobi") &&
-                        (resourceName.equals("util/mobi-jquery.js") ||
-                                resourceName.equals("util/mobi-components.js"))))) {
-            String uncompressedResourceName = resourceName.replaceAll("\\.", ".uncompressed.");
-            return super.createResource(uncompressedResourceName, libraryName, contentType);
+        if (!uncompress && libraryName != null &&
+                (libraryName.equals("org.icefaces.component.dataview") ||
+					libraryName.equals("org.icefaces.component.datespinner") ||
+					libraryName.equals("org.icefaces.component.flipswitch") ||
+					libraryName.equals("org.icefaces.component.geolocation") ||
+					libraryName.equals("org.icefaces.component.timespinner") ||
+					libraryName.equals("org.icefaces.component.util") ||
+					libraryName.equals("org.icefaces.component.viewmanager")) && !resourceName.endsWith(".c.js")) {
+            String compressedResourceName = resourceName.replaceAll("\\.js$", ".c.js");
+            return super.createResource(compressedResourceName, libraryName, contentType);
         } else {
             return super.createResource(resourceName, libraryName, contentType);
         }
