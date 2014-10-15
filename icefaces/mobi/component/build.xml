@@ -194,7 +194,7 @@
 
         <sequential>
             <java jar="${batchminify.rootdir}/dist/batchminify.jar" fork="yes">
-                <arg line="${converted}"/>
+                <arg line="'${converted}'"/>
 			</java>
         </sequential>
     </target>
