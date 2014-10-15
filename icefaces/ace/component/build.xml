@@ -343,7 +343,7 @@
 			<file name="${resources}/icefaces.ace/tree/tree.js" />
 			<file name="${resources}/icefaces.ace/util/blockui.js" />
 		</filelist>
-		<pathconvert refid="batch" property="converted"/>
+		<pathconvert refid="batch" property="converted" pathsep=";"/>
 
         <sequential>
             <java jar="${batchminify.rootdir}/dist/batchminify.jar" fork="yes">

@@ -190,7 +190,7 @@
 			<file name="${resources}/org.icefaces.component.util/overthrow.js"/>
 			<file name="${resources}/org.icefaces.component.viewmanager/viewmanager.js"/>
 		</filelist>
-		<pathconvert refid="batch" property="converted"/>
+		<pathconvert refid="batch" property="converted" pathsep=";"/>
 
         <sequential>
             <java jar="${batchminify.rootdir}/dist/batchminify.jar" fork="yes">
