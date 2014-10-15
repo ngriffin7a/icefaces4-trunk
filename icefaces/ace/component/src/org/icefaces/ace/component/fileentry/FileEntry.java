@@ -344,8 +344,6 @@ public class FileEntry extends FileEntryBase implements Focusable {
     }
 
     public String getFocusedElementId() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        String viewID = BridgeSetup.getViewID(context.getExternalContext());
-        return getClientId() + "::" + viewID;
+        return getClientId();
     }
 }

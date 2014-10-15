@@ -51,7 +51,7 @@ public class FileEntryRenderer extends Renderer {
 
         ResponseWriter writer = facesContext.getResponseWriter();
         writer.startElement("div", uiComponent);
-        writer.writeAttribute("id", clientId, "clientId");
+        writer.writeAttribute("id", clientId + "_container", "clientId");
         boolean disabled = fileEntry.isDisabled();
         boolean multiple = fileEntry.isMultiple();
         boolean autoUpload = fileEntry.isAutoUpload();
