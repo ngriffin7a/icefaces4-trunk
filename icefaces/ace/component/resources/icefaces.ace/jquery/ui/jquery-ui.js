@@ -4762,7 +4762,7 @@
                             oldContent: toHide
                         },
                         toShow = ( this.active = $( [] ) );
-                this._toggle( toShow, toHide, data );
+                this._toggle( toShow, toHide, data, false, false, noEvent ); // ICE-10261
                 return;
             }
 
@@ -4843,7 +4843,7 @@
             // count elements to animate
             self.running = toHide.size() === 0 ? toShow.size() : toHide.size();
 
-            if ( options.animated ) {
+            if ( options.animated && !noEvent) { // ICE-10261
                 var animOptions = {};
 
                 if ( options.collapsible && clickedIsActive ) {
