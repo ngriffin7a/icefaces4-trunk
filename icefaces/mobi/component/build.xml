@@ -49,16 +49,9 @@
     <property name="tld.jar" location="${lib.dir}"/>
     <property name="smartsprites.basedir" location="../tools/smartsprites"/>
 
-    <!-- combined resources -->
-    <property name="mobi-jquery.js.base" value="${resources}/icefaces.mobi/util/mobi-jquery"/>
-    <property name="mobi-jquery.js" location="${mobi-jquery.js.base}.js"/>
-    <property name="mobi-jquery.js.uncompressed" location="${mobi-jquery.js.base}.uncompressed.js"/>
-    <property name="mobi-components.js.base" value="${resources}/icefaces.mobi/util/mobi-components"/>
-    <property name="mobi-components.js" location="${mobi-components.js.base}.js"/>
-    <property name="mobi-components.js.uncompressed" location="${mobi-components.js.base}.uncompressed.js"/>
-
     <property name="root.dir.path" location="${build}/skins/in"/>
     <property name="output.dir.path" location="${build}/skins/out"/>
+    <property name="batchminify.rootdir" location="../../ace/tools/batchminify"/>
     <property name="faces-config.host"
               location="${exploded}/META-INF/faces-config.xml"/>
     <property name="faces-config.merge.location"
@@ -182,55 +175,32 @@
     </target>
 
     <target name="res-js-combine">
-        <!-- mobi-jquery.js -->
-        <available file="${mobi-jquery.js.uncompressed}" property="mobi-jquery.js.uncompressed.present"/>
-        <delete file="${mobi-jquery.js.uncompressed}" verbose="${mobi-jquery.js.uncompressed.present}"/>
-        <concat destfile="${mobi-jquery.js.uncompressed}" force="true" fixlastline="true">
-            <filelist dir="${resources}">
-                <file name="icefaces.mobi/jquery/jquery.js"/>
-                <file name="icefaces.mobi/jquery/ui/jquery-ui.js"/>
-                <file name="icefaces.mobi/jquery/ui/jquery.ui.touch-punch.js"/>
-                <file name="icefaces.mobi/core/core.js"/>
-                <file name="icefaces.mobi/util/util.js"/>
-                <file name="icefaces.mobi/json/json2.js"/>
-                <file name="icefaces.mobi/util/blockui.js"/>
-            </filelist>
-        </concat>
-        <!-- mobi-components.js -->
-        <available file="${mobi-components.js.uncompressed}" property="mobi-components.js.uncompressed.present"/>
-        <delete file="${mobi-components.js.uncompressed}" verbose="${mobi-components.js.uncompressed.present}"/>
-        <concat destfile="${mobi-components.js.uncompressed}" force="true" fixlastline="true">
-            <filelist dir="${resources}">
-                <file name="icefaces.mobi/textentry/textentry.js"/>
-                <file name="icefaces.mobi/animation/animation.js"/>
-            </filelist>
-        </concat>
+
     </target>
 
-    <target name="res-js-compress" depends="res-js-combine"
-            unless="no-compress">
-        <echo message="Compressing mobi-jquery.js"/>
-        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
-            <arg line="--preserve-semi"/>
-            <arg value="-o"/>
-            <arg value="${mobi-jquery.js}"/>
-            <arg value="${mobi-jquery.js.uncompressed}"/>
-        </java>
-        <echo message="Compressing mobi-components.js"/>
-        <java jar="${lib.dir}/yui-compressor.jar" fork="yes">
-            <arg line="--preserve-semi"/>
-            <arg value="-o"/>
-            <arg value="${mobi-components.js}"/>
-            <arg value="${mobi-components.js.uncompressed}"/>
-        </java>
+    <target name="res-js-compress" depends="res-js-combine,batchminify" unless="no-compress">
+		<filelist id="batch">
+			<file name="${resources}/org.icefaces.component.dataview/dataview.js"/>
+			<file name="${resources}/org.icefaces.component.dataview/dataviewcontroller.js"/>
+			<file name="${resources}/org.icefaces.component.datespinner/datespinner.js"/>
+			<file name="${resources}/org.icefaces.component.flipswitch/flipswitch.js"/>
+			<file name="${resources}/org.icefaces.component.geolocation/geolocation.js"/>
+			<file name="${resources}/org.icefaces.component.timespinner/timespinner.js"/>
+			<file name="${resources}/org.icefaces.component.util/component.js"/>
+			<file name="${resources}/org.icefaces.component.util/overthrow.js"/>
+			<file name="${resources}/org.icefaces.component.viewmanager/viewmanager.js"/>
+		</filelist>
+		<pathconvert refid="batch" property="converted"/>
+
+        <sequential>
+            <java jar="${batchminify.rootdir}/dist/batchminify.jar" fork="yes">
+                <arg line="${converted}"/>
+			</java>
+        </sequential>
     </target>
 
     <target name="res-js-no-compress" depends="res-js-combine" if="no-compress">
-        <echo message="Not compressing combined javascript code"/>
-        <copy file="${mobi-jquery.js.uncompressed}" tofile="${mobi-jquery.js}" overwrite="yes">
-        </copy>
-        <copy file="${mobi-components.js.uncompressed}" tofile="${mobi-components.js}" overwrite="yes">
-        </copy>
+
     </target>
 
     <target name="res-css-combine">
@@ -437,11 +407,12 @@
         <delete dir="${dist}"/>
         <antcall target="clean-skins"/>
         <subant buildpath="${cssurlmapper.rootdir}" target="clean"/>
+		<subant buildpath="${batchminify.rootdir}" target="clean"/>
         <delete file="${resources}/icefaces.mobi/util/combined.css"/>
-        <delete file="${mobi-jquery.js.uncompressed}"/>
-        <delete file="${mobi-jquery.js}"/>
-        <delete file="${mobi-components.js.uncompressed}"/>
-        <delete file="${mobi-components.js}"/>
+
+		<delete>
+			<fileset dir="${resources}" includes="**/*.c.js"/>
+		</delete>
     </target>
 
     <target name="skins"
@@ -541,6 +512,10 @@
 
     <target name="cssurlmapper" description="Build the CSS URL mapping tool.">
         <subant buildpath="${cssurlmapper.rootdir}" target="compile"/>
+    </target>
+
+    <target name="batchminify" description="Build the batch minify tool.">
+        <subant buildpath="${batchminify.rootdir}" target="compile"/>
     </target>
 
     <macrodef name="gen.tld.doc">
