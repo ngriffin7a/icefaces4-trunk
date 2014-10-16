@@ -291,6 +291,8 @@
             };
         }
 
+		var justTouched = null; // avoid click event handler on touch devices
+
         function rowTouchEnd(e) {
 			if (config.disabled) return;
             var row = closest(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY), 'tr'),
@@ -311,6 +313,8 @@
             }
 
             touchedRowIndex[e.changedTouches[0].identifier] = null;
+
+			justTouched = setTimeout(function() {justTouched = null;}, 100);
         }
 
         function initSortingEvents() {
@@ -553,6 +557,7 @@
         }
 
         function activateRow(event) {
+			if (justTouched) return;
 			if (config.disabled) return;
             var newIndex = event.delegateTarget.getAttribute('data-index'),
                 details = getNode('det'),
