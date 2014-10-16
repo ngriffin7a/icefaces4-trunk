@@ -245,9 +245,9 @@ public class RadioButtonRenderer extends InputRenderer {
     }
 
     private void encodeIconStyle(ResponseWriter writer, RadioButton radioButton) throws IOException {
-        String iconClass = "ui-icon";
-        String selectedStyle = "ui-icon-radio-on";
-        String unselectedStyle = "ui-icon-radio-off";
+        String iconClass = "fa";
+        String selectedStyle = "fa-dot-circle-o";
+        String unselectedStyle = "fa-circle-o";
         Boolean val = (Boolean)radioButton.getValue();
 
         if (val != null && val) {

@@ -31,7 +31,7 @@ ice.ace.radiobutton = function(clientId, options) {
     this.innerSpanSelector = this.jqId + " > span > span"
     this.fieldSelector = this.jqId + " > input"
     this.buttonSelector = this.jqId + " > span > span > button"
-    this.iconSelector = this.buttonSelector + " > span.ui-icon"
+    this.iconSelector = this.buttonSelector + " > span.fa"
 
     // References
     this.button = ice.ace.jq(this.buttonSelector);
@@ -75,8 +75,8 @@ ice.ace.radiobutton.prototype.addStateCSSClasses = function(state) {
     }
     else if (state == 'checked') {
 		this.button.removeClass('ice-ace-radiobutton-unselected').addClass('ice-ace-radiobutton-selected');
-        this.icon.removeClass('ui-icon-radio-off')
-                 .addClass('ui-icon-radio-on');
+        this.icon.removeClass('fa-circle-o')
+                 .addClass('fa-dot-circle-o');
     }
 };
 
@@ -86,8 +86,8 @@ ice.ace.radiobutton.prototype.removeStateCSSClasses = function(state) {
     }
     else if (state == 'checked') {
 		this.button.removeClass('ice-ace-radiobutton-selected').addClass('ice-ace-radiobutton-unselected');
-        this.icon.removeClass('ui-icon-radio-on')
-                 .addClass('ui-icon-radio-off');
+        this.icon.removeClass('fa-dot-circle-o')
+                 .addClass('fa-circle-o');
     }
 };
 

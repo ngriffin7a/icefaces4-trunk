@@ -31,7 +31,7 @@ ice.ace.checkboxbutton = function(clientId, options) {
     this.innerSpanSelector = this.jqId + " > span > span"
     this.fieldSelector = this.jqId + " > input"
     this.buttonSelector = this.jqId + " > span > span > button"
-    this.iconSelector = this.buttonSelector + " > span.ui-icon"
+    this.iconSelector = this.buttonSelector + " > span.fa"
 
     // References
     this.button = ice.ace.jq(this.buttonSelector);
@@ -83,8 +83,8 @@ ice.ace.checkboxbutton.prototype.addStateCSSClasses = function(state) {
     }
     else if (state == 'checked') {
         this.button.addClass('ui-state-active');
-        this.icon.removeClass('ui-icon-unchecked')
-                 .addClass('ui-icon-check');
+        this.icon.removeClass('fa-square-o')
+                 .addClass('fa-check-square-o');
     }
 };
 
@@ -94,8 +94,8 @@ ice.ace.checkboxbutton.prototype.removeStateCSSClasses = function(state) {
     }
     else if (state == 'checked') {
         this.button.removeClass('ui-state-active');
-        this.icon.removeClass('ui-icon-check')
-                 .addClass('ui-icon-unchecked');
+        this.icon.removeClass('fa-check-square-o')
+                 .addClass('fa-square-o');
     }
 };
 
