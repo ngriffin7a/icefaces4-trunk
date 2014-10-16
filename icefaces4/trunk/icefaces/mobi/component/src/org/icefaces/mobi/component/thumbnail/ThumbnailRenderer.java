@@ -27,10 +27,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
-import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.mobi.util.MobiJSFUtils;
 
 import org.icefaces.util.ClientDescriptor;
+
 import static org.icefaces.mobi.util.HTML.*;
 
 public class ThumbnailRenderer extends Renderer {
@@ -40,9 +40,9 @@ public class ThumbnailRenderer extends Renderer {
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         Thumbnail thumbnail = (Thumbnail) uiComponent;
         String clientId = thumbnail.getClientId();
-		java.util.Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
-		String data = (String) requestMap.get(clientId + "_data");
-		thumbnail.setData(data);
+        java.util.Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
+        String data = (String) requestMap.get(clientId + "_data");
+        thumbnail.setData(data);
     }
 
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
@@ -53,80 +53,78 @@ public class ThumbnailRenderer extends Renderer {
 
         if (compId == null &&
                 (facesContext.isProjectStage(ProjectStage.Development) ||
-                logger.isLoggable(Level.FINER))) {
+                        logger.isLoggable(Level.FINER))) {
             logger.warning("'for' attribute cannot be null");
         }
         UIComponent comp = thumbnail.findComponent(compId);
-        if( comp == null ){
+        if (comp == null) {
             logger.warning("Cannot locate associated component 'for' = " + compId);
             return;
         }
         String mFor = comp.getId();
         if (null != comp) {
             mFor = comp.getClientId(facesContext);
-            if (MobiJSFUtils.uploadInProgress(comp))  {
-               thumbnail.setBaseClass(Thumbnail.CSS_DONE_CLASS);
+            if (MobiJSFUtils.uploadInProgress(comp)) {
+                thumbnail.setBaseClass(Thumbnail.CSS_DONE_CLASS);
             } else {
-               thumbnail.setBaseClass(Thumbnail.CSS_CLASS);
+                thumbnail.setBaseClass(Thumbnail.CSS_CLASS);
             }
-           // logger.info("comp id="+comp.getClientId(facesContext)+ " baseClass = "+thumbnail.getBaseClass());
+            // logger.info("comp id="+comp.getClientId(facesContext)+ " baseClass = "+thumbnail.getBaseClass());
         } else if (facesContext.isProjectStage(ProjectStage.Development) ||
-                logger.isLoggable(Level.FINER)){
+                logger.isLoggable(Level.FINER)) {
             logger.finer(" Cannot find camera or camcorder component with id=" + compId);
         }
-        if (null==thumbnail.getMFor()){  //only have to set it once
-             thumbnail.setMFor(mFor);
+        if (null == thumbnail.getMFor()) {  //only have to set it once
+            thumbnail.setMFor(mFor);
         }
-		ResponseWriter writer = facesContext.getResponseWriter();
+        ResponseWriter writer = facesContext.getResponseWriter();
         encode(thumbnail, writer, comp.getClientId(facesContext));
     }
 
     public void encode(Thumbnail component, ResponseWriter writer, String mFor) throws IOException {
-
-		
         String clientId = component.getClientId();
         ClientDescriptor cd = component.getClient();
-        if (cd.isDesktopBrowser()){
-        //    logger.info("desktop browser");
+        if (cd.isDesktopBrowser()) {
+            //    logger.info("desktop browser");
             return;
         }
         boolean renderThumbnail = false;
-        if (cd.isICEmobileContainer() || cd.isSXRegistered()){
+        if (cd.isICEmobileContainer() || cd.isSXRegistered()) {
             renderThumbnail = true;
         }
-        if (!renderThumbnail){
-            return;
-        }
         String thumbId = component.getMFor() + "-thumb";
-        writer.startElement(SPAN_ELEM, component);
-        String styleClass = component.getBaseClass();
-        if( component.getStyleClass() != null ){
-            styleClass += " " + component.getStyleClass();
-        }
-        writer.writeAttribute(CLASS_ATTR, styleClass, null);
-        String style = component.getStyle();
-        if( style != null ){
-            writer.writeAttribute(STYLE_ATTR, style, null);
-        }
-        writer.startElement(IMG_ELEM, component);
-        writer.writeAttribute(WIDTH_ATTR, "64", null);
-        writer.writeAttribute(HEIGHT_ATTR, "64", null);
-        writer.writeAttribute(ID_ATTR, thumbId, null);
-		String data = component.getData();
-		if (data != null) writer.writeAttribute(SRC_ATTR, data, null);
-        writer.endElement(IMG_ELEM);
 
-		writer.startElement(INPUT_ELEM, component);
-		writer.writeAttribute(TYPE_ATTR, "hidden", null);
-		writer.writeAttribute(ID_ATTR, clientId + "_data", null);
-		writer.writeAttribute(NAME_ATTR, clientId + "_data", null);
-        writer.endElement(INPUT_ELEM);
+        if (renderThumbnail) {
+            writer.startElement(SPAN_ELEM, component);
+            String styleClass = component.getBaseClass();
+            if (component.getStyleClass() != null) {
+                styleClass += " " + component.getStyleClass();
+            }
+            writer.writeAttribute(CLASS_ATTR, styleClass, null);
+            String style = component.getStyle();
+            if (style != null) {
+                writer.writeAttribute(STYLE_ATTR, style, null);
+            }
+            writer.startElement(IMG_ELEM, component);
+            writer.writeAttribute(WIDTH_ATTR, "64", null);
+            writer.writeAttribute(HEIGHT_ATTR, "64", null);
+            writer.writeAttribute(ID_ATTR, thumbId, null);
+            String data = component.getData();
+            if (data != null) writer.writeAttribute(SRC_ATTR, data, null);
+            writer.endElement(IMG_ELEM);
 
-		writer.startElement("script", component);
-		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("if (!window['thumbnails"+mFor+"']) window['thumbnails"+mFor+"'] = {};");
-		writer.write("window['thumbnails"+mFor+"']['"+thumbId+"'] = '"+clientId+"_data';");
-		writer.endElement("script");
-        writer.endElement(SPAN_ELEM);
+            writer.startElement(INPUT_ELEM, component);
+            writer.writeAttribute(TYPE_ATTR, "hidden", null);
+            writer.writeAttribute(ID_ATTR, clientId + "_data", null);
+            writer.writeAttribute(NAME_ATTR, clientId + "_data", null);
+            writer.endElement(INPUT_ELEM);
+            writer.endElement(SPAN_ELEM);
+        }
+
+        writer.startElement("script", component);
+        writer.writeAttribute("type", "text/javascript", null);
+        writer.write("if (!window['thumbnails" + mFor + "']) window['thumbnails" + mFor + "'] = {};");
+        writer.write("window['thumbnails" + mFor + "']['" + thumbId + "'] = '" + clientId + "_data';");
+        writer.endElement("script");
     }
 }
