@@ -28,6 +28,7 @@ import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 import java.io.IOException;
+import java.util.Map;
 
 public class RefreshHandler extends TagHandler {
 
@@ -39,10 +40,14 @@ public class RefreshHandler extends TagHandler {
         boolean disabled = getDisabled(ctx);
         if (!disabled) {
             FacesContext context = FacesContext.getCurrentInstance();
-            UIOutput refreshSetup = new RefreshSetupOutput(
-                getInterval(ctx), getDuration(ctx), disabled);
-            refreshSetup.setTransient(true);
-            parent.getChildren().add(refreshSetup);
+            Map attrs = context.getAttributes();
+            if (!attrs.containsKey(RefreshHandler.class.getName())) {
+                UIOutput refreshSetup = new RefreshSetupOutput(getInterval(ctx), getDuration(ctx), disabled);
+                refreshSetup.setTransient(true);
+                refreshSetup.setId("refreshSetup");
+                parent.getChildren().add(refreshSetup);
+                attrs.put(RefreshHandler.class.getName(), true);
+            }
         }
     }
 
