@@ -90,10 +90,9 @@ public class BridgeSetup implements SystemEventListener {
             root.addComponentResource(context, headResource, "head");
         }
 
-        UIComponent body = findBody(root);
         List<UIComponent> bodyResources = getBodyResources(context);
         for (UIComponent bodyResource : bodyResources) {
-            body.getChildren().add(0, bodyResource);
+            root.addComponentResource(context, bodyResource, "body");
         }
     }
 
@@ -105,18 +104,6 @@ public class BridgeSetup implements SystemEventListener {
     public static BridgeSetup getBridgeSetup(FacesContext facesContext) {
         return (BridgeSetup) facesContext.getExternalContext().
                 getApplicationMap().get(BRIDGE_SETUP);
-    }
-
-    private UIComponent findBody(UIViewRoot root) {
-        List<UIComponent> children = root.getChildren();
-        for (UIComponent c : children) {
-            String rendererType = c.getRendererType();
-            if ("javax.faces.Body".equals(rendererType)) {
-                return c;
-            }
-        }
-
-        throw new RuntimeException("Cannot find h:body component in this page.");
     }
 
     private List<UIComponent> getHeadResources(FacesContext context) {
