@@ -62,7 +62,9 @@
                 (previousURL == document.location.href) && (previousPageTimestamp == pageTimestamp) && (pageLoadTime - previousPageUnloadTime < 700);
             if (!isReload) {
                 //back/forward detected
-                ice.s(null, id);
+                onLoad(window, function() {
+                    ice.s(null, id);
+                });
             }
         } else {
             //fresh load
