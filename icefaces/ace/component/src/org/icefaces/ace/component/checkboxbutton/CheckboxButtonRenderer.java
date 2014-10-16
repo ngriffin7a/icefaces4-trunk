@@ -263,9 +263,9 @@ public class CheckboxButtonRenderer extends CoreRenderer {
     }
 
     private void encodeIconStyle(ResponseWriter writer, CheckboxButton checkbox) throws IOException {
-        String iconClass = "ui-icon";
-        String selectedStyle = "ui-icon-check";
-        String unselectedStyle = "ui-icon-unchecked";
+        String iconClass = "fa";
+        String selectedStyle = "fa-check-square-o";
+        String unselectedStyle = "fa-square-o";
         Boolean val = (Boolean)checkbox.getValue();
 
         if (val != null && val) {
