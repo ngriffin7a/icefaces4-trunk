@@ -380,6 +380,7 @@
             <fileset dir="${resources}">
                 <include name="icefaces.ace/*/*.css"/>
                 <exclude name="icefaces.ace/fileentry/*.css"/>
+				<exclude name="fontawesome/font-awesome.css"/>
                 <exclude name="icefaces.ace/util/*.css"/>
                 <exclude name="icefaces.ace/jquery/ui/jquery-ui.css"/>
                 <exclude name="${skins.lib}/*.css"/>
