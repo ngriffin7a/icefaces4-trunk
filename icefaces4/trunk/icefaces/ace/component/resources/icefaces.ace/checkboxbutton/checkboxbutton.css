@@ -15,20 +15,19 @@
  */
 
 
-.ice-checkboxbutton { display:inline; }
+.ice-checkboxbutton {
+	display:inline;
+}
 
 .ice-checkboxbutton .ui-label {
-    padding: .2em;
+    padding: 0.2em;
 }
 
 .ice-checkboxbutton .yui-button > span > button {
     border:none;
+	padding: 0.2em;
 
     /* IE7 hacks */
     *padding: 0px 6px 0px;
     *font-size: small;
-}
-
-.ui-icon-unchecked {
-    background-position: -160px 0;
 }

@@ -82,7 +82,6 @@ ice.ace.checkboxbutton.prototype.addStateCSSClasses = function(state) {
         this.button.addClass('ui-state-hover');
     }
     else if (state == 'checked') {
-        this.button.addClass('ui-state-active');
         this.icon.removeClass('fa-square-o')
                  .addClass('fa-check-square-o');
     }
@@ -93,7 +92,6 @@ ice.ace.checkboxbutton.prototype.removeStateCSSClasses = function(state) {
         this.button.removeClass('ui-state-hover');
     }
     else if (state == 'checked') {
-        this.button.removeClass('ui-state-active');
         this.icon.removeClass('fa-check-square-o')
                  .addClass('fa-square-o');
     }
