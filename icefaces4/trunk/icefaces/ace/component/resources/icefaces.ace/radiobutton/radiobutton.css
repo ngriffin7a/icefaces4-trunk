@@ -15,10 +15,12 @@
  */
 
 
-.ice-ace-radiobutton { display:inline; }
+.ice-ace-radiobutton {
+	display:inline;
+}
 
 .ice-ace-radiobutton .ui-label {
-    padding: .2em;
+    padding: 0.2em;
 }
 
 .ice-ace-radiobutton > span > span > button {
@@ -29,8 +31,6 @@
 
 .ice-ace-radiobutton .ice-ace-radiobutton-main button {
 	border:0;
+	padding: 0.2em;
 	background-color:transparent;
 }
-
-.ui-icon-radio-on { background-position: -96px -144px; }
-.ui-icon-radio-off { background-position: -112px -144px; }

@@ -248,12 +248,13 @@ public class RadioButtonRenderer extends InputRenderer {
         String iconClass = "fa";
         String selectedStyle = "fa-dot-circle-o";
         String unselectedStyle = "fa-circle-o";
+		String largeStyle = "fa-lg";
         Boolean val = (Boolean)radioButton.getValue();
 
         if (val != null && val) {
-            iconClass += " " + selectedStyle;
+            iconClass += " " + selectedStyle + " " + largeStyle;
         } else {
-            iconClass += " " + unselectedStyle;
+            iconClass += " " + unselectedStyle + " " + largeStyle;
         };
 
         writer.writeAttribute(HTML.CLASS_ATTR, iconClass, null);
