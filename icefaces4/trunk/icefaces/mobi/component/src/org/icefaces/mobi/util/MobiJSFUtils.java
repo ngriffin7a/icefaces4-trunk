@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
@@ -81,17 +82,16 @@ public class MobiJSFUtils {
         Map auxMap = AuxUploadResourceHandler.getAuxRequestMap();
         try {
             part = request.getPart(partUploadName);
-            if (null == part) {
-                part = (Part) auxMap.get(partUploadName);
-            }
         } catch (IOException e) {
             throw e;
-        } catch (Throwable t) {
+        } catch (ServletException e) {
             // ignore Throwable here since auxUpload is not multipart
             // and not-null part must be checked and we may not have
             // getPart API on Servlet 2.5
         }
-        if (null == part) {
+        // if we have a auxMa we'll grab the part data for processing.
+        if (part == null && auxMap != null) {
+            part = (Part) auxMap.get(partUploadName);
             Map commonsMeta = (Map) request.getAttribute("org.icemobile.file." + clientId);
             if (null == commonsMeta) {
                 commonsMeta = (Map)
