@@ -64,7 +64,7 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         ResponseWriter writer = facesContext.getResponseWriter();
         CheckboxButton checkbox = (CheckboxButton) uiComponent;
         String clientId = uiComponent.getClientId(facesContext);
-        String firstWrapperClass = "yui-button yui-checkboxbutton-button ui-button ui-widget ui-state-default";
+        String firstWrapperClass = "yui-button yui-checkboxbutton-button ui-button ui-widget";
         String secondWrapperClass = "first-child";
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
 
@@ -245,13 +245,8 @@ public class CheckboxButtonRenderer extends CoreRenderer {
 
     private void encodeButtonStyle(ResponseWriter writer, CheckboxButton checkbox) throws IOException {
         String buttonClasses = "";
-        String selectedClass = "ui-state-active";
         String disabledClass = "ui-state-disabled";
         Boolean val = (Boolean)checkbox.getValue();
-
-        if (val != null && val) {
-            buttonClasses += selectedClass + " ";
-        }
 
         if (checkbox.isDisabled()) {
             buttonClasses += disabledClass + " ";
@@ -266,12 +261,13 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         String iconClass = "fa";
         String selectedStyle = "fa-check-square-o";
         String unselectedStyle = "fa-square-o";
+		String largeStyle = "fa-lg";
         Boolean val = (Boolean)checkbox.getValue();
 
         if (val != null && val) {
-            iconClass += " " + selectedStyle;
+            iconClass += " " + selectedStyle + " " + largeStyle;
         } else {
-            iconClass += " " + unselectedStyle;
+            iconClass += " " + unselectedStyle + " " + largeStyle;
         };
 
         writer.writeAttribute(HTML.CLASS_ATTR, iconClass, null);
