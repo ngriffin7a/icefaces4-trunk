@@ -181,7 +181,6 @@
     <target name="res-js-compress" depends="res-js-combine,batchminify" unless="no-compress">
 		<filelist id="batch">
 			<file name="${resources}/org.icefaces.component.dataview/dataview.js"/>
-			<file name="${resources}/org.icefaces.component.dataview/dataviewcontroller.js"/>
 			<file name="${resources}/org.icefaces.component.datespinner/datespinner.js"/>
 			<file name="${resources}/org.icefaces.component.flipswitch/flipswitch.js"/>
 			<file name="${resources}/org.icefaces.component.geolocation/geolocation.js"/>

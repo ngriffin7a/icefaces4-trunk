@@ -26,10 +26,9 @@
             <resource name="component.js" library="org.icefaces.component.util"/>
         </requires>
     </resource>
-    <resource name="dataviewcontroller.js" library="org.icefaces.component.dataview">
+    <resource name="dataview.js" library="org.icefaces.component.dataview">
         <requires>
             <resource name="component.js" library="org.icefaces.component.util"/>
-            <resource name="dataview.js" library="org.icefaces.component.dataview"/>
         </requires>
     </resource>
     <resource name="geolocation.js" library="org.icefaces.component.geolocation">
