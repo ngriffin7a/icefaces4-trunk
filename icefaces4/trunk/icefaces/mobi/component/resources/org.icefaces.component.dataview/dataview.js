@@ -595,12 +595,9 @@
 				target.classList.add('ui-state-active');
 			}
 
-			var sib = event.delegateTarget.nextElementSibling,
-				removeActiveClass = function (s) { s.classList.remove('ui-state-active'); };
-
-			while (sib != null) {removeActiveClass(sib); sib = sib.nextElementSibling;};
-			sib = event.delegateTarget.previousElementSibling;
-			while (sib != null) {removeActiveClass(sib); sib = sib.previousElementSibling;};
+			if (indexIn.getAttribute("value") > -1) {
+				getNode('bodyrows')[indexIn.getAttribute("value")].classList.remove('ui-state-active');
+			}
 
             indexIn.setAttribute("value", newIndex);
 
