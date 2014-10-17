@@ -291,8 +291,6 @@
             };
         }
 
-		var justTouched = null; // avoid click event handler on touch devices
-
         function rowTouchEnd(e) {
 			if (config.disabled) return;
             var row = closest(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY), 'tr'),
@@ -313,8 +311,6 @@
             }
 
             touchedRowIndex[e.changedTouches[0].identifier] = null;
-
-			justTouched = setTimeout(function() {justTouched = null;}, 100);
         }
 
         function initSortingEvents() {
@@ -330,6 +326,8 @@
             }
         }
 
+		var activationTimeout = null;
+
         function initActivationEvents() {
             var element = getNode('elem'),
                 /* filter events for those bubbled from tr elems */
@@ -344,9 +342,35 @@
                 }
 
             if (isTouchDevice) {
-                ice.mobi.addListener(element, "touchend", isRowEvent(rowTouchEnd));
+                ice.mobi.addListener(element, "touchend", function(e) {
+					if (!activationTimeout) {
+						activationTimeout = setTimeout(function() {
+								var tr = closest(e.srcElement || e.target, "tr");
+								if (tr && im.matches(tr, bodyRowSelector)) {
+									e.delegateTarget = tr;
+									rowTouchEnd(e);
+								}
+								clearTimeout(activationTimeout);
+								activationTimeout = null;
+							}
+						,100);
+					}
+				});
                 ice.mobi.addListener(element, "touchstart", isRowEvent(rowTouchStart));
-                ice.mobi.addListener(element, "click", isRowEvent(activateRow));
+                ice.mobi.addListener(element, "click", function(e) {
+					if (!activationTimeout) {
+						activationTimeout = setTimeout(function() {
+								var tr = closest(e.srcElement || e.target, "tr");
+								if (tr && im.matches(tr, bodyRowSelector)) {
+									e.delegateTarget = tr;
+									activateRow(e);
+								}
+								clearTimeout(activationTimeout);
+								activationTimeout = null;
+							}
+						,100);
+					}
+				});
             } else {
                 ice.mobi.addListener(element, "click", isRowEvent(activateRow));
             }
@@ -557,7 +581,6 @@
         }
 
         function activateRow(event) {
-			if (justTouched) return;
 			if (config.disabled) return;
             var newIndex = event.delegateTarget.getAttribute('data-index'),
                 details = getNode('det'),
