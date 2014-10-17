@@ -25,9 +25,14 @@
 
 .ice-checkboxbutton .yui-button > span > button {
     border:none;
-	padding: 0.2em;
+	padding: 0.2em 0.2em 0.2em 0.45em;
 
     /* IE7 hacks */
     *padding: 0px 6px 0px;
     *font-size: small;
+}
+
+.yui-checkboxbutton-button .fa-lg {
+	min-width: 1em;
+	text-align: left;
 }
