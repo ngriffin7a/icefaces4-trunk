@@ -42,7 +42,7 @@ import org.icefaces.mobi.util.TLDConstants;
 
 @ResourceDependencies({
 		@ResourceDependency(library = "org.icefaces.component.viewmanager", name = "view-manager.css"),
-		@ResourceDependency(library = "org.icefaces.component.icons", name = "icons.css"),
+	@ResourceDependency(library = "icefaces.ace", name = "fontawesome/font-awesome.css"),
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
         @ResourceDependency(library="org.icefaces.component.viewmanager", name="viewmanager.js")
 })

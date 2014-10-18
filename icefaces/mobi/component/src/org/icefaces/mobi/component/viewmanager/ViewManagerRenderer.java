@@ -101,7 +101,7 @@ public class ViewManagerRenderer extends Renderer{
         writer.writeAttribute("data-backbutton-label", vm.getBackButtonLabel(), null);
         writer.writeAttribute(HTML.STYLE_ATTR, "display:none", null);
         writer.startElement("i", null);
-        writer.writeAttribute(HTML.CLASS_ATTR, "fa fa-chevron-left icon-chevron-left", null);
+        writer.writeAttribute(HTML.CLASS_ATTR, "fa fa-chevron-left", null);
         writer.endElement("i");
         writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "mobi-vm-back-text", null);
@@ -133,7 +133,7 @@ public class ViewManagerRenderer extends Renderer{
                 writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.mobi.viewManager.showView('" + view.getId() + "', event);", null);
                 if( view.getMenuIcon() != null ){
                     writer.startElement("i", null);
-                    writer.writeAttribute(HTML.CLASS_ATTR, "mobi-vm-menu-icon fa fa-" + view.getMenuIcon() + " icon-" + view.getMenuIcon(), null);
+                    writer.writeAttribute(HTML.CLASS_ATTR, "mobi-vm-menu-icon fa fa-" + view.getMenuIcon(), null);
                     writer.endElement("i");
                 }
                 writer.write(view.getTitle());

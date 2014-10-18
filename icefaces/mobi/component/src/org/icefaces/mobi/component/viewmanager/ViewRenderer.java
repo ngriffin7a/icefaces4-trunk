@@ -111,7 +111,7 @@ public class ViewRenderer extends Renderer {
             writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.mobi.viewManager.showView('" + view + "', event);", null);
         if( icon != null ){
             writer.startElement("i",null);
-            writer.writeAttribute(HTML.CLASS_ATTR, "fa fa-" + icon + " icon-" + icon, null);
+            writer.writeAttribute(HTML.CLASS_ATTR, "fa fa-" + icon, null);
             writer.endElement("i");
         }
         writer.write(title);

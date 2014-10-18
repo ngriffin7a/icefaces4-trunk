@@ -202,7 +202,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId + "_title", "id");
         writer.writeAttribute("class", TimeSpinner.TITLE_CLASS, null);
         writer.startElement("span", uiComponent);
-        writer.writeAttribute("class", "icon-time", null);
+        writer.writeAttribute("class", "fa fa-clock-o", null);
         writer.endElement("span");
         writer.startElement("span", uiComponent);
         writer.writeAttribute("class", "mobi-time-title", null);
@@ -482,13 +482,13 @@ public class TimeSpinnerRenderer extends InputRenderer {
 
     private void writePlusIcon(ResponseWriter writer) throws IOException {
         writer.startElement("span", null);
-        writer.writeAttribute("class", "icon-plus", null);
+        writer.writeAttribute("class", "fa fa-plus", null);
         writer.endElement("span");
     }
 
     private void writeMinusIcon(ResponseWriter writer) throws IOException {
         writer.startElement("span", null);
-        writer.writeAttribute("class", "icon-minus", null);
+        writer.writeAttribute("class", "fa fa-minus", null);
         writer.endElement("span");
     }
 
