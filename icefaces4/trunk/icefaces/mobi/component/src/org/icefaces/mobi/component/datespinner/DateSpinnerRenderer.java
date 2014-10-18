@@ -243,7 +243,7 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.writeAttribute("class", DateSpinner.TITLE_CLASS, null);
 
         writer.startElement("span", uiComponent);
-        writer.writeAttribute("class", "icon-time", null);
+        writer.writeAttribute("class", "fa fa-calendar", null);
         writer.endElement("span");
 
         writer.startElement("span", uiComponent);
@@ -558,13 +558,13 @@ public class DateSpinnerRenderer extends InputRenderer {
 
     private void writePlusIcon(ResponseWriter writer) throws IOException {
         writer.startElement("span", null);
-        writer.writeAttribute("class", "icon-plus", null);
+        writer.writeAttribute("class", "fa fa-plus", null);
         writer.endElement("span");
     }
 
     private void writeMinusIcon(ResponseWriter writer) throws IOException {
         writer.startElement("span", null);
-        writer.writeAttribute("class", "icon-minus", null);
+        writer.writeAttribute("class", "fa fa-minus", null);
         writer.endElement("span");
     }
 
