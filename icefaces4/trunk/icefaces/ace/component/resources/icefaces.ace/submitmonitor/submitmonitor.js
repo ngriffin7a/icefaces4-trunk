@@ -123,7 +123,9 @@
                     overlayWidth = container.offsetWidth;
                     overlayHeight = container.offsetHeight;
                 }
-                overlay.style.cssText = 'top: 0px; left: 0px; width: '+overlayWidth+'px; height: '+overlayHeight+'px; position: absolute; z-index: 28000; zoom: 1;';
+                var x = container.offsetTop;
+                var y = container.offsetLeft;
+                overlay.style.cssText = 'top: ' + x + 'px; left: ' + y + 'px; width: '+overlayWidth+'px; height: '+overlayHeight+'px; position: absolute; z-index: 28000; zoom: 1;';
                 if (container != document.body) {
                     ice.ace.jq(overlay).position({
                         my: 'left top',
