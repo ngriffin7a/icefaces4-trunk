@@ -42,7 +42,7 @@ public class AceSymbolicResourceHandler extends ResourceHandlerWrapper {
         boolean uncompress = FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development);
         if (uncompress && libraryName != null &&
                 ((libraryName.equals("icefaces.ace") &&
-                        (resourceName.equals("util/ace-yui.js") ||
+                        (resourceName.equals("util/ace-tabset.js") ||
                                 resourceName.equals("util/ace-core.js") ||
                                 resourceName.equals("util/ace-jquery-ui.js") ||
                                 resourceName.equals("util/ace-datatable.js") ||
