@@ -38,10 +38,11 @@
 
         <h:form id="form">
             <ace:selectMenu value="#{focusManagerBean.focusedComponent}" label="Focus on:" labelPosition="left">
-                <f:selectItem itemValue="" itemLabel="-"/>
+                <f:selectItem itemValue="" itemLabel="*first input component*"/>
                 <f:selectItem itemValue="A" itemLabel="A"/>
                 <f:selectItem itemValue="B" itemLabel="B"/>
                 <f:selectItem itemValue="C" itemLabel="C"/>
+                <f:selectItem itemValue="D" itemLabel="D"/>
                 <ace:ajax execute="@this"/>
             </ace:selectMenu>
             <button type="button" onclick="window.location.reload();">Reload page</button>
@@ -64,8 +65,12 @@
                                        indicatorPosition="right"
                                        styleClass="required-input">
                         </ace:textEntry>
+                        <ace:pushButton value="Submit"/>
                         <div/>
-                        <h:commandButton value="Submit"/>
+                    </h:panelGrid>
+                    <h:panelGrid width="100%">
+                        <ace:message for="C"/>
+                        <ace:message for="D"/>
                     </h:panelGrid>
                 </icecore:focusManager>
             </ace:panel>
