@@ -48,6 +48,7 @@ import java.util.List;
 @ICEResourceDependencies({
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "dnd/dragdrop.js"),
 	@ICEResourceDependency(name="util/ace-datatable.js")
 })
 @ClientBehaviorHolder(events = {
