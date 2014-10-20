@@ -26,7 +26,7 @@
         <mobi:deviceResource />
         <h:outputStylesheet library="ice.samples.showcase" name="showcase_mobile.css" media="screen"/>
         <style type="text/css">
-            .icon-fetch-contact:before {
+            .fa-fetch-contact:before {
                 content: "\0040";
                 border: 1px solid;
                 border-left: 2px solid;
@@ -144,7 +144,7 @@
 
              <!-- Input Components -->
              <!-- DATE AND TIME -->
-             <mobi:view id="dateandtime" title="Date and Time" menuIcon="time" divider="Input Components"
+             <mobi:view id="dateandtime" title="Date and Time" menuIcon="clock-o" divider="Input Components"
 				navBarGroup="dateandtime">
                  <c:if test="#{viewManagerBean.view eq 'dateandtime'}">
                      <ui:include src="/resources/examples/mobi/datespinner/date-example.xhtml" />
@@ -155,7 +155,7 @@
                 <ui:include src="/resources/examples/mobi/datespinner/date-desc.xhtml" />
              </mobi:view>
              <!-- FLIP SWITCH -->
-             <mobi:view id="flipswitch" title="Flip Switch" menuIcon="off"
+             <mobi:view id="flipswitch" title="Flip Switch" menuIcon="power-off"
 				navBarGroup="flipswitch">
                  <c:if test="#{viewManagerBean.view eq 'flipswitch'}">
                      <ui:include src="/resources/examples/mobi/flipswitch/flip-switch-example.xhtml" />
