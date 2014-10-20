@@ -368,6 +368,7 @@ ice.ace.ContextMenu = function(id, cfg) {
 				}
 				var targetComponent = findTargetComponent(event.target);
 				if (targetComponent) {
+					event.preventDefault();
 					var formId = ice.ace.jq(ice.ace.escapeClientId(id)).parents('form:first').attr('id');
 					var options = {
 						source: id,
