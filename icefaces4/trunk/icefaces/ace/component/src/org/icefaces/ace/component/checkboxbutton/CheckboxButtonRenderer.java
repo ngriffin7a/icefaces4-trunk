@@ -146,6 +146,12 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         writer.writeAttribute("value",val, null);
         writer.endElement("input");
 
+		// register checkbox with group
+        writer.startElement("script", null);
+        writer.writeAttribute("type", "text/javascript", null);
+        writer.writeText("ice.ace.checkboxbutton.register('"+clientId+"','"+getGroupId(facesContext, checkbox)+"');", null);
+		writer.endElement("script");
+
         writer.endElement(HTML.DIV_ELEM);
 		
 		Utils.registerLazyComponent(facesContext, clientId, getScript(facesContext, writer, checkbox, clientId));
@@ -153,21 +159,7 @@ public class CheckboxButtonRenderer extends CoreRenderer {
 
     private String getScript(FacesContext facesContext, ResponseWriter writer,
                               CheckboxButton checkbox, String clientId) throws IOException {
-        UIComponent groupComp;
-        String groupId = checkbox.getGroup();
-		if (groupId != null) {
-			groupId = groupId.trim();
-			groupComp = checkbox.findComponent(groupId);
-			groupId = groupComp instanceof ButtonGroup ? groupComp.getClientId(facesContext) : "";
-		}
-		if (groupId == null || "".equals(groupId)) {
-			groupComp = findNearestButtonGroup(checkbox);
-			if (groupComp != null) {
-				groupId = ((ButtonGroup) groupComp).isMutuallyExclusive() ? groupComp.getClientId(facesContext) : "";
-			} else {
-				groupId = "";
-			}
-		}
+        String groupId = getGroupId(facesContext, checkbox);
 
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
         JSONBuilder jb = JSONBuilder.create();
@@ -196,6 +188,25 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         jb.endMap().endArray().endFunction();
 		
 		return jb.toString();
+	}
+
+	private String getGroupId(FacesContext facesContext, CheckboxButton checkbox) {
+        UIComponent groupComp;
+        String groupId = checkbox.getGroup();
+		if (groupId != null) {
+			groupId = groupId.trim();
+			groupComp = checkbox.findComponent(groupId);
+			groupId = groupComp instanceof ButtonGroup ? groupComp.getClientId(facesContext) : "";
+		}
+		if (groupId == null || "".equals(groupId)) {
+			groupComp = findNearestButtonGroup(checkbox);
+			if (groupComp != null) {
+				groupId = ((ButtonGroup) groupComp).isMutuallyExclusive() ? groupComp.getClientId(facesContext) : "";
+			} else {
+				groupId = "";
+			}
+		}
+		return groupId;
 	}
 
 	private ButtonGroup findNearestButtonGroup(UIComponent component) {

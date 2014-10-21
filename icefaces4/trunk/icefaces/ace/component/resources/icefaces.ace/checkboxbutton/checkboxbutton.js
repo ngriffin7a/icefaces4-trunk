@@ -16,12 +16,7 @@
 
 // Constructor
 ice.ace.checkboxbutton = function(clientId, options) {
-    var groups = ice.ace.checkboxbutton.groups,
-        groupId = options.groupId;
-    if (groupId) {
-        groups[groupId] = groups[groupId] || {};
-        groups[groupId][clientId] = clientId;
-    }
+	ice.ace.checkboxbutton.register(clientId, options.groupId);
     this.options = options;
 
     // Selectors
@@ -68,6 +63,15 @@ ice.ace.checkboxbutton = function(clientId, options) {
 
     ice.onElementUpdate(this.id, unload);
 };
+
+ice.ace.checkboxbutton.register = function(clientId, groupId) {
+    var groups = ice.ace.checkboxbutton.groups,
+        groupId = groupId;
+    if (groupId) {
+        groups[groupId] = groups[groupId] || {};
+        groups[groupId][clientId] = clientId;
+    }
+}
 
 ice.ace.checkboxbutton.prototype.isChecked = function() {
     return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
@@ -136,7 +140,7 @@ ice.ace.checkboxbutton.prototype.toggleCheckbox = function (activeButton) {
     }
 };
 
-ice.ace.checkboxbutton.groups = {};
+if (!ice.ace.checkboxbutton.groups) ice.ace.checkboxbutton.groups = {};
 
 ice.ace.checkboxbutton.toggleOthers = function (options, clientId) {
     var groups = ice.ace.checkboxbutton.groups,
