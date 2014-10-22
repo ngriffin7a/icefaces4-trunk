@@ -20,7 +20,7 @@
 }
 
 .ice-checkboxbutton .ui-label {
-    padding: 0.2em;
+	padding: 0.2em 0.45em 0.2em 0.2em;
 }
 
 .ice-checkboxbutton .yui-button > span > button {
@@ -35,4 +35,12 @@
 .yui-checkboxbutton-button .fa-lg {
 	min-width: 1em;
 	text-align: left;
+}
+
+.ice-checkboxbutton-checked .ui-label {
+	opacity: 1;
+}
+
+.ice-checkboxbutton-unchecked .ui-label {
+	opacity: 0.25;
 }
