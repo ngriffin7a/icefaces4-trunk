@@ -45,12 +45,12 @@
                 border:none;
             }
 
-            .ice-checkboxbutton button.ui-state-active {
+            .ice-checkboxbutton-checked {
                 background: url("#{resource['css/images/check.png']}") no-repeat;
                 border:none;
             }
 
-            .ice-checkboxbutton span.ui-state-default {
+            .ice-checkboxbutton-unchecked {
                 background: url("#{resource['css/images/uncheck.png']}") no-repeat;
             }
 
@@ -63,7 +63,7 @@
         <h:form id="form" style="text-align: center">
             <ace:panel>
                 <ace:checkboxButton id="checkBox" value="#{checkboxButton.selected}">
-                    <ace:ajax execute="@this" event="activate" render="valueDescription"/>
+                    <ace:ajax />
                 </ace:checkboxButton>
                 <br/>
 
