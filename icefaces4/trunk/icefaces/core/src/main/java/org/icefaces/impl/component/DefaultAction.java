@@ -28,6 +28,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -128,7 +129,7 @@ public class DefaultAction extends UICommand {
         }
     }
 
-    private static class KeyMap {
+    public static class KeyMap implements Serializable {
         private HashMap<Integer, String> mapping = new HashMap();
 
         public void addMapping(String elementID, Integer keyCode) {
