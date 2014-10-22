@@ -70,7 +70,9 @@ public class LoadBundle extends UIComponentBase {
             bundle = ResourceBundle.getBundle(basename.trim(), locale, getClassLoader(this));
             map = new SerializableMap();
             Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
-            requestMap.remove(oldVar);
+            if (oldVar != null) {
+                requestMap.remove(oldVar);
+            }
             requestMap.put(var, map);
 
             oldBasename = basename;
