@@ -219,11 +219,12 @@ public class FileEntryRenderer extends Renderer {
             writer.endElement("table");
 
             writer.endElement("div");
-			
+
+            String formId = form.getClientId(facesContext);
 			writer.startElement("script", null);
 			writer.writeAttribute("type", "text/javascript", null);
 			writer.writeText("ice.ace.jq(function(){"
-				+ "var root = ice.ace.jq(ice.ace.escapeClientId('" + clientId + "'));"
+				+ "var root = ice.ace.jq(ice.ace.escapeClientId('" + formId + "'));"
 				+ "var addFilesButton = root.find('.buttons').find('> span').eq(0);"
 				+ "addFilesButton.addClass('add-files ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary');"
 				+ "addFilesButton.find('span').attr('style', '');"
