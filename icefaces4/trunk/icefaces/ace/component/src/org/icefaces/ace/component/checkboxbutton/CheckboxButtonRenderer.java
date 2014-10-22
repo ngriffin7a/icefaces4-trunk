@@ -93,6 +93,11 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         String buttonId = clientId + "_button";
         writer.writeAttribute(HTML.ID_ATTR, buttonId, null);
         writer.writeAttribute(HTML.NAME_ATTR, buttonId, null);
+		String selectedClass = "";
+		Object value = checkbox.getValue();
+		if (value != null) selectedClass = (((Boolean) value) ? "ice-checkboxbutton-checked" : "ice-checkboxbutton-unchecked");
+		else selectedClass = "ice-checkboxbutton-unchecked";
+		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all " + selectedClass, null);
 
         encodeButtonTabIndex(writer, checkbox, ariaEnabled);
         encodeButtonStyle(writer, checkbox);
