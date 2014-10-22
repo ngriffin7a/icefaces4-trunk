@@ -44,7 +44,7 @@ public class DateSpinnerRenderer extends InputRenderer {
     private static final Logger logger = Logger.getLogger(DateSpinnerRenderer.class.getName());
 
     private static final String JS_NAME = "datespinner.js";
-    private static final String JS_MIN_NAME = "datespinner-min.js";
+    private static final String JS_MIN_NAME = "datespinner.c.js";
     private static final String JS_LIBRARY = "org.icefaces.component.datespinner";
 
     public static final String TOUCH_START_EVENT = "ontouchstart";

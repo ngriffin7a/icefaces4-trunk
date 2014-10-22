@@ -40,7 +40,7 @@ import java.util.logging.Logger;
 public class TimeSpinnerRenderer extends InputRenderer {
     private static final Logger logger = Logger.getLogger(TimeSpinnerRenderer.class.getName());
     private static final String JS_NAME = "timespinner.js";
-    private static final String JS_MIN_NAME = "timespinner-min.js";
+    private static final String JS_MIN_NAME = "timespinner.c.js";
     private static final String JS_LIBRARY = "org.icefaces.component.timespinner";
 
     public static final String TOUCH_START_EVENT = "ontouchstart";
