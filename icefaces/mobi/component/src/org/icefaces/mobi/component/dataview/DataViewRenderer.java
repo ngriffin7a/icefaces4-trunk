@@ -263,7 +263,6 @@ public class DataViewRenderer extends CoreRenderer {
         writer.startElement(HTML.TBODY_ELEM, null);
 
         List<UIComponent> detailHolders = getDetailHolders(dataView.getDetails());
-        Integer activeIndex = dataView.getActiveRowIndex();
         String rowIndexVar = dataView.getRowIndexVar();
 
         for (IndexedIterator<Object> dataModelIterator = dataModel.iterator(); dataModelIterator.hasNext();) {
@@ -278,9 +277,6 @@ public class DataViewRenderer extends CoreRenderer {
 
             writer.writeAttribute(HTML.ID_ATTR, clientId + "_" + dataModelIterator.getIndex(), null);
             writer.writeAttribute("data-index", index, null);
-
-            if (activeIndex != null && activeIndex.equals(index))
-                writer.writeAttribute(HTML.CLASS_ATTR, DataView.DATAVIEW_ROW_ACTIVE_CLASS, null);
 
             if (dataView.getClientBehaviors().isEmpty())
                 writer.writeAttribute("data-state", encodeRowDetailString(context, dvId, detailHolders), null);

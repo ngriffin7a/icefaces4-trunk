@@ -595,9 +595,12 @@
 				target.classList.add('ui-state-active');
 			}
 
-			if (indexIn.getAttribute("value") > -1) {
-				getNode('bodyrows')[indexIn.getAttribute("value")].classList.remove('ui-state-active');
-			}
+			var sib = event.delegateTarget.nextElementSibling,
+				removeActiveClass = function (s) { s.classList.remove('ui-state-active'); };
+
+			while (sib != null) {removeActiveClass(sib); sib = sib.nextElementSibling;};
+			sib = event.delegateTarget.previousElementSibling;
+			while (sib != null) {removeActiveClass(sib); sib = sib.previousElementSibling;};
 
             indexIn.setAttribute("value", newIndex);
 
@@ -655,6 +658,17 @@
             // prevent resize-init'd height recalcs for the next 200ms
             setTimeout(function() { oriChange = false; },2000);
         });
+
+		var det = getNode('det'), idx = getIndexInput(det), v = idx.getAttribute("value");
+
+		if (v > -1) {
+			var i = 0;
+            Array.prototype.every.call(getNode('bodyrows'), function(e) {
+                if (i == v) e.classList.add('ui-state-active');
+				i++;
+                return true;
+            });
+		}
 
         /* Instance API */
         return { update: update }
