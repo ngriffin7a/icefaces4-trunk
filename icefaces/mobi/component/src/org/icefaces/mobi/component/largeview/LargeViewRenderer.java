@@ -23,7 +23,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.render.Renderer;
 
-import org.icefaces.mobi.util.Utils;
+import org.icefaces.ace.util.Utils;
 
 public class LargeViewRenderer extends Renderer {
 

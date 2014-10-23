@@ -18,7 +18,7 @@ package org.icefaces.mobi.component.timespinner;
 
 
 import org.icefaces.ace.util.Attribute;
-import org.icefaces.mobi.util.Utils;
+import org.icefaces.ace.util.Utils;
 
 import javax.faces.context.FacesContext;
 import java.util.Locale;

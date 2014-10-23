@@ -40,8 +40,8 @@ import org.icefaces.impl.application.AuxUploadSetup;
 import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.impl.util.DOMUtils;
 import org.icefaces.util.EnvUtils;
-
 import org.icefaces.util.ClientDescriptor;
+import org.icefaces.ace.util.Utils;
 
 public class MobiJSFUtils {
     

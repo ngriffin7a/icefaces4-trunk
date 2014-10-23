@@ -16,7 +16,7 @@
 
 package org.icefaces.mobi.component.dataview;
 
-import org.icefaces.mobi.util.Utils;
+import org.icefaces.ace.util.Utils;
 import org.icefaces.mobi.model.dataview.*;
 import org.icefaces.util.ClientDescriptor;
 

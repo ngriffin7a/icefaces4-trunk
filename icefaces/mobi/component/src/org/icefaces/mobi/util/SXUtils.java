@@ -32,6 +32,7 @@ import org.icefaces.impl.push.servlet.ProxyHttpServletRequest;
 import org.icefaces.impl.push.servlet.ProxyServletContext;
 import org.icefaces.impl.push.servlet.ProxySession;
 import org.icefaces.ace.util.Constants;
+import org.icefaces.ace.util.Utils;
 
 public class SXUtils {
 
