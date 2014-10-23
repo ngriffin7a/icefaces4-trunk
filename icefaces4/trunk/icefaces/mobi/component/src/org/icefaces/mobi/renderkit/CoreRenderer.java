@@ -52,7 +52,7 @@ import java.util.MissingResourceException;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-import org.icefaces.mobi.util.JSONBuilder;
+import org.icefaces.ace.util.JSONBuilder;
 
 public class CoreRenderer extends Renderer {
     private static final Logger logger = Logger.getLogger(CoreRenderer.class.getName());
