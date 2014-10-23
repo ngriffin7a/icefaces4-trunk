@@ -20,7 +20,7 @@ import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.renderkit.CoreRenderer;
 import org.icefaces.mobi.util.MobiJSFUtils;
-import org.icefaces.mobi.util.ComponentUtils;
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.EnvUtils;
 
