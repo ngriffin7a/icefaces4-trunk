@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 public class GeolocationRenderer extends CoreRenderer {
     private static final Logger log = Logger.getLogger(GeolocationRenderer.class.getName());
     private static final String JS_NAME = "geolocation.js";
-    private static final String JS_MIN_NAME = "geolocation-min.js";
+    private static final String JS_MIN_NAME = "geolocation.c.js";
     private static final String JS_LIBRARY = "org.icefaces.component.geolocation";
 
     private static final int UNDEFINED_TIMEOUT_VALUE = 0;   // no timeout
