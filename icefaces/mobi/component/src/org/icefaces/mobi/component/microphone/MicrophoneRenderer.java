@@ -29,13 +29,13 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.render.Renderer;
 
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.EnvUtils;
 
-import static org.icefaces.mobi.util.HTML.*;
+import static org.icefaces.ace.util.HTML.*;
 
 public class MicrophoneRenderer extends Renderer {
     private static final Logger logger = Logger.getLogger(MicrophoneRenderer.class.getName());

@@ -17,7 +17,7 @@
 package org.icefaces.mobi.component.outputlist;
 
 
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;

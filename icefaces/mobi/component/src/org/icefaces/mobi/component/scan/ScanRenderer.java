@@ -32,7 +32,7 @@ import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.EnvUtils;
 
-import static org.icefaces.mobi.util.HTML.*;
+import static org.icefaces.ace.util.HTML.*;
 
 public class ScanRenderer extends BaseInputRenderer {
     private static final Logger logger = Logger.getLogger(ScanRenderer.class.getName());

@@ -16,7 +16,7 @@
 
 package org.icefaces.mobi.renderkit;
 
-import static org.icefaces.mobi.util.HTML.*;
+import static org.icefaces.ace.util.HTML.*;
 
 import java.io.IOException;
 

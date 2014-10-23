@@ -34,7 +34,7 @@ import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.EnvUtils;
 
-import static org.icefaces.mobi.util.HTML.*;
+import static org.icefaces.ace.util.HTML.*;
 
 public class FetchContactRenderer extends Renderer {
     

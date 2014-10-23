@@ -28,7 +28,7 @@
 package org.icefaces.mobi.renderkit;
 
 import org.icefaces.mobi.util.Constants;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.util.EnvUtils;
 
 import javax.faces.application.ProjectStage;

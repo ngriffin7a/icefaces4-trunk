@@ -17,7 +17,7 @@
 package org.icefaces.mobi.component.geotrack;
 
 import org.icefaces.impl.util.CoreUtils;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.renderkit.CoreRenderer;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.util.ClientDescriptor;

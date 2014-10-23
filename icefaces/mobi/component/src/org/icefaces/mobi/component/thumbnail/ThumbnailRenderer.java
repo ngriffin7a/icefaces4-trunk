@@ -31,7 +31,7 @@ import org.icefaces.mobi.util.MobiJSFUtils;
 
 import org.icefaces.util.ClientDescriptor;
 
-import static org.icefaces.mobi.util.HTML.*;
+import static org.icefaces.ace.util.HTML.*;
 
 public class ThumbnailRenderer extends Renderer {
     private static final Logger logger =
