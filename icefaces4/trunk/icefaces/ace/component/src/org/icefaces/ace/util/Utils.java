@@ -397,7 +397,8 @@ public class Utils {
                 }
             }
         }
-        
+		out.flush();
+		out.close();        
     }
 
     public static int copyStream(InputStream in, OutputStream out, int start,
@@ -424,6 +425,8 @@ public class Utils {
                 count += l;
             }
         }
+		out.flush();
+		out.close();
         return count;
     }
 

@@ -31,7 +31,7 @@ import javax.faces.render.Renderer;
 
 import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.ace.util.HTML;
-import org.icefaces.mobi.util.Utils;
+import org.icefaces.ace.util.Utils;
 
 
 public class ViewManagerRenderer extends Renderer{
