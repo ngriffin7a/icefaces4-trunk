@@ -19,7 +19,7 @@ package org.icefaces.mobi.component.datespinner;
 import org.icefaces.mobi.renderkit.InputRenderer;
 import org.icefaces.mobi.util.PassThruAttributeWriter;
 import org.icefaces.mobi.util.Utils;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.ComponentUtils;
 
 import javax.faces.component.UIComponent;

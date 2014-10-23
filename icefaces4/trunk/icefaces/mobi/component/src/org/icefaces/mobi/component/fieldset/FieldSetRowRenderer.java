@@ -17,7 +17,7 @@
 package org.icefaces.mobi.component.fieldset;
 
 
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.CSSUtils;
 
 import javax.faces.component.UIComponent;

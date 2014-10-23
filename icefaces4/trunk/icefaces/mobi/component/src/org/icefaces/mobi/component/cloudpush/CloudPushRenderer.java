@@ -24,7 +24,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
-import static org.icefaces.mobi.util.HTML.*;
+import static org.icefaces.ace.util.HTML.*;
 
 public class CloudPushRenderer extends Renderer {
 

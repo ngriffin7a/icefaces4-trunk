@@ -24,7 +24,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
 import org.icefaces.ace.util.Utils;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 
 public class ViewRenderer extends Renderer {
 

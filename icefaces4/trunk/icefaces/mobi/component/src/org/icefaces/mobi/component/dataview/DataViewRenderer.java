@@ -19,7 +19,7 @@ package org.icefaces.mobi.component.dataview;
 import org.icefaces.impl.util.DOMUtils;
 import org.icefaces.ace.component.textentry.TextEntry;
 import org.icefaces.mobi.util.ComponentUtils;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.model.dataview.DataViewColumnModel;
 import org.icefaces.mobi.model.dataview.DataViewColumnsModel;
 import org.icefaces.mobi.model.dataview.DataViewDataModel;

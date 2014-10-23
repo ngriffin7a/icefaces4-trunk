@@ -17,7 +17,7 @@
 package org.icefaces.mobi.component.timespinner;
 
 import org.icefaces.mobi.renderkit.InputRenderer;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.PassThruAttributeWriter;
 import org.icefaces.mobi.util.Utils;
 import org.icefaces.mobi.util.ComponentUtils;

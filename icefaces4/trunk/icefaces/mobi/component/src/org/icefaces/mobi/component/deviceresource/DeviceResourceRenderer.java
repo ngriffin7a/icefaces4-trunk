@@ -33,7 +33,7 @@ import javax.faces.render.Renderer;
 import javax.servlet.http.HttpServletRequest;
 
 import org.icefaces.mobi.util.Attribute;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.MobiJSFConstants;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.PassThruAttributeWriter;

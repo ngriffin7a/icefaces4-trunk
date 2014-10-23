@@ -17,7 +17,7 @@ package org.icefaces.mobi.component.augmentedreality;
 
 import org.icefaces.mobi.renderkit.BaseInputRenderer;
 import org.icefaces.impl.application.AuxUploadResourceHandler;
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.Utils;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.util.EnvUtils;

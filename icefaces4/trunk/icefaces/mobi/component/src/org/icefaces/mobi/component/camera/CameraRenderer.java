@@ -30,7 +30,7 @@ import javax.faces.render.Renderer;
 
 import org.icefaces.mobi.api.IDevice;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
-import static org.icefaces.mobi.util.HTML.*;
+import static org.icefaces.ace.util.HTML.*;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.mobi.util.Utils;
 import org.icefaces.mobi.util.CSSUtils;

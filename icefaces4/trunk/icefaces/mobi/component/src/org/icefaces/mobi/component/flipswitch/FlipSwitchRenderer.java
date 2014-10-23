@@ -16,7 +16,7 @@
 
 package org.icefaces.mobi.component.flipswitch;
 
-import org.icefaces.mobi.util.HTML;
+import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.PassThruAttributeWriter;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.UserAgentInfo;
