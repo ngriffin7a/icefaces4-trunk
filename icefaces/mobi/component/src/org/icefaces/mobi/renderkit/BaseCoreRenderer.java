@@ -25,7 +25,7 @@ import org.icefaces.util.ClientDescriptor;
 import java.lang.StringBuilder;
 import java.util.logging.Logger;
 import static org.icefaces.ace.util.HTML.*;
-import static org.icefaces.mobi.util.Constants.*;
+import static org.icefaces.ace.util.Constants.*;
 
 public abstract class BaseCoreRenderer{
     private static final Logger logger =

@@ -39,9 +39,6 @@ public class Constants {
     public static final String THEME_FORMS_PARAM = "org.icefaces.ace.themeForms";
     public static final String AUTO_UPDATE = "org.icefaces.ace.autoUpdate";
 
-    public final static String VERSION = "2.1.0-b01";
-    public final static String LIBRARY = "icefaces.ace";
-
     public final static String CUSTOM_EVENT = "CUSTOM_EVENT";
 	
 	/* ------------------------------- */

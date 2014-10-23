@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.UserAgentInfo;
+import org.icefaces.ace.util.Constants;
 
 public class Utils {
     public static void renderChildren(FacesContext facesContext,

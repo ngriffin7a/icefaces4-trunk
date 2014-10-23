@@ -24,6 +24,7 @@ import java.util.Formatter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.icefaces.ace.util.Constants;
 
 public class SXUtils {
 
