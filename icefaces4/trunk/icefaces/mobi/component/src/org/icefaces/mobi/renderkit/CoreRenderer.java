@@ -27,7 +27,7 @@
  */
 package org.icefaces.mobi.renderkit;
 
-import org.icefaces.mobi.util.Constants;
+import org.icefaces.ace.util.Constants;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.util.EnvUtils;
 

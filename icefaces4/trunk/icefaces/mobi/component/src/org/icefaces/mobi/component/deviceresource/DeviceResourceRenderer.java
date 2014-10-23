@@ -39,7 +39,7 @@ import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.ClientDescriptor;
-import org.icefaces.mobi.util.Constants;
+import org.icefaces.ace.util.Constants;
 import org.icefaces.mobi.util.SXUtils;
 
 @ListenerFor(systemEventClass = javax.faces.event.PostAddToViewEvent.class)
