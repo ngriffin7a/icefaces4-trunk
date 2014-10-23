@@ -27,7 +27,7 @@
                     var elementID = keyMap[keyCode(e)];
                     if (elementID) {
                         element = lookupElementById(elementID);
-                        submit(ev || window.event, element);
+                        singleSubmitExecuteThis(ev || window.event, element);
                         return false;
                     }
                 }
