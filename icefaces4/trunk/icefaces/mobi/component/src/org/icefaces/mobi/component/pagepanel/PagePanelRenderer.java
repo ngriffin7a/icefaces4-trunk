@@ -24,7 +24,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.icefaces.mobi.renderkit.CoreRenderer;
 import org.icefaces.ace.util.HTML;
-import org.icefaces.mobi.util.PassThruAttributeWriter;
+import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.mobi.util.Utils;
 
 

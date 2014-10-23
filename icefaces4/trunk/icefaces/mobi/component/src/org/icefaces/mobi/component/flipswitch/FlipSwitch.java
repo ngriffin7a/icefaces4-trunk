@@ -16,7 +16,7 @@
 
 package org.icefaces.mobi.component.flipswitch;
 
-import org.icefaces.mobi.util.Attribute;
+import org.icefaces.ace.util.Attribute;
 import org.icefaces.impl.util.Util;
 
 
