@@ -15,7 +15,7 @@
  */
 package org.icefaces.mobi.component.pagepanel;
 
-import org.icefaces.ace.util.Attribute;
+import org.icefaces.mobi.util.Attribute;
 
 /**
  * Model data for PagePane component which is currently stateless.
