@@ -344,6 +344,8 @@
             if (isTouchDevice) {
                 ice.mobi.addListener(element, "touchend", function(e) {
 					if (!activationTimeout) {
+                        //stop from triggering the synthetic click event
+                        e.stopPropagation();
 						activationTimeout = setTimeout(function() {
 								var tr = closest(e.srcElement || e.target, "tr");
 								if (tr && im.matches(tr, bodyRowSelector)) {
