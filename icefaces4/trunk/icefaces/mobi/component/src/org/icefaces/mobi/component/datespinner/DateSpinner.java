@@ -17,7 +17,7 @@
 package org.icefaces.mobi.component.datespinner;
 
 
-import org.icefaces.ace.util.Attribute;
+import org.icefaces.mobi.util.Attribute;
 import org.icefaces.mobi.util.Utils;
 
 import javax.faces.context.FacesContext;
