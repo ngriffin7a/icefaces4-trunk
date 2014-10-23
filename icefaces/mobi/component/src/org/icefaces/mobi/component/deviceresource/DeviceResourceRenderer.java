@@ -32,11 +32,11 @@ import javax.faces.event.ListenerFor;
 import javax.faces.render.Renderer;
 import javax.servlet.http.HttpServletRequest;
 
-import org.icefaces.mobi.util.Attribute;
+import org.icefaces.ace.util.Attribute;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.MobiJSFConstants;
 import org.icefaces.mobi.util.MobiJSFUtils;
-import org.icefaces.mobi.util.PassThruAttributeWriter;
+import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.mobi.util.Constants;
