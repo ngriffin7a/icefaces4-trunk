@@ -25,7 +25,7 @@
         
         <mobi:fieldsetGroup styleClass="intro">
             <mobi:fieldsetRow>
-                Use your mobile device geotracking capabilities to update your location information to the server, even when not having an active web session, as long as the Bridgeit app is running.
+                Use your mobile device's geotracking capabilities to continuously update your location information to the server, even without an active web session, so long as the Bridgeit app is running. This service updates for significant location changes only (500 meters/yards+), approx. every 5 minutes. 
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
         
@@ -37,7 +37,7 @@
                 &#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<h:outputText value="The geotracking data periodically sent by users browsing the application is displayed below."/>
+				<h:outputText value="Press Refresh to display your last recorded location."/>
 				<br />
 				<h:outputText id="geotrackData" value="#{geotrackDataBean.data}"/>
 				<br />
