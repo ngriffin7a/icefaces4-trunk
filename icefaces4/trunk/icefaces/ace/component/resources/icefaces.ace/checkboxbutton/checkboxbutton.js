@@ -48,11 +48,7 @@ ice.ace.checkboxbutton = function(clientId, options) {
     if (options.ariaEnabled)
         ice.ace.jq(this.jqId).on("keypress", function(e) { self.onAriaKeypress(e); });
 
-    // lazy init occuring via kb focus, set focus style since
-    // our focus event won't be set up yet
-    if (document.activeElement == this.button[0])
-        this.addStateCSSClasses('hover');
-    else if (event.type == "mouseover")
+    if (event.type == "mouseover")
         this.addStateCSSClasses('hover');
 
     var unload = function() {
