@@ -534,7 +534,7 @@ ice.ace.fileentry = {
 
     clearFileSelection : function(clientId) {
         ice.ace.fileentry.clearMultipleSelectionTableRows(clientId);
-        var root = document.getElementById(clientId);
+        var root = document.getElementById(clientId+'_container');
         if (root) {
             var fileEntryInputs = root.getElementsByTagName("input");
             var fileEntryInputsLen = fileEntryInputs.length;
