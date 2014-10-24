@@ -44,9 +44,11 @@
 }
 .mobi-pagePanel-header{
     top: 0;
+	position: fixed;
 }
 .mobi-pagePanel-footer{
     bottom: 0;
+	position: fixed;
 }
 .mobi-pagePanel-header h1, .mobi-pagePanel-footer h1{ 
     min-height: 1.1em;
