@@ -90,44 +90,45 @@
         setTimeout(scrollTo, 100, 0, 1);
     }
 
-    function refreshViewDimensions(){
-        //console.log('refreshViewDimensions()');
-         document.body.style.overflowY = 'hidden';
+    function refreshViewDimensions() {
+        setTimeout(function() {
+            //console.log('refreshViewDimensions()');
+             document.body.style.overflowY = 'hidden';
 
-         if ((window.innerWidth != currentWidth) || (ice.mobi.windowHeight() != currentHeight)){
-            currentWidth = window.innerWidth;
-            currentHeight = ice.mobi.windowHeight();
-            var orient = (currentWidth < currentHeight) ? 'portrait' : 'landscape';
-            setOrientation(orient);
-        }
-        
-        var contentHeight = currentHeight - 39; //adjust for header
-        var currentView = getNodeForView(getCurrentView());
-        if( currentView ){
-            if( currentView.querySelectorAll('.mobi-vm-nav-bar').length > 0 ){
-                contentHeight -= 40; //adjust for nav bar if exists
+             if ((window.innerWidth != currentWidth) || (ice.mobi.windowHeight() != currentHeight)){
+                currentWidth = window.innerWidth;
+                currentHeight = ice.mobi.windowHeight();
+                var orient = (currentWidth < currentHeight) ? 'portrait' : 'landscape';
+                setOrientation(orient);
             }
-            var contentNode = currentView.querySelectorAll('.mobi-vm-view-content')[0];
-            if( contentNode ){
-                contentNode.style.height = '' + contentHeight + 'px';
-                //ice.log.debug(ice.log, 'set view content height to ' + contentHeight);
-            }
-            else{
-                console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find content node for view = ' + currentView.id);
-            }
-        }
-        var menuNode = document.querySelector('.mobi-vm-menu');
-        if( menuNode ){
-            menuNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
-        }
-        else
-            console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find menu node');
-        
-        var splashNode = document.querySelector('.mobi-vm-splash');
-        if( splashNode ){
-            splashNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
-        }
 
+            var contentHeight = currentHeight - 39; //adjust for header
+            var currentView = getNodeForView(getCurrentView());
+            if( currentView ){
+                if( currentView.querySelectorAll('.mobi-vm-nav-bar').length > 0 ){
+                    contentHeight -= 40; //adjust for nav bar if exists
+                }
+                var contentNode = currentView.querySelectorAll('.mobi-vm-view-content')[0];
+                if( contentNode ){
+                    contentNode.style.height = '' + contentHeight + 'px';
+                    //ice.log.debug(ice.log, 'set view content height to ' + contentHeight);
+                }
+                else{
+                    console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find content node for view = ' + currentView.id);
+                }
+            }
+            var menuNode = document.querySelector('.mobi-vm-menu');
+            if( menuNode ){
+                menuNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
+            }
+            else
+                console.error('ice.mobi.viewManager.refreshViewDimensions() cannot find menu node');
+
+            var splashNode = document.querySelector('.mobi-vm-splash');
+            if( splashNode ){
+                splashNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
+            }
+        }, 300);
     }
     
     function getTransitionFunctions(reverse){
