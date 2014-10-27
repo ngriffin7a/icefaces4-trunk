@@ -34,7 +34,12 @@ if (window.addEventListener) {
 function updateAddressBarURL(grp, exp){
     var hypertextReference = '//' + location.host + location.pathname + '?grp=' + grp + '&exp=' + exp;
     if( window.history && window.history.pushState ){ //check if browser supports HTML5 history pushState
-        var state = window.history.state ? clone(window.history.state) : {};
+        var state;
+        try {
+            state = window.history.state ? clone(window.history.state) : {};
+        } catch (ex) {
+            state = {};
+        }
         state.src = hypertextReference;
         history.pushState(state, null, hypertextReference); //set the current url, pass in a null state object
     }
