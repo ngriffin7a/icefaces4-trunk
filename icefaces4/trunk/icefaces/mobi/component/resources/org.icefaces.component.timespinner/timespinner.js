@@ -181,9 +181,6 @@ mobi.timespinner = {
         var idPanel = clientId + "_bg";
         var idPopPanel = clientId + "_popup";
 
-        document.getElementById(idPanel).className = "mobi-time-bg";
-        document.getElementById(idPopPanel).className = "mobi-time-container ui-widget ui-widget-content";
-
         // add scroll listener
         this.centerCalculation[clientId] = function () {
             mobi.panelAutoCenter(idPopPanel);
@@ -192,6 +189,11 @@ mobi.timespinner = {
         ice.mobi.addListener(window, this.scrollEvent, this.centerCalculation[clientId]);
         ice.mobi.addListener(window, 'resize', this.centerCalculation[clientId]);
 
+		var overlay = document.getElementById(idPanel);
+		overlay.style.width = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) + 'px';
+		overlay.style.height = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight) + 'px';
+        overlay.className = "mobi-time-bg";
+        document.getElementById(idPopPanel).className = "mobi-time-container ui-widget ui-widget-content";
         // set visible
         this.opened[clientId] = true;
         // calculate center for first view
@@ -208,7 +210,7 @@ mobi.timespinner = {
             window.detachEvent('resize', this.centerCalculation[clientId], false);
         }
         // hide the panels
-        document.getElementById(idPanel).className = "mobi-time";
+        document.getElementById(idPanel).className = "mobi-time-bg-inv";
         document.getElementById(clientId + "_popup").className = "mobi-time-container-inv ui-widget ui-widget-content";
         this.opened[clientId] = false;
         this.centerCalculation[clientId] = undefined;
