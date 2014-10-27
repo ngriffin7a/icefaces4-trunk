@@ -272,7 +272,10 @@ mobi.datespinner = {
         ice.mobi.addListener(window, 'resize', this.centerCalculation[clientId]);
 
         // add visible style classes
-        document.getElementById(idPanel).className = "mobi-date-bg";
+		var overlay = document.getElementById(idPanel);
+		overlay.style.width = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) + 'px';
+		overlay.style.height = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight) + 'px';
+        overlay.className = "mobi-date-bg";
         document.getElementById(idPopPanel).className = "mobi-date-container ui-widget ui-widget-content";
         // set as visible.
         this.opened[clientId] = true;
