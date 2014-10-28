@@ -365,13 +365,13 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         }
 
         if(EnvUtils.isMyFaces()){
-            //Similar to Mojarra, we need to track the ViewState nodes for MyFaces so that
+            //Similar to Mojarra, we need to track the ViewState and ClientWindow nodes for MyFaces so that
             //we can removed them from the DOM after they have been rendered out to the response.
-            if(name != null &&
-                    name.equalsIgnoreCase("name") &&
-                    value instanceof String &&
-                    ((String)value).equalsIgnoreCase("javax.faces.ViewState")){
-                stateNodes.add(cursor);
+            if(name != null && name.equalsIgnoreCase("name") && value instanceof String) {
+                String val = (String) value;
+                if ("javax.faces.ViewState".equalsIgnoreCase(val) || "javax.faces.ClientWindow".equalsIgnoreCase(val)) {
+                    stateNodes.add(cursor);
+                }
             }
         }
 
