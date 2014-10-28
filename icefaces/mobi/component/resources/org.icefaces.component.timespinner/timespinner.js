@@ -139,7 +139,7 @@ mobi.timespinner = {
         }
         var time = hr + ':' + min + ' ' + ampm;
         var titleEl = document.getElementById(clientId + '_title');
-        titleEl.childNodes[1].innerHTML = time;
+        titleEl.childNodes[1].innerHTML = ' ' + time;
     },
 
     getIntValue:function (id) {
