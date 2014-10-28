@@ -91,6 +91,7 @@
     }
 
     function refreshViewDimensions() {
+		// ICE-10357 - Use a timeout to allow iOS Safari time to finish re-layout before calculating the dimensions.
         setTimeout(function() {
             //console.log('refreshViewDimensions()');
              document.body.style.overflowY = 'hidden';
@@ -128,7 +129,7 @@
             if( splashNode ){
                 splashNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
             }
-        }, 300);
+        }, 1);
     }
     
     function getTransitionFunctions(reverse){
