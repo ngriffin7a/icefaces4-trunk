@@ -326,6 +326,8 @@
             }
         }
 
+		var activationTimeout = null;
+
         function initActivationEvents() {
             var element = getNode('elem'),
                 /* filter events for those bubbled from tr elems */
@@ -341,26 +343,36 @@
 
             if (isTouchDevice) {
                 ice.mobi.addListener(element, "touchend", function(e) {
-                    //stop from triggering the synthetic click event
-                    e.preventDefault();
-                    setTimeout(function() {
-                        var tr = closest(e.srcElement || e.target, "tr");
-                        if (tr && im.matches(tr, bodyRowSelector)) {
-                            e.delegateTarget = tr;
-                            rowTouchEnd(e);
-                        }
-                    }, 100);
-                });
-                ice.mobi.addListener(element, "click", function (e) {
-                    setTimeout(function () {
-                        var tr = closest(e.srcElement || e.target, "tr");
-                        if (tr && im.matches(tr, bodyRowSelector)) {
-                            e.delegateTarget = tr;
-                            activateRow(e);
-                        }
-                    }, 100);
-                });
+					if (!activationTimeout) {
+                        //stop from triggering the synthetic click event
+                        e.stopPropagation();
+						activationTimeout = setTimeout(function() {
+								var tr = closest(e.srcElement || e.target, "tr");
+								if (tr && im.matches(tr, bodyRowSelector)) {
+									e.delegateTarget = tr;
+									rowTouchEnd(e);
+								}
+								clearTimeout(activationTimeout);
+								activationTimeout = null;
+							}
+						,100);
+					}
+				});
                 ice.mobi.addListener(element, "touchstart", isRowEvent(rowTouchStart));
+                ice.mobi.addListener(element, "click", function(e) {
+					if (!activationTimeout) {
+						activationTimeout = setTimeout(function() {
+								var tr = closest(e.srcElement || e.target, "tr");
+								if (tr && im.matches(tr, bodyRowSelector)) {
+									e.delegateTarget = tr;
+									activateRow(e);
+								}
+								clearTimeout(activationTimeout);
+								activationTimeout = null;
+							}
+						,100);
+					}
+				});
             } else {
                 ice.mobi.addListener(element, "click", isRowEvent(activateRow));
             }
