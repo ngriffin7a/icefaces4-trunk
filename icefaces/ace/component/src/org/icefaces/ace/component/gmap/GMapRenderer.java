@@ -137,4 +137,14 @@ public class GMapRenderer extends CoreRenderer {
         writer.writeAttribute(HTML.AUTOCOMPLETE_ATTR, "off", null);
         writer.endElement("input");
     }
+
+	protected static String getMapClientId(FacesContext context, UIComponent component) {
+		UIComponent parent = component.getParent();
+		while(parent != null) {
+			if (parent instanceof GMap) break;
+			parent = parent.getParent();
+		}
+		if (parent != null) return parent.getClientId(context);
+		else return "";
+	}
 }

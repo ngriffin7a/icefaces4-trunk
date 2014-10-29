@@ -39,14 +39,15 @@ public class GMapControlRenderer extends CoreRenderer {
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.jq(function() {");
 		JSONBuilder jb;
+		String mapClientId = GMapRenderer.getMapClientId(context, control);
         if (control.isDisabled()) {
 			jb = JSONBuilder.create();
-			jb.beginFunction("ice.ace.gMap.removeControl").item(control.getParent().getClientId(context)).item(control.getName()).endFunction();
+			jb.beginFunction("ice.ace.gMap.removeControl").item(mapClientId).item(control.getName()).endFunction();
             writer.write(jb.toString());
         } else {
 			jb = JSONBuilder.create();
 			jb.beginFunction("ice.ace.gMap.addControl")
-				.item(control.getParent().getClientId(context))
+				.item(mapClientId)
 				.item(control.getName())
 				.item(control.getPosition())
 				.item(control.getControlStyle())

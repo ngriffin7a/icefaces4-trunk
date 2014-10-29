@@ -39,10 +39,11 @@ public class GMapLayerRenderer extends CoreRenderer {
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.jq(function() {");
+		String mapClientId = GMapRenderer.getMapClientId(context, gMapLayer);
         if (gMapLayer.getLayerType() != null) {
 			JSONBuilder jb = JSONBuilder.create();
 			jb.beginFunction("ice.ace.gMap.removeMapLayer")
-				.item(gMapLayer.getParent().getClientId(context))
+				.item(mapClientId)
 				.item(clientId)
 			.endFunction();
             writer.write(jb.toString());
@@ -50,7 +51,7 @@ public class GMapLayerRenderer extends CoreRenderer {
                 if (gMapLayer.getUrl() != null) {
 					jb = JSONBuilder.create();
 					jb.beginFunction("ice.ace.gMap.addMapLayer")
-						.item(gMapLayer.getParent().getClientId(context))
+						.item(mapClientId)
 						.item(clientId)
 						.item(gMapLayer.getLayerType())
 						.item(gMapLayer.getOptions())
@@ -60,7 +61,7 @@ public class GMapLayerRenderer extends CoreRenderer {
                 } else {
 					jb = JSONBuilder.create();
 					jb.beginFunction("ice.ace.gMap.addMapLayer")
-						.item(gMapLayer.getParent().getClientId(context))
+						.item(mapClientId)
 						.item(clientId)
 						.item(gMapLayer.getLayerType())
 						.item(gMapLayer.getOptions())

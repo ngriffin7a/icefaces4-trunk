@@ -42,7 +42,7 @@ public class GMapServicesRenderer extends CoreRenderer {
         if (service.getPoints() != null && service.getName() != null) {
 			JSONBuilder jb = JSONBuilder.create();
 			jb.beginFunction("ice.ace.gMap.gService")
-				.item(service.getParent().getClientId(context))
+				.item(GMapRenderer.getMapClientId(context, service))
 				.item(service.getName())
 				.item(service.getPoints())
 				.item(service.getOptions())

@@ -52,12 +52,13 @@ public class GMapEventRenderer extends CoreRenderer {
 		if (mapContext == null) {
 			throw new FacesException("ace:gMapEvent component '" + gMapEvent.getId() + "' is not nested inside an ace:gMap component.");
 		}
+		UIComponent gMapComponentParent = getGMapComponentParent(gMapEvent);
 		JSONBuilder jb = JSONBuilder.create();
 		jb.beginFunction("ice.ace.gMap.addEvent")
 			.item(mapContext)
-			.item(gMapEvent.getParent().getClientId(context))
+			.item(gMapComponentParent.getClientId(context))
 			.item(clientId)
-			.item(gMapEvent.getParent().getClass().getName())
+			.item(gMapComponentParent.getClass().getName())
 			.item(gMapEvent.getEventType())
 			.item(gMapEvent.getRendererType())
 			.item(gMapEvent.getScriptToUse())
@@ -68,4 +69,20 @@ public class GMapEventRenderer extends CoreRenderer {
         writer.endElement("span");
 
     }
+
+	protected static UIComponent getGMapComponentParent(UIComponent component) {
+		UIComponent parent = component.getParent();
+		while(parent != null) {
+			if (parent instanceof GMap
+					|| parent instanceof GMapAutocomplete
+					|| parent instanceof GMapControl
+					|| parent instanceof GMapInfoWindow
+					|| parent instanceof GMapLayer
+					|| parent instanceof GMapMarker
+					|| parent instanceof GMapOverlay
+					|| parent instanceof GMapServices) return parent;
+			parent = parent.getParent();
+		}
+		return null;
+	}
 }
