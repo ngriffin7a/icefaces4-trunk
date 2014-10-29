@@ -69,12 +69,16 @@ font-size: 110%
 
 
 
+
+
       Wiki</a>.<br>
     <br>
     <h3>Documentation Quick-links</h3>
     <ul>
       <li><a target="_blank"
-href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
+          href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
+
+
 
 
 
@@ -90,12 +94,16 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
 
 
 
+
+
           Documentation</a></li>
       <ul>
         <li><a target="_blank"
             href="http://wiki.icesoft.org/display/ICE/ICEfaces+Overview">Overview</a></li>
         <li><a target="_blank"
             href="http://wiki.icesoft.org/display/ICE/Getting+Started">Getting
+
+
 
 
 
@@ -118,8 +126,8 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
     The binary bundle comes with the ICEfaces libraries pre-compiled and
     the sample applications pre-built to run on "Servlet-profile"
     platforms, such as Tomcat. The binary bundle also includes all the
-    source files for the sample applications, but not the ICEfaces
-    libraries themselves.&nbsp; <br>
+    source files for the sample applications, but does not include the
+    source files for the ICEfaces libraries.&nbsp; <br>
     <br>
     The icefaces directory of the binary bundle contains: <br>
     <ul>
@@ -127,25 +135,27 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
       <ul>
         <li>The ICEfaces API and TLD documentation.</li>
         <ul>
-          <li>ace - JavaDocs and TLD docs for the ACE Components (api
-            and tld).</li>
+          <li>ace - JavaDocs and TLD docs for the ACE Components.</li>
           <li>core - JavaDocs and TLD docs for the core framework APIs
-            and icecore tags.</li>
+            and ICECORE components.</li>
+          <li>icepush - JavaDocs and TLD docs for the ICEpush library.</li>
+          <li>mobi - JavaDocs and TLD docs for the MOBI Components.</li>
         </ul>
       </ul>
       <li><span style="font-weight: bold;">lib</span></li>
       <ul>
-        <li>The ICEfaces libraries along with any possibly required
+        <li>The ICEfaces libraries along with any optional or required
           3rd-party run-time libraries. </li>
         <ul>
-          <li>icefaces.jar - The core ICEfaces framework.</li>
-          <li>icepush.jar - The ICEpush library, provides push
-            functionality to the ICEfaces framework (optional).</li>
+          <li>icefaces.jar - The core ICEfaces framework, including the
+            ICECORE components.</li>
+          <li>icepush.jar - The ICEpush library, provides asynchronous
+            push functionality to the ICEfaces framework (optional).</li>
           <li>icefaces-ace.jar - The ACE Components (ICEfaces Advanced
             Components) library (optional).</li>
           <li>icefaces-mobi.jar - The MOBI Components (ICEfaces Mobile
             Components) library (optional).</li>
-          <li>version-licenses.html - Version and license information
+          <li>versions-licenses.html - Version and license information
             for all included libraries.<br>
           </li>
         </ul>
@@ -163,6 +173,8 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
             converted to work with the ACE Components.</li>
           <li>See the <a target="_blank"
               href="http://wiki.icesoft.org/display/ICE/ACE+ThemeRoller+support">ACE
+
+
 
 
               ThemeRoller Support</a> Wiki topic for details on how to
@@ -210,7 +222,8 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
         <ul>
           <li>ICEfaces Showcase sample application demonstrates key
             ICEfaces framework features and includes comprehensive
-            demonstrations of both the ACE and MOBI Component sets.</li>
+            demonstrations of&nbsp; the ACE, ICECORE, and MOBI component
+            sets.</li>
           <li>See the <a target="_blank"
               href="http://wiki.icesoft.org/display/ICE/MOBI+Components">MOBI
 
@@ -220,8 +233,12 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
 
 
 
-              Components</a> and <a
+
+
+              Components</a> and <a target="_blank"
               href="http://wiki.icesoft.org/display/ICE/ACE+Components">ACE
+
+
 
 
 
@@ -264,12 +281,19 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
 
 
 
+
+
             Components</a> topic of the ICEfaces Wiki for more
           information.</li>
       </ul>
       <li><span style="font-weight: bold;">core</span></li>
       <ul>
         <li>Source files and resources for the ICEfaces core framework.<br>
+        </li>
+      </ul>
+      <li><span style="font-weight: bold;">icepush</span></li>
+      <ul>
+        <li>Source files for the ICEpush library.<br>
         </li>
       </ul>
       <li><span style="font-weight: bold;">lib</span></li>
@@ -284,9 +308,8 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
           <li>icefaces-ace.jar - The ACE Components library (optional).</li>
           <li>icefaces-mobi.jar - The MOBI Components library
             (optional).</li>
-          <li>version-licenses.html - Version and license information
-            for all included libraries.<br>
-          </li>
+          <li>versions-licenses.html - Version and license information
+            for all included libraries.</li>
         </ul>
       </ul>
       <li><span style="font-weight: bold;">licenses</span></li>
@@ -302,6 +325,8 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
             converted to work with the ACE Components.</li>
           <li>See the <a target="_blank"
               href="http://wiki.icesoft.org/display/ICE/ACE+ThemeRoller+support">ACE
+
+
 
 
               ThemeRoller Support</a> Wiki topic for details on how to
@@ -342,17 +367,23 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
         <ul>
           <li>ICEfaces Showcase sample application demonstrates key
             ICEfaces framework features and includes comprehensive
-            demonstrations of both the ACE and ICE Component sets.</li>
+            demonstrations of&nbsp; the ACE, ICECORE, and MOBI component
+            sets.</li>
           <li>See the <a target="_blank"
-              href="http://wiki.icesoft.org/display/ICE/ICE+Components">ICE
+              href="http://wiki.icesoft.org/display/ICE/MOBI+Components">MOBI
 
 
 
 
 
 
-              Components</a> and <a
+
+
+
+              Components</a> and <a target="_blank"
               href="http://wiki.icesoft.org/display/ICE/ACE+Components">ACE
+
+
 
 
 
@@ -363,17 +394,11 @@ href="http://wiki.icesoft.org/display/ICE/ICEfaces+4.0.0+Release+Notes">Release
             information. </li>
           <ul style="font-style: italic;">
             <li>/showcase</li>
-            <li>/showcase-portlets<br>
-            </li>
-          </ul>
-        </ul>
-        <ul>
-          <ul>
+            <li>/showcase-portlets</li>
           </ul>
         </ul>
       </ul>
     </ul>
-    <br>
     <ul>
       <ul>
       </ul>
