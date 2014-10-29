@@ -500,7 +500,7 @@
 
 		for (var i = 0, l = mappings.length; i < l; i++) {
 			var m = mappings[i];
-			if (m.i == r) { return m.o;}
+			if (m && m.i == r) { return m.o;}
 		}
 		return false;
 	};
