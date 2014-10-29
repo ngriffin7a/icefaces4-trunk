@@ -78,7 +78,7 @@ public class GMapAutocompleteRenderer extends CoreRenderer {
         writer.write("ice.ace.jq(function() {");
         JSONBuilder jb = JSONBuilder.create();
         jb.beginFunction("ice.ace.gMap.addAutoComplete")
-                .item(autocomplete.getParent().getClientId(context))
+                .item(GMapRenderer.getMapClientId(context, autocomplete))
                 .item(clientId)
                 .item(autocomplete.getWindowOptions())
                 .item(autocomplete.getOffset())

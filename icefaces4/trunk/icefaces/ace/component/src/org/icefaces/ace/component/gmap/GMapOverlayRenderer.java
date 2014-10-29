@@ -41,16 +41,17 @@ public class GMapOverlayRenderer extends CoreRenderer {
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.jq(function() {");
+		String mapClientId = GMapRenderer.getMapClientId(context, overlay);
         if (overlay.getPoints() != null && overlay.getShape() != null) {
 			JSONBuilder jb = JSONBuilder.create();
 			jb.beginFunction("ice.ace.gMap.removeGOverlay")
-				.item(overlay.getParent().getClientId(context))
+				.item(mapClientId)
 				.item(clientId)
 			.endFunction();
             writer.write(jb.toString());
 			jb = JSONBuilder.create();
 			jb.beginFunction("ice.ace.gMap.gOverlay")
-				.item(overlay.getParent().getClientId(context))
+				.item(mapClientId)
 				.item(clientId)
 				.item(overlay.getShape())
 				.item(overlay.getPoints())

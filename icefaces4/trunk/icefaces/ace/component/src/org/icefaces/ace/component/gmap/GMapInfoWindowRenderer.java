@@ -63,12 +63,12 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.jq(function() {");
-
-            if ("GMapMarker".equals(infoWindow.getParent().getClass().getSimpleName())) {
-                markerId = infoWindow.getParent().getClientId(context);
-                mapId = infoWindow.getParent().getParent().getClientId(context);
+		UIComponent parentMarker = getParentMarker(infoWindow);
+            if (parentMarker != null) {
+                markerId = parentMarker.getClientId(context);
+                mapId = GMapRenderer.getMapClientId(context, infoWindow);
             } else {
-                mapId = infoWindow.getParent().getClientId(context);
+                mapId = GMapRenderer.getMapClientId(context, infoWindow);
             }
 		JSONBuilder jb;
         if (!infoWindow.isDisabled()) {
@@ -142,4 +142,13 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
     public boolean getRendersChildren() {
         return true;
     }
+
+	protected static UIComponent getParentMarker(UIComponent component) {
+		UIComponent parent = component.getParent();
+		while(parent != null) {
+			if (parent instanceof GMapMarker) return parent;
+			parent = parent.getParent();
+		}
+		return null;
+	}
 }

@@ -43,6 +43,7 @@ public class GMapMarkerRenderer extends CoreRenderer {
         String oldLongitude = "";
         String currentLat = marker.getLatitude();
         String currentLon = marker.getLongitude();
+		String mapClientId = GMapRenderer.getMapClientId(context, marker);
 		JSONBuilder jb;
         //create a marker if lat and lon defined on the component itself
         if (!marker.isDisabled()) {
@@ -53,14 +54,14 @@ public class GMapMarkerRenderer extends CoreRenderer {
                     //to dynamic support first to remove if any
 					jb = JSONBuilder.create();
 					jb.beginFunction("ice.ace.gMap.removeMarker")
-						.item(marker.getParent().getClientId(context))
+						.item(mapClientId)
 						.item(clientId)
 					.endFunction();
                     writer.write(jb.toString());
                     if (marker.getOptions() != null) {
 						jb = JSONBuilder.create();
 						jb.beginFunction("ice.ace.gMap.addMarker")
-							.item(marker.getParent().getClientId(context))
+							.item(mapClientId)
 							.item(clientId)
 							.item(currentLat)
 							.item(currentLon)
@@ -70,7 +71,7 @@ public class GMapMarkerRenderer extends CoreRenderer {
                     } else {
 						jb = JSONBuilder.create();
 						jb.beginFunction("ice.ace.gMap.addMarker")
-							.item(marker.getParent().getClientId(context))
+							.item(mapClientId)
 							.item(clientId)
 							.item(currentLat)
 							.item(currentLon)
@@ -84,7 +85,7 @@ public class GMapMarkerRenderer extends CoreRenderer {
             if (marker.getAnimation() != null) {
 				jb = JSONBuilder.create();
 				jb.beginFunction("ice.ace.gMap.animateMarker")
-					.item(marker.getParent().getClientId(context))
+					.item(mapClientId)
 					.item(clientId)
 					.item(marker.getAnimation())
 				.endFunction();
@@ -93,7 +94,7 @@ public class GMapMarkerRenderer extends CoreRenderer {
         } else {
 			jb = JSONBuilder.create();
 			jb.beginFunction("ice.ace.gMap.removeMarker")
-				.item(marker.getParent().getClientId(context))
+				.item(mapClientId)
 				.item(clientId)
 			.endFunction();
 			writer.write(jb.toString());
@@ -102,7 +103,7 @@ public class GMapMarkerRenderer extends CoreRenderer {
 		writer.write("ice.onElementRemove(\"" + clientId + "_marker\", function() {");
 		jb = JSONBuilder.create();
 		jb.beginFunction("ice.ace.gMap.removeMarker")
-			.item(marker.getParent().getClientId(context))
+			.item(mapClientId)
 			.item(clientId)
 		.endFunction();
 		writer.write(jb.toString());
