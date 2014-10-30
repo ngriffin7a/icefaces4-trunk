@@ -28,7 +28,6 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 	this.root = ice.ace.jq(ice.ace.escapeClientId(this.id));
 	var $element = this.root.find('.ui-selectmenu-value');
 	this.element = $element.get(0);
-	this.element.id = this.id + "_input";
 	this.displayedValue = $element.find('span').get(0);
 	this.$downArrowButton = $element.find('div').eq(0);
 	var $displayedValue = ice.ace.jq(this.displayedValue);
