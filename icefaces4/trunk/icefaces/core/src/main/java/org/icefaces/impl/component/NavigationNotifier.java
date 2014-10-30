@@ -67,18 +67,23 @@ public class NavigationNotifier extends UICommand {
         writer.endElement("input");
     }
 
+    public void encodeEnd(FacesContext context) throws IOException {
+    }
+
+    public String getRendererType() {
+        return null;
+    }
+
     public static class Setup implements SystemEventListener {
         public void processEvent(SystemEvent event) throws AbortProcessingException {
-            final FacesContext context = FacesContext.getCurrentInstance();
-            final UIViewRoot root = context.getViewRoot();
             final NavigationNotifier navigationNotifier = (NavigationNotifier) event.getSource();
             UIOutput setupComponent = new UIOutput() {
                 public void encodeBegin(FacesContext context) throws IOException {
                     ResponseWriter writer = context.getResponseWriter();
                     String id = navigationNotifier.getClientId();
                     writer.startElement("span", this);
-
                     writer.writeAttribute("id", id + "_notifier", null);
+
                     writer.startElement("script", this);
                     writer.writeAttribute("type", "text/javascript", null);
                     writer.write("ice.setupNavigationNotifier('" + id + "');");
