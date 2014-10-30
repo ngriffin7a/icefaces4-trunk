@@ -31,10 +31,10 @@
     <ui:param name="tldResources" value="#{pushBeanResources.tldResources}"/>
 
     <ui:define name="example">
-        <icecore:push group="demo"/>
+        <icecore:push group="#{pushWindowScopeBean.group}"/>
         <h:form>
-            <ace:selectMenu value="#{pushViewScopeBean.strategyIndex}" label="Select push strategy:" labelPosition="left"
-                            actionListener="#{pushViewScopeBean.updateStrategy}">
+            <ace:selectMenu value="#{pushWindowScopeBean.strategyIndex}" label="Select push strategy:" labelPosition="left"
+                            actionListener="#{pushWindowScopeBean.updateStrategy}">
                 <f:selectItem itemValue="0" itemLabel="-"/>
                 <f:selectItem itemValue="1" itemLabel="Update page every second"/>
                 <f:selectItem itemValue="2" itemLabel="Update page every 2 seconds 5 times"/>
@@ -44,11 +44,11 @@
             <ace:panel>
                 <ace:chart id="chart"
                            animated="false"
-                           value="#{pushViewScopeBean.barData}"
+                           value="#{pushWindowScopeBean.barData}"
                            stackSeries="false"
-                           defaultAxesConfig="#{pushViewScopeBean.defaultAxis}"
-                           xAxis="#{pushViewScopeBean.axisX}"
-                           yAxis="#{pushViewScopeBean.axisY}"
+                           defaultAxesConfig="#{pushWindowScopeBean.defaultAxis}"
+                           xAxis="#{pushWindowScopeBean.axisX}"
+                           yAxis="#{pushWindowScopeBean.axisY}"
                            legend="true"
                            legendPlacement="OUTSIDE_GRID"
                            highlighter="true"
@@ -58,7 +58,7 @@
                            widgetVar="barChart"/>
 
                 <ace:dataTable id="table"
-                               value="#{pushViewScopeBean.items}"
+                               value="#{pushWindowScopeBean.items}"
                                var="item"
                                paginatorPosition="bottom"
                                rows="10">

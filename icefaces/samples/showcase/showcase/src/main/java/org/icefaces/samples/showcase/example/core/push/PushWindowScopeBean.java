@@ -16,14 +16,10 @@
 
 package org.icefaces.samples.showcase.example.core.push;
 
+import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.CustomScoped;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -35,24 +31,29 @@ import org.icefaces.ace.model.chart.CartesianSeries;
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
 
-@ManagedBean(name = PushViewScopeBean.BEAN_NAME)
-@ViewScoped
-public class PushViewScopeBean implements Serializable {
-    public static final String BEAN_NAME = "pushViewScopeBean";
+@ManagedBean(name = PushWindowScopeBean.BEAN_NAME)
+@CustomScoped(value = "#{window}")
+public class PushWindowScopeBean implements Serializable {
+    public static final String BEAN_NAME = "pushWindowScopeBean";
 
-    public PushViewScopeBean() { }
+    public PushWindowScopeBean() { }
 
-    private final static String DEMO = "demo";
     private final static Random randomizer = new Random(System.currentTimeMillis());
     private final Timer timer = new Timer();
     private int strategyIndex = 0;
 
     private TimerTask task = new NoopTask();
     private PortableRenderer portableRenderer;
+    private String demoGroup;
 
     @PostConstruct
     public void initMetaData() {
         portableRenderer = PushRenderer.getPortableRenderer();
+        demoGroup = "group" + randomizer.nextInt();
+    }
+
+    public String getGroup() {
+        return demoGroup;
     }
 
     public int getStrategyIndex() {
@@ -98,7 +99,7 @@ public class PushViewScopeBean implements Serializable {
         }
 
         public void run() {
-            portableRenderer.render(DEMO);
+            portableRenderer.render(demoGroup);
         }
     }
 
@@ -111,7 +112,7 @@ public class PushViewScopeBean implements Serializable {
 
         public void run() {
             if (++counter < 5) {
-                portableRenderer.render(DEMO);
+                portableRenderer.render(demoGroup);
             } else {
                 cancel();
             }
@@ -127,7 +128,7 @@ public class PushViewScopeBean implements Serializable {
 
         public void run() {
             if (++counter < 3) {
-                portableRenderer.render(DEMO);
+                portableRenderer.render(demoGroup);
             } else {
                 cancel();
             }

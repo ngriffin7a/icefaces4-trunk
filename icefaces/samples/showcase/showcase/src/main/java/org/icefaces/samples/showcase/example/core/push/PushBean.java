@@ -44,8 +44,8 @@ import java.io.Serializable;
                         title="PushBean.java",
                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/push/PushBean.java"),
                 @ExampleResource(type = ResourceType.java,
-                        title="PushViewScopeBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/push/PushViewScopeBean.java")
+                        title="PushWindowScopeBean.java",
+                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/push/PushWindowScopeBean.java")
         }
 )
 @Menu(
