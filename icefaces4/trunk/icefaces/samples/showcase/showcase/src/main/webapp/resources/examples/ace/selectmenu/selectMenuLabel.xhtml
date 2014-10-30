@@ -78,7 +78,7 @@
 					<h:outputText style="margin-left:20px;" value="Province: #{selectMenuBean.province}" />
 				</h:panelGroup>
 			</h:panelGrid>
-			<h:commandButton value="Clear values" actionListener="#{selectMenuBean.clearValues}" />
+			<h:commandButton value="Clear values" actionListener="#{selectMenuBean.clearValues}"><f:ajax execute="@this" render="@all"/></h:commandButton>
             </ace:panel>
         </h:form>
         
