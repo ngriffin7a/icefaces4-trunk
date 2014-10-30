@@ -442,7 +442,7 @@ var singleSubmit;
     };
 
     submit = function(event, element, additionalParameters, callbacks) {
-        return fullSubmit('@form', '@all', event, idOrElement(element), function(p) {
+        return fullSubmit('@all', '@all', event, idOrElement(element), function(p) {
             p('ice.submit.type', 'ice.s');
             p('ice.submit.serialization', 'form');
             if (additionalParameters) additionalParameters(p);
