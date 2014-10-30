@@ -38,15 +38,15 @@
 	<h:form id="MapForm">
     <ace:gMap id="gMap" style="width: 675px; height: 500px" latitude="0" longitude="0" >
         <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.oneDisabled}" content="${gMapInfoWindowBean.oneContent}" longitude="0" latitude="0" options="maxWidth:200"/>
-        <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.twoDisabled}" longitude="0" latitude="0" options="maxWidth:200">${gMapInfoWindowBean.twoContent}</ace:gMapInfoWindow>
+        <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.twoDisabled}" longitude="0" latitude="0" options="maxWidth:200"><h:outputText value="${gMapInfoWindowBean.twoContent}"/></ace:gMapInfoWindow>
         <ace:gMapMarker disabled="${gMapInfoWindowBean.threeDisabled}" latitude="0" longitude="0" options="draggable:true">
             <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.threeDisabled}" content="${gMapInfoWindowBean.threeContent}" showOnClick="true" startOpen="true" options="maxWidth:200"/>
         </ace:gMapMarker>
         <ace:gMapMarker disabled="${gMapInfoWindowBean.fourDisabled}" latitude="0" longitude="0" options="draggable:true">
-            <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.fourDisabled}" showOnClick="true" startOpen="false" options="maxWidth:200">${gMapInfoWindowBean.fourContent}</ace:gMapInfoWindow>
+            <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.fourDisabled}" showOnClick="true" startOpen="false" options="maxWidth:200"><h:outputText value="${gMapInfoWindowBean.fourContent}"/></ace:gMapInfoWindow>
         </ace:gMapMarker>
         <ace:gMapMarker disabled="${gMapInfoWindowBean.fiveDisabled}" latitude="0" longitude="0" options="draggable:true">
-            <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.fiveDisabled}" showOnClick="false" startOpen="true" options="maxWidth:200">${gMapInfoWindowBean.fiveContent}</ace:gMapInfoWindow>
+            <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.fiveDisabled}" showOnClick="false" startOpen="true" options="maxWidth:200"><h:outputText value="${gMapInfoWindowBean.fiveContent}"/></ace:gMapInfoWindow>
         </ace:gMapMarker>
         <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.sixDisabled}" longitude="0" latitude="0" options="maxWidth:200"><img alt="gMapInfoWindow can also display more complex contents than text" src="http://www.icesoft.org/java/resource/images/icesoft-logo.png"/></ace:gMapInfoWindow>
         <ace:gMapInfoWindow disabled="${gMapInfoWindowBean.sevenDisabled}" longitude="0" latitude="0" options="maxWidth:200"><ace:checkboxButton/><p>Other components can be nested as well.</p></ace:gMapInfoWindow>
