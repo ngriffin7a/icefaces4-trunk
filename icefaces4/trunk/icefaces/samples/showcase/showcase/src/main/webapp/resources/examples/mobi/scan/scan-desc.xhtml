@@ -22,11 +22,11 @@
 
     <mobi:fieldsetGroup styleClass="exampleDescription">
         <mobi:fieldsetRow>
-        <p>The scan and qrcode components are used to read or create
-        QR codes.  The ICEmobile Container is needed for reading QR codes.</p>
+        <p>The scan and qrcode components are used to read
+        QR or Bar codes.  BridgeIt is needed for reading QR or bar codes.</p>
 
         <p>The scan component accesses the device camera to 
-        read a QR code.  If successful, the decoded QR Code will be assigned to the 
+        read a code.  If successful, the decoded Code will be assigned to the
         specified backing bean property.</p>
         
         <p>
@@ -35,28 +35,25 @@
             a code has been scanned, the 'captureMessageLabel' attribute value is
             then shown as the button label. 
         </p>
-        
-         <p>QR Code scanning is only available if the application is running
-            in an ICEmobile device container or if ICEmobile SX has been registered, 
-            otherwise the component will display text input field. </p>
+
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
 <pre>
 &lt;mobi:scan id="scanOne"
   value="#<span></span>{bean.qrScanner}"
-  buttonLabel="Scan QR Code"
+  buttonLabel="Scan QR or Bar Code"
   captureMessageLabel="Captured"/&gt;
 </pre>
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
-        <p>The qrcode component is used to generate QR code graphics.  The
+        <p>The ace:qrcode component is used to generate QR code graphics.  The
         component takes a string value and returns the corresponding
         QR code graphic.</p>
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
 
 <pre>
-&lt;mobi:qrcode
+&lt;ace:qrcode
     value="#<span></span>{myBean.encode}"/&gt;
 </pre>
         </mobi:fieldsetRow>
