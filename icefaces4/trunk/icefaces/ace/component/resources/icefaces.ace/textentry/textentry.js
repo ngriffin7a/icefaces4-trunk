@@ -26,7 +26,7 @@ ice.ace.TextEntry = function(id, cfg) {
 	
 	if (cfg.embeddedLabel) { // execute this when component is lazy loaded
 		if (this.jq.attr("name") == labelName) {
-			if (this.cfg.secret) this.jq.attr({type: 'password'});
+			try { if (this.cfg.secret) this.jq.attr({type: 'password'}); } catch (e) {}
 			this.jq.attr({name: inputId});
 			this.jq.val("");
 			this.jq.removeClass("ui-input-label-infield");
@@ -72,7 +72,7 @@ ice.ace.TextEntry = function(id, cfg) {
             function() {
                 var input = jQ(this);
                 if (input.attr("name") == labelName) {
-					if (self.cfg.secret) input.attr({type: 'password'});
+					try { if (self.cfg.secret) input.attr({type: 'password'}); } catch (e) {}
                     input.attr({name: inputId});
                     input.val("");
                     input.removeClass("ui-input-label-infield");
@@ -81,14 +81,14 @@ ice.ace.TextEntry = function(id, cfg) {
             function() {
                 var input = jQ(this);
                 if (jQ.trim(input.val()) == "") {
-                    if (self.cfg.secret) input.attr({type: self.originalType});
+                    try { if (self.cfg.secret) input.attr({type: self.originalType}); } catch (e) {}
                     input.attr({name: labelName});
                     input.val(cfg.embeddedLabel);
                     input.addClass("ui-input-label-infield");
                 }
             });
     } else {
-		if (this.cfg.secret) this.jq.attr({type: 'password'});
+		try { if (this.cfg.secret) this.jq.attr({type: 'password'}); } catch (e) {}
 	}
     this.jq.blur(function() {
         ice.setFocus();
