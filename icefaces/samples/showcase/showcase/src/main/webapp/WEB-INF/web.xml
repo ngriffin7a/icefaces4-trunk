@@ -68,6 +68,11 @@
     </context-param>
 
     <context-param>
+        <param-name>org.apache.myfaces.STRICT_XHTML_LINKS</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>org.icefaces.windowScopeExpiration</param-name>
         <param-value>1500</param-value>
     </context-param>
