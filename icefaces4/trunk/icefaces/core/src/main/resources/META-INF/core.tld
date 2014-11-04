@@ -264,7 +264,7 @@ This container provides the attributes to configure the userInactivity callback 
 	</tag>        
 
    <tag>
-        <description><![CDATA[***DRAFT*** The focusManager component provides the following automatic focus setting behaviors when it is included inside a form component: 
+        <description><![CDATA[The focusManager component provides the following automatic focus setting behaviors when it is included inside a form component: 
 
 - The first visible (enabled) input element in the form has focus set on it initially. 
 - Alternatively, if there is an invalid component in the form (failed validation), the first visible (enabled) invalid component will receive focus instead. 
