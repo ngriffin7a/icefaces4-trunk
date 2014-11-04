@@ -34,6 +34,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIForm;
 import javax.faces.render.ResponseStateManager;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 import java.io.IOException;
@@ -101,6 +102,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 String viewId = context.getViewRoot().getViewId();
                 String actionURL = context.getApplication().getViewHandler().getActionURL(context, viewId);
                 ExternalContext externalContext = context.getExternalContext();
+                String viewState = context.getApplication().getStateManager().getViewState(context);
 
                 StringBuffer url = new StringBuffer(actionURL);
                 url.append(actionURL.contains("?") ? "&" : "?");
@@ -109,7 +111,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 url.append("&");
                 url.append(ResponseStateManager.VIEW_STATE_PARAM);
                 url.append("=");
-                url.append(context.getApplication().getStateManager().getViewState(context));
+                url.append(URLEncoder.encode(viewState, "UTF-8"));
                 url.append("&ice.window=");
                 url.append(externalContext.getClientWindow().getId());
                 url.append("&ice.view=");
