@@ -39,7 +39,7 @@
      -->
 	<c:choose>
 		<c:when test="#{cc.attrs.menuLink.fullPageLoad}">
-			<h:outputLink value="/showcase/showcase.jsf"
+			<h:outputLink value="./showcase.jsf"
 					title="#{msgs[cc.attrs.menuLink.title]}"
 					disabled="#{cc.attrs.menuLink.disabled}"
 					rendered="#{!('selected' eq mainSelected)}"
