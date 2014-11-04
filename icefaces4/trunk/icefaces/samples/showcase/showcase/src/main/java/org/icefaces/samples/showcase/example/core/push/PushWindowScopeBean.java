@@ -16,6 +16,7 @@
 
 package org.icefaces.samples.showcase.example.core.push;
 
+import javax.annotation.PreDestroy;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
@@ -50,6 +51,11 @@ public class PushWindowScopeBean implements Serializable {
     public void initMetaData() {
         portableRenderer = PushRenderer.getPortableRenderer();
         demoGroup = "group" + randomizer.nextInt();
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        timer.cancel();
     }
 
     public String getGroup() {
