@@ -37,8 +37,6 @@
     <property name="lib.compile.application.includes" value=""/>
     <property name="lib.distribute.application.includes" value=""/>
 
-    <property name="bridge.lib.dir" location="${lib.dir}/portlets/liferayfaces"/>
-
     <property name="java.dir" location="./src/main/java"/>
     <property name="res.dir" location="./src/main/resources"/>
     <property name="res.meta.dir" location="./src/main/resources-meta"/>
@@ -172,10 +170,6 @@
                 <patternset refid="lib.distribute.ace"/>
             </lib>
             
-            <lib dir="${bridge.lib.dir}">
-                <patternset refid="lib.distribute.portlet"/>
-            </lib>
-
             <lib dir="${lib.application.dir}" erroronmissingdir="false">
                 <patternset refid="lib.distribute.application"/>
             </lib>
