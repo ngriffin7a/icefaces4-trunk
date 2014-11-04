@@ -49,8 +49,8 @@ public class GeoTrackMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Three strategies are currently supported: 'continuous' where the location of the device will be uploaded as frequently as it changes (intended for testing only due to high power consumption), 'significant' where the location is uploaded when it changes significantly, and 'stop' to cease location tracking.", defaultValue="continuous")
     private String strategy;
 
-    @Property(tlddoc = "The duration in hours.", defaultValue="1")
-    private int duration;
+    @Property(tlddoc = "The duration in hours.", defaultValue="1.0")
+    private double duration;
 
     @Property( tlddoc = org.icefaces.mobi.util.TLDConstants.TABINDEX)
     private int tabindex;
