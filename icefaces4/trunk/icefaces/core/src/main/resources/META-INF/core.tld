@@ -246,9 +246,9 @@ of "FacesEvent" would work.]]></description>
 	</tag>       
 	
    <tag>
-        <description><![CDATA[***DRAFT*** This component would provide a markup-based method of configuring the ICEfaces bridge "ice.onUserInactivity(interval, idleCallback, activeCallback)" function. 
+        <description><![CDATA[This component provides a markup-based method of configuring the ICEfaces bridge "ice.onUserInactivity(interval, idleCallback, activeCallback)" function. 
 
-This container would provide necessary attributes to configure the userInactivity callback while also acting as an invisible container to other JSF components contained within it. Upon firing of the user inactivity callback, the component would make all of it's child components visible on the page.]]></description>
+This container provides the attributes to configure the userInactivity callback while also acting as an invisible container to other JSF components contained within it. Upon firing of the user inactivity callback, the component makes all of its child components visible on the page.]]></description>
         <name>idleMonitor</name>
         <tag-class/>
         <body-content>JSP</body-content>
