@@ -69,7 +69,10 @@ public class NavigationController implements Serializable {
      * Navigation from search component.
      */
     public void navigateValueChangeListener(ValueChangeEvent event) {
-        navigate(null, event.getNewValue().toString());
+		String value = event.getNewValue().toString();
+		AceMenu aceMenu = (AceMenu) FacesUtils.getManagedBean(AceMenu.BEAN_NAME);
+		if (aceMenu.getGroupsMap().get(value) == null) return;
+        navigate(null, value);
         NavigationModel navigationModel = (NavigationModel)
                 FacesUtils.getManagedBean(NavigationModel.BEAN_NAME);
         JavaScriptRunner.runScript(FacesContext.getCurrentInstance(), "updateAddressBarURL('" + navigationModel.getComponentGroup() + "','" + event.getNewValue().toString() + "');document.getElementById('searchForm:searchBox_input').value = '';");
