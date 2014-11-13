@@ -21,6 +21,7 @@ import org.icefaces.impl.application.LazyPushManager;
 import org.icefaces.impl.application.WindowScopeManager;
 import org.icefaces.impl.push.SessionViewManager;
 import org.icefaces.impl.push.servlet.ICEpushResourceHandler;
+import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.util.EnvUtils;
 import org.icepush.PushContext;
 
@@ -85,15 +86,19 @@ public class BridgeSetup implements SystemEventListener {
         FacesContext context = FacesContext.getCurrentInstance();
         UIViewRoot root = context.getViewRoot();
 
+        CoreUtils.setInView(root, "head", false);
         List<UIComponent> headResources = getHeadResources(context);
         for (UIComponent headResource : headResources) {
             root.addComponentResource(context, headResource, "head");
         }
+        CoreUtils.setInView(root, "head", true);
 
+        CoreUtils.setInView(root, "body", false);
         List<UIComponent> bodyResources = getBodyResources(context);
         for (UIComponent bodyResource : bodyResources) {
             root.addComponentResource(context, bodyResource, "body");
         }
+        CoreUtils.setInView(root, "body", true);
     }
 
     /**

@@ -74,6 +74,7 @@ public class FormSubmit implements SystemEventListener {
             }
         };
 
+        form.setInView(false);
         scriptWriter.setId(componentId);
         scriptWriter.setTransient(true);
         form.getChildren().add(0, scriptWriter);
@@ -82,7 +83,7 @@ public class FormSubmit implements SystemEventListener {
         disabledWriter.setTransient(true);
         //add to end of list
         form.getChildren().add(disabledWriter);
-
+        form.setInView(true);
     }
 
     public boolean isListenerForSource(final Object source) {

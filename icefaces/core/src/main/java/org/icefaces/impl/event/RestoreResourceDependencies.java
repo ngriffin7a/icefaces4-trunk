@@ -16,6 +16,7 @@
 
 package org.icefaces.impl.event;
 
+import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.resources.*;
 import org.icefaces.util.UserAgentContext;
 
@@ -107,7 +108,9 @@ public class RestoreResourceDependencies implements SystemEventListener {
         //add only if missing
         if (position == -1) {
             String rendererType = resourceHandler.getRendererTypeForResourceName(name);
+            CoreUtils.setInView(viewRoot, target, false);
             viewRoot.addComponentResource(context, ResourceOutputUtil.createResourceComponent(name, library, rendererType, true), target);
+            CoreUtils.setInView(viewRoot, target, true);
         }
     }
 

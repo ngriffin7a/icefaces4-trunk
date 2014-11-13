@@ -17,6 +17,7 @@
 package org.icefaces.util;
 
 import org.icefaces.impl.component.NavigationNotifier;
+import org.icefaces.impl.util.CoreUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.FactoryFinder;
@@ -68,7 +69,12 @@ public class CachingHeadersSetup implements SystemEventListener {
         setupCachingHeaders.setTransient(true);
 
         FacesContext context = FacesContext.getCurrentInstance();
-        context.getViewRoot().addComponentResource(context, setupCachingHeaders, "body");
+
+        final UIViewRoot viewRoot = context.getViewRoot();
+
+        CoreUtils.setInView(viewRoot, "body", false);
+        viewRoot.addComponentResource(context, setupCachingHeaders, "body");
+        CoreUtils.setInView(viewRoot, "body", false);
     }
 
     public boolean isListenerForSource(Object source) {
