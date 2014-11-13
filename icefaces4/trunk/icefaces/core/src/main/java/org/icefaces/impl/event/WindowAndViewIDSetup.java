@@ -96,7 +96,9 @@ public class WindowAndViewIDSetup implements SystemEventListener {
 
         output.setTransient(true);
         output.setId(componentId);
+        form.setInView(false);
         form.getChildren().add(0, output);
+        form.setInView(true);
     }
 
     public boolean isListenerForSource(final Object source) {

@@ -51,7 +51,9 @@ public class BridgeFormsSetup implements SystemEventListener {
             uiForm.setId(id);
             //disable capture submit for this form
             uiForm.getAttributes().put(FormSubmit.DISABLE_CAPTURE_SUBMIT, FormSubmit.DISABLE_CAPTURE_SUBMIT);
+            parent.setInView(false);
             parent.getChildren().add(uiForm);
+            parent.setInView(true);
         }
     }
 

@@ -17,7 +17,11 @@
 package org.icefaces.impl.util;
 
 import org.icefaces.impl.context.DOMPartialViewContext;
+import org.icefaces.util.EnvUtils;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
@@ -92,5 +96,22 @@ public class CoreUtils {
 
     public static void enableOnElementUpdateNotify(ResponseWriter writer, String id) throws IOException {
         writer.writeAttribute(DOMPartialViewContext.DATA_ELEMENTUPDATE, id, null);
+    }
+
+    public static void setInView(UIViewRoot root, String target, boolean in) {
+        UIComponent container = getResourceContainer(root, target);
+        if (container == null) {
+            UIComponent c = new UIOutput();
+            final FacesContext context = FacesContext.getCurrentInstance();
+            root.addComponentResource(context, c, target);
+            root.removeComponentResource(context, c, target);
+            container = getResourceContainer(root, target);
+        }
+        container.setInView(in);
+    }
+
+    public static UIComponent getResourceContainer(UIViewRoot root, String target) {
+        String facetName = EnvUtils.isMojarra() ? "javax_faces_location_" + target.toUpperCase() : target;
+        return root.getFacets().get(facetName);
     }
 }

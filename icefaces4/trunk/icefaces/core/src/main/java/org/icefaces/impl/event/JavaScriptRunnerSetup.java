@@ -16,10 +16,12 @@
 
 package org.icefaces.impl.event;
 
+import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.util.FocusController;
 import org.icefaces.util.JavaScriptRunner;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -63,6 +65,10 @@ public class JavaScriptRunnerSetup implements SystemEventListener {
         UIViewRoot root = facesContext.getViewRoot();
         jsOutput.setTransient(true);
         jsOutput.setId("javascript_runner");
+        CoreUtils.setInView(root, "body", false);
         root.addComponentResource(facesContext, jsOutput, "body");
+        CoreUtils.setInView(root, "body", true);
     }
+
+
 }

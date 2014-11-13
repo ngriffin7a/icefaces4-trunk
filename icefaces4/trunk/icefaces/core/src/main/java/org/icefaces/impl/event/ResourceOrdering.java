@@ -16,6 +16,7 @@
 
 package org.icefaces.impl.event;
 
+import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.util.EnvUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -183,7 +184,7 @@ public class ResourceOrdering implements SystemEventListener {
     }
 
     private void collectTransitiveDependencies(FacesContext context, UIViewRoot root, String target) {
-        UIComponent resourceContainer = getResourceContainer(root, target);
+        UIComponent resourceContainer = CoreUtils.getResourceContainer(root, target);
         HashSet<ResourceEntry> collectedResourceEntries = new HashSet<ResourceEntry>();
         HashSet<ResourceEntry> currentResourceEntries = new HashSet<ResourceEntry>();
         List children = resourceContainer.getChildren();
@@ -232,7 +233,7 @@ public class ResourceOrdering implements SystemEventListener {
     }
 
     private void orderResources(FacesContext context, UIViewRoot root, String target) {
-        UIComponent resourceContainer = getResourceContainer(root, target);
+        UIComponent resourceContainer = CoreUtils.getResourceContainer(root, target);
         //make resource containers transient so that the removal and addition of resource is not track by the JSF state saving
         resourceContainer.setInView(false);
 
@@ -290,11 +291,6 @@ public class ResourceOrdering implements SystemEventListener {
 
         //restore resource container to non transient state
         resourceContainer.setInView(true);
-    }
-
-    private static UIComponent getResourceContainer(UIViewRoot root, String target) {
-        String facetName = EnvUtils.isMojarra() ? "javax_faces_location_" + target.toUpperCase() : target;
-        return root.getFacets().get(facetName);
     }
 
     public boolean isListenerForSource(final Object source) {

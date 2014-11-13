@@ -17,6 +17,7 @@
 package org.icefaces.impl.event;
 
 import org.icefaces.impl.renderkit.DOMRenderKit;
+import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.resources.*;
 import org.icefaces.util.EnvUtils;
@@ -204,7 +205,9 @@ public class MandatoryResourcesSetup implements SystemEventListener {
         }
 
         if (position == -1) {
+            CoreUtils.setInView(viewRoot, target, false);
             viewRoot.addComponentResource(context, component, target);
+            CoreUtils.setInView(viewRoot, target, false);
         }
     }
 
