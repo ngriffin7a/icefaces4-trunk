@@ -21,7 +21,7 @@
 
     <groupId>org.icefaces</groupId>
     <artifactId>bundle-parent</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>ICEfaces</name>
     <description>ICEfaces Parent Project</description>
@@ -116,7 +116,7 @@
         </tld.title>
 
         <!-- Versions of JSF implementations -->
-        <mojarra.version>2.2.7</mojarra.version>
+        <mojarra.version>2.2.8</mojarra.version>
 
         <myfaces.version>2.2.5</myfaces.version> 
 
