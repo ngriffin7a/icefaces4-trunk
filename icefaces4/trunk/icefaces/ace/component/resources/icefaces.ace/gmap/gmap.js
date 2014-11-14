@@ -47,6 +47,7 @@ function GMapWrapper(eleId, realGMap) {
     var options = "";
     this.services = new Object();
 	this.events = new Object();
+	this.eventModels = new Object();
     this.layer = {};
     this.getElementId = ice.ace.gMap.getElementId;
     this.getRealGMap = ice.ace.gMap.getRealGMap;
@@ -224,6 +225,7 @@ ice.ace.gMap.getGMapWrapper = function (id) {
         var infoWindows = gmapWrapper.infoWindows;
         var overlays = gmapWrapper.overlays;
         var layer = gmapWrapper.layer;
+        var events = gmapWrapper.eventModels;
         ice.ace.gMap.remove(ele);
         gmapWrapper = ice.ace.gMap.create(ele,lat,lng,zoom,type);
         map = gmapWrapper.getRealGMap();
@@ -261,6 +263,13 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 				layer[l].setMap(map);
 			}
             gmapWrapper.layer=layer;
+        }
+        for (var event in events) {
+            if (gmapWrapper.eventModels[event] == null) {
+				var e = events[event];
+				if (!e) continue;
+				ice.ace.gMap.addEvent(e.mapId,e.parentId,e.eventId,e.parentName,e.eventType,e.rendererType,e.script);
+            }
         }
         return gmapWrapper;
     }
@@ -879,4 +888,5 @@ ice.ace.gMap.getGMapWrapper = function (id) {
                 script
             );
         });
+		wrapper.eventModels[eventId] = {mapId:''+mapId,parentId:''+parentId,eventId:''+eventId,parentName:''+parentName,eventType:''+eventType,rendererType:''+rendererType,script:''+script};
     }
