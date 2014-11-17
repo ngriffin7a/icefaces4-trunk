@@ -889,4 +889,15 @@ ice.ace.gMap.getGMapWrapper = function (id) {
             );
         });
 		wrapper.eventModels[eventId] = {mapId:''+mapId,parentId:''+parentId,eventId:''+eventId,parentName:''+parentName,eventType:''+eventType,rendererType:''+rendererType,script:''+script};
-    }
+    };
+
+	ice.ace.gMap.removeEvent = function (mapId,eventId) {
+		var wrapper = ice.ace.gMap.getGMapWrapper(mapId);
+		var event = wrapper.events[eventId];
+		if (event) {
+			google.maps.event.removeListener(event);
+		}
+		try {
+			delete wrapper.eventModels[eventId];
+		} catch (e) { }
+	};

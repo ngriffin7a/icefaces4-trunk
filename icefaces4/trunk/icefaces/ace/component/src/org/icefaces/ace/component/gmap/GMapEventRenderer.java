@@ -54,15 +54,22 @@ public class GMapEventRenderer extends CoreRenderer {
 		}
 		UIComponent gMapComponentParent = getGMapComponentParent(gMapEvent);
 		JSONBuilder jb = JSONBuilder.create();
-		jb.beginFunction("ice.ace.gMap.addEvent")
-			.item(mapContext)
-			.item(gMapComponentParent.getClientId(context))
-			.item(clientId)
-			.item(gMapComponentParent.getClass().getName())
-			.item(gMapEvent.getEventType())
-			.item(gMapEvent.getRendererType())
-			.item(gMapEvent.getScriptToUse())
-		.endFunction();
+		if (!gMapEvent.isDisabled()) {
+			jb.beginFunction("ice.ace.gMap.addEvent")
+				.item(mapContext)
+				.item(gMapComponentParent.getClientId(context))
+				.item(clientId)
+				.item(gMapComponentParent.getClass().getName())
+				.item(gMapEvent.getEventType())
+				.item(gMapEvent.getRendererType())
+				.item(gMapEvent.getScriptToUse())
+			.endFunction();
+		} else {
+			jb.beginFunction("ice.ace.gMap.removeEvent")
+				.item(mapContext)
+				.item(clientId)
+			.endFunction();			
+		}
         writer.write(jb.toString());
         writer.write("});");
         writer.endElement("script");

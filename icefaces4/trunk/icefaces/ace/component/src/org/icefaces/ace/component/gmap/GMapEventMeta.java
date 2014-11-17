@@ -54,5 +54,6 @@ public class GMapEventMeta extends UIPanelMeta {
     @Property(tlddoc = "The script to be executed when the chosen event is fired. Use the variable 'map' to refer to the parent gMap (a google.maps.Map instance) and 'component' to refer to the Google Maps API Javascript object corresponding to the parent tag.")
     private String scriptToUse;
 
-
+    @Property(tlddoc = "Set to true to remove the event from the map.", defaultValue = "false")
+    private Boolean disabled;
 }
