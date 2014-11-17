@@ -923,7 +923,12 @@ public class EnvUtils {
     }
 
     public static boolean isLazyWindowScope(FacesContext facesContext) {
-        return EnvConfig.getEnvConfig(facesContext).lazyWindowScope;
+        Object lazyWindowScope = getViewParam(facesContext, LAZY_WINDOW_SCOPE);
+        if (null == lazyWindowScope) {
+            return EnvConfig.getEnvConfig(facesContext).lazyWindowScope;
+        }
+
+        return (Boolean.TRUE.equals(lazyWindowScope));
     }
 
     public static boolean disableDefaultErrorPopups(FacesContext facesContext) {
