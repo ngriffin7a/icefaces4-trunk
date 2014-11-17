@@ -19,6 +19,7 @@ package org.icefaces.ace.component.fileentry;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.impl.application.WindowScopeManager;
 import org.icefaces.impl.event.BridgeSetup;
+import org.icefaces.util.CoreComponentUtils;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.impl.event.FormSubmit;
 import org.icefaces.impl.context.ICEFacesContextFactory;
@@ -87,6 +88,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
 
         forceAjaxOnView(context);
         form.getAttributes().put(FormSubmit.DISABLE_CAPTURE_SUBMIT, "true");
+        form.setInView(false);
 
         UIOutput urlOutput = new UIOutput() {
             public void encodeBegin(FacesContext context) throws IOException {
@@ -163,6 +165,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
         output.setId(IFRAME_ID);
         output.setTransient(true);
         form.getChildren().add(2, output);
+        form.setInView(true);
     }
     
     private static FileEntry findFileEntry(UIComponent parent) {
