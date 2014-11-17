@@ -44,6 +44,7 @@ public class ConfigHandler extends TagHandler {
     private final TagAttribute mandatoryResource;
     private final TagAttribute messagePersistence;
     private final TagAttribute focusManaged;
+    private final TagAttribute lazyWindowScope;
 
     public ConfigHandler(TagConfig config) {
         super(config);
@@ -56,6 +57,7 @@ public class ConfigHandler extends TagHandler {
         this.mandatoryResource = this.getAttribute("mandatoryResource");
         this.messagePersistence = this.getAttribute("messagePersistence");
         this.focusManaged = this.getAttribute("focusManaged");
+        this.lazyWindowScope = this.getAttribute("lazyWindowScope");
     }
 
     public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
@@ -108,5 +110,9 @@ public class ConfigHandler extends TagHandler {
                     new Boolean(messagePersistence.getValue()));
         }
 
+        if (lazyWindowScope != null) {
+            viewMap.put(EnvUtils.LAZY_WINDOW_SCOPE,
+                    new Boolean(lazyWindowScope.getValue()));
+        }
     }
 }
