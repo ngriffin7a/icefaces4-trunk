@@ -49,7 +49,7 @@
                 <icecore:defaultAction actionListener="#{defaultActionBean.pressedF3}" key="F3"/>
             </h:form>
             <ace:panel rendered="#{defaultActionBean.showActionDescription}">
-                <h:outputText value="Default action triggered on #{defaultActionBean.actionDescription}"/>
+                <h:outputText id="valueOut" value="Default action triggered on #{defaultActionBean.actionDescription}"/>
             </ace:panel>
         </ace:panel>
     </ui:define>

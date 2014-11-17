@@ -37,7 +37,7 @@
         </style>
 
         <h:form id="form">
-            <ace:selectMenu value="#{focusManagerBean.focusedComponent}" label="Focus on:" labelPosition="left">
+            <ace:selectMenu id="focusInput" value="#{focusManagerBean.focusedComponent}" label="Focus on:" labelPosition="left">
                 <f:selectItem itemValue="" itemLabel="*first input component*"/>
                 <f:selectItem itemValue="A" itemLabel="A"/>
                 <f:selectItem itemValue="B" itemLabel="B"/>
@@ -65,12 +65,12 @@
                                        indicatorPosition="right"
                                        styleClass="required-input">
                         </ace:textEntry>
-                        <ace:pushButton value="Submit"/>
+                        <ace:pushButton id="submitButton" value="Submit"/>
                         <div/>
                     </h:panelGrid>
                     <h:panelGrid width="100%">
-                        <ace:message for="C"/>
-                        <ace:message for="D"/>
+                        <ace:message for="C" id="messageC" />
+                        <ace:message for="D" id="messageD"/>
                     </h:panelGrid>
                 </icecore:focusManager>
             </ace:panel>
