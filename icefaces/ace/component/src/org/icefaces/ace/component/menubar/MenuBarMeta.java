@@ -19,6 +19,7 @@ package org.icefaces.ace.component.menubar;
 import org.icefaces.ace.component.menu.AbstractMenu;
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 import org.icefaces.ace.model.MenuModel;
 
@@ -75,6 +76,12 @@ public class MenuBarMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc="Forces the direction in which the submenus will be displayed, regardless of the position of the menu in the viewport. Possible values are combinations of \"up\", \"down\", and \"middle\" with \"left\", \"right\", and \"center\", separated by a space. The value \"auto\" can also be used in place of any of those values (e.g. \"up\", \"up right\", \"left\", \"left auto\", \"center\"). Note that the \"center\" value only applies to first-level submenus, while the \"middle\" value only applies to deeper-level submenus (i.e. all but first-level submenus).", defaultValue = "auto")
     private String direction;
+
+    @Property(tlddoc = "Set to true when the entire menu needs to be updated in the client, such as when an individual menu item changes label or styling, and the entire menu needs to be reinitialized in the client in order to get all the styling and behaviour re-applied to the new HTML nodes. The value of this attribute will be automatically set to false by the component after consuming it (if applicable).", defaultValue = "false")
+    private Boolean forceMenuUpdate;
+
+    @Field(defaultValue = "0", defaultValueIsStringLiteral = false)
+    protected Integer forceUpdateCounter;
 	
     private AbstractMenu am; // need this for resolving dependence on AbstractMenu when compiling Base class
 }
