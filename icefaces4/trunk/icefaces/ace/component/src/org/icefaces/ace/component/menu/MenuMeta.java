@@ -18,6 +18,7 @@ package org.icefaces.ace.component.menu;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 import org.icefaces.ace.model.MenuModel;
 
@@ -101,6 +102,12 @@ public class MenuMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc="Event that will trigger the menu to show, when position is dynamic. The possible values are \"click\", \"mouseenter\", \"dblclick\", and \"rtclick\".", defaultValue = "click")
     private String triggerEvent;
+
+    @Property(tlddoc = "Set to true when the entire menu needs to be updated in the client, such as when an individual menu item changes label or styling, and the entire menu needs to be reinitialized in the client in order to get all the styling and behaviour re-applied to the new HTML nodes. The value of this attribute will be automatically set to false by the component after consuming it (if applicable).", defaultValue = "false")
+    private Boolean forceMenuUpdate;
+
+    @Field(defaultValue = "0", defaultValueIsStringLiteral = false)
+    protected Integer forceUpdateCounter;
 
     private AbstractMenu am; // need this for solving dependence on AbstractMenu when compiling MenuBase
 }

@@ -64,6 +64,17 @@ public class MenuButtonRenderer extends BaseMenuRenderer {
 		
 		writer.startElement("span", button);
 		writer.writeAttribute("id", clientId, "id");
+		if (button.isForceMenuUpdate()) {
+			int updateCounter = button.getForceUpdateCounter();
+			updateCounter++;
+			writer.writeAttribute("data-forceUpdateCounter", updateCounter, null);			
+			button.setForceUpdateCounter(updateCounter);
+			try {
+				button.setForceMenuUpdate(false);
+			} catch (Exception e) { }
+		} else {
+			writer.writeAttribute("data-forceUpdateCounter", button.getForceUpdateCounter(), null);
+		}
 
         //button
 		writer.startElement("button", null);

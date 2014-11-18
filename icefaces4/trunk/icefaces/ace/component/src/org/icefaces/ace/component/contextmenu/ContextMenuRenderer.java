@@ -161,6 +161,17 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
         writer.startElement("span", menu);
 		writer.writeAttribute("id", clientId, "id");
 		writer.writeAttribute("style", "display:none;", null);
+		if (menu.isForceMenuUpdate()) {
+			int updateCounter = menu.getForceUpdateCounter();
+			updateCounter++;
+			writer.writeAttribute("data-forceUpdateCounter", updateCounter, null);			
+			menu.setForceUpdateCounter(updateCounter);
+			try {
+				menu.setForceMenuUpdate(false);
+			} catch (Exception e) { }
+		} else {
+			writer.writeAttribute("data-forceUpdateCounter", menu.getForceUpdateCounter(), null);
+		}
 
 		writer.startElement("ul", null);
 

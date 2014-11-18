@@ -103,6 +103,17 @@ public class MenuBarRenderer extends BaseMenuRenderer {
         writer.startElement("div", menubar);
         writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("style", "display:none;", null);
+		if (menubar.isForceMenuUpdate()) {
+			int updateCounter = menubar.getForceUpdateCounter();
+			updateCounter++;
+			writer.writeAttribute("data-forceUpdateCounter", updateCounter, null);			
+			menubar.setForceUpdateCounter(updateCounter);
+			try {
+				menubar.setForceMenuUpdate(false);
+			} catch (Exception e) { }
+		} else {
+			writer.writeAttribute("data-forceUpdateCounter", menubar.getForceUpdateCounter(), null);
+		}
 
 		writer.startElement("ul", null);
 
