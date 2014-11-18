@@ -32,8 +32,8 @@
 
     <ui:define name="example">
         <h4>Page A</h4>
-        <h:form>
-            <h:selectBooleanCheckbox value="#{redirectViewScopeBean.renderRedirect}">
+        <h:form id="form">
+            <h:selectBooleanCheckbox id="checkbox" value="#{redirectViewScopeBean.renderRedirect}">
                 <f:ajax render="@all"/>
             </h:selectBooleanCheckbox>
             render icecore:redirect component to navigate to other page
