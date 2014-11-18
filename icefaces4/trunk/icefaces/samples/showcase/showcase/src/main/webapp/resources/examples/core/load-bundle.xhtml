@@ -32,16 +32,16 @@
 
     <ui:define name="example">
         <icecore:loadBundle var="theBundle" basename="org.icefaces.samples.showcase.view.resources.loadBundleTest"/>
-        <h:form>
-            <ace:selectMenu value="#{loadBundleViewScopeBean.language}" label="Change locale:"  labelPosition="left">
-                <f:selectItem itemValue="en" itemLabel="English" />
-                <f:selectItem itemValue="fr" itemLabel="Francais" />
-                <f:selectItem itemValue="it" itemLabel="Italiano" />
+        <h:form id="form">
+            <ace:selectMenu id="formSelect" value="#{loadBundleViewScopeBean.language}" label="Change locale:"  labelPosition="left">
+                <f:selectItem id="english" itemValue="en" itemLabel="English" />
+                <f:selectItem id="french" itemValue="fr" itemLabel="Francais" />
+                <f:selectItem id="italian" itemValue="it" itemLabel="Italiano" />
                 <ace:ajax />
             </ace:selectMenu>
         </h:form>
         <ace:panel>
-            <h5><h:outputText value="#{theBundle.theMessage}" /></h5>
+            <h5><h:outputText id="output" value="#{theBundle.theMessage}" /></h5>
         </ace:panel>
     </ui:define>
 </ui:composition>

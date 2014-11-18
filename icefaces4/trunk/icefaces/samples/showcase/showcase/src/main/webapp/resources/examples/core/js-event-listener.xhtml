@@ -31,10 +31,10 @@
     <ui:param name="tldResources" value="#{jsEventListenerBeanResources.tldResources}"/>
 
     <ui:define name="example">
-        <h:form>
+        <h:form id="form">
             <icecore:jsEventListener events="onclick, onkeypress" actionListener="#{jsEventListenerBean.captureEvent}">
                     <p style="margin: 1em;">
-                        <input type="text" name="test" value=""/>
+						<input id="formInput" type="text" name="test" value=""/> 
                     </p>
 
                     Captured Javascript Event

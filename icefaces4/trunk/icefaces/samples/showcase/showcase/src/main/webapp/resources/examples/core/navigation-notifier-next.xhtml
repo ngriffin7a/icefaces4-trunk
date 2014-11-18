@@ -24,11 +24,11 @@
 <h:head></h:head>
 <h:body style="margin: 1em;">
     <h4>Page B</h4>
-    <h:form>
+    <h:form id="form">
         <ace:panel>
             <p>Navigating to the previous page using the <i>Back</i> or <i>Forward</i> button should trigger a notification.</p>
 
-            <p>Using the following <ace:linkButton href="#{navigationNotifierViewScopeBean.navigateBackURI}" style="border: 1px solid grey;" value="link"/> to
+            <p>Using the following <ace:linkButton id="linkButton" href="#{navigationNotifierViewScopeBean.navigateBackURI}" style="border: 1px solid grey;" value="link"/> to
                 navigate back to <b>Page A</b> should not trigger the notification.</p>
         </ace:panel>
     </h:form>
