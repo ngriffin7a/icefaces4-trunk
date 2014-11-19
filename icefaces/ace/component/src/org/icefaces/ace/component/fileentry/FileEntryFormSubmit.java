@@ -113,7 +113,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 url.append("&");
                 url.append(ResponseStateManager.VIEW_STATE_PARAM);
                 url.append("=");
-                url.append(URLEncoder.encode(viewState, "UTF-8"));
+                url.append(EnvUtils.isMyFaces() ? URLEncoder.encode(viewState, "UTF-8") : viewState);
                 url.append("&ice.window=");
                 url.append(externalContext.getClientWindow().getId());
                 url.append("&ice.view=");
