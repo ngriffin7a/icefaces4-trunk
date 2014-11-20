@@ -25,6 +25,8 @@ import javax.faces.component.UISelectOne;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.FacesEvent;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 import java.util.*;
 
 import javax.faces.application.Application;
@@ -115,7 +117,48 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
 	
 	@Override
 	protected void validateValue(FacesContext facesContext, Object submittedValue) {
-	
+
+		// custom validators
+        if (!isEmpty(submittedValue)) {
+            if (getValidators() != null) {
+                Validator[] validators = getValidators();
+                for (Validator validator : validators) {
+                    try {
+                        validator.validate(facesContext, this, submittedValue);
+                    }
+                    catch (ValidatorException ve) {
+                        // If the validator throws an exception, we're
+                        // invalid, and we need to add a message
+                        setValid(false);
+                        FacesMessage message;
+                        String validatorMessageString = getValidatorMessage();
+
+                        if (null != validatorMessageString) {
+                            message =
+                                  new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                                   validatorMessageString,
+                                                   validatorMessageString);
+                            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                        } else {
+                            Collection<FacesMessage> messages = ve.getFacesMessages();
+                            if (null != messages) {
+                                message = null;
+                                String cid = getClientId(facesContext);
+                                for (FacesMessage m : messages) {
+                                    facesContext.addMessage(cid, m);
+                                }
+                            } else {
+                                message = ve.getFacesMessage();
+                            }
+                        }
+                        if (message != null) {
+                            facesContext.addMessage(getClientId(facesContext), message);
+                        }
+                    }
+                }
+            }
+        }
+
 		boolean found = false;
 		populateItemList();
 		Iterator matches = getItemListIterator();
