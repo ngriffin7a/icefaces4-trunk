@@ -34,11 +34,6 @@
         <param-value>false</param-value>
     </context-param>
 
-  <servlet>
-    <servlet-name>Resource Servlet</servlet-name>
-    <servlet-class>com.icesoft.faces.webapp.CompatResourceServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
     <servlet>
       <servlet-name>Faces Servlet</servlet-name>
       <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -48,10 +43,6 @@
       <servlet-name>Faces Servlet</servlet-name>
       <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>Resource Servlet</servlet-name>
-    <url-pattern>/xmlhttp/*</url-pattern>
-  </servlet-mapping>
     <!--
         This MIME type is not registered by default in WebSphere 7 so we add it
         here to be sure the samples and components that use .png images work properly.
