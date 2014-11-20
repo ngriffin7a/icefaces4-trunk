@@ -23,6 +23,7 @@ import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
 import org.icefaces.samples.showcase.metadata.annotation.Menu;
 import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import org.icefaces.samples.showcase.util.FacesUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -67,5 +68,15 @@ public class PushBean extends ComponentExampleImpl<PushBean> implements Serializ
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
+    }
+
+    public void selected() {
+        PushWindowScopeBean managedBean = (PushWindowScopeBean) FacesUtils.getManagedBean(PushWindowScopeBean.BEAN_NAME);
+        managedBean.selected();
+    }
+
+    public void deselected() {
+        PushWindowScopeBean managedBean = (PushWindowScopeBean) FacesUtils.getManagedBean(PushWindowScopeBean.BEAN_NAME);
+        managedBean.deselected();
     }
 }

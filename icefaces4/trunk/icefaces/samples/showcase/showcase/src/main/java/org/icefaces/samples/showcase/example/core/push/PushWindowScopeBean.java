@@ -42,6 +42,7 @@ public class PushWindowScopeBean implements Serializable {
     private final static Random randomizer = new Random(System.currentTimeMillis());
     private final Timer timer = new Timer();
     private int strategyIndex = 0;
+    private int previousStrategyIndex;
 
     private TimerTask task = new NoopTask();
     private PortableRenderer portableRenderer;
@@ -208,5 +209,14 @@ public class PushWindowScopeBean implements Serializable {
         }
 
         return items;
+    }
+
+    public void selected() {
+        setStrategyIndex(previousStrategyIndex);
+    }
+
+    public void deselected() {
+        previousStrategyIndex = strategyIndex;
+        setStrategyIndex(0);
     }
 }
