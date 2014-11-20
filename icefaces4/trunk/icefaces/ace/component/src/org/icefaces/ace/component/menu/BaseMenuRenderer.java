@@ -94,7 +94,7 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 					if(menuItem.getOnclick() != null) writer.writeAttribute("onclick", menuItem.getOnclick(), null);
 					if(menuItem.getTarget() != null) writer.writeAttribute("target", menuItem.getTarget(), null);
 				} else {
-					writer.writeAttribute("style", "cursor:pointer;", null);
+					writer.writeAttribute("style", "cursor:pointer;white-space:nowrap;position:relative;", null);
 
 					UIComponent form = ComponentUtils.findParentForm(context, menuItem);
 					if(form == null) {
