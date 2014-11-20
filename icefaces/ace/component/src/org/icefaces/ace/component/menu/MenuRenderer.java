@@ -200,6 +200,7 @@ public class MenuRenderer extends BaseMenuRenderer {
 
         //title
         writer.startElement("a", null);
+		writer.writeAttribute("style", "white-space:nowrap;position:relative;", "style");
 		if (disabled) {
 			writer.writeAttribute("class", "ui-state-disabled", null);
 		} else {
@@ -282,9 +283,10 @@ public class MenuRenderer extends BaseMenuRenderer {
 				writer.writeAttribute("class", "ui-state-disabled", null);
 			} else {
 				String style = submenu.getStyle();
-				if (style != null && style.trim().length() > 0) {
-					writer.writeAttribute("style", style, "style");
+				if (style == null) {
+					style = "";
 				}
+				writer.writeAttribute("style", "white-space:nowrap;position:relative;" + style, "style");
 				Utils.writeConcatenatedStyleClasses(writer, "", submenu.getStyleClass());
 			}
             writer.write(label);

@@ -127,7 +127,6 @@
 }
 
 .wijmo-wijmenu {
-width:150px;
 padding:0.3em;
 position:relative;
 }
@@ -144,7 +143,6 @@ position:static;
 
 .wijmo-wijmenu .wijmo-wijmenu-parent .wijmo-wijmenu-child {
 display:none;
-width:150px;
 padding:0.3em;
 }
 
