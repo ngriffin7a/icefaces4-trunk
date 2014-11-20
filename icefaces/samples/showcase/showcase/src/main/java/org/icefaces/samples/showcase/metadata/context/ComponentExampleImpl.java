@@ -191,18 +191,11 @@ public class ComponentExampleImpl<T> implements ComponentExample, ExampleResourc
     }
 
 	public String getBeanName() { return ""; }
-    
-//    public Effect getEffect() {
-//        return effect;
-//    }
-    
-//    public void setEffect(Effect effect) {
-//        this.effect = effect;
-//    }
-    
-//    public void prepareEffect() {
-//        if (effect != null) {
-//            effect.setFired(false);
-//        }
-//    }
+
+
+    public void selected() {
+    }
+
+    public void deselected() {
+    }
 }

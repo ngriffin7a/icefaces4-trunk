@@ -96,7 +96,13 @@ public class NavigationModel implements Serializable {
     }
 
     public void setCurrentComponentExample(ComponentExampleImpl currentComponentExample) {
+        if (this.currentComponentExample != null) {
+            this.currentComponentExample.deselected();
+        }
         this.currentComponentExample = currentComponentExample;
+        if (this.currentComponentExample != null) {
+            this.currentComponentExample.selected();
+        }
     }
 
     public String getComponentGroup() {
