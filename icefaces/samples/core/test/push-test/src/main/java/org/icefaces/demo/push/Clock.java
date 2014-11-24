@@ -26,6 +26,11 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.PreDestroyApplicationEvent;
+import javax.faces.event.SystemEvent;
+import javax.faces.event.SystemEventListener;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,7 +42,7 @@ import java.util.TimerTask;
 @WindowDisposed
 public class Clock implements Serializable {
     private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss .SSS");
-    private Timer timer = new Timer();
+    private Timer timer = new Timer("push test clock");
     private long interval = 1000;
     private PortableRenderer renderer;
     private TimerTask intervalNotifier;
@@ -48,6 +53,7 @@ public class Clock implements Serializable {
     public Clock() {
         intervalNotifier = new IntervalNotifier();
         id = generateID();
+        FacesContext.getCurrentInstance().getApplication().subscribeToEvent(PreDestroyApplicationEvent.class, new StopTimer());
     }
 
     @PostConstruct
@@ -92,5 +98,20 @@ public class Clock implements Serializable {
 
     private synchronized String generateID() {
         return Integer.toString((++subCounter) + (hashCode() / 10000), 36).toUpperCase();
+    }
+
+    private class StopTimer implements SystemEventListener {
+        public void processEvent(SystemEvent event) throws AbortProcessingException {
+            try {
+                timer.purge();
+                timer.cancel();
+            } catch (Throwable t) {
+                //timer was already shut down
+            }
+        }
+
+        public boolean isListenerForSource(Object source) {
+            return true;
+        }
     }
 }
