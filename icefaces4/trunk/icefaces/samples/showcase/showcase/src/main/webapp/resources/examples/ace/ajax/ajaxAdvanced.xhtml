@@ -38,7 +38,7 @@
             <ace:panel id="ajaxAdvancedSettings" header="Settings" style="width: 100%;">
                 <h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
 					<h:outputText value="Update values: "/>
-					<h:selectOneRadio value="#{ajaxAdvancedBean.event}">
+					<h:selectOneRadio id="radioButton" value="#{ajaxAdvancedBean.event}">
 						<f:ajax render="ajaxAdvancedSlider" />
 						<f:selectItem itemLabel="after releasing handle" itemValue="slideEnd" />
 						<f:selectItem itemLabel="as the handle is moved" itemValue="slide" />

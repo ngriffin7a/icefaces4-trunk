@@ -49,7 +49,7 @@
 					<ace:textEntry id="ajaxText" value="#{ajaxBean.textValue}">
 						<ace:ajax disabled="#{!ajaxBean.ajaxEnabled}" />
 					</ace:textEntry>
-					<h:outputText value="#{ajaxBean.textValue}"/>
+					<h:outputText id="textEntryOutput" value="#{ajaxBean.textValue}"/>
 
 					<ace:simpleSelectOneMenu id="ajaxSelect" value="#{ajaxBean.selectValue}">
 						<ace:ajax disabled="#{!ajaxBean.ajaxEnabled}" />
@@ -59,7 +59,7 @@
 						<f:selectItem itemLabel="item4" itemValue="item4" />
 						<f:selectItem itemLabel="item5" itemValue="item5" />
 					</ace:simpleSelectOneMenu>
-					<h:outputText value="#{ajaxBean.selectValue}"/>
+					<h:outputText id="menuOutput" value="#{ajaxBean.selectValue}"/>
 
 					<ace:sliderEntry id="ajaxSlider"
 									 axis="x"
@@ -70,9 +70,9 @@
 									 value="#{ajaxBean.sliderValue}">
 						<ace:ajax disabled="#{!ajaxBean.ajaxEnabled}" />
 					</ace:sliderEntry>
-					<h:outputText value="#{ajaxBean.sliderValue}"/>
+					<h:outputText id="sliderOutput" value="#{ajaxBean.sliderValue}"/>
 
-					<h:commandButton value="Submit" />
+					<h:commandButton id="submitButton" value="Submit" />
 					<h:outputText value="" />
                 </h:panelGrid>
             </ace:panel>
