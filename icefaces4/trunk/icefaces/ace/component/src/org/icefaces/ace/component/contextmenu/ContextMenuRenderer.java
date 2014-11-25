@@ -222,6 +222,9 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
 			writer.writeAttribute("class", "ui-state-disabled", null);
 		} else {
 			writer.writeAttribute("href", "#", null);
+			writer.writeAttribute("id", submenu.getClientId(context), null);
+			writer.writeAttribute("name", submenu.getClientId(context), null);
+			writer.writeAttribute("onclick", submenu.getScript(), null);
 		}
 
 		if(icon != null) {

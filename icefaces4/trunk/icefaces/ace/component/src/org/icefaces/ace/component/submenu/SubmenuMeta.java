@@ -18,20 +18,27 @@ package org.icefaces.ace.component.submenu;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
-import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
+import org.icefaces.ace.meta.baseMeta.UICommandMeta;
+
+import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
+import org.icefaces.ace.meta.annotation.ClientEvent;
+import org.icefaces.ace.api.IceClientBehaviorHolder;
 
 @Component(
         tagName = "submenu",
         componentClass = "org.icefaces.ace.component.submenu.Submenu",
         generatedClass = "org.icefaces.ace.component.submenu.SubmenuBase",
-        extendsClass = "javax.faces.component.UIComponentBase",
+        extendsClass = "javax.faces.component.UICommand",
         componentFamily = "org.icefaces.ace.component.Menu",
         componentType = "org.icefaces.ace.component.Submenu",
         tlddoc = "Submenu is nested in a menu component and represents a navigation group." +
                  "<p>For more information, see the " +
                  "<a href=\"http://wiki.icefaces.org/display/ICE/Submenu\">Submenu Wiki Documentation</a>."
 )
-public class SubmenuMeta extends UIComponentBaseMeta {
+@ClientBehaviorHolder(events = {
+	@ClientEvent(name="action", javadoc="", tlddoc="Triggers when the submenu is clicked or selected by any other means.", defaultRender="@all", defaultExecute="@all")
+}, defaultEvent="action")
+public class SubmenuMeta extends UICommandMeta {
     @Property(tlddoc = "Label of the submenu header.")
     private String label;
 
@@ -55,4 +62,7 @@ public class SubmenuMeta extends UIComponentBaseMeta {
 	
     @Property(tlddoc = "Specifies whether the 'positionLeft' and 'positionRight' attributes are relative to the submenu label or the menu bar. It also affects centering when using the value 'center' in 'direction. Possible values are 'label' and 'menubar'. The default value is 'label'.")
     private String relativeTo;
+
+    @Property(tlddoc = "Javascript event handler for click event. The code specified here is executed before the request to the server is sent.")
+    private String onclick;
 }
