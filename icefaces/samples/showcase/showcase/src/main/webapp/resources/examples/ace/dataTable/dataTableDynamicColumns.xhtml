@@ -50,16 +50,16 @@
                 }
             </style>
 
-            <h:selectManyCheckbox value="#{dataTableDynamicColumns.selectedCheckboxes}"
+            <h:selectManyCheckbox id="checkbox" value="#{dataTableDynamicColumns.selectedCheckboxes}"
                                   valueChangeListener="#{dataTableDynamicColumns.checkboxChange}"
                                   styleClass="checkboxes">
                 <f:ajax render="@form" execute="@this"/>
                 <f:selectItems value="#{dataTableDynamicColumns.checkboxes}"/>
             </h:selectManyCheckbox>
 
-            <ace:dataTable value="#{dataTableDynamicColumns.cars}" var="car">
+            <ace:dataTable id="dataTable" value="#{dataTableDynamicColumns.cars}" var="car">
                 <c:forEach items="#{dataTableDynamicColumns.columns}" var="colModel">
-                    <ace:column headerText="#{colModel.headerText}">#{car[colModel.value]}</ace:column>
+                    <ace:column id="columnHeader" headerText="#{colModel.headerText}">#{car[colModel.value]}</ace:column>
                 </c:forEach>
             </ace:dataTable>
         </h:form>

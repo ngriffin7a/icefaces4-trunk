@@ -60,12 +60,12 @@
 
         <h:form id= "form" style="text-align: center">
             <ace:panel>
-				<ace:buttonGroup header="ace:radioButton Overview" mutuallyExclusive="true">
+				<ace:buttonGroup id="buttonGroup1" header="ace:radioButton Overview" mutuallyExclusive="true">
 					<h:panelGrid columns="2" width="100%" columnClasses="col50,col50">
-						<ace:radioButton value="#{radioButton.selected1}" label="#{radioButton.boxValueDescription1}" labelPosition="top">
+						<ace:radioButton id="button1" value="#{radioButton.selected1}" label="#{radioButton.boxValueDescription1}" labelPosition="top">
 							<ace:ajax execute="@form" event="activate" render="@all"/>
 						</ace:radioButton>
-						<ace:radioButton value="#{radioButton.selected2}" label="#{radioButton.boxValueDescription2}" labelPosition="top">
+						<ace:radioButton id="button2" value="#{radioButton.selected2}" label="#{radioButton.boxValueDescription2}" labelPosition="top">
 							<ace:ajax execute="@form" event="activate" render="@all"/>
 						</ace:radioButton>
 					</h:panelGrid>
