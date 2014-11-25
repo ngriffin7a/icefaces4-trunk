@@ -205,6 +205,9 @@ public class MenuRenderer extends BaseMenuRenderer {
 			writer.writeAttribute("class", "ui-state-disabled", null);
 		} else {
 			writer.writeAttribute("href", "#", null);
+			writer.writeAttribute("id", submenu.getClientId(context), null);
+			writer.writeAttribute("name", submenu.getClientId(context), null);
+			writer.writeAttribute("onclick", submenu.getScript(), null);
 		}
 
         if(icon != null) {
@@ -288,6 +291,9 @@ public class MenuRenderer extends BaseMenuRenderer {
 				}
 				writer.writeAttribute("style", "white-space:nowrap;position:relative;" + style, "style");
 				Utils.writeConcatenatedStyleClasses(writer, "", submenu.getStyleClass());
+				writer.writeAttribute("id", submenu.getClientId(context), null);
+				writer.writeAttribute("name", submenu.getClientId(context), null);
+				writer.writeAttribute("onclick", submenu.getScript(), null);
 			}
             writer.write(label);
         }

@@ -32,9 +32,108 @@
 
 package org.icefaces.ace.component.submenu;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import java.util.Map;
+import java.util.List;
+import java.util.Collections;
+import java.util.Iterator;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorContext;
+import javax.faces.component.behavior.ClientBehaviorHolder;
+import org.icefaces.ace.component.ajax.AjaxBehavior;
 
 public class Submenu extends SubmenuBase implements java.io.Serializable {
+
+    public void decode(FacesContext facesContext) {
+	
+        Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
+        String clientId = getClientId(facesContext);
+        if (params.containsKey(clientId)) this.queueEvent(new ActionEvent(this));
+
+        // decode bahaviors 
+		Map<String, List<ClientBehavior>> behaviors = getClientBehaviors();
+        if(behaviors.isEmpty()) {
+            return;
+        }
+		
+        String behaviorEvent = params.get("javax.faces.behavior.event");
+
+        if(null != behaviorEvent) {
+            List<ClientBehavior> behaviorsForEvent = behaviors.get(behaviorEvent);
+
+            if(behaviors.size() > 0) {
+               String behaviorSource = params.get("javax.faces.source");
+
+               if(behaviorSource != null && behaviorSource.startsWith(clientId)) {
+                   for (ClientBehavior behavior: behaviorsForEvent) {
+                       behavior.decode(facesContext, this);
+                   }
+               }
+            }
+        }
+    }
+
+	public String getScript() {
+
+		String clientId = getClientId(getFacesContext());
+		boolean hasAjaxBehavior = false;
+		
+		StringBuilder command = new StringBuilder();
+		command.append("var self = this; setTimeout(function() { var f = function(opt){");
+		// ClientBehaviors
+		Map<String,List<ClientBehavior>> behaviorEvents = getClientBehaviors();
+		if (!behaviorEvents.isEmpty()) {
+			List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
+			for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get("activate").iterator(); behaviorIter.hasNext();) {
+				ClientBehavior behavior = behaviorIter.next();
+				if (behavior instanceof AjaxBehavior)
+					hasAjaxBehavior = true;
+				ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(getFacesContext(), this, "activate", clientId, params);
+				String script = behavior.getScript(cbc);    //could be null if disabled
+
+				if(script != null) {
+					command.append("ice.ace.ab(ice.ace.extendAjaxArgs(");
+					command.append(script);
+					command.append(", opt));");
+				}
+			}
+		}
+		command.append("}; ");
+		
+		if (!hasAjaxBehavior && (getActionExpression() != null || getActionListeners().length > 0)) {
+			command.append("self.id = '" + clientId + "'; ice.s(event, self");
+			
+			StringBuilder parameters = new StringBuilder();
+			parameters.append(",function(p){");
+			for(UIComponent child : getChildren()) {
+				if(child instanceof UIParameter) {
+					UIParameter param = (UIParameter) child;
+					
+					parameters.append("p('");
+					parameters.append(param.getName());
+					parameters.append("','");
+					parameters.append(String.valueOf(param.getValue()));
+					parameters.append("');");
+				}
+			}
+			parameters.append("});");
+			
+			command.append(parameters.toString());
+		} else {
+			command.append("f({node:self});"); // call behaviors function
+		}
+
+		command.append("}, 10);"); // close timeout
+
+		String customOnclick = getOnclick();
+		String onclick = customOnclick == null ? command.toString() : customOnclick + ";" + command.toString();
+
+		return onclick;
+	}
+
     protected FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
     }
