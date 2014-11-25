@@ -50,7 +50,6 @@ import java.util.Set;
 @ICEResourceDependencies({
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
-	@ICEResourceDependency(name = "json/json2.js"),
 	@ICEResourceDependency(name = "dnd/dragdrop.js"),
 	@ICEResourceDependency(name = "list/list.js")
 })
