@@ -50,7 +50,6 @@ import javax.faces.component.UIComponent;
 @ICEResourceDependencies({
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
-	@ICEResourceDependency(name = "json/json2.js"),
 	@ICEResourceDependency(name = "listcontrol/listcontrol.js")
 })
 public class ListControlMeta extends UIComponentBaseMeta {
