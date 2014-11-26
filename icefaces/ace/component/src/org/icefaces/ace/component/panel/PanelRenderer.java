@@ -37,9 +37,11 @@ import javax.faces.context.ResponseWriter;
 import org.icefaces.ace.component.menu.Menu;
 import org.icefaces.ace.renderkit.CoreRenderer;
 
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.JSONBuilder;
+import org.icefaces.impl.event.UIOutputWriter;
 import org.icefaces.render.MandatoryResourceComponent;
 
 @MandatoryResourceComponent(tagName="panel", value="org.icefaces.ace.component.panel.Panel")
@@ -115,10 +117,10 @@ public class PanelRenderer extends CoreRenderer {
         writer.endElement("script");
     }
 
-    protected void encodeMarkup(FacesContext context, Panel panel) throws IOException {
+    protected void encodeMarkup(FacesContext context, final Panel panel) throws IOException {
 		Map<String, Object> domUpdateMap = new HashMap<String, Object>();
         ResponseWriter writer = context.getResponseWriter();
-        String clientId = panel.getClientId(context);
+        final String clientId = panel.getClientId(context);
         Menu optionsMenu = panel.getOptionsMenu();
 
         writer.startElement("div", panel);
@@ -160,22 +162,41 @@ public class PanelRenderer extends CoreRenderer {
         writer.writeAttribute("class", "ui-helper-hidden", null);
         writer.endElement("span");
         writer.endElement("div");
-		
-		// disableInputs
-        writer.startElement("span", null);
-		writer.writeAttribute("id", clientId + "_disableInputs", null);
-		writer.startElement("script", null);
-		writer.writeAttribute("type", "text/javascript", null);
-		if (panel.isDisableInputs()) {
-			writer.write("ice.ace.BlockUI.activate('"+clientId+"_content'); //" + System.currentTimeMillis()); // keep disabled across updates
-		} else if (panel.isPreviousDisableInputs() != null) { 
-			if (panel.isPreviousDisableInputs() == true) // only render when there's a change from disabled to enabled
-				writer.write("ice.ace.BlockUI.deactivate('"+clientId+"_content');");
-		}
-		writer.endElement("script");
-        writer.endElement("span");
-		
-		panel.setPreviousDisableInputs(panel.isDisableInputs());
+
+
+        final boolean disableInputs = panel.isDisableInputs();
+        final boolean previousDisableInputs = panel.isPreviousDisableInputs() != null && panel.isPreviousDisableInputs();
+        if (disableInputs || previousDisableInputs) {
+            //assume that we have a form since, we're trying to disable inputs after all
+            UIComponent parentForm = ComponentUtils.findParentForm(context, panel);
+            //output the input disabling script at the end of the form to give a chance to more complex components to fully render
+            //and thus calculate the overlay coordinates properly
+            parentForm.getChildren().add(new UIOutputWriter() {
+                public void encode(ResponseWriter writer, FacesContext context) throws IOException {
+                    // disableInputs
+                    writer.startElement("span", null);
+                    writer.writeAttribute("id", clientId + "_disableInputs", null);
+                    writer.startElement("script", null);
+                    writer.writeAttribute("type", "text/javascript", null);
+                    if (disableInputs) {
+                        // keep disabled across updates
+                        writer.write("setTimeout(function() {ice.ace.BlockUI.activate('" + clientId + "_content');}, 1); //" + System.currentTimeMillis());
+                    } else if (previousDisableInputs) {
+                        // only render when there's a change from disabled to enabled
+                        writer.write("ice.ace.BlockUI.deactivate('" + clientId + "_content');");
+                    }
+                    writer.endElement("script");
+                    writer.endElement("span");
+                }
+
+                @Override
+                public boolean isTransient() {
+                    return true;
+                }
+            });
+        }
+
+		panel.setPreviousDisableInputs(disableInputs);
     }
 
     protected void encodeHeader(FacesContext context, Panel panel, Map<String, Object> domUpdateMap) throws IOException {
