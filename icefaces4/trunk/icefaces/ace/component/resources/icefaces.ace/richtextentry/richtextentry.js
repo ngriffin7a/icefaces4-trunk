@@ -121,6 +121,7 @@ ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _ski
 			if (behaviors.behaviors.change) editorInstance.ajaxChange = behaviors.behaviors.change;
         }
 		editorInstance.initialData = editorInstance.getData();
+		editorInstance.saveOnSubmit = saveOnSubmit;
 		var onBlur = function(e) {
 			var instance = CKEDITOR.instances[editor];
 			var textarea = document.getElementById(editor);
