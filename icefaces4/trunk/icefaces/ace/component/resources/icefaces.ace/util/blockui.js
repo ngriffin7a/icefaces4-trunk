@@ -52,13 +52,12 @@ ice.ace.BlockUI.disableControls = function(id) {
 }
 
 ice.ace.BlockUI.createOverlay = function(id) {
-	var target = ice.ace.jq(ice.ace.escapeClientId(id));
-	var offset = target.offset();
+	var target = document.getElementById(id);
 	var overlay = document.createElement('div');
 	overlay.className = 'ui-widget-overlay ice-ace-blockui';
 	overlay.style.cssText = 'position: absolute; z-index: 28000; zoom: 1;' +
-		'top:' + offset.top + 'px;left:' + offset.left + 'px;' +
-		'height:' + target.outerHeight() + 'px;width:' + target.outerWidth() + 'px;';
+		'top:' + target.offsetTop + 'px;left:' + target.offsetLeft + 'px;' +
+		'height:' + target.offsetHeight + 'px;width:' + target.offsetWidth + 'px;';
 	return overlay;
 };
 
