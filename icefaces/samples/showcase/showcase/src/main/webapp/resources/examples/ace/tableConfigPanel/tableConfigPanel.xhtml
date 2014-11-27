@@ -99,9 +99,9 @@
                         </ace:column>
             </ace:dataTable>
 			
-			<h:commandButton value="Save Settings" actionListener="#{tableConfigPanelBean.saveSettings}" />
-			<h:commandButton value="Restore Saved Settings" actionListener="#{tableConfigPanelBean.restoreSavedSettings}" style="margin-left:10px;"/>
-			<h:commandButton value="Restore Default Settings" actionListener="#{tableConfigPanelBean.restoreDefaultSettings}" style="margin-left:10px;"/>
+			<h:commandButton id="saveButton" value="Save Settings" actionListener="#{tableConfigPanelBean.saveSettings}" />
+			<h:commandButton id="restoreButton" value="Restore Saved Settings" actionListener="#{tableConfigPanelBean.restoreSavedSettings}" style="margin-left:10px;"/>
+			<h:commandButton id="defaultButton" value="Restore Default Settings" actionListener="#{tableConfigPanelBean.restoreDefaultSettings}" style="margin-left:10px;"/>
             
         </h:form>
     </ui:define>

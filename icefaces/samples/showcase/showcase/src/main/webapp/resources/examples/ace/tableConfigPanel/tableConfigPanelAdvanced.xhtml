@@ -51,15 +51,15 @@
                 </ace:tableConfigPanel>
                 <ace:columnGroup type="header">
 					<ace:row>
-						<ace:column colspan="7" headerText="#{tableConfigPanelAdvancedBean.headerColumns[0].name}"
+						<ace:column id="carDetailsGroup" colspan="7" headerText="#{tableConfigPanelAdvancedBean.headerColumns[0].name}"
 								rendered="#{tableConfigPanelAdvancedBean.headerColumns[0].rendered}" />
 					</ace:row>
 					<ace:row>
-						<ace:column colspan="3" headerText="#{tableConfigPanelAdvancedBean.headerColumns[1].name}"
+						<ace:column id="modelGroup" colspan="3" headerText="#{tableConfigPanelAdvancedBean.headerColumns[1].name}"
 								rendered="#{tableConfigPanelAdvancedBean.headerColumns[1].rendered}" />
-						<ace:column colspan="3" headerText="#{tableConfigPanelAdvancedBean.headerColumns[2].name}"
+						<ace:column id="specGroup" colspan="3" headerText="#{tableConfigPanelAdvancedBean.headerColumns[2].name}"
 								rendered="#{tableConfigPanelAdvancedBean.headerColumns[2].rendered}" />
-						<ace:column colspan="1" headerText="#{tableConfigPanelAdvancedBean.headerColumns[3].name}"
+						<ace:column id="costGroup" colspan="1" headerText="#{tableConfigPanelAdvancedBean.headerColumns[3].name}"
 								rendered="#{tableConfigPanelAdvancedBean.headerColumns[3].rendered}" />
 					</ace:row>
                     <ace:row>
@@ -122,9 +122,9 @@
                         </ace:column>
             </ace:dataTable>
 			
-			<h:commandButton value="Save Settings" actionListener="#{tableConfigPanelAdvancedBean.saveSettings}" />
-			<h:commandButton value="Restore Saved Settings" actionListener="#{tableConfigPanelAdvancedBean.restoreSavedSettings}" style="margin-left:10px;"/>
-			<h:commandButton value="Restore Default Settings" actionListener="#{tableConfigPanelAdvancedBean.restoreDefaultSettings}" style="margin-left:10px;"/>
+			<h:commandButton id="saveButton" value="Save Settings" actionListener="#{tableConfigPanelAdvancedBean.saveSettings}" />
+			<h:commandButton id="restoreButton" value="Restore Saved Settings" actionListener="#{tableConfigPanelAdvancedBean.restoreSavedSettings}" style="margin-left:10px;"/>
+			<h:commandButton id="defaultButton" value="Restore Default Settings" actionListener="#{tableConfigPanelAdvancedBean.restoreDefaultSettings}" style="margin-left:10px;"/>
             
         </h:form>
     </ui:define>
