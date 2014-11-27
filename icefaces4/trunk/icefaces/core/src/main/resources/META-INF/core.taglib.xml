@@ -36,29 +36,28 @@
             web.xml.
         </description>
         <handler-class>org.icefaces.impl.facelets.tag.icefaces.core.ConfigHandler</handler-class>
+
         <attribute>
             <description>
-                A value of "true" indicates that ICEfaces rendering Direct-to-DOM should be applied to the current view.
-                A value of "false" indicates that stock JSF rendering should be used. The default value is "true", since
-                the presence of this tag indicates the use of ICEfaces.
+                Allows control of extra form submissions (double-submits) on a per-page basis. Setting blockUIOnSubmit
+                to true tells ICEfaces that the user interface (UI) should block any subsequent requests until the
+                current request has been processed.
             </description>
-            <name>render</name>
+            <name>blockUIOnSubmit</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
 
-        <!-- *** Comment out ARIA support config. as it is not officially supported as of ICEfaces 3.0
-                <attribute>
-                    <description>
-                        A value of "true" indicates that ARIA support will be applied to the current view. The default value is "true".
-                        ARIA support can also be enabled at an application level by setting the "org.icefaces.aria.enabled" context parameter to true in the web.xml file.
-                        If ARIA is enabled application level, this attribute can disable ARIA for the current view.
-                    </description>
-                    <name>ariaEnabled</name>
-                    <required>false</required>
-                    <type>java.lang.Boolean</type>
-                </attribute>
-        -->
+        <attribute>
+            <description>
+                Allows control of lazy window scope activation on a per-page basis. By using this setting in conjunction
+                with the application-scoped org.icefaces.lazyWindowScope context parameter, you can control the lazy
+                activation of Ajax Push on a per-page basis.
+            </description>
+            <name>lazyPush</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
 
         <attribute>
             <description>
@@ -76,11 +75,58 @@
 
         <attribute>
             <description>
-                A value of "true" indicates that faces messages are persisted
-                across single submits. This attribute takes precedence over the
-                org.icefaces.messagePersistence context parameter in the web.xml fule on a per-view basis.
+                Allows control of ICEfaces' message persistence feature on a per-page basis. By default, ICEfaces will
+                persist FacesMessages across different partial submits from the same page. This setting can be used to
+                disable this behavior on a per-page basis.
             </description>
             <name>messagePersistence</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+
+        <attribute>
+            <description>
+                Allows control of DOM rendering on a per-page basis. By default, when ICEfaces is available, DOM
+                rendering and partial page updates are enabled for stock JSF components. By using this setting in in
+                conjunction with the application-scoped org.icefaces.render.auto context parameter, you can control
+                whether or not ICEfaces is active on an individual page.
+            </description>
+            <name>render</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+
+        <attribute>
+            <description>
+                Allows control of DOM diffing on a per-page basis. By default, when using ICEfaces, Ajax-specified
+                subtree diffing is always done. By using this setting in in conjunction with the application-scoped
+                org.icefaces.subtreeDiff context parameter, you can control whether or not ICEfaces is active on an
+                individual page.
+            </description>
+            <name>subtreeDiff</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+
+        <attribute>
+            <description>
+                Allows tuning of DOM diffing on a per-page basis by forcing the coalescing of the updates when they
+                reach a defined maximum number. By default, when using ICEfaces, DOM diffing is done without any limit
+                on the number of generated updates. By using this setting the application-scoped org.icefaces.domDiff
+                context parameter will be overridden.
+            </description>
+            <name>diffConfig</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <description>
+                Allows control of focus retention on a per-page basis. By default, when using ICEfaces, focus retention
+                is enabled. By using this setting the application-scoped org.icefaces.focusManaged context parameter
+                will be overridden.
+            </description>
+            <name>focusManaged</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
