@@ -101,14 +101,14 @@
         <fileset dir="${jsf.lib.dir}" includes="*.jar" erroronmissingdir="false"/>
         <fileset dir="${lib.dir}" includes="*.jar"/>
         <pathelement path="../component/src"/>
-        <pathelement path="../generator/build"/>
+        <pathelement path="../../ace/generator/build"/>
         <pathelement path="../component/build/meta"/>
     </path>
 
     <path id="javadoc.classpath">
         <fileset dir="${jsf.lib.dir}" includes="*.jar" erroronmissingdir="false"/>
         <fileset dir="${lib.dir}" includes="*.jar"/>
-        <pathelement path="../generator/build"/>
+        <pathelement path="../../ace/generator/build"/>
         <pathelement path="./src"/>
         <pathelement path="./build/meta"/>
         <pathelement path="./build/generated/base"/>
@@ -170,7 +170,7 @@
     </macrodef>
 
     <target name="compile"
-            depends="prepare, generator-dist, compile-meta, generate, compile-interfaces, compile-base, compile-manual, compile-support, res-js-compress, res-js-no-compress, res-css-combine, res-copy"
+            depends="prepare, compile-meta, generate, compile-interfaces, compile-base, compile-support, compile-manual, res-js-compress, res-js-no-compress, res-css-combine, res-copy"
             description="compile the source ">
     </target>
 
@@ -247,11 +247,9 @@
         </javac>
     </target>
 
-    <target name="compile-manual">
-        <!--
-        Have to build generated-jsp/base and generated-interfaces
-        simultaneously with manual, since manual JSP code will depend on them,
-        while they'll depend on their superclass Tags and interfaces
+   <target name="compile-manual">
+        <!--Have to build generated-interfaces
+        simultaneously with manual.  this is responsible for all other non-generated compiling.
         -->
         <javac srcdir="${src}:${build}/generated-jsp/base" destdir="${exploded}" debug="true"
                excludes="**/*Meta.java" verbose="true" failonerror="true"
@@ -281,7 +279,7 @@
     </target>
 
     <target name="generator-dist">
-        <ant inheritAll="false" antfile="../generator/build.xml" target="dist"/>
+        <ant inheritAll="false" antfile="../../ace/generator/build.xml" target="dist"/>
     </target>
 
     <target name="compile-meta">
@@ -294,7 +292,7 @@
     </target>
 
     <target name="generate">
-        <ant inheritAll="false" antfile="../generator/build.xml"
+        <ant inheritAll="false" antfile="../../ace/generator/build.xml"
              target="generate">
             <property name="generator.tld.doc.display.name"
                       value="${product} ${product.lib}"/>
@@ -310,8 +308,6 @@
                       value="${taglib.merge}"/>
             <property name="generator.build.dir"
                       value="${build}"/>
-            <property name="generator.jsp.tld.merge"
-                      value="${jsp.tld.merge}"/>
         </ant>
     </target>
 
@@ -533,25 +529,6 @@
             </java>
         </sequential>
     </macrodef>
-
-    <!--
-        <macrodef name="gen.tld.doc">
-            <attribute name="tld.file"/>
-            <sequential>
-                <delete dir="${tld.doc}"/>
-                <mkdir dir="${tld.doc}"/>
-                <java jar="${tld.jar}/tlddoc.jar" fork="true" failonerror="true">
-                    <arg value="-d"/>
-                    <arg value="${tld.doc}"/>
-                    <arg value="-doctitle"/>
-                    <arg value="${generator.tld.doc.overall.name} ${generator.tld.doc.version}"/>
-                    <arg value="-windowtitle"/>
-                    <arg value="${generator.tld.doc.overall.name} ${generator.tld.doc.version}"/>
-                    <arg value="@{tld.file}"/>
-                </java>
-            </sequential>
-        </macrodef>
-    -->
 
     <target name="tlddoc"
             description="Generate the component TLD Documentation in HTML format.">

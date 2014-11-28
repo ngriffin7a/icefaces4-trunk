@@ -22,7 +22,7 @@
     <target name="all">
         <subant>
             <property name="icefaces.lib.dir" value="${icefaces.lib.dir}" />
-            <fileset dir="." includes="generator/build.xml component/build.xml samples/showcase/build.xml">
+            <fileset dir="." includes="component/build.xml samples/showcase/build.xml">
             </fileset>
         </subant> 
     </target>
