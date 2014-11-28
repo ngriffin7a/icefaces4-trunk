@@ -110,12 +110,12 @@
 				<ace:message for="selectCity" />
 				</h:panelGroup>
 				<h:panelGroup>
-					<h:outputText style="margin-left:20px;" value="Province: #{selectMenuBean.province}" />
+					<h:outputText id="provinceOutput" style="margin-left:20px;" value="Province: #{selectMenuBean.province}" />
 					<br />
-					<h:outputText style="margin-left:20px;" value="City: #{selectMenuBean.city}" />
+					<h:outputText id="cityOutput" style="margin-left:20px;" value="City: #{selectMenuBean.city}" />
 				</h:panelGroup>
 			</h:panelGrid>
-			<ace:pushButton value="Clear values" actionListener="#{selectMenuBean.clearValues}">
+			<ace:pushButton id="clearButton" value="Clear values" actionListener="#{selectMenuBean.clearValues}">
 				<ace:ajax execute="@this" render="@all" onStart="setTimeout(function(){cfg.onstart = null; ice.ace.ab(cfg);},410); return false;"/>
 			</ace:pushButton>
             </ace:panel>
