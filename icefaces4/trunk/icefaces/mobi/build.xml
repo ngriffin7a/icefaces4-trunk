@@ -29,7 +29,7 @@
     
     <target name="clean">
         <subant target="clean">
-            <fileset dir="." includes="generator/build.xml component/build.xml samples/showcase/build.xml">
+            <fileset dir="." includes="component/build.xml samples/showcase/build.xml">
                 <exclude name="**/maven2/build.xml"/>
 	  		</fileset>
         </subant>

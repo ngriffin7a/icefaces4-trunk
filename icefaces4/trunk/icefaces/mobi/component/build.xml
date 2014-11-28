@@ -385,7 +385,7 @@
                 <exclude name="src/org/icefaces/ace/component/**/*Meta.java"/>
                 <exclude name="src/org/icefaces/apache/**"/>
             </fileset>
-            <fileset dir="../generator" defaultexcludes="yes">
+            <fileset dir="../../ace/generator" defaultexcludes="yes">
                 <include name="src/org/icefaces/ace/meta/**/*.java"/>
             </fileset>
             <header><![CDATA[${javadoc.header}]]></header>
