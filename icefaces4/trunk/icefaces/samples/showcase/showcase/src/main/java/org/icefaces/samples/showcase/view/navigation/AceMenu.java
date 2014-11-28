@@ -485,6 +485,7 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.combined", value = ChartCombinedBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.color", value = ChartColorBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.dynamic", value = ChartDynamicBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.stacked", value = ChartStackedBarBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.chart.title", labelExample = "menu.ace.chart.subMenu.export", value = ChartExportBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.chart.altSearch1", labelExample = "menu.ace.chart.title", value = ChartBean.BEAN_NAME),
 
