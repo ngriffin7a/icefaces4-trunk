@@ -70,6 +70,8 @@ import java.util.Random;
                 exampleBeanName = ChartCombinedBean.BEAN_NAME),
         @MenuLink(title = "menu.ace.chart.subMenu.color",
                 exampleBeanName = ChartColorBean.BEAN_NAME),
+        @MenuLink(title="menu.ace.chart.subMenu.stacked",
+                exampleBeanName = ChartStackedBarBean.BEAN_NAME),
         @MenuLink(title = "menu.ace.chart.subMenu.dynamic",
                 exampleBeanName = ChartDynamicBean.BEAN_NAME),
         @MenuLink(title = "menu.ace.chart.subMenu.export",
