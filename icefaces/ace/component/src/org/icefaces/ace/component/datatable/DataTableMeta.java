@@ -214,6 +214,9 @@ public class DataTableMeta extends UIDataMeta {
             defaultValue = "true", defaultValueType = DefaultValueType.EXPRESSION)
     private Boolean staticHeaders;
 
+    @Property(tlddoc = "Causes a caption element to be rendered with the specified text, in order to facilitate better screen reader support and accessibility for this table.")
+	private String caption;
+
     // ID of the configPanel that has been associated with this table, used for
     // component lookups during decodes.
     @Field(defaultValue = "null", defaultValueIsStringLiteral = false)

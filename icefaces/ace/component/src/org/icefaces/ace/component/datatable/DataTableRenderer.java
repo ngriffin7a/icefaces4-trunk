@@ -249,6 +249,12 @@ public class DataTableRenderer extends CoreRenderer {
             if (tableContext.isScrollable() && (height = tableContext.getScrollHeight()) != null)
                 writer.writeAttribute(HTML.STYLE_ELEM, "max-height:" + height + "px; overflow:auto;", null);
             writer.startElement(HTML.TABLE_ELEM, null);
+			String caption = table.getCaption();
+			if (caption != null) {
+				writer.startElement("caption", null);
+				writer.writeText(caption, null);
+				writer.endElement("caption");
+			}
         }
 
         DataTableHeadRenderer.encodeTableHead(context, tableContext);
@@ -276,6 +282,12 @@ public class DataTableRenderer extends CoreRenderer {
             writer.writeAttribute(HTML.CLASS_ATTR, scrollClass, null);
             writer.writeAttribute(HTML.STYLE_ELEM, "max-height:" + tableContext.getScrollHeight() + "px", null);
             writer.startElement(HTML.TABLE_ELEM, null);
+			String caption = table.getCaption();
+			if (caption != null) {
+				writer.startElement("caption", null);
+				writer.writeText(caption, null);
+				writer.endElement("caption");
+			}
 
             if (table.hasHeaders()) {
                 table.setInDuplicateSegment(true);
