@@ -37,11 +37,11 @@
         <h:form id="form">
             
             <ace:panel header="QR Input">
-                <ace:textEntry type="text" value="#{qrcodeBean.qrString}" label="Enter code input:"/>
-				<ace:pushButton value="Create" />
+                <ace:textEntry id="input" type="text" value="#{qrcodeBean.qrString}" label="Enter code input:"/>
+				<ace:pushButton id="createButton" value="Create" />
             </ace:panel>
             <ace:panel header="QR Output">
-                <ace:qrcode value="#{qrcodeBean.qrString}"/>
+                <ace:qrcode id="qr" value="#{qrcodeBean.qrString}"/>
             </ace:panel>
             
         </h:form>

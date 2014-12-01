@@ -37,9 +37,9 @@
 		<h:form id="form">
 			<ace:panel id="graphicImagePanel" header="Images" style="width: 100%;">
 				<h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
-					<ace:graphicImage url="http://www.icesoft.org/java/resource/images/icefaces.png" />
+					<ace:graphicImage id="urlImage" url="http://www.icesoft.org/java/resource/images/icefaces.png" />
 					<h:outputText value="Image loaded via URL" />
-					<ace:graphicImage value="#{graphicImageBean.byteArrayImage}" />
+					<ace:graphicImage id="byteImage" value="#{graphicImageBean.byteArrayImage}" />
 					<h:outputText value="Image loaded via byte array" />
 					<ace:graphicImage value="#{graphicImageBean.resourceImage}" id="resourceGraphicImage" />
 					<h:outputText value="Image loaded via IceOutputResource" />
