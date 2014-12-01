@@ -253,6 +253,13 @@ public class PushRenderer {
         }
     }
 
+    /**
+     * Create a PortableRenderer instance in a non-JSF context. PortableRenderer can trigger renderings in the context of the application.
+     * Once acquired it does not need a current FacesContext in order to function. The returned instances are not serializable.
+     *
+     * @param session a valid HttpSession object
+     * @return application wide PortableRenderer instance
+     */
     public static PortableRenderer getPortableRenderer(final HttpSession session) {
         if (EnvUtils.isICEpushPresent()) {
             return new HttpSessionBasedPortableRenderer(session);
