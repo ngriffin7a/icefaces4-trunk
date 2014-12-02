@@ -51,7 +51,9 @@ public class Submenu extends SubmenuBase implements java.io.Serializable {
 	
         Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
         String clientId = getClientId(facesContext);
-        if (params.containsKey(clientId)) this.queueEvent(new ActionEvent(this));
+        String source = String.valueOf(params.get("ice.event.captured"));
+  
+        if (clientId.equals(source)) this.queueEvent(new ActionEvent(this));
 
         // decode bahaviors 
 		Map<String, List<ClientBehavior>> behaviors = getClientBehaviors();
@@ -87,11 +89,11 @@ public class Submenu extends SubmenuBase implements java.io.Serializable {
 		Map<String,List<ClientBehavior>> behaviorEvents = getClientBehaviors();
 		if (!behaviorEvents.isEmpty()) {
 			List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
-			for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get("activate").iterator(); behaviorIter.hasNext();) {
+			for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get("action").iterator(); behaviorIter.hasNext();) {
 				ClientBehavior behavior = behaviorIter.next();
 				if (behavior instanceof AjaxBehavior)
 					hasAjaxBehavior = true;
-				ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(getFacesContext(), this, "activate", clientId, params);
+				ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(getFacesContext(), this, "action", clientId, params);
 				String script = behavior.getScript(cbc);    //could be null if disabled
 
 				if(script != null) {
