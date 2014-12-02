@@ -200,14 +200,17 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                 if ((null == oldDOM) && isRenderAll()) {
                     //split ViewRoot update into head and body updates to avoid having JSF process the updates in a "special" way
                     if (EnvUtils.generateHeadUpdate(facesContext)) {
-                        Node head = newDOM.getElementsByTagName("head").item(0);
-                        HashMap<String, String> attributes = new HashMap();
-                        attributes.put("type", JAVAX_FACES_VIEW_HEAD);
-                        partialWriter.startExtension(attributes);
-                        partialWriter.startCDATA();
-                        DOMUtils.printNodeCDATA(head, partialWriter);
-                        partialWriter.endCDATA();
-                        partialWriter.endExtension();
+                        final NodeList list = newDOM.getElementsByTagName("head");
+                        if (list != null && list.getLength() > 0) {
+                            Node head = list.item(0);
+                            HashMap<String, String> attributes = new HashMap();
+                            attributes.put("type", JAVAX_FACES_VIEW_HEAD);
+                            partialWriter.startExtension(attributes);
+                            partialWriter.startCDATA();
+                            DOMUtils.printNodeCDATA(head, partialWriter);
+                            partialWriter.endCDATA();
+                            partialWriter.endExtension();
+                        }
                     }
 
                     Element body = (Element) newDOM.getElementsByTagName("body").item(0);
