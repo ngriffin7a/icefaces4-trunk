@@ -28,7 +28,7 @@
                     if (elementID) {
                         element = lookupElementById(elementID);
                         cancel(e);
-                        singleSubmitExecuteThis(ev || window.event, element);
+                        submitExecuteForm(ev || window.event, element);
                         return false;
                     }
                 }
