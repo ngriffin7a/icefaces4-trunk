@@ -58,7 +58,9 @@
               location="${meta-include}/faces-config.xml"/>
     <!-- Space or line separated list of faces-config.xml files to merge with MOBI output -->
     <property name="faces-config.merge" value="${faces-config.merge.location}"/>
-
+	<property name="faces-config.generated.jsf" location="${exploded}/META-INF/faces-config.xml" />
+	<property name="faces-config.manual" location="${meta-include}/faces-config.xml" />
+	<property name="taglib.generated.jsf" location="${exploded}/META-INF/icefaces.taglib.xml" />
     <!-- Example of declaring to merge in a manual TLD file in before the generated one
     <property name="jsp.tld.merge" location="resources/icefaces.mobi/META-INCLUDE/manual.tld"/>
     -->
@@ -100,7 +102,10 @@
     <path id="compile.run.classpath">
         <fileset dir="${jsf.lib.dir}" includes="*.jar" erroronmissingdir="false"/>
         <fileset dir="${lib.dir}" includes="*.jar"/>
-        <pathelement path="../component/src"/>
+        <fileset dir="../../ace/generator/dist" includes="*.jar"/>
+        <pathelement location="${build}/exploded/org/icefaces/mobi/component"/>
+        <pathelement path="../component/src/org/icefaces/mobi/component/dataview/ColumnType.java"/>
+        <pathelement path="src"/>
         <pathelement path="../../ace/generator/build"/>
         <pathelement path="../component/build/meta"/>
     </path>
@@ -170,7 +175,8 @@
     </macrodef>
 
     <target name="compile"
-            depends="prepare, compile-meta, generate, compile-interfaces, compile-base, compile-support, compile-manual, res-js-compress, res-js-no-compress, res-css-combine, res-copy"
+            depends="prepare, compile-meta, generate, compile-interfaces, compile-base, compile-manual, compile-support,
+                     res-js-compress, res-js-no-compress, res-css-combine, res-copy"
             description="compile the source ">
     </target>
 
@@ -291,26 +297,37 @@
         </javac>
     </target>
 
-    <target name="generate">
-        <ant inheritAll="false" antfile="../../ace/generator/build.xml"
-             target="generate">
-            <property name="generator.tld.doc.display.name"
-                      value="${product} ${product.lib}"/>
-            <property name="generator.tld.doc.version"
-                      value="${version.string}"/>
-            <property name="generator.faces-config.host"
-                      value="${faces-config.host}"/>
-            <property name="generator.faces-config.merge"
-                      value="${faces-config.merge}"/>
-            <property name="generator.faces-config.output"
-                      value="${faces-config.host}"/>
-            <property name="generator.taglib.merge"
-                      value="${taglib.merge}"/>
-            <property name="generator.build.dir"
-                      value="${build}"/>
-        </ant>
+    <target name="generate" depends="generator-dist">
+       		<java classname="org.icefaces.ace.generator.Generator"
+                     classpathref="compile.run.classpath" fork="true" classpath="${exploded}" failonerror="true">
+           <!-- the short name of the library is specified as the first attribute, the namespace as the second -->
+			<arg line="mobi http://www.icesoft.com/icefaces/mobile/component" />
+			<sysproperty key="generator.tld.doc.display.name"
+                         value="Mobile Components" />
+   			<sysproperty key="generator.tld.doc.version"
+                         value="${version.string}" />
+            <sysproperty key="generator.build.dir"
+                         value="${build}"/>
+            <sysproperty key="generator.jsp.tld.merge"
+                         value="${jsp.tld.merge}"/>
+        </java>
+        <java classname="org.icefaces.ace.generator.merge.FacesConfigMerge"
+              classpathref="compile.run.classpath" fork="true" classpath="${build}">
+            <arg value="${faces-config.generated.jsf}" />
+            <arg value="${faces-config.manual}" />
+            <arg value="${faces-config.generated.jsf}" />
+        </java>
+
     </target>
 
+    <target name="testMerge" description="test faces config merge">
+         <java classname="org.icefaces.ace.generator.merge.FacesConfigMerge"
+              classpathref="compile.run.classpath" fork="true" classpath="${build}">
+            <arg value="${faces-config.generated.jsf}" />
+            <arg value="${faces-config.manual}" />
+            <arg value="${faces-config.generated.jsf}" />
+        </java>
+    </target>
     <target name="lib" depends="compile, lib-jar"
             description="Generate the icefaces-mobi.jar">
     </target>
@@ -382,11 +399,10 @@
                 <include name="build/generated/base/**/*.java"/>
                 <include name="build/generated-jsp/base/**/*.java"/>
                 <include name="build/generated-interfaces/**/*.java"/>
-                <exclude name="src/org/icefaces/ace/component/**/*Meta.java"/>
+                <exclude name="src/org/icefaces/mobi/component/**/*Meta.java"/>
                 <exclude name="src/org/icefaces/apache/**"/>
             </fileset>
             <fileset dir="../../ace/generator" defaultexcludes="yes">
-                <include name="src/org/icefaces/ace/meta/**/*.java"/>
             </fileset>
             <header><![CDATA[${javadoc.header}]]></header>
             <footer><![CDATA[${javadoc.header}]]></footer>
