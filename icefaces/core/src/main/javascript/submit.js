@@ -17,6 +17,7 @@
 var singleSubmitExecuteThis;
 var singleSubmitExecuteThisRenderThis;
 var submit;
+var submitExecuteForm;
 var fullSubmit;
 var singleSubmit;
 
@@ -443,6 +444,14 @@ var singleSubmit;
 
     submit = function(event, element, additionalParameters, callbacks) {
         return fullSubmit('@all', '@all', event, idOrElement(element), function(p) {
+            p('ice.submit.type', 'ice.s');
+            p('ice.submit.serialization', 'form');
+            if (additionalParameters) additionalParameters(p);
+        }, callbacks);
+    };
+
+    submitExecuteForm = function(event, element, additionalParameters, callbacks) {
+        return fullSubmit('@form', '@all', event, idOrElement(element), function(p) {
             p('ice.submit.type', 'ice.s');
             p('ice.submit.serialization', 'form');
             if (additionalParameters) additionalParameters(p);
