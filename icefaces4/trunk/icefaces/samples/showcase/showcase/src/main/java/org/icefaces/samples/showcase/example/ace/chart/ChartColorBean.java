@@ -44,7 +44,7 @@ import java.util.Map;
 
 @ComponentExample(
         parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.bar.title",
+        title = "example.ace.chart.color.title",
         description = "example.ace.chart.color.description",
         example = "/resources/examples/ace/chart/chartColor.xhtml"
 )
