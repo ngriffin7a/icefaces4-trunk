@@ -22,15 +22,15 @@
 
 
     <h:form prependId="false" id="cloudpushform" enctype="multipart/form-data">
-        
+
         <h3>CloudPush: Send Notification</h3>
-        
+
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow styleClass="intro">
             When used from an ICEmobile container, Priority Push will activate cloud-based notification when the container is not active, and Simple Push will not.
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        
+
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
 				<h:outputLabel for="cpSubject" value="Subject: " />
@@ -57,19 +57,27 @@
                     <f:selectItem itemLabel="30 sec" itemValue="30"/>
                 </h:selectOneMenu>
             </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                <mobi:cloudPush />
-				<br/><br/>
+            <mobi:fieldsetRow id="cloudPushButtons">
+                <div>
+                    <h:panelGrid rendered="#{cloudPushBean.acquireEmail}" columns="2">
+                        <h:inputText id="email" value="#{cloudPushBean.email}"/>
+                        <h:commandButton value="Set email address">
+                            <f:ajax execute="email" render="cloudPushButtons"/>
+                        </h:commandButton>
+                    </h:panelGrid>
+                </div>
+                <mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
+                <br/><br/>
                 <h:commandButton value="Priority Push"
-                        actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
-				<br/>
+                                 actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
+                <br/>
                 <h:commandButton value="Simple Push"
-                        actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
+                                 actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        
+
         <h:messages style="margin-left:10px"/>
-        
+
         <h3>Message</h3>
         <mobi:fieldsetGroup styleClass="results">
             <mobi:fieldsetRow>

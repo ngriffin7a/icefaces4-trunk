@@ -22,8 +22,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
+import javax.servlet.http.HttpServletRequest;
 
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
+import org.icefaces.util.ClientDescriptor;
+
 import static org.icefaces.ace.util.HTML.*;
 
 public class CloudPushRenderer extends Renderer {
@@ -32,23 +35,28 @@ public class CloudPushRenderer extends Renderer {
         CloudPush cloudPush = (CloudPush) uiComponent;
         ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
         String clientId = cloudPush.getClientId();
+        final ClientDescriptor clientDescriptor = ClientDescriptor.getInstance((HttpServletRequest) facesContext.getExternalContext().getRequest());
 		// button element
-		writer.startElement(BUTTON_ELEM, cloudPush);
-		writer.writeAttribute(ID_ATTR, clientId);
-		writer.writeAttribute(NAME_ATTR, clientId + "_button");
-		writer.writeAttribute(TYPE_ATTR, "button");
-		String script = "bridgeit.register();return false;";
-		writer.writeAttribute(ONCLICK_ATTR, script);
-		writer.startElement(SPAN_ELEM, cloudPush);
-		writer.writeText(cloudPush.getButtonLabel());
-		writer.endElement(SPAN_ELEM);
-		// themeroller support
-		writer.startElement("span", cloudPush);
-		writer.startElement("script", cloudPush);
-		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("new ice.mobi.button('"+clientId+"');");
-		writer.endElement("script");
-		writer.endElement("span");
-		writer.endElement(BUTTON_ELEM);
+        final String email = cloudPush.getEmail();
+        final boolean desktopBrowser = clientDescriptor.isDesktopBrowser();
+        if (desktopBrowser && (email != null && email.length() > 0)) {
+            writer.startElement(BUTTON_ELEM, cloudPush);
+            writer.writeAttribute(ID_ATTR, clientId);
+            writer.writeAttribute(NAME_ATTR, clientId + "_button");
+            writer.writeAttribute(TYPE_ATTR, "button");
+            String script = desktopBrowser ? "ice.push.parkInactivePushIds('mail:" + email + "');" : "bridgeit.register();return false;";
+            writer.writeAttribute(ONCLICK_ATTR, script);
+            writer.startElement(SPAN_ELEM, cloudPush);
+            writer.writeText(cloudPush.getButtonLabel());
+            writer.endElement(SPAN_ELEM);
+            // themeroller support
+            writer.startElement("span", cloudPush);
+            writer.startElement("script", cloudPush);
+            writer.writeAttribute("type", "text/javascript");
+            writer.writeText("new ice.mobi.button('"+clientId+"');");
+            writer.endElement("script");
+            writer.endElement("span");
+            writer.endElement(BUTTON_ELEM);
+        }
     }
 }
