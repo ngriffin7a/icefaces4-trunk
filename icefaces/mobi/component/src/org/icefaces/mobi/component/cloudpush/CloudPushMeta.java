@@ -44,4 +44,7 @@ public class CloudPushMeta extends UIComponentBaseMeta {
     @Property(defaultValue="Enable Cloud Push", tlddoc="The label to be displayed on the button.")
     private String buttonLabel;
 
+    @Property(defaultValue="", tlddoc="The email address to be used for cloud push notification.")
+    private String email;
+
 }

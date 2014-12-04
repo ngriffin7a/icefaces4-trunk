@@ -20,12 +20,15 @@ import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushMessage;
 import org.icefaces.application.PushRenderer;
 import org.icefaces.samples.showcase.util.FacesUtils;
+import org.icefaces.util.ClientDescriptor;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -68,6 +71,7 @@ public class CloudPushBean implements Serializable {
     // echo strings that are only set when the push is executed in the future.
     private String echoedSubject;
     private String echoedMessage;
+    private String email = "";
 
 
     public CloudPushBean() {
@@ -189,5 +193,18 @@ public class CloudPushBean implements Serializable {
      */
     public void setScheduledPushExecutor(ScheduledPushExecutor scheduledPushExecutor) {
         this.scheduledPushExecutor = scheduledPushExecutor;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isAcquireEmail() {
+        ClientDescriptor clientDescriptor = ClientDescriptor.getInstance((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest());
+        return clientDescriptor.isDesktopBrowser();
     }
 }
