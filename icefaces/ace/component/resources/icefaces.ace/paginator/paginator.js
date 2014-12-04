@@ -70,8 +70,12 @@ ice.ace.DataTable.Paginator = function(table) {
             var currentPageButtonID = container.attr('id') + '_current_page';
 
             if (keyword == 'currentPageReport') {
+				var totalRecords = cfg.totalRecords;
+				var rowsPerPage = cfg.rowsPerPage;
+				var startRecord = rowsPerPage * (activeIndex - 1) + 1;
+				var endRecord = rowsPerPage * activeIndex;
                 markup = '<span class="ui-paginator-current">';
-                markup += pageReportTemplate.replace(new RegExp('({currentPage})', 'gi'), activeIndex).replace(new RegExp('({totalPages})', 'gi'), max);
+                markup += pageReportTemplate.replace(new RegExp('({currentPage})', 'gi'), activeIndex).replace(new RegExp('({totalPages})', 'gi'), max).replace(new RegExp('({totalRecords})', 'gi'), totalRecords).replace(new RegExp('({startRecord})', 'gi'), startRecord).replace(new RegExp('({endRecord})', 'gi'), endRecord);
                 markup += '</span>';
             }
             else if (keyword == 'firstPageLink') {
