@@ -67,7 +67,9 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
                                     ((UISelectItem) nextSelectItemChild).getItemValue(),
                                     ((UISelectItem) nextSelectItemChild).getItemLabel(),
                                     ((UISelectItem) nextSelectItemChild).getItemDescription(),
-                                    ((UISelectItem) nextSelectItemChild).isItemDisabled()));
+                                    ((UISelectItem) nextSelectItemChild).isItemDisabled(),
+                                    ((UISelectItem) nextSelectItemChild).isItemEscaped(),
+                                    ((UISelectItem) nextSelectItemChild).isNoSelectionOption()));
                 }
             } else if (nextSelectItemChild instanceof UISelectItems) {
                 Object selectItemsValue =
@@ -190,8 +192,8 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
 				break;
 			}
 		}
-		
-		if (found) {
+
+		if (found && !(isRequired() && item.isNoSelectionOption())) {
 			setValid(true);
 		} else { // flag as invalid and add error message
 			Locale locale = null;
