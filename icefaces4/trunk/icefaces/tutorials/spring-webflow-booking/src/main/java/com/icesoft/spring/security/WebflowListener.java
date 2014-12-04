@@ -63,7 +63,8 @@ public class WebflowListener extends FlowExecutionListenerAdapter {
 
         String viewId = BridgeSetup.getViewID(ec);
         if (viewId == null ) {
-            WindowScopeManager.determineWindowID( fc );
+            boolean customWindowTracking = !"url".equals(ec.getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
+            WindowScopeManager.determineWindowID(fc, customWindowTracking);
             if (mAssignViewId != null) {
                 try {
                     mAssignViewId.invoke( BridgeSetup.class,
