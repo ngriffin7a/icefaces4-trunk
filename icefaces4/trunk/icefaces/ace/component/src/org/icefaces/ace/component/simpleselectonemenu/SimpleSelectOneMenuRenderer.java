@@ -56,6 +56,7 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		String emptyStringsAsNull = facesContext.getExternalContext()
 			.getInitParameter("javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL");
 		if (emptyStringsAsNull != null && "true".equalsIgnoreCase(emptyStringsAsNull) && "".equals(value)) {
+			// if we call setSubmittedValue(null), instead, conversion and validation are skipped anyway
 			simpleSelectOneMenu.setValue(null);
 			simpleSelectOneMenu.queueEvent(new ValueChangeEvent (uiComponent, simpleSelectOneMenu.getValue(), null));
 		} else {
