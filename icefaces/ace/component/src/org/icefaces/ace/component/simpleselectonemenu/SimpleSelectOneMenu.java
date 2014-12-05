@@ -185,9 +185,13 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
 					convertedValue = value.toString();
 				}
 			}
-			
+
 			if (!item.isDisabled() && convertedValue != null && convertedSubmittedValue != null 
 				&& convertedValue.equals(convertedSubmittedValue.toString())) {
+				found = true;
+				break;
+			}
+			if (!item.isDisabled() && convertedValue == null && "".equals(convertedSubmittedValue)) {
 				found = true;
 				break;
 			}
