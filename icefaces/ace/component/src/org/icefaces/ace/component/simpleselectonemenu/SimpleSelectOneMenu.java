@@ -193,7 +193,7 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
 			}
 		}
 
-		if (found && !(isRequired() && item.isNoSelectionOption())) {
+		if (found && (!isRequired() || (isRequired() && !item.isNoSelectionOption()))) {
 			setValid(true);
 		} else { // flag as invalid and add error message
 			Locale locale = null;
