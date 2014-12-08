@@ -107,6 +107,9 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
         FacesContext fc = FacesContext.getCurrentInstance();
         if (sessionExpired) {
             Application app = fc.getApplication();
+            final HttpSession session = EnvUtils.getSafeSession(fc, false);
+            //mark session as being expired
+            session.setAttribute(this.getClass().getName(), true);
             if (app == null) {
                 ApplicationFactory factory = (ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
                 app = factory.getApplication();
@@ -136,7 +139,6 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
         //passes, then the session is considered valid.
         boolean validSession = false;
         HttpSession httpSession = EnvUtils.getSafeSession(fc,false);
-
         try {
 
             boolean newSession = httpSession.isNew();
@@ -157,9 +159,14 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
                     "\n  valid         : " + validSession
             );
 
+            //expired session still in use, make sure it's considered invalid/expired
+            if (httpSession.getAttribute(this.getClass().getName()) != null) {
+                validSession = false;
+            }
         } catch (IllegalStateException ignored) {
             //An IllegalStateException here simply means the session is invalid
         }
+
         return validSession;
     }
 }
