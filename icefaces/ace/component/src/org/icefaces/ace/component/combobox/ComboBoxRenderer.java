@@ -356,6 +356,7 @@ public class ComboBoxRenderer extends InputRenderer {
 						}
 					}
 					
+					if (itemValue == null) itemValue = "";
 					itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
 					
 					writer.startElement("div", null);

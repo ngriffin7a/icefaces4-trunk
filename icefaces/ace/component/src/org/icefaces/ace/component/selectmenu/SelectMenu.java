@@ -109,7 +109,9 @@ public class SelectMenu extends SelectMenuBase implements NamingContainer, Focus
                                     ((UISelectItem) nextSelectItemChild).getItemValue(),
                                     ((UISelectItem) nextSelectItemChild).getItemLabel(),
                                     ((UISelectItem) nextSelectItemChild).getItemDescription(),
-                                    ((UISelectItem) nextSelectItemChild).isItemDisabled()));
+                                    ((UISelectItem) nextSelectItemChild).isItemDisabled(),
+                                    ((UISelectItem) nextSelectItemChild).isItemEscaped(),
+                                    ((UISelectItem) nextSelectItemChild).isNoSelectionOption()));
                 }
             } else if (nextSelectItemChild instanceof UISelectItems) {
                 Object selectItemsValue =
@@ -158,6 +160,7 @@ public class SelectMenu extends SelectMenuBase implements NamingContainer, Focus
 	
 		super.validateValue(facesContext, submittedValue);
 		
+		SelectItem item = null;
 		boolean found = false;
 		populateItemList();
 		Iterator matches = getItemListIterator();
@@ -193,7 +196,6 @@ public class SelectMenu extends SelectMenuBase implements NamingContainer, Focus
 				}
             }
 		} else {
-			SelectItem item = null;
 			String convertedSubmittedValue = null;
 			if (submittedValue != null) {
 				try {
@@ -220,10 +222,14 @@ public class SelectMenu extends SelectMenuBase implements NamingContainer, Focus
 					found = true;
 					break;
 				}
+				if (!item.isDisabled() && convertedValue == null && "".equals(convertedSubmittedValue)) {
+					found = true;
+					break;
+				}
 			}
 		}
 		
-		if (found) {
+		if (found && (!isRequired() || (isRequired() && !item.isNoSelectionOption()))) {
 			setValid(true);
 		} else { // flag as invalid and add error message
 			Locale locale = null;
