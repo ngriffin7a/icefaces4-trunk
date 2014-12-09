@@ -27,6 +27,7 @@ import javax.faces.application.*;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ExternalContext;
 import javax.faces.event.PhaseId;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import java.io.InputStream;
@@ -191,19 +192,28 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
             //ranges can be used for subsequent uncompressed responses
             externalContext.setResponseHeader("Accept-Ranges", "bytes");
 
-            if (useRanges)  {
-                int cl = Integer.parseInt(contentLength);
-                rangeEnd = (rangeEnd == 0) ? cl-1: rangeEnd;
-                externalContext.setResponseHeader(CONTENT_RANGE,
-                        "bytes " + rangeStart + "-" + rangeEnd + "/" +
-                        contentLength );
-                externalContext.setResponseHeader(CONTENT_LENGTH, 
-                        "" + (1 + rangeEnd - rangeStart));
-                Util.copyStream(in, out, rangeStart, rangeEnd);
-            } else {
-                Util.copyStream(in, out);
-            }
+            try {
+                if (useRanges)  {
+                    int cl = Integer.parseInt(contentLength);
+                    rangeEnd = (rangeEnd == 0) ? cl-1: rangeEnd;
+                    externalContext.setResponseHeader(CONTENT_RANGE,
+                            "bytes " + rangeStart + "-" + rangeEnd + "/" +
+                            contentLength );
+                    externalContext.setResponseHeader(CONTENT_LENGTH,
+                            "" + (1 + rangeEnd - rangeStart));
+                    Util.copyStream(in, out, rangeStart, rangeEnd);
+                } else {
+                    Util.copyStream(in, out);
+                }
+            } catch (IOException e) {
+                if (e.getMessage().contains("Connection close")) {
+                    // client left the page
+                    log.log(Level.FINE, "Connection closed by client.", e);
+                } else {
+                    throw e;
+                }
 
+            }
         }
 
     }
