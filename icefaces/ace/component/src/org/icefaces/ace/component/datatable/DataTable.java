@@ -2189,6 +2189,12 @@ public class DataTable extends DataTableBase implements Serializable {
 		boolean executeContents = isAlwaysExecuteContents();
 		boolean isRowExpansionRequest = isRowExpansionRequest(context);
 
+		// Some tables in PanelExpansion's will appear as having no rows, if so, reset and rebuild model
+		if (phaseId == PhaseId.APPLY_REQUEST_VALUES && model.getRowCount() == 0) {
+			resetValue();
+			getDataModel();
+		}
+
         iteration: while (true) {
             // Have we processed the requested number of rows?
             if (!inSubrows) processed = processed + 1;
