@@ -49,13 +49,16 @@ public class GMapOverlayRenderer extends CoreRenderer {
 				.item(clientId)
 			.endFunction();
             writer.write(jb.toString());
+			String shape = overlay.getShape();
+			String points = overlay.getPoints();
+			String options = overlay.getOptions();
 			jb = JSONBuilder.create();
 			jb.beginFunction("ice.ace.gMap.gOverlay")
 				.item(mapClientId)
 				.item(clientId)
-				.item(overlay.getShape())
-				.item(overlay.getPoints())
-				.item(overlay.getOptions())
+				.item(shape == null ? "" : shape)
+				.item(points == null ? "" : points)
+				.item(options == null ? "" : options)
 			.endFunction();
             writer.write(jb.toString());
         }

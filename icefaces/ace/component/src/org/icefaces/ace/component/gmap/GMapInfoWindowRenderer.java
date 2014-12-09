@@ -71,13 +71,14 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
                 mapId = GMapRenderer.getMapClientId(context, infoWindow);
             }
 		JSONBuilder jb;
+		String content = infoWindow.getContent();
         if (!infoWindow.isDisabled()) {
             if (infoWindow.getChildCount() == 0) {
 				jb = JSONBuilder.create();
 				jb.beginFunction("ice.ace.gMap.addGWindow")
 					.item(mapId)
 					.item(clientId)
-					.item(infoWindow.getContent())
+					.item(content == null ? "" : content)
 					.item("new google.maps.LatLng(" + infoWindow.getLatitude() + "," + infoWindow.getLongitude() + ")", false)
 					.item(infoWindow.getOptions())
 					.item(markerId)
@@ -108,7 +109,7 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
 					jb.beginFunction("ice.ace.gMap.addGWindow")
 						.item(mapId)
 						.item(clientId)
-						.item(infoWindow.getContent())
+						.item(content == null ? "" : content)
 						.item("new google.maps.LatLng(" + infoWindow.getLatitude() + "," + infoWindow.getLongitude() + ")", false)
 						.item(infoWindow.getOptions())
 						.item(markerId)
