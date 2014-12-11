@@ -123,14 +123,14 @@ public class Column extends ColumnBase implements IProxiableColumn, Serializable
     @Override
     public java.lang.Object getSortBy() {
         Object retVal = super.getSortBy();
-        if (retVal == null) return super.getGroupBy();
+        if (retVal == null && super.isSortWhenGrouping()) return super.getGroupBy();
         else return retVal;
     }
 
     @Override
     public ValueExpression getValueExpression(String name) {
         ValueExpression retVal = super.getValueExpression(name);
-        if (retVal == null && name.equals("sortBy"))
+        if (retVal == null && name.equals("sortBy") && super.isSortWhenGrouping())
             return super.getValueExpression("groupBy");
         else
             return retVal;

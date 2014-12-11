@@ -118,6 +118,10 @@ public class ColumnMeta extends UIColumnMeta {
             "component whenever a client edits a sort control or the application calls table.applySorting().")
     private Integer sortPriority;
 
+    @Property(tlddoc="When disabled, this column will neither be sortable nor automatically sorted when using the groupBy attribute.",
+            defaultValue = "true", defaultValueType = DefaultValueType.EXPRESSION)
+    private boolean sortWhenGrouping;
+
     @Property(tlddoc="Defines the direction of column values during sorting. " +
             "The column directions incoming from the client during a sort request " +
             "overwrite any set by the application. Processing the sorted columns is " +
