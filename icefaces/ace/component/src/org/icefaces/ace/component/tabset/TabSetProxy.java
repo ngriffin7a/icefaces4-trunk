@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.el.ValueExpression;
 import javax.faces.component.StateHelper;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -47,12 +48,19 @@ public class TabSetProxy extends TabSetProxyBase{
     @Override
     public String getFor() {
         String forComponentId = super.getFor();
-        UIViewRoot root = getFacesContext().getViewRoot();
-        UIComponent forComponent = CoreComponentUtils.findComponentInView(root, forComponentId);
-        if( forComponent != null ){
-            forComponentId = forComponent.getClientId();
+        FacesContext facesContext = getFacesContext();
+        UIViewRoot root = facesContext.getViewRoot();
+        String separator = String.valueOf(UINamingContainer.getSeparatorChar(facesContext));
+        if (forComponentId.contains(separator)) {
+            UIComponent forComponent = CoreComponentUtils.findComponentInView(root, forComponentId);
+            if (forComponent == null) {
+                return forComponentId;
+            } else {
+                return forComponent.getClientId();
+            }
+        } else {
+            return forComponentId;
         }
-        return forComponentId;
     }
 
 }
