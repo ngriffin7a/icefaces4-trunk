@@ -127,10 +127,6 @@ ice.ace.Dialog = function(parentID, cfg) {
     this.jq.bind('dialogopen', function(event, ui) {
         _self.onShow(event, ui);
     });
-	
-	this.jq.parent().find('.ui-dialog-titlebar-close').bind('click', function(event, ui) {
-		_self.ajaxHide();
-	});
 
     //Hide close icon if dialog is not closable
     if (closable == false) {
@@ -163,7 +159,7 @@ ice.ace.Dialog.prototype.show = function() {
 
 ice.ace.Dialog.prototype.hide = function() {
 	var self = this;
-    setTimeout(function(){self.jq.dialog('close');self.ajaxHide();},1);
+    setTimeout(function(){self.jq.dialog('close');},1);
 };
 
 /**
@@ -180,6 +176,7 @@ ice.ace.Dialog.prototype.onShow = function(event, ui) {
  */
 ice.ace.Dialog.prototype.onHide = function(event, ui) {
     if (typeof event.originalEvent != 'undefined') {
+        this.ajaxHide();
         if (event.originalEvent.synthetic) return;
     } else {
         if (event.synthetic) return;
