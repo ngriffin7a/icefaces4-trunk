@@ -58,6 +58,14 @@ public class ProxiedBodyColumn implements IProxiableColumn{
         bodyColumn.setOddGroup(oddGroup);
     }
 
+    public boolean isSortWhenGrouping() {
+        return bodyColumn.isSortWhenGrouping();
+    }
+
+    public void setSortWhenGrouping(boolean sortWhenGrouping) {
+        bodyColumn.setSortWhenGrouping(sortWhenGrouping);
+    }
+
     public int getCurrGroupLength() {
         return bodyColumn.getCurrGroupLength();
     }

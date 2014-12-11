@@ -1094,7 +1094,7 @@ public class DataTable extends DataTableBase implements Serializable {
         
         for (Column c : getColumns(true)) {
             Integer priority = c.getSortPriority();
-            if (c.getValueExpression("groupBy") != null) {
+            if (c.getValueExpression("groupBy") != null && c.isSortWhenGrouping()) {
                 if (priority != null && priority > highestGroupedPriority)
                     highestGroupedPriority = priority;
 
