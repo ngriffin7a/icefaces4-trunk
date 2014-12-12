@@ -66,6 +66,14 @@ public class ProxiedBodyColumn implements IProxiableColumn{
         bodyColumn.setSortWhenGrouping(sortWhenGrouping);
     }
 
+    public boolean isHideSortControls() {
+        return bodyColumn.isHideSortControls();
+    }
+
+    public void setHideSortControls(boolean hideSortControls) {
+        bodyColumn.setHideSortControls(hideSortControls);
+    }
+
     public int getCurrGroupLength() {
         return bodyColumn.getCurrGroupLength();
     }
