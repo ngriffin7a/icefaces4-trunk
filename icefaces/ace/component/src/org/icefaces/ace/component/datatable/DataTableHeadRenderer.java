@@ -292,25 +292,26 @@ public class DataTableHeadRenderer {
         writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_CONTROL_CLASS, null);
 
         // Write carats
-        writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_CONTAINER, null);
+		if (!column.isHideSortControls()) {
+			writer.startElement(HTML.SPAN_ELEM, null);
+			writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_CONTAINER, null);
 
-        writer.startElement(HTML.ANCHOR_ELEM, null);
-        writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
-        if (column.hasSortPriority() && column.isSortAscending())
-            writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_UP_CLASS + " ui-toggled", null);
-        else writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_UP_CLASS, null);
-        writer.endElement(HTML.ANCHOR_ELEM);
+			writer.startElement(HTML.ANCHOR_ELEM, null);
+			writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
+			if (column.hasSortPriority() && column.isSortAscending())
+				writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_UP_CLASS + " ui-toggled", null);
+			else writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_UP_CLASS, null);
+			writer.endElement(HTML.ANCHOR_ELEM);
 
-        writer.startElement(HTML.ANCHOR_ELEM, null);
-        writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
-        if (column.hasSortPriority() && !column.isSortAscending())
-            writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_DOWN_CLASS + " ui-toggled", null);
-        else writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_DOWN_CLASS, null);
-        writer.endElement(HTML.ANCHOR_ELEM);
+			writer.startElement(HTML.ANCHOR_ELEM, null);
+			writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
+			if (column.hasSortPriority() && !column.isSortAscending())
+				writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_DOWN_CLASS + " ui-toggled", null);
+			else writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_DOWN_CLASS, null);
+			writer.endElement(HTML.ANCHOR_ELEM);
 
-        writer.endElement(HTML.SPAN_ELEM);
-
+			writer.endElement(HTML.SPAN_ELEM);
+		}
 
         // Write Sort Order Integer
         writer.startElement(HTML.SPAN_ELEM, null);

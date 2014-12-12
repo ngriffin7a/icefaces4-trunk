@@ -122,6 +122,10 @@ public class ColumnMeta extends UIColumnMeta {
             defaultValue = "true", defaultValueType = DefaultValueType.EXPRESSION)
     private boolean sortWhenGrouping;
 
+    @Property(tlddoc="When true, the sort controls in the column header will not be rendered.",
+            defaultValue = "false", defaultValueType = DefaultValueType.EXPRESSION)
+    private boolean hideSortControls;
+
     @Property(tlddoc="Defines the direction of column values during sorting. " +
             "The column directions incoming from the client during a sort request " +
             "overwrite any set by the application. Processing the sorted columns is " +
