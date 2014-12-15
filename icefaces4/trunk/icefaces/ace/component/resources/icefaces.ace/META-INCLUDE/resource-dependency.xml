@@ -39,12 +39,17 @@
         </requires>
     </resource>
 
-    <resource name="util/ace-jquery-ui.js" library="icefaces.ace">
+    <resource name="jquery/ui/jquery-ui.js" library="icefaces.ace">
         <requires>
             <resource name="jquery/jquery.js"  library="icefaces.ace"/>
         </requires>
     </resource>
 
+    <resource name="util/ace-jquery-ui.js" library="icefaces.ace">
+        <requires>
+            <resource name="jquery/ui/jquery-ui.js"  library="icefaces.ace"/>
+        </requires>
+    </resource>
 
 	<!-- This section contains an extry for each ACE component that utilizes a JS resource. -->
 
