@@ -301,7 +301,8 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
         writer.endElement("script");
 		
 		String renderedValue = null;
-		String value = (String) autoCompleteEntry.getValue();
+		Object valueObject = autoCompleteEntry.getValue();
+		String value = valueObject != null ? getConvertedValueForClient(facesContext, autoCompleteEntry, valueObject) : null;
 		String submittedText = (String) autoCompleteEntry.getSubmittedText();
 		if (autoCompleteEntry.isValid()) {
 			if (value != null) {
