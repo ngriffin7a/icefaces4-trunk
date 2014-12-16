@@ -310,6 +310,12 @@ public class DataTableHeadRenderer {
 			else writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_DOWN_CLASS, null);
 			writer.endElement(HTML.ANCHOR_ELEM);
 
+			DataTable table = tableContext.getTable();
+			writer.startElement(HTML.SCRIPT_ELEM, null);
+			writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
+			writer.writeText("(function(){var table = ice.ace.instance('"+table.getClientId(context)+"');if(table) table.setupSortEventsForColumn('"+column.getClientId()+"_sortControl');})();", null);
+			writer.endElement(HTML.SCRIPT_ELEM);
+
 			writer.endElement(HTML.SPAN_ELEM);
 		}
 
