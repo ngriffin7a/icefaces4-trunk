@@ -36,7 +36,7 @@
             <h:panelGrid columns="3">
                 <h:outputLabel for="paginatorIn" value="Enable Paginator:"/>
                 <h:selectBooleanCheckbox id="paginatorIn" value="#{dataTablePaginator.paginator}">
-                    <f:ajax render="@this carTable" execute="@this" />
+                    <f:ajax render="@form" execute="@this" />
                 </h:selectBooleanCheckbox>
                 <ace:message id="pagMsg" for="paginatorIn"/>
                 
