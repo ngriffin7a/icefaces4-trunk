@@ -106,8 +106,12 @@ public class TooltipMeta extends UIOutputMeta {
 	private ValueExpression fetch;
 
     @Property(expression = Expression.METHOD_EXPRESSION,
-              tlddoc = "A server side listener to be invoked when the tooltip is about to be shown in the client.")
+              tlddoc = "A server side listener to be invoked when the tooltip is about to be shown in the client. It must evaluate to a public void method with no arguments.")
     private MethodExpression displayListener;
+
+    @Property(expression = Expression.METHOD_EXPRESSION, methodExpressionArgument = "org.icefaces.ace.event.TooltipDelegateDisplayEvent",
+              tlddoc = "A server side listener to be invoked when a tooltip in delegate mode is about to be shown in the client. It must evaluate to a public void method with a TooltipDelegateDisplayEvent argument. This listener allows the possiblity of preventing the tooltip from being displayed by calling event.cancelDisplay().")
+    private MethodExpression delegateDisplayListener;
 	
 	@Property(tlddoc="Specifies whether the tooltip should be stylized as a speech bubble (i.e. with a speech bubble arrow tip pointing to the triggerer element).", defaultValue="false")
 	private boolean speechBubble;
@@ -117,4 +121,7 @@ public class TooltipMeta extends UIOutputMeta {
 
     @Property(tlddoc="The inline style of the component, rendered on the root div of the component.")
     private String style;
+
+    @Field(defaultValue = "false", defaultValueIsStringLiteral = false)
+    protected Boolean cancelDisplay;
 }

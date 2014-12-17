@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.AbortProcessingException;
+import org.icefaces.ace.event.TooltipDelegateDisplayEvent;
 
 public class Tooltip extends TooltipBase{
 
@@ -58,6 +59,11 @@ public class Tooltip extends TooltipBase{
 			MethodExpression displayListener = getDisplayListener();
 			if (displayListener != null) {
 				displayListener.invoke(getFacesContext().getELContext(), null);
+			}
+		} else if (event instanceof TooltipDelegateDisplayEvent) {
+			MethodExpression delegateDisplayListener = getDelegateDisplayListener();
+			if (delegateDisplayListener != null) {
+				delegateDisplayListener.invoke(getFacesContext().getELContext(), new Object[]{event});
 			}
 		}
 	}
