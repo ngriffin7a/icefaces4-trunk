@@ -26,6 +26,8 @@ ice.ace.Tooltip = function(id, cfg) {
     }
 	this.cfg = cfg;
 	this.target = "";
+	this.preventDisplay = false;
+	ice.ace.Tooltip.instances[this.cfg.id] = this;
 
     if (this.cfg.behaviors === undefined)
         this.cfg.behaviors = {};
@@ -124,6 +126,7 @@ ice.ace.Tooltip = function(id, cfg) {
 						self.activeComponent = targetComponent;
 						self.currentTooltip = instanceId;
 						self.triggerDisplayListener(function() {
+							if (self.preventDisplay) { self.preventDisplay = false; return; }
 							var instance = ice.ace.DelegateTooltips[self.cfg.id][instanceId];
 							if (instance && self.currentTooltip == instanceId) instance.qtip('show');
 						});
@@ -135,6 +138,8 @@ ice.ace.Tooltip = function(id, cfg) {
 	}
     callee[id] = this;
 };
+
+ice.ace.Tooltip.instances = {};
 
 ice.ace.Tooltip.prototype.triggerDisplayListener = function(callback) {
 	var formId = this.jq.parents('form:first').attr('id'),
@@ -165,6 +170,10 @@ ice.ace.Tooltip.prototype.triggerDisplayListener = function(callback) {
                 ice.ace.clearExecRender(options)
         ));
     } else ice.ace.AjaxRequest(options);
+};
+
+ice.ace.Tooltip.prototype.cancelDisplay = function() {
+	this.preventDisplay = true;
 };
 
 ice.ace.Tooltip.endsWith = function(str, suffix) {

@@ -47,6 +47,8 @@ import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.ace.component.delegate.Delegate;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.util.CoreComponentUtils;
+import org.icefaces.util.JavaScriptRunner;
+import org.icefaces.ace.event.TooltipDelegateDisplayEvent;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -103,6 +105,9 @@ public class TooltipRenderer extends CoreRenderer {
 			ActionEvent event = new ActionEvent(tooltip);
 			event.setPhaseId(PhaseId.INVOKE_APPLICATION);
 			tooltip.queueEvent(event);
+			TooltipDelegateDisplayEvent delegateEvent = new TooltipDelegateDisplayEvent(tooltip);
+			delegateEvent.setPhaseId(PhaseId.INVOKE_APPLICATION);
+			tooltip.queueEvent(delegateEvent);
         }
         decodeBehaviors(facesContext, tooltip);
     }
@@ -150,7 +155,7 @@ public class TooltipRenderer extends CoreRenderer {
 	      .beginMap()
           .entry("global", global)
           .entry("id", clientId)
-          .entry("displayListener", (tooltip.getDisplayListener() != null));
+          .entry("displayListener", (tooltip.getDisplayListener() != null || tooltip.getDelegateDisplayListener() != null));
 
 		if (tooltip.isSpeechBubble()) jb.entry("speechBubble", true);
 
@@ -239,6 +244,12 @@ public class TooltipRenderer extends CoreRenderer {
 
         writer.endElement("script");
         writer.endElement("span");
+
+		// determine if display should be cancelled
+		if (tooltip.isCancelDisplay()) {
+			JavaScriptRunner.runScript(facesContext, "ice.ace.Tooltip.instances['"+clientId+"'].cancelDisplay();");
+			tooltip.setCancelDisplay(false);
+		}
 	}
 
 	protected Object getTarget(FacesContext facesContext, Tooltip tooltip) {
