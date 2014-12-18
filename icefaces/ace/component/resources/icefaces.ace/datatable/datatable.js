@@ -1663,7 +1663,9 @@ ice.ace.DataTable.prototype.repairPinnedColumn = function(i) {
         ie7 = ice.ace.jq.browser.msie && ice.ace.jq.browser.version == 7,
         ie8 = ice.ace.jq.browser.msie && ice.ace.jq.browser.version == 8,
         ie9 = ice.ace.jq.browser.msie && ice.ace.jq.browser.version == 9,
+        ie11 = !!navigator.userAgent.match(/Trident.*rv\:11\./),
         firefox = ice.ace.jq.browser.mozilla;
+	if (ie11) firefox = false;
 
     if (ie8 || ie9) {
         bodyCells.first().css('border-top','0px');
@@ -1698,8 +1700,7 @@ ice.ace.DataTable.prototype.repairPinnedColumn = function(i) {
         if (sibling.length == 0)
             sibling = e.prevAll(':not(.pinned)').first();
 
-        if (!firefox)
-            e.css('margin-top', 0-scrollTopVal);
+        e.css('margin-top', 0-scrollTopVal);
 
         if (e.parent().is(':last-child'))
             e.css('height', sibling.height() + ice.ace.jq.getScrollWidth());
@@ -1726,15 +1727,12 @@ ice.ace.DataTable.prototype.repairPinnedColumn = function(i) {
         tbody.parent().unbind('scroll', this.columnPinScrollListener[i]);
 
     this.columnPinScrollListener[i] = function() {
-        if (!firefox) {
-            var scrollTopVal = tbody.parent().scrollTop();
-            bodyCells.css('margin-top', 0-scrollTopVal);
-        } else {
-            bodyCells.css('display', 'none');
-            setTimeout(function() {
-                bodyCells.css('display', '');
-            }, 1);
-        }
+		var scrollTopVal = tbody.parent().scrollTop();
+		if (!firefox) {
+			bodyCells.css('margin-top', 0-scrollTopVal);
+		} else {
+			bodyCells.css('margin-bottom', scrollTopVal);
+		}
     };
 
     tbody.parent().bind('scroll', this.columnPinScrollListener[i]);
@@ -1879,8 +1877,10 @@ ice.ace.DataTable.prototype.pinColumn = function(i) {
         ie7 = ice.ace.jq.browser.msie && ice.ace.jq.browser.version == 7,
         ie8 = ice.ace.jq.browser.msie && ice.ace.jq.browser.version == 8,
         ie9 = ice.ace.jq.browser.msie && ice.ace.jq.browser.version == 9,
+        ie11 = !!navigator.userAgent.match(/Trident.*rv\:11\./),
         firefox = ice.ace.jq.browser.mozilla,
         isInit = arguments[1];
+	if (ie11) firefox = false;
 
     if (ie7) return this.ie7PinColumn(i, isInit);
 
@@ -1942,8 +1942,7 @@ ice.ace.DataTable.prototype.pinColumn = function(i) {
         if (sibling.length == 0)
             sibling = e.prevAll(':not(.pinned)').first();
 
-        if (!firefox)
-            e.css('margin-top', 0-scrollTopVal);
+        e.css('margin-top', 0-scrollTopVal);
 
         if (!borderRightColor) borderRightColor = sibling.css('border-right-color');
         e.css('border-color', borderRightColor);
@@ -2017,15 +2016,12 @@ ice.ace.DataTable.prototype.pinColumn = function(i) {
         tbody.parent().unbind('scroll', this.columnPinScrollListener[i]);
 
     this.columnPinScrollListener[i] = function() {
-        if (!firefox) {
-            var scrollTopVal = tbody.parent().scrollTop();
-            bodyCells.css('margin-top', 0-scrollTopVal);
-        } else {
-            bodyCells.css('display', 'none');
-            setTimeout(function() {
-                bodyCells.css('display', '');
-            }, 1);
-        }
+		var scrollTopVal = tbody.parent().scrollTop();
+		if (!firefox) {
+			bodyCells.css('margin-top', 0-scrollTopVal);
+		} else {
+			bodyCells.css('margin-bottom', scrollTopVal);
+		}
     };
 
     tbody.parent().bind('scroll', this.columnPinScrollListener[i]);
