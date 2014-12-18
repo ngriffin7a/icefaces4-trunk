@@ -81,37 +81,7 @@ public class DateTimeBean extends ComponentExampleImpl<DateTimeBean> implements
 	}
 
 	public void setSelectedDate(Date selectedDate) {
-		if (pattern.equals(PATTERN_TIME)) {
-			// Only update the time portion of the date
-			Calendar currentDate = Calendar.getInstance();
-			currentDate.setTime(this.selectedDate);
-
-			Calendar newDate = Calendar.getInstance();
-			newDate.setTime(selectedDate);
-			currentDate.set(Calendar.HOUR_OF_DAY,
-					newDate.get(Calendar.HOUR_OF_DAY));
-			currentDate.set(Calendar.MINUTE, newDate.get(Calendar.MINUTE));
-			currentDate.set(Calendar.SECOND, newDate.get(Calendar.SECOND));
-
-			this.selectedDate = currentDate.getTime();
-
-		} else if (pattern.equals(PATTERN_DATE)) {
-			// Only update the date portion of the date
-			Calendar currentDate = Calendar.getInstance();
-			currentDate.setTime(this.selectedDate);
-
-			Calendar newDate = Calendar.getInstance();
-			newDate.setTime(selectedDate);
-			currentDate.set(Calendar.DAY_OF_MONTH,
-					newDate.get(Calendar.DAY_OF_MONTH));
-			currentDate.set(Calendar.MONTH, newDate.get(Calendar.MONTH));
-			currentDate.set(Calendar.YEAR, newDate.get(Calendar.YEAR));
-            this.selectedDate = currentDate.getTime();
-
-		} else {
-			// Overwrite the whole object
-			this.selectedDate = selectedDate;
-		}
+        this.selectedDate = selectedDate;
 	}
 
 	public void setTimeType(String timeType) {
