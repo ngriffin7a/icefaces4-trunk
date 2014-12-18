@@ -55,6 +55,10 @@ public class DataTableDecoder {
 
             for (int i = 0; i < indexes.length; i++) {
                 String index = indexes[i];
+				if ("".equals(index)) {
+					objs[i] = null;
+					continue;
+				}
                 // If selection occurs with a TreeModel and non-root index
                 if (table.hasTreeDataModel() && selection.indexOf('.') > 0) {
                     treeModel = (TreeDataModel) model;
