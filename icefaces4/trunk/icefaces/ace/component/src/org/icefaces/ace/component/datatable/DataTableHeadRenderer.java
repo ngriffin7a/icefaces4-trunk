@@ -216,6 +216,11 @@ public class DataTableHeadRenderer {
         if (tableContext.isColumnFilterable())
             encodeFilter(context, tableContext, column);
 
+		writer.startElement(HTML.SCRIPT_ELEM, null);
+		writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
+		writer.writeText("(function(){var table = ice.ace.instance('"+table.getClientId(context)+"');if(table) table.setupClickableHeaderEventsForColumn('"+clientId+"');})();", null);
+		writer.endElement(HTML.SCRIPT_ELEM);
+
         writer.endElement(HTML.DIV_ELEM);
 
         if (!isNextStacked) {
