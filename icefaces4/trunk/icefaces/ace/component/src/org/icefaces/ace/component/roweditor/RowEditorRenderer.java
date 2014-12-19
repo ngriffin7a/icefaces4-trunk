@@ -148,6 +148,7 @@ public class RowEditorRenderer extends CoreRenderer {
 
             if (!hasActiveEditors) {
                 writer.startElement("a", null);
+                writer.writeAttribute("id", component.getClientId(context) + "_button", null);
                 writer.writeAttribute("title", BUTTON.START.getTitle(editor), null);
                 writer.writeAttribute("class", "ui-icon ui-icon-pencil", null);
                 writer.writeAttribute("tabindex", "0", null);
@@ -156,6 +157,7 @@ public class RowEditorRenderer extends CoreRenderer {
 
             if (hasActiveEditors) {
                 writer.startElement("a", null);
+                writer.writeAttribute("id", component.getClientId(context) + "_button", null);
                 writer.writeAttribute("title", BUTTON.SUBMIT.getTitle(editor), null);
                 writer.writeAttribute("class", "ui-icon ui-icon-check", null);
                 writer.writeAttribute("tabindex", "0", null);
