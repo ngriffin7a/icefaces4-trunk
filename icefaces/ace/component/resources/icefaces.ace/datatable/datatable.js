@@ -705,6 +705,82 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
         });
 }
 
+ice.ace.DataTable.prototype.setupClickableHeaderEventsForColumn = function (id) {
+    var _self = this;
+
+    // Bind `clickable header events
+    if (_self.cfg.clickableHeaderSorting) {
+        ice.ace.jq(ice.ace.escapeClientId(id))
+            .unbind('click').bind("click", function (event) {
+                var target = ice.ace.jq(event.target);
+
+                var $this = ice.ace.jq(this),
+                    topCarat = ice.ace.jq($this.find(".ui-icon-triangle-1-n")[0]),
+                    bottomCarat = ice.ace.jq($this.find(".ui-icon-triangle-1-s")[0]);
+                selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
+
+                // If the target of the event is not a layout element or
+                // the target is a child of a sortable-control do not process event.
+                if ((!(event.target.nodeName == 'SPAN') && !(event.target.nodeName == 'DIV') && !(event.target.nodeName == 'A')) ||
+                    ((target.closest('.ui-sortable-control').length > 0) && !selectionMade) ||
+                    (target.closest('.ui-pin-control').length > 0))
+                    return;
+
+                _self.setupSortRequest(_self, ice.ace.jq(this), event, true);
+            })
+            .unbind('mousemove').bind('mousemove', function (event) {
+                var target = ice.ace.jq(event.target);
+
+                // If the target of the event is not a layout element do not process event.
+                if ((!(event.target.nodeName == 'SPAN') && !(event.target.nodeName == 'DIV')
+                    && !(event.target.nodeName == 'A'))) {
+                    target.mouseleave();
+                    return;
+                }
+
+                // if the target is a child of a sortable-control do not process the event
+                if (target.closest('span.ui-sortable-control').length > 0) return;
+
+                var $this = ice.ace.jq(this),
+                    topCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-n")[0]),
+                    bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
+                selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
+
+                if (_self.cfg.clickableHeaderSorting && !selectionMade) {
+                    topCarat.fadeTo(0, .66);
+                } else if (!_self.cfg.clickableHeaderSorting) {
+                    if (!topCarat.hasClass('ui-toggled')) topCarat.fadeTo(0, .66);
+                    else bottomCarat.fadeTo(0, .66);
+                }
+
+                if ($this.closest('th').find('> hr').size() == 0)
+                    $this.closest('th').addClass('ui-state-hover');
+                else
+                    $this.closest('div.ui-sortable-column').addClass('ui-state-hover');
+            })
+            .unbind('mouseleave').bind('mouseleave', function (event) {
+                var $this = ice.ace.jq(this),
+                    topCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-n")[0]),
+                    bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
+
+                if (!bottomCarat.hasClass('ui-toggled'))
+                    if (topCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                        bottomCarat.fadeTo(0, 0);
+                    else bottomCarat.fadeTo(0, .33);
+
+                if (!topCarat.hasClass('ui-toggled'))
+                    if (bottomCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                        topCarat.fadeTo(0, 0);
+                    else topCarat.fadeTo(0, .33);
+
+                if ($this.closest('th').find('> hr').size() == 0)
+                    $this.closest('th').removeClass('ui-state-hover');
+                else
+                    $this.closest('div.ui-sortable-column').removeClass('ui-state-hover');
+            });
+    }
+}
+
 ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
     var _self = this;
 
