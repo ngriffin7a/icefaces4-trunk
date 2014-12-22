@@ -114,8 +114,6 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		if (disabled) writer.writeAttribute("disabled", "disabled", null);
 		String lang = simpleSelectOneMenu.getLang();
 		if (lang != null) writer.writeAttribute("lang", lang, null);
-		boolean readonly = simpleSelectOneMenu.isReadonly();
-		if (readonly) writer.writeAttribute("readonly", "readonly", null);
 		String tabindex = simpleSelectOneMenu.getTabindex();
 		if (tabindex != null) writer.writeAttribute("tabindex", tabindex, null);
 		String title = simpleSelectOneMenu.getTitle();
@@ -147,7 +145,8 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
     public void populateList(FacesContext facesContext, SimpleSelectOneMenu simpleSelectOneMenu) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		Object submittedValue = simpleSelectOneMenu.getSubmittedValue();
-		Object value = submittedValue != null ? submittedValue : simpleSelectOneMenu.getValue();
+        boolean readonly = simpleSelectOneMenu.isReadonly();
+        Object value = submittedValue != null ? submittedValue : simpleSelectOneMenu.getValue();
 		String convertedValue = value != null ? getConvertedValueForClient(facesContext, simpleSelectOneMenu, value) : null;
 		String clientId = simpleSelectOneMenu.getClientId(facesContext);
 		boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
@@ -176,7 +175,8 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 					selectedFound = true;
 				}
 				itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
-				if (item.isDisabled()) {
+                boolean isSelected = String.valueOf(convertedValue).equals(itemValue);
+                if (item.isDisabled() || (!isSelected && readonly)) {
 					sb.append("<option disabled=\"disabled\" value=\"" + itemValue.toString() + "\"" + selected + role + ">").append(itemLabel).append("</option>");
 				} else {
 					sb.append("<option value=\"" + (itemValue == null ? "" : itemValue) + "\"" + selected + role + ">").append(itemLabel).append("</option>");
