@@ -242,7 +242,8 @@ public class ListRenderer extends CoreRenderer {
         styleClass = styleClass == null ? itemStyleClass : styleClass + " " + itemStyleClass;
 
         int first = list.getFirst();
-        int last = first + list.getRows();
+        int rows = list.getRows();
+        int last = first + (rows == 0 ? list.getDataModel().getRowCount() : rows);
         int index = first;
         list.setRowIndex(first);
 
