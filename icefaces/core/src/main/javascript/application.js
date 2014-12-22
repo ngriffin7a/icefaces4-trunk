@@ -466,6 +466,7 @@ if (!window.ice.icefaces) {
         namespace.ser = singleSubmitExecuteThisRenderThis;
         namespace.submit = submit;
         namespace.s = submit;
+        namespace.sef = submitExecuteForm;
         namespace.fullSubmit = fullSubmit;
 
         namespace.ajaxRefresh = function(viewID) {
