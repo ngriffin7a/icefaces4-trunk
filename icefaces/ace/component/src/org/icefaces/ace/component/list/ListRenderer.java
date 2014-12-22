@@ -241,13 +241,16 @@ public class ListRenderer extends CoreRenderer {
 
         styleClass = styleClass == null ? itemStyleClass : styleClass + " " + itemStyleClass;
 
-        list.setRowIndex(0);
+        int first = list.getFirst();
+        int last = first + list.getRows();
+        int index = first;
+        list.setRowIndex(first);
 
         boolean selectItems = false;
         if (list.isRowAvailable())
             selectItems = list.getRowData() instanceof SelectItem;
 
-        while (list.isRowAvailable()) {
+        while (index < last) {
             String itemStyleClass = new String(styleClass);
             SelectItem item = selectItems ? (SelectItem)list.getRowData() : null;
             Object val = selectItems && list.isSelectItemModel() ? item.getValue() : list.getRowData();
@@ -264,7 +267,7 @@ public class ListRenderer extends CoreRenderer {
             else
                 encodeCompositeChild(context, writer, list, itemStyleClass, style);
 
-            list.setRowIndex(list.getRowIndex()+1);
+            list.setRowIndex(++index);
         }
 
         list.setRowIndex(-1);
