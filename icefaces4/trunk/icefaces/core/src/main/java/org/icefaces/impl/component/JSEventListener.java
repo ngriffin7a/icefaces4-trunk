@@ -82,8 +82,9 @@ public class JSEventListener extends UICommand {
             String handlerCode = handler == null ? "function() {return true;}" : handler;
             writer.writeText("var handler = " + handlerCode + ";", null);
             writer.writeText("var el = document.getElementById('" + clientId +"');", null);
+            writer.writeText("el.submitOnEnter = 'disabled';", null);
             writer.writeText("var events = " + normalizedEvents + ";", null);
-            writer.writeText("var callback = function(ev) { if (handler(ev)) ice.s(ev, el, function(p) { p(el.id, 'submitted') }); };" , null);
+            writer.writeText("var callback = function(ev) { if (handler(ev)) ice.sef(ev, el, function(p) { p(el.id, 'submitted') }); };" , null);
             writer.writeText("for (var i = 0, l = events.length; i < l; i++) el[events[i]] = callback;", null);
         }
         writer.endElement("script");
