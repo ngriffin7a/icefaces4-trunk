@@ -37,7 +37,7 @@
             <ace:panel id="ajaxCallbacksStart" header="onStart" style="width: 100%;">
 				<h:outputText value="The onStart attribute fires BEFORE the request is sent to the server. Toggle the checkbox button below to see an alert message appear before the value is updated. If the value returned in the attribute script is not true, the request will be aborted. This callback gets passed the 'cfg' argument, containing the ajax request configuration to be modified before the request is sent." />
 				<br /><br />
-				<h:outputLabel value="Uncheck this box to abort the request: " />
+				<h:outputText value="Uncheck this box to abort the request: " />
 				<input id="allowRequest" type="checkbox" checked="checked" />
 				<h:panelGrid width="60%" columns="2" cellpadding="20" cellspacing="20">
 					<ace:checkboxButton id="ajaxCallbacksButton1" value="#{ajaxCallbacksBean.value1}">
