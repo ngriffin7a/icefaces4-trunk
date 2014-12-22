@@ -166,7 +166,9 @@ public class ListRenderer extends CoreRenderer {
             facet.encodeAll(context);
         } else {
             writer.startElement(HTML.SPAN_ELEM, null);
-            writer.writeAttribute(HTML.CLASS_ATTR, controlsItemSpacerClass, null);
+            String controlsSpacerClass = component.getControlsSpacerClass();
+            String spacerClass = controlsItemSpacerClass + (controlsSpacerClass == null ?  "" : (" " + controlsSpacerClass));
+            writer.writeAttribute(HTML.CLASS_ATTR, spacerClass, null);
 
             writer.startElement(HTML.SPAN_ELEM, null);
             writer.writeAttribute(HTML.CLASS_ATTR, itemStyleClass, "controlsItemClass");
