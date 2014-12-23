@@ -46,7 +46,6 @@
                 <h:panelGrid id="panelGridOne" columns="3" cellspacing="10" style="margin:0 auto 0 auto;">
                     <ace:list id="firstList" value="#{backing.stringList}"
                               dropGroup="textGroup"
-                              selection="true"
                               styleClass="inlineList"/>
 
                     <h:commandButton id="submitBtn" value="Submit Reorder" />
@@ -75,7 +74,6 @@
                     <h:panelGroup></h:panelGroup>
                     <ace:list id="secondList" value="#{backing.oneWaySourceList}"
                               dropGroup="textGroup"
-                              selection="true"
                               style="height:100px;width:150px;"
                               bodyStyle="height:100px;width:150px;"
                               styleClass="inlineList">
@@ -84,7 +82,6 @@
 
                     <ace:list id="thirdList" value="#{backing.oneWayDestList}"
                               dropGroup="textGroup"
-                              selection="true"
                               style="height:100px;width:150px;"
                               bodyStyle="height:100px;width:150px;"
                               styleClass="inlineList">
