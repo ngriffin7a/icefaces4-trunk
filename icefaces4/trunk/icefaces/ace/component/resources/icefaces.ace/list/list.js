@@ -88,8 +88,13 @@ ice.ace.List = function(id, cfg) {
     if (cfg.controls)
         this.setupControls();
 
-    if (cfg.dragging)
-        this.element.find("> ul").sortable(cfg);
+    if (cfg.dragging) {
+        this.element.find("> ul").sortable();
+        this.element.find("> ul").sortable( "option", "disabled", false );
+        this.element.find("> ul").disableSelection();
+    } else {
+        this.element.find("> ul").sortable( "option", "disabled", true );
+    }
 };
 
 // ************************************************************************* //
