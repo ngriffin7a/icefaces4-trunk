@@ -167,6 +167,11 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 			return eventListener;
 		};
 	};
+
+    //ICE-10375
+    ice.onBeforeUnload(function() {
+        google.maps.event.clearListeners(window, 'resize');
+    });
 	
 	ice.ace.gMap.windowResizeHandler = function() {
 		for (var mapKey in GMapRepository) {
