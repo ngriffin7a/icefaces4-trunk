@@ -212,6 +212,7 @@ if (!window.ice.icefaces) {
         eval(ice.importFrom('ice.lib.http'));
 
         namespace.onLoad = curry(onLoad, window);
+        namespace.onBeforeUnload = curry(onBeforeUnload, window);
         namespace.onUnload = curry(onUnload, window);
 
         var handler = window.console && window.console.log ? ConsoleLogHandler(debug) : WindowLogHandler(debug, window.location.href);
