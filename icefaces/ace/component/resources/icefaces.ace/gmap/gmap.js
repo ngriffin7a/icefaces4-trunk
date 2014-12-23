@@ -168,11 +168,6 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 		};
 	};
 
-    //ICE-10375
-    ice.onBeforeUnload(function() {
-        google.maps.event.clearListeners(window, 'resize');
-    });
-	
 	ice.ace.gMap.windowResizeHandler = function() {
 		for (var mapKey in GMapRepository) {
 			var map = GMapRepository[mapKey];
@@ -215,6 +210,27 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 		}, 1000);
         initializing = false;
         GMapRepository[ele] = gmapWrapper;
+
+        //if IE8 or less apply ICE-10375 fix for Element.getBoundingClientRect
+        if (!document.addEventListener) {
+            var mapDirectionsElement = document.getElementById('gMapDirections');
+            if (mapDirectionsElement) {
+                var originalFunction = mapDirectionsElement.getBoundingClientRect;
+                mapDirectionsElement.getBoundingClientRect = function() {
+                    try {
+                        return originalFunction.apply(this, arguments);
+                    } catch (e) {
+                        return {
+                            left: '',
+                            right: '',
+                            top: '',
+                            bottom: ''
+                        };
+                    }
+                };
+            }
+        }
+
         return gmapWrapper;
     }
 
