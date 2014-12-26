@@ -108,7 +108,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
     public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = uiComponent.getClientId(facesContext);
-        AutoCompleteEntry autoCompleteEntry = (AutoCompleteEntry) uiComponent;
+        final AutoCompleteEntry autoCompleteEntry = (AutoCompleteEntry) uiComponent;
 
 		if (autoCompleteEntry.isReset()) {
 			autoCompleteEntry.setText(null);
@@ -174,7 +174,9 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
                 + getStateStyleClasses(autoCompleteEntry) + inFieldLabelStyleClass + (disabled?" ui-state-disabled":""), null);
 		if (disabled) writer.writeAttribute("disabled", "disabled", null);
 		writer.writeAttribute("autocomplete", "off", null);
-
+        if (autoCompleteEntry.isReadonly()) {
+            writer.writeAttribute("readonly", "readonly", null);
+        }
         if (onfocusAppValue != null)
             onfocusCombinedValue += onfocusAppValue.toString();
 
@@ -189,13 +191,12 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
             writer.writeAttribute("onchange", onchangeAppValue.toString(), null);
 
         if (ariaEnabled) {
-            final AutoCompleteEntry component = (AutoCompleteEntry) uiComponent;
             Map<String, Object> ariaAttributes = new HashMap<String, Object>() {{
                 put("autocomplete", "list");
-                put("readonly", component.isReadonly());
-                put("required", component.isRequired());
-                put("disabled", component.isDisabled());
-                put("invalid", !component.isValid());
+                put("readonly", autoCompleteEntry.isReadonly());
+                put("required", autoCompleteEntry.isRequired());
+                put("disabled", autoCompleteEntry.isDisabled());
+                put("invalid", !autoCompleteEntry.isValid());
             }};
             writeAriaAttributes(ariaAttributes, labelAttributes);
         }
