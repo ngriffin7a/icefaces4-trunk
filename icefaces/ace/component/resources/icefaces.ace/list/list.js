@@ -473,6 +473,9 @@ ice.ace.List.prototype.itemClickHandler = function(e) {
 
 /* Determines the original index of an item at a particular index */
 ice.ace.List.prototype.getUnshiftedIndex = function(length, reorderings, index) {
+    if (reorderings.length == 0) {
+        return index;
+    }
     var indexes = [];
     for (var i = 0; length - i >= 0; i++) indexes.push(i);
     for (var i = 0; i < reorderings.length; i++) {
