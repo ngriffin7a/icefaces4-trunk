@@ -56,6 +56,14 @@ public class TextAreaEntryMeta extends UIInputMeta {
     @Property(tlddoc = "Name of the widget variable to access client-side API.")
     private String widgetVar;
 
+    @Property(implementation = Implementation.EXISTS_IN_SUPERCLASS,
+            tlddoc="The inline style of the component, rendered on the element of the component.")
+	private String style;
+
+    @Property(implementation = Implementation.EXISTS_IN_SUPERCLASS,
+            tlddoc="The CSS style class of the component, rendered on the element of the component.")
+	private String styleClass;
+
     @Property(tlddoc = "Indicator indicating that the user is required to provide a submitted value for this input component.")
     private String requiredIndicator;
 
