@@ -286,7 +286,7 @@
 
     <resource name="util/ace-tabset.js" library="icefaces.ace">
         <requires>
-            <resource name="util/ace-core.js" library="icefaces.ace"/>
+            <resource name="animation/animation.js" library="icefaces.ace"/>
         </requires>
     </resource>
 
