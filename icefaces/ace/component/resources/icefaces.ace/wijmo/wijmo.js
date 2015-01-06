@@ -3827,6 +3827,7 @@ function wijmoASPNetParseOptions(o) {
 				}
 			});
 			ele.show();
+			if (ele.is("ul")) ele.css('display', 'inline-block').css('position','relative');
 			$("ul,div", self.rootMenu).each(function () { // ICE-7827 
 				if ($(this).parents(".ui-menu-multicolumn").size() > 0) return; // ICE-7827 
 				$(this).addClass(menuCss + "-list ui-widget-content ui-corner-all " +
@@ -4588,6 +4589,8 @@ function wijmoASPNetParseOptions(o) {
                     else {
                         sublist.show().attr("aria-hidden", false);
                     }
+
+                    sublist.css('display', 'inline-block'); // ICE-10279
 
                     self._isClickToOpen = o.triggerEvent === "click";
 

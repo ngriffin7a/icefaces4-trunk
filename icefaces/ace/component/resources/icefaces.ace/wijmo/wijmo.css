@@ -171,7 +171,7 @@ border:none;
 
 .wijmo-wijmenu .wijmo-wijmenu-link {
 display:block;
-width:92%;
+width:97%;
 outline:none;
 text-decoration:none;
 font-weight:400;
@@ -192,7 +192,7 @@ margin-right:3px;
 }
 
 .wijmo-wijmenu-horizontal .wijmo-wijmenu-child .wijmo-wijmenu-item {
-width:100%;
+width:97%;
 }
 
 .wijmo-wijmenu-horizontal .wijmo-wijmenu-child {
@@ -206,7 +206,7 @@ padding:0.4em 0.3em;
 }
 
 .wijmo-wijmenu-horizontal .wijmo-wijmenu-child .wijmo-wijmenu-link {
-width:92%;
+width:97%;
 }
 
 .wijmo-wijmenu .wijmo-wijmenu-list .ui-widget-header {
@@ -425,4 +425,68 @@ float:right;
 
 .wijmo-wijmenu-flyout, .wijmo-wijmenu-menubutton > div:first-of-type {
 	box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+.ui-widget.ui-widget-content.wijmo-wijmenu {
+	display: inline-block;
+}
+
+.wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout {
+	width: 100%;
+}
+
+.wijmo-wijmenu-horizontal .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout {
+	width: auto;
+}
+
+.wijmo-wijmenu-horizontal .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout .wijmo-wijmenu-item {
+	display:inline-block;
+	width:100%;
+}
+
+.wijmo-wijmenu-horizontal .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout .wijmo-wijmenu-item a {
+	display:inline-block;
+	width:97%;
+}
+
+.wijmo-wijmenu-horizontal .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout .wijmo-wijmenu-item a > .wijmo-wijmenu-text {
+	display:inline-block;
+	width:97%;
+}
+
+.wijmo-wijmenu-horizontal .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout .wijmo-wijmenu-item a .ui-icon {
+	display:inline-block;
+	width:3%;
+}
+
+.ice-ace-menu-plain .wijmo-wijmenu-list {
+	width:100%;
+}
+
+.ice-ace-menu-plain .wijmo-wijmenu .wijmo-wijmenu-list li.ui-widget-header {
+	display:inline-block;
+	width:100%;
+}
+
+.ice-ace-menu-plain .wijmo-wijmenu .wijmo-wijmenu-list li.ui-widget-header h3 {
+	display:inline-block;
+	width:100%;
+	margin: 0;
+	right: 0;
+}
+
+.ice-ace-menu-tiered .wijmo-wijmenu .wijmo-wijmenu-link {
+	display:inline-block;
+	width:98%;
+}
+
+.ice-ace-menu-tiered .wijmo-wijmenu .wijmo-wijmenu-link > .wijmo-wijmenu-text {
+	display:inline-block;
+	width:97%;
+}
+
+.ice-ace-menu-tiered .wijmo-wijmenu .wijmo-wijmenu-link .ui-icon {
+	display:inline-block;
+	min-width: 16px;
+	right: 0;
 }
