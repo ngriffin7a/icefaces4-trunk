@@ -1196,7 +1196,7 @@
             this.helper = this._createHelper(event);
 
             this.helper.addClass("ui-draggable-dragging");
-
+            this.helper.offset(this.element.offset());
             //Cache the helper size
             this._cacheHelperProportions();
 
