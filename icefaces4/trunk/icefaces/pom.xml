@@ -213,7 +213,7 @@
         </repository>
         <repository>
             <id>apache.org</id>
-            <url>https://repository.apache.org/content/repositories/snapshots</url>
+            <url>https://repository.apache.org</url>
         </repository>
         <repository>
             <id>liferay.previews</id>
