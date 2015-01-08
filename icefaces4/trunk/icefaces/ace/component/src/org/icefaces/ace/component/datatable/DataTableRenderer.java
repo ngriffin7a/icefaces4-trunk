@@ -36,6 +36,7 @@ import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
+import org.icefaces.util.JavaScriptRunner;
 
 import javax.faces.FacesException;
 import javax.faces.application.ProjectStage;
@@ -216,6 +217,8 @@ public class DataTableRenderer extends CoreRenderer {
         }
 
         writer.endElement(HTML.DIV_ELEM);
+
+		JavaScriptRunner.runScript(context, "(function(){var table = ice.ace.instance('"+table.getClientId(context)+"');if(table) {var rowEditors = table.getRowEditors(); if (rowEditors.length > 0) table.setupCellEditorEvents(rowEditors);}})();");
     }
 
     private void encodePinningStateHolder(FacesContext context, DataTable table) throws IOException {
