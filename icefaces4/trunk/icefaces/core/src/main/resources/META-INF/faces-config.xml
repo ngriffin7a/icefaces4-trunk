@@ -85,6 +85,7 @@
         <phase-listener>org.icefaces.impl.application.WindowScopeManager$DetermineOrDisposeScope</phase-listener>
         <phase-listener>org.icefaces.impl.application.ReloadAfterNavigationFix$TriggerNavigation</phase-listener>
         <phase-listener>org.icefaces.impl.event.BridgeSetup$AssignViewID</phase-listener>
+        <phase-listener>org.icefaces.impl.application.InitializeHeadAndBodyFacetContainers</phase-listener>
     </lifecycle>
     <application>
         <view-handler>org.icefaces.impl.application.ExternalServletContextSetup</view-handler>
