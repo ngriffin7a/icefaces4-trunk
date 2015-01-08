@@ -857,7 +857,7 @@ ice.ace.SelectMenu.prototype = {
 		}
 		this.updateSelectedIndex();
 		// update label
-		if (value) {
+		if (this.selectedIndex > -1) {
 			var currentEntry = this.getEntry(this.selectedIndex);
 			if (currentEntry) {
 				var labelSpan = ice.ace.jq(currentEntry).find('.'+ice.ace.SelectMenu.LABEL_CLASS).get(0);

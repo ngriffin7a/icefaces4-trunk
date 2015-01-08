@@ -329,6 +329,8 @@ public class SelectMenuRenderer extends InputRenderer {
 						} catch (Exception e) {
 							itemValue = itemValue.toString();
 						}
+					} else {
+						itemValue = "";
 					}
 					
 					itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
