@@ -201,7 +201,6 @@ ice.ace.DataTable = function (id, cfg) {
     this.deselection = [];
 
     var oldInstance = arguments[2];
-    var rowEditors = this.getRowEditors();
 
     // Persist State
     if (oldInstance) {
@@ -232,9 +231,6 @@ ice.ace.DataTable = function (id, cfg) {
 
         if (this.cfg.scrollable)
             this.setupScrolling();
-
-        if (rowEditors.length > 0)
-            this.setupCellEditorEvents(rowEditors);
 
         if (this.cfg.resizableColumns)
             this.setupResizableColumns();
