@@ -109,7 +109,12 @@ public class DataTableRenderer extends CoreRenderer {
 		// Make sure filters and sorting are applied in the current data model at this stage of the lifecycle
 		// when using Mojarra (in some scenarios, filters and sorting aren't being applied at this point).
 		if (!EnvUtils.isMyFaces()) {
-			if (!table.isLazy()) table.setFilteredData(table.processFilters(context));
+			if (!table.isLazy()) {
+				if (table.savedFilterState != null) {
+					table.savedFilterState.apply(table);
+				}
+				table.setFilteredData(table.processFilters(context));
+			}
 		}
 		table.processSorting();
 		table.getDataModel();
@@ -122,6 +127,9 @@ public class DataTableRenderer extends CoreRenderer {
             }
 
             if (table.isApplyingFilters() && !table.isLazy()) {
+				if (table.savedFilterState != null) {
+					table.savedFilterState.apply(table);
+				}
                 table.setFilteredData(table.processFilters(context));
             }
         }

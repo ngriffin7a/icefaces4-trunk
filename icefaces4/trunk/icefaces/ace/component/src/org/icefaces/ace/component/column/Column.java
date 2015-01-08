@@ -51,7 +51,6 @@ public class Column extends ColumnBase implements IProxiableColumn, Serializable
     public FilterConstraint getFilterConstraint() {
         String filterMatchMode = getFilterMatchMode();
 
-        if(filterConstraint == null) {
             if(filterMatchMode.equals(STARTS_WITH_MATCH_MODE)) {
                 filterConstraint = new StartsWithFilterConstraint();
             } else if(filterMatchMode.equals(ENDS_WITH_MATCH_MODE)) {
@@ -61,7 +60,6 @@ public class Column extends ColumnBase implements IProxiableColumn, Serializable
             } else if(filterMatchMode.equals(EXACT_MATCH_MODE)) {
                 filterConstraint = new ExactFilterConstraint();
             }
-        }
 
         return filterConstraint;
     }
