@@ -27,6 +27,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
@@ -87,6 +88,17 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 				autoCompleteEntry.setPopulateList(false);
 				autoCompleteEntry.setSubmittedValue(text);
 				autoCompleteEntry.setSubmittedText(text);
+				if (text != null) {
+					if (autoCompleteEntry.isCaseSensitive()) {
+						if (text.equals(oldText)) {
+							autoCompleteEntry.queueEvent(new ValueChangeEvent(autoCompleteEntry, oldText, text));
+						}
+					} else {
+						if (text.equalsIgnoreCase(oldText)) {
+							autoCompleteEntry.queueEvent(new ValueChangeEvent(autoCompleteEntry, oldText, text));
+						}
+					}
+				}
 			} else if (keyEvent.getKeyCode() == KeyEvent.UP_ARROW_KEY || keyEvent.getKeyCode() == KeyEvent.DOWN_ARROW_KEY) {
 				autoCompleteEntry.setPopulateList(true);
 			} else if (textChanged) {
