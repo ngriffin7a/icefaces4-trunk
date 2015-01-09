@@ -218,7 +218,8 @@ public class DataTableRenderer extends CoreRenderer {
 
         writer.endElement(HTML.DIV_ELEM);
 
-		JavaScriptRunner.runScript(context, "(function(){var table = ice.ace.instance('"+table.getClientId(context)+"');if(table) {var rowEditors = table.getRowEditors(); if (rowEditors.length > 0) table.setupCellEditorEvents(rowEditors);}})();");
+		if (DataTableRendererUtil.hasRowEditor(table))
+			JavaScriptRunner.runScript(context, "(function(){var table = ice.ace.instance('"+table.getClientId(context)+"');if(table) {var rowEditors = table.getRowEditors(); if (rowEditors.length > 0) table.setupCellEditorEvents(rowEditors);}})();");
     }
 
     private void encodePinningStateHolder(FacesContext context, DataTable table) throws IOException {
