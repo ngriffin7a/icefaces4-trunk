@@ -17,7 +17,10 @@
 package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.column.IProxiableColumn;
+import org.icefaces.ace.component.roweditor.RowEditor;
 import org.icefaces.ace.model.table.RowStateMap;
+
+import javax.faces.component.UIComponent;
 
 import java.util.List;
 
@@ -155,4 +158,12 @@ public class DataTableRendererUtil {
 
         return true;
     }
+
+	protected static boolean hasRowEditor(UIComponent component) {
+		if (component instanceof RowEditor) return true;
+		for (UIComponent child : component.getChildren()) {
+			if (hasRowEditor(child)) return true;
+		}
+		return false;
+	}
 }
