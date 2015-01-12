@@ -41,6 +41,7 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,9 +54,18 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     private static SharedMapLookupStrategy sharedMapLookupStrategy;
 
     static {
+        boolean isLiferay;
         try {
-            sharedMapLookupStrategy = new LiferayOriginalRequestWindowScopeSharing();
+            Object url = FacesContext.getCurrentInstance().getExternalContext().getResource("/WEB-INF/portlet.xml");
+            //url not null proves that application is indeed deployed within Liferay (not as webapp deployed along Liferay webapp)
+            isLiferay = EnvUtils.isLiferay() && url != null;
+        } catch (MalformedURLException e) {
+            isLiferay = false;
+        }
+        try {
+            sharedMapLookupStrategy = isLiferay ? new LiferayOriginalRequestWindowScopeSharing() : new TimeBasedHeuristicWindowScopeSharing();
         } catch (Exception e) {
+            //fallback to servlet environment
             sharedMapLookupStrategy = new TimeBasedHeuristicWindowScopeSharing();
         }
     }
