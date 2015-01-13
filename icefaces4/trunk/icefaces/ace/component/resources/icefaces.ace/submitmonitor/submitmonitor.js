@@ -196,42 +196,53 @@
     var beforeUpdate = [];
     var cleanBeforeSubmit = [];
     var cleanBeforeUpdate = [];
+    var elementMonitorMapping = {};
 
     ice.ace.SubmitMonitor = function (id, cfg) {
         var jqId = ice.ace.escapeClientId(cfg.id);
         var uniqueId = uniqueCounter++;
         var stopBlockingUI = NOOP;
 
-        function isMonitoringElement(source) {
-            consoleLog('Monitor '+uniqueId+'>'+jqId+'  isMonitoringElement  monitorFor: ' + cfg.monitorFor + '  source.id: ' + (source ? source.id : '<null>'));
-            var mf = cfg.monitorFor;
-            if (mf == undefined || mf.length == 0) {
-                return true;
+        //cleanup previous mapping for this submit monitor (in case of partial update/re-configure)
+        var mapping = {};
+        for (var p in elementMonitorMapping) {
+            if (elementMonitorMapping.hasOwnProperty(p)) {
+                var v = elementMonitorMapping[p];
+                if (v != id) {
+                    mapping[p] = v;
+                }
             }
+        }
+        elementMonitorMapping = mapping;
+
+        var monitoredElementIDs = cfg.monitorFor;
+        if (monitoredElementIDs) {
+            var ids = monitoredElementIDs.split(" ");
+            for (var i = 0, l = ids.length; i < l; i++) {
+                elementMonitorMapping[ids[i]] = id;
+            }
+        } else {
+            elementMonitorMapping['body'] = id;
+        }
+
+        function isMonitoringElement(source) {
             if (!source) {
                 return false;
             }
-            var monitoredElementIds = mf.split(" ");
-            var curr = source;
-            while (true) {
-                var currId = curr.id;
-                if (currId) {
-                    consoleLog('Monitor '+uniqueId+'>'+jqId+'  isMonitoringElement  source ancestor id: ' + currId + '  monitoredElementIds: ' + monitoredElementIds);
-                    if (-1 < ice.ace.jq.inArray(currId, monitoredElementIds)) {
-                        consoleLog('Monitor '+uniqueId+'>'+jqId+'  isMonitoringElement  MATCHED');
-                        return true;
+            var cursor = source;
+            while (cursor) {
+                var elementID = cursor == document.body ? 'body' : cursor.id;
+                if (elementID) {
+                    var monitorID = elementMonitorMapping[elementID];
+                    if (monitorID) {
+                        //execute this monitor only when the first element encounter (while traversing the ancestors)
+                        //to have a corresponding monitor matches the current one
+                        return monitorID == id;
                     }
-                    consoleLog('Monitor '+uniqueId+'>'+jqId+'  isMonitoringElement  NOT MATCHED  continuing scanning...');
                 }
-                if (curr == document.body) {
-                    break;
-                }
-                curr = curr.parentNode;
-                if (!curr) {
-                    break;
-                }
+                cursor = cursor.parentNode;
             }
-            consoleLog('Monitor '+uniqueId+'>'+jqId+'  isMonitoringElement  NOT MATCHED');
+
             return false;
         }
 
