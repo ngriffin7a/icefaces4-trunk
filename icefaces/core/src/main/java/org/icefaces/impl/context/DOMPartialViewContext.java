@@ -125,7 +125,8 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         }
         if (phaseId == PhaseId.RENDER_RESPONSE) {
             try {
-                PartialResponseWriter partialWriter = getPartialResponseWriter();
+                //get the top PartialResponseWriter (which encloses the chain of all writers)
+                PartialResponseWriter partialWriter = facesContext.getPartialViewContext().getPartialResponseWriter();
 
                 //TODO: need to revisit the strategy for getting the "raw" output writer directly
                 Writer outputWriter = getResponseOutputWriter();
