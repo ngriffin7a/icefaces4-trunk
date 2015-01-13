@@ -305,7 +305,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                 renderExtensions();
                 renderFixViewState();
                 runScripts();
-                super.processPartial(phaseId);
                 partialWriter.endDocument();
 
             } catch (IOException ex) {
