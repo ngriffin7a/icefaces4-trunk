@@ -103,6 +103,7 @@ public class MenuBarRenderer extends BaseMenuRenderer {
         writer.startElement("div", menubar);
         writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("style", "display:none;", null);
+		writer.writeAttribute("class", "ice-ace-menu-bar", null);
 		if (menubar.isForceMenuUpdate()) {
 			int updateCounter = menubar.getForceUpdateCounter();
 			updateCounter++;
