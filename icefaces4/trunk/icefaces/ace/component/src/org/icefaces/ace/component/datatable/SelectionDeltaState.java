@@ -46,11 +46,14 @@ public class SelectionDeltaState {
         String deselection = params.get(clientId + "_deselection");
         boolean hasChange = (selection != null && selection.length() > 0) || (deselection != null && deselection.length() > 0);
 
-        if (hasChange)
+        if (hasChange) {
+			table.resetValue();
+			table.getDataModel();
             if (table.isSingleSelectionMode())
                 decodeSingleSelection(table, selection);
             else
                 decodeMultipleSelection(table, selection, deselection);
+		}
     }
 
     void decodeSingleSelection(DataTable table, String selection) {
