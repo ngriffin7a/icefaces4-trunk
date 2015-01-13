@@ -3806,6 +3806,7 @@ function wijmoASPNetParseOptions(o) {
 							if (hasSubmenu) {
 								icon = $("<span>")
 								.addClass("ui-icon ui-icon-triangle-1-e");
+								link.append("&nbsp;"); // ICE-10279
 								link.append(icon);
 							}
 						}
@@ -3820,6 +3821,7 @@ function wijmoASPNetParseOptions(o) {
 							if (!link.is(":input")) {
 								icon = $("<span>")
 									.addClass("ui-icon ui-icon-triangle-1-e");
+								link.append("&nbsp;"); // ICE-10279
 								link.append(icon);
 							}
 						}
@@ -3827,7 +3829,7 @@ function wijmoASPNetParseOptions(o) {
 				}
 			});
 			ele.show();
-			if (ele.is("ul")) ele.css('display', 'inline-block').css('position','relative');
+			if (ele.is("ul")) ele.css('display', 'inline-block').css('position','relative'); // ICE-10279
 			$("ul,div", self.rootMenu).each(function () { // ICE-7827 
 				if ($(this).parents(".ui-menu-multicolumn").size() > 0) return; // ICE-7827 
 				$(this).addClass(menuCss + "-list ui-widget-content ui-corner-all " +

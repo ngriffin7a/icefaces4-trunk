@@ -161,6 +161,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
         writer.startElement("span", menu);
 		writer.writeAttribute("id", clientId, "id");
 		writer.writeAttribute("style", "display:none;", null);
+		writer.writeAttribute("class", "ice-ace-menu-context", null);
 		if (menu.isForceMenuUpdate()) {
 			int updateCounter = menu.getForceUpdateCounter();
 			updateCounter++;
