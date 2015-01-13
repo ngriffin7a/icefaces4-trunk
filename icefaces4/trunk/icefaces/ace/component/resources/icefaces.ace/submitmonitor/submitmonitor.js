@@ -235,8 +235,8 @@
                 if (elementID) {
                     var monitorID = elementMonitorMapping[elementID];
                     if (monitorID) {
-                        //execute this monitor only when the first element encounter (while traversing the ancestors)
-                        //to have a corresponding monitor matches the current one
+                        //execute this monitor only when the first element encountered (while traversing the ancestors)
+                        //has a corresponding monitor that matches the current one
                         return monitorID == id;
                     }
                 }
