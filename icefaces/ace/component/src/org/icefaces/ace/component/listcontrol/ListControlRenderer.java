@@ -39,8 +39,8 @@ public class ListControlRenderer extends CoreRenderer {
     public static final String controlStyleClass = "if-list-nctrl";
     public static final String controlsSpacerStyleClass = "if-list-ctrl-spcr";
     public static final String dualListStyleClass = "if-list-dl";
-    public static final String listControlHeaderClass = "if-list-nctrl-head";
-    public static final String listControlFooterClass = "if-list-nctrl-foot";
+    public static final String listControlHeaderClass = "ui-state-default if-list-nctrl-head";
+    public static final String listControlFooterClass = "ui-state-default if-list-nctrl-foot";
     public static final String firstStyleClass = "if-list-dl-1";
     public static final String secondStyleClass = "if-list-dl-2";
 
