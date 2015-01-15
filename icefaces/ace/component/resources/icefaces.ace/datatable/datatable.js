@@ -661,6 +661,24 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
                 $this.closest('th').removeClass('ui-state-hover');
             else
                 $this.closest('div.ui-sortable-column').removeClass('ui-state-hover');
+        })
+
+        // Bind keypress kb-navigable sort icons
+        .unbind('keypress').bind('keypress', function (event) {
+            if (event.which == 32 || event.which == 13) {
+                var $currentTarget = ice.ace.jq(event.currentTarget);
+                $currentTarget.closest('.ui-sortable-control')
+                    .trigger('click', [$currentTarget.offset().top, event.metaKey]);
+                return false;
+            }
+        })
+        .unbind('keypress').bind('keypress', function (event) {
+            if (event.which == 32 || event.which == 13) {
+                var $currentTarget = ice.ace.jq(event.currentTarget);
+                $currentTarget.closest('.ui-sortable-control')
+                    .trigger('click', [$currentTarget.offset().top + 6, event.metaKey]);
+                return false;
+            }
         }).each(function () {
             // Prefade sort controls
             var $this = ice.ace.jq(this),
@@ -674,29 +692,6 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
             } else {
                 if (!topCarat.hasClass('ui-toggled')) topCarat.fadeTo(0, .33);
                 if (!bottomCarat.hasClass('ui-toggled')) bottomCarat.fadeTo(0, .33);
-            }
-        });
-
-    // Bind keypress kb-navigable sort icons
-    ice.ace.jq(this.jqId)
-        .off('keypress', this.sortUpSelector)
-        .on('keypress', this.sortUpSelector, function (event) {
-            if (event.which == 32 || event.which == 13) {
-                var $currentTarget = ice.ace.jq(event.currentTarget);
-                $currentTarget.closest('.ui-sortable-control')
-                    .trigger('click', [$currentTarget.offset().top, event.metaKey]);
-                return false;
-            }
-        });
-
-    ice.ace.jq(this.jqId)
-        .off('keypress', this.sortDownSelector)
-        .on('keypress', this.sortDownSelector, function (event) {
-            if (event.which == 32 || event.which == 13) {
-                var $currentTarget = ice.ace.jq(event.currentTarget);
-                $currentTarget.closest('.ui-sortable-control')
-                    .trigger('click', [$currentTarget.offset().top + 6, event.metaKey]);
-                return false;
             }
         });
 }
@@ -860,8 +855,8 @@ ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
 
     // Bind keypress kb-navigable sort icons
     ice.ace.jq(this.jqId)
-        .off('keypress', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-n')
-        .on('keypress', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-n', function (event) {
+        .off('keyup', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-n')
+        .on('keyup', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-n', function (event) {
             if (event.which == 32 || event.which == 13) {
                 var $currentTarget = ice.ace.jq(event.currentTarget);
                 $currentTarget.closest('.ui-sortable-control')
@@ -871,8 +866,8 @@ ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
         });
 
     ice.ace.jq(this.jqId)
-        .off('keypress', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-s')
-        .on('keypress', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-s', function (event) {
+        .off('keyup', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-s')
+        .on('keyup', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-s', function (event) {
             if (event.which == 32 || event.which == 13) {
                 var $currentTarget = ice.ace.jq(event.currentTarget);
                 $currentTarget.closest('.ui-sortable-control')
@@ -1075,33 +1070,6 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
                 rowDblClickObs.push(function(event) { doRowSelect.call(self, event); });
             else
                 rowClickObs.push(function(event) { doRowSelect.call(self, event); });
-
-			this.element.on('mousedown', function (event) {
-				if (event.shiftKey) {
-					this.onselectstart = function() { return false; };
-					this.unselectable = 'on';
-					var table = ice.ace.jq(this);
-					table.css('user-select', 'none');
-					table.css('-o-user-select', 'none');
-					table.css('-ms-user-select', 'none');
-					table.css('-moz-user-select', 'none');
-					table.css('-khtml-user-select', 'none');
-					table.css('-webkit-user-select', 'none');
-				}
-			});
-			this.element.on('mouseup', function (event) {
-				if (event.shiftKey) {
-					this.onselectstart = function() { };
-					this.unselectable = 'off';
-					var table = ice.ace.jq(this);
-					table.css('user-select', '');
-					table.css('-o-user-select', '');
-					table.css('-ms-user-select', '');
-					table.css('-moz-user-select', '');
-					table.css('-khtml-user-select', '');
-					table.css('-webkit-user-select', '');
-				}
-			});
         }
 
         this.setupSelectionHover();
