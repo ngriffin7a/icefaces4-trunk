@@ -855,8 +855,8 @@ ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
 
     // Bind keypress kb-navigable sort icons
     ice.ace.jq(this.jqId)
-        .off('keyup', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-n')
-        .on('keyup', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-n', function (event) {
+        .off('keypress', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-n')
+        .on('keypress', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-n', function (event) {
             if (event.which == 32 || event.which == 13) {
                 var $currentTarget = ice.ace.jq(event.currentTarget);
                 $currentTarget.closest('.ui-sortable-control')
@@ -866,8 +866,8 @@ ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
         });
 
     ice.ace.jq(this.jqId)
-        .off('keyup', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-s')
-        .on('keyup', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-s', function (event) {
+        .off('keypress', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-s')
+        .on('keypress', ice.ace.escapeClientId(id) + ' a.ui-icon-triangle-1-s', function (event) {
             if (event.which == 32 || event.which == 13) {
                 var $currentTarget = ice.ace.jq(event.currentTarget);
                 $currentTarget.closest('.ui-sortable-control')
