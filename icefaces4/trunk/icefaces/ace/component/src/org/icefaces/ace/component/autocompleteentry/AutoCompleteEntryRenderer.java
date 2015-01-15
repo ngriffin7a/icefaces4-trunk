@@ -219,11 +219,11 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 
 		writer.startElement("span", null);
 		writer.writeAttribute("style", "position:relative;display:block;", null);
-        writer.startElement("div", null);
+        writer.startElement("span", null);
         writer.writeAttribute("id", divId, null);
         writer.writeAttribute("class", "ui-widget ui-widget-content ui-corner-all", null);
         writer.writeAttribute("style", "display:none;z-index:500;", null);
-        writer.endElement("div");
+        writer.endElement("span");
 		writer.endElement("span");
 
         writer.endElement("span");

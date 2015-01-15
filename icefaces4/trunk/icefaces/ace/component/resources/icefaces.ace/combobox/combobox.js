@@ -35,7 +35,7 @@ ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selecte
 	this.element.submitOnEnter = 'disabled';
 	this.element.id = this.id + "_input";
 	this.hidden = this.root.find('input[type=hidden]').get(0);
-	var $downArrowButton = $box.find('div');
+	var $downArrowButton = $box.find('span');
 	$element.css('width', $box.width() - $downArrowButton.outerWidth(true) - ($element.outerWidth(true) - $element.width()));
 	this.downArrowButton = $downArrowButton.eq(0);
 	this.downArrowButton.css('height', $box.height());
@@ -89,7 +89,7 @@ ice.ace.ComboBox.setDimensionsOnly = function(id) {
 	var root = ice.ace.jq(ice.ace.escapeClientId(id));
 	var $box = root.find('.ui-combobox-value');
 	var $element = root.find('input');
-	var $downArrowButton = $box.find('div');
+	var $downArrowButton = $box.find('span');
 	$element.css('width', $box.width() - $downArrowButton.outerWidth(true) - ($element.outerWidth(true) - $element.width()));
 	instance.element = $element.get(0);
 	instance.hidden = root.find('input[type=hidden]').get(0);
