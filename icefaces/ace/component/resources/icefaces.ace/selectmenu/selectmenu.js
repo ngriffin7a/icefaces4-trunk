@@ -888,7 +888,7 @@ ice.ace.SelectMenu.prototype = {
 	
 	replaceSpaces: function(str) {
 		if (str) return str.replace(/ /g, '&nbsp;');
-		else return '';
+		else return '&nbsp;';
 	},
 	
 	// update selected index if value was changed programmatically or was pre-selected
