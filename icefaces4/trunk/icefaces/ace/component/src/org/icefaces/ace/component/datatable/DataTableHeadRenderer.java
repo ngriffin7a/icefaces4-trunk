@@ -301,15 +301,22 @@ public class DataTableHeadRenderer {
 			writer.startElement(HTML.SPAN_ELEM, null);
 			writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_CONTAINER, null);
 
+            final String iconUpID = column.getClientId() + "_sortControl_up";
+            final String iconDownID = column.getClientId() + "_sortControl_down";
+
 			writer.startElement(HTML.ANCHOR_ELEM, null);
-			writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
+            writer.writeAttribute(HTML.ID_ATTR, iconUpID, null);
+            writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
+            writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.setFocus('" + iconUpID + "');", null);
 			if (column.hasSortPriority() && column.isSortAscending())
 				writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_UP_CLASS + " ui-toggled", null);
 			else writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_UP_CLASS, null);
 			writer.endElement(HTML.ANCHOR_ELEM);
 
 			writer.startElement(HTML.ANCHOR_ELEM, null);
+            writer.writeAttribute(HTML.ID_ATTR, iconDownID, null);
 			writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
+            writer.writeAttribute(HTML.ONCLICK_ATTR, "ice.setFocus('" + iconDownID + "');", null);
 			if (column.hasSortPriority() && !column.isSortAscending())
 				writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_DOWN_CLASS + " ui-toggled", null);
 			else writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_DOWN_CLASS, null);
