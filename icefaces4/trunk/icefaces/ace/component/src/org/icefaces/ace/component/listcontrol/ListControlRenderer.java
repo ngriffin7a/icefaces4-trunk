@@ -115,7 +115,7 @@ public class ListControlRenderer extends CoreRenderer {
         if (styleClass == null)  styleClass = "";
         else styleClass += " ";
 
-        styleClass = listControlHeaderClass + styleClass;
+        styleClass = listControlHeaderClass + " " + styleClass;
 
         String style = control.getHeaderStyle();
 
@@ -294,7 +294,7 @@ public class ListControlRenderer extends CoreRenderer {
         if (styleClass == null)  styleClass = "";
         else styleClass += " ";
 
-        styleClass = listControlFooterClass + styleClass;
+        styleClass = listControlFooterClass + " " + styleClass;
 
         String style = control.getFooterStyle();
 
