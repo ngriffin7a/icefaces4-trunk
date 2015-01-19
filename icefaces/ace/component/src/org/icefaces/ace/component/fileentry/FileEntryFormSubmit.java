@@ -168,21 +168,6 @@ public class FileEntryFormSubmit implements SystemEventListener {
         form.getChildren().add(2, output);
         form.setInView(true);
     }
-    
-    private static FileEntry findFileEntry(UIComponent parent) {
-        Iterator<UIComponent> kids = parent.getFacetsAndChildren();
-        while (kids.hasNext()) {
-            UIComponent kid = kids.next();
-            if (kid instanceof FileEntry) {
-                return (FileEntry) kid;
-            }
-            final FileEntry grandKid = findFileEntry(kid);
-            if (grandKid != null) {
-                return grandKid;
-            }
-        }
-        return null;
-    }
 
     public boolean isListenerForSource(Object source) {
         return source instanceof FileEntry;
