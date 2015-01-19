@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.fileentry;
 
 import org.icefaces.ace.util.HTML;
+import org.icefaces.ace.util.Utils;
 import org.icefaces.impl.application.WindowScopeManager;
 import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.util.CoreComponentUtils;
@@ -60,8 +61,9 @@ public class FileEntryFormSubmit implements SystemEventListener {
     }
 
     public void processEvent(SystemEvent event) throws AbortProcessingException {
-        FacesContext context = FacesContext.getCurrentInstance();
-        UIForm form = (UIForm) event.getSource();
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final FileEntry fileEntry = (FileEntry) event.getSource();
+        final UIForm form = Utils.findParentForm(fileEntry);
         log.finer(
             "FileEntryFormSubmit.processEvent()\n" +
             "  event: " + event + "\n" +
@@ -79,7 +81,6 @@ public class FileEntryFormSubmit implements SystemEventListener {
 
         // See if there is at least one FileEntry component in the form,
         // which should alter the form submission method.
-        final FileEntry fileEntry = findFileEntry(form);
         if (fileEntry == null) {
             log.finer("FileEntryFormSubmit  !findFileEntry");
             return;
@@ -184,7 +185,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
     }
 
     public boolean isListenerForSource(Object source) {
-        return source instanceof UIForm;
+        return source instanceof FileEntry;
     }
     
     private void forceAjaxOnView(FacesContext facesContext)  {
