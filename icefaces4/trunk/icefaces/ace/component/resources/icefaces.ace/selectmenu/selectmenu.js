@@ -370,6 +370,9 @@ ice.ace.SelectMenu.prototype = {
 				default:
 					if (event.which > 0) this.markFirstMatch(event.which);
                     this.selectEntry();
+                    if (this.cfg.showListOnInput) {
+                        this.updateNOW(this.content);
+                    }
 					event.stopPropagation();
 					event.preventDefault();
 					return;
@@ -431,6 +434,9 @@ ice.ace.SelectMenu.prototype = {
 				default:
 					if (event.which > 0) this.markFirstMatch(event.which);
                     this.render();
+                    if (this.cfg.showListOnInput) {
+                        this.updateNOW(this.content);
+                    }
 					event.stopPropagation();
 					event.preventDefault();
 					return;
@@ -669,7 +675,7 @@ ice.ace.SelectMenu.prototype = {
 		if (found) {
 			this.index = i;
 			this.scrollToMarkedItem();
-		}	
+		}
 	},
 	
 	scrollToMarkedItem: function() {

@@ -140,7 +140,10 @@ public class SelectMenuMeta extends UIInputMeta {
 
     @Property(tlddoc = "Direction in which to show the list of possible matches. Possible values are \"up\", \"down\", and \"auto\".", defaultValue="auto")
     private String direction;
-	
+
+    @Property(tlddoc = "Boolean value that indicates whether the popup list should be displayed when typing in the text field or only when clicking the down arrow button.", defaultValue="true")
+    private boolean showListOnInput;
+
     @Field()
     private List itemList;
 }
