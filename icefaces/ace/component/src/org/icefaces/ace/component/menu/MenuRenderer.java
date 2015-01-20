@@ -143,7 +143,10 @@ public class MenuRenderer extends BaseMenuRenderer {
 		boolean isPlainMultiColumnMenu = isPlainMultiColumn(menu);
 
         if (tiered) {
-           writer.writeAttribute("class", "ice-ace-menu-tiered", null);
+			if (menu.getType().equalsIgnoreCase("sliding"))
+				writer.writeAttribute("class", "ice-ace-menu-sliding", null);
+			else
+				writer.writeAttribute("class", "ice-ace-menu-tiered", null);
         } else {
 			if (!isPlainMultiColumnMenu) {
 				writer.writeAttribute("class", "ice-ace-menu-plain", null);
@@ -208,7 +211,6 @@ public class MenuRenderer extends BaseMenuRenderer {
 
         //title
         writer.startElement("a", null);
-		writer.writeAttribute("style", "white-space:nowrap;position:relative;", "style");
 		if (disabled) {
 			writer.writeAttribute("class", "ui-state-disabled", null);
 		} else {

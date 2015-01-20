@@ -218,7 +218,6 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
 		boolean disabled = submenu.isDisabled();
 
 		writer.startElement("a", null);
-		writer.writeAttribute("style", "white-space:nowrap;position:relative;", null);
 		if (disabled) {
 			writer.writeAttribute("class", "ui-state-disabled", null);
 		} else {

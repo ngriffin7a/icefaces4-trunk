@@ -4268,7 +4268,8 @@ function wijmoASPNetParseOptions(o) {
 				' ui-helper-clearfix').css({ width: container.width() })
 			.find('ul').css({
 				width: container.width(),
-				left: container.width()
+				left: container.width(),
+				padding: '0' // ICE-10279
 			})
 			//.attr("role", "menu").attr("aria-activedescendant", "ui-active-menuitem")
 			.addClass('ui-widget-content');
