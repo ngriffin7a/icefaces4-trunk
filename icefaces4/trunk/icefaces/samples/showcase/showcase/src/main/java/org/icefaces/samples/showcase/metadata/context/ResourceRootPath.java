@@ -23,5 +23,5 @@ import java.io.Serializable;
 public class ResourceRootPath implements Serializable 
 {
     public static final String FOR_WIKI = "http://wiki.icesoft.org/display/ICE/";
-    public static final String FOR_ACE_TLD = "http://www.icesoft.org/docs/v4_latest/ace/tld/ace/";
+    public static final String FOR_ACE_TLD = "http://res.icesoft.org/docs/v4_latest/ace/tld/ace/";
 }
