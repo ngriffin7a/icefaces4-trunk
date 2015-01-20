@@ -200,15 +200,16 @@ public class SelectMenuRenderer extends InputRenderer {
             jb.beginMap()
             .entryNonNullValue("inFieldLabel", inFieldLabel)
             .entry("inFieldLabelStyleClass", IN_FIELD_LABEL_STYLE_CLASS)
-            .entry("labelIsInField", labelIsInField);
-            jb.endMap();
+            .entry("labelIsInField", labelIsInField)
+            .entry("showListOnInput", selectMenu.isShowListOnInput())
+            .endMap();
 			
 			// effects
 			jb.beginMap()
 			.entry("show", selectMenu.getShowEffect())
 			.entry("showLength", selectMenu.getShowEffectLength())
 			.entry("hide", selectMenu.getHideEffect())
-			.entry("hideLength", selectMenu.getHideEffectLength())
+            .entry("hideLength", selectMenu.getHideEffectLength())
 			.endMap();
 
 			jb.endArray();
