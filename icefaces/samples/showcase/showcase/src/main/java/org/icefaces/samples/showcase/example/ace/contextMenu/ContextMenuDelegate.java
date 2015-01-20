@@ -24,6 +24,8 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+
 @ComponentExample(
         parent = ContextMenuBean.BEAN_NAME,
         title = "example.ace.contextMenu.delegate.title",
@@ -71,4 +73,30 @@ public class ContextMenuDelegate extends ComponentExampleImpl<ContextMenuDelegat
     public void setData(Object data) {
         this.data = data;
     }
+
+	public double getCostMinus1k() {
+		if (data == null) return -1000.00;
+		return round2(((Car) data).getCost() - 1000.00);
+	}
+
+	public double getCostMinus2k() {
+		if (data == null) return -2000.00;
+		return round2(((Car) data).getCost() - 2000.00);
+	}
+
+	public double getCostPlus1k() {
+		if (data == null) return 1000.00;
+		return round2(((Car) data).getCost() + 1000.00);
+	}
+
+	public double getCostPlus2k() {
+		if (data == null) return 2000.00;
+		return round2(((Car) data).getCost() + 2000.00);
+	}
+
+	private double round2(double number) {
+		double temp = number * 100;
+		int intValue = (int) temp;
+		return ((double) intValue) / 100.00;
+	}
 }
