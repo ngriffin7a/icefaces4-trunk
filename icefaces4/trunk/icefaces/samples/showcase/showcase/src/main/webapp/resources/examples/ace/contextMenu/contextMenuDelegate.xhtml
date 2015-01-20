@@ -32,17 +32,6 @@
     <ui:param name="tldResources" value="#{contextMenuResources.tldResources}"/>
 
     <ui:define name="example">
-		<style type="text/css">
-			.wijmo-wijmenu {
-				width: 250px;
-			}
-			.wijmo-wijmenu .wijmo-wijmenu-parent .wijmo-wijmenu-child {
-				width: 250px;
-			}
-			.wijmo-wijmenu .wijmo-wijmenu-child {
-				left: 250px;
-			}
-		</style>
         <h:form id="form">
 
 			<ace:delegate id="delegate">		
@@ -160,19 +149,19 @@
 					</ace:menuColumn>
 					<ace:menuColumn width="150">
 						<ace:submenu label="Cost">
-							<ace:menuItem value="(-$2K) #{contextMenuDelegate.data.cost - 2000}" rendered="#{contextMenuDelegate.data.cost > '2000'}">
+							<ace:menuItem value="(-$2K) #{contextMenuDelegate.costMinus2k}" rendered="#{contextMenuDelegate.data.cost > '2000'}">
 								<ace:ajax event="activate" execute="@form" render="@form" />
 								<f:setPropertyActionListener target="#{contextMenuDelegate.data.cost}" value="#{contextMenuDelegate.data.cost - 2000}" />
 							</ace:menuItem>
-							<ace:menuItem value="(-$1K) #{contextMenuDelegate.data.cost - 1000}" rendered="#{contextMenuDelegate.data.cost > '1000'}">
+							<ace:menuItem value="(-$1K) #{contextMenuDelegate.costMinus1k}" rendered="#{contextMenuDelegate.data.cost > '1000'}">
 								<ace:ajax event="activate" execute="@form" render="@form" />
 								<f:setPropertyActionListener target="#{contextMenuDelegate.data.cost}" value="#{contextMenuDelegate.data.cost - 1000}" />
 							</ace:menuItem>
-							<ace:menuItem value="(+$1K) #{contextMenuDelegate.data.cost + 1000}">
+							<ace:menuItem value="(+$1K) #{contextMenuDelegate.costPlus1k}">
 								<ace:ajax event="activate" execute="@form" render="@form" />
 								<f:setPropertyActionListener target="#{contextMenuDelegate.data.cost}" value="#{contextMenuDelegate.data.cost + 1000}" />
 							</ace:menuItem>
-							<ace:menuItem value="(+$2K) #{contextMenuDelegate.data.cost + 2000}">
+							<ace:menuItem value="(+$2K) #{contextMenuDelegate.costPlus2k}">
 								<ace:ajax event="activate" execute="@form" render="@form" />
 								<f:setPropertyActionListener target="#{contextMenuDelegate.data.cost}" value="#{contextMenuDelegate.data.cost + 2000}" />
 							</ace:menuItem>
