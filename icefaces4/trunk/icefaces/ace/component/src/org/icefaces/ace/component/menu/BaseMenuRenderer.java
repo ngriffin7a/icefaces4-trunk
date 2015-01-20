@@ -85,7 +85,6 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 			String helpText = menuItem.getHelpText();
             writer.writeAttribute("id", clientId, null);
 			writer.writeAttribute("title", (helpText != null ? helpText : ""), null);
-			writer.writeAttribute("style", "cursor:pointer;white-space:nowrap;position:relative;", null);
 			if (menuItem.isDisabled() || disabledParent) {
 				writer.writeAttribute("class", "ui-state-disabled", null);
 			} else {
