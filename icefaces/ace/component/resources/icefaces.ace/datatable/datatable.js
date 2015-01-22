@@ -2783,15 +2783,26 @@ ice.ace.DataTable.prototype.loadExpandedPanelContent = function (row) {
 /* #########################################################################
 ########################### Row Editing #################################
 ######################################################################### */
+ice.ace.DataTable.preventSelection = function(event) {
+	var target = ice.ace.jq(event.target);
+	if (!(target.hasClass('ui-icon-check') || target.hasClass('ui-icon-close'))) event.stopPropagation();
+};
+
 ice.ace.DataTable.prototype.showEditors = function (element) {
+    var row = ice.ace.jq(element).closest('tr');
+	row.on('click', ice.ace.DataTable.preventSelection);
     this.doRowEditShowRequest(element);
 }
 
 ice.ace.DataTable.prototype.saveRowEdit = function (element) {
+    var row = ice.ace.jq(element).closest('tr');
+	row.off('click', ice.ace.DataTable.preventSelection);
     this.doRowEditSaveRequest(element);
 }
 
 ice.ace.DataTable.prototype.cancelRowEdit = function (element) {
+    var row = ice.ace.jq(element).closest('tr');
+	row.off('click', ice.ace.DataTable.preventSelection);
     this.doRowEditCancelRequest(element);
 }
 
