@@ -1070,6 +1070,33 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
                 rowDblClickObs.push(function(event) { doRowSelect.call(self, event); });
             else
                 rowClickObs.push(function(event) { doRowSelect.call(self, event); });
+
+			this.element.on('mousedown', function (event) {
+				if (event.shiftKey) {
+					this.onselectstart = function() { return false; };
+					this.unselectable = 'on';
+					var table = ice.ace.jq(this);
+					table.css('user-select', 'none');
+					table.css('-o-user-select', 'none');
+					table.css('-ms-user-select', 'none');
+					table.css('-moz-user-select', 'none');
+					table.css('-khtml-user-select', 'none');
+					table.css('-webkit-user-select', 'none');
+				}
+			});
+			this.element.on('mouseup', function (event) {
+				if (event.shiftKey) {
+					this.onselectstart = function() { };
+					this.unselectable = 'off';
+					var table = ice.ace.jq(this);
+					table.css('user-select', '');
+					table.css('-o-user-select', '');
+					table.css('-ms-user-select', '');
+					table.css('-moz-user-select', '');
+					table.css('-khtml-user-select', '');
+					table.css('-webkit-user-select', '');
+				}
+			});
         }
 
         this.setupSelectionHover();
