@@ -34,7 +34,7 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
         componentFamily = "org.icefaces.DeviceResource",
         tlddoc = "Render the necessary HTML head resources for a detected " +
                 "device, including the device-specific meta tags, the CSS " +
-                "themes, and javascript."
+                "themes, and javascript. This component must be placed inside the head section of a page."
         )
 @ResourceDependencies({
     @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
