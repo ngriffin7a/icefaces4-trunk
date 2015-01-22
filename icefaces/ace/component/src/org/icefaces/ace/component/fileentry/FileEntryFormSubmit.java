@@ -17,33 +17,30 @@
 package org.icefaces.ace.component.fileentry;
 
 import org.icefaces.ace.util.HTML;
+import org.icefaces.ace.util.ScriptWriter;
 import org.icefaces.ace.util.Utils;
-import org.icefaces.impl.application.WindowScopeManager;
-import org.icefaces.impl.event.BridgeSetup;
-import org.icefaces.util.CoreComponentUtils;
-import org.icefaces.util.EnvUtils;
-import org.icefaces.impl.event.FormSubmit;
 import org.icefaces.impl.context.ICEFacesContextFactory;
+import org.icefaces.impl.event.BridgeSetup;
+import org.icefaces.impl.event.FormSubmit;
+import org.icefaces.util.EnvUtils;
 
-import javax.faces.component.UINamingContainer;
-import javax.faces.event.SystemEventListener;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIOutput;
 import javax.faces.component.UIForm;
+import javax.faces.component.UIOutput;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.SystemEvent;
+import javax.faces.event.SystemEventListener;
 import javax.faces.render.ResponseStateManager;
-import java.net.URLEncoder;
-import java.util.Iterator;
-import java.util.Map;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class FileEntryFormSubmit implements SystemEventListener {
-    private static Logger log = Logger.getLogger(FileEntry.class.getName()+".script");
+    private static Logger log = Logger.getLogger(FileEntry.class.getName() + ".script");
 
     static final String IFRAME_ID = "hiddenIframe";
     private static final String ID_SUFFIX = "_captureFileOnsubmit";
@@ -55,9 +52,9 @@ public class FileEntryFormSubmit implements SystemEventListener {
             ICEFacesContextFactory.AJAX_FORCED_VIEWS;
     private boolean partialStateSaving;
 
-    public FileEntryFormSubmit()  {
+    public FileEntryFormSubmit() {
         partialStateSaving = EnvUtils.isPartialStateSaving(
-            FacesContext.getCurrentInstance() );
+                FacesContext.getCurrentInstance());
     }
 
     public void processEvent(SystemEvent event) throws AbortProcessingException {
@@ -65,15 +62,15 @@ public class FileEntryFormSubmit implements SystemEventListener {
         final FileEntry fileEntry = (FileEntry) event.getSource();
         final UIForm form = Utils.findParentForm(fileEntry);
         log.finer(
-            "FileEntryFormSubmit.processEvent()\n" +
-            "  event: " + event + "\n" +
-            "  phase: " + context.getCurrentPhaseId() + "\n" +
-            "  form.clientId: " + form.getClientId(context));
+                "FileEntryFormSubmit.processEvent()\n" +
+                        "  event: " + event + "\n" +
+                        "  phase: " + context.getCurrentPhaseId() + "\n" +
+                        "  form.clientId: " + form.getClientId(context));
 
-        if (!partialStateSaving)  {
-            for (UIComponent child : form.getChildren())  {
+        if (!partialStateSaving) {
+            for (UIComponent child : form.getChildren()) {
                 String id = child.getId();
-                if ((null != id) && id.endsWith(ID_SUFFIX))  {
+                if ((null != id) && id.endsWith(ID_SUFFIX)) {
                     return;
                 }
             }
@@ -137,21 +134,29 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 writer.writeAttribute(HTML.VALUE_ATTR, fileEntry.getId(), null);
                 writer.endElement(HTML.INPUT_ELEM);
             }
+
             public void encodeEnd(FacesContext context) throws IOException {
             }
         };
-        urlOutput.setId(ENCODED_URL_ID);
+        urlOutput.setId(fileEntry.getId() + ENCODED_URL_ID);
         urlOutput.setTransient(true);
         form.getChildren().add(0, urlOutput);
 
-        FormScriptWriter scriptWriter = new FormScriptWriter(
-            null, "_captureFileOnsubmit");
-        form.getChildren().add(1, scriptWriter);
-
         UIOutput output = new UIOutput() {
             public void encodeBegin(FacesContext context) throws IOException {
+                //TODO render into javascript. Probably have to scrape out notion of MessageFormat.
                 String clientId = getClientId(context);
-                log.finer("RENDER IFRAME  clientId: " + clientId);
+                String progressResourcePath = "";
+                String progressPushId = "";
+                if (PushUtils.isPushPresent()) {
+                    progressResourcePath = PushUtils.getProgressResourcePath(context, form);
+                    progressPushId = PushUtils.getPushId(context, form);
+                }
+
+                String script = "ice.ace.fileentry.captureFormOnsubmit('" + form.getClientId() + "', '" + clientId + "', '" +
+                        progressPushId + "', '" + progressResourcePath + "');";
+                ScriptWriter.insertScript(context, this, script);
+
                 ResponseWriter writer = context.getResponseWriter();
                 writer.startElement("iframe", this);
                 writer.writeAttribute("id", clientId, "clientId");
@@ -160,20 +165,21 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 writer.writeAttribute("src", "about:blank", "src");
                 writer.endElement("iframe");
             }
+
             public void encodeEnd(FacesContext context) throws IOException {
             }
         };
-        output.setId(IFRAME_ID);
+        output.setId(fileEntry.getId() + IFRAME_ID);
         output.setTransient(true);
-        form.getChildren().add(2, output);
+        form.getChildren().add(1, output);
         form.setInView(true);
     }
 
     public boolean isListenerForSource(Object source) {
         return source instanceof FileEntry;
     }
-    
-    private void forceAjaxOnView(FacesContext facesContext)  {
+
+    private void forceAjaxOnView(FacesContext facesContext) {
         //ideally we would force this only for certain views
         //unfortunately the JSF view determinateion logic is not exposed
         //so we can only enable for a given session

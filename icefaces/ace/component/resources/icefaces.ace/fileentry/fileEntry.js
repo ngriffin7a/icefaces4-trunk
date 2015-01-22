@@ -390,7 +390,7 @@ ice.ace.fileentry = {
             var results = progressInfo['results'];
             var res;
             for (res in results) {
-                var fileDiv = document.getElementById(results[res]);
+                var fileDiv = document.getElementById(results[res] + '_container');
                 if (fileDiv) {
                     var outerDiv = fileDiv.childNodes[1];
                     if (outerDiv) {
