@@ -1659,15 +1659,6 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
         dupeHead.css('display', 'none');
         dupeFoot.css('display', 'none');
 
-        if (ie7 && this.cfg.ie7Width) {
-            this.cfg.ie7Width = parseInt(this.cfg.ie7Width);
-            var cellWidth = bodyTable.find('> tbody > tr:first-child > td:first-child').width();
-
-            footerTable.parent().add(headerTable.parent()).css('width', this.cfg.ie7Width + 'px');
-            bodyTable.parent().css('width', this.cfg.ie7Width + 'px').css('position','static');
-            bodyTable.parent().parent().css('overflow-x','scroll');
-        }
-
         if (window.console && this.cfg.devMode) {
             console.log("ace:dataTable - ID: " + this.id + " - resizeScrolling - " + (new Date().getTime() - startTime)/1000 + "s");
         }

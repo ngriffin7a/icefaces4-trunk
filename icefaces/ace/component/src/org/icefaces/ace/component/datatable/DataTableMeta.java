@@ -340,19 +340,14 @@ public class DataTableMeta extends UIDataMeta {
             defaultValue = "100", defaultValueType = DefaultValueType.EXPRESSION)
     private Integer scrollHeight;
 
-    @Property(tlddoc= "When using the DataTable scrollable mode, the IE7 configuration gives an equal width to evey column, and defaults to 100% width. " +
-            "This implies there is never a horizontal scrollbar for the table, unless a fixed width is used on the table or the container of the table. Rather" +
-            "than doing this via CSS, this property will apply (via JS) the given width and necessary overflow rules to the ancestors of the DataTable elements to produce a scrollbar." +
-            "Other browsers will produce a horizontal scrollbar automatically when required and this property is ignored.")
+    @Property(tlddoc= "(Deprecated) This attribute was used to support scrolling on IE7 in previous versions and has no effect now.")
     private String scrollWidthIE7;
 
     @Property(tlddoc = "Enabling renders a table that overflows the fixed height and adds " +
             "a scrollbar. Note, used in combination with multi-row headers defined by a ColumnGroup" +
             "component, it is assumed that every body column of the table will have a associated " +
             "single column spanning header column on the bottom row of the multi-row header. This is " +
-            "to allow for appropriate sizing of the scrollable column and the associated header td. Note," +
-            "in IE7, the CSS/DOM engine doesn't suport the dynamic adjustments required for this feature and" +
-            "instead the feature uses a fixed, equal size for each column of the table.")
+            "to allow for appropriate sizing of the scrollable column and the associated header td.")
     private boolean scrollable;
 
 
