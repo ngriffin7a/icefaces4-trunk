@@ -1066,37 +1066,63 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
                 cellClickObs.push(function(event) { doCellSelect.call(self, event); })
         }
         else {
-            if (this.cfg.dblclickSelect)
+            if (this.cfg.dblclickSelect) {
                 rowDblClickObs.push(function(event) { doRowSelect.call(self, event); });
-            else
+
+				this.element.on('mousedown', function (event) {
+					if (event.shiftKey) {
+						document.body.onselectstart = function() { return false; };
+						document.body.unselectable = 'on';
+						var body = ice.ace.jq('body');
+						body.css('user-select', 'none');
+						body.css('-o-user-select', 'none');
+						body.css('-ms-user-select', 'none');
+						body.css('-moz-user-select', 'none');
+						body.css('-khtml-user-select', 'none');
+						body.css('-webkit-user-select', 'none');
+					}
+				});
+				this.element.on('dblclick', function (event) {
+					document.body.onselectstart = function() { };
+					document.body.unselectable = 'off';
+					var body = ice.ace.jq('body');
+					body.css('user-select', '');
+					body.css('-o-user-select', '');
+					body.css('-ms-user-select', '');
+					body.css('-moz-user-select', '');
+					body.css('-khtml-user-select', '');
+					body.css('-webkit-user-select', '');
+				});
+            } else {
                 rowClickObs.push(function(event) { doRowSelect.call(self, event); });
 
-			this.element.on('mousedown', function (event) {
-				if (event.shiftKey) {
-					this.onselectstart = function() { return false; };
-					this.unselectable = 'on';
-					var table = ice.ace.jq(this);
-					table.css('user-select', 'none');
-					table.css('-o-user-select', 'none');
-					table.css('-ms-user-select', 'none');
-					table.css('-moz-user-select', 'none');
-					table.css('-khtml-user-select', 'none');
-					table.css('-webkit-user-select', 'none');
-				}
-			});
-			this.element.on('mouseup', function (event) {
-				if (event.shiftKey) {
-					this.onselectstart = function() { };
-					this.unselectable = 'off';
-					var table = ice.ace.jq(this);
-					table.css('user-select', '');
-					table.css('-o-user-select', '');
-					table.css('-ms-user-select', '');
-					table.css('-moz-user-select', '');
-					table.css('-khtml-user-select', '');
-					table.css('-webkit-user-select', '');
-				}
-			});
+				this.element.on('mousedown', function (event) {
+					if (event.shiftKey) {
+						this.onselectstart = function() { return false; };
+						this.unselectable = 'on';
+						var table = ice.ace.jq(this);
+						table.css('user-select', 'none');
+						table.css('-o-user-select', 'none');
+						table.css('-ms-user-select', 'none');
+						table.css('-moz-user-select', 'none');
+						table.css('-khtml-user-select', 'none');
+						table.css('-webkit-user-select', 'none');
+					}
+				});
+				this.element.on('mouseup', function (event) {
+					if (event.shiftKey) {
+						this.onselectstart = function() { };
+						this.unselectable = 'off';
+						var table = ice.ace.jq(this);
+						table.css('user-select', '');
+						table.css('-o-user-select', '');
+						table.css('-ms-user-select', '');
+						table.css('-moz-user-select', '');
+						table.css('-khtml-user-select', '');
+						table.css('-webkit-user-select', '');
+					}
+				});
+			}
         }
 
         this.setupSelectionHover();
