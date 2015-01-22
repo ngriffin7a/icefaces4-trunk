@@ -259,7 +259,7 @@ public class DataTableRenderer extends CoreRenderer {
 
             writer.startElement(HTML.DIV_ELEM, null);
             if (tableContext.isScrollable() && (height = tableContext.getScrollHeight()) != null)
-                writer.writeAttribute(HTML.STYLE_ELEM, "max-height:" + height + "px; overflow:auto;", null);
+                writer.writeAttribute(HTML.STYLE_ELEM, "height:" + height + "px; overflow:auto;", null);
             writer.startElement(HTML.TABLE_ELEM, null);
 			String caption = table.getCaption();
 			if (caption != null) {
@@ -292,7 +292,7 @@ public class DataTableRenderer extends CoreRenderer {
 
             writer.startElement(HTML.DIV_ELEM, null);
             writer.writeAttribute(HTML.CLASS_ATTR, scrollClass, null);
-            writer.writeAttribute(HTML.STYLE_ELEM, "max-height:" + tableContext.getScrollHeight() + "px", null);
+            writer.writeAttribute(HTML.STYLE_ELEM, "height:" + tableContext.getScrollHeight() + "px", null);
             writer.startElement(HTML.TABLE_ELEM, null);
 			String caption = table.getCaption();
 			if (caption != null) {
