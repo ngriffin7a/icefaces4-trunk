@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class ProgressListenerResourcePusher implements ProgressListener, PushResourceSetup {
     private static Logger log = Logger.getLogger(FileEntry.class.getName()+".push");
-    final private static long MIN_INTERVAL = 2000L;
+    final private static long MIN_INTERVAL = 700L;
 
     private Map<String, FileEntryResults> clientId2Results;
     private ProgressResource pushResource;
