@@ -384,7 +384,6 @@ public class DataTableRenderer extends CoreRenderer {
         final boolean disable = table.isDisabled();
         final boolean allColClicks = table.isAllColumnClicks();
         final boolean scroll = table.isScrollable();
-        final String  ie7Width = table.getScrollWidthIE7();
         final boolean pinning = table.isColumnPinning();
         final boolean hiddenScrollableSizing = table.isHiddenScrollableSizing();
         final boolean height = scroll && table.getScrollHeight() != Integer.MIN_VALUE;
@@ -425,7 +424,6 @@ public class DataTableRenderer extends CoreRenderer {
             json.entry("scrollStep", table.getRows());
             json.entry("scrollLimit", table.getRowCount());
             json.entry("scrollIE8Like7", scrollIE8Like7);
-            if (ie7Width != null) json.entry("ie7Width", ie7Width);
             if (!hiddenScrollableSizing) json.entry("disableHiddenSizing",true);
         }
 
