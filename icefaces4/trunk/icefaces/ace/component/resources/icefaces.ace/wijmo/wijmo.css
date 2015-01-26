@@ -178,7 +178,6 @@ border:solid 1px transparent;
 float:left;
 line-height:16px;
 padding:0.3em;
-cursor:pointer;
 white-space:nowrap;
 position:relative;
 }
@@ -476,6 +475,7 @@ float:right;
 	right: 0;
 	position: absolute;
 	margin-top:0.3em;
+	top: 0;
 }
 
 .ice-ace-menu-tiered .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout {
@@ -506,6 +506,7 @@ float:right;
 	right: 0;
 	position: absolute;
 	margin-top:0.3em;
+	top: 0;
 }
 
 .ice-ace-menu-context .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout {
@@ -536,6 +537,7 @@ float:right;
 	right: 0;
 	position: absolute;
 	margin-top:0.3em;
+	top: 0;
 }
 
 .ice-ace-menu-bar .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout {
