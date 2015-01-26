@@ -16,6 +16,7 @@
 
 package org.icefaces.mobi.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,6 +35,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 import org.icefaces.impl.application.AuxUploadResourceHandler;
 import org.icefaces.impl.application.AuxUploadSetup;
@@ -114,7 +116,7 @@ public class MobiJSFUtils {
         //final case is a simulated upload
         if (null == contentType)  {
             String simulatedFile = request.getParameter(partUploadName);
-            if (null != simulatedFile)  {
+            if (null != simulatedFile && simulatedFile.indexOf(".") > -1)  {
                 //missing contentType indicates simulator
                 fileExtension = simulatedFile.substring(
                         simulatedFile.lastIndexOf(".") );
@@ -124,7 +126,17 @@ public class MobiJSFUtils {
                         "META-INF/resources/org.icefaces.component.skins/simulator/" +
                         simulatedFile );
             }
+            else{ //expected from camera getUserMedia support
+                String data = (String)request.getParameter(clientId);
+                if( data == null || data.length() == 0 ){
+                    return false;
+                }
+                fileStream = new ByteArrayInputStream(DatatypeConverter.parseBase64Binary(data));
+                fileExtension = ".png";
+                contentType = "image/png";
+            }
         }
+        
 
         if (null != fileExtension) {
             fileName += fileExtension;

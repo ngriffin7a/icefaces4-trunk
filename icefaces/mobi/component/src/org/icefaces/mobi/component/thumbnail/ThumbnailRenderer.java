@@ -27,8 +27,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
+import org.icefaces.mobi.component.camera.Camera;
 import org.icefaces.mobi.util.MobiJSFUtils;
-
 import org.icefaces.util.ClientDescriptor;
 
 import static org.icefaces.ace.util.HTML.*;
@@ -78,18 +78,19 @@ public class ThumbnailRenderer extends Renderer {
             thumbnail.setMFor(mFor);
         }
         ResponseWriter writer = facesContext.getResponseWriter();
-        encode(thumbnail, writer, comp.getClientId(facesContext));
+        encode(thumbnail, writer, comp.getClientId(facesContext), comp);
     }
 
-    public void encode(Thumbnail component, ResponseWriter writer, String mFor) throws IOException {
+    public void encode(Thumbnail component, ResponseWriter writer, String mFor, UIComponent forComp) throws IOException {
         String clientId = component.getClientId();
         ClientDescriptor cd = component.getClient();
-        if (cd.isDesktopBrowser()) {
+        boolean isForCamera = forComp instanceof Camera;
+        if (cd.isDesktopBrowser() && !isForCamera ) {
             //    logger.info("desktop browser");
             return;
         }
         boolean renderThumbnail = false;
-        if (cd.isICEmobileContainer() || cd.isSXRegistered()) {
+        if (cd.isICEmobileContainer() || cd.isSXRegistered() || isForCamera ) {
             renderThumbnail = true;
         }
         String thumbId = component.getMFor() + "-thumb";
@@ -106,13 +107,23 @@ public class ThumbnailRenderer extends Renderer {
                 writer.writeAttribute(STYLE_ATTR, style, null);
             }
             writer.startElement(IMG_ELEM, component);
+
+            //if thumb is for camera, always render the thumb for
+            //for client side code, but hide it if the value is null
+            //js code will unhide it when a photo is generated
+            if( isForCamera ){ 
+                Camera cam = (Camera)forComp;
+                if( cam.getValue() == null || !cam.getValue().containsKey("file") ){
+                    writer.writeAttribute(STYLE_ATTR, "display:none", null);
+                }
+            }
             writer.writeAttribute(WIDTH_ATTR, "64", null);
             writer.writeAttribute(HEIGHT_ATTR, "64", null);
             writer.writeAttribute(ID_ATTR, thumbId, null);
             String data = component.getData();
             if (data != null) writer.writeAttribute(SRC_ATTR, data, null);
             writer.endElement(IMG_ELEM);
-
+    
             writer.startElement(INPUT_ELEM, component);
             writer.writeAttribute(TYPE_ATTR, "hidden", null);
             writer.writeAttribute(ID_ATTR, clientId + "_data", null);
@@ -120,7 +131,7 @@ public class ThumbnailRenderer extends Renderer {
             writer.endElement(INPUT_ELEM);
             writer.endElement(SPAN_ELEM);
         }
-
+        
         writer.startElement("script", component);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("if (!window['thumbnails" + mFor + "']) window['thumbnails" + mFor + "'] = {};");
