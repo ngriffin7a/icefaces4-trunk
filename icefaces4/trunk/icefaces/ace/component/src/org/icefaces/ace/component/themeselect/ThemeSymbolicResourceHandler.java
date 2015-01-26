@@ -45,8 +45,11 @@ public class ThemeSymbolicResourceHandler extends ResourceHandlerWrapper {
             ExternalContext externalContext = context.getExternalContext();
             String theme = (String) externalContext.getSessionMap().get(Constants.THEME_PARAM);
             if (theme == null) {
-                String defaultTheme = externalContext.getInitParameter(Constants.THEME_PARAM);
-                theme = defaultTheme == null ? "sam" : defaultTheme;
+                theme = (String) context.getViewRoot().getViewMap().get(Constants.THEME_PARAM);
+                if (theme == null) {
+                    String defaultTheme = externalContext.getInitParameter(Constants.THEME_PARAM);
+                    theme = defaultTheme == null ? "sam" : defaultTheme;
+                }
             } else {
                 theme = theme.trim();
             }
