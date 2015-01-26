@@ -38,62 +38,61 @@ import org.icefaces.util.EnvUtils;
 import org.icefaces.util.ClientDescriptor;
 
 public class CameraRenderer extends Renderer {
-    private static final Logger logger = Logger.getLogger(CameraRenderer.class.getName());
+	private static final Logger logger = Logger.getLogger(CameraRenderer.class.getName());
 
 
-    public void decode(FacesContext facesContext, UIComponent uiComponent) {
-        Camera camera = (Camera) uiComponent;
-        String clientId = camera.getClientId();
-        try {
-            if (!camera.isDisabled()) {
-                Map<String, Object> map = new HashMap<String, Object>();
-                boolean valid =  extractImages(facesContext, map, clientId);
-                /* only set map to value if boolean returned from extractImages is true */
-                if (valid){
-                    if (map !=null){
-                       camera.setValue(map);
+	public void decode(FacesContext facesContext, UIComponent uiComponent) {
+		Camera camera = (Camera) uiComponent;
+		String clientId = camera.getClientId();
+		try {
+			if (!camera.isDisabled()) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				boolean valid =  extractImages(facesContext, map, clientId);
+				/* only set map to value if boolean returned from extractImages is true */
+				if (valid){
+					if (map !=null){
+					   camera.setValue(map);
 
-             //   trigger valueChange and add map as newEvent value old event is NA
-                       uiComponent.queueEvent(new ValueChangeEvent(uiComponent,
-    		    		    null, map));
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			 //   trigger valueChange and add map as newEvent value old event is NA
+					   uiComponent.queueEvent(new ValueChangeEvent(uiComponent,
+							null, map));
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     *
-     * @param facesContext
-     * @param map
-     * @param clientId
-     * @return   boolean true means validation of the upload passes, false mean it does not.
-     * @throws IOException
-     *
-     * that uploaded this component.
-     */
-    public boolean extractImages(FacesContext facesContext, Map map, String clientId) throws IOException {
-        return MobiJSFUtils.decodeComponentFile(facesContext, clientId, map);
-    }
+	/**
+	 *
+	 * @param facesContext
+	 * @param map
+	 * @param clientId
+	 * @return   boolean true means validation of the upload passes, false mean it does not.
+	 * @throws IOException
+	 *
+	 * that uploaded this component.
+	 */
+	public boolean extractImages(FacesContext facesContext, Map map, String clientId) throws IOException {
+		return MobiJSFUtils.decodeComponentFile(facesContext, clientId, map);
+	}
 
-    /*
-      rendering markup moved to core renderer for use with JSP and JSF
-     */
-    public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
-        throws IOException {
-        Camera camera = (Camera) uiComponent;
+	/*
+	  rendering markup moved to core renderer for use with JSP and JSF
+	 */
+	public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
+		throws IOException {
+		Camera camera = (Camera) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = camera.getClientId();
 		writer.startElement(SPAN_ELEM, camera);
 		writer.writeAttribute(ID_ATTR, clientId);
-        String oldLabel = camera.getButtonLabel();
-        if (MobiJSFUtils.uploadInProgress(camera))  {
-            camera.setButtonLabel(camera.getCaptureMessageLabel()) ;
-        } 
-        //StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
-        ClientDescriptor cd = camera.getClient();
+		String oldLabel = camera.getButtonLabel();
+		if (MobiJSFUtils.uploadInProgress(camera))  {
+			camera.setButtonLabel(camera.getCaptureMessageLabel()) ;
+		} 
+		ClientDescriptor cd = camera.getClient();
 		// button element
 		writer.startElement(BUTTON_ELEM, camera);
 		writer.writeAttribute(ID_ATTR, clientId + "_button");
@@ -105,34 +104,37 @@ public class CameraRenderer extends Renderer {
 		String styleClass = camera.getStyleClass();
 		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
 		writer.writeAttribute(TABINDEX_ATTR, camera.getTabindex());
-		//writeStandardAttributes(writer, camera, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
-		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.camera('" + clientId + "', 'callback"+clientId+"', {postURL:'" + camera.getPostURL() + "', ";
-        script += "cookies:{'JSESSIONID':'" + 
-                MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}";
-		int maxwidth = camera.getMaxwidth();
-		if (maxwidth > 0) script += ", maxwidth: " + maxwidth;
-		int maxheight = camera.getMaxheight();
-		if (maxheight > 0) script += ", maxheight:" + maxheight;
-		script += "});";
-		writer.writeAttribute(ONCLICK_ATTR, script);
+		String script = "ice.mobi.cameraBtnOnclick('%s', '%s', '%s', '%s', '%s', %s, %s);";
+		writer.writeAttribute(ONCLICK_ATTR, String.format(script, clientId, camera.getButtonLabel(), 
+				camera.getCaptureMessageLabel(), camera.getPostURL(), 
+				MobiJSFUtils.getSessionIdCookie(facesContext),
+				camera.getMaxwidth() > 0 ? camera.getMaxwidth() : "undefined",
+				camera.getMaxheight() > 0 ? camera.getMaxheight() : "undefined"));
 		writer.startElement(SPAN_ELEM, camera);
 		writer.writeText(camera.getButtonLabel());
 		writer.endElement(SPAN_ELEM);
-
+		
 		// themeroller and thumbnails support
-		writer.startElement("span", camera);
-		writer.startElement("script", camera);
-		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("new ice.mobi.button('"+clientId+"_button');");
-		writer.writeText("if (!window['thumbnails"+clientId+"']) window['thumbnails"+clientId+"'] = {};");
-		writer.writeText("window['callback"+clientId+"'] = function(arg) {for (t in window['thumbnails"+clientId+"']) { setTimeout(function() {var e = document.getElementById(t); if (e) e.src = arg.preview; }, 350); try {document.getElementById(window['thumbnails"+clientId+"'][t]).value = arg.preview;} catch (e) {} }};");
+        writer.startElement("span", camera);
+        writer.startElement("script", camera);
+        writer.writeAttribute("type", "text/javascript");
+        String uiScript = "new ice.mobi.button('" + clientId + "');";
+        uiScript += "window['callback" + clientId + "'] = function(arg) {";
+        uiScript += "if (! ('thumbnails" + clientId + "' in window)){window['thumbnails" + clientId + "'] = {};}";
+        uiScript += "var thumbnails = window['thumbnails" + clientId + "'];";
+        uiScript += "for (t in thumbnails ) {setTimeout(function() {var e = document.getElementById(t); ";
+        uiScript += "if (e) e.src = arg.preview; }, 350); ";
+        uiScript += "try {document.getElementById(thumbnails[t]).value = arg.preview;}catch (e) {} }}; ";
+        writer.writeText(uiScript);
         writer.endElement("script");
-		writer.endElement("span");
+        writer.endElement("span");
+
 		writer.endElement(BUTTON_ELEM);
 
 		writer.endElement(SPAN_ELEM);
-        camera.setButtonLabel(oldLabel);
-    }
+		camera.setButtonLabel(oldLabel);
+	}
+	
+	
 
 }
