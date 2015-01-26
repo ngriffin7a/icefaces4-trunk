@@ -379,6 +379,9 @@
         }
 
         function processUpdateStr(dir) {
+			if( !dir ){
+				return;
+			}
             var valueParts = dir.split('|');
             var details = getNode('det');
 
