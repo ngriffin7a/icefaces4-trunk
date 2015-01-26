@@ -114,7 +114,7 @@
                 /* fix body column widths */
                 for (var i = 0; i < frbcWidths.length; i++) {
                     if( sheet.insertRule ){
-                        sheet.insertRule(selectorId + " ." + firstRowBodyCells[i].classList[0] + " { width: "+frbcWidths[i] + 'px'+"; }", 0);
+                        sheet.insertRule(selectorId + " ." + firstRowBodyCells[i].classList[0] + " { max-width: " + frbcWidths[i] + "px;min-width: " + frbcWidths[i] + "px;width: " + frbcWidths[i] + "px;}", 0);
                     }
                 }
 
