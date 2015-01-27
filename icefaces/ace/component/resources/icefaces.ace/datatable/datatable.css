@@ -223,8 +223,19 @@
     min-height: 0%; /* IE9 hover + scrolling error. description : http://blog.brianrichards.net/post/6721471926/ie9-hover-bug-workaround */
 }
 
+.ui-datatable-scrollable-body.ui-widget-content {
+	border-top-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+}
+
+.ui-datatable-scrollable-body tbody.ui-datatable-data.ui-widget-content {
+	border-bottom-width: 0;
+}
+
 .ui-datatable-scrollable-footer {
     margin-top:-1px; /* Easy fix for double border in scrollable mode */
+	border-top-width: 0;
 }
 
 .ui-datatable-scrollable .ui-datatable-scrollable-body > table {

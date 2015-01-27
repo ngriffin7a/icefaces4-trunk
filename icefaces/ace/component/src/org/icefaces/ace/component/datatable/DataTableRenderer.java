@@ -287,7 +287,7 @@ public class DataTableRenderer extends CoreRenderer {
 
         if (tableContext.isScrollable() && tableContext.isStaticHeaders()) {
             String scrollClass =
-                    DataTableConstants.SCROLLABLE_X_CLASS + " " +
+                    DataTableConstants.SCROLLABLE_X_CLASS + " ui-widget-content " +
                             DataTableConstants.SCROLLABLE_BODY_CLASS;
 
             writer.startElement(HTML.DIV_ELEM, null);
