@@ -1080,6 +1080,15 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
 						body.css('-moz-user-select', 'none');
 						body.css('-khtml-user-select', 'none');
 						body.css('-webkit-user-select', 'none');
+						this.onselectstart = function() { return false; };
+						this.unselectable = 'on';
+						var table = ice.ace.jq(this);
+						table.css('user-select', 'none');
+						table.css('-o-user-select', 'none');
+						table.css('-ms-user-select', 'none');
+						table.css('-moz-user-select', 'none');
+						table.css('-khtml-user-select', 'none');
+						table.css('-webkit-user-select', 'none');
 					}
 				});
 				this.element.on('dblclick', function (event) {
