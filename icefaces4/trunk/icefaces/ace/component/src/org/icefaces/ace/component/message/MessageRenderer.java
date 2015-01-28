@@ -46,7 +46,6 @@ public class MessageRenderer extends Renderer {
         ResponseWriter writer = context.getResponseWriter();
         Message message = (Message) component;
         String forId = (forId = message.getFor()) == null ? "" : forId.trim();
-        String styleClass = "ui-faces-message" + ((styleClass = message.getStyleClass()) == null ? "" : " " + styleClass);
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
         String sourceMethod = "encodeEnd";
 
@@ -61,8 +60,10 @@ public class MessageRenderer extends Renderer {
         String clientId = message.getClientId();
         writer.writeAttribute("id", clientId, "id");
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
+        String styleClass = "ui-faces-message" + ((styleClass = message.getStyleClass()) == null ? "" : messageIter.hasNext() ? " " + styleClass : "");
         writer.writeAttribute("class", styleClass, null);
-        writeAttributes(writer, component, "lang", "style", "title");
+        writeAttributes(writer, component, "lang", "title");
+		if (messageIter.hasNext()) writeAttributes(writer, component, "style");
         if (ariaEnabled) {
             writer.writeAttribute("role", "alert", null);
             writer.writeAttribute("aria-atomic", "true", null);

@@ -45,17 +45,18 @@ public class MessagesRenderer extends Renderer {
 
         ResponseWriter writer = context.getResponseWriter();
         Messages messages = (Messages) component;
-        String style = messages.getStyle();
-        String styleClass = (styleClass = messages.getStyleClass()) == null ? "" : " " + styleClass;
+        Map<String, ArrayList<FacesMessage>> msgs = getMsgs(messages, context);
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
 
         writer.startElement("div", messages);
         String clientId = messages.getClientId();
         writer.writeAttribute("id", clientId, "id");
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
-        if (style != null) {
+        String style = messages.getStyle();
+        if (style != null && msgs.size() > 0) {
             writer.writeAttribute("style", style, "style");
         }
+        String styleClass = (styleClass = messages.getStyleClass()) == null ? "" : msgs.size() > 0 ? " " + styleClass : "";
         writer.writeAttribute("class", "ui-faces-messages ui-widget" + styleClass, null);
         if (ariaEnabled) {
             writer.writeAttribute("role", "alert", null);
@@ -67,7 +68,6 @@ public class MessagesRenderer extends Renderer {
         int count = 1;
         Map<String, ArrayList<String>> prevMsgs = messages.getPrevMsgs(), currMsgs = new HashMap<String, ArrayList<String>>();
         ArrayList<String> prevMsgsForId, currMsgsForId;
-        Map<String, ArrayList<FacesMessage>> msgs = getMsgs(messages, context);
         String msgClientId, msgText;
         ArrayList<FacesMessage> msgList;
         ArrayList<Integer> removeList = new ArrayList<Integer>();
