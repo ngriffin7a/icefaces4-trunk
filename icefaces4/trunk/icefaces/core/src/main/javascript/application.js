@@ -557,6 +557,7 @@ if (!window.ice.icefaces) {
         //include element-remove.js
         //include user-inactivity.js
         //include status.js
+        //include offline.js
         //include fixjsf.js
     })(window.ice);
 }

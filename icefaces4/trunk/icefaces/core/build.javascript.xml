@@ -41,6 +41,7 @@
         <loadfile property="element-update.js" srcFile="${src.dir}/element-update.js"/>
         <loadfile property="element-remove.js" srcFile="${src.dir}/element-remove.js"/>
         <loadfile property="user-inactivity.js" srcFile="${src.dir}/user-inactivity.js"/>
+        <loadfile property="offline.js" srcFile="${src.dir}/offline.js"/>
 
         <copy file="${src.dir}/application.js" tofile="${tmp}" overwrite="yes">
             <filterset begintoken="//include " endtoken=".js">
@@ -57,6 +58,7 @@
                 <filter token="element-update" value="${element-update.js}"/>
                 <filter token="element-remove" value="${element-remove.js}"/>
                 <filter token="user-inactivity" value="${user-inactivity.js}"/>
+                <filter token="offline" value="${offline.js}"/>
             </filterset>
         </copy>
     </target>
