@@ -23,6 +23,7 @@ import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
+import org.icefaces.ace.util.PassThruAttributeWriter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -99,7 +100,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
         if (ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }
-
+        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, component) ;
         String iceFocus = (String) paramMap.get("ice.focus");
         String inFieldLabel = (String) labelAttributes.get("inFieldLabel");
         String value = null;

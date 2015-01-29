@@ -145,7 +145,8 @@ public class ComboBoxMeta extends HtmlInputTextMeta {
 	@Property(tlddoc="Length of time in milliseconds the hide effect will last for.", defaultValue="150")
 	private int hideEffectLength;
 	
-    @Property(tlddoc = "The HTML5 placeholder attribute represents a short hint (a word or short phrase) intended to aid the user with data entry " +
+    @Property(tlddoc = "DEPRECATED in favor of the jsf 2.2 passthrough library. " +
+            "The HTML5 placeholder attribute represents a short hint (a word or short phrase) intended to aid the user with data entry " +
     		"when the input element has no value. If the placeholder attribute is not supported by the browser, the label 'inField' functionality " +
 			"will be used instead.")
     private String placeholder;

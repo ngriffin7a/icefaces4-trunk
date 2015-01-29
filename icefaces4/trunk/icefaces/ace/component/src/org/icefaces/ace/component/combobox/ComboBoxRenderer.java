@@ -18,6 +18,7 @@ package org.icefaces.ace.component.combobox;
 
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.ace.event.TextChangeEvent;
@@ -109,7 +110,8 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.writeAttribute("name", inputClientId, null);
 		writer.writeAttribute("style", comboBox.getStyle() + "; display: inline-block; overflow: hidden;", null);
 		writer.writeAttribute("class", "ui-inputfield ui-state-default ui-corner-left " + getStateStyleClasses(comboBox) + inFieldLabelStyleClass, null);
-		if (ariaEnabled) {
+		PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, uiComponent) ;
+        if (ariaEnabled) {
 			writer.writeAttribute("role", "textbox", null);
 			final ComboBox component = (ComboBox) uiComponent;
 			Map<String, Object> ariaAttributes = new HashMap<String, Object>() {{

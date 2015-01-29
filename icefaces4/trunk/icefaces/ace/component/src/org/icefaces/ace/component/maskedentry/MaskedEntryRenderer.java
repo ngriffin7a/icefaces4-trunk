@@ -39,6 +39,7 @@ import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.JSONBuilder;
+import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 
@@ -150,7 +151,7 @@ public class MaskedEntryRenderer extends InputRenderer {
         if (ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }
-
+        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, maskedEntry) ;
         String valueToRender = null;
 		if (maskedEntry.isValid()) {
 			valueToRender = ComponentUtils.getStringValueToRender(context, maskedEntry);
