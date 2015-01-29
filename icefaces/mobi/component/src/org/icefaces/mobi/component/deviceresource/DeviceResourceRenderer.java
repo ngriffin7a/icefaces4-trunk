@@ -67,6 +67,9 @@ public class DeviceResourceRenderer  extends Renderer implements javax.faces.eve
 	public static final String SCRIPT_SIMULATOR = "simulator-interface.js";
 	public static final String CSS_SIMULATOR = "simulator.css";
 
+	public static final String CSS_MOBILE = "mobile.css";
+	public static final String CSS_MOBILE_LOCATION = "org.icefaces.component.css";
+
     public void processEvent(ComponentSystemEvent event)
             throws AbortProcessingException {
         // http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/index.html
@@ -91,7 +94,7 @@ public class DeviceResourceRenderer  extends Renderer implements javax.faces.eve
     
         ClientDescriptor client = ClientDescriptor
                 .getInstance((HttpServletRequest)context.getExternalContext().getRequest());
-        ios6orHigher = client.isIOS6() || client.isIOS7();
+        ios6orHigher = client.isIOS6() || client.isIOS7() || client.isIOS8();
         if( !ios6orHigher ){
             desktop = client.isDesktopBrowser();
         }
@@ -118,6 +121,14 @@ public class DeviceResourceRenderer  extends Renderer implements javax.faces.eve
                     context.getAttributes().put(Constants.IOS_SMART_APP_BANNER_KEY, Boolean.TRUE);
                 }
             }
+			Resource mobileCss = context.getApplication()
+				.getResourceHandler().createResource(
+					CSS_MOBILE, CSS_MOBILE_LOCATION, "text/css");
+			writer.startElement(HTML.LINK_ELEM, comp);
+			writer.writeAttribute(HTML.TYPE_ATTR, HTML.LINK_TYPE_TEXT_CSS, HTML.TYPE_ATTR);
+			writer.writeAttribute(HTML.REL_ATTR, HTML.STYLE_REL_STYLESHEET, HTML.REL_ATTR);
+			writer.writeURIAttribute(HTML.HREF_ATTR, mobileCss.getRequestPath(), HTML.HREF_ATTR);
+			writer.endElement(HTML.LINK_ELEM);
         }
 
         if (client.isAndroid2OS()) {

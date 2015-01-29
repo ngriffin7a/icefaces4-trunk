@@ -1,0 +1,6 @@
+.ui-field-contain .mobi-fieldset-row input,
+.ui-field-contain .mobi-fieldset-row textarea {
+display:inline-block;
+float: right;
+width: 58%;
+}
