@@ -80,50 +80,60 @@ public class TextEntryMeta extends HtmlInputTextMeta {
 
     @Property(defaultValue = "true", tlddoc="If false, the component will not redisplay its value when the page reloads.")
     private boolean redisplay;
+
 	
 	// ----------------------------------------
 	// ----- imported from mobi:inputText -----
 	// ----------------------------------------
 
-    @Property(defaultValue = "text", tlddoc = "The html5 type attribute for the input element. " +
+    @Property(defaultValue = "text", tlddoc = "***DEPRECATED IN FAVOR OF THE JSF 2.2 passthrough library ***" +
+            " The html5 type attribute for the input element. " +
     		"Currently supports text, phone, url, email, number, date, time, datetime.  Depending " +
     		"on browser and/or device capability, a type-specific keyboard may be displayed and various other " +
             "attributes may apply for the html5 input element. It is up to the developer to ensure that " +
             "the browsers and devices they are targetting are supported properly. ")
     private String type;
 
-    @Property(tlddoc = "The HTML5 placeholder attribute represents a short hint" +
+    @Property(tlddoc = "**DEPRECATED in favor of the jsf 2.2 passthrough library. " +
+            "The HTML5 placeholder attribute represents a short hint" +
     		" (a word or short phrase) intended to aid the user with data entry " +
     		"when the input element has no value.")
     private String placeholder;
 
-    @Property(tlddoc = "The html5 pattern attribute specifies a regular expression against which " +
+    @Property(tlddoc = "**DEPRECATED in favor of the jsf 2.2 passthrough library." +
+            "The html5 pattern attribute specifies a regular expression against which " +
     		"the control's value, or, when the multiple attribute applies and is set, " +
     		"the control's values, are to be checked. ")
     private String pattern;
 
     @Property(defaultValue = "off",
-            tlddoc = "An html5 feature of mobile browser capability which will capitalize the first character of the field.")
+            tlddoc = "**DEPRECATED in favor of the jsf 2.2 passthrough library. " +
+                    "An html5 feature of mobile browser capability which will capitalize the first character of the field.")
     private String autocapitalize;
 
     @Property(defaultValue = "off",
-            tlddoc = "The autocorrect is an html5 attribute that may correct spelling errors in the field if supported in the browser")
+            tlddoc = "DEPRECATED in favor of the jsf 2.2 passthrough library. " +
+                    "The autocorrect is an html5 attribute that may correct spelling errors in the field if supported in the browser")
     private String autocorrect;
 
-    @Property(defaultValue = "3", tlddoc = "Magnifying glass for webkit used to show last three searches on a search field.")
+    @Property(defaultValue = "3", tlddoc = "**DEPRECATED in favor of the jsf 2.2 passthrough library." +
+            "Magnifying glass for webkit used to show last three searches on a search field.")
     private int results;
     
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="Minimum value is an html5 passthrough attribute and" +
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="**DEPRECATED in favor of the jsf 2.2 passthrough library." +
+            "Minimum value is an html5 passthrough attribute and" +
             " only applicable to type number.  " +
             "Will not be rendered if not present.")
     private int min;
 
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="Maximum value is an html5 passthrough attribute, and " +
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="**DEPRECATED in favor of the jsf 2.2 passthrough library. " +
+            "Maximum value is an html5 passthrough attribute, and " +
             " only applicable to type number. " +
             " Will not be rendered if attribute is not present")
     private int max;
     
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="The html5 step attributeto increase/decrease the value of the number input. " +
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="**DEPRECATED in favor of the jsf 2.2 passthrough library. " +
+            "The html5 step attributeto increase/decrease the value of the number input. " +
             "Requires min and max atribute. " +
             "Applicable only to type \"number\". ")
     private int step;

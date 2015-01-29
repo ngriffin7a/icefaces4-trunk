@@ -44,6 +44,7 @@ import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.impl.util.Util;
+import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 
@@ -119,6 +120,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
         }
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
+        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, dateTimeEntry) ;
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", type, null);
 		writer.writeAttribute("tabindex", dateTimeEntry.getTabindex(), null);

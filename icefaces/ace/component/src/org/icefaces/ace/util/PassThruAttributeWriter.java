@@ -22,7 +22,11 @@ import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
+import java.lang.Object;
+import java.lang.String;
 import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is copied over from compat and modified for mobility components
@@ -168,6 +172,25 @@ public class PassThruAttributeWriter {
                 }
 
             }
+        }
+    }
+
+    public static void renderHtml5PassThroughAttributes(ResponseWriter writer, UIComponent component)
+            throws IOException {
+        if (writer==null){
+            throw new FacesException("NPE for writer object");
+        }
+        if (component==null){
+            throw new FacesException("NPE for UIComponent");
+        }
+        String clientId= component.getId();
+        Map<String, Object> attributes = new HashMap<String, Object>();
+        attributes=component.getPassThroughAttributes();
+        if (!attributes.isEmpty()) {
+              for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+                //  System.out.println("for comp="+clientId+" key="+entry.getKey()+" object = "+entry.getValue().toString());
+                  writer.writeAttribute(entry.getKey(), entry.getValue().toString(),null);
+              }
         }
     }
 

@@ -64,12 +64,11 @@ public class TextEntry extends TextEntryBase implements Focusable {
             new Attribute("placeholder", null),
             new Attribute("maxlength", null),
             new Attribute("name", null),
-            new Attribute("required", null),
             new Attribute("tabindex", null),
             new Attribute("style", null)
     };
 
-    private Attribute[] booleanAttNames = {new Attribute("required", null),
+    private Attribute[] booleanAttNames = {
             new Attribute("immediate", null)};
 
 

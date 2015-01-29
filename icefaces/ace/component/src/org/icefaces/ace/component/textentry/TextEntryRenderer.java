@@ -25,12 +25,15 @@ import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
+import java.lang.String;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -65,7 +68,7 @@ public class TextEntryRenderer extends InputRenderer {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = textEntry.getClientId(context);
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
-		
+
 		String type = textEntry.validateType(textEntry.getType());
         boolean isNumberType = type.equals("number");
         boolean isDateType = type.equals("date");
@@ -80,6 +83,7 @@ public class TextEntryRenderer extends InputRenderer {
         Map<String, Object> labelAttributes = getLabelAttributes(component);
 
         writer.startElement("span", null);
+        //check to see if passthrough library is loaded...
 
         writeLabelAndIndicatorBefore(labelAttributes);
 
@@ -143,7 +147,7 @@ public class TextEntryRenderer extends InputRenderer {
         writer.writeAttribute("value", valueToRender , null);
 
         renderPassThruAttributes(context, textEntry, HTML.INPUT_TEXT_ATTRS);
-
+        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, component) ;
         if (ariaEnabled) {
             final TextEntry compoent = (TextEntry) component;
             Map<String, Object> ariaAttributes = new HashMap<String, Object>() {{
@@ -198,5 +202,7 @@ public class TextEntryRenderer extends InputRenderer {
 		writer.endElement("span");
 
         writer.endElement("span");
+
+
 	}
 }
