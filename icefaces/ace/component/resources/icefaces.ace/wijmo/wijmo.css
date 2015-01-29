@@ -440,6 +440,10 @@ float:right;
 	width: auto;
 }
 
+.ice-ace-menu-plain {
+	display:block;
+}
+
 .ice-ace-menu-plain .wijmo-wijmenu-list {
 	width:100%;
 }
@@ -454,6 +458,10 @@ float:right;
 	width:100%;
 	margin: 0;
 	right: 0;
+}
+
+.ice-ace-menu-tiered {
+	display:block;
 }
 
 .ice-ace-menu-tiered .wijmo-wijmenu .wijmo-wijmenu-link {
@@ -547,6 +555,10 @@ float:right;
 .ice-ace-menu-bar .wijmo-wijmenu .wijmo-wijmenu-link > .wijmo-wijmenu-text .ui-icon.wijmo-wijmenu-icon-left,
 .ice-ace-menu-bar .wijmo-wijmenu .wijmo-wijmenu-link > .wijmo-wijmenu-text .wijmo-wijmenu-text {
 	float:none;
+}
+
+.ice-ace-menu-sliding {
+	display:block;
 }
 
 .ice-ace-menu-sliding .wijmo-wijmenu .wijmo-wijmenu-link {
