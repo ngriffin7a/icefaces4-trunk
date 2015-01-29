@@ -49,6 +49,7 @@ import java.util.logging.Logger;
 public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     public static final String SessionSynchronizationMonitor = WindowScopeManager.class.getName() + "$SessionSynchronizationMonitor";
     public static final String ScopeName = "window";
+    private static final String WindowParameter = "ice.window";
     private static final Logger log = Logger.getLogger(WindowScopeManager.class.getName());
     private static final String seed = Integer.toString(new Random().nextInt(1000), 36);
     private static SharedMapLookupStrategy sharedMapLookupStrategy;
@@ -96,7 +97,15 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static ScopeMap lookupWindowScope(FacesContext context) {
-        String id = lookupAssociatedWindowID(context.getExternalContext().getRequestMap());
+        final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
+        final ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
+        //stop looking up the scope map for resources that do not have 'ice.window' parameter in their URL
+        //to avoid creating new window scope maps that will never be used again
+        if (resourceHandler.isResourceRequest(context) && !requestMap.containsKey(WindowParameter)) {
+            return null;
+        }
+
+        String id = lookupAssociatedWindowID(requestMap);
         State state = getState(context);
         if (state == null)  {
             return null;
@@ -131,7 +140,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         synchronized (synchronizationMonitor) {
             State state = getState(context);
             ExternalContext externalContext = context.getExternalContext();
-            String id = customWindowTracking ? externalContext.getRequestParameterMap().get("ice.window") : externalContext.getClientWindow().getId();
+            String id = externalContext.getRequestParameterMap().get(WindowParameter);
             try {
                 for (Object scopeMap : new ArrayList(state.windowScopedMaps.values())) {
                     ScopeMap map = (ScopeMap) scopeMap;
@@ -369,7 +378,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
 
         private void disactivateIfUnused(FacesContext facesContext) {
-            if (!EnvUtils.containsBeans(this)) {
+            if (!EnvUtils.containsBeans(this) && !EnvUtils.containsDisposedBeans(facesContext.getViewRoot().getViewMap())) {
                 //the map *does not* contain objects (most probably beans) other than the ones inserted by the framework
                 disactivate(getState(facesContext));
             }
@@ -630,7 +639,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             if (event.getPhaseId() == PhaseId.RENDER_RESPONSE && isDisposeWindowRequest(parameters)) {
                 //shortcut the lifecycle to avoid running it with certain parts discarded or disposed
                 context.responseComplete();
-                String windowID = (String) parameters.get("ice.window");
+                String windowID = (String) parameters.get(WindowParameter);
                 disposeWindow(context, windowID);
                 if (EnvUtils.isICEpushPresent()) {
                     try {
