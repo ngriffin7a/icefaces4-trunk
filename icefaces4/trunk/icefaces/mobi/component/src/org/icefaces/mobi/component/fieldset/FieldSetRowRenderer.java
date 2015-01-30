@@ -61,6 +61,14 @@ public class FieldSetRowRenderer extends Renderer {
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
+
+		// technique to account for the heights of floated elements in this row
+		writer.startElement(HTML.DIV_ELEM, uiComponent);
+		writer.writeAttribute(HTML.STYLE_ATTR, "clear:both;", HTML.STYLE_ATTR);
+		writer.endElement(HTML.DIV_ELEM);
+		writer.startElement(HTML.DIV_ELEM, uiComponent);
+		writer.endElement(HTML.DIV_ELEM);
+
         writer.endElement(HTML.DIV_ELEM);
     }
 }
