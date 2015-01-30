@@ -1,5 +1,4 @@
-.ui-field-contain .mobi-fieldset-row input,
-.ui-field-contain .mobi-fieldset-row textarea {
+.ui-field-contain .mobi-fieldset-row > * ~ *:nth-last-child(3) { 
 display:inline-block;
 float: right;
 width: 58%;
