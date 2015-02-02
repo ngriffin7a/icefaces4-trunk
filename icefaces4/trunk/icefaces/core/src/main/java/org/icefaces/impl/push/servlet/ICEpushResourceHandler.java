@@ -180,19 +180,6 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
                     throw new RuntimeException(e);
                 }
             }
-
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            ExternalContext externalContext = facesContext.getExternalContext();
-            Object BrowserID = externalContext.getRequestCookieMap().get(BROWSERID_COOKIE);
-            HttpServletRequest request = EnvUtils.getSafeRequest(facesContext);
-            HttpServletResponse response = EnvUtils.getSafeResponse(facesContext);
-            if (null == BrowserID) {
-                //Need better integration with ICEpush to assign ice.push.browser
-                //without createPushId()
-                ((PushContext) externalContext.getApplicationMap()
-                        .get(PushContext.class.getName()))
-                        .createPushId(request, response);
-            }
         }
 
         public PhaseId getPhaseId() {
