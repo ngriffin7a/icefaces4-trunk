@@ -19,8 +19,10 @@ package com.icesoft.icefaces.tutorial.component.dateTimeEntry.yearRange;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.Serializable;
 
-public class DateTimeEntryBean {
+public class DateTimeEntryBean implements Serializable {
+	private static final long serialVersionUID = 1L;
     private Date selectedDate;
     private String yearRange = "c-5:c+5";
 
