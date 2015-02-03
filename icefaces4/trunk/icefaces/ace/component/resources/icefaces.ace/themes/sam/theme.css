@@ -65,7 +65,7 @@
 }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{
     border:1px solid #d3d3d3/*{borderColorHover}*/;
-    background:#bfdaff url("#{resource['icefaces.ace:themes/sam/images/sprite.png']}") repeat-x left -1300px;
+    background:#bfdaff url("#{resource['icefaces.ace:themes/sam/images/ui-hover.png']}") repeat-x scroll left top;
     background-clip: padding-box;
     font-weight:normal/*{fwDefault}*/;
     color:#212121/*{fcHover}*/;
@@ -76,7 +76,7 @@
 }
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, .ui-state-active em {
     border:1px solid #aaaaaa/*{borderColorActive}*/;
-    background:url("#{resource['icefaces.ace:themes/sam/images/sprite.png']}") repeat-x scroll left -1400px #2647A0;
+    background:url("#{resource['icefaces.ace:themes/sam/images/ui-active.png']}") repeat-x scroll left top #2647A0;
     background-clip: padding-box;
     font-weight:normal/*{fwDefault}*/;
     color:#FFFFFF/*{fcActive}*/;
