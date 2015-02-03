@@ -16,5 +16,5 @@
 
 package org.icefaces.ace.component.config;
 
-public class Config extends ConfigBase {
+public class Theme extends ThemeBase {
 }
