@@ -30,6 +30,10 @@
         <resource-handler>org.icefaces.ace.component.themeselect.ThemeSymbolicResourceHandler</resource-handler>
         <resource-handler>org.icefaces.ace.renderkit.AceSymbolicResourceHandler</resource-handler>
 		<resource-handler>org.icefaces.ace.component.qrcode.generator.QRCodeResourceHandler</resource-handler>
+        <system-event-listener>
+            <system-event-listener-class>org.icefaces.ace.component.fileentry.FileEntryFormSubmit</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
+        </system-event-listener>
     </application>
     <lifecycle>
         <phase-listener>org.icefaces.ace.component.fileentry.FileEntryUpload</phase-listener>
