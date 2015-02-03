@@ -16,6 +16,7 @@
 
 package org.icefaces.mobi.component.flipswitch;
 
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.util.ClientDescriptor;
@@ -77,6 +78,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
         writer.startElement(HTML.ANCHOR_ELEM, uiComponent);
         writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
         writer.writeAttribute(HTML.NAME_ATTR, clientId, HTML.NAME_ATTR);
+        ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         String styleClass = FlipSwitch.FLIPSWITCH_OFF_CLASS;
         String switchValue = String.valueOf(flipswitch.getValue());
         boolean isChecked = this.isChecked(switchValue);
@@ -122,6 +124,14 @@ public class FlipSwitchRenderer extends CoreRenderer {
         writer.writeAttribute("class", "mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default" + (!switchVal ? " ui-state-active" : "" ), null);
         writer.write(labelOff);
         writer.endElement(HTML.SPAN_ELEM);
+
+        writer.startElement(HTML.SCRIPT_ELEM, null);
+        writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
+        if (flipswitch.isOfflineDisabled()) {
+            writer.writeText("mobi.flipswitch.offlineDisabled('" + clientId + "');", null);
+        }
+        writer.endElement(HTML.SCRIPT_ELEM);
+
         writer.endElement(HTML.ANCHOR_ELEM);
 
     }

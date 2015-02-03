@@ -22,11 +22,11 @@ if (!window['mobi']) {
 mobi.flipswitch = {
     lastTime: 0,
 
-    init: function(clientId, cfg){
+    init: function (clientId, cfg) {
         // Mobi-526 filter double clicks
         if (cfg.transHack) {
             var currentTimeMillis = new Date().getTime();
-            if ( (currentTimeMillis - mobi.flipswitch.lastTime) < 100 ) {
+            if ((currentTimeMillis - mobi.flipswitch.lastTime) < 100) {
                 console.log("Double click suppression required");
                 return;
             }
@@ -39,36 +39,69 @@ mobi.flipswitch = {
         this.event = cfg.event;
 
         var hasBehaviors = false;
-        if (this.cfg.behaviors){
-           hasBehaviors = true;
+        if (this.cfg.behaviors) {
+            hasBehaviors = true;
         }
-        if (this.flipperEl){
+        if (this.flipperEl) {
             var oldClass = this.flipperEl.className;
             var value = "off";
             var onClass = this.flipperEl.children[0].className;
             var offClass = this.flipperEl.children[2].className;
-            if (oldClass.indexOf('-off ')>0){
-            	this.flipperEl.className='mobi-flipswitch mobi-flipswitch-on ui-widget';
-            	this.flipperEl.children[0].className = 'mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-default ui-state-active';
-            	this.flipperEl.children[2].className = 'mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default';
+            if (oldClass.indexOf('-off ') > 0) {
+                this.flipperEl.className = 'mobi-flipswitch mobi-flipswitch-on ui-widget';
+                this.flipperEl.children[0].className = 'mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-default ui-state-active';
+                this.flipperEl.children[2].className = 'mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default';
                 value = true;
-            }else{
-             	this.flipperEl.className='mobi-flipswitch mobi-flipswitch-off ui-widget';
-             	this.flipperEl.children[0].className = 'mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-default';
+            } else {
+                this.flipperEl.className = 'mobi-flipswitch mobi-flipswitch-off ui-widget';
+                this.flipperEl.children[0].className = 'mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-default';
                 this.flipperEl.children[2].className = 'mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default ui-state-active';
-               	value = false;
+                value = false;
             }
-            var hidden = this.id+"_hidden";
+            var hidden = this.id + "_hidden";
             var thisEl = document.getElementById(hidden);
-            if (thisEl){
-               thisEl.value=value.toString();
+            if (thisEl) {
+                thisEl.value = value.toString();
             }
-            if (hasBehaviors){
-                if (this.cfg.behaviors.click){
+            if (hasBehaviors) {
+                if (this.cfg.behaviors.click) {
                     ice.ace.ab(this.cfg.behaviors.click);
                 }
             }
-         }
+        }
+    },
+
+    offlineDisabled: function(id) {
+        var flipswitch = document.getElementById(id);
+        var clickCallback = flipswitch.onclick;
+
+        flipswitch.removeOnOfflineCallback = ice.onOffline(function() {
+            clickCallback = flipswitch.onclick;
+            flipswitch.onclick = null;
+            var buttons = flipswitch.getElementsByTagName('span');
+            for (var i = 0, l = buttons.length; i < l; i++) {
+                var button = ice.ace.jq(buttons[i]);
+                button.removeClass('ui-state-default');
+                button.addClass('ui-state-disabled');
+            }
+        });
+
+        flipswitch.removeOnOnlineCallback = ice.onOnline(function() {
+            if (clickCallback) {
+                flipswitch.onclick = clickCallback;
+                var buttons = flipswitch.getElementsByTagName('span');
+                for (var i = 0, l = buttons.length; i < l; i++) {
+                    var button = ice.ace.jq(buttons[i]);
+                    button.removeClass('ui-state-disabled');
+                    button.addClass('ui-state-default');
+                }
+            }
+        });
+
+        ice.onElementUpdate(id, function() {
+            flipswitch.removeOnOfflineCallback();
+            flipswitch.removeOnOnlineCallback();
+        });
     }
 };
 
