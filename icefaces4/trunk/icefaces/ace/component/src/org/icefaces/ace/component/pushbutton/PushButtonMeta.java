@@ -56,10 +56,13 @@ public class PushButtonMeta extends UICommandMeta {
     
     @Property(tlddoc="A localized user presentable name for this component.")
     private String label;
-	
+
     @Property (defaultValue="false", tlddoc="If true, no input may be submitted via this component.")
     private boolean disabled;
-    
+
+    @Property (defaultValue="false", tlddoc="If true, no input may be submitted via this component when browser is offline.")
+    private boolean offlineDisabled;
+
     @Property (tlddoc="Tabindex of the component.")
     private Integer tabindex;
   
