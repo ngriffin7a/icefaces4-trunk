@@ -93,10 +93,8 @@ public class TextAreaEntryMeta extends UIInputMeta {
     @Property(tlddoc = "The maximum number of characters that may be entered in this field.")
     private int maxlength;
 	
-    @Property(tlddoc = "DEPRECATED in favor of the jsf 2.2 passthrough library." +
-            "The HTML5 placeholder attribute represents a short hint (a word or short phrase) intended to aid the user with data entry " +
-    		"when the input element has no value. If the placeholder attribute is not supported by the browser, the label 'inField' functionality " +
-			"will be used instead.")
+    @Property(tlddoc = "The HTML5 placeholder attribute represents a short hint (a word or short phrase) intended to aid the user with data entry " + 		"when the input element has no value. If the placeholder attribute is not supported by the browser, the label 'inField' functionality " +
+			"will be used instead. Alternatively, the Mojarra HTML5 'placeholder' passthrough attribute may also be used with this component.")
     private String placeholder;
 
     @Property(tlddoc = "Flag indicating that this element must never receive focus or be included in a subsequent submit. A value of false causes no attribute to be rendered, while a value of true causes the attribute to be rendered as disabled=\"disabled\".", defaultValue = "false")

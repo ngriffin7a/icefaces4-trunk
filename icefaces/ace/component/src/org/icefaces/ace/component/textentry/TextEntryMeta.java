@@ -86,56 +86,47 @@ public class TextEntryMeta extends HtmlInputTextMeta {
 	// ----- imported from mobi:inputText -----
 	// ----------------------------------------
 
-    @Property(defaultValue = "text", tlddoc = "***DEPRECATED IN FAVOR OF THE JSF 2.2 passthrough library ***" +
-            " The html5 type attribute for the input element. " +
+    @Property(defaultValue = "text", tlddoc = " The HTML5 type attribute for the input element. " +
     		"Currently supports text, phone, url, email, number, date, time, datetime.  Depending " +
     		"on browser and/or device capability, a type-specific keyboard may be displayed and various other " +
             "attributes may apply for the html5 input element. It is up to the developer to ensure that " +
-            "the browsers and devices they are targetting are supported properly. ")
+            "the browsers and devices they are targetting are supported properly.  Alternatively, the Mojarra HTML5 'type' passthrough attribute may also be used with this component.")
     private String type;
 
-    @Property(tlddoc = "**DEPRECATED in favor of the jsf 2.2 passthrough library. " +
-            "The HTML5 placeholder attribute represents a short hint" +
+    @Property(tlddoc = "The HTML5 placeholder attribute represents a short hint" +
     		" (a word or short phrase) intended to aid the user with data entry " +
-    		"when the input element has no value.")
+    		"when the input element has no value. Alternatively, the Mojarra HTML5 'placeholder' passthrough attribute may also be used with this component.")
     private String placeholder;
 
-    @Property(tlddoc = "**DEPRECATED in favor of the jsf 2.2 passthrough library." +
-            "The html5 pattern attribute specifies a regular expression against which " +
+    @Property(tlddoc = "The HTML5 pattern attribute specifies a regular expression against which " +
     		"the control's value, or, when the multiple attribute applies and is set, " +
-    		"the control's values, are to be checked. ")
+    		"the control's values, are to be checked. Alternatively, the Mojarra HTML5 'pattern' passthrough attribute may also be used with this component.")
     private String pattern;
 
     @Property(defaultValue = "off",
-            tlddoc = "**DEPRECATED in favor of the jsf 2.2 passthrough library. " +
-                    "An html5 feature of mobile browser capability which will capitalize the first character of the field.")
+            tlddoc = "An HTML5 feature supported by mobile browsers which will automatically capitalize the first character of the field. Alternatively, the Mojarra HTML5 'autocapitalize' passthrough attribute may also be used with this component.")
     private String autocapitalize;
 
     @Property(defaultValue = "off",
-            tlddoc = "DEPRECATED in favor of the jsf 2.2 passthrough library. " +
-                    "The autocorrect is an html5 attribute that may correct spelling errors in the field if supported in the browser")
+            tlddoc = "The autocorrect is an HTML5 attribute that may correct spelling errors in the field if supported in the browser. Alternatively, the Mojarra HTML5 'autocorrect' passthrough attribute may also be used with this component.")
     private String autocorrect;
 
-    @Property(defaultValue = "3", tlddoc = "**DEPRECATED in favor of the jsf 2.2 passthrough library." +
-            "Magnifying glass for webkit used to show last three searches on a search field.")
+    @Property(defaultValue = "3", tlddoc = "Magnifying glass for webkit used to show last three searches on a search field. Alternatively, the Mojarra HTML5 'results' passthrough attribute may also be used with this component.")
     private int results;
     
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="**DEPRECATED in favor of the jsf 2.2 passthrough library." +
-            "Minimum value is an html5 passthrough attribute and" +
-            " only applicable to type number.  " +
-            "Will not be rendered if not present.")
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="Minimum value is an HTML5 passthrough attribute and" +
+            " only applicable to type number. " +
+            "Will not be rendered if not present. Alternatively, the Mojarra HTML5 'min' passthrough attribute may be used with this component.")
     private int min;
 
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="**DEPRECATED in favor of the jsf 2.2 passthrough library. " +
-            "Maximum value is an html5 passthrough attribute, and " +
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="Maximum value is an html5 passthrough attribute, and " +
             " only applicable to type number. " +
-            " Will not be rendered if attribute is not present")
+            " Will not be rendered if attribute is not present. Alternatively, the Mojarra HTML5 'max' passthrough attribute may be used with this component.")
     private int max;
     
-    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="**DEPRECATED in favor of the jsf 2.2 passthrough library. " +
-            "The html5 step attributeto increase/decrease the value of the number input. " +
+    @Property(defaultValue = "Integer.MIN_VALUE", tlddoc="The HTML5 step attributeto increase/decrease the value of the number input. " +
             "Requires min and max atribute. " +
-            "Applicable only to type \"number\". ")
+            "Applicable only to type \"number\". Alternatively, the Mojarra HTML5 'step' passthrough attribute may also be used with this component.")
     private int step;
 
 }
