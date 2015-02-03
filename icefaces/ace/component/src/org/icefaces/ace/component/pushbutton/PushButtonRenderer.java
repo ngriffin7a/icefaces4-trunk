@@ -104,8 +104,11 @@ public class PushButtonRenderer extends CoreRenderer {
         writer.startElement(HTML.SPAN_ELEM, null);
 
         writeButtonValue(writer, pushButton);
-		
-		Utils.registerLazyComponent(facesContext, clientId, getScript(facesContext, writer, pushButton, clientId));
+
+        writer.startElement(HTML.SCRIPT_ELEM, null);
+        writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
+		writer.writeText(getScript(facesContext, writer, pushButton, clientId), null);
+        writer.endElement(HTML.SCRIPT_ELEM);
     }
 	
 	public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
@@ -177,6 +180,8 @@ public class PushButtonRenderer extends CoreRenderer {
 
         if (hasListener(pushButton))
             json.entry("fullSubmit", true);
+
+        json.entry("offlineDisabled", pushButton.isOfflineDisabled());
 
         encodeClientBehaviors(facesContext, pushButton, json);
 

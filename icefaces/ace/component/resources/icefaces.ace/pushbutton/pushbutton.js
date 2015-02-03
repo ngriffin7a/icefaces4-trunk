@@ -34,8 +34,27 @@ ice.ace.pushbutton = function(clientId, cfg){
 
     // lazy init occuring via kb focus, set focus style since
     // our focus event won't be set up yet
-    if (document.activeElement == this.button[0])
+    if (document.activeElement == this.button[0]) {
         self.changeStyleState('hover');
+    }
+
+    var self = this;
+    if (cfg.offlineDisabled) {
+        var previousDisabledState = self.button.attr('disabled');
+        self.removeOnOfflineCallback = ice.onOffline(function() {
+            previousDisabledState = self.button.attr('disabled');
+            self.button.attr('disabled', 'disabled');
+            self.button.removeClass('ui-state-default');
+            self.button.addClass('ui-state-disabled');
+        });
+        self.removeOnOnlineCallback = ice.onOnline(function() {
+            if (!previousDisabledState) {
+                self.button.removeAttr('disabled');
+                self.button.removeClass('ui-state-disabled');
+                self.button.addClass('ui-state-default');
+            }
+        });
+    }
 
     ice.onElementUpdate(this.id, function() {self.unload()});
 };
@@ -45,7 +64,11 @@ ice.ace.pushbutton.prototype.buttonSelector = " > span > button";
 
 ice.ace.pushbutton.prototype.unload = function() {
     this.button.off("click mousedown mouseup mouseenter focus blur mouseleave");
-}
+    if (this.cfg.offlineDisabled) {
+        this.removeOnOfflineCallback();
+        this.removeOnOnlineCallback();
+    }
+};
 
 ice.ace.pushbutton.prototype.onClick = function () {
     var options = {
@@ -78,7 +101,7 @@ ice.ace.pushbutton.prototype.changeStyleState = function(state) {
     this.removeStyleState(this.styleState);
     this.addStyleState(state);
     this.styleState = state;
-}
+};
 
 ice.ace.pushbutton.prototype.addStyleState = function(state) {
     if (state == 'hover')
