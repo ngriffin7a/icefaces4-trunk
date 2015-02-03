@@ -27,6 +27,7 @@ import org.icefaces.util.EnvUtils;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIOutput;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -36,6 +37,7 @@ import javax.faces.event.SystemEventListener;
 import javax.faces.render.ResponseStateManager;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -59,8 +61,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
 
     public void processEvent(SystemEvent event) throws AbortProcessingException {
         final FacesContext context = FacesContext.getCurrentInstance();
-        final FileEntry fileEntry = (FileEntry) event.getSource();
-        final UIForm form = Utils.findParentForm(fileEntry);
+        final UIForm form = (UIForm) event.getSource();
         log.finer(
                 "FileEntryFormSubmit.processEvent()\n" +
                         "  event: " + event + "\n" +
@@ -76,12 +77,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
             }
         }
 
-        // See if there is at least one FileEntry component in the form,
-        // which should alter the form submission method.
-        if (fileEntry == null) {
-            log.finer("FileEntryFormSubmit  !findFileEntry");
-            return;
-        }
+        final FileEntry fileEntry = findFileEntry(form);
         log.finer("FileEntryFormSubmit  findFileEntry!");
 
         forceAjaxOnView(context);
@@ -175,8 +171,23 @@ public class FileEntryFormSubmit implements SystemEventListener {
         form.setInView(true);
     }
 
+    private static FileEntry findFileEntry(UIComponent parent) {
+        Iterator<UIComponent> kids = parent.getFacetsAndChildren();
+        while (kids.hasNext()) {
+            UIComponent kid = kids.next();
+            if (kid instanceof FileEntry) {
+                return (FileEntry) kid;
+            }
+            final FileEntry grandKid = findFileEntry(kid);
+            if (grandKid != null) {
+                return grandKid;
+            }
+        }
+        return null;
+    }
+
     public boolean isListenerForSource(Object source) {
-        return source instanceof FileEntry;
+        return source instanceof UIForm && findFileEntry((UIForm) source) != null;
     }
 
     private void forceAjaxOnView(FacesContext facesContext) {
