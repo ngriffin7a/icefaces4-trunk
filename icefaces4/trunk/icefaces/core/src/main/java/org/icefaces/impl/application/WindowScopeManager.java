@@ -97,15 +97,16 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static ScopeMap lookupWindowScope(FacesContext context) {
-        final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
+        final ExternalContext externalContext = context.getExternalContext();
+        final Map<String, String> parameterMap = externalContext.getRequestParameterMap();
         final ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
         //stop looking up the scope map for resources that do not have 'ice.window' parameter in their URL
         //to avoid creating new window scope maps that will never be used again
-        if (resourceHandler.isResourceRequest(context) && !requestMap.containsKey(WindowParameter)) {
+        if (externalContext.getRequest() != null && !parameterMap.containsKey(WindowParameter) && resourceHandler.isResourceRequest(context)) {
             return null;
         }
 
-        String id = lookupAssociatedWindowID(requestMap);
+        String id = lookupAssociatedWindowID(externalContext.getRequestMap());
         State state = getState(context);
         if (state == null)  {
             return null;
