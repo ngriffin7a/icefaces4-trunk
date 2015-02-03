@@ -25,13 +25,13 @@ import javax.faces.view.facelets.*;
 import java.io.IOException;
 import java.util.Map;
 
-public class ConfigHandler extends ComponentHandler {
-    private final TagAttribute theme;
+public class ThemeHandler extends ComponentHandler {
+    private final TagAttribute value;
 
 
-    public ConfigHandler(ComponentConfig config) {
+    public ThemeHandler(ComponentConfig config) {
         super(config);
-        this.theme = this.getAttribute("theme");
+        this.value = this.getAttribute("value");
     }
 
     public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
@@ -39,8 +39,8 @@ public class ConfigHandler extends ComponentHandler {
         UIViewRoot root = fc.getViewRoot();
         Map viewMap = root.getViewMap();
 
-        if (theme != null) {
-            viewMap.put(Constants.THEME_PARAM, theme.getValue());
+        if (value != null) {
+            viewMap.put(Constants.THEME_PARAM, value.getValue());
         }
     }
 }

@@ -22,16 +22,19 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 
 @Component(
-        tagName = "config",
-        componentClass = "org.icefaces.ace.component.config.Config",
-        generatedClass = "org.icefaces.ace.component.config.ConfigBase",
-        handlerClass = "org.icefaces.ace.component.config.ConfigHandler",
-        componentType = "org.icefaces.AceConfig",
-        rendererType = "org.icefaces.AceConfigRenderer",
+        tagName = "theme",
+        componentClass = "org.icefaces.ace.component.config.Theme",
+        generatedClass = "org.icefaces.ace.component.config.ThemeBase",
+        handlerClass = "org.icefaces.ace.component.config.ThemeHandler",
+        componentType = "org.icefaces.AceTheme",
+        rendererType = "org.icefaces.AceThemeRenderer",
         extendsClass = "javax.faces.component.UIOutput",
         componentFamily = "org.icefaces.aceConfigCode",
         tlddoc = "config provides a way to change global parameters for ACE components."
 )
 
-public class ConfigMeta extends UIComponentBaseMeta {
+public class ThemeMeta extends UIComponentBaseMeta {
+
+    @Property(tlddoc="Name of the theme to apply to the page")
+    private String value;
 }

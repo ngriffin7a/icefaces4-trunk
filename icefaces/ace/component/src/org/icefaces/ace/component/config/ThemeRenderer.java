@@ -18,5 +18,5 @@ package org.icefaces.ace.component.config;
 
 import javax.faces.render.Renderer;
 
-public class ConfigRenderer extends Renderer {
+public class ThemeRenderer extends Renderer {
 }
