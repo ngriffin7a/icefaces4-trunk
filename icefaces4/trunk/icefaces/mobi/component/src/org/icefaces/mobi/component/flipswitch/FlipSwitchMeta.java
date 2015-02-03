@@ -61,6 +61,9 @@ public class FlipSwitchMeta extends UISelectBooleanMeta {
     @Property(tlddoc = "Disables this component, so it does not receive focus or get submitted.")
     private boolean disabled;
 
+    @Property (defaultValue="false", tlddoc="Disables this component when browser is offline.")
+    private boolean offlineDisabled;
+
     @Property(tlddoc="Sets this component to read only, so value cannot be changed.")
     private boolean readonly;
 
