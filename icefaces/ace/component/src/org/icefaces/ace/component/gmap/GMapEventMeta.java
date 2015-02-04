@@ -18,12 +18,15 @@ package org.icefaces.ace.component.gmap;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Expression;
 import org.icefaces.ace.meta.baseMeta.UIPanelMeta;
 
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
+
+import javax.el.MethodExpression;
 
 @Component(
         tagName = "gMapEvent",
@@ -56,4 +59,9 @@ public class GMapEventMeta extends UIPanelMeta {
 
     @Property(tlddoc = "Set to true to remove the event from the map.", defaultValue = "false")
     private Boolean disabled;
+
+    @Property(expression = Expression.METHOD_EXPRESSION,
+            methodExpressionArgument = "org.icefaces.ace.event.MapEvent",
+            tlddoc = "Method expression referencing a method that will be called when a MapEvent has been broadcast for the listener.")
+    private MethodExpression listener;
 }

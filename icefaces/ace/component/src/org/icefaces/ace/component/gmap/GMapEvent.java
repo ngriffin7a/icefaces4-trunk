@@ -16,6 +16,23 @@
 
 package org.icefaces.ace.component.gmap;
 
+import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.FacesEvent;
+import javax.el.MethodExpression;
+import org.icefaces.ace.event.MapEvent;
+
 public class GMapEvent extends GMapEventBase {
 
+    public void broadcast(FacesEvent event) throws AbortProcessingException {
+        super.broadcast(event);
+
+        if (event != null && event instanceof MapEvent) {
+            
+            MethodExpression method = getListener();
+            if (method != null) {
+                method.invoke(getFacesContext().getELContext(), new Object[]{event});
+            }
+        }
+    }
 }
