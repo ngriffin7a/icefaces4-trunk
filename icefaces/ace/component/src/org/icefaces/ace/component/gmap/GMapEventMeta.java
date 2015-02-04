@@ -62,6 +62,6 @@ public class GMapEventMeta extends UIPanelMeta {
 
     @Property(expression = Expression.METHOD_EXPRESSION,
             methodExpressionArgument = "org.icefaces.ace.event.MapEvent",
-            tlddoc = "Method expression referencing a method that will be called when a MapEvent has been broadcast for the listener.")
+            tlddoc = "Method expression referencing a method that will be called when a MapEvent has been broadcast for the listener. The server request will be sent after the client-side script is executed, if any.")
     private MethodExpression listener;
 }
