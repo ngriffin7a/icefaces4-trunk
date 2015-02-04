@@ -19,16 +19,35 @@ package org.icefaces.ace.component.gmap;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.ace.event.MapEvent;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.FacesException;
+import java.util.Map;
 import java.io.IOException;
 
 @MandatoryResourceComponent(tagName = "gMap", value = "org.icefaces.ace.component.gmap.GMap")
 public class GMapEventRenderer extends CoreRenderer {
 
+    public void decode(FacesContext context, UIComponent component) {
+		GMapEvent event = (GMapEvent) component;
+        Map<String, String> requestParameterMap = context.getExternalContext().getRequestParameterMap();
+        String clientId = event.getClientId(context);
+        if (requestParameterMap.get(clientId) != null) {
+			UIComponent parent = event.getParent();
+			while (parent != null) {
+				if (parent instanceof GMap) {
+					break;
+				} else {
+					parent = parent.getParent();
+				}
+			}
+			UIComponent gMapComponentParent = getGMapComponentParent(event);
+			event.queueEvent(new MapEvent(event, (GMap) parent, gMapComponentParent));
+		}
+	}
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
@@ -63,6 +82,7 @@ public class GMapEventRenderer extends CoreRenderer {
 				.item(gMapEvent.getEventType())
 				.item(gMapEvent.getRendererType())
 				.item(gMapEvent.getScriptToUse())
+				.item((gMapEvent.getListener() != null))
 			.endFunction();
 		} else {
 			jb.beginFunction("ice.ace.gMap.removeEvent")
