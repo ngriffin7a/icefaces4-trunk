@@ -838,10 +838,8 @@ version: 2.8.2r1
                 method: function(value) {
                     if (value === true) {
                         this.addClass(this.ACTIVE_CLASSNAME);
-                        this.set('title', this.ACTIVE_TITLE);
                     } else {
                         this.removeClass(this.ACTIVE_CLASSNAME);
-                        this.set('title', '');
                     }
                 },
                 validator: function(value) {
