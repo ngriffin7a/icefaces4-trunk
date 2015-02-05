@@ -4690,6 +4690,7 @@
                         .each(function() {
                             $( this ).height( Math.max( 0, maxHeight -
                                     $( this ).innerHeight() + $( this ).height() ) );
+                            if ($( this ).height() == 0) $( this ).height( "" ); // ICE-10470
                         })
                         .css( "overflow", "auto" );
             } else if ( options.autoHeight ) {
@@ -4697,6 +4698,7 @@
                 this.headers.next()
                         .each(function() {
                             maxHeight = Math.max( maxHeight, $( this ).height( "" ).height() );
+                            if (maxHeight == 0) maxHeight = ""; // ICE-10470
                         })
                         .height( maxHeight );
             }
