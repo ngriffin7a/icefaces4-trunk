@@ -903,7 +903,7 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 			google.maps.event.removeListener(event);
 		}
 		var eventRequest = listener ? ";ice.se(null, document.getElementById('"+mapId+"'), function(p) {p('"+eventId+"','true');});" : "";
-        wrapper.events[eventId] = google.maps.event.addDomListener(parent,eventType,function(){
+        if (parent) wrapper.events[eventId] = google.maps.event.addDomListener(parent,eventType,function(){
             eval(
                 "var map = ice.ace.gMap.getGMapWrapper('" + mapId + "').getRealGMap();" +
                 "var component = " + componentToUse + ";" +
