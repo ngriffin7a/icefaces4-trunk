@@ -66,7 +66,7 @@
 				streaming = false,
 				cameraButton = document.getElementById(id+"_button");
 
-			if( 'getUserMedia' in navigator && 'URL' in window ){
+			if( 'getUserMedia' in navigator && navigator.getUserMedia && 'URL' in window ){
 			   
 				var popup = document.createElement('div'),
 					closeBtn = document.createElement('a'),

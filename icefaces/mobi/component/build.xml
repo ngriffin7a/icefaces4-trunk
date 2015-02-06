@@ -48,6 +48,7 @@
               location="${build}/exploded/META-INF/components.tld"/>
     <property name="tld.jar" location="${lib.dir}"/>
     <property name="smartsprites.basedir" location="../tools/smartsprites"/>
+	<property name="mobi.theme.dir" value="org.icefaces.mobi.theme"/>
 
     <property name="root.dir.path" location="${build}/skins/in"/>
     <property name="output.dir.path" location="${build}/skins/out"/>
@@ -165,11 +166,12 @@
     <macrodef name="concatskin">
         <attribute name="name"/>
         <sequential>
-            <delete file="${resources}/${skins.lib}/@{name}.css"/>
-            <concat destfile="${resources}/${skins.lib}/@{name}.css"
+            <delete file="${resources}/${mobi.theme.dir}/mobi-@{name}.css"/>
+            <concat destfile="${resources}/${mobi.theme.dir}/mobi-@{name}.css"
                     append="true">
-                <fileset dir="${resources}/${skins.lib}/@{name}"
+                <fileset dir="${resources}/${mobi.theme.dir}/base"
                          includes="**/*.css"/>
+            	<fileset file="${resources}/${mobi.theme.dir}/@{name}/theme.css" />
             </concat>
         </sequential>
     </macrodef>
@@ -215,11 +217,7 @@
         <concat destfile="${resources}/icefaces.mobi/util/combined.css"
                 force="true" fixlastline="true">
             <fileset dir="${resources}">
-                <include name="icefaces.mobi/*/*.css"/>
-                <exclude name="icefaces.mobi/fileentry/*.css"/>
-                <exclude name="icefaces.mobi/util/*.css"/>
-                <exclude name="icefaces.mobi/jquery/ui/jquery-ui.css"/>
-                <exclude name="${skins.lib}/*.css"/>
+                <include name="icefaces.mobi/base*/*.css"/>
             </fileset>
         </concat>
     </target>
@@ -448,22 +446,22 @@
                         dir="src/org/icefaces/ace/component/datetimeentry/skins/rime"
                         name="calendar" skin="rime"/>
         -->
-
+    	
         <!-- Process sprites, if use.sprites is set -->
         <antcall target="sprites"/>
-
-        <!-- Copy all resources to the skins resource library -->
-        <copy todir="${resources}/${skins.lib}">
+    	
+    	<!-- Copy all resources to the skins resource library -->
+        <copy todir="${resources}/${mobi.theme.dir}">
             <fileset dir="${output.dir.path}" includes="**"/>
         </copy>
 
         <!-- Map all URLs to the JSF format, CSS files already in the skins resource library will be overwritten -->
-        <cssurlmapper libraryname="${skins.lib}" inputdir="${output.dir.path}"
-                      outputdir="${resources}/${skins.lib}"/>
+        <cssurlmapper libraryname="${mobi.theme.dir}" inputdir="${output.dir.path}"
+                      outputdir="${resources}/${mobi.theme.dir}"/>
 
         <!-- Generate a single CSS file per skin -->
-        <concatskin name="rime"/>
-        <concatskin name="sam"/>
+        <concatskin name="light"/>
+        <concatskin name="dark"/>
 
     </target>
 
@@ -475,7 +473,7 @@
         <delete dir="${output.dir.path}"/>
 
         <!-- Delete the entire skins resource library -->
-        <delete dir="${resources}/${skins.lib}"/>
+        <delete dir="${resources}/${mobi.theme.dir}"/>
 
         <delete file="cache.properties"/>
 
@@ -503,8 +501,9 @@
         </taskdef>
 
         <!-- Specify the names of the skins to process, based on the resources included above. -->
-        <generatesprites skin="sam"/>
-        <generatesprites skin="rime"/>
+    	<generatesprites skin="base"/>
+    	<generatesprites skin="dark"/>
+        <generatesprites skin="light"/>
 
     </target>
 
