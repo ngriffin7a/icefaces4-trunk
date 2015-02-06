@@ -11,63 +11,108 @@
 	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, onchange, sessionId, maxwidth, maxheight){
 
 		function launchHTML5Camera(){
-			function getNamedObject(name){
-				if( !name ){
-					return null;
+
+			function getHiddenInput(){
+				var hiddenInputId = id + "_hidden";
+				var hiddenInput = document.getElementById(hiddenInputId);
+				if( !hiddenInput ){
+					hiddenInput = document.createElement('input');
+					hiddenInput.type = 'hidden';
+					hiddenInput.name = id;
+					hiddenInput.id = hiddenInputId;
+
 				}
-				var parts = name.split('.'),
-					theObject = window;
-				for( var i = 0 ; i < parts.length ; i++ ){
-					theObject = theObject[parts[i]];
-					if( !theObject ){
-						return null;
+				return hiddenInput;
+			}
+
+			function getThumbnail(){
+				var thumbId = id + "-thumb";
+				var thumbnail = document.getElementById(thumbId);
+				return thumbnail;
+			}
+
+			function updateThumbnail(dataURL){
+				var thumbnail = getThumbnail();
+				if( thumbnail ){
+					thumbnail.src = dataURL;
+					thumbnail.style.display = 'inline';
+					var thumbInput = thumbnail.nextSibling;
+					if( thumbInput && thumbInput.type === 'hidden'){
+						thumbInput.value = dataURL;
 					}
 				}
-				if( window === theObject ){
-					return null;
+			}
+
+			function hideThumbnail(){
+				var thumbnail = getThumbnail();
+				if( thumbnail ){
+					thumbnail.style.display = "none";
 				}
-				return theObject;
 			}
 
 			function renderCameraFallbackFileUpload(){
-				var input = document.getElementById(id+'_fileupload');
-				if( !input ){
-					input = document.createElement('input');
-					input.id = id + '_fileupload';
+
+				function getFileInput(){
+					var input = document.getElementById(id+'_fileupload');
+					if( !input ){
+						input = document.createElement('input');
+						input.id = id + '_fileupload';
+						input.type = 'file';
+						var isIE = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
+						input.accept = isIE ? 'image/*;capture=camera' : 'image/*';
+						input.capture = true;
+						input.name = id;
+						input.addEventListener('change', convertImageFromFile, false);
+					}
+					return input;
 				}
-					
-				input.type = 'file';
-				var isIE = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
-				input.accept = isIE ? 'image/*;capture=camera' : 'image/*';
-				input.capture = true;
-				input.name = id;
-				ice.mobi.addListener(input, 'change', function(e){ 
-			        var canvas = document.getElementById('thumbnailCanvas_' + assetId + '_' + photoIndex);
+
+				function convertImageFromFile(){
+					var cameraForm = ice.mobi.formOf(cameraButton),
+						hiddenInput = getHiddenInput(),
+						fileInput = getFileInput(),
+						file = fileInput.files[0];
+
+					//check for image
+					if( file.type.indexOf('image') === -1 ){
+						console.log('ERROR: camera file upload selected non-image: ' + file.type);
+						return;
+					}
+
+					var canvas = document.createElement('canvas');
+					var thumbCanvas = document.createElement('canvas');
 			        var ctx = canvas.getContext('2d');
+			        var thumbCtx = thumbCanvas.getContext('2d');
 			        var reader = new FileReader();
 			        reader.onload = function(event){
 			            var img = new Image();
 			            img.onload = function(){
 			                canvas.width = img.width;
 			                canvas.height = img.height;
+			                thumbCanvas.width = img.width;
+			                thumbCanvas.height = img.width;
 			                ctx.drawImage(img,0,0);
+			                thumbCtx.drawImage(img,0,0);
+			                var dataURL = canvas.toDataURL('image/png');
+			                var thumbDataURL = thumbCanvas.toDataURL('image/jpg', 0.2);
+			                fileInput.parentElement.removeChild(fileInput);
+							hiddenInput.value = dataURL.replace('data:image/png;base64,','');
+							cameraButton.innerText = captureLabel;
+							cameraForm.appendChild(hiddenInput);
+							cameraButton.style.display = 'inline-block';
+							updateThumbnail(thumbDataURL);
 			            }
 			            img.src = event.target.result;
 			        }
-			        reader.readAsDataURL(e.target.files[0]);
-				});
-				
+			        reader.readAsDataURL(file);
+				}
+
+				var input = getFileInput();
 				ctr.appendChild(input);
 				cameraButton.style.display = 'none';
-				//input.click();
 			}
 
-			var ctr = document.getElementById(id),
-				streaming = false,
-				cameraButton = document.getElementById(id+"_button");
-
-			if( 'getUserMedia' in navigator && navigator.getUserMedia && 'URL' in window ){
-			   
+			function renderHTML5Camera(){
 				var popup = document.createElement('div'),
 					closeBtn = document.createElement('a'),
 					video,
@@ -222,12 +267,7 @@
 				
 				function keeppicture(){
 					var cameraForm = ice.mobi.formOf(cameraButton),
-						hiddenInput = cameraForm.querySelector("[name='" + id + "']");
-					if( !hiddenInput ){
-						hiddenInput = document.createElement('input');
-						hiddenInput.type = 'hidden';
-						hiddenInput.name = id;
-					}
+						hiddenInput = getHiddenInput();
 					hiddenInput.value = photo.src.replace('data:image/png;base64,','');
 					document.body.removeChild(popup);
 					cameraButton.innerText = captureLabel;
@@ -257,6 +297,14 @@
 				});
 				
 				navigator.getUserMedia(options, successCallback, errorCallback);
+			}
+
+			var ctr = document.getElementById(id),
+				streaming = false,
+				cameraButton = document.getElementById(id+"_button");
+
+			if( 'getUserMedia' in navigator && navigator.getUserMedia && 'URL' in window ){
+			   renderHTML5Camera();
 			}
 			else{
 				renderCameraFallbackFileUpload();
