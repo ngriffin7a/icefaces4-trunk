@@ -17,7 +17,7 @@
 /* @import "../mixins";*/
 
 
-.mobi-date-container .icon-time, .mobi-time-container .icon-time {
+.mobi-date-container .icon-time, .mobi-time-container .icon-time{
     margin-right: 10px;
     font-size: 150%;
     vertical-align: middle;
