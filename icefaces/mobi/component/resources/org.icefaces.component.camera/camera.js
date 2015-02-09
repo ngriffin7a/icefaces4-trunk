@@ -97,7 +97,7 @@
 			                var thumbDataURL = thumbCanvas.toDataURL('image/jpg', 0.2);
 			                fileInput.parentElement.removeChild(fileInput);
 							hiddenInput.value = dataURL.replace('data:image/png;base64,','');
-							cameraButton.innerText = captureLabel;
+							cameraButton.innerHTML = captureLabel;
 							cameraForm.appendChild(hiddenInput);
 							cameraButton.style.display = 'inline-block';
 							updateThumbnail(thumbDataURL);
@@ -270,7 +270,7 @@
 						hiddenInput = getHiddenInput();
 					hiddenInput.value = photo.src.replace('data:image/png;base64,','');
 					document.body.removeChild(popup);
-					cameraButton.innerText = captureLabel;
+					cameraButton.innerHTML = captureLabel;
 					cameraForm.appendChild(hiddenInput);
 
 					//check for thumbnail
