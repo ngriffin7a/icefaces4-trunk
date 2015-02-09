@@ -22,9 +22,8 @@ import org.icefaces.impl.push.SessionViewManager;
 import org.icefaces.util.EnvUtils;
 
 import javax.annotation.PreDestroy;
-import javax.faces.FactoryFinder;
-import javax.faces.application.Application;
-import javax.faces.application.ResourceHandler;
+import javax.faces.application.*;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
@@ -32,8 +31,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.*;
 import javax.faces.lifecycle.ClientWindow;
-import javax.faces.lifecycle.Lifecycle;
-import javax.faces.lifecycle.LifecycleFactory;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpServletRequest;
@@ -659,6 +656,65 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
 
         public PhaseId getPhaseId() {
             return PhaseId.ANY_PHASE;
+        }
+    }
+
+    @ViewScoped
+    private static class NOOPBean implements Serializable {
+    }
+
+    public static class FixViewScopedBeansOnRedirect extends ConfigurableNavigationHandler {
+        private static Object NOOPViewScopedBean = new NOOPBean();
+        private NavigationHandler handler;
+
+        public FixViewScopedBeansOnRedirect(NavigationHandler handler) {
+            this.handler = handler;
+        }
+
+        public void handleNavigation(FacesContext context, String fromAction, String outcome) {
+            final NavigationCase navigationCase = getNavigationCase(context, fromAction, outcome);
+            boolean redirect = navigationCase != null && navigationCase.isRedirect();
+
+            List<String> beanNames = Collections.EMPTY_LIST;
+            if (redirect) {
+                //save bean names that are disposed by JSF's view bean manager
+                beanNames = new ArrayList();
+                Set<Map.Entry<String, Object>> viewMapEntries = context.getViewRoot().getViewMap().entrySet();
+                for (Map.Entry<String, Object> viewMapEntry : viewMapEntries) {
+                    if (viewMapEntry.getValue().getClass().isAnnotationPresent(ViewScoped.class)) {
+                        beanNames.add(viewMapEntry.getKey());
+                    }
+                }
+            }
+
+            handler.handleNavigation(context, fromAction, outcome);
+
+            if (redirect && !beanNames.isEmpty()) {
+                //add back no-op beans to avoid having them re-initialized when dispose-window request is sent
+                Map viewMap = context.getViewRoot().getViewMap();
+                for (String name : beanNames) {
+                    viewMap.put(name, NOOPViewScopedBean);
+                }
+            }
+        }
+
+        public NavigationCase getNavigationCase(FacesContext context, String fromAction, String outcome) {
+            if (handler instanceof ConfigurableNavigationHandler) {
+                return ((ConfigurableNavigationHandler) handler).getNavigationCase(context, fromAction, outcome);
+            } else {
+                log.warning(handler.toString() + " is not a ConfigurableNavigationHandler");
+            }
+
+            return null;
+        }
+
+        public Map<String, Set<NavigationCase>> getNavigationCases() {
+            if (handler instanceof ConfigurableNavigationHandler) {
+                return ((ConfigurableNavigationHandler) handler).getNavigationCases();
+            } else {
+                log.warning(handler.toString() + " is not a ConfigurableNavigationHandler");
+            }
+            return null;
         }
     }
 

@@ -89,6 +89,7 @@
     </lifecycle>
     <application>
         <view-handler>org.icefaces.impl.application.ExternalServletContextSetup</view-handler>
+        <navigation-handler>org.icefaces.impl.application.WindowScopeManager$FixViewScopedBeansOnRedirect</navigation-handler>
         <navigation-handler>org.icefaces.impl.application.PropagatingNavigationHandler</navigation-handler>
         <navigation-handler>org.icefaces.impl.application.ReloadAfterNavigationFix</navigation-handler>
         <resource-handler>org.icefaces.application.ResourceRegistry</resource-handler>
