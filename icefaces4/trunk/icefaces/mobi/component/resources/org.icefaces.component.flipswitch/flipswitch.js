@@ -80,9 +80,10 @@ mobi.flipswitch = {
             flipswitch.onclick = null;
             var buttons = flipswitch.getElementsByTagName('span');
             for (var i = 0, l = buttons.length; i < l; i++) {
-                var button = ice.ace.jq(buttons[i]);
-                button.removeClass('ui-state-default');
-                button.addClass('ui-state-disabled');
+                var button = buttons[i];
+                var cssClass = button.className;
+                cssClass = cssClass.replace('ui-state-default', 'ui-state-disabled');
+                button.className = cssClass;
             }
         });
 
@@ -91,9 +92,10 @@ mobi.flipswitch = {
                 flipswitch.onclick = clickCallback;
                 var buttons = flipswitch.getElementsByTagName('span');
                 for (var i = 0, l = buttons.length; i < l; i++) {
-                    var button = ice.ace.jq(buttons[i]);
-                    button.removeClass('ui-state-disabled');
-                    button.addClass('ui-state-default');
+                    var button = buttons[i];
+                    var cssClass = button.className;
+                    cssClass = cssClass.replace('ui-state-disabled', 'ui-state-default');
+                    button.className = cssClass;
                 }
             }
         });
