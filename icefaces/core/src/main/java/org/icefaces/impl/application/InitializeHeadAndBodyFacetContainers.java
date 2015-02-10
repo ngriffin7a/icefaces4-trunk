@@ -45,6 +45,7 @@ public class InitializeHeadAndBodyFacetContainers implements PhaseListener {
         UIComponent container = CoreUtils.getResourceContainer(root, target);
         if (container == null) {
             UIComponent c = new UIOutput();
+            c.setId("initialize_" + target);
             root.addComponentResource(context, c, target);
             root.removeComponentResource(context, c, target);
         }
