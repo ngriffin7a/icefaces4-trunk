@@ -29,6 +29,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
@@ -50,6 +51,9 @@ public class MobiJSFUtils {
     private static Logger logger = Logger.getLogger(Utils.class.getName());
     
     static String COOKIE_FORMAT = "org.icemobile.cookieformat";
+    static String PNG_DATA_URL = "data:image/png;base64,";
+    static String JPG_DATA_URL = "data:image/jpg;base64,";
+    static String JPEG_DATA_URL = "data:image/jpeg;base64,";
 
     private static Map<String, String> CONTENT_TYPES;
     static {
@@ -131,9 +135,33 @@ public class MobiJSFUtils {
                 if( data == null || data.length() == 0 ){
                     return false;
                 }
+                System.out.println("incoming data url : " + data.substring(0,30));
+                if( data.startsWith(PNG_DATA_URL)){
+                    System.out.println("starts with png data..");
+                    fileExtension = ".png";
+                    contentType = "image/png"; 
+                    data = data.substring(PNG_DATA_URL.length());
+                }
+                else if( data.startsWith(JPG_DATA_URL)){
+                    System.out.println("starts with jpg data..");
+                    fileExtension = ".jpg";
+                    contentType = "image/jpg";
+                    data = data.substring(JPG_DATA_URL.length());
+                }
+                else if( data.startsWith(JPEG_DATA_URL)){
+                    System.out.println("starts with jpg data..");
+                    fileExtension = ".jpg";
+                    contentType = "image/jpg";
+                    data = data.substring(JPEG_DATA_URL.length());
+                }
+                else{
+                    System.out.println("starts with no data..");
+                    //assume raw jpg
+                    fileExtension = ".jpg";
+                    contentType = "image/jpg";
+                }
+                System.out.println("data: " + data.substring(0, 30));
                 fileStream = new ByteArrayInputStream(DatatypeConverter.parseBase64Binary(data));
-                fileExtension = ".png";
-                contentType = "image/png";
             }
         }
         
