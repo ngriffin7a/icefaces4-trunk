@@ -42,7 +42,7 @@ public class RichTextEntryRenderer extends InputRenderer {
 
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId + "container", null);
-		writer.writeAttribute("class", richTextEntry.getStyleClass(), null);
+		writer.writeAttribute("class", "ice-ace-richtextentry " + richTextEntry.getStyleClass(), null);
 		if (richTextEntry.getStyle() != null) {
 			writer.writeAttribute("style", richTextEntry.getStyle(), null);
 		}
@@ -87,7 +87,8 @@ public class RichTextEntryRenderer extends InputRenderer {
 			.entry("p", ""); // dummy property
 			encodeClientBehaviors(facesContext, richTextEntry, jb);
         jb.endMap().endFunction();
-		writer.write(jb.toString());
+		writer.write("ice.ace.richtextentry.registry['" + clientId + "container'] = function(){" + jb.toString() + "};");
+		writer.write("ice.ace.richtextentry.registry['" + clientId + "container']();");
 		
 		writer.endElement("script");
 		writer.endElement("span");
