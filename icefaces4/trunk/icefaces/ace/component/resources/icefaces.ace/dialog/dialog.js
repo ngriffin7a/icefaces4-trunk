@@ -155,6 +155,9 @@ ice.ace.Dialog.prototype.show = function() {
             self.focusInput(focusOn);
         }
     }, 1);
+    setTimeout(function() {
+		self.recreateChildEditors();
+    }, 1);
 };
 
 ice.ace.Dialog.prototype.hide = function() {
@@ -210,6 +213,11 @@ ice.ace.Dialog.prototype.focusInput = function(id) {
 
 ice.ace.Dialog.prototype.focusFirstInput = function() {
     this.jq.find(':not(:submit):not(:button):input:visible:enabled:first').focus();
+};
+
+ice.ace.Dialog.prototype.recreateChildEditors = function() {
+	var editors = this.jq.find('.ice-ace-richtextentry');
+	editors.each(function(){ice.ace.richtextentry.registry[this.id]();});
 };
 
 ice.ace.Dialog.browser = function() {

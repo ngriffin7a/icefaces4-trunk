@@ -17,6 +17,7 @@
 if (!window['ice']) window.ice = {};
 if (!window.ice['ace']) window.ice.ace = {};
 ice.ace.richtextentry = {};
+ice.ace.richtextentry.registry = {};
 
 CKEDITOR.plugins.add('aceSave', {
     init:function(a) {
