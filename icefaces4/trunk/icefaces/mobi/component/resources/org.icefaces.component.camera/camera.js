@@ -71,7 +71,16 @@
 					var cameraForm = ice.mobi.formOf(cameraButton),
 						hiddenInput = getHiddenInput(),
 						fileInput = getFileInput(),
-						file = fileInput.files[0];
+						file = fileInput.files[0],
+						resolutionRatio = Math.ceil(10000/file.size*100);
+
+					//if file size is > 500k, reduce image quality proportionally
+					if( resolutionRatio > 100 ){
+						resolutionRatio = 100;
+					} 
+					else if( resolutionRatio < 8 ){
+						resolutionRatio = 8;
+					}
 
 					//check for image
 					if( file.type.indexOf('image') === -1 ){
@@ -80,27 +89,26 @@
 					}
 
 					var canvas = document.createElement('canvas');
-					var thumbCanvas = document.createElement('canvas');
-			        var ctx = canvas.getContext('2d');
-			        var thumbCtx = thumbCanvas.getContext('2d');
+					var ctx = canvas.getContext('2d');
 			        var reader = new FileReader();
 			        reader.onload = function(event){
 			            var img = new Image();
 			            img.onload = function(){
+			            	cameraForm.style.cursor = "progress";
 			                canvas.width = img.width;
 			                canvas.height = img.height;
-			                thumbCanvas.width = img.width;
-			                thumbCanvas.height = img.width;
 			                ctx.drawImage(img,0,0);
-			                thumbCtx.drawImage(img,0,0);
-			                var dataURL = canvas.toDataURL('image/png');
-			                var thumbDataURL = thumbCanvas.toDataURL('image/jpg', 0.2);
+			                var myEncoder = new JPEGEncoder(resolutionRatio);
+			                var compressedJPG = myEncoder.encode(ctx.getImageData(0,0,img.width, img.height));
+			                var thumbJPG = myEncoder.encode(ctx.getImageData(0,0,img.width, img.height), 1);
+			                var mbTokb = 1024*1024;
 			                fileInput.parentElement.removeChild(fileInput);
-							hiddenInput.value = dataURL.replace('data:image/png;base64,','');
+			                hiddenInput.value = compressedJPG;
 							cameraButton.innerHTML = captureLabel;
 							cameraForm.appendChild(hiddenInput);
 							cameraButton.style.display = 'inline-block';
-							updateThumbnail(thumbDataURL);
+							updateThumbnail(thumbJPG);
+							cameraForm.style.cursor = "";
 			            }
 			            img.src = event.target.result;
 			        }
