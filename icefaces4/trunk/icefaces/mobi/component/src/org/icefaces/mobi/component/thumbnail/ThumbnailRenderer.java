@@ -111,16 +111,17 @@ public class ThumbnailRenderer extends Renderer {
             //if thumb is for camera, always render the thumb for
             //for client side code, but hide it if the value is null
             //js code will unhide it when a photo is generated
+            String data = component.getData();
             if( isForCamera ){ 
                 Camera cam = (Camera)forComp;
-                if( cam.getValue() == null || !cam.getValue().containsKey("file") ){
+                if( cam.getValue() == null || data == null ){
                     writer.writeAttribute(STYLE_ATTR, "display:none", null);
                 }
             }
             writer.writeAttribute(WIDTH_ATTR, "64", null);
             writer.writeAttribute(HEIGHT_ATTR, "64", null);
             writer.writeAttribute(ID_ATTR, thumbId, null);
-            String data = component.getData();
+            
             if (data != null) writer.writeAttribute(SRC_ATTR, data, null);
             writer.endElement(IMG_ELEM);
     
