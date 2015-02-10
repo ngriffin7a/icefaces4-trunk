@@ -135,32 +135,26 @@ public class MobiJSFUtils {
                 if( data == null || data.length() == 0 ){
                     return false;
                 }
-                System.out.println("incoming data url : " + data.substring(0,30));
                 if( data.startsWith(PNG_DATA_URL)){
-                    System.out.println("starts with png data..");
                     fileExtension = ".png";
                     contentType = "image/png"; 
                     data = data.substring(PNG_DATA_URL.length());
                 }
                 else if( data.startsWith(JPG_DATA_URL)){
-                    System.out.println("starts with jpg data..");
                     fileExtension = ".jpg";
                     contentType = "image/jpg";
                     data = data.substring(JPG_DATA_URL.length());
                 }
                 else if( data.startsWith(JPEG_DATA_URL)){
-                    System.out.println("starts with jpg data..");
                     fileExtension = ".jpg";
                     contentType = "image/jpg";
                     data = data.substring(JPEG_DATA_URL.length());
                 }
                 else{
-                    System.out.println("starts with no data..");
                     //assume raw jpg
                     fileExtension = ".jpg";
                     contentType = "image/jpg";
                 }
-                System.out.println("data: " + data.substring(0, 30));
                 fileStream = new ByteArrayInputStream(DatatypeConverter.parseBase64Binary(data));
             }
         }
