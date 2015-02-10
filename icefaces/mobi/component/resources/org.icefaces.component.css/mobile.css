@@ -1,5 +1,41 @@
-.ui-field-contain .mobi-fieldset-row > * ~ *:nth-last-child(3) { 
-display:inline-block;
+.ui-field-contain .mobi-fieldset-row input[type="text"]:last-of-type,
+.ui-field-contain .mobi-fieldset-row input[type="date"]:last-of-type,
+.ui-field-contain .mobi-fieldset-row input[type="time"]:last-of-type,
+.ui-field-contain .mobi-fieldset-row textarea:last-of-type, 
+.ui-field-contain .mobi-fieldset-row select:last-of-type,
+.ui-field-contain .mobi-fieldset-row input.ui-inputfield.ui-inputmask,
+.ui-field-contain .mobi-fieldset-row input.ui-inputfield.ui-textentry,
+.ui-field-contain .mobi-fieldset-row input.ui-inputfield.ui-textareaentry,
+.ui-field-contain .mobi-fieldset-row .ui-simpleselectonemenu:last-of-type select {
+display: inline-block;
 float: right;
-width: 58%;
+width: 50%;
+}
+
+.ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper:last-of-type,
+.ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper:last-of-type { 
+display: inline-block;
+float: right;
+width: 45%;
+}
+
+.ui-field-contain .mobi-fieldset-row .mobi-date-popup-btn:last-of-type,
+.ui-field-contain .mobi-fieldset-row .mobi-time-popup-btn:last-of-type {
+display: inline-block;
+float: right;
+}
+
+.ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper:last-of-type > input.mobi-input-text,
+.ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper:last-of-type > input.mobi-input-text { 
+width: 100%;
+}
+
+.ui-field-contain .mobi-fieldset-row a.mobi-flipswitch:last-of-type {
+display: inline-block;
+float: right;
+}
+
+.ui-field-contain .mobi-fieldset-row .mobi-float-right {
+display: inline-block;
+float: right;
 }
