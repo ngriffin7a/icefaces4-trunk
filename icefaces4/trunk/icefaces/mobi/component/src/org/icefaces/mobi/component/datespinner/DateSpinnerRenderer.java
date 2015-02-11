@@ -212,7 +212,6 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId + "_hidden", "id");
         writer.writeAttribute("name", clientId + "_hidden", "name");
         writer.endElement("input");
-        writer.endElement("span");
         // build out command button for show/hide of date select popup.
         writer.startElement("input", uiComponent);
         writer.writeAttribute("type", "button", "type");
@@ -227,6 +226,7 @@ public class DateSpinnerRenderer extends InputRenderer {
             writer.writeAttribute(CLICK_EVENT, "mobi.datespinner.toggle('" + clientId + "');", null);
         }
         writer.endElement("input");
+        writer.endElement("span");
         writer.endElement("span"); //end of first span
         // dive that is use to hide/show the popup screen black out, invisible by default.
         writer.startElement("div", uiComponent);

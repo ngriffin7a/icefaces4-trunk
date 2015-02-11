@@ -14,20 +14,24 @@ width: 50%;
 
 .ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper:last-of-type,
 .ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper:last-of-type { 
+position: relative;
 display: inline-block;
 float: right;
-width: 45%;
-}
-
-.ui-field-contain .mobi-fieldset-row .mobi-date-popup-btn:last-of-type,
-.ui-field-contain .mobi-fieldset-row .mobi-time-popup-btn:last-of-type {
-display: inline-block;
-float: right;
+width: 40%;
 }
 
 .ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper:last-of-type > input.mobi-input-text,
 .ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper:last-of-type > input.mobi-input-text { 
+position: absolute;
 width: 100%;
+margin-right: 28px;
+right:0;
+}
+
+.ui-field-contain .mobi-fieldset-row .mobi-date-popup-btn:last-of-type,
+.ui-field-contain .mobi-fieldset-row .mobi-time-popup-btn:last-of-type {
+position: absolute;
+right:0;
 }
 
 .ui-field-contain .mobi-fieldset-row a.mobi-flipswitch:last-of-type {
