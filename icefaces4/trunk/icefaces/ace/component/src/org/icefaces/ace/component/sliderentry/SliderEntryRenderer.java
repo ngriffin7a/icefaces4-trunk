@@ -121,7 +121,7 @@ public class SliderEntryRenderer extends CoreRenderer{
 		style = style == null ? "" : style;
 		writer.writeAttribute("style", style, null);
 		String styleClass = slider.getStyleClass();
-		if (styleClass != null) writer.writeAttribute("class", styleClass, null);
+		writer.writeAttribute("class", "ui-sliderentry " + (styleClass != null ? styleClass : ""), null);
 		
 		writer.startElement("input", null);
 		writer.writeAttribute("id", clientId + "_hidden" , "id");
