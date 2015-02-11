@@ -1,3 +1,9 @@
+/*
+ *  mobi:fieldSet special styling on mobile devices
+ */
+
+/* h:* components that render <input type="text">, <textarea> and <select> */
+/* ace:textEntry, ace:textareaEntry, ace:maskedEntry, ace:simpleSelectOneMenu */
 .ui-field-contain .mobi-fieldset-row input[type="text"]:last-of-type,
 .ui-field-contain .mobi-fieldset-row input[type="date"]:last-of-type,
 .ui-field-contain .mobi-fieldset-row input[type="time"]:last-of-type,
@@ -12,6 +18,7 @@ float: right;
 width: 50%;
 }
 
+/* mobi:dateSpinner and mobi:timeSpinner */
 .ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper:last-of-type,
 .ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper:last-of-type { 
 position: relative;
@@ -34,11 +41,17 @@ position: absolute;
 right:0;
 }
 
-.ui-field-contain .mobi-fieldset-row a.mobi-flipswitch:last-of-type {
+/* mobi:flipswitch */
+.ui-field-contain .mobi-fieldset-row a.mobi-flipswitch:last-of-type,
+.ui-field-contain .mobi-fieldset-row div.ui-autocompleteentry,
+.ui-field-contain .mobi-fieldset-row div.ui-combobox,
+.ui-field-contain .mobi-fieldset-row div.ui-selectmenu,
+.ui-field-contain .mobi-fieldset-row div.ui-sliderentry {
 display: inline-block;
 float: right;
 }
 
+/* optional style class to be applied arbitrarily */
 .ui-field-contain .mobi-fieldset-row .mobi-float-right {
 display: inline-block;
 float: right;
