@@ -174,7 +174,6 @@ public class TimeSpinnerRenderer extends InputRenderer {
         if (disabled)
             writer.writeAttribute("disabled", "disabled", null);
         writer.endElement("input");
-        writer.endElement("span");
         // build out command button for show/hide of date select popup.
         writer.startElement("input", uiComponent);
         writer.writeAttribute("type", "button", "type");
@@ -188,6 +187,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
             writer.writeAttribute(CLICK_EVENT, "mobi.timespinner.toggle('" + clientId + "');", null);
         }
         writer.endElement("input");
+        writer.endElement("span");
         writer.endElement(HTML.SPAN_ELEM);
         // div that is use to hide/show the popup screen black out.
         writer.startElement("div", uiComponent);
