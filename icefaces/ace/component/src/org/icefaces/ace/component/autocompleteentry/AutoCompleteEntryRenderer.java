@@ -159,7 +159,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 		// root
         writer.startElement("div", uiComponent);
 		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("class", autoCompleteEntry.getStyleClass(), null);
+		writer.writeAttribute("class", "ui-autocompleteentry " + autoCompleteEntry.getStyleClass(), null);
 
         writeLabelAndIndicatorBefore(labelAttributes);
 
