@@ -64,7 +64,6 @@ public class BreadcrumbMenuViewScopedBean implements Serializable {
     private NodeStateMap stateMap;
     private MenuModel menuModel1;
     private MenuModel menuModel2;
-    private Tree tree;
 
     private NodeStateCreationCallback contractProvinceInit = new NodeStateCreationCallback() {
         public NodeState initializeState(NodeState newState, Object node) {
@@ -114,6 +113,7 @@ public class BreadcrumbMenuViewScopedBean implements Serializable {
     }
 
     public void treeSelectListener(AjaxBehaviorEvent event) {
+        Tree tree = (Tree) event.getSource();
         List selected = stateMap.getSelected();
         LocationNodeImpl node = (LocationNodeImpl) (selected.isEmpty() ? null : selected.get(0));
         Stack stack = new Stack();
@@ -140,17 +140,9 @@ public class BreadcrumbMenuViewScopedBean implements Serializable {
             menuItem = new MenuItem();
             menuItem.setId(treeId + "-crumb-2" + nodeId);
             menuItem.setValue(node.getName());
-            menuItem.addActionListener(new MenuItemActionListener());
+            menuItem.addActionListener(new MenuItemActionListener(tree));
             menuModel2.addMenuItem(menuItem);
         }
-    }
-
-    public Tree getTree() {
-        return tree;
-    }
-
-    public void setTree(Tree tree) {
-        this.tree = tree;
     }
 
     public MenuModel getMenuModel1() {
@@ -162,6 +154,12 @@ public class BreadcrumbMenuViewScopedBean implements Serializable {
     }
 
     class MenuItemActionListener implements ActionListener {
+        private Tree tree;
+
+        public MenuItemActionListener(Tree tree) {
+            this.tree = tree;
+        }
+
         public void processAction(ActionEvent event) throws AbortProcessingException {
             UIComponent eventComponent = event.getComponent();
             String id = eventComponent.getId();
