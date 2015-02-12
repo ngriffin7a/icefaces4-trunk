@@ -35,13 +35,13 @@
 
     <ui:define name="example">
         <style>
-            .inlineBlock {
-                display: inline-block;
-                vertical-align: top;
-            }
+        .grid td {
+            vertical-align: top;
+        }
         </style>
         <h:form id="form">
             <ace:panel id="panel">
+				<h:panelGrid columns="2" styleClass="grid">
                 <h:panelGroup styleClass="inlineBlock" style="width:60%">
                     <ace:selectMenu id="selectProvince" value="#{selectMenuBean.province}" valueChangeListener="#{selectMenuBean.provinceChange}" label="Select province: " labelPosition="top">
                         <f:selectItem itemValue="British Columbia" itemLabel="British Columbia" />
@@ -67,11 +67,12 @@
                     </ace:selectMenu>
                 </h:panelGroup>
 
-                <h:panelGroup styleClass="inlineBlock">
+                <h:panelGroup>
                     <h:outputText id="outputTxtProvince" style="margin-left:20px;" value="Province: #{selectMenuBean.province}" />
                     <br />
                     <h:outputText id="outputTxtCity" style="margin-left:20px;" value="City: #{selectMenuBean.city}" />
                 </h:panelGroup>
+				</h:panelGrid>
             </ace:panel>
         </h:form>
     </ui:define>
