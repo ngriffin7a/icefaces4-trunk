@@ -18,6 +18,9 @@ package org.icefaces.mobi.component.scan;
 
 
 import java.io.IOException;
+import java.lang.String;
+import java.lang.StringBuilder;
+import java.lang.System;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -71,8 +74,9 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.startElement(SPAN_ELEM, scan);
 		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = scan.getButtonLabel();
+        String capturedLabel=scan.getCaptureMessageLabel();
         if (MobiJSFUtils.uploadInProgress(scan))  {
-           scan.setButtonLabel(scan.getCaptureMessageLabel()) ;
+           scan.setButtonLabel(capturedLabel) ;
         } 
         StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         //ClientDescriptor cd = scan.getClient();
@@ -83,7 +87,8 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.writeAttribute(TYPE_ATTR, "button");
 		//writeStandardAttributes(writer, scan, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.scan('" + clientId + "', '', {postURL:'" + scan.getPostURL() + "', " 
+        // register callback for ICE-10126
+		String script = "bridgeit.scan('" + clientId + "', 'callback"+clientId+"', {postURL:'" + scan.getPostURL() + "', "
 		+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		boolean disabled = scan.isDisabled();
@@ -101,7 +106,21 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.startElement("span", scan);
 		writer.startElement("script", scan);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("new ice.mobi.button('"+clientId+"_button');");
+        StringBuilder uiScript = new StringBuilder("new ice.mobi.button('");
+        uiScript.append( clientId ).append( "');");
+        //callback for ICE-10126
+        uiScript.append("window['callback" + clientId + "'] = function(arg) {");
+        String buttonId=clientId+"_button";
+        String firstLine = "var buttonElem = document.getElementById('"+buttonId+"');";
+        uiScript.append(firstLine);
+        String secondLine=" if (buttonElem) { " +
+                "var existingTextElem = buttonElem.firstChild; " +
+                "if (existingTextElem){" +
+                "     existingTextElem.innerHTML='"+capturedLabel+"';" +
+                "} " +
+             "}};"  ;
+        uiScript.append(secondLine);
+        writer.writeText(uiScript.toString());
 		writer.endElement("script");
 		writer.endElement("span");
 
