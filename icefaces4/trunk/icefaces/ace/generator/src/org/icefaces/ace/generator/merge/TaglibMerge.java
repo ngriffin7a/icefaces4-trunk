@@ -88,8 +88,6 @@ public class TaglibMerge {
             if (checkForDuplicateTags(readerA, readerB)) {
                 return;
             }
-            // Replace component handler tags
-            replaceComponentHandler(readerB);
 
             StringBuffer stringBuilder = new StringBuffer();
 
@@ -143,38 +141,5 @@ public class TaglibMerge {
         }
         System.out.println("Tag file contents are unique! ");
         return false;
-    }
-
-    /**
-     * From the compat taglib file, replace the Component &lt;handler-class&gt;
-     * with one that is in glimmer so the icefaces-compat.jar file doesn't need
-     * to be present. 
-     * @param fileBContents compat taglib file contents
-     */
-    public static void replaceComponentHandler(StringBuffer fileBContents) {
-
-         int spos = 0;
-        int epos;
-        String tagName;
-        String tagTag = "<handler-class>";
-        String endTag = "</handler-class>";
-        int fixCount = 0;
-        String handlerClass;
-        while ( (spos = fileBContents.indexOf(tagTag, spos) ) > -1) {
-            epos = fileBContents.indexOf(endTag, spos + tagTag.length());
-            if (epos > -1) {
-                handlerClass = fileBContents.substring(spos+tagTag.length(), epos);
-                if (handlerClass.endsWith("IceComponentHandler")) {
-                    fileBContents.replace(spos + tagTag.length(), epos, "org.icefaces.facelets.tag.icefaces.core.IceComponentHandler");
-                    fixCount++;
-                } else if (handlerClass.endsWith("TabChangeListenerHandler")) {
-                    fileBContents.replace(spos + tagTag.length(), epos, "org.icefaces.facelets.tag.icefaces.core.TabChangeListenerHandler");
-                } else {
-                    System.out.println("Leaving well enough alone on: " + handlerClass);
-                }                     
-            }
-            spos = epos + endTag.length();
-        }
-        System.out.println("Repaired " + fixCount + " Component Handler tags! ");
     }
 }
