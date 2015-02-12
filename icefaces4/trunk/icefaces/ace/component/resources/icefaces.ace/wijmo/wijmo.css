@@ -432,6 +432,10 @@ float:right;
 	display: inline-block;
 }
 
+.ui-breadcrumb-menu .ui-widget.ui-widget-content.wijmo-wijmenu {
+	display: block;
+}
+
 .wijmo-wijmenu-list.ui-widget-content.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-child.wijmo-wijmenu-flyout {
 	width: 100%;
 }
