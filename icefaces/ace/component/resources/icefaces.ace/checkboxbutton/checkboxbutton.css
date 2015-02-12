@@ -16,7 +16,7 @@
 
 
 .ice-checkboxbutton {
-	display:inline;
+	display:inline-block;
 }
 
 .ice-checkboxbutton .ui-label {
