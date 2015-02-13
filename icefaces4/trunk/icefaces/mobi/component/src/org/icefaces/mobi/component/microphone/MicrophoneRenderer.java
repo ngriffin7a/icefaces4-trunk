@@ -18,6 +18,7 @@ package org.icefaces.mobi.component.microphone;
 
 
 import java.io.IOException;
+import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -78,6 +79,7 @@ public class MicrophoneRenderer extends Renderer {
 		writer.startElement(SPAN_ELEM, microphone);
 		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = microphone.getButtonLabel();
+        String capturedLabel=microphone.getCaptureMessageLabel();
         if (MobiJSFUtils.uploadInProgress(microphone))  {
            microphone.setButtonLabel(microphone.getCaptureMessageLabel()) ;
         } 
@@ -96,7 +98,7 @@ public class MicrophoneRenderer extends Renderer {
 		writer.writeAttribute(TABINDEX_ATTR, microphone.getTabindex());
 		//writeStandardAttributes(writer, microphone, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.microphone('" + clientId + "', '', {postURL:'" + microphone.getPostURL() + "', "
+		String script = "bridgeit.microphone('" + clientId + "', 'callback"+clientId+"', {postURL:'" + microphone.getPostURL() + "', "
         + "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		writer.startElement(SPAN_ELEM, microphone);
@@ -107,7 +109,22 @@ public class MicrophoneRenderer extends Renderer {
 		writer.startElement("span", microphone);
 		writer.startElement("script", microphone);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("new ice.mobi.button('"+clientId+"_button');");
+	//	writer.writeText("new ice.mobi.button('"+clientId+"_button');");
+        StringBuilder uiScript = new StringBuilder("new ice.mobi.button('");
+        uiScript.append( clientId ).append( "');");
+        //callback for ICE-10126
+        uiScript.append("window['callback" + clientId + "'] = function(arg) {");
+        String buttonId=clientId+"_button";
+        String firstLine = "var buttonElem = document.getElementById('"+buttonId+"');";
+        uiScript.append(firstLine);
+        String secondLine=" if (buttonElem) { " +
+                "var existingTextElem = buttonElem.firstChild; " +
+                "if (existingTextElem){" +
+                "     existingTextElem.innerHTML='"+capturedLabel+"';" +
+                "} " +
+             "}};"  ;
+        uiScript.append(secondLine);
+        writer.writeText(uiScript.toString());
 		writer.endElement("script");
 		writer.endElement("span");
 
