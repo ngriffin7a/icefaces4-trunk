@@ -312,6 +312,6 @@ public class SelectMenu extends SelectMenuBase implements NamingContainer, Focus
     }
 
     public String getFocusedElementId() {
-        return getClientId() + "_input";
+        return getClientId() + "_link";
     }
 }
