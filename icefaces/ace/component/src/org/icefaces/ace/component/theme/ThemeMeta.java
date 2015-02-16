@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.ace.component.config;
+package org.icefaces.ace.component.theme;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
@@ -23,14 +23,14 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
 
 @Component(
         tagName = "theme",
-        componentClass = "org.icefaces.ace.component.config.Theme",
-        generatedClass = "org.icefaces.ace.component.config.ThemeBase",
-        handlerClass = "org.icefaces.ace.component.config.ThemeHandler",
+        componentClass = "org.icefaces.ace.component.theme.Theme",
+        generatedClass = "org.icefaces.ace.component.theme.ThemeBase",
+        handlerClass = "org.icefaces.ace.component.theme.ThemeHandler",
         componentType = "org.icefaces.AceTheme",
         rendererType = "org.icefaces.AceThemeRenderer",
         extendsClass = "javax.faces.component.UIOutput",
         componentFamily = "org.icefaces.aceConfigCode",
-        tlddoc = "config provides a way to change global parameters for ACE components."
+        tlddoc = "theme provides a way to change global parameters for ACE components."
 )
 
 public class ThemeMeta extends UIComponentBaseMeta {

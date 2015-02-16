@@ -14,9 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.ace.component.config;
+package org.icefaces.ace.component.theme;
 
-import javax.faces.render.Renderer;
-
-public class ThemeRenderer extends Renderer {
+public class Theme extends ThemeBase {
 }
