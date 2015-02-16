@@ -88,7 +88,8 @@ public class DataTable extends DataTableBase implements Serializable {
     transient protected SortState savedSortState;
     transient protected FilterState savedFilterState;
     transient protected PageState savedPageState;
-    transient protected SelectionDeltaState savedSelectionChanges;
+	// used to associate a client id with a state, in order to avoid sharing/overriding states in the case of nested tables
+    transient protected Map<String, SelectionDeltaState> savedSelectionChanges = new HashMap<String, SelectionDeltaState>();
     transient protected boolean decoded = false;
 
     static {
@@ -422,8 +423,8 @@ public class DataTable extends DataTableBase implements Serializable {
         if (savedPageState != null)
             savedPageState.apply(this);
 
-        if (savedSelectionChanges != null)
-            savedSelectionChanges.apply(this);
+        if (savedSelectionChanges.get(getClientId(context)) != null)
+            savedSelectionChanges.get(getClientId(context)).apply(this);
 
         if (isApplyingFilters() && !isLazy()) {
             if (savedFilterState != null)

@@ -40,7 +40,7 @@ public class DataTableDecoder {
         String clientId = table.getClientId(context);
         Map<String,String> params = context.getExternalContext().getRequestParameterMap();
 
-        table.savedSelectionChanges = new SelectionDeltaState(context, table);
+        table.savedSelectionChanges.put(table.getClientId(context), new SelectionDeltaState(context, table));
 
         queueInstantSelectionEvent(context, table, clientId, params);
     }
