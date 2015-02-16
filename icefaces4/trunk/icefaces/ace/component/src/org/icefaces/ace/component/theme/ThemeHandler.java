@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.ace.component.config;
+package org.icefaces.ace.component.theme;
 
 import org.icefaces.ace.util.Constants;
 
