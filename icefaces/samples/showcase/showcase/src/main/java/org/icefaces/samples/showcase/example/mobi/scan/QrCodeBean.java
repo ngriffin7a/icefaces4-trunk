@@ -21,7 +21,7 @@ package org.icefaces.samples.showcase.example.mobi.qrcode;
 //import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 
@@ -61,7 +61,7 @@ import java.io.Serializable;
 )
 */
 @ManagedBean(name = QrCodeBean.BEAN_NAME)
-@SessionScoped
+@ViewScoped
 public class QrCodeBean /*extends ExampleImpl<QrCodeBean>*/ implements
         Serializable {
 
@@ -69,6 +69,8 @@ public class QrCodeBean /*extends ExampleImpl<QrCodeBean>*/ implements
 
     // echo string for qr image scanner
     private String qrScanner;
+    private String buttonLabel="Scan Code";
+    private String captureMessageLabel="Code Captured";
     private boolean qrScannerUrl;
     // input string for qr image generation.
     private String qrString = "ICEmobile";
@@ -113,5 +115,21 @@ public class QrCodeBean /*extends ExampleImpl<QrCodeBean>*/ implements
 
     public void setQrString(String qrString) {
         this.qrString = qrString;
+    }
+
+    public String getCaptureMessageLabel() {
+        return captureMessageLabel;
+    }
+
+    public void setCaptureMessageLabel(String captureMessageLabel) {
+        this.captureMessageLabel = captureMessageLabel;
+    }
+
+    public String getButtonLabel() {
+        return buttonLabel;
+    }
+
+    public void setButtonLabel(String buttonlabel) {
+        this.buttonLabel = buttonlabel;
     }
 }

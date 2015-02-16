@@ -34,12 +34,15 @@
        <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
                 <mobi:scan value="#{qrCodeBean.qrScanner}"
-                           id="scanOne" style="width:50%"/>
+                           buttonLabel="#{qrCodeBean.buttonLabel}"
+                           captureMessageLabel="#{qrCodeBean.captureMessageLabel}"
+                           id="scanOne" />
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
 				<h:commandButton value="submit" styleClass="submit"
-									actionListener="#{qrCodeBean.checkCodeForUrl}"
-									/>
+									actionListener="#{qrCodeBean.checkCodeForUrl}">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandButton>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
                 <label>QR Code:</label>
