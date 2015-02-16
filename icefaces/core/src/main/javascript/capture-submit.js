@@ -78,7 +78,8 @@
                 }
                 submit(theEvent, f);
             }
-        };
+        }
+
         each(['onkeydown', 'onkeypress', 'onkeyup', 'onclick', 'ondblclick', 'onchange'], function(name) {
             f[name] = function(e) {
                 var event = e || window.event;
@@ -95,7 +96,7 @@
                         }
                     }
                     var elementExists = document.getElementById(element.id);
-                    submit(event, elementExists ? element : f);
+                    submit(event, elementExists ? elementExists : f);
                     f.onsubmit = null;
                     return false;
                 };
