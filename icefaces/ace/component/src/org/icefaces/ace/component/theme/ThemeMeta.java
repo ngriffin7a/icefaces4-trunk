@@ -30,7 +30,8 @@ import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
         rendererType = "org.icefaces.AceThemeRenderer",
         extendsClass = "javax.faces.component.UIOutput",
         componentFamily = "org.icefaces.aceConfigCode",
-        tlddoc = "theme provides a way to change global parameters for ACE components."
+        tlddoc = "The theme component can be used to change the ACE ThemeRoller theme used by the page this component is defined in." +
+                "<p>For more information, see the <a href=\"http://wiki.icefaces.org/display/ICE/Theme\">Theme Wiki Documentation</a>."
 )
 
 public class ThemeMeta extends UIComponentBaseMeta {
