@@ -192,7 +192,8 @@
 			<file name="${resources}/org.icefaces.component.datespinner/datespinner.js"/>
 			<file name="${resources}/org.icefaces.component.flipswitch/flipswitch.js"/>
 			<file name="${resources}/org.icefaces.component.geolocation/geolocation.js"/>
-			<file name="${resources}/org.icefaces.component.timespinner/timespinner.js"/>
+            <file name="${resources}/org.icefaces.component.timespinner/timespinner.js"/>
+            <file name="${resources}/org.icefaces.component.onlinestatus/onlinestatus.js"/>
 			<file name="${resources}/org.icefaces.component.util/component.js"/>
 			<file name="${resources}/org.icefaces.component.util/overthrow.js"/>
 			<file name="${resources}/org.icefaces.component.viewmanager/viewmanager.js"/>
