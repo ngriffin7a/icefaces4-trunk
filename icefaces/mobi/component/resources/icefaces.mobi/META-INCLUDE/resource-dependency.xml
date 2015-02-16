@@ -36,4 +36,9 @@
             <resource name="component.js" library="org.icefaces.component.util"/>
         </requires>
     </resource>
+    <resource name="onlinestatus.js" library="org.icefaces.component.onlinestatus">
+        <requires>
+            <resource name="component.js" library="org.icefaces.component.util"/>
+        </requires>
+    </resource>
 </dependencies>
