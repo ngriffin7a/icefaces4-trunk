@@ -18,6 +18,7 @@ package org.icefaces.mobi.component.scan;
 
 
 import java.io.IOException;
+import java.lang.Boolean;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.System;
@@ -27,6 +28,7 @@ import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import com.sun.corba.se.impl.monitoring.MonitoredObjectImpl;
 import org.icefaces.impl.application.AuxUploadResourceHandler;
 import org.icefaces.mobi.renderkit.BaseInputRenderer;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
@@ -60,6 +62,8 @@ public class ScanRenderer extends BaseInputRenderer {
             if (submittedString != null){
                 Object convertedValue = this.getConvertedValue(facesContext, uiComponent, submittedString);
                 this.setSubmittedValue(scan, convertedValue);
+   //      System.out.println("decode have submitted value so reset the button label to ="+scan.getButtonLabel());
+                scan.setButtonLabel(scan.getButtonLabel()) ;
             }
 
         }
@@ -75,8 +79,9 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.writeAttribute(ID_ATTR, clientId);
         String oldLabel = scan.getButtonLabel();
         String capturedLabel=scan.getCaptureMessageLabel();
+  //   System.out.println(" uploadin progress="+MobiJSFUtils.uploadInProgress(scan));
         if (MobiJSFUtils.uploadInProgress(scan))  {
-           scan.setButtonLabel(capturedLabel) ;
+            scan.setButtonLabel(capturedLabel) ;
         } 
         StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         //ClientDescriptor cd = scan.getClient();
@@ -88,6 +93,7 @@ public class ScanRenderer extends BaseInputRenderer {
 		//writeStandardAttributes(writer, scan, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
         // register callback for ICE-10126
+
 		String script = "bridgeit.scan('" + clientId + "', 'callback"+clientId+"', {postURL:'" + scan.getPostURL() + "', "
 		+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
@@ -111,16 +117,20 @@ public class ScanRenderer extends BaseInputRenderer {
         //callback for ICE-10126
         uiScript.append("window['callback" + clientId + "'] = function(arg) {");
         String buttonId=clientId+"_button";
+  //      uiScript.append("console.log('in callback');");
         String firstLine = "var buttonElem = document.getElementById('"+buttonId+"');";
         uiScript.append(firstLine);
         String secondLine=" if (buttonElem) { " +
+       //         "console.log('have buttonElem');" +
                 "var existingTextElem = buttonElem.firstChild; " +
                 "if (existingTextElem){" +
+  //                      " console.log('have existingTextElem');" +
                 "     existingTextElem.innerHTML='"+capturedLabel+"';" +
                 "} " +
              "}};"  ;
         uiScript.append(secondLine);
         writer.writeText(uiScript.toString());
+//     System.out.println(" uiScript="+uiScript.toString());
 		writer.endElement("script");
 		writer.endElement("span");
 
