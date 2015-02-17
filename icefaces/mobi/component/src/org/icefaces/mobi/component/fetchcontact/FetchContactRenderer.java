@@ -80,6 +80,7 @@ public class FetchContactRenderer extends Renderer {
 
 		writer.startElement(SPAN_ELEM, contactList);
 		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(CLASS_ATTR, "mobi-fetch-contact");
         StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         ClientDescriptor cd = contactList.getClient();
 		// button element

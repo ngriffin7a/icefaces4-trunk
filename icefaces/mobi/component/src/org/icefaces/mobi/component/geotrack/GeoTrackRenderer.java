@@ -45,6 +45,7 @@ public class GeoTrackRenderer extends CoreRenderer {
 
 		writer.startElement(HTML.SPAN_ELEM, geotrack);
 		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
+		writer.writeAttribute(HTML.CLASS_ATTR, "mobi-geotrack", null);
 
 		writer.startElement(HTML.BUTTON_ELEM, geotrack);
 		writer.writeAttribute(HTML.ID_ATTR, clientId + "_button", null);

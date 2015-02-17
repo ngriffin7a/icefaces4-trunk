@@ -42,6 +42,7 @@ public class CloudPushRenderer extends Renderer {
         if (!desktopBrowser || (email != null && email.length() > 0)) {
             writer.startElement(BUTTON_ELEM, cloudPush);
             writer.writeAttribute(ID_ATTR, clientId);
+			writer.writeAttribute(CLASS_ATTR, "mobi-cloud-push");
             writer.writeAttribute(NAME_ATTR, clientId + "_button");
             writer.writeAttribute(TYPE_ATTR, "button");
             String script = desktopBrowser ? "ice.push.parkInactivePushIds('mail:" + email + "');" : "bridgeit.register();return false;";
