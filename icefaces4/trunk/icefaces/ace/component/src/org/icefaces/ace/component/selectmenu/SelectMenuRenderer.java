@@ -217,6 +217,8 @@ public class SelectMenuRenderer extends InputRenderer {
             jb.endFunction();
 
             writer.writeText(jb.toString(), null);
+		} else {
+			writer.writeText("ice.ace.SelectMenu.setDimensionsOnly('"+clientId+"');", null);
 		}
 
         writer.endElement("script");

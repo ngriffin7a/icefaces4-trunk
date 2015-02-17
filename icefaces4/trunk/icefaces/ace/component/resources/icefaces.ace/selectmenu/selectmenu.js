@@ -87,9 +87,26 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 	}
 };
 
+ice.ace.SelectMenu.setDimensionsOnly = function(id) {
+	var root = ice.ace.jq(ice.ace.escapeClientId(id));
+	var $box = root.find('.ui-combobox-value');
+	var $element = root.find('.ui-selectmenu-value');
+	var displayedValue = $element.find('span').get(0);
+	displayedValue.innerHTML = '&nbsp;';
+	var $downArrowButton = $element.find('.ui-selectmenu-button').eq(0);
+	var $displayedValue = ice.ace.jq(displayedValue);
+	$displayedValue.css('width', $element.width() - $downArrowButton.outerWidth(true) - ($displayedValue.outerWidth(true) - $displayedValue.width()));
+	$downArrowButton.css('height', ice.ace.jq(displayedValue).outerHeight());
+	var height = $downArrowButton.height();
+	var padding = (height - ice.ace.SelectMenu.DELTA_HEIGHT) / 2;
+	$downArrowButton.children().eq(0).css('height', padding);
+};
+
 ice.ace.SelectMenu.LABEL_CLASS = 'ui-selectmenu-item-label';
 ice.ace.SelectMenu.VALUE_CLASS = 'ui-selectmenu-item-value';
 ice.ace.SelectMenu.IGNORE_CLASS = 'ui-selectmenu-item-ignore';
+ice.ace.SelectMenu.DELTA_WIDTH = 26;
+ice.ace.SelectMenu.DELTA_HEIGHT = 16;
 
 ice.ace.SelectMenu.keys = {
 KEY_BACKSPACE: 8,
@@ -888,7 +905,7 @@ ice.ace.SelectMenu.prototype = {
 	adjustDownArrowButtonHeight: function() {
 		this.$downArrowButton.css('height', ice.ace.jq(this.displayedValue).outerHeight());
 		var height = this.$downArrowButton.height();
-		var padding = (height - 16) / 2;
+		var padding = (height - ice.ace.SelectMenu.DELTA_HEIGHT) / 2;
 		this.$downArrowButton.children().eq(0).css('height', padding);
 	},
 	
