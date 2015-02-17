@@ -4,45 +4,45 @@
 
 /* h:* components that render <input type="text">, <textarea> and <select> */
 /* ace:textEntry, ace:textareaEntry, ace:maskedEntry, ace:simpleSelectOneMenu */
-.ui-field-contain .mobi-fieldset-row input[type="text"]:last-of-type,
-.ui-field-contain .mobi-fieldset-row input[type="date"]:last-of-type,
-.ui-field-contain .mobi-fieldset-row input[type="time"]:last-of-type,
-.ui-field-contain .mobi-fieldset-row textarea:last-of-type, 
-.ui-field-contain .mobi-fieldset-row select:last-of-type,
+.ui-field-contain .mobi-fieldset-row input[type="text"],
+.ui-field-contain .mobi-fieldset-row input[type="date"],
+.ui-field-contain .mobi-fieldset-row input[type="time"],
+.ui-field-contain .mobi-fieldset-row textarea, 
+.ui-field-contain .mobi-fieldset-row select,
 .ui-field-contain .mobi-fieldset-row input.ui-inputfield.ui-inputmask,
 .ui-field-contain .mobi-fieldset-row input.ui-inputfield.ui-textentry,
 .ui-field-contain .mobi-fieldset-row input.ui-inputfield.ui-textareaentry,
-.ui-field-contain .mobi-fieldset-row .ui-simpleselectonemenu:last-of-type select {
+.ui-field-contain .mobi-fieldset-row .ui-simpleselectonemenu select {
 display: inline-block;
 float: right;
 width: 50%;
 }
 
 /* mobi:dateSpinner and mobi:timeSpinner */
-.ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper:last-of-type,
-.ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper:last-of-type { 
+.ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper,
+.ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper { 
 position: relative;
 display: inline-block;
 float: right;
 width: 40%;
 }
 
-.ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper:last-of-type > input.mobi-input-text,
-.ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper:last-of-type > input.mobi-input-text { 
+.ui-field-contain .mobi-fieldset-row span.mobi-date-wrapper > input.mobi-input-text,
+.ui-field-contain .mobi-fieldset-row span.mobi-time-wrapper > input.mobi-input-text { 
 position: absolute;
 width: 100%;
 margin-right: 28px;
 right:0;
 }
 
-.ui-field-contain .mobi-fieldset-row .mobi-date-popup-btn:last-of-type,
-.ui-field-contain .mobi-fieldset-row .mobi-time-popup-btn:last-of-type {
+.ui-field-contain .mobi-fieldset-row .mobi-date-popup-btn,
+.ui-field-contain .mobi-fieldset-row .mobi-time-popup-btn{
 position: absolute;
 right:0;
 }
 
 /* mobi:flipswitch */
-.ui-field-contain .mobi-fieldset-row a.mobi-flipswitch:last-of-type,
+.ui-field-contain .mobi-fieldset-row a.mobi-flipswitch,
 .ui-field-contain .mobi-fieldset-row div.ui-autocompleteentry,
 .ui-field-contain .mobi-fieldset-row div.ui-combobox,
 .ui-field-contain .mobi-fieldset-row div.ui-selectmenu,
@@ -51,8 +51,54 @@ display: inline-block;
 float: right;
 }
 
-/* optional style class to be applied arbitrarily */
+/* buttons */
+.ui-field-contain .mobi-fieldset-row input[type="button"],
+.ui-field-contain .mobi-fieldset-row input[type="submit"],
+.ui-field-contain .mobi-fieldset-row button,
+.ui-field-contain .mobi-fieldset-row .mobi-camcorder,
+.ui-field-contain .mobi-fieldset-row .mobi-camera,
+.ui-field-contain .mobi-fieldset-row .mobi-cloud-push,
+.ui-field-contain .mobi-fieldset-row .mobi-fetch-contact,
+.ui-field-contain .mobi-fieldset-row .mobi-geotrack,
+.ui-field-contain .mobi-fieldset-row .mobi-microphone,
+.ui-field-contain .mobi-fieldset-row .mobi-scan,
+.ui-field-contain .mobi-fieldset-row .mobi-sms,
+.ui-field-contain .mobi-fieldset-row .ice-checkboxbutton,
+.ui-field-contain .mobi-fieldset-row .ice-linkbutton,
+.ui-field-contain .mobi-fieldset-row .ice-pushbutton,
+.ui-field-contain .mobi-fieldset-row .ice-ace-radiobutton {
+display: table;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+margin-left: auto;
+margin-right: auto;
+}
+
+.ui-field-contain .mobi-fieldset-row .mobi-camcorder button,
+.ui-field-contain .mobi-fieldset-row .mobi-camera button,
+.ui-field-contain .mobi-fieldset-row .mobi-cloud-push button,
+.ui-field-contain .mobi-fieldset-row .mobi-fetch-contact button,
+.ui-field-contain .mobi-fieldset-row .mobi-geotrack button,
+.ui-field-contain .mobi-fieldset-row .mobi-microphone button,
+.ui-field-contain .mobi-fieldset-row .mobi-scan button,
+.ui-field-contain .mobi-fieldset-row .mobi-sms button,
+.ui-field-contain .mobi-fieldset-row .ice-checkboxbutton button,
+.ui-field-contain .mobi-fieldset-row .ice-pushbutton button,
+.ui-field-contain .mobi-fieldset-row .ice-ace-radiobutton button {
+display: inline-block;
+margin: 0;
+}
+
+/* optional style classes to be applied arbitrarily */
 .ui-field-contain .mobi-fieldset-row .mobi-float-right {
 display: inline-block;
 float: right;
+}
+
+.ui-field-contain .mobi-fieldset-row .mobi-center {
+display: table;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+margin-left: auto;
+margin-right: auto;
 }

@@ -46,6 +46,7 @@ public class SmsRenderer extends CoreRenderer {
         String clientId = sms.getClientId();
 		writer.startElement(HTML.SPAN_ELEM, sms);
 		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
+		writer.writeAttribute(HTML.CLASS_ATTR, "mobi-sms", null);
 
 		writer.startElement(HTML.BUTTON_ELEM, sms);
 		writer.writeAttribute(HTML.ID_ATTR, clientId + "_button", null);

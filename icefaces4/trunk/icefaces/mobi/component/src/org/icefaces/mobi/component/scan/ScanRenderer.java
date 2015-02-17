@@ -77,6 +77,7 @@ public class ScanRenderer extends BaseInputRenderer {
 
 		writer.startElement(SPAN_ELEM, scan);
 		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(CLASS_ATTR, "mobi-scan");
         String oldLabel = scan.getButtonLabel();
         String capturedLabel=scan.getCaptureMessageLabel();
   //   System.out.println(" uploadin progress="+MobiJSFUtils.uploadInProgress(scan));

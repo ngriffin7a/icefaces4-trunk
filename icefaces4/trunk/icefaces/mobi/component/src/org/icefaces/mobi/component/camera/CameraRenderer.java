@@ -88,6 +88,7 @@ public class CameraRenderer extends Renderer {
 		String clientId = camera.getClientId();
 		writer.startElement(SPAN_ELEM, camera);
 		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(CLASS_ATTR, "mobi-camera");
 		String oldLabel = camera.getButtonLabel();
 		if (MobiJSFUtils.uploadInProgress(camera))  {
 			camera.setButtonLabel(camera.getCaptureMessageLabel()) ;
@@ -118,7 +119,7 @@ public class CameraRenderer extends Renderer {
         writer.startElement("span", camera);
         writer.startElement("script", camera);
         writer.writeAttribute("type", "text/javascript");
-        String uiScript = "new ice.mobi.button('" + clientId + "');";
+        String uiScript = "new ice.mobi.button('" + clientId + "_button');";
         uiScript += "window['callback" + clientId + "'] = function(arg) {";
         uiScript += "if (! ('thumbnails" + clientId + "' in window)){window['thumbnails" + clientId + "'] = {};}";
         uiScript += "var thumbnails = window['thumbnails" + clientId + "'];";

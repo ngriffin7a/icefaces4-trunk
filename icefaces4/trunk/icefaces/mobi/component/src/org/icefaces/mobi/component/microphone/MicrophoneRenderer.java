@@ -78,6 +78,7 @@ public class MicrophoneRenderer extends Renderer {
 
 		writer.startElement(SPAN_ELEM, microphone);
 		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(CLASS_ATTR, "mobi-microphone");
         String oldLabel = microphone.getButtonLabel();
         String capturedLabel=microphone.getCaptureMessageLabel();
         if (MobiJSFUtils.uploadInProgress(microphone))  {

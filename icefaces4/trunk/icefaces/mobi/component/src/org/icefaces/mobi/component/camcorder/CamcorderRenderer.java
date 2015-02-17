@@ -71,6 +71,7 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		String clientId = camcorder.getClientId();
 		writer.startElement(SPAN_ELEM, camcorder);
 		writer.writeAttribute(ID_ATTR, clientId);
+		writer.writeAttribute(CLASS_ATTR, "mobi-camcorder");
         String oldLabel = camcorder.getButtonLabel();
         if (MobiJSFUtils.uploadInProgress(camcorder))  {
             camcorder.setButtonLabel(camcorder.getCaptureMessageLabel()) ;
