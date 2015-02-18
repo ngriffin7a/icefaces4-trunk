@@ -76,12 +76,7 @@
                     }
                     theEvent = originalEvent;
                 }
-                submit(theEvent, f, null, function(onBeforeSubmit, onBeforeUpdate, onAfterUpdate) {
-                    onAfterUpdate(function() {
-                        //make sure onsubmit is cleared to avoid being used during next submit
-                        f.onsubmit = null;
-                    });
-                });
+                submit(theEvent, f);
             }
         }
 
@@ -89,6 +84,11 @@
             f[name] = function(e) {
                 var event = e || window.event;
                 var element = event.target || event.srcElement;
+                //make sure onsubmit is cleared to avoid being used during next submit
+                var removeCallback = namespace.onAfterUpdate(function() {
+                    f.onsubmit = null;
+                    Delay(removeCallback, 1);
+                });
                 f.onsubmit = function() {
                     //fallback to using form as submitting element when the element was removed by a previous
                     //update and form.onsubmit callback is called directly (by application or third party library code)
@@ -102,7 +102,6 @@
                     }
                     var elementExists = document.getElementById(element.id);
                     submit(event, elementExists ? elementExists : f);
-                    f.onsubmit = null;
                     return false;
                 };
             };
