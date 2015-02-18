@@ -43,10 +43,12 @@ margin-right: 28px;
 right:0;
 }
 
-.ui-field-contain .mobi-fieldset-row .mobi-date-popup-btn,
-.ui-field-contain .mobi-fieldset-row .mobi-time-popup-btn{
+.ui-field-contain .mobi-fieldset-row .mobi-date-wrapper .mobi-date-popup-btn,
+.ui-field-contain .mobi-fieldset-row .mobi-time-wrapper .mobi-time-popup-btn {
 position: absolute;
 right:0;
+display: block;
+margin: 0;
 }
 
 /* mobi:flipswitch */

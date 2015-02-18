@@ -247,6 +247,7 @@ mobi.datespinner = {
         if (this.opened[clientId]==true){
             return;
         }
+		ice.setFocus('');
         var hiddenEl = document.getElementById(clientId + '_hidden');
         var inputEl = document.getElementById(clientId + '_input');
         hiddenEl.value= inputEl.value;
