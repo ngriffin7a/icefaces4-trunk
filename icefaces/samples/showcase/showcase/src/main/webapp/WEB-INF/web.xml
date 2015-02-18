@@ -93,7 +93,12 @@
         <description>Resource Coalescing will automatically combine required resources for the initial page load into single .css and .js files</description>
         <param-name>org.icefaces.coalesceResources</param-name>
         <param-value>false</param-value>
-  </context-param>
+    </context-param>
+    
+    <context-param>
+        <param-name>com.icesoft.mobilesimulator.RUN_SIMULATOR_IN_PRODUCTION</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
 
     <!-- Servlet declarations and mappings -->
