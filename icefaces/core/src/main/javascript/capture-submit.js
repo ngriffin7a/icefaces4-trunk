@@ -76,7 +76,12 @@
                     }
                     theEvent = originalEvent;
                 }
-                submit(theEvent, f);
+                submit(theEvent, f, null, function(onBeforeSubmit, onBeforeUpdate, onAfterUpdate) {
+                    onAfterUpdate(function() {
+                        //make sure onsubmit is cleared to avoid being used during next submit
+                        f.onsubmit = null;
+                    });
+                });
             }
         }
 
