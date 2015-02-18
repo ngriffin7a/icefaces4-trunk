@@ -1,3 +1,11 @@
+/* Simulator styles */
+html.simulator *::-webkit-scrollbar{
+    width: 0;
+}
+html.simulator *{
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
 /*
  *  mobi:fieldSet special styling on mobile devices
  */
