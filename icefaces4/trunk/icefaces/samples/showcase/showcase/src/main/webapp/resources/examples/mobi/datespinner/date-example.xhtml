@@ -28,13 +28,13 @@
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow style="padding-bottom:15px;">
                 <h:outputLabel for="useNative" value="Use Native:" style="display:inline-block;margin-top:5px;"/>
-                <mobi:flipswitch id="useNative" value="#{dateBean.useNative}" style="float:right">
+                <mobi:flipswitch id="useNative" value="#{dateBean.useNative}">
                     <ace:ajax render="dateSpinnerForm" execute="dateSpinnerForm"/>
                 </mobi:flipswitch>&#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow style="padding-bottom:15px;">
                 <h:outputLabel for="readonly" value="Read Only:" style="display:inline-block;margin-top:5px;"/>
-                <mobi:flipswitch id="readonly" value="#{dateBean.readonly}" style="float:right">
+                <mobi:flipswitch id="readonly" value="#{dateBean.readonly}">
                     <ace:ajax render="dateSpinnerForm" execute="dateSpinnerForm"/>
                 </mobi:flipswitch>&#160;
             </mobi:fieldsetRow>
@@ -44,7 +44,7 @@
            <!-- date spinner -->
             <mobi:fieldsetRow>
                 <h:outputLabel value="Date:" for="date"/>
-				<h:panelGroup style="float:right">
+				<h:panelGroup>
 					<mobi:dateSpinner useNative="#{dateBean.useNative}" id="date"
 									  readonly="#{dateBean.readonly}"
 									 value="#{dateBean.dateInput}">
@@ -55,7 +55,7 @@
             <!-- time spinner -->
             <mobi:fieldsetRow>
                 <h:outputLabel value="Time:" for="time"/>
-				<h:panelGroup style="float:right">
+				<h:panelGroup>
 					<mobi:timeSpinner id="time" useNative="#{dateBean.useNative}" timeZone="#{dateBean.timeZone}"
 									 value="#{dateBean.timeInput}" readonly="#{dateBean.readonly}">
 					</mobi:timeSpinner>&#160;
