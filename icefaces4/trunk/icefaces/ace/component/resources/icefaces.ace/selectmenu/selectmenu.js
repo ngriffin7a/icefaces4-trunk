@@ -40,7 +40,6 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 			}
 		}
 	}
-	this.adjustDownArrowButtonHeight();
 	var $input = this.root.find('input[name="'+this.id+'_input"]');
 	this.input = $input.get(0);
 	this.input.id = this.id + "_input";
@@ -108,10 +107,6 @@ ice.ace.SelectMenu.setDimensionsOnly = function(id, updateId) {
 	var $displayedValue = ice.ace.jq(displayedValue);
 	instance.$displayedValue = $displayedValue;
 	$displayedValue.css('width', $element.width() - $downArrowButton.outerWidth(true) - ($displayedValue.outerWidth(true) - $displayedValue.width()));
-	$downArrowButton.css('height', ice.ace.jq(displayedValue).outerHeight());
-	var height = $downArrowButton.height();
-	var padding = (height - ice.ace.SelectMenu.DELTA_HEIGHT) / 2;
-	$downArrowButton.children().eq(0).css('height', padding);
 };
 
 ice.ace.SelectMenu.LABEL_CLASS = 'ui-selectmenu-item-label';
@@ -911,14 +906,6 @@ ice.ace.SelectMenu.prototype = {
 				this.displayedValue.innerHTML = '&nbsp;';
 			}
 		}
-		this.adjustDownArrowButtonHeight();
-	},
-	
-	adjustDownArrowButtonHeight: function() {
-		this.$downArrowButton.css('height', ice.ace.jq(this.displayedValue).outerHeight());
-		var height = this.$downArrowButton.height();
-		var padding = (height - ice.ace.SelectMenu.DELTA_HEIGHT) / 2;
-		this.$downArrowButton.children().eq(0).css('height', padding);
 	},
 	
 	replaceSpaces: function(str) {
