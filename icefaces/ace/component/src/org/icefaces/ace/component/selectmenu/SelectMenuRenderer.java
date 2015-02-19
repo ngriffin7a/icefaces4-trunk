@@ -340,6 +340,7 @@ public class SelectMenuRenderer extends InputRenderer {
 					}
 					
 					itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
+					itemLabel = "".equals(itemLabel.trim()) ? "&nbsp;" : itemLabel;
 
 					String styleClass = "";
 					if (item.isDisabled()) {
