@@ -38,10 +38,6 @@ ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selecte
 	var $downArrowButton = $box.find('span');
 	$element.css('width', $box.width() - $downArrowButton.outerWidth(true) - ($element.outerWidth(true) - $element.width()));
 	this.downArrowButton = $downArrowButton.eq(0);
-	this.downArrowButton.css('height', $box.height());
-	var height = this.downArrowButton.height();
-	var padding = (height - ice.ace.ComboBox.DELTA_HEIGHT) / 2;
-	this.downArrowButton.children().eq(0).css('height', padding);
 	if (ice.ace.jq.browser.msie) {// ie7 fix
 		if (ice.ace.jq.browser.version < 8) {
 			if (navigator.userAgent.indexOf("Trident/5") < 0) {
@@ -95,10 +91,6 @@ ice.ace.ComboBox.setDimensionsOnly = function(id) {
 	instance.hidden = root.find('input[type=hidden]').get(0);
 	instance.cfg = {};
 	var downArrowButton = $downArrowButton.eq(0);
-	downArrowButton.css('height', $box.height());
-	var height = downArrowButton.height();
-	var padding = (height - ice.ace.ComboBox.DELTA_HEIGHT) / 2;
-	downArrowButton.children().eq(0).css('height', padding);
 	if (ice.ace.jq.browser.msie) {// ie7 fix
 		if (ice.ace.jq.browser.version < 8) {
 			if (navigator.userAgent.indexOf("Trident/5") < 0) {

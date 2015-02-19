@@ -157,13 +157,9 @@ public class ComboBoxRenderer extends InputRenderer {
 		// down arrow span
 		writer.startElement("span", null);
 		writer.writeAttribute("class", "ui-state-default ui-corner-right", null);
-		writer.writeAttribute("style", "display:block;float:right; width:17px; border-top:0; border-right:0; border-bottom:0;", null);
+		writer.writeAttribute("style", "text-align:center;display:block;float:right; width:17px; border-top:0; border-right:0; border-bottom:0;", null);
 		writer.startElement("span", null);
-		writer.writeAttribute("style", "display:block;", null);
-		writer.endElement("span");
-		writer.startElement("span", null);
-		writer.writeAttribute("style", "display:block;", null);
-		writer.writeAttribute("class", "ui-icon ui-icon-triangle-1-s", null);
+		writer.writeAttribute("class", "fa fa-chevron-down", null);
 		writer.endElement("span");
 		writer.endElement("span");
 		
