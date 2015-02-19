@@ -49,8 +49,7 @@ import java.util.Map;
         @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
         @ResourceDependency(library = "org.icefaces.component.camera", name = "camera.js"),
-        @ResourceDependency(library = "org.icefaces.component.camera", name = "camera.css"),
-        @ResourceDependency(library = "org.icefaces.component.camera", name = "jpeg_encoder_basic.js")
+        @ResourceDependency(library = "org.icefaces.component.camera", name = "camera.css")
 })
 public class CameraMeta extends UIComponentBaseMeta {
 
