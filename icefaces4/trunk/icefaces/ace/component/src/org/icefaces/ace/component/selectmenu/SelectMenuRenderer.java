@@ -108,6 +108,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		// value field
 		writer.startElement("a", null);
 		boolean disabled = selectMenu.isDisabled();
+		boolean readonly = selectMenu.isReadonly();
 		String disabledClass = "";
 		if (disabled) disabledClass = " ui-state-disabled ";
 		writer.writeAttribute("class", "ui-widget-content ui-corner-all ui-selectmenu-value " + disabledClass, null);
@@ -153,6 +154,8 @@ public class SelectMenuRenderer extends InputRenderer {
         writer.writeAttribute("type", "hidden", null);
         writer.writeAttribute("name", inputClientId, null);
         writer.writeAttribute("value", value, null);
+		if (disabled) writer.writeAttribute("disabled", "disabled", null);
+		if (readonly) writer.writeAttribute("readonly", "readonly", null);
         writer.writeAttribute(HTML.AUTOCOMPLETE_ATTR, "off", null);
         writer.endElement("input");
 
@@ -218,7 +221,7 @@ public class SelectMenuRenderer extends InputRenderer {
 
             writer.writeText(jb.toString(), null);
 		} else {
-			writer.writeText("ice.ace.SelectMenu.setDimensionsOnly('"+clientId+"');", null);
+			writer.writeText("ice.ace.SelectMenu.setDimensionsOnly('"+clientId+"', '"+divId+"');", null);
 		}
 
         writer.endElement("script");
@@ -234,7 +237,7 @@ public class SelectMenuRenderer extends InputRenderer {
         writer.writeAttribute("type", "text/javascript", null);
         writer.writeText("(function() {", null);
         writer.writeText("var instance = ice.ace.SelectMenus[\"" + clientId + "\"];", null);
-        writer.writeText("instance.updateValue('"
+        writer.writeText("if (instance) instance.updateValue('"
 			+ escapeJavascriptString(getConvertedValueForClient(facesContext, selectMenu, value))
 			+ "');", null);
         writer.writeText("})();", null);
@@ -312,8 +315,8 @@ public class SelectMenuRenderer extends InputRenderer {
             selectMenu.setIndex(-1);
 
 			writer.endElement("div");
-            String call = "ice.ace.SelectMenus[\"" + clientId +
-                    "\"].setContent(ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_update')).get(0).firstChild.innerHTML);";
+            String call = "var instance = ice.ace.SelectMenus[\"" + clientId +
+                    "\"]; if (instance) instance.setContent(ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_update')).get(0).firstChild.innerHTML);";
             encodeDynamicScript(facesContext, selectMenu, call);
 			writer.endElement("div");
         } else {
@@ -364,8 +367,8 @@ public class SelectMenuRenderer extends InputRenderer {
 					first = false;
                 }
                 sb.append("</div>");
-                String call = "ice.ace.SelectMenus[\"" + clientId + "\"]" +
-                        ".setContent('" + escapeSingleQuote(sb.toString()) + "');";
+                String call = "var instance = ice.ace.SelectMenus[\"" + clientId + "\"]; " +
+                        "if (instance) instance.setContent('" + escapeSingleQuote(sb.toString()) + "');";
                 encodeDynamicScript(facesContext, selectMenu, call);
             }
         }
@@ -379,7 +382,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		writer.startElement("span", null);
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		writer.writeText(call, null);
+		writer.writeText("(function() {" + call + "})();", null);
 		writer.endElement("script");
 		writer.endElement("span");
 	}
