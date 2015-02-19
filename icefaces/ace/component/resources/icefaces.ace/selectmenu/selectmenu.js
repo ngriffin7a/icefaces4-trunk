@@ -16,12 +16,13 @@
 
 if (!ice.ace.SelectMenus) ice.ace.SelectMenus = {};
 
-ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selectedRowClass, height, direction, behaviors, cfg, effects) {
+ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selectedRowClass, height, direction, behaviors, cfg, effects, disabled) {
 	this.id = id;
 	var isInitialized = false;
 	if (ice.ace.SelectMenus[this.id] && ice.ace.SelectMenus[this.id].initialized) isInitialized = true;
 	if (isInitialized) this.selectedIndex = ice.ace.SelectMenus[this.id].selectedIndex;
 	ice.ace.SelectMenus[this.id] = this;
+	if (disabled) return;
 	this.height = height == 0 ? 'auto' : height;
 	this.direction = direction;
 	var options = {};
@@ -87,14 +88,25 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 	}
 };
 
-ice.ace.SelectMenu.setDimensionsOnly = function(id) {
+ice.ace.SelectMenu.setDimensionsOnly = function(id, updateId) {
+	var instance = new ice.ace.SelectMenu(id, '', '', '', '', '', '', '', '', '', true)
 	var root = ice.ace.jq(ice.ace.escapeClientId(id));
 	var $box = root.find('.ui-combobox-value');
 	var $element = root.find('.ui-selectmenu-value');
 	var displayedValue = $element.find('span').get(0);
 	displayedValue.innerHTML = '&nbsp;';
+	instance.displayedValue = displayedValue;
+	instance.element = $element.get(0);
+	instance.hidden = root.find('input[type=hidden]').get(0);
+	var $input = root.find('input[name="'+id+'_input"]');
+	instance.input = $input.get(0);
+	instance.cfg = {};
+	var $update = ice.ace.jq(ice.ace.escapeClientId(updateId));
+	instance.update = $update.get(0);
 	var $downArrowButton = $element.find('.ui-selectmenu-button').eq(0);
+	instance.$downArrowButton = $downArrowButton;
 	var $displayedValue = ice.ace.jq(displayedValue);
+	instance.$displayedValue = $displayedValue;
 	$displayedValue.css('width', $element.width() - $downArrowButton.outerWidth(true) - ($displayedValue.outerWidth(true) - $displayedValue.width()));
 	$downArrowButton.css('height', ice.ace.jq(displayedValue).outerHeight());
 	var height = $downArrowButton.height();
