@@ -124,7 +124,11 @@
 								var dataURL = canvas.toDataURL('image/jpg');
 								var thumbDataURL;
 								if( dataURL.indexOf('image/png') > -1 ){
-									thumbDataURL = dataURL;
+									canvas.width = 64;
+									canvas.height = 64;
+									ctx = canvas.getContext('2d');
+									ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 64, 64);
+									thumbDataURL = canvas.toDataURL();
 								}
 								else{ 
 									thumbDataURL = canvas.toDataURL('image/jpg', 0.1);
