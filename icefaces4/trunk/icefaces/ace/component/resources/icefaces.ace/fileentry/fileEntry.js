@@ -150,7 +150,9 @@ ice.ace.fileentry = {
                 elem.parentNode.removeChild(elem);
             }
         }
-		ice.se(new Object(), root, function(p) {p(root.id+'_resetValid', 'true')});
+        //clone the submitting element to avoid serializing the contained input[type=file] elements (also avoid having
+        //Myfaces complain about it)
+		ice.se(new Object(), root.cloneNode(false), function(p) {p(root.id+'_resetValid', 'true')});
     },
 
     arrayOfStrings : function(prefix, count) {
