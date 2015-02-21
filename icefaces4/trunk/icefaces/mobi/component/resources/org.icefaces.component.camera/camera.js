@@ -8,7 +8,7 @@
 	window.URL = window.URL || window.mozURL || window.webkitURL;
 	console.log('window.URL support = ' + !!window.URL);
 
-	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, onchange, sessionId, maxwidth, maxheight){
+	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, sessionId, maxwidth, maxheight){
 
 		function launchHTML5Camera(){
 
