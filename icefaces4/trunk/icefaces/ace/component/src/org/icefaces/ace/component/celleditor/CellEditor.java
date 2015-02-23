@@ -63,7 +63,18 @@ public class CellEditor extends CellEditorBase {
             input.setRendered(false);
         }
 
-        super.processDecodes(context);
+		// avoid processing decodes in edit mode if request wasn't initiated by save edits button
+		List<String> selectedEditorIds = state.getActiveCellEditorIds();
+		if (selectedEditorIds.contains(getId())) {
+			String execute = context.getExternalContext().getRequestParameterMap().get("javax.faces.partial.execute");
+			if (execute != null) {
+				if (execute.indexOf(getClientId(context)) > -1) {
+					super.processDecodes(context);
+				}
+			}
+		} else {
+			super.processDecodes(context);
+		}
 
         input.setRendered(true);
     }
