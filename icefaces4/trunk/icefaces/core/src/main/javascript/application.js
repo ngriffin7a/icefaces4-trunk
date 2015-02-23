@@ -412,7 +412,7 @@ if (!window.ice.icefaces) {
 
                     info(logger, 'received error message [code: ' + e.responseCode + ']: ' + e.responseText);
                     broadcast(perRequestServerErrorListeners, [ e.responseCode, e.responseText, containsXMLData(xmlContent) ? xmlContent : null]);
-                } else if (e.status == 'httpError') {
+                } else if (e.status == 'httpError' || e.status == 'malformedXML') {
                     warn(logger, 'HTTP error [code: ' + e.responseCode + ']: ' + e.description + '\n' + e.responseText);
                     broadcast(perRequestNetworkErrorListeners, [ e.responseCode, e.description]);
                 } else {
