@@ -2977,6 +2977,8 @@ ice.ace.DataTable.prototype.doRowEditSaveRequest = function (element) {
         _self = this,
         editorsToProcess = new Array();
 
+	ice.ace.DataTable.restoreInputNames(row);
+
     row.find('> td > div.ui-cell-editor, > td > div > div.ui-cell-editor').each(function () {
         editorsToProcess.push(ice.ace.jq(this).attr('id'));
     });
@@ -3078,6 +3080,28 @@ ice.ace.DataTable.prototype.setupCellEditorEvents = function (rowEditors) {
     rowEditors.closest('tr').find(' > div.ui-cell-editor > span > input')
             .bind('keypress', inputCellKeypress);
 }
+
+ice.ace.DataTable.removeInputNames = function (parentId) {
+	ice.ace.jq(ice.ace.escapeClientId(parentId)).find('input, select, textarea, button').each(function(i,e) {
+		var $e = ice.ace.jq(e);
+		var name = $e.attr('name');
+		if (name) {
+			$e.attr('data-name', name);
+			$e.removeAttr('name');
+		}
+	});
+};
+
+ice.ace.DataTable.restoreInputNames = function (parent) {
+	parent.find('input, select, textarea, button').each(function(i,e) {
+		var $e = ice.ace.jq(e);
+		var dataName = $e.attr('data-name');
+		if (dataName) {
+			$e.attr('name', dataName);
+			$e.removeAttr('data-name');
+		}
+	});
+};
 
 
 /* #########################################################################
