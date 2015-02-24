@@ -184,14 +184,14 @@ public class TreeRenderer extends CoreRenderer {
             Map.Entry<NodeKey, Object> root = roots.next();
 
             tree.setNodeToChild(root.getKey().getKeys()[0]);
-            encodeNode(writer, facesContext, renderContext, true);
+            encodeNode(writer, facesContext, renderContext);
             tree.setNodeToParent();
         }
 
         tree.setNodeToKey(NodeKey.ROOT_KEY);
     }
 
-    private void encodeNode(ResponseWriter writer, FacesContext facesContext, TreeRendererContext renderContext, boolean isRoot) throws IOException {
+    private void encodeNode(ResponseWriter writer, FacesContext facesContext, TreeRendererContext renderContext) throws IOException {
         Tree tree = renderContext.getTree();
         NodeState state = tree.getNodeState();
         String nodeClass = NODE_CLASS;
@@ -218,7 +218,7 @@ public class TreeRenderer extends CoreRenderer {
         writer.startElement(HTML.TR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, NODE_ROW, null);
 
-        encodeNodeSwitch(writer, renderContext, state, isRoot);
+        encodeNodeSwitch(writer, renderContext, state);
 
         // Write Node Template
         writer.startElement(HTML.TD_ELEM, null);
@@ -284,13 +284,13 @@ public class TreeRenderer extends CoreRenderer {
 
             tree.setNodeToChild(nextKeys[nextKeys.length - 1]);
             if (tree.isNodeAvailable())
-                encodeNode(writer, facesContext, renderContext, false);
+                encodeNode(writer, facesContext, renderContext);
             tree.setNodeToParent();
         }
     }
 
     // Responsible for encoding node switch and heirarchy line.
-    private void encodeNodeSwitch(ResponseWriter writer, TreeRendererContext renderContext, NodeState state, boolean isRoot) throws IOException {
+    private void encodeNodeSwitch(ResponseWriter writer, TreeRendererContext renderContext, NodeState state) throws IOException {
         String switchClass = NODE_SWITCH_CLASS;
         String iconClass = NODE_SWITCH_ICON_CLASS;
         String expandedClass = NODE_EXPANDED_ICON_CLASS;
@@ -300,7 +300,7 @@ public class TreeRenderer extends CoreRenderer {
         boolean lazy = renderContext.isLazy();
         boolean leaf = lazy ? false : renderContext.getTree().isLeaf(); // prevent attempt at loading children in lazy mode
 
-		if (isRoot && leaf)
+		if (leaf)
 			; // don't add anything to icon class
         else if (renderContext.isExpansion())
             iconClass += " " + (state.isExpanded() ? expandedClass : contractedClass);
@@ -322,13 +322,11 @@ public class TreeRenderer extends CoreRenderer {
             writer.writeAttribute(HTML.STYLE_ATTR, leafStyle, null);
         writer.endElement(HTML.IMG_ELEM);
 
-        if (isRoot || !leaf || lazy) {
-			writer.startElement(HTML.SPAN_ELEM, null);
-			writer.writeAttribute(HTML.CLASS_ATTR, iconClass, null);
-			if (isRoot && leaf)
-				writer.writeAttribute(HTML.STYLE_ATTR, "background-position:-160px 0;", null);
-			writer.endElement(HTML.SPAN_ELEM);
-		}
+		writer.startElement(HTML.SPAN_ELEM, null);
+		writer.writeAttribute(HTML.CLASS_ATTR, iconClass, null);
+		if (leaf)
+			writer.writeAttribute(HTML.STYLE_ATTR, "background-position:-160px 0;", null);
+		writer.endElement(HTML.SPAN_ELEM);
 
         writer.endElement(HTML.DIV_ELEM);
         writer.endElement(HTML.TD_ELEM);
