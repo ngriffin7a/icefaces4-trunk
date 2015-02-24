@@ -84,13 +84,56 @@
 					}
 				}
 
+				function submitImageFile(file, success, failure){
+					var encodedForm = '';
+					var formData = new FormData();
+					//TODO missing extra parameters ?
+					formData.append(id, file);
+					var request = new XMLHttpRequest();
+					request.addEventListener("load", success, false);
+					request.addEventListener("error", failure, false);
+					request.open("POST", postURL);
+					request.setRequestHeader("JSESSIONID", sessionId);
+					request.send(formData);
+				}
+
 				function convertImageFromFile(){
 					var cameraForm = ice.mobi.formOf(cameraButton),
 						hiddenInput = getHiddenInput(),
 						fileInput = getFileInput(),
 						file = fileInput.files[0],
-						scaleDown = file.size > 1000000,
-						scaleFactor = file.size / 1000000;
+						img = new Image();
+
+					function onSubmitSuccess(){
+						var reader = new FileReader();
+						cameraButton.innerHTML = captureLabel;
+						reader.onload = function(event){
+							img.onload = function(){
+								setTimeout(function(){								
+									var thumbDataURL;
+									var canvas = document.createElement('canvas');
+									var ctx = canvas.getContext('2d');
+									canvas.width = 64;
+									canvas.height = 64;
+									ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 64, 64);
+									thumbDataURL = canvas.toDataURL();
+									canvas = null;
+									fileInput.parentElement.removeChild(fileInput);
+									cameraButton.style.display = 'inline-block';
+									updateThumbnail(thumbDataURL);
+									stopSpinner();
+								},0);
+								
+							}
+							img.src = event.target.result;
+						}
+						reader.readAsDataURL(file);
+					}
+
+					function onSubmitFailure(error){
+						stopSpinner();
+						alert('Error uploading file: ' + error.responseText);
+					}
 
 					//check for image
 					if( file.type.indexOf('image') === -1 ){
@@ -98,55 +141,14 @@
 						return;
 					}
 
-					var canvas = document.createElement('canvas');
-					var ctx = canvas.getContext('2d');
-					var reader = new FileReader();
 					startSpinner();
-					var started = new Date().getTime();
-					reader.onload = function(event){
-						var img = new Image();
-						img.onload = function(){
-							setTimeout(function(){
-								
-								if( scaleDown ){
-									var scaleWidth = Math.round(img.width/scaleFactor);
-									var scaleHeight = Math.round(img.height/scaleFactor);
-									canvas.width = scaleWidth;
-									canvas.height = scaleHeight;
-									ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, scaleWidth, scaleHeight);
-								}
-								else{
-									canvas.width = img.width;
-									canvas.height = img.height;
-									ctx.drawImage(img,0,0);
-								}
-								
-								var dataURL = canvas.toDataURL('image/jpg');
-								var thumbDataURL;
-								if( dataURL.indexOf('image/png') > -1 ){
-									canvas.width = 64;
-									canvas.height = 64;
-									ctx = canvas.getContext('2d');
-									ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 64, 64);
-									thumbDataURL = canvas.toDataURL();
-								}
-								else{ 
-									thumbDataURL = canvas.toDataURL('image/jpg', 0.1);
-								}
-								canvas = null;
-								fileInput.parentElement.removeChild(fileInput);
-								hiddenInput.value = dataURL;
-								cameraButton.innerHTML = captureLabel;
-								cameraForm.appendChild(hiddenInput);
-								cameraButton.style.display = 'inline-block';
-								updateThumbnail(thumbDataURL);
-								stopSpinner();
-							},0);
-							
-						}
-						img.src = event.target.result;
-					}
-					reader.readAsDataURL(file);
+					submitImageFile(file, onSubmitSuccess, onSubmitFailure);
+					
+
+
+					
+
+					
 				}
 
 				var input = getFileInput();
@@ -165,7 +167,8 @@
 					canvas = document.createElement('canvas'),
 					ctx = canvas.getContext('2d'),
 					photo = document.createElement('img'),
-					options = {};
+					options = {},
+					img = new Image();
 
 				popup.id = id + '_popup';
 				popup.className = 'mobi-camera-popup';
@@ -308,19 +311,45 @@
 				}
 				
 				function keeppicture(){
-					var cameraForm = ice.mobi.formOf(cameraButton),
-						hiddenInput = getHiddenInput();
-					hiddenInput.value = photo.src.replace('data:image/png;base64,','');
+					var cameraForm = ice.mobi.formOf(cameraButton);
+					//hiddenInput.value = photo.src.replace('data:image/png;base64,','');
 					document.body.removeChild(popup);
 					cameraButton.innerHTML = captureLabel;
-					cameraForm.appendChild(hiddenInput);
+					createThumbnailForVideo();
+					submitImage(photo.src);
+				}
 
-					//check for thumbnail
-					var thumbnail = document.getElementById(id+'-thumb');
-					if( thumbnail ){
-						thumbnail.src = photo.src;
-						thumbnail.style.display = 'inline';
+				function createThumbnailForVideo(){
+					var thumbCanvas = document.createElement('canvas');
+					var thumbCtx = thumbCanvas.getContext('2d');
+					thumbCanvas.width = 64;
+					thumbCanvas.height = 64;
+					thumbCtx.drawImage(photo, 0, 0, options.width, options.height, 0, 0, 64, 64);
+					updateThumbnail(thumbCanvas.toDataURL('image/png'));
+				}
+
+				function submitImage(dataURL){
+					var encodedForm = '';
+					var formData = new FormData();
+					//TODO missing extra parameters ?
+					formData.append(id, dataURLToBlob(dataURL));
+					var request = new XMLHttpRequest();
+					request.open("POST", postURL);
+					request.setRequestHeader("JSESSIONID", sessionId);
+					request.send(formData);
+				}
+
+				function dataURLToBlob(dataURL){
+					var parts = dataURL.split(',');
+					var byteString = atob(parts[1]);
+					var mimeString = parts[0].split(':')[1].split(';')[0];
+					var ab = new ArrayBuffer(byteString.length);
+					var ia = new Uint8Array(ab);
+					for( var i = 0 ; i < byteString.length ; i ++ ){
+						ia[i] = byteString.charCodeAt(i);
 					}
+					var bb = new Blob([ab], {"type": mimeString});
+					return bb;
 				}
 				
 				ice.mobi.addListener(startbutton, 'click', function(ev){
