@@ -220,6 +220,10 @@ public class SelectMenuRenderer extends InputRenderer {
 			writer.writeText("ice.ace.SelectMenu.setDimensionsOnly('"+clientId+"', '"+divId+"');", null);
 		}
 
+		// render style, style class and required state as a comment to cause a full component update when they change
+		writer.writeText("// " + selectMenu.getStyle() + " " + selectMenu.getStyleClass() + " "
+			+ getStateStyleClasses(selectMenu) + " " + selectMenu.isRequired(), null);
+
         writer.endElement("script");
 		
 		populateList(facesContext, selectMenu);
