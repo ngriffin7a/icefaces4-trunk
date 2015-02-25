@@ -98,6 +98,12 @@ public class MaskedEntryRenderer extends InputRenderer {
         writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
+		String mask = maskedEntry.getMask();
+		if (mask == null) {
+			mask = "";
+			java.util.logging.Logger.getLogger(this.getClass().getName()).warning("Required attribute 'mask' is null in ace:maskedEntry component with id "+maskedEntry.getId()+" in view "+context.getViewRoot().getViewId()+".");
+		}
+
 		JSONBuilder jb = JSONBuilder.create()
             .initialiseVar(this.resolveWidgetVar(maskedEntry))
             .beginFunction("ice.ace.create")
@@ -105,7 +111,7 @@ public class MaskedEntryRenderer extends InputRenderer {
             .beginArray()
             .item(clientId)
             .beginMap()
-            .entry("mask", maskedEntry.getMask());
+            .entry("mask", mask);
 
         String placeHolder = maskedEntry.getPlaceHolder();
 

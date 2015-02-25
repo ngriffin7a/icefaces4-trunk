@@ -63,7 +63,7 @@ public class DataExporterMeta extends UIComponentBaseMeta {
 	@Property(required=Required.yes, tlddoc="Define the id of the ace:dataTable whose data will be exported.")
 	private String target;
 	
-	@Property(required=Required.yes, tlddoc="Define the format of file export. Available formats: \"xls\",\"pdf\",\"csv\", \"xml\".")
+	@Property(tlddoc="Define the format of file export. Available formats: \"xls\",\"pdf\",\"csv\", \"xml\".", defaultValue="csv")
 	private String type;
 	
 	@Property(required=Required.yes, tlddoc="Define the filename of the generated file, defaults to dataTable id.")

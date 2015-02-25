@@ -81,6 +81,10 @@ public abstract class Exporter {
 	
 	public void setUp(DataExporter component, DataTable table) {
 		filename = component.getFileName();
+		if (filename == null) {
+			filename = "data";
+			java.util.logging.Logger.getLogger(this.getClass().getName()).warning("Required attribute 'file' is null in ace:dataExporter component with id "+component.getId()+" in view "+FacesContext.getCurrentInstance().getViewRoot().getViewId()+".");
+		}
 		pageOnly = component.isPageOnly() || table.isLazy();
 		excludeColumns = resolveExcludedColumnIndexes(component.getExcludeColumns());
 		encodingType = component.getEncoding();

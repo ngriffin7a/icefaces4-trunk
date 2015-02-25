@@ -49,11 +49,17 @@ public class DataExporter extends DataExporterBase {
 						throw new FacesException("Object specified as custom exporter does not extend  org.icefaces.ace.component.dataexporter.Exporter.");
 					}
 				}
-				
-				UIComponent targetComponent = event.getComponent().findComponent(getTarget());
-				if (targetComponent == null) targetComponent = CoreComponentUtils.findComponentInView(facesContext.getViewRoot(), getTarget());
-				if (targetComponent == null) throw new FacesException("Cannot find component \"" + getTarget() + "\" in view.");
-				if (!(targetComponent instanceof DataTable)) throw new FacesException("Unsupported datasource target:\"" + targetComponent.getClass().getName() + "\", exporter must target a ACE DataTable.");
+
+				String target = getTarget();
+				UIComponent targetComponent = null;
+				if (target == null) {
+					java.util.logging.Logger.getLogger(this.getClass().getName()).warning("Required attribute 'target' is null in ace:dataExporter component with id "+getId()+" in view "+FacesContext.getCurrentInstance().getViewRoot().getViewId()+".");
+				} else {
+					targetComponent = event.getComponent().findComponent(target);
+				}
+				if (targetComponent == null && target != null) targetComponent = CoreComponentUtils.findComponentInView(facesContext.getViewRoot(), target);
+				if (targetComponent == null) throw new FacesException("Cannot find component \"" + target + "\" in view.");
+				if (!(targetComponent instanceof DataTable)) throw new FacesException("Unsupported datasource target:\"" + targetComponent.getClass().getName() + "\", exporter must target an ACE DataTable.");
 				
 				table = (DataTable) targetComponent;
 				if (!UIComponent.isCompositeComponent(table)) {
