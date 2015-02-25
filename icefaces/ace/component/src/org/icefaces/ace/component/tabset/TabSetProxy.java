@@ -48,6 +48,10 @@ public class TabSetProxy extends TabSetProxyBase{
     @Override
     public String getFor() {
         String forComponentId = super.getFor();
+		if (forComponentId == null) {
+			java.util.logging.Logger.getLogger(this.getClass().getName()).warning("Required attribute 'for' is null in ace:tabSetProxy component with id "+getId()+" in view "+FacesContext.getCurrentInstance().getViewRoot().getViewId()+".");
+			return "";
+		}
         FacesContext facesContext = getFacesContext();
         UIViewRoot root = facesContext.getViewRoot();
         String separator = String.valueOf(UINamingContainer.getSeparatorChar(facesContext));

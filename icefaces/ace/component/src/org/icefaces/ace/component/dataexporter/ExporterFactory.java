@@ -33,7 +33,6 @@ public class ExporterFactory {
 		else if (type.equalsIgnoreCase("pdf")) return new PDFExporter();
 		else if (type.equalsIgnoreCase("csv")) return new CSVExporter();
 		else if (type.equalsIgnoreCase("xml")) return new XMLExporter();
-		
-		throw new IllegalArgumentException("Invalid file type to export:" + type + ", export type can only be xls, pdf, csv or xml");
+		else return new CSVExporter();
 	}
 }

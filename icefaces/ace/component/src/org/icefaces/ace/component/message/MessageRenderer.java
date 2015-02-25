@@ -51,7 +51,7 @@ public class MessageRenderer extends Renderer {
 
         UIComponent forComponent = forId.equals("") ? null : message.findComponent(forId);
         if (forComponent == null) {
-            log(Level.WARNING, sourceMethod, "'for' attribute value cannot be null or empty or non-existent id.");
+            log(Level.WARNING, sourceMethod, "'for' attribute value cannot be null or empty or non-existent id in ace:message component with id "+component.getId()+" in view "+context.getViewRoot().getViewId()+".");
             return;
         }
         Iterator messageIter = context.getMessages(forComponent.getClientId(context));
