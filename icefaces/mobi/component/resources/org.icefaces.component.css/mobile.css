@@ -51,6 +51,13 @@ display: block;
 margin: 0;
 }
 
+.ui-field-contain .mobi-fieldset-row .mobi-date-container .mobi-date-btn-incr,
+.ui-field-contain .mobi-fieldset-row .mobi-date-container .mobi-date-btn-decr,
+.ui-field-contain .mobi-fieldset-row .mobi-time-container .mobi-time-btn-incr,
+.ui-field-contain .mobi-fieldset-row .mobi-time-container .mobi-time-btn-decr {
+margin: 0;
+}
+
 /* mobi:flipswitch */
 .ui-field-contain .mobi-fieldset-row a.mobi-flipswitch,
 .ui-field-contain .mobi-fieldset-row div.ui-autocompleteentry,
