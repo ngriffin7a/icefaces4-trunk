@@ -103,7 +103,7 @@ span.if-tree > table.if-node-cnt > tbody > tr.if-node-tr > td.if-node-sw > div.i
     position: absolute;
     left: 50%;
     margin-left: -1px;
-    margin-top:-6px;
+    margin-top: 1px;
 }
 
 .if-node-sw > div.if-node-ln > img {
