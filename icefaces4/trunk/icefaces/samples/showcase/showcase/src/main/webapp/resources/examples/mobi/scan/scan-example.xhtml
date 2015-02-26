@@ -18,34 +18,44 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
     <h:form prependId="false" id="scanForm">
 
-       <h3>QR Code Scanner</h3>
+       <h3>Barcode Scanner</h3>
        
        <mobi:fieldsetGroup styleClass="intro">
             <mobi:fieldsetRow>
-                Use your mobile device to scan the QR or Bar Code below.
+                Use your mobile device to scan the QR or barcode below.
                 To generate a QRCode from text, see ace:qrcode component
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
        
-       <mobi:fieldsetGroup>
+        <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
                 <mobi:scan value="#{qrCodeBean.qrScanner}"
                            buttonLabel="#{qrCodeBean.buttonLabel}"
                            captureMessageLabel="#{qrCodeBean.captureMessageLabel}"
                            id="scanOne" />
             </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+
+		<h:panelGroup layout="block">
+        <mobi:fieldsetGroup rendered="#{qrCodeBean.qrScanner == null}">
             <mobi:fieldsetRow>
-				<h:commandButton value="submit" styleClass="submit"
+				<ace:pushButton value="Submit Scanned Code" styleClass="submit"
 									actionListener="#{qrCodeBean.checkCodeForUrl}">
                     <f:ajax execute="@form" render="@form"/>
-                </h:commandButton>
+                </ace:pushButton>
             </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block">
+        <mobi:fieldsetGroup rendered="#{qrCodeBean.qrScanner != null}">
             <mobi:fieldsetRow>
-                <label>QR Code:</label>
+                <label>Scanned Code Value:</label>
                 <br/>
                 <span style="display:block;max-width:#{iceBrowser.handheldBrowser ? '270px' : '100%'};overflow:hidden;text-overflow:ellipsis">
                     <h:outputText rendered="#{not qrCodeBean.qrScannerUrl}"
@@ -56,6 +66,7 @@
                 </span>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
+		</h:panelGroup>
         
     </h:form>
 

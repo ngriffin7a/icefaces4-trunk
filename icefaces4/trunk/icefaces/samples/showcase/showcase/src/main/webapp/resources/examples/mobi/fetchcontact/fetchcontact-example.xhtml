@@ -18,6 +18,7 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
     <h:form id="contactForm">
@@ -25,38 +26,43 @@
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
                 <mobi:fetchContact id="contact" 
-                    buttonLabel="Fetch a Contact" 
+                    buttonLabel="Fetch Contact" 
                     fields="name, email, phone"
                     value="#{contactsBean.rawContact}"
                     name="#{contactsBean.name}"
                     email="#{contactsBean.email}"
-                    phone="#{contactsBean.phone}"
-                    style="width:50%"/>
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-				<h:commandButton
-									value="Submit"
-									type="submit"
-									styleClass="submit"/>
-            </mobi:fieldsetRow>
-        </mobi:fieldsetGroup>
-                            
-        <h3>Selected Contact</h3>
-        <mobi:fieldsetGroup styleClass="results">
-            <mobi:fieldsetRow>
-                <label>Name:</label>
-                <span>&#160;#{contactsBean.name}</span>
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                <label>Phone:</label>
-                <span>#{contactsBean.phone}</span>
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                <label>Email:</label>
-                <span>#{contactsBean.email}</span>
+                    phone="#{contactsBean.phone}"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
+		<h:panelGroup layout="block">
+			<mobi:fieldsetGroup rendered="#{contactsBean.name == null}">
+				<mobi:fieldsetRow>
+					<ace:pushButton
+										value="Submit Contact"
+										type="submit"
+										styleClass="submit"/>
+				</mobi:fieldsetRow>
+			</mobi:fieldsetGroup>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block">                            
+		<h:panelGroup rendered="#{contactsBean.name != null}"><h3>Selected Contact</h3></h:panelGroup>
+			<mobi:fieldsetGroup styleClass="results" rendered="#{contactsBean.name != null}">
+				<mobi:fieldsetRow>
+					<label>Name:</label>
+					<span>&#160;#{contactsBean.name}</span>
+				</mobi:fieldsetRow>
+				<mobi:fieldsetRow>
+					<label>Phone:</label>
+					<span>#{contactsBean.phone}</span>
+				</mobi:fieldsetRow>
+				<mobi:fieldsetRow>
+					<label>Email:</label>
+					<span>#{contactsBean.email}</span>
+				</mobi:fieldsetRow>
+			</mobi:fieldsetGroup>
+		</h:panelGroup>
         
     </h:form>
 
