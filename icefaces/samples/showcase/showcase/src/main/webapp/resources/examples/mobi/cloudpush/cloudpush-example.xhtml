@@ -18,6 +18,7 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
 
@@ -41,7 +42,7 @@
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
 				<h:outputLabel for="cpMessage" value="Message: " />
-                <h:inputText id="cpMessage"
+                <h:inputText id="cpMessage" style="display:block;width:100%;"
                                 value="#{cloudPushBean.message}"
                                 type="text"
                                 placeholder="message" />
@@ -61,25 +62,34 @@
                 <div>
                     <h:panelGrid rendered="#{cloudPushBean.acquireEmail}" columns="2">
                         <h:inputText id="email" value="#{cloudPushBean.email}"/>
-                        <h:commandButton value="Set email address">
-                            <f:ajax execute="email" render="cloudPushButtons"/>
-                        </h:commandButton>
+                        <ace:pushButton value="Set email address" styleClass="submit">
+                            <ace:ajax execute="email" render="cloudPushButtons"/>
+                        </ace:pushButton>
                     </h:panelGrid>
                 </div>
-                <mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
-                <br/><br/>
-                <h:commandButton value="Priority Push"
-                                 actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
-                <br/>
-                <h:commandButton value="Simple Push"
-                                 actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
+				<div>
+					<span onclick="this.style.cssText='display:none;';document.getElementById('pushType').style.cssText='display:block;';">
+						<mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
+					</span>
+				</div>
+				<div id="pushType" style="display:none;">
+					<div>
+					<ace:pushButton value="Priority Push" styleClass="submit"
+									 actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
+					</div>
+					<div>
+					<ace:pushButton value="Simple Push" styleClass="submit"
+									 actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
+					</div>
+				</div>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
         <h:messages style="margin-left:10px"/>
 
-        <h3>Message</h3>
-        <mobi:fieldsetGroup styleClass="results">
+		<h:panelGroup layout="block">
+        <h:panelGroup rendered="#{cloudPushBean.echoedMessage != null}"><h3>Message</h3></h:panelGroup>
+        <mobi:fieldsetGroup styleClass="results" rendered="#{cloudPushBean.echoedMessage != null}">
             <mobi:fieldsetRow>
                 <h:outputLabel value="Subject: " for="subjectOut"/>
                 <h:outputText id="subjectOut"
@@ -93,6 +103,7 @@
                                 placeholder="message"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
+		</h:panelGroup>
 
     </h:form>
 </ui:composition>

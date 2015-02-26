@@ -32,35 +32,35 @@
 
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-                <mobi:camcorder id="cc" value="#{camcorderBean.clip}"
-                                buttonLabel="Camcorder" captureMessageLabel="Video captured"/>
-                 &#160;
-            </mobi:fieldsetRow>
-             <mobi:fieldsetRow>
-                <h:outputText>Thumbnail Component</h:outputText>
-                <mobi:thumbnail for="cc" id="thumbnail" />
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-				<h:commandButton id="camcorderUpload"
-									 styleClass="submit"
-									 actionListener="#{camcorderBean.processUploadedVideo}"
-									 value="Upload"/>
+                <mobi:camcorder id="cc" value="#{camcorderBean.clip}" valueChangeListener="#{camcorderBean.videoCaptureListener}"
+                                buttonLabel="Capture Video" captureMessageLabel="Video captured"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-                                 
-        <h3>Uploaded Video</h3>
 
-        <mobi:fieldsetGroup>
+		<h:panelGroup layout="block">
+        <mobi:fieldsetGroup rendered="#{camcorderBean.outputResource == null}">
+             <mobi:fieldsetRow>
+                <mobi:thumbnail for="cc" id="thumbnail" styleClass="mobi-center" />
+				<ace:pushButton id="camcorderUpload"
+									 styleClass="submit"
+									 actionListener="#{camcorderBean.processUploadedVideo}"
+									 value="Upload Video"/>
+            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block">                                 
+        <mobi:fieldsetGroup rendered="#{camcorderBean.outputResource != null}">
             <mobi:fieldsetRow>
-                <ui:fragment rendered="#{camcorderBean.outputResource != null}">
-                    <ace:videoPlayer
-                            value="#{camcorderBean.outputResource}"
-                            linkLabel="Play" width="250" playsinline="true"
-                            controls="true"/>
-                </ui:fragment>
+				<h3>Uploaded Video</h3>
+				<ace:videoPlayer
+						value="#{camcorderBean.outputResource}"
+						linkLabel="Play" width="250" playsinline="true"
+						controls="true"/>
                 
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
+		</h:panelGroup>
         
         <h:outputText value="#{camcorderBean.uploadMessage}" style="margin-left:10px"/>
 

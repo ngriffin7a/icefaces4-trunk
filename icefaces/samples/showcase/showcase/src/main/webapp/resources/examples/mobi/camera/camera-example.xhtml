@@ -34,54 +34,58 @@
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
                 <mobi:camera id="cam" value="#{cameraBean.cameraImage}"
-                        buttonLabel="Camera" captureMessageLabel="Photo captured"
+                        buttonLabel="Camera" captureMessageLabel="Image captured"
                         maxwidth="#{cameraBean.maxWidth}"
                         maxheight="#{cameraBean.maxHeight}"/>
-                &#160;
             </mobi:fieldsetRow>
-             <mobi:fieldsetRow>
-                Thumbnail:
-                <mobi:thumbnail for="cam" id="thumbnail" />
-            </mobi:fieldsetRow>
+        </mobi:fieldsetGroup>
+
+		<h:panelGroup layout="block">
+        <mobi:fieldsetGroup rendered="#{cameraBean.outputResource == null}">
             <mobi:fieldsetRow>
-				<h:commandButton id="cameraUpload"
+				<mobi:thumbnail for="cam" id="thumbnail" styleClass="mobi-center" />
+				<ace:pushButton id="cameraUpload"
 								 styleClass="submit"
 								 actionListener="#{cameraBean.processUploadedImage}"
-								 value="Upload"/>
+								 value="Upload Image"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-                         
-        <h3>Uploaded Image</h3>
+		</h:panelGroup>
 
-        <mobi:fieldsetGroup>
+		<h:panelGroup layout="block">                         
+        <mobi:fieldsetGroup rendered="#{cameraBean.outputResource != null}">
             <mobi:fieldsetRow>
-                <ui:fragment rendered="#{cameraBean.outputResource != null}">
-                    <ace:graphicImage  styleClass="imageView"
+				<h3>Uploaded Image</h3>
+                <ace:graphicImage styleClass="imageView"
                             value="#{cameraBean.outputResource}"/>
-                </ui:fragment>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
+		</h:panelGroup>
         
         <h:outputText value="#{cameraBean.uploadMessage}" style="margin-left:10px"/>
-        
+
+    </h:form>
+
+    <h:form prependId="false">
+
         <h3>Image Dimension Settings</h3>
         
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow style="text-align:left">
-                Set the maximum width and height dimensions for the photo
+                Set the maximum width and height dimensions for the image (on supported devices). Changes will be applied to the next captured image.
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <ace:textEntry id="maxWidth" placeholder="max width"
-                        label="Max width:"
+				<h:outputLabel value="Max width:" for="maxWidth" />
+                <ace:textEntry id="maxWidth"
                         type="number" value="#{cameraBean.maxWidth}" />
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-                <ace:textEntry id="maxHeight" placeholder="max height"
-                        label="Max height:"
+				<h:outputLabel value="Max height:" for="maxHeight" />
+                <ace:textEntry id="maxHeight"
                         type="number" value="#{cameraBean.maxHeight}" />
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
-				<h:commandButton value="Set Dimensions" styleClass="submit"/>
+				<ace:pushButton value="Set Dimensions" styleClass="submit"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
