@@ -59,7 +59,7 @@
 
             <ace:dataTable id="dataTable" value="#{dataTableDynamicColumns.cars}" var="car">
                 <c:forEach items="#{dataTableDynamicColumns.columns}" var="colModel">
-                    <ace:column id="columnHeader" headerText="#{colModel.headerText}">#{car[colModel.value]}</ace:column>
+                    <ace:column headerText="#{colModel.headerText}">#{car[colModel.value]}</ace:column>
                 </c:forEach>
             </ace:dataTable>
         </h:form>
