@@ -44,7 +44,7 @@
             <ace:panel id="panel">
 			<h:panelGrid columns="2" class="grid">
 				<h:panelGroup>
-				<ace:comboBox id="selectProvince" value="#{comboBoxBean.province}" valueChangeListener="#{comboBoxBean.provinceChange}" label="Select province: " labelPosition="top">
+				<ace:comboBox id="selectProvince" value="#{comboBoxBean.province}" valueChangeListener="#{comboBoxBean.provinceChange}" label="Select province: " labelPosition="top" style="height:19px;">
 					<f:selectItem itemValue="British Columbia" itemLabel="British Columbia" />
 					<f:selectItem itemValue="Alberta" itemLabel="Alberta" />
 					<f:selectItem itemValue="Saskatchewan" itemLabel="Saskatchewan" />
@@ -62,7 +62,7 @@
 					<ace:ajax event="blur" execute="@this" render="@all" />
 				</ace:comboBox>
 				<br />
-				<ace:comboBox id="selectCity" value="#{comboBoxBean.city}" rendered="#{comboBoxBean.displayCities}" label="Select city: " labelPosition="top">
+				<ace:comboBox id="selectCity" value="#{comboBoxBean.city}" rendered="#{comboBoxBean.displayCities}" label="Select city: " labelPosition="top" style="height:19px;">
 					<f:selectItems value="#{comboBoxBean.cities}" />
 					<ace:ajax execute="@this" render="@all" />
 					<ace:ajax event="blur" execute="@this" render="@all" />

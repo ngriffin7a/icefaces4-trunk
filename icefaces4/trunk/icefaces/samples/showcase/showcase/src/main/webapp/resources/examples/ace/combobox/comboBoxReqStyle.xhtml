@@ -75,7 +75,7 @@
                                          required="true"
                                          requiredIndicator="(Required)"
                                          indicatorPosition="right"
-                                         styleClass="#{comboBoxReqStyleBean.reqColor}">
+                                         styleClass="#{comboBoxReqStyleBean.reqColor}" style="height:19px;">
 					<f:selectItem itemValue="British Columbia" itemLabel="British Columbia" />
 					<f:selectItem itemValue="Alberta" itemLabel="Alberta" />
 					<f:selectItem itemValue="Saskatchewan" itemLabel="Saskatchewan" />
@@ -99,7 +99,7 @@
                                          required="false"
                                          optionalIndicator="(Optional)"
                                          indicatorPosition="right"
-                                         styleClass="#{comboBoxReqStyleBean.optColor}">
+                                         styleClass="#{comboBoxReqStyleBean.optColor}" style="height:19px;">
 					<f:selectItems value="#{comboBoxBean.cities}" />
 					<ace:ajax execute="@this" render="@all" />
 					<ace:ajax event="blur" execute="@this" />

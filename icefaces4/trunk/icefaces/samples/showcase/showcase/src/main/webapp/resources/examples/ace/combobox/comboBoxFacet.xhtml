@@ -44,7 +44,7 @@
             <ace:panel id="facetPanel">
 			<h:panelGrid columns="2" class="grid">
 				<h:panelGroup>
-				<ace:comboBox id="selectTextColor" value="#{comboBoxFacetBean.textColor}" listVar="color" listValue="#{comboBoxFacetBean.textColors}" itemValue="#{color.hexValue}" label="Select a color or enter a color code for the text: " labelPosition="top" validator="#{comboBoxFacetBean.colorValidator}" width="300">
+				<ace:comboBox id="selectTextColor" value="#{comboBoxFacetBean.textColor}" listVar="color" listValue="#{comboBoxFacetBean.textColors}" itemValue="#{color.hexValue}" label="Select a color or enter a color code for the text: " labelPosition="top" validator="#{comboBoxFacetBean.colorValidator}" width="300" style="height:19px;">
 					<f:facet name="row">
                         <h:panelGrid columns="3" width="100%" columnClasses="col50,col25,col25">
                             <h:outputText value="#{color.name}" />
@@ -56,7 +56,7 @@
 				</ace:comboBox>
 				<ace:message for="selectTextColor" />
 				<br />
-				<ace:comboBox id="selectBackgroundColor" value="#{comboBoxFacetBean.backgroundColor}" listVar="color" listValue="#{comboBoxFacetBean.backgroundColors}" itemValue="#{color.hexValue}" label="Select a color or enter a color code for the background: " labelPosition="top" validator="#{comboBoxFacetBean.colorValidator}" width="300">
+				<ace:comboBox id="selectBackgroundColor" value="#{comboBoxFacetBean.backgroundColor}" listVar="color" listValue="#{comboBoxFacetBean.backgroundColors}" itemValue="#{color.hexValue}" label="Select a color or enter a color code for the background: " labelPosition="top" validator="#{comboBoxFacetBean.colorValidator}" width="300" style="height:19px;">
 					<f:facet name="row">
                         <h:panelGrid columns="3" width="100%" columnClasses="col50,col25,col25">
                             <h:outputText value="#{color.name}" />
