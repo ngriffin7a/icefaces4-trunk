@@ -39,10 +39,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -304,6 +301,10 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
     }
 
     public void endElement(String name) throws IOException {
+        if ("form".equalsIgnoreCase(name)) {
+            writeClientWindow();
+        }
+
         if (FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development)) {
             if (log.isLoggable(Level.WARNING)) {
                 if (!cursor.getNodeName().equals(name)) {
@@ -327,6 +328,23 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
         }
 
         pointCursorAt(cursor.getParentNode());
+    }
+
+    private void writeClientWindow() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (EnvUtils.isMyFaces() && context.isPostback()) {
+            Integer index = (Integer) context.getExternalContext().getRequestMap().get("form-index");
+            index = index == null ? 1 : (index + 1);
+            context.getExternalContext().getRequestMap().put("form-index", index);
+
+            String clientWindow = context.getExternalContext().getClientWindow().getId();
+            startElement("input", null);
+            writeAttribute("id", context.getViewRoot().getId() + ":javax.faces.ClientWindow:" + index, null);
+            writeAttribute("name", "javax.faces.ClientWindow", null);
+            writeAttribute("type", "hidden", null);
+            writeAttribute("value", clientWindow, null);
+            endElement("input");
+        }
     }
 
     private void logUnclosedNode(Node node) {
