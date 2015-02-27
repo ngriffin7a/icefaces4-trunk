@@ -78,7 +78,7 @@ public class ComboBoxMeta extends HtmlInputTextMeta {
     @Property(tlddoc = "The width of the text input field, in pixels.", defaultValue="200")
     private int width;
 	
-    @Property(tlddoc = "Maximum height in pixels of the list of possible matches (if 0, then the size is automatically adjusted to show all possible matches).", defaultValue="200")
+    @Property(tlddoc = "Maximum height in pixels of the list of possible matches (if 0, then the size is automatically adjusted to show all possible matches).", defaultValue="0")
     private int height;
 
     @Property(tlddoc = "Variable name to use for referencing each data object in the list when rendering via a facet.")
