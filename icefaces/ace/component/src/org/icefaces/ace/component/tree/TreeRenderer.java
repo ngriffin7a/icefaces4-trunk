@@ -22,6 +22,7 @@ import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.util.JavaScriptRunner;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -169,6 +170,12 @@ public class TreeRenderer extends CoreRenderer {
         writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
         writer.write(confJson.toString());
         writer.endElement(HTML.SCRIPT_ELEM);
+
+		// re-initialize tree in client if this was a reorder request
+		Map<String, String> paramMap = facesContext.getExternalContext().getRequestParameterMap();
+		String reorderString = paramMap.get(clientId + TreeDecoder.REORDER_SUFFIX);
+		if (reorderString != null && reorderString.length() > 0 && !reorderString.equals("[]"))
+			JavaScriptRunner.runScript(facesContext, confJson.toString());
     }
 
 

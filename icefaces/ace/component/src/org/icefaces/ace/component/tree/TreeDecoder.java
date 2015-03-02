@@ -36,7 +36,7 @@ public class TreeDecoder<N> {
     private static final String CONTRACTION_SUFFIX = "_contract";
     private static final String SELECTION_SUFFIX = "_select";
     private static final String DESELECTION_SUFFIX = "_deselect";
-    private static final String REORDER_SUFFIX = "_reorder";
+    static final String REORDER_SUFFIX = "_reorder";
 
     public TreeDecoder(FacesContext context, Tree<N> tree) {
         this.context = context;
