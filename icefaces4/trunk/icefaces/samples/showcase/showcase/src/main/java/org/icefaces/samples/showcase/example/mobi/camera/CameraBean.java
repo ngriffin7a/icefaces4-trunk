@@ -120,6 +120,13 @@ public class CameraBean /*extends ExampleImpl<CameraBean>*/ implements
         outputResource = null;
     }
 
+    public void reset(ActionEvent event) {
+		cameraImage = new HashMap();
+		disposeResources();
+		outputResource = null;
+		uploadMessage = "";
+	}
+
     @PreDestroy
     public void disposeResources(){
         if( cameraFile != null ){

@@ -33,10 +33,14 @@
         
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-                <mobi:camera id="cam" value="#{cameraBean.cameraImage}"
+                <mobi:camera id="cam" value="#{cameraBean.cameraImage}" rendered="#{cameraBean.outputResource == null}"
                         buttonLabel="Camera" captureMessageLabel="Image captured"
                         maxwidth="#{cameraBean.maxWidth}"
                         maxheight="#{cameraBean.maxHeight}"/>
+				<ace:pushButton id="cameraReset" rendered="#{cameraBean.outputResource != null}"
+									 styleClass="submit"
+									 actionListener="#{cameraBean.reset}"
+									 value="Reset"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 

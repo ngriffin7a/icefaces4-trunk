@@ -32,15 +32,19 @@
 
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-                <mobi:camcorder id="cc" value="#{camcorderBean.clip}"
+                <mobi:camcorder id="cc" value="#{camcorderBean.clip}" rendered="#{camcorderBean.outputResource == null}"
                                 buttonLabel="Capture Video" captureMessageLabel="Video captured"/>
+				<ace:pushButton id="camcorderReset" rendered="#{camcorderBean.outputResource != null}"
+									 styleClass="submit"
+									 actionListener="#{camcorderBean.reset}"
+									 value="Reset"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
 		<h:panelGroup layout="block">
         <mobi:fieldsetGroup rendered="#{camcorderBean.outputResource == null}">
              <mobi:fieldsetRow>
-                <mobi:thumbnail for="cc" id="thumbnail" styleClass="mobi-center" />
+                <mobi:thumbnail for="cc" id="camcorderThumbnail" styleClass="mobi-center" />
 				<ace:pushButton id="camcorderUpload"
 									 styleClass="submit"
 									 actionListener="#{camcorderBean.processUploadedVideo}"

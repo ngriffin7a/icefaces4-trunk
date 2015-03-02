@@ -146,6 +146,13 @@ public class CamcorderBean /*extends ExampleImpl<CamcorderBean>*/ implements
         outputResource = null;
     }
 
+    public void reset(ActionEvent event) {
+		camcorderImage = new HashMap();
+		disposeResources();
+		outputResource = null;
+		uploadMessage = "";
+	}
+
     @PreDestroy
     public void disposeResources(){
         if( camcorderFile != null ){
