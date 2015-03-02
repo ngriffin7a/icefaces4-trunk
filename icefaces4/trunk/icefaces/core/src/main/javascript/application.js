@@ -515,6 +515,11 @@ if (!window.ice.icefaces) {
             var retrieveViewUpdate = retrieveUpdate(viewID);
             ice.push.register([viewID], retrieveViewUpdate);
             ice.onBlockingConnectionReEstablished(retrieveViewUpdate);
+            var unsetupPush = curry(namespace.unsetupPush, viewID);
+            namespace.onSessionExpiry(unsetupPush);
+            namespace.onNetworkError(unsetupPush);
+            namespace.onServerError(unsetupPush);
+            namespace.onUnload(unsetupPush);
         };
 
         namespace.unsetupPush = function(viewID) {
