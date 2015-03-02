@@ -45,6 +45,7 @@ span.if-tree > table.if-node-cnt > tbody > tr.if-node-tr > td.if-node-sw > div.i
 }
 
 .if-node-sub {
+	padding-top: 2px;
 }
 
 .if-node-sw {
