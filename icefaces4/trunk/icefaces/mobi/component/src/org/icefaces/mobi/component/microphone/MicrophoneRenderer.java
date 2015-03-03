@@ -112,7 +112,7 @@ public class MicrophoneRenderer extends Renderer {
 		writer.writeAttribute("type", "text/javascript");
 	//	writer.writeText("new ice.mobi.button('"+clientId+"_button');");
         StringBuilder uiScript = new StringBuilder("new ice.mobi.button('");
-        uiScript.append( clientId ).append( "');");
+        uiScript.append( clientId ).append( "_button');");
         //callback for ICE-10126
         uiScript.append("window['callback" + clientId + "'] = function(arg) {");
         String buttonId=clientId+"_button";
