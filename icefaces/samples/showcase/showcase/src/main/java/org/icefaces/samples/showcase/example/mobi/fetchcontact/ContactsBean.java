@@ -22,6 +22,7 @@ import java.net.URLDecoder;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 
 /*
 import org.icemobile.samples.mobileshowcase.view.metadata.annotation.Destination;
@@ -102,4 +103,10 @@ public class ContactsBean /*extends ExampleImpl<ContactsBean>*/ implements Seria
         this.email = email;
     }
 
+    public void reset(ActionEvent event) {
+		rawContact = null;
+        name = null;
+        phone = null;
+        email = null;
+	}
 }

@@ -25,18 +25,22 @@
     
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-                <mobi:fetchContact id="contact" 
+                <mobi:fetchContact id="contact"  rendered="#{contactsBean.rawContact == null}"
                     buttonLabel="Fetch Contact" 
                     fields="name, email, phone"
                     value="#{contactsBean.rawContact}"
                     name="#{contactsBean.name}"
                     email="#{contactsBean.email}"
                     phone="#{contactsBean.phone}"/>
+				<ace:pushButton id="fetchContactReset" rendered="#{contactsBean.rawContact != null}"
+									 styleClass="submit"
+									 actionListener="#{contactsBean.reset}"
+									 value="Reset"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
 		<h:panelGroup layout="block">
-			<mobi:fieldsetGroup rendered="#{contactsBean.name == null}">
+			<mobi:fieldsetGroup rendered="#{contactsBean.rawContact == null}">
 				<mobi:fieldsetRow>
 					<ace:pushButton
 										value="Submit Contact"
