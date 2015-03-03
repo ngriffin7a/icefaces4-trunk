@@ -56,7 +56,6 @@ public class TreeRenderer extends CoreRenderer {
     public static final String NODE_CONTRACTED_ICON_CLASS = "ui-icon-plus";
     public static final String NODE_CELL = "if-node-td";
     public static final String NODE_ROW = "if-node-tr";
-    public static final String NODE_LEAF_LINE_STYLE = "width: 13px; left:-17px;";
     private static final String NODE_LINE_CONTAINER = "if-node-ln";
 
     @Override
@@ -302,7 +301,6 @@ public class TreeRenderer extends CoreRenderer {
         String iconClass = NODE_SWITCH_ICON_CLASS;
         String expandedClass = NODE_EXPANDED_ICON_CLASS;
         String contractedClass = NODE_CONTRACTED_ICON_CLASS;
-        String leafStyle = NODE_LEAF_LINE_STYLE;
         String dotSource = renderContext.getDotURL();
         boolean lazy = renderContext.isLazy();
         boolean leaf = lazy ? false : renderContext.getTree().isLeaf(); // prevent attempt at loading children in lazy mode
@@ -325,8 +323,6 @@ public class TreeRenderer extends CoreRenderer {
 
         writer.startElement(HTML.IMG_ELEM, null);
         writer.writeAttribute(HTML.SRC_ATTR, dotSource, null);
-        if (leaf)
-            writer.writeAttribute(HTML.STYLE_ATTR, leafStyle, null);
         writer.endElement(HTML.IMG_ELEM);
 
 		writer.startElement(HTML.SPAN_ELEM, null);
