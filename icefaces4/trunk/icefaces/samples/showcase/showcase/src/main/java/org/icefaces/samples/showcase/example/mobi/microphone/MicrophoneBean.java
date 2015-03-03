@@ -163,4 +163,18 @@ public class MicrophoneBean /*extends ExampleImpl<MicrophoneBean>*/ implements
     public void setUploadMessage(String uploadMessage) {
         this.uploadMessage = uploadMessage;
     }
+
+    public void reset(ActionEvent event) {
+		audioFileMap = null;
+		disposeResources();
+		outputResource = null;
+		uploadMessage = "";
+	}
+
+    public void reset() {
+		audioFileMap = null;
+		disposeResources();
+		outputResource = null;
+		uploadMessage = "";
+	}
 }

@@ -32,9 +32,13 @@
 
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-                <mobi:microphone duration="10" buttonLabel="Record Audio"
+                <mobi:microphone duration="10" buttonLabel="Record Audio" rendered="#{microphoneBean.outputResource == null}"
                                  captureMessageLabel="Audio captured"
                                  value="#{microphoneBean.audioFileMap}"/>
+				<ace:pushButton id="microphoneReset" rendered="#{microphoneBean.outputResource != null}"
+									 styleClass="submit"
+									 actionListener="#{microphoneBean.reset}"
+									 value="Reset"/>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
@@ -43,7 +47,9 @@
 				<mobi:fieldsetRow>
 					<ace:pushButton styleClass="submit"
 									 actionListener="#{microphoneBean.processUploadedAudio}"
-									 value="Upload Recorded Audio"/>
+									 value="Upload Recorded Audio">
+						<ace:ajax execute="@all" render="@all" />
+					</ace:pushButton>
 				</mobi:fieldsetRow>
 			</mobi:fieldsetGroup>
 		</h:panelGroup>
