@@ -58,6 +58,7 @@ public class LocationNodeImpl implements MutableTreeNode, Serializable {
         this.name = name;
         this.type = type;
         this.population = population;
+		this.children = new ArrayList<LocationNodeImpl>();
     }
 
     public TreeNode getChildAt(int i) {
