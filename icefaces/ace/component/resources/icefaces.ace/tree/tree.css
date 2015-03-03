@@ -22,6 +22,7 @@ span.if-tree span.ui-icon-empty {
     display: inline-block;
     vertical-align: middle;
     padding: 5px 0;
+	text-align: left;
 }
 
 .if-tree table.if-node-cnt {
@@ -38,6 +39,7 @@ span.if-tree > table.if-node-cnt > tbody > tr.if-node-tr > td.if-node-sw > div.i
     border: 1px solid transparent;
     display:inline-block;
     padding:2px;
+	text-align: left;
 }
 
 .if-node-cnt {
@@ -45,13 +47,14 @@ span.if-tree > table.if-node-cnt > tbody > tr.if-node-tr > td.if-node-sw > div.i
 }
 
 .if-node-sub {
-	padding-top: 2px;
+	padding-top: 5px;
 }
 
 .if-node-sw {
     vertical-align: middle;
     cursor: pointer;
     vertical-align: middle;
+	width: 16px;
 }
 
 .if-node-sw span.ui-icon {
@@ -104,14 +107,14 @@ span.if-tree > table.if-node-cnt > tbody > tr.if-node-tr > td.if-node-sw > div.i
     position: absolute;
     left: 50%;
     margin-left: -1px;
-    margin-top: 1px;
+    margin-top: 5px;
 }
 
 .if-node-sw > div.if-node-ln > img {
-    width:80%;
+    width:15px;
     height:1px;
     position: absolute;
     top: 50%;
-    left: -100%;
+    left: -20px;
     margin-left: 3px;
 }
