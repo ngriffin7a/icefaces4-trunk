@@ -48,8 +48,12 @@
 								    closable="true"
 								    position="center">
                 <h:panelGrid columns="2" styleClass="centeredPanelGrid">
-                    <h:commandButton id="yes" value="Yes" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide();" actionListener="#{confirmationDialogBean.yes}"/>
-                    <h:commandButton id="no" value="No" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide();" actionListener="#{confirmationDialogBean.no}" />
+                    <h:commandButton id="yes" value="Yes" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide();" actionListener="#{confirmationDialogBean.yes}">
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:commandButton>
+                    <h:commandButton id="no" value="No" onclick="ice.ace.instance('#{confirmDialog.clientId}').hide();" actionListener="#{confirmationDialogBean.no}">
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:commandButton>
                 </h:panelGrid>
             </ace:confirmationDialog>
         </h:form>
