@@ -23,6 +23,7 @@ span.if-tree span.ui-icon-empty {
     vertical-align: middle;
     padding: 5px 0;
 	text-align: left;
+	white-space: nowrap;
 }
 
 .if-tree table.if-node-cnt {
