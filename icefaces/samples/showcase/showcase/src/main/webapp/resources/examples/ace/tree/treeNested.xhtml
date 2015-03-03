@@ -33,6 +33,11 @@
 
 <ui:define name="example">
     <h:form> 
+        <style type="text/css">
+			.if-node-sw > div.if-node-ln > img {
+				margin-left: 6px;
+			}
+        </style>
         <ace:tree value="#{treeNestedBean.outerTree}" var="node"
                   expansion="true">
             <ace:node>
