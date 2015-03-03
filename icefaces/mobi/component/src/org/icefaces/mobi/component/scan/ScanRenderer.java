@@ -114,7 +114,7 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.startElement("script", scan);
 		writer.writeAttribute("type", "text/javascript");
         StringBuilder uiScript = new StringBuilder("new ice.mobi.button('");
-        uiScript.append( clientId ).append( "');");
+        uiScript.append( clientId ).append( "_button');");
         //callback for ICE-10126
         uiScript.append("window['callback" + clientId + "'] = function(arg) {");
         String buttonId=clientId+"_button";
