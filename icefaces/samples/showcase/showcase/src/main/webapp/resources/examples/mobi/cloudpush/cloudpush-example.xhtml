@@ -35,14 +35,14 @@
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
 				<h:outputLabel for="cpSubject" value="Subject: " />
-                <h:inputText id="cpSubject"
+                <h:inputText id="cpSubject" style="display:block;width:100%;"
                                 value="#{cloudPushBean.subject}"
                                 type="text"
                                 placeholder="subject" />
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
 				<h:outputLabel for="cpMessage" value="Message: " />
-                <h:inputText id="cpMessage" style="display:block;width:100%;"
+                <h:inputTextarea id="cpMessage" style="display:block;width:100%;"
                                 value="#{cloudPushBean.message}"
                                 type="text"
                                 placeholder="message" />
