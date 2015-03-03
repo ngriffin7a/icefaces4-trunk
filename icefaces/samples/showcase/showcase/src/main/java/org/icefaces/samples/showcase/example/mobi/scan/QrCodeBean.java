@@ -132,4 +132,8 @@ public class QrCodeBean /*extends ExampleImpl<QrCodeBean>*/ implements
     public void setButtonLabel(String buttonlabel) {
         this.buttonLabel = buttonlabel;
     }
+
+    public void reset(ActionEvent event) {
+		qrScannerUrl = false;
+	}
 }
