@@ -86,7 +86,9 @@
                                        required="#{dateIndicator.required}"
                                        label="Selected Date:"
                                        labelPosition="left"/>
-                    <h:commandButton id="submitDate" value="Submit"/>
+                    <h:commandButton id="submitDate" value="Submit">
+						<f:ajax execute="@this cal" render="@all"/>
+					</h:commandButton>
                     <h:outputText value=""/><h:outputText value=""/>
                     <ace:message for="cal"/>
                     <h:outputText value=""/>

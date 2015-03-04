@@ -113,7 +113,9 @@
                                        styleClass="#{dateReqStyle.optColor}"/>
                     <ace:message id="calOptMsg" for="calOpt"/>
                 </h:panelGrid>
-                <h:commandButton id="submitDate" value="Submit"/>
+                <h:commandButton id="submitDate" value="Submit">
+						<f:ajax execute="@this calReq calOpt" render="@all"/>
+				</h:commandButton>
             </ace:panel>
         </h:form>
 		<ui:include src="/resources/ice.samples.showcase/reqStyleCss.xhtml" />

@@ -79,7 +79,9 @@
                                    timeOnly="#{dateTime.timeOnly}"
                                    showButtonPanel="false"/>
                 <h:panelGroup>
-                    <h:commandButton id="submitDate" value="Submit"/>
+                    <h:commandButton id="submitDate" value="Submit">
+						<f:ajax execute="@this cal" render="@all"/>
+					</h:commandButton>
                     <ace:message for="cal"/>
                 </h:panelGroup>
             </h:panelGrid>
