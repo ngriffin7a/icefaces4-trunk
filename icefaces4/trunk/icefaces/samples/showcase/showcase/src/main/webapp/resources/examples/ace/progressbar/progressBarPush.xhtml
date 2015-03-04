@@ -53,18 +53,21 @@
 										rendered="#{!longtask.taskRunning}"
 										disabled="#{longtask.taskRunning}">
                             <h:graphicImage id="playImg" value="#{progressBarPush.playImage.path}" alt="#{progressBarPush.playImage.description}"/>
+							<f:ajax execute="@this" render="@all"/> 
                         </h:commandLink>
                         <h:commandLink id="reset"
 									   actionListener="#{longtask.resetTask}"
 									   rendered="#{!longtask.taskRunning}"
 									   disabled="#{longtask.taskRunning}">
                             <h:graphicImage id="stopImg" value="#{progressBarPush.stopImage.path}" alt="#{progressBarPush.stopImage.description}"/>
+							<f:ajax execute="@this" render="@all"/> 
                         </h:commandLink>
                         <h:commandLink id="stop"
 									   actionListener="#{longtask.stopTask}"
                                        rendered="#{longtask.taskRunning}"
                                        disabled="#{!longtask.taskRunning}">
                             <h:graphicImage id="pauseImg" value="#{progressBarPush.pauseImage.path}" alt="#{progressBarPush.pauseImage.description}"/>
+							<f:ajax execute="@this" render="@all"/> 
                         </h:commandLink>
                         <h:panelGroup rendered="#{longtask.taskRunning}"/>
                    </h:panelGrid>
