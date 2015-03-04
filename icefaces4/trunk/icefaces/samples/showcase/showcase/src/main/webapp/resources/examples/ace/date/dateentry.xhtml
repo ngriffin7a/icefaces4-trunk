@@ -54,7 +54,9 @@
                                    value="#{dateEntry.selectedDate}"
                                    timeZone="Canada/Mountain"
                                    pattern="MMM/dd/yyyy" />
-                        <h:commandButton id="submitDate" value="Submit Date"/>
+                        <h:commandButton id="submitDate" value="Submit Date">						
+							<f:ajax execute="@this cal" render="@all"/>
+						</h:commandButton>
             </h:panelGrid>
         </h:form>
     </ui:define>

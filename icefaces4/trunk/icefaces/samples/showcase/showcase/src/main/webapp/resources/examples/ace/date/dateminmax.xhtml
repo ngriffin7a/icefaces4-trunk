@@ -65,7 +65,9 @@
                                    readOnlyInputText="true"
                                    renderAsPopup="true"/>
                 <h:commandButton id="submitMinMax" value="Submit Min/Max Dates"
-                                 actionListener="#{dateMinMax.submitMinMax}"/>
+                                 actionListener="#{dateMinMax.submitMinMax}">
+								 <f:ajax execute="@form" render="@all"/>
+				</h:commandButton>
                 
                 <h:outputLabel for="cal" value="Selected Date:"/>
                 <ace:dateTimeEntry id="cal"
@@ -74,7 +76,9 @@
                                    pattern="MMM/dd/yyyy"
                                    mindate="#{dateMinMax.minDate}"
                                    maxdate="#{dateMinMax.maxDate}"/>
-                <h:commandButton id="submitDate" value="Submit Date"/>
+                <h:commandButton id="submitDate" value="Submit Date">
+								<f:ajax execute="@this cal" render="@all"/>
+				</h:commandButton>
             </h:panelGrid>
         </h:form>
     </ui:define>
