@@ -34,11 +34,11 @@
        
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-                <mobi:scan value="#{qrCodeBean.qrScanner}" rendered="#{not qrCodeBean.qrScannerUrl}"
+                <mobi:scan value="#{qrCodeBean.qrScanner}" rendered="#{ empty qrCodeBean.qrScanner}"
                            buttonLabel="#{qrCodeBean.buttonLabel}"
                            captureMessageLabel="#{qrCodeBean.captureMessageLabel}"
                            id="scanOne" />
-				<ace:pushButton id="scanReset" rendered="#{qrCodeBean.qrScannerUrl}"
+				<ace:pushButton id="scanReset" rendered="#{not empty qrCodeBean.qrScanner}"
 									 styleClass="submit"
 									 actionListener="#{qrCodeBean.reset}"
 									 value="Reset"/>
@@ -46,7 +46,7 @@
         </mobi:fieldsetGroup>
 
 		<h:panelGroup layout="block">
-        <mobi:fieldsetGroup rendered="#{not qrCodeBean.qrScannerUrl}">
+        <mobi:fieldsetGroup rendered="#{empty qrCodeBean.qrScanner}">
             <mobi:fieldsetRow>
 				<ace:pushButton value="Submit Scanned Code" styleClass="submit"
 									actionListener="#{qrCodeBean.checkCodeForUrl}">
@@ -56,8 +56,8 @@
         </mobi:fieldsetGroup>
 		</h:panelGroup>
 
-		<h:panelGroup layout="block">
-        <mobi:fieldsetGroup rendered="#{qrCodeBean.qrScannerUrl}">
+		<h:panelGroup layout="block" rendered="#{qrCodeBean.qrScannerUrl || not empty qrCodeBean.qrScanner}">
+        <mobi:fieldsetGroup >
             <mobi:fieldsetRow>
                 <label>Scanned Code Value:</label>
                 <br/>

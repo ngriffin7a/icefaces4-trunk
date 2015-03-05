@@ -135,5 +135,7 @@ public class QrCodeBean /*extends ExampleImpl<QrCodeBean>*/ implements
 
     public void reset(ActionEvent event) {
 		qrScannerUrl = false;
+        qrScanner = null;
 	}
+
 }
