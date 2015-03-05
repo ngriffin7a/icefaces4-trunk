@@ -293,6 +293,7 @@ ice.ace.DataTable.Paginator = function(table) {
         container.css('display','none');
     } else {
         initPageMarkup();
+        container.css('display','');
         if (!cfg.disabled) initControlEvents();
         else initDisabledStyling();
     }
