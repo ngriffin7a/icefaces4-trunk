@@ -45,17 +45,21 @@ public class ThumbnailMeta extends UIComponentBaseMeta {
     @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.TABINDEX)
     private int tabindex;
 
-     @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLE)
-     private String style;
+    @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLE)
+    private String style;
 
-     @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLECLASS)
-     private String styleClass;
+    @Property(tlddoc = org.icefaces.mobi.util.TLDConstants.STYLECLASS)
+    private String styleClass;
 
     @Property( name = "for",
                required = Required.yes,
                tlddoc = "The id of camera or camcorder component the thumbnail is associated with.")
     private String For;
 
-	@Field
+    @Property(defaultValue="true", tlddoc="If true, then no value is submitted and kept on the server.")
+    private boolean clientSide;
+
+	@Property(tlddoc="The base64 string value of the thumbnail returned from BridgeIt. " +
+            " clientSide must be false for this attribute to be populated.")
 	private String data;
 }

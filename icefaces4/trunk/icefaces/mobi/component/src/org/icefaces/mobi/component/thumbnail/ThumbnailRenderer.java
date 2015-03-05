@@ -18,6 +18,9 @@ package org.icefaces.mobi.component.thumbnail;
 
 
 import java.io.IOException;
+import java.lang.Object;
+import java.lang.StringBuilder;
+import java.lang.System;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +31,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
 import org.icefaces.mobi.component.camera.Camera;
+import org.icefaces.mobi.component.camcorder.Camcorder;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.util.ClientDescriptor;
 
@@ -42,7 +46,12 @@ public class ThumbnailRenderer extends Renderer {
         String clientId = thumbnail.getClientId();
         java.util.Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
         String data = (String) requestMap.get(clientId + "_data");
-        thumbnail.setData(data);
+        boolean isClient = thumbnail.isClientSide(); //only populate is not clientSide.
+        if (!isClient && data !=null && !data.isEmpty() && data.startsWith("data")){
+         //   logger.info(" data in decode="+data);
+            thumbnail.setData(data);
+        }
+
     }
 
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
@@ -67,7 +76,7 @@ public class ThumbnailRenderer extends Renderer {
             if (MobiJSFUtils.uploadInProgress(comp)) {
                 thumbnail.setBaseClass(Thumbnail.CSS_DONE_CLASS);
             } else {
-                thumbnail.setBaseClass(Thumbnail.CSS_CLASS);
+                thumbnail.setBaseClass(Thumbnail.CSS_INIT_CLASS);
             }
             // logger.info("comp id="+comp.getClientId(facesContext)+ " baseClass = "+thumbnail.getBaseClass());
         } else if (facesContext.isProjectStage(ProjectStage.Development) ||
@@ -85,8 +94,10 @@ public class ThumbnailRenderer extends Renderer {
         String clientId = component.getClientId();
         ClientDescriptor cd = component.getClient();
         boolean isForCamera = forComp instanceof Camera;
-        if (cd.isDesktopBrowser() && !isForCamera ) {
-            //    logger.info("desktop browser");
+        boolean isForCamcorder = forComp instanceof Camcorder;
+        boolean isCam = isForCamera || isForCamcorder;
+        if (cd.isDesktopBrowser() && !isCam ) {
+            logger.info("thumbnail not being rendered");
             return;
         }
         boolean renderThumbnail = false;
@@ -94,10 +105,11 @@ public class ThumbnailRenderer extends Renderer {
             renderThumbnail = true;
         }
         String thumbId = component.getMFor() + "-thumb";
-
+        boolean clientSide = component.isClientSide();
         if (renderThumbnail) {
             writer.startElement(SPAN_ELEM, component);
             String styleClass = component.getBaseClass();
+            writer.writeAttribute("id", clientId, null);
             if (component.getStyleClass() != null) {
                 styleClass += " " + component.getStyleClass();
             }
@@ -108,35 +120,44 @@ public class ThumbnailRenderer extends Renderer {
             }
             writer.startElement(IMG_ELEM, component);
 
-            //if thumb is for camera, always render the thumb for
-            //for client side code, but hide it if the value is null
-            //js code will unhide it when a photo is generated
-            String data = component.getData();
-            if( isForCamera ){ 
-                Camera cam = (Camera)forComp;
-                if( cam.getValue() == null || data == null ){
-                    writer.writeAttribute(STYLE_ATTR, "display:none", null);
+            /* only get the data if clientSide is false */
+            String data=null;
+            if (!clientSide) {
+                data = component.getData();
+                boolean hasValue = false;
+                if( isForCamera ){
+                    Camera cam = (Camera)forComp;
+                    hasValue = cam.getValue() != null;
                 }
+                if (isForCamcorder){
+                    Camcorder cam = (Camcorder)forComp;
+                    hasValue= cam.getValue() !=null;
+                }
+                /* do we need to set styles on server ?? */
             }
             writer.writeAttribute(WIDTH_ATTR, "64", null);
             writer.writeAttribute(HEIGHT_ATTR, "64", null);
             writer.writeAttribute(ID_ATTR, thumbId, null);
             
-            if (data != null) writer.writeAttribute(SRC_ATTR, data, null);
+            if (!clientSide && data != null) writer.writeAttribute(SRC_ATTR, data, null);
             writer.endElement(IMG_ELEM);
-    
-            writer.startElement(INPUT_ELEM, component);
-            writer.writeAttribute(TYPE_ATTR, "hidden", null);
-            writer.writeAttribute(ID_ATTR, clientId + "_data", null);
-            writer.writeAttribute(NAME_ATTR, clientId + "_data", null);
-            writer.endElement(INPUT_ELEM);
+            /* only need to write the data if no using clientSide */
+            if (!clientSide ){
+                writer.startElement(INPUT_ELEM, component);
+                writer.writeAttribute(TYPE_ATTR, "hidden", null);
+                writer.writeAttribute(ID_ATTR, clientId + "_data", null);
+                writer.writeAttribute(NAME_ATTR, clientId + "_data", null);
+                writer.endElement(INPUT_ELEM);
+            }
             writer.endElement(SPAN_ELEM);
         }
         
         writer.startElement("script", component);
         writer.writeAttribute("type", "text/javascript", null);
-        writer.write("if (!window['thumbnails" + mFor + "']) window['thumbnails" + mFor + "'] = {};");
-        writer.write("window['thumbnails" + mFor + "']['" + thumbId + "'] = '" + clientId + "_data';");
+        StringBuilder script = new StringBuilder("if (!window['thumbnails" + mFor + "']) {\n") ;
+        script.append(" window['thumbnails" + mFor + "'] = {};\n}");
+        script.append("\t\t window['thumbnails" + mFor + "']['" + thumbId + "'] = '" + clientId + "_data';");
+        writer.write(script.toString());
         writer.endElement("script");
     }
 }

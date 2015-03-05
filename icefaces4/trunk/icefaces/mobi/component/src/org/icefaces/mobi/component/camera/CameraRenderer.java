@@ -122,10 +122,12 @@ public class CameraRenderer extends Renderer {
         String uiScript = "new ice.mobi.button('" + clientId + "_button');";
         uiScript += "window['callback" + clientId + "'] = function(arg) {";
         uiScript += "if (! ('thumbnails" + clientId + "' in window)){window['thumbnails" + clientId + "'] = {};}";
-        uiScript += "var thumbnails = window['thumbnails" + clientId + "'];";
+        uiScript += "var thumbnails = window['thumbnails" + clientId + "'];\n";
         uiScript += "for (t in thumbnails ) {setTimeout(function() {var e = document.getElementById(t); ";
-        uiScript += "if (e) e.src = arg.preview; }, 350); ";
-        uiScript += "try {document.getElementById(thumbnails[t]).value = arg.preview;}catch (e) {} }}; ";
+        uiScript += "if (e){ e.src = arg.preview; e.className='mobi-thumb-done' }}, 400); ";
+        uiScript += "setTimeout (function() { var hidElem =  document.getElementById(thumbnails[t]); \n " +
+                " if (hidElem) {hidElem.value = arg.preview;}\n} , 350); }}; ";
+  //   System.out.println("\n camera script ="+uiScript);
         writer.writeText(uiScript);
         writer.endElement("script");
         writer.endElement("span");
