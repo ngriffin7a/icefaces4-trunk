@@ -25,8 +25,8 @@ import java.util.Map;
 
 public class Thumbnail extends ThumbnailBase {
 
-    public static final String CSS_CLASS = "mobi-thumb";
-    public static final String CSS_DONE_CLASS = "mobi-thumb-done";
+    public static final String CSS_INIT_CLASS = "mobi-thumb ";
+    public static final String CSS_DONE_CLASS = "mobi-thumb-done ";
     public static final String FOR_MSG = "for component was not detected. ";
 
     private String baseClass;
@@ -100,4 +100,6 @@ public class Thumbnail extends ThumbnailBase {
 		sh.put(valuesKey, clientValues);
 
     }
+
+
 }

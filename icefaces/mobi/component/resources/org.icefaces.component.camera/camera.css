@@ -25,3 +25,22 @@
     margin: 0 auto;
     display: block;
 }
+.mobi-thumb-done {
+    background-repeat: no-repeat;
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.mobi-thumb {
+    display:none !important;
+}
+.mobi-thumb img {
+    display:inherit !important;
+    border-style:  none;
+}
+
+.mobi-thumb img {
+    border-style: none !important;
+}
