@@ -49,8 +49,13 @@ public class NavigationController implements Serializable {
      * This is meant to be used with a full page refresh as metadata (called on each page refresh as postValidate listener)
      */
     public void navigate() {
-        Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        navigate(map.get(NavigationModel.GROUP_PARAM), map.get(NavigationModel.EXAMPLE_PARAM));
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> map = context.getExternalContext().getRequestParameterMap();
+        String newExample = map.get(NavigationModel.EXAMPLE_PARAM);
+        //avoid navigating if this is a postback request with no 'exp' parameter defined
+        if (!context.isPostback() || newExample != null) {
+            navigate(map.get(NavigationModel.GROUP_PARAM), newExample);
+        }
     }
 
     /**
