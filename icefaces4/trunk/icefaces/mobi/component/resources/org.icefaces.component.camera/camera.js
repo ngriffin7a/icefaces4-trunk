@@ -14,6 +14,7 @@
 
 			function getHiddenInput(){
 				var hiddenInputId = id + "_hidden";
+                console.log('hiddenInputId='+hiddenInputId);
 				var hiddenInput = document.getElementById(hiddenInputId);
 				if( !hiddenInput ){
 					hiddenInput = document.createElement('input');
@@ -27,15 +28,20 @@
 
 			function getThumbnail(){
 				var thumbId = id + "-thumb";
+                console.log('thumbId ='+thumbId);
 				var thumbnail = document.getElementById(thumbId);
 				return thumbnail;
 			}
 
 			function updateThumbnail(dataURL){
+                console.log('updatethumbnail');
 				var thumbnail = getThumbnail();
 				if( thumbnail ){
 					thumbnail.src = dataURL;
-					thumbnail.style.display = 'inline';
+                    var sclass = thumbnail.parentNode.className;
+                    var newclass = sclass.replace("mobi-thumb","mobi-thumb-done");
+                    thumbnail.parentNode.className=newclass;
+					//thumbnail.style.display = 'inline';
 					var thumbInput = thumbnail.nextSibling;
 					if( thumbInput && thumbInput.type === 'hidden'){
 						thumbInput.value = dataURL;
