@@ -322,6 +322,7 @@ public class DataTableRenderer extends CoreRenderer {
                 : DataTableConstants.EMPTY_DATA_CLASS;
 
         writer.startElement(HTML.TBODY_ELEM, null);
+        writer.writeAttribute(HTML.ID_ATTR, clientId + "_body", null);
         writer.writeAttribute(HTML.CLASS_ATTR, tbodyClass, null);
 
         if (hasData) {

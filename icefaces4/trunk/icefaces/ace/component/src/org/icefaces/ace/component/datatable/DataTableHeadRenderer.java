@@ -38,6 +38,7 @@ public class DataTableHeadRenderer {
         DataTable table = tableContext.getTable();
         if (!table.hasHeaders()) return;
 
+        String clientId = table.getClientId(context);
         ColumnModel columnModel = tableContext.getColumnModel();
         Map<String, AutoAdjustRenderedColspan.AdjustedRenderedColspan> map =
             AutoAdjustRenderedColspan.adjustIfAllowed(
@@ -54,6 +55,7 @@ public class DataTableHeadRenderer {
         }
 
         writer.startElement(HTML.THEAD_ELEM, null);
+        writer.writeAttribute(HTML.ID_ATTR, clientId + "_header", null);
 
         if (table.isInDuplicateSegment())
             writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
@@ -79,9 +81,9 @@ public class DataTableHeadRenderer {
                                 isNextStacked(columnsInCell, column);
                             if (isNextStacked) { // Used to only check if tableContext.isInHeaderSubrows()
                                 if (!DataTableRendererUtil.areBothSingleColumnSpan(column, columnsInCell.get(i+1)))
-                                    throw new FacesException("DataTable : \"" + table.getClientId(context) + "\" must not have stacked header columns, with colspan values greater than 1.");
+                                    throw new FacesException("DataTable : \"" + clientId + "\" must not have stacked header columns, with colspan values greater than 1.");
                                 if (!DataTableRendererUtil.isNextColumnRowSpanEqual(column, columnsInCell.get(i+1)))
-                                    throw new FacesException("DataTable : \"" + table.getClientId(context) + "\" must not have stacked header columns, with unequal rowspan values.");
+                                    throw new FacesException("DataTable : \"" + clientId + "\" must not have stacked header columns, with unequal rowspan values.");
                             }
                             encodeColumn(context, tableContext, column,
                                 isCurrStacked, isNextStacked, map);
