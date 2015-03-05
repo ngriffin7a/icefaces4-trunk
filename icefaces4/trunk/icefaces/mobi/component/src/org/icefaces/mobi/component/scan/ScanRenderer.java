@@ -62,7 +62,6 @@ public class ScanRenderer extends BaseInputRenderer {
             if (submittedString != null){
                 Object convertedValue = this.getConvertedValue(facesContext, uiComponent, submittedString);
                 this.setSubmittedValue(scan, convertedValue);
-   //      System.out.println("decode have submitted value so reset the button label to ="+scan.getButtonLabel());
                 scan.setButtonLabel(scan.getButtonLabel()) ;
             }
 
@@ -71,6 +70,7 @@ public class ScanRenderer extends BaseInputRenderer {
 
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
+
         Scan scan = (Scan) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = scan.getClientId();
@@ -78,12 +78,17 @@ public class ScanRenderer extends BaseInputRenderer {
 		writer.startElement(SPAN_ELEM, scan);
 		writer.writeAttribute(ID_ATTR, clientId);
 		writer.writeAttribute(CLASS_ATTR, "mobi-scan");
+        writer.startElement(INPUT_ELEM, uiComponent);
+        writer.writeAttribute(TYPE_ATTR, "hidden");
+        writer.writeAttribute(ID_ATTR, clientId+"-hid");
+        writer.writeAttribute(NAME_ATTR, clientId );
+        writer.endElement(INPUT_ELEM);
         String oldLabel = scan.getButtonLabel();
         String capturedLabel=scan.getCaptureMessageLabel();
   //   System.out.println(" uploadin progress="+MobiJSFUtils.uploadInProgress(scan));
-        if (MobiJSFUtils.uploadInProgress(scan))  {
+ /*       if (MobiJSFUtils.uploadInProgress(scan))  {
             scan.setButtonLabel(capturedLabel) ;
-        } 
+        } */
         StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
         //ClientDescriptor cd = scan.getClient();
 		// button element
@@ -118,14 +123,12 @@ public class ScanRenderer extends BaseInputRenderer {
         //callback for ICE-10126
         uiScript.append("window['callback" + clientId + "'] = function(arg) {");
         String buttonId=clientId+"_button";
-  //      uiScript.append("console.log('in callback');");
         String firstLine = "var buttonElem = document.getElementById('"+buttonId+"');";
         uiScript.append(firstLine);
         String secondLine=" if (buttonElem) { " +
-       //         "console.log('have buttonElem');" +
+                "console.log('have buttonElem');" +
                 "var existingTextElem = buttonElem.firstChild; " +
                 "if (existingTextElem){" +
-  //                      " console.log('have existingTextElem');" +
                 "     existingTextElem.innerHTML='"+capturedLabel+"';" +
                 "} " +
              "}};"  ;
