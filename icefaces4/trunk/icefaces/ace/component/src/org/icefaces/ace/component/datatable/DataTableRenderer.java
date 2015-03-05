@@ -432,10 +432,13 @@ public class DataTableRenderer extends CoreRenderer {
 
         json.endMap().endArray().endFunction();
 
-		writer.startElement(HTML.SCRIPT_ELEM, null);
-		writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);        
+        writer.startElement(HTML.SPAN_ELEM, null);
+        writer.writeAttribute(HTML.ID_ATTR, clientId + "_setup", null);
+        writer.startElement(HTML.SCRIPT_ELEM, null);
+		writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
         writer.write(json.toString());
-		writer.endElement(HTML.SCRIPT_ELEM);
+        writer.endElement(HTML.SCRIPT_ELEM);
+        writer.endElement(HTML.SPAN_ELEM);
 	}
 
     private void encodePaginatorConfig(FacesContext context, JSONBuilder scriptJson, DataTable table) throws IOException {
