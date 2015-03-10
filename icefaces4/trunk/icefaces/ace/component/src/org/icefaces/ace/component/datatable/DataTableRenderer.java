@@ -177,6 +177,9 @@ public class DataTableRenderer extends CoreRenderer {
         if ((style = table.getStyle()) != null)
             writer.writeAttribute(HTML.STYLE_ELEM, style, HTML.STYLE_ELEM);
 
+		// last column reordering time (to cause full table updates)
+		writer.writeAttribute("data-lastReordering", table.getLastReordering(), null);
+
         // Header Facet
         encodeFacet(context, table, table.getHeader(), DataTableConstants.HEADER_CLASS);
 

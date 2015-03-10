@@ -234,6 +234,8 @@ public class DataTableMeta extends UIDataMeta {
     protected Integer forcedUpdateCounter;
     @Field
     private Object cachedGlobalFilter;
+    @Field(defaultValue = "0l", defaultValueIsStringLiteral = false)
+    private Long lastReordering;
 
 
 

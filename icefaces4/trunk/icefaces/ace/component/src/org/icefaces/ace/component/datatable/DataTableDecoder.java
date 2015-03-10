@@ -160,6 +160,7 @@ public class DataTableDecoder {
         ordering.add(Integer.parseInt(columnTargets[1]), columnIndex);
         // this call just to indicate a change has taken place to col order, and recalc
         table.setColumnOrdering(ordering);
+		table.setLastReordering(System.currentTimeMillis());
     }
 
 
