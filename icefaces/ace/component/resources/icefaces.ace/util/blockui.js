@@ -14,6 +14,8 @@
  * governing permissions and limitations under the License.
  */
 
+if (!window['ice']) window.ice = {};
+if (!window.ice['ace']) window.ice.ace = {};
 ice.ace.BlockUI = {};
 
 ice.ace.BlockUI.eventSink = function() {
