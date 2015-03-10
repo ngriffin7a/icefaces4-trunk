@@ -15,12 +15,24 @@
   -->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-             xmlns:h="http://java.sun.com/jsf/html"
-             xmlns:f="http://java.sun.com/jsf/core"
-             xmlns:ui="http://java.sun.com/jsf/facelets"
-             xmlns:ace="http://www.icefaces.org/icefaces/components"
-             xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
-
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
+    <script type="text/javascript">
+        var disconnect = 'Disconnect push';
+        var connect = 'Connect push';
+        function toggleBlockingConnection(button) {
+            if (button.value == disconnect) {
+                button.value = connect;
+                ice.push.connection.pauseConnection();
+            } else {
+                button.value = disconnect;
+                ice.push.connection.resumeConnection();
+            }
+        }
+    </script>
 
     <h:form prependId="false" id="cloudpushform" enctype="multipart/form-data">
 
@@ -71,17 +83,20 @@
 					<span onclick="this.style.cssText='display:none;';document.getElementById('pushType').style.cssText='display:block;';">
 						<mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
 					</span>
-				</div>
-				<div id="pushType" style="display:none;">
-					<div>
-					<ace:pushButton value="Priority Push" styleClass="submit"
-									 actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
-					</div>
-					<div>
-					<ace:pushButton value="Simple Push" styleClass="submit"
-									 actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
-					</div>
-				</div>
+                </div>
+                <div id="pushType" style="display:none;">
+                    <div>
+                        <input type="button" onclick="toggleBlockingConnection(this);" class="ui-button ui-widget ui-state-default ui-corner-all" style="padding: 0.5em;" value="Disconnect push"/>
+                    </div>
+                    <div>
+                        <ace:pushButton value="Priority Push" styleClass="submit"
+                                        actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
+                    </div>
+                    <div>
+                        <ace:pushButton value="Simple Push" styleClass="submit"
+                                        actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
+                    </div>
+                </div>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
