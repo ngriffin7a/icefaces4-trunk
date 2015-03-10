@@ -58,6 +58,7 @@
 				var message = document.createTextNode("Note: Your platform does not support this feature. This demo won't be functional.");
 				messageDiv.appendChild(message);
 				div.insertBefore(messageDiv, div.firstChild);
+				setTimeout(function() {ice.ace.BlockUI.activate('geotrackform');}, 1);
 			}
 		})();
 	</script>
