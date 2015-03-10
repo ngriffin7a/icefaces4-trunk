@@ -21,7 +21,7 @@
              xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
-    <h:form prependId="false">
+    <h:form id="microphoneForm" prependId="false">
         
         <mobi:fieldsetGroup styleClass="intro">
             <mobi:fieldsetRow>
@@ -79,6 +79,7 @@
 				var message = document.createTextNode("Note: Your platform does not support this feature. This demo won't be functional.");
 				messageDiv.appendChild(message);
 				div.insertBefore(messageDiv, div.firstChild);
+				setTimeout(function() {ice.ace.BlockUI.activate('microphoneForm');}, 1);
 			}
 		})();
 	</script>
