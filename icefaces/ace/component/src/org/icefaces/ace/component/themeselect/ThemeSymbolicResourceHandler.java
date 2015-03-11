@@ -21,6 +21,7 @@ import org.icefaces.ace.util.Constants;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -45,7 +46,10 @@ public class ThemeSymbolicResourceHandler extends ResourceHandlerWrapper {
             ExternalContext externalContext = context.getExternalContext();
             String theme = (String) externalContext.getSessionMap().get(Constants.THEME_PARAM);
             if (theme == null) {
-                theme = (String) context.getViewRoot().getViewMap().get(Constants.THEME_PARAM);
+				UIViewRoot root = context.getViewRoot();
+				if (root != null) {
+					theme = (String) root.getViewMap().get(Constants.THEME_PARAM);
+				}
                 if (theme == null) {
                     String defaultTheme = externalContext.getInitParameter(Constants.THEME_PARAM);
                     theme = defaultTheme == null ? "sam" : defaultTheme;
