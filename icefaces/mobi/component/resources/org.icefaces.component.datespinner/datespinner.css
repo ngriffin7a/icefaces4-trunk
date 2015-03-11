@@ -132,7 +132,7 @@
     height: 35px;
     border: none;
 }
-.mobi-date-btn .fa{
+.mobi-date-btn .fa, .mobi-time-btn .fa{
     line-height: 35px;
 }
 .mobi-time-popup-btn {
