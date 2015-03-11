@@ -639,18 +639,19 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
                 context.responseComplete();
                 String windowID = (String) parameters.get(WindowParameter);
                 disposeWindow(context, windowID);
-                if (EnvUtils.isICEpushPresent()) {
-                    try {
-                        String[] viewIDs = externalContext.getRequestParameterValuesMap().get("ice.view");
-                        for (int i = 0; i < viewIDs.length; i++) {
-                            SessionViewManager.get(context).removeView(viewIDs[i]);
-                        }
-                    } catch (RuntimeException e) {
+                //do not remove pushIDs from ICEpush, they will just expire (or kept if the pushIDs are parked for cloud push notifications)
+                //if (EnvUtils.isICEpushPresent()) {
+                    //try {
+                    //    String[] viewIDs = externalContext.getRequestParameterValuesMap().get("ice.view");
+                    //    for (int i = 0; i < viewIDs.length; i++) {
+                    //        SessionViewManager.get(context).removeView(viewIDs[i]);
+                    //    }
+                    //} catch (RuntimeException e) {
                         //missing ice.view parameters means that none of the views within the page
                         //was registered with PushRenderer before page unload
-                        log.log(Level.FINE, "Exception during dispose-window ", e);
-                    }
-                }
+                    //    log.log(Level.FINE, "Exception during dispose-window ", e);
+                    //}
+                //}
             }
         }
 
