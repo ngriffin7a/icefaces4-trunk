@@ -63,7 +63,7 @@ a:link, a:visited {
     background: url("#{resource['css/images/topBannerImages/showcaseHeaderBlank.png']}") no-repeat;
     background-color: transparent;
     background-position: top center;
-    width: 100%;
+    min-width: 1020px;
     height: 123px;
 }
 
