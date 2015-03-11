@@ -105,9 +105,13 @@
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<multipart-config/>
+        <!-- Add the multi-part entry below to enable Servlet 3 servers to support ace:fileEntry -->
+        <multipart-config>
+            <max-file-size>52428800</max-file-size>
+            <max-request-size>52428800</max-request-size>
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
     </servlet>
-   
     <servlet>
         <servlet-name>SourceCode Reader</servlet-name>
         <servlet-class>
