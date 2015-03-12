@@ -121,4 +121,26 @@
 		</h:panelGroup>
 
     </h:form>
+
+	<script type="text/javascript">
+		(function() {
+			var isMobile = function() {
+					return (navigator.userAgent.match(/Android/i)
+						|| navigator.userAgent.match(/BlackBerry/i)
+						|| navigator.userAgent.match(/iPhone|iPad|iPod/i)
+						|| navigator.userAgent.match(/IEMobile/i));
+			};
+
+			if (!isMobile()) {
+				var div = document.getElementById('cloudPush_inner');
+				var messageDiv = document.createElement('div');
+				messageDiv.style.cssText = 'top:0;left:0;border:1px solid #f00;background-color:#fff;color:#f00;overflow:auto;font-weight:bold;font-size:large;margin:10px;padding:10px;';
+				var message = document.createTextNode("Note: Your platform does not support this feature. This demo won't be functional.");
+				messageDiv.appendChild(message);
+				div.insertBefore(messageDiv, div.firstChild);
+				setTimeout(function() {ice.ace.BlockUI.activate('cloudpushform');}, 1);
+			}
+		})();
+	</script>
+
 </ui:composition>
