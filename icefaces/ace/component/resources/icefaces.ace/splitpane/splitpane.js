@@ -91,14 +91,21 @@ ice.ace.splitpane = {
                         }
                     }
                     if (height > 0) {
-                        var leftHeight = height - leftNode.offsetTop;
-                        var rightHeight = height - rtNode.offsetTop;
-                        if( leftHeight > 0 ){
-                            leftNode.style.height = "" + leftHeight + "px";
-                        }
-                        if( rightHeight > 0 ){
-                            rtNode.style.height = "" + rightHeight + "px";
-                        }
+						var rootNode = document.getElementById(elId);
+						var rootHeight = rootNode.style.height;
+						if (rootHeight) {
+							leftNode.style.height = "" + rootHeight;
+							rtNode.style.height = "" + rootHeight;
+						} else {
+							var leftHeight = height - leftNode.offsetTop;
+							var rightHeight = height - rtNode.offsetTop;
+							if( leftHeight > 0 ){
+								leftNode.style.height = "" + leftHeight + "px";
+							}
+							if( rightHeight > 0 ){
+								rtNode.style.height = "" + rightHeight + "px";
+							}
+						}
                     }
                 }
             },
