@@ -71,14 +71,6 @@
                 </h:selectOneMenu>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow id="cloudPushButtons">
-                <div>
-                    <h:panelGrid rendered="#{cloudPushBean.acquireEmail}" columns="2">
-                        <h:inputText id="email" value="#{cloudPushBean.email}"/>
-                        <ace:pushButton value="Set email address" styleClass="submit">
-                            <ace:ajax execute="email" render="cloudPushButtons"/>
-                        </ace:pushButton>
-                    </h:panelGrid>
-                </div>
 				<div>
 					<span onclick="this.style.cssText='display:none;';document.getElementById('pushType').style.cssText='display:block;';">
 						<mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
