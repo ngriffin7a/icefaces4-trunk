@@ -28,6 +28,7 @@ import org.icefaces.samples.showcase.example.ace.buttonGroup.ButtonGroupBean;
 import org.icefaces.samples.showcase.example.ace.chart.*;
 import org.icefaces.samples.showcase.example.ace.checkboxButton.CheckboxButtonBean;
 import org.icefaces.samples.showcase.example.ace.checkboxButton.CheckboxButtonCustomBean;
+import org.icefaces.samples.showcase.example.ace.cloudPush.CloudPushDesktopBean;
 import org.icefaces.samples.showcase.example.ace.combobox.*;
 import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogBean;
 import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogEffectBean;
@@ -229,6 +230,7 @@ import java.util.ArrayList;
                 @MenuLink(title = "menu.ace.graphicImage.title", exampleBeanName = GraphicImageBean.BEAN_NAME, group=14, beanClass=GraphicImageBean.class),
                 @MenuLink(title = "menu.ace.videoPlayer.title", exampleBeanName = VideoPlayerBean.BEAN_NAME, group=14, beanClass=VideoPlayerBean.class),
 
+                @MenuLink(title = "menu.ace.cloudPush.title", exampleBeanName = CloudPushDesktopBean.BEAN_NAME, group=15, beanClass=CloudPushDesktopBean.class),
                 @MenuLink(title = "menu.ace.animation.title", exampleBeanName = AnimationBean.BEAN_NAME, group=15, beanClass=AnimationBean.class),
                 @MenuLink(title = "menu.ace.dragDrop.title", exampleBeanName = DragDropOverviewBean.BEAN_NAME, group=15, beanClass=DragDropOverviewBean.class),
                 @MenuLink(title = "menu.ace.printer.title", exampleBeanName = PrinterBean.BEAN_NAME, group=15, beanClass=PrinterBean.class),

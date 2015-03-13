@@ -202,9 +202,4 @@ public class CloudPushBean implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public boolean isAcquireEmail() {
-        ClientDescriptor clientDescriptor = ClientDescriptor.getInstance((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest());
-        return clientDescriptor.isDesktopBrowser();
-    }
 }
