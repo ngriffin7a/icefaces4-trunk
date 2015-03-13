@@ -46,8 +46,9 @@ public class ThumbnailRenderer extends Renderer {
         String clientId = thumbnail.getClientId();
         java.util.Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
         String data = (String) requestMap.get(clientId + "_data");
-        boolean isClient = thumbnail.isClientSide(); //only populate is not clientSide.
-        if (!isClient && data !=null && !data.isEmpty() && data.startsWith("data")){
+   //     boolean isClient = thumbnail.isClientSide(); //only populate is not clientSide.
+    //
+         if ( data !=null && !data.isEmpty() && data.startsWith("data")){
          //   logger.info(" data in decode="+data);
             thumbnail.setData(data);
         }
@@ -105,7 +106,7 @@ public class ThumbnailRenderer extends Renderer {
             renderThumbnail = true;
         }
         String thumbId = component.getMFor() + "-thumb";
-        boolean clientSide = component.isClientSide();
+      //  boolean clientSide = component.isClientSide();
         if (renderThumbnail) {
             writer.startElement(SPAN_ELEM, component);
             String styleClass = component.getBaseClass();
@@ -122,7 +123,7 @@ public class ThumbnailRenderer extends Renderer {
 
             /* only get the data if clientSide is false */
             String data=null;
-            if (!clientSide) {
+      //      if (!clientSide) {
                 data = component.getData();
                 boolean hasValue = false;
                 if( isForCamera ){
@@ -134,21 +135,22 @@ public class ThumbnailRenderer extends Renderer {
                     hasValue= cam.getValue() !=null;
                 }
                 /* do we need to set styles on server ?? */
-            }
+       //     }
             writer.writeAttribute(WIDTH_ATTR, "64", null);
             writer.writeAttribute(HEIGHT_ATTR, "64", null);
             writer.writeAttribute(ID_ATTR, thumbId, null);
             
-            if (!clientSide && data != null) writer.writeAttribute(SRC_ATTR, data, null);
+         //
+            if ( data != null) writer.writeAttribute(SRC_ATTR, data, null);
             writer.endElement(IMG_ELEM);
             /* only need to write the data if no using clientSide */
-            if (!clientSide ){
+       //     if (!clientSide ){
                 writer.startElement(INPUT_ELEM, component);
                 writer.writeAttribute(TYPE_ATTR, "hidden", null);
                 writer.writeAttribute(ID_ATTR, clientId + "_data", null);
                 writer.writeAttribute(NAME_ATTR, clientId + "_data", null);
                 writer.endElement(INPUT_ELEM);
-            }
+        //    }
             writer.endElement(SPAN_ELEM);
         }
         
