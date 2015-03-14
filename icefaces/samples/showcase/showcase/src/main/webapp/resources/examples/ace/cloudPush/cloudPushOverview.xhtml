@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[cloudPushDesktopBean.title]}"/>
+    <ui:param name="description" value="#{msgs[cloudPushDesktopBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[cloudPushDesktopBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{cloudPushDesktopBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{cloudPushDesktopBean.exampleResource}"/>
+    
+    <!--<ui:param name="wikiResources" value="#{cloudPushResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{cloudPushResources.tldResources}"/>-->
+
+    <ui:define name="example">
+        <h:form id="form">
+            
+    <script type="text/javascript">
+        var disconnect = 'Disconnect push';
+        var connect = 'Connect push';
+        function toggleBlockingConnection(button) {
+            if (button.value == disconnect) {
+                button.value = connect;
+                ice.push.connection.pauseConnection();
+            } else {
+                button.value = disconnect;
+                ice.push.connection.resumeConnection();
+            }
+        }
+    </script>
+
+        <ace:panel>
+            <h:panelGroup layout="block">
+				<h:outputLabel for="cpSubject" value="Subject: " />
+                <h:inputText id="cpSubject" style="display:block;width:100%;"
+                                value="#{cloudPushDesktopBean.subject}"
+                                type="text"
+                                placeholder="subject" />
+            </h:panelGroup>
+            <h:panelGroup layout="block">
+				<h:outputLabel for="cpMessage" value="Message: " />
+                <h:inputTextarea id="cpMessage" style="display:block;width:100%;"
+                                value="#{cloudPushDesktopBean.message}"
+                                type="text"
+                                placeholder="message" />
+            </h:panelGroup>
+            <h:panelGroup layout="block">
+                <h:outputLabel value="Message Delay" for="messageDelay" />
+                <h:selectOneMenu id="messageDelay"
+                        style="float:right;line-height:1.8em;min-width:80px;font-size:15px"
+                        value="#{cloudPushDesktopBean.notificationDelay}">
+                    <f:selectItem itemLabel="5 sec" itemValue="5"/>
+                    <f:selectItem itemLabel="10 sec" itemValue="10"/>
+                    <f:selectItem itemLabel="15 sec" itemValue="15"/>
+                    <f:selectItem itemLabel="30 sec" itemValue="30"/>
+                </h:selectOneMenu>
+            </h:panelGroup>
+            <h:panelGroup layout="block" id="cloudPushButtons">
+                <div>
+                    <h:panelGrid columns="2">
+                        <h:inputText id="email" value="#{cloudPushDesktopBean.email}"/>
+                        <ace:pushButton value="Set email address" styleClass="submit">
+                            <ace:ajax execute="email" render="cloudPushButtons"/>
+                        </ace:pushButton>
+                    </h:panelGrid>
+                </div>
+                <div id="pushType" style="display:none;">
+                    <div>
+                        <input type="button" onclick="toggleBlockingConnection(this);" class="ui-button ui-widget ui-state-default ui-corner-all" style="padding: 0.5em;" value="Disconnect push"/>
+                    </div>
+                    <div>
+                        <ace:pushButton value="Priority Push" styleClass="submit"
+                                        actionListener="#{cloudPushDesktopBean.sendPriorityPushMessage}"/>
+                    </div>
+                    <div>
+                        <ace:pushButton value="Simple Push" styleClass="submit"
+                                        actionListener="#{cloudPushDesktopBean.sendNormalPushMessage}"/>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </ace:panel>
+
+        <h:messages style="margin-left:10px"/>
+
+		<h:panelGroup layout="block">
+        <h:panelGroup rendered="#{cloudPushDesktopBean.echoedMessage != null}"><h3>Message</h3></h:panelGroup>
+        <ace:panel styleClass="results" rendered="#{cloudPushDesktopBean.echoedMessage != null}">
+            <h:panelGroup layout="block">
+                <h:outputLabel value="Subject: " for="subjectOut"/>
+                <h:outputText id="subjectOut"
+                              value="#{cloudPushDesktopBean.echoedSubject}"
+                              placeholder="subject"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block">
+                <h:outputLabel value="Message: " for="messageOut"/>
+                <h:outputText id="messageOut"
+                                value="#{cloudPushDesktopBean.echoedMessage}"
+                                placeholder="message"/>
+            </h:panelGroup>
+        </ace:panel>
+		</h:panelGroup>
+            
+        </h:form>
+    </ui:define>
+</ui:composition>
