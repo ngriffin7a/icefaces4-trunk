@@ -119,20 +119,7 @@ public class CameraRenderer extends Renderer {
         writer.startElement("span", camera);
         writer.startElement("script", camera);
         writer.writeAttribute("type", "text/javascript");
-        String uiScript = "new ice.mobi.button('" + clientId + "_button');";
-        uiScript += "window['callback" + clientId + "'] = function(arg) {";
-        uiScript += "if (! ('thumbnails" + clientId + "' in window)){window['thumbnails" + clientId + "'] = {};}";
-        uiScript += "var thumbnails = window['thumbnails" + clientId + "'];\n";
-      //  uiScript += "for (t in thumbnails ) {setTimeout(function() {var e = document.getElementById(t); ";
-        uiScript += "for (t in thumbnails ) {var e = document.getElementById(t); ";
-      //  uiScript += "if (e){ e.src = arg.preview; e.className='mobi-thumb-done' }}, 400); ";
-        uiScript += "if (e){ e.src = arg.preview; e.className='mobi-thumb-done' } ";
-       // uiScript += "setTimeout (function() { var hidElem =  document.getElementById(thumbnails[t]); \n " +
-       //         " if (hidElem) {hidElem.value = arg.preview;}\n} , 350); }}; ";
-        uiScript += " var hidElem =  document.getElementById(thumbnails[t]); \n " +
-                " if (hidElem) {hidElem.value = arg.preview;}\n}\n   }; ";
-  //   System.out.println("\n camera script ="+uiScript);
-        writer.writeText(uiScript);
+        writer.writeText(MobiJSFUtils.getCameraOrCamcorderButtonAndThumbnailScript(clientId));
         writer.endElement("script");
         writer.endElement("span");
 

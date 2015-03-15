@@ -22,9 +22,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Formatter;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,6 +88,12 @@ public class MobiJSFUtils {
         InputStream fileStream = null;
         String contentType = null;
         Map auxMap = AuxUploadResourceHandler.getAuxRequestMap();
+        Set keySet = auxMap.keySet();
+        Iterator iter = keySet.iterator();
+        while(iter.hasNext()){
+            String key = (String)iter.next();
+            System.out.println("auxMap: " + key + "=" + auxMap.get(key));
+        }
         try {
             part = request.getPart(partUploadName);
         } catch (IOException e) {
@@ -332,6 +340,15 @@ public class MobiJSFUtils {
         }
         builder.append("}");
         return builder.toString();
+    }
+    
+    public static String getCameraOrCamcorderButtonAndThumbnailScript(String clientId){
+        return  "new ice.mobi.button('" + clientId + "_button');" +
+                "window['callback" + clientId + "'] = function(arg) {" + 
+                    "var e = document.getElementById('" + clientId + "-thumb');" +
+                    "if (e){ e.src = arg.preview; e.parentNode.className='mobi-thumb-done'; }" +
+                    "console.log('updating thumbnail: ' + e);" +
+                "}"; 
     }
 
 }

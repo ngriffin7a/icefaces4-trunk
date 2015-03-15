@@ -41,20 +41,6 @@ public class ThumbnailRenderer extends Renderer {
     private static final Logger logger =
             Logger.getLogger(ThumbnailRenderer.class.toString());
 
-    public void decode(FacesContext facesContext, UIComponent uiComponent) {
-        Thumbnail thumbnail = (Thumbnail) uiComponent;
-        String clientId = thumbnail.getClientId();
-        java.util.Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
-        String data = (String) requestMap.get(clientId + "_data");
-   //     boolean isClient = thumbnail.isClientSide(); //only populate is not clientSide.
-    //
-         if ( data !=null && !data.isEmpty() && data.startsWith("data")){
-         //   logger.info(" data in decode="+data);
-            thumbnail.setData(data);
-        }
-
-    }
-
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
         /* checking to see if thumbnail is required is in core renderer */
@@ -74,12 +60,6 @@ public class ThumbnailRenderer extends Renderer {
         String mFor = comp.getId();
         if (null != comp) {
             mFor = comp.getClientId(facesContext);
-            if (MobiJSFUtils.uploadInProgress(comp)) {
-                thumbnail.setBaseClass(Thumbnail.CSS_DONE_CLASS);
-            } else {
-                thumbnail.setBaseClass(Thumbnail.CSS_INIT_CLASS);
-            }
-            // logger.info("comp id="+comp.getClientId(facesContext)+ " baseClass = "+thumbnail.getBaseClass());
         } else if (facesContext.isProjectStage(ProjectStage.Development) ||
                 logger.isLoggable(Level.FINER)) {
             logger.finer(" Cannot find camera or camcorder component with id=" + compId);
@@ -120,37 +100,10 @@ public class ThumbnailRenderer extends Renderer {
                 writer.writeAttribute(STYLE_ATTR, style, null);
             }
             writer.startElement(IMG_ELEM, component);
-
-            /* only get the data if clientSide is false */
-            String data=null;
-      //      if (!clientSide) {
-                data = component.getData();
-                boolean hasValue = false;
-                if( isForCamera ){
-                    Camera cam = (Camera)forComp;
-                    hasValue = cam.getValue() != null;
-                }
-                if (isForCamcorder){
-                    Camcorder cam = (Camcorder)forComp;
-                    hasValue= cam.getValue() !=null;
-                }
-                /* do we need to set styles on server ?? */
-       //     }
             writer.writeAttribute(WIDTH_ATTR, "64", null);
             writer.writeAttribute(HEIGHT_ATTR, "64", null);
             writer.writeAttribute(ID_ATTR, thumbId, null);
-            
-         //
-            if ( data != null) writer.writeAttribute(SRC_ATTR, data, null);
             writer.endElement(IMG_ELEM);
-            /* only need to write the data if no using clientSide */
-       //     if (!clientSide ){
-                writer.startElement(INPUT_ELEM, component);
-                writer.writeAttribute(TYPE_ATTR, "hidden", null);
-                writer.writeAttribute(ID_ATTR, clientId + "_data", null);
-                writer.writeAttribute(NAME_ATTR, clientId + "_data", null);
-                writer.endElement(INPUT_ELEM);
-        //    }
             writer.endElement(SPAN_ELEM);
         }
         
