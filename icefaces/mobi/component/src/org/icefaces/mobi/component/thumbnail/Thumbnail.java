@@ -26,11 +26,8 @@ import java.util.Map;
 public class Thumbnail extends ThumbnailBase {
 
     public static final String CSS_INIT_CLASS = "mobi-thumb ";
-    public static final String CSS_DONE_CLASS = "mobi-thumb-done ";
     public static final String FOR_MSG = "for component was not detected. ";
 
-    private String baseClass;
-    private String mFor;
     private boolean disabled = false;
 
     public ClientDescriptor getClient() {
@@ -42,18 +39,9 @@ public class Thumbnail extends ThumbnailBase {
     public void setDisabled(boolean disabled){
         this.disabled=disabled;
     }
-    public void setBaseClass(String cSSBase){
-        if (cSSBase !=null){
-            this.baseClass=cSSBase;
-        }
-    }
-
+   
     public String getBaseClass() {
-     /*   if ((null != mFor) && MobiJSFUtils.uploadInProgress(mFor))  {
-            return IThumbnail.CSS_DONE_CLASS;
-        }
-        return IThumbnail.CSS_CLASS; */
-        return this.baseClass;
+        return CSS_INIT_CLASS;
     }
 
     public String getMFor() {

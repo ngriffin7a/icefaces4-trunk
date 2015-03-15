@@ -56,10 +56,4 @@ public class ThumbnailMeta extends UIComponentBaseMeta {
                tlddoc = "The id of camera or camcorder component the thumbnail is associated with.")
     private String For;
 
- //   @Property(defaultValue="true", tlddoc="If true, then no value is submitted and kept on the server.")
-  //  private boolean clientSide;
-
-	@Property(tlddoc="The base64 string value of the thumbnail returned from BridgeIt. " +
-            " clientSide must be false for this attribute to be populated.")
-	private String data;
 }

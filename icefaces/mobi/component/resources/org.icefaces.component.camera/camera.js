@@ -14,7 +14,6 @@
 
 			function getHiddenInput(){
 				var hiddenInputId = id + "_hidden";
-                console.log('hiddenInputId='+hiddenInputId);
 				var hiddenInput = document.getElementById(hiddenInputId);
 				if( !hiddenInput ){
 					hiddenInput = document.createElement('input');
@@ -28,24 +27,17 @@
 
 			function getThumbnail(){
 				var thumbId = id + "-thumb";
-                console.log('thumbId ='+thumbId);
 				var thumbnail = document.getElementById(thumbId);
 				return thumbnail;
 			}
 
 			function updateThumbnail(dataURL){
-                console.log('updatethumbnail');
 				var thumbnail = getThumbnail();
 				if( thumbnail ){
 					thumbnail.src = dataURL;
-                    var sclass = thumbnail.parentNode.className;
-                    var newclass = sclass.replace("mobi-thumb","mobi-thumb-done");
-                    thumbnail.parentNode.className=newclass;
-					//thumbnail.style.display = 'inline';
-					var thumbInput = thumbnail.nextSibling;
-					if( thumbInput && thumbInput.type === 'hidden'){
-						thumbInput.value = dataURL;
-					}
+					var cl = thumbnail.parentNode.classList;
+					cl.remove('mobi-thumb');
+					cl.add('mobi-thumb-done');
 				}
 			}
 
@@ -318,7 +310,6 @@
 				
 				function keeppicture(){
 					var cameraForm = ice.mobi.formOf(cameraButton);
-					//hiddenInput.value = photo.src.replace('data:image/png;base64,','');
 					document.body.removeChild(popup);
 					cameraButton.innerHTML = captureLabel;
 					createThumbnailForVideo();

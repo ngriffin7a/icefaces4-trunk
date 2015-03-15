@@ -76,9 +76,7 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
         if (MobiJSFUtils.uploadInProgress(camcorder))  {
             camcorder.setButtonLabel(camcorder.getCaptureMessageLabel()) ;
         } 
-        //StringBuilder baseClass = new StringBuilder(CSSUtils.STYLECLASS_BUTTON);
-        //ClientDescriptor cd = camcorder.getClient();
-		// button element
+        // button element
 		writer.startElement(BUTTON_ELEM, camcorder);
 		writer.writeAttribute(ID_ATTR, clientId + "_button");
 		writer.writeAttribute(NAME_ATTR, clientId + "_button");
@@ -102,13 +100,7 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.startElement("span", camcorder);
 		writer.startElement("script", camcorder);
 		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("new ice.mobi.button('"+clientId+"_button');");
-		writer.writeText("if (!window['thumbnails"+clientId+"']) window['thumbnails"+clientId+"'] = {};");
-		writer.writeText("window['callback"+clientId+"'] = function(arg) {for (t in window['thumbnails"+clientId+"']) { " +
-                "setTimeout(function() {var e = document.getElementById(t); " +
-                "if (e) e.src = arg.preview; }, 350);" +
-                "  setTimeout (function() { var hidElem =  document.getElementById(thumbnails" + clientId + "[t]); \n " +
-                " if (hidElem) {hidElem.value = arg.preview;}\n} , 350); }}; ");
+		writer.writeText(MobiJSFUtils.getCameraOrCamcorderButtonAndThumbnailScript(clientId));
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
