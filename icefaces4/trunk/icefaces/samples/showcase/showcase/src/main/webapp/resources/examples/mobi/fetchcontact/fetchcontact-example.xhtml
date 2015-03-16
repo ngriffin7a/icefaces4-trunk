@@ -22,8 +22,11 @@
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
     <h:form id="contactForm">
-    
-        <mobi:fieldsetGroup>
+        <mobi:fieldsetGroup styleClass="intro">
+            <mobi:fieldsetRow>
+                Press the 'Fetch Contact' button to search the device contact list and select
+                        a contact
+            </mobi:fieldsetRow>
             <mobi:fieldsetRow>
                 <mobi:fetchContact id="contact"  rendered="#{contactsBean.rawContact == null}"
                     buttonLabel="Fetch Contact" 
