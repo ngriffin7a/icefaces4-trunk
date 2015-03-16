@@ -80,17 +80,17 @@
                 <div>
                     <h:panelGrid columns="2" rendered="#{empty cloudPushDesktopBean.email}">
                         <ace:textEntry id="email" value="#{cloudPushDesktopBean.email}"/>
-                        <ace:pushButton value="Set email address" styleClass="submit">
+                        <ace:pushButton value="Set email address" styleClass="cloud-push-button">
                             <ace:ajax execute="email" render="cloudPushButtons"/>
                         </ace:pushButton>
                     </h:panelGrid>
                 </div>
                 <h:panelGroup layout="block" id="pushType" rendered="#{not empty cloudPushDesktopBean.email}">
 					<h:panelGrid columns="1">
-                        <ace:pushButton onclick="toggleBlockingConnection(this);" value="Disconnect push"/>
-                        <ace:pushButton value="Priority Push"
+                        <input type="button" onclick="toggleBlockingConnection(this);" class="ui-button ui-widget ui-state-default ui-corner-all" style="padding: 0.4em 1em;" value="Disconnect push"/>
+                        <ace:pushButton value="Priority Push" styleClass="cloud-push-button"
                                         actionListener="#{cloudPushDesktopBean.sendPriorityPushMessage}"/>
-                        <ace:pushButton value="Simple Push"
+                        <ace:pushButton value="Simple Push" styleClass="cloud-push-button"
                                         actionListener="#{cloudPushDesktopBean.sendNormalPushMessage}"/>
 					</h:panelGrid>
                 </h:panelGroup>
