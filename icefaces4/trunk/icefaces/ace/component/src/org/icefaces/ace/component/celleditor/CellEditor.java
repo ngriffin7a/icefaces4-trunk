@@ -66,9 +66,27 @@ public class CellEditor extends CellEditorBase {
 		// avoid processing decodes in edit mode if request wasn't initiated by save edits button
 		List<String> selectedEditorIds = state.getActiveCellEditorIds();
 		if (selectedEditorIds.contains(getId())) {
-			String execute = context.getExternalContext().getRequestParameterMap().get("javax.faces.partial.execute");
-			if (execute != null) {
-				if (execute.indexOf(getClientId(context)) > -1) {
+			UIComponent table = getParent();
+			while (table != null && !(table instanceof DataTable))
+				table = table.getParent();
+
+			if (table != null) {
+				int currentRowIndex = ((DataTable)table).getRowIndex();
+
+				// get table client id without row index
+				((DataTable)table).setRowIndex(-1);
+				String editSubmit = context.getExternalContext().getRequestParameterMap().get(table.getClientId(context)+"_editSubmit");
+				((DataTable)table).setRowIndex(currentRowIndex);
+
+				if (editSubmit != null) {
+					int editRowIndex = -1;
+					try {
+						editRowIndex = Integer.parseInt(editSubmit.trim());
+					} catch (Exception e) {}
+					if (currentRowIndex == editRowIndex) {
+						super.processDecodes(context);
+					}
+				} else {
 					super.processDecodes(context);
 				}
 			}
