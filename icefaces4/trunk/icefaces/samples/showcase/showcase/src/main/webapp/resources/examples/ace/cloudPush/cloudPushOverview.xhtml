@@ -30,8 +30,8 @@
     <ui:param name="subMenuLinks" value="#{cloudPushDesktopBean.subMenuLinks}"/>
     <ui:param name="resourceValue" value="#{cloudPushDesktopBean.exampleResource}"/>
     
-    <!--<ui:param name="wikiResources" value="#{cloudPushResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{cloudPushResources.tldResources}"/>-->
+    <ui:param name="wikiResources" value="#{cloudPushResources.wikiResources}"/>
+    <!--<ui:param name="tldResources" value="#{cloudPushResources.tldResources}"/>-->
 
     <ui:define name="example">
         <h:form id="form">
@@ -53,52 +53,48 @@
         <ace:panel>
             <h:panelGroup layout="block">
 				<h:outputLabel for="cpSubject" value="Subject: " />
-                <h:inputText id="cpSubject" style="display:block;width:100%;"
+                <ace:textEntry id="cpSubject" style="display:block;width:100%;"
                                 value="#{cloudPushDesktopBean.subject}"
                                 type="text"
                                 placeholder="subject" />
             </h:panelGroup>
-            <h:panelGroup layout="block">
+            <h:panelGroup layout="block" style="margin-top:5px;">
 				<h:outputLabel for="cpMessage" value="Message: " />
-                <h:inputTextarea id="cpMessage" style="display:block;width:100%;"
+                <ace:textAreaEntry id="cpMessage" style="display:block;width:100%;"
                                 value="#{cloudPushDesktopBean.message}"
                                 type="text"
                                 placeholder="message" />
             </h:panelGroup>
-            <h:panelGroup layout="block">
-                <h:outputLabel value="Message Delay" for="messageDelay" />
-                <h:selectOneMenu id="messageDelay"
-                        style="float:right;line-height:1.8em;min-width:80px;font-size:15px"
+            <h:panelGroup layout="block" style="margin-top:5px;">
+                <h:outputLabel value="Message Delay: " for="messageDelay" />
+                <ace:simpleSelectOneMenu id="messageDelay"
+                        style="line-height:1.8em;min-width:80px;font-size:15px"
                         value="#{cloudPushDesktopBean.notificationDelay}">
                     <f:selectItem itemLabel="5 sec" itemValue="5"/>
                     <f:selectItem itemLabel="10 sec" itemValue="10"/>
                     <f:selectItem itemLabel="15 sec" itemValue="15"/>
                     <f:selectItem itemLabel="30 sec" itemValue="30"/>
-                </h:selectOneMenu>
+                </ace:simpleSelectOneMenu>
             </h:panelGroup>
-            <h:panelGroup layout="block" id="cloudPushButtons">
+            <ace:panel layout="block" id="cloudPushButtons" style="margin-top:20px;">
                 <div>
-                    <h:panelGrid columns="2">
-                        <h:inputText id="email" value="#{cloudPushDesktopBean.email}"/>
+                    <h:panelGrid columns="2" rendered="#{empty cloudPushDesktopBean.email}">
+                        <ace:textEntry id="email" value="#{cloudPushDesktopBean.email}"/>
                         <ace:pushButton value="Set email address" styleClass="submit">
                             <ace:ajax execute="email" render="cloudPushButtons"/>
                         </ace:pushButton>
                     </h:panelGrid>
                 </div>
-                <div id="pushType" style="display:none;">
-                    <div>
-                        <input type="button" onclick="toggleBlockingConnection(this);" class="ui-button ui-widget ui-state-default ui-corner-all" style="padding: 0.5em;" value="Disconnect push"/>
-                    </div>
-                    <div>
-                        <ace:pushButton value="Priority Push" styleClass="submit"
+                <h:panelGroup layout="block" id="pushType" rendered="#{not empty cloudPushDesktopBean.email}">
+					<h:panelGrid columns="1">
+                        <ace:pushButton onclick="toggleBlockingConnection(this);" value="Disconnect push"/>
+                        <ace:pushButton value="Priority Push"
                                         actionListener="#{cloudPushDesktopBean.sendPriorityPushMessage}"/>
-                    </div>
-                    <div>
-                        <ace:pushButton value="Simple Push" styleClass="submit"
+                        <ace:pushButton value="Simple Push"
                                         actionListener="#{cloudPushDesktopBean.sendNormalPushMessage}"/>
-                    </div>
-                </div>
-            </h:panelGroup>
+					</h:panelGrid>
+                </h:panelGroup>
+            </ace:panel>
         </ace:panel>
 
         <h:messages style="margin-left:10px"/>
