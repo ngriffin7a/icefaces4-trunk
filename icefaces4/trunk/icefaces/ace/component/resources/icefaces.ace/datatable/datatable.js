@@ -2893,8 +2893,6 @@ ice.ace.DataTable.prototype.doRowEditShowRequest = function (element) {
     options.onsuccess = function (responseXML) {
         var xmlDoc = responseXML.documentElement;
 
-        var editorsToProcess = new Array();
-
 		row.find('> td > div.ui-cell-editor, > td > div > div.ui-cell-editor').each(function () {
 			ice.ace.DataTable.removeInputNames(ice.ace.jq(this).attr('id'));
 		});
