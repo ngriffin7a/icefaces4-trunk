@@ -100,7 +100,7 @@ import java.util.List;
                      defaultRender="@this", defaultExecute="@this"),
 
         @ClientEvent(name="editSubmit",
-                     javadoc="Fired when a row is submits its edits.",
+                     javadoc="Fired when a row submits its edits (Note: This event has a special execute attribute. The client ids of all the cell editors in the row will be automatically specified. Using @all or @form won't submit inputs of other rows in edit mode.).",
                      tlddoc="Fired when a row is submits its edits.",
                      defaultRender="@all", defaultExecute="@this"),
 

@@ -64,9 +64,6 @@ public class CellEditorRenderer extends CoreRenderer {
             editor.getFacet("output").encodeAll(context);
         } else {
             editor.getFacet("input").encodeAll(context);
-			writer.startElement(HTML.SCRIPT_ELEM, component);
-			writer.write("ice.ace.DataTable.removeInputNames('"+component.getClientId(context)+"');");
-			writer.endElement(HTML.SCRIPT_ELEM);
         }
         writer.endElement(HTML.SPAN_ELEM);
 
