@@ -442,6 +442,12 @@ public class DataTableRenderer extends CoreRenderer {
         writer.write(json.toString());
         writer.endElement(HTML.SCRIPT_ELEM);
         writer.endElement(HTML.SPAN_ELEM);
+
+		// invisible span without id, used to cause full markup updates when certain settings change
+		writer.startElement(HTML.SPAN_ELEM, null);
+		writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
+		writer.write("" + dblSelect);
+		writer.endElement(HTML.SPAN_ELEM);
 	}
 
     private void encodePaginatorConfig(FacesContext context, JSONBuilder scriptJson, DataTable table) throws IOException {
