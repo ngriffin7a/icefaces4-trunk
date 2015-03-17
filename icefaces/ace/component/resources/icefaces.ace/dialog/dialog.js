@@ -151,6 +151,7 @@ ice.ace.Dialog.prototype.show = function() {
     var focusOn = this.cfg.setFocus;
     setTimeout(function() {
         self.jq.dialog('open');
+		self.resizeMaps();
         if ('**none' != focusOn) {
             self.focusInput(focusOn);
         }
@@ -219,6 +220,20 @@ ice.ace.Dialog.prototype.recreateChildEditors = function() {
 	var editors = this.jq.find('.ice-ace-richtextentry');
 	editors.each(function(){ice.ace.richtextentry.registry[this.id]();});
 };
+
+ice.ace.Dialog.prototype.resizeMaps = function() {
+	var maps = this.jq.find('.ice-ace-gmap');
+	maps.each(function(){
+		var id = this.id;
+		if (id) {
+			id = id.replace(/_wrapper$/, '');
+			var map = ice.ace.gMap.getGMapWrapper(id).getRealGMap();
+			var center = map.getCenter();
+			google.maps.event.trigger(map, 'resize');
+			map.setCenter(center);
+		}
+	});
+}
 
 ice.ace.Dialog.browser = function() {
     if (ice.ace.jq.browser.msie)
