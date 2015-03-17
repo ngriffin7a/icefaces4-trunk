@@ -18,6 +18,7 @@
              xmlns:h="http://java.sun.com/jsf/html"
              xmlns:f="http://java.sun.com/jsf/core"
              xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:ace="http://www.icefaces.org/icefaces/components"
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
 
@@ -41,9 +42,9 @@
 				<br />
 				<h:outputText id="geotrackData" value="#{geotrackDataBean.data}"/>
 				<br />
-				<h:commandButton value="Refresh">
-					<f:ajax render="geotrackData" />
-				</h:commandButton>
+				<ace:pushButton value="Refresh">
+					<ace:ajax render="geotrackData" />
+				</ace:pushButton>
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
 
