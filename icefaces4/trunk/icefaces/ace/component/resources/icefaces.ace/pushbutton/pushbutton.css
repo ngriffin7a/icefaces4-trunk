@@ -20,7 +20,7 @@ Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
 version: 2.6.0
 */
-.ice-pushbutton .yui-button button {
-    padding:.25em 1em;
+.ice-pushbutton button {
+    padding:0.4em 1em;
     /*border:0;*/
 }
