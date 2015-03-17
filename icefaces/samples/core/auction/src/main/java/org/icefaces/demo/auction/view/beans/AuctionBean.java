@@ -103,8 +103,8 @@ public class AuctionBean implements Serializable {
     @PreDestroy
     private void destroy() {
         // remove from bid render group
-        PushRenderer.removeCurrentView(AUCTION_RENDER_GROUP);
-        PushRenderer.removeCurrentView(IntervalPushRenderer.INTERVAL_RENDER_GROUP);
+//        PushRenderer.removeCurrentSession(AUCTION_RENDER_GROUP);
+//        PushRenderer.removeCurrentSession(IntervalPushRenderer.INTERVAL_RENDER_GROUP);
     }
 
 
