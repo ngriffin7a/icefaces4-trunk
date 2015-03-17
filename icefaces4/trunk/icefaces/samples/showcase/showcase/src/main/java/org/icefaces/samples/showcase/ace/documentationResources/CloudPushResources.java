@@ -31,7 +31,7 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
                 // WIKI Resources
                 @ExampleResource(type = ResourceType.wiki,
                     title="Cloud Push Overview",
-                    resource = "http://www.icesoft.org/wiki/display/icemobile/Cloud+Push+Overview"),
+                    resource = "http://www.icesoft.org/wiki/display/icemobile/Cloud+Push+Overview")
         }
 )
 @ManagedBean(name= CloudPushResources.BEAN_NAME)
