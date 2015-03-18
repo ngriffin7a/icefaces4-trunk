@@ -302,9 +302,9 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                     writer.saveOldDocument();
                 }
 
-                renderState();
+                final String viewState = renderState();
                 renderExtensions();
-                renderFixViewState();
+                renderFixViewState(viewState);
                 runScripts();
                 partialWriter.endDocument();
 
@@ -680,7 +680,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
      *
      * @throws IOException
      */
-    private void renderFixViewState() throws IOException {
+    private void renderFixViewState(String viewState) throws IOException {
 
         //See if any form ids were recorded that need their ViewState fixed
         Map facesMap = facesContext.getAttributes();
@@ -690,7 +690,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
             return;
         }
 
-        String viewState = facesContext.getApplication().getStateManager().getViewState(facesContext);
         String escapedViewState = escapeJSString(viewState);
 
         //Build an array of the form ids to be passed into the appropriate client function
@@ -739,7 +738,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
     }
 
 
-    private void renderState() throws IOException {
+    private String renderState() throws IOException {
         Map facesMap = facesContext.getAttributes();
         PartialResponseWriter writer = getPartialResponseWriter();
         String viewState = facesContext.getApplication().getStateManager().getViewState(facesContext);
@@ -761,6 +760,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
             writer.write(viewState);
             writer.endUpdate();
         }
+        return viewState;
     }
 
     protected void renderExtensions() {
