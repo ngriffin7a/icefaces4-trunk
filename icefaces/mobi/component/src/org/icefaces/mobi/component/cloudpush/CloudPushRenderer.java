@@ -38,7 +38,7 @@ public class CloudPushRenderer extends Renderer {
         final ClientDescriptor clientDescriptor = ClientDescriptor.getInstance((HttpServletRequest) facesContext.getExternalContext().getRequest());
 		// button element
         final String email = cloudPush.getEmail();
-        final boolean desktopBrowser = clientDescriptor.isDesktopBrowser();
+        final boolean desktopBrowser = clientDescriptor.isDesktopBrowser() || clientDescriptor.isSimulator();
         if (!desktopBrowser || (email != null && email.length() > 0)) {
             writer.startElement(BUTTON_ELEM, cloudPush);
             writer.writeAttribute(ID_ATTR, clientId);
