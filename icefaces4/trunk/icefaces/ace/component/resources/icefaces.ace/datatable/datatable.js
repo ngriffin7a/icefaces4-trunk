@@ -343,6 +343,7 @@ ice.ace.DataTable.prototype.destroy = function() {
     return clientState;
 }
 
+ice.ace.DataTable.filterEventListeners = {};
 ice.ace.DataTable.prototype.setupFilterEvents = function () {
     var _self = this;
 
@@ -374,25 +375,27 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
             }
         });
 
+	if (!ice.ace.DataTable.filterEventListeners[_self.id]) {
+		ice.ace.DataTable.filterEventListeners[_self.id] = function (event) {
+			if (this.value == '') {
+				_self.filter(event);
+			}
+		};
+	}
+
     this.element.find(this.filterSelector).each(function (index, element) {
         try {
-            element.removeEventListener('input', ice.ace.DataTable.filterEventListener, false);
+            element.removeEventListener('input', ice.ace.DataTable.filterEventListeners[_self.id], false);
         } catch (ex) {
             //ignore failures in browsers that do not support the 'input' event or Element.addEventListener call
         }
         try {
-            element.addEventListener('input', ice.ace.DataTable.filterEventListener, false);
+            element.addEventListener('input', ice.ace.DataTable.filterEventListeners[_self.id], false);
         } catch (ex) {
             //ignore failures in browsers that do not support the 'input' event or Element.addEventListener call
         }
     });
 }
-
-ice.ace.DataTable.filterEventListener = function (event) {
-	if (this.value == '') {
-		_self.filter(event);
-	}
-};
 
 ice.ace.DataTable.prototype.setupPaginator = function () {
     this.paginator = new ice.ace.DataTable.Paginator(this);
