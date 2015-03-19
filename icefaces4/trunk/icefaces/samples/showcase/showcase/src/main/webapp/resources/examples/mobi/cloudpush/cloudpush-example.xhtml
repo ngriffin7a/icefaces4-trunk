@@ -71,16 +71,16 @@
                 </h:selectOneMenu>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow id="cloudPushButtons">
-                <div>
-                    <h:panelGrid rendered="#{cloudPushBean.acquireEmail}" columns="2">
-                        <h:inputText id="email" value="#{cloudPushBean.email}"/>
-                        <ace:pushButton value="Set email address" styleClass="submit">
+                <div id="emailDiv">
+                    <h:panelGrid rendered="#{cloudPushBean.acquireEmail}" columns="1" style="margin-left:auto;margin-right:auto;">
+                        <h:inputText id="email" value="#{cloudPushBean.email}" style="width:100%;"/>
+                        <ace:pushButton value="Set email address">
                             <ace:ajax execute="email" render="cloudPushButtons"/>
                         </ace:pushButton>
                     </h:panelGrid>
                 </div>
 				<div>
-					<span onclick="this.style.cssText='display:none;';document.getElementById('pushType').style.cssText='display:block;';">
+					<span onclick="this.style.cssText='display:none;';document.getElementById('emailDiv').style.cssText='display:none;';document.getElementById('pushType').style.cssText='display:block;';">
 						<mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
 					</span>
                 </div>
@@ -89,11 +89,11 @@
                         <input type="button" onclick="toggleBlockingConnection(this);" class="ui-button ui-widget ui-state-default ui-corner-all" style="padding: 0.5em;" value="Disconnect push"/>
                     </div>
                     <div>
-                        <ace:pushButton value="Priority Push" styleClass="submit"
+                        <ace:pushButton value="Priority Push"
                                         actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
                     </div>
                     <div>
-                        <ace:pushButton value="Simple Push" styleClass="submit"
+                        <ace:pushButton value="Simple Push"
                                         actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
                     </div>
                 </div>
