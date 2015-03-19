@@ -210,6 +210,8 @@ ice.ace.DataTable = function (id, cfg) {
 		this.newInstance = true;
 	}
 
+	this.destroy();
+
     if (this.cfg.paginator)
         this.setupPaginator();
 
@@ -374,16 +376,23 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
 
     this.element.find(this.filterSelector).each(function (index, element) {
         try {
-            element.addEventListener('input', function (event) {
-                if (this.value == '') {
-                    _self.filter(event);
-                }
-            }, false);
+            element.removeEventListener('input', ice.ace.DataTable.filterEventListener, false);
+        } catch (ex) {
+            //ignore failures in browsers that do not support the 'input' event or Element.addEventListener call
+        }
+        try {
+            element.addEventListener('input', ice.ace.DataTable.filterEventListener, false);
         } catch (ex) {
             //ignore failures in browsers that do not support the 'input' event or Element.addEventListener call
         }
     });
 }
+
+ice.ace.DataTable.filterEventListener = function (event) {
+	if (this.value == '') {
+		_self.filter(event);
+	}
+};
 
 ice.ace.DataTable.prototype.setupPaginator = function () {
     this.paginator = new ice.ace.DataTable.Paginator(this);
@@ -1069,82 +1078,17 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
             if (this.cfg.dblclickSelect) {
                 rowDblClickObs.push(function(event) { doRowSelect.call(self, event); });
 
-				this.element.on('mousedown', function (event) {
-					if (event.shiftKey) {
-						document.body.onselectstart = function() { return false; };
-						document.body.unselectable = 'on';
-						var body = ice.ace.jq('body');
-						body.css('user-select', 'none');
-						body.css('-o-user-select', 'none');
-						body.css('-ms-user-select', 'none');
-						body.css('-moz-user-select', 'none');
-						body.css('-khtml-user-select', 'none');
-						body.css('-webkit-user-select', 'none');
-						if (ice.ace.jq.browser.msie && (ice.ace.jq.browser.version == 8 || ice.ace.jq.browser.version == 9)) {
-							this.onselectstart = function() { return false; };
-							this.unselectable = 'on';
-							var table = ice.ace.jq(this);
-							table.css('user-select', 'none');
-							table.css('-o-user-select', 'none');
-							table.css('-ms-user-select', 'none');
-							table.css('-moz-user-select', 'none');
-							table.css('-khtml-user-select', 'none');
-							table.css('-webkit-user-select', 'none');
-						}
-					} else {
-						if (ice.ace.jq.browser.msie && (ice.ace.jq.browser.version == 8 || ice.ace.jq.browser.version == 9)) {
-							this.onselectstart = function() { };
-							this.unselectable = 'off';
-							var table = ice.ace.jq(this);
-							table.css('user-select', '');
-							table.css('-o-user-select', '');
-							table.css('-ms-user-select', '');
-							table.css('-moz-user-select', '');
-							table.css('-khtml-user-select', '');
-							table.css('-webkit-user-select', '');
-						}
-					}
-				});
-				this.element.on('dblclick', function (event) {
-					document.body.onselectstart = function() { };
-					document.body.unselectable = 'off';
-					var body = ice.ace.jq('body');
-					body.css('user-select', '');
-					body.css('-o-user-select', '');
-					body.css('-ms-user-select', '');
-					body.css('-moz-user-select', '');
-					body.css('-khtml-user-select', '');
-					body.css('-webkit-user-select', '');
-				});
+				this.element.off('mousedown', ice.ace.DataTable.preventTextSelectionDouble);
+				this.element.on('mousedown', ice.ace.DataTable.preventTextSelectionDouble);
+				this.element.off('dblclick', ice.ace.DataTable.restoreTextSelectionDouble);
+				this.element.on('dblclick', ice.ace.DataTable.restoreTextSelectionDouble);
             } else {
                 rowClickObs.push(function(event) { doRowSelect.call(self, event); });
 
-				this.element.on('mousedown', function (event) {
-					if (event.shiftKey) {
-						this.onselectstart = function() { return false; };
-						this.unselectable = 'on';
-						var table = ice.ace.jq(this);
-						table.css('user-select', 'none');
-						table.css('-o-user-select', 'none');
-						table.css('-ms-user-select', 'none');
-						table.css('-moz-user-select', 'none');
-						table.css('-khtml-user-select', 'none');
-						table.css('-webkit-user-select', 'none');
-					}
-				});
-				this.element.on('mouseup', function (event) {
-					if (event.shiftKey) {
-						this.onselectstart = function() { };
-						this.unselectable = 'off';
-						var table = ice.ace.jq(this);
-						table.css('user-select', '');
-						table.css('-o-user-select', '');
-						table.css('-ms-user-select', '');
-						table.css('-moz-user-select', '');
-						table.css('-khtml-user-select', '');
-						table.css('-webkit-user-select', '');
-					}
-				});
+				this.element.off('mousedown', ice.ace.DataTable.preventTextSelectionSingle);
+				this.element.on('mousedown', ice.ace.DataTable.preventTextSelectionSingle);
+				this.element.off('mouseup', ice.ace.DataTable.restoreTextSelectionSingle);
+				this.element.on('mouseup', ice.ace.DataTable.restoreTextSelectionSingle);
 			}
         }
 
@@ -1165,6 +1109,83 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
         setupRowDoubleClick.call(this, rowDblClickObs, options);
     }
 }
+
+ice.ace.DataTable.preventTextSelectionDouble = function (event) {
+	if (event.shiftKey) {
+		document.body.onselectstart = function() { return false; };
+		document.body.unselectable = 'on';
+		var body = ice.ace.jq('body');
+		body.css('user-select', 'none');
+		body.css('-o-user-select', 'none');
+		body.css('-ms-user-select', 'none');
+		body.css('-moz-user-select', 'none');
+		body.css('-khtml-user-select', 'none');
+		body.css('-webkit-user-select', 'none');
+		if (ice.ace.jq.browser.msie && (ice.ace.jq.browser.version == 8 || ice.ace.jq.browser.version == 9)) {
+			this.onselectstart = function() { return false; };
+			this.unselectable = 'on';
+			var table = ice.ace.jq(this);
+			table.css('user-select', 'none');
+			table.css('-o-user-select', 'none');
+			table.css('-ms-user-select', 'none');
+			table.css('-moz-user-select', 'none');
+			table.css('-khtml-user-select', 'none');
+			table.css('-webkit-user-select', 'none');
+		}
+	} else {
+		if (ice.ace.jq.browser.msie && (ice.ace.jq.browser.version == 8 || ice.ace.jq.browser.version == 9)) {
+			this.onselectstart = function() { };
+			this.unselectable = 'off';
+			var table = ice.ace.jq(this);
+			table.css('user-select', '');
+			table.css('-o-user-select', '');
+			table.css('-ms-user-select', '');
+			table.css('-moz-user-select', '');
+			table.css('-khtml-user-select', '');
+			table.css('-webkit-user-select', '');
+		}
+	}
+};
+
+ice.ace.DataTable.restoreTextSelectionDouble = function (event) {
+	document.body.onselectstart = function() { };
+	document.body.unselectable = 'off';
+	var body = ice.ace.jq('body');
+	body.css('user-select', '');
+	body.css('-o-user-select', '');
+	body.css('-ms-user-select', '');
+	body.css('-moz-user-select', '');
+	body.css('-khtml-user-select', '');
+	body.css('-webkit-user-select', '');
+};
+
+ice.ace.DataTable.preventTextSelectionSingle = function (event) {
+	if (event.shiftKey) {
+		this.onselectstart = function() { return false; };
+		this.unselectable = 'on';
+		var table = ice.ace.jq(this);
+		table.css('user-select', 'none');
+		table.css('-o-user-select', 'none');
+		table.css('-ms-user-select', 'none');
+		table.css('-moz-user-select', 'none');
+		table.css('-khtml-user-select', 'none');
+		table.css('-webkit-user-select', 'none');
+	}
+};
+
+ice.ace.DataTable.restoreTextSelectionSingle = function (event) {
+	if (event.shiftKey) {
+		this.onselectstart = function() { };
+		this.unselectable = 'off';
+		var table = ice.ace.jq(this);
+		table.css('user-select', '');
+		table.css('-o-user-select', '');
+		table.css('-ms-user-select', '');
+		table.css('-moz-user-select', '');
+		table.css('-khtml-user-select', '');
+		table.css('-webkit-user-select', '');
+	}
+};
 
 ice.ace.DataTable.prototype.setupSelectionHover = function () {
     var _self = this,
