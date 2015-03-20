@@ -24,7 +24,7 @@
     <portlet>
         <portlet-name>accordionPanel</portlet-name>
         <display-name>Accordion Panel</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -45,7 +45,7 @@
     <portlet>
         <portlet-name>accordionPanelDynamic</portlet-name>
         <display-name>Accordion Panel Dynamic</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -66,7 +66,7 @@
     <portlet>
         <portlet-name>accordionPanelEffect</portlet-name>
         <display-name>Accordion Panel Effect</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -87,7 +87,7 @@
     <portlet>
         <portlet-name>animation</portlet-name>
         <display-name>Animation</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -108,7 +108,7 @@
     <portlet>
         <portlet-name>autoCompleteEntry</portlet-name>
         <display-name>Auto Complete</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -130,7 +130,7 @@
     <portlet>
         <portlet-name>autoCompleteEntryFacet</portlet-name>
         <display-name>Auto Complete Facet</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -152,7 +152,7 @@
     <portlet>
         <portlet-name>autoCompleteEntryIndicator</portlet-name>
         <display-name>Auto Complete Indicator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -174,7 +174,7 @@
     <portlet>
         <portlet-name>autoCompleteEntryLabel</portlet-name>
         <display-name>Auto Complete Label</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -196,7 +196,7 @@
     <portlet>
         <portlet-name>autoCompleteEntryLazy</portlet-name>
         <display-name>Auto Complete Lazy</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -218,7 +218,7 @@
     <portlet>
         <portlet-name>autoCompleteEntryMatch</portlet-name>
         <display-name>Auto Complete Match</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -240,7 +240,7 @@
     <portlet>
         <portlet-name>autoCompleteEntryReqStyle</portlet-name>
         <display-name>Auto Complete Style</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -262,7 +262,7 @@
     <portlet>
         <portlet-name>autoCompleteEntryRows</portlet-name>
         <display-name>Auto Complete Rows</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -284,7 +284,7 @@
     <portlet>
         <portlet-name>autoCompleteEntrySelect</portlet-name>
         <display-name>Auto Complete Select</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -306,7 +306,7 @@
     <portlet>
         <portlet-name>breadcrumbMenu</portlet-name>
         <display-name>Breadcrumb Menu</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -328,7 +328,7 @@
     <portlet>
         <portlet-name>chart</portlet-name>
         <display-name>Chart</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -350,7 +350,7 @@
     <portlet>
         <portlet-name>chartBar</portlet-name>
         <display-name>Chart Bar</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -372,7 +372,7 @@
     <portlet>
         <portlet-name>chartBubble</portlet-name>
         <display-name>Chart Bubble</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -394,7 +394,7 @@
     <portlet>
         <portlet-name>chartCandlestick</portlet-name>
         <display-name>Chart Candlestick</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -416,7 +416,7 @@
     <portlet>
         <portlet-name>chartCombined</portlet-name>
         <display-name>Chart Combined</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -438,7 +438,7 @@
     <portlet>
         <portlet-name>chartDonut</portlet-name>
         <display-name>Chart Donut</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -460,7 +460,7 @@
     <portlet>
         <portlet-name>chartDynamic</portlet-name>
         <display-name>Chart Dynamic</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -482,7 +482,7 @@
     <portlet>
         <portlet-name>chartExport</portlet-name>
         <display-name>Chart Export</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -504,7 +504,7 @@
     <portlet>
         <portlet-name>chartGauge</portlet-name>
         <display-name>Chart Guage</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -526,7 +526,7 @@
     <portlet>
         <portlet-name>chartLine</portlet-name>
         <display-name>Chart Line</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -548,7 +548,7 @@
     <portlet>
         <portlet-name>chartPie</portlet-name>
         <display-name>Chart Pie</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -570,7 +570,7 @@
     <portlet>
         <portlet-name>checkboxButton</portlet-name>
         <display-name>Checkbox Button</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -592,7 +592,7 @@
     <portlet>
         <portlet-name>checkboxButtonCustom</portlet-name>
         <display-name>Checkbox Button Custom</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -614,7 +614,7 @@
     <portlet>
         <portlet-name>comboBox</portlet-name>
         <display-name>Combo Box</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -636,7 +636,7 @@
     <portlet>
         <portlet-name>comboBoxFacet</portlet-name>
         <display-name>Combo Box Facet</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -658,7 +658,7 @@
     <portlet>
         <portlet-name>comboBoxFiltering</portlet-name>
         <display-name>Combo Box Filtering</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -680,7 +680,7 @@
     <portlet>
         <portlet-name>comboBoxIndicator</portlet-name>
         <display-name>Combo Box Indicator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -702,7 +702,7 @@
     <portlet>
         <portlet-name>comboBoxLabel</portlet-name>
         <display-name>Combo Box Label</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -724,7 +724,7 @@
     <portlet>
         <portlet-name>comboBoxReqStyle</portlet-name>
         <display-name>Combo Box Required Style</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -746,7 +746,7 @@
     <portlet>
         <portlet-name>confirmationDialog</portlet-name>
         <display-name>Confirmation Dialog</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -767,7 +767,7 @@
     <portlet>
         <portlet-name>confirmationDialogEffect</portlet-name>
         <display-name>Confirmation Dialog Effect</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -788,7 +788,7 @@
     <portlet>
         <portlet-name>confirmationDialogModal</portlet-name>
         <display-name>Confirmation Dialog Modal</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -809,7 +809,7 @@
     <portlet>
         <portlet-name>contextMenu</portlet-name>
         <display-name>Context Menu</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -830,7 +830,7 @@
     <portlet>
         <portlet-name>contextMenuComponent</portlet-name>
         <display-name>Context Menu Component</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -851,7 +851,7 @@
     <portlet>
         <portlet-name>contextMenuEffect</portlet-name>
         <display-name>Context Menu Effect</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -872,7 +872,7 @@
     <portlet>
         <portlet-name>contextMenuTable</portlet-name>
         <display-name>Context Menu Table</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -893,7 +893,7 @@
     <portlet>
         <portlet-name>dataExporter</portlet-name>
         <display-name>Data Exporter</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -914,7 +914,7 @@
     <portlet>
         <portlet-name>dataExporterColumns</portlet-name>
         <display-name>Data Exporter Columns</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -935,7 +935,7 @@
     <portlet>
         <portlet-name>dataExporterCustom</portlet-name>
         <display-name>Data Exporter Custom</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -956,7 +956,7 @@
     <portlet>
         <portlet-name>dataExporterExcludeFromExport</portlet-name>
         <display-name>Data Exporter Exclude From Export</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -977,7 +977,7 @@
     <portlet>
         <portlet-name>dataExporterRows</portlet-name>
         <display-name>Data Exporter Rows</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -998,7 +998,7 @@
     <portlet>
         <portlet-name>dataTable</portlet-name>
         <display-name>Data Table</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1019,7 +1019,7 @@
     <portlet>
         <portlet-name>dataTableColumnReordering</portlet-name>
         <display-name>Data Table Column Reordering</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1040,7 +1040,7 @@
     <portlet>
         <portlet-name>tableConfigPanel</portlet-name>
         <display-name>Data Table Config Panel</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1062,7 +1062,7 @@
     <portlet>
         <portlet-name>dataTableDynamicColumns</portlet-name>
         <display-name>Data Table Dynamic Columns</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1084,7 +1084,7 @@
     <portlet>
         <portlet-name>dataTableFiltering</portlet-name>
         <display-name>Data Table Filtering</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1105,7 +1105,7 @@
     <portlet>
         <portlet-name>dataTableFind</portlet-name>
         <display-name>Data Table Find</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1126,7 +1126,7 @@
     <portlet>
         <portlet-name>dataTableGrouping</portlet-name>
         <display-name>Data Table Grouping</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1147,7 +1147,7 @@
     <portlet>
         <portlet-name>dataTableLazyLoading</portlet-name>
         <display-name>Data Table Lazy Loading</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1168,7 +1168,7 @@
     <portlet>
         <portlet-name>dataTableListener</portlet-name>
         <display-name>Data Table Listener</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1189,7 +1189,7 @@
     <portlet>
         <portlet-name>columnGroup</portlet-name>
         <display-name>Data Table Multi Row Header</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1210,7 +1210,7 @@
     <portlet>
         <portlet-name>dataTablePaginator</portlet-name>
         <display-name>Data Table Paginator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1231,7 +1231,7 @@
     <portlet>
         <portlet-name>dataTablePanelExpansion</portlet-name>
         <display-name>Data Table Panel Expansion</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1252,7 +1252,7 @@
     <portlet>
         <portlet-name>dataTablePinning</portlet-name>
         <display-name>Data Table Pinning</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1273,7 +1273,7 @@
     <portlet>
         <portlet-name>dataTableResizableColumns</portlet-name>
         <display-name>Data Table Resizable Columns</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1294,7 +1294,7 @@
     <portlet>
         <portlet-name>cellEditor</portlet-name>
         <display-name>Data Table Row Editing</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1315,7 +1315,7 @@
     <portlet>
         <portlet-name>rowExpansion</portlet-name>
         <display-name>Data Table Row Expansion</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1336,7 +1336,7 @@
     <portlet>
         <portlet-name>dataTableRowState</portlet-name>
         <display-name>Data Table Row State</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1357,7 +1357,7 @@
     <portlet>
         <portlet-name>dataTableScrolling</portlet-name>
         <display-name>Data Table Scrolling</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1378,7 +1378,7 @@
     <portlet>
         <portlet-name>dataTableSelector</portlet-name>
         <display-name>Data Table Selector</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1399,7 +1399,7 @@
     <portlet>
         <portlet-name>dataTableSorting</portlet-name>
         <display-name>Data Table Sorting</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1420,7 +1420,7 @@
     <portlet>
         <portlet-name>dataTableStackable</portlet-name>
         <display-name>Data Table Stackable</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1441,7 +1441,7 @@
     <portlet>
         <portlet-name>dateAjax</portlet-name>
         <display-name>Date Ajax</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1462,7 +1462,7 @@
     <portlet>
         <portlet-name>dateEntry</portlet-name>
         <display-name>Date Entry</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1483,7 +1483,7 @@
     <portlet>
         <portlet-name>dateIndicator</portlet-name>
         <display-name>Date Indicator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1504,7 +1504,7 @@
     <portlet>
         <portlet-name>dateLabel</portlet-name>
         <display-name>Date Label</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1525,7 +1525,7 @@
     <portlet>
         <portlet-name>dateMinMax</portlet-name>
         <display-name>Date Min Max</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1546,7 +1546,7 @@
     <portlet>
         <portlet-name>dateNavigator</portlet-name>
         <display-name>Date Navigator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1567,7 +1567,7 @@
     <portlet>
         <portlet-name>datePages</portlet-name>
         <display-name>Date Pages</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1588,7 +1588,7 @@
     <portlet>
         <portlet-name>datePopup</portlet-name>
         <display-name>Date Popup</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1609,7 +1609,7 @@
     <portlet>
         <portlet-name>dateReqStyle</portlet-name>
         <display-name>Date Style</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1631,7 +1631,7 @@
     <portlet>
         <portlet-name>dateTimeEntry</portlet-name>
         <display-name>Date Time</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1652,7 +1652,7 @@
     <portlet>
         <portlet-name>dialog</portlet-name>
         <display-name>Dialog</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1673,7 +1673,7 @@
     <portlet>
         <portlet-name>dialogEffectsAndSize</portlet-name>
         <display-name>Dialog Effects And Size</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1694,7 +1694,7 @@
     <portlet>
         <portlet-name>modalDialog</portlet-name>
         <display-name>Dialog Modal</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1715,7 +1715,7 @@
     <portlet>
         <portlet-name>dataTableIntegration</portlet-name>
         <display-name>Drag Drop Data Table Integration</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1736,7 +1736,7 @@
     <portlet>
         <portlet-name>dragDrop</portlet-name>
         <display-name>Drag Drop</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1757,7 +1757,7 @@
     <portlet>
         <portlet-name>draggable</portlet-name>
         <display-name>Draggable</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1778,7 +1778,7 @@
     <portlet>
         <portlet-name>fileEntry</portlet-name>
         <display-name>File Entry</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1799,7 +1799,7 @@
     <portlet>
         <portlet-name>fileEntryCallback</portlet-name>
         <display-name>File Entry Callback</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1820,7 +1820,7 @@
     <!--<portlet>-->
         <!--<portlet-name>fileEntryFailPop</portlet-name>-->
         <!--<display-name>File Entry Failure Popup</display-name>-->
-        <!--<portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>-->
+        <!--<portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>-->
         <!--<init-param>-->
             <!--<name>javax.portlet.faces.defaultViewId.view</name>-->
             <!--<value>/portlet-view.xhtml</value>-->
@@ -1841,7 +1841,7 @@
     <portlet>
         <portlet-name>fileEntryListener</portlet-name>
         <display-name>File Entry Listener</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1862,7 +1862,7 @@
     <!--<portlet>-->
         <!--<portlet-name>fileEntryMultiple</portlet-name>-->
         <!--<display-name>File Entry Multiple</display-name>-->
-        <!--<portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>-->
+        <!--<portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>-->
         <!--<init-param>-->
             <!--<name>javax.portlet.faces.defaultViewId.view</name>-->
             <!--<value>/portlet-view.xhtml</value>-->
@@ -1883,7 +1883,7 @@
     <portlet>
         <portlet-name>fileEntryValidation</portlet-name>
         <display-name>File Entry Validation</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1905,7 +1905,7 @@
     <portlet>
         <portlet-name>gMapAutoComplete</portlet-name>
         <display-name>GMap Autocomplete</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1927,7 +1927,7 @@
     <portlet>
         <portlet-name>gMapBasic</portlet-name>
         <display-name>GMap Basic</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1949,7 +1949,7 @@
     <portlet>
         <portlet-name>gMapControl</portlet-name>
         <display-name>GMap Control</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1971,7 +1971,7 @@
     <portlet>
         <portlet-name>gMapServices</portlet-name>
         <display-name>GMap Directions</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -1993,7 +1993,7 @@
     <portlet>
         <portlet-name>gMapEvent</portlet-name>
         <display-name>GMap Event</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2015,7 +2015,7 @@
     <portlet>
         <portlet-name>gMapInfoWindow</portlet-name>
         <display-name>GMap Info Window</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2037,7 +2037,7 @@
     <portlet>
         <portlet-name>gMapLayer</portlet-name>
         <display-name>GMap Layer</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2059,7 +2059,7 @@
     <portlet>
         <portlet-name>gMapMarker</portlet-name>
         <display-name>GMap Marker</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2081,7 +2081,7 @@
     <portlet>
         <portlet-name>gMapOptions</portlet-name>
         <display-name>GMap Options</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2103,7 +2103,7 @@
     <portlet>
         <portlet-name>gMapOverlay</portlet-name>
         <display-name>GMap Overlay</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2124,7 +2124,7 @@
     <portlet>
         <portlet-name>linkButton</portlet-name>
         <display-name>Link Button</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2145,7 +2145,7 @@
     <portlet>
         <portlet-name>list</portlet-name>
         <display-name>List</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2166,7 +2166,7 @@
     <portlet>
         <portlet-name>listBlock</portlet-name>
         <display-name>List Block</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2188,7 +2188,7 @@
     <portlet>
         <portlet-name>listBlockComplex</portlet-name>
         <display-name>List Block Complex</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2210,7 +2210,7 @@
     <portlet>
         <portlet-name>listDrag</portlet-name>
         <display-name>List Drag</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2231,7 +2231,7 @@
     <portlet>
         <portlet-name>listDual</portlet-name>
         <display-name>List Dual</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2252,7 +2252,7 @@
     <portlet>
         <portlet-name>listMulti</portlet-name>
         <display-name>List Multi</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2273,7 +2273,7 @@
     <portlet>
         <portlet-name>listReorder</portlet-name>
         <display-name>List Reorder</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2295,7 +2295,7 @@
     <portlet>
         <portlet-name>listReorderAjax</portlet-name>
         <display-name>List Reorder Ajax</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2317,7 +2317,7 @@
     <portlet>
         <portlet-name>listSelection</portlet-name>
         <display-name>List Selection</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2339,7 +2339,7 @@
     <portlet>
         <portlet-name>listSelectionAjax</portlet-name>
         <display-name>List Selection Ajax</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2361,7 +2361,7 @@
     <portlet>
         <portlet-name>listSelectionMini</portlet-name>
         <display-name>List Selection Mini</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2383,7 +2383,7 @@
     <portlet>
         <portlet-name>maskedEntry</portlet-name>
         <display-name>Masked Entry</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2404,7 +2404,7 @@
     <portlet>
         <portlet-name>maskedIndicator</portlet-name>
         <display-name>Masked Indicator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2426,7 +2426,7 @@
     <portlet>
         <portlet-name>maskedLabel</portlet-name>
         <display-name>Masked Label</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2448,7 +2448,7 @@
     <portlet>
         <portlet-name>maskedReqStyle</portlet-name>
         <display-name>Masked Style</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2469,7 +2469,7 @@
     <portlet>
         <portlet-name>menu</portlet-name>
         <display-name>Menu</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2490,7 +2490,7 @@
     <portlet>
         <portlet-name>menuDisplay</portlet-name>
         <display-name>Menu Display</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2511,7 +2511,7 @@
     <portlet>
         <portlet-name>menuDynamic</portlet-name>
         <display-name>Menu Dynamic</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2532,7 +2532,7 @@
     <portlet>
         <portlet-name>menuEffect</portlet-name>
         <display-name>Menu Effect</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2553,7 +2553,7 @@
     <portlet>
         <portlet-name>menuEvents</portlet-name>
         <display-name>Menu Events</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2574,7 +2574,7 @@
     <portlet>
         <portlet-name>menuType</portlet-name>
         <display-name>Menu Type</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2595,7 +2595,7 @@
     <portlet>
         <portlet-name>menuBar</portlet-name>
         <display-name>Menu Bar</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2616,7 +2616,7 @@
     <portlet>
         <portlet-name>menuBarClick</portlet-name>
         <display-name>Menu Bar Click</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2637,7 +2637,7 @@
     <portlet>
         <portlet-name>menuBarDynamic</portlet-name>
         <display-name>Menu Bar Dynamic</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2658,7 +2658,7 @@
     <portlet>
         <portlet-name>menuBarEffect</portlet-name>
         <display-name>Menu Bar Effect</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2679,7 +2679,7 @@
     <portlet>
         <portlet-name>menuButton</portlet-name>
         <display-name>Menu Button</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2701,7 +2701,7 @@
     <portlet>
         <portlet-name>message</portlet-name>
         <display-name>Message</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2722,7 +2722,7 @@
     <portlet>
         <portlet-name>multiColumnSubmenu</portlet-name>
         <display-name>Context Menu Multi Column</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2743,7 +2743,7 @@
     <portlet>
         <portlet-name>notificationPanel</portlet-name>
         <display-name>Notification Panel</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2764,7 +2764,7 @@
     <portlet>
         <portlet-name>notificationPanelClient</portlet-name>
         <display-name>Notification Panel Client</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2785,7 +2785,7 @@
     <portlet>
         <portlet-name>panel</portlet-name>
         <display-name>Panel</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2806,7 +2806,7 @@
     <portlet>
         <portlet-name>panelClose</portlet-name>
         <display-name>Panel Close</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2827,7 +2827,7 @@
     <portlet>
         <portlet-name>panelHeader</portlet-name>
         <display-name>Panel Header</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2848,7 +2848,7 @@
     <portlet>
         <portlet-name>panelListener</portlet-name>
         <display-name>Panel Listener</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2869,7 +2869,7 @@
     <portlet>
         <portlet-name>panelMenu</portlet-name>
         <display-name>Panel Menu</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2890,7 +2890,7 @@
     <portlet>
         <portlet-name>panelToggle</portlet-name>
         <display-name>Panel Toggle</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2911,7 +2911,7 @@
     <portlet>
         <portlet-name>printer</portlet-name>
         <display-name>Printer</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2932,7 +2932,7 @@
     <portlet>
         <portlet-name>progressBar</portlet-name>
         <display-name>Progress Bar</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2953,7 +2953,7 @@
     <portlet>
         <portlet-name>progressBarClient</portlet-name>
         <display-name>Progress Bar Client</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2974,7 +2974,7 @@
     <portlet>
         <portlet-name>progressBarClientAndServer</portlet-name>
         <display-name>Progress Bar Client And Server</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -2995,7 +2995,7 @@
     <portlet>
         <portlet-name>progressBarPolling</portlet-name>
         <display-name>Progress Bar Polling</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3016,7 +3016,7 @@
     <portlet>
         <portlet-name>progressBarPush</portlet-name>
         <display-name>Progress Bar Push</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3037,7 +3037,7 @@
     <portlet>
         <portlet-name>pushButton</portlet-name>
         <display-name>Push Button</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3058,7 +3058,7 @@
     <portlet>
         <portlet-name>resizable</portlet-name>
         <display-name>Resizable</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3079,7 +3079,7 @@
     <portlet>
         <portlet-name>resizeListener</portlet-name>
         <display-name>Resize Listener</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3100,7 +3100,7 @@
     <portlet>
         <portlet-name>richTextEntry</portlet-name>
         <display-name>Rich Text Entry</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3122,7 +3122,7 @@
     <portlet>
         <portlet-name>selectMenu</portlet-name>
         <display-name>Select Menu</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3144,7 +3144,7 @@
     <portlet>
         <portlet-name>selectMenuFacet</portlet-name>
         <display-name>Select Menu Facet</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3166,7 +3166,7 @@
     <portlet>
         <portlet-name>selectMenuIndicator</portlet-name>
         <display-name>Select Menu Indicator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3188,7 +3188,7 @@
     <portlet>
         <portlet-name>selectMenuLabel</portlet-name>
         <display-name>Select Menu Label</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3210,7 +3210,7 @@
     <portlet>
         <portlet-name>selectMenuReqStyle</portlet-name>
         <display-name>Select Menu Required Style</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3232,7 +3232,7 @@
     <portlet>
         <portlet-name>simpleSelectOneMenu</portlet-name>
         <display-name>Select One Menu</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3254,7 +3254,7 @@
     <portlet>
         <portlet-name>simpleSelectOneMenuIndicator</portlet-name>
         <display-name>Select One Menu Indicator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3276,7 +3276,7 @@
     <portlet>
         <portlet-name>simpleSelectOneMenuLabel</portlet-name>
         <display-name>Select One Menu Label</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3298,7 +3298,7 @@
     <portlet>
         <portlet-name>simpleSelectOneMenuReqStyle</portlet-name>
         <display-name>Select One Menu Required Style</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3320,7 +3320,7 @@
     <portlet>
         <portlet-name>sliderAsyncInput</portlet-name>
         <display-name>Slider Async</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3341,7 +3341,7 @@
     <portlet>
         <portlet-name>slider</portlet-name>
         <display-name>Slider</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3362,7 +3362,7 @@
     <portlet>
         <portlet-name>sliderListener</portlet-name>
         <display-name>Slider Listener</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3383,7 +3383,7 @@
     <portlet>
         <portlet-name>sliderSubmission</portlet-name>
         <display-name>Slider Submission</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3404,7 +3404,7 @@
     <portlet>
         <portlet-name>submitMonitor</portlet-name>
         <display-name>Submit Monitor</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3425,7 +3425,7 @@
     <portlet>
         <portlet-name>tabsetClientSide</portlet-name>
         <display-name>Tabset Client Side</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3446,7 +3446,7 @@
     <portlet>
         <portlet-name>tabsetProxy</portlet-name>
         <display-name>Tabset Proxy</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3467,7 +3467,7 @@
     <portlet>
         <portlet-name>tabsetServerSide</portlet-name>
         <display-name>Tabset Server Side</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3488,7 +3488,7 @@
     <portlet>
         <portlet-name>tabset</portlet-name>
         <display-name>Tabset</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3509,7 +3509,7 @@
     <portlet>
         <portlet-name>textAreaEntry</portlet-name>
         <display-name>Textarea Entry</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3531,7 +3531,7 @@
     <portlet>
         <portlet-name>textAreaEntryIndicator</portlet-name>
         <display-name>Textarea Entry Indicator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3553,7 +3553,7 @@
     <portlet>
         <portlet-name>textAreaEntryLabel</portlet-name>
         <display-name>Textarea Entry Label</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3575,7 +3575,7 @@
     <portlet>
         <portlet-name>textAreaEntryReqStyle</portlet-name>
         <display-name>Textarea Entry Style</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3596,7 +3596,7 @@
     <portlet>
         <portlet-name>textEntry</portlet-name>
         <display-name>Text Entry</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3617,7 +3617,7 @@
     <portlet>
         <portlet-name>textEntryAutotab</portlet-name>
         <display-name>Text Entry Autotab</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3639,7 +3639,7 @@
     <portlet>
         <portlet-name>textEntryIndicator</portlet-name>
         <display-name>Text Entry Indicator</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3661,7 +3661,7 @@
     <portlet>
         <portlet-name>textEntryLabel</portlet-name>
         <display-name>Text Entry Label</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3683,7 +3683,7 @@
     <portlet>
         <portlet-name>textEntryReqStyle</portlet-name>
         <display-name>Text Entry Style</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3704,7 +3704,7 @@
     <portlet>
         <portlet-name>tooltip</portlet-name>
         <display-name>Tooltip</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3725,7 +3725,7 @@
     <portlet>
         <portlet-name>delegateTooltip</portlet-name>
         <display-name>Tooltip Delegate</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3746,7 +3746,7 @@
     <portlet>
         <portlet-name>tooltipGlobal</portlet-name>
         <display-name>Tooltip Global</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3767,7 +3767,7 @@
     <portlet>
         <portlet-name>tree</portlet-name>
         <display-name>Tree</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3789,7 +3789,7 @@
     <portlet>
         <portlet-name>treeClient</portlet-name>
         <display-name>Tree Client</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3811,7 +3811,7 @@
     <portlet>
         <portlet-name>treeLazy</portlet-name>
         <display-name>Tree Lazy</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3833,7 +3833,7 @@
     <portlet>
         <portlet-name>treeNested</portlet-name>
         <display-name>Tree Nested</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3855,7 +3855,7 @@
     <portlet>
         <portlet-name>treeReorder</portlet-name>
         <display-name>Tree Reorder</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>
@@ -3877,7 +3877,7 @@
     <portlet>
         <portlet-name>treeSelection</portlet-name>
         <display-name>Tree Selection</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/portlet-view.xhtml</value>

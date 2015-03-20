@@ -128,7 +128,7 @@
         <servlet.api.version>3.0.1</servlet.api.version>
 
         <!-- Use with Liferay 6.2 -->
-        <liferayfaces.version>4.2.0-m1</liferayfaces.version>
+        <liferayfaces.version>4.2.0-m2</liferayfaces.version>
 
         <!-- When building samples for Pluto Portal -->
         <!-- <pluto.version>2.0.3</pluto.version> -->

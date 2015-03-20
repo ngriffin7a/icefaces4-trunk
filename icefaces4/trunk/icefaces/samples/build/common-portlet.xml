@@ -69,6 +69,10 @@
                 </resourcecount>
             </condition>
         </fail>
+
+        <property name="bridge.lib.dir" location="${base.portlet.dir}/liferayfaces"/>
+        <echo message="Liferay Faces dir: ${bridge.lib.dir}"/>
+
     </target>
 
     <target name="copy.parent.resources">
