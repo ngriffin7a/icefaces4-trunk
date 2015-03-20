@@ -163,16 +163,23 @@
              destfile="${dist.dir}/${ant.project.name}.war" 
              webxml="${web.dir}/WEB-INF/web.xml">
             <metainf dir="${res.meta.dir}" erroronmissingdir="false"/>
+
             <lib dir="${lib.dir}">
                 <patternset refid="lib.distribute"/>
             </lib>
+
             <lib dir="${lib.ace.dir}">
                 <patternset refid="lib.distribute.ace"/>
             </lib>
             
+            <lib dir="${bridge.lib.dir}" erroronmissingdir="false">
+                <patternset refid="lib.distribute.portlet"/>
+            </lib>
+
             <lib dir="${lib.application.dir}" erroronmissingdir="false">
                 <patternset refid="lib.distribute.application"/>
             </lib>
+
             <lib dir="${jsf.lib.dir}" erroronmissingdir="false">
                 <patternset refid="lib.distribute.jsf"/>
             </lib>
