@@ -446,7 +446,7 @@ public class DataTableRenderer extends CoreRenderer {
 		// invisible span without id, used to cause full markup updates when certain settings change
 		writer.startElement(HTML.SPAN_ELEM, null);
 		writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
-		writer.write("" + dblSelect);
+		writer.write("" + dblSelect + " " + table.getHeaderColumnOrdering() + " " + table.getColumnOrdering());
 		writer.endElement(HTML.SPAN_ELEM);
 	}
 
