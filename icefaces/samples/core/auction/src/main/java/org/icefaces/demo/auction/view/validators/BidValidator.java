@@ -16,10 +16,9 @@
 
 package org.icefaces.demo.auction.view.validators;
 
-import org.icefaces.demo.auction.view.beans.AuctionItemBean;
-import org.icefaces.demo.auction.view.names.BeanNames;
-import org.icefaces.demo.auction.view.names.ParameterNames;
-import org.icefaces.demo.auction.view.util.FacesUtils;
+import java.util.PropertyResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -28,7 +27,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import java.util.PropertyResourceBundle;
+
+import org.icefaces.demo.auction.view.beans.AuctionItemBean;
+import org.icefaces.demo.auction.view.names.BeanNames;
+import org.icefaces.demo.auction.view.names.ParameterNames;
+import org.icefaces.demo.auction.view.util.FacesUtils;
 
 /**
  * Pretty simple validator that checks to see if the auction bid is within
@@ -40,6 +43,7 @@ import java.util.PropertyResourceBundle;
  */
 @FacesValidator(value = "auctionItemBidValidator")
 public class BidValidator implements Validator {
+    private static final Logger LOGGER = Logger.getLogger(BidValidator.class.getName());
 
     // cap the size of a bid that can be made over the the original bid value.
     public static final int MAX_BID_INCREASE = 10000;
@@ -60,7 +64,7 @@ public class BidValidator implements Validator {
         // get the original bid value
         double originalBid = auctionMonitorItemBean.getAuctionItem().getPrice();
         // get the new value
-        double newBid = (Double) value;
+        double newBid = value != null ? (Double) value : 0.0;
 
         // make sure the item hasn't expired.
         if (auctionMonitorItemBean.isExpired()) {
