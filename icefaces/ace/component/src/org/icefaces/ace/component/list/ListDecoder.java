@@ -184,6 +184,7 @@ public class ListDecoder {
         // attach emigrants phase.
 
         Object value = list.getValue();
+		if (value == null) return this;
         List collection = null;
         Set<Object> selected = list.getSelections();
         if (value instanceof List) collection = (List) value;
@@ -294,6 +295,7 @@ public class ListDecoder {
         if (list.isSelectItemModel()) return this;
 
         Object value = list.getValue();
+		if (value == null) return this;
         List collection = null;
         Set<Object> selected = list.getSelections();
         List<ImmigrationRecord> records = list.getImmigrants();
