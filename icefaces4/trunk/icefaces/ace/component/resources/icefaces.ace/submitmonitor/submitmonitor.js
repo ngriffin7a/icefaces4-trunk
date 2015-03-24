@@ -282,6 +282,11 @@
                 var eventType = ( (e.type != undefined && e.type != null) ? e.type : null );
                 var triggeringElement = e.srcElement ? e.srcElement : e.target;
                 var capturingElement = element;
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else {
+                    e.cancelBubble = true;
+                }
                 consoleLog('Monitor '+uniqueId+'>'+jqId+'  event [type: ' + eventType +
                         ', triggered by: ' + (triggeringElement.id || triggeringElement) +
                         ', captured in: ' + (capturingElement.id || capturingElement) + '] was discarded.');
@@ -334,9 +339,7 @@
                         consoleLog('first submit element: ' + (firstSubmitSource.id || firstSubmitSource));
                         if ((firstSubmitSource == triggeringElement) || (firstSubmitSource == element)) {
                             consoleLog('eventSinkFirstClick()  clicked on same element as first submit');
-                            regularSink(e);
-                            // checkbox in Firefox:  onclick, onchange, but in Chrome: onchange, onclick
-                            return true;
+                            return regularSink(e);
                         }
 
                         consoleLog('eventSinkFirstClick()  calling original onclick');
