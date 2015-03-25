@@ -115,4 +115,22 @@ public class DateTimeBean extends ComponentExampleImpl<DateTimeBean> implements
 			timeOnly = false;
 		}
 	}
+
+	// preserve all time parameters in date-only and time-only modes
+	public void valueChanged(ValueChangeEvent event) {
+		if (timeType != null) {
+			Date oldDate = (Date) event.getOldValue();
+			Date newDate = (Date) event.getNewValue();
+			if ("time".equals(timeType)) {
+				newDate.setYear(oldDate.getYear());
+				newDate.setMonth(oldDate.getMonth());
+				newDate.setDate(oldDate.getDate());
+			} else if ("date".equals(timeType)) {
+				newDate.setHours(oldDate.getHours());
+				newDate.setMinutes(oldDate.getMinutes());
+				newDate.setSeconds(oldDate.getSeconds());
+				newDate.setDate(oldDate.getDate()+1);
+			}			
+		}
+	}
 }

@@ -77,7 +77,8 @@
                                    timeZone="Canada/Mountain"
                                    pattern="#{dateTime.pattern}"
                                    timeOnly="#{dateTime.timeOnly}"
-                                   showButtonPanel="false"/>
+                                   showButtonPanel="false"
+                                   valueChangeListener="#{dateTime.valueChanged}"/>
                 <h:panelGroup>
                     <h:commandButton id="submitDate" value="Submit">
 						<f:ajax execute="@this cal" render="@all"/>
