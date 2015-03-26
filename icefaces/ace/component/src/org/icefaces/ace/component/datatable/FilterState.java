@@ -41,16 +41,13 @@ public class FilterState {
     public FilterState(FacesContext context, DataTable table) {
         String clientId = table.getClientId(context);
         Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-        String filteredId = params.get(clientId + "_filteredColumn");
         Column filteredColumn = null;
 
         Map<String,Column> filterMap = table.getFilterMap();
-
-        // If applying a new filter, save the value to the column
-        filteredColumn = filterMap.get(filteredId);
-
-        if (filteredColumn != null)
-            saveState(filteredColumn, params.get(filteredId));
+		for (Column column : filterMap.values()) {
+			String columnId = column.getClientId(context) + "_filter";
+			saveState(column, params.get(columnId));
+		}
     }
 
     public void saveState(Column column) {
