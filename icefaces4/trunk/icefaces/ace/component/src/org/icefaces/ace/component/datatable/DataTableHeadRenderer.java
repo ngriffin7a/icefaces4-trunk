@@ -380,6 +380,13 @@ public class DataTableHeadRenderer {
                 writer.writeAttribute(HTML.STYLE_ELEM, column.getFilterStyle(), null);
 
             writer.endElement(HTML.INPUT_ELEM);
+
+			writer.startElement(HTML.SPAN_ELEM, null);
+			writer.startElement(HTML.SCRIPT_ELEM, null);
+			writer.writeAttribute("type", "text/javascript", null);
+			writer.write("document.getElementById('"+filterId+"').submitOnEnter = 'disabled'; // "+filterValue);
+			writer.endElement(HTML.SCRIPT_ELEM);
+			writer.endElement(HTML.SPAN_ELEM);
         }
         else {
             writer.startElement("select", null);
