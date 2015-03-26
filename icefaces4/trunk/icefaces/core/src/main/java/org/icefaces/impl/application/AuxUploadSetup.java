@@ -55,15 +55,16 @@ public class AuxUploadSetup {
     }
     
     public String getUploadURL()  {
-        ExternalContext externalContext = FacesContext.getCurrentInstance()
-                .getExternalContext();
-        String serverName = externalContext.getRequestHeaderMap().
-                get("x-forwarded-host");
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        String protocol = externalContext.getRequestScheme();
+        String serverName = externalContext.getRequestHeaderMap().get("x-forwarded-host");
+
         if (null == serverName)  {
             serverName = externalContext.getRequestServerName() + ":" +
                     externalContext.getRequestServerPort();
         }
-        return "http://" + serverName + getUploadPath();
+
+        return protocol + "://" + serverName + getUploadPath();
     }
     
     public boolean getEnabled()  {
