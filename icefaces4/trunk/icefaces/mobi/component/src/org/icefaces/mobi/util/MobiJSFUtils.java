@@ -34,8 +34,10 @@ import java.util.logging.Logger;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
@@ -258,13 +260,17 @@ public class MobiJSFUtils {
     }
 
     public static String getSessionIdCookie(FacesContext facesContext) {
-        String sessionID = EnvUtils.getSafeSession(facesContext).getId();
-        String cookieFormat = (String) facesContext.getExternalContext()
-                .getInitParameterMap().get(COOKIE_FORMAT);
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map cookies = externalContext.getRequestCookieMap();
+        Cookie cookie = (Cookie) cookies.get("JSESSIONID");
+        String sessionID = cookie.getValue();
+
+        String cookieFormat = (String) externalContext.getInitParameterMap().get(COOKIE_FORMAT);
         if (null == cookieFormat) {
             // if we have more of these, implement EnvUtils for ICEmobile
             return sessionID;
         }
+
         StringBuilder out = new StringBuilder();
         Formatter cookieFormatter = new Formatter(out);
         cookieFormatter.format(cookieFormat, sessionID);
