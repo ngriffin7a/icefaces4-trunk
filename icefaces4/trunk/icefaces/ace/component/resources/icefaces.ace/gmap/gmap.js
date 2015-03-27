@@ -407,7 +407,8 @@ ice.ace.gMap.getGMapWrapper = function (id) {
 			var yOffset = splitOffset[1];
 			google.maps.event.addListener(autocomplete, 'place_changed', function() {
 				var place = autocomplete.getPlace();
-				if (place.geometry) {
+				var hasSpecialChars = (input.value.indexOf('[') > -1) || (input.value.indexOf(']') > -1) || (input.value.indexOf('/') > -1);
+				if (place.geometry && !hasSpecialChars) {
 					if (place.geometry.viewport) {
 						map.fitBounds(place.geometry.viewport);
 					} else {
