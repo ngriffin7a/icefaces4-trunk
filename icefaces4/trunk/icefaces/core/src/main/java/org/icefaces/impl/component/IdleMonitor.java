@@ -52,12 +52,12 @@ public class IdleMonitor extends UIComponentBase {
         writer.startElement("script", null);
         writer.writeText("ice.onUserInactivity(", null);
         writer.writeText(getInterval(), null);
-        writer.writeText(", function() { document.getElementById('", null);
+        writer.writeText(", function() { var container = document.getElementById('", null);
         writer.writeText(containerID, null);
-        writer.writeText("').style.visibility = 'visible'; }", null);
-        writer.writeText(", function() { document.getElementById('", null);
+        writer.writeText("'); if (container) container.style.visibility = 'visible'; }", null);
+        writer.writeText(", function() { var container = document.getElementById('", null);
         writer.writeText(containerID, null);
-        writer.writeText("').style.visibility = 'hidden'; });", null);
+        writer.writeText("'); if (container) container.style.visibility = 'hidden'; });", null);
         writer.endElement("script");
 
         writer.endElement("span");
