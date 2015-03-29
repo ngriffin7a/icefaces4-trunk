@@ -35,7 +35,7 @@
 
     <ui:define name="example">
         <h:form id="form">
-            <ace:panel id="panel"
+            <ace:panel id="panel" binding="#{panel}"
 					   header="ICEfaces Header"
                        closable="true"
                        toggleable="true"
@@ -55,7 +55,7 @@
                     <h:outputText value="Adhering closely to the standard JSF 2 extension points allows ICEfaces to work transparently with the stock JSF framework, simplifying integration and fostering 3rd party compatibility with other JSF 2-compliant libraries."/>
                 </h:panelGrid>
             </ace:panel>
-			<button onclick="document.getElementById('form:panel').style.display='block';return false;">Show panel</button>
+			<button onclick="document.getElementById('#{panel.clientId}').style.display='block';return false;">Show panel</button>
         </h:form>
     </ui:define>
 </ui:composition>
