@@ -50,7 +50,7 @@
                 <ace:dataTable id="uploadManager"
 							   value="#{progressBarPolling.uploads}"
 							   rendered="#{not empty progressBarPolling.uploads}"
-							   var="upload" rowIndexVar="i"
+                               var="upload" rowIndexVar="i" binding="#{uploadManager}"
                 >
 
                                 <f:facet name="header">
@@ -76,7 +76,7 @@
                              </ace:column>
 
                              <ace:column footerText="Action">
-                                 <h:commandButton id="upload" value="upload" type="button" onclick="ice.ace.instance('uploadManager:#{i}:myProgressBar').start();" rendered="#{upload.ready}" actionListener="#{progressBarPolling.startUpload}">
+                                 <h:commandButton id="upload" value="upload" type="button" onclick="ice.ace.instance('#{uploadManager.clientId}:myProgressBar').start();" rendered="#{upload.ready}" actionListener="#{progressBarPolling.startUpload}">
                                      <f:ajax execute="@this" render="@form"/>
                                  </h:commandButton>
                              </ace:column>

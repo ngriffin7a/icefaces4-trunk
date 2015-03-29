@@ -36,20 +36,21 @@
         <h:form id="form">
             <ace:panel>
                 <ace:progressBar id="clientAndServerProgressBar"
+                                 binding="#{progressBar}"
                                              value="#{progressBarClientAndServer.progressValue}"
                                              changeListener="#{progressBarClientAndServer.changeListener}"/>
             </ace:panel>
 
             <script type="text/javascript">
-            function increase()
-            {
-               ice.ace.instance('form:clientAndServerProgressBar').setValue(ice.ace.instance('form:clientAndServerProgressBar').getValue() + 10);
-            }
-            function decrease()
-            {
-                ice.ace.instance('form:clientAndServerProgressBar').setValue(ice.ace.instance('form:clientAndServerProgressBar').getValue() - 10);
-            }
-        </script>
+                function increase()
+                {
+                    ice.ace.instance('#{progressBar.clientId}').setValue(ice.ace.instance('#{progressBar.clientId}').getValue() + 10);
+                }
+                function decrease()
+                {
+                    ice.ace.instance('#{progressBar.clientId}').setValue(ice.ace.instance('#{progressBar.clientId}').getValue() - 10);
+                }
+            </script>
             
             <h:panelGrid width="100%">
                     <h:panelGroup>
