@@ -27,7 +27,7 @@
     <ui:param name="title" value="#{msgs[progressBarClient.title]}"/>
     <ui:param name="description" value="#{msgs[progressBarClient.description]}"/>
     <ui:param name="resourceValue" value="#{progressBarClient.exampleResource}"/>
-    
+
     <ui:param name="wikiResources" value="#{progressBarResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{progressBarResources.tldResources}"/>
 
@@ -36,12 +36,12 @@
             function begin()
             {
 				if (this.inProgress) return;
-				ice.ace.instance('form:progressBar').setValue(ice.ace.instance('form:progressBar').getValue() + 10);
+                var instance = ice.ace.instance('#{progressBar.clientId}');
+                instance.setValue(instance.getValue() + 10);
 				this.inProgress = true;
                 this.progressInterval = setInterval (
                 function()
                 {
-                    var instance = ice.ace.instance('form:progressBar');
                     if (instance) {
                         instance.setValue(instance.getValue() + 10);
                     } else {
@@ -52,10 +52,10 @@
                 , 2000);
             }
 
-            function stop() 
+            function stop()
             {
                 clearInterval(this.progressInterval);
-                var instance = ice.ace.instance('form:progressBar');
+                var instance = ice.ace.instance('#{progressBar.clientId}');
                 if(instance) {
                     instance.setValue(0);
                 }
@@ -64,18 +64,18 @@
         </script>
 
         <h:form id="form">
-            
+
             <ace:panel>
-                <ace:progressBar id="progressBar" />
+                <ace:progressBar id="progressBar" binding="#{progressBar}"/>
             </ace:panel>
-            
+
             <h:panelGrid width="100%">
                     <h:panelGroup>
                         <h:commandButton id="start" value="Start" onclick="begin();" type="button" style="float: left;"/>
                         <h:commandButton id="cancel" value="Cancel" onclick="stop();" type="button" style="float: right;"/>
                     </h:panelGroup>
             </h:panelGrid>
-            
+
         </h:form>
     </ui:define>
 </ui:composition>
