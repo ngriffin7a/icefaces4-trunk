@@ -92,7 +92,11 @@ public class ImageSet implements Serializable
         else if(imageType.equals(ImageSelect.LIGHTBULB_OFF))
         {
             image = new ImageInfo(BASE_PATH+"lightBulb/LightBulbOff.png", "Light bulb off");
-        }        
+        }
+        else if(imageType.equals(ImageSelect.HOUSE))
+        {
+            image = new ImageInfo(BASE_PATH+"house.png", "House");
+        }
         return image;
     }
     
@@ -175,6 +179,7 @@ public class ImageSet implements Serializable
         PAUSE,
         LIGHTBULB_ON,
         LIGHTBULB_OFF,
+		HOUSE
     }
 
     public static class ImageInfo implements Serializable {
