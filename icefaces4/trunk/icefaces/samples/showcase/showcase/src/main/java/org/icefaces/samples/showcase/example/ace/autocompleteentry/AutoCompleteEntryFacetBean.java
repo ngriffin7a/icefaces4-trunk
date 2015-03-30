@@ -34,6 +34,8 @@ import java.util.StringTokenizer;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.icefaces.samples.showcase.dataGenerators.ImageSet;
+
 @ComponentExample(
         parent = AutoCompleteEntryBean.BEAN_NAME,
         title = "example.ace.autocompleteentry.facet.title",
@@ -59,10 +61,12 @@ public class AutoCompleteEntryFacetBean extends ComponentExampleImpl<AutoComplet
 {
     public static final String BEAN_NAME = "autoCompleteEntryFacetBean";
 	public String getBeanName() { return BEAN_NAME; }
+	private ImageSet.ImageInfo house;
 
     public AutoCompleteEntryFacetBean() 
     {
         super(AutoCompleteEntryFacetBean.class);
+		house = ImageSet.getImage(ImageSet.ImageSelect.HOUSE);
     }
     
     @PostConstruct
@@ -94,5 +98,9 @@ public class AutoCompleteEntryFacetBean extends ComponentExampleImpl<AutoComplet
 			cities = AutoCompleteEntryData.getCities();
 		}
         return cities;
+    }
+
+    public ImageSet.ImageInfo getHouse() {
+        return house;
     }
 }
