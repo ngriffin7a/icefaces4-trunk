@@ -1,16 +1,39 @@
 package org.icefaces.demo.auction.model;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import org.icefaces.demo.auction.converter.TimeLeftConverter;
 
 public class AuctionItem implements Serializable {
-	private static final long serialVersionUID = -396846143165017478L;
-	
+	private static final long serialVersionUID = -8371157741959714824L;
+
 	public enum Condition {
-		NEW_IN_PACKAGE, USED_EXCELLENT, USED_GOOD, USED_BAD, DAMAGED
+		NEW("New"),
+		USED_EXCELLENT("Used (Excellent)"),
+		USED_GOOD("Used (Good)"),
+		USED_BAD("Used (Bad)"),
+		DAMAGED("Damaged");
+		
+		private String value;
+		public String getValue() { return value; }
+		private Condition(String value) { this.value = value; }
+		@Override
+		public String toString() { return value; }
 	}
 	
 	public enum Delivery {
-		ONE_DAY, THREE_DAYS, ONE_WEEK, ONE_TWO_WEEKS, ONE_MONTH
+		ONE_DAY("1 day"),
+		THREE_DAYS("1-3 days"),
+		ONE_WEEK("3-7 days"),
+		ONE_TWO_WEEKS("1-2 weeks"),
+		ONE_MONTH("up to 1 month");
+		
+		private String value;
+		public String getValue() { return value; }
+		private Delivery(String value) { this.value = value; }
+		@Override
+		public String toString() { return value; }
 	}
 	
 	// Main info
@@ -21,7 +44,7 @@ public class AuctionItem implements Serializable {
 	private long expiryDate; // In milliseconds
 	
 	// Details
-	private Integer shippingCost;
+	private Double shippingCost;
 	private String sellerName;
 	private String sellerLocation;
 	private String description;
@@ -36,7 +59,7 @@ public class AuctionItem implements Serializable {
 	}
 	
 	public AuctionItem(String imagePath, String name, double price, int bids,
-			long expiryDateMil, Integer shippingCost, String sellerName,
+			long expiryDateMil, Double shippingCost, String sellerName,
 			String sellerLocation, String description,
 			Delivery estimatedDelivery, Condition condition) {
 		this.imagePath = imagePath;
@@ -76,16 +99,22 @@ public class AuctionItem implements Serializable {
 	public void setBids(int bids) {
 		this.bids = bids;
 	}
+	public void increaseBids() {
+		bids++;
+	}
 	public long getExpiryDate() {
 		return expiryDate;
+	}
+	public String getTimeLeft() {
+		return TimeLeftConverter.convertExpiryToTimeLeft(expiryDate);
 	}
 	public void setExpiryDate(long expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-	public Integer getShippingCost() {
+	public Double getShippingCost() {
 		return shippingCost;
 	}
-	public void setShippingCost(Integer shippingCost) {
+	public void setShippingCost(Double shippingCost) {
 		this.shippingCost = shippingCost;
 	}
 	public String getSellerName() {
@@ -117,5 +146,9 @@ public class AuctionItem implements Serializable {
 	}
 	public void setCondition(Condition condition) {
 		this.condition = condition;
+	}
+	
+	public boolean isExpired() {
+		return new Date().after(new Date(expiryDate));
 	}
 }
