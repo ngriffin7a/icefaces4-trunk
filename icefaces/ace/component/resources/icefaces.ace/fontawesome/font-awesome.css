@@ -7,7 +7,7 @@
 @font-face {
   font-family: 'FontAwesome';
   src: url("#{resource['icefaces.ace:fontawesome/fontawesome-webfont.eot']}");
-  src: url("#{resource['icefaces.ace/fontawesome/fontawesome-webfont.eot']}?#iefix") format('embedded-opentype'), url("#{resource['icefaces.ace:fontawesome/fontawesome-webfont.woff']}") format('woff'), url("#{resource['icefaces.ace:fontawesome/fontawesome-webfont.ttf']}") format('truetype'), url("#{resource['icefaces.ace:fontawesome/fontawesome-webfont.svg']}") format('svg');
+  src: url("#{resource['icefaces.ace:fontawesome/fontawesome-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resource['icefaces.ace:fontawesome/fontawesome-webfont.woff']}") format('woff'), url("#{resource['icefaces.ace:fontawesome/fontawesome-webfont.ttf']}") format('truetype'), url("#{resource['icefaces.ace:fontawesome/fontawesome-webfont.svg']}") format('svg');
   font-weight: normal;
   font-style: normal;
 }
