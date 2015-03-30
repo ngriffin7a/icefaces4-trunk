@@ -15,82 +15,16 @@
  */
 
 .auctionMonitorContainer {
-    background-color: #FFFFFF;
-    border: 1px solid #A6A6A6;
-    padding: 3px;
     margin: 15px;
     margin-bottom:5px;
     margin-top: 45px;
-    position: relative;
-}
-
-.conditionTxt{
-    font-size:smaller;
-    color: #808080;
-    margin-left:15px;
 }
 
 .auctionMontiorTable {
     width: 100%;
-    padding: 1px;
 }
 
-.auctionMontiorTable thead th, .auctionMontiorTable tbody td {
-    padding: 4px;
+/* Overrides */
+.ui-datatable-odd {
+    background-color: #EEEEEE !important;
 }
-
-.auctionMontiorTable thead {
-    background-color: #A6A6A6;
-    color: white;
-}
-
-.auctionMontiorTable thead tr th a, .auctionMontiorTable thead tr th a:visited {
-    text-decoration: none;
-    color: white;
-    font-weight: normal;
-}
-
-.auctionMontiorTable thead th.sorted_true {
-    background-color: #717171;
-}
-
-.auctionMontiorTable tbody tr.odd td {
-    background-color: #EEEEEE;
-}
-
-.auctionMontiorTable tbody tr.expanded td {
-    background-color: #DDEEFF;
-}
-
-.auctionMontiorTable tbody tr.description td {
-    border-bottom: 1px solid white;
-}
-
-.newBid {
-    background-color: yellow;
-}
-
-.spacerColumn {
-    width: 2%
-}
-
-.itemColumn {
-    width: 40%
-}
-
-.priceColumn {
-    width: 10%
-}
-
-.bidsColumn {
-    width: 10%
-}
-
-.timeColumn {
-    width: 15%
-}
-
-.actionColumn {
-    width: 15%
-}
-
