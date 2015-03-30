@@ -24,68 +24,43 @@
     <description>
         ICEfaces Auction Demo
     </description>
-
-    <context-param>
-        <param-name>com.sun.faces.defaultResourceMaxAge</param-name>
-        <param-value>604800000</param-value>
-    </context-param>
-
-    <!-- set the polling interval for the auction IntervalPushRenderer -->
-    <context-param>
-        <param-name>org.icefaces.sample.auction.interval</param-name>
-        <param-value>1000</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-        <param-value>server</param-value>
-    </context-param>
     
-<!--
-    Changing this context parameter to Development may be useful during 
-    development stage to detect potential issues earlier, but this results in
-    application running with lower performance settings within JSF.
--->
+    <listener>
+        <listener-class>org.icefaces.demo.auction.util.ContextListener</listener-class>
+    </listener>
+
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Production</param-value>
     </context-param>
     
+    <!-- Never refresh our Facelets since we'd just be redeploying if there is a change -->
     <context-param>
-        <param-name>org.icefaces.render.auto</param-name>
+        <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+        <param-value>-1</param-value>
+    </context-param>
+    
+    <!-- Do not render comments in the returned HTML -->
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
     </context-param>
     
+    <!-- Use the server machine time for dates -->
     <context-param>
-        <param-name>org.icefaces.autoid</param-name>
+        <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
     </context-param>
     
-    <context-param>
-        <param-name>org.icefaces.strictSessionTimeout</param-name>
-        <param-value>true</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
-        <param-value>false</param-value>
-    </context-param>
-
-    <!-- Faces Servlet -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     </servlet>
 
-    <!-- Faces Servlet Mapping -->
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
-
-    <session-config>
-        <session-timeout>15</session-timeout>
-    </session-config>
 
     <!--
         This MIME type is not registered by default in WebSphere 7 so we add it
@@ -108,7 +83,8 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
+    
+    <session-config>
+        <session-timeout>15</session-timeout>
+    </session-config>
 </web-app>
-
-
