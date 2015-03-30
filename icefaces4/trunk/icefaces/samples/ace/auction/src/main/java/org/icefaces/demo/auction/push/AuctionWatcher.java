@@ -7,26 +7,27 @@ import java.util.logging.Logger;
 
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
+import org.icefaces.demo.auction.service.AuctionService;
 
-public class AuctionPushRenderer {
+public class AuctionWatcher {
 	public static final String INTERVAL_PUSH_GROUP = "auctionWatcher";
 	public static final int INTERVAL_SECONDS = 1;
-	private static final Logger log = Logger.getLogger(AuctionPushRenderer.class.getName());
+	private static final Logger log = Logger.getLogger(AuctionWatcher.class.getName());
 	
-	private static AuctionPushRenderer singleton = null;
+	private static AuctionWatcher singleton = null;
 	private ScheduledExecutorService renderThread;
 	
-	private AuctionPushRenderer() {
+	private AuctionWatcher() {
 	}
 	
-	public static AuctionPushRenderer getInstance() {
+	public static AuctionWatcher getInstance() {
 		if (singleton == null) {
-			singleton = new AuctionPushRenderer();
+			singleton = new AuctionWatcher();
 		}
 		return singleton;
 	}
 
-	public void start() {
+	public void start(final AuctionService toWatch) {
 		// Stop any old executor first
 		stop(false);
 		
@@ -40,6 +41,9 @@ public class AuctionPushRenderer {
 			public void run() {
 				if (!renderThread.isShutdown()) {
 					renderer.render(INTERVAL_PUSH_GROUP);
+					
+					// Check our items for expiry and add more as needed
+					toWatch.checkAuctionExpiry();
 				}
 			}
 		}, 0, INTERVAL_SECONDS, TimeUnit.SECONDS);

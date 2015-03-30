@@ -39,31 +39,76 @@
 
     <div class="auctionMonitorContainer">
         <h:form prependId="false">
-            <ace:dataTable value="#{auctionService.auctions}" var="item"
+            <ace:dataTable id="a"
+                           value="#{auctionService.auctions}" var="item"
                            styleClass="auctionMontiorTable"
                            clickableHeaderSorting="true"
                            emptyMessage="No auctions were found, please try again later."
                            paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
                            rows="20"
                            reorderableColumns="true" resizableColumns="true"
-                           selectionMode="single">
-                <ace:column headerText="Name" sortBy="#{item.name}" sortAscending="true">
+                           alwaysExecuteContents="true"
+                           selectionMode="single"
+                           rowSelectListener="#{bidController.selectItem}"
+                           rowUnselectListener="#{bidController.unselectItem}">
+                <ace:column headerText="Name">
                     #{item.name}
                 </ace:column>
-                <ace:column headerText="Price" sortBy="#{item.price}" style="text-align: right;">
+                <ace:column headerText="Price" style="text-align: right;">
                     <h:outputText value="#{item.price}">
-                        <f:convertNumber type="currency" currencySymbol="$" groupingUsed="true"/>
+                        <f:convertNumber type="currency" currencySymbol="$"/>
                     </h:outputText>
                 </ace:column>
-                <ace:column headerText="Bids" sortBy="#{item.bids}">
+                <ace:column headerText="Bids">
                     #{item.bids}
                 </ace:column>
-                <ace:column headerText="Time Left" sortBy="#{item.timeLeft}">
-                    <h:outputText value="#{item.expiryDate}">
+                <ace:column headerText="Time Left">
+                    <h:outputText id="e" value="#{item.expiryDate}">
                         <f:converter converterId="TimeLeftConverter"/>
                     </h:outputText>
                 </ace:column>
+                <f:facet name="footer">
+                    <h:panelGroup layout="block">
+                        <h:panelGroup layout="block" rendered="#{bidBean.renderBidPanel}">
+                            <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
+                            <ace:textEntry id="bidIn" value="#{bidBean.currentBid}" required="true" requiredMessage="Enter a valid bid.">
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            </ace:textEntry>
+                            <h:commandButton value="Submit" actionListener="#{bidController.submitBid}"/>
+                            <h:commandButton value="Cancel" immediate="true" actionListener="#{bidController.cancelBid}"/>
+                            <h:message for="bidIn"/>
+                        </h:panelGroup>
+                        <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
+                    </h:panelGroup>
+                </f:facet>
             </ace:dataTable>
+            
+            <ace:panel closable="false" collapsed="false" toggleable="true"
+                       header="Details of Listed Item '#{bidBean.bidItem.name}'"
+                       rendered="#{bidBean.renderBidPanel}"
+                       style="margin-top: 15px;">
+	            <h:panelGrid columns="2">
+	                <h:outputText value="Condition:"/>
+	                #{bidBean.bidItem.condition.value}
+	                
+	                <h:outputText value="Seller Name:"/>
+	                #{bidBean.bidItem.sellerName}
+	                
+	                <h:outputText value="Seller Location:"/>
+	                #{bidBean.bidItem.sellerLocation}
+	                
+	                <h:outputText value="Estimated Delivery:"/>
+	                #{bidBean.bidItem.estimatedDelivery.value}
+	                
+	                <h:outputText value="Shipping Cost:"/>
+	                <h:outputText value="#{bidBean.bidItem.shippingCost}">
+	                   <f:convertNumber type="currency" currencySymbol="$"/>
+	                </h:outputText>
+	                
+	                <h:outputText value="Description:"/>
+	                #{bidBean.bidItem.description}
+	            </h:panelGrid>
+            </ace:panel>
         </h:form>
     </div>
 </h:body>

@@ -9,16 +9,17 @@ import org.icefaces.demo.auction.model.AuctionItem;
 public class AuctionItemGenerator {
 	private static final Random random = new SecureRandom();
 	
+	private static final int HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
+	private static final boolean TEST_EXPIRY = false;
+	
 	public static AuctionItem makeItem() {
 		AuctionItem toReturn = new AuctionItem();
 		toReturn.setImagePath(generateImagePath());
 		toReturn.setName(generateName());
-		toReturn.setPrice(10+random.nextInt(5000));
-		if (random.nextBoolean()) {
-			toReturn.setBids(random.nextInt(3));
-		}
-		toReturn.setExpiryDate((new Date().getTime()+3600000)+random.nextInt(604800000)); // Random from base date plus an hour up to a week away
-		toReturn.setShippingCost(1+random.nextInt(20));
+		toReturn.setPrice(generatePrice());
+		toReturn.setBids(generateBids());
+		toReturn.setExpiryDate(generateExpiryDate());
+		toReturn.setShippingCost(generateShippingCost());
 		toReturn.setSellerName(generateSellerName());
 		toReturn.setSellerLocation(generateSellerLocation());
 		toReturn.setDescription(generateDescription(toReturn.getName(), toReturn.getImagePath()));
@@ -35,6 +36,57 @@ public class AuctionItemGenerator {
 	private static String generateName() {
 		// TODO Generate a realistic sounding item name
 		return "Bucket";
+	}
+	
+	private static double generatePrice() {
+		// Figure out if we're doing a cheap, normal, big, or huge size price
+		switch (1+random.nextInt(4)) {
+			case 1: return random.nextInt(10) + random.nextDouble() + 0.1; // Need to add 0.1 for the super rare 0 + 0.0 case
+			case 2: return 5+random.nextInt(100) + random.nextDouble();
+			case 3: return 100+random.nextInt(1000) + random.nextDouble();
+			case 4: return 1000+random.nextInt(10000) + random.nextDouble();
+		}
+		return 1.0;
+	}
+	
+	private static int generateBids() {
+		if (random.nextBoolean()) {
+			return random.nextInt(3);
+		}
+		return 0;
+	}
+	
+	private static long generateExpiryDate() {
+		if (!TEST_EXPIRY) {
+			// First randomly choose if we're doing time beyond a day
+			int min = HOUR_IN_MILLISECONDS; // Minimum of an hour away
+			int cap = min;
+			switch (1+random.nextInt(4)) {
+				// Up to a week
+				case 1: cap = HOUR_IN_MILLISECONDS * 24 * 6; break;
+				// Up to 3 days
+				case 2: cap = HOUR_IN_MILLISECONDS * 24 * 3; break;
+				// Up to 1 day
+				case 3: cap = HOUR_IN_MILLISECONDS * 24; break;
+				// Random hours
+				case 4: cap = HOUR_IN_MILLISECONDS * (1+random.nextInt(5)); break;
+			}
+			return (new Date().getTime()+min)+random.nextInt(cap);
+		}
+		else {
+			long shortExpiry = new Date().getTime();
+			shortExpiry += ((20+random.nextInt(30)) * 1000); // Expire in 20-50 seconds
+			return shortExpiry;
+		}
+	}
+	
+	private static Double generateShippingCost() {
+		if (random.nextBoolean()) {
+			return (1+random.nextInt(20)) + random.nextDouble();
+		}
+		else {
+			return 1+random.nextInt(20) + 0.0;
+		}
 	}
 	
 	private static String generateSellerName() {
