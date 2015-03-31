@@ -14,6 +14,8 @@
  * governing permissions and limitations under the License.
  */
 
-.ui-combobox-value .ui-inputfield {
+.ui-combobox .ui-combobox-value input.ui-inputfield {
 border:0; /* this setting is placed here, rather than inline, so it can be easily overriden */
+margin:0;
+padding:0;
 }
