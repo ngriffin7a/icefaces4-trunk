@@ -17,16 +17,14 @@
 package org.icefaces.demo.auction.message;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.util.TimestampUtil;
 
 @ApplicationScoped
 @ManagedBean(name=GlobalMessageBean.BEAN_NAME)
@@ -34,7 +32,6 @@ public class GlobalMessageBean implements Serializable {
 	public static final String BEAN_NAME = "globalMessage";
 	
 	private static final int FULL_LOG_COUNT = 100;
-	private static final DateFormat TIMESTAMP = new SimpleDateFormat("kk:mm:ss");
 	private static final int MESSAGE_DISPLAY_TIME = 5000;
 	
 	private List<String> messages = new ArrayList<String>(0);
@@ -105,7 +102,7 @@ public class GlobalMessageBean implements Serializable {
 	}
 	
 	public void addMessage(String message) {
-		messages.add(0, TIMESTAMP.format(new Date()) + ": " + message);
+		messages.add(0, TimestampUtil.stamp() + message);
 		
 		// Check if we exceed our max size, in which case we'll remove the last (oldest) element
 		if (messages.size() > FULL_LOG_COUNT) {

@@ -49,7 +49,8 @@
     <h:form id="n" prependId="false">
 		<ace:notificationPanel id="messagePanel"
 			                   visible="#{globalMessage.hasNew}" position="top"
-			                   effect="slide" effectSpeed="slow">
+			                   effect="slide" effectSpeed="slow"
+			                   style="background: #{settingsBean.notificationBackground}; color: #{settingsBean.notificationForeground};">
 			<h:panelGroup layout="block" styleClass="notificationBarWrap">
                 <ui:repeat value="#{globalMessage.messages}" var="gmessage">
                     #{gmessage}<br/>
@@ -64,12 +65,13 @@
     <!-- TODO Add an Add Item button (floating top right of the table?) that does a popup with item details to add -->
     
     <div class="auctionMonitorContainer">
-        <h:messages globalOnly="true" layout="table"/>
-        
-        <ace:tabSet id="at">
+        <ace:tabSet id="at" orientation="#{settingsBean.tabOrientation}">
             <ace:tabPane label="Auction List">
 		        <h:form id="f" prependId="false">
 		            <ace:tabSetProxy for="at"/>
+		            
+		            <h:messages globalOnly="true" layout="table"/>
+		            
 		            <ace:dataTable id="a"
 		                           value="#{auctionService.auctions}" var="item"
 		                           styleClass="auctionMontiorTable"
@@ -177,7 +179,85 @@
 	        <ace:tabPane label="Settings">
 	            <h:form id="s" prependId="false">
 	                <ace:tabSetProxy for="at"/>
-	                <!-- TODO Settings (optionally stored in a cookie): Name, Default Bid Increase, Notification Color, Tab Layout -->
+	                
+	                <icecore:defaultAction actionListener="#{settingsController.save}" key="Enter"/>
+	                
+                    <ace:panel closable="false" collapsed="false" toggleable="true"
+                               header="Application Settings">
+		                <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
+		                    <h:graphicImage id="nameInHelp" library="images" name="help.png"/>
+		                    <h:outputLabel for="nameIn" value="Name:"/>
+		                    <ace:textEntry id="nameIn" value="#{settingsBean.name}" required="true"
+		                                   autocapitalize="on" autocomplete="on" maxlength="15"
+		                                   placeholder="Enter your name">
+		                        <f:validateLength minimum="3" maximum="15"/>
+		                    </ace:textEntry>
+		                    <h:message for="nameIn"/>
+		                    
+		                    <h:graphicImage id="dbidHelp" library="images" name="help.png"/>
+		                    <h:outputLabel for="dbid" value="Default Bid Increment:"/>
+		                    <ace:textEntry id="dbid" value="#{settingsBean.bidIncrement}" required="true"
+		                                   maxlength="5">
+		                        <f:validateDoubleRange minimum="1.0" maximum="100.0"/>
+		                    </ace:textEntry>
+		                    <h:message for="dbid"/>
+		                    
+		                    <h:graphicImage id="taboHelp" library="images" name="help.png"/>
+	                        <h:outputLabel for="tabo" value="Tab Orientation:"/>
+	                        <h:selectOneRadio id="tabo" value="#{settingsBean.tabOrientation}" required="true">
+	                            <f:selectItems value="#{listData.tabOrientations}"/>
+	                        </h:selectOneRadio>
+	                        <h:message for="tabo"/>
+		                    
+		                    <!-- TODO Display color picker dropdown for Notification Back/Foreground choice -->
+		                    <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
+		                    <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
+		                    <ace:textEntry id="ncolorb" value="#{settingsBean.notificationBackground}"/>
+		                    <h:message for="ncolorb"/>
+		                    
+		                    <h:graphicImage id="ncolorfHelp" library="images" name="help.png"/>
+		                    <h:outputLabel for="ncolorf" value="Notification Foreground:" required="true"/>
+		                    <ace:textEntry id="ncolorf" value="#{settingsBean.notificationForeground}"/>
+		                    <h:message for="ncolorf"/>
+		                    
+		                    <h:graphicImage id="saveHelp" library="images" name="help.png"/>
+                            <h:outputLabel for="save" value="Save settings in a web browser cookies?"/>
+                            <h:selectBooleanCheckbox id="save" value="#{settingsBean.saveCookie}" required="true"/>
+                            <h:message for="save"/>
+		                </h:panelGrid>
+		                
+		                <f:facet name="footer">
+                            <h:panelGroup layout="block">
+                                <h:commandButton value="Submit" actionListener="#{settingsController.save}"/>
+                                
+                                <h:messages globalOnly="true" layout="table"/>
+                            </h:panelGroup>
+	                    </f:facet>
+	                </ace:panel>
+	                
+	                <ace:tooltip for="nameInHelp" speechBubble="true">
+	                    Customize the name you want associated with all bids (must be 3 to 15 characters).
+	                </ace:tooltip>
+	                
+	                <ace:tooltip for="dbidHelp" speechBubble="true">
+	                    When you begin a bid on an item the default price amount will be automatically incremented by this number (1-100).
+	                </ace:tooltip>
+	                
+	                <ace:tooltip for="taboHelp" speechBubble="true">
+	                    Choose how you want the tab pane laid out on the page.
+	                </ace:tooltip>
+	                
+	                <ace:tooltip for="ncolorbHelp" speechBubble="true">
+	                    Customize the background color of the notification panel that displays messages at the top of the page.
+	                </ace:tooltip>
+	                
+	                <ace:tooltip for="ncolorfHelp" speechBubble="true">
+	                    Customize the foreground text color of the notification panel that displays messages at the top of the page.
+	                </ace:tooltip>
+	                
+	                <ace:tooltip for="saveHelp" speechBubble="true">
+	                    If selected then your choices on this form will be stored as web browser cookies, and reloaded from there on subsequent visits.
+	                </ace:tooltip>
 	            </h:form>
 	        </ace:tabPane>
         </ace:tabSet>

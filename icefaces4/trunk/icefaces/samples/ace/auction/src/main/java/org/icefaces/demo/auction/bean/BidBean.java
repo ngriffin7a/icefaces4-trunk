@@ -24,6 +24,7 @@ import javax.faces.bean.ViewScoped;
 import org.icefaces.ace.model.table.RowState;
 import org.icefaces.ace.model.table.RowStateMap;
 import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.util.FacesUtils;
 
 @ManagedBean(name=BidBean.BEAN_NAME)
 @ViewScoped
@@ -69,7 +70,8 @@ public class BidBean implements Serializable {
 	
 	public void updateBidding() {
 		if (bidItem != null) {
-			currentBid = bidItem.getPrice() + AuctionItem.BID_INCREMENT;
+			SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
+			currentBid = bidItem.getPrice() + settings.getBidIncrement();
 		}
 	}
 	

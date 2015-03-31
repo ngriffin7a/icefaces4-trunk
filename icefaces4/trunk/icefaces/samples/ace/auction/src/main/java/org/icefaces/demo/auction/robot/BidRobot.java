@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -29,6 +28,7 @@ import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.service.AuctionService;
+import org.icefaces.demo.auction.test.TestFlags;
 import org.icefaces.demo.auction.util.FacesUtils;
 
 /**
@@ -38,7 +38,6 @@ import org.icefaces.demo.auction.util.FacesUtils;
 @CustomScoped(value="#{window}")
 public class BidRobot implements Serializable {
 	public static final String BEAN_NAME = "bidRobot";
-	private static final Logger log = Logger.getLogger(BidRobot.class.getName());
 	
 	private Random random = new SecureRandom();
 	private Thread bidThread;
@@ -48,17 +47,32 @@ public class BidRobot implements Serializable {
 	
 	@PostConstruct
 	public void initRobot() {
+		if (TestFlags.TEST_BIDROBOT) {
+			active = true;
+		}
+		
 		if (active) {
-			// Set some parameters of how the robot will behave
-			maxBids = 5+random.nextInt(20);
 			final AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
+			
+			// Set some parameters of how the robot will behave
+			if (!TestFlags.TEST_BIDROBOT) {
+				maxBids = 5+random.nextInt(20);
+			}
+			else {
+				maxBids = 100;
+			}
 			
 			bidThread = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					int bidCount = 0;
 					while ((bidCount < maxBids) && (active)) {
-						waitTimeMillis = 1000 * (30+random.nextInt(60));
+						if (!TestFlags.TEST_BIDROBOT) {
+							waitTimeMillis = 1000 * (30+random.nextInt(60));
+						}
+						else {
+							waitTimeMillis = 1000;
+						}
 						
 						try {
 							// Have the first bid come in quickly, to show activity right away
@@ -87,7 +101,7 @@ public class BidRobot implements Serializable {
 							// Obviously we only want to bid on a valid non-expired item
 							if (!toBid.isExpired()) {
 								// Create a random bid amount between the normal BID_INCREMENT and half the MAX_BID_INCREASE, plus a few random decimal places 
-								double newBid = toBid.getPrice()+AuctionItem.BID_INCREMENT+random.nextInt((int)AuctionItem.MAX_BID_INCREASE/2)+random.nextDouble();
+								double newBid = toBid.getPrice()+AuctionItem.DEFAULT_BID_INCREMENT+random.nextInt((int)AuctionItem.MAX_BID_INCREASE/2)+random.nextDouble();
 								service.placeBid(toBid, newBid);
 								bidCount++;
 							}
