@@ -42,7 +42,7 @@ public class BidRobot implements Serializable {
 	
 	private Random random = new SecureRandom();
 	private Thread bidThread;
-	private boolean active = random.nextInt(10) > 2; // Have a small chance to not even bid
+	private boolean active = (random.nextInt(10) != 0); // Have a small 10% chance to not even bid
 	private int maxBids;
 	private long waitTimeMillis;
 	

@@ -33,8 +33,11 @@
     
     <script type="text/javascript">
 	    function focusBid() {
-	    	document.getElementById('a:bidIn_input').focus();
-	    	document.getElementById('a:bidIn_input').select();
+	    	var bidIn = document.getElementById('a:bidIn_input');
+	    	if (bidIn) {
+		    	bidIn.focus();
+		    	bidIn.select();
+	    	}
 	    }
     </script>
 </h:head>
@@ -83,18 +86,19 @@
 		                <f:facet name="header">
 		                    Auction List
 		                </f:facet>
-		                <ace:column headerText="Name">
+		                <ace:column headerText="Name" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
 		                    #{item.name}
 		                </ace:column>
-		                <ace:column headerText="Price" style="text-align: right;">
+		                <ace:column headerText="Price" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
+		                            style="text-align: right;">
 		                    <h:outputText value="#{item.price}">
 		                        <f:convertNumber type="currency" currencySymbol="$"/>
 		                    </h:outputText>
 		                </ace:column>
-		                <ace:column headerText="Bids">
+		                <ace:column headerText="Bids" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
 		                    #{item.bids}
 		                </ace:column>
-		                <ace:column headerText="Time Left">
+		                <ace:column headerText="Time Left" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
 		                    <h:outputText id="e" value="#{item.expiryDate}">
 		                        <f:converter converterId="TimeLeftConverter"/>
 		                    </h:outputText>
@@ -173,7 +177,7 @@
 	        <ace:tabPane label="Settings">
 	            <h:form id="s" prependId="false">
 	                <ace:tabSetProxy for="at"/>
-	                <!-- TODO Add a tab with Settings (mainly to choose default bid increase, maybe also name?) -->
+	                <!-- TODO Settings (optionally stored in a cookie): Name, Default Bid Increase, Notification Color, Tab Layout -->
 	            </h:form>
 	        </ace:tabPane>
         </ace:tabSet>

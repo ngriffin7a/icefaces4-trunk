@@ -31,7 +31,6 @@ import javax.faces.bean.ManagedProperty;
 import org.icefaces.demo.auction.message.GlobalMessageBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.push.AuctionWatcher;
-import org.icefaces.demo.auction.util.FacesUtils;
 
 @ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
 @ApplicationScoped
@@ -50,7 +49,7 @@ public class AuctionService implements Serializable {
 	@PostConstruct
 	public void setupAuction() {
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
-		for (int i = 0; i < MINIMUM_ITEMS; i++) {
+		for (int i = 0; i <= MINIMUM_ITEMS; i++) {
 			auctions.add(AuctionItemGenerator.makeItem());
 		}
 		
@@ -105,13 +104,14 @@ public class AuctionService implements Serializable {
 	
 	public boolean placeBid(AuctionItem toUpdate, double newBid) {
 		if (newBid > toUpdate.getPrice()) {
+			// Handle the new bid
 			double oldPrice = toUpdate.getPrice();
 			toUpdate.setPrice(newBid);
 			toUpdate.increaseBids();
 			
-			// TODO Find a way to highlight the client side row, or maybe bold it via CSS from the AuctionItem?
-			
 			if (globalMessage != null) {
+				globalMessage.setLastUpdated(toUpdate);
+				
 				globalMessage.addMessage("New bid (" + toUpdate.getBids() + " total) on item '" + toUpdate.getName() + " increasing the price to " +
 						NumberFormat.getCurrencyInstance().format(newBid) + " from " + NumberFormat.getCurrencyInstance().format(oldPrice) + ".");
 			}
@@ -128,7 +128,7 @@ public class AuctionService implements Serializable {
 	public void setAuctions(List<AuctionItem> auctions) {
 		this.auctions = auctions;
 	}
-
+	
 	public GlobalMessageBean getGlobalMessage() {
 		return globalMessage;
 	}
