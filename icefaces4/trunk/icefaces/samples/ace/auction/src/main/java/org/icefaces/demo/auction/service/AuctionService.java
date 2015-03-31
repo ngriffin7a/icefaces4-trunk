@@ -17,6 +17,7 @@
 package org.icefaces.demo.auction.service;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -25,9 +26,12 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 
+import org.icefaces.demo.auction.message.GlobalMessageBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.push.AuctionWatcher;
+import org.icefaces.demo.auction.util.FacesUtils;
 
 @ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
 @ApplicationScoped
@@ -36,9 +40,12 @@ public class AuctionService implements Serializable {
 	private static final Logger log = Logger.getLogger(AuctionService.class.getName());
 	
 	public static final int MINIMUM_ITEMS = 10;
-	
-	private List<AuctionItem> auctions = new Vector<AuctionItem>(MINIMUM_ITEMS);
+
 	private AuctionWatcher renderer = AuctionWatcher.getInstance();
+	private List<AuctionItem> auctions = new Vector<AuctionItem>(MINIMUM_ITEMS);
+	
+	@ManagedProperty(value="#{" + GlobalMessageBean.BEAN_NAME + "}")
+	private GlobalMessageBean globalMessage;
 	
 	@PostConstruct
 	public void setupAuction() {
@@ -85,10 +92,14 @@ public class AuctionService implements Serializable {
 	
 	public boolean placeBid(AuctionItem toUpdate, double newBid) {
 		if (newBid > toUpdate.getPrice()) {
+			double oldPrice = toUpdate.getPrice();
 			toUpdate.setPrice(newBid);
 			toUpdate.increaseBids();
 			
-			// TODO Notify users of the change in bid price
+			if (globalMessage != null) {
+				globalMessage.addMessage("New bid (" + toUpdate.getBids() + " total) on item '" + toUpdate.getName() + " increasing the price to " +
+						NumberFormat.getCurrencyInstance().format(newBid) + " from " + NumberFormat.getCurrencyInstance().format(oldPrice) + ".");
+			}
 			
 			return true;
 		}
@@ -101,5 +112,13 @@ public class AuctionService implements Serializable {
 
 	public void setAuctions(List<AuctionItem> auctions) {
 		this.auctions = auctions;
+	}
+
+	public GlobalMessageBean getGlobalMessage() {
+		return globalMessage;
+	}
+
+	public void setGlobalMessage(GlobalMessageBean globalMessage) {
+		this.globalMessage = globalMessage;
 	}
 }

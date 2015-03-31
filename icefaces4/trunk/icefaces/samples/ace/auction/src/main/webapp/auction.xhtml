@@ -30,16 +30,37 @@
     <h:outputStylesheet library="css" name="auction_styles.css"/>
     <link href="./resources/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
     <link href="./resources/images/favicon.ico" rel="icon" type="image/x-icon"/>
+    
+    <script type="text/javascript">
+	    function focusBid() {
+	    	document.getElementById('a:bidIn_input').focus();
+	    	document.getElementById('a:bidIn_input').select();
+	    }
+    </script>
 </h:head>
 
 <h:body>
     <h:outputText value="#{pushBean}" style="display: none; height: 0;"/>
     <h:outputText value="#{bidRobot}" style="display: none; height: 0;"/>
+    
+    <h:form id="n" prependId="false">
+		<ace:notificationPanel id="messagePanel"
+			                   visible="#{globalMessage.hasNew}" position="top"
+			                   effect="slide" effectSpeed="slow">
+			<h:panelGroup layout="block" styleClass="notificationBarWrap">
+                <ui:repeat value="#{globalMessage.messages}" var="gmessage">
+                    #{gmessage}<br/>
+                </ui:repeat>
+			</h:panelGroup>
+		</ace:notificationPanel>
+	</h:form>
 
     <h:graphicImage library="images" name="banner_hdr_auction.jpg"/>
 
     <div class="auctionMonitorContainer">
-        <h:form prependId="false">
+        <h:messages globalOnly="true" layout="table"/>
+        
+        <h:form id="f" prependId="false">
             <ace:dataTable id="a"
                            value="#{auctionService.auctions}" var="item"
                            styleClass="auctionMontiorTable"
@@ -49,9 +70,13 @@
                            rows="20"
                            reorderableColumns="true" resizableColumns="true"
                            alwaysExecuteContents="true"
+                           stateMap="#{bidBean.stateMap}"
                            selectionMode="single"
                            rowSelectListener="#{bidController.selectItem}"
                            rowUnselectListener="#{bidController.unselectItem}">
+                <f:facet name="header">
+                    Auction List
+                </f:facet>
                 <ace:column headerText="Name">
                     #{item.name}
                 </ace:column>
@@ -70,14 +95,18 @@
                 </ace:column>
                 <f:facet name="footer">
                     <h:panelGroup layout="block">
-                        <h:panelGroup layout="block" rendered="#{bidBean.renderBidPanel}">
+                        <h:panelGroup id="footWrap" layout="block" rendered="#{bidBean.renderBidPanel}">
+                            <icecore:defaultAction actionListener="#{bidController.submitBid}" key="Enter"/>
+                            <icecore:defaultAction actionListener="#{bidController.cancelBid}" key="Esc"/>
                             <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
                             <ace:textEntry id="bidIn" value="#{bidBean.currentBid}" required="true" requiredMessage="Enter a valid bid.">
                                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                             </ace:textEntry>
-                            <h:commandButton value="Submit" actionListener="#{bidController.submitBid}"/>
+                            <h:commandButton id="submitBid" value="Submit" actionListener="#{bidController.submitBid}"/>
                             <h:commandButton value="Cancel" immediate="true" actionListener="#{bidController.cancelBid}"/>
+                            <br/>
                             <h:message for="bidIn"/>
+                            <h:message for="footWrap"/>
                         </h:panelGroup>
                         <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
                     </h:panelGroup>
