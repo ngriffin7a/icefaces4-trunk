@@ -69,7 +69,7 @@ public class BidController implements Serializable {
 					NumberFormat.getCurrencyInstance().format(AuctionItem.MAX_BID_INCREASE) + " at once, resetting your current bid.");
 			
 			// Reset our current bid to match what the maximum increase should be
-			bidBean.setCurrentBid(bidBean.getBidItem().getPrice() + AuctionItem.MAX_BID_INCREASE);
+			bidBean.setCurrentBid(bidBean.getBidItem().getPrice() + AuctionItem.MAX_BID_INCREASE - 1);
 			return;
 		}
 		

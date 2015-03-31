@@ -80,13 +80,26 @@ public class AuctionService implements Serializable {
 	}
 	
 	public void addAuction(AuctionItem toAdd) {
-		// TODO Notify users when a new auction is added
 		auctions.add(toAdd);
+		
+		if (globalMessage != null) {
+			globalMessage.addMessage("Listed a new auction for item '" + toAdd.getName() + "' added for " + NumberFormat.getCurrencyInstance().format(toAdd.getPrice()) + " ending in " +
+					toAdd.getTimeLeft() + ".");
+		}
 	}
 	
 	public void deleteAuction(AuctionItem toRemove) {
 		if (auctions.remove(toRemove)) {
-			// TODO Notify users when something is removed
+			if (globalMessage != null) {
+				if (toRemove.getBids() > 0) {
+					globalMessage.addMessage("Auction won for item '" + toRemove.getName() + "' with " + toRemove.getBids() + " bids and a winning price of " +
+							NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
+				}
+				else {
+					globalMessage.addMessage("Auction expired for item '" + toRemove.getName() + "' with no bids and a final listed price of " +
+							NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
+				}
+			}
 		}
 	}
 	
@@ -95,6 +108,8 @@ public class AuctionService implements Serializable {
 			double oldPrice = toUpdate.getPrice();
 			toUpdate.setPrice(newBid);
 			toUpdate.increaseBids();
+			
+			// TODO Find a way to highlight the client side row, or maybe bold it via CSS from the AuctionItem?
 			
 			if (globalMessage != null) {
 				globalMessage.addMessage("New bid (" + toUpdate.getBids() + " total) on item '" + toUpdate.getName() + " increasing the price to " +
