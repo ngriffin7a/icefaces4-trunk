@@ -31,6 +31,7 @@ import javax.faces.bean.ManagedBean;
 public class GlobalMessageBean implements Serializable {
 	public static final String BEAN_NAME = "globalMessage";
 	
+	private static final int FULL_LOG_COUNT = 100;
 	private static final DateFormat TIMESTAMP = new SimpleDateFormat("kk:mm:ss");
 	private static final int MESSAGE_DISPLAY_TIME = 5000;
 	
@@ -68,8 +69,33 @@ public class GlobalMessageBean implements Serializable {
 		return messages;
 	}
 	
+	public int getFullLogCount() {
+		return FULL_LOG_COUNT;
+	}
+	
+	public int getMessagesCount() {
+		if ((messages == null) || (messages.isEmpty())) {
+			return 0;
+		}
+		return messages.size();
+	}
+	
+	public int getVisibleLogCount() {
+		int toReturn = getMessagesCount();
+		
+		if (toReturn > FULL_LOG_COUNT) {
+			return FULL_LOG_COUNT;
+		}
+		return toReturn;
+	}
+	
 	public void addMessage(String message) {
 		messages.add(0, TIMESTAMP.format(new Date()) + ": " + message);
+		
+		// Check if we exceed our max size, in which case we'll remove the last (oldest) element
+		if (messages.size() > FULL_LOG_COUNT) {
+			messages.remove(messages.size()-1);
+		}
 		
 		startWait();
 	}
