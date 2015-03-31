@@ -36,10 +36,9 @@
 
 	<mobi:largeView>
 		<style type="text/css">
-			.ui-field-contain .mobi-fieldset-row .mobi-center {
+			.ui-field-contain .mobi-fieldset-row .mobi-center-cloudpush {
 			display: table;
-			margin-top: 0.5em;
-			margin-bottom: 0.5em;
+			margin-top: 0.1em;
 			margin-left: auto;
 			margin-right: auto;
 			}
@@ -84,9 +83,9 @@
             </mobi:fieldsetRow>
             <mobi:fieldsetRow id="cloudPushButtons">
                 <div id="emailDiv">
-                    <h:panelGrid rendered="#{cloudPushBean.acquireEmail}" columns="1" style="margin-left:auto;margin-right:auto;" class="mobi-center">
-                        <h:inputText id="email" value="#{cloudPushBean.email}" style="width:100%;" styleClass="mobi-center"/>
-						<h:panelGroup styleClass="mobi-center">
+                    <h:panelGrid rendered="#{cloudPushBean.acquireEmail}" columns="1" style="margin-left:auto;margin-right:auto;" class="mobi-center-cloudpush">
+                        <h:inputText id="email" value="#{cloudPushBean.email}" style="width:100%;" styleClass="mobi-center-cloudpush"/>
+						<h:panelGroup styleClass="mobi-center-cloudpush">
 							<ace:pushButton value="Set email address">
 								<ace:ajax execute="email" render="cloudPushButtons"/>
 							</ace:pushButton>
@@ -94,19 +93,19 @@
                     </h:panelGrid>
                 </div>
 				<div>
-					<span onclick="this.style.cssText='display:none;';document.getElementById('emailDiv').style.cssText='display:none;';document.getElementById('pushType').style.cssText='display:block;';" class="mobi-center">
+					<span onclick="this.style.cssText='display:none;';document.getElementById('emailDiv').style.cssText='display:none;';document.getElementById('pushType').style.cssText='display:block;';" class="mobi-center-cloudpush">
 						<mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
 					</span>
                 </div>
                 <div id="pushType" style="display:none;">
                     <div>
-                        <input type="button" onclick="toggleBlockingConnection(this);" class="ui-button ui-widget ui-state-default ui-corner-all mobi-center" style="padding: 0.5em;" value="Disconnect push"/>
+                        <input type="button" onclick="toggleBlockingConnection(this);" class="ui-button ui-widget ui-state-default ui-corner-all mobi-center-cloudpush" style="padding: 0.5em;" value="Disconnect Push"/>
                     </div>
-                    <div class="mobi-center">
+                    <div class="mobi-center-cloudpush">
                         <ace:pushButton value="Priority Push" 
                                         actionListener="#{cloudPushBean.sendPriorityPushMessage}"/>
                     </div>
-                    <div class="mobi-center">
+                    <div class="mobi-center-cloudpush">
                         <ace:pushButton value="Simple Push"
                                         actionListener="#{cloudPushBean.sendNormalPushMessage}"/>
                     </div>
