@@ -1,0 +1,27 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:ace="http://www.icefaces.org/icefaces/components"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>
+        <composite:attribute name="id" default="colorPicker" type="java.lang.String"/>
+        <composite:attribute name="value"/>
+    </composite:interface>
+    
+    <composite:implementation>
+		<ace:selectMenu id="#{cc.attrs.id}"
+			            value="#{cc.attrs.value}"
+			            listValue="#{listData.colors}" listVar="color"
+			            itemValue="#{color.rgba}" direction="down">
+			<f:facet name="row">
+				<h:panelGrid columns="2" width="100%" columnClasses="w75,w25">
+					<h:outputText value="#{color.name}" />
+					<h:outputText value="_"
+						style="display: inline-block; width: 20px; color: #{color.rgba}; background-color: #{color.rgba}; border: 1px solid black;"
+						styleClass="ui-selectmenu-item-ignore" />
+				</h:panelGrid>
+			</f:facet>
+		</ace:selectMenu>
+	</composite:implementation>
+</ui:component>

@@ -17,6 +17,8 @@
 package org.icefaces.demo.auction.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -30,8 +32,35 @@ public class ListData implements Serializable {
 	public static final String[] TAB_ORIENTATIONS = new String[] {
 		"bottom", DEFAULT_TAB_ORIENTATION, "left", "right"
 	};
-
+	public static final List<ColorRGBA> COLORS = generateColors();
+	
+	private static List<ColorRGBA> generateColors() {
+		List<ColorRGBA> toReturn = new ArrayList<ColorRGBA>();
+		toReturn.add(new ColorRGBA("White", 255,255,255));
+		toReturn.add(new ColorRGBA("Black", 0,0,0));
+		toReturn.add(new ColorRGBA("Red", 255,0,0));
+		toReturn.add(new ColorRGBA("Green", 0,255,0));
+		toReturn.add(new ColorRGBA("Blue", 0,0,255));
+		toReturn.add(new ColorRGBA("Yellow", 255,255,0));
+		toReturn.add(new ColorRGBA("Purple", 128,0,128));
+		toReturn.add(new ColorRGBA("Brown", 165,42,42));
+		toReturn.add(new ColorRGBA("Cyan", 0,139,139));
+		toReturn.add(new ColorRGBA("Orange", 255,140,0));
+		toReturn.add(new ColorRGBA("Salmon", 233,150,122));
+		toReturn.add(new ColorRGBA("Sky Blue", 0,191,255));
+		toReturn.add(new ColorRGBA("Forest Green", 34,139,34));
+		toReturn.add(new ColorRGBA("Gold", 255,215,0));
+		toReturn.add(new ColorRGBA("Steel Blue", 176,196,222));
+		toReturn.add(new ColorRGBA("Violet Red", 219,112,147));
+		toReturn.add(new ColorRGBA("Seashell", 255,245,238));
+		return toReturn;
+	}
+	
 	public String[] getTabOrientations() {
 		return TAB_ORIENTATIONS;
+	}
+	
+	public List<ColorRGBA> getColors() {
+		return COLORS;
 	}
 }
