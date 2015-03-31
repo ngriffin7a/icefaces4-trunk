@@ -26,6 +26,8 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import org.icefaces.demo.auction.model.AuctionItem;
+
 @ApplicationScoped
 @ManagedBean(name=GlobalMessageBean.BEAN_NAME)
 public class GlobalMessageBean implements Serializable {
@@ -36,6 +38,7 @@ public class GlobalMessageBean implements Serializable {
 	private static final int MESSAGE_DISPLAY_TIME = 5000;
 	
 	private List<String> messages = new ArrayList<String>(0);
+	private AuctionItem lastUpdated = null;
 	private boolean hasNew = false;
 	private Thread waitThread;
 	
@@ -54,11 +57,23 @@ public class GlobalMessageBean implements Serializable {
 				
 				try {
 					Thread.sleep(MESSAGE_DISPLAY_TIME);
+					
+					// Reset our new flag and last updated object
+					// This will hide the notification panel and remove the client side row styling
 					hasNew = false;
+					lastUpdated = null;
 				}catch (InterruptedException ignored) { }
 			}
 		});
 		waitThread.start();
+	}
+	
+	public AuctionItem getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(AuctionItem lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 	
 	public boolean getHasNew() {

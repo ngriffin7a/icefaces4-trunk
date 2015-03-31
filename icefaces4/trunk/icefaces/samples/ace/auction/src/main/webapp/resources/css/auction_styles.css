@@ -14,6 +14,18 @@
  * governing permissions and limitations under the License.
  */
 
+/* Overrides */
+.ui-datatable-odd {
+    background-color: #EEEEEE !important;
+}
+
+.ui-notificationbar {
+    height: 100px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Page Styles */
 .auctionMonitorContainer {
     margin: 15px;
     margin-bottom:5px;
@@ -30,13 +42,10 @@
 	padding: 5px;
 }
 
-/* Overrides */
-.ui-datatable-odd {
-    background-color: #EEEEEE !important;
+.messagePanel {
+	background: rgba(255, 0, 0, 0.9);
 }
 
-.ui-notificationbar {
-	height: 100px;
-	padding: 0;
-	background: rgba(255, 255, 255, 0.9);
+.updateC {
+	background: rgba(50, 50, 200, 0.3);
 }
