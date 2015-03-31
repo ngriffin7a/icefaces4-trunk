@@ -28,7 +28,7 @@ import org.icefaces.demo.auction.converter.TimeLeftConverter;
 public class AuctionItem implements Serializable {
 	private static final long serialVersionUID = 213747232774481730L;
 	
-	public static final double BID_INCREMENT = 1.0;
+	public static final double DEFAULT_BID_INCREMENT = 1.0;
 	public static final double MAX_BID_INCREASE = 100.0;
 
 	public enum Condition {

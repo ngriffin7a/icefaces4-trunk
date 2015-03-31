@@ -112,8 +112,8 @@ public class AuctionService implements Serializable {
 			if (globalMessage != null) {
 				globalMessage.setLastUpdated(toUpdate);
 				
-				globalMessage.addMessage("New bid (" + toUpdate.getBids() + " total) on item '" + toUpdate.getName() + " increasing the price to " +
-						NumberFormat.getCurrencyInstance().format(newBid) + " from " + NumberFormat.getCurrencyInstance().format(oldPrice) + ".");
+				globalMessage.addMessage("New bid (" + toUpdate.getBids() + " total) on item '" + toUpdate.getName() + "' increasing the price from " +
+						NumberFormat.getCurrencyInstance().format(oldPrice) + " to " + NumberFormat.getCurrencyInstance().format(newBid) + ".");
 			}
 			
 			return true;

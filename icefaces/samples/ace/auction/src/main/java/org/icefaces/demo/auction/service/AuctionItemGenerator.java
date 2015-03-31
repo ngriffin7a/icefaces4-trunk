@@ -21,12 +21,12 @@ import java.util.Date;
 import java.util.Random;
 
 import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.test.TestFlags;
 
 public class AuctionItemGenerator {
 	private static final Random random = new SecureRandom();
 	
 	private static final int HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
-	private static final boolean TEST_EXPIRY = false; // Debugging toggle to create short lasting items (true) or normal (false)
 	
 	public static AuctionItem makeItem() {
 		AuctionItem toReturn = new AuctionItem();
@@ -73,7 +73,7 @@ public class AuctionItemGenerator {
 	}
 	
 	private static long generateExpiryDate() {
-		if (!TEST_EXPIRY) {
+		if (!TestFlags.TEST_EXPIRY) {
 			// First randomly choose if we're doing time beyond a day
 			int min = HOUR_IN_MILLISECONDS; // Minimum of an hour away
 			int cap = min;

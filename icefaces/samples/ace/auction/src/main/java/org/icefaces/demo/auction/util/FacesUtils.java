@@ -16,17 +16,19 @@
 
 package org.icefaces.demo.auction.util;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -36,32 +38,97 @@ import javax.servlet.http.HttpSession;
  * @since 2.0
  */
 public class FacesUtils {
+	public static String getStringFromCookie(String name) {
+		Cookie toCheck = getCookie(name);
+		
+		if (toCheck != null) {
+			return toCheck.getValue();
+		}
+		return null;
+	}
+	
 	public static Cookie getCookie(String name) {
-		Object plainRequest = FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		if ((plainRequest != null) && (plainRequest instanceof HttpServletRequest)) {
-			Cookie[] cookieList = ((HttpServletRequest)plainRequest).getCookies();
-			if ((cookieList != null) && (cookieList.length > 0)) {
-				for (Cookie currentCookie : cookieList) {
-					if (name.equals(currentCookie.getName())) {
-						return currentCookie;
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		if (fc != null) {
+			ExternalContext ec = fc.getExternalContext();
+			
+			if (ec != null) {
+				Object mapLookup = ec.getRequestCookieMap().get(name);
+				
+				if ((mapLookup != null) && (mapLookup instanceof Cookie)) {
+					return (Cookie)mapLookup;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static boolean getHasCookieStartingWith(String nameStartsWith) {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		if (fc != null) {
+			ExternalContext ec = fc.getExternalContext();
+			
+			if (ec != null) {
+				nameStartsWith = nameStartsWith.toLowerCase(); // Do a case insensitive check
+				
+				Collection<Object> cookieList = ec.getRequestCookieMap().values();
+				Cookie currentCookie = null;
+				for (Object loopObj : cookieList) {
+					if ((loopObj != null) && (loopObj instanceof Cookie)) {
+						currentCookie = (Cookie)loopObj;
+						if (currentCookie.getName().toLowerCase().startsWith(nameStartsWith)) {
+							return true;
+						}
 					}
 				}
 			}
 		}
 		
-		return null;
+		return false;
 	}
 	
-	public static void addCookie(String name, String value, String comment) {
-		Object plainResponse = FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		if (plainResponse != null) {
-			Cookie visitCookie = new Cookie(name, value);
-			visitCookie.setComment(comment);
-			visitCookie.setMaxAge(60 * 60 * 24 * 365); // Set for a year, since that's pretty standard
-			visitCookie.setPath("/");
+	public static void deleteCookie(String name) {
+		deleteCookie(name, null);
+	}
+	
+	public static void deleteCookie(String name, String value) {
+		// As per the cookie standard setting the age to 0 will cause it to be deleted
+		Map<String,Object> properties = new HashMap<String,Object>(1);
+		properties.put("maxAge", 0);
+		
+		addCookie(name, value, properties);
+	}
+	
+	public static void addCookie(String name, Object value) {
+		Map<String,Object> defaultProperties = new HashMap<String,Object>(1);
+		defaultProperties.put("maxAge", 5184000); // Expire after 60 days
+		defaultProperties.put("path", "/");
+		addCookie(name, value, defaultProperties);
+	}
+	
+	public static void addCookie(String name, Object value, Map<String,Object> properties) {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		if (fc != null) {
+			ExternalContext ec = fc.getExternalContext();
 			
-			((HttpServletResponse)plainResponse).addCookie(visitCookie);
+			if (ec != null) {
+				String valueToAdd = (value != null) ? value.toString() : null;
+				ec.addResponseCookie(name, valueToAdd, properties);
+			}
 		}
+	}
+	
+	public static Object loadFromCookie(String cookieName, Object defaultVal) {
+		String toReturn = getStringFromCookie(cookieName);
+		
+		if (toReturn != null) {
+			return toReturn;
+		}
+		
+		return defaultVal;
 	}
 	
     public static Object getManagedBean(String beanName) {
