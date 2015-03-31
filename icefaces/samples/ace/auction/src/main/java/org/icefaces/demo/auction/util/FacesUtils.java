@@ -155,6 +155,10 @@ public class FacesUtils {
 		FacesContext.getCurrentInstance().addMessage(id, generateMessage(FacesMessage.SEVERITY_INFO, infoText));		
 	}
 	
+	public static void addWarnMessage(String id, String warnText) {
+		FacesContext.getCurrentInstance().addMessage(id, generateMessage(FacesMessage.SEVERITY_WARN, warnText));		
+	}
+	
 	public static void addErrorMessage(String id, String errorText) {
 		FacesContext.getCurrentInstance().addMessage(id, generateMessage(FacesMessage.SEVERITY_ERROR, errorText));
 	}

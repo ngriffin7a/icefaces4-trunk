@@ -21,6 +21,8 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.icefaces.ace.model.table.RowState;
+import org.icefaces.ace.model.table.RowStateMap;
 import org.icefaces.demo.auction.model.AuctionItem;
 
 @ManagedBean(name=BidBean.BEAN_NAME)
@@ -31,6 +33,7 @@ public class BidBean implements Serializable {
 	private boolean renderBidPanel = false;
 	private Double currentBid;
 	private AuctionItem bidItem;
+	private RowStateMap stateMap;
 	
 	public boolean isRenderBidPanel() {
 		return renderBidPanel;
@@ -50,6 +53,12 @@ public class BidBean implements Serializable {
 	public void setBidItem(AuctionItem bidItem) {
 		this.bidItem = bidItem;
 	}
+	public RowStateMap getStateMap() {
+		return stateMap;
+	}
+	public void setStateMap(RowStateMap stateMap) {
+		this.stateMap = stateMap;
+	}
 	
 	public void startBidding(AuctionItem item) {
 		setBidItem(item);
@@ -68,5 +77,15 @@ public class BidBean implements Serializable {
 		setBidItem(null);
 		currentBid = null;
 		renderBidPanel = false;
+	}
+	
+	public void unselectRows() {
+		if (stateMap != null) {
+			RowState rowState = null;
+			for (Object rowData : stateMap.getSelected()) {
+				rowState = stateMap.get(rowData);
+				rowState.setSelected(false);
+			}
+		}
 	}
 }

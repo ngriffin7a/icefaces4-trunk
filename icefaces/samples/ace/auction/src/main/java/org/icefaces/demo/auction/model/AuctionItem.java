@@ -17,7 +17,11 @@
 package org.icefaces.demo.auction.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.Date;
+
+import javax.faces.context.FacesContext;
+import javax.faces.convert.NumberConverter;
 
 import org.icefaces.demo.auction.converter.TimeLeftConverter;
 

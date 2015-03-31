@@ -24,7 +24,19 @@
     width: 100%;
 }
 
+.notificationBarWrap {
+	height: 90px;
+	overflow-y: scroll;
+	padding: 5px;
+}
+
 /* Overrides */
 .ui-datatable-odd {
     background-color: #EEEEEE !important;
+}
+
+.ui-notificationbar {
+	height: 100px;
+	padding: 0;
+	background: rgba(255, 255, 255, 0.9);
 }
