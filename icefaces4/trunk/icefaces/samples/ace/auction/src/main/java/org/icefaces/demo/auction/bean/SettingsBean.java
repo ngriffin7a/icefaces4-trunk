@@ -25,6 +25,7 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.util.ColorRGBA;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.ListData;
 
@@ -53,7 +54,7 @@ public class SettingsBean implements Serializable {
 			name = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "name", name).toString();
 			bidIncrement = Double.parseDouble(FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "bidIncrement", bidIncrement).toString());
 			tabOrientation = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "tabOrientation", tabOrientation).toString();
-			notificationBackground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + notificationBackground, notificationBackground).toString();
+			notificationBackground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationBackground", notificationBackground).toString();
 			notificationForeground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationForeground", notificationForeground).toString();
 		}catch (Exception failedLoad) {
 			log.log(Level.WARNING, "Failed when trying to load settings from a cookie, defaulting instead.", failedLoad);
@@ -71,7 +72,7 @@ public class SettingsBean implements Serializable {
 		name = "User #" + userNumber;
 		bidIncrement = AuctionItem.DEFAULT_BID_INCREMENT;
 		tabOrientation = ListData.DEFAULT_TAB_ORIENTATION;
-		notificationBackground = "rgba(255, 255, 255, 0.9)";
+		notificationBackground = "rgba(255, 255, 255, " + ColorRGBA.DEFAULT_OPACITY + ")";
 		notificationForeground = "rgba(0, 0, 0, 1.0)";
 	}
 

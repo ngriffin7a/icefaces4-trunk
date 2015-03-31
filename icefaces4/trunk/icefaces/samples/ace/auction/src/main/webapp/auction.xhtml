@@ -21,7 +21,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
-                xmlns:util="http://java.sun.com/jsf/composite/components"
+                xmlns:auction="http://java.sun.com/jsf/composite/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core">
 <h:head>
     <title>#{msgs['auction.template.title']}</title>
@@ -209,15 +209,16 @@
 	                        </h:selectOneRadio>
 	                        <h:message for="tabo"/>
 		                    
-		                    <!-- TODO Display color picker dropdown for Notification Back/Foreground choice -->
 		                    <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
 		                    <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
-		                    <ace:textEntry id="ncolorb" value="#{settingsBean.notificationBackground}"/>
+		                    <auction:colorPicker id="ncolorb"
+		                                         value="#{settingsBean.notificationBackground}"/>
 		                    <h:message for="ncolorb"/>
 		                    
 		                    <h:graphicImage id="ncolorfHelp" library="images" name="help.png"/>
 		                    <h:outputLabel for="ncolorf" value="Notification Foreground:" required="true"/>
-		                    <ace:textEntry id="ncolorf" value="#{settingsBean.notificationForeground}"/>
+		                    <auction:colorPicker id="ncolorf"
+		                                         value="#{settingsBean.notificationForeground}"/>
 		                    <h:message for="ncolorf"/>
 		                    
 		                    <h:graphicImage id="saveHelp" library="images" name="help.png"/>

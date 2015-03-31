@@ -23,6 +23,7 @@
     height: 100px;
     padding: 0;
     background: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 1.0);
 }
 
 /* Page Styles */
@@ -48,4 +49,12 @@
 
 .updateC {
 	background: rgba(50, 50, 200, 0.3);
+}
+
+.w25 {
+	width: 25%;
+}
+
+.w75 {
+	width: 75%;
 }
