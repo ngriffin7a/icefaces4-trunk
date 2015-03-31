@@ -73,7 +73,7 @@ public class SettingsBean implements Serializable {
 		bidIncrement = AuctionItem.DEFAULT_BID_INCREMENT;
 		tabOrientation = ListData.DEFAULT_TAB_ORIENTATION;
 		notificationBackground = "rgba(255, 255, 255, " + ColorRGBA.DEFAULT_OPACITY + ")";
-		notificationForeground = "rgba(0, 0, 0, 1.0)";
+		notificationForeground = "rgba(0, 0, 0, " + ColorRGBA.DEFAULT_OPACITY + ")";
 	}
 
 	public String getName() {
