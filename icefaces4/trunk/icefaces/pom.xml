@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~ Copyright 2004-2015 ICEsoft Technologies Canada Corp.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the
@@ -20,13 +20,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.icefaces</groupId>
-    <artifactId>bundle-parent</artifactId>
+<!--    <groupId>com.icesoft.icefaces-ee</groupId> -->
+
+		<artifactId>bundle-parent</artifactId>
     <version>4.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>ICEfaces</name>
-    <description>ICEfaces Parent Project</description>
-    <!--<name>ICEfaces EE</name>-->
-    <!--<description>ICEfaces EE Parent Project</description>-->
+    <!--<name>ICEfaces</name>-->
+    <!--<description>ICEfaces Parent Project</description>-->
+    <name>ICEfaces EE</name>
+    <description>ICEfaces EE Parent Project</description>
     <url>http://www.icesoft.org</url>
 
     <licenses>
@@ -73,10 +75,15 @@
 
     <modules>
         <module>icepush</module>
-        <module>core</module>
+        <module>core</module>        
         <module>ace</module>
         <module>mobi</module>
         <module>samples</module>
+
+        <!-- Additional modules for EE-only -->
+        <module>ext</module>
+        <module>mobile-simulator</module>
+
     </modules>
 
     <properties>
@@ -84,6 +91,7 @@
         <maven.test.skip>true</maven.test.skip>
 
         <!-- Properties for specifying the product being used (open source) -->
+<!-- 
         <icefaces.product.group>org.icefaces</icefaces.product.group>
         <icefaces.product.name>ICEfaces</icefaces.product.name>
         <icefaces.lib.name>icefaces</icefaces.lib.name>
@@ -91,19 +99,19 @@
         <icepush.product.group>org.icepush</icepush.product.group>
         <icepush.product.name>ICEpush</icepush.product.name>
         <icepush.lib.name>icepush</icepush.lib.name>
+ -->
 
         <!-- Properties for specifying the product being used (EE) -->
-        <!--<icefaces.product.group>com.icesoft.icefaces-ee</icefaces.product.group>-->
-        <!--<icefaces.product.name>ICEfaces EE</icefaces.product.name>-->
-        <!--<icefaces.lib.name>icefaces-ee</icefaces.lib.name>-->
-
-        <!--<icepush.product.group>com.icesoft.icepush-ee</icepush.product.group>-->
-        <!--<icepush.product.name>ICEpush EE</icepush.product.name>-->
-        <!--<icepush.lib.name>icepush-ee</icepush.lib.name>-->
-
+        <icefaces.product.group>com.icesoft.icefaces-ee</icefaces.product.group>
+        <icefaces.product.name>ICEfaces EE</icefaces.product.name>
+        <icefaces.lib.name>icefaces-ee</icefaces.lib.name>
+        <icepush.product.group>com.icesoft.icepush-ee</icepush.product.group>
+        <icepush.product.name>ICEpush EE</icepush.product.name>
+        <icepush.lib.name>icepush-ee</icepush.lib.name>
+        
         <icesoft.company.name>ICEsoft Technologies Inc.</icesoft.company.name>
         <icesoft.copyright>ICEsoft Technologies Canada Corp., All Rights Reserved.</icesoft.copyright>
-        <icesoft.copyright.year>2014</icesoft.copyright.year>
+        <icesoft.copyright.year>2015</icesoft.copyright.year>
 
         <javadoc.title>
             ${icefaces.product.name} Java API Documentation
@@ -129,9 +137,6 @@
 
         <!-- Use with Liferay 6.2 -->
         <liferayfaces.version>4.2.0-m2</liferayfaces.version>
-
-        <!-- When building samples for Pluto Portal -->
-        <!-- <pluto.version>2.0.3</pluto.version> -->
 
         <!-- To avoid warnings about platform dependent actions when copying resources -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -268,7 +273,7 @@
                         <artifactId>javax.faces</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
+            </dependency>            
 
             <dependency>
                 <groupId>${icefaces.product.group}</groupId>
@@ -294,6 +299,19 @@
                 <version>${annotation.version}</version>
                 <scope>provided</scope>
             </dependency>
+            
+	        <!-- Dependencies for EE-only -->
+            <dependency>
+                <groupId>${icefaces.product.group}</groupId>
+                <artifactId>${icefaces.lib.name}-ext</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${icefaces.product.group}</groupId>
+                <artifactId>${icefaces.lib.name}-mobile-simulator</artifactId>
+                <version>${project.version}</version>
+            </dependency>            
 
         </dependencies>
     </dependencyManagement>
