@@ -58,7 +58,6 @@
             <h:panelGroup layout="block">
                 <h:panelGroup id="footWrap" layout="block" rendered="#{bidBean.renderBidPanel}">
                     <icecore:defaultAction actionListener="#{bidController.submitBid}" key="Enter"/>
-                    <icecore:defaultAction actionListener="#{bidController.cancelBid}" key="Esc"/>
                     <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
                     <ace:textEntry id="bidIn" value="#{bidBean.currentBid}"
                                    required="true" requiredMessage="Enter a valid bid."
@@ -80,7 +79,7 @@
                header="Details of Listed Item '#{bidBean.bidItem.name}'"
                rendered="#{bidBean.renderBidPanel}"
                style="margin-top: 15px;">
-        <h:panelGrid columns="2">
+        <h:panelGrid columns="2" cellpadding="3" cellspacing="0">
             <h:outputText value="Condition:"/>
             #{bidBean.bidItem.condition.value}
             
@@ -100,6 +99,18 @@
             
             <h:outputText value="Description:"/>
             #{bidBean.bidItem.description}
+            
+            <h:outputText value="Bid History:"/>
+            <h:panelGrid columns="3" rendered="#{bidBean.bidItem.bids gt 0}">
+	            <h:commandButton immediate="true" value="Graph Bid Increases"
+	                             actionListener="#{bidController.openGraphBidDialog}"/>
+                <h:commandButton immediate="true" value="Graph Price Changes"
+                                 actionListener="#{bidController.openGraphPriceDialog}"/>
+                <h:commandButton immediate="true" value="View History"
+                                 actionListener="#{bidController.openViewHistoryDialog}"/>
+            </h:panelGrid>
+            <h:outputText value="No bids yet"
+                          rendered="#{bidBean.bidItem.bids le 0}"/>
         </h:panelGrid>
     </ace:panel>
 </ui:composition>

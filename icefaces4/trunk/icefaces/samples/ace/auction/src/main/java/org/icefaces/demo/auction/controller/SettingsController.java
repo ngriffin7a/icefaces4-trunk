@@ -41,6 +41,7 @@ public class SettingsController implements Serializable {
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation", bean.getTabOrientation());
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground", bean.getNotificationBackground());
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground", bean.getNotificationForeground());
+			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth", bean.getChartWidth());
 			
 			FacesUtils.addGlobalInfoMessage(TimestampUtil.stamp() + "Successfully saved your user settings to cookies.");
 		}
@@ -51,6 +52,7 @@ public class SettingsController implements Serializable {
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation");
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground");
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground");
+			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth");
 			
 			FacesUtils.addGlobalInfoMessage(TimestampUtil.stamp() + "Successfully updated your user settings for the application.");
 		}

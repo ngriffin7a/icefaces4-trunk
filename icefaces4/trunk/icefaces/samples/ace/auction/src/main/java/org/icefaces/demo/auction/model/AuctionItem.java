@@ -17,18 +17,17 @@
 package org.icefaces.demo.auction.model;
 
 import java.io.Serializable;
-import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.faces.context.FacesContext;
-import javax.faces.convert.NumberConverter;
+import javax.annotation.PostConstruct;
 
 import org.icefaces.demo.auction.converter.TimeLeftConverter;
 
 public class AuctionItem implements Serializable {
-	private static final long serialVersionUID = 213747232774481730L;
-	
 	public static final double DEFAULT_BID_INCREMENT = 1.0;
+	public static final double SMALL_BID_INCREMENT = 5.0;
 	public static final double MAX_BID_INCREASE = 100.0;
 
 	public enum Condition {
@@ -73,6 +72,8 @@ public class AuctionItem implements Serializable {
 	private String description;
 	private Delivery estimatedDelivery;
 	private Condition condition;
+	
+	private List<AuctionHistory> history = new ArrayList<AuctionHistory>();
 	
 	public AuctionItem() {
 	}
@@ -122,9 +123,6 @@ public class AuctionItem implements Serializable {
 	public void setBids(int bids) {
 		this.bids = bids;
 	}
-	public void increaseBids() {
-		bids++;
-	}
 	public long getExpiryDate() {
 		return expiryDate;
 	}
@@ -170,7 +168,34 @@ public class AuctionItem implements Serializable {
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
+	public List<AuctionHistory> getHistory() {
+		return history;
+	}
+	public void setHistory(List<AuctionHistory> history) {
+		this.history = history;
+	}
 	
+	public void placeBid(double newPrice) {
+		placeBid(new Date(), newPrice);
+	}
+
+	public void placeBid(Date bidDate, double newPrice) {
+		archiveHistory(bidDate, newPrice);
+		setPrice(newPrice);
+		increaseBids();
+	}
+	
+	public void increaseBids() {
+		bids++;
+	}
+	
+	public void archiveHistory(Date bidDate, double newBid) {
+		if (history != null) {
+			// Store the bid increase between the incoming new bid and our current price
+			history.add(new AuctionHistory(bidDate, (newBid - price), newBid));
+		}
+	}
+
 	public boolean isExpired() {
 		return new Date().after(new Date(expiryDate));
 	}

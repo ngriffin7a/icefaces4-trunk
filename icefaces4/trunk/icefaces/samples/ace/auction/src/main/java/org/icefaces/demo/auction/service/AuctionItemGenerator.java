@@ -17,6 +17,7 @@
 package org.icefaces.demo.auction.service;
 
 import java.security.SecureRandom;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -33,7 +34,6 @@ public class AuctionItemGenerator {
 		toReturn.setImagePath(generateImagePath());
 		toReturn.setName(generateName());
 		toReturn.setPrice(generatePrice());
-		toReturn.setBids(generateBids());
 		toReturn.setExpiryDate(generateExpiryDate());
 		toReturn.setShippingCost(generateShippingCost());
 		toReturn.setSellerName(generateSellerName());
@@ -41,7 +41,22 @@ public class AuctionItemGenerator {
 		toReturn.setDescription(generateDescription(toReturn.getName(), toReturn.getImagePath()));
 		toReturn.setEstimatedDelivery(generateEstimatedDelivery());
 		toReturn.setCondition(generateCondition());
+		
+		// In half the cases generate some initial bids
+		// We need to actually place/record these bids for historical purposes, as compared to just setting bid count directly
+		if (random.nextBoolean()) {
+			generateFakeBids(toReturn);
+		}
+		
 		return toReturn;
+	}
+	
+	public static double makeSmallBid(AuctionItem toBid) {
+		return toBid.getPrice()+AuctionItem.DEFAULT_BID_INCREMENT+random.nextInt((int)AuctionItem.SMALL_BID_INCREMENT)+random.nextDouble();
+	}
+	
+	public static double makeBid(AuctionItem toBid) {
+		return toBid.getPrice()+AuctionItem.DEFAULT_BID_INCREMENT+random.nextInt((int)AuctionItem.MAX_BID_INCREASE/2)+random.nextDouble();
 	}
 	
 	private static String generateImagePath() {
@@ -63,13 +78,6 @@ public class AuctionItemGenerator {
 			case 4: return 1000+random.nextInt(10000) + random.nextDouble();
 		}
 		return 1.0;
-	}
-	
-	private static int generateBids() {
-		if (random.nextBoolean()) {
-			return random.nextInt(3);
-		}
-		return 0;
 	}
 	
 	private static long generateExpiryDate() {
@@ -128,5 +136,30 @@ public class AuctionItemGenerator {
 	private static AuctionItem.Condition generateCondition() {
 		AuctionItem.Condition available[] = AuctionItem.Condition.values();
 		return available[random.nextInt(available.length)];		
+	}
+	
+	private static AuctionItem generateFakeBids(AuctionItem toBid) {
+		int bidsToPlace = random.nextInt(11);
+		
+		if (bidsToPlace > 0) {
+			// We'll place one bid an hour for the past X hours, up to the current hour
+			Calendar cal = Calendar.getInstance();
+			// Subtract a number of hours equal to the bids we're going to place, plus one
+			// Also randomize the minutes and seconds to get realistic looking data
+			cal.add(Calendar.HOUR_OF_DAY, (bidsToPlace+1) * -1);
+			cal.add(Calendar.MINUTE, (10+random.nextInt(20)) * -1);
+			cal.add(Calendar.SECOND, random.nextInt(50) * -1);
+			
+			for (int i = 0; i < bidsToPlace; i++) {
+				toBid.placeBid(cal.getTime(), makeSmallBid(toBid));
+				
+				// Each iteration we'll add another hour, random minutes, and subtract random seconds
+				cal.add(Calendar.HOUR_OF_DAY, 1);
+				cal.add(Calendar.MINUTE, random.nextInt(30));
+				cal.add(Calendar.SECOND, random.nextInt(50) * -1);
+			}
+		}
+		
+		return toBid;
 	}
 }

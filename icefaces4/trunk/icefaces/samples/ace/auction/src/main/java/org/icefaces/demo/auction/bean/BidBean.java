@@ -32,6 +32,7 @@ public class BidBean implements Serializable {
 	public static final String BEAN_NAME = "bidBean";
 	
 	private boolean renderBidPanel = false;
+	private boolean showHistoryDialog = false;
 	private Double currentBid;
 	private AuctionItem bidItem;
 	private RowStateMap stateMap;
@@ -41,6 +42,12 @@ public class BidBean implements Serializable {
 	}
 	public void setRenderBidPanel(boolean renderBidPanel) {
 		this.renderBidPanel = renderBidPanel;
+	}
+	public boolean isShowHistoryDialog() {
+		return showHistoryDialog;
+	}
+	public void setShowHistoryDialog(boolean showHistoryDialog) {
+		this.showHistoryDialog = showHistoryDialog;
 	}
 	public Double getCurrentBid() {
 		return currentBid;

@@ -27,6 +27,7 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.service.AuctionItemGenerator;
 import org.icefaces.demo.auction.service.AuctionService;
 import org.icefaces.demo.auction.test.TestFlags;
 import org.icefaces.demo.auction.util.FacesUtils;
@@ -100,9 +101,8 @@ public class BidRobot implements Serializable {
 							
 							// Obviously we only want to bid on a valid non-expired item
 							if (!toBid.isExpired()) {
-								// Create a random bid amount between the normal BID_INCREMENT and half the MAX_BID_INCREASE, plus a few random decimal places 
-								double newBid = toBid.getPrice()+AuctionItem.DEFAULT_BID_INCREMENT+random.nextInt((int)AuctionItem.MAX_BID_INCREASE/2)+random.nextDouble();
-								service.placeBid(toBid, newBid);
+								// Place a randomly generated bid from our AuctionItemGenerator
+								service.placeBid(toBid, AuctionItemGenerator.makeBid(toBid));
 								bidCount++;
 							}
 						}
