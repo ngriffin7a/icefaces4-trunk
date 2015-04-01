@@ -21,6 +21,7 @@
 
     <parent>
         <groupId>org.icefaces.samples</groupId>
+		<!--		<groupId>com.icesoft.icefaces-ee.samples</groupId>  -->
         <artifactId>showcase-parent</artifactId>
         <version>4.1.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
@@ -33,127 +34,128 @@
     <properties>
         <private.demo>true</private.demo>
         <themes.groupId>org.icefaces.ace-themes</themes.groupId>
+        <themes.version>4.1.0</themes.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-black-tie</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-blitzer</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-cupertino</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-dark-hive</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-dot-luv</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-eggplant</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-excite-bike</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-flick</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-hot-sneaks</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-humanity</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-le-frog</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-mint-choc</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-overcast</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-pepper-grinder</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-redmond</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-smoothness</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-south-street</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-start</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-sunny</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-swanky-purse</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-trontastic</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-ui-darkness</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-ui-lightness</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
         <dependency>
             <groupId>${themes.groupId}</groupId>
             <artifactId>ace-vader</artifactId>
-            <version>${project.version}</version>
+            <version>${themes.version}</version>
         </dependency>
     </dependencies>
 
