@@ -66,11 +66,11 @@ public class AuctionItemGenerator {
 	
 	private static double generatePrice() {
 		// Figure out if we're doing a cheap, normal, big, or huge size price
-		switch (1+random.nextInt(4)) {
-			case 1: return random.nextInt(10) + random.nextDouble() + 0.1; // Need to add 0.1 for the super rare 0 + 0.0 case
-			case 2: return 5+random.nextInt(100) + random.nextDouble();
-			case 3: return 100+random.nextInt(1000) + random.nextDouble();
-			case 4: return 1000+random.nextInt(10000) + random.nextDouble();
+		switch (1+random.nextInt(6)) {
+			case 1: case 2: return random.nextInt(10) + random.nextDouble() + 0.1; // Need to add 0.1 for the super rare 0 + 0.0 case
+			case 3: case 4: return 5+random.nextInt(100) + random.nextDouble();
+			case 5: return 100+random.nextInt(1000) + random.nextDouble();
+			case 6: return 1000+random.nextInt(10000) + random.nextDouble();
 		}
 		return 1.0;
 	}
@@ -80,15 +80,15 @@ public class AuctionItemGenerator {
 			// First randomly choose if we're doing time beyond a day
 			int min = HOUR_IN_MILLISECONDS; // Minimum of an hour away
 			int cap = min;
-			switch (1+random.nextInt(4)) {
+			switch (1+random.nextInt(5)) {
 				// Up to a week
 				case 1: cap = HOUR_IN_MILLISECONDS * 24 * 6; break;
 				// Up to 3 days
 				case 2: cap = HOUR_IN_MILLISECONDS * 24 * 3; break;
 				// Up to 1 day
-				case 3: cap = HOUR_IN_MILLISECONDS * 24; break;
+				case 3: case 4: cap = HOUR_IN_MILLISECONDS * 24; break;
 				// Random hours
-				case 4: cap = HOUR_IN_MILLISECONDS * (1+random.nextInt(5)); break;
+				case 5: cap = HOUR_IN_MILLISECONDS * (1+random.nextInt(5)); break;
 			}
 			return (new Date().getTime()+min)+random.nextInt(cap);
 		}
