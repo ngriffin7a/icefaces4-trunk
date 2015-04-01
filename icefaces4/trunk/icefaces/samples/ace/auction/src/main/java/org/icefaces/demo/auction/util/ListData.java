@@ -32,6 +32,25 @@ public class ListData implements Serializable {
 	public static final String[] TAB_ORIENTATIONS = new String[] {
 		"bottom", DEFAULT_TAB_ORIENTATION, "left", "right"
 	};
+	public static final String[] LOCATIONS = new String[] {
+		"Africa", "Asia", "Australia", "Europe", "North America", "South America"
+	};
+	public static final String[] FIRST_NAMES = new String[] {
+		"James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph",
+		"Charles", "Thomas", "Christopher", "Daniel", "Matthew", "Donald",
+		"Anthony", "Paul", "Mark", "George", "Steven", "Kenneth", "Andrew",
+		"Edward", "Joshua", "Brian", "Kevin", "Ronald", "Timothy", "Jason",
+		"Jeffrey", "Gary", "Mary", "Patricia", "Jennifer", "Elizabeth",
+		"Linda", "Barbara", "Susan", "Margaret", "Jessica", "Dorothy",
+		"Sarah", "Karen", "Nancy", "Betty", "Lisa", "Sandra", "Helen",
+		"Ashley", "Donna", "Kimberly", "Carol", "Michelle", "Emily",
+		"Amanda", "Melissa", "Deborah", "Laura", "Stephanie", "Rebecca", "Sharon"
+	};
+	public static final String[] LAST_NAMES = new String[] {
+		"Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis",
+		"Murphy", "Gallo", "Wilson", "Anderson", "Taylor", "Thomas",
+		"Moore", "Martin", "Jackson", "Thompson", "Lee", "Harris", "Clark"
+	};
 	public static final List<ColorRGBA> COLORS = generateColors();
 	
 	private static List<ColorRGBA> generateColors() {
@@ -58,6 +77,18 @@ public class ListData implements Serializable {
 	
 	public String[] getTabOrientations() {
 		return TAB_ORIENTATIONS;
+	}
+	
+	public String[] getLocations() {
+		return LOCATIONS;
+	}
+	
+	public String[] getFirstNames() {
+		return FIRST_NAMES;
+	}
+	
+	public String[] getLastNames() {
+		return LAST_NAMES;
 	}
 	
 	public List<ColorRGBA> getColors() {
