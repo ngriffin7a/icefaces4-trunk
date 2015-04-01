@@ -106,8 +106,7 @@ public class AuctionService implements Serializable {
 		if (newBid > toUpdate.getPrice()) {
 			// Handle the new bid
 			double oldPrice = toUpdate.getPrice();
-			toUpdate.setPrice(newBid);
-			toUpdate.increaseBids();
+			toUpdate.placeBid(newBid);
 			
 			if (globalMessage != null) {
 				globalMessage.setLastUpdated(toUpdate);

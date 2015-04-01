@@ -61,6 +61,20 @@
                                  value="#{settingsBean.notificationForeground}"/>
             <h:message for="ncolorf"/>
             
+            <h:graphicImage id="cWidthHelp" library="images" name="help.png"/>
+            <h:outputLabel for="cWidth" value="Graph Width:"/>
+            <h:panelGroup layout="block">
+                <h:outputText id="cWidthOut" value="#{settingsBean.chartWidth}px"/>
+				<ace:sliderEntry id="cWidth"
+				                 axis="x" length="250px"
+				                 animate="true" clickableRail="true"
+				                 min="200" max="2000"
+				                 value="#{settingsBean.chartWidth}">
+					<ace:ajax event="slideEnd" execute="@this" render="@form" />
+				</ace:sliderEntry>
+			</h:panelGroup>
+            <h:message for="cWidth"/>
+            
             <h:graphicImage id="saveHelp" library="images" name="help.png"/>
             <h:outputLabel for="save" value="Save settings in web browser cookies?"/>
             <h:selectBooleanCheckbox id="save" value="#{settingsBean.saveCookie}" required="true"/>
@@ -94,6 +108,10 @@
     
     <ace:tooltip for="ncolorfHelp" speechBubble="true">
         Customize the foreground text color of the notification panel that displays messages at the top of the page.
+    </ace:tooltip>
+    
+    <ace:tooltip for="cWidthHelp" speechBubble="true">
+        Change how wide the bid history graphs should be (in pixels).
     </ace:tooltip>
     
     <ace:tooltip for="saveHelp" speechBubble="true">

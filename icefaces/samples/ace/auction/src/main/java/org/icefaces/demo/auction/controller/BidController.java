@@ -23,10 +23,12 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.icefaces.ace.event.SelectEvent;
 import org.icefaces.ace.event.UnselectEvent;
 import org.icefaces.demo.auction.bean.BidBean;
+import org.icefaces.demo.auction.bean.ChartBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.service.AuctionService;
 import org.icefaces.demo.auction.util.FacesUtils;
@@ -86,5 +88,40 @@ public class BidController implements Serializable {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		bidBean.stopBidding();
 		bidBean.unselectRows();
+	}
+	
+	public void openGraphPriceDialog(ActionEvent event) {
+		openHistoryDialog(ChartBean.ChartType.PRICE_CHANGE);
+	}
+	
+	public void openGraphBidDialog(ActionEvent event) {
+		openHistoryDialog(ChartBean.ChartType.BID_INCREASE);
+	}
+	
+	public void openViewHistoryDialog(ActionEvent event) {
+		openHistoryDialog(null);
+	}
+	
+	public void openHistoryDialog(ChartBean.ChartType type) {
+		// Refresh our chart data as part of opening the dialog
+		ChartBean chartBean = (ChartBean)FacesUtils.getManagedBean(ChartBean.BEAN_NAME);
+		chartBean.setType(type);
+		chartBean.refresh();
+		
+		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
+		bidBean.setShowHistoryDialog(true);
+	}
+	
+	public void closeHistoryDialog(ActionEvent event) {
+		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
+		bidBean.setShowHistoryDialog(false);
+		
+		// Clear any old chart data
+		ChartBean chartBean = (ChartBean)FacesUtils.getManagedBean(ChartBean.BEAN_NAME);
+		chartBean.clear();
+	}
+	
+	public void closeHistoryDialogListener(AjaxBehaviorEvent event) {
+		closeHistoryDialog(null);
 	}
 }

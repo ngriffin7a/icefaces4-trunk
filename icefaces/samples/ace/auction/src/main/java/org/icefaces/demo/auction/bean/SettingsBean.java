@@ -24,6 +24,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
+import org.icefaces.demo.auction.controller.BidController;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.util.ColorRGBA;
 import org.icefaces.demo.auction.util.FacesUtils;
@@ -37,12 +38,14 @@ public class SettingsBean implements Serializable {
 	
 	public static final String SETTING_COOKIE_NAME = "settings";
 	
+	private boolean saveCookie;
+	
 	private String name;
 	private double bidIncrement;
 	private String tabOrientation;
 	private String notificationBackground;
 	private String notificationForeground;
-	private boolean saveCookie;
+	private int chartWidth;
 	
 	@PostConstruct
 	public void initValues() {
@@ -56,6 +59,7 @@ public class SettingsBean implements Serializable {
 			tabOrientation = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "tabOrientation", tabOrientation).toString();
 			notificationBackground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationBackground", notificationBackground).toString();
 			notificationForeground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationForeground", notificationForeground).toString();
+			chartWidth = Integer.parseInt(FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "chartWidth", chartWidth).toString());
 		}catch (Exception failedLoad) {
 			log.log(Level.WARNING, "Failed when trying to load settings from a cookie, defaulting instead.", failedLoad);
 			initDefaults();
@@ -74,6 +78,15 @@ public class SettingsBean implements Serializable {
 		tabOrientation = ListData.DEFAULT_TAB_ORIENTATION;
 		notificationBackground = "rgba(255, 255, 255, " + ColorRGBA.DEFAULT_OPACITY + ")";
 		notificationForeground = "rgba(0, 0, 0, " + ColorRGBA.DEFAULT_OPACITY + ")";
+		chartWidth = 800;
+	}
+	
+	public boolean isSaveCookie() {
+		return saveCookie;
+	}
+
+	public void setSaveCookie(boolean saveCookie) {
+		this.saveCookie = saveCookie;
 	}
 
 	public String getName() {
@@ -115,12 +128,12 @@ public class SettingsBean implements Serializable {
 	public void setNotificationForeground(String notificationForeground) {
 		this.notificationForeground = notificationForeground;
 	}
-
-	public boolean isSaveCookie() {
-		return saveCookie;
+	
+	public int getChartWidth() {
+		return chartWidth;
 	}
 
-	public void setSaveCookie(boolean saveCookie) {
-		this.saveCookie = saveCookie;
+	public void setChartWidth(int chartWidth) {
+		this.chartWidth = chartWidth;
 	}
 }
