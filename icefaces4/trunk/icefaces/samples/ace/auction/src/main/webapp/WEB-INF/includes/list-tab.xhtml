@@ -27,7 +27,7 @@
                    clickableHeaderSorting="true"
                    emptyMessage="No auctions were found, please try again later."
                    paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
-                   rows="20"
+                   rows="50"
                    reorderableColumns="true" resizableColumns="true"
                    alwaysExecuteContents="true"
                    stateMap="#{bidBean.stateMap}"
@@ -102,7 +102,7 @@
             
             <h:outputText value="Bid History:"/>
             <h:panelGrid columns="3" rendered="#{bidBean.bidItem.bids gt 0}">
-	            <h:commandButton immediate="true" value="Graph Bid Increases"
+	            <h:commandButton immediate="true" value="Graph Bid Increments"
 	                             actionListener="#{bidController.openGraphBidDialog}"/>
                 <h:commandButton immediate="true" value="Graph Price Changes"
                                  actionListener="#{bidController.openGraphPriceDialog}"/>

@@ -79,7 +79,7 @@ public class ChartBean implements Serializable {
 				CartesianSeries chartData = new CartesianSeries();
 				
 				if ((type == null) || (type == ChartType.BID_INCREASE)) {
-					chartData.setLabel("Bid Increase");
+					chartData.setLabel("Bid Increment");
 				}
 				else {
 					chartData.setLabel("Price Change");
