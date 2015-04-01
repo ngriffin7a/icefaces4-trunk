@@ -1,0 +1,105 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core">
+    <h:messages globalOnly="true" layout="table"/>
+                    
+    <ace:dataTable id="a"
+                   value="#{auctionService.auctions}" var="item"
+                   styleClass="auctionMontiorTable"
+                   clickableHeaderSorting="true"
+                   emptyMessage="No auctions were found, please try again later."
+                   paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
+                   rows="20"
+                   reorderableColumns="true" resizableColumns="true"
+                   alwaysExecuteContents="true"
+                   stateMap="#{bidBean.stateMap}"
+                   selectionMode="single"
+                   rowSelectListener="#{bidController.selectItem}"
+                   rowUnselectListener="#{bidController.unselectItem}">
+        <f:facet name="header">
+            Auction List
+        </f:facet>
+        <ace:column headerText="Name" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+            #{item.name}
+        </ace:column>
+        <ace:column headerText="Price" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
+                    style="text-align: right;">
+            <h:outputText value="#{item.price}">
+                <f:convertNumber type="currency" currencySymbol="$"/>
+            </h:outputText>
+        </ace:column>
+        <ace:column headerText="Bids" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+            #{item.bids}
+        </ace:column>
+        <ace:column headerText="Time Left" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+            <h:outputText id="e" value="#{item.expiryDate}">
+                <f:converter converterId="TimeLeftConverter"/>
+            </h:outputText>
+        </ace:column>
+        <f:facet name="footer">
+            <h:panelGroup layout="block">
+                <h:panelGroup id="footWrap" layout="block" rendered="#{bidBean.renderBidPanel}">
+                    <icecore:defaultAction actionListener="#{bidController.submitBid}" key="Enter"/>
+                    <icecore:defaultAction actionListener="#{bidController.cancelBid}" key="Esc"/>
+                    <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
+                    <ace:textEntry id="bidIn" value="#{bidBean.currentBid}"
+                                   required="true" requiredMessage="Enter a valid bid."
+                                   size="10">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </ace:textEntry>
+                    <h:commandButton id="submitBid" value="Submit" actionListener="#{bidController.submitBid}"/>
+                    <h:commandButton value="Cancel" immediate="true" actionListener="#{bidController.cancelBid}"/>
+                    <br/>
+                    <h:message for="bidIn"/>
+                    <h:message for="footWrap"/>
+                </h:panelGroup>
+                <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
+            </h:panelGroup>
+        </f:facet>
+    </ace:dataTable>
+    
+    <ace:panel closable="false" collapsed="false" toggleable="true"
+               header="Details of Listed Item '#{bidBean.bidItem.name}'"
+               rendered="#{bidBean.renderBidPanel}"
+               style="margin-top: 15px;">
+        <h:panelGrid columns="2">
+            <h:outputText value="Condition:"/>
+            #{bidBean.bidItem.condition.value}
+            
+            <h:outputText value="Seller Name:"/>
+            #{bidBean.bidItem.sellerName}
+            
+            <h:outputText value="Seller Location:"/>
+            #{bidBean.bidItem.sellerLocation}
+            
+            <h:outputText value="Estimated Delivery:"/>
+            #{bidBean.bidItem.estimatedDelivery.value}
+            
+            <h:outputText value="Shipping Cost:"/>
+            <h:outputText value="#{bidBean.bidItem.shippingCost}">
+               <f:convertNumber type="currency" currencySymbol="$"/>
+            </h:outputText>
+            
+            <h:outputText value="Description:"/>
+            #{bidBean.bidItem.description}
+        </h:panelGrid>
+    </ace:panel>
+</ui:composition>

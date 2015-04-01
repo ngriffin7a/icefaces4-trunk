@@ -23,7 +23,7 @@
     height: 100px;
     padding: 0;
     background: rgba(255, 255, 255, 0.9);
-    color: rgba(0, 0, 0, 1.0);
+    color: rgba(0, 0, 0, 0.9);
 }
 
 /* Page Styles */
@@ -41,10 +41,6 @@
 	height: 90px;
 	overflow-y: scroll;
 	padding: 5px;
-}
-
-.messagePanel {
-	background: rgba(255, 0, 0, 0.9);
 }
 
 .updateC {
