@@ -60,8 +60,7 @@ public class AuctionItemGenerator {
 	}
 	
 	private static String generateName() {
-		// TODO Generate a realistic sounding item name
-		return "Bucket";
+		return ListData.ITEMS[random.nextInt(ListData.ITEMS.length)];
 	}
 	
 	private static double generatePrice() {

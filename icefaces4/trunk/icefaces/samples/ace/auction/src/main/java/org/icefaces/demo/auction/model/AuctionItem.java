@@ -27,7 +27,7 @@ public class AuctionItem implements Serializable {
 	private static final long serialVersionUID = -7529651135311336130L;
 	
 	public static final double DEFAULT_BID_INCREMENT = 1.0;
-	public static final double SMALL_BID_INCREMENT = 5.0;
+	public static final double SMALL_BID_INCREMENT = 10.0;
 	public static final double MAX_BID_INCREASE = 100.0;
 
 	public enum Condition {

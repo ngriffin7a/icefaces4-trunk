@@ -32,6 +32,7 @@ public class ListData implements Serializable {
 	public static final String[] TAB_ORIENTATIONS = new String[] {
 		"bottom", DEFAULT_TAB_ORIENTATION, "left", "right"
 	};
+	public static final List<ColorRGBA> COLORS = generateColors();
 	public static final String[] LOCATIONS = new String[] {
 		"Africa", "Asia", "Australia", "Europe", "North America", "South America"
 	};
@@ -51,7 +52,42 @@ public class ListData implements Serializable {
 		"Murphy", "Gallo", "Wilson", "Anderson", "Taylor", "Thomas",
 		"Moore", "Martin", "Jackson", "Thompson", "Lee", "Harris", "Clark"
 	};
-	public static final List<ColorRGBA> COLORS = generateColors();
+	public static final String[] ITEMS = new String[] {
+	    "Air Freshener", "Apple", "Bag", "Balloon", "Bananas", "Bed", "Beef", "Bicycle",
+		"Blanket", "Blouse", "Boardgame", "Book", "Bookmark", "Boom Box",
+		"Bottle", "Bottle Cap", "Bow", "Bowl", "Box", "Bracelet", "Bread",
+		"Brocolli", "Buckel", "Button", "Camera", "Candle",
+		"Candy Wrapper", "Canvas", "Car", "Carrots", "Cat", "Cell Phone",
+		"Chair", "Chair", "Chalk", "Chapter Book", "Charger", "Checkbook",
+		"Chocolate", "Cinder Block", "Clamp", "Clay Pot", "Clock",
+		"Clothes", "Coasters", "Computer", "Conditioner", "Controller",
+		"Cookie Jar", "Cork", "Couch", "Cup", "Deodorant", "Desk", "Dice",
+		"Doll", "Door", "Drawer", "Drill Press", "Envelope", "Eraser",
+		"Eye Liner", "Face Wash", "Fake Flowers", "Flag", "Floor",
+		"Flowers", "Food", "Fork", "Fridge", "Glass", "Glasses",
+		"Glow Stick", "Greeting Card", "Grid Paper", "Hair Brush",
+		"Hair Tie", "Hanger", "Headphones", "Helmet", "House",
+		"Ice Cube Tray", "Keyboard", "Key Chain", "Keys", "Knife", "Lace",
+		"Lamp", "Lamp Shade", "Leg Warmers", "Lip Gloss", "Magnet", "Milk",
+		"Mirror", "Model Car", "Money", "Monitor", "Mop", "Mouse Pad",
+		"Music Player", "Nail Clippers", "Nail File", "Needle",
+		"Newspaper", "Outlet", "Packing Peanuts", "Paint Brush", "Pants",
+		"Paper", "Pen", "Pencil", "Perfume", "Phone", "Photo Album",
+		"Piano", "Pickaxe", "Picture Frame", "Pillow", "Plastic Fork",
+		"Plate", "Playing Card", "Pool Stick", "Puddle", "Purse", "Radio",
+		"Remote", "Ring", "Rubber Band", "Rubber Duck", "Rug",
+		"Rusty Nail", "Sailboat", "Sandal", "Sand Paper", "Scotch Tape",
+		"Screw", "Seat Belt", "Shampoo", "Sharpie", "Shawl", "Shirt",
+		"Shoe Lace", "Shoes", "Shovel", "Sidewalk", "Sketch Pad",
+		"Slipper", "Soap", "Socks", "Soda Can", "Sofa", "Speakers",
+		"Sponge", "Spoon", "Spring", "Stapler", "Sticky Note", "Stockings",
+		"Stop Sign", "Street Light", "Sun Glasses", "Table", "Television",
+		"Thermometer", "Thermostat", "Thread", "Tire Swing", "Toe Ring",
+		"Toilet", "Tomato", "Toothbrush", "Toothpaste", "Tooth Picks",
+		"Towel", "Tree", "Truck", "Truck", "Tweezers", "USB Drive",
+		"Vacuum", "Vase", "Video Game", "Wagon", "Wallet",
+		"Washing Machine", "Watch", "Water Bottle", "White Out", "Window", "Zipper"
+	};
 	
 	private static List<ColorRGBA> generateColors() {
 		List<ColorRGBA> toReturn = new ArrayList<ColorRGBA>();
@@ -79,6 +115,10 @@ public class ListData implements Serializable {
 		return TAB_ORIENTATIONS;
 	}
 	
+	public List<ColorRGBA> getColors() {
+		return COLORS;
+	}
+	
 	public String[] getLocations() {
 		return LOCATIONS;
 	}
@@ -91,7 +131,7 @@ public class ListData implements Serializable {
 		return LAST_NAMES;
 	}
 	
-	public List<ColorRGBA> getColors() {
-		return COLORS;
+	public String[] getItems() {
+		return ITEMS;
 	}
 }
