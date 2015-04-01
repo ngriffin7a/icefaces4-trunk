@@ -112,6 +112,7 @@ public class AuctionService implements Serializable {
 			if (globalMessage != null) {
 				globalMessage.setLastUpdated(toUpdate);
 				
+				// TODO Use the Settings name here (and other logging places)
 				globalMessage.addMessage("New bid (" + toUpdate.getBids() + " total) on item '" + toUpdate.getName() + "' increasing the price from " +
 						NumberFormat.getCurrencyInstance().format(oldPrice) + " to " + NumberFormat.getCurrencyInstance().format(newBid) + ".");
 			}

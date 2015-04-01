@@ -1,0 +1,102 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:auction="http://java.sun.com/jsf/composite/components">
+    <icecore:defaultAction actionListener="#{settingsController.save}" key="Enter"/>
+    
+    <ace:panel closable="false" collapsed="false" toggleable="true"
+               header="Application Settings">
+        <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
+            <h:graphicImage id="nameInHelp" library="images" name="help.png"/>
+            <h:outputLabel for="nameIn" value="Name:"/>
+            <ace:textEntry id="nameIn" value="#{settingsBean.name}" required="true"
+                           autocapitalize="on" autocomplete="on" maxlength="15"
+                           placeholder="Enter your name">
+                <f:validateLength minimum="3" maximum="15"/>
+            </ace:textEntry>
+            <h:message for="nameIn"/>
+            
+            <h:graphicImage id="dbidHelp" library="images" name="help.png"/>
+            <h:outputLabel for="dbid" value="Default Bid Increment:"/>
+            <ace:textEntry id="dbid" value="#{settingsBean.bidIncrement}" required="true"
+                           maxlength="5">
+                <f:validateDoubleRange minimum="1.0" maximum="100.0"/>
+            </ace:textEntry>
+            <h:message for="dbid"/>
+            
+            <h:graphicImage id="taboHelp" library="images" name="help.png"/>
+            <h:outputLabel for="tabo" value="Tab Orientation:"/>
+            <h:selectOneRadio id="tabo" value="#{settingsBean.tabOrientation}" required="true">
+                <f:selectItems value="#{listData.tabOrientations}"/>
+            </h:selectOneRadio>
+            <h:message for="tabo"/>
+            
+            <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
+            <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
+            <auction:colorPicker id="ncolorb"
+                                 value="#{settingsBean.notificationBackground}"/>
+            <h:message for="ncolorb"/>
+            
+            <h:graphicImage id="ncolorfHelp" library="images" name="help.png"/>
+            <h:outputLabel for="ncolorf" value="Notification Foreground:" required="true"/>
+            <auction:colorPicker id="ncolorf"
+                                 value="#{settingsBean.notificationForeground}"/>
+            <h:message for="ncolorf"/>
+            
+            <h:graphicImage id="saveHelp" library="images" name="help.png"/>
+            <h:outputLabel for="save" value="Save settings in web browser cookies?"/>
+            <h:selectBooleanCheckbox id="save" value="#{settingsBean.saveCookie}" required="true"/>
+            <h:message for="save"/>
+        </h:panelGrid>
+        
+        <f:facet name="footer">
+            <h:panelGroup layout="block">
+                <h:commandButton value="Submit" actionListener="#{settingsController.save}"/>
+                
+                <h:messages globalOnly="true" layout="table"/>
+            </h:panelGroup>
+        </f:facet>
+    </ace:panel>
+    
+    <ace:tooltip for="nameInHelp" speechBubble="true">
+        Customize the name you want associated with all bids (must be 3 to 15 characters).
+    </ace:tooltip>
+    
+    <ace:tooltip for="dbidHelp" speechBubble="true">
+        When you begin a bid on an item the default price amount will be automatically incremented by this number (1-100).
+    </ace:tooltip>
+    
+    <ace:tooltip for="taboHelp" speechBubble="true">
+        Choose how you want the tab pane laid out on the page.
+    </ace:tooltip>
+    
+    <ace:tooltip for="ncolorbHelp" speechBubble="true">
+        Customize the background color of the notification panel that displays messages at the top of the page.
+    </ace:tooltip>
+    
+    <ace:tooltip for="ncolorfHelp" speechBubble="true">
+        Customize the foreground text color of the notification panel that displays messages at the top of the page.
+    </ace:tooltip>
+    
+    <ace:tooltip for="saveHelp" speechBubble="true">
+        If selected then your choices on this form will be stored as web browser cookies, and reloaded from there on subsequent visits.
+    </ace:tooltip>
+</ui:composition>
