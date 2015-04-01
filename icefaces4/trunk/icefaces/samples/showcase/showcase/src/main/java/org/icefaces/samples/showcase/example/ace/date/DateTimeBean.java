@@ -129,7 +129,6 @@ public class DateTimeBean extends ComponentExampleImpl<DateTimeBean> implements
 				newDate.setHours(oldDate.getHours());
 				newDate.setMinutes(oldDate.getMinutes());
 				newDate.setSeconds(oldDate.getSeconds());
-				newDate.setDate(newDate.getDate()+1);
 			}			
 		}
 	}
