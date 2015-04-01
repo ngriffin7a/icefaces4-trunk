@@ -16,7 +16,7 @@
 
 package org.icefaces.samples.showcase.example.ace.selectmenu;
 
-public class Color {
+public class Color implements java.io.Serializable {
 
 	public Color(String name, String hexValue) {
 		this.name = name;
