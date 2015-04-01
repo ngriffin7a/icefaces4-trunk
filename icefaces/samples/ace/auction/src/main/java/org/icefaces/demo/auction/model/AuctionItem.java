@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.icefaces.demo.auction.converter.TimeLeftConverter;
 
 public class AuctionItem implements Serializable {
+	private static final long serialVersionUID = -7529651135311336130L;
+	
 	public static final double DEFAULT_BID_INCREMENT = 1.0;
 	public static final double SMALL_BID_INCREMENT = 5.0;
 	public static final double MAX_BID_INCREASE = 100.0;
@@ -59,7 +59,6 @@ public class AuctionItem implements Serializable {
 	}
 	
 	// Main info
-	private String imagePath;
 	private String name;
 	private double price;
 	private int bids = 0;
@@ -78,15 +77,14 @@ public class AuctionItem implements Serializable {
 	public AuctionItem() {
 	}
 	
-	public AuctionItem(String imagePath, String name, double price, int bids, long expiryDateMil) {
-		this(imagePath, name, price, bids, expiryDateMil, null, null, null, null, null, null);
+	public AuctionItem(String name, double price, int bids, long expiryDateMil) {
+		this(name, price, bids, expiryDateMil, null, null, null, null, null, null);
 	}
 	
-	public AuctionItem(String imagePath, String name, double price, int bids,
+	public AuctionItem(String name, double price, int bids,
 			long expiryDateMil, Double shippingCost, String sellerName,
 			String sellerLocation, String description,
 			Delivery estimatedDelivery, Condition condition) {
-		this.imagePath = imagePath;
 		this.name = name;
 		this.price = price;
 		this.bids = bids;
@@ -99,12 +97,6 @@ public class AuctionItem implements Serializable {
 		this.condition = condition;
 	}
 	
-	public String getImagePath() {
-		return imagePath;
-	}
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
 	public String getName() {
 		return name;
 	}

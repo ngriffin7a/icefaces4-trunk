@@ -23,6 +23,7 @@ import java.util.Random;
 
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.test.TestFlags;
+import org.icefaces.demo.auction.util.ListData;
 
 public class AuctionItemGenerator {
 	private static final Random random = new SecureRandom();
@@ -31,14 +32,13 @@ public class AuctionItemGenerator {
 	
 	public static AuctionItem makeItem() {
 		AuctionItem toReturn = new AuctionItem();
-		toReturn.setImagePath(generateImagePath());
 		toReturn.setName(generateName());
 		toReturn.setPrice(generatePrice());
 		toReturn.setExpiryDate(generateExpiryDate());
 		toReturn.setShippingCost(generateShippingCost());
 		toReturn.setSellerName(generateSellerName());
 		toReturn.setSellerLocation(generateSellerLocation());
-		toReturn.setDescription(generateDescription(toReturn.getName(), toReturn.getImagePath()));
+		toReturn.setDescription(generateDescription(toReturn.getName()));
 		toReturn.setEstimatedDelivery(generateEstimatedDelivery());
 		toReturn.setCondition(generateCondition());
 		
@@ -57,11 +57,6 @@ public class AuctionItemGenerator {
 	
 	public static double makeBid(AuctionItem toBid) {
 		return toBid.getPrice()+AuctionItem.DEFAULT_BID_INCREMENT+random.nextInt((int)AuctionItem.MAX_BID_INCREASE/2)+random.nextDouble();
-	}
-	
-	private static String generateImagePath() {
-		// TODO Pick from a preset list generated from image files in directory
-		return "none.png";
 	}
 	
 	private static String generateName() {
@@ -114,17 +109,21 @@ public class AuctionItemGenerator {
 	}
 	
 	private static String generateSellerName() {
-		// TODO Generate a human sounding first/last name
-		return "Joe Smith";
+		String toReturn = ListData.FIRST_NAMES[random.nextInt(ListData.FIRST_NAMES.length)];
+		
+		// Don't need a last name for everyone
+		if (random.nextInt(10) > 4) {
+			toReturn += " " + ListData.LAST_NAMES[random.nextInt(ListData.LAST_NAMES.length)];
+		}
+		return toReturn;
 	}
 	
 	private static String generateSellerLocation() {
-		// TODO Pick from a preset list of countries, pulled from a common class (also used in dropdowns when adding an item)
-		return "Ireland";
+		return ListData.LOCATIONS[random.nextInt(ListData.LOCATIONS.length)];
 	}
 	
-	private static String generateDescription(String name, String imagePath) {
-		// TODO Generate a realistic description based on name and image path
+	private static String generateDescription(String name) {
+		// TODO Generate a realistic description based on name
 		return "Great item";
 	}
 	
