@@ -42,16 +42,17 @@
 </h:head>
 
 <h:body>
-    <h:outputText value="#{pushBean}" style="display: none; height: 0;"/>
-    <h:outputText value="#{bidRobot}" style="display: none; height: 0;"/>
-
-    <h:graphicImage library="images" name="banner_hdr_auction.jpg"/>
-    
     <!-- TODO Add an Add Item button (floating top right of the table?) that does a popup with item details to add -->
     <!-- TODO Add a Chat tab like the old demo? -->
     <!-- TODO Add a clock image or progress bar beside the time left text column to give a visual cue to remainder to expiry -->
     <!-- TODO Need to put manual Pushes throughout the app so it could technically function without the constant polling, perhaps check AuctionWatcher and do push otherwise?
               For example GlobalMessageBean update would need a push -->
+    <!-- TODO Internationalize all the strings and override validation messages (including from the backend) -->
+
+    <h:outputText value="#{pushBean}" style="display: none; height: 0;"/>
+    <h:outputText value="#{bidRobot}" style="display: none; height: 0;"/>
+
+    <h:graphicImage library="images" name="banner_hdr_auction.jpg"/>
     
     <div class="auctionMonitorContainer">
         <ace:tabSet id="at" orientation="#{settingsBean.tabOrientation}">
@@ -79,70 +80,7 @@
         </ace:tabSet>
     </div>
     
-    <h:form id="n" prependId="false">
-        <ace:notificationPanel id="messagePanel"
-                               visible="#{globalMessage.hasNew}" position="top"
-                               effect="slide" effectSpeed="slow"
-                               style="background: #{settingsBean.notificationBackground}; color: #{settingsBean.notificationForeground};">
-            <h:panelGroup layout="block" styleClass="notificationBarWrap">
-                <ui:repeat value="#{globalMessage.messages}" var="gmessage">
-                    #{gmessage}<br/>
-                </ui:repeat>
-            </h:panelGroup>
-        </ace:notificationPanel>
-    </h:form>
-    
-    <h:form id="hd" prependId="false">
-        <ace:dialog id="historyDialog"
-                    visible="#{bidBean.showHistoryDialog}"
-                    rendered="#{bidBean.showHistoryDialog}"
-                    closable="true" closeOnEscape="true"
-                    draggable="true" modal="true" resizable="false"
-                    header="Bid History for '#{bidBean.bidItem.name}'"
-                    width="#{settingsBean.chartWidth+70}">
-            <ace:ajax event="close" listener="#{bidController.closeHistoryDialogListener}"/>
-            
-            <h:panelGroup layout="block" style="margin: 20px;">
-	            <ace:chart id="historyChart"
-	                       animated="true"
-	                       value="#{chartBean.historyData}"
-	                       legend="true"
-	                       legendPlacement="INSIDE_GRID"
-	                       legendLocation="NW"
-	                       xAxis="#{chartBean.xAxis}"
-	                       yAxes="#{chartBean.yAxis}"
-	                       width="#{settingsBean.chartWidth}"
-	                       highlighter="true"
-	                       rendered="#{chartBean.type ne null}"/>
-	                       
-	            <ace:dataTable id="bhT" value="#{bidBean.bidItem.history}" var="history"
-	                   emptyMessage="No bid history yet."
-	                   reorderableColumns="false" resizableColumns="false"
-	                   paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
-	                   style="width: #{settingsBean.chartWidth}px;"
-	                   rows="10"
-	                   rendered="#{chartBean.type eq null}">
-			        <f:facet name="header">
-			            <h:outputText value="Details of #{bidBean.bidItem.bids} Bids"/>
-			        </f:facet>
-	                <ace:column headerText="Date/Time">
-	                    <h:outputText value="#{history.date}">
-	                        <f:convertDateTime pattern="EE hh:mm:ss"/>
-	                    </h:outputText>
-	                </ace:column>
-	                <ace:column headerText="Bid Increase">
-	                    <h:outputText value="#{history.bidIncrease}">
-	                        <f:convertNumber type="currency" currencySymbol="$"/>
-	                    </h:outputText>
-	                </ace:column>
-	                <ace:column headerText="Price">
-	                    <h:outputText value="#{history.price}">
-	                        <f:convertNumber type="currency" currencySymbol="$"/>
-	                    </h:outputText>
-	                </ace:column>
-	            </ace:dataTable>
-            </h:panelGroup>
-        </ace:dialog>
-    </h:form>
+    <ui:include src="/WEB-INF/includes/popups.xhtml"/>
+
 </h:body>
 </html>

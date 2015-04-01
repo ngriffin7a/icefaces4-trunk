@@ -1,0 +1,87 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core">
+    <h:form id="n" prependId="false">
+        <ace:notificationPanel id="messagePanel"
+                               visible="#{globalMessage.hasNew}" position="top"
+                               effect="slide" effectSpeed="slow"
+                               style="background: #{settingsBean.notificationBackground}; color: #{settingsBean.notificationForeground};">
+            <h:panelGroup layout="block" styleClass="notificationBarWrap">
+                <ui:repeat value="#{globalMessage.messages}" var="gmessage">
+                    #{gmessage}<br/>
+                </ui:repeat>
+            </h:panelGroup>
+        </ace:notificationPanel>
+    </h:form>
+    
+    <h:form id="hd" prependId="false">
+        <ace:dialog id="historyDialog"
+                    visible="#{bidBean.showHistoryDialog}"
+                    rendered="#{bidBean.showHistoryDialog}"
+                    closable="true" closeOnEscape="true"
+                    draggable="true" modal="true" resizable="false"
+                    header="Bid History for '#{bidBean.bidItem.name}'"
+                    width="#{settingsBean.chartWidth+70}">
+            <ace:ajax event="close" listener="#{bidController.closeHistoryDialogListener}"/>
+            
+            <h:panelGroup layout="block" style="margin: 20px;">
+                <ace:chart id="historyChart"
+                           animated="true"
+                           value="#{chartBean.historyData}"
+                           legend="true"
+                           legendPlacement="INSIDE_GRID"
+                           legendLocation="NW"
+                           xAxis="#{chartBean.xAxis}"
+                           yAxes="#{chartBean.yAxis}"
+                           width="#{settingsBean.chartWidth}"
+                           highlighter="true"
+                           rendered="#{chartBean.type ne null}"/>
+                           
+                <ace:dataTable id="bhT" value="#{bidBean.bidItem.history}" var="history"
+                       emptyMessage="No bid history yet."
+                       reorderableColumns="false" resizableColumns="false"
+                       paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
+                       style="width: #{settingsBean.chartWidth}px;"
+                       rows="10"
+                       rendered="#{chartBean.type eq null}">
+                    <f:facet name="header">
+                        <h:outputText value="Details of #{bidBean.bidItem.bids} Bids"/>
+                    </f:facet>
+                    <ace:column headerText="Date/Time">
+                        <h:outputText value="#{history.date}">
+                            <f:convertDateTime pattern="EE kk:mm:ss"/>
+                        </h:outputText>
+                    </ace:column>
+                    <ace:column headerText="Bid Increment">
+                        <h:outputText value="#{history.bidIncrease}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText>
+                    </ace:column>
+                    <ace:column headerText="Price">
+                        <h:outputText value="#{history.price}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText>
+                    </ace:column>
+                </ace:dataTable>
+            </h:panelGroup>
+        </ace:dialog>
+    </h:form>
+</ui:composition>
