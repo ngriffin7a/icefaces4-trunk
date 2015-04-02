@@ -200,7 +200,7 @@ public class FacesUtils {
     }
     
 	public static FacesMessage generateMessage(FacesMessage.Severity type, String text) {
-		return new FacesMessage(type, text, text);
+		return new FacesMessage(type, TimestampUtil.stamp() + text, text);
 	}
     
 	public static void addGlobalInfoMessage(String infoText) {

@@ -46,7 +46,8 @@
 	                       required="true" maxlength="20"
 	                       autocapitalize="true" autocorrect="true"
 	                       placeholder="Enter item name"
-	                       requiredIndicator="*">
+	                       requiredIndicator="*"
+	                       validator="UniqueItemNameValidator">
 	            <f:validateLength minimum="3" maximum="20"/>
 	        </ace:textEntry>
 	        <h:message for="itemNIn"/>
@@ -123,6 +124,8 @@
 	    
 	    <f:facet name="footer">
 	        <h:commandButton value="Submit" actionListener="#{bidController.postAuction}"/>
+	        
+	        <h:messages globalOnly="true" layout="table"/>
 	    </f:facet>
     </ace:panel>
 </ui:composition>

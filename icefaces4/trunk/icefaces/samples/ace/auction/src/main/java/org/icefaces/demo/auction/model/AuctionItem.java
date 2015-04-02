@@ -24,8 +24,9 @@ import java.util.List;
 import org.icefaces.demo.auction.converter.TimeLeftConverter;
 
 public class AuctionItem implements Comparable<AuctionItem>, Serializable {
-	private static final long serialVersionUID = -7512542650152899004L;
+	private static final long serialVersionUID = -5232642973027003710L;
 	
+	public static final int EXPIRY_DATE_MINIMUM = 30; // Minimum number of minutes in the future for an expiry date
 	public static final double DEFAULT_BID_INCREMENT = 1.0;
 	public static final double SMALL_BID_INCREMENT = 10.0;
 	public static final double MAX_BID_INCREASE = 100.0;
@@ -201,7 +202,7 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	
 	@Override
 	public String toString() {
-		return name + " for " + price + " with " + bids + " bids ending at " + new Date(expiryDate);
+		return name + " for $" + price + " with " + bids + " bids ending at " + new Date(expiryDate);
 	}
 
 	@Override
