@@ -22,13 +22,13 @@
     <groupId>org.icefaces</groupId>
 <!--    <groupId>com.icesoft.icefaces-ee</groupId> -->
 
-		<artifactId>bundle-parent</artifactId>
+	<artifactId>bundle-parent</artifactId>
     <version>4.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <!--<name>ICEfaces</name>-->
-    <!--<description>ICEfaces Parent Project</description>-->
-    <name>ICEfaces EE</name>
-    <description>ICEfaces EE Parent Project</description>
+    <name>ICEfaces</name>
+    <description>ICEfaces Parent Project</description>
+<!--    <name>ICEfaces EE</name>
+    <description>ICEfaces EE Parent Project</description>  -->
     <url>http://www.icesoft.org</url>
 
     <licenses>
@@ -81,8 +81,10 @@
         <module>samples</module>
 
         <!-- Additional modules for EE-only -->
+       <!--
         <module>ext</module>
         <module>mobile-simulator</module>
+		-->
 
     </modules>
 
@@ -91,7 +93,6 @@
         <maven.test.skip>true</maven.test.skip>
 
         <!-- Properties for specifying the product being used (open source) -->
-<!-- 
         <icefaces.product.group>org.icefaces</icefaces.product.group>
         <icefaces.product.name>ICEfaces</icefaces.product.name>
         <icefaces.lib.name>icefaces</icefaces.lib.name>
@@ -99,16 +100,17 @@
         <icepush.product.group>org.icepush</icepush.product.group>
         <icepush.product.name>ICEpush</icepush.product.name>
         <icepush.lib.name>icepush</icepush.lib.name>
- -->
 
         <!-- Properties for specifying the product being used (EE) -->
+	<!-- 
         <icefaces.product.group>com.icesoft.icefaces-ee</icefaces.product.group>
         <icefaces.product.name>ICEfaces EE</icefaces.product.name>
         <icefaces.lib.name>icefaces-ee</icefaces.lib.name>
         <icepush.product.group>com.icesoft.icepush-ee</icepush.product.group>
         <icepush.product.name>ICEpush EE</icepush.product.name>
         <icepush.lib.name>icepush-ee</icepush.lib.name>
-        
+	-->
+
         <icesoft.company.name>ICEsoft Technologies Inc.</icesoft.company.name>
         <icesoft.copyright>ICEsoft Technologies Canada Corp., All Rights Reserved.</icesoft.copyright>
         <icesoft.copyright.year>2015</icesoft.copyright.year>
@@ -124,9 +126,9 @@
         </tld.title>
 
         <!-- Versions of JSF implementations -->
-        <mojarra.version>2.2.8</mojarra.version>
+        <mojarra.version>2.2.10</mojarra.version>
 
-        <myfaces.version>2.2.5</myfaces.version> 
+        <myfaces.version>2.2.7</myfaces.version> 
 
         <!-- Various library versions settable from one place -->
         <annotation.version>1.0</annotation.version>
@@ -275,6 +277,22 @@
                 </exclusions>
             </dependency>            
 
+
+		<!-- ICEfaces EE Only -->
+		<!--
+            <dependency>
+                <groupId>${icefaces.product.group}</groupId>
+                <artifactId>${icefaces.lib.name}-ext</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${icefaces.product.group}</groupId>
+                <artifactId>${icefaces.lib.name}-mobile-simulator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        -->    
+
             <dependency>
                 <groupId>${icefaces.product.group}</groupId>
                 <artifactId>${icefaces.lib.name}-ace</artifactId>
@@ -301,6 +319,7 @@
             </dependency>
             
 	        <!-- Dependencies for EE-only -->
+			<!--
             <dependency>
                 <groupId>${icefaces.product.group}</groupId>
                 <artifactId>${icefaces.lib.name}-ext</artifactId>
@@ -312,7 +331,8 @@
                 <artifactId>${icefaces.lib.name}-mobile-simulator</artifactId>
                 <version>${project.version}</version>
             </dependency>            
-
+			-->
+			
         </dependencies>
     </dependencyManagement>
 
