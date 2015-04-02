@@ -1,0 +1,128 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:auction="http://java.sun.com/jsf/composite/components">
+    <icecore:defaultAction actionListener="#{bidController.postAuction}" key="Enter"/>
+                
+    <ace:panel closable="false" collapsed="false" toggleable="true"
+               header="New Auction Item to Add">
+	    <h:panelGrid columns="3" cellpadding="3" cellspacing="0" styleClass="postTable">
+	<!-- TODO Add item
+	    private String name;
+	    private double price; (0.01 to $1,000)
+	    private long expiryDate; (set via calendar)
+	    
+	    // Details
+	    private Double shippingCost; ($1-20)
+	    private String sellerName; (prefill from Settings)
+	    private String sellerLocation; (dropdown)
+	    private String description;
+	    private Delivery estimatedDelivery; (dropdown)
+	    private Condition condition; (dropdown)
+	-->
+	        <h:outputText value="Item Details" style="font-weight: bold;"/>
+	        <h:outputText value=""/><h:outputText value=""/>
+	        
+	        <h:outputLabel for="itemNIn" value="Item Name:"/>
+	        <ace:textEntry id="itemNIn" value="#{postBean.toAdd.name}"
+	                       required="true" maxlength="20"
+	                       autocapitalize="true" autocorrect="true"
+	                       placeholder="Enter item name"
+	                       requiredIndicator="*">
+	            <f:validateLength minimum="3" maximum="20"/>
+	        </ace:textEntry>
+	        <h:message for="itemNIn"/>
+	        
+	        <h:outputLabel for="descIn" value="Item Description:"/>
+	        <ace:textAreaEntry id="descIn" value="#{postBean.toAdd.description}"
+	                           rows="2" maxlength="500"
+	                           resizable="true">
+	           <f:validateLength minimum="0" maximum="500"/>
+	        </ace:textAreaEntry>
+	        <h:message for="descIn"/>
+	        
+	        <h:outputLabel for="conditionIn" value="Item Condition:"/>
+	        <h:selectOneMenu id="conditionIn" value="#{postBean.toAdd.condition}">
+	            <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
+	            <f:selectItems value="#{postBean.toAdd.conditions}" var="condition"
+	                           itemValue="#{condition}" itemLabel="#{condition.value}"/>
+	        </h:selectOneMenu>
+	        <h:message for="conditionIn"/>
+	        
+	        <h:outputLabel for="priceIn" value="Starting Price ($):"/>
+	        <ace:textEntry id="priceIn" value="#{postBean.toAdd.price}"
+	                       required="true" requiredIndicator="*"
+	                       maxlength="8">
+	            <f:validateDoubleRange minimum="0.1" maximum="1000"/>
+	            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+	        </ace:textEntry>
+	        <h:message for="priceIn"/>
+	        
+	        <h:outputLabel for="expiryIn" value="Expiry Date:"/>
+	        <ace:dateTimeEntry id="expiryIn" value="#{postBean.expiryDate}"
+	                           navigator="false" renderAsPopup="true" readOnlyInputText="true"
+	                           required="true" requiredIndicator="*"
+	                           mindate="#{bidController.minExpiryDate}" maxdate="#{bidController.maxExpiryDate}"
+	                           showOn="both"
+	                           pattern="MM/dd/yyyy h:mm a"/>
+	        <h:message for="expiryIn"/>
+	        
+            <h:outputText value="Additional Details" style="font-weight: bold;"/>
+            <h:outputText value=""/><h:outputText value=""/>
+            
+	        <h:outputLabel for="sellerName" value="Your Seller Name:"/>
+	        <ace:textEntry id="sellerName" value="#{postBean.toAdd.sellerName}"
+                           autocapitalize="on" autocomplete="on" maxlength="15"
+                           placeholder="Enter your name">
+                <f:validateLength minimum="3" maximum="15"/>
+            </ace:textEntry>
+	        <h:message for="sellerName"/>
+	        
+	        <h:outputLabel for="sellerLoc" value="Your Seller Location:"/>
+            <h:selectOneMenu id="sellerLoc" value="#{postBean.toAdd.sellerLocation}">
+                <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
+                <f:selectItems value="#{listData.locations}"/>
+            </h:selectOneMenu>
+	        <h:message for="sellerLoc"/>
+	        
+	        <h:outputLabel for="shippingIn" value="Shipping Price ($):"/>
+	        <ace:textEntry id="shippingIn" value="#{postBean.toAdd.shippingCost}"
+	                       required="true" requiredIndicator="*"
+	                       maxlength="5">
+	           <f:validateDoubleRange minimum="1.0" maximum="20.0"/>
+	           <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+	        </ace:textEntry>
+	        <h:message for="shippingIn"/>
+	        
+	        <h:outputLabel for="deliveryIn" value="Estimated Delivery:"/>
+            <h:selectOneMenu id="deliveryIn" value="#{postBean.toAdd.estimatedDelivery}">
+                <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
+                <f:selectItems value="#{postBean.toAdd.deliveries}" var="delivery"
+                               itemValue="#{delivery}" itemLabel="#{delivery.value}"/>
+            </h:selectOneMenu>
+	        <h:message for="deliveryIn"/>
+	    </h:panelGrid>
+	    
+	    <f:facet name="footer">
+	        <h:commandButton value="Submit" actionListener="#{bidController.postAuction}"/>
+	    </f:facet>
+    </ace:panel>
+</ui:composition>

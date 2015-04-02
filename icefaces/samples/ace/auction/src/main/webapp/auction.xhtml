@@ -42,12 +42,12 @@
 </h:head>
 
 <h:body>
-    <!-- TODO Add an Add Item button (floating top right of the table?) that does a popup with item details to add -->
-    <!-- TODO Add a Chat tab like the old demo? -->
+    <!-- TODO Add a Chat tab like the old demo? Make the chat dockable and displayable in a popup (and a setting to store position) -->
     <!-- TODO Add a clock image or progress bar beside the time left text column to give a visual cue to remainder to expiry -->
     <!-- TODO Need to put manual Pushes throughout the app so it could technically function without the constant polling, perhaps check AuctionWatcher and do push otherwise?
               For example GlobalMessageBean update would need a push -->
     <!-- TODO Internationalize all the strings and override validation messages (including from the backend) -->
+    <!-- TODO Allow users to customize visible columns (via settings), maybe also show ALL details when an item is selected -->
 
     <h:outputText value="#{pushBean}" style="display: none; height: 0;"/>
     <h:outputText value="#{bidRobot}" style="display: none; height: 0;"/>
@@ -55,7 +55,9 @@
     <h:graphicImage library="images" name="banner_hdr_auction.jpg"/>
     
     <div class="auctionMonitorContainer">
-        <ace:tabSet id="at" orientation="#{settingsBean.tabOrientation}">
+        <ace:tabSet id="at" selectedIndex="#{tabBean.selectedIndex}"
+                    orientation="#{settingsBean.tabOrientation}"
+                    cancelOnInvalid="false">
             <ace:tabPane label="Auction List">
 		        <h:form id="f" prependId="false">
 		            <ace:tabSetProxy for="at"/>
@@ -70,13 +72,20 @@
 		            <ui:include src="/WEB-INF/includes/logs-tab.xhtml"/>
                 </h:form>
 	        </ace:tabPane>
-	        <ace:tabPane label="Settings">
-	            <h:form id="s" prependId="false">
-	                <ace:tabSetProxy for="at"/>
-	                
-	                <ui:include src="/WEB-INF/includes/settings-tab.xhtml"/>
-	            </h:form>
-	        </ace:tabPane>
+            <ace:tabPane label="Post Auction">
+                <h:form id="p">
+                    <ace:tabSetProxy for="at"/>
+                    
+                    <ui:include src="/WEB-INF/includes/post-tab.xhtml"/>
+                </h:form>
+            </ace:tabPane>
+            <ace:tabPane label="Settings">
+                <h:form id="s">
+                    <ace:tabSetProxy for="at"/>
+                    
+                    <ui:include src="/WEB-INF/includes/settings-tab.xhtml"/>
+                </h:form>
+            </ace:tabPane>
         </ace:tabSet>
     </div>
     

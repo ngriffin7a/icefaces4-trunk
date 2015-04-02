@@ -29,6 +29,8 @@ import org.icefaces.demo.auction.push.AuctionWatcher;
 @ManagedBean(name=PushBean.BEAN_NAME)
 @SessionScoped
 public class PushBean implements Serializable {
+	private static final long serialVersionUID = -4989570306999687954L;
+	
 	public static final String BEAN_NAME = "pushBean";
 	
 	@PostConstruct

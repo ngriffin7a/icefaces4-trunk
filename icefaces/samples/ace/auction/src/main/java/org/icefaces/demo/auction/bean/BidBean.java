@@ -36,7 +36,7 @@ public class BidBean implements Serializable {
 	private Double currentBid;
 	private AuctionItem bidItem;
 	private RowStateMap stateMap;
-	
+
 	public boolean isRenderBidPanel() {
 		return renderBidPanel;
 	}
@@ -67,7 +67,7 @@ public class BidBean implements Serializable {
 	public void setStateMap(RowStateMap stateMap) {
 		this.stateMap = stateMap;
 	}
-	
+
 	public void startBidding(AuctionItem item) {
 		setBidItem(item);
 		updateBidding();

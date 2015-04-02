@@ -20,7 +20,7 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core">
     <h:messages globalOnly="true" layout="table"/>
-                    
+    
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
                    styleClass="auctionMontiorTable"
@@ -35,7 +35,13 @@
                    rowSelectListener="#{bidController.selectItem}"
                    rowUnselectListener="#{bidController.unselectItem}">
         <f:facet name="header">
-            Auction List
+            <h:panelGroup layout="block">
+	            Auction List
+	            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
+	                             actionListener="#{tabController.postAuctionTab}"
+	                             immediate="true"
+	                             style="float: right;"/>
+            </h:panelGroup>
         </f:facet>
         <ace:column headerText="Name" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
             #{item.name}

@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.icefaces.demo.auction.converter.TimeLeftConverter;
 
-public class AuctionItem implements Serializable {
-	private static final long serialVersionUID = -7529651135311336130L;
+public class AuctionItem implements Comparable<AuctionItem>, Serializable {
+	private static final long serialVersionUID = -7512542650152899004L;
 	
 	public static final double DEFAULT_BID_INCREMENT = 1.0;
 	public static final double SMALL_BID_INCREMENT = 10.0;
@@ -43,6 +43,9 @@ public class AuctionItem implements Serializable {
 		@Override
 		public String toString() { return value; }
 	}
+	public Condition[] getConditions() {
+		return Condition.values();
+	}
 	
 	public enum Delivery {
 		ONE_DAY("1 day"),
@@ -56,6 +59,9 @@ public class AuctionItem implements Serializable {
 		private Delivery(String value) { this.value = value; }
 		@Override
 		public String toString() { return value; }
+	}
+	public Delivery[] getDeliveries() {
+		return Delivery.values();
 	}
 	
 	// Main info
@@ -184,7 +190,8 @@ public class AuctionItem implements Serializable {
 	public void archiveHistory(Date bidDate, double newBid) {
 		if (history != null) {
 			// Store the bid increase between the incoming new bid and our current price
-			history.add(new AuctionHistory(bidDate, (newBid - price), newBid));
+			// We'll keep this with the newest bid at the "top" of the list (0 index)
+			history.add(0, new AuctionHistory(bidDate, (newBid - price), newBid));
 		}
 	}
 
@@ -195,5 +202,16 @@ public class AuctionItem implements Serializable {
 	@Override
 	public String toString() {
 		return name + " for " + price + " with " + bids + " bids ending at " + new Date(expiryDate);
+	}
+
+	@Override
+	public int compareTo(AuctionItem o) {
+		if (expiryDate < o.getExpiryDate()) {
+			return -1;
+		}
+		else if (expiryDate > o.getExpiryDate()) {
+			return 1;
+		}
+		return 0;
 	}
 }

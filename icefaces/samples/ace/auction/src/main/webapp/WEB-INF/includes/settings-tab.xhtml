@@ -84,6 +84,7 @@
         <f:facet name="footer">
             <h:panelGroup layout="block">
                 <h:commandButton value="Submit" actionListener="#{settingsController.save}"/>
+                <h:commandButton value="Submit &amp; Return" actionListener="#{settingsController.saveAndReturn}"/>
                 
                 <h:messages globalOnly="true" layout="table"/>
             </h:panelGroup>
