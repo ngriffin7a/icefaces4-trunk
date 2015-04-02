@@ -24,6 +24,7 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.service.AuctionItemGenerator;
 import org.icefaces.demo.auction.util.FacesUtils;
 
 @ManagedBean(name=PostBean.BEAN_NAME)
@@ -49,6 +50,7 @@ public class PostBean implements Serializable {
 			toAdd = new AuctionItem();
 			
 			// Set some defaults
+			toAdd.setName(AuctionItemGenerator.generateName());
 			toAdd.setPrice(0.1);
 			toAdd.setShippingCost(1.0);
 			

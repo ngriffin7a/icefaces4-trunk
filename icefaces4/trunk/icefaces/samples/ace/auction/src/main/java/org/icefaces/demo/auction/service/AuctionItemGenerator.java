@@ -59,11 +59,11 @@ public class AuctionItemGenerator {
 		return toBid.getPrice()+AuctionItem.DEFAULT_BID_INCREMENT+random.nextInt((int)AuctionItem.MAX_BID_INCREASE/2)+random.nextDouble();
 	}
 	
-	private static String generateName() {
+	public static String generateName() {
 		return ListData.ITEMS[random.nextInt(ListData.ITEMS.length)];
 	}
 	
-	private static double generatePrice() {
+	public static double generatePrice() {
 		// Figure out if we're doing a cheap, normal, big, or huge size price
 		switch (1+random.nextInt(6)) {
 			case 1: case 2: return random.nextInt(10) + random.nextDouble() + 0.1; // Need to add 0.1 for the super rare 0 + 0.0 case
@@ -74,7 +74,7 @@ public class AuctionItemGenerator {
 		return 1.0;
 	}
 	
-	private static long generateExpiryDate() {
+	public static long generateExpiryDate() {
 		if (!TestFlags.TEST_EXPIRY) {
 			// First randomly choose if we're doing time beyond a day
 			int min = HOUR_IN_MILLISECONDS; // Minimum of an hour away
@@ -98,7 +98,7 @@ public class AuctionItemGenerator {
 		}
 	}
 	
-	private static Double generateShippingCost() {
+	public static Double generateShippingCost() {
 		if (random.nextBoolean()) {
 			return (1+random.nextInt(20)) + random.nextDouble();
 		}
@@ -107,7 +107,7 @@ public class AuctionItemGenerator {
 		}
 	}
 	
-	private static String generateSellerName() {
+	public static String generateSellerName() {
 		String toReturn = ListData.FIRST_NAMES[random.nextInt(ListData.FIRST_NAMES.length)];
 		
 		// Don't need a last name for everyone
@@ -117,26 +117,26 @@ public class AuctionItemGenerator {
 		return toReturn;
 	}
 	
-	private static String generateSellerLocation() {
+	public static String generateSellerLocation() {
 		return ListData.LOCATIONS[random.nextInt(ListData.LOCATIONS.length)];
 	}
 	
-	private static String generateDescription(String name) {
+	public static String generateDescription(String name) {
 		// TODO Generate a realistic description based on name
 		return "Great item";
 	}
 	
-	private static AuctionItem.Delivery generateEstimatedDelivery() {
+	public static AuctionItem.Delivery generateEstimatedDelivery() {
 		AuctionItem.Delivery available[] = AuctionItem.Delivery.values();
 		return available[random.nextInt(available.length)];
 	}
 	
-	private static AuctionItem.Condition generateCondition() {
+	public static AuctionItem.Condition generateCondition() {
 		AuctionItem.Condition available[] = AuctionItem.Condition.values();
 		return available[random.nextInt(available.length)];		
 	}
 	
-	private static AuctionItem generateFakeBids(AuctionItem toBid) {
+	public static AuctionItem generateFakeBids(AuctionItem toBid) {
 		int bidsToPlace = random.nextInt(11);
 		
 		if (bidsToPlace > 0) {
