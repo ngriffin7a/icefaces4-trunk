@@ -51,7 +51,7 @@ public class AuctionService implements Serializable {
 	public void setupAuction() {
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
 		for (int i = 0; i <= MINIMUM_ITEMS; i++) {
-			addAuction(AuctionItemGenerator.makeItem(), false);
+			addAuction(AuctionItemGenerator.makeItem(), true);
 		}
 		
 		renderer.start(this);
@@ -91,20 +91,22 @@ public class AuctionService implements Serializable {
 	}
 	
 	public void addAuction(AuctionItem toAdd) {
-		addAuction(toAdd, true);
+		addAuction(toAdd, false);
 	}
 	
-	public void addAuction(AuctionItem toAdd, boolean log) {
+	public void addAuction(AuctionItem toAdd, boolean silent) {
 		auctions.add(toAdd);
 		sortAuctions();
 		
-		if (log) {
+		if (!silent) {
 			if (globalMessage != null) {
 				globalMessage.setLastUpdated(toAdd);
 				
 				globalMessage.addMessage("Listed a new auction for item '" + toAdd.getName() + "' added for " + NumberFormat.getCurrencyInstance().format(toAdd.getPrice()) + " ending in " +
 						toAdd.getTimeLeft() + ".");
 			}
+			
+			AuctionWatcher.getInstance().manualPush();
 		}
 	}
 	
@@ -122,6 +124,8 @@ public class AuctionService implements Serializable {
 							NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
 				}
 			}
+			
+			AuctionWatcher.getInstance().manualPush();
 		}
 	}
 	
@@ -138,6 +142,8 @@ public class AuctionService implements Serializable {
 				globalMessage.addMessage("New bid (" + toUpdate.getBids() + " total) on item '" + toUpdate.getName() + "' increasing the price from " +
 						NumberFormat.getCurrencyInstance().format(oldPrice) + " to " + NumberFormat.getCurrencyInstance().format(newBid) + ".");
 			}
+			
+			AuctionWatcher.getInstance().manualPush();
 			
 			return true;
 		}

@@ -19,4 +19,5 @@ package org.icefaces.demo.auction.test;
 public class TestFlags {
 	public static final boolean TEST_EXPIRY = false; // Debugging toggle to create short lasting items (true) or normal (false)
 	public static final boolean TEST_BIDROBOT = false; // Debugging toggle to make BidRobots always spawn and bid really often
+	public static final boolean TEST_MANUAL_PUSH = false; // Debugging toggle to make the AuctionWatcher not run an interval thread
 }

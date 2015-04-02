@@ -18,20 +18,25 @@ package org.icefaces.demo.auction.push;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
 import org.icefaces.demo.auction.service.AuctionService;
+import org.icefaces.demo.auction.test.TestFlags;
 
 public class AuctionWatcher {
 	public static final String INTERVAL_PUSH_GROUP = "auctionWatcher";
+	public static final String MANUAL_PUSH_GROUP = "auctionUpdate";
 	public static final int INTERVAL_SECONDS = 1;
 	private static final Logger log = Logger.getLogger(AuctionWatcher.class.getName());
 	
 	private static AuctionWatcher singleton = null;
 	private ScheduledExecutorService renderThread;
+	private ScheduledFuture<?> renderThreadFuture;
+	private PortableRenderer renderer = PushRenderer.getPortableRenderer();
 	
 	private AuctionWatcher() {
 	}
@@ -44,25 +49,25 @@ public class AuctionWatcher {
 	}
 
 	public void start(final AuctionService toWatch) {
-		// Stop any old executor first
-		stop(false);
-		
-		log.info("Starting AuctionPushRenderer every " + INTERVAL_SECONDS + " seconds for push group '" + INTERVAL_PUSH_GROUP + "'.");
-		
-		final PortableRenderer renderer = PushRenderer.getPortableRenderer();
-		renderThread = Executors.newSingleThreadScheduledExecutor();
-		
-		renderThread.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				if (!renderThread.isShutdown()) {
-					renderer.render(INTERVAL_PUSH_GROUP);
-					
-					// Check our items for expiry and add more as needed
-					toWatch.checkAuctionExpiry();
+		if (!TestFlags.TEST_MANUAL_PUSH) {
+			// Stop any old executor first
+			stop(false);
+			
+			log.info("Starting AuctionPushRenderer every " + INTERVAL_SECONDS + " seconds for push group '" + INTERVAL_PUSH_GROUP + "'.");
+			
+			renderThread = Executors.newSingleThreadScheduledExecutor();
+			renderThreadFuture = renderThread.scheduleAtFixedRate(new Runnable() {
+				@Override
+				public void run() {
+					if (!renderThread.isShutdown()) {
+						renderer.render(INTERVAL_PUSH_GROUP);
+						
+						// Check our items for expiry and add more as needed
+						toWatch.checkAuctionExpiry();
+					}
 				}
-			}
-		}, 0, INTERVAL_SECONDS, TimeUnit.SECONDS);
+			}, 0, INTERVAL_SECONDS, TimeUnit.SECONDS);
+		}
 	}
 	
 	public void stop() {
@@ -75,10 +80,30 @@ public class AuctionWatcher {
 		}
 		
 		if (renderThread != null) {
+			if (renderThreadFuture != null) {
+				renderThreadFuture.cancel(true);
+			}
 			renderThread.shutdown();
 			renderThread.shutdownNow();
 			renderThread = null;
 		}
+	}
+	
+	public boolean isRunning() {
+		if ((renderThread != null) && (renderThreadFuture != null)) {
+			return !renderThread.isShutdown() && !renderThreadFuture.isDone();
+		}
+		return false;
+	}
+	
+	public boolean manualPush() {
+		// We only need to do an Ajax Push if we don't have our interval thread running
+		// Otherwise the interval thread will basically take care of updating users
+		if (!isRunning()) {
+			renderer.render(MANUAL_PUSH_GROUP);
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
