@@ -20,11 +20,11 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <icecore:defaultAction actionListener="#{bidController.postAuction}" key="Enter"/>
+    <icecore:defaultAction actionListener="#{auctionController.postAuction}" key="Enter"/>
                 
     <ace:panel closable="false" collapsed="false" toggleable="true"
-               header="New Auction Item to Add (maximum #{bidController.maxPostedAuctions})"
-               rendered="#{postBean.postedCount lt bidController.maxPostedAuctions}">
+               header="New Auction Item to Add (maximum #{auctionController.maxPostedAuctions})"
+               rendered="#{postBean.postedCount lt auctionController.maxPostedAuctions}">
 	    <h:panelGrid columns="3" cellpadding="3" cellspacing="0" styleClass="postTable">
 	        <h:outputText value="Item Details" style="font-weight: bold;"/>
 	        <h:outputText value=""/><h:outputText value=""/>
@@ -69,7 +69,7 @@
 	        <ace:dateTimeEntry id="expiryIn" value="#{postBean.expiryDate}"
 	                           navigator="false" renderAsPopup="true" readOnlyInputText="true"
 	                           required="true" requiredIndicator="*"
-	                           mindate="#{bidController.minExpiryDate}" maxdate="#{bidController.maxExpiryDate}"
+	                           mindate="#{auctionController.minExpiryDate}" maxdate="#{auctionController.maxExpiryDate}"
 	                           showOn="both"
 	                           pattern="MM/dd/yyyy h:mm a"/>
 	        <h:message for="expiryIn"/>
@@ -111,14 +111,14 @@
 	    </h:panelGrid>
 	    
 	    <f:facet name="footer">
-	        <h:commandButton value="Submit" actionListener="#{bidController.postAuction}"/>
+	        <h:commandButton value="Submit" actionListener="#{auctionController.postAuction}"/>
 	        
 	        <h:messages globalOnly="true" layout="table"/>
 	    </f:facet>
     </ace:panel>
     
     <h3>
-        <h:outputText value="No further items can be added as your maximum #{bidController.maxPostedAuctions} posted auction limit has been reached. Thank you for your contributions."
-                      rendered="#{postBean.postedCount ge bidController.maxPostedAuctions}"/>
+        <h:outputText value="No further items can be added as your maximum #{auctionController.maxPostedAuctions} posted auction limit has been reached. Thank you for your contributions."
+                      rendered="#{postBean.postedCount ge auctionController.maxPostedAuctions}"/>
     </h3>
 </ui:composition>

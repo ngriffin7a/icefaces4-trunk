@@ -32,8 +32,8 @@
                    alwaysExecuteContents="true"
                    stateMap="#{bidBean.stateMap}"
                    selectionMode="single"
-                   rowSelectListener="#{bidController.selectItem}"
-                   rowUnselectListener="#{bidController.unselectItem}">
+                   rowSelectListener="#{auctionController.selectItem}"
+                   rowUnselectListener="#{auctionController.unselectItem}">
         <f:facet name="header">
             <h:panelGroup layout="block">
 	            Auction List
@@ -63,15 +63,15 @@
         <f:facet name="footer">
             <h:panelGroup layout="block">
                 <h:panelGroup id="footWrap" layout="block" rendered="#{bidBean.renderBidPanel}">
-                    <icecore:defaultAction actionListener="#{bidController.submitBid}" key="Enter"/>
+                    <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
                     <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
                     <ace:textEntry id="bidIn" value="#{bidBean.currentBid}"
                                    required="true" requiredMessage="Enter a valid bid."
                                    size="10">
                         <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                     </ace:textEntry>
-                    <h:commandButton id="submitBid" value="Submit" actionListener="#{bidController.submitBid}"/>
-                    <h:commandButton value="Cancel" immediate="true" actionListener="#{bidController.cancelBid}"/>
+                    <h:commandButton id="submitBid" value="Submit" actionListener="#{auctionController.submitBid}"/>
+                    <h:commandButton value="Cancel" immediate="true" actionListener="#{auctionController.cancelBid}"/>
                     <br/>
                     <h:message for="bidIn"/>
                     <h:message for="footWrap"/>
@@ -109,11 +109,11 @@
             <h:outputText value="Bid History:"/>
             <h:panelGrid columns="3" rendered="#{bidBean.bidItem.bids gt 0}">
 	            <h:commandButton immediate="true" value="Graph Bid Increments"
-	                             actionListener="#{bidController.openGraphBidDialog}"/>
+	                             actionListener="#{auctionController.openGraphBidDialog}"/>
                 <h:commandButton immediate="true" value="Graph Price Changes"
-                                 actionListener="#{bidController.openGraphPriceDialog}"/>
+                                 actionListener="#{auctionController.openGraphPriceDialog}"/>
                 <h:commandButton immediate="true" value="View History"
-                                 actionListener="#{bidController.openViewHistoryDialog}"/>
+                                 actionListener="#{auctionController.openViewHistoryDialog}"/>
             </h:panelGrid>
             <h:outputText value="No bids yet"
                           rendered="#{bidBean.bidItem.bids le 0}"/>

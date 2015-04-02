@@ -24,7 +24,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
-import org.icefaces.demo.auction.controller.BidController;
+import org.icefaces.demo.auction.controller.AuctionController;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.util.ColorRGBA;
 import org.icefaces.demo.auction.util.FacesUtils;
