@@ -21,6 +21,11 @@
                 xmlns:icecore="http://www.icefaces.org/icefaces/core">
     <h:messages globalOnly="true" layout="table"/>
     
+    <h:panelGroup layout="block" style="float: right;">
+	    <ace:dataExporter target="a" label="Export to PDF" type="pdf" fileName="auctions" includeFooters="false"/>
+	    <ace:dataExporter target="a" label="Export to XLS" type="xls" fileName="auctions" includeFooters="false"/>
+	    <ace:dataExporter target="a" label="Export to CSV" type="csv" fileName="auctions" includeFooters="false"/>
+    </h:panelGroup>
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
                    styleClass="auctionMontiorTable"

@@ -16,6 +16,8 @@
 
 <project name="auction" default="servlet-profile">
     
+    <property name="ace" value="true" />
+
     <property file="./build.properties"/>
     <property file="../build/build.properties"/>
     <import file="../build/common.xml"/>
