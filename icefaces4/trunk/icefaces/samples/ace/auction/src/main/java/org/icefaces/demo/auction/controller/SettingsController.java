@@ -24,7 +24,6 @@ import javax.faces.event.ActionEvent;
 
 import org.icefaces.demo.auction.bean.SettingsBean;
 import org.icefaces.demo.auction.util.FacesUtils;
-import org.icefaces.demo.auction.util.TimestampUtil;
 
 @ManagedBean(name=SettingsController.BEAN_NAME)
 @ApplicationScoped
