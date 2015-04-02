@@ -79,6 +79,17 @@ public class AuctionService implements Serializable {
 		}
 	}
 	
+	public boolean isUniqueItemName(String name) {
+		if ((name != null) && (!name.isEmpty())) {
+			for (AuctionItem loopCheck : auctions) {
+				if (name.equalsIgnoreCase(loopCheck.getName())) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	public void addAuction(AuctionItem toAdd) {
 		addAuction(toAdd, true);
 	}

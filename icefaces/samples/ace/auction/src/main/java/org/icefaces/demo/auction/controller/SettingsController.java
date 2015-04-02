@@ -43,7 +43,7 @@ public class SettingsController implements Serializable {
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground", bean.getNotificationForeground());
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth", bean.getChartWidth());
 			
-			FacesUtils.addGlobalInfoMessage(TimestampUtil.stamp() + "Successfully saved your user settings to cookies.");
+			FacesUtils.addGlobalInfoMessage("Successfully saved your user settings to cookies.");
 		}
 		// Otherwise we should clear our old cookies
 		else {
@@ -54,7 +54,7 @@ public class SettingsController implements Serializable {
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground");
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth");
 			
-			FacesUtils.addGlobalInfoMessage(TimestampUtil.stamp() + "Successfully updated your user settings for the application.");
+			FacesUtils.addGlobalInfoMessage("Successfully updated your user settings for the application.");
 		}
 	}
 	

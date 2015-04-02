@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -40,6 +41,8 @@ import org.icefaces.util.JavaScriptRunner;
 @ManagedBean(name=BidController.BEAN_NAME)
 @ApplicationScoped
 public class BidController implements Serializable {
+	private static final Logger log = Logger.getLogger(BidController.class.getName());
+	
 	// TODO Should rename this AuctionController as it's more generic than just bids
 	public static final String BEAN_NAME = "bidController";
 	
@@ -133,7 +136,25 @@ public class BidController implements Serializable {
 		AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
 		PostBean postBean = (PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME);
 		
+		// TODO ICE-10611 Because the ace:dateTimeEntry doesn't seem to respect min/max date for time, we need to check our expiry date
+		Date dateCheck = getMinExpiryDate();
+		if (postBean.getExpiryDate().before(dateCheck)) {
+			FacesUtils.addGlobalErrorMessage("Expiry date is too soon, please enter a date and time at least " + AuctionItem.EXPIRY_DATE_MINIMUM + " minutes away.");
+			postBean.setExpiryDate(dateCheck);
+			return;
+		}
+		dateCheck = getMaxExpiryDate();
+		if (postBean.getExpiryDate().after(dateCheck)) {
+			FacesUtils.addGlobalErrorMessage("Expiry date is too far in the future, please enter a date and time a maximum of 7 days away.");
+			postBean.setExpiryDate(dateCheck);
+			return;
+		}
+		
+		// If our date is valid we need to apply our expiry date from the calendar to our object
+		postBean.getToAdd().setExpiryDate(postBean.getExpiryDate().getTime());
+		
 		// Add our new auction, then clear the data
+		log.info("Posting a new user auction item: " + postBean.getToAdd());
 		service.addAuction(postBean.getToAdd());
 		postBean.clear();
 		
@@ -143,7 +164,9 @@ public class BidController implements Serializable {
 	}
 	
 	public Date getMinExpiryDate() {
-		return new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MINUTE, AuctionItem.EXPIRY_DATE_MINIMUM); // Allow a minimum of 30 minutes away
+		return cal.getTime();
 	}
 	
 	public Date getMaxExpiryDate() {
