@@ -18,7 +18,10 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
-                xmlns:icecore="http://www.icefaces.org/icefaces/core">
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:auction="http://java.sun.com/jsf/composite/components">
+    <auction:dataExporters target="m" fileName="auction-messages"
+                           includeHeaders="false" includeFooters="false"/>
     <ace:dataTable id="m" value="#{globalMessage.messages}" var="gmessage"
                    emptyMessage="No auction log messages yet."
                    reorderableColumns="false" resizableColumns="false"
