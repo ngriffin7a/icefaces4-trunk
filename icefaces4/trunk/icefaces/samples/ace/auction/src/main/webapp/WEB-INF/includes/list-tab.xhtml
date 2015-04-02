@@ -20,6 +20,8 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
+    <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
+                
     <h:messages globalOnly="true" layout="table"/>
     
     <auction:dataExporters target="a" fileName="auction-list" includeFooters="false"/>
@@ -65,7 +67,6 @@
         <f:facet name="footer">
             <h:panelGroup layout="block">
                 <h:panelGroup id="footWrap" layout="block" rendered="#{bidBean.renderBidPanel}">
-                    <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
                     <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
                     <ace:textEntry id="bidIn" value="#{bidBean.currentBid}"
                                    required="true" requiredMessage="Enter a valid bid."

@@ -56,7 +56,7 @@
     <div class="auctionMonitorContainer">
         <ace:tabSet id="at" selectedIndex="#{tabBean.selectedIndex}"
                     orientation="#{settingsBean.tabOrientation}"
-                    cancelOnInvalid="false">
+                    cancelOnInvalid="false" immediate="true">
             <ace:tabPane label="Auction List">
 		        <h:form id="f" prependId="false">
 		            <ace:tabSetProxy for="at"/>
