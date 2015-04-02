@@ -42,7 +42,9 @@
                         //cancel submit on enter
                         return false;
                     } else {
-                        submit(ev || window.event, element);
+                        if (element && element.id) {
+                            submit(ev || window.event, element);
+                        }
                         return false;
                     }
                 }
