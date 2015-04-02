@@ -37,6 +37,7 @@ public class SettingsController implements Serializable {
 		// Only need to do something on save, otherwise the submit will be enough for the current view
 		if (bean.isSaveCookie()) {
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "name", bean.getName());
+			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "location", bean.getLocation());
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "bidIncrement", String.valueOf(bean.getBidIncrement()));
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation", bean.getTabOrientation());
 			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground", bean.getNotificationBackground());
@@ -48,6 +49,7 @@ public class SettingsController implements Serializable {
 		// Otherwise we should clear our old cookies
 		else {
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "name");
+			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "location");
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "bidIncrement");
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation");
 			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground");

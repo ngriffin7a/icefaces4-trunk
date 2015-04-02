@@ -33,10 +33,15 @@ public class PostBean implements Serializable {
 	
 	private AuctionItem toAdd;
 	private Date expiryDate;
+	private int postedCount = 0; // Track how many auctions this user session has added
 	
 	public void clear() {
 		setToAdd(null);
 		setExpiryDate(null);
+	}
+	
+	public void incrementPostedCount() {
+		postedCount++;
 	}
 
 	public AuctionItem getToAdd() {
@@ -48,13 +53,16 @@ public class PostBean implements Serializable {
 			toAdd.setShippingCost(1.0);
 			
 			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.HOUR, 2);
+			cal.add(Calendar.HOUR, AuctionItem.DEFAULT_EXPIRY_DATE_HOURS);
 			setExpiryDate(cal.getTime());
 			toAdd.setExpiryDate(cal.getTimeInMillis());
 			
 			SettingsBean settingsBean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
 			if ((settingsBean.getName() != null) && (!settingsBean.getName().isEmpty())) {
 				toAdd.setSellerName(settingsBean.getName());
+			}
+			if ((settingsBean.getLocation() != null) && (!settingsBean.getLocation().isEmpty())) {
+				toAdd.setSellerLocation(settingsBean.getLocation());
 			}
 		}
 		
@@ -71,5 +79,13 @@ public class PostBean implements Serializable {
 
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
+	}
+
+	public int getPostedCount() {
+		return postedCount;
+	}
+
+	public void setPostedCount(int postedCount) {
+		this.postedCount = postedCount;
 	}
 }
