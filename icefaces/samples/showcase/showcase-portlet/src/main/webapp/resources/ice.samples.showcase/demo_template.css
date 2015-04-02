@@ -463,3 +463,76 @@ code { overflow-x:auto; } /* Needed to overflow IE 6 */
 .java_literal { color: rgb(188,0,0); }
 .java_javadoc_tag { color: rgb(147,147,147); background-color: rgb(247,247,247); font-style: italic; font-weight: bold; }
 .java_separator { color: rgb(0,33,255); }
+
+/* Portlet-only styling fix for ace:comboBox */
+.ui-combobox .ui-combobox-value input.ui-inputfield {
+border:0;
+margin:0;
+padding:0;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-required,
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-optional {
+	border-width: 2px;
+	margin:1px;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-state-required.ui-state-error,
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-state-optional.ui-state-error {
+	border-width: 3px;
+	margin:0;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield {
+	margin: 0;
+	border-width: 2px;
+	border-style: solid;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-optional.blueRS {
+    border-color: #9999cc;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-required.blueRS {
+    border-color: #0000cc;
+}
+
+.required-styling-demo .blueRS .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-optional {
+    border-color: #9999cc;
+}
+
+.required-styling-demo .blueRS .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-required {
+    border-color: #0000cc;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-optional.redRS {
+    border-color: #cc9999;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-required.redRS {
+    border-color: #cc0000;
+}
+
+.required-styling-demo .redRS .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-optional {
+    border-color: #cc9999;
+}
+
+.required-styling-demo .redRS .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-required {
+    border-color: #cc0000;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-optional.greenRS {
+    border-color: #99cc99;
+}
+
+.required-styling-demo .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-required.greenRS {
+    border-color: #00cc00;
+}
+
+.required-styling-demo .greenRS .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-optional {
+    border-color: #99cc99;
+}
+
+.required-styling-demo .greenRS .ui-combobox .ui-combobox-value input[type="text"].ui-inputfield.ui-state-required {
+    border-color: #00cc00;
+}
