@@ -40,7 +40,7 @@
                     draggable="true" modal="true" resizable="false"
                     header="Bid History for '#{bidBean.bidItem.name}'"
                     width="#{settingsBean.chartWidth+70}">
-            <ace:ajax event="close" listener="#{bidController.closeHistoryDialogListener}"/>
+            <ace:ajax event="close" listener="#{auctionController.closeHistoryDialogListener}"/>
             
             <h:panelGroup layout="block" style="margin: 20px;">
                 <ace:chart id="historyChart"
