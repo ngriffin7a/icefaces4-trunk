@@ -18,6 +18,7 @@ package org.icefaces.demo.auction.service;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -50,7 +51,7 @@ public class AuctionService implements Serializable {
 	public void setupAuction() {
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
 		for (int i = 0; i <= MINIMUM_ITEMS; i++) {
-			auctions.add(AuctionItemGenerator.makeItem());
+			addAuction(AuctionItemGenerator.makeItem(), false);
 		}
 		
 		renderer.start(this);
@@ -79,16 +80,27 @@ public class AuctionService implements Serializable {
 	}
 	
 	public void addAuction(AuctionItem toAdd) {
+		addAuction(toAdd, true);
+	}
+	
+	public void addAuction(AuctionItem toAdd, boolean log) {
 		auctions.add(toAdd);
+		sortAuctions();
 		
-		if (globalMessage != null) {
-			globalMessage.addMessage("Listed a new auction for item '" + toAdd.getName() + "' added for " + NumberFormat.getCurrencyInstance().format(toAdd.getPrice()) + " ending in " +
-					toAdd.getTimeLeft() + ".");
+		if (log) {
+			if (globalMessage != null) {
+				globalMessage.setLastUpdated(toAdd);
+				
+				globalMessage.addMessage("Listed a new auction for item '" + toAdd.getName() + "' added for " + NumberFormat.getCurrencyInstance().format(toAdd.getPrice()) + " ending in " +
+						toAdd.getTimeLeft() + ".");
+			}
 		}
 	}
 	
 	public void deleteAuction(AuctionItem toRemove) {
 		if (auctions.remove(toRemove)) {
+			sortAuctions();
+			
 			if (globalMessage != null) {
 				if (toRemove.getBids() > 0) {
 					globalMessage.addMessage("Auction won for item '" + toRemove.getName() + "' with " + toRemove.getBids() + " bids and a winning price of " +
@@ -119,6 +131,10 @@ public class AuctionService implements Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	public void sortAuctions() {
+		Collections.sort(auctions);
 	}
 	
 	public List<AuctionItem> getAuctions() {

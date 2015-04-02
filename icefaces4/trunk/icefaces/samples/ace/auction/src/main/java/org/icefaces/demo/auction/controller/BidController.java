@@ -18,6 +18,8 @@ package org.icefaces.demo.auction.controller;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -29,6 +31,7 @@ import org.icefaces.ace.event.SelectEvent;
 import org.icefaces.ace.event.UnselectEvent;
 import org.icefaces.demo.auction.bean.BidBean;
 import org.icefaces.demo.auction.bean.ChartBean;
+import org.icefaces.demo.auction.bean.PostBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.service.AuctionService;
 import org.icefaces.demo.auction.util.FacesUtils;
@@ -37,6 +40,7 @@ import org.icefaces.util.JavaScriptRunner;
 @ManagedBean(name=BidController.BEAN_NAME)
 @ApplicationScoped
 public class BidController implements Serializable {
+	// TODO Should rename this AuctionController as it's more generic than just bids
 	public static final String BEAN_NAME = "bidController";
 	
 	public void selectItem(SelectEvent event) {
@@ -123,5 +127,28 @@ public class BidController implements Serializable {
 	
 	public void closeHistoryDialogListener(AjaxBehaviorEvent event) {
 		closeHistoryDialog(null);
+	}
+	
+	public void postAuction(ActionEvent event) {
+		AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
+		PostBean postBean = (PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME);
+		
+		// Add our new auction, then clear the data
+		service.addAuction(postBean.getToAdd());
+		postBean.clear();
+		
+		// Redirect back to the list after posting
+		TabController tabController = (TabController)FacesUtils.getManagedBean(TabController.BEAN_NAME);
+		tabController.auctionListTab(event);
+	}
+	
+	public Date getMinExpiryDate() {
+		return new Date();
+	}
+	
+	public Date getMaxExpiryDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, 7); // Allow up to a week away
+		return cal.getTime();
 	}
 }

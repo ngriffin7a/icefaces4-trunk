@@ -14,47 +14,27 @@
  * governing permissions and limitations under the License.
  */
 
-/* Overrides */
-.ui-datatable-odd {
-    background-color: #EEEEEE !important;
-}
+package org.icefaces.demo.auction.bean;
 
-.ui-notificationbar {
-    height: 100px;
-    padding: 0;
-    background: rgba(255, 255, 255, 0.9);
-    color: rgba(0, 0, 0, 0.9);
-}
+import java.io.Serializable;
 
-/* Page Styles */
-.auctionMonitorContainer {
-    margin: 15px;
-    margin-bottom:5px;
-    margin-top: 45px;
-}
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
-.auctionMontiorTable {
-    width: 100%;
-}
+@ManagedBean(name=TabBean.BEAN_NAME)
+@ViewScoped
+public class TabBean implements Serializable {
+	private static final long serialVersionUID = -2744402527799521411L;
 
-.notificationBarWrap {
-	height: 90px;
-	overflow-y: scroll;
-	padding: 5px;
-}
+	public static final String BEAN_NAME = "tabBean";
+	
+	private int selectedIndex = 0;
 
-.updateC {
-	background: rgba(50, 50, 200, 0.3);
-}
+	public int getSelectedIndex() {
+		return selectedIndex;
+	}
 
-.w25 {
-	width: 25%;
-}
-
-.w75 {
-	width: 75%;
-}
-
-.postTable input, .postTable select, .postTable textarea {
-	width: 200px;
+	public void setSelectedIndex(int selectedIndex) {
+		this.selectedIndex = selectedIndex;
+	}
 }

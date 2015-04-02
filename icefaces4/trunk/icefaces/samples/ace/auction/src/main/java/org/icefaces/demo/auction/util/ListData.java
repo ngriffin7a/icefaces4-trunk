@@ -28,6 +28,7 @@ import javax.faces.bean.ManagedBean;
 public class ListData implements Serializable {
 	public static final String BEAN_NAME = "listData";
 	
+	public static final String DEFAULT_SELECT_LABEL = "-- Select --";
 	public static final String DEFAULT_TAB_ORIENTATION = "top";
 	public static final String[] TAB_ORIENTATIONS = new String[] {
 		"bottom", DEFAULT_TAB_ORIENTATION, "left", "right"
@@ -109,6 +110,10 @@ public class ListData implements Serializable {
 		toReturn.add(new ColorRGBA("Violet Red", 219,112,147));
 		toReturn.add(new ColorRGBA("Seashell", 255,245,238));
 		return toReturn;
+	}
+	
+	public String getDefaultSelectLabel() {
+		return DEFAULT_SELECT_LABEL;
 	}
 	
 	public String[] getTabOrientations() {

@@ -57,4 +57,11 @@ public class SettingsController implements Serializable {
 			FacesUtils.addGlobalInfoMessage(TimestampUtil.stamp() + "Successfully updated your user settings for the application.");
 		}
 	}
+	
+	public void saveAndReturn(ActionEvent event) {
+		save(event);
+		
+		TabController tabController = (TabController)FacesUtils.getManagedBean(TabController.BEAN_NAME);
+		tabController.auctionListTab(event);
+	}
 }
