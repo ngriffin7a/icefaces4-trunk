@@ -46,6 +46,8 @@ public class BidController implements Serializable {
 	// TODO Should rename this AuctionController as it's more generic than just bids
 	public static final String BEAN_NAME = "bidController";
 	
+	public static final int MAX_POSTED_AUCTIONS = 5;
+	
 	public void selectItem(SelectEvent event) {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		bidBean.startBidding((AuctionItem)event.getObject());
@@ -135,12 +137,23 @@ public class BidController implements Serializable {
 	public void postAuction(ActionEvent event) {
 		AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
 		PostBean postBean = (PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME);
+		AuctionItem toAdd = postBean.getToAdd();
 		
-		// TODO ICE-10611 Because the ace:dateTimeEntry doesn't seem to respect min/max date for time, we need to check our expiry date
+		// Only allow a set maximum auctions to be added on a per-session basis 
+		if (postBean.getPostedCount() >= MAX_POSTED_AUCTIONS) {
+			FacesUtils.addGlobalWarnMessage("Thank you for your auction contributions, but you have reached the maximum limit of " + MAX_POSTED_AUCTIONS + " new items.");
+			postBean.clear();
+			return;
+		}
+		
+		// TODO ICE-10611 Because the ace:dateTimeEntry doesn't seem to respect min/max date for time, we need to manually check our expiry date
 		Date dateCheck = getMinExpiryDate();
 		if (postBean.getExpiryDate().before(dateCheck)) {
 			FacesUtils.addGlobalErrorMessage("Expiry date is too soon, please enter a date and time at least " + AuctionItem.EXPIRY_DATE_MINIMUM + " minutes away.");
-			postBean.setExpiryDate(dateCheck);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.HOUR, AuctionItem.DEFAULT_EXPIRY_DATE_HOURS);
+			postBean.setExpiryDate(cal.getTime());
 			return;
 		}
 		dateCheck = getMaxExpiryDate();
@@ -151,11 +164,26 @@ public class BidController implements Serializable {
 		}
 		
 		// If our date is valid we need to apply our expiry date from the calendar to our object
-		postBean.getToAdd().setExpiryDate(postBean.getExpiryDate().getTime());
+		toAdd.setExpiryDate(postBean.getExpiryDate().getTime());
 		
-		// Add our new auction, then clear the data
+		// Next we need to do some defaults is non-required fields are missing
+		if ((toAdd.getSellerLocation() == null) || (toAdd.getSellerLocation().isEmpty())) {
+			toAdd.setSellerLocation("Unknown");
+		}
+		if ((toAdd.getSellerName() == null) || (toAdd.getSellerName().isEmpty())) {
+			toAdd.setSellerName("Anonymous");
+		}
+		if (toAdd.getCondition() == null) {
+			toAdd.setCondition(AuctionItem.Condition.UNKNOWN);
+		}
+		if (toAdd.getEstimatedDelivery() == null) {
+			toAdd.setEstimatedDelivery(AuctionItem.Delivery.UNKNOWN);
+		}
+		
+		// Add our new auction, increase the count of successful auctions from this user session, then clear the temp data
 		log.info("Posting a new user auction item: " + postBean.getToAdd());
-		service.addAuction(postBean.getToAdd());
+		service.addAuction(toAdd);
+		postBean.incrementPostedCount();
 		postBean.clear();
 		
 		// Redirect back to the list after posting
@@ -173,5 +201,9 @@ public class BidController implements Serializable {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 7); // Allow up to a week away
 		return cal.getTime();
+	}
+	
+	public int getMaxPostedAuctions() {
+		return MAX_POSTED_AUCTIONS;
 	}
 }

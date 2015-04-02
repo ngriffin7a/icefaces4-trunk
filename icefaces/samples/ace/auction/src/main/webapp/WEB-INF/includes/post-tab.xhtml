@@ -23,21 +23,9 @@
     <icecore:defaultAction actionListener="#{bidController.postAuction}" key="Enter"/>
                 
     <ace:panel closable="false" collapsed="false" toggleable="true"
-               header="New Auction Item to Add">
+               header="New Auction Item to Add (maximum #{bidController.maxPostedAuctions})"
+               rendered="#{postBean.postedCount lt bidController.maxPostedAuctions}">
 	    <h:panelGrid columns="3" cellpadding="3" cellspacing="0" styleClass="postTable">
-	<!-- TODO Add item
-	    private String name;
-	    private double price; (0.01 to $1,000)
-	    private long expiryDate; (set via calendar)
-	    
-	    // Details
-	    private Double shippingCost; ($1-20)
-	    private String sellerName; (prefill from Settings)
-	    private String sellerLocation; (dropdown)
-	    private String description;
-	    private Delivery estimatedDelivery; (dropdown)
-	    private Condition condition; (dropdown)
-	-->
 	        <h:outputText value="Item Details" style="font-weight: bold;"/>
 	        <h:outputText value=""/><h:outputText value=""/>
 	        
@@ -128,4 +116,9 @@
 	        <h:messages globalOnly="true" layout="table"/>
 	    </f:facet>
     </ace:panel>
+    
+    <h3>
+        <h:outputText value="No further items can be added as your maximum #{bidController.maxPostedAuctions} posted auction limit has been reached. Thank you for your contributions."
+                      rendered="#{postBean.postedCount ge bidController.maxPostedAuctions}"/>
+    </h3>
 </ui:composition>

@@ -41,6 +41,7 @@ public class SettingsBean implements Serializable {
 	private boolean saveCookie;
 	
 	private String name;
+	private String location;
 	private double bidIncrement;
 	private String tabOrientation;
 	private String notificationBackground;
@@ -55,6 +56,7 @@ public class SettingsBean implements Serializable {
 		// Now try loading from a cookie
 		try{
 			name = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "name", name).toString();
+			location = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "location", name).toString();
 			bidIncrement = Double.parseDouble(FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "bidIncrement", bidIncrement).toString());
 			tabOrientation = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "tabOrientation", tabOrientation).toString();
 			notificationBackground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationBackground", notificationBackground).toString();
@@ -74,6 +76,7 @@ public class SettingsBean implements Serializable {
 		String userNumber = String.valueOf(System.currentTimeMillis());
 		userNumber = userNumber.substring(userNumber.length()-5);
 		name = "User #" + userNumber;
+		location = null;
 		bidIncrement = AuctionItem.DEFAULT_BID_INCREMENT;
 		tabOrientation = ListData.DEFAULT_TAB_ORIENTATION;
 		notificationBackground = "rgba(255, 255, 255, " + ColorRGBA.DEFAULT_OPACITY + ")";
@@ -95,6 +98,14 @@ public class SettingsBean implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public double getBidIncrement() {

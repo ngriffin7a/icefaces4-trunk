@@ -26,7 +26,7 @@
                header="Application Settings">
         <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
             <h:graphicImage id="nameInHelp" library="images" name="help.png"/>
-            <h:outputLabel for="nameIn" value="Name:"/>
+            <h:outputLabel for="nameIn" value="Your Name:"/>
             <ace:textEntry id="nameIn" value="#{settingsBean.name}" required="true"
                            autocapitalize="on" autocomplete="on" maxlength="15"
                            placeholder="Enter your name">
@@ -34,8 +34,16 @@
             </ace:textEntry>
             <h:message for="nameIn"/>
             
+            <h:graphicImage id="sLocHelp" library="images" name="help.png"/>
+            <h:outputLabel for="sLoc" value="Your Location:"/>
+            <h:selectOneMenu id="sLoc" value="#{settingsBean.location}" required="true">
+                <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
+                <f:selectItems value="#{listData.locations}"/>
+            </h:selectOneMenu>
+            <h:message for="sLoc"/>
+            
             <h:graphicImage id="dbidHelp" library="images" name="help.png"/>
-            <h:outputLabel for="dbid" value="Default Bid Increment:"/>
+            <h:outputLabel for="dbid" value="Default Bid Increment ($):"/>
             <ace:textEntry id="dbid" value="#{settingsBean.bidIncrement}" required="true"
                            maxlength="5">
                 <f:validateDoubleRange minimum="1.0" maximum="100.0"/>
@@ -92,7 +100,11 @@
     </ace:panel>
     
     <ace:tooltip for="nameInHelp" speechBubble="true">
-        Customize the name you want associated with all bids (must be 3 to 15 characters).
+        Customize the name you want associated with all bids and item sales (must be 3 to 15 characters).
+    </ace:tooltip>
+    
+    <ace:tooltip for="sLocHelp" speechBubble="true">
+        Choose the location any of your sold auction items will originate from.
     </ace:tooltip>
     
     <ace:tooltip for="dbidHelp" speechBubble="true">
