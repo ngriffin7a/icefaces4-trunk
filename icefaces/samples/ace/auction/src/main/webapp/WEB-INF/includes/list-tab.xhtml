@@ -18,14 +18,11 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
-                xmlns:icecore="http://www.icefaces.org/icefaces/core">
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:auction="http://java.sun.com/jsf/composite/components">
     <h:messages globalOnly="true" layout="table"/>
     
-    <h:panelGroup layout="block" style="float: right;">
-	    <ace:dataExporter target="a" label="Export to PDF" type="pdf" fileName="auctions" includeFooters="false"/>
-	    <ace:dataExporter target="a" label="Export to XLS" type="xls" fileName="auctions" includeFooters="false"/>
-	    <ace:dataExporter target="a" label="Export to CSV" type="csv" fileName="auctions" includeFooters="false"/>
-    </h:panelGroup>
+    <auction:dataExporters target="a" fileName="auction-list" includeFooters="false"/>
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
                    styleClass="auctionMontiorTable"
