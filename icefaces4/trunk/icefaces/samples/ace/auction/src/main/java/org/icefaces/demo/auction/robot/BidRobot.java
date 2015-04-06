@@ -45,6 +45,7 @@ public class BidRobot implements Serializable {
 	private boolean active = (random.nextInt(10) != 0); // Have a small 10% chance to not even bid
 	private int maxBids;
 	private long waitTimeMillis;
+	private String robotName;
 	
 	@PostConstruct
 	public void initRobot() {
@@ -53,6 +54,11 @@ public class BidRobot implements Serializable {
 		}
 		
 		if (active) {
+			// Generate a name to use in bid messages
+			String userNumber = String.valueOf(System.currentTimeMillis()-random.nextInt(500));
+			userNumber = userNumber.substring(userNumber.length()-5);
+			robotName = "User #" + userNumber;
+			
 			final AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
 			
 			// Set some parameters of how the robot will behave
@@ -102,7 +108,7 @@ public class BidRobot implements Serializable {
 							// Obviously we only want to bid on a valid non-expired item
 							if (!toBid.isExpired()) {
 								// Place a randomly generated bid from our AuctionItemGenerator
-								service.placeBid(toBid, AuctionItemGenerator.makeBid(toBid));
+								service.placeBid(toBid, robotName, AuctionItemGenerator.makeBid(toBid));
 								bidCount++;
 							}
 						}
@@ -113,6 +119,14 @@ public class BidRobot implements Serializable {
 		}
 	}
 	
+	public String getRobotName() {
+		return robotName;
+	}
+
+	public void setRobotName(String robotName) {
+		this.robotName = robotName;
+	}
+
 	@PreDestroy
 	public void destroyRobot() {
 		if (bidThread != null) {

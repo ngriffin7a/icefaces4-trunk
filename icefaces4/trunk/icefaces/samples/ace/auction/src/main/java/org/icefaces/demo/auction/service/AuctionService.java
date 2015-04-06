@@ -130,6 +130,10 @@ public class AuctionService implements Serializable {
 	}
 	
 	public boolean placeBid(AuctionItem toUpdate, double newBid) {
+		return placeBid(toUpdate, null, newBid);
+	}
+	
+	public boolean placeBid(AuctionItem toUpdate, String bidUsername, double newBid) {
 		if (newBid > toUpdate.getPrice()) {
 			// Handle the new bid
 			double oldPrice = toUpdate.getPrice();
@@ -138,10 +142,14 @@ public class AuctionService implements Serializable {
 			if (globalMessage != null) {
 				globalMessage.setLastUpdated(toUpdate);
 				
-				// TODO Use the Settings name here (and other logging places)
-				globalMessage.addMessage("New bid (" + toUpdate.getBids() + " total) on item '" + toUpdate.getName() + "' increasing the price from " +
+				// Customize our message with a username if we have one available
+				String messageOpener = "New bid";
+				if ((bidUsername != null) && (!bidUsername.isEmpty())) {
+					messageOpener += " by " + bidUsername;
+				}
+				globalMessage.addMessage(messageOpener + " on item '" + toUpdate.getName() + "' increasing the price from " +
 						NumberFormat.getCurrencyInstance().format(oldPrice) + " to " + NumberFormat.getCurrencyInstance().format(newBid) +
-						" (" + NumberFormat.getCurrencyInstance().format(newBid - oldPrice) + " bid).");
+						" (" + NumberFormat.getCurrencyInstance().format(newBid - oldPrice) + " bid, " + toUpdate.getBids() + " bids total).");
 			}
 			
 			AuctionWatcher.getInstance().manualPush();

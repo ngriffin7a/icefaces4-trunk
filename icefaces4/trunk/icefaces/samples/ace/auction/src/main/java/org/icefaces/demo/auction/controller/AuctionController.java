@@ -33,6 +33,7 @@ import org.icefaces.ace.event.UnselectEvent;
 import org.icefaces.demo.auction.bean.BidBean;
 import org.icefaces.demo.auction.bean.ChartBean;
 import org.icefaces.demo.auction.bean.PostBean;
+import org.icefaces.demo.auction.bean.SettingsBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.service.AuctionService;
 import org.icefaces.demo.auction.util.FacesUtils;
@@ -85,7 +86,8 @@ public class AuctionController implements Serializable {
 		
 		// Try to update the bid, if we fail we'll want to notify just this user that they got outbid
 		AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
-		if (!service.placeBid(bidBean.getBidItem(), bidBean.getCurrentBid())) {
+		SettingsBean settingsBean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
+		if (!service.placeBid(bidBean.getBidItem(), settingsBean.getName(), bidBean.getCurrentBid())) {
 			FacesUtils.addWarnMessage(parentId, "Your bid of " +
 					NumberFormat.getCurrencyInstance().format(bidBean.getCurrentBid()) + " does not exceed the current price, please bid again.");
 		}
