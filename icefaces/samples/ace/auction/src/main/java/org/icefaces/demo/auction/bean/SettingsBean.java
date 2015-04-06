@@ -36,6 +36,8 @@ public class SettingsBean implements Serializable {
 	private static final Logger log = Logger.getLogger(SettingsBean.class.getName());
 	
 	public static final String SETTING_COOKIE_NAME = "settings";
+	public static final String ICEFACES_THEME_PARAM = "org.icefaces.ace.theme";
+	public static final String ICEFACES_THEME_DEFAULT = "sam";
 	
 	private boolean saveCookie;
 	private int themeCheck = 0;
@@ -84,7 +86,7 @@ public class SettingsBean implements Serializable {
 		notificationBackground = "rgba(255, 255, 255, " + ColorRGBA.DEFAULT_OPACITY + ")";
 		notificationForeground = "rgba(0, 0, 0, " + ColorRGBA.DEFAULT_OPACITY + ")";
 		chartWidth = 800;
-		themeName = FacesUtils.getFacesParameter("org.icefaces.ace.theme", "sam");
+		themeName = FacesUtils.getFacesParameter(ICEFACES_THEME_PARAM, ICEFACES_THEME_DEFAULT);
 	}
 	
 	public void save() {

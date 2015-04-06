@@ -61,6 +61,13 @@ public class SettingsController implements Serializable {
 		// This will basically duplicate the theme loading, except from cookies instead of a plain bean
 		SettingsBean bean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
 		if (!bean.getHasSetTheme()) {
+			// Also if we're using the default theme then don't both resetting it, just skip the check by over-incrementing it
+			String defaultTheme =
+					FacesUtils.getFacesParameter(SettingsBean.ICEFACES_THEME_PARAM, SettingsBean.ICEFACES_THEME_DEFAULT);
+			if (defaultTheme.equals(bean.getThemeName())) {
+				bean.incrementThemeCheck();
+			}
+			
 			bean.incrementThemeCheck();
 		}
 	}
