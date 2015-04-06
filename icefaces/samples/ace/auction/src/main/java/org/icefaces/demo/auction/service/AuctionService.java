@@ -69,7 +69,7 @@ public class AuctionService implements Serializable {
 	public void checkAuctionExpiry() {
 		// Start adding items to get above our minimum as needed
 		if (auctions.size() < MINIMUM_ITEMS) {
-			addAuction(AuctionItemGenerator.makeItem());
+			addAuction(AuctionItemGenerator.makeUniqueItem(auctions));
 		}
 		
 		for (AuctionItem currentItem : auctions) {
@@ -103,7 +103,7 @@ public class AuctionService implements Serializable {
 			if (globalMessage != null) {
 				globalMessage.setLastUpdated(toAdd);
 				
-				globalMessage.addMessage("Listed a new auction for item '" + toAdd.getName() + "' added for " + NumberFormat.getCurrencyInstance().format(toAdd.getPrice()) + " ending in " +
+				globalMessage.addMessage("Listed a new auction sold by " + toAdd.getSellerName() + " for item '" + toAdd.getName() + "' added for " + NumberFormat.getCurrencyInstance().format(toAdd.getPrice()) + " ending in " +
 						toAdd.getTimeLeft() + ".");
 			}
 			

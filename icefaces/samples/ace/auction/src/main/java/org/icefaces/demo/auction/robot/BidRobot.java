@@ -45,7 +45,6 @@ public class BidRobot implements Serializable {
 	private boolean active = (random.nextInt(10) != 0); // Have a small 10% chance to not even bid
 	private int maxBids;
 	private long waitTimeMillis;
-	private String robotName;
 	
 	@PostConstruct
 	public void initRobot() {
@@ -63,9 +62,6 @@ public class BidRobot implements Serializable {
 			else {
 				maxBids = 100;
 			}
-			
-			// Generate a name to use in bid messages
-			robotName = AuctionItemGenerator.generatePersonName();
 			
 			bidThread = new Thread(new Runnable() {
 				@Override
@@ -106,7 +102,7 @@ public class BidRobot implements Serializable {
 							// Obviously we only want to bid on a valid non-expired item
 							if (!toBid.isExpired()) {
 								// Place a randomly generated bid from our AuctionItemGenerator
-								service.placeBid(toBid, robotName, AuctionItemGenerator.makeBid(toBid));
+								service.placeBid(toBid, AuctionItemGenerator.generatePersonName(), AuctionItemGenerator.makeBid(toBid));
 								bidCount++;
 							}
 						}
@@ -117,14 +113,6 @@ public class BidRobot implements Serializable {
 		}
 	}
 	
-	public String getRobotName() {
-		return robotName;
-	}
-
-	public void setRobotName(String robotName) {
-		this.robotName = robotName;
-	}
-
 	@PreDestroy
 	public void destroyRobot() {
 		if (bidThread != null) {

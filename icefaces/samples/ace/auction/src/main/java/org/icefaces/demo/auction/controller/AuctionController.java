@@ -94,6 +94,11 @@ public class AuctionController implements Serializable {
 		bidBean.updateBidding();
 	}
 	
+	public void submitCloseBid(ActionEvent event) {
+		submitBid(event);
+		cancelBid(event);
+	}
+	
 	public void cancelBid(ActionEvent event) {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		bidBean.stopBidding();
@@ -140,7 +145,7 @@ public class AuctionController implements Serializable {
 		PostBean postBean = (PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME);
 		AuctionItem toAdd = postBean.getToAdd();
 		
-		// Only allow a set maximum auctions to be added on a per-session basis 
+		// Only allow a set maximum auctions to be added on a per-session basis
 		if (postBean.getPostedCount() >= MAX_POSTED_AUCTIONS) {
 			FacesUtils.addGlobalWarnMessage("Thank you for your auction contributions, but you have reached the maximum limit of " + MAX_POSTED_AUCTIONS + " new items.");
 			postBean.clear();
@@ -173,6 +178,9 @@ public class AuctionController implements Serializable {
 		}
 		if ((toAdd.getSellerName() == null) || (toAdd.getSellerName().isEmpty())) {
 			toAdd.setSellerName("Anonymous");
+		}
+		if ((toAdd.getDescription() == null) || (toAdd.getDescription().isEmpty())) {
+			toAdd.setDescription("None");
 		}
 		if (toAdd.getCondition() == null) {
 			toAdd.setCondition(AuctionItem.Condition.UNKNOWN);
