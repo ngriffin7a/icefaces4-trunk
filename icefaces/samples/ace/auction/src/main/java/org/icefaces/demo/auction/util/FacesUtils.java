@@ -166,6 +166,12 @@ public class FacesUtils {
         return null;
     }
     
+    public static String getFacesParameter(String parameter, String defaultValue) {
+    	String toReturn = getFacesParameter(parameter);
+    	
+    	return toReturn != null ? toReturn : defaultValue;
+    }
+    
     public static void destroySession() {
     	// Kill our session and refresh the page
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

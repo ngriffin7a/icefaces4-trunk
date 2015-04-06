@@ -21,6 +21,7 @@ import java.io.Serializable;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.icefaces.demo.auction.bean.SettingsBean;
 import org.icefaces.demo.auction.util.FacesUtils;
@@ -35,34 +36,32 @@ public class SettingsController implements Serializable {
 		
 		// Only need to do something on save, otherwise the submit will be enough for the current view
 		if (bean.isSaveCookie()) {
-			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "name", bean.getName());
-			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "location", bean.getLocation());
-			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "bidIncrement", String.valueOf(bean.getBidIncrement()));
-			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation", bean.getTabOrientation());
-			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground", bean.getNotificationBackground());
-			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground", bean.getNotificationForeground());
-			FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth", bean.getChartWidth());
+			bean.save();
 			
 			FacesUtils.addGlobalInfoMessage("Successfully saved your user settings to cookies.");
 		}
 		// Otherwise we should clear our old cookies
 		else {
-			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "name");
-			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "location");
-			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "bidIncrement");
-			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation");
-			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground");
-			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground");
-			FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth");
+			bean.delete();
 			
 			FacesUtils.addGlobalInfoMessage("Successfully updated your user settings for the application.");
 		}
-	}
-	
-	public void saveAndReturn(ActionEvent event) {
-		save(event);
 		
 		TabController tabController = (TabController)FacesUtils.getManagedBean(TabController.BEAN_NAME);
 		tabController.auctionListTab(event);
+	}
+	
+	public void initializeTheme(ComponentSystemEvent event) {
+		// We need to initialize the ICEfaces component theme that is customized via settings
+		// To do this normally you'd use the ace:theme component in the view
+		// But we can store our theme in cookies
+		// Because ace:theme is processed very early in the JSF lifecycle the cookies aren't loaded yet
+		// So instead we need to use f:event to call this method
+		//  which will allow a hidden ace:themeSelect component to be rendered on the page, just once
+		// This will basically duplicate the theme loading, except from cookies instead of a plain bean
+		SettingsBean bean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
+		if (!bean.getHasSetTheme()) {
+			bean.incrementThemeCheck();
+		}
 	}
 }

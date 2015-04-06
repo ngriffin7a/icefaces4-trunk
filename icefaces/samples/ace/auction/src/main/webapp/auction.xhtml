@@ -43,7 +43,6 @@
 
 <h:body>
     <!-- TODO Add a Chat tab like the old demo? Make the chat dockable and displayable in a popup (and a setting to store position) -->
-    <!-- TODO Option to use ace:growlMessages for notification instead of the panel (via Settings). Or use growl for chat notifications? -->
     <!-- TODO Allow users to customize visible columns (via settings), maybe also show ALL details when an item is selected. Could be done via dataTable configuration component? -->
     <!-- TODO Allow overall component theme changer (via Settings)? -->
     <!-- TODO Add images (perhaps shown on the right of the details panel), and choosable images when adding an item -->
@@ -54,7 +53,11 @@
 
     <h:outputText value="#{pushBean}" style="display: none; height: 0;"/>
     <h:outputText value="#{bidRobot}" style="display: none; height: 0;"/>
-
+    
+    <f:event type="preRenderView" listener="#{settingsController.initializeTheme}"/>
+    <ace:themeSelect value="#{settingsBean.themeName}" style="display: none; height: 0;"
+                     rendered="#{!settingsBean.hasSetTheme}"/>
+    
     <h:graphicImage library="images" name="banner_hdr_auction.jpg"/>
     
     <div class="auctionMonitorContainer">
@@ -90,6 +93,8 @@
                 </h:form>
             </ace:tabPane>
         </ace:tabSet>
+        
+        <h3><h:messages globalOnly="true" layout="table"/></h3>
     </div>
     
     <ui:include src="/WEB-INF/includes/popups.xhtml"/>
