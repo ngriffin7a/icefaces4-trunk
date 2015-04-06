@@ -59,7 +59,7 @@ public class SettingsBean implements Serializable {
 		// Now try loading from a cookie
 		try{
 			name = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "name", name).toString();
-			location = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "location", name).toString();
+			location = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "location", location).toString();
 			bidIncrement = Double.parseDouble(FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "bidIncrement", bidIncrement).toString());
 			tabOrientation = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "tabOrientation", tabOrientation).toString();
 			notificationBackground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationBackground", notificationBackground).toString();
