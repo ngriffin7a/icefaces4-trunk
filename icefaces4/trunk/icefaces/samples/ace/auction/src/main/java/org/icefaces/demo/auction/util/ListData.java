@@ -34,8 +34,9 @@ public class ListData implements Serializable {
 		"bottom", DEFAULT_TAB_ORIENTATION, "left", "right"
 	};
 	public static final List<ColorRGBA> COLORS = generateColors();
+	public static final String DEFAULT_LOCATION = "North America";
 	public static final String[] LOCATIONS = new String[] {
-		"Africa", "Asia", "Australia", "Europe", "North America", "South America"
+		"Africa", "Asia", "Australia", "Europe", DEFAULT_LOCATION, "South America"
 	};
 	public static final String[] FIRST_NAMES = new String[] {
 		"James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph",

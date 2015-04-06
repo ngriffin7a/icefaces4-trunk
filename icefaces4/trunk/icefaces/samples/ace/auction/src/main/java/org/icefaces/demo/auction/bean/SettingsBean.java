@@ -38,6 +38,7 @@ public class SettingsBean implements Serializable {
 	public static final String SETTING_COOKIE_NAME = "settings";
 	
 	private boolean saveCookie;
+	private int themeCheck = 0;
 	
 	private String name;
 	private String location;
@@ -46,6 +47,7 @@ public class SettingsBean implements Serializable {
 	private String notificationBackground;
 	private String notificationForeground;
 	private int chartWidth;
+	private String themeName;
 	
 	@PostConstruct
 	public void initValues() {
@@ -61,6 +63,7 @@ public class SettingsBean implements Serializable {
 			notificationBackground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationBackground", notificationBackground).toString();
 			notificationForeground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationForeground", notificationForeground).toString();
 			chartWidth = Integer.parseInt(FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "chartWidth", chartWidth).toString());
+			themeName = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "themeName", themeName).toString();
 		}catch (Exception failedLoad) {
 			log.log(Level.WARNING, "Failed when trying to load settings from a cookie, defaulting instead.", failedLoad);
 			initDefaults();
@@ -75,12 +78,35 @@ public class SettingsBean implements Serializable {
 		String userNumber = String.valueOf(System.currentTimeMillis());
 		userNumber = userNumber.substring(userNumber.length()-5);
 		name = "User #" + userNumber;
-		location = null;
+		location = ListData.DEFAULT_LOCATION;
 		bidIncrement = AuctionItem.DEFAULT_BID_INCREMENT;
 		tabOrientation = ListData.DEFAULT_TAB_ORIENTATION;
 		notificationBackground = "rgba(255, 255, 255, " + ColorRGBA.DEFAULT_OPACITY + ")";
 		notificationForeground = "rgba(0, 0, 0, " + ColorRGBA.DEFAULT_OPACITY + ")";
 		chartWidth = 800;
+		themeName = FacesUtils.getFacesParameter("org.icefaces.ace.theme", "sam");
+	}
+	
+	public void save() {
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "name", name);
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "location", location);
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "bidIncrement", String.valueOf(bidIncrement));
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation", tabOrientation);
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground", notificationBackground);
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground", notificationForeground);
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth", chartWidth);
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "themeName", themeName);
+	}
+	
+	public void delete() {
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "name");
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "location");
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "bidIncrement");
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation");
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground");
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground");
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth");
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "themeName");
 	}
 	
 	public boolean isSaveCookie() {
@@ -89,6 +115,22 @@ public class SettingsBean implements Serializable {
 
 	public void setSaveCookie(boolean saveCookie) {
 		this.saveCookie = saveCookie;
+	}
+	
+	public int getThemeCheck() {
+		return themeCheck;
+	}
+
+	public void setThemeCheck(int themeCheck) {
+		this.themeCheck = themeCheck;
+	}
+	
+	public void incrementThemeCheck() {
+		themeCheck++;
+	}
+	
+	public boolean getHasSetTheme() {
+		return themeCheck > 1;
 	}
 
 	public String getName() {
@@ -145,5 +187,13 @@ public class SettingsBean implements Serializable {
 
 	public void setChartWidth(int chartWidth) {
 		this.chartWidth = chartWidth;
+	}
+
+	public String getThemeName() {
+		return themeName;
+	}
+
+	public void setThemeName(String themeName) {
+		this.themeName = themeName;
 	}
 }

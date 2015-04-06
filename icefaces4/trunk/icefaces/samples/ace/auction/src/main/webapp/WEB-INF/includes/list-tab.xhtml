@@ -22,8 +22,6 @@
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
     <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
                 
-    <h:messages globalOnly="true" layout="table"/>
-    
     <auction:dataExporters target="a" fileName="auction-list" includeFooters="false"/>
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
@@ -47,19 +45,22 @@
 	                             style="float: right;"/>
             </h:panelGroup>
         </f:facet>
-        <ace:column headerText="Name" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+        <ace:column headerText="Name" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
+                    style="width: 30%;">
             #{item.name}
         </ace:column>
         <ace:column headerText="Price" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
-                    style="text-align: right;">
+                    style="width: 30%; text-align: right;">
             <h:outputText value="#{item.price}">
                 <f:convertNumber type="currency" currencySymbol="$"/>
             </h:outputText>
         </ace:column>
-        <ace:column headerText="Bids" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+        <ace:column headerText="Bids" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
+                    style="width: 10%;">
             #{item.bids}
         </ace:column>
-        <ace:column headerText="Time Left" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+        <ace:column headerText="Time Left" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
+                    style="width: 30%;">
             <h:outputText id="e" value="#{item.expiryDate}">
                 <f:converter converterId="TimeLeftConverter"/>
             </h:outputText>

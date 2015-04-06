@@ -71,17 +71,23 @@
             
             <h:graphicImage id="cWidthHelp" library="images" name="help.png"/>
             <h:outputLabel for="cWidth" value="Graph Width:"/>
-            <h:panelGroup layout="block">
+            <h:panelGroup id="cWidthWrap" layout="block">
                 <h:outputText id="cWidthOut" value="#{settingsBean.chartWidth}px"/>
 				<ace:sliderEntry id="cWidth"
 				                 axis="x" length="250px"
 				                 animate="true" clickableRail="true"
 				                 min="200" max="2000"
 				                 value="#{settingsBean.chartWidth}">
-					<ace:ajax event="slideEnd" execute="@this" render="@form" />
+					<ace:ajax event="slideEnd" execute="@this" render="cWidthWrap" />
 				</ace:sliderEntry>
 			</h:panelGroup>
             <h:message for="cWidth"/>
+            
+            <!-- TODO ICE-10616 Note that submitting this form, even with invalid fields above, will still apply the theme. Also the tabSet will be reset to the first index -->
+            <h:graphicImage id="themeHelp" library="images" name="help.png"/>
+            <h:outputLabel for="theme" value="ICEfaces Theme:"/>
+            <ace:themeSelect id="theme" value="#{settingsBean.themeName}" required="true"/>
+            <h:message for="theme"/>
             
             <h:graphicImage id="saveHelp" library="images" name="help.png"/>
             <h:outputLabel for="save" value="Save settings in web browser cookies?"/>
@@ -92,9 +98,6 @@
         <f:facet name="footer">
             <h:panelGroup layout="block">
                 <h:commandButton value="Submit" actionListener="#{settingsController.save}"/>
-                <h:commandButton value="Submit &amp; Return" actionListener="#{settingsController.saveAndReturn}"/>
-                
-                <h:messages globalOnly="true" layout="table"/>
             </h:panelGroup>
         </f:facet>
     </ace:panel>
@@ -125,6 +128,10 @@
     
     <ace:tooltip for="cWidthHelp" speechBubble="true">
         Change how wide the bid history graphs should be (in pixels).
+    </ace:tooltip>
+    
+    <ace:tooltip for="themeHelp" speechBubble="true">
+        Change the component theme used by ICEfaces.
     </ace:tooltip>
     
     <ace:tooltip for="saveHelp" speechBubble="true">

@@ -17,6 +17,8 @@
 <project name="auction" default="servlet-profile">
     
     <property name="ace" value="true" />
+	<property name="mobi" value="true" />
+    <property name="includeThemeJars" value="true"/>
 
     <property file="./build.properties"/>
     <property file="../build/build.properties"/>
