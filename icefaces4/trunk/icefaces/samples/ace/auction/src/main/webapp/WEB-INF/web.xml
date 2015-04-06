@@ -64,7 +64,7 @@
     
     <context-param>
         <param-name>org.icefaces.ace.theme</param-name>
-        <param-value>sam</param-value>
+        <param-value>cupertino</param-value>
     </context-param>
     
     <servlet>
