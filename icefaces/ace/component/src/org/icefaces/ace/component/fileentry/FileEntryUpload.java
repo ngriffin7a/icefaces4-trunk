@@ -18,6 +18,7 @@ package org.icefaces.ace.component.fileentry;
 
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.apache.commons.fileupload.*;
+import org.icefaces.apache.commons.io.IOUtils;
 import org.icefaces.impl.application.WindowScopeManager;
 import org.icefaces.impl.context.DOMPartialViewContext;
 import org.icefaces.impl.util.CoreUtils;
@@ -773,14 +774,9 @@ public class FileEntryUpload implements PhaseListener {
                             in.close();
                         }
                     } else if (file != null) {
-                        try  {
-                            part.write(file.getAbsolutePath());
-                        } catch (Exception e)  {
-                            log.fine("FileEntryUpload fallback copyStream " + e);
-                            Util.copyStream(part.getInputStream(),
-                                new FileOutputStream(file));
-                            part.delete();
-                        }
+                        InputStream in = part.getInputStream();
+                        FileOutputStream out = new FileOutputStream(file);
+                        Util.copyStream(in, out);
                         partsManualProgress.updateRead(size);
                     }
                 }
@@ -792,7 +788,6 @@ public class FileEntryUpload implements PhaseListener {
             }
         }
     }
-
 
     /**
      * The request contentLength is the number of bytes in the whole request,
