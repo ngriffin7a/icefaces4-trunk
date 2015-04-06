@@ -20,8 +20,6 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
-    
     <auction:dataExporters target="a" fileName="auction-list" includeFooters="false"/>
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
@@ -79,24 +77,30 @@
             </h:outputText>
         </ace:column>
         <f:facet name="footer">
-            <h:panelGroup layout="block">
-                <h:panelGroup id="footWrap" layout="block" rendered="#{bidBean.renderBidPanel}">
+            <h:panelGroup layout="block" style="width: 100%; text-align: center;">
+                <h:panelGrid id="buttonWrap"
+                             columns="6" style="width: auto; margin: 0 auto;"
+                             rendered="#{bidBean.renderBidPanel}">
+                    <!-- We position the defaultAction this way so we can easily grab the parent container and add an error message if needed -->
+                    <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
+                    
                     <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
                     <ace:textEntry id="bidIn" value="#{bidBean.currentBid}"
                                    required="true" requiredMessage="Enter a valid bid."
                                    size="10">
                         <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                     </ace:textEntry>
-                    <h:commandButton id="submitBid" value="Submit"
-                                     actionListener="#{auctionController.submitBid}"/>
-                    <h:commandButton id="submitCloseBid" value="Submit &amp; Close"
-                                     actionListener="#{auctionController.submitCloseBid}"/>
-                    <h:commandButton value="Cancel" immediate="true"
-                                     actionListener="#{auctionController.cancelBid}"/>
-                    <br/>
-                    <h:message for="bidIn"/>
-                    <h:message for="footWrap"/>
-                </h:panelGroup>
+                    <ace:pushButton id="submitBid" value="Submit"
+                                    actionListener="#{auctionController.submitBid}"/>
+                    <ace:pushButton id="submitCloseBid" value="Submit &amp; Close"
+                                    actionListener="#{auctionController.submitCloseBid}"/>
+                    <ace:pushButton value="Cancel" immediate="true"
+                                    actionListener="#{auctionController.cancelBid}"/>
+                    <f:facet name="footer">
+	                    <h:message for="bidIn"/>
+	                    <h:message for="buttonWrap"/>
+                    </f:facet>
+                </h:panelGrid>
                 <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
             </h:panelGroup>
         </f:facet>
@@ -135,15 +139,15 @@
             <h:outputText value="Bid History:"/>
             <h:panelGrid columns="7" rendered="#{bidBean.bidItem.bids gt 0}">
                 <h:outputText value="#{bidBean.bidItem.bids} bids"/>
-                |
+                <b>|</b>
 	            <h:commandLink immediate="true" actionListener="#{auctionController.openGraphBidDialog}">
 	                Graph Bid Increments
 	            </h:commandLink>
-	            |
+	            <b>|</b>
                 <h:commandLink immediate="true" actionListener="#{auctionController.openGraphPriceDialog}">
                     Graph Price Changes
                 </h:commandLink>
-                |
+                <b>|</b>
                 <h:commandLink immediate="true" actionListener="#{auctionController.openViewHistoryDialog}">
                     View History
                 </h:commandLink>

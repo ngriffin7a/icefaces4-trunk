@@ -58,6 +58,7 @@
             </h:selectOneRadio>
             <h:message for="tabo"/>
             
+            <!-- TODO ICE-10612 - When resolved use the new color picker component instead of this custom composite component approach -->
             <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
             <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
             <auction:colorPicker id="ncolorb"
@@ -97,10 +98,10 @@
         </h:panelGrid>
         
         <f:facet name="footer">
-            <h:panelGroup layout="block">
-                <h:commandButton value="Submit" actionListener="#{settingsController.save}"/>
-                <h:commandButton value="Cancel" actionListener="#{tabController.auctionListTab}" immediate="true"/>
-            </h:panelGroup>
+            <h:panelGrid columns="2">
+                <ace:pushButton value="Submit" actionListener="#{settingsController.save}"/>
+                <ace:pushButton value="Cancel" actionListener="#{tabController.auctionListTab}" immediate="true"/>
+            </h:panelGrid>
         </f:facet>
     </ace:panel>
     
