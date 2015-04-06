@@ -32,6 +32,7 @@ import javax.faces.bean.ManagedProperty;
 import org.icefaces.demo.auction.message.GlobalMessageBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.push.AuctionWatcher;
+import org.icefaces.demo.auction.test.TestFlags;
 
 @ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
 @ApplicationScoped
@@ -39,7 +40,7 @@ public class AuctionService implements Serializable {
 	public static final String BEAN_NAME = "auctionService";
 	private static final Logger log = Logger.getLogger(AuctionService.class.getName());
 	
-	public static final int MINIMUM_ITEMS = 10;
+	public static final int MINIMUM_ITEMS = TestFlags.TEST_MANY_ITEMS ? 5000 : 10;
 
 	private AuctionWatcher renderer = AuctionWatcher.getInstance();
 	private List<AuctionItem> auctions = new Vector<AuctionItem>(MINIMUM_ITEMS);
@@ -50,8 +51,8 @@ public class AuctionService implements Serializable {
 	@PostConstruct
 	public void setupAuction() {
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
-		for (int i = 0; i <= MINIMUM_ITEMS; i++) {
-			addAuction(AuctionItemGenerator.makeItem(), true);
+		for (int i = 0; i < MINIMUM_ITEMS; i++) {
+			addAuction(AuctionItemGenerator.makeUniqueItem(auctions), true);
 		}
 		
 		renderer.start(this);
@@ -67,7 +68,7 @@ public class AuctionService implements Serializable {
 	
 	public void checkAuctionExpiry() {
 		// Start adding items to get above our minimum as needed
-		if (auctions.size() <= MINIMUM_ITEMS) {
+		if (auctions.size() < MINIMUM_ITEMS) {
 			addAuction(AuctionItemGenerator.makeItem());
 		}
 		
@@ -161,6 +162,10 @@ public class AuctionService implements Serializable {
 	
 	public void sortAuctions() {
 		Collections.sort(auctions);
+	}
+	
+	public int getAuctionsSize() {
+		return auctions != null ? auctions.size() : 0;
 	}
 	
 	public List<AuctionItem> getAuctions() {
