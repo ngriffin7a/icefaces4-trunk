@@ -63,7 +63,8 @@ public class AuctionController implements Serializable {
 	
 	public void submitBid(ActionEvent event) {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
-		String parentId = event.getComponent().getParent().getClientId(); // Used in case we have to add an error message
+		// Used in case we have to add an error message
+		String parentId = event.getComponent().getParent().getClientId();
 		
 		// Need to validate two cases: bid is less than current price OR bid is over max bid increase compared to price
 		// First validate that the bid actually exceeds the price we're comparing to

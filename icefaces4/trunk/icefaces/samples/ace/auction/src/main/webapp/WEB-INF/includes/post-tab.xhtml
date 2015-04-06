@@ -25,7 +25,7 @@
     <ace:panel closable="false" collapsed="false" toggleable="true"
                header="New Auction Item to Add (maximum #{auctionController.maxPostedAuctions})"
                rendered="#{postBean.postedCount lt auctionController.maxPostedAuctions}">
-	    <h:panelGrid columns="3" cellpadding="3" cellspacing="0" styleClass="postTable">
+	    <h:panelGrid columns="3" cellpadding="4" cellspacing="0" styleClass="postTable">
 	        <h:outputText value="Item Details" style="font-weight: bold;"/>
 	        <h:outputText value=""/><h:outputText value=""/>
 	        
@@ -111,8 +111,10 @@
 	    </h:panelGrid>
 	    
 	    <f:facet name="footer">
-	        <h:commandButton value="Submit" actionListener="#{auctionController.postAuction}"/>
-	        <h:commandButton value="Cancel" actionListener="#{tabController.auctionListTab}" immediate="true"/>
+	        <h:panelGrid columns="2">
+		        <ace:pushButton value="Submit" actionListener="#{auctionController.postAuction}"/>
+		        <ace:pushButton value="Cancel" actionListener="#{tabController.auctionListTab}" immediate="true"/>
+	        </h:panelGrid>
 	    </f:facet>
     </ace:panel>
     
