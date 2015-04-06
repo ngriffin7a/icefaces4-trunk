@@ -87,8 +87,12 @@
                                    size="10">
                         <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                     </ace:textEntry>
-                    <h:commandButton id="submitBid" value="Submit" actionListener="#{auctionController.submitBid}"/>
-                    <h:commandButton value="Cancel" immediate="true" actionListener="#{auctionController.cancelBid}"/>
+                    <h:commandButton id="submitBid" value="Submit"
+                                     actionListener="#{auctionController.submitBid}"/>
+                    <h:commandButton id="submitCloseBid" value="Submit &amp; Close"
+                                     actionListener="#{auctionController.submitCloseBid}"/>
+                    <h:commandButton value="Cancel" immediate="true"
+                                     actionListener="#{auctionController.cancelBid}"/>
                     <br/>
                     <h:message for="bidIn"/>
                     <h:message for="footWrap"/>
