@@ -19,6 +19,7 @@ package org.icefaces.demo.auction.service;
 import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.icefaces.demo.auction.model.AuctionItem;
@@ -29,6 +30,9 @@ public class AuctionItemGenerator {
 	private static final Random random = new SecureRandom();
 	
 	private static final int HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
+	private static final int UNIQUE_NAME_MAX_CHECKS = 5;
+	
+	private static int uniqueCountSuffix = random.nextInt(100);
 	
 	public static AuctionItem makeItem() {
 		AuctionItem toReturn = new AuctionItem();
@@ -36,7 +40,7 @@ public class AuctionItemGenerator {
 		toReturn.setPrice(generatePrice());
 		toReturn.setExpiryDate(generateExpiryDate());
 		toReturn.setShippingCost(generateShippingCost());
-		toReturn.setSellerName(generateSellerName());
+		toReturn.setSellerName(generatePersonName());
 		toReturn.setSellerLocation(generateSellerLocation());
 		toReturn.setDescription(generateDescription(toReturn.getName()));
 		toReturn.setEstimatedDelivery(generateEstimatedDelivery());
@@ -49,6 +53,45 @@ public class AuctionItemGenerator {
 		}
 		
 		return toReturn;
+	}
+	
+	public static AuctionItem makeUniqueItem(List<AuctionItem> toCheck) {
+		AuctionItem toReturn = makeItem();
+		
+		if ((toCheck == null) || (toCheck.isEmpty())) {
+			return toReturn;
+		}
+		
+		return checkUniqueName(toReturn, toCheck, 0);
+	}
+	
+	private static AuctionItem checkUniqueName(AuctionItem item, List<AuctionItem> toCheck, int iteration) {
+		boolean nameChanged = false;
+		for (AuctionItem loopCheck : toCheck) {
+			// If we have a matching name regenerate one
+			if (loopCheck.getName().equalsIgnoreCase(item.getName())) {
+				item.setName(generateName()); // Regenerate a new name
+				
+				// It's possible to reach our max unique name checks
+				// This would happen if our requested auction list size is bigger than ListData.ITEMS
+				// In such a case we want to append a random unique string and just return to stop recursively checking
+				if (iteration > UNIQUE_NAME_MAX_CHECKS) {
+					uniqueCountSuffix++;
+					item.setName(item.getName() + " #" + uniqueCountSuffix);
+					return item;
+				}
+				
+				nameChanged = true;
+				break;
+			}
+		}
+		
+		if (nameChanged) {
+			// If our name changed we need to recursively recheck it
+			return checkUniqueName(item, toCheck, iteration+1);
+		}
+		
+		return item;
 	}
 	
 	public static double makeSmallBid(AuctionItem toBid) {
@@ -107,7 +150,7 @@ public class AuctionItemGenerator {
 		}
 	}
 	
-	public static String generateSellerName() {
+	public static String generatePersonName() {
 		String toReturn = ListData.FIRST_NAMES[random.nextInt(ListData.FIRST_NAMES.length)];
 		
 		// Don't need a last name for everyone

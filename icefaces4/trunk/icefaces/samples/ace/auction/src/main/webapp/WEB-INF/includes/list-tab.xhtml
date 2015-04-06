@@ -21,7 +21,7 @@
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
     <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
-                
+    
     <auction:dataExporters target="a" fileName="auction-list" includeFooters="false"/>
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
@@ -36,9 +36,15 @@
                    selectionMode="single"
                    rowSelectListener="#{auctionController.selectItem}"
                    rowUnselectListener="#{auctionController.unselectItem}">
+        <ace:tableConfigPanel columnNameConfigurable="true"
+					          columnOrderingConfigurable="true"
+					          columnVisibilityConfigurable="true"
+					          columnSortingConfigurable="false"
+					          type="last-col" hideDisabledRows="true"
+					          modal="true"/>
         <f:facet name="header">
             <h:panelGroup layout="block">
-	            Auction List
+	            <h:outputText value="Auction List (#{auctionService.auctionsSize} items)"/>
 	            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
 	                             actionListener="#{tabController.postAuctionTab}"
 	                             immediate="true"
@@ -46,12 +52,19 @@
             </h:panelGroup>
         </f:facet>
         <ace:column headerText="Name" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
-                    style="width: 30%;">
+                    style="width: 30%;"
+                    configurable="false">
             #{item.name}
         </ace:column>
         <ace:column headerText="Price" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
                     style="width: 30%; text-align: right;">
             <h:outputText value="#{item.price}">
+                <f:convertNumber type="currency" currencySymbol="$"/>
+            </h:outputText>
+        </ace:column>
+        <ace:column headerText="Shipping Cost" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
+                    style="text-align: right;">
+            <h:outputText value="#{item.shippingCost}">
                 <f:convertNumber type="currency" currencySymbol="$"/>
             </h:outputText>
         </ace:column>
@@ -90,6 +103,11 @@
                rendered="#{bidBean.renderBidPanel}"
                style="margin-top: 15px;">
         <h:panelGrid columns="2" cellpadding="3" cellspacing="0">
+            <h:outputText value="Price:"/>
+            <h:outputText value="#{bidBean.bidItem.price}">
+               <f:convertNumber type="currency" currencySymbol="$"/>
+            </h:outputText>
+            
             <h:outputText value="Condition:"/>
             #{bidBean.bidItem.condition.value}
             
@@ -111,13 +129,20 @@
             #{bidBean.bidItem.description}
             
             <h:outputText value="Bid History:"/>
-            <h:panelGrid columns="3" rendered="#{bidBean.bidItem.bids gt 0}">
-	            <h:commandButton immediate="true" value="Graph Bid Increments"
-	                             actionListener="#{auctionController.openGraphBidDialog}"/>
-                <h:commandButton immediate="true" value="Graph Price Changes"
-                                 actionListener="#{auctionController.openGraphPriceDialog}"/>
-                <h:commandButton immediate="true" value="View History"
-                                 actionListener="#{auctionController.openViewHistoryDialog}"/>
+            <h:panelGrid columns="7" rendered="#{bidBean.bidItem.bids gt 0}">
+                <h:outputText value="#{bidBean.bidItem.bids} bids"/>
+                |
+	            <h:commandLink immediate="true" actionListener="#{auctionController.openGraphBidDialog}">
+	                Graph Bid Increments
+	            </h:commandLink>
+	            |
+                <h:commandLink immediate="true" actionListener="#{auctionController.openGraphPriceDialog}">
+                    Graph Price Changes
+                </h:commandLink>
+                |
+                <h:commandLink immediate="true" actionListener="#{auctionController.openViewHistoryDialog}">
+                    View History
+                </h:commandLink>
             </h:panelGrid>
             <h:outputText value="No bids yet"
                           rendered="#{bidBean.bidItem.bids le 0}"/>

@@ -54,11 +54,6 @@ public class BidRobot implements Serializable {
 		}
 		
 		if (active) {
-			// Generate a name to use in bid messages
-			String userNumber = String.valueOf(System.currentTimeMillis()-random.nextInt(500));
-			userNumber = userNumber.substring(userNumber.length()-5);
-			robotName = "User #" + userNumber;
-			
 			final AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
 			
 			// Set some parameters of how the robot will behave
@@ -68,6 +63,9 @@ public class BidRobot implements Serializable {
 			else {
 				maxBids = 100;
 			}
+			
+			// Generate a name to use in bid messages
+			robotName = AuctionItemGenerator.generatePersonName();
 			
 			bidThread = new Thread(new Runnable() {
 				@Override
