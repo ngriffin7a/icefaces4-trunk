@@ -91,11 +91,14 @@
                         <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                     </ace:textEntry>
                     <ace:pushButton id="submitBid" value="Submit"
-                                    actionListener="#{auctionController.submitBid}"/>
+                                    actionListener="#{auctionController.submitBid}"
+                                    title="Submit your bid for the selected item"/>
                     <ace:pushButton id="submitCloseBid" value="Submit &amp; Close"
-                                    actionListener="#{auctionController.submitCloseBid}"/>
+                                    actionListener="#{auctionController.submitCloseBid}"
+                                    title="Submit your bid for the selected item then return to the list"/>
                     <ace:pushButton value="Cancel" immediate="true"
-                                    actionListener="#{auctionController.cancelBid}"/>
+                                    actionListener="#{auctionController.cancelBid}"
+                                    title="Cancel your bid and unselect the item"/>
                     <f:facet name="footer">
 	                    <h:message for="bidIn"/>
 	                    <h:message for="buttonWrap"/>
@@ -140,15 +143,18 @@
             <h:panelGrid columns="7" rendered="#{bidBean.bidItem.bids gt 0}">
                 <h:outputText value="#{bidBean.bidItem.bids} bids"/>
                 <b>|</b>
-	            <h:commandLink immediate="true" actionListener="#{auctionController.openGraphBidDialog}">
+	            <h:commandLink immediate="true" actionListener="#{auctionController.openGraphBidDialog}"
+	                           title="Open a popup showing a graph of bid increment history">
 	                Graph Bid Increments
 	            </h:commandLink>
 	            <b>|</b>
-                <h:commandLink immediate="true" actionListener="#{auctionController.openGraphPriceDialog}">
+                <h:commandLink immediate="true" actionListener="#{auctionController.openGraphPriceDialog}"
+                               title="Open a popup showing a graph of increasing price changes">
                     Graph Price Changes
                 </h:commandLink>
                 <b>|</b>
-                <h:commandLink immediate="true" actionListener="#{auctionController.openViewHistoryDialog}">
+                <h:commandLink immediate="true" actionListener="#{auctionController.openViewHistoryDialog}"
+                               title="Open a popup showing a table of past bid details">
                     View History
                 </h:commandLink>
             </h:panelGrid>

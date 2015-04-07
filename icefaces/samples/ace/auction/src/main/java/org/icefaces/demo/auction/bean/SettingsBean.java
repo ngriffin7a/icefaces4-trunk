@@ -25,7 +25,6 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.model.AuctionItem;
-import org.icefaces.demo.auction.util.ColorRGBA;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.ListData;
 
@@ -72,7 +71,9 @@ public class SettingsBean implements Serializable {
 		}
 
 		// Set our boolean flag based on whether we actually had settings cookies at all
-		saveCookie = FacesUtils.getHasCookieStartingWith(SETTING_COOKIE_NAME); 
+		saveCookie = FacesUtils.getHasCookieStartingWith(SETTING_COOKIE_NAME);
+		
+		log.info("User initialized with SettingsBean: " + toString());
 	}
 	
 	private void initDefaults() {
@@ -83,8 +84,8 @@ public class SettingsBean implements Serializable {
 		location = ListData.DEFAULT_LOCATION;
 		bidIncrement = AuctionItem.DEFAULT_BID_INCREMENT;
 		tabOrientation = ListData.DEFAULT_TAB_ORIENTATION;
-		notificationBackground = "rgba(255, 255, 255, " + ColorRGBA.DEFAULT_OPACITY + ")";
-		notificationForeground = "rgba(0, 0, 0, " + ColorRGBA.DEFAULT_OPACITY + ")";
+		notificationBackground = ListData.DEFAULT_BACKGROUND_COLOR.getRgba();
+		notificationForeground = ListData.DEFAULT_FOREGROUND_COLOR.getRgba();
 		chartWidth = 800;
 		themeName = FacesUtils.getFacesParameter(ICEFACES_THEME_PARAM, ICEFACES_THEME_DEFAULT);
 	}
@@ -197,5 +198,10 @@ public class SettingsBean implements Serializable {
 
 	public void setThemeName(String themeName) {
 		this.themeName = themeName;
+	}
+	
+	@Override
+	public String toString() {
+		return name + " from " + location + " using theme " + themeName + " with fg/bg colors " + notificationForeground + "/" + notificationBackground;
 	}
 }
