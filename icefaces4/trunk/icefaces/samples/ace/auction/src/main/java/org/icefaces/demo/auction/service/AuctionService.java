@@ -33,6 +33,7 @@ import org.icefaces.demo.auction.message.GlobalMessageBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.push.AuctionWatcher;
 import org.icefaces.demo.auction.test.TestFlags;
+import org.icefaces.demo.auction.util.StringUtil;
 
 @ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
 @ApplicationScoped
@@ -49,7 +50,7 @@ public class AuctionService implements Serializable {
 	private GlobalMessageBean globalMessage;
 	
 	@PostConstruct
-	public void setupAuction() {
+	private void initAuctionService() {
 		log.info("Test Flag status...expiry [" + TestFlags.TEST_EXPIRY
 				+ "], bid robot [" + TestFlags.TEST_BIDROBOT
 				+ "], manual push [" + TestFlags.TEST_MANUAL_PUSH
@@ -64,7 +65,7 @@ public class AuctionService implements Serializable {
 	}
 	
 	@PreDestroy
-	public void cleanupAuction() {
+	private void cleanupAuctionService() {
 		// Note as of Tomcat 7 the PreDestroy doesn't seem to be called properly for ApplicationScoped beans
 		// So although we ideally want to stop the IntervalPushRenderer here, instead we have to use a
 		//  ServletContextListener to reliably do so. See util.ContextListener for details.
@@ -86,7 +87,7 @@ public class AuctionService implements Serializable {
 	}
 	
 	public boolean isUniqueItemName(String name) {
-		if ((name != null) && (!name.isEmpty())) {
+		if (StringUtil.validString(name)) {
 			for (AuctionItem loopCheck : auctions) {
 				if (name.equalsIgnoreCase(loopCheck.getName())) {
 					return false;
@@ -150,7 +151,7 @@ public class AuctionService implements Serializable {
 				
 				// Customize our message with a username if we have one available
 				String messageOpener = "New bid";
-				if ((bidUsername != null) && (!bidUsername.isEmpty())) {
+				if (StringUtil.validString(bidUsername)) {
 					messageOpener += " by " + bidUsername;
 				}
 				globalMessage.addMessage(messageOpener + " on item '" + toUpdate.getName() + "' increasing the price from " +

@@ -37,6 +37,7 @@ import org.icefaces.demo.auction.bean.SettingsBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.service.AuctionService;
 import org.icefaces.demo.auction.util.FacesUtils;
+import org.icefaces.demo.auction.util.StringUtil;
 import org.icefaces.util.JavaScriptRunner;
 
 @ManagedBean(name=AuctionController.BEAN_NAME)
@@ -174,13 +175,13 @@ public class AuctionController implements Serializable {
 		toAdd.setExpiryDate(postBean.getExpiryDate().getTime());
 		
 		// Next we need to do some defaults is non-required fields are missing
-		if ((toAdd.getSellerLocation() == null) || (toAdd.getSellerLocation().isEmpty())) {
+		if (!StringUtil.validString(toAdd.getSellerLocation())) {
 			toAdd.setSellerLocation("Unknown");
 		}
-		if ((toAdd.getSellerName() == null) || (toAdd.getSellerName().isEmpty())) {
+		if (!StringUtil.validString(toAdd.getSellerName())) {
 			toAdd.setSellerName("Anonymous");
 		}
-		if ((toAdd.getDescription() == null) || (toAdd.getDescription().isEmpty())) {
+		if (!StringUtil.validString(toAdd.getDescription())) {
 			toAdd.setDescription("None");
 		}
 		if (toAdd.getCondition() == null) {

@@ -26,6 +26,7 @@ import javax.faces.bean.ManagedBean;
 import org.icefaces.demo.auction.model.AuctionItem;
 import org.icefaces.demo.auction.service.AuctionItemGenerator;
 import org.icefaces.demo.auction.util.FacesUtils;
+import org.icefaces.demo.auction.util.StringUtil;
 
 @ManagedBean(name=PostBean.BEAN_NAME)
 @CustomScoped(value="#{window}")
@@ -60,10 +61,10 @@ public class PostBean implements Serializable {
 			toAdd.setExpiryDate(cal.getTimeInMillis());
 			
 			SettingsBean settingsBean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
-			if ((settingsBean.getName() != null) && (!settingsBean.getName().isEmpty())) {
+			if (StringUtil.validString(settingsBean.getName())) {
 				toAdd.setSellerName(settingsBean.getName());
 			}
-			if ((settingsBean.getLocation() != null) && (!settingsBean.getLocation().isEmpty())) {
+			if (StringUtil.validString(settingsBean.getLocation())) {
 				toAdd.setSellerLocation(settingsBean.getLocation());
 			}
 		}
