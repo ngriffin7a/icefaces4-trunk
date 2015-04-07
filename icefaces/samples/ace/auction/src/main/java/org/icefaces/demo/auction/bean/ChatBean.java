@@ -28,6 +28,7 @@ import javax.faces.bean.ManagedProperty;
 import org.icefaces.demo.auction.chat.ChatRoom;
 import org.icefaces.demo.auction.service.ChatService;
 import org.icefaces.demo.auction.util.FacesUtils;
+import org.icefaces.demo.auction.util.StringUtil;
 
 @ManagedBean(name=ChatBean.BEAN_NAME)
 @CustomScoped(value="#{window}")
@@ -57,7 +58,7 @@ public class ChatBean implements Serializable {
 	private ChatService service;
 	
 	@PostConstruct
-	public void initChatBean() {
+	private void initChatBean() {
 		// If we only have a single room then just autojoin on creation
 		if ((service != null) && (!service.getHasMultipleRooms())) {
 			service.joinRoom(this, service.getDefaultRoom());
@@ -66,7 +67,7 @@ public class ChatBean implements Serializable {
 	}
 	
 	@PreDestroy
-	public void destroyChatBean() {
+	private void cleanupChatBean() {
 		if ((currentRoom != null) && (service != null)) {
 			log.info("ChatBean timed out, removing user " + getName() + " from chat room " + currentRoom);
 			service.leaveRoom(this, currentRoom);
@@ -77,12 +78,12 @@ public class ChatBean implements Serializable {
 		// Try to get our name each time from the SettingsBean
 		// This saves us having to manually sync the names between beans
 		SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
-		if ((settings != null) && (settings.getName() != null) && (!settings.getName().isEmpty())) {
+		if ((settings != null) && (StringUtil.validString(settings.getName()))) {
 			cachedName = settings.getName();
 			return settings.getName();
 		}
 		
-		if ((cachedName != null) && (!cachedName.isEmpty())) {
+		if (StringUtil.validString(cachedName)) {
 			return cachedName;
 		}
 		

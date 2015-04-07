@@ -50,7 +50,7 @@ public class BidRobot implements Serializable {
 	private long waitTimeMillis;
 	
 	@PostConstruct
-	public void initRobot() {
+	private void initBidRobot() {
 		if (TestFlags.TEST_BIDROBOT) {
 			active = true;
 		}
@@ -118,7 +118,7 @@ public class BidRobot implements Serializable {
 	}
 	
 	@PreDestroy
-	public void destroyRobot() {
+	private void cleanupBidRobot() {
 		if (active) {
 			log.info("Destroying a BidRobot with " + bidCount + "/" + maxBids + " bids done.");
 		}

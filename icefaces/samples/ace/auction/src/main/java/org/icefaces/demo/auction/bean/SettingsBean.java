@@ -51,7 +51,7 @@ public class SettingsBean implements Serializable {
 	private String themeName;
 	
 	@PostConstruct
-	public void initValues() {
+	private void initSettingsBean() {
 		// First initialize to defaults
 		initDefaults();
 		

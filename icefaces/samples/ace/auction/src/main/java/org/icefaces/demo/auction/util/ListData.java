@@ -26,6 +26,8 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean(name=ListData.BEAN_NAME)
 @ApplicationScoped
 public class ListData implements Serializable {
+	private static final long serialVersionUID = -9018968427877614267L;
+
 	public static final String BEAN_NAME = "listData";
 	
 	public static final String DEFAULT_SELECT_LABEL = "-- Select --";

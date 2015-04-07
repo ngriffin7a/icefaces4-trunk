@@ -34,13 +34,13 @@ public class PushBean implements Serializable {
 	public static final String BEAN_NAME = "pushBean";
 	
 	@PostConstruct
-	public void startup() {
+	private void initPushBean() {
 		PushRenderer.addCurrentSession(AuctionWatcher.INTERVAL_PUSH_GROUP);
 		PushRenderer.addCurrentSession(AuctionWatcher.MANUAL_PUSH_GROUP);
 	}
 	
 	@PreDestroy
-	public void cleanup() {
+	private void cleanupPushBean() {
 		PushRenderer.removeCurrentSession(AuctionWatcher.INTERVAL_PUSH_GROUP);
 		PushRenderer.removeCurrentSession(AuctionWatcher.MANUAL_PUSH_GROUP);
 	}

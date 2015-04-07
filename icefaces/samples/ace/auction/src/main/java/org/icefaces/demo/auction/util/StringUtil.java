@@ -16,28 +16,8 @@
 
 package org.icefaces.demo.auction.util;
 
-
-public class ColorRGBA {
-	public static final double DEFAULT_OPACITY = 0.9;
-	
-	private String name;
-	private String rgba;
-	
-	public ColorRGBA(String name, int red, int green, int blue) {
-		this.name = name;
-		this.rgba = "rgba(" + red + ", " + green + ", " + blue + ", " + DEFAULT_OPACITY + ")";
-	}
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getRgba() {
-		return rgba;
-	}
-	public void setRgba(String rgba) {
-		this.rgba = rgba;
+public class StringUtil {
+	public static boolean validString(String toCheck) {
+		return toCheck != null && toCheck.trim().length() > 0;
 	}
 }

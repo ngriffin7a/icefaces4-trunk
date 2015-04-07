@@ -37,7 +37,7 @@ public class ChatService implements Serializable {
 	private List<ChatRoom> rooms;
 	
 	@PostConstruct
-	public void setupRooms() {
+	private void initChatService() {
 		rooms = new ArrayList<ChatRoom>(1);
 		rooms.add(new ChatRoom("Lounge"));
 	}
