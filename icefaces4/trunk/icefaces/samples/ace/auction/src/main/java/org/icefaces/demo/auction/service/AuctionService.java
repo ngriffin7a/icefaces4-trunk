@@ -50,7 +50,12 @@ public class AuctionService implements Serializable {
 	
 	@PostConstruct
 	public void setupAuction() {
+		log.info("Test Flag status...expiry [" + TestFlags.TEST_EXPIRY
+				+ "], bid robot [" + TestFlags.TEST_BIDROBOT
+				+ "], manual push [" + TestFlags.TEST_MANUAL_PUSH
+				+ "], many items [" + TestFlags.TEST_MANY_ITEMS + "].");
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
+		
 		for (int i = 0; i < MINIMUM_ITEMS; i++) {
 			addAuction(AuctionItemGenerator.makeUniqueItem(auctions), true);
 		}

@@ -30,11 +30,14 @@ public class ListData implements Serializable {
 	
 	public static final String DEFAULT_SELECT_LABEL = "-- Select --";
 	public static final String DEFAULT_TAB_ORIENTATION = "top";
+	public static final String DEFAULT_LOCATION = "North America";
+	public static final ColorRGBA DEFAULT_FOREGROUND_COLOR = new ColorRGBA("Black", 0,0,0);
+	public static final ColorRGBA DEFAULT_BACKGROUND_COLOR = new ColorRGBA("Steel Blue", 176,196,222);
+	
 	public static final String[] TAB_ORIENTATIONS = new String[] {
 		"bottom", DEFAULT_TAB_ORIENTATION, "left", "right"
 	};
 	public static final List<ColorRGBA> COLORS = generateColors();
-	public static final String DEFAULT_LOCATION = "North America";
 	public static final String[] LOCATIONS = new String[] {
 		"Africa", "Asia", "Australia", "Europe", DEFAULT_LOCATION, "South America"
 	};
@@ -94,7 +97,7 @@ public class ListData implements Serializable {
 	private static List<ColorRGBA> generateColors() {
 		List<ColorRGBA> toReturn = new ArrayList<ColorRGBA>();
 		toReturn.add(new ColorRGBA("White", 255,255,255));
-		toReturn.add(new ColorRGBA("Black", 0,0,0));
+		toReturn.add(DEFAULT_FOREGROUND_COLOR);
 		toReturn.add(new ColorRGBA("Red", 255,0,0));
 		toReturn.add(new ColorRGBA("Green", 0,255,0));
 		toReturn.add(new ColorRGBA("Blue", 0,0,255));
@@ -107,7 +110,7 @@ public class ListData implements Serializable {
 		toReturn.add(new ColorRGBA("Sky Blue", 0,191,255));
 		toReturn.add(new ColorRGBA("Forest Green", 34,139,34));
 		toReturn.add(new ColorRGBA("Gold", 255,215,0));
-		toReturn.add(new ColorRGBA("Steel Blue", 176,196,222));
+		toReturn.add(DEFAULT_BACKGROUND_COLOR);
 		toReturn.add(new ColorRGBA("Violet Red", 219,112,147));
 		toReturn.add(new ColorRGBA("Seashell", 255,245,238));
 		return toReturn;

@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -39,10 +40,12 @@ import org.icefaces.demo.auction.util.FacesUtils;
 @CustomScoped(value="#{window}")
 public class BidRobot implements Serializable {
 	public static final String BEAN_NAME = "bidRobot";
+	private static final Logger log = Logger.getLogger(BidRobot.class.getName());
 	
 	private Random random = new SecureRandom();
 	private Thread bidThread;
 	private boolean active = (random.nextInt(10) != 0); // Have a small 10% chance to not even bid
+	private int bidCount = 0;
 	private int maxBids;
 	private long waitTimeMillis;
 	
@@ -63,10 +66,11 @@ public class BidRobot implements Serializable {
 				maxBids = 100;
 			}
 			
+			log.info("Initialize a BidRobot with " + maxBids + " bids left.");
+			
 			bidThread = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					int bidCount = 0;
 					while ((bidCount < maxBids) && (active)) {
 						if (!TestFlags.TEST_BIDROBOT) {
 							waitTimeMillis = 1000 * (30+random.nextInt(60));
@@ -115,6 +119,10 @@ public class BidRobot implements Serializable {
 	
 	@PreDestroy
 	public void destroyRobot() {
+		if (active) {
+			log.info("Destroying a BidRobot with " + bidCount + "/" + maxBids + " bids done.");
+		}
+		
 		if (bidThread != null) {
 			active = false;
 			bidThread.interrupt();
