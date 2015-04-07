@@ -1,0 +1,111 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+-->
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:ace="http://www.icefaces.org/icefaces/components"
+              xmlns:icecore="http://www.icefaces.org/icefaces/core"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>
+    </composite:interface>
+    
+    <composite:implementation>
+        <icecore:defaultAction actionListener="#{chatController.submitMessage}" key="Enter"/>
+    
+	    <h:panelGrid id="cw" columns="2" columnClasses="w25 valignTop,w75 valignTop" style="width: 100%;">
+	        <!-- TODO Set height and visible rows based on Settings? -->
+	        <ace:dataTable id="odt" value="#{chatBean.currentRoom.occupantsList}" var="occupant"
+	                       emptyMessage="No occupants yet."
+	                       rows="#{chatBean.currentRoom.maxMessages}"
+	                       paginator="true"
+	                       paginatorAlwaysVisible="bottom"
+	                       paginatorPosition="top"
+	                       paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+	                       rendered="#{chatBean.renderOccupants}">
+	            <f:facet name="header">
+	               Occupants (#{chatBean.currentRoom.occupantsSize})
+	               <h:commandButton image="resources/images/chat-contract.png" immediate="true"
+	                                title="Minimize the occupants list"
+	                                actionListener="#{chatController.toggleOccupantsList}"
+	                                style="float: right;"/>
+	            </f:facet>
+	            <ace:column>
+	                #{occupant}
+	            </ace:column>
+	        </ace:dataTable>
+	        
+	        <!-- TODO Customize which columns the user wants to see (mainly timestamp), maybe via ace:tableConfigPanel? -->
+	        <ace:dataTable id="mdt" value="#{chatBean.currentRoom.messages}" var="message"
+	                       rows="#{chatBean.currentRoom.maxMessages}" paginator="false"
+	                       styleClass="chatMessages">
+	            <f:facet name="header">
+                    <h:commandButton image="resources/images/chat-expand.png" immediate="true"
+                                     title="Restore the width of the occupants list"
+                                     actionListener="#{chatController.toggleOccupantsList}"
+                                     rendered="#{!chatBean.renderOccupants}"
+                                     style="float: left;"/>
+                    Chat Messages
+                    <h:panelGroup layout="block" style="float: right;">
+	                    <h:commandButton image="resources/images/chat-tab.png" immediate="true"
+	                                     title="Lock the chat panel into a tab"
+	                                     actionListener="#{chatController.positionTab}"
+	                                     disabled="#{chatBean.isPositionTab}"
+	                                     style="padding-right: 2px;"/>
+	                    <h:commandButton image="resources/images/chat-popup.png" immediate="true"
+	                                     title="Popup the chat panel into a dialog"
+	                                     actionListener="#{chatController.positionPopup}"
+	                                     disabled="#{chatBean.isPositionPopup}"
+	                                     style="padding-right: 2px;"/>
+	                    <h:commandButton image="resources/images/chat-bottom.png" immediate="true"
+	                                     title="Move the chat panel into a notification bar at the bottom"
+	                                     actionListener="#{chatController.positionBottom}"
+	                                     disabled="#{chatBean.isPositionBottom}"
+	                                     style="padding-right: 2px;"/>
+	                </h:panelGroup>
+	            </f:facet>
+	            <ace:column style="width: 10%;">
+	                #{message.timestampFormatted}
+	            </ace:column>
+	            <ace:column style="width: 15%; text-align: right;#{message.system ? ' font-weight: bold;' : ''}">
+	                #{message.senderFormatted}
+	            </ace:column>
+	            <ace:column style="width: 75%; text-align: left;#{message.system ? ' font-style: italic;' : ''}">
+	                #{message.text}
+	            </ace:column>
+	        </ace:dataTable>
+	        
+	        <f:facet name="footer">
+	           <h:panelGrid columns="2" cellspacing="2" cellpadding="0"
+	                        style="width: 50%;" styleClass="center"
+	                        columnClasses="w90,w10">
+	                <ace:textEntry id="cin" value="#{chatBean.currentMessage}"
+	                               autocorrect="true"
+	                               maxlength="140" style="width: 100%;"
+	                               placeholder="Enter your chat message">
+	                    <f:validateLength minimum="0" maximum="140"/>
+	                </ace:textEntry>
+	                <h:commandButton image="resources/images/chat-submit.png" title="Submit your chat message"
+	                                 actionListener="#{chatController.submitMessage}"/>
+	                
+	                <f:facet name="footer">
+	                    <h:message for="cin"/>
+	                </f:facet>
+	           </h:panelGrid>
+	       </f:facet>
+	    </h:panelGrid>
+    </composite:implementation>
+</ui:component>

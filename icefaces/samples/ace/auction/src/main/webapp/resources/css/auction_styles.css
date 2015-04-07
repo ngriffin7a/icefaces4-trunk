@@ -19,6 +19,10 @@
     background-color: #EEEEEE !important;
 }
 
+.ui-datatable tr {
+	height: 25px;
+} 
+
 .ui-notificationbar {
     height: 110px;
     overflow-y: scroll;
@@ -42,16 +46,62 @@
 	padding: 10px;
 }
 
+.notificationBarChat {
+	height: 200px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
 .updateC {
 	background: rgba(50, 50, 200, 0.3);
+}
+
+.wX {
+	width: auto;
+}
+
+.w10 {
+	width: 10%;
 }
 
 .w25 {
 	width: 25%;
 }
 
+.w50 {
+	width: 50%;
+}
+
 .w75 {
 	width: 75%;
+}
+
+.w90 {
+	width: 90%;
+}
+
+.w100 {
+	width: 100%;
+}
+
+.center {
+	margin: 0 auto;
+}
+
+.alignRight {
+	text-align: right;
+}
+
+.valignTop {
+	vertical-align: top;
+}
+
+.chatMessages .ui-datatable-odd, .chatMessages .ui-datatable-even {
+	background-color: #FFFFFF !important;
+}
+
+.chatMessages .ui-col-0, .chatMessages .ui-col-1, .chatMessages .ui-col-2 {
+	border: none !important;
 }
 
 .postTable input, .postTable select, .postTable textarea {

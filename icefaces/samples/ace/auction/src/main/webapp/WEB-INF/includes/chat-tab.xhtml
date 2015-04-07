@@ -20,22 +20,8 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <auction:dataExporters target="m" fileName="auction-messages"
-                           includeHeaders="false" includeFooters="false"/>
-    <ace:dataTable id="m" value="#{globalMessage.messages}" var="gmessage"
-                   emptyMessage="No auction log messages yet."
-                   reorderableColumns="false" resizableColumns="false"
-                   paginator="false"
-                   rows="#{globalMessage.fullLogCount}">
-        <f:facet name="header">
-            <h:outputText value="Previous #{globalMessage.visibleLogCount} Auction Notifications"/>
-        </f:facet>
-        <ace:column style="text-align: left;">
-            #{gmessage}
-        </ace:column>
-        <f:facet name="footer">
-            <h:outputText value="Previous #{globalMessage.visibleLogCount} Auction Notifications"
-                          rendered="#{globalMessage.visibleLogCount > globalMessage.fullLogCount/2}"/>
-        </f:facet>
-    </ace:dataTable>
+    <ace:panel closable="false" collapsed="false" toggleable="true"
+               header="Chat Room: #{chatService.defaultRoom.name}">
+        <auction:chat/>
+    </ace:panel>
 </ui:composition>

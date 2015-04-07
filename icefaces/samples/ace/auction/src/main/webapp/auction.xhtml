@@ -42,10 +42,15 @@
 </h:head>
 
 <h:body>
-    <!-- TODO Add a Chat tab like the old demo? Make the chat dockable and displayable in a popup (and a setting to store position) -->
-    <!-- TODO Add images (perhaps shown on the right of the details panel), and choosable images when adding an item -->
+	<!-- TODO Continue with Chat. Show new message count in Chat tab, bug check popup position, TestFlag option, test multiple rooms, make ChatRobot (including random join/leave), send private message?, etc. -->
+	<!-- TODO Add images (perhaps shown on the right of the details panel), and choosable images when adding an item -->
     <!-- TODO Make a mobile version of the auction list using mobi components -->
+    <!-- TODO Use consistent PostConstruct and PreDestroy names throughout the beans -->
+    <!-- TODO Move some inline styling in the CSS file, especially inside iterative components -->
+    <!-- TODO Check isEmpty usage, put String checks into a util class that does proper trim/length comparison -->
     <!-- TODO Add commenting throughout the source to help new developers -->
+    <!-- TODO Clean up bean/controller/service split, maybe don't even need separate services? -->
+    <!-- TODO Reorganize packages to be by feature/function instead of model/bean/service/etc. -->
     <!-- TODO Internationalize all the strings, titles, etc. and override validation messages (including from the backend) -->
     <!-- TODO Generate serialization IDs to remove source warnings -->
     <!-- TODO ICE-10621 - When fixed and ace:simpleSelectOneMenu functions the same as h:selectOneMenu then update all h:selectOneMenus to ACE (on settings, add item, etc.) -->
@@ -82,6 +87,13 @@
                     <ace:tabSetProxy for="at"/>
                     
                     <ui:include src="/WEB-INF/includes/post-tab.xhtml"/>
+                </h:form>
+            </ace:tabPane>
+            <ace:tabPane label="Chat" disabled="#{!chatBean.isPositionTab}">
+                <h:form id="c">
+                    <ace:tabSetProxy for="at"/>
+                    
+                    <ui:include src="/WEB-INF/includes/chat-tab.xhtml"/>
                 </h:form>
             </ace:tabPane>
             <ace:tabPane label="Settings">

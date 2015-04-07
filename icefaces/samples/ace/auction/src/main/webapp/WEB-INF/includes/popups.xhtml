@@ -20,7 +20,7 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <h:form id="n" prependId="false">
+    <h:form id="n">
         <ace:notificationPanel id="messagePanel"
                                visible="#{globalMessage.hasNew}" position="top"
                                effect="slide" effectSpeed="slow"
@@ -33,7 +33,7 @@
         </ace:notificationPanel>
     </h:form>
     
-    <h:form id="hd" prependId="false">
+    <h:form id="hd">
         <ace:dialog id="historyDialog"
                     visible="#{bidBean.showHistoryDialog}"
                     rendered="#{bidBean.showHistoryDialog}"
@@ -85,6 +85,30 @@
 	                </ace:dataTable>
                 </h:panelGroup>
             </h:panelGroup>
+        </ace:dialog>
+    </h:form>
+    
+    <h:form id="cnp">
+        <ace:notificationPanel id="chatPanel"
+                               visible="#{chatBean.isPositionBottom}"
+                               rendered="#{chatBean.isPositionBottom}"
+                               position="bottom"
+                               styleClass="notificationBarChat">
+            <auction:chat/>
+        </ace:notificationPanel>
+    </h:form>
+    
+    <h:form id="cpop">
+        <!-- TODO Set this chat popup width via Settings. Perhaps just rename chart width to dialog width and use it globally? -->
+        <ace:dialog id="chatDialog"
+                    visible="#{chatBean.isPositionPopup}"
+                    rendered="#{chatBean.isPositionPopup}"
+                    closable="false" closeOnEscape="false"
+                    draggable="true" modal="false" resizable="false"
+                    dialogPosition="right top"
+                    width="800"
+                    header="Chat Room: #{chatBean.currentRoom.name}">
+            <auction:chat/>
         </ace:dialog>
     </h:form>
 </ui:composition>
