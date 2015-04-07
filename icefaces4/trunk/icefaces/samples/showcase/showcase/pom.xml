@@ -34,7 +34,7 @@
     <properties>
         <private.demo>true</private.demo>
         <themes.groupId>org.icefaces.ace-themes</themes.groupId>
-        <themes.version>4.1.0</themes.version>
+        <themes.version>4.0.0</themes.version>
     </properties>
     <dependencies>
         <dependency>
