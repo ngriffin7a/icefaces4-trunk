@@ -26,4 +26,8 @@ public class TimestampUtil {
 	public static String stamp() {
 		return TIMESTAMP.format(new Date()) + ": ";
 	}
+	
+	public static String stamp(Date base) {
+		return TIMESTAMP.format(base);
+	}
 }

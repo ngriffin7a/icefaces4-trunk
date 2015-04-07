@@ -33,7 +33,8 @@ public class TabController implements Serializable {
 	public static final int TAB_AUCTION_LIST = 0;
 	public static final int TAB_AUCTION_LOGS = 1;
 	public static final int TAB_POST_AUCTION = 2;
-	public static final int TAB_SETTINGS = 3;
+	public static final int TAB_CHAT = 3;
+	public static final int TAB_SETTINGS = 4;
 	
 	public void moveToTab(int selectedIndex) {
 		TabBean tabBean = (TabBean)FacesUtils.getManagedBean(TabBean.BEAN_NAME);
@@ -51,6 +52,10 @@ public class TabController implements Serializable {
 	public void postAuctionTab(ActionEvent event) {
 		moveToTab(TAB_POST_AUCTION);
 	}
+	
+	public void chatTab(ActionEvent event) {
+		moveToTab(TAB_CHAT);
+	}	
 	
 	public void settingsTab(ActionEvent event) {
 		moveToTab(TAB_SETTINGS);

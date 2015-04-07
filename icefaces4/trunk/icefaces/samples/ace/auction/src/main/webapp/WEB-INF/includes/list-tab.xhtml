@@ -79,7 +79,8 @@
         <f:facet name="footer">
             <h:panelGroup layout="block" style="width: 100%; text-align: center;">
                 <h:panelGrid id="buttonWrap"
-                             columns="6" style="width: auto; margin: 0 auto;"
+                             columns="6"
+                             style="width: auto;" styleClass="center"
                              rendered="#{bidBean.renderBidPanel}">
                     <!-- We position the defaultAction this way so we can easily grab the parent container and add an error message if needed -->
                     <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
