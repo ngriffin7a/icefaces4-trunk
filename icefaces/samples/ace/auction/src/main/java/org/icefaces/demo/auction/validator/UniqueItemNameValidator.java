@@ -23,7 +23,7 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-import org.icefaces.demo.auction.service.AuctionService;
+import org.icefaces.demo.auction.bid.AuctionService;
 import org.icefaces.demo.auction.util.FacesUtils;
 
 @FacesValidator(value="UniqueItemNameValidator")

@@ -31,7 +31,6 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.icefaces.ace.event.SelectEvent;
 import org.icefaces.ace.event.UnselectEvent;
 import org.icefaces.demo.auction.bid.model.AuctionItem;
-import org.icefaces.demo.auction.service.AuctionService;
 import org.icefaces.demo.auction.settings.SettingsBean;
 import org.icefaces.demo.auction.tabs.TabController;
 import org.icefaces.demo.auction.util.FacesUtils;

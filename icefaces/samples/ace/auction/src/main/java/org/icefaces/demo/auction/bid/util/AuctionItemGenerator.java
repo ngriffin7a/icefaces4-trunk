@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.service;
+package org.icefaces.demo.auction.bid.util;
 
 import java.security.SecureRandom;
 import java.util.Calendar;

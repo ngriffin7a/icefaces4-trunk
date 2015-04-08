@@ -22,7 +22,6 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
-import org.icefaces.demo.auction.service.ChatService;
 import org.icefaces.demo.auction.tabs.TabController;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;

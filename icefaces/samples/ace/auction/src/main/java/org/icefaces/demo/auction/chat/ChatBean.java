@@ -25,7 +25,6 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
-import org.icefaces.demo.auction.service.ChatService;
 import org.icefaces.demo.auction.settings.SettingsBean;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;
