@@ -49,6 +49,7 @@ public class ChatBean implements Serializable {
 	}
 	
 	private String cachedName; // Store our previous name successfully pulled from SettingsBean
+	private String selectedRoom;
 	private ChatRoom currentRoom;
 	private String currentMessage;
 	private ChatPosition position = ChatPosition.TAB;
@@ -59,10 +60,9 @@ public class ChatBean implements Serializable {
 	
 	@PostConstruct
 	private void initChatBean() {
-		// If we only have a single room then just autojoin on creation
-		if ((service != null) && (!service.getHasMultipleRooms())) {
-			service.joinRoom(this, service.getDefaultRoom());
-			currentRoom = service.getDefaultRoom();
+		// Join our default room
+		if (service != null) {
+			service.joinDefaultRoom(this);
 		}
 	}
 	
@@ -70,8 +70,15 @@ public class ChatBean implements Serializable {
 	private void cleanupChatBean() {
 		if ((currentRoom != null) && (service != null)) {
 			log.info("ChatBean timed out, removing user " + getName() + " from chat room " + currentRoom);
-			service.leaveRoom(this, currentRoom);
+			service.leaveRoom(this);
 		}
+	}
+	
+	public void resetState() {
+		setRenderOccupants(true);
+		setCurrentMessage(null);
+		setCurrentRoom(null);
+		setSelectedRoom(null);
 	}
 	
 	public String getName() {
@@ -88,6 +95,14 @@ public class ChatBean implements Serializable {
 		}
 		
 		return "Anonymous";
+	}
+	
+	public String getSelectedRoom() {
+		return selectedRoom;
+	}
+
+	public void setSelectedRoom(String selectedRoom) {
+		this.selectedRoom = selectedRoom;
 	}
 
 	public ChatRoom getCurrentRoom() {
@@ -140,5 +155,9 @@ public class ChatBean implements Serializable {
 	
 	public boolean getIsPositionBottom() {
 		return position == ChatPosition.BOTTOM;
+	}
+	
+	public boolean getHasCurrentRoom() {
+		return currentRoom != null;
 	}
 }

@@ -23,11 +23,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 import org.icefaces.application.PushRenderer;
 import org.icefaces.demo.auction.bean.ChatBean;
 import org.icefaces.demo.auction.chat.ChatMessage;
 import org.icefaces.demo.auction.chat.ChatRoom;
+import org.icefaces.demo.auction.util.StringUtil;
 
 @ManagedBean(name=ChatService.BEAN_NAME,eager=true)
 @ApplicationScoped
@@ -38,8 +40,10 @@ public class ChatService implements Serializable {
 	
 	@PostConstruct
 	private void initChatService() {
-		rooms = new ArrayList<ChatRoom>(1);
+		rooms = new ArrayList<ChatRoom>(3);
 		rooms.add(new ChatRoom("Lounge"));
+		rooms.add(new ChatRoom("Bidding Tips"));
+		rooms.add(new ChatRoom("Item Help"));
 	}
 
 	public List<ChatRoom> getRooms() {
@@ -50,32 +54,49 @@ public class ChatService implements Serializable {
 		this.rooms = rooms;
 	}
 	
-	public boolean getHasMultipleRooms() {
-		return rooms != null && rooms.size() > 1;
+	public ChatRoom getRoomByName(String name) {
+		for (ChatRoom loopRoom : rooms) {
+			if (name.equalsIgnoreCase(loopRoom.getName())) {
+				return loopRoom;
+			}
+		}
+		return null;
 	}
 	
-	public ChatRoom getDefaultRoom() {
-		return !getHasMultipleRooms() ? rooms.get(0) : null;
+	public void joinDefaultRoom(ChatBean person) {
+		if ((rooms != null) && (!rooms.isEmpty())) {
+			joinRoom(person, rooms.get(0));
+		}
 	}
 	
 	public void joinRoom(ChatBean person, ChatRoom toJoin) {
 		toJoin.addOccupant(person);
+		
+		// Update our bean state as well
+		person.setCurrentRoom(toJoin);
+		person.setSelectedRoom(null);
+		
 		PushRenderer.addCurrentView(toJoin.getPushGroup());
 		
 		// Notify any users in the room already
-		addSystemMessage(toJoin, person.getName() + " has joined the chat room.");
+		addSystemMessage(toJoin, person.getName() + " joined.");
 	}
 	
-	public boolean leaveRoom(ChatBean person, ChatRoom toLeave) {
-		boolean status = removeFromRoom(person.getName(), toLeave);
+	public boolean leaveRoom(ChatBean person) {
+		boolean status = removeFromRoom(person.getName(), person.getCurrentRoom());
 		
 		// We'll take this opportunity to also do a check for any expired people
 		// This is in case a PreDestroy didn't fire, so we don't have "ghosts" sitting around
-		List<String> expiredPeople = toLeave.checkExpiredOccupants();
+		List<String> expiredPeople = person.getCurrentRoom().checkExpiredOccupants();
 		if ((expiredPeople != null) && (!expiredPeople.isEmpty())) {
 			for (String removeName : expiredPeople) {
-				removeFromRoom(removeName, toLeave);
+				removeFromRoom(removeName, person.getCurrentRoom());
 			}
+		}
+		
+		// Finally reset our person state for future joins, if leaving was successful
+		if (status) {
+			person.resetState();
 		}
 		
 		return status;
@@ -83,8 +104,16 @@ public class ChatService implements Serializable {
 	
 	private boolean removeFromRoom(String name, ChatRoom toLeave) {
 		if (toLeave.removeOccupant(name)) {
+			// Try to remove our render group if we're in a valid JSF state with a FacesContext present
+			// Basically if the user manually left the room via a button (FacesContext valid) compared to their bean being destroyed (invalid)
+			if ((toLeave != null) && (FacesContext.getCurrentInstance() != null)) {
+				if (StringUtil.validString(toLeave.getPushGroup())) {
+					PushRenderer.removeCurrentView(toLeave.getPushGroup());
+				}
+			}
+			
 			// Notify any remaining users
-			addSystemMessage(toLeave, name + " has left the chat room.");
+			addSystemMessage(toLeave, name + " left.");
 			
 			return true;
 		}

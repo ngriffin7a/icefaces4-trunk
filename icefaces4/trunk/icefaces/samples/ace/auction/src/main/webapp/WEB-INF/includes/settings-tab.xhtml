@@ -71,19 +71,19 @@
                                  value="#{settingsBean.notificationForeground}"/>
             <h:message for="ncolorf"/>
             
-            <h:graphicImage id="cWidthHelp" library="images" name="help.png"/>
-            <h:outputLabel for="cWidth" value="Graph Width:"/>
-            <h:panelGroup id="cWidthWrap" layout="block">
-                <h:outputText id="cWidthOut" value="#{settingsBean.chartWidth}px"/>
-				<ace:sliderEntry id="cWidth"
+            <h:graphicImage id="pWidthHelp" library="images" name="help.png"/>
+            <h:outputLabel for="pWidth" value="Popup Width:"/>
+            <h:panelGroup id="pWidthWrap" layout="block">
+                <h:outputText id="pWidthOut" value="#{settingsBean.popupWidth}px"/>
+				<ace:sliderEntry id="pWidth"
 				                 axis="x" length="250px"
 				                 animate="true" clickableRail="true"
 				                 min="200" max="2000"
-				                 value="#{settingsBean.chartWidth}">
-					<ace:ajax event="slideEnd" execute="@this" render="cWidthWrap" />
+				                 value="#{settingsBean.popupWidth}">
+					<ace:ajax event="slideEnd" execute="@this" render="pWidthWrap" />
 				</ace:sliderEntry>
 			</h:panelGroup>
-            <h:message for="cWidth"/>
+            <h:message for="pWidth"/>
             
             <!-- TODO ICE-10616 Note that submitting this form, even with invalid fields above, will still apply the theme. Also the tabSet will be reset to the first index -->
             <h:graphicImage id="themeHelp" library="images" name="help.png"/>
@@ -129,8 +129,8 @@
         Customize the foreground text color of the notification panel that displays messages at the top of the page.
     </ace:tooltip>
     
-    <ace:tooltip for="cWidthHelp" speechBubble="true">
-        Change how wide the bid history graphs should be (200 to 2000 pixels).
+    <ace:tooltip for="pWidthHelp" speechBubble="true">
+        Change how wide the chat and bid history popups should be (200 to 2000 pixels).
     </ace:tooltip>
     
     <ace:tooltip for="themeHelp" speechBubble="true">

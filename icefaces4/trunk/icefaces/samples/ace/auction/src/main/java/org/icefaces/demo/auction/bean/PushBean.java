@@ -19,29 +19,39 @@ package org.icefaces.demo.auction.bean;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.icefaces.application.PushRenderer;
 import org.icefaces.demo.auction.push.AuctionWatcher;
 
 @ManagedBean(name=PushBean.BEAN_NAME)
-@SessionScoped
+@ViewScoped
 public class PushBean implements Serializable {
-	private static final long serialVersionUID = -4989570306999687954L;
+	private static final long serialVersionUID = -2200618059830440963L;
 	
 	public static final String BEAN_NAME = "pushBean";
 	
 	@PostConstruct
 	private void initPushBean() {
-		PushRenderer.addCurrentSession(AuctionWatcher.INTERVAL_PUSH_GROUP);
-		PushRenderer.addCurrentSession(AuctionWatcher.MANUAL_PUSH_GROUP);
+		joinIntervalGroup();
 	}
 	
-	@PreDestroy
-	private void cleanupPushBean() {
-		PushRenderer.removeCurrentSession(AuctionWatcher.INTERVAL_PUSH_GROUP);
-		PushRenderer.removeCurrentSession(AuctionWatcher.MANUAL_PUSH_GROUP);
+	public void joinIntervalGroup() {
+		try{
+			PushRenderer.removeCurrentView(AuctionWatcher.MANUAL_PUSH_GROUP);
+			PushRenderer.addCurrentView(AuctionWatcher.INTERVAL_PUSH_GROUP);
+		}catch (NullPointerException failed) { }
+	}
+	
+	public void leaveIntervalGroup() {
+		try{
+			PushRenderer.removeCurrentView(AuctionWatcher.INTERVAL_PUSH_GROUP);
+			PushRenderer.addCurrentView(AuctionWatcher.MANUAL_PUSH_GROUP);
+		}catch (NullPointerException failed) { }
+	}
+	
+	public String getInit() {
+		return null;
 	}
 }

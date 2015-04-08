@@ -27,16 +27,19 @@
     </composite:interface>
     
     <composite:implementation>
-	    <h:panelGroup layout="block" style="float: right;">
-	        <ace:dataExporter target="#{cc.attrs.target}"
+	    <h:panelGroup id="ew" layout="block" styleClass="floatR">
+	        <ace:dataExporter id="epdf"
+	                          target="#{cc.attrs.target}"
 	                          label="Export to PDF" type="pdf"
 	                          fileName="#{cc.attrs.fileName}"
 	                          includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
-            <ace:dataExporter target="#{cc.attrs.target}"
+            <ace:dataExporter id="exls"
+                              target="#{cc.attrs.target}"
                               label="Export to XLS" type="xls"
                               fileName="#{cc.attrs.fileName}"
                               includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
-            <ace:dataExporter target="#{cc.attrs.target}"
+            <ace:dataExporter id="ecsv"
+                              target="#{cc.attrs.target}"
                               label="Export to CSV" type="csv"
                               fileName="#{cc.attrs.fileName}"
                               includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>

@@ -46,32 +46,27 @@
 	            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
 	                             actionListener="#{tabController.postAuctionTab}"
 	                             immediate="true"
-	                             style="float: right;"/>
+	                             styleClass="floatR"/>
             </h:panelGroup>
         </f:facet>
-        <ace:column headerText="Name" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
-                    style="width: 30%;"
+        <ace:column headerText="Name" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
                     configurable="false">
             #{item.name}
         </ace:column>
-        <ace:column headerText="Price" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
-                    style="width: 30%; text-align: right;">
-            <h:outputText value="#{item.price}">
+        <ace:column headerText="Price" styleClass="w30R#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+            <h:outputText id="p" value="#{item.price}">
                 <f:convertNumber type="currency" currencySymbol="$"/>
             </h:outputText>
         </ace:column>
-        <ace:column headerText="Shipping Cost" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
-                    style="text-align: right;">
-            <h:outputText value="#{item.shippingCost}">
+        <ace:column headerText="Shipping Cost" styleClass="alignR#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+            <h:outputText id="sc" value="#{item.shippingCost}">
                 <f:convertNumber type="currency" currencySymbol="$"/>
             </h:outputText>
         </ace:column>
-        <ace:column headerText="Bids" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
-                    style="width: 10%;">
+        <ace:column headerText="Bids" styleClass="w10#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
             #{item.bids}
         </ace:column>
-        <ace:column headerText="Time Left" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}"
-                    style="width: 30%;">
+        <ace:column headerText="Time Left" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
             <h:outputText id="e" value="#{item.expiryDate}">
                 <f:converter converterId="TimeLeftConverter"/>
             </h:outputText>

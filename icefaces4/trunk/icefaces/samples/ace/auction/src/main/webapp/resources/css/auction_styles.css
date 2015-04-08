@@ -21,7 +21,7 @@
 
 .ui-datatable tr {
 	height: 25px;
-} 
+}
 
 .ui-notificationbar {
     height: 110px;
@@ -64,8 +64,16 @@
 	width: 10%;
 }
 
+.w15 {
+	width: 15%;
+}
+
 .w25 {
 	width: 25%;
+}
+
+.w30, .w30R {
+	width: 30%;
 }
 
 .w50 {
@@ -88,8 +96,20 @@
 	margin: 0 auto;
 }
 
-.alignRight {
-	text-align: right;
+.floatR {
+	float: right;
+}
+
+.floatL {
+	float: left;
+}
+
+.alignR, .w30R {
+	text-align: right !important;
+}
+
+.alignL {
+	text-align: left !important;
 }
 
 .valignTop {
@@ -106,4 +126,13 @@
 
 .postTable input, .postTable select, .postTable textarea {
 	width: 200px;
+}
+
+.positionButton {
+	padding-right: 2px;
+}
+
+.hidden {
+	display: none;
+	height: 0;
 }
