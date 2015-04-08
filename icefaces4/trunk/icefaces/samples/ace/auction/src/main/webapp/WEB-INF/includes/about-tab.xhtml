@@ -20,12 +20,112 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <!-- TODO Use ace:accordion here to split products? -->
-    <!-- TODO Also use ProductInfo class for version, build date, etc. -->
-	<p>ICEfaces is an open-source Rich Internet Application (RIA)
-		development framework based on the JavaServer Faces 2 standard.
-		ICEfaces extends JavaServer Faces to simplify development and enhance
-		the standard JSF feature set - simultaneously improving developer
-		efficiency and expanding the spectrum of RIA capabilities that can be
-		included in any JSF-based web application.</p>
+    <h:panelGroup id="aboutWrap" layout="block" styleClass="w75 center">
+	    <ace:accordion id="acc" collapsible="false">
+	        <ace:accordionPane title="Demo Overview">
+	            <h:outputLink value="http://www.icesoft.org/" target="_blank">
+	               <h:graphicImage library="images" name="icesoft-logo.png" styleClass="aboutImage"/>
+	            </h:outputLink>
+				<p>This Auction Monitor application demonstrates various features
+					of ICEfaces, from the rich ACE components to ICEpush and many useful
+					JSF techniques. This application was rapidly developed with the help
+					of the ICEfaces framework.</p>
+				<p>The Auction List tab displays a generated list of randomized
+					auction items, and is the core page of the application. You can bid
+					on the items, and other users will automatically see the various
+					updates thanks to Ajax Push. Items have additional details when
+					selected in the list, and you can generate a graph of previous bids.
+					The Auction List also supports an export feature to download the
+					current data in various file formats.</p>
+				<p>The Auction Logs tab keeps track of various notification
+					messages, such as bids and new items. These will be displayed
+					dynamically at the top of the application in a notification bar, but
+					the full list can be viewed here at any time.</p>
+				<p>The Post Auction tab allows you to customize then list
+					fabricated auction items, with all the fields configurable using
+					various input components.</p>
+				<p>The Chat tab is used to talk with other users of the
+					application. There are a few chat rooms to join, and sent messages
+					will automatically update for each user as they come in. You can
+					customize how the chat is positioned for ease of use, such as in a
+					floating popup dialog instead of the tab.</p>
+				<p>The Settings tab demonstrates how an application can be
+					customized on a per-user basis. In this case we provide the option
+					to save your settings to browser cookies, but a database or other
+					persistence system could have been used instead. Many ACE components
+					are shown on this page.</p>
+			</ace:accordionPane>
+			<ace:accordionPane title="ICEfaces Details">
+			    <h:outputLink value="http://www.icesoft.org/java/projects/ICEfaces/" target="_blank">
+			        <h:graphicImage library="images" name="icefaces.png" styleClass="aboutImage"/>
+			    </h:outputLink>
+				<p>ICEfaces is an open-source Rich Internet Application (RIA)
+					development framework based on the JavaServer Faces 2 standard.
+					ICEfaces extends JavaServer Faces to simplify development and
+					enhance the standard JSF feature set - simultaneously improving
+					developer efficiency and expanding the spectrum of RIA capabilities
+					that can be included in any JSF-based web application.</p>
+				<p>ICEfaces is much more than a suite of rich components.
+					Innovative framework features simplify development and transcend the
+					capabilities of standard JavaServer Faces. In particular, two key
+					ICEfaces JSF framework extensions, Automatic Ajax and Ajax Push,
+					will reshape your thinking about how RIA's are developed with Java
+					Ajax, and what they can do.</p>
+				<p>ICEfaces application development is essentially Java EE /
+					JavaServer Faces development, which promotes a component-based
+					architecture using familiar tag-based declarative UI definition, and
+					dynamic data binding into the server-resident application data
+					model. ICEfaces provides application developers with a familiar Java
+					Enterprise development model that completely shelters them from the
+					complexities of low-level Ajax development in JavaScript.</p>
+				<h:outputLink value="http://www.icesoft.org/java/projects/ICEfaces/" target="_blank">Read More</h:outputLink>
+			</ace:accordionPane>
+			<ace:accordionPane title="ICEpdf Details">
+			<h:outputLink value="http://www.icesoft.org/java/projects/ICEpdf/" target="_blank">
+			    <h:graphicImage library="images" name="icepdf.png" styleClass="aboutImage"/>
+			</h:outputLink>
+			<p>ICEpdf is an open source PDF engine for viewing, printing, and
+				annotating PDF documents. The ICEpdf API is 100% Java, lightweight,
+				fast, efficient, and very easy to use.</p>
+			<p>ICEpdf can be used as standalone open source Java PDF viewer,
+				or can be easily embedded in any Java application to seamlessly load
+				or capture PDF documents. Beyond PDF document rendering, ICEpdf is
+				extremely versatile, and can be used in a multitude of innovative
+				ways, including:</p>
+			<ul>
+				<li>PDF to image conversion</li>
+				<li>PDF annotation (see below)</li>
+				<li>PDF text and/or image extraction</li>
+				<li>PDF search</li>
+				<li>PDF printing</li>
+			</ul>
+			<h:outputLink value="http://www.icesoft.org/java/projects/ICEpdf/" target="_blank">Read More</h:outputLink>
+			</ace:accordionPane>
+			<ace:accordionPane title="BridgeIt Details">
+			    <h:outputLink value="http://bridgeit.mobi/" target="_blank">
+			        <h:graphicImage library="images" name="bridgeit-logo.png" styleClass="aboutImage"/>
+			    </h:outputLink>
+				<p>BridgeIt enables any HTML5 web application to access a wide
+					range of native mobile device capabilities using a very simple
+					JavaScript API. BridgeIt is supported on the most popular mobile
+					platforms, such as Apple iOS, Google Android, and Microsoft Windows
+					Phone. Using BridgeIt, HTML5/JavaScript application developers can
+					leverage such native-device features as:</p>
+				<ul>
+					<li>Camera for photo and video recording</li>
+					<li>Barcode scanning (using the camera)</li>
+					<li>Contacts list</li>
+					<li>Location tracking</li>
+					<li>Microphone for audio recording</li>
+					<li>Cloud-push for creating native device notifications from
+						within the web-app.</li>
+				</ul>
+				<p>No native development, packaging, or app store publication is required.</p>
+				<h:outputLink value="http://bridgeit.mobi/" target="_blank">Read More</h:outputLink>
+			</ace:accordionPane>
+	    </ace:accordion>
+	
+		<hr width="100%" />
+		<h:outputText value="#{auctionService.productInfo}" style="font-style: italic;" />
+	</h:panelGroup>
 </ui:composition>

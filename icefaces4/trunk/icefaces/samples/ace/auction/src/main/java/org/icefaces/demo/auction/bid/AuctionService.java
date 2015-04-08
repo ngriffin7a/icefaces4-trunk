@@ -29,6 +29,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
+import org.icefaces.application.ProductInfo;
 import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.auction.message.GlobalMessageBean;
@@ -46,6 +47,7 @@ public class AuctionService implements Serializable {
 
 	private AuctionWatcher renderer = AuctionWatcher.getInstance();
 	private List<AuctionItem> auctions = new Vector<AuctionItem>(MINIMUM_ITEMS);
+	private String productInfoString;
 	
 	@ManagedProperty(value="#{" + GlobalMessageBean.BEAN_NAME + "}")
 	private GlobalMessageBean globalMessage;
@@ -189,5 +191,20 @@ public class AuctionService implements Serializable {
 
 	public void setGlobalMessage(GlobalMessageBean globalMessage) {
 		this.globalMessage = globalMessage;
+	}
+	
+	public String getProductInfo() {
+		if (productInfoString == null) {
+			productInfoString = new StringBuilder("Powered by ")
+				.append(ProductInfo.PRODUCT)
+				.append(" ").append(ProductInfo.PRIMARY).append(".")
+				.append(ProductInfo.SECONDARY).append(".")
+				.append(ProductInfo.TERTIARY).append(" from ")
+				.append(ProductInfo.COMPANY).append(" (build date ")
+				.append(ProductInfo.BUILD_DATE).append(", number ")
+				.append(ProductInfo.BUILD_NO).append(", revision ")
+				.append(ProductInfo.REVISION).append(")").toString();
+		}
+		return productInfoString;
 	}
 }
