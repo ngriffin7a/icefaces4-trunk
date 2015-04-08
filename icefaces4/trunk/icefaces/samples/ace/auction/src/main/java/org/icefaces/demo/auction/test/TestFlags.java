@@ -21,4 +21,5 @@ public class TestFlags {
 	public static final boolean TEST_EXPIRY = false; // Debugging toggle to create short lasting items (true) or normal (false)
 	public static final boolean TEST_BIDROBOT = false; // Debugging toggle to make BidRobots always spawn and bid really often
 	public static final boolean TEST_MANY_ITEMS = false; // Debugging toggle to make a huge number of random items instead of the usual
+	public static final boolean TEST_AUTOJOIN_CHAT = false; // Debugging toggle to make any user autojoin the default chat room
 }
