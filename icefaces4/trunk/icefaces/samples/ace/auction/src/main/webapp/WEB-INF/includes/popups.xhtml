@@ -20,12 +20,13 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <h:form id="n" rendered="#{globalMessage.hasNew}">
-        <ace:notificationPanel id="messagePanel"
+    <h:panelGroup id="pops" layout="block">
+    <h:form id="n">
+        <ace:notificationPanel id="mp"
                                visible="#{globalMessage.hasNew}" position="top"
                                effect="slide" effectSpeed="slow"
                                style="background: #{settingsBean.notificationBackground}; color: #{settingsBean.notificationForeground};">
-            <h:panelGroup layout="block" styleClass="notificationBarWrap">
+            <h:panelGroup id="mpw" layout="block" styleClass="notificationBarWrap">
                 <ui:repeat value="#{globalMessage.messages}" var="gmessage">
                     #{gmessage}<br/>
                 </ui:repeat>
@@ -107,4 +108,5 @@
             <auction:chat/>
         </ace:dialog>
     </h:form>
+    </h:panelGroup>
 </ui:composition>
