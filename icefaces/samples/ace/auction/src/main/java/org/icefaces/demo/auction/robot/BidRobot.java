@@ -129,4 +129,8 @@ public class BidRobot implements Serializable {
 			bidThread = null;
 		}
 	}
+	
+	public String getInit() {
+		return null;
+	}
 }

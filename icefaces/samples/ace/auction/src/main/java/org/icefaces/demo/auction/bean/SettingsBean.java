@@ -47,7 +47,7 @@ public class SettingsBean implements Serializable {
 	private String tabOrientation;
 	private String notificationBackground;
 	private String notificationForeground;
-	private int chartWidth;
+	private int popupWidth;
 	private String themeName;
 	
 	@PostConstruct
@@ -63,7 +63,7 @@ public class SettingsBean implements Serializable {
 			tabOrientation = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "tabOrientation", tabOrientation).toString();
 			notificationBackground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationBackground", notificationBackground).toString();
 			notificationForeground = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "notificationForeground", notificationForeground).toString();
-			chartWidth = Integer.parseInt(FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "chartWidth", chartWidth).toString());
+			popupWidth = Integer.parseInt(FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "popupWidth", popupWidth).toString());
 			themeName = FacesUtils.loadFromCookie(SETTING_COOKIE_NAME + "themeName", themeName).toString();
 		}catch (Exception failedLoad) {
 			log.log(Level.WARNING, "Failed when trying to load settings from a cookie, defaulting instead.", failedLoad);
@@ -86,7 +86,7 @@ public class SettingsBean implements Serializable {
 		tabOrientation = ListData.DEFAULT_TAB_ORIENTATION;
 		notificationBackground = ListData.DEFAULT_BACKGROUND_COLOR.getRgba();
 		notificationForeground = ListData.DEFAULT_FOREGROUND_COLOR.getRgba();
-		chartWidth = 800;
+		popupWidth = 800;
 		themeName = FacesUtils.getFacesParameter(ICEFACES_THEME_PARAM, ICEFACES_THEME_DEFAULT);
 	}
 	
@@ -97,7 +97,7 @@ public class SettingsBean implements Serializable {
 		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation", tabOrientation);
 		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground", notificationBackground);
 		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground", notificationForeground);
-		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth", chartWidth);
+		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "popupWidth", popupWidth);
 		FacesUtils.addCookie(SettingsBean.SETTING_COOKIE_NAME + "themeName", themeName);
 	}
 	
@@ -108,7 +108,7 @@ public class SettingsBean implements Serializable {
 		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "tabOrientation");
 		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationBackground");
 		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "notificationForeground");
-		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "chartWidth");
+		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "popupWidth");
 		FacesUtils.deleteCookie(SettingsBean.SETTING_COOKIE_NAME + "themeName");
 	}
 	
@@ -184,12 +184,12 @@ public class SettingsBean implements Serializable {
 		this.notificationForeground = notificationForeground;
 	}
 	
-	public int getChartWidth() {
-		return chartWidth;
+	public int getPopupWidth() {
+		return popupWidth;
 	}
 
-	public void setChartWidth(int chartWidth) {
-		this.chartWidth = chartWidth;
+	public void setPopupWidth(int popupWidth) {
+		this.popupWidth = popupWidth;
 	}
 
 	public String getThemeName() {

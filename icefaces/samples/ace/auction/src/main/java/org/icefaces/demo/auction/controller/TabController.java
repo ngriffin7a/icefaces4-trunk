@@ -21,7 +21,9 @@ import java.io.Serializable;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 
+import org.icefaces.demo.auction.bean.PushBean;
 import org.icefaces.demo.auction.bean.TabBean;
 import org.icefaces.demo.auction.util.FacesUtils;
 
@@ -35,10 +37,39 @@ public class TabController implements Serializable {
 	public static final int TAB_POST_AUCTION = 2;
 	public static final int TAB_CHAT = 3;
 	public static final int TAB_SETTINGS = 4;
+	public static final int TAB_ABOUT = 5;
 	
 	public void moveToTab(int selectedIndex) {
 		TabBean tabBean = (TabBean)FacesUtils.getManagedBean(TabBean.BEAN_NAME);
+		
+		int oldIndex = tabBean.getSelectedIndex();
 		tabBean.setSelectedIndex(selectedIndex);
+		processTabChange(oldIndex, selectedIndex);
+	}
+	
+	public boolean checkTab(int indexCheck) {
+		TabBean tabBean = (TabBean)FacesUtils.getManagedBean(TabBean.BEAN_NAME);
+		
+		return tabBean.getSelectedIndex() == indexCheck;
+	}
+	
+	public void changeListener(ValueChangeEvent event) {
+		try{
+			processTabChange((Integer)event.getOldValue(), (Integer)event.getNewValue());
+		}catch (ClassCastException failed) { }
+	}
+	
+	private void processTabChange(int fromIndex, int toIndex) {
+		// We want to manage our push groups based on the tab we're on
+		// Basically if we're not on the first tab (Auction List) we don't need the constant 1/second push updates
+		// Similary if we're not on that tab we'll want to join the manual push group
+		PushBean pushBean = (PushBean)FacesUtils.getManagedBean(PushBean.BEAN_NAME);
+		if (fromIndex == TAB_AUCTION_LIST) {
+			pushBean.leaveIntervalGroup();
+		}
+		if (toIndex == TAB_AUCTION_LIST) {
+			pushBean.joinIntervalGroup();
+		}
 	}
 	
 	public void auctionListTab(ActionEvent event) {
@@ -55,9 +86,37 @@ public class TabController implements Serializable {
 	
 	public void chatTab(ActionEvent event) {
 		moveToTab(TAB_CHAT);
-	}	
+	}
 	
 	public void settingsTab(ActionEvent event) {
 		moveToTab(TAB_SETTINGS);
+	}
+	
+	public void aboutTab(ActionEvent event) {
+		moveToTab(TAB_ABOUT);
+	}
+	
+	public boolean getIsAuctionListTab() {
+		return checkTab(TAB_AUCTION_LIST);
+	}
+	
+	public boolean getIsAuctionLogsTab() {
+		return checkTab(TAB_AUCTION_LOGS);
+	}
+	
+	public boolean getIsPostAuctionTab() {
+		return checkTab(TAB_POST_AUCTION);
+	}
+	
+	public boolean getIsChatTab() {
+		return checkTab(TAB_CHAT);
+	}
+	
+	public boolean getIsSettingsTab() {
+		return checkTab(TAB_SETTINGS);
+	}
+	
+	public boolean getIsAboutTab() {
+		return checkTab(TAB_ABOUT);
 	}
 }

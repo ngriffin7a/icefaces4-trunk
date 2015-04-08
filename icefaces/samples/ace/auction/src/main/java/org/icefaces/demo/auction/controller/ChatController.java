@@ -24,19 +24,42 @@ import javax.faces.event.ActionEvent;
 
 import org.icefaces.demo.auction.bean.ChatBean;
 import org.icefaces.demo.auction.chat.ChatMessage;
+import org.icefaces.demo.auction.chat.ChatRoom;
 import org.icefaces.demo.auction.service.ChatService;
 import org.icefaces.demo.auction.util.FacesUtils;
+import org.icefaces.demo.auction.util.StringUtil;
 
 @ManagedBean(name=ChatController.BEAN_NAME)
 @ApplicationScoped
 public class ChatController implements Serializable {
 	public static final String BEAN_NAME = "chatController";
 	
+	public void joinRoom(ActionEvent event) {
+		ChatBean bean = (ChatBean)FacesUtils.getManagedBean(ChatBean.BEAN_NAME);
+		
+		if (StringUtil.validString(bean.getSelectedRoom())) {
+			ChatService service = (ChatService)FacesUtils.getManagedBean(ChatService.BEAN_NAME);
+			ChatRoom toJoin = service.getRoomByName(bean.getSelectedRoom());
+			
+			if (toJoin != null) {
+				service.joinRoom(bean, toJoin);
+			}
+		}
+	}
+	
+	public void leaveRoom(ActionEvent event) {
+		ChatBean bean = (ChatBean)FacesUtils.getManagedBean(ChatBean.BEAN_NAME);
+		ChatService service = (ChatService)FacesUtils.getManagedBean(ChatService.BEAN_NAME);
+		
+		// First leave the room via the service
+		service.leaveRoom(bean);
+	}
+	
 	public void submitMessage(ActionEvent event) {
 		ChatBean bean = (ChatBean)FacesUtils.getManagedBean(ChatBean.BEAN_NAME);
 		
 		// Only bother submitting if we actually have a typed message
-		if ((bean.getCurrentRoom() != null) && (bean.getCurrentMessage() != null) && (bean.getCurrentMessage().trim().length() > 0)) {
+		if ((bean.getCurrentRoom() != null) && (StringUtil.validString(bean.getCurrentMessage()))) {
 			ChatMessage message = new ChatMessage(bean.getName(), bean.getCurrentMessage());
 			
 			ChatService service = (ChatService)FacesUtils.getManagedBean(ChatService.BEAN_NAME);
@@ -67,6 +90,8 @@ public class ChatController implements Serializable {
 	private void changePositionAndTab(ChatBean.ChatPosition position, int tabIndex) {
 		ChatBean bean = (ChatBean)FacesUtils.getManagedBean(ChatBean.BEAN_NAME);
 		bean.setPosition(position);
+		// Help the format by rendering occupants only in the tab, otherwise save space and hide it
+		bean.setRenderOccupants(ChatBean.ChatPosition.TAB == position);
 		
 		TabController tabController = (TabController)FacesUtils.getManagedBean(TabController.BEAN_NAME);
 		tabController.moveToTab(tabIndex);

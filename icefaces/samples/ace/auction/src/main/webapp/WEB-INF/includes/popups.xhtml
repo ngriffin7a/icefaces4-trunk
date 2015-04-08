@@ -20,7 +20,7 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <h:form id="n">
+    <h:form id="n" rendered="#{globalMessage.hasNew}">
         <ace:notificationPanel id="messagePanel"
                                visible="#{globalMessage.hasNew}" position="top"
                                effect="slide" effectSpeed="slow"
@@ -33,14 +33,13 @@
         </ace:notificationPanel>
     </h:form>
     
-    <h:form id="hd">
+    <h:form id="hd" rendered="#{bidBean.showHistoryDialog}">
         <ace:dialog id="historyDialog"
                     visible="#{bidBean.showHistoryDialog}"
-                    rendered="#{bidBean.showHistoryDialog}"
                     closable="true" closeOnEscape="true"
                     draggable="true" modal="true" resizable="false"
                     header="Bid History for '#{bidBean.bidItem.name}'"
-                    width="#{settingsBean.chartWidth+70}">
+                    width="#{settingsBean.popupWidth}">
             <ace:ajax event="close" listener="#{auctionController.closeHistoryDialogListener}"/>
             
             <h:panelGroup layout="block" style="margin: 20px;">
@@ -52,7 +51,7 @@
                            legendLocation="NW"
                            xAxis="#{chartBean.xAxis}"
                            yAxes="#{chartBean.yAxis}"
-                           width="#{settingsBean.chartWidth}"
+                           width="#{settingsBean.popupWidth-70}"
                            highlighter="true"
                            rendered="#{chartBean.type ne null}"/>
 
@@ -62,7 +61,7 @@
 	                       emptyMessage="No bid history yet."
 	                       reorderableColumns="false" resizableColumns="false"
 	                       paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
-	                       style="width: #{settingsBean.chartWidth}px;"
+	                       styleClass="w100"
 	                       rows="10">
 	                    <f:facet name="header">
 	                        <h:outputText value="Details of #{bidBean.bidItem.bids} Bids"/>
@@ -88,26 +87,23 @@
         </ace:dialog>
     </h:form>
     
-    <h:form id="cnp">
+    <h:form id="cnp" rendered="#{chatBean.isPositionBottom}">
         <ace:notificationPanel id="chatPanel"
                                visible="#{chatBean.isPositionBottom}"
-                               rendered="#{chatBean.isPositionBottom}"
                                position="bottom"
                                styleClass="notificationBarChat">
             <auction:chat/>
         </ace:notificationPanel>
     </h:form>
     
-    <h:form id="cpop">
-        <!-- TODO Set this chat popup width via Settings. Perhaps just rename chart width to dialog width and use it globally? -->
+    <h:form id="cpop" rendered="#{chatBean.isPositionPopup}">
         <ace:dialog id="chatDialog"
                     visible="#{chatBean.isPositionPopup}"
-                    rendered="#{chatBean.isPositionPopup}"
                     closable="false" closeOnEscape="false"
                     draggable="true" modal="false" resizable="false"
                     dialogPosition="right top"
-                    width="800"
-                    header="Chat Room: #{chatBean.currentRoom.name}">
+                    width="#{settingsBean.popupWidth}"
+                    header="Auction Chat">
             <auction:chat/>
         </ace:dialog>
     </h:form>

@@ -42,24 +42,25 @@
 </h:head>
 
 <h:body>
-	<!-- TODO Continue with Chat. Show new message count in Chat tab, bug check popup position, TestFlag option, test multiple rooms, make ChatRobot (including random join/leave), send private message?, etc. -->
-	<!-- TODO Better management of push groups. Add a tabChangeListener so if the user isn't on Auction List they don't get 1/second push updates, instead they are added to the manual group, etc. -->
-	<!-- TODO Add images (perhaps shown on the right of the details panel), and choosable images when adding an item -->
-    <!-- TODO Make a mobile version of the auction list using mobi components -->
-    <!-- TODO Move some inline styling in the CSS file, especially inside iterative components -->
-    <!-- TODO Add commenting throughout the source to help new developers -->
     <!-- TODO Clean up bean/controller/service split, maybe don't even need separate services? -->
     <!-- TODO Reorganize packages to be by feature/function instead of model/bean/service/etc. -->
+	<!-- TODO Make ChatRobot? Would also have a TestFlag option -->
+	<!-- TODO Possibly add images to Global notification messages (like a bell for won, arrow up for bid, etc.), and perhaps use an object instead of a String so that timestamp, image, text can be separated? -->
+	<!-- TODO Add auction item images (perhaps shown on the right of the details panel), and choosable images when adding an item -->
+    <!-- TODO Make a mobile version of the auction list using mobi components -->
+    <!-- TODO Add commenting throughout the source to help new developers -->
     <!-- TODO Either internationalize all the strings, titles, etc. or just remove existing internationalization -->
     <!-- TODO Override validation messages (including from the backend) -->
     <!-- TODO Generate serialization IDs to remove source warnings -->
+    <!-- TODO Bug check ace:notificationPanel not firing Effect when server side instead of client side -->
+    <!-- TODO Bug check ace:dialog position, which doesn't seem to apply properly -->
     <!-- TODO ICE-10621 - When fixed and ace:simpleSelectOneMenu functions the same as h:selectOneMenu then update all h:selectOneMenus to ACE (on settings, add item, etc.) -->
-
-    <h:outputText value="#{pushBean}" style="display: none; height: 0;"/>
-    <h:outputText value="#{bidRobot}" style="display: none; height: 0;"/>
+    
+    <h:outputText value="#{pushBean.init}" styleClass="hidden"/>
+    <h:outputText value="#{bidRobot.init}" styleClass="hidden"/>
     
     <f:event type="preRenderView" listener="#{settingsController.initializeTheme}"/>
-    <ace:themeSelect value="#{settingsBean.themeName}" style="display: none; height: 0;"
+    <ace:themeSelect value="#{settingsBean.themeName}" styleClass="hidden"
                      rendered="#{!settingsBean.hasSetTheme}"/>
     
     <h:graphicImage library="images" name="banner_hdr_auction.jpg"/>
@@ -67,42 +68,52 @@
     <div class="auctionMonitorContainer">
         <ace:tabSet id="at" selectedIndex="#{tabBean.selectedIndex}"
                     orientation="#{settingsBean.tabOrientation}"
-                    cancelOnInvalid="false" immediate="true">
-            <ace:tabPane label="Auction List">
+                    cancelOnInvalid="false" immediate="true"
+                    tabChangeListener="#{tabController.changeListener}">
+            <ace:tabPane id="Tb" label="Auction List">
 		        <h:form id="f" prependId="false">
 		            <ace:tabSetProxy for="at"/>
 		            
 		            <ui:include src="/WEB-INF/includes/list-tab.xhtml"/>
 		        </h:form>
 	        </ace:tabPane>
-	        <ace:tabPane label="Auction Logs">
+	        <ace:tabPane id="Tal" label="Auction Logs">
 	            <h:form id="al" prependId="false">
 		            <ace:tabSetProxy for="at"/>
 		            
 		            <ui:include src="/WEB-INF/includes/logs-tab.xhtml"/>
                 </h:form>
 	        </ace:tabPane>
-            <ace:tabPane label="Post Auction">
+            <ace:tabPane id="Tp" label="Post Auction">
                 <h:form id="p">
                     <ace:tabSetProxy for="at"/>
                     
                     <ui:include src="/WEB-INF/includes/post-tab.xhtml"/>
                 </h:form>
             </ace:tabPane>
-            <ace:tabPane label="Chat" disabled="#{!chatBean.isPositionTab}">
+            <ace:tabPane id="Tc" label="Chat" disabled="#{!chatBean.isPositionTab}">
                 <h:form id="c">
                     <ace:tabSetProxy for="at"/>
                     
                     <ui:include src="/WEB-INF/includes/chat-tab.xhtml"/>
                 </h:form>
             </ace:tabPane>
-            <ace:tabPane label="Settings">
+            <ace:tabPane id="Ts" label="Settings">
                 <h:form id="s">
                     <ace:tabSetProxy for="at"/>
                     
                     <ui:include src="/WEB-INF/includes/settings-tab.xhtml"/>
                 </h:form>
             </ace:tabPane>
+            <!-- TODO Finish the About tab with demo info/instructions, company info, and other product info
+            <ace:tabPane id="Tab" label="About">
+                <h:form id="ab">
+                    <ace:tabSetProxy for="at"/>
+                    
+                    <ui:include src="/WEB-INF/includes/about-tab.xhtml"/>
+                </h:form>
+            </ace:tabPane>
+            -->
         </ace:tabSet>
         
         <h3><h:messages globalOnly="true" layout="table"/></h3>

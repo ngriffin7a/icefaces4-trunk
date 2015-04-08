@@ -49,7 +49,7 @@ public class AuctionWatcher {
 	}
 
 	public void start(final AuctionService toWatch) {
-		if (!TestFlags.TEST_MANUAL_PUSH) {
+		if (!TestFlags.TEST_NO_INTERVAL_PUSH) {
 			// Stop any old executor first
 			stop(false);
 			
@@ -89,21 +89,8 @@ public class AuctionWatcher {
 		}
 	}
 	
-	public boolean isRunning() {
-		if ((renderThread != null) && (renderThreadFuture != null)) {
-			return !renderThread.isShutdown() && !renderThreadFuture.isDone();
-		}
-		return false;
-	}
-	
-	public boolean manualPush() {
-		// We only need to do an Ajax Push if we don't have our interval thread running
-		// Otherwise the interval thread will basically take care of updating users
-		if (!isRunning()) {
-			renderer.render(MANUAL_PUSH_GROUP);
-			return true;
-		}
-		return false;
+	public void manualPush() {
+		renderer.render(MANUAL_PUSH_GROUP);
 	}
 	
 	@Override

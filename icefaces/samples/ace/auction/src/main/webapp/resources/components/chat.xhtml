@@ -19,93 +19,104 @@
               xmlns:ui="http://java.sun.com/jsf/facelets"
               xmlns:ace="http://www.icefaces.org/icefaces/components"
               xmlns:icecore="http://www.icefaces.org/icefaces/core"
-              xmlns:composite="http://java.sun.com/jsf/composite">
+              xmlns:composite="http://java.sun.com/jsf/composite"
+              xmlns:auction="http://java.sun.com/jsf/composite/components">
     <composite:interface>
     </composite:interface>
     
     <composite:implementation>
+        <h:panelGroup id="chat" layout="block">
         <icecore:defaultAction actionListener="#{chatController.submitMessage}" key="Enter"/>
-    
-	    <h:panelGrid id="cw" columns="2" columnClasses="w25 valignTop,w75 valignTop" style="width: 100%;">
-	        <!-- TODO Set height and visible rows based on Settings? -->
-	        <ace:dataTable id="odt" value="#{chatBean.currentRoom.occupantsList}" var="occupant"
-	                       emptyMessage="No occupants yet."
-	                       rows="#{chatBean.currentRoom.maxMessages}"
-	                       paginator="true"
-	                       paginatorAlwaysVisible="bottom"
-	                       paginatorPosition="top"
-	                       paginatorTemplate="{PreviousPageLink} {NextPageLink}"
-	                       rendered="#{chatBean.renderOccupants}">
-	            <f:facet name="header">
-	               Occupants (#{chatBean.currentRoom.occupantsSize})
-	               <h:commandButton image="resources/images/chat-contract.png" immediate="true"
-	                                title="Minimize the occupants list"
-	                                actionListener="#{chatController.toggleOccupantsList}"
-	                                style="float: right;"/>
+        
+	        <h:panelGrid id="ncw" columns="3" rendered="#{!chatBean.hasCurrentRoom}">
+	            <h:outputLabel for="roomIn" value="Select a Chat Room:"/>
+	            <h:selectOneMenu id="roomIn" value="#{chatBean.selectedRoom}" required="true">
+	                <f:selectItems value="#{chatService.rooms}" var="room"
+	                               itemLabel="#{room.name} (#{room.occupantsSize} occupants)" itemValue="#{room.name}"/>
+	            </h:selectOneMenu>
+	            <h:message for="roomIn"/>
+	            
+	            <f:facet name="footer">
+	                <h:panelGrid columns="3">
+			            <ace:pushButton value="Join Room" actionListener="#{chatController.joinRoom}"/>
+			            <ace:pushButton value="Cancel" actionListener="#{tabController.auctionListTab}"
+			                            rendered="#{chatBean.isPositionTab}" immediate="true"/>
+		                <auction:chatPosition/>
+		            </h:panelGrid>
 	            </f:facet>
-	            <ace:column>
-	                #{occupant}
-	            </ace:column>
-	        </ace:dataTable>
+	        </h:panelGrid>
 	        
-	        <!-- TODO Customize which columns the user wants to see (mainly timestamp), maybe via ace:tableConfigPanel? -->
-	        <ace:dataTable id="mdt" value="#{chatBean.currentRoom.messages}" var="message"
-	                       rows="#{chatBean.currentRoom.maxMessages}" paginator="false"
-	                       styleClass="chatMessages">
-	            <f:facet name="header">
-                    <h:commandButton image="resources/images/chat-expand.png" immediate="true"
-                                     title="Restore the width of the occupants list"
-                                     actionListener="#{chatController.toggleOccupantsList}"
-                                     rendered="#{!chatBean.renderOccupants}"
-                                     style="float: left;"/>
-                    Chat Messages
-                    <h:panelGroup layout="block" style="float: right;">
-	                    <h:commandButton image="resources/images/chat-tab.png" immediate="true"
-	                                     title="Lock the chat panel into a tab"
-	                                     actionListener="#{chatController.positionTab}"
-	                                     disabled="#{chatBean.isPositionTab}"
-	                                     style="padding-right: 2px;"/>
-	                    <h:commandButton image="resources/images/chat-popup.png" immediate="true"
-	                                     title="Popup the chat panel into a dialog"
-	                                     actionListener="#{chatController.positionPopup}"
-	                                     disabled="#{chatBean.isPositionPopup}"
-	                                     style="padding-right: 2px;"/>
-	                    <h:commandButton image="resources/images/chat-bottom.png" immediate="true"
-	                                     title="Move the chat panel into a notification bar at the bottom"
-	                                     actionListener="#{chatController.positionBottom}"
-	                                     disabled="#{chatBean.isPositionBottom}"
-	                                     style="padding-right: 2px;"/>
-	                </h:panelGroup>
-	            </f:facet>
-	            <ace:column style="width: 10%;">
-	                #{message.timestampFormatted}
-	            </ace:column>
-	            <ace:column style="width: 15%; text-align: right;#{message.system ? ' font-weight: bold;' : ''}">
-	                #{message.senderFormatted}
-	            </ace:column>
-	            <ace:column style="width: 75%; text-align: left;#{message.system ? ' font-style: italic;' : ''}">
-	                #{message.text}
-	            </ace:column>
-	        </ace:dataTable>
-	        
-	        <f:facet name="footer">
-	           <h:panelGrid columns="2" cellspacing="2" cellpadding="0"
-	                        style="width: 50%;" styleClass="center"
-	                        columnClasses="w90,w10">
-	                <ace:textEntry id="cin" value="#{chatBean.currentMessage}"
-	                               autocorrect="true"
-	                               maxlength="140" style="width: 100%;"
-	                               placeholder="Enter your chat message">
-	                    <f:validateLength minimum="0" maximum="140"/>
-	                </ace:textEntry>
-	                <h:commandButton image="resources/images/chat-submit.png" title="Submit your chat message"
-	                                 actionListener="#{chatController.submitMessage}"/>
-	                
-	                <f:facet name="footer">
-	                    <h:message for="cin"/>
-	                </f:facet>
-	           </h:panelGrid>
-	       </f:facet>
-	    </h:panelGrid>
+		    <h:panelGrid id="cw" columns="2" columnClasses="w25 valignTop,w75 valignTop" styleClass="w100"
+		                 rendered="#{chatBean.hasCurrentRoom}">
+		        <ace:dataTable id="odt" value="#{chatBean.currentRoom.occupantsList}" var="occupant"
+		                       emptyMessage="No occupants yet."
+		                       rows="#{chatBean.currentRoom.maxMessages}"
+		                       paginator="true"
+		                       paginatorAlwaysVisible="bottom"
+		                       paginatorPosition="top"
+		                       paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+		                       rendered="#{chatBean.renderOccupants}">
+		            <f:facet name="header">
+		               Occupants (#{chatBean.currentRoom.occupantsSize})
+		               <h:commandButton image="resources/images/chat-contract.png" immediate="true"
+		                                title="Minimize the occupants list"
+		                                actionListener="#{chatController.toggleOccupantsList}"
+		                                styleClass="floatR"/>
+		            </f:facet>
+		            <ace:column>
+		                #{occupant}
+		            </ace:column>
+		            <f:facet name="footer">
+		                <ace:pushButton value="Leave Room" immediate="true"
+		                                actionListener="#{chatController.leaveRoom}"
+		                                title="Leave the current chat room and return to the available list"/>
+		            </f:facet>
+		        </ace:dataTable>
+		        
+		        <!-- TODO Customize which columns the user wants to see (mainly timestamp), maybe via ace:tableConfigPanel? -->
+		        <!-- TODO Perhaps this should be a ui:repeat, to reduce response size (since right now the entire table is returned on new message) -->
+		        <ace:dataTable id="mdt" value="#{chatBean.currentRoom.messages}" var="message"
+		                       rows="#{chatBean.currentRoom.maxMessages}" paginator="false"
+		                       styleClass="chatMessages">
+		            <f:facet name="header">
+	                    <h:commandButton image="resources/images/chat-expand.png" immediate="true"
+	                                     title="Restore the width of the occupants list"
+	                                     actionListener="#{chatController.toggleOccupantsList}"
+	                                     rendered="#{!chatBean.renderOccupants}"
+	                                     styleClass="floatL"/>
+	                    <h:outputText value="Chat Messages for '#{chatBean.currentRoom.name}'"/>
+                        <auction:chatPosition/>
+		            </f:facet>
+		            <ace:column styleClass="w10">
+		                #{message.timestampFormatted}
+		            </ace:column>
+		            <ace:column styleClass="w15" style="text-align: right;#{message.system ? ' font-weight: bold;' : ''}">
+		                #{message.senderFormatted}
+		            </ace:column>
+		            <ace:column styleClass="w75" style="text-align: left;#{message.system ? ' font-style: italic;' : ''}">
+		                #{message.text}
+		            </ace:column>
+		        </ace:dataTable>
+		        
+		        <f:facet name="footer">
+		           <h:panelGrid columns="2" cellspacing="2" cellpadding="0"
+		                        styleClass="w50 center"
+		                        columnClasses="w90,w10">
+		                <ace:textEntry id="cin" value="#{chatBean.currentMessage}"
+		                               autocorrect="true"
+		                               maxlength="140" styleClass="w100"
+		                               placeholder="Enter your chat message">
+		                    <f:validateLength minimum="0" maximum="140"/>
+		                </ace:textEntry>
+		                <h:commandButton image="resources/images/chat-submit.png" title="Submit your chat message"
+		                                 actionListener="#{chatController.submitMessage}"/>
+		                
+		                <f:facet name="footer">
+		                    <h:message for="cin"/>
+		                </f:facet>
+		           </h:panelGrid>
+		       </f:facet>
+		    </h:panelGrid>
+	    </h:panelGroup>
     </composite:implementation>
 </ui:component>
