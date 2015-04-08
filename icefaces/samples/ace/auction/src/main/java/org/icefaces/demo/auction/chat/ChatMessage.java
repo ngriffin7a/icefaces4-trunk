@@ -56,7 +56,7 @@ public class ChatMessage implements Serializable {
 	}
 	
 	public String getTimestampFormatted() {
-		return timestamp != null ? new StringBuffer("(").append(TimestampUtil.stamp(timestamp)).append(")").toString() : null;
+		return timestamp != null ? new StringBuilder("(").append(TimestampUtil.stamp(timestamp)).append(")").toString() : null;
 	}
 	public Date getTimestamp() {
 		return timestamp;
@@ -65,7 +65,7 @@ public class ChatMessage implements Serializable {
 		this.timestamp = timestamp;
 	}
 	public String getSenderFormatted() {
-		return sender != null ? new StringBuffer(sender).append(": ").toString() : null;
+		return sender != null ? new StringBuilder(sender).append(": ").toString() : null;
 	}
 	public String getSender() {
 		return sender;
@@ -90,6 +90,6 @@ public class ChatMessage implements Serializable {
 	public String toString() {
 		// Format example:
 		// (16:45:30) Peter: Hello there
-		return new StringBuffer(getTimestampFormatted()).append(' ').append(getSenderFormatted()).append(text).toString();
+		return new StringBuilder(getTimestampFormatted()).append(' ').append(getSenderFormatted()).append(text).toString();
 	}
 }
