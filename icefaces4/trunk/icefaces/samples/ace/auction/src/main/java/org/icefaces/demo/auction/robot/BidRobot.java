@@ -27,9 +27,9 @@ import javax.annotation.PreDestroy;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
+import org.icefaces.demo.auction.bid.AuctionService;
 import org.icefaces.demo.auction.bid.model.AuctionItem;
-import org.icefaces.demo.auction.service.AuctionItemGenerator;
-import org.icefaces.demo.auction.service.AuctionService;
+import org.icefaces.demo.auction.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.auction.test.TestFlags;
 import org.icefaces.demo.auction.util.FacesUtils;
 

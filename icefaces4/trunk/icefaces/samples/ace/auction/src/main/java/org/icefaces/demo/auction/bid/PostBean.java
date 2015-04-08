@@ -24,7 +24,7 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.bid.model.AuctionItem;
-import org.icefaces.demo.auction.service.AuctionItemGenerator;
+import org.icefaces.demo.auction.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.auction.settings.SettingsBean;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;

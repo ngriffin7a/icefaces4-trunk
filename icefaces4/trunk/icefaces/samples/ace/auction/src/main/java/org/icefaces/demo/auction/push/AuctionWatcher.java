@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
-import org.icefaces.demo.auction.service.AuctionService;
+import org.icefaces.demo.auction.bid.AuctionService;
 import org.icefaces.demo.auction.test.TestFlags;
 
 public class AuctionWatcher {

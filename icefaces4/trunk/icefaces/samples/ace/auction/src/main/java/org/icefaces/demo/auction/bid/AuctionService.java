@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.service;
+package org.icefaces.demo.auction.bid;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -30,6 +30,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 import org.icefaces.demo.auction.bid.model.AuctionItem;
+import org.icefaces.demo.auction.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.auction.message.GlobalMessageBean;
 import org.icefaces.demo.auction.push.AuctionWatcher;
 import org.icefaces.demo.auction.test.TestFlags;

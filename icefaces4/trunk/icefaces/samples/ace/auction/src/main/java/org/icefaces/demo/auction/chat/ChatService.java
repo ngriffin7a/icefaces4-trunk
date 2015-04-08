@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.service;
+package org.icefaces.demo.auction.chat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,9 +26,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import org.icefaces.application.PushRenderer;
-import org.icefaces.demo.auction.chat.ChatBean;
-import org.icefaces.demo.auction.chat.ChatMessage;
-import org.icefaces.demo.auction.chat.ChatRoom;
 import org.icefaces.demo.auction.util.StringUtil;
 
 @ManagedBean(name=ChatService.BEAN_NAME,eager=true)
