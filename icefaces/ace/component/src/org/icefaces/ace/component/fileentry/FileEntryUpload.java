@@ -36,6 +36,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.Part;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -125,18 +126,26 @@ public class FileEntryUpload implements PhaseListener {
 
             try {
 				if (partClass != null) {
+                    PartsManualProgress partsManualProgress = new PartsManualProgress(progressListenerResourcePusher, requestContentLength);
 					Collection<javax.servlet.http.Part> parts = request.getParts();
+                    LinkedList<PartFile> partFiles = new LinkedList();
+                    for (javax.servlet.http.Part part : parts) {
+                        PartFile partFile = new PartFile(part, partsManualProgress);
+                        //make sure the form parameters show up first, then the files
+                        if (partFile.isFormField()) {
+                            partFiles.addFirst(partFile);
+                        } else {
+                            partFiles.addLast(partFile);
+                        }
+                    }
 					log.finer("FileEntryUpload  Parts size: " + parts.size());
-					PartsManualProgress partsManualProgress = new PartsManualProgress(
-						(ProgressListener) progressListenerResourcePusher,
-						requestContentLength);
-					for (javax.servlet.http.Part part : parts) {
+					for (PartFile partFile : partFiles) {
 						handleMultipartPortion(facesContext,
 							resolvedCharacterEncoding, clientId2Results,
 							clientId2Callbacks, parameterListMap,
 							partsManualProgress,
 							(PushResourceSetup) progressListenerResourcePusher,
-							buffer, new PartFile(part, partsManualProgress));
+							buffer, partFile);
 					}
                 }
 
