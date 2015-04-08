@@ -23,10 +23,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 
 import org.icefaces.application.PushRenderer;
-import org.icefaces.demo.auction.util.StringUtil;
 
 @ManagedBean(name=ChatService.BEAN_NAME,eager=true)
 @ApplicationScoped
