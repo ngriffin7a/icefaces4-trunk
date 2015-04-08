@@ -57,7 +57,9 @@ public class AuctionService implements Serializable {
 		log.info("Test Flag status...no interval push [" + TestFlags.TEST_NO_INTERVAL_PUSH
 				+ "], expiry [" + TestFlags.TEST_EXPIRY
 				+ "], bid robot [" + TestFlags.TEST_BIDROBOT
-				+ "], many items [" + TestFlags.TEST_MANY_ITEMS + "].");
+				+ "], many items [" + TestFlags.TEST_MANY_ITEMS
+				+ "], autojoin chat [" + TestFlags.TEST_AUTOJOIN_CHAT
+				+ "].");
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
 		
 		for (int i = 0; i < MINIMUM_ITEMS; i++) {

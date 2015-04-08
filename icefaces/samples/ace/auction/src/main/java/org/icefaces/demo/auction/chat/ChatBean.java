@@ -26,6 +26,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 import org.icefaces.demo.auction.settings.SettingsBean;
+import org.icefaces.demo.auction.test.TestFlags;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;
 
@@ -59,9 +60,11 @@ public class ChatBean implements Serializable {
 	
 	@PostConstruct
 	private void initChatBean() {
-		// Join our default room
-		if (service != null) {
-			service.joinDefaultRoom(this);
+		if (TestFlags.TEST_AUTOJOIN_CHAT) {
+			// Join our default room
+			if (service != null) {
+				service.joinDefaultRoom(this);
+			}
 		}
 	}
 	
