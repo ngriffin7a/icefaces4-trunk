@@ -101,14 +101,6 @@ public class ChatService implements Serializable {
 	
 	private boolean removeFromRoom(String name, ChatRoom toLeave) {
 		if (toLeave.removeOccupant(name)) {
-			// Try to remove our render group if we're in a valid JSF state with a FacesContext present
-			// Basically if the user manually left the room via a button (FacesContext valid) compared to their bean being destroyed (invalid)
-			if ((toLeave != null) && (FacesContext.getCurrentInstance() != null)) {
-				if (StringUtil.validString(toLeave.getPushGroup())) {
-					PushRenderer.removeCurrentView(toLeave.getPushGroup());
-				}
-			}
-			
 			// Notify any remaining users
 			addSystemMessage(toLeave, name + " left.");
 			
