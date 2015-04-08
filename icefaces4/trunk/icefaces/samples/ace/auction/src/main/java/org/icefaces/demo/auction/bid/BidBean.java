@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.bean;
+package org.icefaces.demo.auction.bid;
 
 import java.io.Serializable;
 
@@ -23,7 +23,8 @@ import javax.faces.bean.ViewScoped;
 
 import org.icefaces.ace.model.table.RowState;
 import org.icefaces.ace.model.table.RowStateMap;
-import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.bid.model.AuctionItem;
+import org.icefaces.demo.auction.settings.SettingsBean;
 import org.icefaces.demo.auction.util.FacesUtils;
 
 @ManagedBean(name=BidBean.BEAN_NAME)

@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.icefaces.demo.auction.bean.ChatBean;
-
 public class ChatRoom implements Serializable {
 	public static final int MAX_MESSAGES = 15;
 	public static final String DEFAULT_PUSHGROUP_SUFFIX = "_pgroup";

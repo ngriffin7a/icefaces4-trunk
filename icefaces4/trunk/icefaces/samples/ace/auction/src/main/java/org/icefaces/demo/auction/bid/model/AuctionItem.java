@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.model;
+package org.icefaces.demo.auction.bid.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.controller;
+package org.icefaces.demo.auction.bid;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -30,12 +30,10 @@ import javax.faces.event.AjaxBehaviorEvent;
 
 import org.icefaces.ace.event.SelectEvent;
 import org.icefaces.ace.event.UnselectEvent;
-import org.icefaces.demo.auction.bean.BidBean;
-import org.icefaces.demo.auction.bean.ChartBean;
-import org.icefaces.demo.auction.bean.PostBean;
-import org.icefaces.demo.auction.bean.SettingsBean;
-import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.service.AuctionService;
+import org.icefaces.demo.auction.settings.SettingsBean;
+import org.icefaces.demo.auction.tabs.TabController;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;
 import org.icefaces.util.JavaScriptRunner;

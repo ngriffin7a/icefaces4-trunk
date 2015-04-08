@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.bean;
+package org.icefaces.demo.auction.bid;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -23,8 +23,9 @@ import java.util.Date;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
-import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.service.AuctionItemGenerator;
+import org.icefaces.demo.auction.settings.SettingsBean;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;
 

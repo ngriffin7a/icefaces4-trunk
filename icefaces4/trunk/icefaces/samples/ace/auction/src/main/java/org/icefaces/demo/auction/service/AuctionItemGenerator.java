@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.icefaces.demo.auction.model.AuctionItem;
+import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.test.TestFlags;
 import org.icefaces.demo.auction.util.ListData;
 
