@@ -26,7 +26,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import org.icefaces.application.PushRenderer;
-import org.icefaces.demo.auction.bean.ChatBean;
+import org.icefaces.demo.auction.chat.ChatBean;
 import org.icefaces.demo.auction.chat.ChatMessage;
 import org.icefaces.demo.auction.chat.ChatRoom;
 import org.icefaces.demo.auction.util.StringUtil;

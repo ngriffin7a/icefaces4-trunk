@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.bean;
+package org.icefaces.demo.auction.bid;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import javax.faces.bean.ViewScoped;
 import org.icefaces.ace.component.chart.Axis;
 import org.icefaces.ace.component.chart.AxisType;
 import org.icefaces.ace.model.chart.CartesianSeries;
-import org.icefaces.demo.auction.model.AuctionHistory;
+import org.icefaces.demo.auction.bid.model.AuctionHistory;
 import org.icefaces.demo.auction.util.FacesUtils;
 
 @ManagedBean(name=ChartBean.BEAN_NAME)

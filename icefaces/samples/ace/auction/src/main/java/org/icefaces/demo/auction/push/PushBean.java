@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.bean;
+package org.icefaces.demo.auction.push;
 
 import java.io.Serializable;
 
@@ -23,7 +23,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.icefaces.application.PushRenderer;
-import org.icefaces.demo.auction.push.AuctionWatcher;
 
 @ManagedBean(name=PushBean.BEAN_NAME)
 @ViewScoped

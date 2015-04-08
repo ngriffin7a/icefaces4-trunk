@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.controller;
+package org.icefaces.demo.auction.chat;
 
 import java.io.Serializable;
 
@@ -22,10 +22,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
-import org.icefaces.demo.auction.bean.ChatBean;
-import org.icefaces.demo.auction.chat.ChatMessage;
-import org.icefaces.demo.auction.chat.ChatRoom;
 import org.icefaces.demo.auction.service.ChatService;
+import org.icefaces.demo.auction.tabs.TabController;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;
 

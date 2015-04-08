@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.bean;
+package org.icefaces.demo.auction.tabs;
 
 import java.io.Serializable;
 

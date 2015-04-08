@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.controller;
+package org.icefaces.demo.auction.settings;
 
 import java.io.Serializable;
 
@@ -23,7 +23,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 
-import org.icefaces.demo.auction.bean.SettingsBean;
+import org.icefaces.demo.auction.tabs.TabController;
 import org.icefaces.demo.auction.util.FacesUtils;
 
 @ManagedBean(name=SettingsController.BEAN_NAME)
