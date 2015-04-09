@@ -74,7 +74,6 @@
 		        </ace:dataTable>
 		        
 		        <!-- TODO Customize which columns the user wants to see (mainly timestamp), maybe via ace:tableConfigPanel? -->
-		        <!-- TODO Perhaps this should be a ui:repeat, to reduce response size (since right now the entire table is returned on new message) -->
 		        <ace:dataTable id="mdt" value="#{chatBean.currentRoom.messages}" var="message"
 		                       rows="#{chatBean.currentRoom.maxMessages}" paginator="false"
 		                       styleClass="chatMessages">
