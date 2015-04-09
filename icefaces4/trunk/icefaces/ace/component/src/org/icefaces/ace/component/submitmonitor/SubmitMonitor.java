@@ -70,7 +70,6 @@ public class SubmitMonitor extends SubmitMonitorBase
 
     public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        org.icefaces.util.EnvUtils.setBlockUIOnSubmit(facesContext, false);
         org.icefaces.util.EnvUtils.setDisableDefaultErrorPopups(facesContext, true);
     }
 }
