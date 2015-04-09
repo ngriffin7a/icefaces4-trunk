@@ -19,18 +19,24 @@ package org.icefaces.demo.auction.chat;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
+import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
 
 @ManagedBean(name=ChatService.BEAN_NAME,eager=true)
 @ApplicationScoped
 public class ChatService implements Serializable {
 	public static final String BEAN_NAME = "chatService";
+	private static final Logger log = Logger.getLogger(ChatService.class.getName());
 	
+	private PortableRenderer portable;
 	private List<ChatRoom> rooms;
 	
 	@PostConstruct
@@ -39,6 +45,8 @@ public class ChatService implements Serializable {
 		rooms.add(new ChatRoom("Lounge"));
 		rooms.add(new ChatRoom("Bidding Tips"));
 		rooms.add(new ChatRoom("Item Help"));
+		
+		portable = PushRenderer.getPortableRenderer();
 	}
 
 	public List<ChatRoom> getRooms() {
@@ -78,27 +86,37 @@ public class ChatService implements Serializable {
 	}
 	
 	public boolean leaveRoom(ChatBean person) {
-		boolean status = removeFromRoom(person.getName(), person.getCurrentRoom());
+		return leaveRoom(person, false);
+	}
+	
+	public boolean leaveRoom(ChatBean person, boolean fromDestroy) {
+		boolean status = removeFromRoom(person.getName(), person.getCurrentRoom(), fromDestroy);
 		
 		// We'll take this opportunity to also do a check for any expired people
 		// This is in case a PreDestroy didn't fire, so we don't have "ghosts" sitting around
 		List<String> expiredPeople = person.getCurrentRoom().checkExpiredOccupants();
 		if ((expiredPeople != null) && (!expiredPeople.isEmpty())) {
 			for (String removeName : expiredPeople) {
-				removeFromRoom(removeName, person.getCurrentRoom());
+				removeFromRoom(removeName, person.getCurrentRoom(), fromDestroy);
 			}
 		}
 		
-		// Finally reset our person state for future joins, if leaving was successful
-		if (status) {
-			person.resetState();
-		}
+		// Finally reset our person state for future joins (regardless of status)
+		person.resetState();
 		
 		return status;
 	}
 	
-	private boolean removeFromRoom(String name, ChatRoom toLeave) {
+	private boolean removeFromRoom(String name, ChatRoom toLeave, boolean fromDestroy) {
 		if (toLeave.removeOccupant(name)) {
+			if (!fromDestroy) {
+				try{
+					PushRenderer.removeCurrentView(toLeave.getPushGroup());
+				}catch (Exception failedRemove) {
+					log.log(Level.SEVERE, "Failed to remove " + name + " from room push group " + toLeave.getPushGroup(), failedRemove);
+				}
+			}
+			
 			// Notify any remaining users
 			addSystemMessage(toLeave, name + " left.");
 			
@@ -108,12 +126,28 @@ public class ChatService implements Serializable {
 	}
 	
 	private void addSystemMessage(ChatRoom room, String text) {
-		room.addSystemMessage(text);
+		if (room.addSystemMessage(text)) {
+			pushUpdateRoom(room.getPushGroup());
+		}
 	}
 	
 	public void addMessage(ChatRoom room, ChatMessage toAdd) {
 		if (room.addMessage(toAdd)) {
-			PushRenderer.render(room.getPushGroup());
+			pushUpdateRoom(room.getPushGroup());
+		}
+	}
+	
+	private void pushUpdateRoom(String pushGroup) {
+		// Just failsafe wrap this in a catch, in case it's used from an unexpected place
+		try{
+			if (FacesContext.getCurrentInstance() != null) {
+				PushRenderer.render(pushGroup);
+			}
+			else if (portable != null) {
+				portable.render(pushGroup);
+			}
+		}catch (Exception failedUpdate) {
+			log.log(Level.SEVERE, "Failed to push update the room push group " + pushGroup, failedUpdate);
 		}
 	}
 }

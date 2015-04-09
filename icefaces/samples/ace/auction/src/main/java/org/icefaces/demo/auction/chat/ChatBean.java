@@ -71,8 +71,8 @@ public class ChatBean implements Serializable {
 	@PreDestroy
 	private void cleanupChatBean() {
 		if ((currentRoom != null) && (service != null)) {
-			log.info("ChatBean timed out, removing user " + getName() + " from chat room " + currentRoom);
-			service.leaveRoom(this);
+			log.info("ChatBean timed out, removing user " + getName() + " from chat room " + currentRoom.getName());
+			service.leaveRoom(this, true);
 		}
 	}
 	
