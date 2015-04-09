@@ -19,7 +19,8 @@ package org.icefaces.demo.auction.util;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.icefaces.demo.auction.push.AuctionWatcher;
+import org.icefaces.demo.auction.watcher.AuctionWatcher;
+import org.icefaces.demo.auction.watcher.ChatWatcher;
 
 /**
  * As of Tomcat 7 the PreDestroy annotation on ApplicationScoped beans doesn't seem to be called
@@ -31,6 +32,7 @@ public class ContextListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		AuctionWatcher.getInstance().stop();
+		ChatWatcher.getInstance().stop();
 	}
 
 	@Override
