@@ -76,6 +76,12 @@ public class ChatBean implements Serializable {
 		}
 	}
 	
+	@Override
+	public void finalize() {
+		log.info("ChatBean finalize, going to try to cleanup");
+		cleanupChatBean();
+	}
+	
 	public void resetState() {
 		setRenderOccupants(true);
 		setCurrentMessage(null);
