@@ -76,8 +76,13 @@ public class AuctionItemGenerator {
 				// This would happen if our requested auction list size is bigger than ListData.ITEMS
 				// In such a case we want to append a random unique string and just return to stop recursively checking
 				if (iteration > UNIQUE_NAME_MAX_CHECKS) {
+					// Also need to regenerate the description since it might use the name
+					// Note we use the base name without the unique count suffix, to make it more readable
+					item.setDescription(generateDescription(item.getName()));
+					
 					uniqueCountSuffix++;
 					item.setName(item.getName() + " #" + uniqueCountSuffix);
+					
 					return item;
 				}
 				
@@ -165,8 +170,63 @@ public class AuctionItemGenerator {
 	}
 	
 	public static String generateDescription(String name) {
-		// TODO Generate a realistic description based on name
-		return "Great item";
+		// Start with an opening line
+		String toReturn = "";
+		switch (random.nextInt(7)) {
+			case 0: toReturn = "Bid now on this"; break;
+			case 1: toReturn = "This"; break;
+			case 2: toReturn = "Hurry and bid on this"; break;
+			case 3: toReturn = "Great opportunity to own this"; break;
+			case 4: toReturn = "Rare chance to purchase this"; break;
+			case 5: toReturn = "Interesting listing on this"; break;
+			case 6: toReturn = "Quickly put some money on this"; break;
+		}
+		
+		// Then add an adjective to help describe the item
+		// tiny, small, big, huge, cool, neat, fun, unique, historical, funky, pretty, basic, fancy, red, blue, green, orange
+		toReturn += " ";
+		switch (random.nextInt(17)) {
+			case 0: toReturn += "tiny"; break;
+			case 1: toReturn += "small"; break;
+			case 2: toReturn += "big"; break;
+			case 3: toReturn += "huge"; break;
+			case 4: toReturn += "cool"; break;
+			case 5: toReturn += "neat"; break;
+			case 6: toReturn += "fun"; break;
+			case 7: toReturn += "unique"; break;
+			case 8: toReturn += "historical"; break;
+			case 9: toReturn += "funky"; break;
+			case 10: toReturn += "pretty"; break;
+			case 11: toReturn += "basic"; break;
+			case 12: toReturn += "fancy"; break;
+			case 13: toReturn += "red"; break;
+			case 14: toReturn += "blue"; break;
+			case 15: toReturn += "green"; break;
+			case 16: toReturn += "orange"; break;
+		}
+		
+		// Have a chance to add the item name, otherwise go generic
+		if (random.nextInt(10) < 3) {
+			toReturn += " item";
+		}
+		else {
+			toReturn += " " + name;
+		}
+		
+		// End with a final sentence
+		toReturn += ", ";
+		switch (random.nextInt(8)) {
+			case 0: toReturn += "highly sought after"; break;
+			case 1: toReturn += "lots of fun"; break;
+			case 2: toReturn += "interesting and unique"; break;
+			case 3: toReturn += "barely any left"; break;
+			case 4: toReturn += "many for sale"; break;
+			case 5: toReturn += "free local shipping"; break;
+			case 6: toReturn += "once in a lifetime chance"; break;
+			case 7: toReturn += "tell your friends"; break;
+		}
+		
+		return toReturn;
 	}
 	
 	public static AuctionItem.Delivery generateEstimatedDelivery() {
@@ -176,7 +236,7 @@ public class AuctionItemGenerator {
 	
 	public static AuctionItem.Condition generateCondition() {
 		AuctionItem.Condition available[] = AuctionItem.Condition.values();
-		return available[random.nextInt(available.length)];		
+		return available[random.nextInt(available.length)];
 	}
 	
 	public static AuctionItem generateFakeBids(AuctionItem toBid) {

@@ -90,6 +90,12 @@ public class ChatMessage implements Serializable {
 	public String toString() {
 		// Format example:
 		// (16:45:30) Peter: Hello there
-		return new StringBuilder(getTimestampFormatted()).append(' ').append(getSenderFormatted()).append(text).toString();
+		String timestampFormatted = getTimestampFormatted();
+		String senderFormatted = getSenderFormatted();
+		return new StringBuilder(
+				timestampFormatted != null ? timestampFormatted : "")
+				.append(' ')
+				.append(senderFormatted != null ? senderFormatted : "Anonymous")
+				.append(text).toString();
 	}
 }
