@@ -77,6 +77,11 @@ public class AuctionService implements Serializable {
 		renderer.stop();
 	}
 	
+	@Override
+	public void finalize() {
+		cleanupAuctionService();
+	}
+	
 	public void checkAuctionExpiry() {
 		// Start adding items to get above our minimum as needed
 		if (auctions.size() < MINIMUM_ITEMS) {
