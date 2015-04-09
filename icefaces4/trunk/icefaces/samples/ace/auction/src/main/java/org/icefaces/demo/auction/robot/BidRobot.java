@@ -130,6 +130,11 @@ public class BidRobot implements Serializable {
 		}
 	}
 	
+	@Override
+	public void finalize() {
+		cleanupBidRobot();
+	}
+	
 	public String getInit() {
 		return null;
 	}

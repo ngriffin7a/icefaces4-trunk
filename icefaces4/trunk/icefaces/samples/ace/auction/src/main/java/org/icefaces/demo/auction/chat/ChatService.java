@@ -19,10 +19,14 @@ package org.icefaces.demo.auction.chat;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -36,8 +40,11 @@ public class ChatService implements Serializable {
 	public static final String BEAN_NAME = "chatService";
 	private static final Logger log = Logger.getLogger(ChatService.class.getName());
 	
+	private static final long EXPIRYWATCHER_RATE_MINUTES = 2;
+	
 	private PortableRenderer portable;
 	private List<ChatRoom> rooms;
+	private ScheduledExecutorService expiryWatcher;
 	
 	@PostConstruct
 	private void initChatService() {
@@ -47,6 +54,63 @@ public class ChatService implements Serializable {
 		rooms.add(new ChatRoom("Item Help"));
 		
 		portable = PushRenderer.getPortableRenderer();
+		
+		initOccupantExpiryWatcher();
+	}
+	
+	@PreDestroy
+	private void cleanupChatService() {
+		// Manually clean up our scheduler, just in case
+		if (expiryWatcher != null) {
+			try{
+				expiryWatcher.shutdownNow();
+			}catch (Exception ignored) { }
+		}
+	}
+	
+	@Override
+	public void finalize() {
+		cleanupChatService();
+	}
+	
+	private void initOccupantExpiryWatcher() {
+		// Clean up any old instances
+		if (expiryWatcher != null) {
+			expiryWatcher.shutdownNow();
+			expiryWatcher = null;
+		}
+		
+		// Schedule a new routine check for expired users
+		expiryWatcher = Executors.newSingleThreadScheduledExecutor();
+		expiryWatcher.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				if (!expiryWatcher.isShutdown()) {
+					checkOccupantExpiry();
+				}
+			}
+		}, EXPIRYWATCHER_RATE_MINUTES*2, EXPIRYWATCHER_RATE_MINUTES, TimeUnit.MINUTES);
+	}
+	
+	private int checkOccupantExpiry() {
+		int removedCount = 0;
+		
+		if ((rooms != null) && (!rooms.isEmpty())) {
+			List<String> expiredPeople = null;
+			for (ChatRoom loopRoom : rooms) {
+				expiredPeople = loopRoom.checkExpiredOccupants();
+				
+				if ((expiredPeople != null) && (!expiredPeople.isEmpty())) {
+					for (String removeName : expiredPeople) {
+						if (removeFromRoom(removeName, loopRoom, true)) {
+							removedCount++;
+						}
+					}
+				}
+			}
+		}
+		
+		return removedCount;
 	}
 
 	public List<ChatRoom> getRooms() {
@@ -91,15 +155,6 @@ public class ChatService implements Serializable {
 	
 	public boolean leaveRoom(ChatBean person, boolean fromDestroy) {
 		boolean status = removeFromRoom(person.getName(), person.getCurrentRoom(), fromDestroy);
-		
-		// We'll take this opportunity to also do a check for any expired people
-		// This is in case a PreDestroy didn't fire, so we don't have "ghosts" sitting around
-		List<String> expiredPeople = person.getCurrentRoom().checkExpiredOccupants();
-		if ((expiredPeople != null) && (!expiredPeople.isEmpty())) {
-			for (String removeName : expiredPeople) {
-				removeFromRoom(removeName, person.getCurrentRoom(), fromDestroy);
-			}
-		}
 		
 		// Finally reset our person state for future joins (regardless of status)
 		person.resetState();
