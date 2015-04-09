@@ -41,6 +41,19 @@
         return tally;
     };
 
+    var isParentElement = function(parent, child) {
+        var cursor = child;
+        while (cursor) {
+            if (parent == cursor) {
+                return true;
+            } else {
+                cursor = cursor.parentNode;
+            }
+        }
+
+        return false;
+    };
+
     var isSessionExpired = function(xmlContent) {
         var sessionExpired = false;
         if (xmlContent && xmlContent.documentElement) {
@@ -436,10 +449,33 @@
             return false;
         }
 
+        //override the primitive submit function with one that will block sub-sequent calls
+        var lock = false;
+        var originalSubmitFunction = ice.submitFunction;
+        ice.submitFunction = function(element, event, options) {
+            var blockedContainer = resolveBlockUIElement(element);
+            if (!blockedContainer || (isParentElement(blockedContainer, element) && !lock)) {
+                lock = true;
+                var originalOnEvent = options.onevent;
+                options.onevent = function(submitEvent) {
+                    if (submitEvent.status == 'success') {
+                        lock = false;
+                    }
+                    if (originalOnEvent) {
+                        originalOnEvent(submitEvent);
+                    }
+                };
+                originalSubmitFunction(element, event, options);
+            }
+        };
+
         consoleLog('Monitor '+uniqueId+'>'+jqId+'  Register onElementUpdate: '+cfg.id+'_script');
 
         window.ice.onElementUpdate(cfg.id+'_script', function() {
             cleanup = CLEANUP_PENDING;
+            //revert to the original (overridden) submit function
+            //there can be multiple levels when more than on submit monitor is on the page
+            ice.submitFunction = originalSubmitFunction;
             consoleLog('Monitor '+uniqueId+'>'+jqId+'  onElementUpdate  -> CLEANUP_PENDING');
         });
 
