@@ -33,9 +33,9 @@ import org.icefaces.application.ProductInfo;
 import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.auction.message.GlobalMessageBean;
-import org.icefaces.demo.auction.push.AuctionWatcher;
 import org.icefaces.demo.auction.test.TestFlags;
 import org.icefaces.demo.auction.util.StringUtil;
+import org.icefaces.demo.auction.watcher.AuctionWatcher;
 
 @ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
 @ApplicationScoped

@@ -78,7 +78,7 @@ public class ChatBean implements Serializable {
 	
 	@Override
 	public void finalize() {
-		log.info("ChatBean finalize, going to try to cleanup");
+		log.info("ChatBean finalize for " + getName() + ", going to try to cleanup");
 		cleanupChatBean();
 	}
 	
@@ -92,11 +92,13 @@ public class ChatBean implements Serializable {
 	public String getName() {
 		// Try to get our name each time from the SettingsBean
 		// This saves us having to manually sync the names between beans
-		SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
-		if ((settings != null) && (StringUtil.validString(settings.getName()))) {
-			cachedName = settings.getName();
-			return settings.getName();
-		}
+		try{
+			SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
+			if ((settings != null) && (StringUtil.validString(settings.getName()))) {
+				cachedName = settings.getName();
+				return settings.getName();
+			}
+		}catch (Exception failedSettings) { }
 		
 		if (StringUtil.validString(cachedName)) {
 			return cachedName;

@@ -19,9 +19,6 @@ package org.icefaces.demo.auction.chat;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +30,7 @@ import javax.faces.context.FacesContext;
 
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
+import org.icefaces.demo.auction.watcher.ChatWatcher;
 
 @ManagedBean(name=ChatService.BEAN_NAME,eager=true)
 @ApplicationScoped
@@ -40,11 +38,9 @@ public class ChatService implements Serializable {
 	public static final String BEAN_NAME = "chatService";
 	private static final Logger log = Logger.getLogger(ChatService.class.getName());
 	
-	private static final long EXPIRYWATCHER_RATE_MINUTES = 2;
-	
+	private ChatWatcher expiry = ChatWatcher.getInstance();
 	private PortableRenderer portable;
 	private List<ChatRoom> rooms;
-	private ScheduledExecutorService expiryWatcher;
 	
 	@PostConstruct
 	private void initChatService() {
@@ -55,17 +51,12 @@ public class ChatService implements Serializable {
 		
 		portable = PushRenderer.getPortableRenderer();
 		
-		initOccupantExpiryWatcher();
+		expiry.start(this);
 	}
 	
 	@PreDestroy
-	private void cleanupChatService() {
-		// Manually clean up our scheduler, just in case
-		if (expiryWatcher != null) {
-			try{
-				expiryWatcher.shutdownNow();
-			}catch (Exception ignored) { }
-		}
+	public void cleanupChatService() {
+		expiry.stop();
 	}
 	
 	@Override
@@ -73,26 +64,7 @@ public class ChatService implements Serializable {
 		cleanupChatService();
 	}
 	
-	private void initOccupantExpiryWatcher() {
-		// Clean up any old instances
-		if (expiryWatcher != null) {
-			expiryWatcher.shutdownNow();
-			expiryWatcher = null;
-		}
-		
-		// Schedule a new routine check for expired users
-		expiryWatcher = Executors.newSingleThreadScheduledExecutor();
-		expiryWatcher.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				if (!expiryWatcher.isShutdown()) {
-					checkOccupantExpiry();
-				}
-			}
-		}, EXPIRYWATCHER_RATE_MINUTES*2, EXPIRYWATCHER_RATE_MINUTES, TimeUnit.MINUTES);
-	}
-	
-	private int checkOccupantExpiry() {
+	public int checkOccupantExpiry() {
 		int removedCount = 0;
 		
 		if ((rooms != null) && (!rooms.isEmpty())) {

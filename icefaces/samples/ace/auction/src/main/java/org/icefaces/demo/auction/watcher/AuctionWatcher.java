@@ -14,28 +14,20 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.demo.auction.push;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
+package org.icefaces.demo.auction.watcher;
 
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
 import org.icefaces.demo.auction.bid.AuctionService;
 import org.icefaces.demo.auction.test.TestFlags;
+import org.icefaces.demo.auction.watcher.base.ThreadedWatcher;
 
-public class AuctionWatcher {
+public class AuctionWatcher extends ThreadedWatcher {
 	public static final String INTERVAL_PUSH_GROUP = "auctionWatcher";
 	public static final String MANUAL_PUSH_GROUP = "auctionUpdate";
-	public static final int INTERVAL_SECONDS = 1;
-	private static final Logger log = Logger.getLogger(AuctionWatcher.class.getName());
+	public static final int INTERVAL = 1;
 	
 	private static AuctionWatcher singleton = null;
-	private ScheduledExecutorService renderThread;
-	private ScheduledFuture<?> renderThreadFuture;
 	private PortableRenderer renderer = PushRenderer.getPortableRenderer();
 	
 	private AuctionWatcher() {
@@ -50,51 +42,21 @@ public class AuctionWatcher {
 
 	public void start(final AuctionService toWatch) {
 		if (!TestFlags.TEST_NO_INTERVAL_PUSH) {
-			// Stop any old executor first
-			stop(false);
-			
-			log.info("Starting AuctionPushRenderer every " + INTERVAL_SECONDS + " seconds for push group '" + INTERVAL_PUSH_GROUP + "'.");
-			
-			renderThread = Executors.newSingleThreadScheduledExecutor();
-			renderThreadFuture = renderThread.scheduleAtFixedRate(new Runnable() {
+			super.start("AuctionWatcher", 0, INTERVAL, new Runnable() {
 				@Override
 				public void run() {
-					if (!renderThread.isShutdown()) {
+					if (!thread.isShutdown()) {
 						renderer.render(INTERVAL_PUSH_GROUP);
 						
 						// Check our items for expiry and add more as needed
 						toWatch.checkAuctionExpiry();
 					}
 				}
-			}, 0, INTERVAL_SECONDS, TimeUnit.SECONDS);
-		}
-	}
-	
-	public void stop() {
-		stop(true);
-	}
-	
-	public void stop(boolean logRequest) {
-		if (logRequest) {
-			log.info("Stop requested for AuctionPushRenderer " + renderThread + ".");
-		}
-		
-		if (renderThread != null) {
-			if (renderThreadFuture != null) {
-				renderThreadFuture.cancel(true);
-			}
-			renderThread.shutdown();
-			renderThread.shutdownNow();
-			renderThread = null;
+			});
 		}
 	}
 	
 	public void manualPush() {
 		renderer.render(MANUAL_PUSH_GROUP);
-	}
-	
-	@Override
-	public void finalize() {
-		stop(false);
 	}
 }

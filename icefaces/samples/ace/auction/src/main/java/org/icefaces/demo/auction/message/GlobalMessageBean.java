@@ -24,8 +24,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.bid.model.AuctionItem;
-import org.icefaces.demo.auction.push.AuctionWatcher;
 import org.icefaces.demo.auction.util.TimestampUtil;
+import org.icefaces.demo.auction.watcher.AuctionWatcher;
 
 @ApplicationScoped
 @ManagedBean(name=GlobalMessageBean.BEAN_NAME)

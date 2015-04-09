@@ -23,6 +23,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.icefaces.application.PushRenderer;
+import org.icefaces.demo.auction.watcher.AuctionWatcher;
 
 @ManagedBean(name=PushBean.BEAN_NAME)
 @ViewScoped
