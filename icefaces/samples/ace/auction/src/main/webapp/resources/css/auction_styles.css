@@ -31,8 +31,18 @@
     color: rgba(0, 0, 0, 0.9);
 }
 
-.ui-tabset .ui-tabs-nav li {
+.ui-tabset .ui-tabs-nav li,
+.ui-tabset .ui-tabs-nav div {
 	width: 125px;
+}
+
+.ui-tabset .ui-tabs-nav div {
+	text-align: center;
+}
+
+.ui-tabset .ui-tabs-nav div em {
+	float: none;
+	display: block;
 }
 
 /* Page Styles */
