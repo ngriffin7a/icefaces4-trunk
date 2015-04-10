@@ -132,7 +132,9 @@ ice.ace.tabset = {
                     document.getElementById(event.newValue.get('element').firstChild.id).focus();
                 } catch(e) {}
 
-                ice.ace.jq(tabview._contentParent).css({opacity:1});
+                var contentParent = ice.ace.jq(tabview._contentParent);
+				contentParent.css({opacity:1});
+				ice.ace.tabset.resizeMaps(contentParent);
                 cachedNewTab = null;
                 ice.ace.tabset.consoleLog(false, 'tabSet.tabChange.doOnSuccess  EXIT');
             };
@@ -779,6 +781,20 @@ ice.ace.tabset = {
                 ifr.removeAttribute(key);
             }
         }
-    }
+    },
+
+	resizeMaps : function(root) {
+		var maps = root.find('.ice-ace-gmap');
+		maps.each(function(){
+			var id = this.id;
+			if (id) {
+				id = id.replace(/_wrapper$/, '');
+				var map = ice.ace.gMap.getGMapWrapper(id).getRealGMap();
+				var center = map.getCenter();
+				google.maps.event.trigger(map, 'resize');
+				map.setCenter(center);
+			}
+		});
+	}
 };
 
