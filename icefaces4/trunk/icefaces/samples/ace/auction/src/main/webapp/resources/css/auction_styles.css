@@ -24,11 +24,12 @@
 }
 
 .ui-notificationbar {
-    height: 110px;
+    height: 65px;
     overflow-y: scroll;
     padding: 0;
     background: rgba(255, 255, 255, 0.9);
     color: rgba(0, 0, 0, 0.9);
+    box-shadow: 10px 7px 20px #555555;
 }
 
 .ui-tabset .ui-tabs-nav li,
