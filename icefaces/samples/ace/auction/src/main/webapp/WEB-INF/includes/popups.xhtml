@@ -26,11 +26,14 @@
                                visible="#{globalMessage.hasNew}" position="top"
                                effect="slide" effectSpeed="slow"
                                style="background: #{settingsBean.notificationBackground}; color: #{settingsBean.notificationForeground};">
-            <h:panelGroup id="mpw" layout="block" styleClass="notificationBarWrap">
+            <h:panelGrid id="mpw" columns="1" styleClass="notificationBarWrap">
+                <f:facet name="header">
+                    <h:outputText value="Auction Notifications" style="float: left;"/>
+                </f:facet>
                 <ui:repeat value="#{globalMessage.messages}" var="gmessage">
                     #{gmessage}<br/>
                 </ui:repeat>
-            </h:panelGroup>
+            </h:panelGrid>
         </ace:notificationPanel>
     </h:form>
     
