@@ -21,26 +21,6 @@
         }
     };
 
-    var broadcast = function(funcs, args) {
-        args = args || [];
-
-        for (var i in funcs) {
-            if (!isNaN(parseInt(i))) {
-                funcs[i].apply(funcs[i],args);
-            }
-        }
-    };
-
-    var fold = function(items, initialValue, injector) {
-        var tally = initialValue;
-        var size = items.length;
-        for (var i = 0; i < size; i++) {
-            tally = injector(tally, items[i]);
-        }
-
-        return tally;
-    };
-
     var isParentElement = function(parent, child) {
         var cursor = child;
         while (cursor) {
