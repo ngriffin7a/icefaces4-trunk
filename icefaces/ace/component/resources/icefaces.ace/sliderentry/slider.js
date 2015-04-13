@@ -125,3 +125,10 @@ ice.ace.Slider.prototype.disable = function() {
     this.jq.slider('disable');
 }
 
+ice.ace.Slider.updateValue = function(id, value) {
+	var root = ice.ace.jq(ice.ace.escapeClientId(id));
+	var handle = root.find('.ui-slider-handle');
+	if (!handle.hasClass('ui-state-active')) {
+		root.children('div').eq(1).slider('value', value);
+	}
+};
