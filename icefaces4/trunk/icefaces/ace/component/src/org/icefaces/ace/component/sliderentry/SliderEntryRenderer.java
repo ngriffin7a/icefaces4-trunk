@@ -129,6 +129,11 @@ public class SliderEntryRenderer extends CoreRenderer{
 		writer.writeAttribute("type", "hidden" , "type");
 		writer.writeAttribute("value", slider.getValue() , "value");
         writer.writeAttribute(HTML.AUTOCOMPLETE_ATTR, "off", null);
+
+		Map<String, Object> domUpdateMap = new HashMap<String, Object>();
+        domUpdateMap.put("value", slider.getValue());
+        writer.writeAttribute("data-hashcode", domUpdateMap.hashCode(), null);
+
 		writer.endElement("input");
 
 		// top/left label
@@ -181,13 +186,6 @@ public class SliderEntryRenderer extends CoreRenderer{
 			writer.writeAttribute("style", "clear:both;", null);
 			writer.endElement("div");
 		}
-		
-		Map<String, Object> domUpdateMap = new HashMap<String, Object>();
-        domUpdateMap.put("value", slider.getValue());
-        writer.startElement("span", null);
-        writer.writeAttribute("data-hashcode", domUpdateMap.hashCode(), null);
-        writer.writeAttribute("style", "display: none;", null);
-        writer.endElement("span");
 
 		writer.endElement("div");
 	}
@@ -221,7 +219,6 @@ public class SliderEntryRenderer extends CoreRenderer{
           .entry("step", step)
           .entry("orientation", orientation)
           .entry("clickableRail", slider.isClickableRail())
-          .entry("value", slider.getValue())
           .entry("ariaEnabled", ariaEnabled);
 
 		if (length.toLowerCase().indexOf("px") == -1) {
@@ -245,9 +242,14 @@ public class SliderEntryRenderer extends CoreRenderer{
 		// script to set value
 		writer.startElement("span", null);
 		writer.writeAttribute("id", clientId + "_value", null);
+
+		Map<String, Object> domUpdateMap = new HashMap<String, Object>();
+        domUpdateMap.put("value", slider.getValue());
+        writer.writeAttribute("data-hashcode", domUpdateMap.hashCode(), null);
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("ice.ace.jq(ice.ace.escapeClientId('"+clientId+"')).children('div').eq(1).slider('value', "+slider.getValue()+");");
+		writer.write("ice.ace.Slider.updateValue('"+clientId+"', "+slider.getValue()+");");
 		writer.endElement("script");
 		writer.endElement("span");
 	}
