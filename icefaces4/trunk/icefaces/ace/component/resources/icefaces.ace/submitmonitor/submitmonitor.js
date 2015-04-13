@@ -289,24 +289,6 @@
             }
         }
 
-        function eventSink(element) {
-            return function(e) {
-				e = e || window.event;
-                var eventType = ( (e.type != undefined && e.type != null) ? e.type : null );
-                var triggeringElement = e.srcElement ? e.srcElement : e.target;
-                var capturingElement = element;
-                if (e.stopPropagation) {
-                    e.stopPropagation();
-                } else {
-                    e.cancelBubble = true;
-                }
-                consoleLog('Monitor '+uniqueId+'>'+jqId+'  event [type: ' + eventType +
-                        ', triggered by: ' + (triggeringElement.id || triggeringElement) +
-                        ', captured in: ' + (capturingElement.id || capturingElement) + '] was discarded.');
-                return false;
-            }
-        }
-
         var allStates = ['idle', 'active', 'serverError', 'networkError', 'sessionExpired'];
         var IDLE = 0, ACTIVE = 1, SERVER_ERROR = 2, NETWORK_ERROR = 3, SESSION_EXPIRED = 4;
         var currentState = IDLE;
@@ -330,76 +312,13 @@
                 var overlayShownFunc = function() {
                     overlayShown = true;
                 };
-                var eventSinkFirstClickCount = 0;
-                function eventSinkFirstClick(firstSubmitSource, element, originalOnclick, regularSink) {
-                    return function(e) {
-                        consoleLog('Monitor '+uniqueId+'>'+jqId+'  eventSinkFirstClick()  overlayShown: ' + overlayShown + '  eventSinkFirstClickCount: ' + eventSinkFirstClickCount);
-                        if (overlayShown) {
-                            consoleLog('eventSinkFirstClick()  overlay shown');
-                            return regularSink(e);
-                        }
-                        if (eventSinkFirstClickCount > 0) {
-                            consoleLog('eventSinkFirstClick()  not first click');
-                            return regularSink(e);
-                        }
-                        eventSinkFirstClickCount++;
-
-						e = e || window.event;
-                        var triggeringElement = ( (e.srcElement != undefined && e.srcElement != null) ? e.srcElement : e.target);
-                        consoleLog('event [type: ' + e.type +
-                                ', triggered by: ' + (triggeringElement.id || triggeringElement) +
-                                ', captured in: ' + (element.id || element) + ']');
-                        consoleLog('first submit element: ' + (firstSubmitSource.id || firstSubmitSource));
-                        if ((firstSubmitSource == triggeringElement) || (firstSubmitSource == element)) {
-                            consoleLog('eventSinkFirstClick()  clicked on same element as first submit');
-                            return regularSink(e);
-                        }
-
-                        consoleLog('eventSinkFirstClick()  calling original onclick');
-                        // Might not be an onclick directly on that element, it might
-                        // have to bubble up
-                        anticipatePossibleSecondSubmit = ANTICIPATED;
-                        if (originalOnclick) {
-                            return originalOnclick.call(element, e);
-                        }
-                    }
-                }
 
                 consoleLog('Monitor '+uniqueId+'>'+jqId+'  doOverlayIfBlockingUI  after eventSinkFirstClick');
                 var overlayContainerElem = resolveBlockUIElement(source);
                 consoleLog('Monitor '+uniqueId+'>'+jqId+'  doOverlayIfBlockingUI  overlayContainerElem: ' + overlayContainerElem);
                 var blockUIOverlay = Overlay(cfg, overlayContainerElem, overlayShownFunc);
                 overlayShownFunc = null;
-                var rollbacks = fold(['input', 'select', 'textarea', 'button', 'a'], [], function(result, type) {
-                    return result.concat(
-                            ice.ace.jq.map(overlayContainerElem.getElementsByTagName(type), function(e) {
-                        var sink = eventSink(e);
-                        var onkeypress = e.onkeypress;
-                        var onkeyup = e.onkeyup;
-                        var onkeydown = e.onkeydown;
-                        var onclick = e.onclick;
-                        var sinkClick = eventSinkFirstClick(source, e, onclick, sink);
-                        e.onkeypress = sink;
-                        e.onkeyup = sink;
-                        e.onkeydown = sink;
-                        e.onclick = sinkClick;
-
-                        return function() {
-                            try {
-                                e.onkeypress = onkeypress;
-                                e.onkeyup = onkeyup;
-                                e.onkeydown = onkeydown;
-                                e.onclick = onclick;
-                            } catch (ex) {
-                                //don't fail if element is not present anymore
-                            }
-                        };
-                    })
-                    );
-                });
-
                 stopBlockingUI = function() {
-                    broadcast(rollbacks);
                     if (blockUIOverlay) {
                         blockUIOverlay();
                         blockUIOverlay = null;
