@@ -206,7 +206,10 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
                     Util.copyStream(in, out);
                 }
             } catch (IOException e) {
-                if (e.getMessage().contains("Connection close")) {
+                final String message = e.getMessage();
+                final Throwable cause = e.getCause();
+                //test if connection was aborted before the entire response was sent (Servlet 3.0 or Jetty 9.*)
+                if ((message != null && message.contains("Connection close")) || (cause != null && cause.toString().contains("EofException"))) {
                     // client left the page
                     log.log(Level.FINE, "Connection closed by client.", e);
                 } else {
