@@ -16,11 +16,16 @@
 
 package org.icefaces.ace.component.textentry;
 
+import org.icefaces.ace.event.CharCountEvent;
+import org.icefaces.ace.util.Constants;
 import org.icefaces.component.Focusable;
 import org.icefaces.ace.util.Attribute;
 import org.icefaces.ace.util.Utils;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
+import java.util.Map;
 
 public class TextEntry extends TextEntryBase implements Focusable {
     public final static String THEME_INPUT_CLASS = "ui-inputfield ui-textentry ui-widget ui-state-default ui-corner-all";
@@ -117,9 +122,24 @@ public class TextEntry extends TextEntryBase implements Focusable {
 		return numberAttributeNames;
 	}
     public String getDefaultEventName(FacesContext facesContext){
-         if (Utils.isTouchEventEnabled(facesContext)) {
-             return "onblur";
-         }
-        else return "onchange";
+        return Utils.isTouchEventEnabled(facesContext) ? "onblur" : "onchange";
+    }
+
+    public void queueEvent(FacesEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+        String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+        if (eventName.equals("charCount")) {
+            if (event instanceof AjaxBehaviorEvent) {
+                AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+                String val = (String) this.getSubmittedValue();
+                long currentLength = (val == null || val.isEmpty()) ? 0 : val.length();
+                long charsRemaining = this.getMaxlength() - currentLength;
+                super.queueEvent(new CharCountEvent(this, behaviorEvent.getBehavior(), currentLength, charsRemaining));
+            }
+        } else {
+            super.queueEvent(event);
+        }
     }
 }
