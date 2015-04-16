@@ -45,8 +45,12 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ICEResourceDependency(name = "textareaentry/textareaentry.js")
 })
 @ClientBehaviorHolder(events = {
-        @ClientEvent(name = "blur", javadoc = "Fired when the text input field loses focus (default event).",
-                tlddoc = "Fired when the text input field loses focus (default event).", defaultRender = "@all", defaultExecute = "@this"),
+    @ClientEvent(name = "blur", javadoc = "Fired when the text input field loses focus (default event).",
+            tlddoc = "Fired when the text input field loses focus (default event).", defaultRender = "@all", defaultExecute = "@this"),
+    @ClientEvent(name = "charCount", javadoc = "Fired when the number of characters entered in the component changes, either by the " +
+            "user typing a new character, deleting one or more characters, or cutting/pasting characters into the component.",
+            tlddoc = "Fired when the number of characters entered in the component changes, either by the user typing a new " +
+                    "character, deleting one or more characters, or cutting/pasting characters into the component.", defaultRender = "@all", defaultExecute = "@this"),
 	@ClientEvent(name="valueChange", javadoc="Fired when the component detects value is changed.",
             tlddoc="Fired when the component detects value is changed.",
             defaultRender="@all", defaultExecute="@this")

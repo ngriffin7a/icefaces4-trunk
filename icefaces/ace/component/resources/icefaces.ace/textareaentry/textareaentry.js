@@ -23,6 +23,7 @@ ice.ace.TextAreaEntry = function(id, cfg) {
     this.cfg = cfg;
     this.jqId = ice.ace.escapeClientId(inputId);
     this.jq = jQ(this.jqId);
+    var self = this;
 	if (cfg.placeholder && !('placeholder' in document.createElement('input'))) { // if 'placeholder' isn't supported, use label inField
 		this.cfg.inFieldLabel = this.cfg.placeholder;
 	}
@@ -64,7 +65,11 @@ ice.ace.TextAreaEntry = function(id, cfg) {
             }
         });
     }
-    if (this.cfg.behaviors) {
-        ice.ace.attachBehaviors(this.jq, this.cfg.behaviors);
+    if (cfg.behaviors) {
+        ice.ace.jq.each(cfg.behaviors, function(name, behavior) {
+            self.jq.on(name == 'charCount' ? 'input' : name, function() {
+                ice.ace.ab(behavior);
+            });
+        });
     }
 };

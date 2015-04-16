@@ -96,8 +96,12 @@ ice.ace.TextEntry = function(id, cfg) {
     this.jq.change(function() {
         ice.setFocus();
     });
-    if (this.cfg.behaviors) {
-        ice.ace.attachBehaviors(this.jq, this.cfg.behaviors);
+    if (cfg.behaviors) {
+        ice.ace.jq.each(cfg.behaviors, function(name, behavior) {
+            self.jq.on(name == 'charCount' ? 'input' : name, function() {
+                ice.ace.ab(behavior);
+            });
+        });
     }
 };
 

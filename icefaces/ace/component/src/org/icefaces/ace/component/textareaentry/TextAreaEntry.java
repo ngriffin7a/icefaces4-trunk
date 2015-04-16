@@ -17,9 +17,14 @@
 package org.icefaces.ace.component.textareaentry;
 
 import org.icefaces.ace.component.textareaentry.TextAreaEntryBase;
+import org.icefaces.ace.event.CharCountEvent;
+import org.icefaces.ace.util.Constants;
 import org.icefaces.component.Focusable;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
+import java.util.Map;
 
 public class TextAreaEntry extends TextAreaEntryBase implements Focusable {
     public final static String THEME_INPUT_CLASS = "ui-inputfield ui-textareaentry ui-widget ui-state-default ui-corner-all";
@@ -27,5 +32,23 @@ public class TextAreaEntry extends TextAreaEntryBase implements Focusable {
 
     public String getFocusedElementId() {
         return getClientId(FacesContext.getCurrentInstance()) + "_input";
+    }
+
+    public void queueEvent(FacesEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+        String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+        if (eventName.equals("charCount")) {
+            if (event instanceof AjaxBehaviorEvent) {
+                AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+                String val = (String) this.getSubmittedValue();
+                long currentLength = (val == null || val.isEmpty()) ? 0 : val.length();
+                long charsRemaining = this.getMaxlength() - currentLength;
+                super.queueEvent(new CharCountEvent(this, behaviorEvent.getBehavior(), currentLength, charsRemaining));
+            }
+        } else {
+            super.queueEvent(event);
+        }
     }
 }
