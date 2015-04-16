@@ -34,8 +34,8 @@ public class RichTextEntry extends RichTextEntryBase {
     public void decode(FacesContext facesContext) {
         Map map = facesContext.getExternalContext().getRequestParameterMap();
         String clientId = getClientId(facesContext);
-        if (map.containsKey(clientId) &&
-                (isSaveOnSubmit() ^ clientId.equals(map.get("javax.faces.source")))) {
+        if (map.containsKey(clientId) && (isSaveOnSubmit()
+                || (!isSaveOnSubmit() && clientId.equals(map.get("javax.faces.source"))))) {
             String newValue = map.get(clientId).toString();
             setSubmittedValue(newValue);
         }
