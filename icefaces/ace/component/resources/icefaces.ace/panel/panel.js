@@ -120,6 +120,11 @@ ice.ace.Panel.prototype.show = function() {
     this.visibleStateHolder.val(true);
 }
 
+ice.ace.Panel.prototype.isClosed = function(){
+    return ice.ace.jq(this.jqId).css('display')=='none';
+}
+
+
 ice.ace.Panel.prototype.setupToggleTrigger = function() {
     var _self = this,
     trigger = this.toggler.parent();
