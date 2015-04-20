@@ -73,34 +73,7 @@
         </ace:column>
         <f:facet name="footer">
             <h:panelGroup layout="block" style="width: 100%; text-align: center;">
-                <h:panelGrid id="buttonWrap"
-                             columns="6"
-                             style="width: auto;" styleClass="center"
-                             rendered="#{bidBean.renderBidPanel}">
-                    <!-- We position the defaultAction this way so we can easily grab the parent container and add an error message if needed -->
-                    <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
-                    
-                    <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
-                    <ace:textEntry id="bidIn" value="#{bidBean.currentBid}"
-                                   required="true" requiredMessage="Enter a valid bid."
-                                   size="10">
-                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                    </ace:textEntry>
-                    <ace:pushButton id="submitBid" value="Submit"
-                                    actionListener="#{auctionController.submitBid}"
-                                    title="Submit your bid for the selected item"/>
-                    <ace:pushButton id="submitCloseBid" value="Submit &amp; Close"
-                                    actionListener="#{auctionController.submitCloseBid}"
-                                    title="Submit your bid for the selected item then return to the list"/>
-                    <ace:pushButton value="Cancel" immediate="true"
-                                    actionListener="#{auctionController.cancelBid}"
-                                    title="Cancel your bid and unselect the item"/>
-                    <f:facet name="footer">
-	                    <h:message for="bidIn"/>
-	                    <h:message for="buttonWrap"/>
-                    </f:facet>
-                </h:panelGrid>
-                <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
+                <ui:include src="/WEB-INF/includes/bid-panel.xhtml"/>
             </h:panelGroup>
         </f:facet>
     </ace:dataTable>

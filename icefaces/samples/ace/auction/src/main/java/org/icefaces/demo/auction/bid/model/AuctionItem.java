@@ -17,6 +17,7 @@
 package org.icefaces.demo.auction.bid.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 import org.icefaces.demo.auction.converter.TimeLeftConverter;
 
 public class AuctionItem implements Comparable<AuctionItem>, Serializable {
-	private static final long serialVersionUID = -1344490985543019993L;
+	private static final long serialVersionUID = -3411644838300151767L;
 	
 	public static final int DEFAULT_EXPIRY_DATE_HOURS = 2; // Default hours to add to an expiry date
 	public static final int EXPIRY_DATE_MINIMUM = 30; // Minimum number of minutes in the future for an expiry date
@@ -118,6 +119,9 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public String getPriceFormatted() {
+		return NumberFormat.getCurrencyInstance().format(price);
 	}
 	public int getBids() {
 		return bids;
