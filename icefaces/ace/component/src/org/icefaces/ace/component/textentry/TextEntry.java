@@ -130,7 +130,7 @@ public class TextEntry extends TextEntryBase implements Focusable {
         Map<String,String> params = context.getExternalContext().getRequestParameterMap();
         String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-        if (eventName.equals("charCount")) {
+        if (eventName != null && eventName.equals("charCount")) {
             if (event instanceof AjaxBehaviorEvent) {
                 AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
                 String val = (String) this.getSubmittedValue();
