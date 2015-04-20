@@ -35,6 +35,7 @@ import org.icefaces.demo.auction.settings.SettingsBean;
 import org.icefaces.demo.auction.tabs.TabController;
 import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;
+import org.icefaces.mobi.component.dataview.DataView;
 import org.icefaces.util.JavaScriptRunner;
 
 @ManagedBean(name=AuctionController.BEAN_NAME)
@@ -57,6 +58,16 @@ public class AuctionController implements Serializable {
 	public void unselectItem(UnselectEvent event) {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		bidBean.stopBidding();
+	}
+	
+	public void clientSelect(AjaxBehaviorEvent event) {
+		DataView view = (DataView)event.getComponent();
+		
+		if (view.getActiveRowIndex() > -1) {
+			AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
+			BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
+			bidBean.startBidding(service.getAuctionByIndex(view.getActiveRowIndex()));
+		}
 	}
 	
 	public void submitBid(ActionEvent event) {

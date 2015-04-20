@@ -1,0 +1,42 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+-->
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:ace="http://www.icefaces.org/icefaces/components"
+              xmlns:icecore="http://www.icefaces.org/icefaces/core"
+              xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>
+        <composite:attribute name="position" default="top" type="java.lang.String"/>
+    </composite:interface>
+    
+    <composite:implementation>
+        <ace:notificationPanel id="mp"
+                               visible="#{globalMessage.hasNew}" position="#{cc.attrs.position}"
+                               effect="slide" effectSpeed="slow"
+                               style="background: #{settingsBean.notificationBackground}; color: #{settingsBean.notificationForeground};">
+            <h:panelGrid id="mpw" columns="1" styleClass="notificationBarWrap">
+                <f:facet name="header">
+                    <h:outputText value="Auction Notifications" style="float: left;"/>
+                </f:facet>
+                <ui:repeat value="#{globalMessage.messages}" var="gmessage">
+                    #{gmessage}<br/>
+                </ui:repeat>
+            </h:panelGrid>
+        </ace:notificationPanel>
+    </composite:implementation>
+</ui:component>

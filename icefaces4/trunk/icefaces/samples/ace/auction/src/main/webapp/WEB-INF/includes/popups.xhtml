@@ -18,98 +18,95 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
     <h:panelGroup id="pops" layout="block">
     <h:form id="n">
-        <ace:notificationPanel id="mp"
-                               visible="#{globalMessage.hasNew}" position="top"
-                               effect="slide" effectSpeed="slow"
-                               style="background: #{settingsBean.notificationBackground}; color: #{settingsBean.notificationForeground};">
-            <h:panelGrid id="mpw" columns="1" styleClass="notificationBarWrap">
-                <f:facet name="header">
-                    <h:outputText value="Auction Notifications" style="float: left;"/>
-                </f:facet>
-                <ui:repeat value="#{globalMessage.messages}" var="gmessage">
-                    #{gmessage}<br/>
-                </ui:repeat>
-            </h:panelGrid>
-        </ace:notificationPanel>
+        <mobi:largeView>
+            <auction:globalMessages position="top"/>
+        </mobi:largeView>
+        
+        <mobi:smallView>
+            <auction:globalMessages position="bottom"/>
+        </mobi:smallView>
     </h:form>
     
-    <h:form id="hd" rendered="#{bidBean.showHistoryDialog}">
-        <ace:dialog id="historyDialog"
-                    visible="#{bidBean.showHistoryDialog}"
-                    closable="true" closeOnEscape="true"
-                    draggable="true" modal="true" resizable="false"
-                    header="Bid History for '#{bidBean.bidItem.name}'"
-                    width="#{settingsBean.popupWidth}">
-            <ace:ajax event="close" listener="#{auctionController.closeHistoryDialogListener}"/>
-            
-            <h:panelGroup layout="block" style="margin: 20px;">
-                <ace:chart id="historyChart"
-                           animated="true"
-                           value="#{chartBean.historyData}"
-                           legend="true"
-                           legendPlacement="INSIDE_GRID"
-                           legendLocation="NW"
-                           xAxis="#{chartBean.xAxis}"
-                           yAxes="#{chartBean.yAxis}"
-                           width="#{settingsBean.popupWidth-70}"
-                           highlighter="true"
-                           rendered="#{chartBean.type ne null}"/>
-
-                <h:panelGroup layout="block" rendered="#{chartBean.type eq null}">
-                    <auction:dataExporters target="bhT" fileName="bid-history"/>
-	                <ace:dataTable id="bhT" value="#{bidBean.bidItem.history}" var="history"
-	                       emptyMessage="No bid history yet."
-	                       reorderableColumns="false" resizableColumns="false"
-	                       paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
-	                       styleClass="w100"
-	                       rows="10">
-	                    <f:facet name="header">
-	                        <h:outputText value="Details of #{bidBean.bidItem.bids} Bids"/>
-	                    </f:facet>
-	                    <ace:column headerText="Date/Time">
-	                        <h:outputText value="#{history.date}">
-	                            <f:convertDateTime pattern="EE kk:mm:ss"/>
-	                        </h:outputText>
-	                    </ace:column>
-	                    <ace:column headerText="Bid Increment">
-	                        <h:outputText value="#{history.bidIncrease}">
-	                            <f:convertNumber type="currency" currencySymbol="$"/>
-	                        </h:outputText>
-	                    </ace:column>
-	                    <ace:column headerText="Price">
-	                        <h:outputText value="#{history.price}">
-	                            <f:convertNumber type="currency" currencySymbol="$"/>
-	                        </h:outputText>
-	                    </ace:column>
-	                </ace:dataTable>
-                </h:panelGroup>
-            </h:panelGroup>
-        </ace:dialog>
-    </h:form>
-    
-    <h:form id="cnp" rendered="#{chatBean.isPositionBottom}">
-        <ace:notificationPanel id="chatPanel"
-                               visible="#{chatBean.isPositionBottom}"
-                               position="bottom"
-                               styleClass="notificationBarChat">
-            <auction:chat/>
-        </ace:notificationPanel>
-    </h:form>
-    
-    <h:form id="cpop" rendered="#{chatBean.isPositionPopup}">
-        <ace:dialog id="chatDialog"
-                    visible="#{chatBean.isPositionPopup}"
-                    closable="false" closeOnEscape="false"
-                    draggable="true" modal="false" resizable="false"
-                    dialogPosition="right top"
-                    width="#{settingsBean.popupWidth}"
-                    header="Auction Chat">
-            <auction:chat/>
-        </ace:dialog>
-    </h:form>
+    <mobi:largeView>
+	    <h:form id="hd" rendered="#{bidBean.showHistoryDialog}">
+	        <ace:dialog id="historyDialog"
+	                    visible="#{bidBean.showHistoryDialog}"
+	                    closable="true" closeOnEscape="true"
+	                    draggable="true" modal="true" resizable="false"
+	                    header="Bid History for '#{bidBean.bidItem.name}'"
+	                    width="#{settingsBean.popupWidth}">
+	            <ace:ajax event="close" listener="#{auctionController.closeHistoryDialogListener}"/>
+	            
+	            <h:panelGroup layout="block" style="margin: 20px;">
+	                <ace:chart id="historyChart"
+	                           animated="true"
+	                           value="#{chartBean.historyData}"
+	                           legend="true"
+	                           legendPlacement="INSIDE_GRID"
+	                           legendLocation="NW"
+	                           xAxis="#{chartBean.xAxis}"
+	                           yAxes="#{chartBean.yAxis}"
+	                           width="#{settingsBean.popupWidth-70}"
+	                           highlighter="true"
+	                           rendered="#{chartBean.type ne null}"/>
+	
+	                <h:panelGroup layout="block" rendered="#{chartBean.type eq null}">
+	                    <auction:dataExporters target="bhT" fileName="bid-history"/>
+		                <ace:dataTable id="bhT" value="#{bidBean.bidItem.history}" var="history"
+		                       emptyMessage="No bid history yet."
+		                       reorderableColumns="false" resizableColumns="false"
+		                       paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
+		                       styleClass="w100"
+		                       rows="10">
+		                    <f:facet name="header">
+		                        <h:outputText value="Details of #{bidBean.bidItem.bids} Bids"/>
+		                    </f:facet>
+		                    <ace:column headerText="Date/Time">
+		                        <h:outputText value="#{history.date}">
+		                            <f:convertDateTime pattern="EE kk:mm:ss"/>
+		                        </h:outputText>
+		                    </ace:column>
+		                    <ace:column headerText="Bid Increment">
+		                        <h:outputText value="#{history.bidIncrease}">
+		                            <f:convertNumber type="currency" currencySymbol="$"/>
+		                        </h:outputText>
+		                    </ace:column>
+		                    <ace:column headerText="Price">
+		                        <h:outputText value="#{history.price}">
+		                            <f:convertNumber type="currency" currencySymbol="$"/>
+		                        </h:outputText>
+		                    </ace:column>
+		                </ace:dataTable>
+	                </h:panelGroup>
+	            </h:panelGroup>
+	        </ace:dialog>
+	    </h:form>
+	    
+	    <h:form id="cnp" rendered="#{chatBean.isPositionBottom}">
+	        <ace:notificationPanel id="chatPanel"
+	                               visible="#{chatBean.isPositionBottom}"
+	                               position="bottom"
+	                               styleClass="notificationBarChat">
+	            <auction:chat/>
+	        </ace:notificationPanel>
+	    </h:form>
+	    
+	    <h:form id="cpop" rendered="#{chatBean.isPositionPopup}">
+	        <ace:dialog id="chatDialog"
+	                    visible="#{chatBean.isPositionPopup}"
+	                    closable="false" closeOnEscape="false"
+	                    draggable="true" modal="false" resizable="false"
+	                    dialogPosition="right top"
+	                    width="#{settingsBean.popupWidth}"
+	                    header="Auction Chat">
+	            <auction:chat/>
+	        </ace:dialog>
+	    </h:form>
+    </mobi:largeView>
     </h:panelGroup>
 </ui:composition>

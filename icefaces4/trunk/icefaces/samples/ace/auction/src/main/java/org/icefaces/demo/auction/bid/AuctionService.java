@@ -96,6 +96,13 @@ public class AuctionService implements Serializable {
 		}
 	}
 	
+	public AuctionItem getAuctionByIndex(int index) {
+		if ((index > 0) && (index < auctions.size())) {
+			return auctions.get(index);
+		}
+		return null;
+	}
+	
 	public boolean isUniqueItemName(String name) {
 		if (StringUtil.validString(name)) {
 			for (AuctionItem loopCheck : auctions) {
