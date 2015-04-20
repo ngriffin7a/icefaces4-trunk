@@ -22,6 +22,8 @@ import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -57,6 +59,8 @@ public class PanelListener extends ComponentExampleImpl<PanelListener> implement
 	public String getBeanName() { return BEAN_NAME; }
     private Format formatter = new SimpleDateFormat("HH:mm:ss");
     private String statusMessage = "No status yet.";
+    private boolean reOpenButton = false;
+
     
     public PanelListener() {
         super(PanelListener.class);
@@ -73,9 +77,27 @@ public class PanelListener extends ComponentExampleImpl<PanelListener> implement
     
     public void close(CloseEvent event) {
         statusMessage = "Close Event fired @ "+ formatter.format(new Date())+" server time";
+        this.reOpenButton = true;
     }
     
     public void toggle(ToggleEvent event) {
         statusMessage = "Toggle Event fired @ "+ formatter.format(new Date())+ " server time";
     }
+
+    /**
+      * use ace:ajax on the pushButton to reset it to not be rendered
+      * @param event
+      */
+     public void buttonNotVisible(ActionEvent event){
+         this.reOpenButton = false;
+     }
+
+    public boolean isReOpenButton() {
+        return reOpenButton;
+    }
+
+    public void setReOpenButton(boolean reOpenButton) {
+        this.reOpenButton = reOpenButton;
+    }
+
 }
