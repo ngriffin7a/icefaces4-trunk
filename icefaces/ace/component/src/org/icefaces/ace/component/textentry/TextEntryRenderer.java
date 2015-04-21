@@ -48,8 +48,6 @@ public class TextEntryRenderer extends InputRenderer {
             return;
         }
 
-        decodeBehaviors(context, textEntry);
-
 		String clientId = textEntry.getClientId(context);
         Map<String,String> requestParameterMap = context.getExternalContext().getRequestParameterMap();
         String submittedValue = requestParameterMap.get(clientId + "_input");
@@ -60,7 +58,9 @@ public class TextEntryRenderer extends InputRenderer {
         if(submittedValue != null) {
             textEntry.setSubmittedValue(submittedValue);
         }
-	}
+
+        decodeBehaviors(context, textEntry);
+    }
 
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
