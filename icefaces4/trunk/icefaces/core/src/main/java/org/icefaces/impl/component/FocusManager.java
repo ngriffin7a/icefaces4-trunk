@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 public class FocusManager extends UIComponentBase {
     private final static Logger log = Logger.getLogger(FocusManager.class.getName());
     private final static Random RANDOM = new Random();
+    private final static String LAST_FOCUSED_COMPONENT = "lastFocusedComponent";
 
     public String getFamily() {
         return "javax.faces.Output";
@@ -59,32 +60,28 @@ public class FocusManager extends UIComponentBase {
         Map attributes = context.getAttributes();
         UIInput invalidUIInput = (UIInput) attributes.get(DetectInvalidChild.class.getName());
         if (invalidUIInput == null) {
-            //apply focus only if not already specified in the browser
-            String iceFocus = context.getExternalContext().getRequestParameterMap().get("ice.focus");
-            if (iceFocus == null) {
-                //set focus on the specified component
-                String focusFor = getFor();
-                if (focusFor != null && !"".equals(focusFor)) {
-                    UIComponent c = findComponent(this, focusFor);
+            //set focus on the specified component
+            String focusFor = getFor();
+            if (focusFor != null && !"".equals(focusFor)) {
+                UIComponent c = findComponent(this, focusFor);
+                if (c instanceof UIInput || c instanceof Focusable) {
+                    source = c;
+                } else {
+                    log.warning("The \"for\" attribute points to a component that is not an instance of UIInput");
+                }
+            }
+
+            //assuming that grand/child components are valid, selecting the first UIInput component
+            if (source == null) {
+                LinkedList<UIComponent> queue = new LinkedList();
+                queue.add(this);
+                while (!queue.isEmpty()) {
+                    UIComponent c = queue.removeFirst();
                     if (c instanceof UIInput || c instanceof Focusable) {
                         source = c;
-                    } else {
-                        log.warning("The \"for\" attribute points to a component that is not an instance of UIInput");
+                        break;
                     }
-                }
-
-                //assuming that grand/child components are valid, selecting the first UIInput component
-                if (source == null) {
-                    LinkedList<UIComponent> queue = new LinkedList();
-                    queue.add(this);
-                    while (!queue.isEmpty()) {
-                        UIComponent c = queue.removeFirst();
-                        if (c instanceof UIInput || c instanceof Focusable) {
-                            source = c;
-                            break;
-                        }
-                        queue.addAll(c.getChildren());
-                    }
+                    queue.addAll(c.getChildren());
                 }
             }
         } else {
@@ -92,25 +89,24 @@ public class FocusManager extends UIComponentBase {
         }
 
         if (source != null) {
-            writer.startElement("script", null);
-            writer.writeAttribute("type", "text/javascript", null);
+            final String id = source instanceof Focusable ? ((Focusable) source).getFocusedElementId() : source.getClientId(context);
+            final Map componentAttributes = getAttributes();
+            final String lastFocusedComponent = (String) componentAttributes.get(LAST_FOCUSED_COMPONENT);
+            //apply focus only when different from last application
+            if (!id.equals(lastFocusedComponent)) {
+                componentAttributes.put(LAST_FOCUSED_COMPONENT, id);
+                FocusController.setFocus(context, id);
 
-            String id;
-            if (source instanceof Focusable) {
-                id = ((Focusable) source).getFocusedElementId();
-            } else {
-                id = source.getClientId(context);
+                writer.startElement("script", null);
+                writer.writeAttribute("type", "text/javascript", null);
+                writer.writeText("try { ice.applyFocus('", null);
+                writer.writeText(id, null);
+                writer.writeText("'); } catch (ex) {ice.log.warn(ice.logger, 'failed to focus element ", null);
+                writer.writeText(id, null);
+                writer.writeText("'); }//", null);
+                writer.writeText(RANDOM.nextLong(), null);
+                writer.endElement("script");
             }
-
-            FocusController.setFocus(context, id);
-
-            writer.writeText("try { ice.applyFocus('", null);
-            writer.writeText(id, null);
-            writer.writeText("'); } catch (ex) {ice.log.warn(ice.logger, 'failed to focus element ", null);
-            writer.writeText(id, null);
-            writer.writeText("'); }//", null);
-            writer.writeText(RANDOM.nextLong(), null);
-            writer.endElement("script");
         }
 
         writer.endElement("span");
