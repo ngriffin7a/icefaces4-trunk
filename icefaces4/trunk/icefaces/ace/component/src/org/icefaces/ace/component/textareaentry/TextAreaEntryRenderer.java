@@ -43,8 +43,6 @@ public class TextAreaEntryRenderer extends InputRenderer {
             return;
         }
 
-        decodeBehaviors(context, textAreaEntry);
-
         String clientId = textAreaEntry.getClientId(context);
         Map<String, String> requestParameterMap = context.getExternalContext().getRequestParameterMap();
         String submittedValue = requestParameterMap.get(clientId + "_input");
@@ -55,6 +53,8 @@ public class TextAreaEntryRenderer extends InputRenderer {
         if (submittedValue != null) {
             textAreaEntry.setSubmittedValue(submittedValue);
         }
+
+        decodeBehaviors(context, textAreaEntry);
     }
 
     @Override
