@@ -23,17 +23,9 @@ import javax.faces.render.Renderer;
 import java.io.IOException;
 
 public class RendererWrapper extends Renderer {
-    private Renderer renderer;
+    private final Renderer renderer;
 
     public RendererWrapper(Renderer renderer) {
-        this.renderer = renderer;
-    }
-
-    public Renderer getWrappedRenderer() {
-        return renderer;
-    }
-
-    public void setWrappedRenderer(Renderer renderer) {
         this.renderer = renderer;
     }
 
