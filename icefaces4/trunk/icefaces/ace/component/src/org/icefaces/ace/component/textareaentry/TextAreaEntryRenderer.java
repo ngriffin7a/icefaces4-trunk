@@ -119,7 +119,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
         }
         defaultClass += textAreaEntry.isResizable() ? " ui-textareaentry-resizable" : " ui-textareaentry-non-resizable";
 
-        renderPassThruAttributes(context, textAreaEntry, HTML.TEXTAREA_ATTRS);
+        renderPassThruAttributes(context, textAreaEntry, HTML.INPUT_TEXTAREA_ATTRS);
 
         if (ariaEnabled) {
             final TextAreaEntry compoent = (TextAreaEntry) component;
