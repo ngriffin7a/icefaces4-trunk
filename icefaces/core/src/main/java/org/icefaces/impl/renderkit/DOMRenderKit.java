@@ -108,7 +108,7 @@ public class DOMRenderKit extends RenderKitWrapper {
                                 currClass.getName());
                         }
                         sb.append(", the field '").append(field.getName()).
-                            append("' is not declared 'static final'. " +
+                            append("' is not declared 'final'. " +
                                 "Renderer classes must not have instance " +
                                 "fields, and must be re-entrant.");
                         log.warning(sb.toString());
