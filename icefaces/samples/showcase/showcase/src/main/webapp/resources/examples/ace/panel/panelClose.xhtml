@@ -54,14 +54,13 @@
         </h:form>
         
         <h:form id="form2">
-            <ace:panel id="panel" binding="#{panelCloseComponent}"
+            <ace:panel id="panel"
 					   header="ICEfaces Closeable Header"
                        closable="#{panelClose.closable}"
                        closeSpeed="#{panelClose.speed}">
                 <p>ICEfaces 2 is an open-source Rich Internet Application (RIA) development framework based on the JavaServer Faces (JSF) 2 standard. Like its predecessor, ICEfaces 1.8, ICEfaces 2 extends JSF to simplify development and enhance the standard JSF feature set - simultaneously improving developer efficiency and expanding the spectrum of RIA capabilities that can be included in any JSF-based web application.</p>
                 <p>Adhering closely to the standard JSF 2 extension points allows ICEfaces to work transparently with the stock JSF framework, simplifying integration and fostering 3rd party compatibility with other JSF 2-compliant libraries.</p>
             </ace:panel>
-			<button onclick="document.getElementById('#{panelCloseComponent.clientId}').style.display='block';return false;">Show panel</button>
         </h:form>
     </ui:define>
 </ui:composition>
