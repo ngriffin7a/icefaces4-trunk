@@ -100,6 +100,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
         if (ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }
+        ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, component) ;
         String iceFocus = (String) paramMap.get("ice.focus");
         String inFieldLabel = (String) labelAttributes.get("inFieldLabel");

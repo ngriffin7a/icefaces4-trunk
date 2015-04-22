@@ -92,6 +92,7 @@ public class TextEntryRenderer extends InputRenderer {
         if (ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }
+        ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
         PassThruAttributeWriter.renderNonBooleanAttributes(writer, textEntry, textEntry.getCommonInputAttributeNames());
         PassThruAttributeWriter.renderBooleanAttributes(writer, textEntry, textEntry.getBooleanAttNames());
