@@ -188,7 +188,7 @@ public class JSONBuilder {
                 params.append("null");
             }
             else {
-                params.append('"').append(escapeString(curr)).append('"');
+                params.append('\'').append(escapeString(curr)).append('\'');
             }
             if (idx < (len-1)) {
                 params.append(',');
@@ -216,14 +216,14 @@ public class JSONBuilder {
             }
             else {
                 if (quote) {
-                    params.append('"');
+                    params.append('\'');
                 }
                 if (escape) {
                     curr = escapeString(curr);
                 }
                 params.append(curr);
                 if (quote) {
-                    params.append('"');
+                    params.append('\'');
                 }
             }
             if (it.hasNext()) {
@@ -373,7 +373,7 @@ public class JSONBuilder {
         	params.append(value);   
         } else {
             value = escapeString(value);
-	    	params.append('"').append(value).append('"');     
+	    	params.append('\'').append(value).append('\'');
         }
         return this;
     }
@@ -451,7 +451,7 @@ public class JSONBuilder {
      */
     public JSONBuilder item(String value, boolean escaped) {
         conditionallyAppendComma();
-        if (escaped) params.append('"').append(escapeString(value)).append('"');
+        if (escaped) params.append('\'').append(escapeString(value)).append('\'');
         else params.append(value);
         return this;
     }
@@ -505,7 +505,7 @@ public class JSONBuilder {
 
     private void appendCommaAndKey(String key) {
         conditionallyAppendComma();
-        params.append('"').append(key).append('"').append(":");
+        params.append('\'').append(key).append('\'').append(":");
     }
 
     private void conditionallyAppendComma() {

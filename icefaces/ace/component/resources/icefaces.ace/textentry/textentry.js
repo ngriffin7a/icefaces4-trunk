@@ -103,6 +103,9 @@ ice.ace.TextEntry = function(id, cfg) {
             });
         });
     }
+    ice.onElementUpdate(inputId, function() {
+        ice.ace.destroy(id);
+    });
 };
 
 // Original code copied from http://stackoverflow.com/a/7329696

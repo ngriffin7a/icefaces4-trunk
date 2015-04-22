@@ -72,4 +72,8 @@ ice.ace.TextAreaEntry = function(id, cfg) {
             });
         });
     }
+
+    ice.onElementUpdate(inputId, function() {
+        ice.ace.destroy(id);
+    });
 };
