@@ -40,18 +40,19 @@ ice.ace.instance = function(id) {
 	var element = document.getElementById(id);
 	if (element && element.widget) return element.widget;
 	return null;
-}
+};
 
 ice.ace.destroy = function(id) {
     var elem = document.getElementById(id);
-    if (elem.widget.destroy) {
-        var deadState = elem.widget.destroy();
+    var widget = elem.widget;
+    if (widget && widget.destroy) {
+        var deadState = widget.destroy();
         if (deadState) {
             ice.ace.deadStates[id] = deadState;
         }
     }
     delete elem.widget;
-}
+};
 
 ice.ace.lazy = function(name, args) {
     var clientId = args[0], // lazy requires clientId is first arg
@@ -66,7 +67,7 @@ ice.ace.lazy = function(name, args) {
         return component;
 	} else
         return elem.widget;
-}
+};
 
 ice.ace.lazy.registry = {}; // store uninitialized lazy components
 
@@ -125,13 +126,13 @@ ice.ace.eachCustomUpdate = function(responseXML, f) {
               extension.firstChild.data);
         }
     }
-}
+};
 
 ice.ace.clearExecRender = function(options) {
     options['execute'] = undefined;
     options['render'] = undefined;
     return options;
-}
+};
 
 ice.ace.extendAjaxArgs = function(callArguments, options) {
     // Return a modified copy of the original arguments instead of modifying the original.
