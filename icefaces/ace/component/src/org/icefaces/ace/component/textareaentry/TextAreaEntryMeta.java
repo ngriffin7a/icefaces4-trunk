@@ -94,7 +94,7 @@ public class TextAreaEntryMeta extends UIInputMeta {
     @Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "A localized user presentable name for this component.")
     private String label;
 
-    @Property(tlddoc = "The maximum number of characters that may be entered in this field.")
+    @Property(defaultValue = "-1", tlddoc = "The maximum number of characters that may be entered in this field.")
     private int maxlength;
 	
     @Property(tlddoc = "The HTML5 placeholder attribute represents a short hint (a word or short phrase) intended to aid the user with data entry " + 		"when the input element has no value. If the placeholder attribute is not supported by the browser, the label 'inField' functionality " +
