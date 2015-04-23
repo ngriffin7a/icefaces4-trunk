@@ -93,12 +93,15 @@ public class TextAreaEntryRenderer extends InputRenderer {
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
 
         String clientId = textAreaEntry.getClientId(context);
-
+        int maxLength = textAreaEntry.getMaxlength();
         writer.startElement("textarea", null);
         writer.writeAttribute("id", clientId + "_input", null);
         writer.writeAttribute("name", clientId + "_input", null);
         if (ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
+        }
+        if (maxLength > -1) {
+            writer.writeAttribute("maxlength", maxLength, null);
         }
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, component) ;
@@ -120,7 +123,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
         }
         defaultClass += textAreaEntry.isResizable() ? " ui-textareaentry-resizable" : " ui-textareaentry-non-resizable";
 
-        renderPassThruAttributes(context, textAreaEntry, HTML.INPUT_TEXTAREA_ATTRS);
+        renderPassThruAttributes(context, textAreaEntry, HTML.TEXTAREA_ATTRS);
 
         if (ariaEnabled) {
             final TextAreaEntry compoent = (TextAreaEntry) component;
@@ -160,9 +163,10 @@ public class TextAreaEntryRenderer extends InputRenderer {
           .beginMap()
           .entryNonNullValue("inFieldLabel", (String) labelAttributes.get("inFieldLabel"))
           .entry("inFieldLabelStyleClass", IN_FIELD_LABEL_STYLE_CLASS);
-        jb.entry("maxlength", textAreaEntry.getMaxlength());
-		if (placeholder != null) jb.entry("placeholder", placeholder);
-		else jb.entry("placeholder", "");
+        if (maxLength > -1) {
+            jb.entry("maxlength", maxLength);
+        }
+        jb.entry("placeholder", placeholder != null ? placeholder : "");
 
         encodeClientBehaviors(context, textAreaEntry, jb);
 
