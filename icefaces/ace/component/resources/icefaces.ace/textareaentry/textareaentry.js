@@ -77,3 +77,11 @@ ice.ace.TextAreaEntry = function(id, cfg) {
         ice.ace.destroy(id);
     });
 };
+
+ice.ace.jq(document).on("keydown keypress", function(e){
+    if (e.which == 8) {
+        if(e.target.nodeName != 'TEXTAREA') {
+            e.preventDefault();
+        }
+    }
+});
