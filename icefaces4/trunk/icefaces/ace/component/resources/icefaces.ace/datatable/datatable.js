@@ -1137,15 +1137,15 @@ ice.ace.DataTable.preventTextSelectionDouble = function (event) {
 		}
 	} else {
 		if (ice.ace.jq.browser.msie && (ice.ace.jq.browser.version == 8 || ice.ace.jq.browser.version == 9)) {
-			this.onselectstart = function() { };
-			this.unselectable = 'off';
+			this.onselectstart = function() { return false; };
+			this.unselectable = 'on';
 			var table = ice.ace.jq(this);
-			table.css('user-select', '');
-			table.css('-o-user-select', '');
-			table.css('-ms-user-select', '');
-			table.css('-moz-user-select', '');
-			table.css('-khtml-user-select', '');
-			table.css('-webkit-user-select', '');
+			table.css('user-select', 'none');
+			table.css('-o-user-select', 'none');
+			table.css('-ms-user-select', 'none');
+			table.css('-moz-user-select', 'none');
+			table.css('-khtml-user-select', 'none');
+			table.css('-webkit-user-select', 'none');
 		}
 	}
 };
