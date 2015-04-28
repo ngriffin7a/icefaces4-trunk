@@ -467,6 +467,9 @@ public class JSONBuilder {
                 case '\\':
                     sb.append("\\\\");
                     break;
+                case '\'':
+                    sb.append("\\\'");
+                    break;
                 case '\"':
                     sb.append("\\\"");
                     break;
