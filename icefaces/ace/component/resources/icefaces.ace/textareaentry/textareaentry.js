@@ -79,8 +79,8 @@ ice.ace.TextAreaEntry = function(id, cfg) {
 };
 
 ice.ace.jq(document).on("keydown keypress", function(e){
-    if (e.which == 8) {
-        if(e.target.nodeName != 'TEXTAREA') {
+    if ((e.which || e.keyCode) == 8) {
+        if(['TEXTAREA', 'INPUT'].indexOf(e.target.nodeName) == -1) {
             e.preventDefault();
         }
     }
