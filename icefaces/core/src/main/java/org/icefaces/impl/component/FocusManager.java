@@ -94,7 +94,9 @@ public class FocusManager extends UIComponentBase {
             final String lastFocusedComponent = (String) componentAttributes.get(LAST_FOCUSED_COMPONENT);
             //apply focus only when different from last application
             if (!id.equals(lastFocusedComponent)) {
-                componentAttributes.put(LAST_FOCUSED_COMPONENT, id);
+                if (invalidUIInput == null) {
+                    componentAttributes.put(LAST_FOCUSED_COMPONENT, id);
+                }
                 FocusController.setFocus(context, id);
 
                 writer.startElement("script", null);
