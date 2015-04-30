@@ -60,16 +60,38 @@ ice.ace.TextAreaEntry = function(id, cfg) {
     });
     if (maxlength > 0) {
         this.jq.on("keyup change", function (e) {
-            if (this.value.length > maxlength) {
-                this.value = this.value.substring(0, maxlength);
+            var target = e.target;
+            if (target.value.length > maxlength) {
+                target.value = target.value.substring(0, maxlength);
             }
         });
     }
     if (cfg.behaviors) {
         ice.ace.jq.each(cfg.behaviors, function(name, behavior) {
-            self.jq.on(name == 'charCount' ? 'input' : name, function() {
-                ice.ace.ab(behavior);
-            });
+            if (name == 'charCount') {
+                if (document.attachEvent) {
+                    //IE 7,8,9 handling -- backspace and delete keypresses do not trigger 'input' events
+                    self.jq.on('input', function (e) {
+                        if (e.target.value.length <= maxlength) {
+                            e.cancelBubble = true;
+                            ice.ace.ab(behavior);
+                        }
+                    });
+                    self.jq.on('keyup', function (e) {
+                        if (e.target.value.length <= maxlength) {
+                            ice.ace.ab(behavior);
+                        }
+                    });
+                } else {
+                    self.jq.on('input', function (e) {
+                        ice.ace.ab(behavior);
+                    });
+                }
+            } else {
+                self.jq.on(name, function () {
+                    ice.ace.ab(behavior);
+                });
+            }
         });
     }
 
@@ -80,7 +102,7 @@ ice.ace.TextAreaEntry = function(id, cfg) {
 
 ice.ace.jq(document).on("keydown keypress", function(e){
     if ((e.which || e.keyCode) == 8) {
-        if(['TEXTAREA', 'INPUT'].indexOf(e.target.nodeName) == -1) {
+        if ('TEXTAREA' != e.target.nodeName) {
             e.preventDefault();
         }
     }
