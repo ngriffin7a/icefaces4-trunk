@@ -161,11 +161,3 @@ ice.ace.TextEntry.nextTabElement = function(currElement) {
         }
     }
 };
-
-ice.ace.jq(document).on("keydown keypress", function(e){
-    if ((e.which || e.keyCode) == 8) {
-        if ('INPUT' != e.target.nodeName) {
-            e.preventDefault();
-        }
-    }
-});
