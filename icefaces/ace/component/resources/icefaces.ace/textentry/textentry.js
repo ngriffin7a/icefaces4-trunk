@@ -23,8 +23,9 @@ ice.ace.TextEntry = function(id, cfg) {
     this.jqId = ice.ace.escapeClientId(id) + " input.ui-textentry";
     this.jq = jQ(this.jqId);
 	var self = this;
-	
-	if (cfg.embeddedLabel) { // execute this when component is lazy loaded
+    var maxlength = cfg.maxlength;
+
+    if (cfg.embeddedLabel) { // execute this when component is lazy loaded
 		if (this.jq.attr("name") == labelName) {
 			try { if (this.cfg.secret) this.jq.attr({type: 'password'}); } catch (e) {}
 			this.jq.attr({name: inputId});
@@ -98,9 +99,30 @@ ice.ace.TextEntry = function(id, cfg) {
     });
     if (cfg.behaviors) {
         ice.ace.jq.each(cfg.behaviors, function(name, behavior) {
-            self.jq.on(name == 'charCount' ? 'input' : name, function() {
-                ice.ace.ab(behavior);
-            });
+            if (name == 'charCount') {
+                if (document.attachEvent) {
+                    //IE 7,8,9 handling -- backspace and delete keypresses do not trigger 'input' events
+                    self.jq.on('input', function (e) {
+                        if (e.target.value.length <= e.target.maxLength) {
+                            e.cancelBubble = true;
+                            ice.ace.ab(behavior);
+                        }
+                    });
+                    self.jq.on('keyup', function (e) {
+                        if (e.target.value.length <= e.target.maxLength) {
+                            ice.ace.ab(behavior);
+                        }
+                    });
+                } else {
+                    self.jq.on('input', function (e) {
+                        ice.ace.ab(behavior);
+                    });
+                }
+            } else {
+                self.jq.on(name, function () {
+                    ice.ace.ab(behavior);
+                });
+            }
         });
     }
     ice.onElementUpdate(inputId, function() {
