@@ -35,7 +35,7 @@
 
     <ui:define name="example">
         <h:form id="textEntryForm">
-            <ace:panel id="personalInfoInputPanel" header="Example Comment" styleClass="required-styling-demo">
+            <ace:panel id="inputPanel" header="Example Comment" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
                     <h:outputText value="(Choose the maximum comment length. Normally this would be set in the app, but is configurable for demo purposes.)"
                                   style="font-size: 10px;"/>
@@ -56,7 +56,7 @@
 								   labelPosition="left"  label="Comment:">
 						<ace:ajax event="charCount"
 							      listener="#{textEntryCharCountBean.updateCount}"
-							      render="@form" execute="@form"/>
+							      render="@this charOut"/>
 					</ace:textEntry>
 					
 					<f:facet name="footer">
@@ -68,7 +68,6 @@
                 <h:panelGrid width="100%">
                     <ace:message for="maxIn"/>
                     <ace:message for="commentIn"/>
-                    <h:messages layout="table"/>
                 </h:panelGrid>
             </ace:panel>
         </h:form>
