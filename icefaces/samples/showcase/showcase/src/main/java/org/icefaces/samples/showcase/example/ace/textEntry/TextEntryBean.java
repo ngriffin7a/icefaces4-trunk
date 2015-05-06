@@ -52,6 +52,8 @@ import java.io.Serializable;
                     exampleBeanName = TextEntryAutotabBean.BEAN_NAME),
 	        @MenuLink(title = "menu.ace.textEntry.subMenu.secret",
                     exampleBeanName = TextEntrySecretBean.BEAN_NAME),
+	        @MenuLink(title = "menu.ace.textEntry.subMenu.charCount",
+                    exampleBeanName = TextEntryCharCountBean.BEAN_NAME),
 	        @MenuLink(title = "menu.ace.textEntry.subMenu.label",
                     exampleBeanName = TextEntryLabelBean.BEAN_NAME),
 	        @MenuLink(title = "menu.ace.textEntry.subMenu.indicator",
