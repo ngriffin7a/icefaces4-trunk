@@ -48,6 +48,8 @@ import java.io.Serializable;
 	        @MenuLink(title = "menu.ace.textAreaEntry.subMenu.main",
 	                isDefault = true,
                     exampleBeanName = TextAreaEntryBean.BEAN_NAME),
+	        @MenuLink(title = "menu.ace.textAreaEntry.subMenu.charCount",
+                    exampleBeanName = TextAreaEntryCharCountBean.BEAN_NAME),
 	        @MenuLink(title = "menu.ace.textAreaEntry.subMenu.label",
                     exampleBeanName = TextAreaEntryLabelBean.BEAN_NAME),
 	        @MenuLink(title = "menu.ace.textAreaEntry.subMenu.indicator",

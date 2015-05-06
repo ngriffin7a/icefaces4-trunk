@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[textAreaEntryCharCountBean.title]}"/>
+    <ui:param name="description" value="#{msgs[textAreaEntryCharCountBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[textAreaEntryCharCountBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{textAreaEntryCharCountBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{textAreaEntryCharCountBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{textAreaEntryResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{textAreaEntryResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="textAreaEntryForm">
+            <ace:panel id="inputPanel" header="Example Comment" styleClass="required-styling-demo">
+                <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
+                    <h:outputText value="(Choose the maximum comment length. Normally this would be set in the app, but is configurable for demo purposes.)"
+                                  style="font-size: 10px;"/>
+                                  
+                    <ace:textEntry id="maxIn"
+                                   value="#{textAreaEntryCharCountBean.maxlength}"
+                                   size="3" maxlength="3" required="true"
+                                   labelPosition="left"  label="Max Length:">
+                        <f:validateLongRange minimum="1" maximum="250"/>
+                        <ace:ajax event="valueChange" render="@form" execute="@form"/>
+                    </ace:textEntry>
+                    
+                    <hr/>
+                                   
+                    <ace:textAreaEntry id="commentIn"
+                                   value="#{textAreaEntryCharCountBean.comment}"
+                                   maxlength="#{textAreaEntryCharCountBean.maxlength}"
+                                   labelPosition="left"  label="Comment:">
+                        <ace:ajax event="charCount"
+                                  listener="#{textAreaEntryCharCountBean.updateCount}"
+                                  render="@this charOut"/>
+                    </ace:textAreaEntry>
+                    
+                    <f:facet name="footer">
+                       <h:panelGroup layout="block" style="font-weight: bold;">
+                           <h:outputText id="charOut" value="#{textAreaEntryCharCountBean.currLength} characters entered, #{textAreaEntryCharCountBean.charsRemaining} remaining"/>
+                       </h:panelGroup>
+                    </f:facet>
+                </h:panelGrid>
+                <h:panelGrid width="100%">
+                    <ace:message for="maxIn"/>
+                    <ace:message for="commentIn"/>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>
+
