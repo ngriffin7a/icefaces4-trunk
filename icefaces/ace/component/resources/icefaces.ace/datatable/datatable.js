@@ -355,9 +355,10 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
     });
 
     if (this.cfg.filterEvent == "enter")
-        this.element.on('keypress', this.filterSelector, function (event) {
+        this.element.on('keydown', this.filterSelector, function (event) {
             event.stopPropagation();
             if (event.which == 13) {
+                event.preventDefault();
                 _self.filter(event);
             }
         });
