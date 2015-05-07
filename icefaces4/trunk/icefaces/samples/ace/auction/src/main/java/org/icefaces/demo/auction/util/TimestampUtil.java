@@ -22,7 +22,7 @@ import java.util.Date;
 
 public class TimestampUtil {
 	private static final DateFormat TIMESTAMP = new SimpleDateFormat("kk:mm:ss");
-	private static final DateFormat DATESTAMP = new SimpleDateFormat("kk:mm:ss EEE dd MMM");
+	private static final DateFormat DATESTAMP = new SimpleDateFormat("h:mm a (EEEE, MMM dd)");
 	
 	public static String stamp() {
 		return TIMESTAMP.format(new Date()) + ": ";

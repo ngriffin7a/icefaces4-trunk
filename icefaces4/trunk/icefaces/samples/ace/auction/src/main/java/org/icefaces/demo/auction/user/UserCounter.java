@@ -41,11 +41,15 @@ public class UserCounter implements Serializable {
 		totalSessions++;
 		currentSessions++;
 		
+		log.info("User Counter increased: " + totalSessions + " total, " + currentSessions + " current since " + startTimestamp);
+		
 		return totalSessions;
 	}
 	
 	public int cleanupUser() {
 		currentSessions--;
+		
+		log.info("User Counter decreased: " + totalSessions + " total, " + currentSessions + " current since " + startTimestamp);
 		
 		return currentSessions;
 	}
