@@ -34,7 +34,21 @@
     <ui:param name="tldResources" value="#{textEntryResources.tldResources}"/>
 
     <ui:define name="example">
-        <h:form id="textEntryForm">
+        <script type="text/javascript">
+            function updateClientSide(elementId) {
+                var e = document.getElementById(elementId);
+                if (e) {
+                    var output = document.getElementById("charOut");
+                    if (output) {
+                        output.textContent = e.value.length + " characters entered, " + (e.maxLength - e.value.length) + " remaining";
+                        return true;
+                    }
+                }
+                return false;
+            }
+        </script>
+    
+        <h:form id="textEntryForm" prependId="false">
             <ace:panel id="inputPanel" header="Example Comment" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">
                     <h:outputText value="(Choose the maximum comment length. Normally this would be set in the app, but is configurable for demo purposes.)"
@@ -55,13 +69,12 @@
 								   maxlength="#{textEntryCharCountBean.maxlength}"
 								   labelPosition="left"  label="Comment:">
 						<ace:ajax event="charCount"
-							      listener="#{textEntryCharCountBean.updateCount}"
-							      render="@this charOut"/>
+						          onStart="updateClientSide(cfg.source + '_input');"/>
 					</ace:textEntry>
 					
 					<f:facet name="footer">
 					   <h:panelGroup layout="block" style="font-weight: bold;">
-					       <h:outputText id="charOut" value="#{textEntryCharCountBean.currLength} characters entered, #{textEntryCharCountBean.charsRemaining} remaining"/>
+					       <h:outputText id="charOut" value="0 characters entered, #{textEntryCharCountBean.maxlength} remaining"/>
 					   </h:panelGroup>
 					</f:facet>
 				</h:panelGrid>
