@@ -310,7 +310,7 @@ ice.ace.DataTable.prototype.destroy = function() {
     this.element.find(this.scrollBodySelector).unbind('scroll');
 
     // Clear filter events
-    this.element.off('keyup keypress', this.filterSelector);
+    this.element.off('keyup keypress input', this.filterSelector);
 
     // Clear panel expansion events
     this.element.off('keyup click', this.panelExpansionSelector);
@@ -349,7 +349,8 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
 
     // Don't run form level enter key handling
     this.element.on('keypress', this.filterSelector, function (event) {
-        if (event.which == 13) {
+        var keyCode = event.keyCode || event.which;
+        if (keyCode == 13) {
             event.stopPropagation();
         }
     });
@@ -357,8 +358,13 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
     if (this.cfg.filterEvent == "enter")
         this.element.on('keydown', this.filterSelector, function (event) {
             event.stopPropagation();
-            if (event.which == 13) {
-                event.preventDefault();
+            var keyCode = event.keyCode || event.which;
+            if (keyCode == 13) {
+                if (event.preventDefault) {
+                    event.preventDefault();
+                } else {
+                    event.returnValue = false;
+                }
                 _self.filter(event);
             }
         });
@@ -366,7 +372,8 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
     else if (this.cfg.filterEvent == "change")
         this.element.on('keyup', this.filterSelector, function (event) {
             var _event = event;
-            if (event.which == 8 || event.which == 13 || event.which > 40 || event.isTrigger) {
+            var keyCode = event.keyCode || event.which;
+            if (keyCode == 8 || keyCode == 13 || keyCode > 40 || event.isTrigger) {
                 if (_self.delayedFilterCall)
                     clearTimeout(_self.delayedFilterCall);
 
@@ -376,27 +383,12 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
             }
         });
 
-	if (!ice.ace.DataTable.filterEventListeners[_self.id]) {
-		ice.ace.DataTable.filterEventListeners[_self.id] = function (event) {
-			if (this.value == '') {
-				_self.filter(event);
-			}
-		};
-	}
-
-    this.element.find(this.filterSelector).each(function (index, element) {
-        try {
-            element.removeEventListener('input', ice.ace.DataTable.filterEventListeners[_self.id], false);
-        } catch (ex) {
-            //ignore failures in browsers that do not support the 'input' event or Element.addEventListener call
-        }
-        try {
-            element.addEventListener('input', ice.ace.DataTable.filterEventListeners[_self.id], false);
-        } catch (ex) {
-            //ignore failures in browsers that do not support the 'input' event or Element.addEventListener call
+    this.element.on('input', this.filterSelector, function (event) {
+        if ((event.target || event.srcElement).value == '') {
+            _self.filter(event);
         }
     });
-}
+};
 
 ice.ace.DataTable.prototype.setupPaginator = function () {
     this.paginator = new ice.ace.DataTable.Paginator(this);
