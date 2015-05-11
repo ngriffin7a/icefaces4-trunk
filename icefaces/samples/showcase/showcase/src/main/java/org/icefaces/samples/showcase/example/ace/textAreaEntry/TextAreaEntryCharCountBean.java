@@ -22,7 +22,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
-import org.icefaces.ace.event.CharCountEvent;
 import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
@@ -57,8 +56,6 @@ public class TextAreaEntryCharCountBean extends ComponentExampleImpl<TextAreaEnt
     
 	private int maxlength = 50;
 	private String comment;
-	private Long currLength = 0l;
-	private Long charsRemaining = (long)maxlength;
     
     public TextAreaEntryCharCountBean() {
         super(TextAreaEntryCharCountBean.class);
@@ -80,27 +77,6 @@ public class TextAreaEntryCharCountBean extends ComponentExampleImpl<TextAreaEnt
 		this.comment = comment;
 	}
 	
-	public Long getCurrLength() {
-		return currLength;
-	}
-
-	public void setCurrLength(Long currLength) {
-		this.currLength = currLength;
-	}
-
-	public Long getCharsRemaining() {
-		return charsRemaining;
-	}
-
-	public void setCharsRemaining(Long charsRemaining) {
-		this.charsRemaining = charsRemaining;
-	}
-
-	public void updateCount(CharCountEvent event) {
-		currLength = event.getCurrentLength();
-		charsRemaining = event.getCharsRemaining();
-	}
-
     @PostConstruct
     public void initMetaData() {
         super.initMetaData();
