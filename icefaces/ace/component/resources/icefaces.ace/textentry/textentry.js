@@ -100,6 +100,13 @@ ice.ace.TextEntry = function(id, cfg) {
     if (cfg.behaviors) {
         ice.ace.jq.each(cfg.behaviors, function(name, behavior) {
             if (name == 'charCount') {
+                var target = document.getElementById(inputId);
+                behavior.currLength = function() {
+                    return target.value.length;
+                };
+                behavior.charsRemaining = function() {
+                    return target.maxLength - target.value.length;
+                };
                 if (document.attachEvent) {
                     //IE 7,8,9 handling -- backspace and delete keypresses do not trigger 'input' events
                     self.jq.on('input', function (e) {
