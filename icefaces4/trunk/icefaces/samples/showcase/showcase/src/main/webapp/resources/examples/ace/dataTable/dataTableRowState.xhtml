@@ -85,14 +85,12 @@
             <h:panelGroup id="editing" style="display:inline-block; vertical-align: top; margin: .5em .25em;">
                 Editing<br/>
                 <h:commandButton id="startEditAll" value="Start Editing For All"
-                                 onclick="setTimeout(function() {ice.ace.DataTable.removeAllInputNames('form:carTableRowExpansion')},1000);"
                                  actionListener="#{dataTableRowState.startAllEditing}">
-                    <f:ajax execute="@this" render="@all"/>
+                    <f:ajax execute="@this" render="@all" onevent="removeAllInputNames"/>
                                  </h:commandButton><br/>
                 <h:commandButton id="startEditSel" value="Start Editing For Selected"
-                                 onclick="setTimeout(function() {ice.ace.DataTable.removeAllInputNames('form:carTableRowExpansion')},1000);"
                                  actionListener="#{dataTableRowState.startEditing}">
-                    <f:ajax execute="@this" render="@all"/>
+                    <f:ajax execute="@this" render="@all" onevent="removeAllInputNames"/>
                                  </h:commandButton><br/>
                 <h:commandButton id="stopEditAll" value="Stop Editing For All"
                                  actionListener="#{dataTableRowState.stopAllEditing}">
@@ -214,7 +212,12 @@
            </ace:dataTable>
         </h:form>
 		<script type="text/javascript">
-			setTimeout(function() {ice.ace.DataTable.removeAllInputNames('form:carTableRowExpansion')},1000);
+			var removeAllInputNames = function(data) {
+				if (data.status == 'success') {
+					setTimeout(function() {ice.ace.DataTable.removeAllInputNames('#{dataTableBindings.tables[dataTableRowState.clazz].clientId}')},1500);
+				}
+			};
+			setTimeout(function() {ice.ace.DataTable.removeAllInputNames('#{dataTableBindings.tables[dataTableRowState.clazz].clientId}')},2000);
 		</script>
         <ace:messages id="facesMsgs"/>
     </ui:define>
