@@ -66,7 +66,7 @@ public class DraggableOverviewBean extends ComponentExampleImpl<DraggableOvervie
         image = ImageSet.getImage(ImageSet.ImageSelect.PICTURE);
         axisMovementConstraint = "x or y";
         helperMode = "original";
-        containmentConstraint = "";
+        containmentConstraint = "#div1";
         gridMode ="1,1";
         revert = false;
         opacity = 1d;

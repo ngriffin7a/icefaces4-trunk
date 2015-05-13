@@ -24,17 +24,17 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
+        
     <ui:param name="title" value="#{msgs[draggableOverviewBean.title]}"/>
     <ui:param name="description" value="#{msgs[draggableOverviewBean.description]}"/>
     <ui:param name="resourceValue" value="#{draggableOverviewBean.exampleResource}"/>
-    
     <ui:param name="wikiResources" value="#{dragDropResources.wikiResources}"/>
     <ui:param name="tldResources" value="#{dragDropResources.tldResources}"/>
 
     <ui:define name="example">
-       <h:form id="form">
-
-           
+	   
+       <h:form id="form">			
+		 <div id="div1"> 
            <ace:panel id="draggableSetupPanel" header="Draggable Component Configuration Panel">
                        
                         <h:panelGrid columns="2" styleClass="centeredPanelGridWithLeftJustifiedText">
@@ -54,9 +54,9 @@
                         </ace:simpleSelectOneMenu>
                         
                         <h:outputLabel id="containmentConstraintLabel" for="containmentConstraintSelector" value="Containment:" />
-                        <ace:simpleSelectOneMenu id="containmentConstraintSelector" value="#{draggableOverviewBean.containmentConstraint}" title="Force dragable component to stay within its parent container area">
+                        <ace:simpleSelectOneMenu id="containmentConstraintSelector" value="#{draggableOverviewBean.containmentConstraint}" title="Force draggable component to stay within its parent container area">
 							<ace:ajax execute="@this" />
-                            <f:selectItem itemValue="" itemLabel="no"/>
+                            <f:selectItem itemValue="#div1" itemLabel="no"/>
                             <f:selectItem itemValue="parent" itemLabel="yes"/>
                         </ace:simpleSelectOneMenu>
                         
@@ -83,8 +83,7 @@
                             <f:selectItem itemValue="0.2" itemLabel="0.2"/>
                         </ace:simpleSelectOneMenu>
 
-                    </h:panelGrid>
-                    
+                    </h:panelGrid>                    
                      
            </ace:panel>
            
@@ -99,13 +98,13 @@
                                             containment="#{draggableOverviewBean.containmentConstraint}"
                                             grid="#{draggableOverviewBean.gridMode}"
                                             revert="#{draggableOverviewBean.revert}"
-                                            opacity="#{draggableOverviewBean.opacity}"/>
+                                            opacity="#{draggableOverviewBean.opacity}" />
+											
                </h:graphicImage>
-           </ace:panel>
-           
-           
-           
+           </ace:panel>           
+          </div>
         </h:form>
         
     </ui:define>
+
 </ui:composition>
