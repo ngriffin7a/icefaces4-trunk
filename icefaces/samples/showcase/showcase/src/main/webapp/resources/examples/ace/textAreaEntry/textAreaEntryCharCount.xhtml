@@ -35,14 +35,11 @@
 
     <ui:define name="example">
         <script type="text/javascript">
-            function updateClientSide(elementId) {
-                var e = document.getElementById(elementId);
-                if (e) {
-                    var output = document.getElementById("charOut");
-                    if (output) {
-                        output.textContent = e.value.length + " characters entered, " + (e.maxLength - e.value.length) + " remaining";
-                        return true;
-                    }
+            function updateClientSide(charCount, outputId) {
+                var output = document.getElementById(outputId);
+                if (output) {
+                    output.textContent = charCount.currLength() + " characters entered, " + charCount.charsRemaining() + " remaining";
+                    return true;
                 }
                 return false;
             }
@@ -69,7 +66,7 @@
                                    maxlength="#{textAreaEntryCharCountBean.maxlength}"
                                    labelPosition="left"  label="Comment:">
                         <ace:ajax event="charCount"
-                                  onStart="updateClientSide(cfg.source + '_input');"/>
+                                  onStart="updateClientSide(cfg, 'charOut');"/>
                     </ace:textAreaEntry>
                     
                     <f:facet name="footer">
