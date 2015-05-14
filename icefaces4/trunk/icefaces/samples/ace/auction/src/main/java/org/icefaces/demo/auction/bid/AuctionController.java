@@ -162,7 +162,7 @@ public class AuctionController implements Serializable {
 			return;
 		}
 		
-		// TODO ICE-10611 Because the ace:dateTimeEntry doesn't seem to respect min/max date for time, we need to manually check our expiry date
+		// TODO ICE-10611 - Because the ace:dateTimeEntry doesn't seem to respect min/max date for time, we need to manually check our expiry date
 		Date dateCheck = getMinExpiryDate();
 		if (postBean.getExpiryDate().before(dateCheck)) {
 			FacesUtils.addGlobalErrorMessage("Expiry date is too soon, please enter a date and time at least " + AuctionItem.EXPIRY_DATE_MINIMUM + " minutes away.");
