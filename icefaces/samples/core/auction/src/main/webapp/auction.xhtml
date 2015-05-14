@@ -111,7 +111,7 @@
                     <tr class="#{status.even?'even':'odd'} #{auctionItem.showExtendedDescription?'expanded':''}">
                         <!-- contract/expand arrow graphic, toggles extend auction item decription visiblity -->
                         <td id="row_#{status.index}_td1" valign="top">
-                            <h:commandLink
+                            <h:commandLink id="detailClick"
                                     actionListener="#{auctionController.toggleExtendedDescription}"
                                     immediate="true">
                                 <h:graphicImage width="15" height="15"
