@@ -575,3 +575,7 @@ body, table {
 #examplePanel_header .ui-panel-titlebar-icons {
 	display:none;
 }
+
+.row-state-table input[type="text"] {
+	width:90%;
+}

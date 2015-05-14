@@ -117,7 +117,8 @@
                           value="#{dataTableRowState.carsData}"
                           selectionMode="multiple"
                           var="car"
-                          rows="10">
+                          rows="10"
+                          styleClass="row-state-table">
                <ace:ajax event="select" render="controls @this" execute="@this" />
                <ace:ajax event="editSubmit" render="facesMsgs"/>
 
@@ -138,7 +139,7 @@
                             <h:outputText id="nameCell" value="#{car.name}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <h:inputText id="nameInput" value="#{car.name}" style="width:90%"/>
+                            <h:inputText id="nameInput" value="#{car.name}"/>
                         </f:facet>
                     </ace:cellEditor>
                 </ace:column>
@@ -151,7 +152,7 @@
                             <h:outputText id="weightCell" value="#{car.weight}"/>lbs.
                         </f:facet>
                         <f:facet name="input">
-                            <h:inputText id="weightInput" value="#{car.weight}" style="width:90%"/>lbs.
+                            <h:inputText id="weightInput" value="#{car.weight}"/>lbs.
                         </f:facet>
                     </ace:cellEditor>
                 </ace:column>
@@ -164,7 +165,7 @@
                             <h:outputText id="accelCell" value="#{car.acceleration}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <h:inputText id="accelInput" value="#{car.acceleration}" style="width:90%"/>
+                            <h:inputText id="accelInput" value="#{car.acceleration}"/>
                         </f:facet>
                     </ace:cellEditor>
                 </ace:column>
@@ -177,7 +178,7 @@
                             <h:outputText id="mpgCell" value="#{car.mpg}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <h:inputText id="mpgInput" value="#{car.mpg}" style="width:90%"/>
+                            <h:inputText id="mpgInput" value="#{car.mpg}"/>
                         </f:facet>
                     </ace:cellEditor>
                 </ace:column>
@@ -196,7 +197,7 @@
                             </h:outputText>
                         </f:facet>
                         <f:facet name="input">
-                            <h:inputText id="costInput" value="#{car.cost}" style="width:90%">
+                            <h:inputText id="costInput" value="#{car.cost}">
                                 <f:convertNumber type="currency"
                                                  currencySymbol="$"
                                                  groupingUsed="true"
