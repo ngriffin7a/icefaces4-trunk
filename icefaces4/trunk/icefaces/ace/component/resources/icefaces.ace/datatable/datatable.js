@@ -3118,7 +3118,6 @@ ice.ace.DataTable.removeInputNames = function (parentId) {
 
 // removes name attributes from all inputs inside cell editors in editing mode for an entire table
 ice.ace.DataTable.removeAllInputNames = function (parentId) {
-	var changes = {};
 	ice.ace.jq(ice.ace.escapeClientId(parentId) + ' .ui-state-highlight.ui-cell-editor').find('input, select, textarea, button').each(function(i,e) {
 		var $e = ice.ace.jq(e);
 		var name = $e.attr('name');
@@ -3132,6 +3131,7 @@ ice.ace.DataTable.removeAllInputNames = function (parentId) {
 };
 
 ice.ace.DataTable.restoreInputNames = function (parent) {
+	var changes = {};
 	parent.find('input, select, textarea, button').each(function(i,e) {
 		var $e = ice.ace.jq(e);
 		var dataName = $e.attr('data-name');
