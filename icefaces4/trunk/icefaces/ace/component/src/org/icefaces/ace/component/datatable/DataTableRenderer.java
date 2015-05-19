@@ -430,6 +430,7 @@ public class DataTableRenderer extends CoreRenderer {
             json.entry("scrollIE8Like7", scrollIE8Like7);
             if (!hiddenScrollableSizing) json.entry("disableHiddenSizing",true);
         }
+        if (EnvUtils.isDeltaSubmit(context)) json.entry("deltaSubmit",true);
 
         encodeClientBehaviors(context, table, json);
 

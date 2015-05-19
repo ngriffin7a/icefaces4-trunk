@@ -2998,7 +2998,8 @@ ice.ace.DataTable.prototype.doRowEditSaveRequest = function (element) {
         _self = this,
         editorsToProcess = new Array();
 
-	ice.ace.DataTable.restoreInputNames(row);
+	var changes = ice.ace.DataTable.restoreInputNames(row);
+	changes = this.cfg.deltaSubmit ? changes : {};
 
     row.find('> td > div.ui-cell-editor, > td > div > div.ui-cell-editor').each(function () {
         editorsToProcess.push(ice.ace.jq(this).attr('id'));
@@ -3032,7 +3033,7 @@ ice.ace.DataTable.prototype.doRowEditSaveRequest = function (element) {
     params[rowEditorId] = rowEditorId;
     params[this.id + '_editSubmit'] = row.attr('id').split('_row_')[1];
 
-    options.params = params;
+    options.params = ice.ace.jq.extend(params, changes);
 
     if (this.behaviors)
         if (this.behaviors.editSubmit) {
@@ -3109,18 +3110,23 @@ ice.ace.DataTable.removeInputNames = function (parentId) {
 		if (name) {
 			$e.attr('data-name', name);
 			$e.removeAttr('name');
+			var val = $e.val();
+			$e.attr('data-value', val);
 		}
 	});
 };
 
 // removes name attributes from all inputs inside cell editors in editing mode for an entire table
 ice.ace.DataTable.removeAllInputNames = function (parentId) {
+	var changes = {};
 	ice.ace.jq(ice.ace.escapeClientId(parentId) + ' .ui-state-highlight.ui-cell-editor').find('input, select, textarea, button').each(function(i,e) {
 		var $e = ice.ace.jq(e);
 		var name = $e.attr('name');
 		if (name) {
 			$e.attr('data-name', name);
 			$e.removeAttr('name');
+			var val = $e.val();
+			$e.attr('data-value', val);
 		}
 	});
 };
@@ -3132,8 +3138,12 @@ ice.ace.DataTable.restoreInputNames = function (parent) {
 		if (dataName) {
 			$e.attr('name', dataName);
 			$e.removeAttr('data-name');
+			var dataValue = $e.attr('data-value');
+			if (dataValue && (dataValue != $e.val()))
+				changes['patch-'+dataName] = dataValue;
 		}
 	});
+	return changes;
 };
 
 
