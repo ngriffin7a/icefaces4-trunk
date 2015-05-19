@@ -38,7 +38,7 @@
             function updateClientSide(charCount, outputId) {
                 var output = document.getElementById(outputId);
                 if (output) {
-                    output.textContent = charCount.currLength() + " characters entered, " + charCount.charsRemaining() + " remaining";
+                    output.innerHTML = charCount.currLength() + " characters entered, " + charCount.charsRemaining() + " remaining";
                     return true;
                 }
                 return false;
