@@ -109,10 +109,4 @@ public class ProductInfo {
         info.append( "\n" );
         return info.toString();
     }
-
-	public static void main(String[] args) {
-        ProductInfo app = new ProductInfo();
-        System.out.println( app.toString() );
-    }
-
 }
