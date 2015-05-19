@@ -14,10 +14,9 @@
   ~ governing permissions and limitations under the License.
   -->
 
-<project name="ace-common-portlet">
+<project name="showcase-common-portlet">
 
-    <property name="icefaces.base.dir" location="../../.." />
-    <property name="portlet"           value="true" />
+    <property name="icefaces.base.dir" location="../../../" />
 
     <import file="../../build/common-portlet.xml" />
     <import file="../../build/common.xml" />

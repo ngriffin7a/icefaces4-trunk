@@ -16,7 +16,8 @@
 
 <project name="ace-common">
 
-    <property name="icefaces.base.dir" location="../../.." />
+    <property name="icefaces.base.dir" location="../../../" />
+
     <import file="../../build/common.xml" />
 
 </project>
