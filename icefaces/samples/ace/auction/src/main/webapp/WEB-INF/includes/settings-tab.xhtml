@@ -22,7 +22,7 @@
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
     <icecore:defaultAction actionListener="#{settingsController.save}" key="Enter"/>
     
-    <ace:panel closable="false" collapsed="false" toggleable="true"
+    <ace:panel closable="false" collapsed="false" toggleable="false"
                header="Application Settings">
         <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
             <h:graphicImage id="nameInHelp" library="images" name="help.png"/>
@@ -32,16 +32,16 @@
                            placeholder="Enter your name">
                 <f:validateLength minimum="3" maximum="15"/>
             </ace:textEntry>
-            <h:message for="nameIn"/>
+            <ace:message for="nameIn"/>
             
             <h:graphicImage id="sLocHelp" library="images" name="help.png"/>
             <h:outputLabel for="sLoc" value="Your Location:"/>
-            <!-- TODO ICE-10621 - When fixed and ace:simpleSelectOneMenu functions the same as h:selectOneMenu then update all h:selectOneMenus to ACE (on settings, add item, etc.) -->
+            <!-- TODO ICE-10621 - When fixed and ace:simpleSelectOneMenu functions the same as h:selectOneMenu then update all h:selectOneMenus to ACE (on settings, add item, etc.) as well as label/labelPosition -->
             <h:selectOneMenu id="sLoc" value="#{settingsBean.location}" required="true">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
             </h:selectOneMenu>
-            <h:message for="sLoc"/>
+            <ace:message for="sLoc"/>
             
             <h:graphicImage id="dbidHelp" library="images" name="help.png"/>
             <h:outputLabel for="dbid" value="Default Bid Increment ($):"/>
@@ -50,27 +50,27 @@
                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                 <f:validateDoubleRange minimum="1.0" maximum="100.0"/>
             </ace:textEntry>
-            <h:message for="dbid"/>
+            <ace:message for="dbid"/>
             
             <h:graphicImage id="taboHelp" library="images" name="help.png"/>
             <h:outputLabel for="tabo" value="Tab Orientation:"/>
             <h:selectOneRadio id="tabo" value="#{settingsBean.tabOrientation}" required="true">
                 <f:selectItems value="#{listData.tabOrientations}"/>
             </h:selectOneRadio>
-            <h:message for="tabo"/>
+            <ace:message for="tabo"/>
             
             <!-- TODO ICE-10612 - When resolved use the new color picker component instead of this custom composite component approach -->
             <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
             <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
             <auction:colorPicker id="ncolorb"
                                  value="#{settingsBean.notificationBackground}"/>
-            <h:message for="ncolorb"/>
+            <ace:message for="ncolorb"/>
             
             <h:graphicImage id="ncolorfHelp" library="images" name="help.png"/>
             <h:outputLabel for="ncolorf" value="Notification Foreground:" required="true"/>
             <auction:colorPicker id="ncolorf"
                                  value="#{settingsBean.notificationForeground}"/>
-            <h:message for="ncolorf"/>
+            <ace:message for="ncolorf"/>
             
             <h:graphicImage id="pWidthHelp" library="images" name="help.png"/>
             <h:outputLabel for="pWidth" value="Popup Width:"/>
@@ -84,18 +84,18 @@
 					<ace:ajax event="slideEnd" execute="@this" render="pWidthWrap" />
 				</ace:sliderEntry>
 			</h:panelGroup>
-            <h:message for="pWidth"/>
+            <ace:message for="pWidth"/>
             
             <!-- TODO ICE-10616 - Note that submitting this form, even with invalid fields above, will still apply the theme. Also the tabSet will be reset to the first index -->
             <h:graphicImage id="themeHelp" library="images" name="help.png"/>
             <h:outputLabel for="theme" value="ICEfaces Theme:"/>
             <ace:themeSelect id="theme" value="#{settingsBean.themeName}" required="true"/>
-            <h:message for="theme"/>
+            <ace:message for="theme"/>
             
             <h:graphicImage id="saveHelp" library="images" name="help.png"/>
             <h:outputLabel for="save" value="Save settings in web browser cookies?"/>
             <h:selectBooleanCheckbox id="save" value="#{settingsBean.saveCookie}" required="true"/>
-            <h:message for="save"/>
+            <ace:message for="save"/>
         </h:panelGrid>
         
         <f:facet name="footer">

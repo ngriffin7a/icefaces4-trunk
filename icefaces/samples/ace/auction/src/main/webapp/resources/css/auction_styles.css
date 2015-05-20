@@ -49,10 +49,12 @@
 /* Page Styles */
 .auctionMonitorContainer {
 	margin: 30px 15px 5px 15px;
+	min-width: 800px;
 }
 
-.auctionMontiorTable {
+.auctionMonitorTable {
     width: 100%;
+    min-width: 800px;
 }
 
 .notificationBarWrap {
@@ -152,4 +154,8 @@
 
 .aboutImage {
 	margin: 10px;
+}
+
+.messagePadding .ui-faces-message {
+	line-height: 30px;
 }

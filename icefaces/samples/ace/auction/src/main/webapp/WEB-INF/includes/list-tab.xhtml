@@ -23,7 +23,7 @@
     <auction:dataExporters target="a" fileName="auction-list" includeFooters="false"/>
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
-                   styleClass="auctionMontiorTable"
+                   styleClass="auctionMonitorTable"
                    clickableHeaderSorting="true"
                    emptyMessage="No auctions were found, please try again later."
                    paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
@@ -79,7 +79,7 @@
     </ace:dataTable>
     
     <ace:panel closable="false" collapsed="false" toggleable="true"
-               header="Details of Listed Item '#{bidBean.bidItem.name}'"
+               header="'#{bidBean.bidItem.name}' Details"
                rendered="#{bidBean.renderBidPanel}"
                style="margin-top: 15px;">
         <h:panelGrid columns="2" cellpadding="3" cellspacing="0">

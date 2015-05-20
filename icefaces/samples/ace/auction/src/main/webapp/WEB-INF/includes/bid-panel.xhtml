@@ -37,20 +37,17 @@
         <ace:pushButton id="submitBid" value="Submit"
                         actionListener="#{auctionController.submitBid}"
                         title="Submit your bid for the selected item"/>
-        <mobi:largeView>
-            <ace:pushButton id="submitCloseBid" value="Submit &amp; Close"
-                            actionListener="#{auctionController.submitCloseBid}"
-                            title="Submit your bid for the selected item then return to the list"/>
-        </mobi:largeView>
-        <ace:pushButton value="Cancel" immediate="true"
+        <ace:pushButton value="Close" immediate="true"
                         actionListener="#{auctionController.cancelBid}"
                         title="Cancel your bid and unselect the item"/>
-        <f:facet name="footer">
-            <h:message for="bidIn"/>
-            <h:message for="buttonWrap"/>
-        </f:facet>
     </h:panelGrid>
-    <mobi:largeView>
+    
+	<h:panelGroup layout="block" styleClass="messagePadding">
+		<ace:message for="bidIn" />
+		<ace:message for="buttonWrap" />
+	</h:panelGroup>
+	
+	<mobi:largeView>
         <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
     </mobi:largeView>
 </ui:composition>
