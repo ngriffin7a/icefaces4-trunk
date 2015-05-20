@@ -21,10 +21,12 @@
               xmlns:icecore="http://www.icefaces.org/icefaces/core"
               xmlns:composite="http://java.sun.com/jsf/composite">
     <composite:interface>
+        <composite:attribute name="label" type="java.lang.String" required="false"/>
     </composite:interface>
     
     <composite:implementation>
-        <h:panelGroup layout="block" styleClass="floatR">
+        <h:panelGrid columns="4" styleClass="floatR" style="width: auto;">
+            <h:outputText value="#{cc.attrs.label}"/>
 	        <h:commandButton image="resources/images/chat-tab.png" immediate="true"
 	                         title="Lock the chat panel into a tab"
 	                         actionListener="#{chatController.positionTab}"
@@ -40,6 +42,6 @@
 	                         actionListener="#{chatController.positionBottom}"
 	                         disabled="#{chatBean.isPositionBottom}"
                              styleClass="positionButton"/>
-	    </h:panelGroup>
+	    </h:panelGrid>
     </composite:implementation>
 </ui:component>
