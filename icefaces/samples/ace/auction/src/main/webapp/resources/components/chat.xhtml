@@ -28,12 +28,13 @@
         <h:panelGroup id="chat" layout="block">
         <icecore:defaultAction actionListener="#{chatController.submitMessage}" key="Enter"/>
         
-	        <h:panelGrid id="ncw" columns="3" rendered="#{!chatBean.hasCurrentRoom}">
+	        <h:panelGrid id="ncw" columns="4" rendered="#{!chatBean.hasCurrentRoom}">
 	            <h:outputLabel for="roomIn" value="Select a Chat Room:"/>
 	            <h:selectOneMenu id="roomIn" value="#{chatBean.selectedRoom}" required="true">
 	                <f:selectItems value="#{chatService.rooms}" var="room"
 	                               itemLabel="#{room.name} (#{room.occupantsSize} occupants)" itemValue="#{room.name}"/>
 	            </h:selectOneMenu>
+	            <auction:chatPosition label="Position:"/>
 	            <ace:message for="roomIn"/>
 	            
 	            <f:facet name="footer">
@@ -41,7 +42,6 @@
 			            <ace:pushButton value="Join Room" actionListener="#{chatController.joinRoom}"/>
 			            <ace:pushButton value="Cancel" actionListener="#{tabController.auctionListTab}"
 			                            rendered="#{chatBean.isPositionTab}" immediate="true"/>
-		                <auction:chatPosition/>
 		            </h:panelGrid>
 	            </f:facet>
 	        </h:panelGrid>
