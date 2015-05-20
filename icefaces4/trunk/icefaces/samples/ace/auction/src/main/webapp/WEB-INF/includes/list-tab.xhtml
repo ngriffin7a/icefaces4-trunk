@@ -20,7 +20,6 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <auction:dataExporters target="a" fileName="auction-list" includeFooters="false"/>
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
                    styleClass="auctionMonitorTable"
@@ -47,6 +46,7 @@
 	                             actionListener="#{tabController.postAuctionTab}"
 	                             immediate="true"
 	                             styleClass="floatR"/>
+                <auction:dataExporters target="a" fileName="auction-list" includeFooters="false" popup="true"/>
             </h:panelGroup>
         </f:facet>
         <ace:column headerText="Name" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
@@ -79,7 +79,7 @@
     </ace:dataTable>
     
     <ace:panel closable="false" collapsed="false" toggleable="true"
-               header="'#{bidBean.bidItem.name}' Details"
+               header="Details for '#{bidBean.bidItem.name}'"
                rendered="#{bidBean.renderBidPanel}"
                style="margin-top: 15px;">
         <h:panelGrid columns="2" cellpadding="3" cellspacing="0">
@@ -109,23 +109,17 @@
             #{bidBean.bidItem.description}
             
             <h:outputText value="Bid History:"/>
-            <h:panelGrid columns="7" rendered="#{bidBean.bidItem.bids gt 0}">
+            <h:panelGrid columns="4" rendered="#{bidBean.bidItem.bids gt 0}">
                 <h:outputText value="#{bidBean.bidItem.bids} bids"/>
-                <b>|</b>
-	            <h:commandLink immediate="true" actionListener="#{auctionController.openGraphBidDialog}"
-	                           title="Open a popup showing a graph of bid increment history">
-	                Graph Bid Increments
-	            </h:commandLink>
-	            <b>|</b>
-                <h:commandLink immediate="true" actionListener="#{auctionController.openGraphPriceDialog}"
-                               title="Open a popup showing a graph of increasing price changes">
-                    Graph Price Changes
-                </h:commandLink>
-                <b>|</b>
-                <h:commandLink immediate="true" actionListener="#{auctionController.openViewHistoryDialog}"
-                               title="Open a popup showing a table of past bid details">
-                    View History
-                </h:commandLink>
+	            <h:commandButton immediate="true" actionListener="#{auctionController.openGraphBidDialog}"
+	                             title="Graph Bid Increments - open a popup showing a graph of bid increment history"
+	                             image="resources/images/graph-bids.png"/>
+                <h:commandButton immediate="true" actionListener="#{auctionController.openGraphPriceDialog}"
+                                 title="Graph Price Changes - Open a popup showing a graph of increasing price changes"
+                                 image="resources/images/graph-price.png"/>
+                <h:commandButton immediate="true" actionListener="#{auctionController.openViewHistoryDialog}"
+                                 title="View History - Open a popup showing a table of past bid details"
+                                 image="resources/images/history.png"/>
             </h:panelGrid>
             <h:outputText value="No bids yet"
                           rendered="#{bidBean.bidItem.bids le 0}"/>

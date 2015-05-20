@@ -68,6 +68,7 @@
 	        <h:outputLabel for="expiryIn" value="Expiry Date:"/>
 	        <ace:dateTimeEntry id="expiryIn" value="#{postBean.expiryDate}"
 	                           navigator="false" renderAsPopup="true" readOnlyInputText="true"
+	                           popupIcon="resources/images/calendar.png"
 	                           required="true" requiredIndicator="*"
 	                           mindate="#{auctionController.minExpiryDate}" maxdate="#{auctionController.maxExpiryDate}"
 	                           showOn="both"
