@@ -20,8 +20,6 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
-    <auction:dataExporters target="m" fileName="auction-messages"
-                           includeHeaders="false" includeFooters="false"/>
     <ace:dataTable id="m" value="#{globalMessage.messages}" var="gmessage"
                    emptyMessage="No auction log messages yet."
                    reorderableColumns="false" resizableColumns="false"
@@ -29,6 +27,7 @@
                    rows="#{globalMessage.fullLogCount}">
         <f:facet name="header">
             <h:outputText value="Previous #{globalMessage.visibleLogCount} Auction Notifications"/>
+            <auction:dataExporters target="m" fileName="auction-messages" includeHeaders="false" includeFooters="false" popup="true"/>
         </f:facet>
         <ace:column styleClass="alignL">
             #{gmessage}

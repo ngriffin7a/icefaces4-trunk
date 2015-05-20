@@ -17,9 +17,11 @@
               xmlns:f="http://java.sun.com/jsf/core"
               xmlns:h="http://java.sun.com/jsf/html"
               xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:c="http://java.sun.com/jsp/jstl/core"
               xmlns:ace="http://www.icefaces.org/icefaces/components"
               xmlns:composite="http://java.sun.com/jsf/composite">
     <composite:interface>
+        <composite:attribute name="popup" type="java.lang.Boolean" required="false" default="false"/>
         <composite:attribute name="target" type="java.lang.String" required="true"/>
         <composite:attribute name="fileName" type="java.lang.String" default="export"/>
         <composite:attribute name="includeHeaders" type="java.lang.Boolean" default="true"/>
@@ -27,22 +29,54 @@
     </composite:interface>
     
     <composite:implementation>
-	    <h:panelGroup id="ew" layout="block" styleClass="floatR">
-	        <ace:dataExporter id="epdf"
-	                          target="#{cc.attrs.target}"
-	                          label="Export to PDF" type="pdf"
-	                          fileName="#{cc.attrs.fileName}"
-	                          includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
-            <ace:dataExporter id="exls"
-                              target="#{cc.attrs.target}"
-                              label="Export to XLS" type="xls"
-                              fileName="#{cc.attrs.fileName}"
-                              includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
-            <ace:dataExporter id="ecsv"
-                              target="#{cc.attrs.target}"
-                              label="Export to CSV" type="csv"
-                              fileName="#{cc.attrs.fileName}"
-                              includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
-	    </h:panelGroup>
+        <c:choose>
+	        <c:when test="#{cc.attrs.popup}">
+				<h:commandButton id="exportOut" image="resources/images/export.png"
+					             title="Export this table to PDF, CSV, or XLS" immediate="true"
+					             onclick="ice.ace.instance(this.nextElementSibling.id).show();"
+					             styleClass="floatR" />
+				<ace:dialog id="exportDialog"
+				            header="Export Table"
+				            closable="true" closeOnEscape="true"
+					        modal="true" draggable="true" resizable="false"
+					        width="500">
+					<p>Choose the file format you want to export this table to</p>
+                    <ace:dataExporter id="epdf"
+                                      target="#{cc.attrs.target}"
+                                      label="Export to PDF" type="pdf"
+                                      fileName="#{cc.attrs.fileName}"
+                                      includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
+                    <ace:dataExporter id="exls"
+                                      target="#{cc.attrs.target}"
+                                      label="Export to XLS" type="xls"
+                                      fileName="#{cc.attrs.fileName}"
+                                      includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
+                    <ace:dataExporter id="ecsv"
+                                      target="#{cc.attrs.target}"
+                                      label="Export to CSV" type="csv"
+                                      fileName="#{cc.attrs.fileName}"
+                                      includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
+				</ace:dialog>
+			</c:when>
+	        <c:otherwise>
+				<h:panelGroup id="ew" layout="block" styleClass="floatR">
+			        <ace:dataExporter id="epdf"
+			                          target="#{cc.attrs.target}"
+			                          label="Export to PDF" type="pdf"
+			                          fileName="#{cc.attrs.fileName}"
+			                          includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
+		            <ace:dataExporter id="exls"
+		                              target="#{cc.attrs.target}"
+		                              label="Export to XLS" type="xls"
+		                              fileName="#{cc.attrs.fileName}"
+		                              includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
+		            <ace:dataExporter id="ecsv"
+		                              target="#{cc.attrs.target}"
+		                              label="Export to CSV" type="csv"
+		                              fileName="#{cc.attrs.fileName}"
+		                              includeHeaders="#{cc.attrs.includeHeaders}" includeFooters="#{cc.attrs.includeFooters}"/>
+			    </h:panelGroup>
+		    </c:otherwise>
+	    </c:choose>
     </composite:implementation>
 </ui:component>
