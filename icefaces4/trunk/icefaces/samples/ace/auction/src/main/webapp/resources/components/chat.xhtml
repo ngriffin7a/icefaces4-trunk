@@ -34,7 +34,7 @@
 	                <f:selectItems value="#{chatService.rooms}" var="room"
 	                               itemLabel="#{room.name} (#{room.occupantsSize} occupants)" itemValue="#{room.name}"/>
 	            </h:selectOneMenu>
-	            <h:message for="roomIn"/>
+	            <ace:message for="roomIn"/>
 	            
 	            <f:facet name="footer">
 	                <h:panelGrid columns="3">
@@ -111,7 +111,7 @@
 		                                 actionListener="#{chatController.submitMessage}"/>
 		                
 		                <f:facet name="footer">
-		                    <h:message for="cin"/>
+		                    <ace:message for="cin"/>
 		                </f:facet>
 		           </h:panelGrid>
 		       </f:facet>

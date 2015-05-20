@@ -22,7 +22,7 @@
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
     <icecore:defaultAction actionListener="#{auctionController.postAuction}" key="Enter"/>
                 
-    <ace:panel closable="false" collapsed="false" toggleable="true"
+    <ace:panel closable="false" collapsed="false" toggleable="false"
                header="New Auction Item to Add (maximum #{auctionController.maxPostedAuctions})"
                rendered="#{postBean.postedCount lt auctionController.maxPostedAuctions}">
 	    <h:panelGrid columns="3" cellpadding="4" cellspacing="0" styleClass="postTable">
@@ -38,7 +38,7 @@
 	                       validator="UniqueItemNameValidator">
 	            <f:validateLength minimum="3" maximum="20"/>
 	        </ace:textEntry>
-	        <h:message for="itemNIn"/>
+	        <ace:message for="itemNIn"/>
 	        
 	        <h:outputLabel for="descIn" value="Item Description:"/>
 	        <ace:textAreaEntry id="descIn" value="#{postBean.toAdd.description}"
@@ -46,7 +46,7 @@
 	                           resizable="true">
 	           <f:validateLength minimum="0" maximum="500"/>
 	        </ace:textAreaEntry>
-	        <h:message for="descIn"/>
+	        <ace:message for="descIn"/>
 	        
 	        <h:outputLabel for="conditionIn" value="Item Condition:"/>
 	        <h:selectOneMenu id="conditionIn" value="#{postBean.toAdd.condition}">
@@ -54,7 +54,7 @@
 	            <f:selectItems value="#{postBean.toAdd.conditions}" var="condition"
 	                           itemValue="#{condition}" itemLabel="#{condition.value}"/>
 	        </h:selectOneMenu>
-	        <h:message for="conditionIn"/>
+	        <ace:message for="conditionIn"/>
 	        
 	        <h:outputLabel for="priceIn" value="Starting Price ($):"/>
 	        <ace:textEntry id="priceIn" value="#{postBean.toAdd.price}"
@@ -63,7 +63,7 @@
 	            <f:validateDoubleRange minimum="0.1" maximum="1000"/>
 	            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
 	        </ace:textEntry>
-	        <h:message for="priceIn"/>
+	        <ace:message for="priceIn"/>
 	        
 	        <h:outputLabel for="expiryIn" value="Expiry Date:"/>
 	        <ace:dateTimeEntry id="expiryIn" value="#{postBean.expiryDate}"
@@ -72,7 +72,7 @@
 	                           mindate="#{auctionController.minExpiryDate}" maxdate="#{auctionController.maxExpiryDate}"
 	                           showOn="both"
 	                           pattern="MM/dd/yyyy h:mm a"/>
-	        <h:message for="expiryIn"/>
+	        <ace:message for="expiryIn"/>
 	        
             <h:outputText value="Additional Details" style="font-weight: bold;"/>
             <h:outputText value=""/><h:outputText value=""/>
@@ -83,14 +83,14 @@
                            placeholder="Enter your name">
                 <f:validateLength minimum="3" maximum="15"/>
             </ace:textEntry>
-	        <h:message for="sellerName"/>
+	        <ace:message for="sellerName"/>
 	        
 	        <h:outputLabel for="sellerLoc" value="Your Seller Location:"/>
             <h:selectOneMenu id="sellerLoc" value="#{postBean.toAdd.sellerLocation}">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
             </h:selectOneMenu>
-	        <h:message for="sellerLoc"/>
+	        <ace:message for="sellerLoc"/>
 	        
 	        <h:outputLabel for="shippingIn" value="Shipping Price ($):"/>
 	        <ace:textEntry id="shippingIn" value="#{postBean.toAdd.shippingCost}"
@@ -99,7 +99,7 @@
 	           <f:validateDoubleRange minimum="1.0" maximum="20.0"/>
 	           <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
 	        </ace:textEntry>
-	        <h:message for="shippingIn"/>
+	        <ace:message for="shippingIn"/>
 	        
 	        <h:outputLabel for="deliveryIn" value="Estimated Delivery:"/>
             <h:selectOneMenu id="deliveryIn" value="#{postBean.toAdd.estimatedDelivery}">
@@ -107,7 +107,7 @@
                 <f:selectItems value="#{postBean.toAdd.deliveries}" var="delivery"
                                itemValue="#{delivery}" itemLabel="#{delivery.value}"/>
             </h:selectOneMenu>
-	        <h:message for="deliveryIn"/>
+	        <ace:message for="deliveryIn"/>
 	    </h:panelGrid>
 	    
 	    <f:facet name="footer">
