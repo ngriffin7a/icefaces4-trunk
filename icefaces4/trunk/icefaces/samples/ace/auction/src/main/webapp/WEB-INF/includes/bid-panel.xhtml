@@ -26,7 +26,7 @@
                  style="width: auto;" styleClass="center"
                  rendered="#{bidBean.renderBidPanel}">
         <!-- We position the defaultAction this way so we can easily grab the parent container and add an error message if needed -->
-        <!-- Not we don't use 'Escape' here to cancel the bid because it would interfere with our dialogs (like View History) -->
+        <!-- Note we don't use 'Escape' here to cancel the bid because it would interfere with our dialogs (like View History) -->
         <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
         
         <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
