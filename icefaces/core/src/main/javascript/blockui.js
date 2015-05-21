@@ -20,29 +20,46 @@ var startBlockingUI;
 
     function Overlay(element) {
         var container = element || document.body;
+
         var overlay = container.ownerDocument.createElement('iframe');
         overlay.setAttribute('src', 'about:blank');
         overlay.setAttribute('frameborder', '0');
-        overlay.className = 'ice-blockui-overlay';
         var overlayStyle = overlay.style;
+        overlayStyle.position = 'absolute';
+        overlayStyle.filter = 'alpha(opacity=0)';
         overlayStyle.top = '0';
         overlayStyle.left = '0';
+        overlayStyle.zIndex = 3000;
+
+        var stylingOverlay = container.ownerDocument.createElement('div');
+        stylingOverlay.className = 'ice-blockui-overlay';
+        var stylingOverlayStyle = stylingOverlay.style;
+        stylingOverlayStyle.position = 'absolute';
+        stylingOverlayStyle.top = '0';
+        stylingOverlayStyle.left = '0';
+        stylingOverlayStyle.zIndex = 3001;
 
         if (container.tagName.toLowerCase() == 'body') {
             overlayStyle.width = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) + 'px';
-            overlayStyle.height = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight) + 'px';
+            overlayStyle.height = Math.max(document.documentElement.offsetHeight, document.documentElement.scrollHeight, document.body.scrollHeight) + 'px';
+            stylingOverlayStyle.width = overlayStyle.width;
+            stylingOverlayStyle.height = overlayStyle.height;
         } else {
             overlayStyle.width = container.offsetWidth + 'px';
             overlayStyle.height = container.offsetHeight + 'px';
+            stylingOverlayStyle.width = overlayStyle.width;
+            stylingOverlayStyle.height = overlayStyle.height;
         }
 
         container.appendChild(overlay);
+        container.appendChild(stylingOverlay);
 
         return object(function(method) {
             method(off, function(self) {
                 if (overlay) {
                     try {
                         container.removeChild(overlay);
+                        container.removeChild(stylingOverlay);
                     } catch (e) {
                         //ignore, the overlay does not match the document after a html/body level update
                     }
