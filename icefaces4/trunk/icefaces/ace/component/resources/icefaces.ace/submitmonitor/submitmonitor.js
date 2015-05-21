@@ -257,7 +257,7 @@
             if (rawBlockUI == '@all') {
                 return document.body;
             } else if (rawBlockUI == '@source') {
-                return source;
+                return source._original ? source._original : source;
             } else if (rawBlockUI == '@none') {
                 return null;
             } else {
@@ -353,7 +353,8 @@
         var originalSubmitFunction = ice.submitFunction;
         ice.submitFunction = function(element, event, options) {
             var blockedContainer = resolveBlockUIElement(element);
-            if (!blockedContainer || (isParentElement(blockedContainer, element) && !lock)) {
+			var originalElement = element._original ? element._original : element;
+            if (!blockedContainer || (isParentElement(blockedContainer, originalElement) && !lock)) {
                 lock = true;
                 var originalOnEvent = options.onevent;
                 options.onevent = function(submitEvent) {
