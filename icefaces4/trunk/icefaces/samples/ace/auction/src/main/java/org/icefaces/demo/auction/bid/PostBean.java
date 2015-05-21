@@ -37,6 +37,8 @@ public class PostBean implements Serializable {
 	private AuctionItem toAdd;
 	private Date expiryDate;
 	private int postedCount = 0; // Track how many auctions this user session has added
+	private boolean showItemImageDialog = false;
+	private String clickedImage;
 	
 	public void clear() {
 		setToAdd(null);
@@ -53,6 +55,7 @@ public class PostBean implements Serializable {
 			
 			// Set some defaults
 			toAdd.setName(AuctionItemGenerator.generateName());
+			toAdd.setImageName(AuctionItemGenerator.generateImageName(toAdd.getName()));
 			toAdd.setPrice(0.1);
 			toAdd.setShippingCost(1.0);
 			
@@ -91,5 +94,21 @@ public class PostBean implements Serializable {
 
 	public void setPostedCount(int postedCount) {
 		this.postedCount = postedCount;
+	}
+	
+	public boolean isShowItemImageDialog() {
+		return showItemImageDialog;
+	}
+
+	public void setShowItemImageDialog(boolean showImageDialog) {
+		this.showItemImageDialog = showImageDialog;
+	}
+
+	public String getClickedImage() {
+		return clickedImage;
+	}
+
+	public void setClickedImage(String clickedImage) {
+		this.clickedImage = clickedImage;
 	}
 }

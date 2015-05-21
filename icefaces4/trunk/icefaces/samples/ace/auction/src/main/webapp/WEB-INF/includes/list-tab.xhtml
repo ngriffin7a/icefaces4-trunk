@@ -82,7 +82,7 @@
                header="Details for '#{bidBean.bidItem.name}'"
                rendered="#{bidBean.renderBidPanel}"
                style="margin-top: 15px;">
-        <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{bidBean.bidItem.imageName}.jpg"
+        <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{bidBean.bidItem.imageName}#{auctionImage.extension}"
                         styleClass="itemImage" alt="Picture for #{bidBean.bidItem.name}"/>
         
         <h:panelGrid columns="2" cellpadding="3" cellspacing="0">

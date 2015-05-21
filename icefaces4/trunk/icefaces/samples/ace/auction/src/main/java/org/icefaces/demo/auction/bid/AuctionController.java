@@ -30,6 +30,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 
 import org.icefaces.ace.event.SelectEvent;
 import org.icefaces.ace.event.UnselectEvent;
+import org.icefaces.demo.auction.bid.model.AuctionImage;
 import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.settings.SettingsBean;
 import org.icefaces.demo.auction.tabs.TabController;
@@ -143,6 +144,41 @@ public class AuctionController implements Serializable {
 	
 	public void closeHistoryDialogListener(AjaxBehaviorEvent event) {
 		closeHistoryDialog(null);
+	}
+	
+	public void openItemImageDialog(ActionEvent event) {
+		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
+		postBean.setShowItemImageDialog(true);
+	}
+	
+	public void closeItemImageDialog(ActionEvent event) {
+		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
+		postBean.setShowItemImageDialog(false);
+	}
+	
+	public void closeItemImageDialogListener(AjaxBehaviorEvent event) {
+		closeItemImageDialog(null);
+	}
+	
+	public String clickItemImage() {
+		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
+		String clickedName = postBean.getClickedImage();
+		
+		if (StringUtil.validString(clickedName)) {
+			// Need to strip the extension if possible
+			clickedName = clickedName.replaceAll(AuctionImage.EXTENSION, "");
+		}
+
+		// Set our image name and close the dialog
+		postBean.getToAdd().setImageName(clickedName);
+		closeItemImageDialog(null);
+		
+		return null;
+	}
+	
+	public void clickNoItemImage(ActionEvent event) {
+		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
+		postBean.getToAdd().setImageName(null);
 	}
 	
 	public void postAuction(ActionEvent event) {
