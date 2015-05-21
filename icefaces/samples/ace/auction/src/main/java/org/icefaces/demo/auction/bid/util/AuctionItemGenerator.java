@@ -22,8 +22,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.icefaces.demo.auction.bid.model.AuctionImage;
 import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.test.TestFlags;
+import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.ListData;
 
 public class AuctionItemGenerator {
@@ -37,6 +39,7 @@ public class AuctionItemGenerator {
 	public static AuctionItem makeItem() {
 		AuctionItem toReturn = new AuctionItem();
 		toReturn.setName(generateName());
+		toReturn.setImageName(generateImageName(toReturn.getName()));
 		toReturn.setPrice(generatePrice());
 		toReturn.setExpiryDate(generateExpiryDate());
 		toReturn.setShippingCost(generateShippingCost());
@@ -73,8 +76,10 @@ public class AuctionItemGenerator {
 				item.setName(generateName()); // Regenerate a new name
 				
 				// Also need to regenerate the description since it might use the name
+				// Similarly we regenerate the image name for the same reason
 				// Note we use the base name without any unique count suffix, to make it more readable
 				item.setDescription(generateDescription(item.getName()));
+				item.setImageName(generateImageName(item.getName()));
 				
 				// It's possible to reach our max unique name checks
 				// This would happen if our requested auction list size is bigger than ListData.ITEMS
@@ -109,6 +114,10 @@ public class AuctionItemGenerator {
 	
 	public static String generateName() {
 		return ListData.ITEMS[random.nextInt(ListData.ITEMS.length)];
+	}
+	
+	public static String generateImageName(String name) {
+		return ((AuctionImage)FacesUtils.getManagedBean(AuctionImage.BEAN_NAME)).convertNameToImageName(name);
 	}
 	
 	public static double generatePrice() {
