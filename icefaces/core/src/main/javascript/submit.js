@@ -412,6 +412,7 @@ var singleSubmit;
                     //copy the value for textareas since some browsers (Chrome 22 and Firefox 16) are to lazy to do it
                     clonedElement.value = element.value;
                 }
+                clonedElement._original = element;
 
                 append(appendedElements, deltaSubmitForm.appendChild(clonedElement));
 
