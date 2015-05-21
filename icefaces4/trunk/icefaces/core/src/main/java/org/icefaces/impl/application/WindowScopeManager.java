@@ -161,6 +161,11 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             }
 
             Map requestMap = externalContext.getRequestMap();
+            String presetID = (String) requestMap.get(WindowScopeManager.class.getName());
+            if (presetID != null) {
+                return presetID;
+            }
+
             if (id == null) {
                 ScopeMap scopeMap = sharedMapLookupStrategy.lookup(context);
 
