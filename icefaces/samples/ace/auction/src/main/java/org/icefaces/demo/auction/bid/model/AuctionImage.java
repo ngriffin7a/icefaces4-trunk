@@ -1,6 +1,8 @@
 package org.icefaces.demo.auction.bid.model;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,7 +14,9 @@ import org.icefaces.demo.auction.util.StringUtil;
 
 @ManagedBean(name=AuctionImage.BEAN_NAME)
 @ApplicationScoped
-public class AuctionImage {
+public class AuctionImage implements Serializable {
+	private static final long serialVersionUID = 2422253645219479912L;
+	
 	public static final String BEAN_NAME = "auctionImage";
 	private static final Logger log = Logger.getLogger(AuctionImage.class.getName());
 	
@@ -21,6 +25,7 @@ public class AuctionImage {
 	public static final String EXTENSION = ".jpg";
 	
 	private File parentDir;
+	private String[] cachedImagesList; // List of images (including extension)
 	
 	public AuctionImage() {
 		initParentDir();
@@ -39,9 +44,13 @@ public class AuctionImage {
 		}
 	}
 	
+	public boolean isValidParentDir() {
+		return parentDir != null;
+	}
+	
 	public String convertNameToImageName(String name) {
 		// First of all we won't assign any images until we know we have a valid parentDir (ideally resources/items/) to pull from
-		if (parentDir != null) {
+		if (isValidParentDir()) {
 			// The image name format is all lowercase, spaces replaced with underscores
 			if (StringUtil.validString(name)) {
 				name = name.toLowerCase();
@@ -61,7 +70,36 @@ public class AuctionImage {
 		return DEFAULT_NAME;
 	}
 	
+	public String[] getImagesList() {
+		if (cachedImagesList == null) {
+			if (isValidParentDir()) {
+				cachedImagesList = parentDir.list(new FilenameFilter() {
+					@Override
+	                public boolean accept(File dir, String name) {
+	                    return name.toLowerCase().endsWith(EXTENSION) && (!name.toLowerCase().startsWith(DEFAULT_NAME));
+	                }
+				});
+			}
+		}
+		return cachedImagesList;
+	}
+	
+	public int getNumberOfImages() {
+		if (getImagesList() != null) {
+			return cachedImagesList.length;
+		}
+		return 0;
+	}
+	
 	public String getImageLibrary() {
 		return IMAGE_LIBRARY;
+	}
+	
+	public String getDefaultName() {
+		return DEFAULT_NAME;
+	}
+	
+	public String getExtension() {
+		return EXTENSION;
 	}
 }

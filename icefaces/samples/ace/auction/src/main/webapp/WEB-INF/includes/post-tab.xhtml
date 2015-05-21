@@ -21,7 +21,7 @@
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:auction="http://java.sun.com/jsf/composite/components">
     <icecore:defaultAction actionListener="#{auctionController.postAuction}" key="Enter"/>
-                
+    
     <ace:panel closable="false" collapsed="false" toggleable="false"
                header="New Auction Item to Add (maximum #{auctionController.maxPostedAuctions})"
                rendered="#{postBean.postedCount lt auctionController.maxPostedAuctions}">
@@ -39,6 +39,14 @@
 	            <f:validateLength minimum="3" maximum="20"/>
 	        </ace:textEntry>
 	        <ace:message for="itemNIn"/>
+	        
+	        <h:outputLabel for="itemIIn" value="Item Image:"/>
+            <h:commandLink id="itemIIn" actionListener="#{auctionController.openItemImageDialog}" immediate="true"
+                           disabled="#{!auctionImage.validParentDir}">
+		        <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{postBean.toAdd.imageName}#{auctionImage.extension}"
+		                        styleClass="itemImageS" title="Click to change image from #{postBean.toAdd.imageName}#{auctionImage.extension}"/>
+            </h:commandLink>
+	        <ace:message for="itemIIn"/>
 	        
 	        <h:outputLabel for="descIn" value="Item Description:"/>
 	        <ace:textAreaEntry id="descIn" value="#{postBean.toAdd.description}"
