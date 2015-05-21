@@ -63,7 +63,7 @@ public class DraggableMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc = "Restrict the drag movement of this item to an axis. Default is null, possible values include: \"x\" & \"y\".")
     String axis;
-    @Property(tlddoc = "Id of the parent component whose boundaries should restrict the movement of this draggable.")
+    @Property(tlddoc = "JQuery selector of the element whose boundaries should restrict the movement of this draggable. Other possible values are 'parent', 'document', and 'window'.")
     String containment;
     @Property(tlddoc = "JQuery selector that defines the set of items this draggable shares its space with, ensures this item is brought to the front z-index when dragged.")
     String stack;
