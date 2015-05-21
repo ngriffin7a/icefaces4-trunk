@@ -25,7 +25,6 @@ import java.util.Random;
 import org.icefaces.demo.auction.bid.model.AuctionImage;
 import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.test.TestFlags;
-import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.ListData;
 
 public class AuctionItemGenerator {
@@ -117,7 +116,8 @@ public class AuctionItemGenerator {
 	}
 	
 	public static String generateImageName(String name) {
-		return ((AuctionImage)FacesUtils.getManagedBean(AuctionImage.BEAN_NAME)).convertNameToImageName(name);
+		// Need to use a static approach here instead of a bean lookup to be threadsafe
+		return AuctionImage.staticConvertNameToImageName(name);
 	}
 	
 	public static double generatePrice() {

@@ -24,33 +24,31 @@ public class AuctionImage implements Serializable {
 	public static final String DEFAULT_NAME = "unknown";
 	public static final String EXTENSION = ".jpg";
 	
-	private File parentDir;
+	private static final File parentDir = generateParentDir();
 	private String[] cachedImagesList; // List of images (including extension)
 	
-	public AuctionImage() {
-		initParentDir();
-	}
-	
-	private void initParentDir() {
-		parentDir = new File(FacesUtils.getResourcesDirectory(), IMAGE_LIBRARY);
+	private static File generateParentDir() {
+		File toReturn = new File(FacesUtils.getResourcesDirectory(), IMAGE_LIBRARY);
 		
-		if ((parentDir == null) || (!parentDir.exists()) || (!parentDir.isDirectory()) || (!parentDir.canRead())) {
-			log.log(Level.SEVERE, "Desired item image directory " + parentDir + " does not exist or isn't readable. This means all images will be " + DEFAULT_NAME + EXTENSION);
+		if ((toReturn == null) || (!toReturn.exists()) || (!toReturn.isDirectory()) || (!toReturn.canRead())) {
+			log.log(Level.SEVERE, "Desired item image directory " + toReturn + " does not exist or isn't readable. This means all images will be " + DEFAULT_NAME + EXTENSION);
 			
-			parentDir = null;
+			toReturn = null;
 		}
 		else {
-			log.info("Item image directory " + parentDir.getAbsolutePath() + " valid with " + parentDir.list().length + " files.");
+			log.info("Item image directory " + toReturn.getAbsolutePath() + " valid with " + toReturn.list().length + " files.");
 		}
+		
+		return toReturn;
 	}
 	
 	public boolean isValidParentDir() {
 		return parentDir != null;
 	}
 	
-	public String convertNameToImageName(String name) {
+	public static String staticConvertNameToImageName(String name) {
 		// First of all we won't assign any images until we know we have a valid parentDir (ideally resources/items/) to pull from
-		if (isValidParentDir()) {
+		if (parentDir != null) {
 			// The image name format is all lowercase, spaces replaced with underscores
 			if (StringUtil.validString(name)) {
 				name = name.toLowerCase();
@@ -68,6 +66,10 @@ public class AuctionImage implements Serializable {
 			}
 		}
 		return DEFAULT_NAME;
+	}
+	
+	public String convertNameToImageName(String name) {
+		return staticConvertNameToImageName(name);
 	}
 	
 	public String[] getImagesList() {
