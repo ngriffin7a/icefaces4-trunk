@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.icefaces.demo.auction.converter.TimeLeftConverter;
+import org.icefaces.demo.auction.util.StringUtil;
 
 public class AuctionItem implements Comparable<AuctionItem>, Serializable {
-	private static final long serialVersionUID = -3411644838300151767L;
+	private static final long serialVersionUID = 4644174362859927531L;
 	
 	public static final int DEFAULT_EXPIRY_DATE_HOURS = 2; // Default hours to add to an expiry date
 	public static final int EXPIRY_DATE_MINIMUM = 30; // Minimum number of minutes in the future for an expiry date
@@ -76,6 +77,7 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	private long expiryDate; // In milliseconds
 	
 	// Details
+	private String imageName; // Relative name (no extension or full path
 	private Double shippingCost;
 	private String sellerName;
 	private String sellerLocation;
@@ -89,17 +91,18 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	}
 	
 	public AuctionItem(String name, double price, int bids, long expiryDateMil) {
-		this(name, price, bids, expiryDateMil, null, null, null, null, null, null);
+		this(name, price, bids, expiryDateMil, null, null, null, null, null, null, null);
 	}
 	
 	public AuctionItem(String name, double price, int bids,
-			long expiryDateMil, Double shippingCost, String sellerName,
+			long expiryDateMil, String imageName, Double shippingCost, String sellerName,
 			String sellerLocation, String description,
 			Delivery estimatedDelivery, Condition condition) {
 		this.name = name;
 		this.price = price;
 		this.bids = bids;
 		this.expiryDate = expiryDateMil;
+		this.imageName = imageName;
 		this.shippingCost = shippingCost;
 		this.sellerName = sellerName;
 		this.sellerLocation = sellerLocation;
@@ -137,6 +140,15 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	}
 	public void setExpiryDate(long expiryDate) {
 		this.expiryDate = expiryDate;
+	}
+	public String getImageName() {
+		if (StringUtil.validString(imageName)) {
+			return imageName;
+		}
+		return AuctionImage.DEFAULT_NAME;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 	public Double getShippingCost() {
 		return shippingCost;

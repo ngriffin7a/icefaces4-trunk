@@ -82,6 +82,10 @@
                header="Details for '#{bidBean.bidItem.name}'"
                rendered="#{bidBean.renderBidPanel}"
                style="margin-top: 15px;">
+        <!-- TODO Properly display an image -->
+        <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{bidBean.bidItem.imageName}.jpg"
+                        styleClass="itemImage" alt="Picture of #{bidBean.bidItem.name}"/>
+        
         <h:panelGrid columns="2" cellpadding="3" cellspacing="0">
             <h:outputText value="Price:"/>
             <h:outputText value="#{bidBean.bidItem.price}">

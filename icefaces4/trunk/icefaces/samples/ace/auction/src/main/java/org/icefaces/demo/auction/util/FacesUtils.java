@@ -16,6 +16,7 @@
 
 package org.icefaces.demo.auction.util;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -245,5 +246,17 @@ public class FacesUtils {
     	}
     	
     	return null;
+    }
+    
+    public static File getWebDirectory() {
+    	if (FacesContext.getCurrentInstance() != null) {
+    		return new File(((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getRealPath("/"));
+    	}
+    	
+    	return new File("web");
+    }
+    
+    public static File getResourcesDirectory() {
+        return new File(getWebDirectory(), "resources");
     }
 }
