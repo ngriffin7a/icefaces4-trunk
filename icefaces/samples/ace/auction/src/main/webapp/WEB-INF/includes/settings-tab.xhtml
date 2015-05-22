@@ -94,7 +94,7 @@
             
             <h:graphicImage id="saveHelp" library="images" name="help.png"/>
             <h:outputLabel for="save" value="Save settings in web browser cookies?"/>
-            <h:selectBooleanCheckbox id="save" value="#{settingsBean.saveCookie}" required="true"/>
+            <ace:checkboxButton id="save" value="#{settingsBean.saveCookie}" required="true"/>
             <ace:message for="save"/>
         </h:panelGrid>
         
