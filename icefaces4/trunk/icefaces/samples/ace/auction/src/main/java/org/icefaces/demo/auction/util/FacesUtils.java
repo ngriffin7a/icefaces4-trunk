@@ -20,6 +20,8 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -39,6 +41,8 @@ import javax.servlet.http.HttpSession;
  * @since 2.0
  */
 public class FacesUtils {
+	private static final Logger log = Logger.getLogger(FacesUtils.class.getName());
+	
 	public static String getStringFromCookie(String name) {
 		Cookie toCheck = getCookie(name);
 		
@@ -146,6 +150,9 @@ public class FacesUtils {
 		        }
 	        }
         }
+        
+        log.log(Level.WARNING, "getManagedBean failed for [" + beanName + "] with null context.");
+        
         return null;
     }
     
