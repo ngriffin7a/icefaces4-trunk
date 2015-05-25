@@ -651,22 +651,6 @@
                     if (!oriChange) {
                         recalcScrollHeight();
                     }
-
-                    var header = ice.ace.jq('.mobi-dv-head');
-                    while (header.offset().left + header.width() > ice.ace.jq(window).width()) {
-                        var ths = ice.ace.jq('.mobi-dv-head  th').toArray();
-                        var lastChildIndex = (ths.length - 1);
-
-                        var last = ths[lastChildIndex];
-                        last.parentNode.removeChild(last);
-
-                        var trs = ice.ace.jq('.mobi-dv-body tr').toArray();
-                        ice.ace.jq.each(trs, function(i, tr) {
-                            var tds = tr.children;
-                            var lastTD = tds[tds.length - 1];
-                            tr.removeChild(lastTD);
-                        });
-                    }
                 },100);
             }
         });
