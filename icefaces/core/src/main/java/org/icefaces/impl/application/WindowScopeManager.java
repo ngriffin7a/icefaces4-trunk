@@ -135,18 +135,9 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         if (synchronizationMonitor == null) return null;
 
 
-        ExternalContext externalContext = context.getExternalContext();
-        Map requestMap = externalContext.getRequestMap();
-        String presetID = getAssociatedWindowID(requestMap);
-
-        //avoid running scope map cleanup more than once per request -- the activated map in the first method call will be discarded in the second call
-        //avoid scope map lookup in case this method is invoked multiple time for a given request -- a new map will be extracted off 'disposedWindowScopedMaps' for the same request
-        if (presetID != null) {
-            return presetID;
-        }
-
         synchronized (synchronizationMonitor) {
             State state = getState(context);
+            ExternalContext externalContext = context.getExternalContext();
             String id = externalContext.getRequestParameterMap().get(WindowParameter);
             try {
                 for (Object scopeMap : new ArrayList(state.windowScopedMaps.values())) {
@@ -169,6 +160,11 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
                 log.log(Level.FINE, "Failed to remove window scope map", e);
             }
 
+            Map requestMap = externalContext.getRequestMap();
+            String presetID = (String) requestMap.get(WindowScopeManager.class.getName());
+            if (presetID != null) {
+                return presetID;
+            }
 
             if (id == null) {
                 ScopeMap scopeMap = sharedMapLookupStrategy.lookup(context);
@@ -385,8 +381,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
 
         private void disactivateIfUnused(FacesContext facesContext) {
-            final UIViewRoot viewRoot = facesContext.getViewRoot();
-            if (!EnvUtils.containsBeans(this) && (viewRoot == null || !EnvUtils.containsDisposedBeans(viewRoot.getViewMap()))) {
+            if (!EnvUtils.containsBeans(this) && !EnvUtils.containsDisposedBeans(facesContext.getViewRoot().getViewMap())) {
                 //the map *does not* contain objects (most probably beans) other than the ones inserted by the framework
                 disactivate(getState(facesContext));
             }
@@ -464,10 +459,6 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
 
     private static void associateWindowID(String id, Map requestMap) {
         requestMap.put(WindowScopeManager.class.getName(), id);
-    }
-
-    private static String getAssociatedWindowID(Map requestMap) {
-        return (String) requestMap.get(WindowScopeManager.class.getName());
     }
 
     private static State getState(FacesContext context) {
