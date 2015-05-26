@@ -17,17 +17,13 @@
 package org.icefaces.ace.component.stackpane;
 
 
-//import org.icefaces.mobi.renderkit.BaseLayoutRenderer;
 import static org.icefaces.ace.util.HTML.ID_ATTR;
 import static org.icefaces.ace.util.HTML.SPAN_ELEM;
 import static org.icefaces.ace.util.HTML.DIV_ELEM;
 import static org.icefaces.ace.util.HTML.CLASS_ATTR;
 import static org.icefaces.ace.util.HTML.STYLE_ATTR;
-//import org.icefaces.mobi.utils.JSFUtils;
+
 import org.icefaces.util.CoreComponentUtils;
-//import org.icemobile.util.CSSUtils;
-import org.icefaces.util.ClientDescriptor;
-//import org.icemobile.util.Utils;
 import org.icefaces.ace.renderkit.CoreRenderer;
 
 import javax.faces.component.UIComponent;
@@ -35,8 +31,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.swing.text.html.HTML;
 import java.io.IOException;
-
-//import static org.icemobile.util.HTML.*;
 
 
 public class StackPaneRenderer extends CoreRenderer {
@@ -92,9 +86,6 @@ public class StackPaneRenderer extends CoreRenderer {
        writer.endElement(DIV_ELEM);
        writer.endElement(DIV_ELEM);
    }
-
-
-    
     
     public boolean getRendersChildren() {
         return true;
@@ -109,11 +100,6 @@ public class StackPaneRenderer extends CoreRenderer {
             renderChildren(facesContext, uiComponent);
         }
     }
-    
-
-
-
-
 
 
 }

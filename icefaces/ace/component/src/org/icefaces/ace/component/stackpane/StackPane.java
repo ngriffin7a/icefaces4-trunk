@@ -16,10 +16,7 @@
 package org.icefaces.ace.component.stackpane;
 
 
-//import org.icefaces.ace.api.StackPaneController;
 import org.icefaces.ace.util.Utils;
-//import org.iceacele.util.ClientDescriptor;
-import org.icefaces.util.ClientDescriptor;
 import org.icefaces.ace.api.StackPaneController;
 
 import javax.el.ValueExpression;
@@ -94,11 +91,7 @@ public class StackPane extends StackPaneBase{
 			return true;
 		}
 	}
-    
-    public ClientDescriptor getClient() {
-        return Utils.getClientDescriptor();
-    }
-    
+
     public boolean isFirstPane(){
         if( first == null ){
             List<UIComponent> children = this.getParent().getChildren();
@@ -115,7 +108,6 @@ public class StackPane extends StackPaneBase{
     public boolean isSelected(){
         UIComponent parent = this.getParent();
         while( !(parent instanceof StackPaneController) && parent != null ){
-         //   System.out.println(" parent is class="+parent.getClass().getName());
             parent = parent.getParent();
         }
         
