@@ -354,7 +354,8 @@
         ice.submitFunction = function(element, event, options) {
             var blockedContainer = resolveBlockUIElement(element);
 			var originalElement = element._original ? element._original : element;
-            if (!blockedContainer || (isParentElement(blockedContainer, originalElement) && !lock)) {
+            if (!blockedContainer || (isParentElement(blockedContainer, originalElement) && !lock)
+				|| !isParentElement(blockedContainer, originalElement)) {
                 lock = true;
                 var originalOnEvent = options.onevent;
                 options.onevent = function(submitEvent) {
