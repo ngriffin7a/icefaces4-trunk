@@ -16,11 +16,7 @@
 package org.icefaces.ace.component.panelstack;
 
 
-//import org.icefaces.mobi.component.contentpane.ContentPane;
-//import org.icefaces.mobi.renderkit.BaseLayoutRenderer;
-//import org.icefaces.mobi.utils.HTML;
-//import org.icefaces.mobi.utils.JSFUtils;
-//import org.icefaces.mobi.utils.MobiJSFUtils;
+
 import org.icefaces.ace.component.stackpane.StackPane;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.HTML;
@@ -35,7 +31,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//import static org.icemobile.util.HTML.CLASS_ATTR;
 
 public class PanelStackRenderer extends CoreRenderer {
 
@@ -94,7 +89,6 @@ public class PanelStackRenderer extends CoreRenderer {
          writer.writeAttribute("id", clientId+"_hidden", null);
          writer.writeAttribute("name", clientId+"_hidden", null);
          String currentId = stack.getCurrentId();
-      //  System.out.println(" currentId="+currentId);
          if( currentId != null && currentId.length() > 0 ) {
              writer.writeAttribute("value", currentId, null);
          }

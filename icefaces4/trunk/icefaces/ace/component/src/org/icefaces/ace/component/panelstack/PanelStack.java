@@ -17,7 +17,6 @@ package org.icefaces.ace.component.panelstack;
 
 
 import org.icefaces.ace.api.StackPaneController;
-//import org.icefaces.mobi.utils.JSFUtils;
 import org.icefaces.util.CoreComponentUtils;
 
 import javax.faces.component.UIComponent;
@@ -26,11 +25,10 @@ import javax.faces.component.UIComponent;
 public class PanelStack extends PanelStackBase implements StackPaneController {
 
      /**
-     * method is required by ContentPaneController interface no error checking as
+     * method is required by StackPaneController interface no error checking as
      * component is not in the tree
      */
      public String getSelectedId(){
-      //   System.out.println(" id="+getCurrentId());
          return getCurrentId();
      }
 
