@@ -24,6 +24,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import org.icefaces.demo.auction.bid.model.AuctionItem;
+import org.icefaces.demo.auction.test.TestFlags;
+import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.TimestampUtil;
 import org.icefaces.demo.auction.watcher.AuctionWatcher;
 
@@ -104,13 +106,18 @@ public class GlobalMessageBean implements Serializable {
 	}
 	
 	public void addMessage(String message) {
-		messages.add(0, TimestampUtil.stamp() + message);
-		
-		// Check if we exceed our max size, in which case we'll remove the last (oldest) element
-		if (messages.size() > FULL_LOG_COUNT) {
-			messages.remove(messages.size()-1);
+		if (!TestFlags.TEST_GROWL_MESSAGES) {
+			messages.add(0, TimestampUtil.stamp() + message);
+			
+			// Check if we exceed our max size, in which case we'll remove the last (oldest) element
+			if (messages.size() > FULL_LOG_COUNT) {
+				messages.remove(messages.size()-1);
+			}
+			
+			startWait();
 		}
-		
-		startWait();
+		else {
+			FacesUtils.addGlobalInfoMessage(message);
+		}
 	}
 }

@@ -34,6 +34,7 @@ import org.icefaces.demo.auction.bid.model.AuctionItem;
 import org.icefaces.demo.auction.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.auction.message.GlobalMessageBean;
 import org.icefaces.demo.auction.test.TestFlags;
+import org.icefaces.demo.auction.util.FacesUtils;
 import org.icefaces.demo.auction.util.StringUtil;
 import org.icefaces.demo.auction.watcher.AuctionWatcher;
 
@@ -141,11 +142,11 @@ public class AuctionService implements Serializable {
 			if (globalMessage != null) {
 				if (toRemove.getBids() > 0) {
 					globalMessage.addMessage("Auction won for item '" + toRemove.getName() + "' with " + toRemove.getBids() + " bids and a winning price of " +
-							NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
+							          NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
 				}
 				else {
 					globalMessage.addMessage("Auction expired for item '" + toRemove.getName() + "' with no bids and a final listed price of " +
-							NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
+							          NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
 				}
 			}
 			
@@ -171,6 +172,7 @@ public class AuctionService implements Serializable {
 				if (StringUtil.validString(bidUsername)) {
 					messageOpener += " by " + bidUsername;
 				}
+				
 				globalMessage.addMessage(messageOpener + " on item '" + toUpdate.getName() + "' increasing the price from " +
 						NumberFormat.getCurrencyInstance().format(oldPrice) + " to " + NumberFormat.getCurrencyInstance().format(newBid) +
 						" (" + NumberFormat.getCurrencyInstance().format(newBid - oldPrice) + " bid, " + toUpdate.getBids() + " bids total).");
