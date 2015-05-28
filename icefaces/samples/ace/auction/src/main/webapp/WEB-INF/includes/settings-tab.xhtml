@@ -16,6 +16,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
@@ -59,18 +60,20 @@
             </h:selectOneRadio>
             <ace:message for="tabo"/>
             
-            <!-- TODO ICE-10612 - When resolved use the new color picker component instead of this custom composite component approach -->
-            <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
-            <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
-            <auction:colorPicker id="ncolorb"
-                                 value="#{settingsBean.notificationBackground}"/>
-            <ace:message for="ncolorb"/>
-            
-            <h:graphicImage id="ncolorfHelp" library="images" name="help.png"/>
-            <h:outputLabel for="ncolorf" value="Notification Foreground:" required="true"/>
-            <auction:colorPicker id="ncolorf"
-                                 value="#{settingsBean.notificationForeground}"/>
-            <ace:message for="ncolorf"/>
+            <c:if test="#{!testFlags.testGrowlMessages}">
+	            <!-- TODO ICE-10612 - When resolved use the new color picker component instead of this custom composite component approach -->
+	            <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
+	            <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
+	            <auction:colorPicker id="ncolorb"
+	                                 value="#{settingsBean.notificationBackground}"/>
+	            <ace:message for="ncolorb"/>
+	            
+	            <h:graphicImage id="ncolorfHelp" library="images" name="help.png"/>
+	            <h:outputLabel for="ncolorf" value="Notification Foreground:" required="true"/>
+	            <auction:colorPicker id="ncolorf"
+	                                 value="#{settingsBean.notificationForeground}"/>
+	            <ace:message for="ncolorf"/>
+            </c:if>
             
             <h:graphicImage id="pWidthHelp" library="images" name="help.png"/>
             <h:outputLabel for="pWidth" value="Popup Width:"/>
@@ -122,13 +125,15 @@
         Choose how you want the tab pane laid out on the page.
     </ace:tooltip>
     
-    <ace:tooltip for="ncolorbHelp" speechBubble="true">
-        Customize the background color of the notification panel that displays messages at the top of the page.
-    </ace:tooltip>
-    
-    <ace:tooltip for="ncolorfHelp" speechBubble="true">
-        Customize the foreground text color of the notification panel that displays messages at the top of the page.
-    </ace:tooltip>
+    <c:if test="#{!testFlags.testGrowlMessages}">
+	    <ace:tooltip for="ncolorbHelp" speechBubble="true">
+	        Customize the background color of the notification panel that displays messages at the top of the page.
+	    </ace:tooltip>
+	    
+	    <ace:tooltip for="ncolorfHelp" speechBubble="true">
+	        Customize the foreground text color of the notification panel that displays messages at the top of the page.
+	    </ace:tooltip>
+    </c:if>
     
     <ace:tooltip for="pWidthHelp" speechBubble="true">
         Change how wide the chat and bid history popups should be (200 to 2000 pixels).
