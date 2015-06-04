@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[submitMonitorStyle.title]}"/>
+    <ui:param name="description" value="#{msgs[submitMonitorStyle.description]}"/>
+    <ui:param name="resourceValue" value="#{submitMonitorStyle.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{submitMonitorResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{submitMonitorResources.tldResources}"/>
+
+    <ui:define name="example">
+		<style type="text/css">
+		    .ice-sub-mon.customExample > .ice-sub-mon-mid.idle > .ice-sub-mon-img {
+                background-image: url("#{request.contextPath}/javax.faces.resource/submitmonitor/connect_idle.gif.jsf?ln=icefaces.ace");
+		    }
+		    .ice-sub-mon.customExample > .ice-sub-mon-mid.idle > .ice-sub-mon-txt {
+		        color: green;
+		        font-size: 14px;
+		        float: left;
+		    }
+		
+			.ice-sub-mon.customExample > .ice-sub-mon-mid.active > .ice-sub-mon-img {
+			    background-image: url("#{request.contextPath}/javax.faces.resource/images/submitMonitor/#{submitMonitorStyle.activeIcon}.gif.jsf?ln=css");
+			    height: 32px;
+			    width: 130px;
+			}
+			.ice-sub-mon.customExample > .ice-sub-mon-mid.active > .ice-sub-mon-txt {
+			    color: blue;
+			    font-size: 16px;
+			    font-weight: bold;
+			    float: left;
+			}
+		</style>
+
+		<h:form id="demoForm" prependId="false">
+            <h:panelGroup id="overall" layout="block">
+                <ace:panel id="panel" header="Example Panel">
+                    <p>Custom styling has been applied to the idle/active text, and you can choose which active icon to use.</p>
+                    <p>To see the new icon click 'Long Running Test' (which simulates a lengthy submit so you can fully see the submitMonitor).</p>
+                    
+                    <h:panelGroup layout="block" style="margin: 10px 0 10px 0;">
+	                    <ace:submitMonitor id="submitMonitorPanel"
+	                                       for="submitWrapper"
+	                                       blockUI="@none"
+	                                       activeLabel="Submitting..."
+	                                       idleLabel="Idle"
+	                                       styleClass="customExample"/>
+                    </h:panelGroup>
+                    
+                    <h:panelGrid columns="2" style="margin-top: 10px;">
+	                    <h:outputLabel for="iconIn" value="Active Icon:"/>
+	                    <h:selectOneMenu id="iconIn" value="#{submitMonitorStyle.activeIcon}" required="true">
+	                        <f:selectItems value="#{submitMonitorStyle.availableIcons}"/>
+	                        <f:ajax execute="@this" render="@all"/>
+	                    </h:selectOneMenu>
+                    </h:panelGrid>
+                    
+                    <h:panelGroup id="submitWrapper" layout="block">
+                        <ace:pushButton id="submitPanel" label="Long Running Test"
+                                        actionListener="#{submitMonitor.sleepLong}"/>
+                    </h:panelGroup>
+                </ace:panel>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

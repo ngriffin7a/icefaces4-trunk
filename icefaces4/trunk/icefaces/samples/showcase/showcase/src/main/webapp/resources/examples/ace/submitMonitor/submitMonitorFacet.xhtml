@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[submitMonitorFacet.title]}"/>
+    <ui:param name="description" value="#{msgs[submitMonitorFacet.description]}"/>
+    <ui:param name="resourceValue" value="#{submitMonitorFacet.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{submitMonitorResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{submitMonitorResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="demoForm" prependId="false">
+            <ace:panel id="panel" header="Example Panel">
+                <h:panelGroup id="watch" layout="block">
+                    <p>Trigger either the active or error state of the submitMonitor. Note the idle state has an inline image we customized, the active state displays some test data (for example this could be dynamically loaded from a database), and the error state simulates a bug reporting tool.</p>
+                    <br/>
+	                <h:commandButton value="Trigger Monitor (Active)" actionListener="#{submitMonitor.sleep}"/>
+	                <h:commandButton value="Trigger Monitor (Error)" actionListener="#{submitMonitorFacet.forceError}"/>
+                </h:panelGroup>
+                
+                <hr/>
+	            
+	            <h:panelGroup layout="block" style="margin: 10px 0 10px 0;">
+	                <ace:submitMonitor id="submitMonitorPanel"
+	                                   for="watch"
+	                                   blockUI="@none">
+	                    <f:facet name="idle">
+	                        <h:graphicImage library="css" name="images/letters/i-blue_small.png"/>
+	                        Idle Monitor...
+	                    </f:facet>
+	                    
+	                    <f:facet name="active">
+			                <ace:dataTable id="carTable"
+				                           value="#{dataTableBean.carsData}" var="car"
+				                           paginator="false" rows="5">
+				                <f:facet name="header">
+				                    Active Monitor (displaying some example data)...
+				                </f:facet>
+				                
+				                <ace:column headerText="Name">#{car.name}</ace:column>
+				                <ace:column headerText="Weight">#{car.weight}lbs.</ace:column>
+				                <ace:column headerText="MPG">#{car.mpg}</ace:column>
+				            </ace:dataTable>
+	                    </f:facet>
+	                    
+	                    <f:facet name="serverError">
+	                       <p><b>Error!</b></p>
+	                       <p>Simulated an exception on the server. In this case we can use submitMonitor custom facets to display a bug reporter, for example.</p>
+	                       
+	                       <h:panelGrid columns="2">
+	                           <f:facet name="header">
+	                               Report error use case
+	                           </f:facet>
+	                           
+	                           <h:outputLabel for="nameIn" value="Name:"/>
+	                           <ace:textEntry id="nameIn"/>
+	                           
+	                           <h:outputLabel for="problemIn" value="Problem:"/>
+	                           <ace:textAreaEntry id="problemIn" rows="3" />
+	                       </h:panelGrid>
+	                    </f:facet>
+	                </ace:submitMonitor>
+                </h:panelGroup>
+            </ace:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
