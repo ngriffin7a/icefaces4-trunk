@@ -55,7 +55,7 @@ public class DynamicResource extends DynamicResourceBase {
             if (headers != null) {
                 responseHeaders.putAll(headers);
             }
-            if (attachment && fileName != null) {
+            if (fileName != null) {
                 setAttachmentFileName(fileName);
             }
             if (mimeType != null) {
@@ -127,7 +127,7 @@ public class DynamicResource extends DynamicResourceBase {
 
         public void setAttachmentFileName(String fileName) {
             String name = encodeContentDispositionFilename(fileName);
-            responseHeaders.put("Content-Disposition", "attachment; filename" + name);
+            if (name != null) responseHeaders.put("Content-Disposition", "attachment; filename" + name);
         }
     }
 
