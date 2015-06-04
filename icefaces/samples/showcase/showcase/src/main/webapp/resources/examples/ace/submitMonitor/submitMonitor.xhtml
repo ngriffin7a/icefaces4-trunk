@@ -34,73 +34,30 @@
     <ui:param name="tldResources" value="#{submitMonitorResources.tldResources}"/>
 
     <ui:define name="example">
-        <h:panelGrid id="completeExample" columns="2" style="width: 100%;">
-            <ace:panel id="configPanel" header="Configuration Panel" style="height: 300px;">
-                <h:form id="configForm">
+        <h:form id="demoForm">
+            <h:panelGroup id="overall" layout="block">
+		        <ace:panel id="panel" header="Example Panel">
+		            <p>Click this button to utilize the submitMonitor for this specific panel. Otherwise click the button outside the panel to trigger the submitMonitor for the whole page.</p>
 
-                    <h:panelGrid id="configGrid" columns="2" styleClass="centeredPanelWithBorderSpacingAndLeftJustifiedText">
-                        <h:outputLabel id="forLabel" for="forSelector" value="Region to listen to:" />
-                        <ace:simpleSelectOneMenu id="forSelector" value="#{submitMonitor.forSelection}" valueChangeListener="#{submitMonitor.sleep}">
-							<ace:ajax execute="@this" />
-                            <f:selectItem itemValue=":demoForm:demoGroup" itemLabel="Demonstration Panel"/>
-                            <f:selectItem itemValue=":configForm:configGrid :demoForm:demoGroup" itemLabel="Configuration and Demonstration Panels"/>
-                            <f:selectItem itemValue="" itemLabel="Whole page"/>
-                        </ace:simpleSelectOneMenu>
-
-                        <h:outputLabel id="blockLabel" for="blockSelector" value="What to block:" />
-                        <ace:simpleSelectOneMenu id="blockSelector" value="#{submitMonitor.blockSelection}" valueChangeListener="#{submitMonitor.sleep}">
-							<ace:ajax execute="@this" />
-                            <f:selectItem itemValue="@none" itemLabel="Nothing"/>
-                            <f:selectItem itemValue="@source" itemLabel="Only the submitting component"/>
-                            <f:selectItem itemValue=":completeExample" itemLabel="Configuration and Demonstration Panels"/>
-                            <f:selectItem itemValue="@all" itemLabel="Whole page"/>
-                        </ace:simpleSelectOneMenu>
-
-                        <h:outputLabel id="idleLabel" for="idleInput" value="Idle label:"/>
-                        <h:inputText id="idleInput" value="#{submitMonitor.idleLabel}" valueChangeListener="#{submitMonitor.sleep}">
-                            <f:ajax execute="@this" render="@all"/>
-                        </h:inputText>
-
-                        <h:outputLabel id="activeLabel" for="activeInput" value="Active label:"/>
-                        <h:inputText id="activeInput" value="#{submitMonitor.activeLabel}" valueChangeListener="#{submitMonitor.sleep}">
-                            <f:ajax execute="@this" render="@all"/>
-                        </h:inputText>
-
-                        <h:outputLabel id="serverErrorLabel" for="serverInput" value="Server error label:"/>
-                        <h:inputText id="serverInput" value="#{submitMonitor.serverErrorLabel}" valueChangeListener="#{submitMonitor.sleep}">
-                            <f:ajax execute="@this" render="@all"/>
-                        </h:inputText>
-
-                        <h:outputLabel id="networkErrorLabel" for="networkInput" value="Network error label:"/>
-                        <h:inputText id="networkInput" value="#{submitMonitor.networkErrorLabel}" valueChangeListener="#{submitMonitor.sleep}">
-                            <f:ajax execute="@this" render="@all"/>
-                        </h:inputText>
-
-                        <h:outputLabel id="sessionExpiredLabel" for="sessionInput" value="Session expired label:"/>
-                        <h:inputText id="sessionInput" value="#{submitMonitor.sessionExpiredLabel}" valueChangeListener="#{submitMonitor.sleep}">
-                            <f:ajax execute="@this" render="@all"/>
-                        </h:inputText>
-                    </h:panelGrid>
-                </h:form>
-            </ace:panel>
-            <ace:panel id="demoPanel" header="Demonstration Panel" style="height: 300px;">
-                <h:panelGroup id="submitMonitorGroup">
-                    <ace:submitMonitor id="submitMonitor"
-                                       idleLabel="#{submitMonitor.idleLabel}"
-                                       activeLabel="#{submitMonitor.activeLabel}"
-                                       serverErrorLabel="#{submitMonitor.serverErrorLabel}"
-                                       networkErrorLabel="#{submitMonitor.networkErrorLabel}"
-                                       sessionExpiredLabel="#{submitMonitor.sessionExpiredLabel}"
-                                       for="#{submitMonitor.forSelection}"
-                                       blockUI="#{submitMonitor.blockSelection}"/>
-                </h:panelGroup>
-                <br/>
-                <h:form id="demoForm">
-                    <h:panelGroup id="demoGroup">
-                        <ace:pushButton id="submitButton" label="Submit" actionListener="#{submitMonitor.sleep}"/>
-                    </h:panelGroup>
-                </h:form>
-            </ace:panel>
-        </h:panelGrid>
+					<ace:submitMonitor id="submitMonitorPanel"
+					                   for=":demoForm:panel"
+						               blockUI=":demoForm:panel"
+						               autoCenter="true"
+						               activeLabel="Waiting for panel to process..."/>
+					<ace:pushButton id="submitPanel" label="Submit (Block Panel)"
+	                                actionListener="#{submitMonitor.sleep}"/>
+		        </ace:panel>
+		        
+		        <h:panelGroup id="page" layout="block" style="margin-top: 10px;">
+                    <ace:submitMonitor id="submitMonitorPage"
+                                       for=":demoForm:page"
+                                       blockUI="@all"
+                                       autoCenter="true"
+                                       activeLabel="Waiting for the entire page to process..."/>
+			        <ace:pushButton id="submitPage" label="Submit (Block Entire Page)"
+			                        actionListener="#{submitMonitor.sleep}"/>
+			    </h:panelGroup>
+		    </h:panelGroup>
+	    </h:form>
     </ui:define>
 </ui:composition>

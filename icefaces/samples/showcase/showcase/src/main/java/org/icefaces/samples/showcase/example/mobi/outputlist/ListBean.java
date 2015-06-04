@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.mobi.list;
+package org.icefaces.samples.showcase.example.mobi.outputlist;
 
 //import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
 //import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;

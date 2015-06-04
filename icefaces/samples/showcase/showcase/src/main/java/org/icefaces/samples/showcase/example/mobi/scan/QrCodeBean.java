@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.mobi.qrcode;
+package org.icefaces.samples.showcase.example.mobi.scan;
 
 
 //import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;

@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    template="/resources/templates/content-template.xhtml">
+    
+    <ui:param name="title" value="#{msgs[submitMonitorNested.title]}"/>
+    <ui:param name="description" value="#{msgs[submitMonitorNested.description]}"/>
+    <ui:param name="resourceValue" value="#{submitMonitorNested.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{submitMonitorResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{submitMonitorResources.tldResources}"/>
+    
+    <!-- TODO ICE-10720 - Currently toggling 'rendered' to false with multiple submitMonitors doesn't "bubble up" the submission capture properly.
+                          When the bug is fixed this demo should function properly without needing any changes -->
+    <ui:define name="example">
+        <h:form id="configForm">
+            <ace:panel header="Configuration">
+		        <h:panelGrid columns="2">
+                    <h:outputLabel for="renderList" value="Enable List Monitor:"/>
+                    <h:selectBooleanCheckbox id="renderList" value="#{submitMonitorNested.renderList}">
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:selectBooleanCheckbox>
+                    
+		            <h:outputLabel for="renderPanel" value="Enable Panel Monitor:"/>
+		            <h:selectBooleanCheckbox id="renderPanel" value="#{submitMonitorNested.renderPanel}">
+		                <f:ajax execute="@this" render="@all"/>
+		            </h:selectBooleanCheckbox>
+		        </h:panelGrid>
+	        </ace:panel>
+        </h:form>
+        
+        <br/>
+        <hr/>
+        <br/>
+
+		<h:form id="demoForm" prependId="false">
+			<ace:submitMonitor id="submitMonitorPage" blockUI="@all"
+				               autoCenter="true" activeLabel="Monitor: entire page" />
+				               
+			<ace:panel id="panel" header="Example Panel">
+				<ace:submitMonitor id="submitMonitorPanel" for="panel"
+					               blockUI="@all" autoCenter="true"
+					               activeLabel="Monitor: example panel"
+					               rendered="#{submitMonitorNested.renderPanel}"/>
+	            
+				<h:panelGroup id="wrapper" layout="block">
+					<ace:submitMonitor id="submitMonitorWrapper" for="wrapper"
+						               blockUI="@all" autoCenter="true" activeLabel="Monitor: list only"
+						               rendered="#{submitMonitorNested.renderList}"/>
+					<h:outputLabel for="list" value="Example List:" />
+					<h:selectOneMenu id="list" valueChangeListener="#{submitMonitor.sleepListener}">
+						<f:selectItem itemValue="Test 1" />
+						<f:selectItem itemValue="Test 2" />
+						<f:selectItem itemValue="Test 3" />
+						<f:ajax execute="@this" render="@all" />
+					</h:selectOneMenu>
+				</h:panelGroup>
+				
+                <ace:pushButton id="submitPanel" label="Submit Panel"
+                                actionListener="#{submitMonitor.sleep}" />
+			</ace:panel>
+			
+            <ace:pushButton id="submitPage" label="Submit Page"
+                            actionListener="#{submitMonitor.sleep}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
