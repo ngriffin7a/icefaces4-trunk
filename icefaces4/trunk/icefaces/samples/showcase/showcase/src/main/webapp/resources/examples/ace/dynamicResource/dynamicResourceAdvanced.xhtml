@@ -43,7 +43,7 @@
 					</h:selectBooleanCheckbox>
 
 					<h:outputLabel for="fileName" value="Enter file name: " />
-					<h:inputText id="fileName" value="#{dynamicResourceAdvancedBean.fileName}">
+					<h:inputText id="fileName" value="#{dynamicResourceAdvancedBean.fileName}" disabled="#{!dynamicResourceAdvancedBean.attachment}">
 						<f:ajax render="@form" />
 						<f:ajax render="dynamicResource" event="keyup" />
 					</h:inputText>
@@ -58,8 +58,7 @@
 					<ace:dynamicResource id="dynamicResource"
 						resource="#{dynamicResourceBean.resource}" 
 						label="Download resource" 
-						fileName="#{dynamicResourceAdvancedBean.fileName}" 
-						attachment="#{dynamicResourceAdvancedBean.attachment}" 
+						fileName="#{dynamicResourceAdvancedBean.attachment ? dynamicResourceAdvancedBean.fileName : null}" 
 						target="#{dynamicResourceAdvancedBean.target}" 
 						image="css/images/download-button.gif" 
 						type="image" />
