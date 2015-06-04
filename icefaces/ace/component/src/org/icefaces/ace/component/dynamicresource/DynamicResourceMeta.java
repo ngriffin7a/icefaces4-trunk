@@ -39,7 +39,7 @@ public class DynamicResourceMeta {
     @Property(tlddoc = "Custom CSS style class(es) to use for this component. These style classes can be defined in your page or in a theme CSS file.")
     private String styleClass;
 
-    @Property(tlddoc="The file name to be used for the attachment header. If the label is not specified the file name will be used. See also the resource attribute.")
+    @Property(tlddoc="The file name to be used for the attachment header. If the label is not specified the file name will be used. See also the resource attribute. Note: a specific file name only works if the file is downloaded as an attachment. Setting this attribute to anything but null will cause the file to be downloaded as an attachment, instead of being loaded right in the browser.")
     private String fileName;
 
     @Property(tlddoc="The image path that will be used to display an image for link instead of text.")
@@ -51,7 +51,7 @@ public class DynamicResourceMeta {
     @Property(tlddoc="The label to be displayed for the resource. The label will be used for the text of the link or button. If an image is used, the label will be used as the alt attribute value of the image element.")
     private String label;
 
-    @Property(tlddoc="If true, specifies that the resource should be downloaded as an attachment. See also the resource attribute.")
+    @Property(tlddoc="(Deprecated) Setting the fileName attribute will cause the file to be downloaded as an attachment, instead of loading it right in the browser.")
     private boolean attachment;
 
     @Property(tlddoc="Value of the target attribute when resource is rendered as a link and image.", defaultValue="_blank")
@@ -66,7 +66,7 @@ public class DynamicResourceMeta {
     @Property(tlddoc="Flag indicating that this element must never receive focus or be included in a subsequent submit.")
     private boolean disabled;
 
-    @Property(tlddoc="The object of type com.icesoft.faces.context.Resource that will be used. It can be use to override the attachment, fileName, lastModified and mimeType attributes via the withOptions() method.")
+    @Property(tlddoc="The object of type com.icesoft.faces.context.Resource that will be used. It can be use to override the fileName, lastModified and mimeType attributes via the withOptions() method.")
     private Resource resource;
 
     @Property(tlddoc="The scope in which the resource will be stored. The values can be 'flash', 'view', window', 'session', and 'application'. When not specified the 'session' scope is used.")
