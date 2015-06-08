@@ -2895,7 +2895,7 @@ ice.ace.DataTable.prototype.doRowEditShowRequest = function (element) {
         rowEditorId = row.find('> td > div.ui-row-editor, > td > div > div.ui-row-editor').attr('id'),
         options = {
             source:rowEditorId,
-            execute:'@this',
+            execute:this.id,
             formId:this.cfg.formId
         },
         _self = this,
@@ -2905,7 +2905,7 @@ ice.ace.DataTable.prototype.doRowEditShowRequest = function (element) {
         cellsToRender.push(ice.ace.jq(this).attr('id'));
     });
     options.render = cellsToRender.join(' ');
-    options.render = options.render + " @this";
+    options.render = options.render + " " + this.id;
 
     options.onsuccess = function (responseXML) {
         var xmlDoc = responseXML.documentElement;
@@ -2946,7 +2946,7 @@ ice.ace.DataTable.prototype.doRowEditCancelRequest = function (element) {
         rowEditorId = row.find('> td > div.ui-row-editor, > td > div > div.ui-row-editor').attr('id'),
         options = {
             source:rowEditorId,
-            execute:'@this',
+            execute:this.id,
             formId:this.cfg.formId
         },
         _self = this,
@@ -2956,7 +2956,7 @@ ice.ace.DataTable.prototype.doRowEditCancelRequest = function (element) {
         editorsToProcess.push(ice.ace.jq(this).attr('id'));
     });
     options.render = editorsToProcess.join(' ');
-    options.render = options.render + " @this";
+    options.render = options.render + " " + this.id;
 
     options.onsuccess = function (responseXML) {
         var xmlDoc = responseXML.documentElement;
@@ -3005,7 +3005,7 @@ ice.ace.DataTable.prototype.doRowEditSaveRequest = function (element) {
         editorsToProcess.push(ice.ace.jq(this).attr('id'));
     });
     options.execute = editorsToProcess.join(' ');
-    options.execute = options.execute + " @this";
+    options.execute = options.execute + " " + this.id;
     options.render = options.execute;
 
     options.onsuccess = function (responseXML) {
