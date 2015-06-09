@@ -88,8 +88,8 @@ public class AuthController implements Serializable {
 				UserBean user = (UserBean)FacesUtils.getManagedBean(UserBean.BEAN_NAME);
 				user.setAuthenticated(true);
 				
-				// Clear our entered password
-				authBean.clearPassword();
+				SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
+				log.info("User " + settings.getName() + " entered valid credentials for Authentication.");
 			}
 			else {
 				// Have pretty harsh lockout for failed attempts, so users gets one chance to Auth
@@ -99,6 +99,9 @@ public class AuthController implements Serializable {
 				SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
 				log.info("User " + settings.getName() + " unsuccessfully attempted Authentication, locking.");
 			}
+			
+			// Clear our entered password
+			authBean.clearPassword();
 		}
 	}
 	
