@@ -191,12 +191,7 @@
     var cleanBeforeUpdate = [];
     var elementMonitorMapping = {};
 
-    ice.ace.SubmitMonitor = function (id, cfg) {
-        var jqId = ice.ace.escapeClientId(cfg.id);
-        var uniqueId = uniqueCounter++;
-        var stopBlockingUI = NOOP;
-
-        //cleanup previous mapping for this submit monitor (in case of partial update/re-configure)
+    function cleanupMonitorMapping(id) {
         var mapping = {};
         for (var p in elementMonitorMapping) {
             if (elementMonitorMapping.hasOwnProperty(p)) {
@@ -207,6 +202,15 @@
             }
         }
         elementMonitorMapping = mapping;
+    }
+
+    ice.ace.SubmitMonitor = function (id, cfg) {
+        var jqId = ice.ace.escapeClientId(cfg.id);
+        var uniqueId = uniqueCounter++;
+        var stopBlockingUI = NOOP;
+
+        //cleanup previous mapping for this submit monitor (in case of partial update/re-configure)
+        cleanupMonitorMapping(id);
 
         var monitoredElementIDs = cfg.monitorFor;
         if (monitoredElementIDs) {
@@ -374,6 +378,7 @@
 
         window.ice.onElementUpdate(cfg.id+'_script', function() {
             cleanup = CLEANUP_PENDING;
+            cleanupMonitorMapping(cfg.id);
             //revert to the original (overridden) submit function
             //there can be multiple levels when more than on submit monitor is on the page
             ice.submitFunction = originalSubmitFunction;
