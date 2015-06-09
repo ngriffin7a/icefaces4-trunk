@@ -60,10 +60,8 @@ public class CheckboxButtonMeta extends UISelectBooleanMeta {
     @Property(tlddoc="Label to be displayed on the button.")
     private String label;
 
-/*    @Property(defaultValue="left",
-    		tlddoc="Default is left for rime theme. Other possibility is \"on\" " +
-    				"for sam skin.")
-    private String labelPosition; */
+    @Property(tlddoc = "Position of label relative to the checkbox button. Supported values are \"inField/left/right/top/bottom/none\".", defaultValue="inField")
+    private String labelPosition;
 
     @Property(tlddoc="The inline style of the component, rendered on the root div of the component.")
 	private String style;

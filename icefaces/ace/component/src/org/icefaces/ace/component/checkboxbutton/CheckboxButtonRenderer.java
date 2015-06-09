@@ -34,10 +34,10 @@ import org.icefaces.ace.util.*;
 
 import org.icefaces.util.EnvUtils;
 import org.icefaces.render.MandatoryResourceComponent;
-import org.icefaces.ace.renderkit.CoreRenderer;
+import org.icefaces.ace.renderkit.InputRenderer;
 
 @MandatoryResourceComponent(tagName="checkboxButton", value="org.icefaces.ace.component.checkboxbutton.CheckboxButton")
-public class CheckboxButtonRenderer extends CoreRenderer {
+public class CheckboxButtonRenderer extends InputRenderer {
     private enum EventType {
         HOVER, FOCUS
     }
@@ -64,6 +64,7 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         ResponseWriter writer = facesContext.getResponseWriter();
         CheckboxButton checkbox = (CheckboxButton) uiComponent;
         String clientId = uiComponent.getClientId(facesContext);
+		Map<String, Object> labelAttributes = getLabelAttributes(uiComponent);
         String firstWrapperClass = "yui-button yui-checkboxbutton-button ui-button ui-widget";
         String secondWrapperClass = "first-child";
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
@@ -75,6 +76,8 @@ public class CheckboxButtonRenderer extends CoreRenderer {
 
         encodeScript(facesContext, writer, checkbox, clientId, EventType.HOVER);
         encodeRootStyle(writer, checkbox);
+
+		writeLabelAndIndicatorBefore(labelAttributes);
 
         // First Wrapper
         writer.startElement(HTML.SPAN_ELEM, null);
@@ -105,7 +108,7 @@ public class CheckboxButtonRenderer extends CoreRenderer {
 
         renderPassThruAttributes(facesContext, checkbox, HTML.BUTTON_ATTRS, new String[]{"style"});
 
-        if (checkbox.getLabel() != null) {
+        if (checkbox.getLabel() != null && "inField".equalsIgnoreCase(checkbox.getLabelPosition())) {
             writer.startElement(HTML.SPAN_ELEM, null);
             writer.writeAttribute(HTML.CLASS_ATTR, "ui-label", null);
             writer.write(checkbox.getLabel());
@@ -119,6 +122,8 @@ public class CheckboxButtonRenderer extends CoreRenderer {
         writer.endElement(HTML.BUTTON_ELEM);
         writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.SPAN_ELEM);
+
+		writeLabelAndIndicatorAfter(labelAttributes);
     }
 
     private void encodeAriaAttributes(ResponseWriter writer, CheckboxButton checkbox) throws IOException {
