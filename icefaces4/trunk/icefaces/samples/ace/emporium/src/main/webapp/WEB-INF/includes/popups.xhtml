@@ -163,19 +163,19 @@
 		                <ace:pushButton id="rChat" value="Reset" actionListener="#{authController.resetChat}"/>
 		                
 		                <f:facet name="footer">
-		                    <h:panelGrid columns="2">
-			                    <ace:pushButton value="Logout" immediate="true"
-			                                    onclick="ice.ace.instance('authPopup').hide();"
-			                                    actionListener="#{authController.cancelAuth}"/>
-	                            <ace:pushButton value="Close" immediate="true"
-	                                            onclick="ice.ace.instance('authPopup').hide();"/>
-	                            
-	                            <c:if test="#{!testFlags.testGrowlMessages}">
-	                                <f:facet name="footer">
-			                            <ace:messages globalOnly="true"/>
-			                        </f:facet>
-			                    </c:if>
-		                    </h:panelGrid>
+		                    <h:panelGroup layout="block">
+			                    <h:panelGrid columns="2">
+				                    <ace:pushButton value="Logout" immediate="true"
+				                                    onclick="ice.ace.instance('authPopup').hide();"
+				                                    actionListener="#{authController.cancelAuth}"/>
+		                            <ace:pushButton value="Close" immediate="true"
+		                                            onclick="ice.ace.instance('authPopup').hide();"/>
+			                    </h:panelGrid>
+			                    
+			                    <c:if test="#{!testFlags.testGrowlMessages}">
+                                    <ace:messages globalOnly="true"/>
+                                </c:if>
+		                    </h:panelGroup>
 		                </f:facet>
 		            </h:panelGrid>
 		                    
