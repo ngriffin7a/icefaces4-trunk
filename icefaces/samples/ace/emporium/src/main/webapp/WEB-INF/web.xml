@@ -26,7 +26,7 @@
     </description>
     
     <listener>
-        <listener-class>org.icefaces.demo.auction.util.ContextListener</listener-class>
+        <listener-class>org.icefaces.demo.emporium.util.ContextListener</listener-class>
     </listener>
     
     <context-param>
