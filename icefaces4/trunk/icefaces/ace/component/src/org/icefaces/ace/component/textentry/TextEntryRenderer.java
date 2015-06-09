@@ -81,6 +81,7 @@ public class TextEntryRenderer extends InputRenderer {
 
         defaultClass += getStateStyleClasses(textEntry);
         Map<String, Object> labelAttributes = getLabelAttributes(component);
+		labelAttributes.put("fieldClientId", clientId + "_input");
 
         writer.startElement("span", null);
         //check to see if passthrough library is loaded...

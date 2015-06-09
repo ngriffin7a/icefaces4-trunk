@@ -65,6 +65,7 @@ public class RadioButtonRenderer extends InputRenderer {
         RadioButton radioButton = (RadioButton) uiComponent;
         String clientId = uiComponent.getClientId(facesContext);
 		Map<String, Object> labelAttributes = getLabelAttributes(uiComponent);
+		labelAttributes.put("fieldClientId", clientId + "_button");
         String firstWrapperClass = "ice-ace-radiobutton-main";
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
 

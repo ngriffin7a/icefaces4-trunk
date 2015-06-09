@@ -49,6 +49,8 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 	this.cfg = cfg;
 	this.effects = effects;
 	$element.data("labelIsInField", this.cfg.labelIsInField);
+	var $label = ice.ace.jq(ice.ace.escapeClientId('label_' + this.id));
+	$label.on('click', function(){$element.focus();});
 	
 	if (isInitialized) {
 		this.initialize(this.element, this.update, options, rowClass, highlightedRowClass, selectedRowClass, behaviors);

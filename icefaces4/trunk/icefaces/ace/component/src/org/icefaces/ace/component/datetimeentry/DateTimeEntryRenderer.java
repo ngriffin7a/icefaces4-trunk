@@ -82,6 +82,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
         DateTimeEntry dateTimeEntry = (DateTimeEntry) component;
         String value = DateTimeEntryUtils.getValueAsString(context, dateTimeEntry);
         Map<String, Object> labelAttributes = getLabelAttributes(component);
+		labelAttributes.put("fieldClientId", dateTimeEntry.getClientId(context) + "_input");
 
         encodeMarkup(context, dateTimeEntry, value, labelAttributes);
     }
