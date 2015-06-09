@@ -13,6 +13,7 @@ import javax.faces.event.ActionEvent;
 import org.icefaces.demo.emporium.bid.AuctionService;
 import org.icefaces.demo.emporium.chat.ChatService;
 import org.icefaces.demo.emporium.message.GlobalMessageBean;
+import org.icefaces.demo.emporium.settings.SettingsBean;
 import org.icefaces.demo.emporium.test.TestFlags;
 import org.icefaces.demo.emporium.user.UserBean;
 import org.icefaces.demo.emporium.util.FacesUtils;
@@ -89,6 +90,14 @@ public class AuthController implements Serializable {
 				
 				// Clear our entered password
 				authBean.clearPassword();
+			}
+			else {
+				// Have pretty harsh lockout for failed attempts, so users gets one chance to Auth
+				UserBean user = (UserBean)FacesUtils.getManagedBean(UserBean.BEAN_NAME);
+				user.setLocked(true);
+				
+				SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
+				log.info("User " + settings.getName() + " unsuccessfully attempted Authentication, locking.");
 			}
 		}
 	}

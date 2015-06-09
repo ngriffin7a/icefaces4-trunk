@@ -16,6 +16,7 @@ public class UserBean implements Serializable {
 	@ManagedProperty(value="#{" + UserCounter.BEAN_NAME + "}")
 	private UserCounter counter;
 	private boolean authenticated = false;
+	private boolean locked = false; // Potentially lock a session from further Auth attempts
 	
 	@PostConstruct
 	private void initUserBean() {
@@ -45,6 +46,14 @@ public class UserBean implements Serializable {
 
 	public void setAuthenticated(boolean authenticated) {
 		this.authenticated = authenticated;
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
 	}
 
 	public String getInit() {
