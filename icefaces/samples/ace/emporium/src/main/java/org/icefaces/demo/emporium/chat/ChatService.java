@@ -84,6 +84,16 @@ public class ChatService implements Serializable {
 		
 		return removedCount;
 	}
+	
+	public void resetChatMessages() {
+		// We will remove all chat messages from all rooms, and add a default System message notifying users of this
+		for (ChatRoom currentRoom : rooms) {
+			if (currentRoom.getMessagesSize() > 0) {
+				currentRoom.removeMessages();
+				addSystemMessage(currentRoom, "Cleared chat messages.");
+			}
+		}
+	}
 
 	public List<ChatRoom> getRooms() {
 		return rooms;

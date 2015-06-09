@@ -15,6 +15,7 @@ public class UserBean implements Serializable {
 	
 	@ManagedProperty(value="#{" + UserCounter.BEAN_NAME + "}")
 	private UserCounter counter;
+	private boolean authenticated = false;
 	
 	@PostConstruct
 	private void initUserBean() {
@@ -36,6 +37,14 @@ public class UserBean implements Serializable {
 
 	public void setCounter(UserCounter counter) {
 		this.counter = counter;
+	}
+
+	public boolean isAuthenticated() {
+		return authenticated;
+	}
+
+	public void setAuthenticated(boolean authenticated) {
+		this.authenticated = authenticated;
 	}
 
 	public String getInit() {

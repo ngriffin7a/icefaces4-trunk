@@ -69,6 +69,10 @@ public class GlobalMessageBean implements Serializable {
 		waitThread.start();
 	}
 	
+	public void resetLog() {
+		messages.clear();
+	}
+	
 	public AuctionItem getLastUpdated() {
 		return lastUpdated;
 	}
