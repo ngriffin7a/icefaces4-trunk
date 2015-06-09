@@ -20,7 +20,7 @@
               xmlns:ace="http://www.icefaces.org/icefaces/components"
               xmlns:icecore="http://www.icefaces.org/icefaces/core"
               xmlns:composite="http://java.sun.com/jsf/composite"
-              xmlns:auction="http://java.sun.com/jsf/composite/components">
+              xmlns:emporium="http://java.sun.com/jsf/composite/components">
     <composite:interface>
     </composite:interface>
     
@@ -34,7 +34,7 @@
 	                <f:selectItems value="#{chatService.rooms}" var="room"
 	                               itemLabel="#{room.name} (#{room.occupantsSize} occupants)" itemValue="#{room.name}"/>
 	            </h:selectOneMenu>
-	            <auction:chatPosition label="Position:"/>
+	            <emporium:chatPosition label="Position:"/>
 	            <ace:message for="roomIn"/>
 	            
 	            <f:facet name="footer">
@@ -84,7 +84,7 @@
 	                                     rendered="#{!chatBean.renderOccupants}"
 	                                     styleClass="floatL"/>
 	                    <h:outputText value="Chat Messages for '#{chatBean.currentRoom.name}'"/>
-                        <auction:chatPosition/>
+                        <emporium:chatPosition/>
 		            </f:facet>
 		            <ace:column styleClass="w10">
 		                #{message.timestampFormatted}

@@ -20,7 +20,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
-                xmlns:auction="http://java.sun.com/jsf/composite/components">
+                xmlns:emporium="http://java.sun.com/jsf/composite/components">
     <icecore:defaultAction actionListener="#{settingsController.save}" key="Enter"/>
     
     <ace:panel closable="false" collapsed="false" toggleable="false"
@@ -64,13 +64,13 @@
 	            <!-- TODO ICE-10612 - When resolved use the new color picker component instead of this custom composite component approach -->
 	            <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
 	            <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
-	            <auction:colorPicker id="ncolorb"
+	            <emporium:colorPicker id="ncolorb"
 	                                 value="#{settingsBean.notificationBackground}"/>
 	            <ace:message for="ncolorb"/>
 	            
 	            <h:graphicImage id="ncolorfHelp" library="images" name="help.png"/>
 	            <h:outputLabel for="ncolorf" value="Notification Foreground:" required="true"/>
-	            <auction:colorPicker id="ncolorf"
+	            <emporium:colorPicker id="ncolorf"
 	                                 value="#{settingsBean.notificationForeground}"/>
 	            <ace:message for="ncolorf"/>
             </c:if>
