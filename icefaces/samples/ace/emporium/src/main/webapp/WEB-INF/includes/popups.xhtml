@@ -21,15 +21,15 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
-                xmlns:auction="http://java.sun.com/jsf/composite/components">
+                xmlns:emporium="http://java.sun.com/jsf/composite/components">
     <h:panelGroup id="pops" layout="block">
     <h:form id="n">
         <mobi:largeView>
-            <auction:globalMessages position="top"/>
+            <emporium:globalMessages position="top"/>
         </mobi:largeView>
         
         <mobi:smallView>
-            <auction:globalMessages position="bottom"/>
+            <emporium:globalMessages position="bottom"/>
         </mobi:smallView>
     </h:form>
     
@@ -57,7 +57,7 @@
 	                           rendered="#{chartBean.type ne null}"/>
 	
 	                <h:panelGroup layout="block" rendered="#{chartBean.type eq null}">
-	                    <auction:dataExporters target="bhT" fileName="bid-history"/>
+	                    <emporium:dataExporters target="bhT" fileName="bid-history"/>
 		                <ace:dataTable id="bhT" value="#{bidBean.bidItem.history}" var="history"
 		                       emptyMessage="No bid history yet."
 		                       reorderableColumns="false" resizableColumns="false"
@@ -93,7 +93,7 @@
 	                               visible="#{chatBean.isPositionBottom}"
 	                               position="bottom"
 	                               styleClass="notificationBarChat">
-	            <auction:chat/>
+	            <emporium:chat/>
 	        </ace:notificationPanel>
 	    </h:form>
 	    
@@ -104,9 +104,9 @@
 	                    draggable="true" modal="false" resizable="false"
 	                    dialogPosition="right top"
 	                    width="#{settingsBean.popupWidth}"
-	                    header="Auction Chat"
+	                    header="Emporium Chat"
 	                    styleClass="shadowDialog">
-	            <auction:chat/>
+	            <emporium:chat/>
 	        </ace:dialog>
 	    </h:form>
     </mobi:largeView>

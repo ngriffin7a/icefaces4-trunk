@@ -19,10 +19,10 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
-                xmlns:auction="http://java.sun.com/jsf/composite/components">
+                xmlns:emporium="http://java.sun.com/jsf/composite/components">
     <ace:dataTable id="a"
                    value="#{auctionService.auctions}" var="item"
-                   styleClass="auctionMonitorTable"
+                   styleClass="emporiumTable"
                    clickableHeaderSorting="true"
                    emptyMessage="No auctions were found, please try again later."
                    paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
@@ -46,7 +46,7 @@
 	                             actionListener="#{tabController.postAuctionTab}"
 	                             immediate="true"
 	                             styleClass="floatR"/>
-                <auction:dataExporters target="a" fileName="auction-list" includeFooters="false" popup="true"/>
+                <emporium:dataExporters target="a" fileName="auction-list" includeFooters="false" popup="true"/>
             </h:panelGroup>
         </f:facet>
         <ace:column headerText="Name" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
