@@ -60,6 +60,13 @@
     min-width: 800px;
 }
 
+.headerText {
+    color: #034F83;
+    font-size: 32px;
+    text-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3), 0 -4px 30px rgba(255, 255, 255, 0.4);
+    padding: 0 0 20px 12px;
+}
+
 .notificationBarWrap {
 	padding: 10px;
 }
@@ -157,7 +164,10 @@
 }
 
 .aboutImage {
+	background-color: rgba(50, 50, 90, 0.3);
+	border-radius: 50px;
 	margin: 10px;
+	padding: 20px;
 }
 
 .messagePadding .ui-faces-message {
