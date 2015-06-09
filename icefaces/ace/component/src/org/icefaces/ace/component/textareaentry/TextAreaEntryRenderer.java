@@ -69,6 +69,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId, "clientId");
 
         Map<String, Object> labelAttributes = getLabelAttributes(component);
+		labelAttributes.put("fieldClientId", clientId + "_input");
 
         writer.startElement("span", null);
         writer.writeAttribute("id", clientId + "_markup", null);

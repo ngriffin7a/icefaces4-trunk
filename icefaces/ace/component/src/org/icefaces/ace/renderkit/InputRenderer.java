@@ -174,6 +174,8 @@ public class InputRenderer extends CoreRenderer {
         ResponseWriter writer = FacesContext.getCurrentInstance().getResponseWriter();
         boolean required = (Boolean) attributes.get("required"), hasIndicator = (Boolean) attributes.get("hasIndicator");
         String clientId = (String) attributes.get("clientId");
+        String fieldClientId = (String) attributes.get("fieldClientId");
+		fieldClientId = fieldClientId != null ? fieldClientId : clientId;
         String label = (String) attributes.get("label"), labelPosition = (String) attributes.get("labelPosition");
         String indicator = (String) attributes.get("indicator"), indicatorPosition = (String) attributes.get("indicatorPosition");
         if (hasIndicator) {
@@ -197,13 +199,14 @@ public class InputRenderer extends CoreRenderer {
             }
 */
         }
-        writer.startElement("span", null);
+        writer.startElement("label", null);
         writer.writeAttribute("id", "label_" + clientId, null);
+        writer.writeAttribute("for", fieldClientId, null);
         if (!hasIndicator || (!indicatorPosition.equals("labelLeft") && !indicatorPosition.equals("labelRight"))) {
             writer.writeAttribute("class", LABEL_STYLE_CLASS + " " + LABEL_STYLE_CLASS + "-" + labelPosition, null);
         }
         writer.write(label);
-        writer.endElement("span");
+        writer.endElement("label");
         if (hasIndicator) {
 /*
             if (indicatorPosition.equals("labelBottom")) {

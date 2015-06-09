@@ -73,6 +73,7 @@ public class MaskedEntryRenderer extends InputRenderer {
         MaskedEntry maskedEntry = (MaskedEntry) component;
         ResponseWriter writer = context.getResponseWriter();
         Map<String, Object> labelAttributes = getLabelAttributes(component);
+		labelAttributes.put("fieldClientId", maskedEntry.getClientId(context) + "_field");
 
         writeLabelAndIndicatorBefore(labelAttributes);
 		encodeMarkup(context, maskedEntry, labelAttributes);
