@@ -179,7 +179,7 @@
 		                </f:facet>
 		            </h:panelGrid>
 		                    
-		            <h:panelGrid columns="3" cellpadding="10" rendered="#{!userBean.authenticated}">
+		            <h:panelGrid columns="3" cellpadding="10" rendered="#{!userBean.authenticated and !userBean.locked}">
 		                <f:facet name="header">
 		                    Please enter your authentication password.<br/>
 		                    Authentication attempts will be recorded and logged.
@@ -198,6 +198,15 @@
 			                                    onclick="ice.ace.instance('authPopup').hide();"/>
 			                </h:panelGrid>
 		                </f:facet>
+		            </h:panelGrid>
+		            
+		            <h:panelGrid columns="1" rendered="#{userBean.locked}">
+		                <p>Invalid authentication attempt.</p>
+		                
+                        <f:facet name="footer">
+                            <ace:pushButton value="Close" immediate="true"
+                                            onclick="ice.ace.instance('authPopup').hide();"/>
+                        </f:facet>		            
 		            </h:panelGrid>
 	            </h:panelGroup>
 	        </ace:dialog>
