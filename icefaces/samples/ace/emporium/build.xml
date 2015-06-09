@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright 2004-2015 ICEsoft Technologies Canada Corp.
   ~
@@ -15,18 +14,14 @@
   ~ governing permissions and limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project name="emporium" default="servlet-profile">
+    
+    <property name="ace" value="true" />
+	<property name="mobi" value="true" />
+    <property name="includeThemeJars" value="true"/>
 
-    <parent>
-        <groupId>org.icefaces.samples</groupId>
-        <artifactId>ace-parent</artifactId>
-        <version>4.1.0-SNAPSHOT</version>
-        <relativePath>..</relativePath>
-    </parent>
-
-    <artifactId>auction</artifactId>
-    <packaging>war</packaging>
-    <name>${icefaces.product.name}: Ace Samples Auction</name>
-
+    <property file="./build.properties"/>
+    <property file="../build/build.properties"/>
+    <import file="../build/common.xml"/>
+        
 </project>
