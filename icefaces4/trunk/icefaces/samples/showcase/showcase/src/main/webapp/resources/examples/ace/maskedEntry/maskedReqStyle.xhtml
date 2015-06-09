@@ -66,21 +66,19 @@
             </ace:panel>
         
             <ace:panel id="personalInfoInputPanel" header="Personal Info" styleClass="#{maskedReqStyleBean.useTheme ? '' : 'required-styling-demo'}">
-                <h:panelGrid id="inputGrid" columns="2" width="100%" cellpadding="6" cellspacing="6">
-                    <h:outputLabel id="workPhoneLabel" for="workPhoneInput" value="Work Phone:"/>
+                <h:panelGrid id="inputGrid" columns="1" width="100%" cellpadding="6" cellspacing="6">
                     <ace:maskedEntry id="workPhoneInput" value="#{maskedReqStyleBean.workPhone}" mask="(999) 999-9999? x99999"
                                      required="true" requiredIndicator="(Required)"
-                                     indicatorPosition="right"
+                                     indicatorPosition="right" label="Work Phone:" labelPosition="left"
                                      styleClass="#{maskedReqStyleBean.reqColor}">
                         <ace:ajax execute="@this" render="@this workPhoneOutput"/>
 						<ace:ajax event="blur" execute="@this" render="@all"/>
                     </ace:maskedEntry>
 					<br />
                     <ace:message for="workPhoneInput" />
-                    <h:outputLabel id="mobilePhoneLabel" for="mobilePhoneInput" value="Mobile Phone:"/>
                     <ace:maskedEntry id="mobilePhoneInput" value="#{maskedReqStyleBean.mobilePhone}" mask="(999) 999-9999"
                                      required="false" optionalIndicator="(Optional)"
-                                     indicatorPosition="right"
+                                     indicatorPosition="right" label="Mobile Phone:" labelPosition="left"
                                      styleClass="#{maskedReqStyleBean.optColor}">
                         <ace:ajax execute="@this" render="@this mobilePhoneOutput"/>
                     </ace:maskedEntry>
