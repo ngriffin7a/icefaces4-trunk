@@ -61,10 +61,10 @@
 }
 
 .headerText {
+	padding: 0 0 20px 12px;
     color: #034F83;
     font-size: 32px;
-    text-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3), 0 -4px 30px rgba(255, 255, 255, 0.4);
-    padding: 0 0 20px 12px;
+    text-shadow: 2px 4px 3px rgba(100, 100, 100, 0.4), 0 0 5px rgba(100, 180, 255, 1);
 }
 
 .notificationBarWrap {
