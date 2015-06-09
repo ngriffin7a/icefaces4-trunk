@@ -63,9 +63,7 @@ public class AuctionService implements Serializable {
 				+ "].");
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
 		
-		for (int i = 0; i < MINIMUM_ITEMS; i++) {
-			addAuction(AuctionItemGenerator.makeUniqueItem(auctions), true);
-		}
+		generateDefaultData();
 		
 		renderer.start(this);
 	}
@@ -81,6 +79,13 @@ public class AuctionService implements Serializable {
 	@Override
 	public void finalize() {
 		cleanupAuctionService();
+	}
+	
+	public void generateDefaultData() {
+		auctions.clear();
+		for (int i = 0; i < MINIMUM_ITEMS; i++) {
+			addAuction(AuctionItemGenerator.makeUniqueItem(auctions), true);
+		}
 	}
 	
 	public void checkAuctionExpiry() {

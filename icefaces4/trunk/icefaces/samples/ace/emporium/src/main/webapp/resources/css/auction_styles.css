@@ -188,6 +188,12 @@
 	height: 50px;
 }
 
+.authNote {
+	font-size: 10px;
+	padding-bottom: 8px;
+	vertical-align: middle;
+}
+
 /* Image Item Loop */
 .iil {
 	width: 75px;

@@ -67,6 +67,11 @@
         <param-value>cupertino</param-value>
     </context-param>
     
+    <context-param>
+        <param-name>org.icefaces.demo.emporium.auth.passwordFile</param-name>
+        <param-value>/opt/tomcat/emporium/password</param-value>
+    </context-param>
+    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

@@ -57,7 +57,11 @@ public class ChatRoom implements Serializable {
 		// Notify users of the chat room they're in
 		addSystemMessage("Welcome to the '" + name + "' chat room.");
 		
-		// Fill out the rest of the maximum messages with blanks, to help with formatting
+		fillSpacerMessages();
+	}
+	
+	private void fillSpacerMessages() {
+		// Fill out the rest of the maximum messages with blank spacer messages, to help with formatting
 		for (int i = messages.size(); i < MAX_MESSAGES; i++) {
 			addMessage(new ChatMessage());
 		}
@@ -122,6 +126,12 @@ public class ChatRoom implements Serializable {
 	
 	public boolean addSystemMessage(String text) {
 		return addMessage(new ChatMessage(true, text));
+	}
+	
+	public void removeMessages() {
+		getMessages().clear();
+		
+		fillSpacerMessages();
 	}
 	
 	public void addOccupant(ChatBean person) {

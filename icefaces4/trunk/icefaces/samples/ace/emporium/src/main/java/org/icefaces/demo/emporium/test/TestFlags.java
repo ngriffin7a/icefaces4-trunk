@@ -24,7 +24,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean(name=TestFlags.BEAN_NAME)
 @ApplicationScoped
 public class TestFlags implements Serializable  {
-	private static final long serialVersionUID = -7595861143468624487L;
+	private static final long serialVersionUID = 6059811793634285960L;
 
 	public static final String BEAN_NAME = "testFlags";
 	
@@ -34,6 +34,7 @@ public class TestFlags implements Serializable  {
 	public static final boolean TEST_MANY_ITEMS = false; // Debugging toggle to make a huge number of random items instead of the usual
 	public static final boolean TEST_AUTOJOIN_CHAT = false; // Debugging toggle to make any user autojoin the default chat room
 	public static final boolean TEST_GROWL_MESSAGES = false; // Debugging toggle to test ace:growlMessages in place of our notification panel
+	public static final boolean TEST_NO_AUTH = false; // Debugging toggle to disallow Authentication (to reset data) if set to true
 	
 	public boolean isTestNoIntervalPush() {
 		return TEST_NO_INTERVAL_PUSH;
@@ -57,5 +58,9 @@ public class TestFlags implements Serializable  {
 
 	public boolean isTestGrowlMessages() {
 		return TEST_GROWL_MESSAGES;
+	}
+	
+	public boolean isTestNoAuth() {
+		return TEST_NO_AUTH;
 	}
 }

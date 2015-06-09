@@ -16,6 +16,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
@@ -135,6 +136,17 @@
 	    </ace:accordion>
 	
 		<hr width="100%" />
-		<h:outputText value="#{auctionService.productInfo}" style="font-style: italic;" />
+		<h:panelGroup layout="block" styleClass="w100" style="font-style: italic;">
+		    <h:outputText value="#{auctionService.productInfo}" styleClass="floatL"/>
+		    
+		    <c:if test="#{authController.allowAuth}">
+			    <h:panelGroup layout="block" styleClass="floatR">
+		            <h:commandButton image="resources/images/auth.png" immediate="true"
+		                             onclick="ice.ace.instance('authPopup').show();"/>
+		            <h:outputText value="Valid" styleClass="authNote"
+		                          rendered="#{userBean.authenticated}"/>
+	            </h:panelGroup>
+            </c:if>
+		</h:panelGroup>
 	</h:panelGroup>
 </ui:composition>
