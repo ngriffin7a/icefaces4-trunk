@@ -657,17 +657,34 @@ public class EnvUtils {
     }
 
     public static String getMandatoryResourceConfig(FacesContext facesContext) {
-        String configValue = EnvConfig.getEnvConfig(facesContext)
-                .mandatoryResourceConfig;
-        String result = configValue;
-        String overValue = (String) getViewParam(facesContext, MANDATORY_RESOURCE_CONFIG);
-        if (null != overValue) {
-            result = overValue;
+        String configValue = EnvConfig.getEnvConfig(facesContext).mandatoryResourceConfig;
+        if ("all".equals(configValue)) {
+            return configValue.trim();
         }
-        if (null != result) {
-            result = result.trim();
+
+        HashSet<String> result = new HashSet(Arrays.asList(configValue.split(" ")));
+
+        String viewValue = (String) getViewParam(facesContext, MANDATORY_RESOURCE_CONFIG);
+        if (null != viewValue) {
+            if ("all".equals(viewValue)) {
+                return viewValue.trim();
+            } else {
+                result.addAll(Arrays.asList(viewValue.split(" ")));
+            }
         }
-        return result;
+
+        StringBuffer buffer = new StringBuffer();
+        boolean first = true;
+        for (String s : result) {
+            if (first) {
+                first = false;
+            } else {
+                buffer.append(" ");
+            }
+            buffer.append(s);
+        }
+
+        return buffer.toString();
     }
 
     public static boolean isUniqueResourceURLs(FacesContext facesContext) {
