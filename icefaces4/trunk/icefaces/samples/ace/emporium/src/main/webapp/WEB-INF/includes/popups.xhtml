@@ -173,16 +173,17 @@
 			                    </h:panelGrid>
 			                    
 			                    <c:if test="#{!testFlags.testGrowlMessages}">
-                                    <ace:messages globalOnly="true"/>
+                                    <h:messages globalOnly="true" layout="table"/>
                                 </c:if>
 		                    </h:panelGroup>
 		                </f:facet>
 		            </h:panelGrid>
-		                    
+		            
 		            <h:panelGrid columns="3" cellpadding="10" rendered="#{!userBean.authenticated and !userBean.locked}">
 		                <f:facet name="header">
 		                    Please enter your authentication password.<br/>
 		                    Authentication attempts will be recorded and logged.
+		                    <icecore:defaultAction actionListener="#{authController.submitAuth}" key="Enter"/>
 		                </f:facet>
 		                
 		                <h:outputLabel for="authIn" value="Password:"/>
