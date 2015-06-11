@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.icefaces.demo.emporium.converter.TimeLeftConverter;
+import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.StringUtil;
 
 public class AuctionItem implements Comparable<AuctionItem>, Serializable {
@@ -75,6 +76,7 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	private double price;
 	private int bids = 0;
 	private long expiryDate; // In milliseconds
+	private String owner; // Used internally, could be an HTTP session ID or null
 	
 	// Details
 	private String imageName; // Relative name (no extension or full path
@@ -91,17 +93,18 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	}
 	
 	public AuctionItem(String name, double price, int bids, long expiryDateMil) {
-		this(name, price, bids, expiryDateMil, null, null, null, null, null, null, null);
+		this(name, price, bids, expiryDateMil, null, null, null, null, null, null, null, null);
 	}
 	
 	public AuctionItem(String name, double price, int bids,
-			long expiryDateMil, String imageName, Double shippingCost, String sellerName,
+			long expiryDateMil, String owner, String imageName, Double shippingCost, String sellerName,
 			String sellerLocation, String description,
 			Delivery estimatedDelivery, Condition condition) {
 		this.name = name;
 		this.price = price;
 		this.bids = bids;
 		this.expiryDate = expiryDateMil;
+		this.owner = owner;
 		this.imageName = imageName;
 		this.shippingCost = shippingCost;
 		this.sellerName = sellerName;
@@ -134,6 +137,12 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	}
 	public long getExpiryDate() {
 		return expiryDate;
+	}
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	public String getTimeLeft() {
 		return TimeLeftConverter.convertExpiryToTimeLeft(expiryDate);
@@ -191,6 +200,10 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	}
 	public void setHistory(List<AuctionHistory> history) {
 		this.history = history;
+	}
+	
+	public boolean getAllowRemoval() {
+		return ((owner != null) && (owner.equals(FacesUtils.getHttpSessionId())));
 	}
 	
 	public void placeBid(double newPrice) {

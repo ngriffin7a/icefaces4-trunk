@@ -77,13 +77,18 @@ public class AuctionController implements Serializable {
 	public void submitBid(ActionEvent event) {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		// Used in case we have to add an error message
-		String parentId = event.getComponent().getParent().getClientId();
+		String parentId = null;
+		try {
+			parentId = event.getComponent().getParent().getClientId();
+		}catch (Exception ignored) { }
 		
 		// Need to validate two cases: bid is less than current price OR bid is over max bid increase compared to price
 		// First validate that the bid actually exceeds the price we're comparing to
 		if (bidBean.getCurrentBid() <= bidBean.getBidItem().getPrice()) {
-			FacesUtils.addWarnMessage(parentId, "Note your bid does not exceed the current price of " +
-					NumberFormat.getCurrencyInstance().format(bidBean.getBidItem().getPrice()) + ", updating your current bid.");
+			if (parentId != null) {
+				FacesUtils.addWarnMessage(parentId, "Note your bid does not exceed the current price of " +
+						NumberFormat.getCurrencyInstance().format(bidBean.getBidItem().getPrice()) + ", updating your current bid.");
+			}
 			
 			// Also note we update the user bid to match the minimum we expect
 			bidBean.updateBidding();
@@ -92,8 +97,10 @@ public class AuctionController implements Serializable {
 		// We also need to validate that the bid hasn't been increased by too much
 		// This is to keep prices somewhat reasonable, as compared to someone instantly bidding a million dollars
 		if ((bidBean.getCurrentBid() - bidBean.getBidItem().getPrice()) > AuctionItem.MAX_BID_INCREASE) {
-			FacesUtils.addWarnMessage(parentId, "You cannot increase the bid more than " +
-					NumberFormat.getCurrencyInstance().format(AuctionItem.MAX_BID_INCREASE) + " at once, resetting your current bid.");
+			if (parentId != null) {
+				FacesUtils.addWarnMessage(parentId, "You cannot increase the bid more than " +
+						NumberFormat.getCurrencyInstance().format(AuctionItem.MAX_BID_INCREASE) + " at once, resetting your current bid.");
+			}
 			
 			// Reset our current bid to match what the maximum increase should be
 			bidBean.setCurrentBid(bidBean.getBidItem().getPrice() + AuctionItem.MAX_BID_INCREASE - 1);
@@ -104,8 +111,10 @@ public class AuctionController implements Serializable {
 		AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
 		SettingsBean settingsBean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
 		if (!service.placeBid(bidBean.getBidItem(), settingsBean.getName(), bidBean.getCurrentBid())) {
-			FacesUtils.addWarnMessage(parentId, "Your bid of " +
-					NumberFormat.getCurrencyInstance().format(bidBean.getCurrentBid()) + " does not exceed the current price, please bid again.");
+			if (parentId != null) {
+				FacesUtils.addWarnMessage(parentId, "Your bid of " +
+						NumberFormat.getCurrencyInstance().format(bidBean.getCurrentBid()) + " does not exceed the current price, please bid again.");
+			}
 		}
 		bidBean.updateBidding();
 	}
@@ -244,6 +253,10 @@ public class AuctionController implements Serializable {
 			toAdd.setEstimatedDelivery(AuctionItem.Delivery.UNKNOWN);
 		}
 		
+		// We need to set the owner to our HttpSession ID
+		// This will allow us to remove the item from the auction list until our session expires
+		toAdd.setOwner(FacesUtils.getHttpSessionId());
+		
 		// Add our new auction, increase the count of successful auctions from this user session, then clear the temp data
 		log.info("Posting a new user auction item: " + postBean.getToAdd());
 		service.addAuction(toAdd);
@@ -253,6 +266,32 @@ public class AuctionController implements Serializable {
 		// Redirect back to the list after posting
 		TabController tabController = (TabController)FacesUtils.getManagedBean(TabController.BEAN_NAME);
 		tabController.auctionListTab(event);
+	}
+	
+	public String requestRemoveAuction() {
+		PostBean postBean = (PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME);
+		AuctionItem toRemove = postBean.getToRemove();
+		
+		if (toRemove != null) {
+			// Actually remove the item via the service
+			AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
+			service.deleteAuction(toRemove, true);
+			
+			// Update our posted count as well so the user can keep adding items as needed
+			postBean.decrementPostedCount();
+			
+			// Also we need to check a special case where a user might have selected the deleted item to bid on
+			// In which case we need to unselect it and hide the details
+			BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
+			if ((bidBean.getBidItem() != null) && (bidBean.getBidItem().equals(postBean.getToRemove()))) {
+				bidBean.stopBidding();
+			}
+			
+			// Notify the user of our success
+			FacesUtils.addGlobalInfoMessage("Successfully removed your posted auction item '" + toRemove.getName() + "'.");
+		}
+		
+		return null;
 	}
 	
 	public Date getMinExpiryDate() {

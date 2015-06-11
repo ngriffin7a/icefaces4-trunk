@@ -142,6 +142,10 @@ public class AuctionService implements Serializable {
 	}
 	
 	public void deleteAuction(AuctionItem toRemove) {
+		deleteAuction(toRemove, false);
+	}
+	
+	public void deleteAuction(AuctionItem toRemove, boolean voluntaryDelete) {
 		if (auctions.remove(toRemove)) {
 			sortAuctions();
 			
@@ -151,7 +155,7 @@ public class AuctionService implements Serializable {
 							          NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
 				}
 				else {
-					globalMessage.addMessage("Auction expired for item '" + toRemove.getName() + "' with no bids and a final listed price of " +
+					globalMessage.addMessage("Auction " + (voluntaryDelete ? "deleted" : "expired") + " for item '" + toRemove.getName() + "' with no bids and a final listed price of " +
 							          NumberFormat.getCurrencyInstance().format(toRemove.getPrice()) + ".");
 				}
 			}
