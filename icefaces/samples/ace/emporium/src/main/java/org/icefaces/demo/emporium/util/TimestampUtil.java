@@ -23,6 +23,7 @@ import java.util.Date;
 public class TimestampUtil {
 	private static final DateFormat TIMESTAMP = new SimpleDateFormat("kk:mm:ss");
 	private static final DateFormat DATESTAMP = new SimpleDateFormat("h:mm a (EEEE, MMM dd)");
+	private static final DateFormat DEPLOYSTAMP = new SimpleDateFormat("ha EEEE, MMM dd yyyy");
 	
 	public static String stamp() {
 		return TIMESTAMP.format(new Date()) + ": ";
@@ -34,5 +35,9 @@ public class TimestampUtil {
 	
 	public static String datestamp() {
 		return DATESTAMP.format(new Date());
+	}
+	
+	public static String deploystamp() {
+		return DEPLOYSTAMP.format(new Date());
 	}
 }

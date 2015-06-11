@@ -137,7 +137,7 @@
 	
 		<hr width="100%" />
 		<h:panelGroup layout="block" styleClass="w100" style="font-style: italic;">
-		    <h:outputText value="#{auctionService.productInfo}" styleClass="floatL"/>
+		    <h:outputText value="#{auctionService.productInfo} deployed at #{auctionService.startTime}" styleClass="floatL"/>
 		    
 		    <c:if test="#{authController.allowAuth}">
 			    <h:panelGroup layout="block" styleClass="floatR">
