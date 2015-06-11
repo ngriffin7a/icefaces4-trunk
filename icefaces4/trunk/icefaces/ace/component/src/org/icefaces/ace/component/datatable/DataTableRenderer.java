@@ -222,7 +222,7 @@ public class DataTableRenderer extends CoreRenderer {
         writer.endElement(HTML.DIV_ELEM);
 
 		if (DataTableRendererUtil.hasRowEditor(table))
-			JavaScriptRunner.runScript(context, "(function(){var table = ice.ace.instance('"+table.getClientId(context)+"');if(table) {var rowEditors = table.getRowEditors(); if (rowEditors.length > 0) table.setupCellEditorEvents(rowEditors);}})();");
+			JavaScriptRunner.runScript(context, "(function(){var table = ice.ace.instance('"+table.getClientId(context)+"');if(table) {var rowEditors = table.getRowEditors(); if (rowEditors.length > 0) table.setupCellEditorEvents(rowEditors);table.adjustFooterWidth();}})();");
     }
 
     private void encodePinningStateHolder(FacesContext context, DataTable table) throws IOException {

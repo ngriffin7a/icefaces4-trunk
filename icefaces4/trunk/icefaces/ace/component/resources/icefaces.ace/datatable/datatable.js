@@ -3180,3 +3180,11 @@ ice.ace.DataTable.prototype.clearSelection = function () {
     this.selection = [];
     ice.ace.jq(this.selectionHolder).val('');
 };
+
+ice.ace.DataTable.prototype.adjustFooterWidth = function () {
+	var footer = this.element.find('.ui-datatable-footer');
+	if (footer.get(0)) {
+		var body = this.element.find(this.bodyTableSelector);
+		footer.css('width', body.outerWidth() - (footer.outerWidth() - footer.width()));
+	}
+};
