@@ -19,6 +19,8 @@ package org.icefaces.demo.emporium.bid.model;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,6 +100,7 @@ public class AuctionImage implements Serializable {
 	                }
 				});
 			}
+			Arrays.sort(cachedImagesList);
 		}
 		return cachedImagesList;
 	}
