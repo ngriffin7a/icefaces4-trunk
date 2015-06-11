@@ -134,6 +134,10 @@ public class AuthController implements Serializable {
 		AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
 		service.generateDefaultData();
 		
+		// Also log the event so users aren't confused
+		GlobalMessageBean bean = (GlobalMessageBean)FacesUtils.getManagedBean(GlobalMessageBean.BEAN_NAME);
+		bean.addMessage("Reset auction item list.");
+		
 		FacesUtils.addGlobalInfoMessage("Successfully cleared and regenerated auction list items.");
 	}
 	
