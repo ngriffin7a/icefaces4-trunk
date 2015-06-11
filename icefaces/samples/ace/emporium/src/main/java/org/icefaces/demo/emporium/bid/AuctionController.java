@@ -61,6 +61,9 @@ public class AuctionController implements Serializable {
 		bidBean.stopBidding();
 	}
 	
+	/**
+	 * Row selection fired from the mobile (mobi:) version of the page, that uses dataView
+	 */
 	public void clientSelect(AjaxBehaviorEvent event) {
 		DataView view = (DataView)event.getComponent();
 		
@@ -86,6 +89,8 @@ public class AuctionController implements Serializable {
 			bidBean.updateBidding();
 			return;
 		}
+		// We also need to validate that the bid hasn't been increased by too much
+		// This is to keep prices somewhat reasonable, as compared to someone instantly bidding a million dollars
 		if ((bidBean.getCurrentBid() - bidBean.getBidItem().getPrice()) > AuctionItem.MAX_BID_INCREASE) {
 			FacesUtils.addWarnMessage(parentId, "You cannot increase the bid more than " +
 					NumberFormat.getCurrencyInstance().format(AuctionItem.MAX_BID_INCREASE) + " at once, resetting your current bid.");
@@ -123,6 +128,11 @@ public class AuctionController implements Serializable {
 		openHistoryDialog(null);
 	}
 	
+	public void openItemImageDialog(ActionEvent event) {
+		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
+		postBean.setShowItemImageDialog(true);
+	}
+	
 	public void openHistoryDialog(ChartBean.ChartType type) {
 		// Refresh our chart data as part of opening the dialog
 		ChartBean chartBean = (ChartBean)FacesUtils.getManagedBean(ChartBean.BEAN_NAME);
@@ -146,11 +156,6 @@ public class AuctionController implements Serializable {
 		closeHistoryDialog(null);
 	}
 	
-	public void openItemImageDialog(ActionEvent event) {
-		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
-		postBean.setShowItemImageDialog(true);
-	}
-	
 	public void closeItemImageDialog(ActionEvent event) {
 		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
 		postBean.setShowItemImageDialog(false);
@@ -160,6 +165,11 @@ public class AuctionController implements Serializable {
 		closeItemImageDialog(null);
 	}
 	
+	/**
+	 * Method called in relation to adding an item
+	 * This is done when an item image is clicked from the popup
+	 * So we need to figure out what image it was, and get it set as a filename
+	 */
 	public String clickItemImage() {
 		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
 		String clickedName = postBean.getClickedImage();
@@ -176,6 +186,10 @@ public class AuctionController implements Serializable {
 		return null;
 	}
 	
+	/**
+	 * Method called in relation to adding an item
+	 * This is done when the "No Image" button is chosen in the popup 
+	 */
 	public void clickNoItemImage(ActionEvent event) {
 		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
 		postBean.getToAdd().setImageName(null);
@@ -193,7 +207,7 @@ public class AuctionController implements Serializable {
 			return;
 		}
 		
-		// TODO ICE-10611 - Because the ace:dateTimeEntry doesn't seem to respect min/max date for time, we need to manually check our expiry date
+		// TODO ICE-10611 - Because the ace:dateTimeEntry doesn't seem to respect min/max date for time, we need to manually check our expiry date min/max
 		Date dateCheck = getMinExpiryDate();
 		if (postBean.getExpiryDate().before(dateCheck)) {
 			FacesUtils.addGlobalErrorMessage("Expiry date is too soon, please enter a date and time at least " + AuctionItem.EXPIRY_DATE_MINIMUM + " minutes away.");

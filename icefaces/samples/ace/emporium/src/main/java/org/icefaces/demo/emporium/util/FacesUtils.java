@@ -34,12 +34,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-/**
- * JSF utilities.
- *
- * @author ICEsoft Technologies Inc.
- * @since 2.0
- */
 public class FacesUtils {
 	private static final Logger log = Logger.getLogger(FacesUtils.class.getName());
 	

@@ -19,6 +19,12 @@ package org.icefaces.demo.emporium.watcher;
 import org.icefaces.demo.emporium.chat.ChatService;
 import org.icefaces.demo.emporium.watcher.base.ThreadedWatcher;
 
+/**
+ * Class to monitor the chat rooms for expired occupants
+ * This can happen if a person closes their browser without leaving the chat room,
+ *  in which case we need to clean them from the occupant list
+ * This check will run every INTERVAL minutes (by default 2 minutes)
+ */
 public class ChatWatcher extends ThreadedWatcher {
 	public static final int INTERVAL = 60 * 2; // 2 minutes
 	

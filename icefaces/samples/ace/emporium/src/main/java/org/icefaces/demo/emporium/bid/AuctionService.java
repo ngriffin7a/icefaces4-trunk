@@ -94,6 +94,7 @@ public class AuctionService implements Serializable {
 			addAuction(AuctionItemGenerator.makeUniqueItem(auctions));
 		}
 		
+		// Loop through all items looking for anything that is expired, which we will remove
 		for (AuctionItem currentItem : auctions) {
 			if (currentItem.isExpired()) {
 				deleteAuction(currentItem);
