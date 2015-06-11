@@ -22,6 +22,10 @@ import org.icefaces.demo.emporium.bid.AuctionService;
 import org.icefaces.demo.emporium.test.TestFlags;
 import org.icefaces.demo.emporium.watcher.base.ThreadedWatcher;
 
+/**
+ * Class used to continuously monitor auctions for expiry
+ * This will also update the auction list every INTERVAL seconds (default 1 second) so that users can see the time left counting down
+ */
 public class AuctionWatcher extends ThreadedWatcher {
 	public static final String INTERVAL_PUSH_GROUP = "auctionWatcher";
 	public static final String MANUAL_PUSH_GROUP = "auctionUpdate";

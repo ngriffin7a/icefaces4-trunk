@@ -33,7 +33,6 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 
 @ManagedBean(name=ChartBean.BEAN_NAME)
 @ViewScoped
-@SuppressWarnings("serial")
 public class ChartBean implements Serializable {
 	public static final String BEAN_NAME = "chartBean";
 	

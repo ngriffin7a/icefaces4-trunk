@@ -54,8 +54,14 @@ public class AuthController implements Serializable {
 		this.allowAuth = allowAuth;
 	}
 
+	/**
+	 * Method to figure out if we will even allow Authentication
+	 * This means having a login button on the About tab and an authentication dialog displayable
+	 * We will allow authentication if a password file is found and we're not explicitly disabled by TestFlags
+	 * 
+	 * @return true if Authentication should be enabled
+	 */
 	private boolean determineStatus() {
-		// Figure out if we can allow authentication, which means having a login button on the About tab and an authentication dialog displayable
 		// Obviously if our TestFlags disallows it, we comply
 		if (TestFlags.TEST_NO_AUTH) {
 			return false;
@@ -70,6 +76,7 @@ public class AuthController implements Serializable {
 			try{
 				File testFile = new File(passwordFilePath);
 				
+				// Ensure our path exists, is readable, and is actually a file
 				if ((testFile.exists()) && (testFile.canRead()) && (testFile.isFile())) {
 					correctPassword = new Scanner(testFile).useDelimiter("\\Z").next();
 					

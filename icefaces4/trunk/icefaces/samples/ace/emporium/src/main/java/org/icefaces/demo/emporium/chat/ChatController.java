@@ -48,7 +48,6 @@ public class ChatController implements Serializable {
 		ChatBean bean = (ChatBean)FacesUtils.getManagedBean(ChatBean.BEAN_NAME);
 		ChatService service = (ChatService)FacesUtils.getManagedBean(ChatService.BEAN_NAME);
 		
-		// First leave the room via the service
 		service.leaveRoom(bean);
 	}
 	

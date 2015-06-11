@@ -35,6 +35,8 @@ public class UniqueItemNameValidator implements Validator {
 			
 			AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
 			
+			// Ensure that our entered item name doesn't already exist in the listings
+			// This is to prevent duplicates
 			if (!service.isUniqueItemName(value)) {
 	            FacesMessage message = new FacesMessage("Auction item '" + value + "' already exists, please choose another name.");
 	            message.setSeverity(FacesMessage.SEVERITY_ERROR);
