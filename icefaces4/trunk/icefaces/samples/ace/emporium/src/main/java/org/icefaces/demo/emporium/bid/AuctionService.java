@@ -34,8 +34,8 @@ import org.icefaces.demo.emporium.bid.model.AuctionItem;
 import org.icefaces.demo.emporium.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.emporium.message.GlobalMessageBean;
 import org.icefaces.demo.emporium.test.TestFlags;
-import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.StringUtil;
+import org.icefaces.demo.emporium.util.TimestampUtil;
 import org.icefaces.demo.emporium.watcher.AuctionWatcher;
 
 @ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
@@ -49,6 +49,7 @@ public class AuctionService implements Serializable {
 	private AuctionWatcher renderer = AuctionWatcher.getInstance();
 	private List<AuctionItem> auctions = new Vector<AuctionItem>(MINIMUM_ITEMS);
 	private String productInfoString;
+	private String startTime = TimestampUtil.deploystamp();
 	
 	@ManagedProperty(value="#{" + GlobalMessageBean.BEAN_NAME + "}")
 	private GlobalMessageBean globalMessage;
@@ -219,6 +220,14 @@ public class AuctionService implements Serializable {
 		this.globalMessage = globalMessage;
 	}
 	
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
 	public String getProductInfo() {
 		if (productInfoString == null) {
 			productInfoString = new StringBuilder("Powered by ")
@@ -226,9 +235,7 @@ public class AuctionService implements Serializable {
 				.append(" ").append(ProductInfo.PRIMARY).append(".")
 				.append(ProductInfo.SECONDARY).append(".")
 				.append(ProductInfo.TERTIARY).append(" from ")
-				.append(ProductInfo.COMPANY).append(" (build date ")
-				.append(ProductInfo.BUILD_DATE).append(", number ")
-				.append(ProductInfo.BUILD_NO).append(", revision ")
+				.append(ProductInfo.COMPANY).append(" (revision ")
 				.append(ProductInfo.REVISION).append(")").toString();
 		}
 		return productInfoString;
