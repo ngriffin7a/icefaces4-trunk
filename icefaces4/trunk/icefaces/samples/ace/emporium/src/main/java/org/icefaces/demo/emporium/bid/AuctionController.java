@@ -219,7 +219,7 @@ public class AuctionController implements Serializable {
 		// TODO ICE-10611 - Because the ace:dateTimeEntry doesn't seem to respect min/max date for time, we need to manually check our expiry date min/max
 		Date dateCheck = getMinExpiryDate();
 		if (postBean.getExpiryDate().before(dateCheck)) {
-			FacesUtils.addGlobalErrorMessage("Expiry date is too soon, please enter a date and time at least " + AuctionItem.EXPIRY_DATE_MINIMUM + " minutes away.");
+			FacesUtils.addGlobalErrorMessage("Expiry date is too soon, please enter a date and time at least " + AuctionItem.EXPIRY_DATE_MINIMUM_S + " minutes away.");
 			
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.HOUR, AuctionItem.DEFAULT_EXPIRY_DATE_HOURS);
@@ -296,13 +296,13 @@ public class AuctionController implements Serializable {
 	
 	public Date getMinExpiryDate() {
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MINUTE, AuctionItem.EXPIRY_DATE_MINIMUM); // Allow a minimum of 30 minutes away
+		cal.add(Calendar.MINUTE, AuctionItem.EXPIRY_DATE_MINIMUM_S); // Allow a minimum of 30 minutes away
 		return cal.getTime();
 	}
 	
 	public Date getMaxExpiryDate() {
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.HOUR_OF_DAY, 48); // Allow up to 48 hours (2 days) away
+		cal.add(Calendar.HOUR_OF_DAY, AuctionItem.EXPIRY_DATE_MAXIMUM_H); // Allow up to 48 hours (2 days) away
 		return cal.getTime();
 	}
 	
