@@ -100,19 +100,16 @@ public class AuthController implements Serializable {
 		cancelAuth(event);
 		
 		if (StringUtil.validString(authBean.getPassword())) {
+			UserBean user = (UserBean)FacesUtils.getManagedBean(UserBean.BEAN_NAME);
+			SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
+			
 			if (authBean.getPassword().equals(correctPassword)) {
-				UserBean user = (UserBean)FacesUtils.getManagedBean(UserBean.BEAN_NAME);
 				user.setAuthenticated(true);
-				
-				SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
 				log.info("User " + settings.getName() + " entered valid credentials for Authentication.");
 			}
 			else {
 				// Have pretty harsh lockout for failed attempts, so users gets one chance to Auth
-				UserBean user = (UserBean)FacesUtils.getManagedBean(UserBean.BEAN_NAME);
 				user.setLocked(true);
-				
-				SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
 				log.info("User " + settings.getName() + " unsuccessfully attempted Authentication, locking.");
 			}
 			
