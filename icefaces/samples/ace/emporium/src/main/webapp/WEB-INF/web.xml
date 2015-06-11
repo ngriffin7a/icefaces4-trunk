@@ -57,6 +57,18 @@
         <param-value>true</param-value>
     </context-param>
     
+    <!-- Ensure our Ajax Push will not extend the session -->
+    <context-param>
+        <param-name>org.icefaces.strictSessionTimeout</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
+    <!-- Stop multiple inputs from the user while processing the a request -->
+    <context-param>
+        <param-name>org.icefaces.blockUIOnSubmit</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
     <context-param>
         <param-name>org.icefaces.windowScopeExpiration</param-name>
         <param-value>2000</param-value>
@@ -67,6 +79,7 @@
         <param-value>cupertino</param-value>
     </context-param>
     
+    <!-- Point to a password file to enable Authentication functionality -->
     <context-param>
         <param-name>org.icefaces.demo.emporium.auth.passwordFile</param-name>
         <param-value>/opt/tomcat/emporium/password</param-value>

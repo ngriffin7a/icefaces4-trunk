@@ -237,13 +237,22 @@ public class FacesUtils {
 	public static void addErrorMessage(String id, String errorText) {
 		FacesContext.getCurrentInstance().addMessage(id, generateMessage(FacesMessage.SEVERITY_ERROR, errorText));
 	}
-    
-    public static String getHttpSessionId() {
-    	if (FacesContext.getCurrentInstance() != null) {
+	
+	public static HttpSession getHttpSession() {
+		if (FacesContext.getCurrentInstance() != null) {
 	    	Object session = FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 	    	if ((session != null) && (session instanceof HttpSession)) {
-	    		return ((HttpSession)session).getId();
+	    		return (HttpSession)session;
 	    	}
+    	}
+    	
+    	return null;
+	}
+    
+    public static String getHttpSessionId() {
+    	HttpSession toCheck = getHttpSession();
+    	if (toCheck != null) {
+    		return toCheck.getId();
     	}
     	
     	return null;

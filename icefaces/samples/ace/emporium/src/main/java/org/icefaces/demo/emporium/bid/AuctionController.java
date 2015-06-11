@@ -263,7 +263,7 @@ public class AuctionController implements Serializable {
 	
 	public Date getMaxExpiryDate() {
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, 7); // Allow up to a week away
+		cal.add(Calendar.HOUR_OF_DAY, 48); // Allow up to 48 hours (2 days) away
 		return cal.getTime();
 	}
 	

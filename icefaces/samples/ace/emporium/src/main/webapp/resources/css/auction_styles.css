@@ -15,6 +15,10 @@
  */
 
 /* Overrides */
+.ice-blockui-overlay {
+	background-color: transparent;
+}
+
 .ui-datatable-odd {
     background-color: #EEEEEE !important;
 }
@@ -200,6 +204,13 @@
 	font-size: 10px;
 	padding-bottom: 8px;
 	vertical-align: middle;
+}
+
+.submitMonitorWrap {
+	float: right;
+	position: relative;
+	z-index: 5;
+	padding: 7px 10px 0 0;
 }
 
 /* Image Item Loop */

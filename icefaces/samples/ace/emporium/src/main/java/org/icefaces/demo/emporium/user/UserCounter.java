@@ -23,8 +23,12 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.servlet.http.HttpSession;
 
+import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.TimestampUtil;
+
+import com.sun.net.httpserver.HttpServer;
 
 @ManagedBean(name=UserCounter.BEAN_NAME,eager=true)
 @ApplicationScoped
@@ -32,6 +36,8 @@ public class UserCounter implements Serializable {
 	private static final Logger log = Logger.getLogger(UserCounter.class.getName());
 	
 	public static final String BEAN_NAME = "userCounter";
+	private static final int DEFAULT_SESSION_TIMEOUT_S = 10 * 60; // 10 minutes
+	private static final int SESSION_WARN_S = 20; // 20 seconds before timeout we'll warn the user of upcoming expiry
 	
 	private int totalSessions = 0;
 	private int currentSessions = 0;
@@ -68,5 +74,42 @@ public class UserCounter implements Serializable {
 		log.info("User Counter decreased: " + totalSessions + " total, " + currentSessions + " current since " + startTimestamp);
 		
 		return currentSessions;
+	}
+	
+	/**
+	 * Method to determine what the session-timeout from web.xml is, in seconds
+	 * 
+	 * @return session timeout length in seconds, or DEFAULT_SESSION_TIMEOUT_S if not found
+	 */
+	public int getSessionTimeout() {
+		HttpSession toCheck = FacesUtils.getHttpSession();
+		if (toCheck != null) {
+			return toCheck.getMaxInactiveInterval();
+		}
+		
+		return DEFAULT_SESSION_TIMEOUT_S;
+	}
+	
+	/**
+	 * Method to get a warning interval a set number of seconds BEFORE session expiry
+	 * This is meant to be used in tandem with icecore:idleMonitor
+	 * 
+	 * @return session timeout length minus SESSION_WARN_S
+	 */
+	public int getSessionTimeoutWarnInterval() {
+		int toReturn = getSessionTimeout();
+		
+		// There is a chance our session timeout is so short that we can't use our normal warn interval
+		// In which case we just return the session timeout
+		if ((toReturn - SESSION_WARN_S) <= 0) {
+			return toReturn;
+		}
+		
+		// Otherwise return the session timeout minus our SESSION_WARN_S value
+		return (toReturn - SESSION_WARN_S);
+	}
+	
+	public int getSessionTimeoutWarnSeconds() {
+		return SESSION_WARN_S;
 	}
 }

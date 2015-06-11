@@ -17,13 +17,13 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:ace="http://www.icefaces.org/icefaces/components"
-                xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
-                xmlns:icecore="http://www.icefaces.org/icefaces/core">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core">
 <h:head>
     <title>ICEfaces Emporium</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
@@ -44,6 +44,9 @@
 </h:head>
 
 <h:body>
+    <!-- TODO Generate serialization IDs to remove source warnings -->
+    <!-- TODO Have an option to remove and item you added, until your session expires (should also update posted count) -->
+    
     <h:outputText value="#{pushBean.init}" styleClass="hidden"/>
     <h:outputText value="#{bidRobot.init}" styleClass="hidden"/>
     <h:outputText value="#{userBean.init}" styleClass="hidden"/>
@@ -60,6 +63,10 @@
 	    </tr></table>
 	    
 	    <div class="emporiumContainer">
+		    <h:panelGroup layout="block" styleClass="submitMonitorWrap">
+		        <ace:submitMonitor blockUI="@none"/>
+		    </h:panelGroup>
+		    
 	        <ace:tabSet id="at" selectedIndex="#{tabBean.selectedIndex}"
 	                    orientation="#{settingsBean.tabOrientation}"
 	                    cancelOnInvalid="false" immediate="true"
@@ -111,6 +118,10 @@
 	        <c:if test="#{!testFlags.testGrowlMessages}">
 	           <h3><ace:messages globalOnly="true"/></h3>
 	        </c:if>
+	        
+		    <icecore:idleMonitor interval="#{userCounter.sessionTimeoutWarnInterval}">
+	            <h3>Note your session will expire in #{userCounter.sessionTimeoutWarnSeconds} seconds</h3>
+		    </icecore:idleMonitor>
 	    </div>
     </mobi:largeView>
     
