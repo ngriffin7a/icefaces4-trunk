@@ -20,6 +20,7 @@ import org.icefaces.ace.util.CollectionUtils;
 import org.icefaces.ace.util.collections.EntrySetToKeyListTransformer;
 import org.icefaces.ace.util.collections.Predicate;
 
+import javax.swing.tree.TreeNode;
 import java.io.Serializable;
 import java.util.*;
 
@@ -127,6 +128,7 @@ public class NodeStateMap implements Map<Object, NodeState>, Serializable {
     }
 
     public void setAllExpanded(boolean val) {
+		populateEntireMap();
         for (NodeState s : map.values()) s.setExpanded(val);
     }
 
@@ -151,4 +153,19 @@ public class NodeStateMap implements Map<Object, NodeState>, Serializable {
             return false;
         }
     }
+
+	// Util
+	public void populateEntireMap() {
+		for (Object o : map.keySet()) addChildren(o);
+	}
+
+	private void addChildren(Object o) {
+		get(o);
+		if (o instanceof TreeNode) {
+			Enumeration children = ((TreeNode) o).children();
+			while (children.hasMoreElements()) {
+				addChildren(children.nextElement());
+			}
+		}
+	}
 }
