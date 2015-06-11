@@ -51,6 +51,14 @@
         </f:facet>
         <ace:column headerText="Name" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
                     configurable="false">
+			<h:commandButton rendered="#{item.allowRemoval}"
+				             image="resources/images/remove.png"
+				             title="Remove your posted auction item"
+				             action="#{auctionController.requestRemoveAuction}" immediate="true"
+				             styleClass="floatL">
+				<f:setPropertyActionListener target="#{postBean.toRemove}"
+					value="#{item}" />
+			</h:commandButton>
             #{item.name}
         </ace:column>
         <ace:column headerText="Price" styleClass="w30R#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">

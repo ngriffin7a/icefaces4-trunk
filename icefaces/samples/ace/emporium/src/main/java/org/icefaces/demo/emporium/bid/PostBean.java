@@ -35,6 +35,7 @@ public class PostBean implements Serializable {
 	public static final String BEAN_NAME = "postBean";
 	
 	private AuctionItem toAdd;
+	private AuctionItem toRemove;
 	private Date expiryDate;
 	private int postedCount = 0; // Track how many auctions this user session has added
 	private boolean showItemImageDialog = false;
@@ -47,6 +48,10 @@ public class PostBean implements Serializable {
 	
 	public void incrementPostedCount() {
 		postedCount++;
+	}
+	
+	public void decrementPostedCount() {
+		postedCount--;
 	}
 
 	public AuctionItem getToAdd() {
@@ -78,6 +83,14 @@ public class PostBean implements Serializable {
 
 	public void setToAdd(AuctionItem toAdd) {
 		this.toAdd = toAdd;
+	}
+	
+	public AuctionItem getToRemove() {
+		return toRemove;
+	}
+
+	public void setToRemove(AuctionItem toRemove) {
+		this.toRemove = toRemove;
 	}
 
 	public Date getExpiryDate() {
