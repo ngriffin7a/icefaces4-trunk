@@ -115,7 +115,7 @@
 	        </ace:tabSet>
 	        
 	        <c:if test="#{!testFlags.testGrowlMessages}">
-	           <h3><ace:messages globalOnly="true"/></h3>
+	           <h3><ace:messages globalOnly="true" redisplay="false"/></h3>
 	        </c:if>
 	        
 		    <icecore:idleMonitor interval="#{userCounter.sessionTimeoutWarnInterval}">
