@@ -42,6 +42,7 @@
         <f:facet name="header">
             <h:panelGroup layout="block">
 	            <h:outputText value="Auction List (#{auctionService.auctionsSize} items)"/>
+	            <!-- TODO Add an ace:confirmationDialog before removing a posted auction item -->
 	            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
 	                             actionListener="#{tabController.postAuctionTab}"
 	                             immediate="true"
