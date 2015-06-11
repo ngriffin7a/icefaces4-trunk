@@ -30,7 +30,7 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	private static final long serialVersionUID = -3733889643161862851L;
 	
 	public static final int DEFAULT_EXPIRY_DATE_HOURS = 2; // Default hours to add to an expiry date
-	public static final int EXPIRY_DATE_MINIMUM_S = 30; // Minimum number of minutes in the future for an expiry date
+	public static final int EXPIRY_DATE_MINIMUM_M = 30; // Minimum number of minutes in the future for an expiry date
 	public static final int EXPIRY_DATE_MAXIMUM_H = 48; // Maximum number of hours in the future for a default expiry date
 	public static final double DEFAULT_BID_INCREMENT = 1.0;
 	public static final double SMALL_BID_INCREMENT = 10.0;
