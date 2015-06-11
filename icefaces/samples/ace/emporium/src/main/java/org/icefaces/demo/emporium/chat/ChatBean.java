@@ -55,6 +55,9 @@ public class ChatBean implements Serializable {
 	private ChatPosition position = ChatPosition.TAB;
 	private boolean renderOccupants = true;
 	
+	@ManagedProperty(value="#{" + SettingsBean.BEAN_NAME + "}")
+	private SettingsBean settingsBean;
+	
 	@ManagedProperty(value="#{" + ChatService.BEAN_NAME + "}")
 	private ChatService service;
 	
@@ -93,10 +96,9 @@ public class ChatBean implements Serializable {
 		// Try to get our name each time from the SettingsBean
 		// This saves us having to manually sync the names between beans
 		try{
-			SettingsBean settings = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
-			if ((settings != null) && (StringUtil.validString(settings.getName()))) {
-				cachedName = settings.getName();
-				return settings.getName();
+			if ((settingsBean != null) && (StringUtil.validString(settingsBean.getName()))) {
+				cachedName = settingsBean.getName();
+				return settingsBean.getName();
 			}
 		}catch (Exception failedSettings) { }
 		
@@ -145,6 +147,14 @@ public class ChatBean implements Serializable {
 
 	public void setRenderOccupants(boolean renderOccupants) {
 		this.renderOccupants = renderOccupants;
+	}
+	
+	public SettingsBean getSettingsBean() {
+		return settingsBean;
+	}
+
+	public void setSettingsBean(SettingsBean settingsBean) {
+		this.settingsBean = settingsBean;
 	}
 
 	public ChatService getService() {
