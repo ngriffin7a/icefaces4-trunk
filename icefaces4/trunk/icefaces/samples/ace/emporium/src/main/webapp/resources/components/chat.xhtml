@@ -25,7 +25,7 @@
     </composite:interface>
     
     <composite:implementation>
-        <h:panelGroup id="chat" layout="block">
+        <h:panelGroup id="chat" layout="block" styleClass="w100">
         <icecore:defaultAction actionListener="#{chatController.submitMessage}" key="Enter"/>
         
 	        <h:panelGrid id="ncw" columns="4" rendered="#{!chatBean.hasCurrentRoom}">

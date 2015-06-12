@@ -37,7 +37,7 @@ public class ListData implements Serializable {
 	public static final ColorRGBA DEFAULT_BACKGROUND_COLOR = new ColorRGBA("Steel Blue", 176,196,222);
 	
 	public static final String[] TAB_ORIENTATIONS = new String[] {
-		"bottom", DEFAULT_TAB_ORIENTATION, "left", "right"
+		DEFAULT_TAB_ORIENTATION, "bottom"
 	};
 	public static final List<ColorRGBA> COLORS = generateColors();
 	public static final String[] LOCATIONS = new String[] {
