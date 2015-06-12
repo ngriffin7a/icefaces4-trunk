@@ -25,6 +25,7 @@
     <ace:panel closable="false" collapsed="false" toggleable="false"
                header="New Auction Item to Add (maximum #{auctionController.maxPostedAuctions})"
                rendered="#{postBean.postedCount lt auctionController.maxPostedAuctions}">
+        <ace:ajax execute="@this" render="@form">
 	    <h:panelGrid columns="3" cellpadding="4" cellspacing="0" styleClass="postTable">
 	        <h:outputText value="Item Details" style="font-weight: bold;"/>
 	        <h:outputText value=""/><h:outputText value=""/>
@@ -118,6 +119,7 @@
             </h:selectOneMenu>
 	        <ace:message for="deliveryIn"/>
 	    </h:panelGrid>
+	    </ace:ajax>
 	    
 	    <f:facet name="footer">
 	        <h:panelGrid columns="2">
