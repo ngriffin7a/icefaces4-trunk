@@ -31,9 +31,12 @@
     <composite:implementation>
         <c:choose>
 	        <c:when test="#{cc.attrs.popup}">
+	            <!-- Note that the 'nextSibling' used in the commandButton to figure out our dialog client ID
+	                  is a bit touchy on spacing and comments, so it needs to be directly above the ace:dialog to work.
+	                  Ideally we could use 'nextElementSibling' instead but that isn't supported in IE 8 or lower -->
 				<h:commandButton id="exportOut" image="resources/images/export.png"
 					             title="Export this table to PDF, CSV, or XLS" immediate="true"
-					             onclick="ice.ace.instance(this.nextElementSibling.id).show();"
+					             onclick="ice.ace.instance(this.nextSibling.id).show();"
 					             styleClass="floatR" />
 				<ace:dialog id="exportDialog"
 				            header="Export Table"
