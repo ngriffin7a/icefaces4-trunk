@@ -50,17 +50,19 @@ public class ThemeSelect extends ThemeSelectBase {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Enumeration<URL> urls = classLoader.getResources("META-INF/resources");
         URL url;
-        Matcher matcher = Pattern.compile("((jar)|(vfs)):.*/WEB-INF/lib/(ace-)?(.+?)(-\\d+(\\.\\d+){0,2}(-.+)?)?\\.jar!?/META-INF/resources/?").matcher("");
+        Matcher matcher = Pattern.compile("((zip)|(jar)|(vfs)):.*/WEB-INF/lib/(ace-)?(.+?)(-\\d+(\\.\\d+){0,2}(-.+)?)?\\.jar!?/META-INF/resources/?").matcher("");
         String theme;
         while (urls.hasMoreElements()) {
             url = urls.nextElement();
             if (matcher.reset(url.toString()).matches()) {
-                theme = matcher.group(5);
-                url = classLoader.getResource("META-INF/resources/ace-" + theme);
-                if (url != null) {
-                    resource = resourceHandler.createResource("theme.css", "ace-" + theme);
-                    if (resource != null) {
-                        themeList.add(theme);
+                theme = matcher.group(6);
+                if (theme!=null ){
+                    url = classLoader.getResource("META-INF/resources/ace-" + theme);
+                    if (url != null) {
+                        resource = resourceHandler.createResource("theme.css", "ace-" + theme);
+                        if (resource != null) {
+                            themeList.add(theme);
+                        }
                     }
                 }
             }
