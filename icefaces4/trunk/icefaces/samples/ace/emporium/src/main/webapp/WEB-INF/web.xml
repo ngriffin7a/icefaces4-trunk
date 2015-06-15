@@ -64,6 +64,7 @@
     </context-param>
     
     <!-- Stop multiple inputs from the user while processing the a request -->
+    <!-- TODO ICE-10731 - Normally we don't want blocking both here and via ace:submitMonitor, but until we can style separately we'll use this -->
     <context-param>
         <param-name>org.icefaces.blockUIOnSubmit</param-name>
         <param-value>true</param-value>
