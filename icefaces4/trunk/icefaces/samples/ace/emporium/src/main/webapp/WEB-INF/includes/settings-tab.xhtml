@@ -25,7 +25,7 @@
     
     <ace:panel closable="false" collapsed="false" toggleable="false"
                header="Application Settings">
-        <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
+        <h:panelGrid columns="4" cellpadding="4" cellspacing="4" styleClass="postTable">
             <h:graphicImage id="nameInHelp" library="images" name="help.png"/>
             <h:outputLabel for="nameIn" value="Your Name:"/>
             <ace:textEntry id="nameIn" value="#{settingsBean.name}" required="true"
@@ -79,7 +79,7 @@
             <h:panelGroup id="pWidthWrap" layout="block">
                 <h:outputText id="pWidthOut" value="#{settingsBean.popupWidth}px"/>
 				<ace:sliderEntry id="pWidth"
-				                 axis="x" length="250px"
+				                 axis="x" length="200px"
 				                 animate="true" clickableRail="true"
 				                 min="200" max="2000"
 				                 value="#{settingsBean.popupWidth}">
