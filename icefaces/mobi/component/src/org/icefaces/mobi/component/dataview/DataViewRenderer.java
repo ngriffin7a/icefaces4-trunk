@@ -282,7 +282,7 @@ public class DataViewRenderer extends CoreRenderer {
                 writer.writeAttribute("data-state", encodeRowDetailString(context, dvId, detailHolders), null);
 
             for (IndexedIterator<DataViewColumnModel> columnModelIterator = columnModel.iterator(); columnModelIterator.hasNext();)
-                writeColumn(writer, elContext, columnModelIterator.next(), columnModelIterator.getIndex());
+                writeColumn(writer, elContext, columnModelIterator.next(), columnModelIterator.getIndex(), dataView);
 
             writer.endElement(HTML.TR_ELEM);
         }
@@ -299,12 +299,13 @@ public class DataViewRenderer extends CoreRenderer {
         writer.endElement(HTML.DIV_ELEM);
     }
 
-    private void writeColumn(ResponseWriter writer, ELContext elContext, DataViewColumnModel column, int index) throws IOException {
+    private void writeColumn(ResponseWriter writer, ELContext elContext, DataViewColumnModel column, int index, DataView dataView) throws IOException {
         if (!column.isRendered()) return;
 
         ValueExpression ve = column.getValueExpression();
         Object value = ve == null ? column.getValue() : ve.getValue(elContext); // use value expression if available, value will have been pre-evaluated
         String type = column.getType();
+		boolean escape = column.isEscape();
         String colClass = getColumnStyleClass(column, index);
 
         writer.startElement(HTML.TD_ELEM, null);
@@ -335,13 +336,16 @@ public class DataViewRenderer extends CoreRenderer {
             if (value != null && value instanceof List)
                 for (Object i : (List)value) {
                     writer.startElement(HTML.LI_ELEM, null);
-                    writer.write(i.toString());
+					if (escape) writer.writeText(i.toString(), dataView, null);
+                    else writer.write(i.toString());
                     writer.endElement(HTML.LI_ELEM);
                 }
             writer.endElement(HTML.UL_ELEM);
         }
-        else if (value != null)
-            writer.write(value.toString());
+        else if (value != null) {
+			if (escape) writer.writeText(value.toString(), dataView, null);
+			else writer.write(value.toString());
+		}
 
         writer.writeAttribute(HTML.CLASS_ATTR, colClass, null);
 

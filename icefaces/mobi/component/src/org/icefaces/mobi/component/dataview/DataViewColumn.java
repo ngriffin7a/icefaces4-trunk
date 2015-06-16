@@ -47,6 +47,10 @@ public class DataViewColumn extends DataViewColumnBase implements ValueHolder {
                 return DataViewColumn.this.isSortable();
             }
 
+            public boolean isEscape() {
+                return DataViewColumn.this.isEscape();
+            }
+
             public String getType() {
                 return DataViewColumn.this.getType().toString();
             }
