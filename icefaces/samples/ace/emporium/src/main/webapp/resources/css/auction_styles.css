@@ -19,6 +19,11 @@
 	background-color: transparent;
 }
 
+.ui-simpleselectonemenu .ui-inputfield {
+	/* Match the padding of other input fields (like textEntry), instead of setting to 0 */
+	padding: 4px;
+}
+
 .ui-datatable-odd {
     background-color: #EEEEEE !important;
 }
@@ -162,8 +167,13 @@
 	border: none !important;
 }
 
-.postTable input, .postTable select, .postTable textarea {
+.postTable input[type="text"], .postTable select, .postTable textarea {
 	width: 200px;
+	padding: 4px;
+	margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .positionButton {
