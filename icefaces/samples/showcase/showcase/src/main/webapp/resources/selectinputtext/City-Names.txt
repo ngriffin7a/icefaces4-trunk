@@ -93,7 +93,7 @@ Acme
 Acme
 Acme
 Acme
-A Coruña
+A Coru\u00f1a
 Acosta
 Acqui Terme
 Acra
@@ -271,7 +271,7 @@ Akita
 Akko
 Akmene
 Akola
-Ðakovo
+\u00d0akovo
 Akqi
 Akron
 Akron
@@ -380,7 +380,7 @@ Alburnett
 Alburtis
 Albury
 Alcalde
-Alcalá De Henares
+Alcal\u00e1 De Henares
 Alcester
 Alco
 Alcoa
@@ -469,7 +469,7 @@ Alida
 Alief
 Aligarh
 Aline
-Alingsås
+Alings\u00e5s
 Aliquippa
 Aliso Viejo
 Alix
@@ -521,7 +521,7 @@ Allentown
 Allentown
 Allenwood
 Allenwood
-Allerød
+Aller\u00f8d
 Allersberg
 Allerton
 Allerton
@@ -667,7 +667,7 @@ Altoona
 Altoona
 Alto Pass
 Altrincham
-Altötting
+Alt\u00f6tting
 Altura
 Alturas
 Alturas
@@ -1040,7 +1040,7 @@ Aquasco
 Aquashicola
 Aquebogue
 Aquilla
-Araçatuba
+Ara\u00e7atuba
 Arab
 Araba
 Arabi
@@ -1449,7 +1449,7 @@ Athol
 Athol
 Athol
 Athol Springs
-Atizapán De Zaragoza
+Atizap\u00e1n De Zaragoza
 Atka
 Atkins
 Atkins
@@ -1751,10 +1751,10 @@ Bad Orb
 Bad Sachsa
 Bad Urach
 Bad Vilbel
-Bad Vöslau
+Bad V\u00f6slau
 Bad Wildbad
 Bad Zwischenahn
-Bagé
+Bag\u00e9
 Bagamoyo
 Bagdad
 Bagdad
@@ -1976,7 +1976,7 @@ Baran
 Barataria
 Barbacena
 Barbeau
-Barberà del Vallès
+Barber\u00e0 del Vall\u00e8s
 Barber's Corner
 Barbers Point
 Barberton
@@ -2093,7 +2093,7 @@ Barry
 Barryton
 Barrytown
 Barryville
-Barsebäck
+Barseb\u00e4ck
 Barstow
 Barstow
 Barstow
@@ -2572,7 +2572,7 @@ Bellwood
 Bellwood
 Bellwood
 Bellwood
-Belém
+Bel\u00e9m
 Belmar
 Belmond
 Belmont
@@ -2753,7 +2753,7 @@ Berkley
 Berkshire
 Berkshire
 Berlaar
-Berlevåg
+Berlev\u00e5g
 Berlin
 Berlin
 Berlin
@@ -3059,7 +3059,7 @@ Birds Landing
 Birdsnest
 Birdsville
 Birkenhead
-Birkerød
+Birker\u00f8d
 Birlad
 Birmingham
 Birmingham
@@ -3104,11 +3104,11 @@ Biwabik
 Bixby
 Bixby
 Biysk
-Bjärred
-Bjärsjölagård
-Bjästa
-Bjuröklubb
-Bülach
+Bj\u00e4rred
+Bj\u00e4rsj\u00f6lag\u00e5rd
+Bj\u00e4sta
+Bjur\u00f6klubb
+B\u00fclach
 Blachly
 Black
 Black
@@ -3295,7 +3295,7 @@ Blountsville
 Blountville
 Blowing Rock
 Bloxom
-Bålsta
+B\u00e5lsta
 Blue
 Blue Ball
 Blue Bell
@@ -3541,14 +3541,14 @@ Borgosesia
 Boring
 Boring
 Borken
-Borlänge
+Borl\u00e4nge
 Bormes-les-Mimosas
 Bornem
-Boränget
+Bor\u00e4nget
 Boron
 Borovichi
 Borrego Springs
-Borås
+Bor\u00e5s
 Borsa
 Borup
 Boscobel
@@ -3744,7 +3744,7 @@ Bradyville
 Braemar
 Braeton
 Braga
-Bragança Paulista
+Bragan\u00e7a Paulista
 Braggadocio
 Bragg City
 Braggs
@@ -3809,7 +3809,7 @@ Braselton
 Brashear
 Brashear
 Brasher Falls
-Brasília
+Bras\u00edlia
 Brasov
 Brasso Seco Village
 Brasstown
@@ -3827,7 +3827,7 @@ Brazeau
 Brazil
 Brazoria
 Brazzaville
-Bräcke
+Br\u00e4cke
 Brcko
 Brea
 Breaks
@@ -4019,8 +4019,8 @@ Brittany
 Britton
 Britton
 Brixey
-Brøndby
-Brønderslev
+Br\u00f8ndby
+Br\u00f8nderslev
 Brno
 Broadalbin
 Broadbent
@@ -4282,7 +4282,7 @@ Bryn Mawr
 Bryn Mawr
 Bryson
 Bryson City
-Båstad
+B\u00e5stad
 Bucaramanga
 Buchanan
 Buchanan
@@ -4934,7 +4934,7 @@ Campo
 Campobasso
 Campobello
 Campo Grande
-Campos do Jordão
+Campos do Jord\u00e3o
 Campo Seco
 Camp Pendleton
 Camp Point
@@ -5373,7 +5373,7 @@ Castelar
 Castelfranco Veneto
 Castell
 Castella
-Castellón De la Plana
+Castell\u00f3n De la Plana
 Castello di Cisterna
 Castelnuovo Di porto
 Castelvetrano
@@ -5410,7 +5410,7 @@ Castroville
 Catadupa
 Cataldo
 Catalina
-Catalão
+Catal\u00e3o
 Catania
 Catanzaro
 Cataract
@@ -5784,7 +5784,7 @@ Chappell Hill
 Chappells
 Chapra
 Chaptico
-Charaña
+Chara\u00f1a
 Charallave
 Chardon
 Charenton
@@ -6161,7 +6161,7 @@ Chittorgarh
 chitungwiza
 Chivacoa
 Chloe
-Châlons
+Ch\u00e2lons
 Chloride
 Choa Chu Kang
 Choccolocco
@@ -6280,7 +6280,7 @@ City of Industry
 Ciudad Acuna
 Ciudad Del Carmen
 Ciudad Del Este
-Ciudad de México
+Ciudad de M\u00e9xico
 Ciudadela
 Ciudad Guzman
 Ciudad Juarez
@@ -7092,7 +7092,7 @@ Constableville
 Constanta
 Constantia
 Constantine
-Constitución
+Constituci\u00f3n
 Contai
 Continental
 Continental Divide
@@ -7523,7 +7523,7 @@ Crawfordville
 Crawley
 Crawley
 Crayne
-Córdoba
+C\u00f3rdoba
 Creal Springs
 Creamery
 Cream Ridge
@@ -7585,7 +7585,7 @@ Creve Coeur
 Crewe
 Crewe
 Crichton
-Criciúma
+Crici\u00fama
 Criders
 Crimora
 Cripple Creek
@@ -7722,7 +7722,7 @@ Cuba
 Cuba
 Cuba
 Cuba City
-Cubatão
+Cubat\u00e3o
 Cubero
 Cub Run
 Cuche
@@ -7739,7 +7739,7 @@ Cuernavaca
 Cuero
 Cuervo
 Cugy
-Cuiabá
+Cuiab\u00e1
 Cuilapa
 Culberson
 Culbertson
@@ -8171,7 +8171,7 @@ Daytona Beach
 Dayville
 Dayville
 Dazey
-Döbriach
+D\u00f6briach
 Deadwood
 Deadwood
 Deal
@@ -8623,7 +8623,7 @@ Diggs
 Dighton
 Dighton
 Dijon
-Dikanäs
+Dikan\u00e4s
 Dike
 Dike
 Diksmuide
@@ -8681,7 +8681,7 @@ Divernon
 Divide
 Divide
 Dividing Creek
-Divinópolis
+Divin\u00f3polis
 Dix
 Dix
 Dixfield
@@ -8704,7 +8704,7 @@ Dixonville
 Diyarbakir
 Djerba
 Djurdjevac
-Dülmen
+D\u00fclmen
 D Lo
 Dmitrov
 Dnebrovsky
@@ -8751,7 +8751,7 @@ Dolph
 Dolphin
 Dolton
 Dombivli
-Dombås
+Domb\u00e5s
 Dona Ana
 Donahue
 Donald
@@ -9850,7 +9850,7 @@ Elk Creek
 Elk Creek
 Elk Creek
 Elk Creek
-Elkenøre
+Elken\u00f8re
 Elk Falls
 Elkfork
 Elk Garden
@@ -10181,7 +10181,7 @@ Enfield
 Enfield Center
 Engadine
 Engativa
-Engavågen
+Engav\u00e5gen
 Engelhard
 England
 Englehart
@@ -10200,7 +10200,7 @@ Enid
 Enigma
 Enka
 Enkhuizen
-Enköping
+Enk\u00f6ping
 Enloe
 Enna
 Ennice
@@ -10311,7 +10311,7 @@ Eskilstuna
 Eskisehir
 Esko
 Eskridge
-Eslöv
+Esl\u00f6v
 Esmond
 Esmond
 Esmont
@@ -10944,7 +10944,7 @@ Finley
 Finley
 Finleyville
 Finly
-Finspång
+Finsp\u00e5ng
 Firebaugh
 Firebrick
 Firenze
@@ -11088,7 +11088,7 @@ Florenceville
 Florencia
 Floresville
 Florham Park
-Florianópolis
+Florian\u00f3polis
 Florida
 Floridia
 Florien
@@ -11459,7 +11459,7 @@ Fox River Grove
 Fox Valley
 Foxworth
 Foyil
-Foz do Iguaçu
+Foz do Igua\u00e7u
 Frackville
 Fragua
 Frakes
@@ -11550,7 +11550,7 @@ Frazer
 Frazeysburg
 Frazier Park
 Fraziers Bottom
-Førde
+F\u00f8rde
 Fred
 Frederic
 Frederic
@@ -11704,7 +11704,7 @@ Frisco
 Frisco
 Frisco City
 Fritch
-Färjestaden
+F\u00e4rjestaden
 Frogner
 Frohna
 Froid
@@ -11722,8 +11722,8 @@ Frostburg
 Frostburg
 Frosterley
 Frostproof
-Frösön
-Fürstenberg
+Fr\u00f6s\u00f6n
+F\u00fcrstenberg
 Fruita
 Fruitdale
 Fruitdale
@@ -11739,7 +11739,7 @@ Fruitport
 Fruitvale
 Fruitvale
 Fruitvale
-Frövi
+Fr\u00f6vi
 Fryburg
 Frydek-Mistek
 Fryeburg
@@ -12048,7 +12048,7 @@ Gas
 Gasburg
 Gas City
 Gasconade
-Gaspé
+Gasp\u00e9
 Gaspar Hernandez
 Gasport
 Gasquet
@@ -12099,8 +12099,8 @@ Gazelle
 Gaziantep
 Gbarnga
 Gdansk
-Gdañsk
-Gäddede
+Gda\u00f1sk
+G\u00e4ddede
 Gdynia
 Geary
 Geddes
@@ -12270,7 +12270,7 @@ Gibsonton
 Gibsonville
 Giddings
 Gideon
-Gießen
+Gie\u00dfen
 Gifford
 Gifford
 Gifford
@@ -12361,7 +12361,7 @@ Girona
 Girvin
 Gisborne
 Gislaved
-Gislövs Läge
+Gisl\u00f6vs L\u00e4ge
 Givatayim
 Given
 Giza
@@ -12585,7 +12585,7 @@ Glyndon
 Glyndon
 Glynn
 Gnadenhutten
-Gänserndorf
+G\u00e4nserndorf
 Goa
 Goa Velha
 Gober
@@ -12604,7 +12604,7 @@ Goessel
 Goetzville
 Goff
 Goffstown
-Goiânia
+Goi\u00e2nia
 Golconda
 Golconda
 Gold Bar
@@ -13344,10 +13344,10 @@ Grunthal
 Gruver
 Gruver
 Grygla
-Güssing
-Götene
-Göttingen
-Götzis
+G\u00fcssing
+G\u00f6tene
+G\u00f6ttingen
+G\u00f6tzis
 Guadalajara
 Guadalupe
 Guadalupita
@@ -13363,13 +13363,13 @@ Guangchang
 Guangdong
 Guangnan
 Guangzhou
-Guará
+Guar\u00e1
 Guaranda
 Guararema
 Guaratingueta
 Guarda
-Guarujá
-Águas de Lindóia
+Guaruj\u00e1
+\u00c1guas de Lind\u00f3ia
 Guasdualito
 Guastalla
 Guasti
@@ -13407,7 +13407,7 @@ Guilford
 Guilford
 Guilin
 Guilsbro
-Guimarães
+Guimar\u00e3es
 Guin
 Guinda
 Guion
@@ -13468,7 +13468,7 @@ Guys
 Guys Mills
 Guysville
 Guyton
-Gävle
+G\u00e4vle
 Gwalior
 Gweru
 Gwinn
@@ -13521,7 +13521,7 @@ Hadsund
 Haedo
 Haerkingen
 Haeundae
-Hafnarfjörður
+Hafnarfj\u00f6r\u00f0ur
 Hagaman
 Hagan
 Hagar Shores
@@ -13690,7 +13690,7 @@ Hamlin
 Hamlin
 Hamlin
 Hamm
-Hammenhög
+Hammenh\u00f6g
 Hammerfest
 Hammett
 Hammon
@@ -14247,7 +14247,7 @@ Hazleton
 Hazleton
 Hazleton
 Hazyview
-Hódmezõvásárhely
+H\u00f3dmez\u00f5v\u00e1s\u00e1rhely
 Headland
 Headrick
 Head Waters
@@ -14346,7 +14346,7 @@ Helmville
 Helotes
 Helper
 Helsingborg
-Helsingør
+Helsing\u00f8r
 Helsinki
 Helton
 Heltonville
@@ -14529,7 +14529,7 @@ Heyburn
 Heyuan
 Heyworth
 Hezuo
-Höganäs
+H\u00f6gan\u00e4s
 Hialeah
 Hiawassee
 Hiawatha
@@ -14648,7 +14648,7 @@ Hill City
 Hill City
 Hillegom
 Hiller
-Hillerød
+Hiller\u00f8d
 Hillerstorp
 Hilliard
 Hilliard
@@ -14771,10 +14771,10 @@ Hiwassee
 Hixson
 Hixton
 Hjo
-Hjørring
-Höllviken
-Hämeenlinna
-Hønefoss
+Hj\u00f8rring
+H\u00f6llviken
+H\u00e4meenlinna
+H\u00f8nefoss
 Hoagland
 Hobart
 Hobart
@@ -14921,7 +14921,7 @@ Holmes City
 Holmes Mill
 Holmesville
 Holmesville
-Holmgård
+Holmg\u00e5rd
 Holon
 Holstein
 Holstein
@@ -15202,17 +15202,17 @@ Hoyt
 Hoyt
 Hoyt Lakes
 Hoytville
-Höör
+H\u00f6\u00f6r
 Hradec Kralove
 Hrastnik
-Härnösand
-Hørsholm
+H\u00e4rn\u00f6sand
+H\u00f8rsholm
 Hsin-Chu
 Hsin-chu
 Hsin-Chu County
 Hsin Tien
 Hsintien City
-Hässleholm
+H\u00e4ssleholm
 Huachipato
 Huachuca City
 Huade
@@ -15332,7 +15332,7 @@ Hume
 Hume
 Hume
 Humeston
-Humlebæk
+Humleb\u00e6k
 Hummelstown
 Hummels Wharf
 Humnoke
@@ -15425,7 +15425,7 @@ Hurstbridge
 Hurstville
 Hurt
 Hurtsboro
-Åhus
+\u00c5hus
 Huskvarna
 Huslia
 Huson
@@ -15478,14 +15478,14 @@ Hygiene
 Hymera
 Hyndman
 Hyner
-Hyères
+Hy\u00e8res
 Hyrum
 Hysham
-Hyvinkää
+Hyvink\u00e4\u00e4
 Iaeger
 Iasi
 Ibadan
-Ibagué
+Ibagu\u00e9
 Ibague
 Ibapah
 Ibaraki
@@ -15541,7 +15541,7 @@ I-Lan County
 Ile-Ife
 Ilfeld
 Ilford
-Ilhéus
+Ilh\u00e9us
 Iliamna
 Iliff
 Ilion
@@ -15834,7 +15834,7 @@ Italy
 Itamaraca
 Itamogi
 Itanagar
-Itanhaém
+Itanha\u00e9m
 Itapetinga
 Itasca
 Itasca
@@ -16178,7 +16178,7 @@ Jewett
 Jewett
 Jewett
 Jewett City
-Jôgeva
+J\u00f4geva
 Jhabua
 Jhalawar
 Jhang Sadar
@@ -16303,7 +16303,7 @@ JoniSkelis
 JoniSkis
 Jonkoping
 Jonquiere
-João Pessoa
+Jo\u00e3o Pessoa
 Joplin
 Joplin
 Joppa
@@ -16332,7 +16332,7 @@ Jourdanton
 Joy
 Joyce
 Joyce
-Jørpeland
+J\u00f8rpeland
 Juan Aldama
 Juan De Herrera
 Juan Santiago
@@ -16372,7 +16372,7 @@ Junction City
 Junction City
 Junction City
 Junction City
-Jundiaí
+Jundia\u00ed
 Juneau
 Juneau
 Juneau
@@ -16396,7 +16396,7 @@ Justin
 Jutiapa
 Juticalpa
 Juuka
-Jyväskylä
+Jyv\u00e4skyl\u00e4
 Kaaawa
 Kaba He
 Kabul
@@ -16703,7 +16703,7 @@ Kemaman
 Kemblesville
 Kemerovo
 Kemi
-Kemijärvi
+Kemij\u00e4rvi
 Kemmerer
 Kemp
 Kemp
@@ -17162,7 +17162,7 @@ Klerksdorp
 Kleve
 Klickitat
 Klimmen
-Klimpfjäll
+Klimpfj\u00e4ll
 Klingerstown
 Klippan
 Klokkerholm
@@ -17263,7 +17263,7 @@ Koridhallos
 Korla
 Korneuburg
 Kornwestheim
-Korsør
+Kors\u00f8r
 Kortrijk
 Kos
 Kosciusko
@@ -17312,7 +17312,7 @@ Kremenchug
 Kremlin
 Kremlin
 Kremmling
-Kremsmünster
+Kremsm\u00fcnster
 Kresgeville
 Kress
 Krestsy
@@ -17325,7 +17325,7 @@ Kristiansund
 Kristinehamn
 Krk
 Krnov
-Krogsbølle
+Krogsb\u00f8lle
 Krommenie
 Krotz Springs
 Kruiningen
@@ -17357,7 +17357,7 @@ Kumamoto
 Kumasi
 Kumla
 Kuna
-Kungälv
+Kung\u00e4lv
 Kungsbacka
 Kunia
 Kunkle
@@ -17453,7 +17453,7 @@ Lackey
 Lac La Biche
 Laclede
 Laclede
-Lac-Mégantic
+Lac-M\u00e9gantic
 Lacombe
 Lacombe
 Lacon
@@ -17766,7 +17766,7 @@ Lalitpur
 Lalitpur
 La Loma
 La Londe-les-Maures
-La Louvière
+La Louvi\u00e8re
 La Luz
 La Maddalena
 La Madera
@@ -17905,7 +17905,7 @@ Langworthy
 Langzhong
 Lanham
 Lankin
-Lanškroun
+Lan\u0161kroun
 Lannon
 Lanoka Harbor
 Lansdale
@@ -18451,7 +18451,7 @@ Leslie
 Leslie
 Leslie
 Leslie
-Les Méchins
+Les M\u00e9chins
 Les Ormes-sur-Voulzie
 Lester
 Lester
@@ -18461,7 +18461,7 @@ Lesterville
 Lesterville
 Le Sueur
 Les Ulis
-Ålesund
+\u00c5lesund
 Letart
 Letcher
 Letcher
@@ -18604,7 +18604,7 @@ Lidcombe
 Lidderdale
 Liden
 Lidgerwood
-Lidingö
+Liding\u00f6
 Lidkoping
 Liebenthal
 Liege
@@ -18632,7 +18632,7 @@ Lilesville
 Lilienfeld
 Lille
 Lillehammer
-Lillestrøm
+Lillestr\u00f8m
 Lillian
 Lillian
 Lillie
@@ -18762,7 +18762,7 @@ Lingling
 Lingo
 Linguere
 Linjiang
-Linköping
+Link\u00f6ping
 Linkuva
 Linkwood
 Linn
@@ -18955,7 +18955,7 @@ Lloyd
 Lloyd
 Lloyd
 Lloydminster
-Älmhult
+\u00c4lmhult
 Loa
 Loachapoka
 Loami
@@ -19034,7 +19034,7 @@ Loganville
 Loganville
 Loganville
 Log Lane Village
-Logroño
+Logro\u00f1o
 Logsden
 Lohja
 Lohman
@@ -19267,7 +19267,7 @@ Louisville
 Louisville
 Louisville
 Louisville
-Loulé
+Loul\u00e9
 Loup City
 Lourdes
 Louth
@@ -19348,7 +19348,7 @@ Loyalton
 Loysburg
 Loysville
 Lozano
-Ølstykke
+\u00d8lstykke
 Luana
 Luanda
 Luanda
@@ -19411,14 +19411,14 @@ Lugano
 Lugansk
 Lugo
 Lugoff
-Luján de Cuyo
+Luj\u00e1n de Cuyo
 Lukachukai
 Luke
 Luke AFB
 Lukeville
 Lula
 Lula
-Luleå
+Lule\u00e5
 Luling
 Luling
 Lulu
@@ -19492,7 +19492,7 @@ Luzerne
 Luzerne
 Luzerne
 Luzhou
-Lévis
+L\u00e9vis
 Lviv
 Lyburn
 Lycksele
@@ -19596,7 +19596,7 @@ Mableton
 Mabscott
 Mabton
 Macamic
-Macapá
+Macap\u00e1
 Mac Arthur
 Macatawa
 Macau
@@ -19608,7 +19608,7 @@ Macedon
 Macedonia
 Macedonia
 Macedonia
-Maceió
+Macei\u00f3
 Maceo
 Macerata
 Macfarlan
@@ -19817,7 +19817,7 @@ Malaga
 Malakoff
 Malang
 Malappuram
-Malargüe
+Malarg\u00fce
 Malcesine
 Malcolm
 Malcolm
@@ -19844,7 +19844,7 @@ Mallard
 Mallie
 Mallory
 Mallory
-Malmö
+Malm\u00f6
 Malmo
 Malmstrom A F B
 Malo
@@ -20042,7 +20042,7 @@ Mantua
 Mantua
 Manukau City
 Manurewa
-Manáus
+Man\u00e1us
 Manvel
 Manvel
 Manville
@@ -20138,7 +20138,7 @@ Marchand
 Marche-En-Famenne
 Marco Island
 Marcola
-Marcos Juárez
+Marcos Ju\u00e1rez
 Marcq-En-Baroeul
 Marcus
 Marcus
@@ -20200,7 +20200,7 @@ Marine City
 Marineland
 Marine on Saint Croix
 Marinette
-Maringá
+Maring\u00e1
 Maringouin
 Marino
 Marion
@@ -20463,7 +20463,7 @@ Matamoras
 Matamoros
 Matane
 Matanzas
-Mataró
+Matar\u00f3
 Mataram
 Matawan
 Matehuala
@@ -20556,7 +20556,7 @@ Maxwelton
 May
 May
 May
-Mayagüez
+Mayag\u00fcez
 Maybee
 Maybell
 Maybeury
@@ -20812,7 +20812,7 @@ Mc Veigh
 Mc Veytown
 McVille
 Mc Williams
-Mödling
+M\u00f6dling
 Meacham
 Mead
 Mead
@@ -21135,7 +21135,7 @@ Mesquite
 Mesquite
 Mesquite
 messina
-Meßstetten
+Me\u00dfstetten
 Meta
 Metairie
 Metaline
@@ -21698,13 +21698,13 @@ Mize
 Mizpah
 Mizpah
 Mizque
-Åmål
+\u00c5m\u00e5l
 Mlada Boleslav
-Målilla
-Mölndal
-Mölnlycke
-Mönchengladbach
-Mänttä
+M\u00e5lilla
+M\u00f6lndal
+M\u00f6lnlycke
+M\u00f6nchengladbach
+M\u00e4ntt\u00e4
 Mo
 Moab
 Moapa
@@ -21808,7 +21808,7 @@ Monett
 Monetta
 Monette
 Money
-Mongaguá
+Mongagu\u00e1
 Mongaup Valley
 Mongo
 Monhegan
@@ -22490,11 +22490,11 @@ Moyie Springs
 Moyock
 Mozelle
 Mozier
-Mérida
-Mérida
-Mérignac
-Märsta
-Mürzzuschlag
+M\u00e9rida
+M\u00e9rida
+M\u00e9rignac
+M\u00e4rsta
+M\u00fcrzzuschlag
 Msaken
 Msida
 MSN TV
@@ -22900,9 +22900,9 @@ Nazareth
 Nazareth Illit
 Naze
 Nazlini
-Náchod
-Åndalsnes
-Nödinge
+N\u00e1chod
+\u00c5ndalsnes
+N\u00f6dinge
 Neah Bay
 Neal
 Neapolis
@@ -23031,8 +23031,8 @@ Nettleton
 Neubrandenburg
 Neuburg
 Neuchatel
-Neudörfl
-Neuenbürg
+Neud\u00f6rfl
+Neuenb\u00fcrg
 Neuf-Brisach
 Neuilly-Plaisance
 Neu-Isenburg
@@ -23514,7 +23514,7 @@ New Zion
 Ney
 Neyba
 Nezperce
-Ängelholm
+\u00c4ngelholm
 Niagara
 Niagara
 Niagara Falls
@@ -23563,7 +23563,7 @@ Niland
 Niles
 Niles
 Niles
-Nilsiä
+Nilsi\u00e4
 Nilwood
 Nimes
 Nimitz
@@ -23596,7 +23596,7 @@ Nisibon
 Nisland
 Nisswa
 Nisula
-Niterói
+Niter\u00f3i
 Nitra
 Nitro
 Nitta Yuma
@@ -23660,7 +23660,7 @@ Norco
 Norco
 Norcross
 Norcross
-Nordbørg
+Nordb\u00f8rg
 Norden
 Nordhausen
 Nordheim
@@ -23702,8 +23702,8 @@ Norris
 Norris City
 Norristown
 Norristown
-Norrköping
-Norrtälje
+Norrk\u00f6ping
+Norrt\u00e4lje
 North
 North
 North Adams
@@ -23998,7 +23998,7 @@ Notus
 Nouakchott
 Noumea
 Nova
-Nova Iguaçu
+Nova Igua\u00e7u
 Nova Lima
 Novar
 Novara
@@ -24021,12 +24021,12 @@ Noxapater
 Noxen
 Noxon
 Noyes
-Nærbø
-Nürnberg
-Närpiö
-Nørre Alslev
-Nørresundby
-Nässjö
+N\u00e6rb\u00f8
+N\u00fcrnberg
+N\u00e4rpi\u00f6
+N\u00f8rre Alslev
+N\u00f8rresundby
+N\u00e4ssj\u00f6
 Nubieber
 Nucla
 Nuevo
@@ -24065,11 +24065,11 @@ Nydalen
 Nye
 Nyeri
 Nyingchi
-Nyköping
+Nyk\u00f6ping
 Nylstroom
-Nynäshamn
+Nyn\u00e4shamn
 Nyon
-Nyíregyháza
+Ny\u00edregyh\u00e1za
 Nyssa
 Nyuzen
 Oacoma
@@ -24477,7 +24477,7 @@ Olney
 Olney
 Olney
 Olney Springs
-Olofström
+Olofstr\u00f6m
 Olomouc
 Olongapo
 Olpe
@@ -24505,7 +24505,7 @@ Omega
 Omegna
 Omena
 Omer
-Omiš
+Omi\u0161
 Omiya
 Omro
 Omsk
@@ -24927,7 +24927,7 @@ Owyhee
 Oxbow
 Oxbow
 Oxbow
-Oxelösund
+Oxel\u00f6sund
 Oxford
 Oxford
 Oxford
@@ -25187,7 +25187,7 @@ Paoli
 Paoli
 Paoli
 Paonia
-Paços de brandão
+Pa\u00e7os de brand\u00e3o
 Papaaloa
 Papaikou
 Papatoetoe
@@ -25195,7 +25195,7 @@ Papeete
 Paphos
 Papillion
 Papineau
-Parañaque
+Para\u00f1aque
 Parachute
 Parade
 Paradis
@@ -25219,7 +25219,7 @@ Paraiso
 Paramaribo
 Paramount
 Paramus
-Paraná
+Paran\u00e1
 Paratwada
 Parchman
 Pardeesville
@@ -25302,7 +25302,7 @@ Parma
 Parma
 Parmele
 Parmelee
-Parnaíba
+Parna\u00edba
 Parnell
 Parnell
 Parnu
@@ -25377,7 +25377,7 @@ Paton
 Patrai
 Patras
 Patratu
-Patreksfjörður
+Patreksfj\u00f6r\u00f0ur
 Patrick
 Patrick AFB
 Patricksburg
@@ -25669,7 +25669,7 @@ Pereslavl'-Zalesskiy
 Perham
 Perham
 Peridot
-Peristérion
+Perist\u00e9rion
 Perkasie
 Perkins
 Perkins
@@ -25738,7 +25738,7 @@ Peru
 Peru
 Peru
 Peru
-Peruíbe
+Peru\u00edbe
 Perugia
 Pesaro
 Pescadero
@@ -25793,7 +25793,7 @@ Petrolia
 Petrolia
 Petros
 Petrozavodsk
-Petrópolis
+Petr\u00f3polis
 Pettibone
 Pettigrew
 Pettisville
@@ -26116,7 +26116,7 @@ Pismo Beach
 Pistoia
 Pitcairn
 Pitcher
-Piteå
+Pite\u00e5
 Pitesti
 Pithoragarh
 Piti
@@ -26775,7 +26775,7 @@ Poyntelle
 Poy Sippi
 Poza Rica
 Poznan
-Pozuelo de Alarcón
+Pozuelo de Alarc\u00f3n
 Prague
 Prague
 Prague
@@ -26814,11 +26814,11 @@ Prattsville
 Prattville
 Pray
 Praya
-Précy-sur-Oise
+Pr\u00e9cy-sur-Oise
 Preble
 Preble
 Preemption
-Premià de Dalt
+Premi\u00e0 de Dalt
 Premier
 Premium
 Premont
@@ -26974,11 +26974,11 @@ Prudence Island
 Prudenville
 Prudhoe Bay
 Prue
-Péruwelz
+P\u00e9ruwelz
 Pryazha
 Pryor
 Pryor
-Pásztó
+P\u00e1szt\u00f3
 Ptuj
 Pucallpa
 Pucheng
@@ -27506,7 +27506,7 @@ Rayville
 Rayville
 Raywick
 Raywood
-Rødovre
+R\u00f8dovre
 Rea
 Reader
 Readfield
@@ -27536,7 +27536,7 @@ Reardan
 Reasnor
 Rebecca
 Rebersburg
-Örebro
+\u00d6rebro
 Rebuck
 Rechovot
 Recife
@@ -27783,7 +27783,7 @@ Rexmont
 Rexville
 Reydell
 Reydon
-Reykjavík
+Reykjav\u00edk
 Reynella
 Reyno
 Reynolds
@@ -27819,13 +27819,13 @@ Rhodesdale
 Rhodhiss
 Rhododendron
 Rhome
-Århus
+\u00c5rhus
 Rhymesbury
 Rialto
 Ribe
 Ribeira Grande
-Ribeirão Pires
-Ribeirão Preto
+Ribeir\u00e3o Pires
+Ribeir\u00e3o Preto
 Ribera
 Ribera
 Riberalta
@@ -28143,10 +28143,10 @@ Rixeyville
 Rixford
 Riyadh
 Rizhao
-Årjäng
-Ørnes
-Rönninge
-Örnsköldsvik
+\u00c5rj\u00e4ng
+\u00d8rnes
+R\u00f6nninge
+\u00d6rnsk\u00f6ldsvik
 Roach
 Roachdale
 Road Town
@@ -28679,7 +28679,7 @@ Royse City
 Royston
 Rozel
 Rozet
-Rörbäcksnäs
+R\u00f6rb\u00e4cksn\u00e4s
 Rubicon
 Rubio
 Rubtsovsk
@@ -28834,7 +28834,7 @@ Ryland
 Rypin
 Ryuo
 Rzeszow
-Ås
+\u00c5s
 Saanichton
 Saarbrucken
 Saas Fee
@@ -28885,7 +28885,7 @@ Safety Harbor
 Saffell
 Safford
 Safford
-Ísafjörður
+\u00cdsafj\u00f6r\u00f0ur
 Sagamore
 Sagamore
 Sagamore Beach
@@ -29055,7 +29055,7 @@ Saint Joseph
 Saint Joseph
 Saint-Joseph-de-Sorel
 Saint-Jovite
-Saint-Jérôme
+Saint-J\u00e9r\u00f4me
 Saint-Jude
 Saint Julians
 Saint-Julien-en-Genevois
@@ -29137,7 +29137,7 @@ Saint Petersburg
 Saint Petersburg
 Saint Regis
 Saint Regis Falls
-Saint-Rémi
+Saint-R\u00e9mi
 Saint Robert
 Saint-Robert
 Saint Rose
@@ -29336,7 +29336,7 @@ San Casimiro
 Sanchez
 Sanchore
 San Clemente
-San Clemente del Tuyú
+San Clemente del Tuy\u00fa
 San Cristobal
 San Cristobal
 San Cristobal
@@ -29456,7 +29456,7 @@ San Joaquin
 San Joaquin
 San Jon
 San Jorge
-San José de Mayo
+San Jos\u00e9 de Mayo
 San Jose
 San Jose
 San Jose
@@ -29481,7 +29481,7 @@ SAN JUAN SACATEPEQUEZ
 Sankt Augustin
 Sankt Gallen
 Sankt Johann im Pongau
-Sankt Pölten
+Sankt P\u00f6lten
 San Leandro
 San Lorenzo
 San Lorenzo
@@ -29490,7 +29490,7 @@ San Lucas
 San Luis
 San Luis
 San Luis Obispo
-San Luis Potosí
+San Luis Potos\u00ed
 San Luis Rey
 San Luis Rio Colorado
 San Manuel
@@ -29566,7 +29566,7 @@ SANTA CRUZ DEL QUICHE
 Santa Cruz de Tenerife
 Santa Cruz do Sul
 Santa Elena
-Santafé de Bogotá
+Santaf\u00e9 de Bogot\u00e1
 Santa Fe
 Santa Fe
 Santa Fe
@@ -29589,7 +29589,7 @@ SANTA RITA
 Santa Rita
 Santa Rita
 Santa Rita Park
-Santarém
+Santar\u00e9m
 Santa Rosa
 Santa Rosa
 Santa Rosa
@@ -29612,14 +29612,14 @@ Santiago de Compostela
 Santiago del Estero
 Santiago Rodriguez
 Santo
-Santo André
+Santo Andr\u00e9
 Santo Domingo
 Santo Domingo
 Santo Domingo
 Santo Domingo De Los Colorados
 Santo Domingo Pueblo
-Santo João da Madeira
-Santo Ângelo
+Santo Jo\u00e3o da Madeira
+Santo \u00c2ngelo
 Santos
 Santurce
 San Vicente
@@ -29922,8 +29922,8 @@ Scribner
 Scroggins
 Scuddy
 Scurry
-Söderhamn
-Södertälje
+S\u00f6derhamn
+S\u00f6dert\u00e4lje
 Seabeck
 Seaboard
 Seabrook
@@ -30572,7 +30572,7 @@ Sigtuna
 Sigulda
 Sigurd
 Sihor
-Siilinjärvi
+Siilinj\u00e4rvi
 Sikar
 Sikes
 Sikeston
@@ -30585,7 +30585,7 @@ Silerton
 Siletz
 Silex
 Siliguri
-Siljansnäs
+Siljansn\u00e4s
 Silkeborg
 Silkeborg
 Siloam
@@ -30743,7 +30743,7 @@ Skara
 Skarsa
 Skaudvile
 SKELDON
-Skellefteå
+Skellefte\u00e5
 Skellytown
 Skelton
 skiatook
@@ -30765,9 +30765,9 @@ Skopje
 Skovde
 Skowhegan
 Skull Valley
-Skummeslövsstrand
+Skummesl\u00f6vsstrand
 Skuodas
-Skövde
+Sk\u00f6vde
 Skwentna
 Skyforest
 Skygusty
@@ -30827,12 +30827,12 @@ Slough
 Sloughhouse
 Slovan
 Sluis
-Sölvesborg
+S\u00f6lvesborg
 Smackover
 Smalininkai
 Small Point
 Smallwood
-Sámara
+S\u00e1mara
 Smarr
 Smartt
 Smartville
@@ -30939,12 +30939,12 @@ Snydersburg
 Snydertown
 Soacha
 Soap Lake
-São Bernardo do Campo
+S\u00e3o Bernardo do Campo
 Sobieski
 Sobral
 Socabaya
-São Caetano do Sul
-São Carlos
+S\u00e3o Caetano do Sul
+S\u00e3o Carlos
 Socastee
 Sochi
 Social Circle
@@ -30962,13 +30962,13 @@ Soest
 Sofia
 Sogamoso
 Sogndal
-São Gonçalo
+S\u00e3o Gon\u00e7alo
 Sog Xian
 Soignies
 Sojat
-São José do Rio Preto
-São José dos Campos
-São José dos Pinhais
+S\u00e3o Jos\u00e9 do Rio Preto
+S\u00e3o Jos\u00e9 dos Campos
+S\u00e3o Jos\u00e9 dos Pinhais
 Soka
 Sokch'o
 Solana Beach
@@ -30983,11 +30983,11 @@ Soldotna
 Solebury
 Soledad
 Solen
-São Leopoldo
+S\u00e3o Leopoldo
 Solgohachia
 Solihull
 Solingen
-Sollefteå
+Sollefte\u00e5
 Sollentuna
 Solna
 Solo
@@ -31005,7 +31005,7 @@ Solothurn
 Solsberry
 Solsville
 Soltau
-São Luís
+S\u00e3o Lu\u00eds
 Solvang
 Solway
 Sombor
@@ -31065,7 +31065,7 @@ Sonora
 Sontag
 Sonyea
 Sooke
-São Paulo
+S\u00e3o Paulo
 Sopchoppy
 Soper
 Soperton
@@ -31085,9 +31085,9 @@ Sorrento
 Sorrento
 Sorrento Mesa
 Sortland
-Sosúa
-São Sebastião
-São Sebastião do Paraíso
+Sos\u00faa
+S\u00e3o Sebasti\u00e3o
+S\u00e3o Sebasti\u00e3o do Para\u00edso
 Soso
 Sotin
 Souda
@@ -31297,7 +31297,7 @@ Southworth
 South Yarmouth
 South Yarra
 Sovetskaya Gavan'
-São Vicente
+S\u00e3o Vicente
 Soweto
 Spade
 Spalding
@@ -31539,8 +31539,8 @@ Sriganganagar
 Srikakulam
 Srikalahasti
 Srinagar
-Särna
-Sørreisa
+S\u00e4rna
+S\u00f8rreisa
 Srtoud
 Staatsburg
 Stacy
@@ -31729,7 +31729,7 @@ Stellenbosch
 Stem
 Ste-Maxime
 Stendal
-Såtenäs
+S\u00e5ten\u00e4s
 Stenungsund
 Stephan
 Stephen
@@ -31764,7 +31764,7 @@ Sterling Forest
 Sterling Heights
 Sterlington
 Sterrett
-Östersund
+\u00d6stersund
 Stet
 Stetson
 Stetsonville
@@ -31838,7 +31838,7 @@ Stitzer
 St Ives
 St. John's
 Stjordal
-Ställdalen
+St\u00e4lldalen
 St. Louis
 Stockbridge
 Stockbridge
@@ -32010,8 +32010,8 @@ Streetman
 Streetsboro
 Stringer
 Stringtown
-Strömstad
-Strängnäs
+Str\u00f6mstad
+Str\u00e4ngn\u00e4s
 Stroh
 Stromsburg
 Strong
@@ -32339,8 +32339,8 @@ Svelvik
 Svencioneliai
 Svencionys
 Svendborg
-Svenskär
-Svolvær
+Svensk\u00e4r
+Svolv\u00e6r
 Swain
 Swainsboro
 Swakopmund
@@ -32453,7 +32453,7 @@ Szczecin
 Szeged
 Szekesfehervar
 Szekszard
-Székesfehérvár
+Sz\u00e9kesfeh\u00e9rv\u00e1r
 Szolnok
 Szombathely
 Taastrup
@@ -32600,7 +32600,7 @@ Tanana
 Tandur
 Taneytown
 Taneyville
-Tangará da Serra
+Tangar\u00e1 da Serra
 Tangent
 Tangerang
 Tangerine
@@ -32659,7 +32659,7 @@ Tatum
 Tatum
 Tatum
 Tatums
-Taubaté
+Taubat\u00e9
 Taunggyi
 Taunton
 Taunton
@@ -32702,7 +32702,7 @@ Taytay
 Tazewell
 Tazewell
 Tbilisi
-Tábor
+T\u00e1bor
 Tchula
 Tea
 Tea
@@ -32716,7 +32716,7 @@ Tebbetts
 Tecate
 Tecate
 Techny
-Tecomán
+Tecom\u00e1n
 Tecopa
 Tecumseh
 Tecumseh
@@ -32736,7 +32736,7 @@ Tehuacana
 Tehuantepec
 Teigen
 Tekamah
-Tekirdað
+Tekirda\u00f0
 Tekoa
 Tekonsha
 TELA
@@ -32811,7 +32811,7 @@ Te Puke
 Tererro
 Teresina
 Teresita
-Teresópolis
+Teres\u00f3polis
 Terheijden
 Terlingua
 Terlton
@@ -32983,7 +32983,7 @@ Thorold
 Thorp
 Thorp
 Thorpe
-Thorsø
+Thors\u00f8
 Thorsby
 Thousand Island Park
 Thousand Oaks
@@ -33149,8 +33149,8 @@ Tivoli
 Tixtla De Guerrero
 Tlaquepaque
 Tlaxcala
-Tällberg
-Tønsberg
+T\u00e4llberg
+T\u00f8nsberg
 Toa Baja
 Toano
 Toa Payoh
@@ -33377,7 +33377,7 @@ Trancoso
 Tranekaer
 Tranquility
 Tranquillity
-Tranås
+Tran\u00e5s
 Transfer
 Transylvania
 Trapani
@@ -33394,7 +33394,7 @@ Traverse City
 Travis AFB
 Treadwell
 Trebloc
-Töreboda
+T\u00f6reboda
 Trecate
 Treece
 Trego
@@ -33489,10 +33489,10 @@ Trnava
 Trofa
 Trogir
 Troisdorf
-Trois-Rivières
+Trois-Rivi\u00e8res
 Troitsk
-Trollhättan
-Tromsø
+Trollh\u00e4ttan
+Troms\u00f8
 Trona
 Trondheim
 Tropic
@@ -33540,9 +33540,9 @@ Troyan
 Troyes
 Troy Grove
 Troy Mills
-Três Coroas
-Tórshavn
-Três Lagoas
+Tr\u00eas Coroas
+T\u00f3rshavn
+Tr\u00eas Lagoas
 Truchas
 Truckee
 True
@@ -33611,7 +33611,7 @@ Tulia
 Tulihe
 Tullahassee
 Tullahoma
-Tullebølle
+Tulleb\u00f8lle
 Tullos
 Tully
 Tulsa
@@ -33717,7 +33717,7 @@ Tuxpan
 Tuxtla Gutierrez
 Tuzla
 Tvedestrand
-Tvååker
+Tv\u00e5\u00e5ker
 Twain
 Twain Harte
 Tweed Heads
@@ -33773,7 +33773,7 @@ Tyner
 Tyngsboro
 Tynset
 Tyonek
-Tyresö
+Tyres\u00f6
 Tyringham
 Tyro
 Tyro
@@ -33789,7 +33789,7 @@ Ty Ty
 Tzaneen
 Uberaba
 Uberlingen
-Uberlândia
+Uberl\u00e2ndia
 Ubilla
 Ubly
 Ubud
@@ -33866,7 +33866,7 @@ Underwood
 Underwood
 Uneeda
 Unicoi
-União da Vitória
+Uni\u00e3o da Vit\u00f3ria
 Union
 Union
 Union
@@ -33963,7 +33963,7 @@ Upington
 Upland
 Upland
 Upland
-Uplands Väsby
+Uplands V\u00e4sby
 Upper Black Eddy
 Upperco
 Upper Darby
@@ -34004,7 +34004,7 @@ Urbandale
 Urbanna
 Urena
 Ures
-Ðurðevac
+\u00d0ur\u00f0evac
 Urgench
 Uriah
 Urich
@@ -34055,7 +34055,7 @@ Vader
 Vadito
 Vado
 Vadodara
-Vadsø
+Vads\u00f8
 Vaduz
 Vaiden
 Vail
@@ -34078,7 +34078,7 @@ Valdosta
 Vale
 Vale
 Vale
-Valença
+Valen\u00e7a
 Valencia
 Valencia
 Valencia
@@ -34323,7 +34323,7 @@ Veraguas
 Verbania
 Verbank
 Verbena
-Verchères
+Verch\u00e8res
 Verda
 Verdalsoren
 Verden
@@ -34338,7 +34338,7 @@ Vergas
 Vergennes
 Vergennes
 Veribest
-Överkalix
+\u00d6verkalix
 Vermilion
 Vermilion
 Vermillion
@@ -34395,7 +34395,7 @@ Versailles
 Versailles
 Vershire
 Versoix
-Övertorneå
+\u00d6vertorne\u00e5
 Verviers
 Vesper
 Vest
@@ -34412,7 +34412,7 @@ Veurne
 Vevay
 Vevey
 Veyo
-Viña Del Mar
+Vi\u00f1a Del Mar
 Vian
 Viana do Castelo
 Vianen
@@ -34480,14 +34480,14 @@ Vigevano
 Vigo
 Vijayawada
 Viking
-Ávila
+\u00c1vila
 Vila do Conde
 Vila Do Porto
 Vila Franca de Xira
 Vilamoura
 Vila Nova de Gaia
 Vilanova I La Geltru
-Vila Real de Santo António
+Vila Real de Santo Ant\u00f3nio
 Vilas
 Vilas
 Vilhelmina
@@ -34509,13 +34509,13 @@ Villa Grove
 Villa Grove
 Villahermosa
 Villa Jaragua
-Villa María
+Villa Mar\u00eda
 Villa Maria
 Villamont
 Villanova
 VILLA NUEVA
 Villanueva
-Villanueva de la Cañada
+Villanueva de la Ca\u00f1ada
 Villa Park
 Villa Park
 Villard
@@ -34577,7 +34577,7 @@ Viola
 Viola
 Violet
 Violet Hill
-Viçosa
+Vi\u00e7osa
 Viper
 Virar
 Virbalis
@@ -34613,7 +34613,7 @@ Vitacura
 Viterbo
 Vitoria
 Vitre
-Vitória
+Vit\u00f3ria
 Vivian
 Vivian
 Vizianagaram
@@ -34656,16 +34656,16 @@ Votaw
 Voth
 Votkinsk
 Vowinckel
-Vörderås
+V\u00f6rder\u00e5s
 Vredenburgh
 Vrhnika
 Vrsac
-Västerås
-Västervik
+V\u00e4ster\u00e5s
+V\u00e4stervik
 Vulcan
 Vulcan
 Vulcan
-Våxtorp
+V\u00e5xtorp
 Vyara
 Vyborg
 Waalwijk
@@ -34848,7 +34848,7 @@ Walla Walla
 Wallback
 Wallburg
 Walldorf
-Walldürn
+Walld\u00fcrn
 Walled Lake
 Waller
 Walling
@@ -36790,7 +36790,7 @@ Wrens
 Wrenshall
 Wrentham
 Wrexham
-Wörgl
+W\u00f6rgl
 Wright
 Wright
 Wright
