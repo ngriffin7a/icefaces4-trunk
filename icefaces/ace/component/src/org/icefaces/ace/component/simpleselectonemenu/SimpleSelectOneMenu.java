@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.simpleselectonemenu;
 
 import org.icefaces.component.Focusable;
+import org.icefaces.ace.util.SelectItemsIterator;
 
 import javax.faces.model.SelectItem;
 import javax.faces.component.UISelectItem;
@@ -51,65 +52,10 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
 	
     public static List getSelectItems(FacesContext context, UIComponent uiComponent) {
         List selectItems = new ArrayList();
-        if (uiComponent.getChildCount() == 0) return selectItems;
-        Iterator children = uiComponent.getChildren().iterator();
-        while (children.hasNext()) {
-            UIComponent nextSelectItemChild = (UIComponent) children.next();
-            if (nextSelectItemChild instanceof UISelectItem) {
-                Object selectItemValue =
-                        ((UISelectItem) nextSelectItemChild).getValue();
-                if (selectItemValue != null &&
-                    selectItemValue instanceof SelectItem) {
-                    selectItems.add(selectItemValue);
-                } else {
-                    selectItems.add(
-                            new SelectItem(
-                                    ((UISelectItem) nextSelectItemChild).getItemValue(),
-                                    ((UISelectItem) nextSelectItemChild).getItemLabel(),
-                                    ((UISelectItem) nextSelectItemChild).getItemDescription(),
-                                    ((UISelectItem) nextSelectItemChild).isItemDisabled(),
-                                    ((UISelectItem) nextSelectItemChild).isItemEscaped(),
-                                    ((UISelectItem) nextSelectItemChild).isNoSelectionOption()));
-                }
-            } else if (nextSelectItemChild instanceof UISelectItems) {
-                Object selectItemsValue =
-                        ((UISelectItems) nextSelectItemChild).getValue();
-
-                if (selectItemsValue != null) {
-                    if (selectItemsValue instanceof SelectItem) {
-                        selectItems.add(selectItemsValue);
-                    } else if (selectItemsValue instanceof Collection) {
-                        Iterator selectItemsIterator =
-                                ((Collection) selectItemsValue).iterator();
-                        while (selectItemsIterator.hasNext()) {
-                            selectItems.add(selectItemsIterator.next());
-                        }
-                    } else if (selectItemsValue instanceof SelectItem[]) {
-                        SelectItem selectItemArray[] =
-                                (SelectItem[]) selectItemsValue;
-                        for (int i = 0; i < selectItemArray.length; i++) {
-                            selectItems.add(selectItemArray[i]);
-                        }
-                    } else if (selectItemsValue instanceof Map) {
-                        Iterator selectItemIterator =
-                                ((Map) selectItemsValue).keySet().iterator();
-                        while (selectItemIterator.hasNext()) {
-                            Object nextKey = selectItemIterator.next();
-                            if (nextKey != null) {
-                                Object nextValue =
-                                        ((Map) selectItemsValue).get(nextKey);
-                                if (nextValue != null) {
-                                    selectItems.add(
-                                            new SelectItem(
-                                                    nextValue.toString(),
-                                                    nextKey.toString()));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+		SelectItemsIterator selectItemsIterator = new SelectItemsIterator(context, uiComponent);
+		while (selectItemsIterator.hasNext()) {
+			selectItems.add(cloneSelectItem(selectItemsIterator.next()));
+		}
         return selectItems;
     }
 
@@ -278,4 +224,17 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
         }
         return loader;
     }
+
+	private static SelectItem cloneSelectItem(SelectItem o) {
+		SelectItem copy = new SelectItem();
+		String description = o.getDescription();
+		if (description != null) copy.setDescription(new String(description));
+		copy.setDisabled(o.isDisabled());
+		copy.setEscape(o.isEscape());
+		String label = o.getLabel();
+		if (label != null) copy.setLabel(new String(label));
+		copy.setNoSelectionOption(o.isNoSelectionOption());
+		copy.setValue(o.getValue());
+		return copy;
+	}
 }
