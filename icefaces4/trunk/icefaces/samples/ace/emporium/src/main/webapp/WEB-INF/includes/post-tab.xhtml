@@ -26,7 +26,7 @@
                header="New Auction Item to Add (maximum #{auctionController.maxPostedAuctions})"
                rendered="#{postBean.postedCount lt auctionController.maxPostedAuctions}">
         <ace:ajax execute="@this" render="@form">
-	    <h:panelGrid columns="3" cellpadding="4" cellspacing="0" styleClass="postTable">
+	    <h:panelGrid columns="3" cellpadding="4" cellspacing="4" styleClass="postTable">
 	        <h:outputText value="Item Details" style="font-weight: bold;"/>
 	        <h:outputText value=""/><h:outputText value=""/>
 	        
@@ -58,11 +58,11 @@
 	        <ace:message for="descIn"/>
 	        
 	        <h:outputLabel for="conditionIn" value="Item Condition:"/>
-	        <h:selectOneMenu id="conditionIn" value="#{postBean.toAdd.condition}">
+	        <ace:simpleSelectOneMenu id="conditionIn" value="#{postBean.toAdd.condition}">
 	            <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
 	            <f:selectItems value="#{postBean.toAdd.conditions}" var="condition"
 	                           itemValue="#{condition}" itemLabel="#{condition.value}"/>
-	        </h:selectOneMenu>
+	        </ace:simpleSelectOneMenu>
 	        <ace:message for="conditionIn"/>
 	        
 	        <h:outputLabel for="priceIn" value="Starting Price ($):"/>
@@ -96,10 +96,10 @@
 	        <ace:message for="sellerName"/>
 	        
 	        <h:outputLabel for="sellerLoc" value="Your Seller Location:"/>
-            <h:selectOneMenu id="sellerLoc" value="#{postBean.toAdd.sellerLocation}">
+            <ace:simpleSelectOneMenu id="sellerLoc" value="#{postBean.toAdd.sellerLocation}">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
-            </h:selectOneMenu>
+            </ace:simpleSelectOneMenu>
 	        <ace:message for="sellerLoc"/>
 	        
 	        <h:outputLabel for="shippingIn" value="Shipping Price ($):"/>
@@ -112,11 +112,11 @@
 	        <ace:message for="shippingIn"/>
 	        
 	        <h:outputLabel for="deliveryIn" value="Estimated Delivery:"/>
-            <h:selectOneMenu id="deliveryIn" value="#{postBean.toAdd.estimatedDelivery}">
+            <ace:simpleSelectOneMenu id="deliveryIn" value="#{postBean.toAdd.estimatedDelivery}">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{postBean.toAdd.deliveries}" var="delivery"
                                itemValue="#{delivery}" itemLabel="#{delivery.value}"/>
-            </h:selectOneMenu>
+            </ace:simpleSelectOneMenu>
 	        <ace:message for="deliveryIn"/>
 	    </h:panelGrid>
 	    </ace:ajax>

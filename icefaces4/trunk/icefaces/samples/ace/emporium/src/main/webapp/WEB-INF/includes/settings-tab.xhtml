@@ -37,11 +37,10 @@
             
             <h:graphicImage id="sLocHelp" library="images" name="help.png"/>
             <h:outputLabel for="sLoc" value="Your Location:"/>
-            <!-- TODO ICE-10621 - When fixed and ace:simpleSelectOneMenu functions the same as h:selectOneMenu then update all h:selectOneMenus to ACE (on settings, add item, etc.) as well as label/labelPosition -->
-            <h:selectOneMenu id="sLoc" value="#{settingsBean.location}" required="true">
+            <ace:simpleSelectOneMenu id="sLoc" value="#{settingsBean.location}" required="true">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
-            </h:selectOneMenu>
+            </ace:simpleSelectOneMenu>
             <ace:message for="sLoc"/>
             
             <h:graphicImage id="dbidHelp" library="images" name="help.png"/>
