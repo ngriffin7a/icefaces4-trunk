@@ -35,4 +35,5 @@ public interface DataViewColumnModel {
     public Locale getLocale();
     public boolean isRendered();
     public String getStyleClass();
+	public boolean isEscape();
 }
