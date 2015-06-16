@@ -21,6 +21,7 @@ import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.ace.event.TextChangeEvent;
+import org.icefaces.impl.util.DOMUtils;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -176,6 +177,7 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 					selectedFound = true;
 				}
 				itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
+				itemLabel = item.isEscape() ? DOMUtils.escapeAnsi(itemLabel) : itemLabel;
                 boolean isSelected = String.valueOf(convertedValue).equals(itemValue);
                 if (item.isDisabled() || (!isSelected && readonly)) {
 					sb.append("<option disabled=\"disabled\" value=\"" + itemValue.toString() + "\"" + selected + role + ">").append(itemLabel).append("</option>");
