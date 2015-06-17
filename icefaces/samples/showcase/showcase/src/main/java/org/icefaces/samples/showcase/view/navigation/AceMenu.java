@@ -79,6 +79,7 @@ import org.icefaces.samples.showcase.example.ace.notificationpanel.NotificationP
 import org.icefaces.samples.showcase.example.ace.notificationpanel.NotificationPanelClientBean;
 import org.icefaces.samples.showcase.example.ace.overview.AceSuiteOverviewBean;
 import org.icefaces.samples.showcase.example.ace.panel.*;
+import org.icefaces.samples.showcase.example.ace.panelStack.*;
 import org.icefaces.samples.showcase.example.ace.printer.PrinterBean;
 import org.icefaces.samples.showcase.example.ace.progressbar.*;
 import org.icefaces.samples.showcase.example.ace.pushButton.PushButtonBean;
@@ -187,6 +188,7 @@ import java.util.ArrayList;
 
                 @MenuLink(title = "menu.ace.accordionpanel.title", exampleBeanName = AccordionPanelBean.BEAN_NAME, group=7, beanClass=AccordionPanelBean.class),
                 @MenuLink(title = "menu.ace.panel.title", exampleBeanName = PanelBean.BEAN_NAME, group=7, beanClass=PanelBean.class),
+                @MenuLink(title = "menu.ace.panelStack.title", exampleBeanName = PanelStackBean.BEAN_NAME, group=7, beanClass=PanelStackBean.class),
                 @MenuLink(title = "menu.ace.splitpane.title", exampleBeanName = SplitPaneBean.BEAN_NAME, group=7, beanClass=SplitPaneBean.class),
                 @MenuLink(title = "menu.ace.tabSet.title", exampleBeanName = TabSetBean.BEAN_NAME, group=7, beanClass=TabSetBean.class),
                 @MenuLink(title = "menu.ace.tree.title", exampleBeanName = TreeBean.BEAN_NAME, group=7, beanClass=TreeBean.class),
@@ -394,6 +396,9 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.close", value = PanelClose.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.listener", value = PanelListener.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.menu", value = PanelMenu.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.panelStack.title", labelExample = "menu.ace.panelStack.subMenu.main", value = PanelStackBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panelStack.title", labelExample = "menu.ace.panelStack.subMenu.dataTable", value = PanelStackDataTable.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.splitpane.title", labelExample = "menu.ace.splitpane.subMenu.main", value = SplitPaneBean.BEAN_NAME),
 
