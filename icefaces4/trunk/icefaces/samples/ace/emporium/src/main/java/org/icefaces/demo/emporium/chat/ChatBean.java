@@ -27,7 +27,6 @@ import javax.faces.bean.ManagedProperty;
 
 import org.icefaces.demo.emporium.settings.SettingsBean;
 import org.icefaces.demo.emporium.test.TestFlags;
-import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.StringUtil;
 
 @ManagedBean(name=ChatBean.BEAN_NAME)
