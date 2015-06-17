@@ -114,29 +114,36 @@
     </mobi:largeView>
     
 	<c:if test="#{auctionImage.validParentDir}">
-        <h:form id="ip" rendered="#{postBean.showItemImageDialog}">
+        <h:form id="ip">
             <ace:dialog id="imagePopup"
                         closable="true" closeOnEscape="true"
                         draggable="true" modal="true" resizable="true"
                         header="Item Images (#{auctionImage.numberOfImages})"
-                        width="600" height="400"
-                        visible="#{postBean.showItemImageDialog}">
+                        width="600" height="400">
                 <ace:ajax event="close" listener="#{auctionController.closeItemImageDialogListener}"/>
                 
-                <center>
-                    <h:commandButton value="Choose No Image" action="#{auctionController.clickItemImage}">
-                        <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{auctionImage.defaultName}"/>
-                    </h:commandButton>
-                </center>
                 <h:panelGroup layout="block">
-                    <c:forEach items="#{auctionImage.imagesList}" var="image">
-                        <h:commandLink action="#{auctionController.clickItemImage}">
-                            <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{image}"/>
-                            <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{image}"
-                                            alt="#{image}" title="#{image}"
-                                            styleClass="iil"/>
-                        </h:commandLink>
-                    </c:forEach>
+                    <h:panelGroup rendered="#{!postBean.showItemImageDialog}">
+                        <h3>Please wait while the images load...</h3>
+                    </h:panelGroup>
+                    
+                    <h:panelGroup layout="block" rendered="#{postBean.showItemImageDialog}">
+		                <center>
+		                    <h:commandButton value="Choose No Image" action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();">
+		                        <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{auctionImage.defaultName}"/>
+		                    </h:commandButton>
+		                </center>
+		                <h:panelGroup layout="block">
+		                    <c:forEach items="#{auctionImage.imagesList}" var="image">
+		                        <h:commandLink action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();">
+		                            <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{image}"/>
+		                            <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{image}"
+		                                            alt="#{image}" title="#{image}"
+		                                            styleClass="iil"/>
+		                        </h:commandLink>
+		                    </c:forEach>
+		                </h:panelGroup>
+	                </h:panelGroup>
                 </h:panelGroup>
             </ace:dialog>
          </h:form>
