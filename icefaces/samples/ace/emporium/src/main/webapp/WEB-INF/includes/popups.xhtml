@@ -155,10 +155,16 @@
 		                    No confirmation will be asked before performing the operation.
 		                </f:facet>
 		                
-		                <h:outputLabel for="rList" value="Auction List:"/>
+		                <h:outputLabel for="cSess" value="Current Sessions:"/>
+		                <h:outputText id="cSess" value="#{userCounter.currentSessions}"/>
+		                
+                        <h:outputLabel for="tSess" value="Total Sessions:"/>
+                        <h:outputText id="tSess" value="#{userCounter.totalSessions}"/>
+		                
+		                <h:outputLabel for="rList" value="Auction List (#{auctionService.auctionsSize} items):"/>
 		                <ace:pushButton id="rList" value="Reset" actionListener="#{authController.resetAuctions}"/>
 		                
-		                <h:outputLabel for="rLogs" value="Auction Logs:"/>
+		                <h:outputLabel for="rLogs" value="Auction Logs (#{globalMessage.visibleLogCount} items):"/>
 		                <ace:pushButton id="rLogs" value="Reset" actionListener="#{authController.resetLogs}"/>
 		                
 		                <h:outputLabel for="rChat" value="Chat Messages:"/>

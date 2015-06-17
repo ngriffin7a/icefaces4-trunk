@@ -28,8 +28,6 @@ import javax.servlet.http.HttpSession;
 import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.TimestampUtil;
 
-import com.sun.net.httpserver.HttpServer;
-
 @ManagedBean(name=UserCounter.BEAN_NAME,eager=true)
 @ApplicationScoped
 public class UserCounter implements Serializable {
@@ -73,6 +71,14 @@ public class UserCounter implements Serializable {
 		
 		log.info("User Counter decreased: " + totalSessions + " total, " + currentSessions + " current since " + startTimestamp);
 		
+		return currentSessions;
+	}
+	
+	public int getTotalSessions() {
+		return totalSessions;
+	}
+	
+	public int getCurrentSessions() {
 		return currentSessions;
 	}
 	
