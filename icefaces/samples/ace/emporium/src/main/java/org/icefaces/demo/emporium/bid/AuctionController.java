@@ -140,6 +140,7 @@ public class AuctionController implements Serializable {
 	public void openItemImageDialog(ActionEvent event) {
 		PostBean postBean = ((PostBean)FacesUtils.getManagedBean(PostBean.BEAN_NAME));
 		postBean.setShowItemImageDialog(true);
+		postBean.setHasLoadedImages(true);
 	}
 	
 	public void openHistoryDialog(ChartBean.ChartType type) {

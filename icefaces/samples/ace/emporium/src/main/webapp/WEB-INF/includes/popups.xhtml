@@ -123,7 +123,7 @@
                 <ace:ajax event="close" listener="#{auctionController.closeItemImageDialogListener}"/>
                 
                 <h:panelGroup layout="block">
-                    <h:panelGroup rendered="#{!postBean.showItemImageDialog}">
+                    <h:panelGroup rendered="#{!postBean.showItemImageDialog and !postBean.hasLoadedImages}">
                         <h3>Please wait while the images load...</h3>
                         <br/><br/>
                         <center>
@@ -131,7 +131,7 @@
                         </center>
                     </h:panelGroup>
                     
-                    <h:panelGroup layout="block" rendered="#{postBean.showItemImageDialog}">
+                    <h:panelGroup layout="block" rendered="#{postBean.showItemImageDialog or postBean.hasLoadedImages}">
 		                <center>
 		                    <h:commandButton value="Choose No Image" action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();">
 		                        <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{auctionImage.defaultName}"/>
