@@ -15,9 +15,16 @@
  */
 
 package org.icefaces.ace.component.panelstack;
+
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
-import org.icefaces.ace.meta.baseMeta.UIPanelMeta;
+import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
+import org.icefaces.ace.meta.baseMeta.UIOutputMeta;
+import org.icefaces.ace.meta.baseMeta.UISeriesBaseMeta;
+import org.icefaces.ace.resources.ACEResourceNames;
+import org.icefaces.resources.ICEResourceDependencies;
+import org.icefaces.resources.ICEResourceDependency;
+import org.icefaces.resources.ICEResourceLibrary;
 
 
 @Component(
@@ -27,13 +34,21 @@ import org.icefaces.ace.meta.baseMeta.UIPanelMeta;
         generatedClass = "org.icefaces.ace.component.panelstack.PanelStackBase",
         componentType = "org.icefaces.PanelStack",
         rendererType = "org.icefaces.PanelStackRenderer",
-        extendsClass = "javax.faces.component.UIPanel",
+        extendsClass = "javax.faces.component.UIOutput",
         componentFamily = "org.icefaces.PanelStack",
         tlddoc = "panelStack manages child contentPanes, controlling which child is visible.")
-public class PanelStackMeta extends UIPanelMeta {
+
+@ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
+@ICEResourceDependencies({
+	@ICEResourceDependency(name = "util/ace-core.js"),
+	@ICEResourceDependency(name = "jquery/jquery.js"),
+	@ICEResourceDependency(name = "util/blockui.js"),
+	@ICEResourceDependency(name = "panel/panel.js")
+})
+public class PanelStackMeta extends UIOutputMeta {
 
      @Property( tlddoc="The id of the panel that is visible.")
-     private String currentId;
+     private String selectedId;
 
      @Property(tlddoc="Style to apply to the container element.")
      private String style;

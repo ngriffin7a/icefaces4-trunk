@@ -31,8 +31,7 @@ import org.icefaces.ace.meta.baseMeta.UIPanelMeta;
         rendererType = "org.icefaces.StackPaneRenderer",
         extendsClass = "javax.faces.component.UIPanel",
         componentFamily = "org.icefaces.StackPane",
-        tlddoc = "This component is a child of panelStack, " +
-                " which implements StackPaneController.  " +
+        tlddoc = "This component is a child of panelStack." +
                 "The facelet attribute determines whether the children of this component are constructed in the " +
                 "server side component tree. A special tag handler is utilised to assist with this task.  The desired " +
                 "outcome of this feature is to allow developers to maintain as small a server-side component tree as " +
@@ -53,7 +52,7 @@ public class StackPaneMeta extends UIPanelMeta{
     @Property(tlddoc="Style class to apply to the container element.")
     private String styleClass;
 
-    @Property(defaultValue="false", implementation = Implementation.EXISTS_IN_SUPERCLASS,
+    @Property(defaultValue="false",
                tlddoc = "If this attribute is \"true\" the component utilizes the StackPaneHandler to optimise " +
                        "server-side performance by reducing the size of the server-side component tree. " +
                        "Any non-selected stackPane will not have its children added to the component tree. " +

@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[panelStackDataTable.title]}"/>
+    <ui:param name="description" value="#{msgs[panelStackDataTable.description]}"/>
+    <ui:param name="resourceValue" value="#{panelStackDataTable.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{panelStackResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{panelStackResources.tldResources}"/>
+
+    <ui:define name="example">
+        <p>NOTES: This shows use of the panelStack within a dataTable, where each of the queries determines
+            which widget or input components are used to modify the data
+
+        </p>
+
+        <h:form id="queryFrm">
+            <ace:panel header="Choose a query to illustrate">
+                <h:selectOneMenu id="selectPane"
+                                 value="#{panelStackDataTable.selectedValue}"
+                                 valueChangeListener="#{panelStackDataTable.changeList}">
+                    <f:selectItem itemValue="1" itemLabel="query1"/>
+                    <f:selectItem itemValue="2" itemLabel="query2"/>
+                    <f:selectItem itemValue="3" itemLabel="query3"/>
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectOneMenu>
+            </ace:panel>
+        </h:form>
+        <h:form id="frm1">
+            <h:dataTable id="tbl1" var="input"
+                         value="#{panelStackDataTable.selectedQuery}">
+                  <f:facet name="header">
+                  <h:outputText value="selectedId"/>
+               </f:facet>
+              <h:column>
+                  <f:facet name="header">
+                      type
+                  </f:facet>
+                  <h:outputText value="#{input.type}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header">
+                    widget
+                </f:facet>
+                <ace:panelStack id="stack1" selectedId="#{input.type}">
+                    <ace:stackPane id="TEXTENTRY"
+                                   facelet="#{input.facelet}">
+                        <ace:panel header="#{input.type}">
+                            <ace:textEntry value="#{input.value}">
+                                <ace:ajax execute="@this" render="@all"/>
+                            </ace:textEntry>
+                        </ace:panel>
+                    </ace:stackPane>
+                    <ace:stackPane id="CHECKBOX"
+                                   facelet="#{input.facelet}">
+                        <ace:panel header="#{input.type}">
+                            <ace:checkboxButton id="out2" value="#{input.booleanVal}">
+                                <ace:ajax execute="@this" render="@all"/>
+                            </ace:checkboxButton>
+                        </ace:panel>
+                    </ace:stackPane>
+                    <ace:stackPane id="RADIO" parentSelectedId="#{input.type}"
+                                   facelet="${panelStackDataTable.facelet}">
+                        <ace:panel header="#{input.type}">
+                            <ace:radioButton id="outR" value="#{input.booleanVal}">
+                                <ace:ajax execute="@this" render="@all"/>
+                            </ace:radioButton>
+                        </ace:panel>
+                    </ace:stackPane>
+                    <ace:stackPane id="TEXTAREAENTRY" parentSelectedId="#{input.type}"
+                                   facelet="${panelStackDataTable.facelet}">
+                        <ace:panel header="#{input.type}">
+                            <ace:textAreaEntry value="#{input.value}">
+                                <ace:ajax execute="@this" render="@all"/>
+                            </ace:textAreaEntry>
+                        </ace:panel>
+                    </ace:stackPane>
+                    <ace:stackPane id="DATE" parentSelectedId="#{input.type}"
+                                   facelet="${panelStackDataTable.facelet}">
+                        <ace:panel header="#{input.type}">
+                            <ace:dateTimeEntry value="#{input.value}">
+                                <f:convertDateTime/>
+                                <ace:ajax execute="@this" render="@all"/>
+                            </ace:dateTimeEntry>
+                        </ace:panel>
+                    </ace:stackPane>
+                </ace:panelStack>
+            </h:column>
+            </h:dataTable>
+            <ace:message for="stack1"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

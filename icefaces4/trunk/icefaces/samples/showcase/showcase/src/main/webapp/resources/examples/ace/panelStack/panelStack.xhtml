@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[panelStackBean.title]}"/>
+    <ui:param name="description" value="#{msgs[panelStackBean.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[panelStackBean.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{panelStackBean.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{panelStackBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{panelStackResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{panelStackResources.tldResources}"/>
+
+    <ui:define name="example">
+        <h:form id="queryFrm">
+            <ace:panel header="Select the pane to open" >
+              <h:outputText  value="select the pane to open:-"/>
+         <h:selectOneMenu id="selectPane"  value="#{panelStackBean.currentId}">
+             <f:selectItem itemValue="TEXTONLY1" itemLabel="textonly"/>
+             <f:selectItem itemValue="CHECKBOX1" itemLabel="checkbox" />
+             <f:selectItem itemValue="MEMO1" itemLabel="memo" />
+             <f:selectItem itemValue="COMBOBOX1" itemLabel="combobox" />
+             <f:ajax execute="@this" render="@all"/>
+         </h:selectOneMenu>
+            </ace:panel>
+            <ace:panel header="#{msgs['example.ace.panelStack.instruction2']}" >
+
+                <h:panelGrid columns="3">
+                    <h:outputLabel for="sbCf" value="Value for facelet:-"/>
+                    <h:selectBooleanCheckbox id="sbCf" value="#{panelStackBean.facelet}" >
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:selectBooleanCheckbox>
+                    <h:outputLabel for="otf" value="Size of Component Tree:-" />
+                    <h:outputText id="otf" value="#{treeMonitor.treeSize}"/>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+
+       <h:form id="frm1">
+           <h3>Simple panelStack within a form</h3>
+			    <ace:panelStack id="stack1" selectedId="#{panelStackBean.currentId}">
+			        <ace:stackPane id="TEXTONLY1" facelet="#{panelStackBean.facelet}">
+			            <ace:panel id="panelText" header="textonly">
+			             	 <ace:textEntry id="if1t" value="#{panelStackBean.text1}">
+			                     <ace:ajax execute="@this" render="@form"/>
+			                 </ace:textEntry>
+			           <h:outputText value="value submitted is= #{panelStackBean.text1}"/>
+			            </ace:panel>
+			        </ace:stackPane>
+			        <ace:stackPane id="CHECKBOX1" facelet="#{panelStackBean.facelet}">
+			            <ace:panel id="panelChkbox" header="checkbox">
+			                <h:selectBooleanCheckbox id="chkbox1" value="#{panelStackBean.chkbox1}">
+                                <f:ajax execute="@this" render="@all"/>
+			                </h:selectBooleanCheckbox>
+			            </ace:panel>
+			        </ace:stackPane>
+			        <ace:stackPane id="MEMO1" facelet="#{panelStackBean.facelet}">
+			            <ace:panel id="panelmemo" header="memo">
+			                 <ace:textEntry id="if1t2" value="#{panelStackBean.text2}">
+			                     <ace:ajax execute="@this" render="@form"/>
+			                 </ace:textEntry>
+                            <h:outputText id="outtext2" value="chose memo:- ${panelStackBean.text2}"/>
+			            </ace:panel>
+			        </ace:stackPane>
+			        <ace:stackPane id="COMBOBOX1" facelet="#{panelStackBean.facelet}">
+						<ace:panel id="panelCombo" header="combobox">
+                            <ace:comboBox value="#{panelStackBean.comboBox}" >
+                                <f:selectItem itemValue="British Columbia" itemLabel="British Columbia" />
+                                <f:selectItem itemValue="Alberta" itemLabel="Alberta" />
+                                <f:selectItem itemValue="Saskatchewan" itemLabel="Saskatchewan" />
+                                <f:selectItem itemValue="Manitoba" itemLabel="Manitoba" />
+                                <f:selectItem itemValue="Ontario" itemLabel="Ontario" />
+                                <f:selectItem itemValue="Quebec" itemLabel="Quebec" />
+                                <f:selectItem itemValue="Newfoundland and Labrador" itemLabel="Newfoundland and Labrador" />
+                                <f:selectItem itemValue="Prince Edward Island" itemLabel="Prince Edward Island" />
+                                <f:selectItem itemValue="New Brunswick" itemLabel="New Brunswick" />
+                                <f:selectItem itemValue="Nova Scotia" itemLabel="Nova Scotia" />
+                                <f:selectItem itemValue="Yukon" itemLabel="Yukon" />
+                                <f:selectItem itemValue="Northwest Territories" itemLabel="Northwest Territories" />
+                                <f:selectItem itemValue="Nunavut" itemLabel="Nunavut" />
+                                <ace:ajax execute="@this" render="@all" />
+                                <ace:ajax event="blur" execute="@this" render="@all" />
+                            </ace:comboBox>
+                            <br />
+                            <h:outputText id="cmboOut" value="chose:- #{panelStackBean.comboBox}"/>
+			            </ace:panel>
+			        </ace:stackPane>
+			    </ace:panelStack>
+	    </h:form>
+
+    </ui:define>
+</ui:composition>

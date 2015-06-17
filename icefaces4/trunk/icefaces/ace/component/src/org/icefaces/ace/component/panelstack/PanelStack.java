@@ -15,33 +15,13 @@
  */
 package org.icefaces.ace.component.panelstack;
 
+import javax.faces.context.FacesContext;
 
-import org.icefaces.ace.api.StackPaneController;
-import org.icefaces.util.CoreComponentUtils;
+public class PanelStack extends PanelStackBase {
 
-import javax.faces.component.UIComponent;
-
-@SuppressWarnings("unchecked")
-public class PanelStack extends PanelStackBase implements StackPaneController {
-
-     /**
-     * method is required by StackPaneController interface no error checking as
-     * component is not in the tree
-     */
-     public String getSelectedId(){
-         return getCurrentId();
-     }
-
-    
-    public void setCurrentId(String currentId) {
-        if( currentId != null ){
-            UIComponent uic = CoreComponentUtils.findComponent(currentId, this);
-            if( uic == null ){
-                System.out.println(" uic returning null!!!");
-                return;
-            }
-        }
-        super.setCurrentId(currentId);
+    public Object getValue() {
+        Object value = super.getValue();
+        return value == null ? new Object[] { new Object() } : value;
     }
 }
 

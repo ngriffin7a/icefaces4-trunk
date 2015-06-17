@@ -17,86 +17,68 @@
 package org.icefaces.ace.component.stackpane;
 
 
-import static org.icefaces.ace.util.HTML.ID_ATTR;
-import static org.icefaces.ace.util.HTML.SPAN_ELEM;
-import static org.icefaces.ace.util.HTML.DIV_ELEM;
-import static org.icefaces.ace.util.HTML.CLASS_ATTR;
-import static org.icefaces.ace.util.HTML.STYLE_ATTR;
-
-import org.icefaces.util.CoreComponentUtils;
 import org.icefaces.ace.renderkit.CoreRenderer;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.swing.text.html.HTML;
 import java.io.IOException;
+
+import static org.icefaces.ace.util.HTML.*;
 
 
 public class StackPaneRenderer extends CoreRenderer {
 
-    public void encodeBegin(FacesContext facesContext, UIComponent uiComponent)throws IOException {
-        UIComponent parent = uiComponent.getParent();
+    public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
         StackPane pane = (StackPane) uiComponent;
-        ResponseWriter writer =facesContext.getResponseWriter();
+        ResponseWriter writer = facesContext.getResponseWriter();
         boolean selected = pane.isSelected();
         encodeStackPaneBegin(pane, writer, selected);
     }
-    
-    public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
-            throws IOException {
-          UIComponent parent = uiComponent.getParent();
-          StackPane pane = (StackPane)uiComponent;
-          ResponseWriter writer =facesContext.getResponseWriter();
-          encodeStackPaneEnd(writer);
-      }
 
-    
-    /* ****************** CONTENT STACK RENDERING ********************** */
-    
-    private void encodeStackPaneBegin(StackPane pane, ResponseWriter writer, boolean selected)
-        throws IOException{
+    public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
+        ResponseWriter writer = facesContext.getResponseWriter();
+        encodeStackPaneEnd(writer);
+    }
+
+    /* ****************** PANEL STACK RENDERING ********************** */
+    private void encodeStackPaneBegin(StackPane pane, ResponseWriter writer, boolean selected) throws IOException {
         String clientId = pane.getClientId();
+
         writer.startElement(DIV_ELEM, pane);
-        writer.writeAttribute(ID_ATTR, clientId+"_wrp", null);
-        if( selected ){
-            writer.writeAttribute(CLASS_ATTR, 
-                     StackPane.CONTENT_SELECTED, null);
-                
-        }
-        else{
-            writer.writeAttribute(CLASS_ATTR, 
-                    StackPane.CONTENT_HIDDEN, null);
+        writer.writeAttribute(ID_ATTR, clientId + "_wrp", null);
+        if (selected) {
+            writer.writeAttribute(CLASS_ATTR, StackPane.CONTENT_SELECTED, null);
+        } else {
+            writer.writeAttribute(CLASS_ATTR, StackPane.CONTENT_HIDDEN, null);
         }
         writer.writeAttribute("data-paneid", pane.getId(), null);
 
         writer.startElement(DIV_ELEM, pane);
         writer.writeAttribute(ID_ATTR, clientId, null);
-        if (pane.getStyleClass()!=null){
+        if (pane.getStyleClass() != null) {
             writer.writeAttribute(CLASS_ATTR, pane.getStyleClass(), null);
         }
-        if (pane.getStyle()!=null){
+        if (pane.getStyle() != null) {
             writer.writeAttribute(STYLE_ATTR, pane.getStyle(), null);
         }
-
     }
-    
-    public void encodeStackPaneEnd(ResponseWriter writer)
-            throws IOException {
-       writer.endElement(DIV_ELEM);
-       writer.endElement(DIV_ELEM);
-   }
-    
+
+    public void encodeStackPaneEnd(ResponseWriter writer) throws IOException {
+        writer.endElement(DIV_ELEM);
+        writer.endElement(DIV_ELEM);
+    }
+
     public boolean getRendersChildren() {
         return true;
     }
 
-    public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException{
-        StackPane pane = (StackPane)uiComponent;
-        if (pane.isClient()){
+    public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException {
+        StackPane pane = (StackPane) uiComponent;
+        pane.createChildren();
+        if (pane.isClient()) {
             renderChildren(facesContext, uiComponent);
-        }
-        else if (pane.isSelected()){
+        } else if (pane.isSelected()) {
             renderChildren(facesContext, uiComponent);
         }
     }
