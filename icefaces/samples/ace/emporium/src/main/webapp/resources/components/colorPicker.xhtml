@@ -28,7 +28,8 @@
 		<ace:selectMenu id="#{cc.attrs.id}"
 			            value="#{cc.attrs.value}"
 			            listValue="#{listData.colors}" listVar="color"
-			            itemValue="#{color.rgba}" direction="down">
+			            itemValue="#{color.rgba}" direction="down"
+			            height="250">
 			<f:facet name="row">
 				<h:panelGrid columns="2" width="100%" columnClasses="w75,w25">
 					<h:outputText value="#{color.name}" />
