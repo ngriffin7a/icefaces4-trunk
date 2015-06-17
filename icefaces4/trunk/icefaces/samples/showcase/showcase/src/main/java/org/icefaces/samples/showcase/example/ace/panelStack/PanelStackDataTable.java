@@ -31,6 +31,7 @@ import java.util.List;
 
 
 @ComponentExample(
+        parent = PanelStackBean.BEAN_NAME,
         title = "example.ace.panelStack.datatable.title",
         description = "example.ace.panelStack.datatable.description",
         example = "/resources/examples/ace/panelStack/panelStackDataTable.xhtml"
