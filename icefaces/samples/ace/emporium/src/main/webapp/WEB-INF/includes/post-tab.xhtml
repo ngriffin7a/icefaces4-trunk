@@ -43,7 +43,7 @@
 	        
 	        <h:outputLabel for="itemIIn" value="Item Image:"/>
             <h:commandLink id="itemIIn" actionListener="#{auctionController.openItemImageDialog}" immediate="true"
-                           disabled="#{!auctionImage.validParentDir}">
+                           disabled="#{!auctionImage.validParentDir}" onclick="ice.ace.instance('ip:imagePopup').show();">
 		        <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{postBean.toAdd.imageName}#{auctionImage.extension}"
 		                        styleClass="itemImageS" title="Click to change image from #{postBean.toAdd.imageName}#{auctionImage.extension}"/>
             </h:commandLink>
