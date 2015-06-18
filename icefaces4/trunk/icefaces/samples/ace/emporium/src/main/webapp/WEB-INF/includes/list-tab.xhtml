@@ -42,7 +42,6 @@
         <f:facet name="header">
             <h:panelGroup layout="block">
 	            <h:outputText value="Auction List (#{auctionService.auctionsSize} items)"/>
-	            <!-- TODO Add an ace:confirmationDialog before removing a posted auction item -->
 	            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
 	                             actionListener="#{tabController.postAuctionTab}"
 	                             immediate="true"
@@ -55,7 +54,7 @@
 			<h:commandButton rendered="#{item.allowRemoval}"
 				             image="resources/images/remove.png"
 				             title="Remove your posted auction item"
-				             action="#{auctionController.requestRemoveAuction}" immediate="true"
+				             onclick="ice.ace.instance('confirmRemove').show();"
 				             styleClass="floatL">
 				<f:setPropertyActionListener target="#{postBean.toRemove}"
 					value="#{item}" />
@@ -137,4 +136,17 @@
                           rendered="#{bidBean.bidItem.bids le 0}"/>
         </h:panelGrid>
     </ace:panel>
+    
+    <ace:confirmationDialog id="confirmRemove"
+                            closable="true" closeOnEscape="true"
+                            header="Confirm Item Removal"
+                            message="Are you sure you want to remove this item?"
+                            severity="circle-minus"
+                            modal="true" draggable="true">
+        <h:panelGrid columns="2">
+	        <ace:pushButton value="Yes" onclick="ice.ace.instance('confirmRemove').hide();"
+	                        action="#{auctionController.requestRemoveAuction}" immediate="true"/>
+	        <ace:pushButton value="No" onclick="ice.ace.instance('confirmRemove').hide();"/>
+        </h:panelGrid>
+    </ace:confirmationDialog>
 </ui:composition>

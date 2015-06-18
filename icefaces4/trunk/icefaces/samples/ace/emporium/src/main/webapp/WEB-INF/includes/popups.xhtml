@@ -133,9 +133,10 @@
                     
                     <h:panelGroup layout="block" rendered="#{postBean.showItemImageDialog or postBean.hasLoadedImages}">
 		                <center>
-		                    <h:commandButton value="Choose No Image" action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();">
+		                    <ace:pushButton value="Choose No Image" action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();"
+		                                    style="margin-bottom: 10px;">
 		                        <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{auctionImage.defaultName}"/>
-		                    </h:commandButton>
+		                    </ace:pushButton>
 		                </center>
 		                <h:panelGroup layout="block">
 		                    <c:forEach items="#{auctionImage.imagesList}" var="image">
