@@ -31,6 +31,7 @@ import org.icefaces.demo.emporium.bid.AuctionService;
 import org.icefaces.demo.emporium.bid.model.AuctionItem;
 import org.icefaces.demo.emporium.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.emporium.test.TestFlags;
+import org.icefaces.demo.emporium.user.UserCounter;
 import org.icefaces.demo.emporium.util.FacesUtils;
 
 /**
@@ -42,6 +43,8 @@ public class BidRobot implements Serializable {
 	public static final String BEAN_NAME = "bidRobot";
 	private static final Logger log = Logger.getLogger(BidRobot.class.getName());
 	
+	private static final int MAX_BIDROBOTS = 100;
+	
 	private Random random = new SecureRandom();
 	private Thread bidThread;
 	private boolean active = (random.nextInt(10) != 0); // Have a small 10% chance to not even bid
@@ -51,6 +54,14 @@ public class BidRobot implements Serializable {
 	
 	@PostConstruct
 	private void initBidRobot() {
+		// Check our existing UserCounter, if we have too many users we don't need a BidRobot
+		// This is because we don't want a ton of BidRobots just spamming the site
+		UserCounter counter = (UserCounter)FacesUtils.getManagedBean(UserCounter.BEAN_NAME);
+		if (counter.getCurrentSessions() >= MAX_BIDROBOTS) {
+			active = false;
+		}
+		
+		// Of course if we're intentionally trying to test the bid robots then ALWAYS activate them
 		if (TestFlags.TEST_BIDROBOT) {
 			active = true;
 		}
