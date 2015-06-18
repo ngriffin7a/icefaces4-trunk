@@ -44,10 +44,19 @@ public class InitializeHeadAndBodyFacetContainers implements PhaseListener {
         final UIViewRoot root = context.getViewRoot();
         UIComponent container = CoreUtils.getResourceContainer(root, target);
         if (container == null) {
+            //set temporary view root to avoid having the add/remove component listeners invoked (on the original root)
+            final UIViewRoot temp = new UIViewRoot();
+            //propagate the view map
+            temp.getViewMap().putAll(root.getViewMap());
+            context.setViewRoot(temp);
+
             UIComponent c = new UIOutput();
             c.setId("initialize_" + target);
             root.addComponentResource(context, c, target);
             root.removeComponentResource(context, c, target);
+
+            root.getViewMap().putAll(temp.getViewMap());
+            context.setViewRoot(root);
         }
     }
 }
