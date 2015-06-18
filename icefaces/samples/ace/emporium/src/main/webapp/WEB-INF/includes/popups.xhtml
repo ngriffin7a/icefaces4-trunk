@@ -134,7 +134,8 @@
                     <h:panelGroup layout="block" rendered="#{postBean.showItemImageDialog or postBean.hasLoadedImages}">
 		                <center>
 		                    <ace:pushButton value="Choose No Image" action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();"
-		                                    style="margin-bottom: 10px;">
+		                                    style="margin-bottom: 10px;"
+		                                    title="Do not define an image for this item">
 		                        <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{auctionImage.defaultName}"/>
 		                    </ace:pushButton>
 		                </center>
