@@ -22,9 +22,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseEvent;
-import javax.faces.event.PhaseId;
-import javax.faces.event.PhaseListener;
+import javax.faces.event.*;
+import java.util.List;
 
 public class InitializeHeadAndBodyFacetContainers implements PhaseListener {
     public void afterPhase(PhaseEvent event) {
@@ -44,19 +43,34 @@ public class InitializeHeadAndBodyFacetContainers implements PhaseListener {
         final UIViewRoot root = context.getViewRoot();
         UIComponent container = CoreUtils.getResourceContainer(root, target);
         if (container == null) {
-            //set temporary view root to avoid having the add/remove component listeners invoked (on the original root)
-            final UIViewRoot temp = new UIViewRoot();
-            //propagate the view map
-            temp.getViewMap().putAll(root.getViewMap());
-            context.setViewRoot(temp);
+            List<SystemEventListener> postAddToViewListeners = root.getViewListenersForEventClass(PostAddToViewEvent.class);
+            if (postAddToViewListeners != null) {
+                for (SystemEventListener l : postAddToViewListeners) {
+                    root.unsubscribeFromViewEvent(PostAddToViewEvent.class, l);
+                }
+            }
+            List<SystemEventListener> preRemoveFromViewListeners = root.getViewListenersForEventClass(PreRemoveFromViewEvent.class);
+            if (preRemoveFromViewListeners != null) {
+                for (SystemEventListener l : preRemoveFromViewListeners) {
+                    root.unsubscribeFromViewEvent(PreRemoveFromViewEvent.class, l);
+                }
+            }
 
             UIComponent c = new UIOutput();
             c.setId("initialize_" + target);
             root.addComponentResource(context, c, target);
             root.removeComponentResource(context, c, target);
 
-            root.getViewMap().putAll(temp.getViewMap());
-            context.setViewRoot(root);
+            if (postAddToViewListeners != null) {
+                for (SystemEventListener l : postAddToViewListeners) {
+                    root.subscribeToViewEvent(PostAddToViewEvent.class, l);
+                }
+            }
+            if (preRemoveFromViewListeners != null) {
+                for (SystemEventListener l : preRemoveFromViewListeners) {
+                    root.subscribeToViewEvent(PreRemoveFromViewEvent.class, l);
+                }
+            }
         }
     }
 }
