@@ -261,6 +261,14 @@ ice.ace.DataTable = function (id, cfg) {
 
 	if (this.cfg.paginator)
 		this.resizePaginator();
+
+	if (this.element.find('.ui-datatable-footer').get(0)) {
+		var self = this;
+		this.adjustFooterWidthCallback = function () {
+			self.adjustFooterWidth();
+		};
+		ice.ace.jq(window).bind('resize', this.adjustFooterWidthCallback);
+	}
 }
 
 
@@ -308,6 +316,7 @@ ice.ace.DataTable.prototype.destroy = function() {
     // Clear scrolling
     ice.ace.jq(window).unbind('resize', this.scrollableResizeCallback);
     this.element.find(this.scrollBodySelector).unbind('scroll');
+	ice.ace.jq(window).unbind('resize', this.adjustFooterWidthCallback);
 
     // Clear filter events
     this.element.off('keyup keypress input', this.filterSelector);
