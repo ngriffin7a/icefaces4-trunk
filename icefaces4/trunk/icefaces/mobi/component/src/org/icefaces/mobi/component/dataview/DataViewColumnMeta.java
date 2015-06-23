@@ -59,7 +59,7 @@ public class DataViewColumnMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Sets the CSS class to apply to this component.")
     String styleClass;
 
-    @Property(tlddoc = "Flag indicating that characters that are sensitive in HTML and XML markup must be escaped.", defaultValue = "false")
+    @Property(tlddoc = "Flag indicating that characters that are sensitive in HTML and XML markup must be escaped.", defaultValue = "true")
     boolean escape;
 
     @Field // MyFaces -  converter must be state saved, cannot cache at component instance level
