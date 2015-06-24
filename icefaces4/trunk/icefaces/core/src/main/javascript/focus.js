@@ -159,11 +159,20 @@ var restoreMonitorFocusChangesOnUpdate;
             element.addEventListener('focus', saveCurrentFocus, true);
             element.addEventListener('click', saveCurrentFocus, true);
         }
+
+        return function() {
+            if (element.attachEvent) {
+                element.detachEvent('onfocusin', saveCurrentFocus);
+            } else {
+                element.removeEventListener('focus', saveCurrentFocus);
+                element.removeEventListener('click', saveCurrentFocus);
+            }
+        };
     };
 
     restoreMonitorFocusChangesOnUpdate = function(element) {
         var id = element.id;
-        namespace.onAfterUpdate(function(updates) {
+        return namespace.onAfterUpdate(function(updates) {
             if (detect(updates, function(update) {
                 return update.getAttribute('id') == id;
             })) {
