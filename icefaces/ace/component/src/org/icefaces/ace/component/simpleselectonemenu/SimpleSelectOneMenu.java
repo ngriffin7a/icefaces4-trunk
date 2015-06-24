@@ -18,6 +18,7 @@ package org.icefaces.ace.component.simpleselectonemenu;
 
 import org.icefaces.component.Focusable;
 import org.icefaces.ace.util.SelectItemsIterator;
+import org.icefaces.ace.util.SelectUtils;
 
 import javax.faces.model.SelectItem;
 import javax.faces.component.UISelectItem;
@@ -107,45 +108,27 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
             }
         }
 
-		boolean found = false;
-		populateItemList();
-		Iterator matches = getItemListIterator();
-		SelectItem item = null;
-		String convertedSubmittedValue = null;
-		if (submittedValue != null) {
-			try {
-				convertedSubmittedValue = ((SimpleSelectOneMenuRenderer) getRenderer(facesContext)).getConvertedValueForClient(facesContext, this, submittedValue);
-			} catch (Exception e) {
-				convertedSubmittedValue = submittedValue.toString();
-			}
-		}
-		while (matches.hasNext()) {
-			item = (SelectItem) matches.next();
-			Object value = item.getValue();
-			String convertedValue = null;
-			
-			if (value != null) {
-				try {
-					convertedValue = ((SimpleSelectOneMenuRenderer) getRenderer(facesContext)).getConvertedValueForClient(facesContext, this, value);
-				} catch (Exception e) {
-					convertedValue = value.toString();
-				}
-			}
+        boolean found = SelectUtils.matchValue(facesContext,
+                                               this,
+                                               submittedValue,
+                                               new SelectItemsIterator(facesContext, this),
+                                               getConverter());
 
-			if (!item.isDisabled() && convertedValue != null && convertedSubmittedValue != null 
-				&& convertedValue.equals(convertedSubmittedValue.toString())) {
-				found = true;
-				break;
-			}
-			if (!item.isDisabled() && convertedValue == null && "".equals(convertedSubmittedValue)) {
-				found = true;
-				break;
-			}
+        boolean isNoSelection = SelectUtils.valueIsNoSelectionOption(facesContext,
+                                               this,
+                                               submittedValue,
+                                               new SelectItemsIterator(facesContext, this),
+                                               getConverter());
+
+		boolean valid = true;
+		if (!isRequired() && isNoSelection) {
+			valid = true;
+		} else {
+			if (!found) valid = false;
+			else if (isRequired() && isNoSelection) valid = false;
 		}
 
-		if (found && (!isRequired() || (isRequired() && !item.isNoSelectionOption()))) {
-			setValid(true);
-		} else { // flag as invalid and add error message
+        if (!valid) { // flag as invalid and add error message
 			Locale locale = null;
 			// facesContext.getViewRoot() may not have been initialized at this point.
 			if (facesContext != null && facesContext.getViewRoot() != null) {
@@ -213,6 +196,8 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
             facesContext.addMessage(getClientId(facesContext), message);
             setValid(false);
+		} else {
+			setValid(true);
 		}
 	}
 	
