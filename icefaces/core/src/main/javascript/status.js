@@ -124,14 +124,14 @@ var setupDefaultIndicators;
         return tagWithContent.substring(tagWithContent.indexOf('>') + 1, tagWithContent.lastIndexOf('<'));
     }
 
-    setupDefaultIndicators = function (container, configuration) {
+    setupDefaultIndicators = function (container) {
         var overlay = BackgroundOverlay(container);
         var beforeSessionExpiryIndicator = object(function (method) {
             method(off, noop);
         });
 
         function showIndicators() {
-            return !(namespace.disableDefaultErrorPopups || configuration.disableDefaultErrorPopups);
+            return !(namespace.disableDefaultErrorPopups || container.configuration.disableDefaultErrorPopups);
         }
 
         namespace.onServerError(function (code, html, xmlContent) {

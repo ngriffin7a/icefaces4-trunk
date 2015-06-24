@@ -483,30 +483,50 @@ if (!window.ice.icefaces) {
             c.ajaxRefresh();
         };
 
+        function objectToString(o) {
+            var result = [];
+            for (var prop in o) {
+                if (o.hasOwnProperty(prop)) {
+                    append(result, prop);
+                    append(result, o[prop]);
+                }
+            }
+            return result.join('');
+        }
+
+        var unsetupBridge = noop;
         namespace.setupBridge = function(setupID, viewID, windowID, configuration) {
             var container = document.getElementById(setupID).parentNode;
-            container.setupCount = container.setupCount ? (container.setupCount + 1) : 1;
 
-            if (container.setupCount == 1) {
+            if (objectToString(configuration) != objectToString(container.configuration)) {
+                unsetupBridge();
+                //collect the setups to be rolled back in case the bridge changes configuration dynamically
+                var rollbacks = [];
                 container.configuration = configuration;
                 container.configuration.viewID = viewID;
                 namespace.window = windowID;
                 if (configuration.sendDisposeWindow) {
-                    onBeforeUnload(window, disposeWindow(viewID));
+                    append(rollbacks, onBeforeUnload(window, disposeWindow(viewID)));
                 }
                 if (configuration.focusManaged) {
-                    monitorFocusChanges(container);
-                    restoreMonitorFocusChangesOnUpdate(container);
+                    append(rollbacks, monitorFocusChanges(container));
+                    append(rollbacks, restoreMonitorFocusChangesOnUpdate(container));
                 }
                 if (configuration.clientSideElementUpdateDetermination) {
-                    switchToClientSideElementUpdateDetermination();
+                    append(rollbacks, switchToClientSideElementUpdateDetermination());
                 }
                 if (configuration.blockUIOnSubmit) {
-                    onBeforeUnload(window, function() {
+                    append(rollbacks, onBeforeUnload(window, function() {
                         startBlockingUI();
-                    });
+                    }));
                 }
-                setupDefaultIndicators(container, configuration);
+
+                unsetupBridge = broadcaster(rollbacks);
+            }
+
+            container.setupCount = container.setupCount ? (container.setupCount + 1) : 1;
+            if (container.setupCount == 1) {
+                setupDefaultIndicators(container);
                 clearEventHandlersOnUnload(container);
             }
         };

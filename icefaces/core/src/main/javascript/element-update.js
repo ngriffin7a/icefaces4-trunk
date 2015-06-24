@@ -18,14 +18,15 @@ var switchToClientSideElementUpdateDetermination;
 
 (function() {
     var elementUpdateListeners = [];
-    namespace.onElementUpdate = function(id, callback) {
+
+    function serverSideOnElementUpdate(id, callback) {
         var element = lookupElementById(id);
         if (element) {
             element['data-onElementUpdate'] = callback;
         } else {
             warn(logger, 'Cannot find element [' + id + '] to assign onElementUpdate callback.');
         }
-    };
+    }
 
     function clientSideOnElementUpdate(id, callback) {
         var element = lookupElementById(id);
@@ -54,14 +55,20 @@ var switchToClientSideElementUpdateDetermination;
         });
     }
 
+    namespace.onElementUpdate = serverSideOnElementUpdate;
+
     switchToClientSideElementUpdateDetermination = function() {
         namespace.onElementUpdate = clientSideOnElementUpdate;
         // determine which elements are about to be removed by an update,
         // and clean them up while they're still in place
-        namespace.onBeforeUpdate(function(updates) {
+        var removeOnBeforeUpdate = namespace.onBeforeUpdate(function(updates) {
             each(updates.getElementsByTagName('update'), findAndNotifyUpdatedElements);
             each(updates.getElementsByTagName('delete'), findAndNotifyUpdatedElements);
         });
+        return function() {
+            namespace.onElementUpdate = serverSideOnElementUpdate;
+            removeOnBeforeUpdate();
+        }
     };
 
     function findAndNotifyUpdatedElements(update) {
