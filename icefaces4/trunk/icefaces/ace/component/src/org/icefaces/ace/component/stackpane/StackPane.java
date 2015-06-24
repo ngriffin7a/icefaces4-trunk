@@ -31,12 +31,6 @@ public class StackPane extends StackPaneBase {
 
     public static final String CONTENT_SELECTED = "ace-contentpane ";
     public static final String CONTENT_HIDDEN = "ace-contentpane-hidden ";
-
-    private static final Runnable NOOP = new Runnable() {
-        public void run() {
-        }
-    };
-
     private Runnable createChildren;
 
     @Override
@@ -105,7 +99,6 @@ public class StackPane extends StackPaneBase {
                     this.setInView(false);
                     createChildren.run();
                     this.setInView(true);
-                    createChildren = NOOP;
                 }
             } else {
                 if (children != null && !children.isEmpty()) {
