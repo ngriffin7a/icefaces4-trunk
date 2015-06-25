@@ -319,13 +319,13 @@ ice.ace.TableConf.prototype.init = function(id, cfg) {
                     }}).not('.ui-toggled').fadeTo(0, 0.33);
     }
 
-	this.$this.find("input[type='checkbox']").off('keyup keypress').keypress(function(event,element) {
+	this.$this.find("input[type='checkbox']").off('keyup keypress').keypress(function(event) {
 		if (event.which == 32 || event.which == 13) {
 			return false;
 		}
-	}).keyup(function(event,element) {
-		if (event.which == 32 || event.which == 13) {
-			$element = ice.ace.jq(element);
+	}).keyup(function(event) {
+		if (event.which == 13) {
+			$element = ice.ace.jq(this);
 			var value = $element.is(':checked');
 			if (value) $element.removeAttr('checked');
 			else $element.attr('checked', 'checked');
