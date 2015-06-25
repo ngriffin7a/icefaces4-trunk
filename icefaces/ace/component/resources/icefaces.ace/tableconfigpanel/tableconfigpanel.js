@@ -52,7 +52,7 @@ ice.ace.TableConfLauncher = function(clientId, panelJsId) {
     }
 
     var unload = function() {
-        launcher.off('click mouseenter mouseleave keyup');
+        launcher.off('click mouseenter mouseleave keyup keypress');
     }
 
     // Toggle active state when initialized via hover
@@ -66,7 +66,9 @@ ice.ace.TableConfLauncher = function(clientId, panelJsId) {
         .click(function(e){
             activate(e);
         }).keyup(function(e) {
-            if (e.which == 13) activate(e);
+            if (e.which == 13 || e.which == 32) activate(e);
+        }).keypress(function(e) {
+            if (e.which == 13 || e.which == 32) return false;
         });
 
     ice.onElementUpdate(clientId, unload);
@@ -301,6 +303,7 @@ ice.ace.TableConf.prototype.init = function(id, cfg) {
                         var $currentTarget = ice.ace.jq(event.currentTarget);
                         $currentTarget.closest('.ui-sortable-control')
                                 .trigger('click', [$currentTarget.offset().top, metaKey]);
+						return false;
                     }}).not('.ui-toggled').fadeTo(0, 0.33);
 
         this.$this.find('.ui-tableconf-body div.ui-tableconf-item:not(.ui-disabled) .ui-sortable-control')
@@ -312,14 +315,28 @@ ice.ace.TableConf.prototype.init = function(id, cfg) {
                         var $currentTarget = ice.ace.jq(event.currentTarget);
                         $currentTarget.closest('.ui-sortable-control')
                                 .trigger('click', [$currentTarget.offset().top + 6, metaKey]);
+						return false;
                     }}).not('.ui-toggled').fadeTo(0, 0.33);
     }
+
+	this.$this.find("input[type='checkbox']").off('keyup keypress').keypress(function(event,element) {
+		if (event.which == 32 || event.which == 13) {
+			return false;
+		}
+	}).keyup(function(event,element) {
+		if (event.which == 32 || event.which == 13) {
+			$element = ice.ace.jq(element);
+			var value = $element.is(':checked');
+			if (value) $element.removeAttr('checked');
+			else $element.attr('checked', 'checked');
+		}
+	});
 };
 
 ice.ace.TableConf.prototype.setupOkButton = function() {
     var self = this;
     ice.ace.jq(this.id + "_tableconf_ok")
-            .off('mouseenter mouseleave click')
+            .off('mouseenter mouseleave click keyup keypress')
             .hover(function (event) {
                 ice.ace.jq(event.currentTarget).toggleClass('ui-state-hover');
             })
@@ -332,13 +349,19 @@ ice.ace.TableConf.prototype.setupOkButton = function() {
                 var panel = ice.ace.jq(self.id);
                 if (panel.is(':not(:visible)'))
                     self.submitTableConfig(event.currentTarget);
+			})
+			.keyup(function (e) {
+				if (e.which == 13 || e.which == 32) this.click();
+			})
+			.keypress(function (e) {
+				if (e.which == 13 || e.which == 32) return false;
             });
 }
 
 ice.ace.TableConf.prototype.setupTrashButton = function() {
     var self = this;
     ice.ace.jq(this.id + "_tableconf_trash")
-            .off('mouseenter mouseleave click')
+            .off('mouseenter mouseleave click keyup keypress')
             .hover(function (event) {
                 ice.ace.jq(event.currentTarget).toggleClass('ui-state-hover');
             })
@@ -351,13 +374,19 @@ ice.ace.TableConf.prototype.setupTrashButton = function() {
                 var panel = ice.ace.jq(self.id);
                 if (panel.is(':not(:visible)'))
                     self.trashTableConfig(event.currentTarget);
+			})
+			.keyup(function (e) {
+				if (e.which == 13 || e.which == 32) this.click();
+			})
+			.keypress(function (e) {
+				if (e.which == 13 || e.which == 32) return false;
             });
 }
 
 ice.ace.TableConf.prototype.setupCloseButton = function() {
     var self = this;
     ice.ace.jq(this.id + "_tableconf_close")
-            .off('mouseenter mouseleave click')
+            .off('mouseenter mouseleave click keyup keypress')
             .hover(function (event) {
                 ice.ace.jq(event.currentTarget).toggleClass('ui-state-hover');
             })
@@ -370,6 +399,12 @@ ice.ace.TableConf.prototype.setupCloseButton = function() {
 
                 if (self.cfg.behaviors && self.behaviors.cancel)
                     ice.ace.ab(self.behaviors.cancel);
+			})
+			.keyup(function (e) {
+				if (e.which == 13 || e.which == 32) this.click();
+			})
+			.keypress(function (e) {
+				if (e.which == 13 || e.which == 32) return false;
             });
 }
 
