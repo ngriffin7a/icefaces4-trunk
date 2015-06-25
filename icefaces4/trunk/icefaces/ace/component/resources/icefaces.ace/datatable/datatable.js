@@ -322,20 +322,20 @@ ice.ace.DataTable.prototype.destroy = function() {
     this.element.off('keyup keypress input', this.filterSelector);
 
     // Clear panel expansion events
-    this.element.off('keyup click', this.panelExpansionSelector);
+    this.element.off('keyup keypress click', this.panelExpansionSelector);
 
     // Clear row expansion events
-    this.element.off('keyup click', this.rowExpansionSelector);
+    this.element.off('keyup keypress click', this.rowExpansionSelector);
 
     // Clear cell editor events
     var icoSel = this.cellEditorSelector.replace(/link/g, 'a.ui-icon-pencil');
-    this.element.off('click keyup', icoSel);
+    this.element.off('click keyup keypress', icoSel);
 
     icoSel = this.cellEditorSelector.replace(/link/g, 'a.ui-icon-check');
-    this.element.off('click keyup', icoSel);
+    this.element.off('click keyup keypress', icoSel);
 
     icoSel = this.cellEditorSelector.replace(/link/g, 'a.ui-icon-close');
-    this.element.off('click keyup', icoSel);
+    this.element.off('click keyup keypress', icoSel);
 
     this.getRowEditors().closest('tr')
             .find(' > div.ui-cell-editor > span > input')
@@ -1251,7 +1251,12 @@ ice.ace.DataTable.prototype.setupRowExpansionEvents = function () {
     var table = this;
     var selector = this.rowExpansionSelector;
     ice.ace.jq(this.jqId)
-        .off('keyup click', selector)
+        .off('keyup keypress click', selector)
+        .on('keypress', selector, function (event) {
+            if (event.which == 32 || event.which == 13) {
+                return false;
+            }
+        })
         .on('keyup', selector, function (event) {
             if (event.which == 32 || event.which == 13) {
                 table.toggleExpansion(this);
@@ -1267,7 +1272,12 @@ ice.ace.DataTable.prototype.setupPanelExpansionEvents = function () {
     var table = this;
     var selector = this.panelExpansionSelector;
     ice.ace.jq(this.jqId)
-        .off('keyup click', selector)
+        .off('keyup keypress click', selector)
+        .on('keypress', selector, function (event) {
+            if (event.which == 32 || event.which == 13) {
+                return false;
+            }
+        })
         .on('keyup', selector, function (event) {
             if (event.which == 32 || event.which == 13) {
                 table.toggleExpansion(this);
@@ -3082,29 +3092,41 @@ ice.ace.DataTable.prototype.setupCellEditorEvents = function (rowEditors) {
     var selector = this.cellEditorSelector;
 
     var icoSel = selector.replace(/link/g, 'a.ui-icon-pencil');
-    ice.ace.jq(this.jqId).off('click keyup', icoSel)
+    ice.ace.jq(this.jqId).off('click keyup keypress', icoSel)
             .on('click', icoSel, showEditors)
             .on('keyup', icoSel, function (event) {
         if (event.which == 32 || event.which == 13) {
             showEditors(event);
+        }})
+            .on('keypress', icoSel, function (event) {
+        if (event.which == 32 || event.which == 13) {
+            return false;
         }
     });
 
     icoSel = selector.replace(/link/g, 'a.ui-icon-check');
-    ice.ace.jq(this.jqId).off('click keyup', icoSel)
+    ice.ace.jq(this.jqId).off('click keyup keypress', icoSel)
             .on('click', icoSel, saveRowEditors)
             .on('keyup', icoSel, function (event) {
         if (event.which == 32 || event.which == 13) {
             saveRowEditors(event);
+        }})
+            .on('keypress', icoSel, function (event) {
+        if (event.which == 32 || event.which == 13) {
+            return false;
         }
     });
 
     icoSel = selector.replace(/link/g, 'a.ui-icon-close');
-    ice.ace.jq(this.jqId).off('click keyup', icoSel)
+    ice.ace.jq(this.jqId).off('click keyup keypress', icoSel)
             .on('click', icoSel, cancelRowEditors)
             .on('keyup', icoSel, function (event) {
         if (event.which == 32 || event.which == 13) {
             cancelRowEditors(event);
+        }})
+            .on('keypress', icoSel, function (event) {
+        if (event.which == 32 || event.which == 13) {
+            return false;
         }
     });
 

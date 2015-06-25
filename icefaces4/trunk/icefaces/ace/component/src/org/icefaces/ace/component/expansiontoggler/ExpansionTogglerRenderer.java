@@ -47,6 +47,7 @@ public class ExpansionTogglerRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+		String togglerClientId = component.getClientId(context);
         RowState rowState = (RowState) context.getExternalContext().getRequestMap().get("rowState");
         boolean expanded = rowState.isExpanded();
         boolean expandable  = rowState.isExpandable();
@@ -99,6 +100,8 @@ public class ExpansionTogglerRenderer extends CoreRenderer {
             writer.startElement("a", toggler);
             writer.writeAttribute("tabindex", "0", null);
             writer.writeAttribute("class", togglerClass, null);
+            writer.writeAttribute("id", togglerClientId, null);
+            writer.writeAttribute("onfocus", "ice.setFocus('" + togglerClientId + "');", null);
             writer.endElement("a");
 
             writer.endElement("div");
