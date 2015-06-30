@@ -66,9 +66,10 @@ public class StackPane extends StackPaneBase {
     public boolean visitTree(VisitContext context, VisitCallback callback) {
         if (isSelected()) {
             createChildren();
+            return super.visitTree(context, callback);
+        } else {
+            return true;
         }
-
-        return super.visitTree(context, callback);
     }
 
     public boolean isSelected() {
