@@ -49,6 +49,8 @@ ice.ace.TableConfLauncher = function(clientId, panelJsId) {
         maxWidth = Math.max.apply(Math, panel.find('.ui-tableconf-body .sorting').
                 map(function(idx, elem) {return elem.offsetWidth;}).get());
         if (maxWidth > 0) panel.find('.ui-tableconf-body .sorting').width(maxWidth);
+
+		ice.ace.jq(ice.ace.escapeClientId(panel.attr('id')) + "_tableconf_close").focus();
     }
 
     var unload = function() {
