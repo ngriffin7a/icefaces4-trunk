@@ -82,25 +82,25 @@ ice.ace.DataTable.Paginator = function(table) {
                 var className = 'ui-paginator-first ui-state-default ui-corner-all';
 				var buttonId = specificContainer.attr('id') + '_firstPageLink';
                 if (activeIndex == 1) className += ' ui-state-disabled';
-                markup = '<a href="#" id="'+buttonId+'" class="'+className+'" onclick="ice.setFocus(\'' + buttonId + '\');" onkeypress="var e = event || window.event; if (e.keyCode == 32) this.click();return false;"><span class="ui-icon ui-icon-seek-first">'+labels.first+'</span></a>';
+                markup = '<a href="#" id="'+buttonId+'" class="'+className+'" onclick="ice.setFocus(\'' + buttonId + '\');" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0" title="'+labels.first+'" aria-label="'+labels.first+'"><span class="ui-icon ui-icon-seek-first"></span></a>';
             }
             else if (keyword == 'lastPageLink') {
                 var className = 'ui-paginator-last ui-state-default ui-corner-all';
 				var buttonId = specificContainer.attr('id') + '_lastPageLink';
                 if (activeIndex == max) className += ' ui-state-disabled';
-                markup = '<a href="#" id="'+buttonId+'" class="'+className+'" onclick="ice.setFocus(\'' + buttonId + '\');" onkeypress="var e = event || window.event; if (e.keyCode == 32) this.click();return false;"><span class="ui-icon ui-icon-seek-end">'+labels.last+'</span></a>';
+                markup = '<a href="#" id="'+buttonId+'" class="'+className+'" onclick="ice.setFocus(\'' + buttonId + '\');" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0" title="'+labels.last+'" aria-label="'+labels.last+'"><span class="ui-icon ui-icon-seek-end"></span></a>';
             }
             else if (keyword == 'previousPageLink') {
                 var className = 'ui-paginator-previous ui-state-default ui-corner-all';
 				var buttonId = specificContainer.attr('id') + '_previousPageLink';
                 if (activeIndex == 1) className += ' ui-state-disabled';
-                markup = '<a href="#" id="'+buttonId+'" class="'+className+'" onclick="ice.setFocus(\'' + buttonId + '\');" onkeypress="var e = event || window.event; if (e.keyCode == 32) this.click();return false;"><span class="ui-icon ui-icon-seek-prev">'+labels.prev+'</span></a>';
+                markup = '<a href="#" id="'+buttonId+'" class="'+className+'" onclick="ice.setFocus(\'' + buttonId + '\');" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0" title="'+labels.prev+'" aria-label="'+labels.prev+'"><span class="ui-icon ui-icon-seek-prev"></span></a>';
             }
             else if (keyword == 'nextPageLink') {
                 var className = 'ui-paginator-next ui-state-default ui-corner-all';
 				var buttonId = specificContainer.attr('id') + '_nextPageLink';
                 if (activeIndex == max) className += ' ui-state-disabled';
-                markup = '<a href="#" id="'+buttonId+'" class="'+className+'" onclick="ice.setFocus(\'' + buttonId + '\');" onkeypress="var e = event || window.event; if (e.keyCode == 32) this.click();return false;"><span class="ui-icon ui-icon-seek-next">'+labels.next+'</span></a>';
+                markup = '<a href="#" id="'+buttonId+'" class="'+className+'" onclick="ice.setFocus(\'' + buttonId + '\');" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0" title="'+labels.next+'" aria-label="'+labels.next+'"><span class="ui-icon ui-icon-seek-next"></span></a>';
             }
             else if (keyword == 'rowsPerPageDropdown' && cfg.rowsPerPageOptions) {
                 markup = '<select class="ui-paginator-rpp-options" title="Rows per page" id="' + specificContainer.attr('id') + keyword + '">';
@@ -132,10 +132,10 @@ ice.ace.DataTable.Paginator = function(table) {
 
                 for (var i = startPage; i <= (cfg.pageLinks + startPage - 1) && ((i-1) * cfg.rowsPerPage < cfg.totalRecords); i++) {
                     if (i == activeIndex) {
-                        markup += '<a  href="#" class="ui-paginator-page ui-state-default ui-corner-all ui-paginator-current-page ui-state-active" style="cursor: default;" id="' + currentPageButtonID + '" onkeypress="var e = event || window.event; if (e.keyCode == 32) this.click();return false;">'+i+'</a>';
+                        markup += '<a  href="#" class="ui-paginator-page ui-state-default ui-corner-all ui-paginator-current-page ui-state-active" style="cursor: default;" id="' + currentPageButtonID + '" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0">'+i+'</a>';
                     }
                     else
-                        markup += '<a href="#" class="ui-paginator-page ui-state-default ui-corner-all" onclick="ice.setFocus(\'' + currentPageButtonID + '\');" onkeypress="var e = event || window.event; if (e.keyCode == 32) this.click();return false;">'+i+'</a>';
+                        markup += '<a href="#" class="ui-paginator-page ui-state-default ui-corner-all" onclick="ice.setFocus(\'' + currentPageButtonID + '\');" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0">'+i+'</a>';
 
                     // Only render a single page when non-positive integer is given for row count
                     if (cfg.rowsPerPage < 1) break;
