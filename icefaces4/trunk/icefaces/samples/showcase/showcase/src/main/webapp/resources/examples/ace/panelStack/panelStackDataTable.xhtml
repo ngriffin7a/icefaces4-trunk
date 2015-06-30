@@ -66,7 +66,7 @@
                 </f:facet>
                 <ace:panelStack id="stack1" selectedId="#{input.type}">
                     <ace:stackPane id="TEXTENTRY"
-                                   facelet="#{input.facelet}">
+                                   facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.type}">
                             <ace:textEntry value="#{input.value}">
                                 <ace:ajax execute="@this" render="@all"/>
@@ -74,7 +74,7 @@
                         </ace:panel>
                     </ace:stackPane>
                     <ace:stackPane id="CHECKBOX"
-                                   facelet="#{input.facelet}">
+                                   facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.type}">
                             <ace:checkboxButton id="out2" value="#{input.booleanVal}">
                                 <ace:ajax execute="@this" render="@all"/>
@@ -82,7 +82,7 @@
                         </ace:panel>
                     </ace:stackPane>
                     <ace:stackPane id="RADIO" parentSelectedId="#{input.type}"
-                                   facelet="${panelStackDataTable.facelet}">
+                                   facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.type}">
                             <ace:radioButton id="outR" value="#{input.booleanVal}">
                                 <ace:ajax execute="@this" render="@all"/>
@@ -90,7 +90,7 @@
                         </ace:panel>
                     </ace:stackPane>
                     <ace:stackPane id="TEXTAREAENTRY" parentSelectedId="#{input.type}"
-                                   facelet="${panelStackDataTable.facelet}">
+                                   facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.type}">
                             <ace:textAreaEntry value="#{input.value}">
                                 <ace:ajax execute="@this" render="@all"/>
@@ -98,7 +98,7 @@
                         </ace:panel>
                     </ace:stackPane>
                     <ace:stackPane id="DATE" parentSelectedId="#{input.type}"
-                                   facelet="${panelStackDataTable.facelet}">
+                                   facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.type}">
                             <ace:dateTimeEntry value="#{input.value}">
                                 <f:convertDateTime/>
