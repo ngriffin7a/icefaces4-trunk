@@ -68,7 +68,7 @@ public class StackPane extends StackPaneBase {
             createChildren();
             return super.visitTree(context, callback);
         } else {
-            return true;
+            return false;
         }
     }
 
