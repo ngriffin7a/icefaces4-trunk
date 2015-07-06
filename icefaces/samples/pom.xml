@@ -33,6 +33,7 @@
     <url>http://www.icesoft.org</url>
 
     <modules>
+        <module>ace</module>
         <module>core</module>
         <module>showcase</module>
     </modules>
