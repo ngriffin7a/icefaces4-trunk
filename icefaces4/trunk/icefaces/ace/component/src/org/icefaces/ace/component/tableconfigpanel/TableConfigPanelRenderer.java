@@ -90,9 +90,13 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
         String okTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "OK_BUTTON_TITLE", "Save Changes");
         String closeTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "CLOSE_BUTTON_TITLE", "Cancel Changes");
         String trashTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "RESET_BUTTON_TITLE", "Reset To Original Settings");
-        writeConfigPanelOkButton(writer, clientId, okTitle);
-        writeConfigPanelCloseButton(writer, clientId, closeTitle);
+
+        writer.startElement(HTML.SPAN_ELEM, null);
+		writer.writeAttribute(HTML.STYLE_ATTR, "float:right;", null);
         writeConfigPanelTrashButton(writer, clientId, trashTitle);
+        writeConfigPanelCloseButton(writer, clientId, closeTitle);
+        writeConfigPanelOkButton(writer, clientId, okTitle);
+        writer.endElement(HTML.SPAN_ELEM);
 
         writer.endElement(HTML.DIV_ELEM);
 
@@ -405,7 +409,6 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
 
     private void writeConfigPanelTrashButton(ResponseWriter writer, String clientId, String title) throws IOException {
         writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute(HTML.STYLE_ATTR, "float:right;", null);
 
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
@@ -426,7 +429,6 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
 
     private void writeConfigPanelOkButton(ResponseWriter writer, String clientId, String title) throws IOException {
         writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute(HTML.STYLE_ATTR, "float:right;", null);
 
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
@@ -447,7 +449,6 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
 
     private void writeConfigPanelCloseButton(ResponseWriter writer, String clientId, String title) throws IOException {
         writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute(HTML.STYLE_ATTR, "float:right;", null);
 
         writer.startElement(HTML.ANCHOR_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all ui-tableconf-head-button", null);
