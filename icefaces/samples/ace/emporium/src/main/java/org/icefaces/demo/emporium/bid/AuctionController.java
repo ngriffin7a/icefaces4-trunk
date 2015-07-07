@@ -105,6 +105,11 @@ public class AuctionController implements Serializable {
 		bidBean.updateBidding();
 	}
 	
+	public void submitBidAndClose(ActionEvent event) {
+		submitBid(event);
+		unselectItem(null);
+	}
+	
 	public void cancelBid(ActionEvent event) {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		bidBean.stopBidding();
