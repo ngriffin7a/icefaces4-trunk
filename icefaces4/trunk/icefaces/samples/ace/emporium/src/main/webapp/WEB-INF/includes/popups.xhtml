@@ -111,128 +111,128 @@
 	            </h:panelGroup>
 	        </ace:dialog>
 	    </h:form>
-    </mobi:largeView>
     
-	<c:if test="#{auctionImage.validParentDir}">
-        <h:form id="ip">
-            <ace:dialog id="imagePopup"
-                        closable="true" closeOnEscape="true"
-                        draggable="true" modal="true" resizable="true"
-                        header="Item Images (#{auctionImage.numberOfImages})"
-                        width="600" height="400">
-                <ace:ajax event="close" listener="#{auctionController.closeItemImageDialogListener}"/>
-                
-                <h:panelGroup layout="block">
-                    <h:panelGroup rendered="#{!postBean.showItemImageDialog and !postBean.hasLoadedImages}">
-                        <h3>Please wait while the images load...</h3>
-                        <br/><br/>
-                        <center>
-                            <h:graphicImage library="icefaces.ace" name="submitmonitor/connect_active.gif"/>
-                        </center>
-                    </h:panelGroup>
-                    
-                    <h:panelGroup layout="block" rendered="#{postBean.showItemImageDialog or postBean.hasLoadedImages}">
-		                <center>
-		                    <ace:pushButton value="Choose No Image" action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();"
-		                                    style="margin-bottom: 10px;"
-		                                    title="Do not define an image for this item">
-		                        <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{auctionImage.defaultName}"/>
-		                    </ace:pushButton>
-		                </center>
-		                <h:panelGroup layout="block">
-		                    <c:forEach items="#{auctionImage.imagesList}" var="image">
-		                        <h:commandLink action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();">
-		                            <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{image}"/>
-		                            <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{image}"
-		                                            alt="#{image}" title="#{image}"
-		                                            styleClass="iil"/>
-		                        </h:commandLink>
-		                    </c:forEach>
+		<c:if test="#{auctionImage.validParentDir}">
+	        <h:form id="ip">
+	            <ace:dialog id="imagePopup"
+	                        closable="true" closeOnEscape="true"
+	                        draggable="true" modal="true" resizable="true"
+	                        header="Item Images (#{auctionImage.numberOfImages})"
+	                        width="600" height="400">
+	                <ace:ajax event="close" listener="#{auctionController.closeItemImageDialogListener}"/>
+	                
+	                <h:panelGroup layout="block">
+	                    <h:panelGroup rendered="#{!postBean.showItemImageDialog and !postBean.hasLoadedImages}">
+	                        <h3>Please wait while the images load...</h3>
+	                        <br/><br/>
+	                        <center>
+	                            <h:graphicImage library="icefaces.ace" name="submitmonitor/connect_active.gif"/>
+	                        </center>
+	                    </h:panelGroup>
+	                    
+	                    <h:panelGroup layout="block" rendered="#{postBean.showItemImageDialog or postBean.hasLoadedImages}">
+			                <center>
+			                    <ace:pushButton value="Choose No Image" action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();"
+			                                    style="margin-bottom: 10px;"
+			                                    title="Do not define an image for this item">
+			                        <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{auctionImage.defaultName}"/>
+			                    </ace:pushButton>
+			                </center>
+			                <h:panelGroup layout="block">
+			                    <c:forEach items="#{auctionImage.imagesList}" var="image">
+			                        <h:commandLink action="#{auctionController.clickItemImage}" onclick="ice.ace.instance('ip:imagePopup').hide();">
+			                            <f:setPropertyActionListener target="#{postBean.clickedImage}" value="#{image}"/>
+			                            <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{image}"
+			                                            alt="#{image}" title="#{image}"
+			                                            styleClass="iil"/>
+			                        </h:commandLink>
+			                    </c:forEach>
+			                </h:panelGroup>
 		                </h:panelGroup>
 	                </h:panelGroup>
-                </h:panelGroup>
-            </ace:dialog>
-         </h:form>
-    </c:if>
-    
-    <c:if test="#{authController.allowAuth}">
-	    <h:form prependId="false">
-	        <ace:dialog id="authPopup"
-	                    closable="true" closeOnEscape="true"
-	                    draggable="true" modal="true" resizable="false"
-	                    header="Authentication Request">
-	            <h:panelGroup layout="block">
-		            <h:panelGrid columns="2" cellpadding="5" rendered="#{userBean.authenticated}">
-		                <f:facet name="header">
-		                    Click any button to reset or clear the relevant data.<br/>
-		                    No confirmation will be asked before performing the operation.
-		                </f:facet>
-		                
-		                <h:outputLabel for="cSess" value="Current Sessions:"/>
-		                <h:outputText id="cSess" value="#{userCounter.currentSessions}"/>
-		                
-                        <h:outputLabel for="tSess" value="Total Sessions:"/>
-                        <h:outputText id="tSess" value="#{userCounter.totalSessions}"/>
-		                
-		                <h:outputLabel for="rList" value="Auction List (#{auctionService.auctionsSize} items):"/>
-		                <ace:pushButton id="rList" value="Reset" actionListener="#{authController.resetAuctions}"/>
-		                
-		                <h:outputLabel for="rLogs" value="Auction Logs (#{globalMessage.visibleLogCount} items):"/>
-		                <ace:pushButton id="rLogs" value="Reset" actionListener="#{authController.resetLogs}"/>
-		                
-		                <h:outputLabel for="rChat" value="Chat Messages:"/>
-		                <ace:pushButton id="rChat" value="Reset" actionListener="#{authController.resetChat}"/>
-		                
-		                <f:facet name="footer">
-		                    <h:panelGroup layout="block">
+	            </ace:dialog>
+	         </h:form>
+	    </c:if>
+	    
+	    <c:if test="#{authController.allowAuth}">
+		    <h:form prependId="false">
+		        <ace:dialog id="authPopup"
+		                    closable="true" closeOnEscape="true"
+		                    draggable="true" modal="true" resizable="false"
+		                    header="Authentication Request">
+		            <h:panelGroup layout="block">
+			            <h:panelGrid columns="2" cellpadding="5" rendered="#{userBean.authenticated}">
+			                <f:facet name="header">
+			                    Click any button to reset or clear the relevant data.<br/>
+			                    No confirmation will be asked before performing the operation.
+			                </f:facet>
+			                
+			                <h:outputLabel for="cSess" value="Current Sessions:"/>
+			                <h:outputText id="cSess" value="#{userCounter.currentSessions}"/>
+			                
+	                        <h:outputLabel for="tSess" value="Total Sessions:"/>
+	                        <h:outputText id="tSess" value="#{userCounter.totalSessions}"/>
+			                
+			                <h:outputLabel for="rList" value="Auction List (#{auctionService.auctionsSize} items):"/>
+			                <ace:pushButton id="rList" value="Reset" actionListener="#{authController.resetAuctions}"/>
+			                
+			                <h:outputLabel for="rLogs" value="Auction Logs (#{globalMessage.visibleLogCount} items):"/>
+			                <ace:pushButton id="rLogs" value="Reset" actionListener="#{authController.resetLogs}"/>
+			                
+			                <h:outputLabel for="rChat" value="Chat Messages:"/>
+			                <ace:pushButton id="rChat" value="Reset" actionListener="#{authController.resetChat}"/>
+			                
+			                <f:facet name="footer">
+			                    <h:panelGroup layout="block">
+				                    <h:panelGrid columns="2">
+					                    <ace:pushButton value="Logout" immediate="true"
+					                                    onclick="ice.ace.instance('authPopup').hide();"
+					                                    actionListener="#{authController.cancelAuth}"/>
+			                            <ace:pushButton value="Close" immediate="true"
+			                                            onclick="ice.ace.instance('authPopup').hide();"/>
+				                    </h:panelGrid>
+				                    
+				                    <c:if test="#{!testFlags.testGrowlMessages}">
+	                                    <h:messages globalOnly="true" layout="table"/>
+	                                </c:if>
+			                    </h:panelGroup>
+			                </f:facet>
+			            </h:panelGrid>
+			            
+			            <h:panelGrid columns="3" cellpadding="10" rendered="#{!userBean.authenticated and !userBean.locked}">
+			                <f:facet name="header">
+			                    Please enter your authentication password.<br/>
+			                    Authentication attempts will be recorded and logged.
+			                    <icecore:defaultAction actionListener="#{authController.submitAuth}" key="Enter"/>
+			                </f:facet>
+			                
+			                <h:outputLabel for="authIn" value="Password:"/>
+							<ace:textEntry id="authIn" value="#{authBean.password}"
+							               secret="true" redisplay="false"
+									       required="true" autocomplete="false" maxlength="50"/>
+							<ace:message for="authIn"/>
+							
+			                <f:facet name="footer">
 			                    <h:panelGrid columns="2">
-				                    <ace:pushButton value="Logout" immediate="true"
-				                                    onclick="ice.ace.instance('authPopup').hide();"
-				                                    actionListener="#{authController.cancelAuth}"/>
-		                            <ace:pushButton value="Close" immediate="true"
-		                                            onclick="ice.ace.instance('authPopup').hide();"/>
-			                    </h:panelGrid>
-			                    
-			                    <c:if test="#{!testFlags.testGrowlMessages}">
-                                    <h:messages globalOnly="true" layout="table"/>
-                                </c:if>
-		                    </h:panelGroup>
-		                </f:facet>
-		            </h:panelGrid>
-		            
-		            <h:panelGrid columns="3" cellpadding="10" rendered="#{!userBean.authenticated and !userBean.locked}">
-		                <f:facet name="header">
-		                    Please enter your authentication password.<br/>
-		                    Authentication attempts will be recorded and logged.
-		                    <icecore:defaultAction actionListener="#{authController.submitAuth}" key="Enter"/>
-		                </f:facet>
-		                
-		                <h:outputLabel for="authIn" value="Password:"/>
-						<ace:textEntry id="authIn" value="#{authBean.password}"
-						               secret="true" redisplay="false"
-								       required="true" autocomplete="false" maxlength="50"/>
-						<ace:message for="authIn"/>
-						
-		                <f:facet name="footer">
-		                    <h:panelGrid columns="2">
-			                    <ace:pushButton value="Submit" actionListener="#{authController.submitAuth}"/>
-			                    <ace:pushButton value="Close" immediate="true"
-			                                    onclick="ice.ace.instance('authPopup').hide();"/>
-			                </h:panelGrid>
-		                </f:facet>
-		            </h:panelGrid>
-		            
-		            <h:panelGrid columns="1" rendered="#{userBean.locked}">
-		                <p>Invalid authentication attempt.</p>
-		                
-                        <f:facet name="footer">
-                            <ace:pushButton value="Close" immediate="true"
-                                            onclick="ice.ace.instance('authPopup').hide();"/>
-                        </f:facet>		            
-		            </h:panelGrid>
-	            </h:panelGroup>
-	        </ace:dialog>
-	    </h:form>
-    </c:if>
+				                    <ace:pushButton value="Submit" actionListener="#{authController.submitAuth}"/>
+				                    <ace:pushButton value="Close" immediate="true"
+				                                    onclick="ice.ace.instance('authPopup').hide();"/>
+				                </h:panelGrid>
+			                </f:facet>
+			            </h:panelGrid>
+			            
+			            <h:panelGrid columns="1" rendered="#{userBean.locked}">
+			                <p>Invalid authentication attempt.</p>
+			                
+	                        <f:facet name="footer">
+	                            <ace:pushButton value="Close" immediate="true"
+	                                            onclick="ice.ace.instance('authPopup').hide();"/>
+	                        </f:facet>		            
+			            </h:panelGrid>
+		            </h:panelGroup>
+		        </ace:dialog>
+		    </h:form>
+	    </c:if>
+    </mobi:largeView>
     </h:panelGroup>
 </ui:composition>
