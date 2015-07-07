@@ -3216,6 +3216,7 @@ ice.ace.DataTable.prototype.adjustFooterWidth = function () {
 	var footer = this.element.find('.ui-datatable-footer');
 	if (footer.get(0)) {
 		var body = this.element.find(this.bodyTableSelector);
+		if (!body.width()) body = this.element;
 		footer.css('width', body.outerWidth() - (footer.outerWidth() - footer.width()) + 1);
 	}
 };
