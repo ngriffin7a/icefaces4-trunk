@@ -29,18 +29,45 @@
         <!-- Note we don't use 'Escape' here to cancel the bid because it would interfere with our dialogs (like View History) -->
         <icecore:defaultAction actionListener="#{auctionController.submitBid}" key="Enter"/>
         
-        <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
+        <h:panelGroup>
+	        <mobi:largeView>
+	            <h:outputLabel for="bidIn" value="Bid on '#{bidBean.bidItem.name}':"/>
+	        </mobi:largeView>
+	        <mobi:smallView>
+	            <h:outputLabel for="bidIn" value="Bid:"/>
+	        </mobi:smallView>
+        </h:panelGroup>
+        
         <ace:textEntry id="bidIn" value="#{bidBean.currentBid}"
                        required="true" requiredMessage="Enter a valid bid."
                        size="10">
             <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
         </ace:textEntry>
-        <ace:pushButton id="submitBid" value="Submit"
-                        actionListener="#{auctionController.submitBid}"
-                        title="Submit your bid for the selected item"/>
-        <ace:pushButton value="Close" immediate="true"
-                        actionListener="#{auctionController.cancelBid}"
-                        title="Cancel your bid and unselect the item"/>
+        
+        <h:panelGroup>
+	        <mobi:largeView>
+		        <ace:pushButton id="submitBid" value="Submit"
+		                        actionListener="#{auctionController.submitBid}"
+		                        title="Submit your bid for the selected item"/>
+	        </mobi:largeView>
+	        <mobi:smallView>
+	            <ace:pushButton id="submitBid" value="Go"
+	                            actionListener="#{auctionController.submitBid}"
+	                            title="Submit your bid for the selected item"/>
+	        </mobi:smallView>
+        </h:panelGroup>
+        <h:panelGroup>
+	        <mobi:largeView>
+		        <ace:pushButton value="Close" immediate="true"
+		                        actionListener="#{auctionController.cancelBid}"
+		                        title="Cancel your bid and unselect the item"/>
+	        </mobi:largeView>
+	        <mobi:smallView>
+	            <h:commandButton image="resources/images/remove.png" immediate="true"
+	                             actionListener="#{auctionController.cancelBid}"
+	                             title="Cancel your bid and unselect the item"/>
+	        </mobi:smallView>
+        </h:panelGroup>
     </h:panelGrid>
     
 	<h:panelGroup layout="block" styleClass="messagePadding">
@@ -48,7 +75,5 @@
 		<ace:message for="buttonWrap" />
 	</h:panelGroup>
 	
-	<mobi:largeView>
-        <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
-    </mobi:largeView>
+    <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
 </ui:composition>

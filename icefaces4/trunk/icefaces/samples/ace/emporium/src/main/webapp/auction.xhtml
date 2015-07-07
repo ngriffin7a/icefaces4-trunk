@@ -27,6 +27,9 @@
 <h:head>
     <title>ICEfaces Emporium</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <mobi:smallView>
+        <mobi:deviceResource/>
+    </mobi:smallView>
     <h:outputStylesheet library="css" name="demo_template.css"/>
     <h:outputStylesheet library="css" name="auction_styles.css"/>
     <link href="./resources/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
@@ -49,12 +52,11 @@
     <h:outputText value="#{pushBean.init}" styleClass="hidden"/>
     <h:outputText value="#{bidRobot.init}" styleClass="hidden"/>
     <h:outputText value="#{userBean.init}" styleClass="hidden"/>
-    
-    <mobi:largeView>
-	    <f:event type="preRenderView" listener="#{settingsController.initializeTheme}"/>
-	    <ace:themeSelect value="#{settingsBean.themeName}" styleClass="hidden"
-	                     rendered="#{!settingsBean.hasSetTheme}"/>
-	    
+    <f:event type="preRenderView" listener="#{settingsController.initializeTheme}"/>
+    <ace:themeSelect value="#{settingsBean.themeName}" styleClass="hidden"
+                     rendered="#{!settingsBean.hasSetTheme}"/>
+
+    <mobi:largeView>	    
 	    <table cellspacing="0" cellpadding="0"><tr>
 	       <td valign="bottom"><h:graphicImage library="images" name="banner_hdr_auction.jpg"/></td>
     	   <td valign="bottom" class="headerText"><b>ICEfaces</b> Emporium</td>
@@ -125,21 +127,8 @@
     </mobi:largeView>
     
     <mobi:smallView>
-        <h:form id="fMobi" prependId="false">
-            <mobi:dataView value="#{auctionService.auctions}" var="item">
-                <ace:ajax event="select" execute="@this" render="@form" listener="#{auctionController.clientSelect}"/>
-            
-                <mobi:dataViewColumns>
-                    <mobi:dataViewColumn headerText="Name" value="#{item.name}"/>
-                    <mobi:dataViewColumn headerText="Price" value="#{item.priceFormatted}"/>
-                    <mobi:dataViewColumn headerText="Bids" value="#{item.bids}"/>
-                    <mobi:dataViewColumn headerText="Time Left" value="#{item.timeLeft}"/>
-                </mobi:dataViewColumns>
-                
-                <mobi:dataViewDetails>
-                    <ui:include src="/WEB-INF/includes/bid-panel.xhtml"/>
-                </mobi:dataViewDetails>
-            </mobi:dataView>
+        <h:form id="f" prependId="false">
+            <ui:include src="/WEB-INF/includes/list-tab.xhtml"/>
         </h:form>
     </mobi:smallView>
     

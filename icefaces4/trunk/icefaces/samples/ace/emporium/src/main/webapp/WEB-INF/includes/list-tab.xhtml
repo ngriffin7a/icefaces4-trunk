@@ -18,135 +18,175 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:emporium="http://java.sun.com/jsf/composite/components">
-    <ace:dataTable id="a"
-                   value="#{auctionService.auctions}" var="item"
-                   styleClass="emporiumTable"
-                   clickableHeaderSorting="true"
-                   emptyMessage="No auctions were found, please try again later."
-                   paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
-                   rows="50"
-                   reorderableColumns="true" resizableColumns="true"
-                   alwaysExecuteContents="true"
-                   stateMap="#{bidBean.stateMap}"
-                   selectionMode="single"
-                   rowSelectListener="#{auctionController.selectItem}"
-                   rowUnselectListener="#{auctionController.unselectItem}">
-        <ace:tableConfigPanel columnNameConfigurable="true"
-					          columnOrderingConfigurable="true"
-					          columnVisibilityConfigurable="true"
-					          columnSortingConfigurable="false"
-					          type="last-col" hideDisabledRows="true"
-					          modal="true"/>
-        <f:facet name="header">
-            <h:panelGroup layout="block">
-	            <h:outputText value="Auction List (#{auctionService.auctionsSize} items)"/>
-	            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
-	                             actionListener="#{tabController.postAuctionTab}"
-	                             immediate="true"
-	                             styleClass="floatR"/>
-                <emporium:dataExporters target="a" fileName="auction-list" includeFooters="false" popup="true"/>
-            </h:panelGroup>
-        </f:facet>
-        <ace:column headerText="Name" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
-                    configurable="false">
-			<h:commandButton rendered="#{item.allowRemoval}"
-				             image="resources/images/remove.png"
-				             title="Remove your posted auction item"
-				             onclick="ice.ace.instance('confirmRemove').show();"
-				             styleClass="floatL">
-				<f:setPropertyActionListener target="#{postBean.toRemove}"
-					value="#{item}" />
-			</h:commandButton>
-            #{item.name}
-        </ace:column>
-        <ace:column headerText="Price" styleClass="w30R#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
-            <h:outputText id="p" value="#{item.price}">
-                <f:convertNumber type="currency" currencySymbol="$"/>
-            </h:outputText>
-        </ace:column>
-        <ace:column headerText="Shipping Cost" styleClass="alignR#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
-            <h:outputText id="sc" value="#{item.shippingCost}">
-                <f:convertNumber type="currency" currencySymbol="$"/>
-            </h:outputText>
-        </ace:column>
-        <ace:column headerText="Bids" styleClass="w10#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
-            #{item.bids}
-        </ace:column>
-        <ace:column headerText="Time Left" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
-            <h:outputText id="e" value="#{item.expiryDate}">
-                <f:converter converterId="TimeLeftConverter"/>
-            </h:outputText>
-        </ace:column>
-        <f:facet name="footer">
-            <h:panelGroup layout="block" style="width: 100%; text-align: center;">
-                <ui:include src="/WEB-INF/includes/bid-panel.xhtml"/>
-            </h:panelGroup>
-        </f:facet>
-    </ace:dataTable>
+    <mobi:largeView>
+	    <ace:dataTable id="a"
+	                   value="#{auctionService.auctions}" var="item"
+	                   styleClass="emporiumTable"
+	                   clickableHeaderSorting="true"
+	                   emptyMessage="No auctions were found, please try again later."
+	                   paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
+	                   rows="50"
+	                   reorderableColumns="true" resizableColumns="true"
+	                   alwaysExecuteContents="true"
+	                   stateMap="#{bidBean.stateMap}"
+	                   selectionMode="single"
+	                   rowSelectListener="#{auctionController.selectItem}"
+	                   rowUnselectListener="#{auctionController.unselectItem}">
+	        <ace:tableConfigPanel columnNameConfigurable="true"
+						          columnOrderingConfigurable="true"
+						          columnVisibilityConfigurable="true"
+						          columnSortingConfigurable="false"
+						          type="last-col" hideDisabledRows="true"
+						          modal="true"/>
+	        <f:facet name="header">
+	            <h:panelGroup layout="block">
+		            <h:outputText value="Auction List (#{auctionService.auctionsSize} items)"/>
+		            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
+		                             actionListener="#{tabController.postAuctionTab}"
+		                             immediate="true"
+		                             styleClass="floatR"/>
+	                <emporium:dataExporters target="a" fileName="auction-list" includeFooters="false" popup="true"/>
+	            </h:panelGroup>
+	        </f:facet>
+	        <ace:column headerText="Name" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
+	                    configurable="false">
+				<h:commandButton rendered="#{item.allowRemoval}"
+					             image="resources/images/remove.png"
+					             title="Remove your posted auction item"
+					             onclick="ice.ace.instance('confirmRemove').show();"
+					             styleClass="floatL">
+					<f:setPropertyActionListener target="#{postBean.toRemove}"
+						value="#{item}" />
+				</h:commandButton>
+	            #{item.name}
+	        </ace:column>
+	        <ace:column headerText="Price" styleClass="w30R#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+	            <h:outputText id="p" value="#{item.price}">
+	                <f:convertNumber type="currency" currencySymbol="$"/>
+	            </h:outputText>
+	        </ace:column>
+	        <ace:column headerText="Shipping Cost" styleClass="alignR#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+	            <h:outputText id="sc" value="#{item.shippingCost}">
+	                <f:convertNumber type="currency" currencySymbol="$"/>
+	            </h:outputText>
+	        </ace:column>
+	        <ace:column headerText="Bids" styleClass="w10#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+	            #{item.bids}
+	        </ace:column>
+	        <ace:column headerText="Time Left" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+	            <h:outputText id="e" value="#{item.expiryDate}">
+	                <f:converter converterId="TimeLeftConverter"/>
+	            </h:outputText>
+	        </ace:column>
+	        <f:facet name="footer">
+	            <h:panelGroup layout="block" style="width: 100%; text-align: center;">
+	                <ui:include src="/WEB-INF/includes/bid-panel.xhtml"/>
+	            </h:panelGroup>
+	        </f:facet>
+	    </ace:dataTable>
+	    
+	    <ace:panel closable="false" collapsed="false" toggleable="true"
+	               header="Details for '#{bidBean.bidItem.name}'"
+	               rendered="#{bidBean.renderBidPanel}"
+	               style="margin-top: 15px;">
+	        <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{bidBean.bidItem.imageName}#{auctionImage.extension}"
+	                        styleClass="itemImage" alt="Picture for #{bidBean.bidItem.name}"/>
+	        
+	        <h:panelGrid columns="2" cellpadding="3" cellspacing="0">
+	            <h:outputText value="Price:"/>
+	            <h:outputText value="#{bidBean.bidItem.price}">
+	               <f:convertNumber type="currency" currencySymbol="$"/>
+	            </h:outputText>
+	            
+	            <h:outputText value="Condition:"/>
+	            #{bidBean.bidItem.condition.value}
+	            
+	            <h:outputText value="Seller Name:"/>
+	            #{bidBean.bidItem.sellerName}
+	            
+	            <h:outputText value="Seller Location:"/>
+	            #{bidBean.bidItem.sellerLocation}
+	            
+	            <h:outputText value="Estimated Delivery:"/>
+	            #{bidBean.bidItem.estimatedDelivery.value}
+	            
+	            <h:outputText value="Shipping Cost:"/>
+	            <h:outputText value="#{bidBean.bidItem.shippingCost}">
+	               <f:convertNumber type="currency" currencySymbol="$"/>
+	            </h:outputText>
+	            
+	            <h:outputText value="Description:"/>
+	            #{bidBean.bidItem.description}
+	            
+	            <h:outputText value="Bid History:"/>
+	            <h:panelGrid columns="4" rendered="#{bidBean.bidItem.bids gt 0}">
+	                <h:outputText value="#{bidBean.bidItem.bids} bids"/>
+		            <h:commandButton immediate="true" actionListener="#{auctionController.openGraphBidDialog}"
+		                             title="Graph Bid Increments - open a popup showing a graph of bid increment history"
+		                             image="resources/images/graph-bids.png"/>
+	                <h:commandButton immediate="true" actionListener="#{auctionController.openGraphPriceDialog}"
+	                                 title="Graph Price Changes - Open a popup showing a graph of increasing price changes"
+	                                 image="resources/images/graph-price.png"/>
+	                <h:commandButton immediate="true" actionListener="#{auctionController.openViewHistoryDialog}"
+	                                 title="View History - Open a popup showing a table of past bid details"
+	                                 image="resources/images/history.png"/>
+	            </h:panelGrid>
+	            <h:outputText value="No bids yet"
+	                          rendered="#{bidBean.bidItem.bids le 0}"/>
+	        </h:panelGrid>
+	    </ace:panel>
+	    
+	    <ace:confirmationDialog id="confirmRemove"
+	                            closable="true" closeOnEscape="true"
+	                            header="Confirm Item Removal"
+	                            message="Are you sure you want to remove this item?"
+	                            severity="circle-minus"
+	                            modal="true" draggable="true">
+	        <h:panelGrid columns="2">
+		        <ace:pushButton value="Yes" onclick="ice.ace.instance('confirmRemove').hide();"
+		                        action="#{auctionController.requestRemoveAuction}" immediate="true"/>
+		        <ace:pushButton value="No" onclick="ice.ace.instance('confirmRemove').hide();"/>
+	        </h:panelGrid>
+	    </ace:confirmationDialog>
+    </mobi:largeView>
     
-    <ace:panel closable="false" collapsed="false" toggleable="true"
-               header="Details for '#{bidBean.bidItem.name}'"
-               rendered="#{bidBean.renderBidPanel}"
-               style="margin-top: 15px;">
-        <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{bidBean.bidItem.imageName}#{auctionImage.extension}"
-                        styleClass="itemImage" alt="Picture for #{bidBean.bidItem.name}"/>
-        
-        <h:panelGrid columns="2" cellpadding="3" cellspacing="0">
-            <h:outputText value="Price:"/>
-            <h:outputText value="#{bidBean.bidItem.price}">
-               <f:convertNumber type="currency" currencySymbol="$"/>
-            </h:outputText>
-            
-            <h:outputText value="Condition:"/>
-            #{bidBean.bidItem.condition.value}
-            
-            <h:outputText value="Seller Name:"/>
-            #{bidBean.bidItem.sellerName}
-            
-            <h:outputText value="Seller Location:"/>
-            #{bidBean.bidItem.sellerLocation}
-            
-            <h:outputText value="Estimated Delivery:"/>
-            #{bidBean.bidItem.estimatedDelivery.value}
-            
-            <h:outputText value="Shipping Cost:"/>
-            <h:outputText value="#{bidBean.bidItem.shippingCost}">
-               <f:convertNumber type="currency" currencySymbol="$"/>
-            </h:outputText>
-            
-            <h:outputText value="Description:"/>
-            #{bidBean.bidItem.description}
-            
-            <h:outputText value="Bid History:"/>
-            <h:panelGrid columns="4" rendered="#{bidBean.bidItem.bids gt 0}">
-                <h:outputText value="#{bidBean.bidItem.bids} bids"/>
-	            <h:commandButton immediate="true" actionListener="#{auctionController.openGraphBidDialog}"
-	                             title="Graph Bid Increments - open a popup showing a graph of bid increment history"
-	                             image="resources/images/graph-bids.png"/>
-                <h:commandButton immediate="true" actionListener="#{auctionController.openGraphPriceDialog}"
-                                 title="Graph Price Changes - Open a popup showing a graph of increasing price changes"
-                                 image="resources/images/graph-price.png"/>
-                <h:commandButton immediate="true" actionListener="#{auctionController.openViewHistoryDialog}"
-                                 title="View History - Open a popup showing a table of past bid details"
-                                 image="resources/images/history.png"/>
-            </h:panelGrid>
-            <h:outputText value="No bids yet"
-                          rendered="#{bidBean.bidItem.bids le 0}"/>
-        </h:panelGrid>
-    </ace:panel>
-    
-    <ace:confirmationDialog id="confirmRemove"
-                            closable="true" closeOnEscape="true"
-                            header="Confirm Item Removal"
-                            message="Are you sure you want to remove this item?"
-                            severity="circle-minus"
-                            modal="true" draggable="true">
-        <h:panelGrid columns="2">
-	        <ace:pushButton value="Yes" onclick="ice.ace.instance('confirmRemove').hide();"
-	                        action="#{auctionController.requestRemoveAuction}" immediate="true"/>
-	        <ace:pushButton value="No" onclick="ice.ace.instance('confirmRemove').hide();"/>
-        </h:panelGrid>
-    </ace:confirmationDialog>
+    <mobi:smallView>
+        <ace:dataTable id="a"
+                       value="#{auctionService.auctions}" var="item"
+                       styleClass="emporiumTable"
+                       style="min-width: 0;"
+                       clickableHeaderSorting="true"
+                       emptyMessage="No auctions were found, please try again later."
+                       paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
+                       rows="50"
+                       reorderableColumns="false" resizableColumns="false"
+                       alwaysExecuteContents="true"
+                       stateMap="#{bidBean.stateMap}"
+                       selectionMode="single"
+                       rowSelectListener="#{auctionController.selectItem}"
+                       rowUnselectListener="#{auctionController.unselectItem}">
+            <f:facet name="header">
+                Auction List (#{auctionService.auctionsSize} items)
+            </f:facet>
+            <ace:column headerText="Name" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+                #{item.name}
+            </ace:column>
+            <ace:column headerText="Price" styleClass="alignR #{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+                <h:outputText id="p" value="#{item.price}">
+                    <f:convertNumber type="currency" currencySymbol="$"/>
+                </h:outputText>
+            </ace:column>
+            <ace:column headerText="Bids" styleClass="#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? 'updateC' : ''}">
+                #{item.bids}
+            </ace:column>
+            <f:facet name="footer">
+                <h:panelGroup layout="block" style="width: 100%; text-align: center;">
+                    <ui:include src="/WEB-INF/includes/bid-panel.xhtml"/>
+                </h:panelGroup>
+            </f:facet>
+        </ace:dataTable>
+    </mobi:smallView>
 </ui:composition>
