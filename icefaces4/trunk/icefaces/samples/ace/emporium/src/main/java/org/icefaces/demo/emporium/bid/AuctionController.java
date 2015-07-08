@@ -47,6 +47,7 @@ public class AuctionController implements Serializable {
 	public static final String BEAN_NAME = "auctionController";
 	
 	public static final int MAX_POSTED_AUCTIONS = 5;
+	public static final String SUBMIT_PARENT_WRAPPER_ID = "buttonWrap";
 	
 	public void selectItem(SelectEvent event) {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
@@ -296,6 +297,30 @@ public class AuctionController implements Serializable {
 		return null;
 	}
 	
+	/**
+	 * Method used by bid submission to get our parent ID that contains "buttonWrap"
+	 * This is because that container has an ace:message associated with it in the view
+	 * So a bit tightly coupled, but this should dynamically adjust if the XHTML changes
+	 *  as compared to hard coding the heirarchy here
+	 *  
+	 * @param comp to check the parent of for the proper ID
+	 * @return the ID or null
+	 */
+	private String checkParentForWrap(UIComponent comp) {
+		UIComponent parent = comp.getParent();
+		
+		if (parent != null) {
+			String idCheck = comp.getParent().getClientId();
+			if ((idCheck != null) && (idCheck.contains(SUBMIT_PARENT_WRAPPER_ID))) {
+				return idCheck;
+			}
+			
+			return checkParentForWrap(parent);
+		}
+		
+		return null;
+	}
+	
 	public Date getMinExpiryDate() {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MINUTE, AuctionItem.EXPIRY_DATE_MINIMUM_M); // Allow a minimum of 30 minutes away
@@ -312,27 +337,7 @@ public class AuctionController implements Serializable {
 		return MAX_POSTED_AUCTIONS;
 	}
 	
-	/**
-	 * Method used by bid submission to get our parent ID that contains "buttonWrap"
-	 * This is because that container has an ace:message associated with it in the view
-	 * So a bit tightly coupled, but this should dynamically adjust if the XHTML changes
-	 *  as compared to hard coding the heirarchy here
-	 *  
-	 * @param comp to check the parent of for the proper ID
-	 * @return the ID or null
-	 */
-	private String checkParentForWrap(UIComponent comp) {
-		UIComponent parent = comp.getParent();
-		
-		if (parent != null) {
-			String idCheck = comp.getParent().getClientId();
-			if ((idCheck != null) && (idCheck.contains("buttonWrap"))) {
-				return idCheck;
-			}
-			
-			return checkParentForWrap(parent);
-		}
-		
-		return null;
+	public String getSubmitParentWrapperId() {
+		return SUBMIT_PARENT_WRAPPER_ID;
 	}
 }

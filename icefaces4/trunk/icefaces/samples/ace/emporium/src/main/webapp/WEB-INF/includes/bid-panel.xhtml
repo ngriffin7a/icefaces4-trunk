@@ -21,7 +21,7 @@
                 xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:emporium="http://java.sun.com/jsf/composite/components">
-    <h:panelGrid id="buttonWrap"
+    <h:panelGrid id="#{auctionController.submitParentWrapperId}"
                  columns="6"
                  style="width: auto;" styleClass="center"
                  rendered="#{bidBean.renderBidPanel}">
@@ -72,7 +72,7 @@
     
 	<h:panelGroup layout="block" styleClass="messagePadding">
 		<ace:message for="bidIn" />
-		<ace:message for="buttonWrap" />
+		<ace:message for="#{auctionController.submitParentWrapperId}" />
 	</h:panelGroup>
 	
     <h:outputText value="Select a row to begin bidding." rendered="#{!bidBean.renderBidPanel}"/>
