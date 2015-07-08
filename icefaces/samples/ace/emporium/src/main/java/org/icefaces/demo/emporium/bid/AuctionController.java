@@ -96,10 +96,8 @@ public class AuctionController implements Serializable {
 		// We also need to validate that the bid hasn't been increased by too much
 		// This is to keep prices somewhat reasonable, as compared to someone instantly bidding a million dollars
 		if ((bidBean.getCurrentBid() - bidBean.getBidItem().getPrice()) > AuctionItem.MAX_BID_INCREASE) {
-			if (parentId != null) {
-				FacesUtils.addWarnMessage(parentId, "You cannot increase the bid more than " +
-						NumberFormat.getCurrencyInstance().format(AuctionItem.MAX_BID_INCREASE) + " at once, resetting your current bid.");
-			}
+			FacesUtils.addWarnMessage(parentId, "You cannot increase the bid more than " +
+					NumberFormat.getCurrencyInstance().format(AuctionItem.MAX_BID_INCREASE) + " at once, resetting your current bid.");
 			
 			// Reset our current bid to match what the maximum increase should be
 			bidBean.setCurrentBid(bidBean.getBidItem().getPrice() + AuctionItem.MAX_BID_INCREASE - 1);
@@ -110,10 +108,8 @@ public class AuctionController implements Serializable {
 		AuctionService service = (AuctionService)FacesUtils.getManagedBean(AuctionService.BEAN_NAME);
 		SettingsBean settingsBean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
 		if (!service.placeBid(bidBean.getBidItem(), settingsBean.getName(), bidBean.getCurrentBid())) {
-			if (parentId != null) {
-				FacesUtils.addWarnMessage(parentId, "Your bid of " +
-						NumberFormat.getCurrencyInstance().format(bidBean.getCurrentBid()) + " does not exceed the current price, please bid again.");
-			}
+			FacesUtils.addWarnMessage(parentId, "Your bid of " +
+					NumberFormat.getCurrencyInstance().format(bidBean.getCurrentBid()) + " does not exceed the current price, please bid again.");
 		}
 		bidBean.updateBidding();
 	}
