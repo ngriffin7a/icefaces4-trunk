@@ -44,7 +44,7 @@
             <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
         </ace:textEntry>
         
-        <h:panelGroup>
+        <h:panelGroup id="submitWrap">
 	        <mobi:largeView>
 		        <ace:pushButton id="submitBid" value="Submit"
 		                        actionListener="#{auctionController.submitBid}"
@@ -56,7 +56,7 @@
 	                            title="Submit your bid for the selected item"/>
 	        </mobi:smallView>
         </h:panelGroup>
-        <h:panelGroup>
+        <h:panelGroup id="closeWrap">
 	        <mobi:largeView>
 		        <ace:pushButton value="Close" immediate="true"
 		                        actionListener="#{auctionController.cancelBid}"

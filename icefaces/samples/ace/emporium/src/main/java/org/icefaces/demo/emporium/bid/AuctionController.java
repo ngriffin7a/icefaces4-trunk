@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -55,26 +56,38 @@ public class AuctionController implements Serializable {
 		JavaScriptRunner.runScript(FacesContext.getCurrentInstance(), "focusBid();");
 	}
 	
+	/**
+	 * Method called when an item is selected in the datatable
+	 * This is only called from a mobile (ie: phone, tablet, etc.) device
+	 * Because of this we don't call our focusBid() JS like the desktop version,
+	 *  since that JS isn't rendered on the page via mobi:largeView
+	 * 
+	 * @param event of the select
+	 */
+	public void selectItemMobile(SelectEvent event) {
+		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
+		bidBean.startBidding((AuctionItem)event.getObject());
+	}
+	
 	public void unselectItem(UnselectEvent event) {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		bidBean.stopBidding();
 	}
 	
 	public void submitBid(ActionEvent event) {
-		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		// Used in case we have to add an error message
 		String parentId = null;
 		try {
-			parentId = event.getComponent().getParent().getClientId();
+			parentId = checkParentForWrap(event.getComponent());
 		}catch (Exception ignored) { }
+		
+		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		
 		// Need to validate two cases: bid is less than current price OR bid is over max bid increase compared to price
 		// First validate that the bid actually exceeds the price we're comparing to
 		if (bidBean.getCurrentBid() <= bidBean.getBidItem().getPrice()) {
-			if (parentId != null) {
-				FacesUtils.addWarnMessage(parentId, "Note your bid does not exceed the current price of " +
-						NumberFormat.getCurrencyInstance().format(bidBean.getBidItem().getPrice()) + ", updating your current bid.");
-			}
+			FacesUtils.addWarnMessage(parentId, "Note your bid does not exceed the current price of " +
+					NumberFormat.getCurrencyInstance().format(bidBean.getBidItem().getPrice()) + ", updating your current bid.");
 			
 			// Also note we update the user bid to match the minimum we expect
 			bidBean.updateBidding();
@@ -106,8 +119,9 @@ public class AuctionController implements Serializable {
 	}
 	
 	public void submitBidAndClose(ActionEvent event) {
+		// We'll submit and call our cancel
 		submitBid(event);
-		unselectItem(null);
+		cancelBid(event);
 	}
 	
 	public void cancelBid(ActionEvent event) {
@@ -300,5 +314,29 @@ public class AuctionController implements Serializable {
 	
 	public int getMaxPostedAuctions() {
 		return MAX_POSTED_AUCTIONS;
+	}
+	
+	/**
+	 * Method used by bid submission to get our parent ID that contains "buttonWrap"
+	 * This is because that container has an ace:message associated with it in the view
+	 * So a bit tightly coupled, but this should dynamically adjust if the XHTML changes
+	 *  as compared to hard coding the heirarchy here
+	 *  
+	 * @param comp to check the parent of for the proper ID
+	 * @return the ID or null
+	 */
+	private String checkParentForWrap(UIComponent comp) {
+		UIComponent parent = comp.getParent();
+		
+		if (parent != null) {
+			String idCheck = comp.getParent().getClientId();
+			if ((idCheck != null) && (idCheck.contains("buttonWrap"))) {
+				return idCheck;
+			}
+			
+			return checkParentForWrap(parent);
+		}
+		
+		return null;
 	}
 }
