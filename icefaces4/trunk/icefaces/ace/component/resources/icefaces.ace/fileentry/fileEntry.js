@@ -359,11 +359,17 @@ ice.ace.fileentry = {
 
             ice.ace.fileentry.consoleLog(false, "onload()  end");
         };
+
+        function deregisterPushId() {
+            window.ice.push.deregister([progressPushId]);
+        }
+
         if (iframeElem.addEventListener) {
             iframeElem.addEventListener("load",iframeOnloadHandler,false);
-        }
-        else if (iframeElem.attachEvent) {
-            iframeElem.attachEvent("onload",iframeOnloadHandler);
+            iframeElem.addEventListener("unload", deregisterPushId, false);
+        } else if (iframeElem.attachEvent) {
+            iframeElem.attachEvent("onload", iframeOnloadHandler);
+            iframeElem.attachEvent("onunload", deregisterPushId);
         }
 
         /*
