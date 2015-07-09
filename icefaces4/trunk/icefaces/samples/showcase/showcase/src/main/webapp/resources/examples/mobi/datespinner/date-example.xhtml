@@ -49,6 +49,7 @@
 									  readonly="#{dateBean.readonly}"
 									 value="#{dateBean.dateInput}">
 						<f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="#{dateBean.timeZone}"/>
+						<ace:ajax />
 					</mobi:dateSpinner>&#160;
 				</h:panelGroup>
             </mobi:fieldsetRow>
@@ -58,6 +59,7 @@
 				<h:panelGroup>
 					<mobi:timeSpinner id="time" useNative="#{dateBean.useNative}" timeZone="#{dateBean.timeZone}"
 									 value="#{dateBean.timeInput}" readonly="#{dateBean.readonly}">
+						<ace:ajax />
 					</mobi:timeSpinner>&#160;
 				</h:panelGroup>
             </mobi:fieldsetRow>
