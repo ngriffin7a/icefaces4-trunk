@@ -104,7 +104,7 @@
 
 					function onSubmitSuccess(){
 						var reader = new FileReader();					
-						var markup = captureLabel;
+						var markup = '<span class="ui-button-text">'+captureLabel+'</span>';
 						if (buttonImage) markup = captureButtonImage ? '<img src="'+captureButtonImage+'" />' : '<img src="'+buttonImage+'" />';
 						cameraButton.innerHTML = markup;
 						reader.onload = function(event){
@@ -327,7 +327,7 @@
 				function keeppicture(){
 					var cameraForm = ice.mobi.formOf(cameraButton);
 					document.body.removeChild(popup);
-					var markup = captureLabel;
+					var markup = '<span class="ui-button-text">'+captureLabel+'</span>';
 					if (buttonImage) markup = captureButtonImage ? '<img src="'+captureButtonImage+'" />' : '<img src="'+buttonImage+'" />';
 					cameraButton.innerHTML = markup;
 					createThumbnailForVideo();
