@@ -34,7 +34,7 @@ import javax.el.MethodExpression;
         componentType   = "org.icefaces.ace.component.Accordion",
         rendererType    = "org.icefaces.ace.component.AccordionRenderer",
 		componentFamily = "org.icefaces.ace.component",
-		tlddoc = "The Accordion is a container component that displays contents in a stacked format." +
+		tlddoc = "The Accordion is a container component that displays contents in a stacked format. Keyboard interaction is supported when the accordion is focused and works by pressing the space or enter keys on the highlighted pane to open/close it and using the arrow keys to move up or down across the panes." +
                  "<p>For more information, see the " +
                  "<a href=\"http://wiki.icefaces.org/display/ICE/Accordion\">Accordion Wiki Documentation</a>."
         )
