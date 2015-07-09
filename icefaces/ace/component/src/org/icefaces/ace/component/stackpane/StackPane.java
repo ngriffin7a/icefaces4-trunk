@@ -21,9 +21,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import javax.faces.event.PhaseId;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class StackPane extends StackPaneBase {
@@ -32,44 +31,80 @@ public class StackPane extends StackPaneBase {
     public static final String CONTENT_SELECTED = "ace-contentpane ";
     public static final String CONTENT_HIDDEN = "ace-contentpane-hidden ";
     private Runnable createChildren;
+    private Map childState = new HashMap();
 
-    @Override
     public void processDecodes(FacesContext context) {
         if (isSelected()) {
             createChildren();
+            restoreChildrenState();
             super.processDecodes(context);
+            saveChildrenState();
         }
     }
 
-    @Override
     public void processValidators(FacesContext context) {
         if (isSelected()) {
             super.processValidators(context);
         }
     }
 
-    @Override
     public void processUpdates(FacesContext context) {
         if (isSelected()) {
             super.processUpdates(context);
         }
     }
 
-    @Override
     public void processRestoreState(FacesContext context, Object state) {
         if (isSelected()) {
             super.processRestoreState(context, state);
         }
     }
 
-    @Override
-    public boolean visitTree(VisitContext context, VisitCallback callback) {
+    public Object processSaveState(FacesContext context) {
         if (isSelected()) {
-            createChildren();
-            return super.visitTree(context, callback);
+            return super.processSaveState(context);
         } else {
-            return false;
+            return null;
         }
+    }
+
+    public boolean visitTree(VisitContext context, VisitCallback callback) {
+        PhaseId currentPhaseId = context.getFacesContext().getCurrentPhaseId();
+        //visit the tree to restore and respectively save the state of the children between JSF lifecycles
+        if (currentPhaseId == PhaseId.RESTORE_VIEW || currentPhaseId == PhaseId.RENDER_RESPONSE) {
+            return super.visitTree(context, callback);
+        }
+
+        return false;
+    }
+
+    //save children state during JSF lifecycle to allow the child state to be restored in case of re-initialisation
+    public void saveChildrenState(List<UIComponent> children) {
+        for (UIComponent c: children) {
+            String id = c.getClientId();
+            Object state = c.saveState(getFacesContext());
+            childState.put(id, state);
+            saveChildrenState(c.getChildren());
+        }
+    }
+
+    public void saveChildrenState() {
+        saveChildrenState(getChildren());
+    }
+
+    public void restoreChildrenState(List<UIComponent> children) {
+        for (UIComponent c: children) {
+            String id = c.getClientId();
+            Object state = childState.get(id);
+            if (state != null) {
+                c.restoreState(getFacesContext(), state);
+            }
+            restoreChildrenState(c.getChildren());
+        }
+    }
+
+    public void restoreChildrenState() {
+        restoreChildrenState(getChildren());
     }
 
     public boolean isSelected() {
@@ -113,5 +148,18 @@ public class StackPane extends StackPaneBase {
                 }
             }
         }
+    }
+
+    public Object saveState(FacesContext context) {
+        Object[] state = new Object[2];
+        state[0] = childState;
+        state[1] = super.saveState(context);
+        return state;
+    }
+
+    public void restoreState(FacesContext context, Object state) {
+        Object[] restoredState = (Object[]) state;
+        childState = (Map) restoredState[0];
+        super.restoreState(context, restoredState[1]);
     }
 }
