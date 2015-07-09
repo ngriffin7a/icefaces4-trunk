@@ -8,7 +8,7 @@
 	window.URL = window.URL || window.mozURL || window.webkitURL;
 	console.log('window.URL support = ' + !!window.URL);
 
-	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, sessionId, maxwidth, maxheight){
+	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, sessionId, maxwidth, maxheight, buttonImage, captureButtonImage){
 
 		function launchHTML5Camera(){
 
@@ -103,8 +103,10 @@
 						img = new Image();
 
 					function onSubmitSuccess(){
-						var reader = new FileReader();
-						cameraButton.innerHTML = captureLabel;
+						var reader = new FileReader();					
+						var markup = captureLabel;
+						if (buttonImage) markup = captureButtonImage ? '<img src="'+captureButtonImage+'" />' : '<img src="'+buttonImage+'" />';
+						cameraButton.innerHTML = markup;
 						reader.onload = function(event){
 							img.onload = function(){
 								setTimeout(function(){								
@@ -305,13 +307,17 @@
 					redobutton.classList.add('mobi-hidden');
 					startbutton.classList.remove('mobi-hidden');
 					videoCtr.classList.remove('mobi-hidden');
-					cameraButton.innerText = buttonLabel;
+					var markup = buttonLabel;
+					if (buttonImage) markup = '<img src="'+buttonImage+'" />';
+					cameraButton.innerText = markup;
 				}
 				
 				function keeppicture(){
 					var cameraForm = ice.mobi.formOf(cameraButton);
 					document.body.removeChild(popup);
-					cameraButton.innerHTML = captureLabel;
+					var markup = captureLabel;
+					if (buttonImage) markup = captureButtonImage ? '<img src="'+captureButtonImage+'" />' : '<img src="'+buttonImage+'" />';
+					cameraButton.innerHTML = markup;
 					createThumbnailForVideo();
 					submitImage(photo.src);
 				}

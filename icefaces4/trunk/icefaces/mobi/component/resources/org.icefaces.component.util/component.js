@@ -410,3 +410,9 @@ ice.mobi.button.prototype.addClass = function(className) {
 ice.mobi.button.prototype.removeClass = function(className) {
 	this.buttonElement.className = this.buttonElement.className.replace(new RegExp('(?:^|\\\s)'+className+'(?!\\\S)','g') , '');
 };
+
+ice.mobi.setupImageButton = function(id) {
+	var buttonElement = document.getElementById(id);
+	buttonElement.style.border = '0';
+	buttonElement.style.backgroundColor = 'transparent';
+};

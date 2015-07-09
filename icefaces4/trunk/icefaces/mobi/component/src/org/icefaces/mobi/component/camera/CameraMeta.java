@@ -91,4 +91,10 @@ public class CameraMeta extends UIComponentBaseMeta {
 
     @Property(defaultValue="Camera", tlddoc="The label to be displayed on the button. ")
     private String buttonLabel;
+
+    @Property(tlddoc = "The image to be displayed on the button, instead of a text label. The value may resolve to a byte array, an instance of IceOutputResource or a String containing the URL of the image.")
+    private Object buttonImage;
+
+    @Property(tlddoc = "The image to be displayed on the button on a successful image capture, instead of a text label. The value may resolve to a byte array, an instance of IceOutputResource or a String containing the URL of the image. This attribute is only applied if 'buttonImage' is specified.")
+    private Object captureButtonImage;
 }
