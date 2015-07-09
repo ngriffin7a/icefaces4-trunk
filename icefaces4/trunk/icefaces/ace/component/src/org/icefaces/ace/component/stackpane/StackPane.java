@@ -73,6 +73,13 @@ public class StackPane extends StackPaneBase {
         //visit the tree to restore and respectively save the state of the children between JSF lifecycles
         if (currentPhaseId == PhaseId.RESTORE_VIEW || currentPhaseId == PhaseId.RENDER_RESPONSE) {
             return super.visitTree(context, callback);
+        } else {
+            if (isSelected()) {
+                createChildren();
+                boolean result = super.visitTree(context, callback);
+                saveChildrenState();
+                return result;
+            }
         }
 
         return false;
