@@ -155,6 +155,17 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.startElement("input", uiComponent);
         writer.writeAttribute("id", clientId + "_input", "id");
         writer.writeAttribute("name", clientId + "_input", "name");
+        if (!disabledOrReadonly){
+			StringBuilder onblur = new StringBuilder(255);
+			onblur.append("mobi.timespinner.inputSubmit('").append(clientId).append("',{ event: event");
+			if (hasBehaviors) {
+				String behaviors = this.encodeClientBehaviors(context, cbh, "change").toString();
+				behaviors = behaviors.replace("\"", "\'");
+				onblur.append(behaviors);
+			}
+			onblur.append("});");
+            writer.writeAttribute("onblur", onblur.toString(), null);
+        }
         // apply class attribute and pass though attributes for style.
         PassThruAttributeWriter.renderNonBooleanAttributes(writer, uiComponent,
                 timeEntry.getCommonAttributeNames());

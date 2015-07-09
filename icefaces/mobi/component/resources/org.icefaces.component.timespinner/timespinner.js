@@ -152,23 +152,30 @@ mobi.timespinner = {
     select:function (clientId, cfg) {
         this.cfg = cfg;
         var event = this.cfg.event;
-        var hasBehaviors = false;
         var behaviors = this.cfg.behaviors;
-        if (behaviors) {
-            hasBehaviors = true;
-        }
         var inputEl = document.getElementById(clientId + '_input');
         var titleEl = document.getElementById(clientId + '_title');
         inputEl.value = titleEl.childNodes[1].innerHTML;
-        if (hasBehaviors) {
+        if (behaviors) {
             if (behaviors.change) {
                 ice.ace.ab(behaviors.change);
             }
         }
-        if (!hasBehaviors) {
-            ice.se(event, clientId);
-        }
         this.close(clientId);
+    },
+    inputSubmit: function(clientId, cfg){
+        if (this.opened[clientId]==true){
+            return;
+        }
+		ice.setFocus('');
+        this.cfg = cfg;
+        var event = this.cfg.event;
+        var behaviors = this.cfg.behaviors;
+        if (behaviors) {
+            if (behaviors.change) {
+                ice.ace.ab(behaviors.change);
+            }
+        }
     },
     toggle:function (clientId) {
         if (!this.opened[clientId]) {
