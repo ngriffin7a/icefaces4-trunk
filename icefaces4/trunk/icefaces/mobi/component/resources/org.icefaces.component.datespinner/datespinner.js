@@ -229,18 +229,11 @@ mobi.datespinner = {
     dateSubmit: function(cfg, clientId) {
             this.cfg = cfg;
             var event = this.cfg.event;
-            var hasBehaviors = false;
             var behaviors = this.cfg.behaviors;
             if (behaviors) {
-                hasBehaviors = true;
-            }
-            if (hasBehaviors) {
                 if (behaviors.change) {
                     ice.ace.ab(behaviors.change);
                 }
-            }
-            if (!hasBehaviors) {
-                ice.se(event, clientId);
             }
     },
     inputSubmit: function(clientId, cfg){
