@@ -164,6 +164,7 @@
 					startbutton = document.createElement('a'),
 					keepbutton = document.createElement('a'),
 					redobutton = document.createElement('a'),
+					cancelbutton = document.createElement('a'),
 					canvas = document.createElement('canvas'),
 					ctx = canvas.getContext('2d'),
 					photo = document.createElement('img'),
@@ -192,11 +193,15 @@
 				canvas.className = startbutton.className + ' mobi-hidden';
 				keepbutton.id = 'keep_' + id;
 				redobutton.id = 'redo_' + id;
+				cancelbutton.id = 'cancel_' + id;
 				
 				keepbutton.className = keepbutton.className + ' mobi-hidden';
 				redobutton.className = redobutton.className + ' mobi-hidden';
+				cancelbutton.className = cancelbutton.className + ' mobi-hidden';
 				
 				redobutton.innerHTML = 'Redo';
+
+				cancelbutton.innerHTML = 'Cancel';
 				
 				keepbutton.innerHTML = 'Keep';
 				
@@ -207,11 +212,16 @@
 				popup.appendChild(startbutton);
 				popup.appendChild(redobutton);
 				popup.appendChild(keepbutton);
+				popup.appendChild(cancelbutton);
 				document.body.appendChild(popup);
 
 				new ice.mobi.button(startbutton.id);
 				new ice.mobi.button(keepbutton.id);
 				new ice.mobi.button(redobutton.id);
+				new ice.mobi.button(cancelbutton.id);
+
+				document.getElementById(keepbutton.id).style.marginLeft = '10px';
+				document.getElementById(cancelbutton.id).style.marginLeft = '10px';
 
 				if( !options.width ){
 					options.width = popup.clientWidth - 40;
@@ -299,12 +309,14 @@
 					startbutton.classList.add('mobi-hidden');
 					keepbutton.classList.remove('mobi-hidden');
 					redobutton.classList.remove('mobi-hidden');
+					cancelbutton.classList.remove('mobi-hidden');
 				}
 				
 				function redopicture(){
 					photo.classList.add('mobi-hidden');
 					keepbutton.classList.add('mobi-hidden');
 					redobutton.classList.add('mobi-hidden');
+					cancelbutton.classList.add('mobi-hidden');
 					startbutton.classList.remove('mobi-hidden');
 					videoCtr.classList.remove('mobi-hidden');
 					var markup = buttonLabel;
@@ -320,6 +332,10 @@
 					cameraButton.innerHTML = markup;
 					createThumbnailForVideo();
 					submitImage(photo.src);
+				}
+
+				function cancelpicture(){
+					document.body.removeChild(popup);
 				}
 
 				function createThumbnailForVideo(){
@@ -367,6 +383,11 @@
 				
 				ice.mobi.addListener(redobutton, 'click', function(ev){
 					redopicture();
+					ev.preventDefault();
+				});
+
+				ice.mobi.addListener(cancelbutton, 'click', function(ev){
+					cancelpicture();
 					ev.preventDefault();
 				});
 				
