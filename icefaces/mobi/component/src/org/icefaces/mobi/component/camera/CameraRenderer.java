@@ -32,7 +32,9 @@ import org.icefaces.mobi.api.IDevice;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import static org.icefaces.ace.util.HTML.*;
 import org.icefaces.mobi.util.MobiJSFUtils;
+import org.icefaces.ace.util.IceOutputResource;
 import org.icefaces.ace.util.Utils;
+import org.icefaces.application.ResourceRegistry;
 import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.util.ClientDescriptor;
@@ -90,8 +92,14 @@ public class CameraRenderer extends Renderer {
 		writer.writeAttribute(ID_ATTR, clientId);
 		writer.writeAttribute(CLASS_ATTR, "mobi-camera");
 		String oldLabel = camera.getButtonLabel();
+		Object oldImage = camera.getButtonImage();
+		boolean isImageButton = (oldImage != null);
 		if (MobiJSFUtils.uploadInProgress(camera))  {
 			camera.setButtonLabel(camera.getCaptureMessageLabel()) ;
+			if (oldImage != null) {
+				Object newImage = camera.getCaptureButtonImage();
+				if (newImage != null) camera.setButtonImage(newImage);
+			}
 		} 
 		ClientDescriptor cd = camera.getClient();
 		// button element
@@ -105,21 +113,35 @@ public class CameraRenderer extends Renderer {
 		String styleClass = camera.getStyleClass();
 		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
 		writer.writeAttribute(TABINDEX_ATTR, camera.getTabindex());
-		String script = "ice.mobi.cameraBtnOnclick('%s', '%s', '%s', '%s', '%s', %s, %s);";
+		String script = "ice.mobi.cameraBtnOnclick('%s', '%s', '%s', '%s', '%s', %s, %s, '%s', '%s');";
 		writer.writeAttribute(ONCLICK_ATTR, String.format(script, clientId, camera.getButtonLabel(), 
 				camera.getCaptureMessageLabel(), camera.getPostURL(), 
 				MobiJSFUtils.getSessionIdCookie(facesContext),
 				camera.getMaxwidth() > 0 ? camera.getMaxwidth() : "undefined",
-				camera.getMaxheight() > 0 ? camera.getMaxheight() : "undefined"));
+				camera.getMaxheight() > 0 ? camera.getMaxheight() : "undefined",
+				processImageSource(facesContext, camera.getButtonImage(), clientId+"_buttonImage"),
+				processImageSource(facesContext, camera.getCaptureButtonImage(), clientId+"_captureButtonImage")
+				));
 		writer.startElement(SPAN_ELEM, camera);
-		writer.writeText(camera.getButtonLabel());
+		
+		if (isImageButton) {
+			writer.startElement(IMG_ELEM, camera);
+			writer.writeAttribute(SRC_ATTR, processImageSource(facesContext, camera.getButtonImage(), clientId+"_buttonImage"));
+			writer.endElement(IMG_ELEM);
+		} else {
+			writer.writeText(camera.getButtonLabel());
+		}
 		writer.endElement(SPAN_ELEM);
 		
 		// themeroller and thumbnails support
         writer.startElement("span", camera);
         writer.startElement("script", camera);
         writer.writeAttribute("type", "text/javascript");
-        writer.writeText(MobiJSFUtils.getCameraOrCamcorderButtonAndThumbnailScript(clientId));
+		if (isImageButton) {
+			writer.writeText(MobiJSFUtils.getCameraOrCamcorderButtonAndThumbnailScriptImageButton(clientId));
+		} else {
+			writer.writeText(MobiJSFUtils.getCameraOrCamcorderButtonAndThumbnailScript(clientId));
+		}
         writer.endElement("script");
         writer.endElement("span");
 
@@ -127,8 +149,26 @@ public class CameraRenderer extends Renderer {
 
 		writer.endElement(SPAN_ELEM);
 		camera.setButtonLabel(oldLabel);
+		camera.setButtonImage(oldImage);
 	}
 	
-	
+    public String processImageSource(FacesContext facesContext, Object o, String name) {
+        if (o instanceof IceOutputResource) {
+            // register resource
+            IceOutputResource iceResource = (IceOutputResource) o;
+            return ResourceRegistry.addWindowResource(iceResource);
+        }
+        if (o instanceof byte[]) {
+            // have to create the resource first and cache it in ResourceRegistry
+            IceOutputResource iceResource = new IceOutputResource(name, o, "");
+            return ResourceRegistry.addWindowResource(iceResource);
+        } else {
+			if (o != null) {
+				return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, (String) o);
+			} else {
+				return "";
+			}
+        }
+    }
 
 }

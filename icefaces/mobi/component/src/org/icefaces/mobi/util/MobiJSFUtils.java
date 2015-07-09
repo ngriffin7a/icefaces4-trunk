@@ -357,4 +357,13 @@ public class MobiJSFUtils {
                 "}"; 
     }
 
+    public static String getCameraOrCamcorderButtonAndThumbnailScriptImageButton(String clientId){
+        return  "ice.mobi.setupImageButton('" + clientId + "_button');" +
+				"window['callback" + clientId + "'] = function(arg) {" + 
+                    "var e = document.getElementById('" + clientId + "-thumb');" +
+                    "if (e){ e.src = arg.preview; e.parentNode.className='mobi-thumb-done'; }" +
+                    "console.log('updating thumbnail: ' + e);" +
+                "}"; 
+    }
+
 }
