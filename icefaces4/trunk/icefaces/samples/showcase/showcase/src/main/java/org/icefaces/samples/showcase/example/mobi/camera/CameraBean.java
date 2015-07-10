@@ -86,6 +86,8 @@ public class CameraBean /*extends ExampleImpl<CameraBean>*/ implements
     private Integer maxHeight;
     private Integer maxWidth;
 
+    private boolean useImages = false;
+
     public CameraBean() {
         //super(CameraBean.class);
     }
@@ -169,5 +171,13 @@ public class CameraBean /*extends ExampleImpl<CameraBean>*/ implements
 
     public void setMaxWidth(Integer width) {
         this.maxWidth = width;
+    }
+
+    public boolean isUseImages() {
+        return useImages;
+    }
+
+    public void setUseImages(boolean useImages) {
+        this.useImages = useImages;
     }
 }
