@@ -30,11 +30,27 @@
                 it to the server.
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
+
+        <mobi:fieldsetGroup>
+
+            <mobi:fieldsetRow style="padding-bottom:15px;">
+                <h:outputLabel for="spell" value="Use Image Button:" style="display:inline-block;margin-top:5px;"/>
+                <mobi:flipswitch id="spell" style="float:right"
+                                 labelOn="ON" labelOff="OFF"
+                                 singleSubmit="true"
+                                 value="#{cameraBean.useImages}"><ace:ajax />&#160;</mobi:flipswitch>
+            </mobi:fieldsetRow>
+
+        </mobi:fieldsetGroup>
         
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow>
-                <mobi:camera id="cam" value="#{cameraBean.cameraImage}" rendered="#{cameraBean.outputResource == null}"
+                <mobi:camera id="cam" value="#{cameraBean.cameraImage}" rendered="#{(cameraBean.outputResource == null) and (cameraBean.useImages) == false}"
                         buttonLabel="Camera" captureMessageLabel="Image captured"
+                        maxwidth="#{cameraBean.maxWidth}"
+                        maxheight="#{cameraBean.maxHeight}"/>
+                <mobi:camera id="cam2" value="#{cameraBean.cameraImage}" rendered="#{(cameraBean.outputResource == null) and (cameraBean.useImages == true)}"
+                        buttonImage="/resources/css/images/camera.png" captureButtonImage="/resources/css/images/photos.png"
                         maxwidth="#{cameraBean.maxWidth}"
                         maxheight="#{cameraBean.maxHeight}"/>
 				<ace:pushButton id="cameraReset" rendered="#{cameraBean.outputResource != null}"
