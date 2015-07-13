@@ -648,7 +648,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
 
             ExternalContext externalContext = context.getExternalContext();
             Map parameters = externalContext.getRequestParameterMap();
-            if (event.getPhaseId() == PhaseId.RENDER_RESPONSE && isDisposeWindowRequest(parameters)) {
+            if (event.getPhaseId() == PhaseId.RESTORE_VIEW && isDisposeWindowRequest(parameters)) {
                 //shortcut the lifecycle to avoid running it with certain parts discarded or disposed
                 context.responseComplete();
                 String windowID = (String) parameters.get(WindowParameter);
