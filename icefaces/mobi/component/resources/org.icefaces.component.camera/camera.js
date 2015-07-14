@@ -197,7 +197,7 @@
 				
 				keepbutton.className = keepbutton.className + ' mobi-hidden';
 				redobutton.className = redobutton.className + ' mobi-hidden';
-				cancelbutton.className = cancelbutton.className + ' mobi-hidden';
+				cancelbutton.className = cancelbutton.className;
 				
 				redobutton.innerHTML = 'Redo';
 
@@ -220,6 +220,7 @@
 				new ice.mobi.button(redobutton.id);
 				new ice.mobi.button(cancelbutton.id);
 
+				document.getElementById(startbutton.id).style.marginLeft = '10px';
 				document.getElementById(keepbutton.id).style.marginLeft = '10px';
 				document.getElementById(cancelbutton.id).style.marginLeft = '10px';
 
@@ -309,14 +310,12 @@
 					startbutton.classList.add('mobi-hidden');
 					keepbutton.classList.remove('mobi-hidden');
 					redobutton.classList.remove('mobi-hidden');
-					cancelbutton.classList.remove('mobi-hidden');
 				}
 				
 				function redopicture(){
 					photo.classList.add('mobi-hidden');
 					keepbutton.classList.add('mobi-hidden');
 					redobutton.classList.add('mobi-hidden');
-					cancelbutton.classList.add('mobi-hidden');
 					startbutton.classList.remove('mobi-hidden');
 					videoCtr.classList.remove('mobi-hidden');
 					var markup = buttonLabel;
