@@ -18,7 +18,6 @@ package org.icefaces.ace.component.fileentry;
 
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.ScriptWriter;
-import org.icefaces.ace.util.Utils;
 import org.icefaces.impl.context.ICEFacesContextFactory;
 import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.impl.event.FormSubmit;
@@ -27,11 +26,11 @@ import org.icefaces.util.EnvUtils;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIOutput;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.AbortProcessingException;
+import javax.faces.event.PreRenderViewEvent;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 import javax.faces.render.ResponseStateManager;
@@ -83,6 +82,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
         forceAjaxOnView(context);
         form.getAttributes().put(FormSubmit.DISABLE_CAPTURE_SUBMIT, "true");
         form.setInView(false);
+        context.getApplication().subscribeToEvent(PreRenderViewEvent.class, new ReEnableCaptureSubmit(form.getId()));
 
         UIOutput urlOutput = new UIOutput() {
             public void encodeBegin(FacesContext context) throws IOException {
@@ -199,5 +199,24 @@ public class FileEntryFormSubmit implements SystemEventListener {
         ExternalContext externalContext = facesContext.getExternalContext();
         Map sessionMap = externalContext.getSessionMap();
         sessionMap.put(AJAX_FORCED_VIEWS, AJAX_FORCED_VIEWS);
+    }
+
+    private static class ReEnableCaptureSubmit implements SystemEventListener {
+        private final String id;
+
+        public ReEnableCaptureSubmit(String id) {
+            this.id = id;
+        }
+
+        public void processEvent(SystemEvent event) throws AbortProcessingException {
+            final FacesContext ctx = FacesContext.getCurrentInstance();
+            UIComponent f = ctx.getViewRoot().findComponent(id);
+            f.getAttributes().remove(FormSubmit.DISABLE_CAPTURE_SUBMIT);
+            ctx.getApplication().unsubscribeFromEvent(PreRenderViewEvent.class, this);
+        }
+
+        public boolean isListenerForSource(Object source) {
+            return true;
+        }
     }
 }
