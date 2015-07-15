@@ -125,6 +125,7 @@ public class BidRobot implements Serializable {
 					}
 				}
 			});
+			bidThread.setName("Emporium BidRobot (" + maxBids + " bids)");
 			bidThread.start();
 		}
 	}
