@@ -66,6 +66,7 @@ public class GlobalMessageBean implements Serializable {
 				}catch (InterruptedException ignored) { }
 			}
 		});
+		waitThread.setName("Emporium GlobalMessageBean wait");
 		waitThread.start();
 	}
 	
