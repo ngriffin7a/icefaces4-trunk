@@ -41,6 +41,8 @@ import org.icefaces.demo.emporium.watcher.AuctionWatcher;
 @ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
 @ApplicationScoped
 public class AuctionService implements Serializable {
+	private static final long serialVersionUID = -7792292390252586384L;
+	
 	public static final String BEAN_NAME = "auctionService";
 	private static final Logger log = Logger.getLogger(AuctionService.class.getName());
 	
@@ -55,7 +57,7 @@ public class AuctionService implements Serializable {
 	private GlobalMessageBean globalMessage;
 	
 	@PostConstruct
-	private void initAuctionService() {
+	public void initAuctionService() {
 		log.info(TestFlags.getLogStatus());
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
 		
@@ -65,7 +67,7 @@ public class AuctionService implements Serializable {
 	}
 	
 	@PreDestroy
-	private void cleanupAuctionService() {
+	public void cleanupAuctionService() {
 		// Note as of Tomcat 7 the PreDestroy doesn't seem to be called properly for ApplicationScoped beans
 		// So although we ideally want to stop the IntervalPushRenderer here, instead we have to use a
 		//  ServletContextListener to reliably do so. See util.ContextListener for details.

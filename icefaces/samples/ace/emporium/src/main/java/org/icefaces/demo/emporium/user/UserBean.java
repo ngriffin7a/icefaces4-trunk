@@ -27,6 +27,8 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name=UserBean.BEAN_NAME)
 @SessionScoped
 public class UserBean implements Serializable {
+	private static final long serialVersionUID = 323333989702728319L;
+
 	public static final String BEAN_NAME = "userBean";
 	
 	@ManagedProperty(value="#{" + UserCounter.BEAN_NAME + "}")
@@ -35,14 +37,14 @@ public class UserBean implements Serializable {
 	private boolean locked = false; // Potentially lock a session from further Auth attempts
 	
 	@PostConstruct
-	private void initUserBean() {
+	public void initUserBean() {
 		if (counter != null) {
 			counter.countUser();
 		}
 	}
 	
 	@PreDestroy
-	private void cleanupUserBean() {
+	public void cleanupUserBean() {
 		if (counter != null) {
 			counter.cleanupUser();
 		}

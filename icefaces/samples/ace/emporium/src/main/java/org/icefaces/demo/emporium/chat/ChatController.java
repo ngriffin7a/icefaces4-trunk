@@ -29,6 +29,8 @@ import org.icefaces.demo.emporium.util.StringUtil;
 @ManagedBean(name=ChatController.BEAN_NAME)
 @ApplicationScoped
 public class ChatController implements Serializable {
+	private static final long serialVersionUID = 7368121991990492527L;
+	
 	public static final String BEAN_NAME = "chatController";
 	
 	public void joinRoom(ActionEvent event) {

@@ -24,6 +24,8 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name=AuthBean.BEAN_NAME)
 @ViewScoped
 public class AuthBean implements Serializable {
+	private static final long serialVersionUID = 4465851674596653052L;
+
 	public static final String BEAN_NAME = "authBean";
 	
 	private String password;

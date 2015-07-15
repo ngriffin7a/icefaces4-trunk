@@ -29,6 +29,8 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 @ManagedBean(name=SettingsController.BEAN_NAME)
 @ApplicationScoped
 public class SettingsController implements Serializable {
+	private static final long serialVersionUID = -6274970289418534981L;
+	
 	public static final String BEAN_NAME = "settingsController";
 	
 	public void save(ActionEvent event) {

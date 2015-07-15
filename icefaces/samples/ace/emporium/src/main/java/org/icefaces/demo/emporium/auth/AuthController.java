@@ -38,6 +38,8 @@ import org.icefaces.demo.emporium.util.StringUtil;
 @ManagedBean(name=AuthController.BEAN_NAME,eager=true)
 @ApplicationScoped
 public class AuthController implements Serializable {
+	private static final long serialVersionUID = -4816395364764005758L;
+	
 	public static final String BEAN_NAME = "authController";
 	private static final Logger log = Logger.getLogger(AuthController.class.getName());
 	

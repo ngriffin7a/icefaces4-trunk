@@ -31,6 +31,8 @@ import org.icefaces.demo.emporium.util.TimestampUtil;
 @ManagedBean(name=UserCounter.BEAN_NAME,eager=true)
 @ApplicationScoped
 public class UserCounter implements Serializable {
+	private static final long serialVersionUID = -6531575318215737454L;
+
 	private static final Logger log = Logger.getLogger(UserCounter.class.getName());
 	
 	public static final String BEAN_NAME = "userCounter";
@@ -42,14 +44,14 @@ public class UserCounter implements Serializable {
 	private String startTimestamp;
 	
 	@PostConstruct
-	private void initUserCounter() {
+	public void initUserCounter() {
 		startTimestamp = TimestampUtil.datestamp();
 		
 		log.info("Starting up user counter at " + startTimestamp + ".");
 	}
 	
 	@PreDestroy
-	private void cleanupUserCounter() {
+	public void cleanupUserCounter() {
 		log.info("Shutting down user counter. There are currently "
 				+ currentSessions
 				+ " active visitors. The total visitor count was "

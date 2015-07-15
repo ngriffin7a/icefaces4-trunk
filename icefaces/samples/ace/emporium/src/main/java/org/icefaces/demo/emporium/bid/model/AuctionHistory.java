@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class AuctionHistory implements Serializable {
-	private static final long serialVersionUID = 8759997075273076877L;
+	private static final long serialVersionUID = 8752611394567384445L;
 	
 	private Date date;
 	private double bidIncrease;

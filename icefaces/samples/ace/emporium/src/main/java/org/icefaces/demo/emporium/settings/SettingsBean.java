@@ -31,6 +31,8 @@ import org.icefaces.demo.emporium.util.ListData;
 @ManagedBean(name=SettingsBean.BEAN_NAME)
 @CustomScoped(value="#{window}")
 public class SettingsBean implements Serializable {
+	private static final long serialVersionUID = 81892502131393194L;
+	
 	public static final String BEAN_NAME = "settingsBean";
 	private static final Logger log = Logger.getLogger(SettingsBean.class.getName());
 	
@@ -51,7 +53,7 @@ public class SettingsBean implements Serializable {
 	private String themeName;
 	
 	@PostConstruct
-	private void initSettingsBean() {
+	public void initSettingsBean() {
 		// First initialize to defaults
 		initDefaults();
 		

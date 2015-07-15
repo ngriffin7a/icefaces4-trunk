@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ChatRoom implements Serializable {
+	private static final long serialVersionUID = -5147724953775107675L;
+	
 	public static final int MAX_MESSAGES = 15;
 	public static final String DEFAULT_PUSHGROUP_SUFFIX = "_pgroup";
 	

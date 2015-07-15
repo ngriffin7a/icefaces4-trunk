@@ -26,6 +26,8 @@ import org.icefaces.demo.emporium.watcher.base.ThreadedWatcher;
  * This check will run every INTERVAL minutes (by default 2 minutes)
  */
 public class ChatWatcher extends ThreadedWatcher {
+	private static final long serialVersionUID = 8532516032899510758L;
+
 	public static final int INTERVAL = 60 * 2; // 2 minutes
 	
 	private static ChatWatcher singleton = null;
