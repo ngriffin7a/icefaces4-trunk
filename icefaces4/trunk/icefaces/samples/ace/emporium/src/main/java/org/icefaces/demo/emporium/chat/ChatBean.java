@@ -32,6 +32,8 @@ import org.icefaces.demo.emporium.util.StringUtil;
 @ManagedBean(name=ChatBean.BEAN_NAME)
 @CustomScoped(value="#{window}")
 public class ChatBean implements Serializable {
+	private static final long serialVersionUID = -1437691596104071036L;
+	
 	public static final String BEAN_NAME = "chatBean";
 	private static final Logger log = Logger.getLogger(ChatBean.class.getName());
 	
@@ -61,7 +63,7 @@ public class ChatBean implements Serializable {
 	private ChatService service;
 	
 	@PostConstruct
-	private void initChatBean() {
+	public void initChatBean() {
 		if (TestFlags.TEST_AUTOJOIN_CHAT) {
 			// Join our default room
 			if (service != null) {
@@ -71,7 +73,7 @@ public class ChatBean implements Serializable {
 	}
 	
 	@PreDestroy
-	private void cleanupChatBean() {
+	public void cleanupChatBean() {
 		if ((currentRoom != null) && (service != null)) {
 			log.info("ChatBean timed out, removing user " + getName() + " from chat room " + currentRoom.getName());
 			service.leaveRoom(this, true);

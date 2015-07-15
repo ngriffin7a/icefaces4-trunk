@@ -40,6 +40,8 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 @ManagedBean(name=BidRobot.BEAN_NAME)
 @CustomScoped(value="#{window}")
 public class BidRobot implements Serializable {
+	private static final long serialVersionUID = -7678091811944698163L;
+	
 	public static final String BEAN_NAME = "bidRobot";
 	private static final Logger log = Logger.getLogger(BidRobot.class.getName());
 	
@@ -53,7 +55,7 @@ public class BidRobot implements Serializable {
 	private long waitTimeMillis;
 	
 	@PostConstruct
-	private void initBidRobot() {
+	public void initBidRobot() {
 		// Check our existing UserCounter, if we have too many users we don't need a BidRobot
 		// This is because we don't want a ton of BidRobots just spamming the site
 		UserCounter counter = (UserCounter)FacesUtils.getManagedBean(UserCounter.BEAN_NAME);
@@ -131,7 +133,7 @@ public class BidRobot implements Serializable {
 	}
 	
 	@PreDestroy
-	private void cleanupBidRobot() {
+	public void cleanupBidRobot() {
 		System.out.println(this + " cleanupBidRobot thread " + bidThread); // TODO TEMPORARY
 		if (active) {
 			log.info("Destroying a BidRobot with " + bidCount + "/" + maxBids + " bids done.");

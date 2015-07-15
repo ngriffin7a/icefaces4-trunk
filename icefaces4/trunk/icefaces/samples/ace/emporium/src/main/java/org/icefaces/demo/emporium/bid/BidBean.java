@@ -30,6 +30,8 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 @ManagedBean(name=BidBean.BEAN_NAME)
 @ViewScoped
 public class BidBean implements Serializable {
+	private static final long serialVersionUID = 6875028567468983012L;
+
 	public static final String BEAN_NAME = "bidBean";
 	
 	private boolean renderBidPanel = false;

@@ -28,12 +28,12 @@ import org.icefaces.demo.emporium.watcher.AuctionWatcher;
 @ManagedBean(name=PushBean.BEAN_NAME)
 @ViewScoped
 public class PushBean implements Serializable {
-	private static final long serialVersionUID = -2200618059830440963L;
+	private static final long serialVersionUID = 431936667425122754L;
 	
 	public static final String BEAN_NAME = "pushBean";
 	
 	@PostConstruct
-	private void initPushBean() {
+	public void initPushBean() {
 		joinIntervalGroup();
 	}
 	

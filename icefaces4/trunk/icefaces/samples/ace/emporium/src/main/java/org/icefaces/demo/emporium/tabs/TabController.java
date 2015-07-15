@@ -29,6 +29,8 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 @ManagedBean(name=TabController.BEAN_NAME)
 @ApplicationScoped
 public class TabController implements Serializable {
+	private static final long serialVersionUID = 4856147366078794499L;
+
 	public static final String BEAN_NAME = "tabController";
 	
 	public static final int TAB_AUCTION_LIST = 0;

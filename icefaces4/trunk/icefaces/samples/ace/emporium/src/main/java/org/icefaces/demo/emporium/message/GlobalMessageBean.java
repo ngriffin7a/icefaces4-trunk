@@ -32,6 +32,8 @@ import org.icefaces.demo.emporium.watcher.AuctionWatcher;
 @ApplicationScoped
 @ManagedBean(name=GlobalMessageBean.BEAN_NAME)
 public class GlobalMessageBean implements Serializable {
+	private static final long serialVersionUID = 574228227833990548L;
+
 	public static final String BEAN_NAME = "globalMessage";
 	
 	private static final int FULL_LOG_COUNT = 100;

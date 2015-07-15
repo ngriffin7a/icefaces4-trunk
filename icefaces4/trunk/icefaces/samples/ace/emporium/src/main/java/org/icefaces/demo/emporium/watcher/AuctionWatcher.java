@@ -27,6 +27,8 @@ import org.icefaces.demo.emporium.watcher.base.ThreadedWatcher;
  * This will also update the auction list every INTERVAL seconds (default 1 second) so that users can see the time left counting down
  */
 public class AuctionWatcher extends ThreadedWatcher {
+	private static final long serialVersionUID = -5294487159144795209L;
+	
 	public static final String INTERVAL_PUSH_GROUP = "auctionWatcher";
 	public static final String MANUAL_PUSH_GROUP = "auctionUpdate";
 	public static final int INTERVAL = 1;

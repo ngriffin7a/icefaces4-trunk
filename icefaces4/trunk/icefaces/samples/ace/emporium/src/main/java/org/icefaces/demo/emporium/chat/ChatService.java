@@ -35,6 +35,8 @@ import org.icefaces.demo.emporium.watcher.ChatWatcher;
 @ManagedBean(name=ChatService.BEAN_NAME,eager=true)
 @ApplicationScoped
 public class ChatService implements Serializable {
+	private static final long serialVersionUID = 6219783333449720939L;
+	
 	public static final String BEAN_NAME = "chatService";
 	private static final Logger log = Logger.getLogger(ChatService.class.getName());
 	
@@ -43,7 +45,7 @@ public class ChatService implements Serializable {
 	private List<ChatRoom> rooms;
 	
 	@PostConstruct
-	private void initChatService() {
+	public void initChatService() {
 		rooms = new ArrayList<ChatRoom>(3);
 		rooms.add(new ChatRoom("Lounge"));
 		rooms.add(new ChatRoom("Bidding Tips"));

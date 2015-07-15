@@ -34,6 +34,8 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 @ManagedBean(name=ChartBean.BEAN_NAME)
 @ViewScoped
 public class ChartBean implements Serializable {
+	private static final long serialVersionUID = 7257511117767692700L;
+	
 	public static final String BEAN_NAME = "chartBean";
 	
 	public enum ChartType {

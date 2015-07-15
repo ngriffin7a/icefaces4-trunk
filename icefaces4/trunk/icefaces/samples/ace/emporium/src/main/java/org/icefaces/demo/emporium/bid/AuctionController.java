@@ -42,6 +42,8 @@ import org.icefaces.util.JavaScriptRunner;
 @ManagedBean(name=AuctionController.BEAN_NAME)
 @ApplicationScoped
 public class AuctionController implements Serializable {
+	private static final long serialVersionUID = 1566584488199697566L;
+
 	private static final Logger log = Logger.getLogger(AuctionController.class.getName());
 	
 	public static final String BEAN_NAME = "auctionController";

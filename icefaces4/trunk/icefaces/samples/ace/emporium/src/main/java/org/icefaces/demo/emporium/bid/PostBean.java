@@ -32,6 +32,8 @@ import org.icefaces.demo.emporium.util.StringUtil;
 @ManagedBean(name=PostBean.BEAN_NAME)
 @CustomScoped(value="#{window}")
 public class PostBean implements Serializable {
+	private static final long serialVersionUID = -7979594191648800420L;
+
 	public static final String BEAN_NAME = "postBean";
 	
 	private AuctionItem toAdd;
