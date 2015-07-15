@@ -648,7 +648,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
 
             ExternalContext externalContext = context.getExternalContext();
             Map parameters = externalContext.getRequestParameterMap();
-            if (event.getPhaseId() == PhaseId.RESTORE_VIEW && isDisposeWindowRequest(parameters)) {
+            if (event.getPhaseId() == PhaseId.RENDER_RESPONSE && isDisposeWindowRequest(parameters)) {
                 //shortcut the lifecycle to avoid running it with certain parts discarded or disposed
                 context.responseComplete();
                 String windowID = (String) parameters.get(WindowParameter);
@@ -674,12 +674,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
     }
 
-    @ViewScoped
-    private static class NOOPBean implements Serializable {
-    }
-
     public static class FixViewScopedBeansOnRedirect extends ConfigurableNavigationHandler {
-        private static Object NOOPViewScopedBean = new NOOPBean();
         private NavigationHandler handler;
 
         public FixViewScopedBeansOnRedirect(NavigationHandler handler) {
@@ -690,26 +685,24 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             final NavigationCase navigationCase = getNavigationCase(context, fromAction, outcome);
             boolean redirect = navigationCase != null && navigationCase.isRedirect();
 
-            List<String> beanNames = Collections.EMPTY_LIST;
+            Map<String, Object> beans = Collections.EMPTY_MAP;
             if (redirect) {
                 //save bean names that are disposed by JSF's view bean manager
-                beanNames = new ArrayList();
+                beans = new HashMap();
                 Set<Map.Entry<String, Object>> viewMapEntries = context.getViewRoot().getViewMap().entrySet();
                 for (Map.Entry<String, Object> viewMapEntry : viewMapEntries) {
                     if (viewMapEntry.getValue().getClass().isAnnotationPresent(ViewScoped.class)) {
-                        beanNames.add(viewMapEntry.getKey());
+                        beans.put(viewMapEntry.getKey(), viewMapEntry.getValue());
                     }
                 }
             }
 
             handler.handleNavigation(context, fromAction, outcome);
 
-            if (redirect && !beanNames.isEmpty()) {
+            if (redirect && !beans.isEmpty()) {
                 //add back no-op beans to avoid having them re-initialized when dispose-window request is sent
                 Map viewMap = context.getViewRoot().getViewMap();
-                for (String name : beanNames) {
-                    viewMap.put(name, NOOPViewScopedBean);
-                }
+                viewMap.putAll(beans);
             }
         }
 
