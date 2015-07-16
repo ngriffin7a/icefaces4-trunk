@@ -1235,6 +1235,256 @@ ice.ace.DataTable.prototype.setupSelectionHover = function () {
         });
 }
 
+ice.ace.DataTable.prototype.selectAllRows = function () {
+
+	if (this.cfg.selectionMode != 'multiple') return;
+
+    var self = this,
+            tbody = this.element.find(this.bodyTableSelector),
+            elemRange = tbody.children(),
+            deselectedId, firstRowSelected;
+
+    // Sync State //
+    self.readSelections();
+
+    elemRange.each(function (i, elem) {
+        var element = ice.ace.jq(elem),
+                targetId = element.attr('id').split('_row_')[1];
+
+        // Adjust State //
+        element.addClass('ui-state-active ui-selected');
+        self.deselection = ice.ace.jq.grep(self.deselection, function (r) {
+            return r != targetId;
+        });
+        self.selection.push(targetId);
+    });
+
+    // Write State //
+    self.writeSelections();
+
+    // Submit State //
+    if (self.cfg.instantSelect) {
+        var options = {
+            source: self.id,
+            execute: self.id,
+            formId: self.cfg.formId
+        };
+
+        var params = {};
+        params[self.id + '_instantSelectedRowIndexes'] = this.selection;
+
+        var firstRowSelected = tbody.children(':first').hasClass('ui-selected');
+
+        // If first row is in this selection, deselection, or will be implicitly deselected by singleSelection
+        // resize the scrollable table.
+        if (self.cfg.scrollable && (ice.ace.jq.inArray("0", self.selection) > -1 || ice.ace.jq.inArray("0", self.deselection) > -1 || (firstRowSelected && self.isSingleSelection()))) {
+            options.onsuccess = function (responseXML) {
+                self.resizeScrolling();
+                return false;
+            };
+        }
+
+        options.params = params;
+
+        if (this.behaviors)
+            if (this.behaviors.select) {
+                ice.ace.ab(ice.ace.extendAjaxArgs(
+                        this.behaviors.select,
+                        ice.ace.clearExecRender(options)
+                        ));
+                return;
+            }
+
+        ice.ace.AjaxRequest(options);
+    }
+}
+
+ice.ace.DataTable.prototype.deselectAllRows = function () {
+
+	if (this.cfg.selectionMode != 'multiple') return;
+
+    var self = this,
+            tbody = this.element.find(this.bodyTableSelector),
+            elemRange = tbody.children(),
+            deselectedId, firstRowSelected;
+
+    // Sync State //
+    self.readSelections();
+
+    elemRange.each(function (i, elem) {
+        var element = ice.ace.jq(elem),
+                targetId = element.attr('id').split('_row_')[1];
+
+        // Adjust State //
+        element.removeClass('ui-state-active ui-selected');
+        self.selection = ice.ace.jq.grep(self.selection, function (r) {
+            return r != targetId;
+        });
+        self.deselection.push(targetId);
+    });
+
+    // Write State //
+    self.writeSelections();
+
+    // Submit State //
+    if (self.cfg.instantSelect) {
+        var options = {
+            source: self.id,
+            execute: self.id,
+            formId: self.cfg.formId
+        };
+
+        var params = {};
+        params[self.id + '_instantSelectedRowIndexes'] = this.selection;
+
+        var firstRowSelected = tbody.children(':first').hasClass('ui-selected');
+
+        // If first row is in this selection, deselection, or will be implicitly deselected by singleSelection
+        // resize the scrollable table.
+        if (self.cfg.scrollable && (ice.ace.jq.inArray("0", self.selection) > -1 || ice.ace.jq.inArray("0", self.deselection) > -1 || (firstRowSelected && self.isSingleSelection()))) {
+            options.onsuccess = function (responseXML) {
+                self.resizeScrolling();
+                return false;
+            };
+        }
+
+        options.params = params;
+
+        if (this.behaviors)
+            if (this.behaviors.select) {
+                ice.ace.ab(ice.ace.extendAjaxArgs(
+                        this.behaviors.select,
+                        ice.ace.clearExecRender(options)
+                        ));
+                return;
+            }
+
+        ice.ace.AjaxRequest(options);
+    }
+}
+
+ice.ace.DataTable.prototype.selectAllCells = function () {
+
+	if (this.cfg.selectionMode != 'multiplecell') return;
+
+    var self = this,
+            elemRange = this.element.find(this.cellSelector);
+
+    // Sync State //
+    self.readSelections();
+
+    elemRange.each(function (i, elem) {
+        var element = ice.ace.jq(elem),
+                rowId = element.parent().attr('id').split('_row_')[1],
+            columnIndex = element.index(),
+        targetId = rowId + '#' + columnIndex;
+
+        // Adjust State //
+        element.addClass('ui-state-active ui-selected');
+        self.deselection = ice.ace.jq.grep(self.deselection, function (r) {
+            return r != targetId;
+        });
+        self.selection.push(targetId);
+    });
+
+    // Write State //
+    self.writeSelections();
+
+    // Submit State //
+    if (self.cfg.instantSelect) {
+        var options = {
+            source: self.id,
+            execute: self.id,
+            formId: self.cfg.formId
+        };
+
+        var params = {};
+
+        // If first row is in this selection, deselection, or will be implicitly deselected by singleSelection
+        // resize the scrollable table.
+        if (self.cfg.scrollable && (ice.ace.jq.inArray("0", self.selection) > -1 || ice.ace.jq.inArray("0", self.deselection) > -1)) {
+            options.onsuccess = function (responseXML) {
+                self.resizeScrolling();
+                return false;
+            };
+        }
+
+        options.params = params;
+
+        if (this.behaviors)
+            if (this.behaviors.select) {
+                ice.ace.ab(ice.ace.extendAjaxArgs(
+                        this.behaviors.select,
+                        ice.ace.clearExecRender(options)
+                        ));
+                return;
+            }
+
+        ice.ace.AjaxRequest(options);
+    }
+}
+
+ice.ace.DataTable.prototype.deselectAllCells = function () {
+
+	if (this.cfg.selectionMode != 'multiplecell') return;
+
+    var self = this,
+            elemRange = this.element.find(this.cellSelector);
+
+    // Sync State //
+    self.readSelections();
+
+    elemRange.each(function (i, elem) {
+        var element = ice.ace.jq(elem),
+                rowId = element.parent().attr('id').split('_row_')[1],
+            columnIndex = element.index(),
+        targetId = rowId + '#' + columnIndex;
+
+        // Adjust State //
+        element.removeClass('ui-state-active ui-selected');
+        self.selection = ice.ace.jq.grep(self.selection, function (r) {
+            return r != targetId;
+        });
+        self.deselection.push(targetId);
+    });
+
+    // Write State //
+    self.writeSelections();
+
+    // Submit State //
+    if (self.cfg.instantSelect) {
+        var options = {
+            source: self.id,
+            execute: self.id,
+            formId: self.cfg.formId
+        };
+
+        var params = {};
+
+        // If first row is in this selection, deselection, or will be implicitly deselected by singleSelection
+        // resize the scrollable table.
+        if (self.cfg.scrollable && (ice.ace.jq.inArray("0", self.selection) > -1 || ice.ace.jq.inArray("0", self.deselection) > -1)) {
+            options.onsuccess = function (responseXML) {
+                self.resizeScrolling();
+                return false;
+            };
+        }
+
+        options.params = params;
+
+        if (this.behaviors)
+            if (this.behaviors.select) {
+                ice.ace.ab(ice.ace.extendAjaxArgs(
+                        this.behaviors.select,
+                        ice.ace.clearExecRender(options)
+                        ));
+                return;
+            }
+
+        ice.ace.AjaxRequest(options);
+    }
+}
+
 ice.ace.DataTable.prototype.setupReorderableColumns = function () {
     var _self = this;
     ice.ace.jq(this.jqId + ' > div > table > thead').sortable({
