@@ -253,17 +253,21 @@ ice.ace.DataTable = function (id, cfg) {
     oldInstance = null;
     rowEditors = null;
 
+	var self = this;
     // Setup unload callback if not already done
     if (!window[this.cfg.widgetVar]) {
-        var self = this;
         ice.onElementUpdate(this.id, function() { ice.ace.destroy(self.id); });
     }
 
-	if (this.cfg.paginator)
+	if (this.cfg.paginator) {
 		this.resizePaginator();
+		this.resizePaginatorCallback = function () {
+			self.resizePaginator();
+		};
+		ice.ace.jq(window).bind('resize', this.resizePaginatorCallback);
+	}
 
 	if (this.element.find('.ui-datatable-footer').get(0)) {
-		var self = this;
 		this.adjustFooterWidthCallback = function () {
 			self.adjustFooterWidth();
 		};
@@ -317,6 +321,7 @@ ice.ace.DataTable.prototype.destroy = function() {
     ice.ace.jq(window).unbind('resize', this.scrollableResizeCallback);
     this.element.find(this.scrollBodySelector).unbind('scroll');
 	ice.ace.jq(window).unbind('resize', this.adjustFooterWidthCallback);
+	ice.ace.jq(window).unbind('resize', this.resizePaginatorCallback);
 
     // Clear filter events
     this.element.off('keyup keypress input', this.filterSelector);
