@@ -73,7 +73,7 @@ public class TableConfigPanelMeta extends UIComponentBaseMeta {
     @Property(name = "for", tlddoc="Defines the component ID of the DataTable this ConfigPanel manipulates.")
     String forTarget;
 
-    @Property(tlddoc = "Enable to hide columns with configurable property set to false, rather than render them with a disabled style.",
+    @Property(tlddoc = "When set to true, the disabled rows in the panel (corresponding to ace:column's that have their 'configurable' attribute set to false) will not be rendered, instead of rendering them with a disabled styling.",
               defaultValue = "false",
               defaultValueType = DefaultValueType.EXPRESSION)
     boolean hideDisabledRows;
