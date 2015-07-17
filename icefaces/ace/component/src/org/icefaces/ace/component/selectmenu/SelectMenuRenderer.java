@@ -97,7 +97,7 @@ public class SelectMenuRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", "ui-selectmenu ui-widget " + selectMenu.getStyleClass(), null);
 		String dir = selectMenu.getDir();
-		if (dir != null) writer.writeAttribute("dir", dir, null);
+		if (dir != null) writer.writeAttribute("data-dir", dir, null);
 		String lang = selectMenu.getLang();
 		if (lang != null) writer.writeAttribute("lang", lang, null);
 		String title = selectMenu.getTitle();
@@ -132,6 +132,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		writer.startElement("span", null);
 		writer.writeAttribute("style", selectMenu.getStyle(), null);
 		writer.writeAttribute("class", "ui-inputfield ui-widget-content ui-corner-left " + getStateStyleClasses(selectMenu) + inFieldLabelStyleClass, null);
+		if (dir != null) writer.writeAttribute("dir", dir, null);
 		writer.endElement("span");
 		
 		// down arrow span
@@ -161,6 +162,7 @@ public class SelectMenuRenderer extends InputRenderer {
         writer.writeAttribute("id", divId, null);
         writer.writeAttribute("class", "ui-selectmenu-list", null);
         writer.writeAttribute("style", "display:none;z-index:500;", null);
+		if (dir != null) writer.writeAttribute("dir", dir, null);
         writer.endElement("div");
 
         encodeScript(facesContext, writer, clientId, selectMenu,

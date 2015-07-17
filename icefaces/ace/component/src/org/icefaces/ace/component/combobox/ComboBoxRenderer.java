@@ -174,6 +174,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.writeAttribute("id", divId, null);
 		writer.writeAttribute("class", "ui-widget ui-widget-content ui-corner-all ui-combobox-list", null);
 		writer.writeAttribute("style", "display:none;z-index:500;", null);
+		if (dir != null) writer.writeAttribute("dir", dir, null);
 		writer.endElement("div");
 
 		encodeScript(facesContext, writer, clientId, comboBox,
