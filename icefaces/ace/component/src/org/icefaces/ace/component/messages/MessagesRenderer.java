@@ -190,7 +190,7 @@ public class MessagesRenderer extends Renderer {
     }
 
     private Map<String, ArrayList<FacesMessage>> getMsgs(Messages component, FacesContext context) {
-        Map<String, ArrayList<FacesMessage>> msgs = new HashMap<String, ArrayList<FacesMessage>>();
+        Map<String, ArrayList<FacesMessage>> msgs = new LinkedHashMap<String, ArrayList<FacesMessage>>();
         String forId = (forId = component.getFor()) == null ? "@all" : forId.trim();
         if (forId.equals("@all")) {
             if (component.isGlobalOnly()) {
