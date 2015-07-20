@@ -85,7 +85,6 @@ public class BidRobot implements Serializable {
 				@Override
 				public void run() {
 					while ((bidCount < maxBids) && (active)) {
-						System.out.println(this + " BidRobot loop start active=" + active + " with " + bidCount + "/" + maxBids + " bids left"); // TODO TEMPORARY
 						if (!TestFlags.TEST_BIDROBOT) {
 							waitTimeMillis = 1000 * (30+random.nextInt(60));
 						}
@@ -134,7 +133,6 @@ public class BidRobot implements Serializable {
 	
 	@PreDestroy
 	public void cleanupBidRobot() {
-		System.out.println(this + " cleanupBidRobot thread " + bidThread); // TODO TEMPORARY
 		if (active) {
 			log.info("Destroying a BidRobot with " + bidCount + "/" + maxBids + " bids done.");
 		}
@@ -143,8 +141,6 @@ public class BidRobot implements Serializable {
 			active = false;
 			bidThread.interrupt();
 			bidThread = null;
-			
-			System.out.println(this + " thread after destroy " + bidThread); // TODO TEMPORARY
 		}
 	}
 	
