@@ -32,6 +32,7 @@ public class AuctionItemGenerator {
 	
 	private static final int HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 	private static final int UNIQUE_NAME_MAX_CHECKS = 5;
+	private static final int MAX_FAKE_BIDS = TestFlags.TEST_MANY_PAST_BIDS ? 1000 : 10;
 	
 	private static int uniqueCountSuffix = random.nextInt(100);
 	
@@ -50,7 +51,7 @@ public class AuctionItemGenerator {
 		
 		// In half the cases generate some initial bids
 		// We need to actually place/record these bids for historical purposes, as compared to just setting bid count directly
-		if (random.nextBoolean()) {
+		if ((random.nextBoolean()) || (TestFlags.TEST_MANY_PAST_BIDS)) {
 			generateFakeBids(toReturn);
 		}
 		
@@ -136,15 +137,13 @@ public class AuctionItemGenerator {
 			// First randomly choose if we're doing time beyond a day
 			int min = HOUR_IN_MILLISECONDS; // Minimum of an hour away
 			int cap = min;
-			switch (1+random.nextInt(4)) {
-				// Up to a week
-				case 1: cap = HOUR_IN_MILLISECONDS * 24 * 6; break;
+			switch (random.nextInt(3)) {
 				// Up to 3 days
-				case 2: cap = HOUR_IN_MILLISECONDS * 24 * 3; break;
+				case 0: cap = HOUR_IN_MILLISECONDS * 24 * 3; break;
 				// Up to 1 day
-				case 4: cap = HOUR_IN_MILLISECONDS * 24; break;
+				case 1: cap = HOUR_IN_MILLISECONDS * 24; break;
 				// Random hours
-				case 5: cap = HOUR_IN_MILLISECONDS * (1+random.nextInt(5)); break;
+				case 2: cap = HOUR_IN_MILLISECONDS * (1+random.nextInt(5)); break;
 			}
 			return (new Date().getTime()+min)+random.nextInt(cap);
 		}
@@ -250,25 +249,24 @@ public class AuctionItemGenerator {
 	}
 	
 	public static AuctionItem generateFakeBids(AuctionItem toBid) {
-		int bidsToPlace = random.nextInt(11);
+		int bidsToPlace = 1+random.nextInt(MAX_FAKE_BIDS);
 		
-		if (bidsToPlace > 0) {
-			// We'll place one bid an hour for the past X hours, up to the current hour
-			Calendar cal = Calendar.getInstance();
-			// Subtract a number of hours equal to the bids we're going to place, plus one
-			// Also randomize the minutes and seconds to get realistic looking data
-			cal.add(Calendar.HOUR_OF_DAY, (bidsToPlace+1) * -1);
-			cal.add(Calendar.MINUTE, (10+random.nextInt(20)) * -1);
-			cal.add(Calendar.SECOND, random.nextInt(50) * -1);
+		// We'll place one bid an hour for the past X hours, up to the current hour
+		Calendar cal = Calendar.getInstance();
+		// Subtract a number of hours equal to the bids (times two) we're going to place
+		// This gives us a buffer in case randomized minutes eventually take us into the future
+		// Also randomize the minutes and seconds to get realistic looking data
+		cal.add(Calendar.HOUR_OF_DAY, (bidsToPlace*2) * -1);
+		cal.add(Calendar.MINUTE, (10+random.nextInt(20)) * -1);
+		cal.add(Calendar.SECOND, random.nextInt(50) * -1);
+		
+		for (int i = 0; i < bidsToPlace; i++) {
+			toBid.placeBid(cal.getTime(), makeSmallBid(toBid));
 			
-			for (int i = 0; i < bidsToPlace; i++) {
-				toBid.placeBid(cal.getTime(), makeSmallBid(toBid));
-				
-				// Each iteration we'll add another hour, random minutes, and subtract random seconds
-				cal.add(Calendar.HOUR_OF_DAY, 1);
-				cal.add(Calendar.MINUTE, random.nextInt(30));
-				cal.add(Calendar.SECOND, random.nextInt(50) * -1);
-			}
+			// Each iteration we'll add another hour, random minutes, and subtract random seconds
+			cal.add(Calendar.HOUR_OF_DAY, 1);
+			cal.add(Calendar.MINUTE, random.nextInt(30));
+			cal.add(Calendar.SECOND, random.nextInt(50) * -1);
 		}
 		
 		return toBid;
