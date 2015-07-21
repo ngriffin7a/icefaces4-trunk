@@ -65,7 +65,7 @@
 		                       styleClass="w100"
 		                       rows="10">
 		                    <f:facet name="header">
-		                        <h:outputText value="Details of #{bidBean.bidItem.bids} Bids"/>
+		                        <h:outputText value="Details of #{bidBean.bidItem.bids} Bids (#{bidBean.bidItem.historySize} shown)"/>
 		                    </f:facet>
 		                    <ace:column headerText="Date/Time">
 		                        <h:outputText value="#{history.date}">

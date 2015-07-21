@@ -73,7 +73,7 @@ public class BidRobot implements Serializable {
 			
 			// Set some parameters of how the robot will behave
 			if (!TestFlags.TEST_BIDROBOT) {
-				maxBids = 5+random.nextInt(20);
+				maxBids = 3+random.nextInt(12);
 			}
 			else {
 				maxBids = 100;

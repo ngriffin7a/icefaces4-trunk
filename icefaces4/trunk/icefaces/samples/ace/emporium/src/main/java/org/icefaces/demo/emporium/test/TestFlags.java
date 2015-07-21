@@ -24,7 +24,7 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean(name=TestFlags.BEAN_NAME)
 @ApplicationScoped
 public class TestFlags implements Serializable  {
-	private static final long serialVersionUID = 6418184505268668580L;
+	private static final long serialVersionUID = 5330750960779100433L;
 
 	public static final String BEAN_NAME = "testFlags";
 	
@@ -32,6 +32,7 @@ public class TestFlags implements Serializable  {
 	public static final boolean TEST_EXPIRY = false; // Debugging toggle to create short lasting items (true) or normal (false)
 	public static final boolean TEST_BIDROBOT = false; // Debugging toggle to make BidRobots always spawn and bid really often
 	public static final boolean TEST_MANY_ITEMS = false; // Debugging toggle to make a huge number of random items instead of the usual
+	public static final boolean TEST_MANY_PAST_BIDS = false; // Debugging toggle to generate hundreds of past bid history instead of a dozen
 	public static final boolean TEST_AUTOJOIN_CHAT = false; // Debugging toggle to make any user autojoin the default chat room
 	public static final boolean TEST_GROWL_MESSAGES = false; // Debugging toggle to test ace:growlMessages in place of our notification panel
 	public static final boolean TEST_NO_AUTH = false; // Debugging toggle to disallow Authentication (to reset data) if set to true
@@ -44,6 +45,7 @@ public class TestFlags implements Serializable  {
 				+ "], expiry [" + TestFlags.TEST_EXPIRY
 				+ "], bid robot [" + TestFlags.TEST_BIDROBOT
 				+ "], many items [" + TestFlags.TEST_MANY_ITEMS
+				+ "], many past bids [" + TestFlags.TEST_MANY_PAST_BIDS
 				+ "], autojoin chat [" + TestFlags.TEST_AUTOJOIN_CHAT
 				+ "], growl messages [" + TestFlags.TEST_GROWL_MESSAGES
 				+ "], no auth [" + TestFlags.TEST_NO_AUTH
@@ -64,6 +66,10 @@ public class TestFlags implements Serializable  {
 
 	public boolean isTestManyItems() {
 		return TEST_MANY_ITEMS;
+	}
+	
+	public boolean isTestManyPastBids() {
+		return TEST_MANY_PAST_BIDS;
 	}
 
 	public boolean isTestAutojoinChat() {

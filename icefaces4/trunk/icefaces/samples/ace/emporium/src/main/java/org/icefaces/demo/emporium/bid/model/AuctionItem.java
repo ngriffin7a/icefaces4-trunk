@@ -27,7 +27,7 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.StringUtil;
 
 public class AuctionItem implements Comparable<AuctionItem>, Serializable {
-	private static final long serialVersionUID = -3733889643161862851L;
+	private static final long serialVersionUID = 8611062373441213361L;
 	
 	public static final int DEFAULT_EXPIRY_DATE_HOURS = 2; // Default hours to add to an expiry date
 	public static final int EXPIRY_DATE_MINIMUM_M = 30; // Minimum number of minutes in the future for an expiry date
@@ -35,6 +35,7 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	public static final double DEFAULT_BID_INCREMENT = 1.0;
 	public static final double SMALL_BID_INCREMENT = 10.0;
 	public static final double MAX_BID_INCREASE = 100.0;
+	public static final int MAX_HISTORY_SIZE = 200; // Maximum history items to maintain
 
 	public enum Condition {
 		NEW("New"),
@@ -202,6 +203,12 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 	public void setHistory(List<AuctionHistory> history) {
 		this.history = history;
 	}
+	public int getHistorySize() {
+		return history != null ? history.size() : 0;
+	}
+	public int getMaxHistorySize() {
+		return MAX_HISTORY_SIZE;
+	}
 	
 	public boolean getAllowRemoval() {
 		return ((owner != null) && (owner.equals(FacesUtils.getHttpSessionId())));
@@ -226,6 +233,11 @@ public class AuctionItem implements Comparable<AuctionItem>, Serializable {
 			// Store the bid increase between the incoming new bid and our current price
 			// We'll keep this with the newest bid at the "top" of the list (0 index)
 			history.add(0, new AuctionHistory(bidDate, (newBid - price), newBid));
+			
+			// We'll also chop off any excess history items to keep the list somewhat manageable
+			if (history.size() > MAX_HISTORY_SIZE) {
+				history.remove(history.size()-1);
+			}
 		}
 	}
 
