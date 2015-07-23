@@ -75,13 +75,11 @@ public class StackPaneRenderer extends CoreRenderer {
     public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException {
         StackPane pane = (StackPane) uiComponent;
         pane.createChildren();
-        pane.restoreChildrenState();
         if (pane.isClient()) {
             renderChildren(facesContext, uiComponent);
         } else if (pane.isSelected()) {
             renderChildren(facesContext, uiComponent);
         }
-        pane.saveChildrenState();
     }
 
 

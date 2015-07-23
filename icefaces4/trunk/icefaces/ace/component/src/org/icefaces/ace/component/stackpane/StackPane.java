@@ -20,7 +20,10 @@ import org.icefaces.ace.component.panelstack.PanelStack;
 import javax.faces.component.UIComponent;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
+import javax.faces.component.visit.VisitHint;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.PhaseId;
 import java.util.*;
 import java.util.logging.Logger;
@@ -31,14 +34,11 @@ public class StackPane extends StackPaneBase {
     public static final String CONTENT_SELECTED = "ace-contentpane ";
     public static final String CONTENT_HIDDEN = "ace-contentpane-hidden ";
     private Runnable createChildren;
-    private Map childState = new HashMap();
 
     public void processDecodes(FacesContext context) {
         if (isSelected()) {
             createChildren();
-            restoreChildrenState();
             super.processDecodes(context);
-            saveChildrenState();
         }
     }
 
@@ -53,6 +53,7 @@ public class StackPane extends StackPaneBase {
             super.processUpdates(context);
         }
     }
+
 
     public void processRestoreState(FacesContext context, Object state) {
         if (isSelected()) {
@@ -71,47 +72,19 @@ public class StackPane extends StackPaneBase {
     public boolean visitTree(VisitContext context, VisitCallback callback) {
         PhaseId currentPhaseId = context.getFacesContext().getCurrentPhaseId();
         //visit the tree to restore and respectively save the state of the children between JSF lifecycles
+        if (context.getHints().contains(VisitHint.SKIP_ITERATION)) {
+            return false;
+        }
         if (currentPhaseId == PhaseId.RESTORE_VIEW || currentPhaseId == PhaseId.RENDER_RESPONSE) {
             return super.visitTree(context, callback);
         } else {
             if (isSelected()) {
                 createChildren();
-                boolean result = super.visitTree(context, callback);
-                saveChildrenState();
-                return result;
+                return super.visitTree(context, callback);
             }
         }
 
         return false;
-    }
-
-    //save children state during JSF lifecycle to allow the child state to be restored in case of re-initialisation
-    public void saveChildrenState(List<UIComponent> children) {
-        for (UIComponent c: children) {
-            String id = c.getClientId();
-            Object state = c.saveState(getFacesContext());
-            childState.put(id, state);
-            saveChildrenState(c.getChildren());
-        }
-    }
-
-    public void saveChildrenState() {
-        saveChildrenState(getChildren());
-    }
-
-    public void restoreChildrenState(List<UIComponent> children) {
-        for (UIComponent c: children) {
-            String id = c.getClientId();
-            Object state = childState.get(id);
-            if (state != null) {
-                c.restoreState(getFacesContext(), state);
-            }
-            restoreChildrenState(c.getChildren());
-        }
-    }
-
-    public void restoreChildrenState() {
-        restoreChildrenState(getChildren());
     }
 
     public boolean isSelected() {
@@ -139,8 +112,17 @@ public class StackPane extends StackPaneBase {
             List children = getChildren();
             if (isSelected()) {
                 if (children == null || children.isEmpty()) {
+                    FacesContext facesContext = getFacesContext();
+                    Map<Object, Object> attributes = facesContext.getAttributes();
+                    List cachedChildren = (List) attributes.get(getClientId());
                     this.setInView(false);
-                    createChildren.run();
+                    if (cachedChildren == null) {
+                        createChildren.run();
+                        attributes.put(getClientId(), new ArrayList(getChildren()));
+                    } else {
+                        getChildren().addAll(cachedChildren);
+                        resetClientId(getChildren());
+                    }
                     this.setInView(true);
                 }
             } else {
@@ -157,16 +139,10 @@ public class StackPane extends StackPaneBase {
         }
     }
 
-    public Object saveState(FacesContext context) {
-        Object[] state = new Object[2];
-        state[0] = childState;
-        state[1] = super.saveState(context);
-        return state;
-    }
-
-    public void restoreState(FacesContext context, Object state) {
-        Object[] restoredState = (Object[]) state;
-        childState = (Map) restoredState[0];
-        super.restoreState(context, restoredState[1]);
+    private void resetClientId(List<UIComponent> children) {
+        for (UIComponent c: children) {
+            c.setId(c.getId());
+            resetClientId(c.getChildren());
+        }
     }
 }
