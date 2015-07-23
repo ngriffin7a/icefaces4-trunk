@@ -795,6 +795,16 @@ ice.ace.tabset = {
 				map.setCenter(center);
 			}
 		});
+	},
+
+	clearSelectedIndexState: function(clientId) {
+		var rootElem = document.getElementById(clientId);
+		if (rootElem) {
+			var targetElement = ice.ace.tabset.getTabIndexField(rootElem, false);
+			if (targetElement) {
+				targetElement.value = '';
+			}
+		}
 	}
 };
 
