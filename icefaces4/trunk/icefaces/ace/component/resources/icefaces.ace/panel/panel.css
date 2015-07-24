@@ -23,7 +23,6 @@
 .ui-panel .ui-panel-title {
     display:inline-block;
     vertical-align: middle;
-    width:70%;
     /* IE7 inline-block hack */
     zoom: 1;
     *display:inline;
@@ -32,7 +31,6 @@
     display:inline-block;
     vertical-align: middle;
     text-align: right;
-    width:30%;
     /* IE7 inline-block hack */
     zoom: 1;
     *display:inline;
