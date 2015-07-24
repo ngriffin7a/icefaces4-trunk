@@ -71,6 +71,9 @@ public class PanelMeta extends UIPanelMeta {
 	
 	@Property(tlddoc="Header text of the panel.")
 	private String header;
+
+	@Property(tlddoc="Specifies how the header text should be aligned (when specified via the \"header\" attribute). The possible values are \"left\", \"center\", and \"right\".", defaultValue="left")
+	private String headerAlign;
 	
 	@Property(tlddoc="Footer text of the panel.")
 	private String footer;

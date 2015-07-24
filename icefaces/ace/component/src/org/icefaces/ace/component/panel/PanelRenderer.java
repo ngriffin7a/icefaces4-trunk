@@ -205,19 +205,38 @@ public class PanelRenderer extends CoreRenderer {
         UIComponent header = panel.getFacet("header");
         String headerText = panel.getHeader();
         String clientId = panel.getClientId(context);
+		String headerAlign = panel.getHeaderAlign();
+		if ("right".equalsIgnoreCase(headerAlign))
+			headerAlign = "right";
+		else if ("center".equalsIgnoreCase(headerAlign))
+			headerAlign = "center";
+		else headerAlign = "left";
 
         domUpdateMap.put("headerText", headerText);
         if(headerText == null && header == null) {
             return;
         }
 
+		boolean isHeaderText = header == null;
+
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId + "_header", null);
         writer.writeAttribute("class", Panel.PANEL_TITLEBAR_CLASS, null);
 
+		if (isHeaderText) {
+			writer.startElement("div", null);
+			writer.writeAttribute("style", "display:table;", null);
+			writer.startElement("div", null);
+			writer.writeAttribute("style", "display:table-row;", null);
+		}
+
         //Title
         writer.startElement("span", null);
         writer.writeAttribute("class", Panel.PANEL_TITLE_CLASS, null);
+		if (isHeaderText) {
+			String padding = "center".equals(headerAlign) ? "padding-left:6em;" : "";
+			writer.writeAttribute("style", "display:table-cell;width:99%;text-align:"+headerAlign+";"+padding, null);
+		}
 
         if(header != null) {
             renderChild(context, header);
@@ -226,9 +245,11 @@ public class PanelRenderer extends CoreRenderer {
         }
         writer.endElement("span");
 
+        //Options
         writer.startElement("span", null);
         writer.writeAttribute("class", Panel.PANEL_ICONS_CLASS, null);
-        //Options
+		if (isHeaderText) writer.writeAttribute("style", "display:table-cell;white-space:nowrap;", null);
+
         if(panel.isClosable()) {
             encodeIcon(context, panel, "ui-icon-closethick", clientId + "_closer");
         }
@@ -242,6 +263,11 @@ public class PanelRenderer extends CoreRenderer {
             encodeIcon(context, panel, "ui-icon-gear", clientId + "_menu");
         }
         writer.endElement("span");
+
+		if (isHeaderText) {
+			writer.endElement("div");
+			writer.endElement("div");
+		}
 
         writer.endElement("div");
     }
