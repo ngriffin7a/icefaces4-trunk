@@ -22,6 +22,7 @@ import org.icefaces.impl.push.SessionViewManager;
 import org.icefaces.util.EnvUtils;
 
 import javax.annotation.PreDestroy;
+import javax.el.ELContext;
 import javax.faces.application.*;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
@@ -47,6 +48,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     public static final String SessionSynchronizationMonitor = WindowScopeManager.class.getName() + "$SessionSynchronizationMonitor";
     public static final String ScopeName = "window";
     private static final String WindowParameter = "ice.window";
+    private static final String ICEFACES_BEAN_DESTROY_RECORDER = "icefacesBeanDestroyRecorder";
     private static final Logger log = Logger.getLogger(WindowScopeManager.class.getName());
     private static final String seed = Integer.toString(new Random().nextInt(1000), 36);
     private static SharedMapLookupStrategy sharedMapLookupStrategy;
@@ -319,15 +321,19 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             return;
         }
         Map viewMap = viewRoot.getViewMap();
-        Iterator keys = viewMap.keySet().iterator();
-        while (keys.hasNext()) {
-            Object key = keys.next();
-            Object object = viewMap.get(key);
-            if (object.getClass().isAnnotationPresent(WindowDisposed.class)) {
-                keys.remove();
-                callAnnotatedMethod(object, PreDestroy.class);
-                if (log.isLoggable(Level.FINE)) {
-                    log.log(Level.FINE, "Closing window disposed ViewScoped bean " + key);
+        //additional test necessary when running with Myfaces 2.1.1* or Mojarra 2.2.1*
+        IcefacesBeanDestroyRecorder beanDestroyRecorder = (IcefacesBeanDestroyRecorder) viewMap.get(ICEFACES_BEAN_DESTROY_RECORDER);
+        if (!beanDestroyRecorder.isDisposed()) {
+            Iterator keys = viewMap.keySet().iterator();
+            while (keys.hasNext()) {
+                Object key = keys.next();
+                Object object = viewMap.get(key);
+                if (object.getClass().isAnnotationPresent(WindowDisposed.class)) {
+                    keys.remove();
+                    callAnnotatedMethod(object, PreDestroy.class);
+                    if (log.isLoggable(Level.FINE)) {
+                        log.log(Level.FINE, "Closing window disposed ViewScoped bean " + key);
+                    }
                 }
             }
         }
@@ -754,6 +760,10 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         }
 
         public void beforePhase(final PhaseEvent event) {
+            //force the creation of 'icefacesBeanDestroyRecorder' bean
+            FacesContext context = FacesContext.getCurrentInstance();
+            ELContext elContext = context.getELContext();
+            elContext.getELResolver().getValue(elContext, null, ICEFACES_BEAN_DESTROY_RECORDER);
         }
 
         public PhaseId getPhaseId() {
