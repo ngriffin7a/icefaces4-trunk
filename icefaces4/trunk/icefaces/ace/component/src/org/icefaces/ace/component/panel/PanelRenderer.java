@@ -221,22 +221,29 @@ public class PanelRenderer extends CoreRenderer {
 
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId + "_header", null);
-        writer.writeAttribute("class", Panel.PANEL_TITLEBAR_CLASS, null);
+        writer.writeAttribute("class", Panel.PANEL_TITLEBAR_CLASS + (isHeaderText ? "" : " header-facet"), null);
 
 		if (isHeaderText) {
 			writer.startElement("div", null);
-			writer.writeAttribute("style", "display:table;", null);
+			writer.writeAttribute("class", "header-text-table", null);
 			writer.startElement("div", null);
-			writer.writeAttribute("style", "display:table-row;", null);
+			writer.writeAttribute("class", "header-text-row", null);
 		}
 
         //Title
         writer.startElement("span", null);
-        writer.writeAttribute("class", Panel.PANEL_TITLE_CLASS, null);
+		String padding = "";
 		if (isHeaderText) {
-			String padding = "center".equals(headerAlign) ? "padding-left:6em;" : "";
-			writer.writeAttribute("style", "display:table-cell;width:99%;text-align:"+headerAlign+";"+padding, null);
+			if ("center".equals(headerAlign)) {
+				int numButtons = 0;
+				if (panel.isClosable()) numButtons++;
+				if (panel.isToggleable()) numButtons++;
+				if (panel.getOptionsMenu() != null) numButtons++;
+				if (numButtons > 0) padding = "padding" + (numButtons*2);
+			}
+			writer.writeAttribute("style", "text-align: " + headerAlign + ";", null);
 		}
+        writer.writeAttribute("class", Panel.PANEL_TITLE_CLASS + (isHeaderText ? " header-text-left " + padding : ""), null);
 
         if(header != null) {
             renderChild(context, header);
@@ -247,8 +254,7 @@ public class PanelRenderer extends CoreRenderer {
 
         //Options
         writer.startElement("span", null);
-        writer.writeAttribute("class", Panel.PANEL_ICONS_CLASS, null);
-		if (isHeaderText) writer.writeAttribute("style", "display:table-cell;white-space:nowrap;", null);
+        writer.writeAttribute("class", Panel.PANEL_ICONS_CLASS + (isHeaderText ? " header-text-right" : ""), null);
 
         if(panel.isClosable()) {
             encodeIcon(context, panel, "ui-icon-closethick", clientId + "_closer");
