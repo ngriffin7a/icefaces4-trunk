@@ -27,6 +27,9 @@
     zoom: 1;
     *display:inline;
 }
+.ui-panel .header-facet .ui-panel-title {
+	width: 70%;
+}
 .ui-panel .ui-panel-titlebar-icons {
     display:inline-block;
     vertical-align: middle;
@@ -34,6 +37,9 @@
     /* IE7 inline-block hack */
     zoom: 1;
     *display:inline;
+}
+.ui-panel .header-facet .ui-panel-titlebar-icons {
+	width: 30%;
 }
 .ui-panel .ui-panel-titlebar-icon {
     display:inline-block;
@@ -56,4 +62,28 @@
     margin: 0.5em 0 0;
     padding: 0.5em 1em;
     text-align: left;
+}
+.ui-panel .header-text-table {
+	display: table;
+	width: 100%;
+}
+.ui-panel .header-text-row {
+	display: table-row;
+}
+.ui-panel .header-text-left {
+	display: table-cell;
+	width: 99%;
+}
+.ui-panel .header-text-left.padding2 {
+	padding-left: 2em;
+}
+.ui-panel .header-text-left.padding4 {
+	padding-left: 4em;
+}
+.ui-panel .header-text-left.padding6 {
+	padding-left: 6em;
+}
+.ui-panel .header-text-right {
+	display: table-cell;
+	white-space: nowrap;
 }
