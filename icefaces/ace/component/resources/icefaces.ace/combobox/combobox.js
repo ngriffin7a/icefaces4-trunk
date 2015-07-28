@@ -35,8 +35,7 @@ ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selecte
 	this.element.submitOnEnter = 'disabled';
 	this.element.id = this.id + "_input";
 	this.hidden = this.root.find('input[type=hidden]').get(0);
-	var $downArrowButton = $box.find('span');
-	$element.css('width', $box.width() - $downArrowButton.outerWidth(true) - ($element.outerWidth(true) - $element.width()));
+	var $downArrowButton = $box.find('.ui-combobox-button');
 	this.downArrowButton = $downArrowButton.eq(0);
 	if (ice.ace.jq.browser.msie) {// ie7 fix
 		if (ice.ace.jq.browser.version < 8) {
@@ -75,8 +74,12 @@ ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selecte
 			}
 			self.initialize(self.element, self.update, options, rowClass, highlightedRowClass, selectedRowClass, behaviors); 
 		};
+		var triggerInitClick = function() {
+			triggerInit();
+			self.clientSideModeUpdate(self.noFilter);
+		};
 		$element.on('focus', triggerInit);
-		$downArrowButton.on('click', triggerInit);
+		$downArrowButton.on('click', triggerInitClick);
 	}
 };
 
@@ -85,8 +88,7 @@ ice.ace.ComboBox.setDimensionsOnly = function(id) {
 	var root = ice.ace.jq(ice.ace.escapeClientId(id));
 	var $box = root.find('.ui-combobox-value');
 	var $element = root.find('input');
-	var $downArrowButton = $box.find('span');
-	$element.css('width', $box.width() - $downArrowButton.outerWidth(true) - ($element.outerWidth(true) - $element.width()));
+	var $downArrowButton = $box.find('.ui-combobox-button');
 	instance.element = $element.get(0);
 	instance.hidden = root.find('input[type=hidden]').get(0);
 	instance.cfg = {};

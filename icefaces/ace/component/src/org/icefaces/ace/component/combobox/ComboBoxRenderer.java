@@ -105,11 +105,19 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.writeAttribute("class", "ui-widget ui-corner-all ui-state-default ui-combobox-value", null);
 		writer.writeAttribute("style", "display: inline-block; width: " + width + "px;", null);
 		
+		// table layout start
+		writer.startElement("div", null);
+		writer.writeAttribute("class", "ui-combobox-table", null);
+		writer.startElement("div", null);
+		writer.writeAttribute("class", "ui-combobox-row", null);
+
 		// text input
+		writer.startElement("span", null);
+		writer.writeAttribute("class", "ui-combobox-cell-left", null);
 		writer.startElement("input", null);
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputClientId, null);
-		writer.writeAttribute("style", comboBox.getStyle() + "; display: inline-block; overflow: hidden;", null);
+		writer.writeAttribute("style", comboBox.getStyle(), null);
 		writer.writeAttribute("class", "ui-inputfield ui-state-default ui-corner-left " + getStateStyleClasses(comboBox) + inFieldLabelStyleClass, null);
 		PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, uiComponent) ;
         if (ariaEnabled) {
@@ -145,6 +153,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		String placeholder = comboBox.getPlaceholder();
 		if (placeholder != null) writer.writeAttribute("placeholder", placeholder, null);
 		writer.endElement("input");
+		writer.endElement("span");
 		
 		// hidden input
 		writer.startElement("input", null);
@@ -157,12 +166,19 @@ public class ComboBoxRenderer extends InputRenderer {
 		
 		// down arrow span
 		writer.startElement("span", null);
-		writer.writeAttribute("class", "ui-state-default ui-corner-right", null);
-		writer.writeAttribute("style", "text-align:center;display:block;float:right; width:17px; border-top:0; border-right:0; border-bottom:0;", null);
+		writer.writeAttribute("class", "ui-combobox-cell-right", null);
+		writer.startElement("span", null);
+		writer.writeAttribute("class", "ui-state-default ui-corner-right ui-combobox-button", null);
+		writer.writeAttribute("style", "text-align:center; border-top:0; border-right:0; border-bottom:0;", null);
 		writer.startElement("span", null);
 		writer.writeAttribute("class", "fa fa-chevron-down", null);
 		writer.endElement("span");
 		writer.endElement("span");
+		writer.endElement("span");
+
+		// table layout end
+		writer.endElement("div");
+		writer.endElement("div");
 		
 		writer.endElement("span");
 		

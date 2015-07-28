@@ -31,8 +31,6 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 	this.element = $element.get(0);
 	this.displayedValue = $element.find('span').get(0);
 	this.$downArrowButton = $element.find('.ui-selectmenu-button').eq(0);
-	var $displayedValue = ice.ace.jq(this.displayedValue);
-	$displayedValue.css('width', $element.width() - this.$downArrowButton.outerWidth(true) - ($displayedValue.outerWidth(true) - $displayedValue.width()));
 	if (ice.ace.jq.browser.msie) {// ie7 fix
 		if (ice.ace.jq.browser.version < 8) {
 			if (navigator.userAgent.indexOf("Trident/5") < 0) {
@@ -44,7 +42,7 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 	this.input = $input.get(0);
 	this.input.id = this.id + "_input";
 	var $update = ice.ace.jq(ice.ace.escapeClientId(updateId))
-	$update.css('width', $element.width());
+	$update.css('width', this.root.width());
 	this.update = $update.get(0);
 	this.cfg = cfg;
 	this.effects = effects;
@@ -106,9 +104,6 @@ ice.ace.SelectMenu.setDimensionsOnly = function(id, updateId) {
 	instance.update = $update.get(0);
 	var $downArrowButton = $element.find('.ui-selectmenu-button').eq(0);
 	instance.$downArrowButton = $downArrowButton;
-	var $displayedValue = ice.ace.jq(displayedValue);
-	instance.$displayedValue = $displayedValue;
-	$displayedValue.css('width', $element.width() - $downArrowButton.outerWidth(true) - ($displayedValue.outerWidth(true) - $displayedValue.width()));
 };
 
 ice.ace.SelectMenu.LABEL_CLASS = 'ui-selectmenu-item-label';
