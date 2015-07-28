@@ -23,6 +23,7 @@ import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InitializeHeadAndBodyFacetContainers implements PhaseListener {
@@ -45,12 +46,14 @@ public class InitializeHeadAndBodyFacetContainers implements PhaseListener {
         if (container == null) {
             List<SystemEventListener> postAddToViewListeners = root.getViewListenersForEventClass(PostAddToViewEvent.class);
             if (postAddToViewListeners != null) {
+                postAddToViewListeners = new ArrayList<SystemEventListener>(postAddToViewListeners);
                 for (SystemEventListener l : postAddToViewListeners) {
                     root.unsubscribeFromViewEvent(PostAddToViewEvent.class, l);
                 }
             }
             List<SystemEventListener> preRemoveFromViewListeners = root.getViewListenersForEventClass(PreRemoveFromViewEvent.class);
             if (preRemoveFromViewListeners != null) {
+                preRemoveFromViewListeners = new ArrayList<SystemEventListener>(preRemoveFromViewListeners);
                 for (SystemEventListener l : preRemoveFromViewListeners) {
                     root.unsubscribeFromViewEvent(PreRemoveFromViewEvent.class, l);
                 }
