@@ -17,3 +17,28 @@
 .ui-combobox-value .ui-inputfield {
 border:0; /* this setting is placed here, rather than inline, so it can be easily overriden */
 }
+
+.ui-combobox-table {
+	display: table;
+	width: 100%;
+	border-spacing: 0;
+}
+.ui-combobox-row {
+	display: table-row;
+}
+.ui-combobox-cell-left {
+	display: table-cell;
+	width: 99%;
+	padding-right: 5px;
+}
+.ui-combobox-cell-left .ui-inputfield {
+	overflow: hidden;
+	width: 100%;
+}
+.ui-combobox-cell-right {
+	display: table-cell;
+	white-space: nowrap;
+}
+.ui-combobox-button {
+	padding: 2px;
+}
