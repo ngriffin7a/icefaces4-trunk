@@ -19,7 +19,6 @@ package org.icefaces.ace.component.splitpane;
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Facet;
 import org.icefaces.ace.meta.annotation.Facets;
-import org.icefaces.ace.meta.annotation.JSP;
 import org.icefaces.ace.meta.annotation.Property;
 import org.icefaces.ace.meta.annotation.Implementation;
 import org.icefaces.ace.meta.baseMeta.UIPanelMeta;
@@ -55,9 +54,6 @@ public class SplitPaneMeta extends UIPanelMeta {
 
     @Property(defaultValue="25", tlddoc="An integer value representing the % of the total width assigned to the left pane.")
     private int columnDivider;
-
-    @Property(tlddoc="Page-wide unique identifier.", implementation=Implementation.GENERATE)
-    private String id;
 
     @Property(tlddoc="Sets the CSS style definition to be applied to this component.", implementation=Implementation.GENERATE)
     private String style;
