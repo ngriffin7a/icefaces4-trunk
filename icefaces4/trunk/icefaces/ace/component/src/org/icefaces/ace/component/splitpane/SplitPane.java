@@ -19,7 +19,7 @@ package org.icefaces.ace.component.splitpane;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.util.ClientDescriptor;
 
-public class SplitPane extends SplitPaneBase implements ISplitPane {
+public class SplitPane extends SplitPaneBase {
 
     public static final String SPLITPANE_BASE_CSS = "ui-widget ace-splitpane" ;
     public static final String SPLITPANE_NONSCROLL_CSS = "ui-widget-content ace-splitpane-nonScrollable";
