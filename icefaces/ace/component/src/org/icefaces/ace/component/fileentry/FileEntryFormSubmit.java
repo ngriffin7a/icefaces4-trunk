@@ -18,6 +18,7 @@ package org.icefaces.ace.component.fileentry;
 
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.ScriptWriter;
+import org.icefaces.impl.application.WindowScopeManager;
 import org.icefaces.impl.context.ICEFacesContextFactory;
 import org.icefaces.impl.event.BridgeSetup;
 import org.icefaces.impl.event.FormSubmit;
@@ -146,7 +147,12 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 String progressPushId = "";
                 if (PushUtils.isPushPresent()) {
                     progressResourcePath = PushUtils.getProgressResourcePath(context, form);
-                    progressPushId = PushUtils.getPushId(context, form);
+                    final Map<String, Object> windowMap = WindowScopeManager.lookupWindowScope(context);
+                    progressPushId = (String) windowMap.get(FileEntryFormSubmit.class.getName());
+                    if (progressPushId == null) {
+                        progressPushId = PushUtils.getPushId(context, form);
+                        windowMap.put(FileEntryFormSubmit.class.getName(), progressPushId);
+                    }
                 }
 
                 String script = "ice.ace.fileentry.captureFormOnsubmit('" + form.getClientId() + "', '" + clientId + "', '" +
