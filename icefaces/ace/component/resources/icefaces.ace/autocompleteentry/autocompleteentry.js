@@ -227,9 +227,9 @@ ice.ace.Autocompleter.prototype = {
 			var $root = ice.ace.jq(ice.ace.escapeClientId(this.id + '_update')).children('div:first');
 			this.clientSideModeCfg.data = $root.children();
 			if ($root.hasClass('facet')) {
-				this.clientSideModeCfg.data.children('span.label').each(function(i,e){model.push(e.innerHTML)});
+				this.clientSideModeCfg.data.children('span.value').each(function(i,e){model.push(e.innerHTML)});
 			} else {
-				this.clientSideModeCfg.data.each(function(i,e){model.push(e.innerHTML)});
+				this.clientSideModeCfg.data.children('span.informal').each(function(i,e){model.push(e.innerHTML)});
 			}
 			this.clientSideModeCfg.model = model;
 			//$root.detach();
@@ -674,9 +674,13 @@ ice.ace.Autocompleter.prototype = {
             this.element.value = newValue + value;
         } else {
             this.element.value = value;
+			var $element = ice.ace.jq(this.element);
+			if ($element.data("labelIsInField") && ice.ace.jq.trim($element.val())) {
+				$element.removeClass(this.cfg.inFieldLabelStyleClass);
+				$element.data("labelIsInField", false);
+			}
         }
         this.element.focus();
-
         if (this.options.afterUpdateElement)
             this.options.afterUpdateElement(this.element, selectedElement);
     },

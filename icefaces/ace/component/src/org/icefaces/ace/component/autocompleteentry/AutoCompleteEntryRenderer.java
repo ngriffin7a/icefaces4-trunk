@@ -439,16 +439,27 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
                 while (matches.hasNext() && rowCounter < rows) {
                     item = (SelectItem) matches.next();
                     String itemLabel = item.getLabel();
-                    if (itemLabel == null) {
+					Object itemValue = item.getValue();
+                    if (itemValue != null) {
 						try {
-							itemLabel = getConvertedValueForClient(facesContext, autoCompleteEntry, item.getValue());
+							itemValue = getConvertedValueForClient(facesContext, autoCompleteEntry, itemValue);
 						} catch (Exception e) {
-							itemLabel = item.getValue().toString();
+							itemValue = itemValue.toString();
 						}
                     }
+					itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
 					if (satisfiesFilter(itemLabel, text, filterMatchMode, autoCompleteEntry)) {
-                    sb.append("<div style=\"border: 0;\">").append(itemLabel).append("</div>");
-							rowCounter++;
+						sb.append("<div style=\"border: 0;\">");
+
+						sb.append("<span class=\"informal\">"); // span to display
+						sb.append(itemLabel);
+						sb.append("</span>");
+						sb.append("<span style=\"visibility:hidden;display:none;\">"); // span to select
+						sb.append(itemValue);
+						sb.append("</span>");
+
+						sb.append("</div>");
+						rowCounter++;
 					}
                 }
                 sb.append("</div>");
@@ -495,7 +506,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 				encodeParentAndChildren(facesContext, facet);
 				writer.endElement("span");
 				writer.startElement("span", null); // span to select
-				writer.writeAttribute("class", "label", null);
+				writer.writeAttribute("class", "value", null);
 				writer.writeAttribute("style", "visibility:hidden;display:none;", null);
 				String itemLabel;
 				try {
@@ -520,14 +531,26 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
                 while (matches.hasNext()) {
                     item = (SelectItem) matches.next();
                     String itemLabel = item.getLabel();
-                    if (itemLabel == null) {
+					Object itemValue = item.getValue();
+                    if (itemValue != null) {
 						try {
-							itemLabel = getConvertedValueForClient(facesContext, autoCompleteEntry, item.getValue());
+							itemValue = getConvertedValueForClient(facesContext, autoCompleteEntry, itemValue);
 						} catch (Exception e) {
-							itemLabel = item.getValue().toString();
+							itemValue = itemValue.toString();
 						}
                     }
-                    sb.append("<div style=\"border: 0;\">").append(itemLabel).append("</div>");
+					itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
+
+					sb.append("<div style=\"border: 0;\">");
+
+					sb.append("<span class=\"informal\">"); // span to display
+					sb.append(itemLabel);
+					sb.append("</span>");
+					sb.append("<span class=\"value\" style=\"visibility:hidden;display:none;\">"); // span to select
+					sb.append(itemValue);
+					sb.append("</span>");
+
+					sb.append("</div>");
                 }
 				writer.write(escapeSingleQuote(sb.toString()));
             }
