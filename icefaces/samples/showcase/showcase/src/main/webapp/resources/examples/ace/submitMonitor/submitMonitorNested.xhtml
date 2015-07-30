@@ -33,7 +33,7 @@
     
     <ui:define name="example">
         <h:form id="configForm">
-            <ace:panel header="Configuration Panel">
+            <ace:panel id="configPanel" header="Configuration Panel">
 		        <h:panelGrid columns="2">
                     <h:outputLabel for="renderList" value="Enable List Monitor:"/>
                     <h:selectBooleanCheckbox id="renderList" value="#{submitMonitorNested.renderList}">
