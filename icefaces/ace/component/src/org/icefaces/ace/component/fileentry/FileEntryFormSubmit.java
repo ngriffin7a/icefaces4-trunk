@@ -217,8 +217,10 @@ public class FileEntryFormSubmit implements SystemEventListener {
         public void processEvent(SystemEvent event) throws AbortProcessingException {
             final FacesContext ctx = FacesContext.getCurrentInstance();
             UIComponent f = ctx.getViewRoot().findComponent(id);
-            f.getAttributes().remove(FormSubmit.DISABLE_CAPTURE_SUBMIT);
-            ctx.getApplication().unsubscribeFromEvent(PreRenderViewEvent.class, this);
+            if (f != null) {
+                f.getAttributes().remove(FormSubmit.DISABLE_CAPTURE_SUBMIT);
+                ctx.getApplication().unsubscribeFromEvent(PreRenderViewEvent.class, this);
+            }
         }
 
         public boolean isListenerForSource(Object source) {
