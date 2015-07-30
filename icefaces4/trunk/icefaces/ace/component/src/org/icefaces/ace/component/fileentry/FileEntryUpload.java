@@ -783,10 +783,21 @@ public class FileEntryUpload implements PhaseListener {
                             in.close();
                         }
                     } else if (file != null) {
-                        InputStream in = part.getInputStream();
+                        InputStream in = getInputStream();
                         FileOutputStream out = new FileOutputStream(file);
-                        Util.copyStream(in, out);
-                        partsManualProgress.updateRead(size);
+                        try {
+                            while (true) {
+                                int read = in.read(buffer);
+                                if (read < 0) {
+                                    break;
+                                }
+                                out.write(buffer, 0, read);
+                                partsManualProgress.updateRead(read);
+                            }
+                        }
+                        finally {
+                            in.close();
+                        }
                     }
                 }
             }
