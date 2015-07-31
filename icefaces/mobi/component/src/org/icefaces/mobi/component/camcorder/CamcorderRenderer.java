@@ -69,6 +69,8 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
         Camcorder camcorder = (Camcorder) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = camcorder.getClientId();
+		UIComponent fallbackFacet = camcorder.getFacet("fallback");
+
 		writer.startElement(SPAN_ELEM, camcorder);
 		writer.writeAttribute(ID_ATTR, clientId);
 		writer.writeAttribute(CLASS_ATTR, "mobi-camcorder");
@@ -88,7 +90,8 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
 		writer.writeAttribute(TABINDEX_ATTR, camcorder.getTabindex());
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.camcorder('" + clientId + "', 'callback"+clientId+"', {postURL:'" + camcorder.getPostURL() + "', ";
+		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		String script = launchFailed + "bridgeit.camcorder('" + clientId + "', 'callback"+clientId+"', {postURL:'" + camcorder.getPostURL() + "', ";
         script += "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}";
 		script += "});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
@@ -104,6 +107,21 @@ public class CamcorderRenderer extends BaseInputResourceRenderer {
 		writer.endElement("script");
 		writer.endElement("span");
 		writer.endElement(BUTTON_ELEM);
+
+		if (fallbackFacet != null) {
+			writer.startElement(SPAN_ELEM, camcorder);
+			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
+			writer.writeAttribute(STYLE_ATTR, "display:none;");
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+		}
+		writer.startElement("script", camcorder);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('camcorder') && document.getElementById('"+clientId+"_fallback')) {");
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
+		writer.writeText("}");
+		writer.endElement("script");
 
 		writer.endElement(SPAN_ELEM);
         camcorder.setButtonLabel(oldLabel);

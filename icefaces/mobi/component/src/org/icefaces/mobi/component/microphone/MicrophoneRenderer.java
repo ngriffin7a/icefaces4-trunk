@@ -75,6 +75,7 @@ public class MicrophoneRenderer extends Renderer {
         Microphone microphone = (Microphone) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = microphone.getClientId();
+		UIComponent fallbackFacet = microphone.getFacet("fallback");
 
 		writer.startElement(SPAN_ELEM, microphone);
 		writer.writeAttribute(ID_ATTR, clientId);
@@ -99,7 +100,8 @@ public class MicrophoneRenderer extends Renderer {
 		writer.writeAttribute(TABINDEX_ATTR, microphone.getTabindex());
 		//writeStandardAttributes(writer, microphone, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.microphone('" + clientId + "', 'callback"+clientId+"', {postURL:'" + microphone.getPostURL() + "', "
+		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		String script = launchFailed + "bridgeit.microphone('" + clientId + "', 'callback"+clientId+"', {postURL:'" + microphone.getPostURL() + "', "
         + "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		writer.startElement(SPAN_ELEM, microphone);
@@ -130,6 +132,21 @@ public class MicrophoneRenderer extends Renderer {
 		writer.endElement("span");
 
 		writer.endElement(BUTTON_ELEM);
+
+		if (fallbackFacet != null) {
+			writer.startElement(SPAN_ELEM, microphone);
+			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
+			writer.writeAttribute(STYLE_ATTR, "display:none;");
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+		}
+		writer.startElement("script", microphone);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('microphone') && document.getElementById('"+clientId+"_fallback')) {");
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
+		writer.writeText("}");
+		writer.endElement("script");
 
 		writer.endElement(SPAN_ELEM);
         microphone.setButtonLabel(oldLabel);

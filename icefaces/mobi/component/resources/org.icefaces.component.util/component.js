@@ -416,3 +416,16 @@ ice.mobi.setupImageButton = function(id) {
 	buttonElement.style.border = '0';
 	buttonElement.style.backgroundColor = 'transparent';
 };
+
+ice.mobi.fallback = {};
+ice.mobi.fallback.setupLaunchFailed = function(regularId, fallbackId) {
+	bridgeit.launchFailed = function() {
+		document.getElementById(regularId).style.display = 'none';
+		document.getElementById(fallbackId).style.display = 'inline';
+		bridgeit.launchFailed = function() {};
+	};
+	var checkTimeout = setTimeout(function() {
+		clearTimeout(checkTimeout);
+		bridgeit.launchFailed = function() {};	
+	}, 3500);
+};

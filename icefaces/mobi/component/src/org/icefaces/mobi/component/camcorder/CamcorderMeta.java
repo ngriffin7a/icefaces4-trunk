@@ -85,4 +85,10 @@ public class CamcorderMeta extends UIComponentBaseMeta {
 
     @Property(defaultValue="Camcorder", tlddoc = "The button label. ")
     private String buttonLabel;
+
+    @Facets
+    class FacetsMeta{
+        @Facet(tlddoc = "Allows rendering of nested components that are displayed if the BridgeIt app cannot be used, either due to running on an unsupported platform (such as a desktop OS), or the BridgeIt app not being installed on the device.")
+        UIComponent fallback;
+    }
 }
