@@ -77,6 +77,7 @@ public class FetchContactRenderer extends Renderer {
         FetchContact contactList = (FetchContact) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = contactList.getClientId();
+		UIComponent fallbackFacet = contactList.getFacet("fallback");
 
 		writer.startElement(SPAN_ELEM, contactList);
 		writer.writeAttribute(ID_ATTR, clientId);
@@ -91,7 +92,8 @@ public class FetchContactRenderer extends Renderer {
 		writer.writeAttribute(TABINDEX_ATTR, contactList.getTabindex());
 		//writeStandardAttributes(writer, contactList, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String script = "bridgeit.fetchContact('" + clientId + "', '', {postURL:'" + contactList.getPostURL() + "', "
+		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		String script = launchFailed + "bridgeit.fetchContact('" + clientId + "', '', {postURL:'" + contactList.getPostURL() + "', "
 			+ "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) + "'}, "
 			+ "fields: '" +contactList.getFields() + "'});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
@@ -114,6 +116,21 @@ public class FetchContactRenderer extends Renderer {
 		writer.endElement("span");
 
 		writer.endElement(BUTTON_ELEM);
+
+		if (fallbackFacet != null) {
+			writer.startElement(SPAN_ELEM, contactList);
+			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
+			writer.writeAttribute(STYLE_ATTR, "display:none;");
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(SPAN_ELEM);
+		}
+		writer.startElement("script", contactList);
+		writer.writeAttribute("type", "text/javascript");
+		writer.writeText("if (!bridgeit.isSupportedPlatform('fetchContacts') && document.getElementById('"+clientId+"_fallback')) {");
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
+		writer.writeText("}");
+		writer.endElement("script");
 
 		writer.endElement(SPAN_ELEM);
     }

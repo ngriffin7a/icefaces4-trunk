@@ -42,6 +42,7 @@ public class GeoTrackRenderer extends CoreRenderer {
         GeoTrack geotrack = (GeoTrack) uiComponent;
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = geotrack.getClientId();
+		UIComponent fallbackFacet = geotrack.getFacet("fallback");
 
 		writer.startElement(HTML.SPAN_ELEM, geotrack);
 		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
@@ -57,7 +58,8 @@ public class GeoTrackRenderer extends CoreRenderer {
 		String styleClass = geotrack.getStyleClass();
 		if (styleClass != null) writer.writeAttribute(HTML.CLASS_ATTR, styleClass, null);
 		writer.writeAttribute(HTML.TABINDEX_ATTR, geotrack.getTabindex(), null);
-		String script = "bridgeit.geoTrack('" + clientId + "', '', {postURL:'" + GeoTrackResourceHandler.getPostURL();
+		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		String script = launchFailed + "bridgeit.geoTrack('" + clientId + "', '', {postURL:'" + GeoTrackResourceHandler.getPostURL();
 		script += "&__id=" + storeExpression(facesContext, geotrack) + "', ";
 		String strategy = geotrack.getStrategy();
         script += "strategy:'" + strategy + "', duration:" + ("stop".equalsIgnoreCase(strategy) ? "0" : geotrack.getDuration());
@@ -78,6 +80,21 @@ public class GeoTrackRenderer extends CoreRenderer {
 		writer.endElement("span");
 
 		writer.endElement(HTML.BUTTON_ELEM);
+
+		if (fallbackFacet != null) {
+			writer.startElement(HTML.SPAN_ELEM, geotrack);
+			writer.writeAttribute(HTML.ID_ATTR, clientId + "_fallback", null);
+			writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(HTML.SPAN_ELEM);
+		}
+		writer.startElement("script", geotrack);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.writeText("if (!bridgeit.isSupportedPlatform('geospy') && document.getElementById('"+clientId+"_fallback')) {", null);
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';", null);
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';", null);
+		writer.writeText("}", null);
+		writer.endElement("script");
 
 		writer.endElement(HTML.SPAN_ELEM);
     }

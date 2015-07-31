@@ -74,4 +74,10 @@ public class SmsMeta extends UIComponentBaseMeta {
 
     @Property(required=Required.yes, tlddoc="The client-side id of the input or textarea element that contains the message to send. It's also possible to specify a component id of ace:textEntry, ace:textAreaEntry, ace:autoCompleteEntry, ace:comboBox, and ace:maskedEntry components. This attribute takes precedence over the 'message' attribute. It's recommended to use this client-side approach.")
     private String messageInputId;
+
+    @Facets
+    class FacetsMeta{
+        @Facet(tlddoc = "Allows rendering of nested components that are displayed if the BridgeIt app cannot be used, either due to running on an unsupported platform (such as a desktop OS), or the BridgeIt app not being installed on the device.")
+        UIComponent fallback;
+    }
 }

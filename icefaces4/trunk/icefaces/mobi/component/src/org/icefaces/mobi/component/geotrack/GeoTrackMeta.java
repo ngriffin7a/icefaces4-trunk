@@ -73,4 +73,10 @@ public class GeoTrackMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc="Custom parameters that will be echoed by Bridgeit whenever it sends geotracking data to the server. These parameters can be used to identify individual users, pages, etc. The parameters must be in correct JSON format (without the opening/closing brackets), and the names should always start with the underscore character (e.g. \"_viewId: '/geotracking.jsf', _userId: '001'\").", defaultValue="")
     private String parameters;
+
+    @Facets
+    class FacetsMeta{
+        @Facet(tlddoc = "Allows rendering of nested components that are displayed if the BridgeIt app cannot be used, either due to running on an unsupported platform (such as a desktop OS), or the BridgeIt app not being installed on the device.")
+        UIComponent fallback;
+    }
 }

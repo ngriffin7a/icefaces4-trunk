@@ -44,6 +44,8 @@ public class SmsRenderer extends CoreRenderer {
         Sms sms = (Sms) uiComponent;
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = sms.getClientId();
+		UIComponent fallbackFacet = sms.getFacet("fallback");
+
 		writer.startElement(HTML.SPAN_ELEM, sms);
 		writer.writeAttribute(HTML.ID_ATTR, clientId, null);
 		writer.writeAttribute(HTML.CLASS_ATTR, "mobi-sms", null);
@@ -61,7 +63,8 @@ public class SmsRenderer extends CoreRenderer {
             if (sms.isDisabled()) writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
 			String number = determineNumber(sms);
 			String message = determineMessage(sms);
-		    String script = "bridgeit.sms(" + number + ", " + message + ");";
+			String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		    String script = launchFailed + "bridgeit.sms(" + number + ", " + message + ");";
 		    writer.writeAttribute(HTML.ONCLICK_ATTR, script, null);
         } catch (Exception e){
             writer.writeAttribute(HTML.DISABLED_ATTR, "disabled", null);
@@ -82,6 +85,21 @@ public class SmsRenderer extends CoreRenderer {
 		writer.endElement("span");
 
 		writer.endElement(HTML.BUTTON_ELEM);
+
+		if (fallbackFacet != null) {
+			writer.startElement(HTML.SPAN_ELEM, sms);
+			writer.writeAttribute(HTML.ID_ATTR, clientId + "_fallback", null);
+			writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", null);
+			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
+			writer.endElement(HTML.SPAN_ELEM);
+		}
+		writer.startElement("script", sms);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.writeText("if (!bridgeit.isSupportedPlatform('sms') && document.getElementById('"+clientId+"_fallback')) {", null);
+		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';", null);
+		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';", null);
+		writer.writeText("}", null);
+		writer.endElement("script");
 
 		writer.endElement(HTML.SPAN_ELEM);
     }
