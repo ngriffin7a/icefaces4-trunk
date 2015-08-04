@@ -105,8 +105,17 @@ ice.ace.splitpane = {
 							var rightInnerHeight = $rightNode.height();
 							if (leftOuterHeight > rightOuterHeight) {
 								rtNode.style.height = "" + (leftOuterHeight - (rightOuterHeight - rightInnerHeight)) + "px";
-							} else {
+							} else if (rightOuterHeight > leftOuterHeight) {
 								leftNode.style.height = "" + (rightOuterHeight - (leftOuterHeight - leftInnerHeight)) + "px";
+							} else {
+								var leftHeight = height - leftNode.offsetTop;
+								var rightHeight = height - rtNode.offsetTop;
+								if( leftHeight > 0 ){
+									leftNode.style.height = "" + leftHeight + "px";
+								}
+								if( rightHeight > 0 ){
+									rtNode.style.height = "" + rightHeight + "px";
+								}
 							}
 						}
                     }
