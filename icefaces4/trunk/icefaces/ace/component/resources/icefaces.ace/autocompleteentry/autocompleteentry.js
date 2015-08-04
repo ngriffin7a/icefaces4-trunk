@@ -49,6 +49,7 @@ ice.ace.Autocompleter = function(id, updateId, rowClass, selectedRowClass, delay
 		this.initialize(this.element, this.update, options, rowClass, selectedRowClass, behaviors);
 	} else {
         if (ice.ace.jq.trim($element.val()) == "" && this.cfg.inFieldLabel) {
+			$element.attr({name: ''});
             $element.val(this.cfg.inFieldLabel);
             $element.addClass(this.cfg.inFieldLabelStyleClass);
             $element.data("labelIsInField", true);
@@ -58,6 +59,7 @@ ice.ace.Autocompleter = function(id, updateId, rowClass, selectedRowClass, delay
 			$element.off('focus');
 			if ($element.data("labelIsInField")) {
 				$element.val("");
+				$element.attr({name: $element.attr('id')});
 				$element.removeClass(self.cfg.inFieldLabelStyleClass);
 				$element.data("labelIsInField", false);
 				self.cfg.labelIsInField = false;
@@ -527,6 +529,7 @@ ice.ace.Autocompleter.prototype = {
 			}
 		}
         if (ice.ace.jq.trim(input.val()) == "" && this.cfg.inFieldLabel) {
+			input.attr({name: ''});
             input.val(this.cfg.inFieldLabel);
             input.addClass(this.cfg.inFieldLabelStyleClass);
             input.data("labelIsInField", true);
@@ -550,6 +553,7 @@ ice.ace.Autocompleter.prototype = {
         var input = ice.ace.jq(this.element);
         if (input.data("labelIsInField")) {
             input.val("");
+			input.attr({name: this.element.id});
             input.removeClass(this.cfg.inFieldLabelStyleClass);
             input.data("labelIsInField", false);
         }
@@ -676,6 +680,7 @@ ice.ace.Autocompleter.prototype = {
             this.element.value = value;
 			var $element = ice.ace.jq(this.element);
 			if ($element.data("labelIsInField") && ice.ace.jq.trim($element.val())) {
+				$element.attr({name: this.element.id});
 				$element.removeClass(this.cfg.inFieldLabelStyleClass);
 				$element.data("labelIsInField", false);
 			}
