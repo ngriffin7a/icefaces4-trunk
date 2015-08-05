@@ -31,7 +31,7 @@ import org.icefaces.demo.emporium.util.TimestampUtil;
 @ManagedBean(name=UserCounter.BEAN_NAME,eager=true)
 @ApplicationScoped
 public class UserCounter implements Serializable {
-	private static final long serialVersionUID = -6531575318215737454L;
+	private static final long serialVersionUID = -7145606829917954969L;
 
 	private static final Logger log = Logger.getLogger(UserCounter.class.getName());
 	
@@ -41,6 +41,7 @@ public class UserCounter implements Serializable {
 	
 	private int totalSessions = 0;
 	private int currentSessions = 0;
+	private int highestConcurrentSessions = 0;
 	private String startTimestamp;
 	
 	@PostConstruct
@@ -54,7 +55,8 @@ public class UserCounter implements Serializable {
 	public void cleanupUserCounter() {
 		log.info("Shutting down user counter. There are currently "
 				+ currentSessions
-				+ " active visitors. The total visitor count was "
+				+ " active visitors, with the highest concurrent being "
+				+ highestConcurrentSessions + ". The total visitor count was "
 				+ totalSessions + " sessions since " + startTimestamp
 				+ " (current time is " + TimestampUtil.datestamp() + ").");
 	}
@@ -63,7 +65,11 @@ public class UserCounter implements Serializable {
 		totalSessions++;
 		currentSessions++;
 		
-		log.info("User Counter increased: " + totalSessions + " total, " + currentSessions + " current since " + startTimestamp);
+		if (currentSessions > highestConcurrentSessions) {
+			highestConcurrentSessions = new Integer(currentSessions);
+		}
+		
+		log.info("User Counter increased: " + totalSessions + " total, " + currentSessions + " current (" + highestConcurrentSessions + " highest concurrent) since " + startTimestamp);
 		
 		return totalSessions;
 	}
@@ -71,7 +77,7 @@ public class UserCounter implements Serializable {
 	public int cleanupUser() {
 		currentSessions--;
 		
-		log.info("User Counter decreased: " + totalSessions + " total, " + currentSessions + " current since " + startTimestamp);
+		log.info("User Counter decreased: " + totalSessions + " total, " + currentSessions + " current (" + highestConcurrentSessions + " highest concurrent) since " + startTimestamp);
 		
 		return currentSessions;
 	}
