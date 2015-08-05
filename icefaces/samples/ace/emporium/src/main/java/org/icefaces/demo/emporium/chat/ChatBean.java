@@ -82,7 +82,6 @@ public class ChatBean implements Serializable {
 	
 	@Override
 	public void finalize() {
-		log.info("ChatBean finalize for " + getName() + ", going to try to cleanup");
 		cleanupChatBean();
 	}
 	
