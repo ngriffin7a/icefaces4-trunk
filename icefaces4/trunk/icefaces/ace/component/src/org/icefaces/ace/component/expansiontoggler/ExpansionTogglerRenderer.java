@@ -48,6 +48,7 @@ public class ExpansionTogglerRenderer extends CoreRenderer {
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		String togglerClientId = component.getClientId(context);
+		togglerClientId = togglerClientId != null ? togglerClientId.replace(".", "-") : "";
         RowState rowState = (RowState) context.getExternalContext().getRequestMap().get("rowState");
         boolean expanded = rowState.isExpanded();
         boolean expandable  = rowState.isExpandable();
