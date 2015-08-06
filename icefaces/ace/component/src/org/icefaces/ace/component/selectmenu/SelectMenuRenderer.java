@@ -95,7 +95,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		// root
         writer.startElement("div", uiComponent);
         writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("class", "ui-selectmenu ui-widget " + selectMenu.getStyleClass(), null);
+		writer.writeAttribute("class", "ui-selectmenu ui-widget " + getStateStyleClasses(selectMenu) + " " + selectMenu.getStyleClass(), null);
 		String dir = selectMenu.getDir();
 		if (dir != null) writer.writeAttribute("data-dir", dir, null);
 		String lang = selectMenu.getLang();
@@ -131,7 +131,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		// text span
 		writer.startElement("span", null);
 		writer.writeAttribute("style", selectMenu.getStyle(), null);
-		writer.writeAttribute("class", "ui-inputfield ui-widget-content ui-corner-left " + getStateStyleClasses(selectMenu) + inFieldLabelStyleClass, null);
+		writer.writeAttribute("class", "ui-inputfield ui-widget-content ui-corner-left " + inFieldLabelStyleClass, null);
 		if (dir != null) writer.writeAttribute("dir", dir, null);
 		writer.endElement("span");
 		
