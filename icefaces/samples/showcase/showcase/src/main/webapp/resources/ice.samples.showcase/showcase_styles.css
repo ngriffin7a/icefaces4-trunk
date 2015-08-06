@@ -512,8 +512,22 @@ div.ui-widget.ui-widget-content.wijmo-wijmenu.ui-corner-all.ui-helper-clearfix.w
 	margin:0;
 }
 
-.required-styling-demo .ui-combobox-value .ui-inputfield,
-.required-styling-demo .ui-selectmenu-value .ui-inputfield {
+.required-styling-demo .ui-combobox-value.ui-state-required,
+.required-styling-demo .ui-selectmenu-value.ui-state-optional {
+	border-width: 2px;
+	margin:1px;
+}
+
+.required-styling-demo .ui-combobox-value.ui-state-required .ui-inputfield,
+.required-styling-demo .ui-combobox-value.ui-state-optional .ui-inputfield,
+.required-styling-demo .ui-selectmenu-value.ui-state-required .ui-inputfield,
+.required-styling-demo .ui-selectmenu-value.ui-state-optional .ui-inputfield {
+	border-width: 0;
+	margin:0;
+}
+
+.required-styling-demo .ui-combobox-value,
+.required-styling-demo .ui-selectmenu-value {
 	margin: 0;
 	border: 2px solid;
 }

@@ -33,7 +33,8 @@
 	color: #000099;
 }
 
-.required-styling-demo .blueRS .ui-inputfield.ui-state-optional {
+.required-styling-demo .blueRS .ui-inputfield.ui-state-optional,
+.required-styling-demo .blueRS .ui-state-optional {
     border-color: #9999cc;
 }
 
@@ -41,12 +42,20 @@
     border-color: #ccccff;
 }
 
-.required-styling-demo .blueRS .ui-inputfield.ui-state-required {
+.required-styling-demo .blueRS .ui-inputfield.ui-state-required,
+.required-styling-demo .blueRS .ui-state-required {
     border-color: #0000cc;
 }
 
 .required-styling-demo .blueRS .ui-state-required.ui-state-error {
     border-color: #0000ff;
+	background-color: #ccccff;
+	background-image: none; /* prevent theme background */
+	color: #000099;
+}
+
+.required-styling-demo .blueRS .ui-combobox-value.ui-state-required.ui-state-error .ui-inputfield,
+.required-styling-demo .blueRS .ui-selectmenu-value.ui-state-required.ui-state-error .ui-inputfield {
 	background-color: #ccccff;
 	background-image: none; /* prevent theme background */
 	color: #000099;
@@ -71,7 +80,8 @@
 	color: #990000;
 }
 
-.required-styling-demo .redRS .ui-inputfield.ui-state-optional {
+.required-styling-demo .redRS .ui-inputfield.ui-state-optional,
+.required-styling-demo .redRS .ui-state-optional {
     border-color: #cc9999;
 }
 
@@ -79,12 +89,20 @@
     border-color: #ffcccc;
 }
 
-.required-styling-demo .redRS .ui-inputfield.ui-state-required {
+.required-styling-demo .redRS .ui-inputfield.ui-state-required,
+.required-styling-demo .redRS .ui-state-required {
     border-color: #cc0000;
 }
 
 .required-styling-demo .redRS .ui-state-required.ui-state-error {
     border-color: #ff0000;
+	background-color: #ffcccc;
+	background-image: none; /* prevent theme background */
+	color: #990000;
+}
+
+.required-styling-demo .redRS .ui-combobox-value.ui-state-required.ui-state-error .ui-inputfield,
+.required-styling-demo .redRS .ui-selectmenu-value.ui-state-required.ui-state-error .ui-inputfield {
 	background-color: #ffcccc;
 	background-image: none; /* prevent theme background */
 	color: #990000;
@@ -109,7 +127,8 @@
 	color: #009900;
 }
 
-.required-styling-demo .greenRS .ui-inputfield.ui-state-optional {
+.required-styling-demo .greenRS .ui-inputfield.ui-state-optional,
+.required-styling-demo .greenRS .ui-state-optional {
     border-color: #99cc99;
 }
 
@@ -117,12 +136,20 @@
     border-color: #ccffcc;
 }
 
-.required-styling-demo .greenRS .ui-inputfield.ui-state-required {
+.required-styling-demo .greenRS .ui-inputfield.ui-state-required,
+.required-styling-demo .greenRS .ui-state-required {
     border-color: #00cc00;
 }
 
 .required-styling-demo .greenRS .ui-state-required.ui-state-error {
     border-color: #00ff00;
+	background-color: #ccffcc;
+	background-image: none; /* prevent theme background */
+	color: #009900;
+}
+
+.required-styling-demo .greenRS .ui-combobox-value.ui-state-required.ui-state-error .ui-inputfield,
+.required-styling-demo .greenRS .ui-selectmenu-value.ui-state-required.ui-state-error .ui-inputfield {
 	background-color: #ccffcc;
 	background-image: none; /* prevent theme background */
 	color: #009900;
