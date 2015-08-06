@@ -96,13 +96,13 @@ public class ComboBoxRenderer extends InputRenderer {
 		// root
 		writer.startElement("div", uiComponent);
 		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("class", "ui-combobox " + getStateStyleClasses(comboBox) + " " + comboBox.getStyleClass(), null);
+		writer.writeAttribute("class", "ui-combobox " + comboBox.getStyleClass(), null);
 
 		writeLabelAndIndicatorBefore(labelAttributes);
 		
 		// value field
 		writer.startElement("span", null);
-		writer.writeAttribute("class", "ui-widget ui-corner-all ui-state-default ui-combobox-value", null);
+		writer.writeAttribute("class", "ui-widget ui-corner-all ui-state-default ui-combobox-value " + getStateStyleClasses(comboBox), null);
 		writer.writeAttribute("style", "display: inline-block; width: " + width + "px;", null);
 		
 		// table layout start

@@ -95,7 +95,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		// root
         writer.startElement("div", uiComponent);
         writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("class", "ui-selectmenu ui-widget " + getStateStyleClasses(selectMenu) + " " + selectMenu.getStyleClass(), null);
+		writer.writeAttribute("class", "ui-selectmenu ui-widget " + selectMenu.getStyleClass(), null);
 		String dir = selectMenu.getDir();
 		if (dir != null) writer.writeAttribute("data-dir", dir, null);
 		String lang = selectMenu.getLang();
@@ -111,7 +111,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		boolean readonly = selectMenu.isReadonly();
 		String disabledClass = "";
 		if (disabled) disabledClass = " ui-state-disabled ";
-		writer.writeAttribute("class", "ui-widget-content ui-corner-all ui-selectmenu-value " + disabledClass, null);
+		writer.writeAttribute("class", "ui-widget-content ui-corner-all ui-selectmenu-value " + getStateStyleClasses(selectMenu) + " " + disabledClass, null);
         writer.writeAttribute("style", "display: inline-block; width: " + width + "px;", null);
         writer.writeAttribute("id", clientId + "_link", null);
 		String tabindex = selectMenu.getTabindex();
