@@ -96,7 +96,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		// root
 		writer.startElement("div", uiComponent);
 		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("class", "ui-combobox " + comboBox.getStyleClass(), null);
+		writer.writeAttribute("class", "ui-combobox " + getStateStyleClasses(comboBox) + " " + comboBox.getStyleClass(), null);
 
 		writeLabelAndIndicatorBefore(labelAttributes);
 		
@@ -118,7 +118,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", inputClientId, null);
 		writer.writeAttribute("style", comboBox.getStyle(), null);
-		writer.writeAttribute("class", "ui-inputfield ui-state-default ui-corner-left " + getStateStyleClasses(comboBox) + inFieldLabelStyleClass, null);
+		writer.writeAttribute("class", "ui-inputfield ui-state-default ui-corner-left " + inFieldLabelStyleClass, null);
 		PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, uiComponent) ;
         if (ariaEnabled) {
 			writer.writeAttribute("role", "textbox", null);

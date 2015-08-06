@@ -42,7 +42,7 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 	this.input = $input.get(0);
 	this.input.id = this.id + "_input";
 	var $update = ice.ace.jq(ice.ace.escapeClientId(updateId))
-	$update.css('width', this.root.width());
+	$update.css('width', $element.outerWidth());
 	this.update = $update.get(0);
 	this.cfg = cfg;
 	this.effects = effects;
@@ -248,6 +248,7 @@ ice.ace.SelectMenu.prototype = {
 		var element = this.element;
 		var update = this.update;
 		if (update["style"] && (!update.style.position || update.style.position == 'absolute')) {
+			ice.ace.jq(update).css('width', ice.ace.jq(element).outerWidth());
 			update.style.position = 'absolute';
 			var jqElement = ice.ace.jq(element);
 			var jqUpdate = ice.ace.jq(update);
