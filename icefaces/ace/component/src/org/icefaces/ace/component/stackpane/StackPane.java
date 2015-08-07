@@ -31,8 +31,8 @@ import java.util.logging.Logger;
 public class StackPane extends StackPaneBase {
     private static final Logger logger = Logger.getLogger(StackPane.class.toString());
 
-    public static final String CONTENT_SELECTED = "ace-contentpane ";
-    public static final String CONTENT_HIDDEN = "ace-contentpane-hidden ";
+    public static final String CONTENT_SELECTED = "ace-stackpane ";
+    public static final String CONTENT_HIDDEN = "ace-stackpane-hidden ";
     private Runnable createChildren;
 
     public void processDecodes(FacesContext context) {
