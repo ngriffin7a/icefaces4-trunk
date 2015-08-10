@@ -33,6 +33,7 @@ public class StackPane extends StackPaneBase {
 
     public static final String CONTENT_SELECTED = "ace-stackpane ";
     public static final String CONTENT_HIDDEN = "ace-stackpane-hidden ";
+    private static final List<UIComponent> NO_CHILDREN = new LinkedList<UIComponent>();
     private Runnable createChildren;
 
     public void processDecodes(FacesContext context) {
@@ -85,6 +86,10 @@ public class StackPane extends StackPaneBase {
         }
 
         return false;
+    }
+
+    public Iterator<UIComponent> getFacetsAndChildren() {
+        return isSelected() ? super.getFacetsAndChildren() : NO_CHILDREN.iterator();
     }
 
     public boolean isSelected() {
