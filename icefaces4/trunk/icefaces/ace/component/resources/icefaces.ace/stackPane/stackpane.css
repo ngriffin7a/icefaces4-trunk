@@ -14,12 +14,12 @@
  * governing permissions and limitations under the License.
  */
 
-.ace-contentpane {
+.ace-stackpane {
     opacity:1;
     visibility: visible;
     display: block;
 }
-.ace-contentpane-hidden {
+.ace-stacktpane-hidden {
     opacity: 0;
     visibility: hidden;
     height:0;
