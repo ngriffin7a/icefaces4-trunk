@@ -89,7 +89,7 @@ public class StackPane extends StackPaneBase {
     }
 
     public Iterator<UIComponent> getFacetsAndChildren() {
-        return isSelected() ? super.getFacetsAndChildren() : NO_CHILDREN.iterator();
+        return FacesContext.getCurrentInstance().getCurrentPhaseId() == PhaseId.RENDER_RESPONSE ? super.getFacetsAndChildren() : NO_CHILDREN.iterator();
     }
 
     public boolean isSelected() {
