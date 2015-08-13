@@ -28,6 +28,7 @@ import org.icefaces.samples.showcase.example.ace.buttonGroup.ButtonGroupBean;
 import org.icefaces.samples.showcase.example.ace.chart.*;
 import org.icefaces.samples.showcase.example.ace.checkboxButton.CheckboxButtonBean;
 import org.icefaces.samples.showcase.example.ace.checkboxButton.CheckboxButtonCustomBean;
+import org.icefaces.samples.showcase.example.ace.checkboxButtons.CheckboxButtonsBean;
 import org.icefaces.samples.showcase.example.ace.combobox.*;
 import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogBean;
 import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogEffectBean;
@@ -168,6 +169,7 @@ import java.util.ArrayList;
 
                 @MenuLink(title = "menu.ace.buttonGroup.title", exampleBeanName = ButtonGroupBean.BEAN_NAME, group=4, beanClass=ButtonGroupBean.class),
                 @MenuLink(title = "menu.ace.checkboxButton.title", exampleBeanName = CheckboxButtonBean.BEAN_NAME, group=4, beanClass=CheckboxButtonBean.class),
+                @MenuLink(title = "menu.ace.checkboxButtons.title", exampleBeanName = CheckboxButtonsBean.BEAN_NAME, group=4, beanClass=CheckboxButtonsBean.class),
                 @MenuLink(title = "menu.ace.linkButton.title", exampleBeanName = LinkButtonBean.BEAN_NAME, group=4, beanClass=LinkButtonBean.class),
                 @MenuLink(title = "menu.ace.menuButton.title", exampleBeanName = MenuButtonBean.BEAN_NAME, group=4, beanClass=MenuButtonBean.class),
                 @MenuLink(title = "menu.ace.pushButton.title", exampleBeanName = PushButtonBean.BEAN_NAME, group=4, beanClass=PushButtonBean.class),
@@ -319,6 +321,8 @@ import java.util.ArrayList;
 
                 @SearchSelectItem(labelTag = "menu.ace.checkboxButton.title", labelExample = "menu.ace.checkboxButton.subMenu.main", value = CheckboxButtonBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.checkboxButton.title", labelExample = "menu.ace.checkboxButton.subMenu.custom", value = CheckboxButtonCustomBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.checkboxButtons.title", labelExample = "menu.ace.checkboxButtons.subMenu.main", value = CheckboxButtonsBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.linkButton.title", labelExample = "menu.ace.linkButton.subMenu.main", value = LinkButtonBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.linkButton.altSearch1", labelExample = "menu.ace.linkButton.title", value = LinkButtonBean.BEAN_NAME),
