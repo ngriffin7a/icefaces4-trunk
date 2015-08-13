@@ -88,10 +88,6 @@ public class StackPane extends StackPaneBase {
         return false;
     }
 
-    public Iterator<UIComponent> getFacetsAndChildren() {
-        return isSelected() || FacesContext.getCurrentInstance().getCurrentPhaseId() == PhaseId.RENDER_RESPONSE ? super.getFacetsAndChildren() : NO_CHILDREN.iterator();
-    }
-
     public boolean isSelected() {
         UIComponent parent = this.getParent();
         while (!(parent instanceof PanelStack) && parent != null) {
