@@ -252,12 +252,10 @@
 						focusText = input.val();
 						var pos = checkVal();
 						writeBuffer();
-						setTimeout(function() {
-							if (pos == mask.length)
-								input.caret(0, pos);
-							else
-								input.caret(pos);
-						}, 0);
+						if (pos == mask.length)
+							input.caret(0, pos);
+						else
+							input.caret(pos);
 					})
 					.bind("blur.mask", function() {
 						checkVal();
