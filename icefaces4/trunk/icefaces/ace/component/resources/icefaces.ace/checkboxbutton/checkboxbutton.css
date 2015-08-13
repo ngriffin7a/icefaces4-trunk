@@ -44,3 +44,7 @@
 .ice-checkboxbutton-unchecked .ui-label {
 	opacity: 0.25;
 }
+
+.ice-ace-checkboxbuttons .ice-checkboxbutton {
+	margin-right: 10px;
+}

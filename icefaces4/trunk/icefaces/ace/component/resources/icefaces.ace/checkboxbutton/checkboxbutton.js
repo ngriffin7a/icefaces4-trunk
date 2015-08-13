@@ -41,8 +41,15 @@ ice.ace.checkboxbutton = function(clientId, options) {
 
     if (!options.disabled)
         ice.ace.jq(this.jqId).on("click", function () {
-            ice.ace.checkboxbutton.toggleOthers(self.options, self.id);
-            self.toggleCheckbox(true);
+			if (self.options.checkboxButtons) {
+				if (self.options.mutuallyExclusive) {
+					ice.ace.checkboxbutton.toggleOthers(self.options, self.id);
+				}
+				self.toggleCheckbox(true);
+			} else {
+				ice.ace.checkboxbutton.toggleOthers(self.options, self.id);
+				self.toggleCheckbox(true);
+			}
         });
 
     if (options.ariaEnabled)
@@ -70,11 +77,22 @@ ice.ace.checkboxbutton.register = function(clientId, groupId) {
 }
 
 ice.ace.checkboxbutton.prototype.isChecked = function() {
-    return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
+    if (this.options.checkboxButtons) {
+        return (!!ice.ace.jq(this.fieldSelector).attr('name'));
+    } else {
+		return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
+	}
 };
 
 ice.ace.checkboxbutton.prototype.setChecked = function(bool) {
-    ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
+    if (this.options.checkboxButtons) {
+		if (!ice.ace.jq(this.fieldSelector).attr('name'))
+			ice.ace.jq(this.fieldSelector).attr('name', this.options.checkboxButtons);
+		else 
+			ice.ace.jq(this.fieldSelector).attr('name', '');
+    } else {
+		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
+	}
 };
 
 ice.ace.checkboxbutton.prototype.addStateCSSClasses = function(state) {
@@ -127,16 +145,29 @@ ice.ace.checkboxbutton.prototype.toggleCheckbox = function (activeButton) {
         ice.ace.jq(this.innerSpanSelector).attr("aria-checked", newValue);
     }
 
-    if (this.options.behaviors && this.options.behaviors.action) {
-		if (activeButton) {
-            ice.setFocus(this.id + '_button');
-            ice.ace.ab(ice.ace.extendAjaxArgs(
-                this.options.behaviors.action,
-                {params: this.options.uiParams}
-            ));
-        } else {
-            ice.setFocus('');
-        }
+    if (this.options.behaviors) {
+		if (this.options.behaviors.action) {
+			if (activeButton) {
+				ice.setFocus(this.id + '_button');
+				ice.ace.ab(ice.ace.extendAjaxArgs(
+					this.options.behaviors.action,
+					{params: this.options.uiParams}
+				));
+			} else {
+				ice.setFocus('');
+			}
+		}
+		if (this.options.behaviors.change) {
+			if (activeButton) {
+				ice.setFocus(this.id + '_button');
+				ice.ace.ab(ice.ace.extendAjaxArgs(
+					this.options.behaviors.change,
+					{params: this.options.uiParams}
+				));
+			} else {
+				ice.setFocus('');
+			}
+		}
     }
 };
 
