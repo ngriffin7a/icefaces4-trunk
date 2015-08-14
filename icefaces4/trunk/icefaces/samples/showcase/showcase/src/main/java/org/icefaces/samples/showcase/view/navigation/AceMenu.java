@@ -402,7 +402,9 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.panel.title", labelExample = "menu.ace.panel.subMenu.menu", value = PanelMenu.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.panelStack.title", labelExample = "menu.ace.panelStack.subMenu.main", value = PanelStackBean.BEAN_NAME),
-                @SearchSelectItem(labelTag = "menu.ace.panelStack.title", labelExample = "menu.ace.panelStack.subMenu.dataTable", value = PanelStackDataTable.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.panelStack.title", labelExample = "menu.ace.panelStack.subMenu.client", value = PanelStackClient.BEAN_NAME),
+				@SearchSelectItem(labelTag = "menu.ace.panelStack.title", labelExample = "menu.ace.panelStack.subMenu.dataTable", value = PanelStackDataTable.BEAN_NAME),
+				@SearchSelectItem(labelTag = "menu.ace.panelStack.title", labelExample = "menu.ace.panelStack.subMenu.facelet", value = PanelStackFacelet.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.splitpane.title", labelExample = "menu.ace.splitpane.subMenu.main", value = SplitPaneBean.BEAN_NAME),
 

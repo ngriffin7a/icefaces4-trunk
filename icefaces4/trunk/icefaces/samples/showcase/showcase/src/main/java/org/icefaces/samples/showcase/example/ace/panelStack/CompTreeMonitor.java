@@ -30,7 +30,7 @@ import org.icefaces.ace.util.ComponentUtils;
 public class CompTreeMonitor implements java.io.Serializable {
 
     public int getTreeSize() {
-        String stackId1= "frm1:tbl1:0:stack1";
+        String stackId1= "panelStackForm:stack1";
 
         FacesContext context = FacesContext.getCurrentInstance();
         UIViewRoot root = context.getViewRoot();
@@ -39,15 +39,13 @@ public class CompTreeMonitor implements java.io.Serializable {
             stack = ComponentUtils.findComponent(root, "stack1");
         }
         if (null==stack) {
-         //   System.out.println(" even core comps did not find stack!??!");
-            return -1;
+             return -1;
         }
         return countChildComponents(stack);
     }
     private static int countChildComponents(UIComponent uic) {
         int children = 1;
-  //      System.out.println(" uic is class="+uic.getClass().getName());
-        if (uic.getChildCount() > 0 || uic.getFacetCount() > 0) {
+         if (uic.getChildCount() > 0 || uic.getFacetCount() > 0) {
             Iterator<UIComponent> iter = uic.getFacetsAndChildren();
             while (iter.hasNext()) {
                 children += countChildComponents(iter.next());

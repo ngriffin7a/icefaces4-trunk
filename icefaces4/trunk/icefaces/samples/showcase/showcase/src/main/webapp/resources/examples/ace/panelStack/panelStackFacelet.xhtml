@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ice="http://www.icesoft.com/icefaces/component"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[panelStackFacelet.title]}"/>
+    <ui:param name="description" value="#{msgs[panelStackFacelet.description]}"/>
+    <ui:param name="resourceValue" value="#{panelStackFacelet.exampleResource}"/>
+
+    <ui:param name="wikiResources" value="#{panelStackResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{panelStackResources.tldResources}"/>
+
+    <ui:define name="example">
+<icecore:config mandatoryResource="textEntry textAreaEntry sliderEntry dateTimeEntry checkboxButton radioButton maskedEntry selectMenu" />
+
+	<h:form id="selectForm">
+		<ace:panel id="panel1" header="Choose an ace:stackPane" styleClass="required-styling-demo">	
+			<ace:buttonGroup id="buttonGroup" mutuallyExclusive="true">
+					<h:panelGrid columns="2" width="50%" columnClasses="col50, col50">
+				<ace:radioButton id="radio1" value="#{panelStackFacelet.r1}" label="Address Form" labelPosition="top" >
+					<ace:ajax execute="buttonGroup" event="activate" render="@all" />
+				</ace:radioButton>
+				<ace:radioButton id="radio2" value="#{panelStackFacelet.r2}" label="Dinner Reservation" labelPosition="top" >
+					<ace:ajax execute="buttonGroup" event="activate" render="@all" />
+				</ace:radioButton>
+				</h:panelGrid>
+			</ace:buttonGroup>				
+		</ace:panel >
+	</h:form>
+ 
+ <h:form id="panelStackForm">
+		<ace:panelStack id="stack1" selectedId="#{panelStackFacelet.currentId}">    	
+				<ace:stackPane id="stackPane1" facelet="#{panelStackFacelet.facelet}">		
+				<ace:panel id="panel2" header="Address Form" styleClass="required-styling-demo">
+					<h:panelGrid columns="1" width="100%" styleClass="textEntryInputTable">
+						<ace:textEntry value="#{panelStackFacelet.name}" label="Name: " labelPosition="left" />
+						<ace:textEntry value="#{panelStackFacelet.address}" label="Address: " labelPosition="left" />
+						<ace:textEntry value="#{panelStackFacelet.city}" label="City: " labelPosition="left" />
+						<ace:maskedEntry value="#{panelStackFacelet.phone}" label="Phone: " labelPosition="left" mask="(999) 999-9999" />
+						<ace:textAreaEntry value="#{panelStackFacelet.note}" label="Notes: " labelPosition="left" />
+					</h:panelGrid>
+				</ace:panel>
+			</ace:stackPane>			
+		 	<ace:stackPane id="stackPane2" facelet="#{panelStackFacelet.facelet}">			 
+				<ace:panel id="panel3" header="Reservation Form" styleClass="required-styling-demo">
+					<h:panelGrid columns="2" width="80%" >
+					<h:outputLabel for="titleGroup" value="Title: " />
+					<ace:buttonGroup id="titleGroup"  mutuallyExclusive="true" >
+						<h:panelGrid  columns="4" columnClasses="col25, col25, col25, col25">
+					    <ace:radioButton id="titleMr" value="#{panelStackFacelet.r3}" label="Mr." labelPosition="right"  />					 
+					    <ace:radioButton id="titleMrs" value="#{panelStackFacelet.r4}"  label="Mrs." labelPosition="right" />					
+				    	<ace:radioButton id="titleMs" value="#{panelStackFacelet.r5}"  label="Ms." labelPosition="right" />					
+				    	<ace:radioButton id="titleDr" value="#{panelStackFacelet.r6}" label="Dr." labelPosition="right" />
+					    </h:panelGrid>
+			   	    </ace:buttonGroup>
+					<h:outputLabel for="textEntry" value="Name: " />
+					<ace:textEntry id="textEntry" value="#{panelStackFacelet.name2}" />				
+					<h:outputLabel for="maskedEntry" value="Phone: " />
+					<ace:maskedEntry id="maskedEntry" value="#{panelStackFacelet.phone2}" mask="(999) 999-9999" />
+					<h:outputLabel for="dateEntry" value="Date of Reservation: " />
+					<ace:dateTimeEntry id="dateEntry" renderAsPopup="true" value="#{panelStackFacelet.selectedDate}"
+					 pattern="MM/dd/yyyy"  timeZone="Canada/Mountain" />					
+               	   <h:outputLabel for="selectMenu" value="Time of Reservation:  " />
+			   	    <ace:selectMenu id="selectMenu" value="#{panelStackFacelet.time}">
+			   	    	<f:selectItem itemValue="6pm" itemLabel="6 pm" />
+			   	    		<f:selectItem itemValue="7pm" itemLabel="7 pm" />
+			   	    			<f:selectItem itemValue="8pm" itemLabel="8 pm" />
+			   	    			<f:selectItem itemValue="9pm" itemLabel="9 pm" />
+			   	    			<f:selectItem itemValue="10pm" itemLabel="10 pm" />
+			   	    				   	    </ace:selectMenu>
+			   	      <h:outputLabel for="checkboxButton1" value="Valet required? " />
+				 	<ace:checkboxButton id="checkboxButton1" value="#{panelStackFacelet.valet}">
+					 	</ace:checkboxButton>
+				 	  <h:outputLabel for="simpleSelectOne" value="Occasion: " />
+				 	<ace:simpleSelectOneMenu id="simpleSelectOne" value="#{panelStackFacelet.occasion}">
+				 	<f:selectItem itemValue="none" itemLabel="None" />
+			   	    		<f:selectItem itemValue="birthday" itemLabel="Birthday" />
+			   	    			<f:selectItem itemValue="date" itemLabel="Date" />
+			   	    			<f:selectItem itemValue="anniversary" itemLabel="Anniversary" />
+			   	    	   		</ace:simpleSelectOneMenu>
+				 		<h:outputLabel for="serviceGroup" value="Additional Services Offered: " />				 		 
+				 	<ace:buttonGroup id="serviceGroup" mutuallyExclusive="false" header="Check one or more services if desired">
+				 	 <h:panelGrid  columns="1">
+				 	   <ace:checkboxButton id="check1" value="#{panelStackFacelet.cb1}" label="Private table" labelPosition="right" >
+					    </ace:checkboxButton>
+				 	  <ace:checkboxButton id="check2" value="#{panelStackFacelet.cb2}" label="Long stemmed roses on table" labelPosition="right"  >
+				  	    </ace:checkboxButton>					     
+					     <ace:checkboxButton id="check3" value="#{panelStackFacelet.cb3}" label="Chilled champagne upon arrival" labelPosition="right" > 
+					    </ace:checkboxButton>
+					     <ace:checkboxButton id="check4" value="#{panelStackFacelet.cb4}" label="Private tour of wine cellar" labelPosition="right" >
+					      </ace:checkboxButton>
+					</h:panelGrid>
+				 	</ace:buttonGroup>				 	
+				 	<h:outputLabel for="textAreaEntry" value="Additional comments: "/>
+				 	<ace:textAreaEntry id="textAreaEntry" value="#{panelStackFacelet.note2}">
+				 	</ace:textAreaEntry>		
+				 </h:panelGrid>		
+				</ace:panel>								
+			</ace:stackPane>		
+			</ace:panelStack>
+		</h:form>
+		
+	<h:form>
+		<ace:panel header="Toggle facelet to see server-side component tree size difference" id="panel4" styleClass="required-styling-demo">
+			<h:panelGrid columns="2">
+				<h:outputLabel for="faceletOut" value="Set facelet to true "/>
+				<ace:checkboxButton id="faceletOut" value="#{panelStackFacelet.facelet}" >
+					<ace:ajax execute="@this" render="@all"/>
+				</ace:checkboxButton>
+				<h:outputLabel for="compTreeOut" value="Size of Component Tree: " />
+				<h:outputText id="compTreeOut" value="#{treeMonitor.treeSize}"/>
+			</h:panelGrid>
+		</ace:panel>
+	</h:form>
+    </ui:define>
+</ui:composition>

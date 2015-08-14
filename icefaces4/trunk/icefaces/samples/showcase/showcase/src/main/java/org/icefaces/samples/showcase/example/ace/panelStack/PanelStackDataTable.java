@@ -28,7 +28,7 @@ import java.lang.String;
 import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Date;
 
 @ComponentExample(
         parent = PanelStackBean.BEAN_NAME,
@@ -61,26 +61,27 @@ public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTabl
     private List<InputDefinition> selectedQuery;
     private String selectedValue = "1";
     private boolean facelet = true;
+	private Date selectedDate = new Date(System.currentTimeMillis());
 
     public PanelStackDataTable() {
         super(PanelStackDataTable.class);
         //populate queryLists to simulate types of dataLists from db
-        this.queryList1.add(new InputDefinition("TEXTENTRY", "FirstName", "Thomas"));
-        this.queryList1.add(new InputDefinition("TEXTENTRY", "LastName", "Smith"));
-        this.queryList1.add(new InputDefinition("CHECKBOX", "Admin", false));
+        this.queryList1.add(new InputDefinition("TEXTENTRY", "Street Address", "108 Aspen Drive"));
+	        this.queryList1.add(new InputDefinition("TEXTENTRY", "City", "Calgary"));
+	        this.queryList1.add(new InputDefinition("CHECKBOX", "Current", true));	       
 
-        this.queryList2.add(new InputDefinition("TEXTENTRY", "FirstName", "Jane"));
-        this.queryList2.add(new InputDefinition("TEXTENTRY", "LastName", "Brown"));
-        this.queryList2.add(new InputDefinition("CHECKBOX", "Admin", true));
-        this.queryList2.add(new InputDefinition("RADIO", "Level", true));
-        this.queryList2.add(new InputDefinition("CHECKBOX", "Active", false));
-
-        this.queryList3.add(new InputDefinition("TEXTENTRY", "FirstName", "John"));
-        this.queryList3.add(new InputDefinition("TEXTENTRY", "LastName", "Taylor"));
-        this.queryList3.add(new InputDefinition("TEXTENTRY", "Middle", "A"));
-        this.queryList3.add(new InputDefinition("TEXTAREAENTRY", "Notes","Memo from last meeting.."));
-        this.selectedQuery = queryList1;
-    }
+	        this.queryList2.add(new InputDefinition("TEXTENTRY", "First Name", "Jane"));
+	        this.queryList2.add(new InputDefinition("TEXTENTRY", "Last Name", "Brown"));
+	        this.queryList2.add(new InputDefinition("CHECKBOX", "Admin", true));
+	        this.queryList2.add(new InputDefinition("DATE", "Date Hired", ""));
+	      
+			this.queryList3.add(new InputDefinition("TEXTENTRY", "First Name", "John"));
+	        this.queryList3.add(new InputDefinition("TEXTENTRY", "Last Name", "Taylor"));
+	        this.queryList3.add(new InputDefinition("TEXTENTRY", "Title", "Developer"));
+	        this.queryList3.add(new InputDefinition("CHECKBOX", "Active", true));
+	        this.queryList3.add(new InputDefinition("TEXTAREAENTRY", "Notes","Memo from last meeting.."));
+	        this.selectedQuery = queryList1;
+	    }
     
     @PostConstruct
     public void initMetaData() {
@@ -110,10 +111,26 @@ public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTabl
     public void setFacelet(boolean facelet) {
         this.facelet = facelet;
     }
+	
+	public String getSelectedValue() {
+        return selectedValue;
+    }
+
+    public void setSelectedValue(String selectedValue) {
+        this.selectedValue = selectedValue;
+    }
+	
+	public Date getSelectedDate() {
+		return selectedDate;
+	}
+
+	public void setSelectedDate(Date selectedDate) {
+		this.selectedDate = selectedDate;
+	}
 
     public void changeList(ValueChangeEvent event){
         String newVal = event.getNewValue().toString();
-        this.selectedValue=newVal;
+        this.selectedValue = newVal;
         if (newVal.equals("2")){
             this.selectedQuery = queryList2;
         }else if (newVal.equals("3")){
@@ -124,11 +141,5 @@ public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTabl
 
     }
 
-    public String getSelectedValue() {
-        return selectedValue;
-    }
-
-    public void setSelectedValue(String selectedValue) {
-        this.selectedValue = selectedValue;
-    }
+    
 }
