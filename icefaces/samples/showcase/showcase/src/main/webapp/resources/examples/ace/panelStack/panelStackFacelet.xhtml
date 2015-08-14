@@ -54,11 +54,12 @@
 				<ace:stackPane id="stackPane1" facelet="#{panelStackFacelet.facelet}">		
 				<ace:panel id="panel2" header="Address Form" styleClass="required-styling-demo">
 					<h:panelGrid columns="1" width="100%" styleClass="textEntryInputTable">
-						<ace:textEntry value="#{panelStackFacelet.name}" label="Name: " labelPosition="left" />
-						<ace:textEntry value="#{panelStackFacelet.address}" label="Address: " labelPosition="left" />
-						<ace:textEntry value="#{panelStackFacelet.city}" label="City: " labelPosition="left" />
-						<ace:maskedEntry value="#{panelStackFacelet.phone}" label="Phone: " labelPosition="left" mask="(999) 999-9999" />
-						<ace:textAreaEntry value="#{panelStackFacelet.note}" label="Notes: " labelPosition="left" />
+						<ace:textEntry id="nameIn" value="#{panelStackFacelet.name}" label="Name: " labelPosition="left" />
+						<ace:textEntry id="addressIn" value="#{panelStackFacelet.address}" label="Address: " labelPosition="left" />
+						<ace:textEntry id="cityIn" value="#{panelStackFacelet.city}" label="City: " labelPosition="left" />
+						<ace:maskedEntry id="phoneIn" value="#{panelStackFacelet.phone}" label="Phone: " labelPosition="left" mask="(999) 999-9999" />
+						<ace:textAreaEntry id="noteIn" value="#{panelStackFacelet.note}" label="Notes: " labelPosition="left" />
+						<h:commandButton id="submitAddress" type="submit" value="Submit" />
 					</h:panelGrid>
 				</ace:panel>
 			</ace:stackPane>			
@@ -113,15 +114,15 @@
 					</h:panelGrid>
 				 	</ace:buttonGroup>				 	
 				 	<h:outputLabel for="textAreaEntry" value="Additional comments: "/>
-				 	<ace:textAreaEntry id="textAreaEntry" value="#{panelStackFacelet.note2}">
-				 	</ace:textAreaEntry>		
+				 	<ace:textAreaEntry id="textAreaEntry" value="#{panelStackFacelet.note2}" />
+					<h:commandButton id="submitReservation" type="submit" value="Submit" />					
 				 </h:panelGrid>		
 				</ace:panel>								
 			</ace:stackPane>		
 			</ace:panelStack>
 		</h:form>
 		
-	<h:form>
+	<h:form id="faceletForm">
 		<ace:panel header="Toggle facelet to see server-side component tree size difference" id="panel4" styleClass="required-styling-demo">
 			<h:panelGrid columns="2">
 				<h:outputLabel for="faceletOut" value="Set facelet to true "/>

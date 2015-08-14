@@ -55,7 +55,7 @@
                     <ace:stackPane id="TEXTENTRY"
                                    facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.title}">
-                            <ace:textEntry value="#{input.value}">
+                            <ace:textEntry id="textEntryIn" value="#{input.value}">
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:textEntry>
                         </ace:panel>
@@ -63,7 +63,7 @@
                     <ace:stackPane id="CHECKBOX"
                                    facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.title}">
-                            <ace:checkboxButton id="out2" value="#{input.booleanVal}">
+                            <ace:checkboxButton id="checkboxButtonIn" value="#{input.booleanVal}">
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:checkboxButton>
                         </ace:panel>
@@ -71,7 +71,7 @@
                     <ace:stackPane id="RADIO" parentSelectedId="#{input.type}"
                                    facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.title}">
-                            <ace:radioButton id="outR" value="#{input.booleanVal}">
+                            <ace:radioButton id="radioButtonIn" value="#{input.booleanVal}">
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:radioButton>
                         </ace:panel>
@@ -79,7 +79,7 @@
                     <ace:stackPane id="TEXTAREAENTRY" parentSelectedId="#{input.type}"
                                    facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.title}">
-                            <ace:textAreaEntry value="#{input.value}">
+                            <ace:textAreaEntry id="textAreaEntryIn" value="#{input.value}">
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:textAreaEntry>
                         </ace:panel>
@@ -87,7 +87,7 @@
                     <ace:stackPane id="DATE" parentSelectedId="#{input.type}"
                                    facelet="#{panelStackDataTable.facelet}">
                         <ace:panel header="#{input.title}">
-                            <ace:dateTimeEntry value="#{panelStackDataTable.selectedDate}">                              
+                            <ace:dateTimeEntry id="dateTimeEntryIn" value="#{panelStackDataTable.selectedDate}">                              
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:dateTimeEntry>
                         </ace:panel>
