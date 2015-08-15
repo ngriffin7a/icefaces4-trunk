@@ -16,12 +16,7 @@
 
 // Constructor
 ice.ace.radiobutton = function(clientId, options) {
-    var groups = ice.ace.radiobutton.groups,
-        groupId = options.groupId;
-    if (groupId) {
-        groups[groupId] = groups[groupId] || {};
-        groups[groupId][clientId] = clientId;
-    }
+	ice.ace.radiobutton.register(clientId, options.groupId);
     this.options = options;
 
     // Selectors
@@ -45,8 +40,15 @@ ice.ace.radiobutton = function(clientId, options) {
 
     if (!options.disabled)
         ice.ace.jq(this.jqId).on("click", function () {
-			ice.ace.radiobutton.toggleOthers(self.options, self.id);
-			self.toggleCheckbox(true);
+			if (self.options.radioButtons) {
+				if (self.options.mutuallyExclusive) {
+					ice.ace.radiobutton.toggleOthers(self.options, self.id);
+				}
+				self.toggleCheckbox(true);
+			} else {
+				ice.ace.radiobutton.toggleOthers(self.options, self.id);
+				self.toggleCheckbox(true);
+			}
         });
 
     if (options.ariaEnabled)
@@ -61,12 +63,32 @@ ice.ace.radiobutton = function(clientId, options) {
     ice.onElementUpdate(this.id, unload);
 };
 
+ice.ace.radiobutton.register = function(clientId, groupId) {
+    var groups = ice.ace.radiobutton.groups,
+        groupId = groupId;
+    if (groupId) {
+        groups[groupId] = groups[groupId] || {};
+        groups[groupId][clientId] = clientId;
+    }
+};
+
 ice.ace.radiobutton.prototype.isChecked = function() {
-    return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
+    if (this.options.radioButtons) {
+        return (!!ice.ace.jq(this.fieldSelector).attr('name'));
+    } else {
+		return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
+	}
 };
 
 ice.ace.radiobutton.prototype.setChecked = function(bool) {
-    ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
+    if (this.options.radioButtons) {
+		if (!ice.ace.jq(this.fieldSelector).attr('name'))
+			ice.ace.jq(this.fieldSelector).attr('name', this.options.radioButtons);
+		else 
+			ice.ace.jq(this.fieldSelector).attr('name', '');
+    } else {
+		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
+	}
 };
 
 ice.ace.radiobutton.prototype.addStateCSSClasses = function(state) {
@@ -127,6 +149,15 @@ ice.ace.radiobutton.prototype.toggleCheckbox = function (activeButton) {
 					{params: this.options.uiParams}
 				));
 			}
+			if (this.options.behaviors.change) {
+				if (activeButton) {
+					ice.setFocus(this.id + '_button');
+					ice.ace.ab(ice.ace.extendAjaxArgs(
+						this.options.behaviors.change,
+						{params: this.options.uiParams}
+					));
+				}
+			}
 		} else {
 			if (this.options.behaviors.deactivate) {
 				if (activeButton) ice.setFocus(this.id + '_button');
@@ -134,6 +165,15 @@ ice.ace.radiobutton.prototype.toggleCheckbox = function (activeButton) {
 					this.options.behaviors.deactivate,
 					{params: this.options.uiParams}
 				));
+			}
+			if (this.options.behaviors.change) {
+				if (activeButton) {
+					ice.setFocus(this.id + '_button');
+					ice.ace.ab(ice.ace.extendAjaxArgs(
+						this.options.behaviors.change,
+						{params: this.options.uiParams}
+					));
+				}
 			}
 		}
 	}

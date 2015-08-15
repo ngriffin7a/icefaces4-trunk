@@ -34,3 +34,7 @@
 	padding: 0.2em;
 	background-color:transparent;
 }
+
+.ice-ace-radiobuttons .ice-ace-radiobutton {
+	margin-right: 10px;
+}
