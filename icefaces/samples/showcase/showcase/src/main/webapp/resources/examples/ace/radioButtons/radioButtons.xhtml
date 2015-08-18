@@ -23,32 +23,32 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[checkboxButtons.title]}"/>
-    <ui:param name="description" value="#{msgs[checkboxButtons.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[checkboxButtons.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{checkboxButtons.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{checkboxButtons.exampleResource}"/>
+    <ui:param name="title" value="#{msgs[radioButtons.title]}"/>
+    <ui:param name="description" value="#{msgs[radioButtons.description]}"/>
+    <ui:param name="subMenuTitle" value="#{msgs[radioButtons.subMenuTitle]}"/>
+    <ui:param name="subMenuLinks" value="#{radioButtons.subMenuLinks}"/>
+    <ui:param name="resourceValue" value="#{radioButtons.exampleResource}"/>
 
-    <ui:param name="wikiResources" value="#{checkboxButtonsResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{checkboxButtonsResources.tldResources}"/>
+    <ui:param name="wikiResources" value="#{radioButtonsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{radioButtonsResources.tldResources}"/>
 
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
 			<h:outputLabel for="mutuallyExclusive" value="Enable mutual exclusivity: " />
-			<h:selectBooleanCheckbox id="mutuallyExclusive" value="#{checkboxButtons.mutuallyExclusive}">
+			<h:selectBooleanCheckbox id="mutuallyExclusive" value="#{radioButtons.mutuallyExclusive}">
 				<f:ajax render="@form" />
 			</h:selectBooleanCheckbox>
             <ace:panel>
-				<ace:checkboxButtons id="checkboxButtons" header="Using ace:checkboxButtons" mutuallyExclusive="#{checkboxButtons.mutuallyExclusive}" value="#{checkboxButtons.selected}" labelPosition="top">
+				<ace:radioButtons id="radioButtons" header="Using ace:radioButtons" mutuallyExclusive="#{radioButtons.mutuallyExclusive}" value="#{radioButtons.selected}" labelPosition="top">
 					<f:selectItem itemLabel="One" itemValue="One" />
 					<f:selectItem itemLabel="Two" itemValue="Two" />
 					<f:selectItem itemLabel="Three" itemValue="Three" />
 					<f:selectItem itemLabel="Four" itemValue="Four" />
 					<f:selectItem itemLabel="Five" itemValue="Five" />
 					<ace:ajax />
-				</ace:checkboxButtons>
-                The selected checkboxes are:
-                <h:outputText id="checkboxDescription" value="#{checkboxButtons.selected}" style="font-weight: bold;"/>
+				</ace:radioButtons>
+                The selected radios are:
+                <h:outputText id="radioDescription" value="#{radioButtons.selected}" style="font-weight: bold;"/>
             </ace:panel>
         </h:form>
     </ui:define>

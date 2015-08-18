@@ -28,7 +28,7 @@ import org.icefaces.samples.showcase.example.ace.buttonGroup.ButtonGroupBean;
 import org.icefaces.samples.showcase.example.ace.chart.*;
 import org.icefaces.samples.showcase.example.ace.checkboxButton.CheckboxButtonBean;
 import org.icefaces.samples.showcase.example.ace.checkboxButton.CheckboxButtonCustomBean;
-import org.icefaces.samples.showcase.example.ace.checkboxButtons.CheckboxButtonsBean;
+import org.icefaces.samples.showcase.example.ace.checkboxButtons.*;
 import org.icefaces.samples.showcase.example.ace.combobox.*;
 import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogBean;
 import org.icefaces.samples.showcase.example.ace.confirmationdialog.ConfirmationDialogEffectBean;
@@ -86,6 +86,7 @@ import org.icefaces.samples.showcase.example.ace.progressbar.*;
 import org.icefaces.samples.showcase.example.ace.pushButton.PushButtonBean;
 import org.icefaces.samples.showcase.example.ace.qrcode.QrcodeBean;
 import org.icefaces.samples.showcase.example.ace.radioButton.RadioButtonBean;
+import org.icefaces.samples.showcase.example.ace.radioButtons.*;
 import org.icefaces.samples.showcase.example.ace.radioButton.RadioButtonCustomBean;
 import org.icefaces.samples.showcase.example.ace.resizable.ResizableBean;
 import org.icefaces.samples.showcase.example.ace.resizable.ResizeListenerBean;
@@ -174,6 +175,7 @@ import java.util.ArrayList;
                 @MenuLink(title = "menu.ace.menuButton.title", exampleBeanName = MenuButtonBean.BEAN_NAME, group=4, beanClass=MenuButtonBean.class),
                 @MenuLink(title = "menu.ace.pushButton.title", exampleBeanName = PushButtonBean.BEAN_NAME, group=4, beanClass=PushButtonBean.class),
                 @MenuLink(title = "menu.ace.radioButton.title", exampleBeanName = RadioButtonBean.BEAN_NAME, group=4, beanClass=RadioButtonBean.class),
+                @MenuLink(title = "menu.ace.radioButtons.title", exampleBeanName = RadioButtonsBean.BEAN_NAME, group=4, beanClass=RadioButtonsBean.class),
 
                 @MenuLink(title = "menu.ace.autocompleteentry.title", exampleBeanName = AutoCompleteEntryBean.BEAN_NAME, group=5, beanClass=AutoCompleteEntryBean.class),
                 @MenuLink(title = "menu.ace.combobox.title", exampleBeanName = ComboBoxBean.BEAN_NAME, group=5, beanClass=ComboBoxBean.class),
@@ -323,6 +325,9 @@ import java.util.ArrayList;
                 @SearchSelectItem(labelTag = "menu.ace.checkboxButton.title", labelExample = "menu.ace.checkboxButton.subMenu.custom", value = CheckboxButtonCustomBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.checkboxButtons.title", labelExample = "menu.ace.checkboxButtons.subMenu.main", value = CheckboxButtonsBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.checkboxButtons.title", labelExample = "menu.ace.checkboxButtons.subMenu.label", value = CheckboxButtonsLabelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.checkboxButtons.title", labelExample = "menu.ace.checkboxButtons.subMenu.indicator", value = CheckboxButtonsIndicatorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.checkboxButtons.title", labelExample = "menu.ace.checkboxButtons.subMenu.reqStyle", value = CheckboxButtonsReqStyleBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.linkButton.title", labelExample = "menu.ace.linkButton.subMenu.main", value = LinkButtonBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.linkButton.altSearch1", labelExample = "menu.ace.linkButton.title", value = LinkButtonBean.BEAN_NAME),
@@ -332,6 +337,11 @@ import java.util.ArrayList;
 
                 @SearchSelectItem(labelTag = "menu.ace.radioButton.title", labelExample = "menu.ace.radioButton.subMenu.main", value = RadioButtonBean.BEAN_NAME),
                 @SearchSelectItem(labelTag = "menu.ace.radioButton.title", labelExample = "menu.ace.radioButton.subMenu.custom", value = RadioButtonCustomBean.BEAN_NAME),
+
+                @SearchSelectItem(labelTag = "menu.ace.radioButtons.title", labelExample = "menu.ace.radioButtons.subMenu.main", value = RadioButtonsBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.radioButtons.title", labelExample = "menu.ace.radioButtons.subMenu.label", value = RadioButtonsLabelBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.radioButtons.title", labelExample = "menu.ace.radioButtons.subMenu.indicator", value = RadioButtonsIndicatorBean.BEAN_NAME),
+                @SearchSelectItem(labelTag = "menu.ace.radioButtons.title", labelExample = "menu.ace.radioButtons.subMenu.reqStyle", value = RadioButtonsReqStyleBean.BEAN_NAME),
 
                 @SearchSelectItem(labelTag = "menu.ace.menuButton.title", labelExample = "menu.ace.menuButton.subMenu.main", value = MenuButtonBean.BEAN_NAME),
 
