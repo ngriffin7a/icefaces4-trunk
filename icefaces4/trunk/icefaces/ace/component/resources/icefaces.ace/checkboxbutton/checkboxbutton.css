@@ -45,6 +45,10 @@
 	opacity: 0.25;
 }
 
+.ice-ace-checkboxbuttons {
+	text-align: center;
+}
+
 .ice-ace-checkboxbuttons .ice-checkboxbutton {
 	margin-right: 10px;
 }
