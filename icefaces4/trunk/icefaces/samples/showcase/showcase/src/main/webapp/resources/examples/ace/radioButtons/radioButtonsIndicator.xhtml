@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[radioButtonsIndicatorBean.title]}"/>
+    <ui:param name="description" value="#{msgs[radioButtonsIndicatorBean.description]}"/>
+    <ui:param name="resourceValue" value="#{radioButtonsIndicatorBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{radioButtonsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{radioButtonsResources.tldResources}"/>
+
+    <ui:define name="example">
+        
+        <h:form id="inputForm">
+
+            
+            <ace:panel header="Indicator Customization">
+                <h:panelGrid width="60%" columns="2" cellpadding="6" cellspacing="6">
+                     <h:outputLabel for="requiredIn" value="Required?"/>
+                     <h:selectBooleanCheckbox id="requiredIn" value="#{radioButtonsIndicatorBean.required}">
+                         <f:ajax execute="@form" render="@all"/>
+                     </h:selectBooleanCheckbox>
+                     
+                     <h:outputLabel for="requiredText" value="Required Indicator Text:"/>
+                     <h:inputText id="requiredText" value="#{radioButtonsIndicatorBean.requiredText}"
+                                  disabled="#{!radioButtonsIndicatorBean.required}">
+                         <f:ajax execute="@this" render="@all"/>
+                                  </h:inputText>
+                     
+                     <h:outputLabel for="optionalText" value="Optional Indicator Text:"/>
+                     <h:inputText id="optionalText" value="#{radioButtonsIndicatorBean.optionalText}"
+                                  disabled="#{radioButtonsIndicatorBean.required}">
+                         <f:ajax execute="@this" render="@all"/>
+                                  </h:inputText>
+                                  
+                     <h:outputLabel for="positionIn" value="Indicator Position:"/>
+                     <ace:simpleSelectOneMenu id="positionIn" value="#{radioButtonsIndicatorBean.position}">
+						<ace:ajax execute="@this" />
+						<f:selectItem itemLabel="Top" itemValue="top" />
+						<f:selectItem itemLabel="Bottom" itemValue="bottom" />
+						<f:selectItem itemLabel="Right" itemValue="right" />
+						<f:selectItem itemLabel="Left" itemValue="left" />
+						<f:selectItem itemLabel="None" itemValue="none" />
+                     </ace:simpleSelectOneMenu>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+        
+        <h:form id="demoForm">
+            <ace:panel header="Radio Buttons">
+			<h:panelGrid columns="1" class="grid">
+				<h:panelGroup>
+				<ace:radioButtons id="radioButtonsIndicator" header="ace:radioButtons with indicator" mutuallyExclusive="true" value="#{radioButtonsIndicatorBean.selected}" 
+					required="#{radioButtonsIndicatorBean.required}"
+					requiredIndicator="#{radioButtonsIndicatorBean.requiredText}" 
+					optionalIndicator="#{radioButtonsIndicatorBean.optionalText}"
+					indicatorPosition="#{radioButtonsIndicatorBean.position}">
+					<f:selectItem itemLabel="One" itemValue="One" />
+					<f:selectItem itemLabel="Two" itemValue="Two" />
+					<f:selectItem itemLabel="Three" itemValue="Three" />
+					<f:selectItem itemLabel="Four" itemValue="Four" />
+					<f:selectItem itemLabel="Five" itemValue="Five" />
+					<ace:ajax />
+				</ace:radioButtons>
+				<ace:message for="radioButtonsIndicator" />
+				</h:panelGroup>
+				<h:panelGroup>
+					The selected radio button is:
+					<h:outputText id="radioDescriptionIndicator" value="#{radioButtonsIndicatorBean.selected}" style="font-weight: bold;"/>
+				</h:panelGroup>
+			</h:panelGrid>
+            </ace:panel>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>

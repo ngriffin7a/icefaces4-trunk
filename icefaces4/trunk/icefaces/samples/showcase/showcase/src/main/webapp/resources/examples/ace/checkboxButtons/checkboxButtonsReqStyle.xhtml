@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:param name="title" value="#{msgs[checkboxButtonsReqStyleBean.title]}"/>
+    <ui:param name="description" value="#{msgs[checkboxButtonsReqStyleBean.description]}"/>
+    <ui:param name="resourceValue" value="#{checkboxButtonsReqStyleBean.exampleResource}"/>
+    
+    <ui:param name="wikiResources" value="#{checkboxButtonsResources.wikiResources}"/>
+    <ui:param name="tldResources" value="#{checkboxButtonsResources.tldResources}"/>
+
+    <ui:define name="example">
+        
+        <h:form id="inputForm">
+
+            
+            <ace:panel header="Color Customization">
+                <h:panelGrid width="100%" columns="3" columnClasses="col25,col25,col50"
+                             cellpadding="6" cellspacing="6">
+                        <h:outputLabel for="reqColor" value="Required Color Style:"/>
+                        <ace:simpleSelectOneMenu id="reqColor" value="#{checkboxButtonsReqStyleBean.reqColor}"
+                                         style="width: 150px;" disabled="#{checkboxButtonsReqStyleBean.useTheme}">
+										 <ace:ajax execute="@this" />
+                            <f:selectItem itemValue="blueRS" itemLabel="Blue"/>
+                            <f:selectItem itemValue="greenRS" itemLabel="Green"/>
+                            <f:selectItem itemValue="redRS" itemLabel="Red"/>
+                        </ace:simpleSelectOneMenu>
+                        <ace:message for="reqColor"/>
+                    
+                        <h:outputLabel for="optColor" value="Optional Color Style:"/>
+                        <ace:simpleSelectOneMenu id="optColor" value="#{checkboxButtonsReqStyleBean.optColor}"
+                                         style="width: 150px;" disabled="#{checkboxButtonsReqStyleBean.useTheme}">
+										 <ace:ajax execute="@this" />
+                            <f:selectItem itemValue="blueRS" itemLabel="Blue"/>
+                            <f:selectItem itemValue="greenRS" itemLabel="Green"/>
+                            <f:selectItem itemValue="redRS" itemLabel="Red"/>
+                        </ace:simpleSelectOneMenu>
+                        <ace:message for="optColor"/>
+                </h:panelGrid>
+				<h:panelGroup>
+					<h:selectBooleanCheckbox id="useTheme" value="#{checkboxButtonsReqStyleBean.useTheme}" >
+                        <f:ajax execute="@this" render="@all"/>
+					</h:selectBooleanCheckbox>
+					<h:outputLabel for="useTheme" value=" No custom styling (use theme)" />
+				</h:panelGroup>
+            </ace:panel>
+       </h:form>
+       
+       <h:form id="demoForm">    
+            <ace:panel header="Checkbox Buttons" styleClass="#{checkboxButtonsReqStyleBean.useTheme ? '' : 'required-styling-demo'}">
+			<h:panelGrid columns="1" width="100%" styleClass="textEntryInputTable">
+				<h:panelGroup styleClass="#{checkboxButtonsReqStyleBean.reqColor}">
+					<ace:checkboxButtons id="checkboxButtonsRequired1" header="Required ace:checkboxButtons" mutuallyExclusive="true" value="#{checkboxButtonsReqStyleBean.selected1}" required="true">
+						<f:selectItem itemLabel="One" itemValue="One" />
+						<f:selectItem itemLabel="Two" itemValue="Two" />
+						<f:selectItem itemLabel="Three" itemValue="Three" />
+						<f:selectItem itemLabel="Four" itemValue="Four" />
+						<f:selectItem itemLabel="Five" itemValue="Five" />
+						<ace:ajax />
+					</ace:checkboxButtons>
+				</h:panelGroup>
+				<h:panelGroup>
+					<ace:message for="checkboxButtonsRequired1"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					The selected checkbox for the required field is:
+					<h:outputText id="checkboxDescriptionRequired1" value="#{checkboxButtonsReqStyleBean.selected1}" style="font-weight: bold;"/>
+				</h:panelGroup>
+				<h:panelGroup styleClass="#{checkboxButtonsReqStyleBean.optColor}">
+					<ace:checkboxButtons id="checkboxButtonsRequired2" header="Optional ace:checkboxButtons" mutuallyExclusive="true" value="#{checkboxButtonsReqStyleBean.selected2}" required="false">
+						<f:selectItem itemLabel="One" itemValue="One" />
+						<f:selectItem itemLabel="Two" itemValue="Two" />
+						<f:selectItem itemLabel="Three" itemValue="Three" />
+						<f:selectItem itemLabel="Four" itemValue="Four" />
+						<f:selectItem itemLabel="Five" itemValue="Five" />
+						<ace:ajax />
+					</ace:checkboxButtons>
+				</h:panelGroup>
+				<h:panelGroup>
+					<ace:message for="checkboxButtonsRequired2"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					The selected checkbox for the optional field is:
+					<h:outputText id="checkboxDescriptionRequired2" value="#{checkboxButtonsReqStyleBean.selected2}" style="font-weight: bold;"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<ace:pushButton id="submit" value="Submit">
+						<ace:ajax execute="@form" render="@form" />
+					</ace:pushButton>
+				</h:panelGroup>
+			</h:panelGrid>
+			<ace:pushButton id="clearButton" value="Clear values" actionListener="#{checkboxButtonsReqStyleBean.clearValues}">
+				<ace:ajax />
+			</ace:pushButton>
+            </ace:panel>
+        </h:form>
+		<ui:include src="/resources/ice.samples.showcase/reqStyleCss.xhtml" />
+        
+    </ui:define>
+</ui:composition>

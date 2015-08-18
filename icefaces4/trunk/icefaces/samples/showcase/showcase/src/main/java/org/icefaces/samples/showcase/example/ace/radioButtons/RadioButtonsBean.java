@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.checkboxButtons;
+package org.icefaces.samples.showcase.example.ace.radioButtons;
 
 import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
 import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
@@ -32,46 +32,46 @@ import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 import java.util.*;
 
 @ComponentExample(
-    title = "example.ace.checkboxButtons.title",
-    description = "example.ace.checkboxButtons.description",
-    example = "/resources/examples/ace/checkboxButtons/checkboxButtons.xhtml"
+    title = "example.ace.radioButtons.title",
+    description = "example.ace.radioButtons.description",
+    example = "/resources/examples/ace/radioButtons/radioButtons.xhtml"
 )
 @ExampleResources(
     resources ={
         // xhtml
         @ExampleResource(type = ResourceType.xhtml,
-                         title="checkboxButtons.xhtml",
-                         resource = "/resources/examples/ace/checkboxButtons/checkboxButtons.xhtml"),
+                         title="radioButtons.xhtml",
+                         resource = "/resources/examples/ace/radioButtons/radioButtons.xhtml"),
         // Java Source
         @ExampleResource(type = ResourceType.java,
-                         title="CheckboxButtonsBean.java",
-                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/checkboxButtons/CheckboxButtonsBean.java")
+                         title="RadioButtonsBean.java",
+                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/radioButtons/RadioButtonsBean.java")
     }
 )
 
 @Menu(
-    title = "menu.ace.checkboxButtons.subMenu.title",
+    title = "menu.ace.radioButtons.subMenu.title",
     menuLinks = {
-        @MenuLink(title = "menu.ace.checkboxButtons.subMenu.main", isDefault = true,
-                  exampleBeanName = CheckboxButtonsBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.checkboxButtons.subMenu.label", exampleBeanName = CheckboxButtonsLabelBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.checkboxButtons.subMenu.indicator", exampleBeanName = CheckboxButtonsIndicatorBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.checkboxButtons.subMenu.reqStyle", exampleBeanName = CheckboxButtonsReqStyleBean.BEAN_NAME)
+        @MenuLink(title = "menu.ace.radioButtons.subMenu.main", isDefault = true,
+                  exampleBeanName = RadioButtonsBean.BEAN_NAME),
+		@MenuLink(title = "menu.ace.radioButtons.subMenu.label", exampleBeanName = RadioButtonsLabelBean.BEAN_NAME),
+		@MenuLink(title = "menu.ace.radioButtons.subMenu.indicator", exampleBeanName = RadioButtonsIndicatorBean.BEAN_NAME),
+		@MenuLink(title = "menu.ace.radioButtons.subMenu.reqStyle", exampleBeanName = RadioButtonsReqStyleBean.BEAN_NAME)
     }
 )
 
-@ManagedBean(name= CheckboxButtonsBean.BEAN_NAME)
+@ManagedBean(name= RadioButtonsBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class CheckboxButtonsBean extends ComponentExampleImpl<CheckboxButtonsBean> implements Serializable {
+public class RadioButtonsBean extends ComponentExampleImpl<RadioButtonsBean> implements Serializable {
 
-    public static final String BEAN_NAME = "checkboxButtons";
+    public static final String BEAN_NAME = "radioButtons";
 	public String getBeanName() { return BEAN_NAME; }
 
 	private List<String> selected = new ArrayList<String>();
 	private boolean mutuallyExclusive = false;
 
-    public CheckboxButtonsBean() {
-        super(CheckboxButtonsBean.class);
+    public RadioButtonsBean() {
+        super(RadioButtonsBean.class);
 		selected.add("One");
 		selected.add("Three");
 		selected.add("Five");
