@@ -236,7 +236,23 @@ ice.ace.Autocompleter.prototype = {
 			this.clientSideModeCfg.model = model;
 			//$root.detach();
 		}
-		
+
+		// prevent the backspace key from navigating to the previoous page
+		// when holding the key to delete all the characters
+		// and the input element is temporarily unavailable while it gets updated, 
+		// especially when required=true
+		ice.ace.jq(this.element).on('keydown', function(e) {
+			if (e.keyCode == 8 && this.value.length == 1) {
+				ice.ace.jq(document).off('keydown', ice.ace.Autocompleter.preventBackspaceNavigationHandler)
+					.on('keydown', ice.ace.Autocompleter.preventBackspaceNavigationHandler);
+			}
+		});
+		ice.ace.jq(this.element).on('blur', function(e) {
+			setTimeout(function() {
+				ice.ace.jq(document).off('keydown', ice.ace.Autocompleter.preventBackspaceNavigationHandler)
+			}, 1000);
+		});
+
 		this.initialized = true;
 		
 		if (this.clientSideModeCfg && this.showingList) {
@@ -980,5 +996,11 @@ ice.ace.Autocompleter.prototype = {
 				|| e == 'fold' || e == 'puff' || e == 'pulsate' || e == 'scale' || e == 'slide') {
 			list.toggle(e, {}, this.effects.hideLength);
 		} else list.fadeOut(this.effects.hideLength);
+	}
+};
+
+ice.ace.Autocompleter.preventBackspaceNavigationHandler = function (e) {
+    if (e.keyCode === 8) {
+		e.preventDefault();return false;
 	}
 };
