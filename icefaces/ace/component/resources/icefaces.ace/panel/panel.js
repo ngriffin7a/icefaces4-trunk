@@ -74,7 +74,7 @@ ice.ace.Panel.prototype.toggle = function() {
 	
     var _self = this;
 
-    this.content.slideToggle(this.cfg.toggleSpeed,
+    ice.ace.jq(this.jqId + '_content').slideToggle(this.cfg.toggleSpeed,
         function(e) {
             if(_self.cfg.behaviors) {
                 var toggleBehavior = _self.cfg.behaviors['toggle'];
