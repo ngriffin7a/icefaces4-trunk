@@ -35,6 +35,11 @@
 	background-color:transparent;
 }
 
+.ice-ace-radiobuttons {
+	text-align: center;
+}
+
 .ice-ace-radiobuttons .ice-ace-radiobutton {
+	display: inline-block;
 	margin-right: 10px;
 }
