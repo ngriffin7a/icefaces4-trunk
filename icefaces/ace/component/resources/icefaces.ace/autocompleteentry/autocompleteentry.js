@@ -241,15 +241,15 @@ ice.ace.Autocompleter.prototype = {
 		// when holding the key to delete all the characters
 		// and the input element is temporarily unavailable while it gets updated, 
 		// especially when required=true
-		ice.ace.jq(this.element).on('keydown', function(e) {
+		ice.ace.jq(this.element).on(keyEvent, function(e) {
 			if (e.keyCode == 8 && this.value.length == 1) {
-				ice.ace.jq(document).off('keydown', ice.ace.Autocompleter.preventBackspaceNavigationHandler)
-					.on('keydown', ice.ace.Autocompleter.preventBackspaceNavigationHandler);
+				ice.ace.jq(document).off(keyEvent, ice.ace.Autocompleter.preventBackspaceNavigationHandler)
+					.on(keyEvent, ice.ace.Autocompleter.preventBackspaceNavigationHandler);
 			}
 		});
 		ice.ace.jq(this.element).on('blur', function(e) {
 			setTimeout(function() {
-				ice.ace.jq(document).off('keydown', ice.ace.Autocompleter.preventBackspaceNavigationHandler)
+				ice.ace.jq(document).off(keyEvent, ice.ace.Autocompleter.preventBackspaceNavigationHandler)
 			}, 1000);
 		});
 
