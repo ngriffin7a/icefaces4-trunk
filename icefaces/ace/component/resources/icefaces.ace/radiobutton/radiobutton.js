@@ -84,7 +84,7 @@ ice.ace.radiobutton.prototype.setChecked = function(bool) {
     if (this.options.radioButtons) {
 		if (!ice.ace.jq(this.fieldSelector).attr('name'))
 			ice.ace.jq(this.fieldSelector).attr('name', this.options.radioButtons);
-		else 
+		else if (!bool)
 			ice.ace.jq(this.fieldSelector).attr('name', '');
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
