@@ -59,6 +59,7 @@ import java.util.Date;
 public class PanelStackFacelet extends ComponentExampleImpl<PanelStackFacelet> implements Serializable {
 
 	public static final String BEAN_NAME = "panelStackFacelet";
+	public String getBeanName() { return BEAN_NAME; }
 
 	private static final long serialVersionUID = 1L;
 	private String currentId = "stackPane1";
