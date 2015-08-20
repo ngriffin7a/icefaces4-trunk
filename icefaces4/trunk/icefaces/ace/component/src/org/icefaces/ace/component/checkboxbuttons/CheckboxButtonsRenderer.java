@@ -130,8 +130,14 @@ public class CheckboxButtonsRenderer extends InputRenderer {
         Converter converter = checkboxButtons.getConverter();
 		SelectItemsIterator selectItemsIterator = new SelectItemsIterator(context, checkboxButtons);
 		int i = 0;
-		while (selectItemsIterator.hasNext()) {
-			encodeButton(context, checkboxButtons, i++, (SelectItem) selectItemsIterator.next(), converter, currentSelections);
+		if (!checkboxButtons.isValid()) {
+			while (selectItemsIterator.hasNext()) {
+				encodeButton(context, checkboxButtons, i++, (SelectItem) selectItemsIterator.next(), converter, checkboxButtons.getSubmittedValue());
+			}
+		} else {
+			while (selectItemsIterator.hasNext()) {
+				encodeButton(context, checkboxButtons, i++, (SelectItem) selectItemsIterator.next(), converter, currentSelections);
+			}
 		}
 
 		if ("bottom".equalsIgnoreCase(indicatorPosition)) {

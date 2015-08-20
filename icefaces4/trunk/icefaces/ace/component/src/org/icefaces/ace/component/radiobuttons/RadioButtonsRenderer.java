@@ -129,8 +129,14 @@ public class RadioButtonsRenderer extends InputRenderer {
         Converter converter = radioButtons.getConverter();
 		SelectItemsIterator selectItemsIterator = new SelectItemsIterator(context, radioButtons);
 		int i = 0;
-		while (selectItemsIterator.hasNext()) {
-			encodeButton(context, radioButtons, i++, (SelectItem) selectItemsIterator.next(), converter, currentSelections);
+		if (!radioButtons.isValid()) {
+			while (selectItemsIterator.hasNext()) {
+				encodeButton(context, radioButtons, i++, (SelectItem) selectItemsIterator.next(), converter, radioButtons.getSubmittedValue());
+			}
+		} else {
+			while (selectItemsIterator.hasNext()) {
+				encodeButton(context, radioButtons, i++, (SelectItem) selectItemsIterator.next(), converter, currentSelections);
+			}
 		}
 
 		if ("bottom".equalsIgnoreCase(indicatorPosition)) {
