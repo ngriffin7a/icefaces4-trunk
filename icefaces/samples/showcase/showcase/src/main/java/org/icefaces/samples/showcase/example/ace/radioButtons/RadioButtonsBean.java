@@ -87,4 +87,19 @@ public class RadioButtonsBean extends ComponentExampleImpl<RadioButtonsBean> imp
 
 	public boolean isMutuallyExclusive() { return mutuallyExclusive; }
 	public void setMutuallyExclusive(boolean mutuallyExclusive) { this.mutuallyExclusive = mutuallyExclusive; }
+
+	public String getSelectedString() {
+		String result = "";
+		if (selected != null) {
+			result += selected.toString();
+			result = result.replace("[", "");
+			result = result.replace("]", "");
+			if ("".equals(result)) {
+				result = "None";
+			}
+		} else {
+			result = "None";
+		}
+		return result;
+	}
 }
