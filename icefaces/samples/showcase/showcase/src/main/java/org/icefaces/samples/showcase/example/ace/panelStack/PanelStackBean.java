@@ -65,6 +65,7 @@ import java.util.List;
 @CustomScoped(value = "#{window}")
 public class PanelStackBean extends ComponentExampleImpl<PanelStackBean> implements  Serializable {
     public static final String BEAN_NAME = "panelStackBean";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String currentId="stackPane1"; // the id of the currently selected stackPane
     private boolean facelet = false;

@@ -53,6 +53,7 @@ import java.util.Date;
 @CustomScoped(value = "#{window}")
 public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTable> implements  Serializable {
     public static final String BEAN_NAME = "panelStackDataTable";
+	public String getBeanName() { return BEAN_NAME; }
     
     private String currentId; // the id of the currently selected stackPane
     private List<InputDefinition> queryList1 = new ArrayList<InputDefinition>();

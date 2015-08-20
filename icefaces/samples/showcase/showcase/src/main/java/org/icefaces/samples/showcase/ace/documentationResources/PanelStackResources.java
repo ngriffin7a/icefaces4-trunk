@@ -16,14 +16,16 @@
 
 package org.icefaces.samples.showcase.ace.documentationResources;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
+import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
+import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
+import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
 import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
-import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
 
 @ExampleResources(
         resources ={
@@ -42,7 +44,7 @@ import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
 @ManagedBean(name= PanelStackResources.BEAN_NAME)
 @CustomScoped(value = "#{window}")
 public class PanelStackResources extends ComponentExampleImpl<PanelStackResources> implements Serializable {
-    public static final String BEAN_NAME = "PanelStackResources";
+    public static final String BEAN_NAME = "panelStackResources";
     public PanelStackResources()
     {
         super(PanelStackResources.class);
