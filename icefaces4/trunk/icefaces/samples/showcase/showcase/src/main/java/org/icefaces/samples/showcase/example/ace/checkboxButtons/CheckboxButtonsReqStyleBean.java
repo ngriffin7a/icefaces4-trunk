@@ -41,11 +41,7 @@ import java.util.*;
             @ExampleResource(type = ResourceType.java,
                     title="CheckboxButtonsReqStyleBean.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/checkboxButtons/CheckboxButtonsReqStyleBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="CheckboxButtonsBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/checkboxButtons/CheckboxButtonsBean.java")
+                    "/example/ace/checkboxButtons/CheckboxButtonsReqStyleBean.java")
         }
 )
 @ManagedBean(name= CheckboxButtonsReqStyleBean.BEAN_NAME)
@@ -72,6 +68,36 @@ public class CheckboxButtonsReqStyleBean extends ComponentExampleImpl<CheckboxBu
 	private List<String> selected2 = new ArrayList<String>();
 	public List<String> getSelected2() { return selected2; }
 	public void setSelected2(List<String> selected2) { this.selected2 = selected2; }
+
+	public String getSelected1String() {
+		String result = "";
+		if (selected1 != null) {
+			result += selected1.toString();
+			result = result.replace("[", "");
+			result = result.replace("]", "");
+			if ("".equals(result)) {
+				result = "None";
+			}
+		} else {
+			result = "None";
+		}
+		return result;
+	}
+
+	public String getSelected2String() {
+		String result = "";
+		if (selected2 != null) {
+			result += selected2.toString();
+			result = result.replace("[", "");
+			result = result.replace("]", "");
+			if ("".equals(result)) {
+				result = "None";
+			}
+		} else {
+			result = "None";
+		}
+		return result;
+	}
 
     private String reqColor = "redRS";
     private String optColor = "greenRS";

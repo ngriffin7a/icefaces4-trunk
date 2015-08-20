@@ -44,11 +44,7 @@ import java.util.*;
             @ExampleResource(type = ResourceType.java,
                     title="RadioButtonsLabelBean.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/radioButtons/RadioButtonsLabelBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="RadioButtonsBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/radioButtons/RadioButtonsBean.java")
+                    "/example/ace/radioButtons/RadioButtonsLabelBean.java")
         }
 )
 @ManagedBean(name= RadioButtonsLabelBean.BEAN_NAME)
@@ -73,7 +69,22 @@ public class RadioButtonsLabelBean extends ComponentExampleImpl<RadioButtonsLabe
 	private List<String> selected = new ArrayList<String>();
 	public List<String> getSelected() { return selected; }
 	public void setSelected(List<String> selected) { this.selected = selected; }
-    
+
+	public String getSelectedString() {
+		String result = "";
+		if (selected != null) {
+			result += selected.toString();
+			result = result.replace("[", "");
+			result = result.replace("]", "");
+			if ("".equals(result)) {
+				result = "None";
+			}
+		} else {
+			result = "None";
+		}
+		return result;
+	}
+
     public String getLabelPosition() {
         return labelPosition;
     }

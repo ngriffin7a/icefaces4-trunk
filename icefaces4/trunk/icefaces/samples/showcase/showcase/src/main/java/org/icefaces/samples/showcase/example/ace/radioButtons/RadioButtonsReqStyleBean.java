@@ -41,11 +41,7 @@ import java.util.*;
             @ExampleResource(type = ResourceType.java,
                     title="RadioButtonsReqStyleBean.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/radioButtons/RadioButtonsReqStyleBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="RadioButtonsBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/radioButtons/RadioButtonsBean.java")
+                    "/example/ace/radioButtons/RadioButtonsReqStyleBean.java")
         }
 )
 @ManagedBean(name= RadioButtonsReqStyleBean.BEAN_NAME)
@@ -72,6 +68,36 @@ public class RadioButtonsReqStyleBean extends ComponentExampleImpl<RadioButtonsR
 	private List<String> selected2 = new ArrayList<String>();
 	public List<String> getSelected2() { return selected2; }
 	public void setSelected2(List<String> selected2) { this.selected2 = selected2; }
+
+	public String getSelected1String() {
+		String result = "";
+		if (selected1 != null) {
+			result += selected1.toString();
+			result = result.replace("[", "");
+			result = result.replace("]", "");
+			if ("".equals(result)) {
+				result = "None";
+			}
+		} else {
+			result = "None";
+		}
+		return result;
+	}
+
+	public String getSelected2String() {
+		String result = "";
+		if (selected2 != null) {
+			result += selected2.toString();
+			result = result.replace("[", "");
+			result = result.replace("]", "");
+			if ("".equals(result)) {
+				result = "None";
+			}
+		} else {
+			result = "None";
+		}
+		return result;
+	}
 
     private String reqColor = "redRS";
     private String optColor = "greenRS";

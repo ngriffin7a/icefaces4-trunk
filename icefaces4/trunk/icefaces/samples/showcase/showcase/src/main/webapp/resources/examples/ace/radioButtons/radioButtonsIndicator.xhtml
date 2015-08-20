@@ -84,11 +84,13 @@
 					<f:selectItem itemLabel="Five" itemValue="Five" />
 					<ace:ajax />
 				</ace:radioButtons>
+				</h:panelGroup>
+				<h:panelGroup>
 				<ace:message for="radioButtonsIndicator" />
 				</h:panelGroup>
 				<h:panelGroup>
 					The selected radio button is:
-					<h:outputText id="radioDescriptionIndicator" value="#{radioButtonsIndicatorBean.selected}" style="font-weight: bold;"/>
+					<h:outputText id="radioDescriptionIndicator" value="#{radioButtonsIndicatorBean.selectedString}" style="font-weight: bold;"/>
 				</h:panelGroup>
 			</h:panelGrid>
             </ace:panel>

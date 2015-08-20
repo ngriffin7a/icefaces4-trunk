@@ -42,11 +42,7 @@ import java.util.*;
             @ExampleResource(type = ResourceType.java,
                     title="CheckboxButtonsIndicatorBean.java",
                     resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/checkboxButtons/CheckboxButtonsIndicatorBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="CheckboxButtonsBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/checkboxButtons/CheckboxButtonsBean.java")
+                    "/example/ace/checkboxButtons/CheckboxButtonsIndicatorBean.java")
         }
 )
 @ManagedBean(name= CheckboxButtonsIndicatorBean.BEAN_NAME)
@@ -74,7 +70,22 @@ public class CheckboxButtonsIndicatorBean extends ComponentExampleImpl<CheckboxB
 	private List<String> selected = new ArrayList<String>();
 	public List<String> getSelected() { return selected; }
 	public void setSelected(List<String> selected) { this.selected = selected; }
-    
+
+	public String getSelectedString() {
+		String result = "";
+		if (selected != null) {
+			result += selected.toString();
+			result = result.replace("[", "");
+			result = result.replace("]", "");
+			if ("".equals(result)) {
+				result = "None";
+			}
+		} else {
+			result = "None";
+		}
+		return result;
+	}
+
     public boolean getRequired() {
         return required;
     }

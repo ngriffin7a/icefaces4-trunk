@@ -84,11 +84,13 @@
 					<f:selectItem itemLabel="Five" itemValue="Five" />
 					<ace:ajax />
 				</ace:checkboxButtons>
+				</h:panelGroup>
+				<h:panelGroup>
 				<ace:message for="checkboxButtonsIndicator" />
 				</h:panelGroup>
 				<h:panelGroup>
 					The selected checkbox is:
-					<h:outputText id="checkboxDescriptionIndicator" value="#{checkboxButtonsIndicatorBean.selected}" style="font-weight: bold;"/>
+					<h:outputText id="checkboxDescriptionIndicator" value="#{checkboxButtonsIndicatorBean.selectedString}" style="font-weight: bold;"/>
 				</h:panelGroup>
 			</h:panelGrid>
             </ace:panel>
