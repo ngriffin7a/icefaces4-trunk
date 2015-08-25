@@ -1584,6 +1584,41 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 
         _self.scrollLeft = scrollLeftVal;
         _self.scrollTop = scrollTopVal;
+
+		if (_self.cfg.liveScroll) {
+			if (scrollTopVal + $this.innerHeight() >= $this[0].scrollHeight) {
+
+				var options = {
+					source: _self.id,
+					render: _self.id,
+					execute: _self.id,
+					formId: _self.cfg.formId
+				};
+
+				options.onsuccess = function (responseXML) {
+					if (_self.cfg.scrollable) _self.resizeScrolling();
+				};
+
+				var params = {};
+				params[_self.id + "_paging"] = true;
+				params[_self.id + "_rows"] = _self.cfg.rowsPerPage;
+				params[_self.id + "_page"] = _self.cfg.initialPage + 1 + _self.cfg.liveScrollBufferPages;
+
+				options.params = params;
+
+	/*
+				if (table.behaviors) {
+					ice.ace.ab(ice.ace.extendAjaxArgs(
+						table.behaviors.page,
+						ice.ace.clearExecRender(options)
+					));
+					return;
+				}
+	*/
+
+				ice.ace.AjaxRequest(options);
+			}
+		}
     });
 
     this.scrollableResizeCallback = function () {
@@ -1596,21 +1631,6 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
     }
 
     ice.ace.jq(window).bind('resize', this.scrollableResizeCallback);
-
-    //live scroll
-    if (this.cfg.liveScroll) {
-        var bodyContainer = ice.ace.jq(this.jqId + ' > div > table > tbody[display!=none]');
-        this.scrollOffset = this.cfg.scrollStep;
-        this.shouldLiveScroll = true;
-
-        bodyContainer.scroll(function () {
-            if (_self.shouldLiveScroll) {
-                var $this = ice.ace.jq(this);
-                var sTop = $this.scrollTop(), sHeight = this.scrollHeight, viewHeight = $this.height();
-                if (sTop >= (sHeight - viewHeight)) _self.loadLiveRows();
-            }
-        });
-    }
 
     if (window.console && this.cfg.devMode) {
         console.log("ace:dataTable - ID: " + this.id + " - setupScrolling - " + (new Date().getTime() - startTime)/1000 + "s");
@@ -2642,39 +2662,6 @@ ice.ace.DataTable.prototype.reorderColumns = function (oldIndex, newIndex) {
             ));
             return;
         }
-
-    ice.ace.AjaxRequest(options);
-}
-
-ice.ace.DataTable.prototype.loadLiveRows = function () {
-    var options = {
-            source:this.id,
-            execute:this.id,
-            render:this.id,
-            formId:this.cfg.formId
-        },
-        _self = this;
-
-    options.onsuccess = function (responseXML) {
-        ice.ace.eachCustomUpdate(responseXML, function (id, content) {
-            if (id == _self.id) {
-                ice.ace.jq(_self.jqId + ' div.ui-datatable-scrollable-body:first > table > tbody > tr:last').after(content);
-                _self.scrollOffset += _self.cfg.scrollStep;
-                if (_self.scrollOffset == _self.cfg.scrollLimit) _self.shouldLiveScroll = false;
-            }
-            else ice.ace.AjaxResponse.updateElem(id, content);
-        });
-        _self.resizeScrolling();
-        if (_self.cfg.pinning) _self.initializePinningState();
-        return false;
-    };
-
-    var params = {};
-    params[this.id + "_scrolling"] = true;
-    params[this.id + "_scrollOffset"] = this.scrollOffset;
-    params['ice.customUpdate'] = this.id;
-
-    options.params = params;
 
     ice.ace.AjaxRequest(options);
 }
