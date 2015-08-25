@@ -32,39 +32,9 @@ public class OnlineStatusBean  implements Serializable {
     public static final String BEAN_NAME = "onlineStatusBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private String firstName;
-    private String lastName;
-    private String submittedValues="";
 
     public OnlineStatusBean() {
 
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void submitValues(ActionEvent ae){
-        this.submittedValues=" You have entered firstName="+firstName+" lastName="+lastName;
-    }
-
-    public String getSubmittedValues() {
-        return submittedValues;
-    }
-
-    public void setSubmittedValues(String submittedValues) {
-        this.submittedValues = submittedValues;
-    }
 }
