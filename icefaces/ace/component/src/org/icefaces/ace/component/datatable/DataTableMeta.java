@@ -352,6 +352,12 @@ public class DataTableMeta extends UIDataMeta {
             "to allow for appropriate sizing of the scrollable column and the associated header td.")
     private boolean scrollable;
 
+    @Property(tlddoc = "When set to true, a number of rows will be automatically loaded after reaching the bottom of the table scroll bar. The rows correspond to the data items in the data model that follow the rows currently displayed. The number of rows to load is determined by the 'rows' and the 'liveScrollBufferPages' attributes.")
+    private boolean liveScroll;
+
+    @Property(tlddoc = "When using live scrolling, the number of pages specified by this attribute will be rendered before and after the current page. This means that if the value is 2, there will be 5 pages worth of rows displayed on the table.", defaultValue="2")
+    private Integer liveScrollBufferPages;
+
 
 
     /* ##################################################################### */

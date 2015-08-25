@@ -323,6 +323,13 @@ public class DataTableRenderer extends CoreRenderer {
         String tbodyClass = hasData
                 ? DataTableConstants.DATA_CLASS
                 : DataTableConstants.EMPTY_DATA_CLASS;
+		if (table.isLiveScroll()) {
+			int originalFirst = first;
+			int bufferPages = table.getLiveScrollBufferPages();
+			first = first - (bufferPages * rows);
+			if (first < 0) first = 0;
+			rowCountToRender = (originalFirst - first) + rows + (bufferPages * rows);
+		}
 
         writer.startElement(HTML.TBODY_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId + "_body", null);
@@ -396,6 +403,7 @@ public class DataTableRenderer extends CoreRenderer {
         final boolean noHidden = Boolean.parseBoolean(context.getExternalContext().getInitParameter("org.icefaces.ace.datatable.scroll.nohiddencheck"));
         final String widgetVar = resolveWidgetVar(table);
         final boolean devMode = FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development);
+		final boolean liveScroll = table.isLiveScroll();
 
         JSONBuilder json = JSONBuilder.create().initialiseVar(widgetVar)
                 .beginFunction("ice.ace.create").item("DataTable").beginArray()
@@ -425,6 +433,12 @@ public class DataTableRenderer extends CoreRenderer {
         if (pinning) json.entry("pinning",true);
         if (scroll) {
             json.entry("scrollable", true);
+			if (liveScroll) {
+				json.entry("liveScroll", liveScroll);
+				json.entry("liveScrollBufferPages", table.getLiveScrollBufferPages());
+				json.entry("rowsPerPage", table.getRows());
+				json.entry("initialPage", table.getPage());
+			}
             json.entry("scrollStep", table.getRows());
             json.entry("scrollLimit", table.getRowCount());
             json.entry("scrollIE8Like7", scrollIE8Like7);
