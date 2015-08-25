@@ -77,6 +77,13 @@
                      <ui:include src="/resources/examples/mobile-splash.xhtml" />
                  </c:if>
              </mobi:view>
+             <!-- ONLINESTATUS -->
+             <mobi:view id="onlinestatus" title="Online Status" menuIcon="signal"
+                        divider="Status" navBarGroup="onlinestatus">
+                 <c:if test="#{viewManagerBean.view eq 'onlinestatus'}">
+                     <ui:include src="/resources/examples/mobi/onlinestatus/onlinestatus-example.xhtml"/>
+                 </c:if>
+             </mobi:view>
              
              <!-- Layout Components -->
              <!-- DATAVIEW -->
@@ -90,6 +97,7 @@
                  includeInMenu="false" navBarGroup="dataview">
                 <ui:include src="/resources/examples/mobi/dataview/dataview-desc.xhtml" />
              </mobi:view>
+
              <!-- FIELDSET -->
              <mobi:view id="fieldset" title="Fieldset" menuIcon="minus"
 				navBarGroup="fieldset">
@@ -145,7 +153,6 @@
                  includeInMenu="false" navBarGroup="viewsize">
                 <ui:include src="/resources/examples/mobi/viewsize/viewsize-desc.xhtml" />
              </mobi:view>
-
 
              <!-- Input Components -->
              <!-- DATE AND TIME -->
