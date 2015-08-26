@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Global logging</title>
+    <script type="text/javascript">
+
+        function scrollToBottom(element) {
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function log(logContainer, line) {
+            var elementDocument = logContainer.ownerDocument;
+            var eventNode = elementDocument.createElement('code');
+            var priority = line.substr(0, 5);
+            var color;
+            switch (priority) {
+                case '[debu': color = 'black'; break;
+                case '[info': color = 'blue'; break;
+                case '[warn': color = 'green'; break;
+                case '[erro': color = 'red'; break;
+                default: color = 'black'; break;
+            }
+            eventNode.style.color = color;
+            eventNode.style.display = 'block';
+            logContainer.appendChild(eventNode).appendChild(elementDocument.createTextNode(line));
+            scrollToBottom(logContainer);
+        }
+
+        function cleanupLogStore() {
+            localStorage['ice.localStorageLogHandler.store'] = '';
+            document.getElementById('messages').innerHTML = '';
+        }
+
+        window.addEventListener('load', function() {
+            var logContainer = document.getElementById('messages');
+            var previousMessages = localStorage['ice.localStorageLogHandler.store'];
+            var messages = previousMessages ? previousMessages.split('%%') : [];
+            for (var i = 0, l = messages.length; i < l; i++) {
+                log(logContainer, messages[i]);
+            }
+
+            function logListener(e) {
+                if (e.key == 'ice.localStorageLogHandler.currentEntry') {
+                    log(logContainer, e.newValue);
+                }
+            }
+
+            if (window.addEventListener) {
+                window.addEventListener('storage', logListener, false);
+            } else {
+                document.attachEvent('onstorage', logListener);//IE8
+            }
+        });
+
+        function enableLogging(enable) {
+            if (enable) {
+                localStorage.setItem('ice.localStorageLogHandler.enabled', 'yes');
+            } else {
+                localStorage.removeItem('ice.localStorageLogHandler.enabled');
+            }
+        }
+
+        function adjustSize(value) {
+            localStorage['ice.localStorageLogHandler.enabled'] = Number(value);
+        }
+
+        window.addEventListener('load', function() {
+            var logEnable = document.getElementById('logEnable');
+            var value = localStorage['ice.localStorageLogHandler.enabled'];
+            logEnable.checked = value ? true : false;
+
+            var logSize = document.getElementById('logSize');
+            logSize.value = localStorage['ice.localStorageLogHandler.maxSize'];
+        });
+    </script>
+</head>
+<body>
+<table style="border: 0px">
+    <tbody>
+    <tr>
+        <td colspan="2"><button onclick="cleanupLogStore();">Cleanup all log entries</button></td>
+    </tr>
+    <tr>
+        <td style="text-align: right;">Enable logging</td>
+        <td><input id="logEnable" type="checkbox" onclick="enableLogging(this.checked);"/></td>
+    </tr>
+    <tr>
+        <td style="text-align: right;">Maximum log size (kB)</td>
+        <td><input id="logSize" type="number" onclick="adjustSize(this.value);"/></td>
+    </tr>
+    </tbody>
+</table>
+<div style="overflow-y: scroll; height: 50em; border: 1px solid grey;" id="messages"/>
+</body>
+</html>

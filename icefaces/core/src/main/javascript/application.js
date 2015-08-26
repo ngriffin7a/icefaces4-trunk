@@ -215,8 +215,8 @@ if (!window.ice.icefaces) {
         namespace.onBeforeUnload = curry(onBeforeUnload, window);
         namespace.onUnload = curry(onUnload, window);
 
-        var handler = window.console && window.console.log ? ConsoleLogHandler(debug) : WindowLogHandler(debug, window.location.href);
-        var logger = Logger([ 'window' ], handler);
+        var handler = LocalStorageLogHandler(window.console && window.console.log ? ConsoleLogHandler(debug) : WindowLogHandler(debug, window.location.href));
+        var logger = Logger([ 'icefaces' ], handler);
         namespace.log = logger;
         namespace.log.debug = debug;
         namespace.log.info = info;
