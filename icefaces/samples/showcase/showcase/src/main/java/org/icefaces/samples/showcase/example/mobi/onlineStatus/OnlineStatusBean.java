@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.core.onlineStatus;
+package org.icefaces.samples.showcase.example.mobi.onlineStatus;
 
 
 import javax.annotation.PostConstruct;
