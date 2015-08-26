@@ -61,11 +61,12 @@
             </h:panelGroup>
 
             <h:panelGroup layout="block" styleClass="footer">
-                <p>&#xA9; 2014 ICEsoft Technologies Canada Corp.</p>
+                <p style="float: left;">&#xA9; <script language="javascript">document.write(new Date().getFullYear());</script> ICEsoft Technologies Canada Corp.</p>
+                <p style="float: right;">#{productUtil.productInfo}</p>
             </h:panelGroup>
 			<script type="text/javascript">
 				document.getElementById('container').setAttribute('aria-live', 'rude');
-			</script>			
+			</script>
         </h:panelGroup>
     </f:view>
 </h:body>
