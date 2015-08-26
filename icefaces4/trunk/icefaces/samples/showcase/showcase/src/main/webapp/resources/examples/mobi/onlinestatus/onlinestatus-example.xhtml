@@ -37,7 +37,7 @@
              background-color: red;
          }
          .onlineStyle {
-             background-color: blue;
+             background-color: green;
          }
     </style>
 
@@ -55,31 +55,44 @@
     <h:form  id="onlineStatusform" >
        <mobi:fieldsetGroup>
            <mobi:fieldsetRow styleClass="intro">
-               Change the device or desktop browser to work offline to view the effects of this component.
+               This component can show a change of style or fire javascript functions by detecting offline/online status.
+               Change your device or desktop browser to work offline to view the effects of this component.
            </mobi:fieldsetRow>
-           <mobi:fieldsetGroup>
-               The following div will appear red when offline and blue when online using onlineStyleClass and offlineStyleClass attributes.
-           </mobi:fieldsetGroup>
+       </mobi:fieldsetGroup>
+       <mobi:fieldsetGroup >
+           <mobi:fieldsetRow group="true">
+                   Examples
+           </mobi:fieldsetRow>
            <mobi:fieldsetRow>
+               Using onlineStyleClass and offlineStyleClass the background color changes for online or offline status
                <mobi:onlineStatus onlineStyleClass="onlineStyle" offlineStyleClass="offlineStyle"
                            onOnline="online('notificationElem');"
                            onOffline="offline('notificationElem');">
-               <strong> RED is OFFLINE, BLUE is OFFLINE  </strong>
+               <strong> RED is OFFLINE, GREEN is ONLINE  </strong>
                </mobi:onlineStatus>
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
+           </mobi:fieldsetRow>
+           <mobi:fieldsetRow>
                 The following div will be modified by javascript to show when offline
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
                <div id="notificationElem">
                </div>
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                Some of the ace components also support offline styling
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
+           </mobi:fieldsetRow>
+       </mobi:fieldsetGroup>
+       <mobi:fieldsetGroup>
+           <mobi:fieldsetRow group="true">
+               Component Support
+           </mobi:fieldsetRow>
+           <mobi:fieldsetRow>
+                ace pushButton supports offline styling with offlineDisabled attribute
                 <ace:pushButton id="pb1" value="ace pushButton" offlineDisabled="true"></ace:pushButton>
-            </mobi:fieldsetRow>
+           </mobi:fieldsetRow>
+           <mobi:fieldsetRow>
+               mobi flipswitch supports offline styling as well
+               <mobi:flipswitch id="fs1" labelOn="ON" labelOff="OFF"
+                       value="#{onlineStatusBean.flipswitch}"
+                       offlineDisabled="true">
+                    <ace:ajax execute="@this" render="@all"/>
+               </mobi:flipswitch>
+           </mobi:fieldsetRow>
        </mobi:fieldsetGroup>
 
     </h:form>

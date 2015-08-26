@@ -22,23 +22,29 @@
 
     <mobi:fieldsetGroup styleClass="exampleDescription">
         <mobi:fieldsetRow>
-        <p>the onlineStatus component renders an element that will allow css to change
-            depending on what the online state of the browser is.</p>
+           <p>the onlineStatus component renders an element that will allow css to change
+            depending on what the online state of the browser is.  It also has the abilit
+            to trigger javascript functions whenever the device or browser goess
+            offline or online
+           </p>
 
-        <p>Simply place the online stauts component on the page and define the class and/or js function
-            to define once the browser goes offline or online</p>
+           <p>Simply place the online status component on the page and define the class and/or js function
+           then place the device or browser offline to test</p>
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
 <pre>
-   <mobi:onlineStatus onlineStyleClass="onlineStyle" offlineStyleClass="offlineStyle"
-                      onOnline="online();" onOffline="offline();"/>
+&lt;mobi:onlineStatus
+    onlineStyleClass="onlineStyle"
+    offlineStyleClass="offlineStyle"
+    onOnline="online();"
+    onOffline="offline();"/&gt;
 </pre>
         </mobi:fieldsetRow>
         <mobi:fieldsetRow>
-        <p>
-            To test simply turn your device to airport mode or many desktop browsers allow you to
-            work offline as well (see offline browsing for your desktop browser).
-        </p>
+            <p>
+            To test simply turn your device to airport mode or desktop browsers to
+            work offline (see offline browsing for your desktop browser).
+            </p>
         </mobi:fieldsetRow>
     
     </mobi:fieldsetGroup>

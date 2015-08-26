@@ -31,10 +31,17 @@ import java.lang.String;
 public class OnlineStatusBean  implements Serializable {
     public static final String BEAN_NAME = "onlineStatusBean";
 	public String getBeanName() { return BEAN_NAME; }
-
+    private boolean flipswitch = false;
 
     public OnlineStatusBean() {
 
     }
 
+    public boolean isFlipswitch() {
+        return flipswitch;
+    }
+
+    public void setFlipswitch(boolean flipswitch) {
+        this.flipswitch = flipswitch;
+    }
 }
