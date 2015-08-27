@@ -1585,7 +1585,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
         _self.scrollLeft = scrollLeftVal;
         _self.scrollTop = scrollTopVal;
 
-		if (_self.cfg.liveScroll) {
+		if (_self.cfg.liveScroll) { // when reaching the bottom of the scroll bar
 			if (scrollTopVal + $this.innerHeight() >= $this[0].scrollHeight) {
 
 				var options = {
@@ -1613,6 +1613,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 					var bodyTable = _self.element.find(_self.scrollBodySelector).children('table');
 					var marginTop = bodyTable.css('margin-top');
 					bodyTable.css('margin-top', ((parseInt(marginTop, 10) + removedRowsHeights) + 'px'));
+					bodyTable.css('margin-bottom', '0');
 
 					if (_self.cfg.scrollable) _self.resizeScrolling();
 				};
@@ -1635,7 +1636,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 	*/
 
 				ice.ace.AjaxRequest(options);
-			} else if (scrollTopVal == 0) {
+			} else if (scrollTopVal == 0) { // when reaching the top of the scroll bar
 
 				var options = {
 					source: _self.id,
@@ -1671,6 +1672,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 						var bodyTable = _self.element.find(_self.scrollBodySelector).children('table');
 						var marginBottom = bodyTable.css('margin-bottom');
 						bodyTable.css('margin-bottom', ((parseInt(marginBottom, 10) + removedRowsHeights) + 'px'));
+						bodyTable.css('margin-top', '0');
 
 						// move scroll handle down to account for newly added rows
 						var rows = _self.element.find(_self.bodyTableSelector).children('tr');
@@ -1691,6 +1693,8 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 
 					ice.ace.AjaxRequest(options);
 				}
+			} else { // when scrolling to regions that were previously loaded
+
 			}
 		}
     });
