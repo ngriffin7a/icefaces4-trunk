@@ -19,15 +19,16 @@ package org.icefaces.samples.showcase.example.mobi.onlineStatus;
 
 import javax.annotation.PostConstruct;
 
-import javax.faces.bean.CustomScoped;
+
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.lang.String;
 
 
 @ManagedBean(name = OnlineStatusBean.BEAN_NAME)
-@CustomScoped(value = "#{window}")
+@SessionScoped
 public class OnlineStatusBean  implements Serializable {
     public static final String BEAN_NAME = "onlineStatusBean";
 	public String getBeanName() { return BEAN_NAME; }
