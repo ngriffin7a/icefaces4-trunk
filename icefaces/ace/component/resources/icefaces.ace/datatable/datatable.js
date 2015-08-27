@@ -1585,8 +1585,27 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
         _self.scrollLeft = scrollLeftVal;
         _self.scrollTop = scrollTopVal;
 
-		if (_self.cfg.liveScroll) { // when reaching the bottom of the scroll bar
-			if (scrollTopVal + $this.innerHeight() >= $this[0].scrollHeight) {
+		if (_self.cfg.liveScroll) {
+
+			var bodyTable = _self.element.find(_self.scrollBodySelector).children('table');
+			var scrollBody = _self.element.find(_self.scrollBodySelector);
+			var scrollBodyHeight = scrollBody.height();
+			var marginTop = (parseInt(bodyTable.css('margin-top')));
+			var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+			var currentRowsHeight = 0;
+			var i;
+			for (i = 0; i < rows.length; i++) {
+				currentRowsHeight += ice.ace.jq(rows.get(i)).outerHeight();
+			}
+			var aboveCurrentRows = false;
+			var belowCurrentRows = false;
+			if (scrollTopVal > 0 && scrollTopVal < marginTop) {
+				aboveCurrentRows = true;
+			} else if (scrollTopVal > (marginTop + currentRowsHeight - scrollBodyHeight)) {
+				belowCurrentRows = true;
+			}
+
+			if (belowCurrentRows || ((scrollTopVal + $this.innerHeight()) >= $this[0].scrollHeight)) { // when reaching the bottom of the scroll bar
 
 				var options = {
 					source: _self.id,
@@ -1636,7 +1655,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 	*/
 
 				ice.ace.AjaxRequest(options);
-			} else if (scrollTopVal == 0) { // when reaching the top of the scroll bar
+			} else if (aboveCurrentRows || scrollTopVal == 0) { // when reaching the top of the scroll bar
 
 				var options = {
 					source: _self.id,
@@ -1693,8 +1712,6 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 
 					ice.ace.AjaxRequest(options);
 				}
-			} else { // when scrolling to regions that were previously loaded
-
 			}
 		}
     });
