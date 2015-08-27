@@ -1635,6 +1635,62 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 	*/
 
 				ice.ace.AjaxRequest(options);
+			} else if (scrollTopVal == 0) {
+
+				var options = {
+					source: _self.id,
+					render: _self.id,
+					execute: _self.id,
+					formId: _self.cfg.formId
+				};
+
+				// compute heights of removed rows
+				var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+				var currentPage = _self.cfg.initialPage;
+				currentPage = currentPage == 0 ? 1 : currentPage;
+				var bufferPages = _self.cfg.liveScrollBufferPages;
+
+				if (currentPage > bufferPages) {
+					var rowsPerPage = _self.cfg.rowsPerPage;
+					var numRemovedRows = rowsPerPage * (bufferPages + 1);
+					var removedRowsHeights = 0;
+					var i;
+					for (i = -1; i >= -numRemovedRows; i--) {
+						removedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+					}
+
+					var params = {};
+					params[_self.id + "_paging"] = true;
+					params[_self.id + "_rows"] = rowsPerPage;
+					params[_self.id + "_page"] = currentPage - 1 - bufferPages;
+
+					options.params = params;
+
+					options.onsuccess = function (responseXML) {
+						// add margin to table element to account for removed rows
+						var bodyTable = _self.element.find(_self.scrollBodySelector).children('table');
+						var marginBottom = bodyTable.css('margin-bottom');
+						bodyTable.css('margin-bottom', ((parseInt(marginBottom, 10) + removedRowsHeights) + 'px'));
+
+						// move scroll handle down to account for newly added rows
+						var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+						var bufferPages = _self.cfg.liveScrollBufferPages;
+						var currentPage = _self.cfg.initialPage - 1 - bufferPages;
+						currentPage = currentPage == 0 ? 1 : currentPage;
+						var rowsPerPage = _self.cfg.rowsPerPage;
+						var numAddedRows = rowsPerPage * (currentPage > bufferPages ? bufferPages + 1 : currentPage);
+						var addedRowsHeights = 0;
+						var j;
+						for (j = 0; j < numAddedRows; j++) {
+							addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+						}
+						_self.element.find(_self.scrollBodySelector).scrollTop(addedRowsHeights);
+
+						if (_self.cfg.scrollable) _self.resizeScrolling();
+					};
+
+					ice.ace.AjaxRequest(options);
+				}
 			}
 		}
     });
