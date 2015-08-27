@@ -1595,14 +1595,32 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 					formId: _self.cfg.formId
 				};
 
+				// compute heights of removed rows
+				var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+				var currentPage = _self.cfg.initialPage;
+				currentPage = currentPage == 0 ? 1 : currentPage;
+				var bufferPages = _self.cfg.liveScrollBufferPages;
+				var rowsPerPage = _self.cfg.rowsPerPage;
+				var numRemovedRows = rowsPerPage * (currentPage > bufferPages ? bufferPages + 1 : currentPage);
+				var removedRowsHeights = 0;
+				var i;
+				for (i = 0; i < numRemovedRows; i++) {
+					removedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+				}
+
 				options.onsuccess = function (responseXML) {
+					// add margin to table element to account for removed rows
+					var bodyTable = _self.element.find(_self.scrollBodySelector).children('table');
+					var marginTop = bodyTable.css('margin-top');
+					bodyTable.css('margin-top', ((parseInt(marginTop, 10) + removedRowsHeights) + 'px'));
+
 					if (_self.cfg.scrollable) _self.resizeScrolling();
 				};
 
 				var params = {};
 				params[_self.id + "_paging"] = true;
-				params[_self.id + "_rows"] = _self.cfg.rowsPerPage;
-				params[_self.id + "_page"] = _self.cfg.initialPage + 1 + _self.cfg.liveScrollBufferPages;
+				params[_self.id + "_rows"] = rowsPerPage;
+				params[_self.id + "_page"] = currentPage + 1 + bufferPages;
 
 				options.params = params;
 
