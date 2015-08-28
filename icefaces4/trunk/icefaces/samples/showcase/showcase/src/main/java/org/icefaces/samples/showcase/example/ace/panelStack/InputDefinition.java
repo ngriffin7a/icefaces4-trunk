@@ -25,15 +25,6 @@ public class InputDefinition implements Serializable{
     private Object value;
     private boolean booleanVal = false;
 
-    public boolean isFacelet() {
-        return facelet;
-    }
-
-    public void setFacelet(boolean facelet) {
-        this.facelet = facelet;
-    }
-
-    private boolean facelet = true;
 
     public InputDefinition(String type, String title,  Object value){
     	this.type = type;

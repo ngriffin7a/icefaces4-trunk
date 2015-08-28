@@ -61,7 +61,6 @@ public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTabl
     private List<InputDefinition> queryList3 = new ArrayList<InputDefinition>();
     private List<InputDefinition> selectedQuery;
     private String selectedValue = "1";
-    private boolean facelet = true;
 	private Date selectedDate = new Date(System.currentTimeMillis());
 
     public PanelStackDataTable() {
@@ -104,15 +103,7 @@ public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTabl
     public void setSelectedQuery(List<InputDefinition> selectedList) {
         this.selectedQuery = selectedList;
     }
-
-    public boolean isFacelet() {
-        return facelet;
-    }
-
-    public void setFacelet(boolean facelet) {
-        this.facelet = facelet;
-    }
-	
+   
 	public String getSelectedValue() {
         return selectedValue;
     }

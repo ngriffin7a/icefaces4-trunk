@@ -52,40 +52,35 @@
                          value="#{panelStackDataTable.selectedQuery}">                 
               <h:column>               
                 <ace:panelStack id="stack1" selectedId="#{input.type}">
-                    <ace:stackPane id="TEXTENTRY"
-                                   facelet="#{panelStackDataTable.facelet}">
+                    <ace:stackPane id="TEXTENTRY"  >                                  
                         <ace:panel header="#{input.title}">
                             <ace:textEntry id="textEntryIn" value="#{input.value}">
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:textEntry>
                         </ace:panel>
                     </ace:stackPane>
-                    <ace:stackPane id="CHECKBOX"
-                                   facelet="#{panelStackDataTable.facelet}">
+                    <ace:stackPane id="CHECKBOX" >
                         <ace:panel header="#{input.title}">
                             <ace:checkboxButton id="checkboxButtonIn" value="#{input.booleanVal}">
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:checkboxButton>
                         </ace:panel>
                     </ace:stackPane>
-                    <ace:stackPane id="RADIO" parentSelectedId="#{input.type}"
-                                   facelet="#{panelStackDataTable.facelet}">
+                    <ace:stackPane id="RADIO" >
                         <ace:panel header="#{input.title}">
                             <ace:radioButton id="radioButtonIn" value="#{input.booleanVal}">
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:radioButton>
                         </ace:panel>
                     </ace:stackPane>
-                    <ace:stackPane id="TEXTAREAENTRY" parentSelectedId="#{input.type}"
-                                   facelet="#{panelStackDataTable.facelet}">
+                    <ace:stackPane id="TEXTAREAENTRY" >
                         <ace:panel header="#{input.title}">
                             <ace:textAreaEntry id="textAreaEntryIn" value="#{input.value}">
                                 <ace:ajax execute="@this" render="@all"/>
                             </ace:textAreaEntry>
                         </ace:panel>
                     </ace:stackPane>
-                    <ace:stackPane id="DATE" parentSelectedId="#{input.type}"
-                                   facelet="#{panelStackDataTable.facelet}">
+                    <ace:stackPane id="DATE" >
                         <ace:panel header="#{input.title}">
                             <ace:dateTimeEntry id="dateTimeEntryIn" value="#{panelStackDataTable.selectedDate}">                              
                                 <ace:ajax execute="@this" render="@all"/>
@@ -95,7 +90,6 @@
                 </ace:panelStack>
             </h:column>
             </h:dataTable>
-           <ace:message for="stack1"/>			
         </h:form>
 		</ace:panel>
     </ui:define>

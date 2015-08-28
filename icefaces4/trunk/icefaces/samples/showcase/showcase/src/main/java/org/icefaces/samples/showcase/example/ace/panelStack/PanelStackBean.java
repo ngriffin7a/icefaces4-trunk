@@ -68,7 +68,6 @@ public class PanelStackBean extends ComponentExampleImpl<PanelStackBean> impleme
 	public String getBeanName() { return BEAN_NAME; }
     
     private String currentId="stackPane1"; // the id of the currently selected stackPane
-    private boolean facelet = false;
     private String text1;
     private String text2;
     private String comboBox;
@@ -123,12 +122,5 @@ public class PanelStackBean extends ComponentExampleImpl<PanelStackBean> impleme
         this.currentId = currentId;
     }
 
-    public boolean isFacelet() {
-        return facelet;
-    }
-
-    public void setFacelet(boolean facelet) {
-        this.facelet = facelet;
-    }
-
+   
 }
