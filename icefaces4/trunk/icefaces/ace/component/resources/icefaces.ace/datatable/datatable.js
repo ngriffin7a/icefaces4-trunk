@@ -1559,6 +1559,13 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
     if (this.scrollTop) scrollBody.scrollTop(this.scrollTop);
     if (this.scrollLeft) scrollBody.scrollLeft(this.scrollLeft);
 
+	if (this.cfg.liveScroll) {
+		// just to allow live scrolling up right away
+		if (!this.scrollTop || (scrollBody.scrollTop() == 0)) scrollBody.scrollTop(1);
+
+		this.addFillerSpaceToEnableScrolling();
+	}
+
     scrollBody.bind('scroll', function () {
         var $this = ice.ace.jq(this),
             $header = ice.ace.jq(_self.jqId + ' > div.ui-datatable-scrollable-header'),
@@ -1587,25 +1594,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 
 		if (_self.cfg.liveScroll) {
 
-			var bodyTable = _self.element.find(_self.scrollBodySelector).children('table');
-			var scrollBody = _self.element.find(_self.scrollBodySelector);
-			var scrollBodyHeight = scrollBody.height();
-			var marginTop = (parseInt(bodyTable.css('margin-top')));
-			var rows = _self.element.find(_self.bodyTableSelector).children('tr');
-			var currentRowsHeight = 0;
-			var i;
-			for (i = 0; i < rows.length; i++) {
-				currentRowsHeight += ice.ace.jq(rows.get(i)).outerHeight();
-			}
-			var aboveCurrentRows = false;
-			var belowCurrentRows = false;
-			if (scrollTopVal > 0 && scrollTopVal < marginTop) {
-				aboveCurrentRows = true;
-			} else if (scrollTopVal > (marginTop + currentRowsHeight - scrollBodyHeight)) {
-				belowCurrentRows = true;
-			}
-
-			if (belowCurrentRows || ((scrollTopVal + $this.innerHeight()) >= $this[0].scrollHeight)) { // when reaching the bottom of the scroll bar
+			if ((scrollTopVal + $this.innerHeight()) >= $this[0].scrollHeight) { // when reaching the bottom of the scroll bar
 
 				var options = {
 					source: _self.id,
@@ -1614,25 +1603,28 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 					formId: _self.cfg.formId
 				};
 
-				// compute heights of removed rows
-				var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+				var rowsPerPage = _self.cfg.rowsPerPage;
 				var currentPage = _self.cfg.initialPage;
 				currentPage = currentPage == 0 ? 1 : currentPage;
 				var bufferPages = _self.cfg.liveScrollBufferPages;
-				var rowsPerPage = _self.cfg.rowsPerPage;
-				var numRemovedRows = rowsPerPage * (currentPage > bufferPages ? bufferPages + 1 : currentPage);
-				var removedRowsHeights = 0;
-				var i;
-				for (i = 0; i < numRemovedRows; i++) {
-					removedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
-				}
 
 				options.onsuccess = function (responseXML) {
-					// add margin to table element to account for removed rows
-					var bodyTable = _self.element.find(_self.scrollBodySelector).children('table');
-					var marginTop = bodyTable.css('margin-top');
-					bodyTable.css('margin-top', ((parseInt(marginTop, 10) + removedRowsHeights) + 'px'));
-					bodyTable.css('margin-bottom', '0');
+					_self.addFillerSpaceToEnableScrolling();
+
+					// move scroll handle up to account for newly added rows
+					var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+					var bufferPages = _self.cfg.liveScrollBufferPages;
+					var currentPage = _self.cfg.initialPage + 1 + bufferPages;
+					var rowsPerPage = _self.cfg.rowsPerPage;
+					var numAddedRows = rowsPerPage * (bufferPages + 1);
+					var addedRowsHeights = 0;
+					var i;
+					for (i = 0; i < numAddedRows; i++) {
+						addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+					}
+					var scrollChange = $this[0].scrollHeight - addedRowsHeights - $this.innerHeight();
+					scrollChange = scrollChange < 1 ? 1 : scrollChange; // prevent an immediate upwards live scroll request
+					_self.element.find(_self.scrollBodySelector).scrollTop();
 
 					if (_self.cfg.scrollable) _self.resizeScrolling();
 				};
@@ -1655,7 +1647,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 	*/
 
 				ice.ace.AjaxRequest(options);
-			} else if (aboveCurrentRows || scrollTopVal == 0) { // when reaching the top of the scroll bar
+			} else if (scrollTopVal == 0) { // when reaching the top of the scroll bar
 
 				var options = {
 					source: _self.id,
@@ -1665,19 +1657,12 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 				};
 
 				// compute heights of removed rows
-				var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+				var rowsPerPage = _self.cfg.rowsPerPage;
 				var currentPage = _self.cfg.initialPage;
 				currentPage = currentPage == 0 ? 1 : currentPage;
 				var bufferPages = _self.cfg.liveScrollBufferPages;
 
 				if (currentPage > bufferPages) {
-					var rowsPerPage = _self.cfg.rowsPerPage;
-					var numRemovedRows = rowsPerPage * (bufferPages + 1);
-					var removedRowsHeights = 0;
-					var i;
-					for (i = -1; i >= -numRemovedRows; i--) {
-						removedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
-					}
 
 					var params = {};
 					params[_self.id + "_paging"] = true;
@@ -1687,11 +1672,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 					options.params = params;
 
 					options.onsuccess = function (responseXML) {
-						// add margin to table element to account for removed rows
-						var bodyTable = _self.element.find(_self.scrollBodySelector).children('table');
-						var marginBottom = bodyTable.css('margin-bottom');
-						bodyTable.css('margin-bottom', ((parseInt(marginBottom, 10) + removedRowsHeights) + 'px'));
-						bodyTable.css('margin-top', '0');
+						_self.addFillerSpaceToEnableScrolling();
 
 						// move scroll handle down to account for newly added rows
 						var rows = _self.element.find(_self.bodyTableSelector).children('tr');
@@ -1701,8 +1682,8 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 						var rowsPerPage = _self.cfg.rowsPerPage;
 						var numAddedRows = rowsPerPage * (currentPage > bufferPages ? bufferPages + 1 : currentPage);
 						var addedRowsHeights = 0;
-						var j;
-						for (j = 0; j < numAddedRows; j++) {
+						var i;
+						for (i = 0; i < numAddedRows; i++) {
 							addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
 						}
 						_self.element.find(_self.scrollBodySelector).scrollTop(addedRowsHeights);
@@ -1730,6 +1711,23 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
     if (window.console && this.cfg.devMode) {
         console.log("ace:dataTable - ID: " + this.id + " - setupScrolling - " + (new Date().getTime() - startTime)/1000 + "s");
     }
+}
+
+ice.ace.DataTable.prototype.addFillerSpaceToEnableScrolling = function () {
+
+	var scrollBody = this.element.find(this.scrollBodySelector);
+	var scrollBodyHeight = scrollBody.height();
+	var rows = this.element.find(this.bodyTableSelector).children('tr');
+	var currentRowsHeight = 0;
+	var i;
+	for (i = 0; i < rows.length; i++) {
+		currentRowsHeight += ice.ace.jq(rows.get(i)).outerHeight();
+	}
+	if (currentRowsHeight <= scrollBodyHeight) {
+		var bodyTable = this.element.find(this.scrollBodySelector).children('table');
+		var marginBottom = scrollBodyHeight - currentRowsHeight + 10;
+		bodyTable.css('margin-bottom', marginBottom + 'px');
+	}
 }
 
 ice.ace.DataTable.prototype.setupResizableColumns = function () {
