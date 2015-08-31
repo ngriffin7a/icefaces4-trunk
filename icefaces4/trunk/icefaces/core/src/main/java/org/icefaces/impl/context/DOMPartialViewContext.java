@@ -144,7 +144,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                 facesContext.setResponseWriter(writer);
 
                 Document oldDOM = writer.getOldDocument();
-                applyBrowserChanges(ec.getRequestParameterValuesMap(), oldDOM);
+                applyBrowserChanges(getRenderIds(), getExecuteIds(), ec.getRequestParameterValuesMap(), oldDOM);
                 writer.setDocument(oldDOM);
                 writer.saveOldDocument();
 
@@ -505,7 +505,27 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         return renderCallback;
     }
 
-    private void applyBrowserChanges(Map parameters, Document document) {
+    private boolean shouldApplyChange(Collection<String> ids, String id, Document document) {
+        if (ids.contains("@all")) {
+            return true;
+        } else if (ids.contains(id)) {
+            return true;
+        } else {
+            Node cursor = document.getElementById(id).getParentNode();
+            while (cursor != null && cursor instanceof Element) {
+                final String parentID = ((Element) cursor).getAttribute("id");
+                if (ids.contains(parentID)) {
+                    return true;
+                } else {
+                    cursor = cursor.getParentNode();
+                }
+            }
+
+            return false;
+        }
+    }
+
+    private void applyBrowserChanges(Collection<String> renderIds, Collection<String> executeIds, Map parameters, Document document) {
         if (null == document) {
             //partial rendering should be valid in this case
             //since complete partial subtrees will be produced by the diff
@@ -518,7 +538,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
             String id = inputElement.getAttribute("id");
             if (!"".equals(id)) {
                 String name;
-                if (parameters.containsKey(id)) {
+                if (parameters.containsKey(id) && shouldApplyChange(executeIds, id, document) && shouldApplyChange(renderIds, id, document)) {
 
                     //The PortletFaces Bridge may return null rather than an empty
                     //string as the default so we guard against that.
@@ -539,7 +559,8 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                             inputElement.setAttribute("value", value);
                         }
                     }
-                } else if (!"".equals(name = inputElement.getAttribute("name")) && parameters.containsKey(name)) {
+                } else if (!"".equals(name = inputElement.getAttribute("name")) &&
+                        parameters.containsKey(name) && shouldApplyChange(executeIds, id, document) && shouldApplyChange(renderIds, id, document)) {
                     String type = inputElement.getAttribute("type");
                     if (type != null && (type.equals("checkbox") || type.equals("radio"))) {
                         String currValue = inputElement.getAttribute("value");
@@ -582,7 +603,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         for (int i = 0; i < textareaElementsLength; i++) {
             Element textareaElement = (Element) textareaElements.item(i);
             String id = textareaElement.getAttribute("id");
-            if (!"".equals(id) && parameters.containsKey(id)) {
+            if (!"".equals(id) && parameters.containsKey(id) && shouldApplyChange(executeIds, id, document) && shouldApplyChange(renderIds, id, document)) {
                 String value = ((String[]) parameters.get(id))[0];
                 Node firstChild = textareaElement.getFirstChild();
                 if (null != firstChild) {
@@ -604,7 +625,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         for (int i = 0; i < selectElementsLength; i++) {
             Element selectElement = (Element) selectElements.item(i);
             String id = selectElement.getAttribute("id");
-            if (!"".equals(id) && parameters.containsKey(id)) {
+            if (!"".equals(id) && parameters.containsKey(id) && shouldApplyChange(executeIds, id, document) && shouldApplyChange(renderIds, id, document)) {
                 List values = Arrays.asList((String[]) parameters.get(id));
 
                 NodeList optionElements =
