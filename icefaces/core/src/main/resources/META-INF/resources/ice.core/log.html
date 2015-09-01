@@ -28,12 +28,19 @@
         }
 
         function cleanupLogStore() {
-            localStorage['ice.localStorageLogHandler.store'] = '';
-            document.getElementById('messages').innerHTML = '';
+            if (window.localStorage) {
+                localStorage['ice.localStorageLogHandler.store'] = '';
+                document.getElementById('messages').innerHTML = '';
+            }
         }
 
-        window.addEventListener('load', function() {
+        function loadRecordedLogs() {
             var logContainer = document.getElementById('messages');
+            if (!window.localStorage) {
+                log(logContainer, "[warn] HTML5 local storage feature is missing. Cannot record or display the logs.");
+                return;
+            }
+
             var previousMessages = localStorage['ice.localStorageLogHandler.store'];
             var messages = previousMessages ? previousMessages.split('%%') : [];
             for (var i = 0, l = messages.length; i < l; i++) {
@@ -51,28 +58,40 @@
             } else {
                 document.attachEvent('onstorage', logListener);//IE8
             }
-        });
+        }
 
         function enableLogging(enable) {
-            if (enable) {
-                localStorage.setItem('ice.localStorageLogHandler.enabled', 'yes');
-            } else {
-                localStorage.removeItem('ice.localStorageLogHandler.enabled');
+            if (window.localStorage) {
+                if (enable) {
+                    localStorage.setItem('ice.localStorageLogHandler.enabled', 'yes');
+                } else {
+                    localStorage.removeItem('ice.localStorageLogHandler.enabled');
+                }
             }
         }
 
         function adjustSize(value) {
-            localStorage['ice.localStorageLogHandler.enabled'] = Number(value);
+            if (window.localStorage) {
+                localStorage['ice.localStorageLogHandler.enabled'] = Number(value);
+            }
         }
 
-        window.addEventListener('load', function() {
+        function initControls() {
             var logEnable = document.getElementById('logEnable');
-            var value = localStorage['ice.localStorageLogHandler.enabled'];
+            var value = window.localStorage ? localStorage['ice.localStorageLogHandler.enabled'] : false;
             logEnable.checked = value ? true : false;
 
             var logSize = document.getElementById('logSize');
-            logSize.value = localStorage['ice.localStorageLogHandler.maxSize'];
-        });
+            logSize.value = window.localStorage ? (localStorage['ice.localStorageLogHandler.maxSize'] || 500) : 0;
+        }
+
+        if (window.attachEvent) {
+            window.attachEvent('onload', loadRecordedLogs);
+            window.attachEvent('onload', initControls);
+        } else {
+            window.addEventListener('load', loadRecordedLogs);
+            window.addEventListener('load', initControls);
+        }
     </script>
 </head>
 <body>
