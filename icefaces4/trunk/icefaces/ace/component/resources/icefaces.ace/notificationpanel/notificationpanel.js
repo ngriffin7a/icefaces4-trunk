@@ -35,10 +35,8 @@ ice.ace.NotificationBar = function(id, cfg) {
     ice.ace.jq(this.jq).css(this.cfg.position, '0');
     ice.ace.jq(this.jq).css("left", '0');
 
-//	jQuery(this.jq).appendTo(jQuery('body'));
-
     if (this.cfg.visible) {
-        ice.ace.jq(this.jq).css({'display':'block'});
+        this.show();
     } else {
         ice.ace.jq(this.jq).css({'display':'none'});
     }
