@@ -207,4 +207,11 @@ public class DateTimeEntryMeta extends UIInputMeta {
 
     @Property(defaultValue = "false", tlddoc = "The Today (or Now) button can be set to navigate the popup to the current month without selecting date/time, or select the date/time as well.")
     private boolean todayNowButtonsAlsoSelect;
+
+    @Property(tlddoc = "Set a minimum selectable date and time. Must be java.util.Date object. Default is no limit.")
+    private Object minDateTime;
+
+    @Property(tlddoc = "Set a maximum selectable date and time. Must be java.util.Date object. Default is no limit.")
+    private Object maxDateTime;
+
 }
