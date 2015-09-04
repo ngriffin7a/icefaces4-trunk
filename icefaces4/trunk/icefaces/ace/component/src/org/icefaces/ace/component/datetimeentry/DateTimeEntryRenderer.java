@@ -28,17 +28,22 @@
 package org.icefaces.ace.component.datetimeentry;
 
 import java.io.IOException;
+import java.lang.Object;
+import java.lang.System;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.FacesException;
 
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
@@ -221,6 +226,9 @@ public class DateTimeEntryRenderer extends InputRenderer {
         boolean timeOnly = dateTimeEntry.isTimeOnly();
         StringBuilder script = new StringBuilder();
         JSONBuilder json = JSONBuilder.create();
+        //minDateTime takes precedence for setting minDate, minHour and minMinute
+        //likewise maxDateTime takes precendence for setting maxDate, maxHour and maxMinute
+
 
         script.append("ice.ace.jq(function(){").append(resolveWidgetVar(dateTimeEntry)).append(" = new ");
 
@@ -235,9 +243,24 @@ public class DateTimeEntryRenderer extends InputRenderer {
 
         if(dateTimeEntry.getPages() != 1)
             json.entry("numberOfMonths", dateTimeEntry.getPages());
-
-        json.entryNonNullValue("minDate", DateTimeEntryUtils.getDateAsString(dateTimeEntry, dateTimeEntry.getMindate()))
-            .entryNonNullValue("maxDate", DateTimeEntryUtils.getDateAsString(dateTimeEntry, dateTimeEntry.getMaxdate()))
+        Object minDate = dateTimeEntry.getMindate();
+        Object maxDate = dateTimeEntry.getMaxdate();
+        if (dateTimeEntry.getMinDateTime() !=null ){
+            if (dateTimeEntry.getMinDateTime() instanceof Date){
+                minDate = dateTimeEntry.getMinDateTime();
+            }else  {
+                throw new FacesException("Attribute minDateTime must be type java.util.Date");
+            }
+        }
+         if (dateTimeEntry.getMaxDateTime() !=null ){
+            if (dateTimeEntry.getMaxDateTime() instanceof Date){
+                maxDate = dateTimeEntry.getMaxDateTime();
+            }else  {
+                throw new FacesException("Attribute maxDateTime must be type java.util.Date");
+            }
+        }
+        json.entryNonNullValue("minDate", DateTimeEntryUtils.getDateAsString(dateTimeEntry, minDate))
+            .entryNonNullValue("maxDate", DateTimeEntryUtils.getDateAsString(dateTimeEntry, maxDate))
             .entryNonNullValue("showButtonPanel", dateTimeEntry.isShowButtonPanel())
             .entryNonNullValue("yearRange", dateTimeEntry.getYearRange());
 
@@ -270,6 +293,43 @@ public class DateTimeEntryRenderer extends InputRenderer {
         }
 
         //time
+        //check to see if minDateTime and maxDateTime are available and get min and max hour and minute from them
+        int minHour = dateTimeEntry.getMinHour();
+        int minMinute = dateTimeEntry.getMinMinute();
+        int minSecond = dateTimeEntry.getMinSecond();
+        if (dateTimeEntry.getMinDateTime() !=null ){
+            if (dateTimeEntry.getMinDateTime() instanceof java.util.Date){
+                Calendar calendar  = Calendar.getInstance();
+                calendar.setTime((Date)dateTimeEntry.getMinDateTime());
+                minHour = calendar.get(Calendar.HOUR_OF_DAY);
+                minMinute = calendar.get(Calendar.MINUTE);
+                minSecond = calendar.get(Calendar.SECOND);
+                System.out.println("from minDateTime:-  minHour="+minHour+" minMinute="+minMinute+" minSecond="+minSecond);
+            }else
+                System.out.println(" minDateTime must be java.util.Date");
+        } else {
+
+            System.out.println("other:-  minHour="+minHour+" minMinute="+minMinute+" minSecond="+minSecond);
+        }
+        int maxHour = dateTimeEntry.getMaxHour();
+        int maxMinute= dateTimeEntry.getMaxMinute();
+        int maxSecond = dateTimeEntry.getMaxSecond();
+        if (dateTimeEntry.getMaxDateTime() !=null){
+            if (dateTimeEntry.getMaxDateTime() instanceof java.util.Date){
+                Calendar calendar  = Calendar.getInstance();
+                Date date =  (Date)dateTimeEntry.getMaxDateTime();
+                calendar.setTime(date);
+                maxHour = calendar.get(Calendar.HOUR_OF_DAY);
+                maxMinute = calendar.get(Calendar.MINUTE);
+                maxSecond = calendar.get(Calendar.SECOND);
+                System.out.println("from maxDateTime:-  maxHour="+maxHour+" maxMinute="+maxMinute+" maxSecond="+maxSecond);
+            }else {
+                System.out.println("maxDateTime attribute must be of type java.util.Date") ;
+            }
+        }else {
+
+            System.out.println("other:-  maxHour="+maxHour+" maxMinute="+maxMinute+" maxSecond="+maxSecond);
+        }
         if(dateTimeEntry.hasTime()) {
             json.entry("timeOnly", timeOnly)
 
@@ -279,12 +339,12 @@ public class DateTimeEntryRenderer extends InputRenderer {
             .entry("stepSecond", dateTimeEntry.getStepSecond())
 
             //minmax
-            .entry("hourMin", dateTimeEntry.getMinHour())
-            .entry("hourMax", dateTimeEntry.getMaxHour())
-            .entry("minuteMin", dateTimeEntry.getMinMinute())
-            .entry("minuteMax", dateTimeEntry.getMaxMinute())
-            .entry("secondMin", dateTimeEntry.getMinSecond())
-            .entry("secondMax", dateTimeEntry.getMaxSecond());
+            .entry("hourMin", minHour)
+            .entry("hourMax", maxHour)
+            .entry("minuteMin", minMinute)
+            .entry("minuteMax", maxMinute)
+            .entry("secondMin", minSecond)
+            .entry("secondMax", maxSecond);
         }
 
         encodeClientBehaviors(context, dateTimeEntry, json);
@@ -342,7 +402,6 @@ public class DateTimeEntryRenderer extends InputRenderer {
             format.setTimeZone(dateTimeEntry.calculateTimeZone());
             format.setLenient(dateTimeEntry.isLenientParsing());
             convertedValue = format.parse(submittedValue);
-            
             return convertedValue;
 
         } catch (ParseException e) {
