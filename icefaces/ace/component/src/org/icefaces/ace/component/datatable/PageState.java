@@ -50,6 +50,7 @@ public class PageState {
     public void apply(DataTable table) {
         table.setRows(rows);
         table.setPage(page);
-        table.setFirst((table.getPage() - 1) * table.getRows());
+		if (page == 0) table.setFirst(0);
+        else table.setFirst((table.getPage() - 1) * table.getRows());
     }
 }
