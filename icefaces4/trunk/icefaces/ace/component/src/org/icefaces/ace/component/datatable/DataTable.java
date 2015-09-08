@@ -1274,6 +1274,48 @@ public class DataTable extends DataTableBase implements Serializable {
         this.setFirst((this.getPage()-1) * rows);
     }
 
+	@Override
+	public int getRows() {
+		return getRows(false);
+	}
+
+	public int getRows(boolean includeBufferRows) {
+		if (isLiveScroll() && includeBufferRows) {
+			int rows = super.getRows();
+			int first = super.getFirst();
+			int rowCount = getRowCount();
+			int rowCountToUpdate = rows == 0 ? rowCount : rows;
+			int originalFirst = first;
+			int bufferPages = getLiveScrollBufferPages();
+			first = first - (bufferPages * rows);
+			if (first < 0) first = 0;
+			rowCountToUpdate = (originalFirst - first) + rows + (bufferPages * rows);
+
+			return rowCountToUpdate;
+		} else {
+			return super.getRows();
+		}
+	}
+
+	@Override
+	public int getFirst() {
+		return getFirst(false);
+	}
+
+	public int getFirst(boolean includeBufferRows) {
+		if (isLiveScroll() && includeBufferRows) {
+			int rows = super.getRows();
+			int first = super.getFirst();
+			int bufferPages = getLiveScrollBufferPages();
+			first = first - (bufferPages * rows);
+			if (first < 0) first = 0;
+
+			return first;
+		} else {
+			return super.getFirst();
+		}
+	}
+
     protected void processSorting() {
         Object value = getValue();
         if (value instanceof List) {
@@ -1599,7 +1641,7 @@ public class DataTable extends DataTableBase implements Serializable {
     private boolean visitRowsAndExpandedRows(VisitContext context, VisitCallback callback, boolean visitRows) {
         int rows = 0;
         int offset = 0;
-        int first = getFirst();
+        int first = getFirst(true);
 
         // The data model that is used in myFaces may have been generated
         // from incorrect getValue() results (I assume) causing it to
@@ -1621,7 +1663,7 @@ public class DataTable extends DataTableBase implements Serializable {
 
         if (visitRows) {
             stateMap = this.getStateMap();
-            rows = getRows();
+            rows = getRows(true);
             // If a indeterminate number of rows are shown, visit all rows.
             if (rows == 0) rows = getRowCount();
         }
@@ -2178,9 +2220,9 @@ public class DataTable extends DataTableBase implements Serializable {
 
         // Iterate over our UIColumn & PanelExpansion children, once per row
         int processed = 0;
-        int first = getFirst();
+        int first = getFirst(true);
         int rowIndex = first - 1;
-        int rows = getRows();
+        int rows = getRows(true);
         boolean inSubrows = false;
         PanelExpansion panelExpansion = getPanelExpansion();
         RowStateMap map = getStateMap();
