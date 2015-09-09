@@ -26,23 +26,43 @@
 * Contributors: ______________________ 
 * 
 */
-
+if (!window['ice']) window.ice = {};
+if (!window.ice['ace']) window.ice.ace = {};
+if (!ice.ace.NotificationsPanels) ice.ace.NotificationPanels = {};
 ice.ace.NotificationBar = function(id, cfg) {
     this.id = id;
     this.cfg = cfg;
-    this.jq = ice.ace.escapeClientId(this.id);
+    this.jqId = ice.ace.escapeClientId(id);
+    this.jq = ice.ace.jq(this.jqId);
+    this.init();
+    var _self = this;
+  //  this.jq.find("script").remove();
+    if (this.cfg.visible) {
+        if (this.barIsHidden()){
+            ice.ace.NotificationPanels[this.id].show();
+            ice.ace.jq(_self.jq).css({'display':'block'});
+        }
+    } else {
+        if (this.barIsBlock()){
+            ice.ace.NotificationPanels[this.id].hide();
+            ice.ace.jq(this.jq).css({'display':'none'});
+        }
+    }
+    ice.ace.NotificationPanels[this.id] = _self;
+};
 
+ice.ace.NotificationBar.prototype.barIsHidden = function() {
+    return ice.ace.jq(this.jq).css('display') == 'none';
+};
+
+ice.ace.NotificationBar.prototype.barIsBlock = function() {
+    return ice.ace.jq(this.jq).css('display') == 'block';
+};
+
+ice.ace.NotificationBar.prototype.init = function () {
     ice.ace.jq(this.jq).css(this.cfg.position, '0');
     ice.ace.jq(this.jq).css("left", '0');
-
-    if (this.cfg.visible) {
-        this.show();
-    } else {
-        ice.ace.jq(this.jq).css({'display':'none'});
-    }
-    if (this.cfg.ariaEnabled) {
-        ice.ace.jq(this.jq).attr("aria-hidden", !this.cfg.visible);
-    }
+    ice.ace.jq(this.jq).css({'display':'none'});
 };
 
 ice.ace.NotificationBar.prototype.show = function() {
@@ -52,7 +72,9 @@ ice.ace.NotificationBar.prototype.show = function() {
         ice.ace.jq(this.jq).fadeIn(this.cfg.effect);
     else if (this.cfg.effect === "none")
         ice.ace.jq(this.jq).show();
-    this.cfg.visible = true;
+    if (!this.cfg.visible) {
+        this.cfg.visible = true;
+    }
     if (this.cfg.ariaEnabled) {
         ice.ace.jq(this.jq).attr("aria-hidden", !this.cfg.visible);
     }
@@ -69,7 +91,9 @@ ice.ace.NotificationBar.prototype.hide = function() {
         ice.ace.jq(this.jq).fadeOut(this.cfg.effect);
     else if (this.cfg.effect === "none")
         ice.ace.jq(this.jq).hide();
-    this.cfg.visible = false;
+    if (this.cfg.visible){
+        this.cfg.visible = false;
+    }
     if (this.cfg.ariaEnabled) {
         ice.ace.jq(this.jq).attr("aria-hidden", !this.cfg.visible);
     }
