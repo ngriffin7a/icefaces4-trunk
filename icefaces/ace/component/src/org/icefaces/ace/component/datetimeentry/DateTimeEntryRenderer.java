@@ -304,12 +304,9 @@ public class DateTimeEntryRenderer extends InputRenderer {
                 minHour = calendar.get(Calendar.HOUR_OF_DAY);
                 minMinute = calendar.get(Calendar.MINUTE);
                 minSecond = calendar.get(Calendar.SECOND);
-                System.out.println("from minDateTime:-  minHour="+minHour+" minMinute="+minMinute+" minSecond="+minSecond);
-            }else
-                System.out.println(" minDateTime must be java.util.Date");
-        } else {
-
-            System.out.println("other:-  minHour="+minHour+" minMinute="+minMinute+" minSecond="+minSecond);
+            }else {
+                throw new FacesException("MinDateTime attribute must be java.util.Date");
+            }
         }
         int maxHour = dateTimeEntry.getMaxHour();
         int maxMinute= dateTimeEntry.getMaxMinute();
@@ -322,13 +319,9 @@ public class DateTimeEntryRenderer extends InputRenderer {
                 maxHour = calendar.get(Calendar.HOUR_OF_DAY);
                 maxMinute = calendar.get(Calendar.MINUTE);
                 maxSecond = calendar.get(Calendar.SECOND);
-                System.out.println("from maxDateTime:-  maxHour="+maxHour+" maxMinute="+maxMinute+" maxSecond="+maxSecond);
             }else {
-                System.out.println("maxDateTime attribute must be of type java.util.Date") ;
+                throw new FacesException("maxDateTime attribute must be of type java.util.Date") ;
             }
-        }else {
-
-            System.out.println("other:-  maxHour="+maxHour+" maxMinute="+maxMinute+" maxSecond="+maxSecond);
         }
         if(dateTimeEntry.hasTime()) {
             json.entry("timeOnly", timeOnly)
