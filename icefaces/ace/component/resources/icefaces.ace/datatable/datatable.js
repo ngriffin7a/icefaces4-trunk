@@ -1567,134 +1567,144 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 	}
 
     scrollBody.bind('scroll', function () {
-        var $this = ice.ace.jq(this),
-            $header = ice.ace.jq(_self.jqId + ' > div.ui-datatable-scrollable-header'),
-            $footer = ice.ace.jq(_self.jqId + ' > div.ui-datatable-scrollable-footer'),
-            scrollLeftVal = $this.scrollLeft(),
-            scrollTopVal = $this.scrollTop();
+        var $this = ice.ace.jq(this);
+		setTimeout(function() { // prevent multiple, repeated requests with short intervals
+			var $header = ice.ace.jq(_self.jqId + ' > div.ui-datatable-scrollable-header'),
+				$footer = ice.ace.jq(_self.jqId + ' > div.ui-datatable-scrollable-footer'),
+				scrollLeftVal = $this.scrollLeft(),
+				scrollTopVal = $this.scrollTop();
 
-        if (ice.ace.jq.browser.mozilla) {
-            if (scrollLeftVal == 0) {
-                $header.scrollLeft(-1);
-                $footer.scrollLeft(-1);
-            } else if (scrollLeftVal == (this.scrollWidth - this.clientWidth)){
-                $header.scrollLeft(scrollLeftVal + 1);
-                $footer.scrollLeft(scrollLeftVal + 1);
-            }
-
-            $header.scrollLeft(scrollLeftVal);
-            $footer.scrollLeft(scrollLeftVal);
-        } else {
-            $header.scrollLeft(scrollLeftVal);
-            $footer.scrollLeft(scrollLeftVal);
-        }
-
-        _self.scrollLeft = scrollLeftVal;
-        _self.scrollTop = scrollTopVal;
-
-		if (_self.cfg.liveScroll) {
-
-			if ((scrollTopVal + $this.innerHeight()) >= $this[0].scrollHeight) { // when reaching the bottom of the scroll bar
-
-				var options = {
-					source: _self.id,
-					render: _self.id,
-					execute: _self.id,
-					formId: _self.cfg.formId
-				};
-
-				var rowsPerPage = _self.cfg.rowsPerPage;
-				var currentPage = _self.cfg.initialPage;
-				currentPage = currentPage == 0 ? 1 : currentPage;
-				var bufferPages = _self.cfg.liveScrollBufferPages;
-
-				options.onsuccess = function (responseXML) {
-					_self.addFillerSpaceToEnableScrolling();
-
-					// move scroll handle up to account for newly added rows
-					var rows = _self.element.find(_self.bodyTableSelector).children('tr');
-					var bufferPages = _self.cfg.liveScrollBufferPages;
-					var currentPage = _self.cfg.initialPage + 1 + bufferPages;
-					var rowsPerPage = _self.cfg.rowsPerPage;
-					var numAddedRows = rowsPerPage * (bufferPages + 1);
-					var addedRowsHeights = 0;
-					var i;
-					for (i = 0; i < numAddedRows; i++) {
-						addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
-					}
-					var scrollChange = $this[0].scrollHeight - addedRowsHeights - $this.innerHeight();
-					scrollChange = scrollChange < 1 ? 1 : scrollChange; // prevent an immediate upwards live scroll request
-					_self.element.find(_self.scrollBodySelector).scrollTop();
-
-					if (_self.cfg.scrollable) _self.resizeScrolling();
-				};
-
-				var params = {};
-				params[_self.id + "_paging"] = true;
-				params[_self.id + "_rows"] = rowsPerPage;
-				params[_self.id + "_page"] = currentPage + 1 + bufferPages;
-
-				options.params = params;
-
-	/*
-				if (table.behaviors) {
-					ice.ace.ab(ice.ace.extendAjaxArgs(
-						table.behaviors.page,
-						ice.ace.clearExecRender(options)
-					));
-					return;
+			if (ice.ace.jq.browser.mozilla) {
+				if (scrollLeftVal == 0) {
+					$header.scrollLeft(-1);
+					$footer.scrollLeft(-1);
+				} else if (scrollLeftVal == ($this.get(0).scrollWidth - $this.get(0).clientWidth)){
+					$header.scrollLeft(scrollLeftVal + 1);
+					$footer.scrollLeft(scrollLeftVal + 1);
 				}
-	*/
 
-				ice.ace.AjaxRequest(options);
-			} else if (scrollTopVal == 0) { // when reaching the top of the scroll bar
+				$header.scrollLeft(scrollLeftVal);
+				$footer.scrollLeft(scrollLeftVal);
+			} else {
+				$header.scrollLeft(scrollLeftVal);
+				$footer.scrollLeft(scrollLeftVal);
+			}
 
-				var options = {
-					source: _self.id,
-					render: _self.id,
-					execute: _self.id,
-					formId: _self.cfg.formId
-				};
+			_self.scrollLeft = scrollLeftVal;
+			_self.scrollTop = scrollTopVal;
 
-				// compute heights of removed rows
-				var rowsPerPage = _self.cfg.rowsPerPage;
-				var currentPage = _self.cfg.initialPage;
-				currentPage = currentPage == 0 ? 1 : currentPage;
-				var bufferPages = _self.cfg.liveScrollBufferPages;
+			if (_self.cfg.liveScroll) {
 
-				if (currentPage > bufferPages) {
+				if ((scrollTopVal + $this.innerHeight()) >= $this[0].scrollHeight) { // when reaching the bottom of the scroll bar
 
-					var params = {};
-					params[_self.id + "_paging"] = true;
-					params[_self.id + "_rows"] = rowsPerPage;
-					params[_self.id + "_page"] = currentPage - 1 - bufferPages;
+					var options = {
+						source: _self.id,
+						render: _self.id,
+						execute: _self.id,
+						formId: _self.cfg.formId
+					};
 
-					options.params = params;
+					var rowsPerPage = _self.cfg.rowsPerPage;
+					var currentPage = _self.cfg.initialPage;
+					currentPage = currentPage == 0 ? 1 : currentPage;
+					var bufferPages = _self.cfg.liveScrollBufferPages;
 
 					options.onsuccess = function (responseXML) {
 						_self.addFillerSpaceToEnableScrolling();
 
-						// move scroll handle down to account for newly added rows
-						var rows = _self.element.find(_self.bodyTableSelector).children('tr');
-						var bufferPages = _self.cfg.liveScrollBufferPages;
-						var currentPage = _self.cfg.initialPage - 1 - bufferPages;
-						currentPage = currentPage == 0 ? 1 : currentPage;
-						var rowsPerPage = _self.cfg.rowsPerPage;
-						var numAddedRows = rowsPerPage * (currentPage > bufferPages ? bufferPages + 1 : currentPage);
-						var addedRowsHeights = 0;
-						var i;
-						for (i = 0; i < numAddedRows; i++) {
-							addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+						// move scroll handle up to account for newly added rows
+						if (_self.cfg.liveScrollBufferPages) {
+							var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+							var bufferPages = _self.cfg.liveScrollBufferPages;
+							var currentPage = _self.cfg.initialPage + 1 + bufferPages;
+							var rowsPerPage = _self.cfg.rowsPerPage;
+							var numAddedRows = rowsPerPage * (bufferPages + 1);
+							var addedRowsHeights = 0;
+							var i;
+							for (i = 0; i < numAddedRows; i++) {
+								addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+							}
+							var scrollChange = $this[0].scrollHeight - addedRowsHeights - $this.innerHeight();
+							scrollChange = scrollChange < 1 ? 1 : scrollChange; // prevent an immediate upwards live scroll request
+							_self.element.find(_self.scrollBodySelector).scrollTop(scrollChange);
 						}
-						_self.element.find(_self.scrollBodySelector).scrollTop(addedRowsHeights);
 
 						if (_self.cfg.scrollable) _self.resizeScrolling();
+
+						setTimeout(function() { window['liveScrollInProgress' + _self.id] = false; }, 200);
 					};
 
-					ice.ace.AjaxRequest(options);
+					var params = {};
+					params[_self.id + "_paging"] = true;
+					params[_self.id + "_rows"] = rowsPerPage;
+					params[_self.id + "_page"] = currentPage + 1 + bufferPages;
+
+					options.params = params;
+
+					if (!window['liveScrollInProgress' + _self.id]) {
+						window['liveScrollInProgress' + _self.id] = true;
+						ice.ace.AjaxRequest(options);
+					}
+				} else if (scrollTopVal == 0) { // when reaching the top of the scroll bar
+
+					var options = {
+						source: _self.id,
+						render: _self.id,
+						execute: _self.id,
+						formId: _self.cfg.formId
+					};
+
+					// compute heights of removed rows
+					var rowsPerPage = _self.cfg.rowsPerPage;
+					var currentPage = _self.cfg.initialPage;
+					currentPage = currentPage == 0 ? 1 : currentPage;
+					var bufferPages = _self.cfg.liveScrollBufferPages;
+
+					if (currentPage > bufferPages && currentPage > 1) {
+
+						var params = {};
+						params[_self.id + "_paging"] = true;
+						params[_self.id + "_rows"] = rowsPerPage;
+						params[_self.id + "_page"] = currentPage - 1 - bufferPages;
+
+						options.params = params;
+
+						options.onsuccess = function (responseXML) {
+							_self.addFillerSpaceToEnableScrolling();
+
+							// move scroll handle down to account for newly added rows
+							if (_self.cfg.liveScrollBufferPages) {
+								var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+								var bufferPages = _self.cfg.liveScrollBufferPages;
+								var currentPage = _self.cfg.initialPage - 1 - bufferPages;
+								currentPage = currentPage == 0 ? 1 : currentPage;
+								var rowsPerPage = _self.cfg.rowsPerPage;
+								var numAddedRows = rowsPerPage * (currentPage > bufferPages ? bufferPages + 1 : currentPage);
+								var addedRowsHeights = 0;
+								var i;
+								for (i = 0; i < numAddedRows; i++) {
+									addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+								}
+								var scrollChange = addedRowsHeights;
+								if ((addedRowsHeights + $this.innerHeight() + 1) >= $this[0].scrollHeight) {
+									scrollChange = addedRowsHeights - 1; // prevent an immediate downwards live scroll request
+								}
+								_self.element.find(_self.scrollBodySelector).scrollTop(scrollChange);
+							}
+
+							if (_self.cfg.scrollable) _self.resizeScrolling();
+
+							setTimeout(function() { window['liveScrollInProgress' + _self.id] = false; }, 200);
+						};
+
+						if (!window['liveScrollInProgress' + _self.id]) {
+							window['liveScrollInProgress' + _self.id] = true;
+							ice.ace.AjaxRequest(options);
+						}
+					}
 				}
 			}
-		}
+		}, 200);
     });
 
     this.scrollableResizeCallback = function () {

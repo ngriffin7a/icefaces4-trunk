@@ -1282,13 +1282,11 @@ public class DataTable extends DataTableBase implements Serializable {
 	public int getRows(boolean includeBufferRows) {
 		if (isLiveScroll() && includeBufferRows) {
 			int rows = super.getRows();
-			int first = super.getFirst();
+			int originalFirst = super.getFirst();
+			int first = getFirst(true);
 			int rowCount = getRowCount();
 			int rowCountToUpdate = rows == 0 ? rowCount : rows;
-			int originalFirst = first;
 			int bufferPages = getLiveScrollBufferPages();
-			first = first - (bufferPages * rows);
-			if (first < 0) first = 0;
 			rowCountToUpdate = (originalFirst - first) + rows + (bufferPages * rows);
 
 			return rowCountToUpdate;
