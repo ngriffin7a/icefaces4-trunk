@@ -99,6 +99,13 @@ public class BridgeSetup implements SystemEventListener {
             root.addComponentResource(context, bodyResource, "body");
         }
         CoreUtils.setInView(root, "body", true);
+
+        //force page load on IE when new tab is opened with "Duplicate Tab"
+        if (!context.isPostback()) {
+            ExternalContext externalContext = context.getExternalContext();
+            externalContext.setResponseHeader("Cache-Control", "no-cache, no-store, must-revalidate, private");
+            externalContext.setResponseHeader("Expires", "-1");
+        }
     }
 
     /**
