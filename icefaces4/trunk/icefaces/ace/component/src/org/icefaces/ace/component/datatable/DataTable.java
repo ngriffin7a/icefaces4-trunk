@@ -1285,11 +1285,10 @@ public class DataTable extends DataTableBase implements Serializable {
 			int originalFirst = super.getFirst();
 			int first = getFirst(true);
 			int rowCount = getRowCount();
-			int rowCountToUpdate = rows == 0 ? rowCount : rows;
+			int rowCountToReturn = rows == 0 ? rowCount : rows;
 			int bufferPages = getLiveScrollBufferPages();
-			rowCountToUpdate = (originalFirst - first) + rows + (bufferPages * rows);
-
-			return rowCountToUpdate;
+			rowCountToReturn = (originalFirst - first) + rows + (bufferPages * rows);
+			return rowCountToReturn;
 		} else {
 			return super.getRows();
 		}

@@ -1608,42 +1608,49 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 					var currentPage = _self.cfg.initialPage;
 					currentPage = currentPage == 0 ? 1 : currentPage;
 					var bufferPages = _self.cfg.liveScrollBufferPages;
+					var totalRows = _self.cfg.scrollLimit;
+					var totalPages = _self.cfg.scrollLimit / rowsPerPage;
+					totalPages = _self.cfg.scrollLimit % rowsPerPage > 0 ? totalPages + 1 : totalPages;
+					var alreadyDisplayingLastPage = (currentPage + bufferPages) >= totalPages;
 
-					options.onsuccess = function (responseXML) {
-						_self.addFillerSpaceToEnableScrolling();
+					if (!alreadyDisplayingLastPage) {
 
-						// move scroll handle up to account for newly added rows
-						if (_self.cfg.liveScrollBufferPages) {
-							var rows = _self.element.find(_self.bodyTableSelector).children('tr');
-							var bufferPages = _self.cfg.liveScrollBufferPages;
-							var currentPage = _self.cfg.initialPage + 1 + bufferPages;
-							var rowsPerPage = _self.cfg.rowsPerPage;
-							var numAddedRows = rowsPerPage * (bufferPages + 1);
-							var addedRowsHeights = 0;
-							var i;
-							for (i = 0; i < numAddedRows; i++) {
-								addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+						var params = {};
+						params[_self.id + "_paging"] = true;
+						params[_self.id + "_rows"] = rowsPerPage;
+						params[_self.id + "_page"] = currentPage + 1 + bufferPages;
+
+						options.params = params;
+
+						options.onsuccess = function (responseXML) {
+							_self.addFillerSpaceToEnableScrolling();
+
+							// move scroll handle up to account for newly added rows
+							if (_self.cfg.liveScrollBufferPages) {
+								var rows = _self.element.find(_self.bodyTableSelector).children('tr');
+								var bufferPages = _self.cfg.liveScrollBufferPages;
+								var currentPage = _self.cfg.initialPage + 1 + bufferPages;
+								var rowsPerPage = _self.cfg.rowsPerPage;
+								var numAddedRows = rowsPerPage * (bufferPages + 1);
+								var addedRowsHeights = 0;
+								var i;
+								for (i = 0; i < numAddedRows; i++) {
+									addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+								}
+								var scrollChange = $this[0].scrollHeight - addedRowsHeights - $this.innerHeight();
+								scrollChange = scrollChange < 1 ? 1 : scrollChange; // prevent an immediate upwards live scroll request
+								_self.element.find(_self.scrollBodySelector).scrollTop(scrollChange);
 							}
-							var scrollChange = $this[0].scrollHeight - addedRowsHeights - $this.innerHeight();
-							scrollChange = scrollChange < 1 ? 1 : scrollChange; // prevent an immediate upwards live scroll request
-							_self.element.find(_self.scrollBodySelector).scrollTop(scrollChange);
+
+							if (_self.cfg.scrollable) _self.resizeScrolling();
+
+							setTimeout(function() { window['liveScrollInProgress' + _self.id] = false; }, 200);
+						};
+
+						if (!window['liveScrollInProgress' + _self.id]) {
+							window['liveScrollInProgress' + _self.id] = true;
+							ice.ace.AjaxRequest(options);
 						}
-
-						if (_self.cfg.scrollable) _self.resizeScrolling();
-
-						setTimeout(function() { window['liveScrollInProgress' + _self.id] = false; }, 200);
-					};
-
-					var params = {};
-					params[_self.id + "_paging"] = true;
-					params[_self.id + "_rows"] = rowsPerPage;
-					params[_self.id + "_page"] = currentPage + 1 + bufferPages;
-
-					options.params = params;
-
-					if (!window['liveScrollInProgress' + _self.id]) {
-						window['liveScrollInProgress' + _self.id] = true;
-						ice.ace.AjaxRequest(options);
 					}
 				} else if (scrollTopVal == 0) { // when reaching the top of the scroll bar
 
@@ -1654,7 +1661,6 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 						formId: _self.cfg.formId
 					};
 
-					// compute heights of removed rows
 					var rowsPerPage = _self.cfg.rowsPerPage;
 					var currentPage = _self.cfg.initialPage;
 					currentPage = currentPage == 0 ? 1 : currentPage;
