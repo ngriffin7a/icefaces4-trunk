@@ -1287,6 +1287,7 @@ public class DataTable extends DataTableBase implements Serializable {
 			int rowCount = getRowCount();
 			int rowCountToReturn = rows == 0 ? rowCount : rows;
 			int bufferPages = getLiveScrollBufferPages();
+			bufferPages = originalFirst == 0 ? bufferPages * 2 : bufferPages;
 			rowCountToReturn = (originalFirst - first) + rows + (bufferPages * rows);
 			return rowCountToReturn;
 		} else {
