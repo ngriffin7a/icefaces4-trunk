@@ -273,6 +273,9 @@ ice.ace.DataTable = function (id, cfg) {
 		};
 		ice.ace.jq(window).bind('resize', this.adjustFooterWidthCallback);
 	}
+
+	this.justInstantiated = true;
+	setTimeout(function() { self.justInstantiated = false; }, 500);
 }
 
 
@@ -1591,11 +1594,13 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 			}
 
 			_self.scrollLeft = scrollLeftVal;
+			_self.previousScrollTop = _self.scrollTop;
 			_self.scrollTop = scrollTopVal;
 
 			if (_self.cfg.liveScroll) {
 
-				if ((scrollTopVal + $this.innerHeight()) >= $this[0].scrollHeight) { // when reaching the bottom of the scroll bar
+				// when reaching the bottom of the scroll bar or the end of the bottom buffer pages of the first page
+				if (((scrollTopVal + $this.innerHeight()) >= $this[0].scrollHeight) || _self.shouldLiveScrollBefore()) {
 
 					var options = {
 						source: _self.id,
@@ -1693,7 +1698,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 								}
 								var scrollChange = addedRowsHeights;
 								if ((addedRowsHeights + $this.innerHeight() + 1) >= $this[0].scrollHeight) {
-									scrollChange = addedRowsHeights - 1; // prevent an immediate downwards live scroll request
+									scrollChange = $this[0].scrollHeight - $this.innerHeight() - 1; // prevent an immediate downwards live scroll request
 								}
 								_self.element.find(_self.scrollBodySelector).scrollTop(scrollChange);
 							}
@@ -1739,11 +1744,40 @@ ice.ace.DataTable.prototype.addFillerSpaceToEnableScrolling = function () {
 	for (i = 0; i < rows.length; i++) {
 		currentRowsHeight += ice.ace.jq(rows.get(i)).outerHeight();
 	}
+
+	var bodyTable = this.element.find(this.scrollBodySelector).children('table');
+	var marginBottom = scrollBodyHeight - currentRowsHeight + 10;
 	if (currentRowsHeight <= scrollBodyHeight) {
-		var bodyTable = this.element.find(this.scrollBodySelector).children('table');
-		var marginBottom = scrollBodyHeight - currentRowsHeight + 10;
 		bodyTable.css('margin-bottom', marginBottom + 'px');
+	} else {
+		bodyTable.css('margin-bottom', '0');
 	}
+}
+
+ice.ace.DataTable.prototype.shouldLiveScrollBefore = function() {
+
+	if (this.justInstantiated) return false;
+
+	var currentPage = this.cfg.initialPage;
+	currentPage = currentPage == 0 ? 1 : currentPage;
+
+	if (currentPage > 1) return false;
+
+	if (!this.previousScrollTop || this.scrollTop <= this.previousScrollTop) return false; // N/A when scrolling up
+
+	var scrollBody = this.element.find(this.scrollBodySelector);
+	var scrollBodyHeight = scrollBody.height();
+	var bufferPages = this.cfg.liveScrollBufferPages;
+	var rowsPerPage = this.cfg.rowsPerPage;
+	var rows = this.element.find(this.bodyTableSelector).children('tr');
+	var firstRowsHeight = 0;
+	var i;
+	for (i = 0; i < rows.length; i++) {
+		firstRowsHeight += ice.ace.jq(rows.get(i)).outerHeight();
+		if (i >= ((bufferPages + 1) * rowsPerPage)) break;
+	}
+
+	return (scrollBody.scrollTop() + scrollBody.innerHeight()) > firstRowsHeight;
 }
 
 ice.ace.DataTable.prototype.setupResizableColumns = function () {
