@@ -1649,7 +1649,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 
 							if (_self.cfg.scrollable) _self.resizeScrolling();
 
-							setTimeout(function() { window['liveScrollInProgress' + _self.id] = false; }, 200);
+							setTimeout(function() { window['liveScrollInProgress' + _self.id] = false; }, 350);
 						};
 
 						if (!window['liveScrollInProgress' + _self.id]) {
@@ -1705,7 +1705,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 
 							if (_self.cfg.scrollable) _self.resizeScrolling();
 
-							setTimeout(function() { window['liveScrollInProgress' + _self.id] = false; }, 200);
+							setTimeout(function() { window['liveScrollInProgress' + _self.id] = false; }, 350);
 						};
 
 						if (!window['liveScrollInProgress' + _self.id]) {
@@ -1715,7 +1715,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 					}
 				}
 			}
-		}, 200);
+		}, 400);
     });
 
     this.scrollableResizeCallback = function () {
