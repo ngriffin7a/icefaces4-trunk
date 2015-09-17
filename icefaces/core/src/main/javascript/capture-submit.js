@@ -102,8 +102,17 @@
                             element.id = element.name;
                         }
                     }
-                    var elementExists = document.getElementById(element.id);
-                    submit(event, elementExists ? elementExists : f);
+                    if (mojarra && arguments.callee.caller == mojarra.jsfcljs) {
+                        //just submit the form, the Form.onsubmit is invoked on a different event
+                        //Mojarra will add its own hidden input elements before and remove them after the submit
+                        submit(null, f);
+                        return false;
+                    } else {
+                        var elementExists = document.getElementById(element.id);
+                        submit(event, elementExists ? elementExists : f);
+                        f.onsubmit = null;
+                        return false;
+                    }
                     return false;
                 };
             };
