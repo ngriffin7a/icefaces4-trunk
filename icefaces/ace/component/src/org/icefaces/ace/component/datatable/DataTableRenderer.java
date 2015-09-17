@@ -401,6 +401,7 @@ public class DataTableRenderer extends CoreRenderer {
         final String widgetVar = resolveWidgetVar(table);
         final boolean devMode = FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development);
 		final boolean liveScroll = table.isLiveScroll();
+		final boolean nestedTable = table.isNestedTable();
 
         JSONBuilder json = JSONBuilder.create().initialiseVar(widgetVar)
                 .beginFunction("ice.ace.create").item("DataTable").beginArray()
@@ -428,6 +429,7 @@ public class DataTableRenderer extends CoreRenderer {
         if (noHover) json.entry("nohover",true);
         if (noHidden) json.entry("nohidden",true);
         if (pinning) json.entry("pinning",true);
+        if (nestedTable) json.entry("nestedTable",true);
         if (scroll) {
             json.entry("scrollable", true);
 			if (liveScroll) {
