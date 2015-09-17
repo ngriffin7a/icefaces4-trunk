@@ -175,11 +175,14 @@ if (!window.ice.ace['DataTableStylesheets']) {
 
 
 
-
+ice.ace.DataTables = {};
 
 // Constructor
 ice.ace.DataTable = function (id, cfg) {
     this.id = id;
+	if (ice.ace.DataTables[this.id]) ice.ace.DataTables[this.id].destroy();
+	ice.ace.DataTables[this.id] = this;
+
     this.cfg = cfg;
     this.jqId = ice.ace.escapeClientId(id);
     this.sortOrder = [];
