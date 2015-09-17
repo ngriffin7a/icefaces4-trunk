@@ -141,6 +141,7 @@ public class MenuBarRenderer extends BaseMenuRenderer {
                     encodeMenuItem(context, (MenuItem) child);
                 } else if(child instanceof MenuSeparator) {
                     // we just need <li></li>
+					writer.writeAttribute("id", child.getClientId(context), "id");
                 } else if(child instanceof Submenu) {
                     encodeSubmenu(context, (Submenu) child);
                 } else if(child instanceof MultiColumnSubmenu) {

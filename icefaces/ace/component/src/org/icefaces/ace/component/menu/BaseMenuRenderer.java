@@ -180,9 +180,10 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 		}
 	}
 	
-	protected void encodeMenuSeparator(FacesContext context) throws IOException {
+	protected void encodeMenuSeparator(FacesContext context, UIComponent menuSeparator) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("li", null);
+		writer.writeAttribute("id", menuSeparator.getClientId(context), "id");
 		writer.endElement("li");
 	}
 
@@ -316,7 +317,7 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 									encodeMenuItem(context, (MenuItem) item, disabledSubmenu);
 									writer.endElement("li");
 								} else if(item instanceof MenuSeparator) {
-									encodeMenuSeparator(context);
+									encodeMenuSeparator(context, item);
 								} else if(item instanceof Submenu) {
 									Submenu sm = (Submenu) item;
 									disabledSubmenu = sm.isDisabled();

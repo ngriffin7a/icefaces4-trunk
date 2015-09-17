@@ -102,6 +102,8 @@ public class MenuButtonRenderer extends BaseMenuRenderer {
                 writer.startElement("li", child);
                 if (child instanceof MenuItem)
                     encodeMenuItem(context, (MenuItem) child);
+				else if (child instanceof MenuSeparator)
+					writer.writeAttribute("id", child.getClientId(context), "id");
                 writer.endElement("li");
 			}
 		}

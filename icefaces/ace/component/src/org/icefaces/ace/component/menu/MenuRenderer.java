@@ -192,6 +192,7 @@ public class MenuRenderer extends BaseMenuRenderer {
                     encodeMenuItem(context, (MenuItem) child);
                 } else if(child instanceof MenuSeparator) {
                     // we just need <li></li>
+					writer.writeAttribute("id", child.getClientId(context), "id");
                 } else if(child instanceof Submenu) {
                     encodeTieredSubmenu(context, (Submenu) child);
                 } else if(child instanceof MultiColumnSubmenu) {
@@ -262,7 +263,7 @@ public class MenuRenderer extends BaseMenuRenderer {
                     encodeMenuItem(context, (MenuItem) child, disableChildren);
                     writer.endElement("li");
                 } else if(child instanceof MenuSeparator) {
-                    encodeMenuSeparator(context);
+                    encodeMenuSeparator(context, child);
                 } else if(child instanceof Submenu) {
                     encodePlainSubmenu(context, (Submenu) child, disableChildren);
                 } else if(child instanceof MultiColumnSubmenu) {
