@@ -110,13 +110,13 @@ import java.util.List;
                      defaultRender="@this", defaultExecute="@this"),
 
         @ClientEvent(name="expand",
-                     javadoc="Fired when a child ExpansionToggler component is clicked to expand.",
-                     tlddoc="Fired when a child ExpansionToggler component is clicked to expand.",
+                     javadoc="Fired when a child ExpansionToggler component is clicked to expand (Note: for nested tables, the execute value should be @form or @all for the expansion to work).",
+                     tlddoc="Fired when a child ExpansionToggler component is clicked to expand  (Note: for nested tables, the execute value should be @form or @all for the expansion to work).",
                      defaultRender="@all", defaultExecute="@this"),
 
         @ClientEvent(name="contract",
-                     javadoc="Fired when a child ExpansionToggler component is clicked to contract.",
-                     tlddoc="Fired when a child ExpansionToggler component is clicked to contract.",
+                     javadoc="Fired when a child ExpansionToggler component is clicked to contract  (Note: for nested tables, the execute value should be @form or @all for the contraction to work).",
+                     tlddoc="Fired when a child ExpansionToggler component is clicked to contract  (Note: for nested tables, the execute value should be @form or @all for the contraction to work).",
                      defaultRender="@all", defaultExecute="@this"),
 
         @ClientEvent(name="pin",

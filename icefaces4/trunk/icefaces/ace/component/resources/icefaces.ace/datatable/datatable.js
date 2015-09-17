@@ -3152,8 +3152,13 @@ ice.ace.DataTable.prototype.sendPanelContractionRequest = function (row) {
         rowId = row.attr('id').split('_row_')[1];
     _self = this;
 
+	if (this.cfg.nestedTable) { // only this way the inner tables get to execute
+		options.execute = '@form';
+		options.render = '@form';
+	}
+
     var params = {};
-    params[this.id + ':' + rowId + '_rowExpansion'] = true;
+    params[this.id + ':' + rowId + '_rowExpansion'] = this.id;
     options.params = params;
 
     options.onsuccess = function (responseXML) {
@@ -3183,8 +3188,13 @@ ice.ace.DataTable.prototype.sendRowContractionRequest = function (row) {
         rowId = row.attr('id').split('_row_')[1];
     _self = this;
 
+	if (this.cfg.nestedTable) { // only this way the inner tables get to execute
+		options.execute = '@form';
+		options.render = '@form';
+	}
+
     var params = {};
-    params[this.id + ':' + rowId + '_rowExpansion'] = true;
+    params[this.id + ':' + rowId + '_rowExpansion'] = this.id;
     ;
     options.params = params;
 
@@ -3220,8 +3230,13 @@ ice.ace.DataTable.prototype.loadExpandedRows = function (row) {
         return false;
     };
 
+	if (this.cfg.nestedTable) { // only this way the inner tables get to execute
+		options.execute = '@form';
+		options.render = '@form';
+	}
+
     var params = {};
-    params[this.id + ':' + rowId + '_rowExpansion'] = true;
+    params[this.id + ':' + rowId + '_rowExpansion'] = this.id;
     options.params = params;
 
     if (this.behaviors)
@@ -3246,13 +3261,18 @@ ice.ace.DataTable.prototype.loadExpandedPanelContent = function (row) {
         rowId = row.attr('id').split('_row_')[1],
         _self = this;
 
+	if (this.cfg.nestedTable) { // only this way the inner tables get to execute
+		options.execute = '@form';
+		options.render = '@form';
+	}
+
     options.onsuccess = function (responseXML) {
         if (_self.cfg.scrollable) _self.setupScrolling();
         return false;
     };
 
     var params = {};
-    params[this.id + ':' + rowId + '_rowExpansion'] = true;
+    params[this.id + ':' + rowId + '_rowExpansion'] = this.id;
     options.params = params;
 
     if (this.behaviors)

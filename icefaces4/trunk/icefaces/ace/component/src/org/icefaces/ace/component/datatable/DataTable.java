@@ -1018,7 +1018,11 @@ public class DataTable extends DataTableBase implements Serializable {
 			String name = names.next();
 			if (name.startsWith(clientId)) {
 				if (name.endsWith("_rowExpansion")) {
-					return true;
+					Map<String, String> params = x.getExternalContext().getRequestParameterMap();
+					String value = params.get(name);
+					if (value != null && clientId.equals(value)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -1312,6 +1316,18 @@ public class DataTable extends DataTableBase implements Serializable {
 		} else {
 			return super.getFirst();
 		}
+	}
+
+	public boolean isNestedTable() {
+        UIComponent parent = getParent();
+
+        while (parent != null) {
+            if (parent instanceof UIData) {
+                return true;
+            }
+            parent = parent.getParent();
+        }
+        return false;
 	}
 
     protected void processSorting() {
