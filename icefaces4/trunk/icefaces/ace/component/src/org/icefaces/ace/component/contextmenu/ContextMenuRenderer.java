@@ -201,6 +201,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
                     encodeSubmenu(context, (Submenu) child);
                 } else if(child instanceof MenuSeparator) {
                     // we just need <li></li>
+					writer.writeAttribute("id", child.getClientId(context), "id");
                 } else if(child instanceof MultiColumnSubmenu) {
 					encodeMultiColumnSubmenu(context, (MultiColumnSubmenu) child);
 				}
