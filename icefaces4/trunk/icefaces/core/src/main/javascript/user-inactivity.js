@@ -19,17 +19,17 @@
     var notifiedUserInactivityListeners = [];
     var isUserInactivityMonitorStarted = false;
 
-    namespace.onUserInactivity = function(timeout, idleUserCallback, activeUserCallback) {
+    namespace.onUserInactivity = function(timeout, idleUserCallback, activeUserCallback, userActiveEvents) {
         if (!isUserInactivityMonitorStarted) {
             isUserInactivityMonitorStarted = true;
-            observeUserInactivity();
+            observeUserInactivity(userActiveEvents || [ 'keydown', 'mouseover' ]);
         }
         var tuple = {interval: (timeout * 1000), idleCallback: idleUserCallback, activeCallback: activeUserCallback};
         append(userInactivityListeners, tuple);
         return removeCallbackCallback(userInactivityListeners, detectByReference(tuple));
     };
 
-    function observeUserInactivity() {
+    function observeUserInactivity(userActiveEvents) {
         var userActivityMonitor = Delay(function() {
             var now = (new Date).getTime();
             var additionalNotifiedListeners = select(userInactivityListeners, function(tuple) {
@@ -75,7 +75,8 @@
                 notifiedUserInactivityListeners = [];
             }
         }
-        registerListener('keydown', document, resetUserInactivity);
-        registerListener('mouseover', document, resetUserInactivity);
+        each(userActiveEvents, function(e) {
+            registerListener(e, document, resetUserInactivity);
+        });
     }
 })();
