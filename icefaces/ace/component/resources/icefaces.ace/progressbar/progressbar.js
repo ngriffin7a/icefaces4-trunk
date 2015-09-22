@@ -36,19 +36,36 @@ ice.ace.ProgressBar = function(id, cfg) {
         this.cfg.formId = ice.ace.jq(this.jqId).parents('form:first').attr('id');
     }
 
+	if (this.cfg.indeterminate) {
+		var value = this.cfg.value;
+		if (!(value == 0 || value == 100))
+			this.cfg.value = false;
+	}
+
     this.qObj = ice.ace.jq(this.jqId);
     this.qObj.progressbar(this.cfg);
-//    if (this.cfg.hasChangeListener) {
+
+	if (!this.cfg.indeterminate) {
         this.qObj.bind('progressbarchange', this, this.changeListener);
-//    }
+	}
 }
 
 ice.ace.ProgressBar.prototype.setValue = function(value) {
+	if (this.cfg.indeterminate) {
+		if (!(value == 0 || value == 100)) {
+			ice.ace.jq(this.jqId).progressbar('value', false);
+			return;
+		}
+	}
     ice.ace.jq(this.jqId).progressbar('value', value);
 }
 
 ice.ace.ProgressBar.prototype.getValue  = function() {
     return ice.ace.jq(this.jqId).progressbar('value');
+}
+
+ice.ace.ProgressBar.prototype.startIndeterminateState = function() {
+	ice.ace.jq(this.jqId).progressbar('value', false);
 }
 
 ice.ace.ProgressBar.prototype.start = function() {

@@ -9605,117 +9605,148 @@
 
 })(jQuery || ice.ace.jq);
 /*!
- * jQuery UI Progressbar 1.8.24
+ * jQuery UI Progressbar 1.11.4
+ * http://jqueryui.com
  *
- * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
  * http://jquery.org/license
  *
- * http://docs.jquery.com/UI/Progressbar
- *
- * Depends:
- *   jquery.ui.core.js
- *   jquery.ui.widget.js
+ * http://api.jqueryui.com/progressbar/
  */
 (function( $, undefined ) {
 
-    $.widget( "ui.progressbar", {
-        options: {
-            value: 0,
-            max: 100
-        },
+	$.widget( "ui.progressbar", {
+		version: "1.11.4",
+		options: {
+			max: 100,
+			value: 0,
 
-        min: 0,
+			change: null,
+			complete: null
+		},
 
-        _create: function() {
-            this.element
-                    .addClass( "ui-progressbar ui-widget ui-widget-content ui-corner-all" );
-            if (this.options.ariaEnabled) {
-                this.element
-                        .attr({
-                            role: "progressbar",
-                            "aria-valuemin": this.min,
-                            "aria-valuemax": this.options.max,
-                            "aria-valuenow": this._value(),
-                            "aria-disabled": this.options.disabled
-                        });
-            }
+		min: 0,
 
-            this.valueDiv = $( "<div class='ui-progressbar-value ui-widget-header ui-corner-left'></div>" )
-                    .appendTo( this.element );
+		_create: function() {
+			// Constrain initial value
+			this.oldValue = this.options.value = this._constrainedValue();
 
-            this.oldValue = this._value();
-            this._refreshValue();
-        },
+			this.element
+				.addClass( "ui-progressbar ui-widget ui-widget-content ui-corner-all" )
+				.attr({
+					// Only set static values, aria-valuenow and aria-valuemax are
+					// set inside _refreshValue()
+					role: "progressbar",
+					"aria-valuemin": this.min
+				});
 
-        destroy: function() {
-            this.element
-                    .removeClass( "ui-progressbar ui-widget ui-widget-content ui-corner-all" )
-                    .removeAttr( "role" )
-                    .removeAttr( "aria-valuemin" )
-                    .removeAttr( "aria-valuemax" )
-                    .removeAttr( "aria-valuenow" )
-                    .removeAttr( "aria-disabled" );
+			this.valueDiv = $( "<div class='ui-progressbar-value ui-widget-header ui-corner-left'></div>" )
+				.appendTo( this.element );
 
-            this.valueDiv.remove();
+			this._refreshValue();
+		},
 
-            $.Widget.prototype.destroy.apply( this, arguments );
-        },
+		_destroy: function() {
+			this.element
+				.removeClass( "ui-progressbar ui-widget ui-widget-content ui-corner-all" )
+				.removeAttr( "role" )
+				.removeAttr( "aria-valuemin" )
+				.removeAttr( "aria-valuemax" )
+				.removeAttr( "aria-valuenow" );
 
-        value: function( newValue ) {
-            if ( newValue === undefined ) {
-                return this._value();
-            }
+			this.valueDiv.remove();
+		},
 
-            this._setOption( "value", newValue );
-            return this;
-        },
+		value: function( newValue ) {
+			if ( newValue === undefined ) {
+				return this.options.value;
+			}
 
-        _setOption: function( key, value ) {
-            if ( key === "value" ) {
-                this.options.value = value;
-                this._refreshValue();
-                if ( this._value() === this.options.max ) {
-                    this._trigger( "complete" );
-                }
-            }
+			this.options.value = this._constrainedValue( newValue );
+			this._refreshValue();
+		},
 
-            $.Widget.prototype._setOption.apply( this, arguments );
-        },
+		_constrainedValue: function( newValue ) {
+			if ( newValue === undefined ) {
+				newValue = this.options.value;
+			}
 
-        _value: function() {
-            var val = this.options.value;
-            // normalize invalid value
-            if ( typeof val !== "number" ) {
-                val = 0;
-            }
-            return Math.min( this.options.max, Math.max( this.min, val ) );
-        },
+			this.indeterminate = newValue === false;
 
-        _percentage: function() {
-            return 100 * this._value() / this.options.max;
-        },
+			// sanitize value
+			if ( typeof newValue !== "number" ) {
+				newValue = 0;
+			}
 
-        _refreshValue: function() {
-            var value = this.value();
-            var percentage = this._percentage();
+			return this.indeterminate ? false :
+				Math.min( this.options.max, Math.max( this.min, newValue ) );
+		},
 
-            if ( this.oldValue !== value ) {
-                this.oldValue = value;
-                this._trigger( "change", undefined, {value: value, percentage: percentage} ); // ICE-8631
-            }
+		_setOptions: function( options ) {
+			// Ensure "value" option is set after other values (like max)
+			var value = options.value;
+			delete options.value;
 
-            this.valueDiv
-                    .toggle( value > this.min )
-                    .toggleClass( "ui-corner-right", value === this.options.max )
-                    .width( percentage.toFixed(0) + "%" );
-            this.element.attr( "aria-valuenow", value );
-        }
-    });
+			this._super( options );
 
-    $.extend( $.ui.progressbar, {
-        version: "1.8.24"
-    });
+			this.options.value = this._constrainedValue( value );
+			this._refreshValue();
+		},
+
+		_setOption: function( key, value ) {
+			if ( key === "max" ) {
+				// Don't allow a max less than min
+				value = Math.max( this.min, value );
+			}
+			if ( key === "disabled" ) {
+				this.element
+					.toggleClass( "ui-state-disabled", !!value )
+					.attr( "aria-disabled", value );
+			}
+			this._super( key, value );
+		},
+
+		_percentage: function() {
+			return this.indeterminate ? 100 : 100 * ( this.options.value - this.min ) / ( this.options.max - this.min );
+		},
+
+		_refreshValue: function() {
+			var value = this.options.value,
+				percentage = this._percentage();
+
+			this.valueDiv
+				.toggle( this.indeterminate || value > this.min )
+				.toggleClass( "ui-corner-right", value === this.options.max )
+				.width( percentage.toFixed(0) + "%" );
+
+			this.element.toggleClass( "ui-progressbar-indeterminate", this.indeterminate );
+
+			if ( this.indeterminate ) {
+				this.element.removeAttr( "aria-valuenow" );
+				if ( !this.overlayDiv ) {
+					this.overlayDiv = $( "<div class='ui-progressbar-overlay'></div>" ).appendTo( this.valueDiv );
+				}
+			} else {
+				this.element.attr({
+					"aria-valuemax": this.options.max,
+					"aria-valuenow": value
+				});
+				if ( this.overlayDiv ) {
+					this.overlayDiv.remove();
+					this.overlayDiv = null;
+				}
+			}
+
+			if ( this.oldValue !== value ) {
+				this.oldValue = value;
+				this._trigger( "change", undefined, {value: value, percentage: percentage} ); // ICE-8631
+			}
+			if ( value === this.options.max ) {
+				this._trigger( "complete" );
+			}
+		}
+	});
 
 })(jQuery || ice.ace.jq);
 /*!
