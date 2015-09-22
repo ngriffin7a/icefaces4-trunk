@@ -70,7 +70,8 @@
 													usePolling="true"
 													pollingInterval="2000"
 													value="#{upload.progressValue}"
-													completeListener="#{progressBarPolling.completeListener}">
+													completeListener="#{progressBarPolling.completeListener}"
+													indeterminate="#{progressBarPolling.indeterminate}">
                                      <ace:ajax event="complete" execute="@this" render="@form" />
                                  </ace:progressBar>
                              </ace:column>
@@ -84,6 +85,12 @@
             </ace:panel>
            
             <h:panelGrid style="float: right;">
+				<h:panelGroup>
+					<h:selectBooleanCheckbox value="#{progressBarPolling.indeterminate}">
+						<f:ajax render="@all"/>
+					</h:selectBooleanCheckbox>
+					<h:outputLabel for="pollingIndeterminate"> Enable indeterminate mode</h:outputLabel>
+				</h:panelGroup>
                 <h:commandButton id="reset"
 								 value="Reset uploads"
 								 actionListener="#{progressBarPolling.processFormReset}"

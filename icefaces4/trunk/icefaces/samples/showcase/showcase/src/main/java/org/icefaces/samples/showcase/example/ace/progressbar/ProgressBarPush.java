@@ -64,6 +64,7 @@ public class ProgressBarPush extends ComponentExampleImpl<ProgressBarPush> imple
     private ImageSet.ImageInfo playImage;
     private ImageSet.ImageInfo stopImage;
     private ImageSet.ImageInfo pauseImage;
+	private boolean indeterminate;
     
     public ProgressBarPush() 
     {
@@ -106,5 +107,12 @@ public class ProgressBarPush extends ComponentExampleImpl<ProgressBarPush> imple
 
     public void setStopImage(ImageInfo stopImage) {
         this.stopImage = stopImage;
+    }
+
+    public boolean isIndeterminate() {
+        return indeterminate;
+    }
+    public void setIndeterminate(boolean indeterminate) {
+        this.indeterminate = indeterminate;
     }
 }

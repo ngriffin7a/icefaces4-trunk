@@ -33,23 +33,34 @@
 
     <ui:define name="example">
         <script type="text/javascript">
+			window.indeterminate = false;
             function begin()
             {
 				if (this.inProgress) return;
                 var instance = ice.ace.instance('#{progressBar.clientId}');
-                instance.setValue(instance.getValue() + 10);
-				this.inProgress = true;
-                this.progressInterval = setInterval (
-                function()
-                {
-                    if (instance) {
-                        instance.setValue(instance.getValue() + 10);
-                    } else {
-                        //page content was modified, progress bar is not present in the page anymore
-                        stop();
-                    }
-                }
-                , 2000);
+				if (!window.indeterminate) {
+					instance.setValue(instance.getValue() + 10);
+					this.inProgress = true;
+					this.progressInterval = setInterval (
+					function()
+					{
+						if (instance) {
+							instance.setValue(instance.getValue() + 10);
+						} else {
+							//page content was modified, progress bar is not present in the page anymore
+							stop();
+						}
+					}
+					, 2000);
+				} else {
+					instance.startIndeterminateState();
+					this.progressInterval = setInterval (
+					function()
+					{
+						instance.setValue(100);
+					}
+					, 6000);
+				}
             }
 
             function stop()
@@ -64,7 +75,7 @@
         </script>
 
         <h:form id="form">
-
+			<input type="checkbox" id="clientIndeterminate" onchange="window.indeterminate = !window.indeterminate; return false;" /><label for="clientIndeterminate"> Enable indeterminate mode</label>
             <ace:panel>
                 <ace:progressBar id="progressBar" binding="#{progressBar}"/>
             </ace:panel>
