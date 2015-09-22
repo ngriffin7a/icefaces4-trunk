@@ -137,6 +137,7 @@ public class ProgressBarRenderer extends CoreRenderer {
             json.entry("disabled", true);
         }
 
+        json.entry("indeterminate", progressBar.isIndeterminate());
         json.entry("hasChangeListener", hasChangeListener);
         json.entry("ariaEnabled", ariaEnabled);
 

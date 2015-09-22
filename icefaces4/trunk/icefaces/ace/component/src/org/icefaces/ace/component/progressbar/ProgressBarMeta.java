@@ -70,6 +70,9 @@ public class ProgressBarMeta extends UIComponentBaseMeta {
     @Property(defaultValue = "3000", tlddoc = "Interval in milliseconds to do polling.")
     private int pollingInterval;
 
+    @Property(tlddoc = "Determines whether the progress bar operates in indeterminate mode or not. If true, the progress bar shows a constant animation across the entire span of the bar when active to show that it is in a busy state. It is meant to be used in cases where the task completion is not knowable in terms of steps or a percentage value.", defaultValue = "false")
+    private boolean indeterminate;
+
     @Property(tlddoc = "Inline style of the main container element.")
     private String style;
 
