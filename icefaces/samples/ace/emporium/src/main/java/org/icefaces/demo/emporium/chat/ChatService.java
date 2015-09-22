@@ -41,7 +41,7 @@ public class ChatService implements Serializable {
 	private static final Logger log = Logger.getLogger(ChatService.class.getName());
 	
 	private ChatWatcher expiry = ChatWatcher.getInstance();
-	private PortableRenderer portable;
+	private transient PortableRenderer portable;
 	private List<ChatRoom> rooms;
 	
 	@PostConstruct

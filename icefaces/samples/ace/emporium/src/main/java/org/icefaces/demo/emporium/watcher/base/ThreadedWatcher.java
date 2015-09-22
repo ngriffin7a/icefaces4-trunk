@@ -27,9 +27,9 @@ public abstract class ThreadedWatcher implements Serializable {
 	private static final long serialVersionUID = 2694944821384436851L;
 
 	private static final Logger log = Logger.getLogger(ThreadedWatcher.class.getName());
-	
-	protected ScheduledExecutorService thread;
-	protected ScheduledFuture<?> threadFuture;
+
+	protected transient ScheduledExecutorService thread;
+	protected transient ScheduledFuture<?> threadFuture;
 	
 	public void start(String name, int startDelaySeconds, int intervalSeconds, Runnable toStart) {
 		// Stop any old executor first
