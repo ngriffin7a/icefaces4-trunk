@@ -1641,9 +1641,16 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 								var rowsPerPage = _self.cfg.rowsPerPage;
 								var numAddedRows = rowsPerPage * (bufferPages + 1);
 								var addedRowsHeights = 0;
-								var i;
-								for (i = 0; i < numAddedRows; i++) {
-									addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+								var count = 0;
+								var i = 1; // because we use the negative value
+								while (count <= numAddedRows && i <= rows.size()) {
+									var currentRow = ice.ace.jq(rows.get(-i));
+									// only count main rows, but add the heights of all rows in between
+									if (currentRow.hasClass('ui-datatable-odd') 
+										|| currentRow.hasClass('ui-datatable-even')) count++;
+									if (count > numAddedRows) break;
+									addedRowsHeights += currentRow.outerHeight();
+									i++;
 								}
 								var scrollChange = $this[0].scrollHeight - addedRowsHeights - $this.innerHeight();
 								scrollChange = scrollChange < 1 ? 1 : scrollChange; // prevent an immediate upwards live scroll request
@@ -1695,9 +1702,16 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 								var rowsPerPage = _self.cfg.rowsPerPage;
 								var numAddedRows = rowsPerPage * (currentPage > bufferPages ? bufferPages + 1 : currentPage);
 								var addedRowsHeights = 0;
-								var i;
-								for (i = 0; i < numAddedRows; i++) {
-									addedRowsHeights += ice.ace.jq(rows.get(i)).outerHeight();
+								var count = 0;
+								var i = 0;
+								while (count <= numAddedRows && i < rows.size()) {
+									var currentRow = ice.ace.jq(rows.get(i));
+									// only count main rows, but add the heights of all rows in between
+									if (currentRow.hasClass('ui-datatable-odd')
+										|| currentRow.hasClass('ui-datatable-even')) count++;
+									if (count > numAddedRows) break;
+									addedRowsHeights += currentRow.outerHeight();
+									i++;
 								}
 								var scrollChange = addedRowsHeights;
 								if ((addedRowsHeights + $this.innerHeight() + 1) >= $this[0].scrollHeight) {
