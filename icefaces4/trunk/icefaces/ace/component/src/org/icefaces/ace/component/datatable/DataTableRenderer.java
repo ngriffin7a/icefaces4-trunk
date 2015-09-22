@@ -324,8 +324,11 @@ public class DataTableRenderer extends CoreRenderer {
                 ? DataTableConstants.DATA_CLASS
                 : DataTableConstants.EMPTY_DATA_CLASS;
 		if (table.isLiveScroll()) {
-			first = table.getFirst(true);
-			rowCountToRender = table.getRows(true);
+			int liveScrollRows = table.getRows(true);
+			if (liveScrollRows > 0) {
+				first = table.getFirst(true);
+				rowCountToRender = liveScrollRows;
+			}
 		}
 
         writer.startElement(HTML.TBODY_ELEM, null);
