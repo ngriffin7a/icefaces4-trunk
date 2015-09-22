@@ -48,7 +48,7 @@ public class BidRobot implements Serializable {
 	private static final int MAX_BIDROBOTS = 50;
 	
 	private Random random = new SecureRandom();
-	private Thread bidThread;
+	private transient Thread bidThread;
 	private volatile boolean active = (random.nextInt(10) != 0); // Have a small 10% chance to not even bid
 	private int bidCount = 0;
 	private int maxBids;
