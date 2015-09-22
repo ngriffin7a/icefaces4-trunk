@@ -1600,7 +1600,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 			_self.previousScrollTop = _self.scrollTop;
 			_self.scrollTop = scrollTopVal;
 
-			if (_self.cfg.liveScroll) {
+			if (_self.cfg.liveScroll && _self.cfg.rowsPerPage > 0) {
 
 				// when reaching the bottom of the scroll bar or the end of the bottom buffer pages of the first page
 				if (((scrollTopVal + $this.innerHeight()) >= $this[0].scrollHeight) || _self.shouldLiveScrollBefore()) {
