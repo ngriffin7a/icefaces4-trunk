@@ -230,8 +230,16 @@
                 The interval of user inactivity (in seconds) after which the children are made visible
             </description>
             <name>interval</name>
-            <required>true</required>
+            <required>false</required>
             <type>java.lang.Long</type>
+        </attribute>
+        <attribute>
+            <description>
+                The space separated list of JS events used to detect user activity.
+            </description>
+            <name>userActiveEvents</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
     </tag>
 

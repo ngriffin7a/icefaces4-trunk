@@ -24,7 +24,8 @@ import java.io.IOException;
 
 public class IdleMonitor extends UIComponentBase {
     private enum PropertyKeys {
-        interval
+        interval,
+        userActiveEvents
     }
 
     public String getFamily() {
@@ -40,11 +41,21 @@ public class IdleMonitor extends UIComponentBase {
         getStateHelper().put(PropertyKeys.interval, interval);
     }
 
+    public String getUserActiveEvents() {
+        String events = (String) getStateHelper().eval(PropertyKeys.userActiveEvents);
+        return events == null ? "keydown mouseover" : events;
+    }
+
+    public void setUserActiveEvents(String events) {
+        getStateHelper().put(PropertyKeys.userActiveEvents, events);
+    }
+
     public void encodeBegin(FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         String id = getClientId(context);
         String setupID = id + "_setup";
         String containerID = id + "_container";
+        String[] activityEvents = getUserActiveEvents().split(" ");
 
         writer.startElement("span", null);
         writer.writeAttribute("id", setupID, null);
@@ -57,7 +68,17 @@ public class IdleMonitor extends UIComponentBase {
         writer.writeText("'); if (container) container.style.visibility = 'visible'; }", null);
         writer.writeText(", function() { var container = document.getElementById('", null);
         writer.writeText(containerID, null);
-        writer.writeText("'); if (container) container.style.visibility = 'hidden'; });", null);
+        writer.writeText("'); if (container) container.style.visibility = 'hidden'; }, [", null);
+        for (int i = 0, l = activityEvents.length; i < l; i++) {
+            String activityEvent = activityEvents[i];
+            writer.writeText("'", null);
+            writer.writeText(activityEvent, null);
+            writer.writeText("'", null);
+            if (i < l - 1) {
+                writer.writeText(", ", null);
+            }
+        }
+        writer.writeText("]);", null);
         writer.endElement("script");
 
         writer.endElement("span");
