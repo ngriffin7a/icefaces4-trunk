@@ -43,7 +43,7 @@
                         <h:outputText id="stopped" value="stopped" rendered="#{(longtask.progress eq 0) and !longtask.taskRunning}" style="font-weight: bold;"/>
                     </h:panelGrid>
                     
-                    <ace:progressBar   id="myProgressBar"
+                    <ace:progressBar   id="myProgressBar" indeterminate="#{progressBarPush.indeterminate}"
                                        value="#{longtask.progress}"/>
                     
                     
@@ -73,6 +73,12 @@
                    </h:panelGrid>
                 </h:panelGrid>
             </ace:panel>
+			<h:panelGroup>
+				<h:selectBooleanCheckbox value="#{progressBarPush.indeterminate}">
+					<f:ajax />
+				</h:selectBooleanCheckbox>
+				<h:outputLabel for="pushIndeterminate"> Enable indeterminate mode</h:outputLabel>
+			</h:panelGroup>
             
             <ui:remove>
                 <ace:panel>

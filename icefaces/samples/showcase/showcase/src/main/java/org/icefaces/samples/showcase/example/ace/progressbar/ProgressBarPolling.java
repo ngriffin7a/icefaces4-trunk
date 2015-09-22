@@ -57,7 +57,8 @@ public class ProgressBarPolling extends ComponentExampleImpl<ProgressBarPolling>
     private String selection;
     private boolean selectorIsDisabled;
     private UploadObject currentSelection; //pointer to the selected UploadObject
-    
+	private boolean indeterminate;
+
     public ProgressBarPolling() {
         super(ProgressBarPolling.class);
         initializeBean();
@@ -229,6 +230,13 @@ public class ProgressBarPolling extends ComponentExampleImpl<ProgressBarPolling>
     }
     public void setSelectorIsDisabled(boolean selectorIsDisabled) {
         this.selectorIsDisabled = selectorIsDisabled;
+    }
+
+    public boolean isIndeterminate() {
+        return indeterminate;
+    }
+    public void setIndeterminate(boolean indeterminate) {
+        this.indeterminate = indeterminate;
     }
     ////////////////////////////////////////////BEAN GETTERS&SETTERS END/////////////////////////////////////////////////
 }//end of managed bean
