@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -39,7 +40,8 @@ import org.icefaces.demo.emporium.util.FacesUtils;
  */
 @ManagedBean(name=BidRobot.BEAN_NAME)
 @CustomScoped(value="#{window}")
-public class BidRobot implements Serializable {
+public class BidRobot
+implements Serializable {
 	private static final long serialVersionUID = -7678091811944698163L;
 	
 	public static final String BEAN_NAME = "bidRobot";
@@ -53,9 +55,10 @@ public class BidRobot implements Serializable {
 	private int bidCount = 0;
 	private int maxBids;
 	private long waitTimeMillis;
-	
+
 	@PostConstruct
 	public void initBidRobot() {
+        BidRobotMonitor.getInstance().addBidRobot(this);
 		// Check our existing UserCounter, if we have too many users we don't need a BidRobot
 		// This is because we don't want a ton of BidRobots just spamming the site
 		UserCounter counter = (UserCounter)FacesUtils.getManagedBean(UserCounter.BEAN_NAME);
@@ -91,21 +94,14 @@ public class BidRobot implements Serializable {
 						else {
 							waitTimeMillis = 1000;
 						}
-						
-						try {
-							// Have the first bid come in quickly, to show activity right away
-							if (bidCount == 0) {
-								Thread.sleep(waitTimeMillis / 10);
-							}
-							else {
-								Thread.sleep(waitTimeMillis);
-							}
-						}catch (InterruptedException ignored) {
-							if (!active) {
-								return;
-							}
-						}
-						
+                        // Have the first bid come in quickly, to show activity right away
+                        if (bidCount == 0) {
+                            sleep(waitTimeMillis / 10);
+                        }
+                        else {
+                            sleep(waitTimeMillis);
+                        }
+
 						// Break our loop if we're not active anymore after our sleep
 						if (!active) {
 							return;
@@ -136,12 +132,11 @@ public class BidRobot implements Serializable {
 		if (active) {
 			log.info("Destroying a BidRobot with " + bidCount + "/" + maxBids + " bids done.");
 		}
-		
 		if (bidThread != null) {
-			active = false;
-			bidThread.interrupt();
+            stop();
 			bidThread = null;
 		}
+        BidRobotMonitor.getInstance().removeBidRobot(this);
 	}
 	
 	@Override
@@ -152,4 +147,30 @@ public class BidRobot implements Serializable {
 	public String getInit() {
 		return null;
 	}
+
+    void stop() {
+        active = false;
+        try {
+            bidThread.join();
+        } catch (final InterruptedException exception) {
+            log.log(Level.WARNING, "Join interrupted!", exception);
+        }
+    }
+
+    private void sleep(final long sleepTimeMillis) {
+        long _remainingSleepTimeMillis = sleepTimeMillis;
+        while (_remainingSleepTimeMillis != 0) {
+            try {
+                Thread.sleep(100);
+                if (!active) {
+                    return;
+                }
+                _remainingSleepTimeMillis -= 100;
+            } catch (final InterruptedException event) {
+                if (!active) {
+                    return;
+                }
+            }
+        }
+    }
 }

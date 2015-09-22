@@ -19,6 +19,7 @@ package org.icefaces.demo.emporium.util;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.icefaces.demo.emporium.robot.BidRobotMonitor;
 import org.icefaces.demo.emporium.watcher.AuctionWatcher;
 import org.icefaces.demo.emporium.watcher.ChatWatcher;
 
@@ -31,6 +32,7 @@ import org.icefaces.demo.emporium.watcher.ChatWatcher;
 public class ContextListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
+        BidRobotMonitor.getInstance().cleanUp();
 		AuctionWatcher.getInstance().stop();
 		ChatWatcher.getInstance().stop();
 	}
