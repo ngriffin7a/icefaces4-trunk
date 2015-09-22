@@ -40,13 +40,13 @@ import org.icefaces.demo.emporium.util.FacesUtils;
  */
 @ManagedBean(name=BidRobot.BEAN_NAME)
 @CustomScoped(value="#{window}")
-public class BidRobot
-implements Serializable {
-	private static final long serialVersionUID = -7678091811944698163L;
+public class BidRobot implements Serializable {
+	private static final long serialVersionUID = 8554270345924993631L;
 	
 	public static final String BEAN_NAME = "bidRobot";
 	private static final Logger log = Logger.getLogger(BidRobot.class.getName());
 	
+	private static final long SLEEP_INCREMENT_MS = 100;
 	private static final int MAX_BIDROBOTS = 50;
 	
 	private Random random = new SecureRandom();
@@ -58,7 +58,6 @@ implements Serializable {
 
 	@PostConstruct
 	public void initBidRobot() {
-        BidRobotMonitor.getInstance().addBidRobot(this);
 		// Check our existing UserCounter, if we have too many users we don't need a BidRobot
 		// This is because we don't want a ton of BidRobots just spamming the site
 		UserCounter counter = (UserCounter)FacesUtils.getManagedBean(UserCounter.BEAN_NAME);
@@ -124,6 +123,9 @@ implements Serializable {
 			});
 			bidThread.setName("Emporium BidRobot (" + maxBids + " bids)");
 			bidThread.start();
+			
+			// Monitor this BidRobot in case we have to clean it up
+			BidRobotMonitor.getInstance().addBidRobot(this);
 		}
 	}
 	
@@ -139,6 +141,35 @@ implements Serializable {
         BidRobotMonitor.getInstance().removeBidRobot(this);
 	}
 	
+    public void stop() {
+        active = false;
+        
+        try {
+            bidThread.join();
+        }catch (InterruptedException exception) {
+            log.log(Level.WARNING, "Thread join interrupted for a BidRobot.", exception);
+        }
+    }
+
+    private void sleep(long sleepTimeMillis) {
+        long remainingSleepTimeMillis = sleepTimeMillis;
+        
+        while (remainingSleepTimeMillis != 0) {
+            try {
+                Thread.sleep(SLEEP_INCREMENT_MS);
+                remainingSleepTimeMillis -= SLEEP_INCREMENT_MS;
+                
+                if (!active) {
+                    return;
+                }
+            }catch (InterruptedException event) {
+                if (!active) {
+                    return;
+                }
+            }
+        }
+    }
+	
 	@Override
 	public void finalize() {
 		cleanupBidRobot();
@@ -147,30 +178,4 @@ implements Serializable {
 	public String getInit() {
 		return null;
 	}
-
-    void stop() {
-        active = false;
-        try {
-            bidThread.join();
-        } catch (final InterruptedException exception) {
-            log.log(Level.WARNING, "Join interrupted!", exception);
-        }
-    }
-
-    private void sleep(final long sleepTimeMillis) {
-        long _remainingSleepTimeMillis = sleepTimeMillis;
-        while (_remainingSleepTimeMillis != 0) {
-            try {
-                Thread.sleep(100);
-                if (!active) {
-                    return;
-                }
-                _remainingSleepTimeMillis -= 100;
-            } catch (final InterruptedException event) {
-                if (!active) {
-                    return;
-                }
-            }
-        }
-    }
 }

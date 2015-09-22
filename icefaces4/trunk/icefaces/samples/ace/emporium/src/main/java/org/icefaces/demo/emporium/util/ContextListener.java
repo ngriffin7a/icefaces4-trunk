@@ -32,7 +32,7 @@ import org.icefaces.demo.emporium.watcher.ChatWatcher;
 public class ContextListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-        BidRobotMonitor.getInstance().cleanUp();
+        BidRobotMonitor.getInstance().stop();
 		AuctionWatcher.getInstance().stop();
 		ChatWatcher.getInstance().stop();
 	}
