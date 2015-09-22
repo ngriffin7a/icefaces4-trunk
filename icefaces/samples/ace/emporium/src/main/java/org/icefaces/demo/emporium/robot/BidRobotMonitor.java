@@ -1,79 +1,70 @@
 package org.icefaces.demo.emporium.robot;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
+/**
+ * Class used to monitor each BidRobot
+ * This is necessary in case we shutdown the app server and want to properly clean up any threads
+ */
+public class BidRobotMonitor implements Serializable {
+	private static final long serialVersionUID = -1362622742201870812L;
 
-@ManagedBean(eager = true, name = BidRobotMonitor.BEAN_NAME)
-@ApplicationScoped
-public class BidRobotMonitor {
-    private static final Logger LOGGER = Logger.getLogger(BidRobotMonitor.class.getName());
-
-    public static final String BEAN_NAME = "bidRobotMonitor";
-
-    private static BidRobotMonitor instance;
+	private static BidRobotMonitor singleton = null;
 
     private final Lock bidRobotSetLock = new ReentrantLock();
     private final Set<BidRobot> bidRobotSet = new HashSet<BidRobot>();
 
-    public BidRobotMonitor() {
-        instance = this;
-    }
-
-    public void cleanUp() {
-        if (!getBidRobotSet().isEmpty()) {
-            getBidRobotSetLock().lock();
-            try {
-                if (!getBidRobotSet().isEmpty()) {
-                    for (final BidRobot _bidRobot : getBidRobotSet()) {
-                        _bidRobot.stop();
-                    }
-                }
-            } finally {
-                getBidRobotSetLock().unlock();
-            }
-        }
+    private BidRobotMonitor() {
     }
 
     public static BidRobotMonitor getInstance() {
-        return instance;
+		if (singleton == null) {
+			singleton = new BidRobotMonitor();
+		}
+		return singleton;
     }
-
-    protected Set<BidRobot> getBidRobotSet() {
-        return bidRobotSet;
-    }
-
-    protected Lock getBidRobotSetLock() {
-        return bidRobotSetLock;
-    }
-
-    void addBidRobot(final BidRobot bidRobot) {
-        if (!getBidRobotSet().contains(bidRobot)) {
-            getBidRobotSetLock().lock();
+    
+    public void addBidRobot(BidRobot toAdd) {
+        if (!bidRobotSet.contains(toAdd)) {
+            bidRobotSetLock.lock();
             try {
-                if (!getBidRobotSet().contains(bidRobot)) {
-                    getBidRobotSet().add(bidRobot);
+                if (!bidRobotSet.contains(toAdd)) {
+                    bidRobotSet.add(toAdd);
                 }
-            } finally {
-                getBidRobotSetLock().unlock();
+            }finally {
+                bidRobotSetLock.unlock();
             }
         }
     }
 
-    void removeBidRobot(final BidRobot bidRobot) {
-        if (getBidRobotSet().contains(bidRobot)) {
-            getBidRobotSetLock().lock();
+    public void removeBidRobot(BidRobot toRemove) {
+        if (bidRobotSet.contains(toRemove)) {
+            bidRobotSetLock.lock();
             try {
-                if (getBidRobotSet().contains(bidRobot)) {
-                    getBidRobotSet().remove(bidRobot);
+                if (bidRobotSet.contains(toRemove)) {
+                    bidRobotSet.remove(toRemove);
                 }
-            } finally {
-                getBidRobotSetLock().unlock();
+            }finally {
+                bidRobotSetLock.unlock();
+            }
+        }
+    }
+    
+    public void stop() {
+        if (!bidRobotSet.isEmpty()) {
+            bidRobotSetLock.lock();
+            try {
+                if (!bidRobotSet.isEmpty()) {
+                    for (BidRobot loopRobot : bidRobotSet) {
+                        loopRobot.stop();
+                    }
+                }
+            }finally {
+                bidRobotSetLock.unlock();
             }
         }
     }
