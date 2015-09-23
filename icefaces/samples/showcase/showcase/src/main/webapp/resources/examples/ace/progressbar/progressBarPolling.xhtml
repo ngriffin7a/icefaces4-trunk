@@ -84,9 +84,9 @@
                 </ace:dataTable>
             </ace:panel>
            
-            <h:panelGrid style="float: right;">
+            <h:panelGrid columns="2" style="float: right;">
 				<h:panelGroup>
-					<h:selectBooleanCheckbox value="#{progressBarPolling.indeterminate}">
+					<h:selectBooleanCheckbox id="pollingIndeterminate" value="#{progressBarPolling.indeterminate}">
 						<f:ajax render="@all"/>
 					</h:selectBooleanCheckbox>
 					<h:outputLabel for="pollingIndeterminate"> Enable indeterminate mode</h:outputLabel>
