@@ -74,7 +74,7 @@
                 </h:panelGrid>
             </ace:panel>
 			<h:panelGroup>
-				<h:selectBooleanCheckbox value="#{progressBarPush.indeterminate}">
+				<h:selectBooleanCheckbox id="pushIndeterminate" value="#{progressBarPush.indeterminate}">
 					<f:ajax />
 				</h:selectBooleanCheckbox>
 				<h:outputLabel for="pushIndeterminate"> Enable indeterminate mode</h:outputLabel>
