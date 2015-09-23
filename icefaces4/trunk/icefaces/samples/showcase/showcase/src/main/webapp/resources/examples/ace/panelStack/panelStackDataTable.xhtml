@@ -33,8 +33,7 @@
 
     <ui:define name="example">
        <icecore:config mandatoryResource="textEntry textAreaEntry dateTimeEntry checkboxButton" />
-		<ace:panel>
-         <h:form id="queryForm">
+	         <h:form id="queryForm">
          	<h:outputLabel for="selectPane"  value="Choose a query to illustrate: "/>
                 <h:selectOneMenu id="selectPane"
                                  value="#{panelStackDataTable.selectedValue}"
@@ -45,13 +44,12 @@
                     <f:ajax execute="@this" render="@all"/>
                 </h:selectOneMenu>
          </h:form>
-		</ace:panel>
-		<ace:panel>
-        <h:form id="dataTableForm">
-            <h:dataTable id="tbl1" var="input"
-                         value="#{panelStackDataTable.selectedQuery}">                 
-              <h:column>               
-                <ace:panelStack id="stack1" selectedId="#{input.type}">
+		 <br />
+	        <h:form id="dataTableForm">
+            <ace:dataTable id="tbl1" var="input"
+                         value="#{panelStackDataTable.selectedQuery}" style="width:60%;">                 
+              <ace:column>               
+                <ace:panelStack id="stack1" selectedId="#{input.type}" >
                     <ace:stackPane id="TEXTENTRY"  >                                  
                         <ace:panel header="#{input.title}">
                             <ace:textEntry id="textEntryIn" value="#{input.value}">
@@ -88,9 +86,8 @@
                         </ace:panel>
                     </ace:stackPane>
                 </ace:panelStack>
-            </h:column>
-            </h:dataTable>
+            </ace:column>
+            </ace:dataTable>
         </h:form>
-		</ace:panel>
-    </ui:define>
+	 </ui:define>
 </ui:composition>
