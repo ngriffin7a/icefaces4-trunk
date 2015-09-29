@@ -72,12 +72,33 @@ public class SourceCodeLoaderServlet extends HttpServlet implements Serializable
 	}
 	
 	public void getSource(String sourcePath, HttpServletResponse response, PrintWriter writer) { // either response or writer must be non-null
+		// First we need to check if our file even exists properly, otherwise we'll bail
+		File sourceFile = new File(getServletContext().getRealPath(sourcePath));
+		if ((!sourceFile.exists()) || (!sourceFile.canRead()) || (sourceFile.isDirectory())) {
+			PrintWriter responseStream = null;
+			try{
+				responseStream = response != null ? response.getWriter() : writer;
+				responseStream.write("File " + sourceFile.getName() + " could not be found, please try again later.");
+			}catch (Exception failedWrite) {
+				failedWrite.printStackTrace();
+			} finally {
+				// Close the response
+				if (responseStream != null) {
+					try{
+						responseStream.close();
+					} catch (Exception ignoredClose) { }
+				}
+			}
+			
+			return;
+		}
+		
 		InputStream sourceStream = getServletContext().getResourceAsStream(sourcePath);
-				
+		
 		if (sourceStream == null) {
 			try {
 				// Work around for websphere
-				sourceStream = new FileInputStream(new File(getServletContext().getRealPath(sourcePath)));
+				sourceStream = new FileInputStream(sourceFile);
 			} catch (Exception failedWorkaround) {
 				failedWorkaround.printStackTrace();
 			}
@@ -109,9 +130,9 @@ public class SourceCodeLoaderServlet extends HttpServlet implements Serializable
 				// Check the extension
 				String name = sourcePath.substring(sourcePath.lastIndexOf("/") + 1);
 				String type = "";
-				if (sourcePath.endsWith(".java")) {
+				if (sourcePath.toLowerCase().endsWith(".java")) {
 					type = XhtmlRendererFactory.JAVA;
-				} else if (sourcePath.endsWith(".xhtml")) {
+				} else if (sourcePath.toLowerCase().endsWith(".xhtml")) {
 					type = XhtmlRendererFactory.XHTML;
 				}
 				
