@@ -144,6 +144,15 @@ public class ColumnMeta extends UIColumnMeta {
             "Having a value in this field indicates a column is pinned. 1 indexed.")
     private Integer pinningOrder;
 
+    @Property(defaultValue = "org.icefaces.ace.component.column.ColumnType.text",
+              defaultValueType = DefaultValueType.EXPRESSION,
+              tlddoc = "Define the ColumnType of this column, determining how the " +
+                      "'value' attribute of this component will be handled when filtering. Valid options " +
+                      "include : text, bool, date, image " +
+                      "(Date assumes the value object is a Date object, and "+
+                      "Image assumes the value is a representation of an image URL).")
+    ColumnType type;
+
 //    These per-feature configuration attributes will be used when the 'value' property is added to Column.
 //    Until then they are redundant.
 //    @Property(tlddoc="Enables per-column control of column sorting when either the " +

@@ -49,7 +49,10 @@ import java.util.List;
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
 	@ICEResourceDependency(name = "dnd/dragdrop.js"),
-	@ICEResourceDependency(name="util/ace-datatable.js")
+	@ICEResourceDependency(name="util/ace-datatable.js"),
+	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
+	@ICEResourceDependency(name = "datetimeentry/jquery-ui-timepicker-addon.js"),
+	@ICEResourceDependency(name = "datetimeentry/datetimeentry.js")
 })
 @ClientBehaviorHolder(events = {
         @ClientEvent(name="page", javadoc="Fired when the page is changed on the DataTable.",
@@ -387,7 +390,7 @@ public class DataTableMeta extends UIDataMeta {
     private boolean constantRefilter;
 
     @Property(tlddoc="Defines the Javascript event on which to trigger filter event, ex. " +
-            "\'keyup\', \'blur\', \'change\' and \'enter\'.", defaultValue="change")
+            "\'keyup\', \'blur\', \'change\' and \'enter\' (Note: columns filtered based on Date values always trigger the event on change).", defaultValue="change")
     private String filterEvent;
 
     @Property(tlddoc="Defines the input to the column non-specific filter, coming from the client, or " +

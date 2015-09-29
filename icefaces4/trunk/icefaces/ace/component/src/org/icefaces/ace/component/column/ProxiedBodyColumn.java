@@ -281,4 +281,12 @@ public class ProxiedBodyColumn implements IProxiableColumn{
     public String getLazyColumnKey() {
         return (isPropertySpecified(bodyColumn, "lazyColumnKey") ? bodyColumn : headerColumn).getLazyColumnKey();
     }
+
+    public void setType(ColumnType type) {
+        (isPropertySpecified(bodyColumn, "type") ? bodyColumn : headerColumn).setType(type);
+    }
+
+    public ColumnType getType() {
+        return (isPropertySpecified(bodyColumn, "type") ? bodyColumn : headerColumn).getType();
+    }
 }
