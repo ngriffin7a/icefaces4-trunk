@@ -74,7 +74,7 @@
 
     <context-param>
         <param-name>org.icefaces.windowScopeExpiration</param-name>
-        <param-value>1500</param-value>
+        <param-value>3000</param-value>
     </context-param>
 
     <context-param>

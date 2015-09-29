@@ -66,14 +66,14 @@
                       expansion="true"
                       selection="true"
                       selectMultiple="false"
-                      value="#{breadcrumbMenuViewScopedBean.treeRoots}"
-                      stateCreationCallback="#{breadcrumbMenuViewScopedBean.contractProvinceInit}"
+                      value="#{breadcrumbMenuBean.treeRoots}"
+                      stateCreationCallback="#{breadcrumbMenuBean.contractProvinceInit}"
                       var="node"
-                      stateMap="#{breadcrumbMenuViewScopedBean.stateMap}"
+                      stateMap="#{breadcrumbMenuBean.stateMap}"
                       stateVar="nState"
                       type="#{node.type}">
-                <ace:ajax event="select" render="@all" execute="@all" listener="#{breadcrumbMenuViewScopedBean.treeSelectListener}"/>
-                <ace:ajax event="deselect" render="@all" execute="@all" listener="#{breadcrumbMenuViewScopedBean.treeSelectListener}"/>
+                <ace:ajax event="select" render="@all" execute="@all" listener="#{breadcrumbMenuBean.treeSelectListener}"/>
+                <ace:ajax event="deselect" render="@all" execute="@all" listener="#{breadcrumbMenuBean.treeSelectListener}"/>
                 <ace:node type="country">
                     Country: <h:outputText value="#{node.name}" />
                 </ace:node>
@@ -88,9 +88,9 @@
 
             <h:panelGroup>
                 <span style="font-weight:bold; text-align: left">Crumbs with URL's:</span><br/>
-                <ace:breadcrumbMenu id="crumbs-1" model="#{breadcrumbMenuViewScopedBean.menuModel1}"/>
+                <ace:breadcrumbMenu id="crumbs-1" model="#{breadcrumbMenuBean.menuModel1}"/>
                 <span style="font-weight:bold; text-align: left">Crumbs with action listeners:</span><br/>
-                <ace:breadcrumbMenu id="crumbs-2" model="#{breadcrumbMenuViewScopedBean.menuModel2}"/>
+                <ace:breadcrumbMenu id="crumbs-2" model="#{breadcrumbMenuBean.menuModel2}"/>
             </h:panelGroup>
         </h:panelGrid>
     </h:form>
