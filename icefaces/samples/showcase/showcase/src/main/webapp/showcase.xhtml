@@ -27,12 +27,12 @@
 
     <ui:define name="metadata">
         <f:metadata>
-            <f:viewParam name="grp" required="false"
-                         value="#{navigationModel.componentGroup}"/>
-            <f:viewParam name="exp" required="false"
-                         value="#{navigationModel.componentExample}"/>
-            <f:event type="postValidate"
-                     listener="#{navigationController.navigate}"/>
+            <f:viewParam name="#{showcaseMenu.urlParamGroup}" required="false"
+                         value="#{userMenuState.paramComponent}"/>
+            <f:viewParam name="#{showcaseMenu.urlParamDemo}" required="false"
+                         value="#{userMenuState.paramDemo}"/>
+            <f:event type="preRenderView"
+                     listener="#{showcaseMenu.processParams}"/>
         </f:metadata>
     </ui:define>
 
@@ -47,8 +47,7 @@
                         <h:link id="aceSuiteLink"
                                 styleClass="aceSuiteLink"
                                 outcome="showcase">
-                                <f:param name="grp" value="#{aceMenu.beanName}"/>
-                                <h:graphicImage value="#{navigationModel.componentGroup == aceMenu.beanName ? '/resources/css/images/topBannerImages/desktop-on.png' : '/resources/css/images/topBannerImages/desktop-off.png' }"
+                                <h:graphicImage value="/resources/css/images/topBannerImages/desktop-on.png"
                                                 alt="Desktop Components Showcase"
                                                 styleClass="suiteLinkImageStyle"
                                                 title="Desktop Components Showcase"/>
@@ -56,7 +55,7 @@
                         <h:outputLink id="mobiSuiteLink"
                                 styleClass="mobiSuiteLink"
                                 value="showcase-mobile.jsf"  >
-                                <h:graphicImage value="#{navigationModel.componentGroup == mobiMenu.beanName ? '/resources/css/images/topBannerImages/mobile-on.png' : '/resources/css/images/topBannerImages/mobile-off.png' }"
+                                <h:graphicImage value="/resources/css/images/topBannerImages/mobile-off.png"
                                                 alt="Mobile Components Showcase"
                                                 styleClass="suiteLinkImageStyle"
                                                 title="Mobile Components Showcase"/>
@@ -69,142 +68,79 @@
     </ui:define>
 
     <ui:define name="suite-menu">
-
+    
         <h:form id="searchForm">
-            <ace:comboBox valueChangeListener="#{navigationController.navigateValueChangeListener}" id="searchBox"
-                          placeholder="Search" value="#{navigationController.emptyValue}"
+            <ace:comboBox id="searchBox"
+                          value="#{userMenuState.searchFieldHolder}"
+                          valueChangeListener="#{showcaseMenu.searchChanged}"
+                          placeholder="Search"
                           filterMatchMode="contains"
                           width="212"
+                          style="font-size: 8pt;"
                           required="true">
-                <f:selectItems value="#{navigationModel.currentComponentGroup.searchSelectItems}"/>
-                <ace:ajax resetValues="true"/>
+                <f:selectItems value="#{showcaseMenu.searchItems}"/>
+                <ace:ajax resetValues="true" render="@all"/>
             </ace:comboBox>
         </h:form>
 
-        <h:form>
-            <ace:accordion effect="slide"
-            			   collapsible="true"
-                           activeIndex="#{aceMenu.groupsMap[navigationModel.currentComponentExample.beanName]}"
-                           autoHeight="false">
-                <ace:accordionPane title="#{msgs['menu.ace.aceSuiteOverview.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[0]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.core.group.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[1]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.ajax.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[2]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.input.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[3]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.buttons.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[4]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.selection.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[5]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.datatable.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[6]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>              
-                <ace:accordionPane title="#{msgs['menu.ace.group.containers.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[7]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.dialogs.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[8]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.menus.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[9]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.messages.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[10]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.file.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[11]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.charts.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[12]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.mapping.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[13]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.media.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[14]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
-                <ace:accordionPane title="#{msgs['menu.ace.group.misc.title']}">
-                    <ul>
-						<c:forEach var="link" items="#{aceMenu.groups[15]}">
-							<showcase:componentNavigation menuLink="#{link}"/>
-						</c:forEach>
-                    </ul>
-                </ace:accordionPane>
+        <h:form id="sm">
+            <ace:accordion autoHeight="false" collapsible="true" effect="slide" activeIndex="#{userMenuState.activeIndex}">
+                <c:forEach var="categoryGroup" items="#{showcaseMenu.categories}">
+                    <ace:accordionPane title="#{categoryGroup.name}">
+                        <ul>
+                            <c:forEach var="componentGroup" items="#{categoryGroup.components}">
+                                <li>
+                                    <h:panelGroup layout="block" rendered="#{userMenuState.selectedComponent ne componentGroup}">
+	                                    <h:commandLink value="#{componentGroup.name}"
+	                                                   rendered="#{!componentGroup.fullPageRefresh}"
+	                                                   action="#{showcaseMenu.clickComponentGroup}"
+	                                                   onclick="updateAddressBarURL('#{componentGroup.name}');"
+	                                                   styleClass="mlNor">
+	                                        <f:ajax render="@all"/>
+	                                        <f:setPropertyActionListener target="#{userMenuState.selectedComponent}" value="#{componentGroup}"/>
+	                                    </h:commandLink>
+	                                    <h:link outcome="showcase" value="#{componentGroup.name}" rendered="#{componentGroup.fullPageRefresh}"
+	                                            styleClass="mlNor">
+	                                        <f:param name="#{showcaseMenu.urlParamGroup}" value="#{componentGroup.name}"/>
+	                                        <f:param name="#{showcaseMenu.urlParamDemo}" value="#{componentGroup.firstDemo.name}"/>
+	                                    </h:link>
+                                    </h:panelGroup>
+                                    
+                                    <ace:panel header="#{userMenuState.selectedComponent.name}"
+                                               styleClass="smHeader"
+                                               rendered="#{userMenuState.selectedComponent eq componentGroup}">
+                                        <ul>
+                                            <ui:repeat var="demo"
+                                                       value="#{userMenuState.selectedComponent.demos}">
+                                                <li>
+                                                    <h:commandLink value="#{demo.name}" styleClass="#{userMenuState.selectedDemo eq demo ? 'mlSelS' : 'mlNorS'}"
+                                                                   onclick="updateAddressBarURL('#{userMenuState.selectedComponent.name}','#{demo.name}');"
+                                                                   rendered="#{!componentGroup.fullPageRefresh}">
+                                                        <f:ajax render="@all"/>
+                                                        <f:setPropertyActionListener target="#{userMenuState.selectedDemo}" value="#{demo}"/>
+                                                    </h:commandLink>
+				                                    <h:link outcome="showcase" value="#{demo.name}"
+				                                            styleClass="#{userMenuState.selectedDemo eq demo ? 'mlSelS' : 'mlNorS'}"
+				                                            rendered="#{componentGroup.fullPageRefresh}">
+				                                        <f:param name="#{showcaseMenu.urlParamGroup}" value="#{componentGroup.name}"/>
+				                                        <f:param name="#{showcaseMenu.urlParamDemo}" value="#{demo.name}"/>
+				                                    </h:link>
+                                                </li>
+                                            </ui:repeat>
+                                        </ul>
+                                    </ace:panel>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </ace:accordionPane>
+                </c:forEach>
             </ace:accordion>
         </h:form>
-
+        
     </ui:define>
 
     <ui:define name="component-example">
-        <ui:include src="#{navigationModel.currentComponentExample.example}"/>
+        <ui:include src="#{userMenuState.selectedDemo.includedPath}"/>
     </ui:define>
 
 </ui:composition>

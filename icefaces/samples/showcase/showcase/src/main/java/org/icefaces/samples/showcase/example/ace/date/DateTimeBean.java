@@ -22,27 +22,13 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-@ComponentExample(parent = DateEntryBean.BEAN_NAME, title = "example.ace.dateentry.timeentry.title", description = "example.ace.dateentry.timeentry.description", example = "/resources/examples/ace/date/datetimeentry.xhtml")
-@ExampleResources(resources = {
-// xhtml
-		@ExampleResource(type = ResourceType.xhtml, title = "datetimeentry.xhtml", resource = "/resources/examples/ace/date/datetimeentry.xhtml"),
-		// Java Source
-		@ExampleResource(type = ResourceType.java, title = "DateTimeBean.java", resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/date/DateTimeBean.java") })
 @ManagedBean(name = DateTimeBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DateTimeBean extends ComponentExampleImpl<DateTimeBean> implements
-		Serializable {
+public class DateTimeBean implements Serializable {
 	public static final String BEAN_NAME = "dateTime";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -57,8 +43,6 @@ public class DateTimeBean extends ComponentExampleImpl<DateTimeBean> implements
 	private boolean timeOnly = false;
 
 	public DateTimeBean() {
-		super(DateTimeBean.class);
-
 		Calendar calendar = Calendar.getInstance(
 				TimeZone.getTimeZone("Canada/Mountain"), Locale.getDefault());
 		selectedDate = calendar.getTime();
@@ -94,11 +78,6 @@ public class DateTimeBean extends ComponentExampleImpl<DateTimeBean> implements
 
 	public void setTimeOnly(boolean timeOnly) {
 		this.timeOnly = timeOnly;
-	}
-
-	@PostConstruct
-	public void initMetaData() {
-		super.initMetaData();
 	}
 
 	public void typeChanged(ValueChangeEvent event) {

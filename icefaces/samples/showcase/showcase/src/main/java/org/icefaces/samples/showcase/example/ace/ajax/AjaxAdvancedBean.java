@@ -16,48 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.ajax;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = AjaxBean.BEAN_NAME,
-        title = "example.ace.ajax.advanced.title",
-        description = "example.ace.ajax.advanced.description",
-        example = "/resources/examples/ace/ajax/ajaxAdvanced.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="ajaxAdvanced.xhtml",
-                    resource = "/resources/examples/ace/ajax/ajaxAdvanced.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AjaxAdvancedBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/ajax/AjaxAdvancedBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= AjaxAdvancedBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AjaxAdvancedBean extends ComponentExampleImpl<AjaxAdvancedBean> implements Serializable
+public class AjaxAdvancedBean implements Serializable
 {
     public static final String BEAN_NAME = "ajaxAdvancedBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public AjaxAdvancedBean() {
-        super(AjaxAdvancedBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
 	private String event = "slideEnd";
     private int sliderValue = 0;

@@ -16,42 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.combobox;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.PositionBean;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = ComboBoxBean.BEAN_NAME,
-        title = "example.ace.combobox.label.title",
-        description = "example.ace.combobox.label.description",
-        example = "/resources/examples/ace/combobox/comboBoxLabel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="comboBoxLabel.xhtml",
-                    resource = "/resources/examples/ace/combobox/comboBoxLabel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ComboBoxLabelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/combobox/ComboBoxLabelBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="ComboBoxBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/combobox/ComboBoxBean.java")
-        }
-)
+import org.icefaces.samples.showcase.util.PositionBean;
+
 @ManagedBean(name= ComboBoxLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ComboBoxLabelBean extends ComponentExampleImpl<ComboBoxLabelBean> implements Serializable
+public class ComboBoxLabelBean implements Serializable
 {
     public static final String BEAN_NAME = "comboBoxLabelBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -60,11 +35,6 @@ public class ComboBoxLabelBean extends ComponentExampleImpl<ComboBoxLabelBean> i
     private String labelText = "Select province:";
     private String labelPosition = "left";
 
-    public ComboBoxLabelBean() 
-    {
-        super(ComboBoxLabelBean.class);
-    }
-    
     public String getSelectedText() {
         return selectedText;
     }
@@ -87,11 +57,6 @@ public class ComboBoxLabelBean extends ComponentExampleImpl<ComboBoxLabelBean> i
     
     public void setLabelPosition(String labelPosition) {
         this.labelPosition = labelPosition;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
     
     public void positionChanged(ValueChangeEvent event) {

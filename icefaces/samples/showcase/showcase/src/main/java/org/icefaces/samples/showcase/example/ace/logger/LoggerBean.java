@@ -16,61 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.logger;
 
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;                                                                       
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.logger.title",
-        description = "example.ace.logger.description",
-        example = "/resources/examples/ace/logger/logger.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="logger.xhtml",
-                    resource = "/resources/examples/ace/logger/logger.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="LoggerBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                               "/example/ace/logger/LoggerBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.logger.subMenu.title",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.logger.subMenu.main",
-	                exampleBeanName = LoggerBean.BEAN_NAME)
-})
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= LoggerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class LoggerBean extends ComponentExampleImpl<LoggerBean> implements Serializable {
+public class LoggerBean implements Serializable {
 
     public static final String BEAN_NAME = "logger";
 	public String getBeanName() { return BEAN_NAME; }
 
     private boolean rendered = false;
     private String category = "logBugz";
-
-    public LoggerBean() {
-        super(LoggerBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public String getCategory() {
         return category;

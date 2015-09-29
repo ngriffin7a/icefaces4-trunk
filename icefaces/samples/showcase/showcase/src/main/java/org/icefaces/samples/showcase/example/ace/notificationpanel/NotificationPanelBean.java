@@ -16,46 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.notificationpanel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.notificationpanel.title",
-        description = "example.ace.notificationpanel.description",
-        example = "/resources/examples/ace/notificationpanel/notificationPanel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="notificationPanel.xhtml",
-                    resource = "/resources/examples/ace/notificationpanel/notificationPanel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="NotificationPanel.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/notificationpanel/NotificationPanelBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.notificationpanel.subMenu.title",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.notificationpanel.subMenu.main", isDefault = true,
-                                         exampleBeanName = NotificationPanelBean.BEAN_NAME),
-                        @MenuLink(title = "menu.ace.notificationpanel.subMenu.clientSide",
-                        exampleBeanName = NotificationPanelClientBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= NotificationPanelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class NotificationPanelBean extends ComponentExampleImpl<NotificationPanelBean> implements Serializable {
+public class NotificationPanelBean implements Serializable {
     public static final String BEAN_NAME = "notificationPanelBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -66,13 +36,7 @@ public class NotificationPanelBean extends ComponentExampleImpl<NotificationPane
 
     public NotificationPanelBean()
     {
-        super(NotificationPanelBean.class);
         initializeBeanVariables();
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
    public void showAppropriateButton(ActionEvent e)

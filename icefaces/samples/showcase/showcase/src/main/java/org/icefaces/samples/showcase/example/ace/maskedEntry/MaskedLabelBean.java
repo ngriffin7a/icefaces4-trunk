@@ -16,36 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.maskedEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = MaskedEntryBean.BEAN_NAME,
-        title = "example.ace.maskedLabel.title",
-        description = "example.ace.maskedLabel.description",
-        example = "/resources/examples/ace/maskedEntry/maskedLabel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="maskedLabel.xhtml",
-                    resource = "/resources/examples/ace/maskedEntry/maskedLabel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MaskedLabel.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/maskedEntry/MaskedLabelBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= MaskedLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MaskedLabelBean extends ComponentExampleImpl<MaskedLabelBean> implements Serializable
+public class MaskedLabelBean implements Serializable
 {
     public static final String BEAN_NAME = "maskedLabelBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -56,10 +34,6 @@ public class MaskedLabelBean extends ComponentExampleImpl<MaskedLabelBean> imple
     private String workPhone;
     private String mobilePhone;
     private String sin;
-    
-    public MaskedLabelBean() {
-        super(MaskedLabelBean.class);
-    }
     
     public String getLabelText() {
         return labelText;
@@ -107,10 +81,5 @@ public class MaskedLabelBean extends ComponentExampleImpl<MaskedLabelBean> imple
 
     public void setSin(String sin) {
         this.sin = sin;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

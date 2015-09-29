@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.gMapInfoWindow;
 
-import javax.el.MethodExpression;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.CustomScoped;
-import javax.annotation.PostConstruct;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.gMapInfoWindow.title",
-        description = "example.ace.gMapInfoWindow.description",
-        example = "/resources/examples/ace/gMapInfoWindow/gMapInfoWindow.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="gMapInfoWindow.xhtml",
-                    resource = "/resources/examples/ace/gMapInfoWindow/gMapInfoWindow.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="GMapInfoWindowBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapInfoWindow/GMapInfoWindowBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.gMapInfoWindow.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.gMapInfoWindow.subMenu.main", isDefault = true, exampleBeanName = GMapInfoWindowBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= GMapInfoWindowBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class GMapInfoWindowBean extends ComponentExampleImpl<GMapInfoWindowBean> implements Serializable{
+public class GMapInfoWindowBean implements Serializable{
 	public static final String BEAN_NAME = "gMapInfoWindowBean";
 	public String getBeanName() { return BEAN_NAME; }
 	private boolean oneDisabled = false;
@@ -239,12 +213,5 @@ public class GMapInfoWindowBean extends ComponentExampleImpl<GMapInfoWindowBean>
         } else if (selectedRender.equals("seven")) {
            sevenContent = displayedValue;
         }
-    }
-	public GMapInfoWindowBean() {
-        super(GMapInfoWindowBean.class);
-    }
-	@PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

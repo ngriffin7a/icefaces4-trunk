@@ -17,44 +17,22 @@
 
 package org.icefaces.samples.showcase.example.ace.dragDrop;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
+
 import org.icefaces.ace.event.DragDropEvent;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
-import org.icefaces.samples.showcase.example.ace.dragDrop.DragDropItem;
 
-@ComponentExample(
-        parent = DragDropOverviewBean.BEAN_NAME,
-        title = "example.ace.dataTableIntegration.title",
-        description = "example.ace.dataTableIntegration.description",
-        example = "/resources/examples/ace/dragDrop/dataTableIntegration.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTableIntegration.xhtml",
-                    resource = "/resources/examples/ace/dragDrop/dataTableIntegration.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableIntegration.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dragDrop/DataTableIntegrationBean.java")
-        }
-)
 @ManagedBean(name= DataTableIntegrationBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableIntegrationBean extends ComponentExampleImpl<DataTableIntegrationBean> implements Serializable
+public class DataTableIntegrationBean implements Serializable
 {
    public static final String BEAN_NAME = "dataTableIntegrationBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -64,15 +42,9 @@ public class DataTableIntegrationBean extends ComponentExampleImpl<DataTableInte
    
    public DataTableIntegrationBean()
    {
-       super(DataTableIntegrationBean.class);
        initializeData();
    }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
    private void initializeData()
    {
         availableItems = new ArrayList<DragDropItem>();

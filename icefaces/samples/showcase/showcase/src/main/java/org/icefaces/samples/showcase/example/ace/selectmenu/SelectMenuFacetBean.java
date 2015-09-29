@@ -16,40 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.selectmenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
-import java.util.*;
-
-@ComponentExample(
-		parent = SelectMenuBean.BEAN_NAME,
-        title = "example.ace.selectmenu.facet.title",
-        description = "example.ace.selectmenu.facet.description",
-        example = "/resources/examples/ace/selectmenu/selectMenuFacet.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="selectMenuFacet.xhtml",
-                    resource = "/resources/examples/ace/selectmenu/selectMenuFacet.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="SelectMenuFacetBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/selectmenu/SelectMenuFacetBean.java")
-        }
-)
 @ManagedBean(name= SelectMenuFacetBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SelectMenuFacetBean extends ComponentExampleImpl< SelectMenuFacetBean > implements Serializable {
+public class SelectMenuFacetBean implements Serializable {
 
     public static final String BEAN_NAME = "selectMenuFacetBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -58,8 +34,6 @@ public class SelectMenuFacetBean extends ComponentExampleImpl< SelectMenuFacetBe
 	private List<Color> backgroundColors;
     
     public SelectMenuFacetBean() {
-        super(SelectMenuFacetBean.class);
-		
 		backgroundColors = new ArrayList<Color>();
 		backgroundColors.add(new Color("Alice Blue", "#F0F8FF"));
 		backgroundColors.add(new Color("Beige", "#F5F5DC"));
@@ -93,11 +67,6 @@ public class SelectMenuFacetBean extends ComponentExampleImpl< SelectMenuFacetBe
 		textColors.add(new Color("Pale Violet Red", "#DB7093"));
 		textColors.add(new Color("Sandy Brown", "#F4A460"));
 		textColors.add(new Color("Slate Blue", "#6A5ACD"));
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
 	private String textColor = "";

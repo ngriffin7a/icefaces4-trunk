@@ -23,14 +23,44 @@
     xmlns:icecore="http://www.icefaces.org/icefaces/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
-
-    <ui:param name="title" value="#{msgs[aceSuiteOverview.title]}"/>
-    <ui:param name="description" value="#{msgs[aceSuiteOverview.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[aceSuiteOverview.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{aceSuiteOverview.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{aceSuiteOverview.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{aceSuiteOverview.wikiResources}"/>
-    <ui:param name="tldResources" value="#{aceSuiteOverview.tldResources}"/>
-    
+<ui:define name="example">
+    <div class="desc" style="margin: 0; padding: 0;">
+	<p>
+		The Desktop Showcase provides demonstrations for the key features
+		available in the ICEfaces ACE and ICECORE components.<br/>
+	</p>
+	<h2>ACE Components</h2>
+	<p>The ACE Components (ICEfaces Advanced Components) utilize a
+		blend of server-side and client-based rendering techniques to provide
+		a rich, responsive user-experience with reduced network and
+		server-processing requirements.</p>
+	<p>
+		Key features:<br/>
+	</p>
+	<ul>
+		<li><b>&#187;</b> Leverage powerful JavaScript components from
+			3rd-party libraries, such as jQuery, while shielding ICEfaces
+			application developers from having to learn/use JavaScript directly.</li>
+		<li><b>&#187;</b> Support extensive client-side functionality to
+			improve component richness, responsiveness, and scalability.</li>
+		<li><b>&#187;</b> Provide a flexible and consistent approach to
+			UI theming/skinning across all components, based on jQuery
+			ThemeRoller themes.</li>
+	</ul>
+	<p>The ACE Component containers and dialogs are best-suited for
+		desktop or tablet platforms. All other ACE components are also
+		generally suitable for use on mobile devices such as smart-phones and
+		are intended to be used in a mix-and-match fashion together with the
+		MOBI (Mobile) components to provide comprehensive support for
+		authoring mobile web-applications.</p>
+	<h2>ICECORE Components</h2>
+	<p>The ICECORE Components (ICEfaces Core Components) are a set of
+		none-visual utililities that provide ready solutions for common
+		problems in many JSF applications.</p> These components work at the ICEfaces framework level and can be used in conjunction with any supported JSF components, on all platforms (Desktop or Mobile). <h2>How
+		are the Components Licensed?</h2>
+	<p>The ACE Components are made available under the Apache License
+		Version 2 open source License. All code modifications and component
+		enhancements are free for developers to use, distribute and modify.</p>
+    </div>
+</ui:define>
 </ui:composition>

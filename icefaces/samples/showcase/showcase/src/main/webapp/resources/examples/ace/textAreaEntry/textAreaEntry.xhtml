@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[textAreaEntryBean.title]}"/>
-    <ui:param name="description" value="#{msgs[textAreaEntryBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[textAreaEntryBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{textAreaEntryBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{textAreaEntryBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{textAreaEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{textAreaEntryResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="textAreaEntryForm">
             <ace:panel id="inputPanel" header="Enter Comments Below" styleClass="required-styling-demo">

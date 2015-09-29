@@ -16,51 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.radioButtons;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.util.*;
 
-@ComponentExample(
-        parent = RadioButtonsBean.BEAN_NAME,
-        title = "example.ace.radioButtons.reqStyle.title",
-        description = "example.ace.radioButtons.reqStyle.description",
-        example = "/resources/examples/ace/radioButtons/radioButtonsReqStyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="radioButtonsReqStyle.xhtml",
-                    resource = "/resources/examples/ace/radioButtons/radioButtonsReqStyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="RadioButtonsReqStyleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/radioButtons/RadioButtonsReqStyleBean.java")
-        }
-)
 @ManagedBean(name= RadioButtonsReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class RadioButtonsReqStyleBean extends ComponentExampleImpl<RadioButtonsReqStyleBean> implements Serializable
+public class RadioButtonsReqStyleBean implements Serializable
 {
     public static final String BEAN_NAME = "radioButtonsReqStyleBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    public RadioButtonsReqStyleBean() 
-    {
-        super(RadioButtonsReqStyleBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 	private List<String> selected1 = new ArrayList<String>();
 	public List<String> getSelected1() { return selected1; }
 	public void setSelected1(List<String> selected1) { this.selected1 = selected1; }

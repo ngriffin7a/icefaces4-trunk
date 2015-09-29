@@ -16,66 +16,28 @@
 
 package org.icefaces.samples.showcase.example.ace.tableConfigPanel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-import javax.faces.event.ActionEvent;
-
-@ComponentExample(
-        title = "example.ace.tableConfigPanel.title",
-        description = "example.ace.tableConfigPanel.description",
-        example = "/resources/examples/ace/tableConfigPanel/tableConfigPanel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="tableConfigPanel.xhtml",
-                    resource = "/resources/examples/ace/tableConfigPanel/tableConfigPanel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TableConfigPanelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/tableConfigPanel/TableConfigPanelBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.tableConfigPanel.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.tableConfigPanel.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = TableConfigPanelBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.tableConfigPanel.subMenu.advanced",
-                    exampleBeanName = TableConfigPanelAdvancedBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= TableConfigPanelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TableConfigPanelBean extends ComponentExampleImpl<TableConfigPanelBean> implements Serializable 
+public class TableConfigPanelBean implements Serializable 
 {
     public static final String BEAN_NAME = "tableConfigPanelBean";
 	public String getBeanName() { return BEAN_NAME; }
     
     public TableConfigPanelBean() {
-        super(TableConfigPanelBean.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private List<Car> carsData;
 
     public List<Car> getCarsData() { return carsData; }

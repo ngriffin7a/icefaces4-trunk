@@ -16,63 +16,22 @@
 
 package org.icefaces.samples.showcase.example.ace.dataExporter;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.dataExporter.title",
-        description = "example.ace.dataExporter.description",
-        example = "/resources/examples/ace/dataExporter/dataExporter.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataExporter.xhtml",
-                    resource = "/resources/examples/ace/dataExporter/dataExporter.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataExporterBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataExporter/DataExporterBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.dataExporter.subMenu.title",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.dataExporter.subMenu.main", isDefault = true, exampleBeanName = DataExporterBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.dataExporter.subMenu.columns", exampleBeanName = DataExporterColumns.BEAN_NAME),
-                        @MenuLink(title = "menu.ace.dataExporter.subMenu.rows", exampleBeanName = DataExporterRows.BEAN_NAME),
-                        @MenuLink(title = "menu.ace.dataExporter.subMenu.excludeFromExport", exampleBeanName = ExcludeFromExport.BEAN_NAME),
-			@MenuLink(title = "menu.ace.dataExporter.subMenu.custom", exampleBeanName = DataExporterCustom.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DataExporterBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataExporterBean extends ComponentExampleImpl<DataExporterBean> implements Serializable {
+public class DataExporterBean implements Serializable {
     public static final String BEAN_NAME = "dataExporterBean";
 	public String getBeanName() { return BEAN_NAME; }
     private String type;
 
     public DataExporterBean() {
-        super(DataExporterBean.class);
         this.type = "csv";
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
 }

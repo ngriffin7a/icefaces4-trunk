@@ -23,15 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[pushButton.title]}"/>
-    <ui:param name="description" value="#{msgs[pushButton.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[pushButton.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{pushButton.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{pushButton.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{pushButtonResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{pushButtonResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form" style="text-align: center;">
             <ace:tabSet id="tabSet">
@@ -40,8 +31,8 @@
                                     value="Go to LinkButton example"
                                     action="#{pushButton.executeAction}">
                         <ace:ajax execute="@all" render="@all" onSuccess="updateAddressBarURL('aceMenu','linkButton');" />
-                        <f:param name="grp" value="aceMenu"/>
-                        <f:param name="exp" value="linkButton" />
+                        <f:param name="#{showcaseMenu.urlParamGroup}" value="aceMenu"/>
+                        <f:param name="#{showcaseMenu.urlParamDemo}" value="linkButton" />
                     </ace:pushButton>
                 </ace:tabPane>
                 <ace:tabPane id="pane2" label="Action Listener">

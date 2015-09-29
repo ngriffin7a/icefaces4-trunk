@@ -16,51 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.growlmessages;
 
-import org.icefaces.ace.component.textentry.TextEntry;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.Iterator;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ActionEvent;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
 
-@ComponentExample(
-        title = "example.ace.growlmessages.title",
-        description = "example.ace.growlmessages.description",
-        example = "/resources/examples/ace/growlmessages/growlmessages.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "growlmessages.xhtml",
-                        resource = "/resources/examples/ace/growlmessages/growlmessages.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "GrowlMessagesBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase" +
-                                "/example/ace/growlmessages/GrowlMessagesBean.java")
-        }
-)
-@Menu(
-        title = "menu.ace.growlmessages.subMenu.main",
-        menuLinks = {
-                @MenuLink(title = "menu.ace.growlmessages.subMenu.main",
-                        isDefault = true,
-                        exampleBeanName = GrowlMessagesBean.BEAN_NAME)
-        }
-)
 @ManagedBean(name = GrowlMessagesBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class GrowlMessagesBean extends ComponentExampleImpl<GrowlMessagesBean> implements Serializable {
+public class GrowlMessagesBean implements Serializable {
     public static final String BEAN_NAME = "growlMessagesBean";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -73,15 +41,6 @@ public class GrowlMessagesBean extends ComponentExampleImpl<GrowlMessagesBean> i
 	private boolean warn;
 	private boolean error;
 	private boolean fatal;
-
-    public GrowlMessagesBean() {
-        super(GrowlMessagesBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public String getAutoHide() {
         return autoHide;

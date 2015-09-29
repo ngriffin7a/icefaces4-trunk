@@ -16,39 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.tree;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-@ComponentExample(
-        parent = TreeBean.BEAN_NAME,
-        title = "example.ace.tree.nested.title",
-        description = "example.ace.tree.nested.description",
-        example = "/resources/examples/ace/tree/treeNested.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="treeNested.xhtml",
-                        resource = "/resources/examples/ace/tree/treeNested.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="TreeNestedBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/tree/TreeNestedBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= TreeNestedBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TreeNestedBean extends ComponentExampleImpl<TreeNestedBean> implements Serializable {
+public class TreeNestedBean implements Serializable {
     public static final String BEAN_NAME = "treeNestedBean";
 	public String getBeanName() { return BEAN_NAME; }
     private List<LocationNodeImpl> treeRoots;
@@ -58,7 +35,6 @@ public class TreeNestedBean extends ComponentExampleImpl<TreeNestedBean> impleme
     }};
 
     public TreeNestedBean() {
-        super(TreeNestedBean.class);
         treeRoots = TreeDataFactory.getTreeRoots();
     }
 
@@ -68,10 +44,5 @@ public class TreeNestedBean extends ComponentExampleImpl<TreeNestedBean> impleme
 
     public List<LocationNodeImpl> getOuterTree() {
         return outerTree;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

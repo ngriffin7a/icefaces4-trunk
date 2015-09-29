@@ -24,21 +24,12 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[themeSelectBean.title]}"/>
-    <ui:param name="description" value="#{msgs[themeSelectBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[themeSelectBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{themeSelectBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{themeSelectBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{themeSelectResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{themeSelectResources.tldResources}"/>
-
     <ui:define name="example">
 
 		<h:form id="form">
             <ace:panel id="themePanel" header="Theme Selection" style="width: 100%;">
 				<h:outputText value="Select new theme: "/>
-				<ace:themeSelect value="#{navigationModel.theme}">
+				<ace:themeSelect value="#{themeSelectBean.theme}">
 					<ace:ajax render="@all"/>
 				</ace:themeSelect>
 			</ace:panel>

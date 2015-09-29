@@ -16,45 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.list;
 
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.model.SelectItem;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@ComponentExample(
-    parent = ListBean.BEAN_NAME,
-    title = "example.ace.list.selectionAjax.title",
-    description = "example.ace.list.selectionAjax.description",
-    example = "/resources/examples/ace/list/listSelectionAjax.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                title="ListSelectionAjax.xhtml",
-                resource = "/resources/examples/ace/"+
-                        "list/listSelectionAjax.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                title="ListSelectionAjaxBean.java",
-                resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                        "showcase/example/ace/list/ListSelectionAjaxBean.java")
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
+
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= ListSelectionAjaxBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ListSelectionAjaxBean extends ComponentExampleImpl<ListSelectionAjaxBean> {
+public class ListSelectionAjaxBean implements Serializable {
     public static final String BEAN_NAME = "listSelectionAjaxBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -66,15 +41,6 @@ public class ListSelectionAjaxBean extends ComponentExampleImpl<ListSelectionAja
     private Set<Object> ajaxSelections;
     private boolean multiSelect = true;
     
-    public ListSelectionAjaxBean() {
-        super(ListSelectionAjaxBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public List<SelectItem> getAjaxStringList() {
         return ajaxStringList;
     }

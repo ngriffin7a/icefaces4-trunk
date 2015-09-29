@@ -16,59 +16,19 @@
 
 package org.icefaces.samples.showcase.example.core.focusManager;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "Focus Manager Component",
-        description = "The <b>&lt;icecore:focusManager&gt;</b> component manages where focus will be applied on page load. The focus will move to the first invalid component, in this case when the required field is not filled in.",
-        example = "/resources/examples/core/focus-manager.xhtml"
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ExampleResources(
-        resources = {
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="focus-manager.xhtml",
-                        resource = "/resources/examples/core/focus-manager.xhtml"),
-                @ExampleResource(type = ResourceType.java,
-                        title="FocusManagerBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/focusManager/FocusManagerBean.java")
-        }
-)
-@Menu(
-    title = "menu.core.focusManagerBean.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.core.focusManagerBean.subMenu.main", isDefault = true, exampleBeanName = FocusManagerBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name = FocusManagerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class FocusManagerBean extends ComponentExampleImpl<FocusManagerBean> implements Serializable {
+public class FocusManagerBean implements Serializable {
     public static final String BEAN_NAME = "focusManagerBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     private String focusedComponent = "";
     private String a, b, c, d = "";
-
-    public FocusManagerBean() {
-        super(FocusManagerBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public String getFocusedComponent() {
         return focusedComponent;

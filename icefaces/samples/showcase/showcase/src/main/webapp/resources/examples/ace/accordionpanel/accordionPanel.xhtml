@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[accordionPanelBean.title]}"/>
-    <ui:param name="description" value="#{msgs[accordionPanelBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[accordionPanelBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{accordionPanelBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{accordionPanelBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{accordionPanelResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{accordionPanelResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             <ace:accordion id="accordion" collapsible="true" autoHeight="false">

@@ -16,36 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.dialog;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = DialogBean.BEAN_NAME,
-        title = "example.ace.dialog.dialogEffectAndSize.title",
-        description = "example.ace.dialog.dialogEffectAndSize.description",
-        example = "/resources/examples/ace/dialog/dialogEffectsAndSize.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dialogEffectsAndSize.xhtml",
-                    resource = "/resources/examples/ace/dialog/dialogEffectsAndSize.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DialogEffectsAndSize.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dialog/DialogEffectsAndSizeBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DialogEffectsAndSizeBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DialogEffectsAndSizeBean extends ComponentExampleImpl<DialogEffectsAndSizeBean> implements Serializable
+public class DialogEffectsAndSizeBean implements Serializable
 {
     public static final String BEAN_NAME = "dialogEffectsAndSizeBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -57,13 +35,7 @@ public class DialogEffectsAndSizeBean extends ComponentExampleImpl<DialogEffects
 
     public DialogEffectsAndSizeBean() 
     {
-        super(DialogEffectsAndSizeBean.class);
         initializeDefaultBeanValues();
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public String getHideEffect() {

@@ -16,49 +16,23 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.ace.component.datatable.DataTable;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+
+import org.icefaces.ace.component.datatable.DataTable;
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.util.FacesUtils;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.find.title",
-        description = "example.ace.dataTable.find.description",
-        example = "/resources/examples/ace/dataTable/dataTableFind.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="dataTableFind.xhtml",
-                        resource = "/resources/examples/ace/"+
-                                "dataTable/dataTableFind.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="DataTableFind.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                                "showcase/example/ace/dataTable/DataTableFind.java")
-        }
-)
 @ManagedBean(name= DataTableFind.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableFind extends ComponentExampleImpl<DataTableFind> implements Serializable {
+public class DataTableFind implements Serializable {
     public static final String BEAN_NAME = "aceDataTableFind";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -88,17 +62,11 @@ public class DataTableFind extends ComponentExampleImpl<DataTableFind> implement
             new SelectItem("pulsate", "Pulsate")};
     
     public DataTableFind() {
-        super(DataTableFind.class);
         cars = new ArrayList<Car>(DataTableData.getDefaultData());
     }
 
     public Class getClazz() {
         return getClass();
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public void find(javax.faces.event.ActionEvent e) {

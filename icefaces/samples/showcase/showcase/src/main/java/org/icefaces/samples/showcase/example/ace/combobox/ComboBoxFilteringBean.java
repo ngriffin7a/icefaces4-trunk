@@ -16,40 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.combobox;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import java.util.*;
 
-@ComponentExample(
-		parent = ComboBoxBean.BEAN_NAME,
-        title = "example.ace.combobox.filtering.title",
-        description = "example.ace.combobox.filtering.description",
-        example = "/resources/examples/ace/combobox/comboBoxFiltering.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="comboBoxFiltering.xhtml",
-                    resource = "/resources/examples/ace/combobox/comboBoxFiltering.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ComboBoxFilteringBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/combobox/ComboBoxFilteringBean.java")
-        }
-)
 @ManagedBean(name= ComboBoxFilteringBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ComboBoxFilteringBean extends ComponentExampleImpl< ComboBoxFilteringBean > implements Serializable {
+public class ComboBoxFilteringBean implements Serializable {
 
     public static final String BEAN_NAME = "comboBoxFilteringBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -70,8 +50,6 @@ public class ComboBoxFilteringBean extends ComponentExampleImpl< ComboBoxFilteri
 	private Map<String, List<SelectItem>> provinceCitiesMap;
     
     public ComboBoxFilteringBean() {
-        super(ComboBoxFilteringBean.class);
-		
 		britishColumbiaCities = new ArrayList<SelectItem>();
 		britishColumbiaCities.add(new SelectItem("Kelowna"));
 		britishColumbiaCities.add(new SelectItem("Tofino"));
@@ -135,11 +113,6 @@ public class ComboBoxFilteringBean extends ComponentExampleImpl< ComboBoxFilteri
 		provinceCitiesMap.put("Yukon", yukonCities);
 		provinceCitiesMap.put("Northwest Territories", northwestTerritoriesCities);
 		provinceCitiesMap.put("Nunavut", nunavutCities);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
 	private String province = "";

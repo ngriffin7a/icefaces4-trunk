@@ -16,36 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.dialog;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = DialogBean.BEAN_NAME,
-        title = "example.ace.dialog.modalDialog.title",
-        description = "example.ace.dialog.modalDialog.description",
-        example = "/resources/examples/ace/dialog/modalDialog.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="modalDialog.xhtml",
-                    resource = "/resources/examples/ace/dialog/modalDialog.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ModalDialog.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dialog/ModalDialogBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= ModalDialogBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ModalDialogBean extends ComponentExampleImpl<ModalDialogBean> implements Serializable
+public class ModalDialogBean implements Serializable
 {
     public static final String BEAN_NAME = "modalDialogBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -54,17 +32,10 @@ public class ModalDialogBean extends ComponentExampleImpl<ModalDialogBean> imple
 
     public ModalDialogBean() 
     {
-        super(ModalDialogBean.class);
-        
         draggable = false;
         modal = false;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public boolean isDraggable() {
         return draggable;
     }

@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[tabSet.title]}"/>
-    <ui:param name="description" value="#{msgs[tabSet.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[tabSet.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{tabSet.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{tabSet.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{tabSetResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{tabSetResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             <ace:tabSet id="sampleTabSet" clientSide="false">

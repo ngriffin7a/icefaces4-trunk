@@ -16,53 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.accordionpanel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
 
-@ComponentExample(
-        title = "example.ace.accordionpanel.title",
-        description = "example.ace.accordionpanel.description",
-        example = "/resources/examples/ace/accordionpanel/accordionPanel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="accordionPanel.xhtml",
-                    resource = "/resources/examples/ace/accordionpanel/accordionPanel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AccordionPanel.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/accordionpanel/AccordionPanelBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.accordionpanel.subMenu.title",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.accordionpanel.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = AccordionPanelBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.accordionpanel.subMenu.dynamic",
-                    exampleBeanName = AccordionPanelDynamicBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.accordionpanel.subMenu.effect",
-                    exampleBeanName = AccordionPanelEffectBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= AccordionPanelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AccordionPanelBean extends ComponentExampleImpl<AccordionPanelBean> implements Serializable {
+public class AccordionPanelBean implements Serializable {
     public static final String BEAN_NAME = "accordionPanelBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -72,17 +40,11 @@ public class AccordionPanelBean extends ComponentExampleImpl<AccordionPanelBean>
     
     public AccordionPanelBean() 
     {
-        super(AccordionPanelBean.class);
         items = populateListWithItems();
         toDoList = populateToDoList();
         image = ImageSet.getImage(ImageSet.ImageSelect.PICTURE);
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private ArrayList<Item> populateListWithItems()
    {
         ArrayList<Item> list = new ArrayList<Item>();

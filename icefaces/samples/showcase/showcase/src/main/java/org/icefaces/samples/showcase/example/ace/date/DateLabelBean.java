@@ -16,55 +16,24 @@
 
 package org.icefaces.samples.showcase.example.ace.date;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.PositionBean;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 import java.util.Date;
 
-@ComponentExample(
-        parent = DateEntryBean.BEAN_NAME,
-        title = "example.ace.dateentry.label.title",
-        description = "example.ace.dateentry.label.description",
-        example = "/resources/examples/ace/date/datelabel.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "datelabel.xhtml",
-                        resource = "/resources/examples/ace/date/datelabel.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "DateLabelBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/date/DateLabelBean.java"),
-                @ExampleResource(type = ResourceType.java,
-                        title="PositionBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                        "/util/PositionBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ValueChangeEvent;
+
+import org.icefaces.samples.showcase.util.PositionBean;
+
 @ManagedBean(name = DateLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DateLabelBean extends ComponentExampleImpl<DateLabelBean> implements Serializable {
+public class DateLabelBean implements Serializable {
     public static final String BEAN_NAME = "dateLabel";
 	public String getBeanName() { return BEAN_NAME; }
 
     private Date selectedDate = new Date(System.currentTimeMillis());
     private String labelText = "Selected Date:";
     private String labelPosition = "left";
-
-    public DateLabelBean() {
-        super(DateLabelBean.class);
-    }
 
     public Date getSelectedDate() {
         return selectedDate;
@@ -88,11 +57,6 @@ public class DateLabelBean extends ComponentExampleImpl<DateLabelBean> implement
 
     public void setLabelPosition(String labelPosition) {
         this.labelPosition = labelPosition;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public void positionChanged(ValueChangeEvent event) {

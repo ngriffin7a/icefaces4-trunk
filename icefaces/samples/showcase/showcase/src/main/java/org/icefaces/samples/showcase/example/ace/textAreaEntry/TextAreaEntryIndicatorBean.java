@@ -16,37 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.textAreaEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = TextAreaEntryBean.BEAN_NAME,
-        title = "example.ace.textAreaEntry.indicator.title",
-        description = "example.ace.textAreaEntry.indicator.description",
-        example = "/resources/examples/ace/textAreaEntry/textAreaEntryIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textAreaEntryIndicator.xhtml",
-                    resource = "/resources/examples/ace/textAreaEntry/textAreaEntryIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextAreaEntryIndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textAreaEntry/TextAreaEntryIndicatorBean.java")
-        }
-)
 @ManagedBean(name= TextAreaEntryIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TextAreaEntryIndicatorBean extends ComponentExampleImpl<TextAreaEntryIndicatorBean> implements Serializable
+public class TextAreaEntryIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "textAreaEntryIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -55,11 +33,6 @@ public class TextAreaEntryIndicatorBean extends ComponentExampleImpl<TextAreaEnt
     private String requiredText = "(*)";
     private String optionalText = "(Opt.)";
     private String position = "right";
-
-    
-    public TextAreaEntryIndicatorBean() {
-        super(TextAreaEntryIndicatorBean.class);
-    }
 
     public void applyRequired(ValueChangeEvent e) {
         required = (Boolean) e.getNewValue();
@@ -96,11 +69,4 @@ public class TextAreaEntryIndicatorBean extends ComponentExampleImpl<TextAreaEnt
     public void setPosition(String position) {
         this.position = position;
     }
-
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 }

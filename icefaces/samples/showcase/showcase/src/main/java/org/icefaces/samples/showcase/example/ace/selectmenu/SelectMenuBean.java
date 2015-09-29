@@ -16,49 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.selectmenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import java.util.*;
 
-@ComponentExample(
-        title = "example.ace.selectmenu.title",
-        description = "example.ace.selectmenu.description",
-        example = "/resources/examples/ace/selectmenu/selectMenuOverview.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="selectMenuOverview.xhtml",
-                    resource = "/resources/examples/ace/selectmenu/selectMenuOverview.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="SelectMenuBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/selectmenu/SelectMenuBean.java")
-        }
-)
-@Menu(
-            title = "menu.ace.selectmenu.subMenu.title",
-            menuLinks = {
-                @MenuLink(title = "menu.ace.selectmenu.subMenu.main", isDefault = true, exampleBeanName = SelectMenuBean.BEAN_NAME),
-				@MenuLink(title = "menu.ace.selectmenu.subMenu.facet", exampleBeanName = SelectMenuFacetBean.BEAN_NAME),
-				@MenuLink(title = "menu.ace.selectmenu.subMenu.label", exampleBeanName = SelectMenuLabelBean.BEAN_NAME),
-				@MenuLink(title = "menu.ace.selectmenu.subMenu.indicator", exampleBeanName = SelectMenuIndicatorBean.BEAN_NAME),
-				@MenuLink(title = "menu.ace.selectmenu.subMenu.reqStyle", exampleBeanName = SelectMenuReqStyleBean.BEAN_NAME)
-            }
-)
 @ManagedBean(name= SelectMenuBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SelectMenuBean extends ComponentExampleImpl< SelectMenuBean > implements Serializable {
+public class SelectMenuBean implements Serializable {
 
     public static final String BEAN_NAME = "selectMenuBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -79,8 +50,6 @@ public class SelectMenuBean extends ComponentExampleImpl< SelectMenuBean > imple
 	private Map<String, List<SelectItem>> provinceCitiesMap;
     
     public SelectMenuBean() {
-        super(SelectMenuBean.class);
-		
 		britishColumbiaCities = new ArrayList<SelectItem>();
 		britishColumbiaCities.add(new SelectItem("Kelowna"));
 		britishColumbiaCities.add(new SelectItem("Tofino"));
@@ -144,11 +113,6 @@ public class SelectMenuBean extends ComponentExampleImpl< SelectMenuBean > imple
 		provinceCitiesMap.put("Yukon", yukonCities);
 		provinceCitiesMap.put("Northwest Territories", northwestTerritoriesCities);
 		provinceCitiesMap.put("Nunavut", nunavutCities);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
 	private String province = "";

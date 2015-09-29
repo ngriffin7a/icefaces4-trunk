@@ -16,67 +16,31 @@
 
 package org.icefaces.samples.showcase.example.ace.dynamicResource;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-
-import javax.faces.application.Resource;
-import java.io.InputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.Resource;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-@ComponentExample(
-        title = "example.ace.dynamicResource.title",
-        description = "example.ace.dynamicResource.description",
-        example = "/resources/examples/ace/dynamicResource/dynamicResource.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dynamicResource.xhtml",
-                    resource = "/resources/examples/ace/dynamicResource/dynamicResource.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DynamicResourceBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dynamicResource/DynamicResourceBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.dynamicResource.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.dynamicResource.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = DynamicResourceBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.dynamicResource.subMenu.advanced",
-                    exampleBeanName = DynamicResourceAdvancedBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= DynamicResourceBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DynamicResourceBean extends ComponentExampleImpl<DynamicResourceBean> implements Serializable {
+public class DynamicResourceBean implements Serializable {
     public static final String BEAN_NAME = "dynamicResourceBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    public DynamicResourceBean() {
-        super(DynamicResourceBean.class);
-    }
-    
     @PostConstruct
     public void initMetaData() {
-        super.initMetaData();
 		String resourcePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/media/icemobile.pdf");
 		File file = new File(resourcePath);
 		try {

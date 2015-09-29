@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[simpleSelectOneMenuBean.title]}"/>
-    <ui:param name="description" value="#{msgs[simpleSelectOneMenuBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[simpleSelectOneMenuBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{simpleSelectOneMenuBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{simpleSelectOneMenuBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{selectMenuResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{selectMenuResources.tldResources}"/>
-
     <ui:define name="example">
         <style type="text/css">
         .grid td {

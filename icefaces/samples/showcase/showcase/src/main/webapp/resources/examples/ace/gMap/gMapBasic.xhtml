@@ -25,15 +25,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[mapBean.title]}"/>
-    <ui:param name="description" value="#{msgs[mapBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[mapBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{mapBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{mapBean.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{gMapResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="input">
 		<ace:gMap id="gMapBasic"  style="width: 675px; height: 500px" latitude="${mapBean.lat}" longitude="${mapBean.lon}" type="${mapBean.type}"

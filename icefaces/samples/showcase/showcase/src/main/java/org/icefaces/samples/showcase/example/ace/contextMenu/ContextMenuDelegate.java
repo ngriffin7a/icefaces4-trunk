@@ -16,54 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.contextMenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-@ComponentExample(
-        parent = ContextMenuBean.BEAN_NAME,
-        title = "example.ace.contextMenu.delegate.title",
-        description = "example.ace.contextMenu.delegate.description",
-        example = "/resources/examples/ace/contextMenu/contextMenuDelegate.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="contextMenuDelegate.xhtml",
-                    resource = "/resources/examples/ace/contextMenu/contextMenuDelegate.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ContextMenuDelegate.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/contextMenu/ContextMenuDelegate.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableDynamic.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableDynamic.java")
-        }
-)
 @ManagedBean(name= ContextMenuDelegate.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ContextMenuDelegate extends ComponentExampleImpl<ContextMenuDelegate> implements Serializable {
+public class ContextMenuDelegate implements Serializable {
     public static final String BEAN_NAME = "contextMenuDelegate";
 	public String getBeanName() { return BEAN_NAME; }
     
-    public ContextMenuDelegate() {
-        super(ContextMenuDelegate.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-	
 	private Object data;
 	
     public Object getData() {

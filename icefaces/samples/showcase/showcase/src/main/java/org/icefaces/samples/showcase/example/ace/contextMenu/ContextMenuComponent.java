@@ -16,53 +16,23 @@
 
 package org.icefaces.samples.showcase.example.ace.contextMenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.FacesUtils;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = ContextMenuBean.BEAN_NAME,
-        title = "example.ace.contextMenu.component.title",
-        description = "example.ace.contextMenu.component.description",
-        example = "/resources/examples/ace/contextMenu/contextMenuComponent.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "contextMenuComponent.xhtml",
-                        resource = "/resources/examples/ace/contextMenu/contextMenuComponent.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "ContextMenuComponent.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase" +
-                                "/example/ace/contextMenu/ContextMenuComponent.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.samples.showcase.util.FacesUtils;
+
 @ManagedBean(name = ContextMenuComponent.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ContextMenuComponent extends ComponentExampleImpl<ContextMenuComponent> implements Serializable {
+public class ContextMenuComponent implements Serializable {
     public static final String BEAN_NAME = "contextMenuComponent";
 	public String getBeanName() { return BEAN_NAME; }
 
     private String actionDescription;
 
     public ContextMenuComponent() {
-        super(ContextMenuComponent.class);
         actionDescription = "";
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public String performAction() {

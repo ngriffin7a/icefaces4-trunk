@@ -16,61 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.overview;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
 
-@ComponentExample(
-        title = "example.ace.aceSuiteOverview.title",
-        description = "example.ace.aceSuiteOverview.description",
-        example = "/resources/examples/ace/aceSuiteOverview/aceSuiteOverview.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="aceSuiteOverview.xhtml",
-                    resource = "/resources/examples/ace/aceSuiteOverview/aceSuiteOverview.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AceSuiteOverview.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/overview/AceSuiteOverviewBean.java"),
-            //WIKI documentation
-            @ExampleResource(type = ResourceType.wiki,
-                    title="ACE Components WIKI",
-                    resource = ResourceRootPath.FOR_WIKI+"ACE+Components"),
-            //TLD Documentation
-            @ExampleResource(type = ResourceType.tld,
-                    title="ACE Components TLD",
-                    resource = ResourceRootPath.FOR_ACE_TLD + "tld-summary.html")
-        }
-)
-@Menu(
-	title = "menu.ace.aceSuiteOverview.subMenu.title",
-	menuLinks = {
-                    @MenuLink(title = "menu.ace.aceSuiteOverview.subMenu.main", isDefault = true, exampleBeanName = AceSuiteOverviewBean.BEAN_NAME)
-                }
-)
 @ManagedBean(name= AceSuiteOverviewBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AceSuiteOverviewBean extends ComponentExampleImpl<AceSuiteOverviewBean> implements Serializable 
+public class AceSuiteOverviewBean implements Serializable 
 {
     public static final String BEAN_NAME = "aceSuiteOverview";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public AceSuiteOverviewBean() 
-    {
-        super(AceSuiteOverviewBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

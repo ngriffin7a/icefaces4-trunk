@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[dateLocale.title]}"/>
-    <ui:param name="description" value="#{msgs[dateLocale.description]}"/>
-    <ui:param name="resourceValue" value="#{dateLocale.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{dateTimeEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{dateTimeEntryResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="calLocaleForm">
             <ace:panel>

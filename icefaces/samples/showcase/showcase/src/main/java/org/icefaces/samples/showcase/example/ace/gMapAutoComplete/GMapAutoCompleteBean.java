@@ -16,46 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.gMapAutoComplete;
 
-import javax.el.MethodExpression;
-import javax.faces.application.*;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.component.*;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import java.util.ArrayList;
-import javax.faces.bean.CustomScoped;
-import javax.annotation.PostConstruct;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.gMapAutoComplete.title",
-        description = "example.ace.gMapAutoComplete.description",
-        example = "/resources/examples/ace/gMapAutoComplete/gMapAutoComplete.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="gMapAutoComplete.xhtml",
-                    resource = "/resources/examples/ace/gMapAutoComplete/gMapAutoComplete.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="GMapAutoCompleteBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapAutoComplete/GMapAutoCompleteBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.gMapAutoComplete.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.gMapAutoComplete.subMenu.main", isDefault = true, exampleBeanName = GMapAutoCompleteBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= GMapAutoCompleteBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class GMapAutoCompleteBean extends ComponentExampleImpl<GMapAutoCompleteBean> implements Serializable{
+public class GMapAutoCompleteBean implements Serializable{
 	public static final String BEAN_NAME = "gMapAutoCompleteBean";
 	public String getBeanName() { return BEAN_NAME; }
 	private boolean showWindow = false;
@@ -92,13 +60,5 @@ public class GMapAutoCompleteBean extends ComponentExampleImpl<GMapAutoCompleteB
 
     public void setUrl(String url) {
         this.url = url;
-    }
-	
-	public GMapAutoCompleteBean() {
-        super(GMapAutoCompleteBean.class);
-    }
-	@PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

@@ -16,42 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.panelStack;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
-import java.lang.String;
-import java.lang.System;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
 
-@ComponentExample(
-        parent = PanelStackBean.BEAN_NAME,
-        title = "example.ace.panelStack.datatable.title",
-        description = "example.ace.panelStack.datatable.description",
-        example = "/resources/examples/ace/panelStack/panelStackDataTable.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="panelStackDataTable.xhtml",
-                    resource = "/resources/examples/ace/panelStack/panelStackDataTable.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PanelStackDataTable.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/panelStack/PanelStackDataTable.java")
-        }
-)
 @ManagedBean(name= PanelStackDataTable.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTable> implements  Serializable {
+public class PanelStackDataTable implements  Serializable {
     public static final String BEAN_NAME = "panelStackDataTable";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -64,7 +40,6 @@ public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTabl
 	private Date selectedDate = new Date(System.currentTimeMillis());
 
     public PanelStackDataTable() {
-        super(PanelStackDataTable.class);
         //populate queryLists to simulate types of dataLists from db
         this.queryList1.add(new InputDefinition("TEXTENTRY", "Street Address", "108 Aspen Drive"));
 	        this.queryList1.add(new InputDefinition("TEXTENTRY", "City", "Calgary"));
@@ -83,11 +58,6 @@ public class PanelStackDataTable extends ComponentExampleImpl<PanelStackDataTabl
 	        this.selectedQuery = queryList1;
 	    }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public String getCurrentId() {
         return currentId;
     }

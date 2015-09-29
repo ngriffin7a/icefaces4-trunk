@@ -16,50 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.tooltip;
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
 
-@ComponentExample(
-        title = "example.ace.tooltip.title",
-        description = "example.ace.tooltip.description",
-        example = "/resources/examples/ace/tooltip/toolTip.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="toolTip.xhtml",
-                    resource = "/resources/examples/ace/tooltip/toolTip.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TooltipOverviewBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/tooltip/TooltipOverviewBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="ImageSet.java",
-                   resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/dataGenerators/ImageSet.java")
-        }
-)
-@Menu(
-	title = "menu.ace.tooltip.subMenu.title",
-	menuLinks = {
-	         @MenuLink(title = "menu.ace.tooltip.subMenu.main", isDefault = true, exampleBeanName = TooltipOverviewBean.BEAN_NAME)
-                        ,@MenuLink(title = "menu.ace.tooltip.subMenu.globalTooltip", exampleBeanName = GlobalTooltipBean.BEAN_NAME)
-						,@MenuLink(title = "menu.ace.tooltip.subMenu.delegateTooltip", exampleBeanName = DelegateTooltipBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= TooltipOverviewBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TooltipOverviewBean extends ComponentExampleImpl<TooltipOverviewBean> implements Serializable {
+public class TooltipOverviewBean implements Serializable {
     
     public static final String BEAN_NAME = "tooltipOverviewBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -76,14 +44,9 @@ public class TooltipOverviewBean extends ComponentExampleImpl<TooltipOverviewBea
     /////////////---- CONSTRUCTOR BEGIN
     public TooltipOverviewBean() 
     {
-        super(TooltipOverviewBean.class);
         carSet = ImageSet.getImages(ImageSet.ImagesSelect.CARS);
     }
 
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
     /////////////---- GETTERS & SETTERS BEGIN
     public String getTooltipEffect() { return tooltipEffect; }
     public void setTooltipEffect(String tooltipEffect) { this.tooltipEffect = tooltipEffect; }

@@ -16,42 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.date;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.ace.event.DateSelectEvent;
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Calendar;
 
-@ComponentExample(
-        parent = DateEntryBean.BEAN_NAME,
-        title = "example.ace.dateentry.minmax.title",
-        description = "example.ace.dateentry.minmax.description",
-        example = "/resources/examples/ace/date/dateminmax.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dateminmax.xhtml",
-                    resource = "/resources/examples/ace/date/dateminmax.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DateMinMaxBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/date/DateMinMaxBean.java")
-        }
-)
 @ManagedBean(name= DateMinMaxBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DateMinMaxBean extends ComponentExampleImpl<DateMinMaxBean> implements Serializable {
+public class DateMinMaxBean implements Serializable {
     public static final String BEAN_NAME = "dateMinMax";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -60,8 +35,6 @@ public class DateMinMaxBean extends ComponentExampleImpl<DateMinMaxBean> impleme
     private Date maxDate = new Date(System.currentTimeMillis());
 
     public DateMinMaxBean() {
-        super(DateMinMaxBean.class);
-        
         // Set the default minimum date to 1 Year ago
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(minDate);
@@ -105,11 +78,6 @@ public class DateMinMaxBean extends ComponentExampleImpl<DateMinMaxBean> impleme
     
     public void setMaxDate(Date maxDate) {
         this.maxDate = maxDate;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
     
     public void submitMinMax(ActionEvent event) {

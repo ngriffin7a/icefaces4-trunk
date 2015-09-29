@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[comboBoxBean.title]}"/>
-    <ui:param name="description" value="#{msgs[comboBoxBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[comboBoxBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{comboBoxBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{comboBoxBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{comboBoxResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{comboBoxResources.tldResources}"/>
-
     <ui:define name="example">
         <style type="text/css">
         .grid td {

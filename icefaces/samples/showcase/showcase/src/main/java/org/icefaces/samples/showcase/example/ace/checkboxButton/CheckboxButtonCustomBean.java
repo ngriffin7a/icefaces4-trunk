@@ -16,44 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.checkboxButton;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.checkboxButton.custom.title",
-        description = "example.ace.checkboxButton.custom.description",
-        example = "/resources/examples/ace/checkboxButton/checkboxbuttoncustom.xhtml",
-        parent = CheckboxButtonBean.BEAN_NAME
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                         title="checkboxbuttoncustom.xhtml",
-                         resource = "/resources/examples/ace/checkboxButton/checkboxbuttoncustom.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                         title="CheckboxButtonBean.java",
-                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/checkboxButton/CheckboxButtonBean.java")
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= CheckboxButtonCustomBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class CheckboxButtonCustomBean extends ComponentExampleImpl<CheckboxButtonCustomBean> implements Serializable {
+public class CheckboxButtonCustomBean implements Serializable {
     public static final String BEAN_NAME = "checkboxButtonCustom";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public CheckboxButtonCustomBean() {
-        super(CheckboxButtonCustomBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

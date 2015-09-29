@@ -16,48 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.autocompleteentry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 
-@ComponentExample(
-        parent = AutoCompleteEntryBean.BEAN_NAME,
-        title = "example.ace.autocompleteentry.facet.title",
-        description = "example.ace.autocompleteentry.facet.description",
-        example = "/resources/examples/ace/autocompleteentry/autoCompleteEntryFacet.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="autoCompleteEntryFacet.xhtml",
-                    resource = "/resources/examples/ace/autocompleteentry/autoCompleteEntryFacet.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AutoCompleteEntryFacetBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryFacetBean.java")
-        }
-)
 @ManagedBean(name= AutoCompleteEntryFacetBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AutoCompleteEntryFacetBean extends ComponentExampleImpl<AutoCompleteEntryFacetBean> implements Serializable
+public class AutoCompleteEntryFacetBean implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryFacetBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -65,15 +34,9 @@ public class AutoCompleteEntryFacetBean extends ComponentExampleImpl<AutoComplet
 
     public AutoCompleteEntryFacetBean() 
     {
-        super(AutoCompleteEntryFacetBean.class);
 		house = ImageSet.getImage(ImageSet.ImageSelect.HOUSE);
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 	public List<City> cities;
 	private String selectedText;
 	

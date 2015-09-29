@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[textEntryCharCountBean.title]}"/>
-    <ui:param name="description" value="#{msgs[textEntryCharCountBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[textEntryCharCountBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{textEntryCharCountBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{textEntryCharCountBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{textEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{textEntryResources.tldResources}"/>
-
     <ui:define name="example">
         <script type="text/javascript">
             function updateClientSide(charCount, outputId) {

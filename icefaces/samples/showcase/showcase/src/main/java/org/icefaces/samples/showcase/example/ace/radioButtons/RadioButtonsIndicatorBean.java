@@ -16,38 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.radioButtons;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
-import java.util.*;
-
-@ComponentExample(
-        parent = RadioButtonsBean.BEAN_NAME,
-        title = "example.ace.radioButtons.indicator.title",
-        description = "example.ace.radioButtons.indicator.description",
-        example = "/resources/examples/ace/radioButtons/radioButtonsIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="radioButtonsIndicator.xhtml",
-                    resource = "/resources/examples/ace/radioButtons/radioButtonsIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="RadioButtonsIndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/radioButtons/RadioButtonsIndicatorBean.java")
-        }
-)
 @ManagedBean(name= RadioButtonsIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class RadioButtonsIndicatorBean extends ComponentExampleImpl<RadioButtonsIndicatorBean> implements Serializable
+public class RadioButtonsIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "radioButtonsIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -56,16 +34,6 @@ public class RadioButtonsIndicatorBean extends ComponentExampleImpl<RadioButtons
     private String requiredText = "This field is required.";
     private String optionalText = "Not mandatory.";
     private String position = "right";
-
-    public RadioButtonsIndicatorBean() 
-    {
-        super(RadioButtonsIndicatorBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
 	private List<String> selected = new ArrayList<String>();
 	public List<String> getSelected() { return selected; }

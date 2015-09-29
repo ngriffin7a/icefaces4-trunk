@@ -16,69 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.panel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
-import java.io.Serializable;
-
-@ComponentExample(
-        title = "example.ace.panel.title",
-        description = "example.ace.panel.description",
-        example = "/resources/examples/ace/panel/panel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="panel.xhtml",
-                    resource = "/resources/examples/ace/panel/panel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PanelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/panel/PanelBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.panel.subMenu.title",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.panel.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = PanelBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.panel.subMenu.header",
-                exampleBeanName = PanelHeader.BEAN_NAME),
-            @MenuLink(title = "menu.ace.panel.subMenu.toggle",
-                exampleBeanName = PanelToggle.BEAN_NAME),
-            @MenuLink(title = "menu.ace.panel.subMenu.close",
-                exampleBeanName = PanelClose.BEAN_NAME),
-            @MenuLink(title = "menu.ace.panel.subMenu.listener",
-                exampleBeanName = PanelListener.BEAN_NAME),
-            @MenuLink(title = "menu.ace.panel.subMenu.menu",
-                exampleBeanName = PanelMenu.BEAN_NAME)
-    }
-)
 @ManagedBean(name= PanelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PanelBean extends ComponentExampleImpl<PanelBean> implements Serializable {
+public class PanelBean implements Serializable {
     public static final String BEAN_NAME = "panelBean";
 	public String getBeanName() { return BEAN_NAME; }
     private boolean reOpenButton = false;
     
     private boolean collapsed = false;
-
-    public PanelBean() {
-        super(PanelBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public boolean getCollapsed() { return collapsed; }
     public void setCollapsed(boolean collapsed) { this.collapsed = collapsed; }

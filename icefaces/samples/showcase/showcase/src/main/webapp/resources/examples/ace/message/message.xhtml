@@ -24,15 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[messageBean.title]}"/>
-    <ui:param name="description" value="#{msgs[messageBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[messageBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{messageBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{messageBean.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{messageResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{messageResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="messageDemoForm">
             <ace:panel id="personalInfoInputPanel" header="Personal Info">

@@ -16,40 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
-import org.icefaces.ace.model.chart.SectorSeries;
-import org.icefaces.ace.model.chart.ChartSeries;
-import org.icefaces.ace.model.chart.SectorSeries.SectorType;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.donut.title",
-        description = "example.ace.chart.donut.description",
-        example = "/resources/examples/ace/chart/chartDonut.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="ChartDonut.xhtml",
-                    resource = "/resources/examples/ace/chart/chartDonut.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ChartDonutBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartDonutBean.java")
-        }
-)
+import org.icefaces.ace.model.chart.ChartSeries;
+import org.icefaces.ace.model.chart.SectorSeries;
+import org.icefaces.ace.model.chart.SectorSeries.SectorType;
+
 @ManagedBean(name= ChartDonutBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartDonutBean extends ComponentExampleImpl<ChartDonutBean> implements Serializable
+public class ChartDonutBean implements Serializable
 {
     public static final String BEAN_NAME = "chartDonutBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -71,13 +52,8 @@ public class ChartDonutBean extends ComponentExampleImpl<ChartDonutBean> impleme
         }});
     }};
     
-    public ChartDonutBean() {
-        super(ChartDonutBean.class);
-    }
-    
     @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
+    public void init() {
         model.setType(SectorType.DONUT);
     }
     

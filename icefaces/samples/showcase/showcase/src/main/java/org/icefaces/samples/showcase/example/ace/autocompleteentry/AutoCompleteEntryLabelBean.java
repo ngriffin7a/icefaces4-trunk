@@ -16,46 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.autocompleteentry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.PositionBean;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = AutoCompleteEntryBean.BEAN_NAME,
-        title = "example.ace.autocompleteentry.label.title",
-        description = "example.ace.autocompleteentry.label.description",
-        example = "/resources/examples/ace/autocompleteentry/autoCompleteEntryLabel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="autoCompleteEntryLabel.xhtml",
-                    resource = "/resources/examples/ace/autocompleteentry/autoCompleteEntryLabel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="LabelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryLabelBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="AutoCompleteEntryBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="PositionBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/util/PositionBean.java")
-        }
-)
+import org.icefaces.samples.showcase.util.PositionBean;
+
 @ManagedBean(name= AutoCompleteEntryLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AutoCompleteEntryLabelBean extends ComponentExampleImpl<AutoCompleteEntryLabelBean> implements Serializable
+public class AutoCompleteEntryLabelBean implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryLabelBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -64,11 +35,6 @@ public class AutoCompleteEntryLabelBean extends ComponentExampleImpl<AutoComplet
     private String labelText = "Cities of the World:";
     private String labelPosition = "left";
 
-    public AutoCompleteEntryLabelBean() 
-    {
-        super(AutoCompleteEntryLabelBean.class);
-    }
-    
     public String getSelectedText() {
         return selectedText;
     }
@@ -91,11 +57,6 @@ public class AutoCompleteEntryLabelBean extends ComponentExampleImpl<AutoComplet
     
     public void setLabelPosition(String labelPosition) {
         this.labelPosition = labelPosition;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
     
     public void positionChanged(ValueChangeEvent event) {

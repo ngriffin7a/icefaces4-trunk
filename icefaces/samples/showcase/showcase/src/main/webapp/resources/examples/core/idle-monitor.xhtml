@@ -22,14 +22,6 @@
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
-    <ui:param name="title" value="#{idleMonitorBean.title}"/>
-    <ui:param name="description" value="#{idleMonitorBean.description}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[idleMonitorBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{idleMonitorBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{idleMonitorBean.exampleResource}"/>
-    <ui:param name="wikiResources" value="#{idleMonitorBeanResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{idleMonitorBeanResources.tldResources}"/>
-
     <ui:define name="example">
                 <icecore:idleMonitor interval="10">
                     <h5 id="idleMonitor" style="color: red;">You stopped using the application 10 seconds ago!</h5>

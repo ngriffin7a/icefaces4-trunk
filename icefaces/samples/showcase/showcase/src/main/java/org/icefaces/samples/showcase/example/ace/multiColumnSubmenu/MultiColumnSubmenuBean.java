@@ -16,51 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.multiColumnSubmenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.multiColumnSubmenu.title",
-        description = "example.ace.multiColumnSubmenu.description",
-        example = "/resources/examples/ace/multiColumnSubmenu/multiColumnSubmenu.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="multiColumnSubmenu.xhtml",
-                    resource = "/resources/examples/ace/multiColumnSubmenu/multiColumnSubmenu.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MultiColumnSubmenuBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/multiColumnSubmenu/MultiColumnSubmenuBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.multiColumnSubmenu.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.multiColumnSubmenu.subMenu.main", isDefault = true, exampleBeanName = MultiColumnSubmenuBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name = MultiColumnSubmenuBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MultiColumnSubmenuBean extends ComponentExampleImpl<MultiColumnSubmenuBean> implements Serializable {
+public class MultiColumnSubmenuBean implements Serializable {
     public static final String BEAN_NAME = "multiColumnSubmenuBean";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public MultiColumnSubmenuBean() {
-        super(MultiColumnSubmenuBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

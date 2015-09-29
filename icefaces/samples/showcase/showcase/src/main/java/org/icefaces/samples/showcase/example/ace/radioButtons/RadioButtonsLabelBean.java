@@ -16,55 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.radioButtons;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.PositionBean;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
 
-import java.util.*;
-
-@ComponentExample(
-        parent = RadioButtonsBean.BEAN_NAME,
-        title = "example.ace.radioButtons.label.title",
-        description = "example.ace.radioButtons.label.description",
-        example = "/resources/examples/ace/radioButtons/radioButtonsLabel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="radioButtonsLabel.xhtml",
-                    resource = "/resources/examples/ace/radioButtons/radioButtonsLabel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="RadioButtonsLabelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/radioButtons/RadioButtonsLabelBean.java")
-        }
-)
 @ManagedBean(name= RadioButtonsLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class RadioButtonsLabelBean extends ComponentExampleImpl<RadioButtonsLabelBean> implements Serializable
+public class RadioButtonsLabelBean implements Serializable
 {
     public static final String BEAN_NAME = "radioButtonsLabelBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     private String labelPosition = "left";
-
-    public RadioButtonsLabelBean() 
-    {
-        super(RadioButtonsLabelBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
 	private List<String> selected = new ArrayList<String>();
 	public List<String> getSelected() { return selected; }

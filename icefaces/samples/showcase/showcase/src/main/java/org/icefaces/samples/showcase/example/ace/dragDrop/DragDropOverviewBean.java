@@ -17,49 +17,16 @@
 
 package org.icefaces.samples.showcase.example.ace.dragDrop;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-        title = "example.ace.dragDrop.title",
-        description = "example.ace.dragDrop.description",
-        example = "/resources/examples/ace/dragDrop/dragDropOverview.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dragDropOverview.xhtml",
-                    resource = "/resources/examples/ace/dragDrop/dragDropOverview.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DragDropOverview.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dragDrop/DragDropOverviewBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.maskedEntry.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.dragDrop.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = DragDropOverviewBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.dragDrop.subMenu.draggable",
-                    exampleBeanName = DraggableOverviewBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.dragDrop.subMenu.dataTableIntegration",
-                    exampleBeanName = DataTableIntegrationBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DragDropOverviewBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DragDropOverviewBean extends ComponentExampleImpl<DragDropOverviewBean> implements Serializable
+public class DragDropOverviewBean implements Serializable
 {
     public static final String BEAN_NAME = "dragDropOverviewBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -68,13 +35,7 @@ public class DragDropOverviewBean extends ComponentExampleImpl<DragDropOverviewB
     
     public DragDropOverviewBean()
     {
-        super(DragDropOverviewBean.class);
         populateListWithItems();
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     private void populateListWithItems()

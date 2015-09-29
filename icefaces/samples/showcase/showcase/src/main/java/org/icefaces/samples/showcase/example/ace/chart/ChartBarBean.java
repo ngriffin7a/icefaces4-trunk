@@ -16,54 +16,24 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.AjaxBehaviorEvent;
+
 import org.icefaces.ace.component.chart.Axis;
 import org.icefaces.ace.component.chart.AxisType;
 import org.icefaces.ace.model.chart.CartesianSeries;
 import org.icefaces.ace.model.chart.CartesianSeries.CartesianType;
 import org.icefaces.ace.model.chart.ChartSeries;
-import org.icefaces.ace.model.chart.DragConstraintAxis;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.lang.Boolean;
-import java.lang.Override;
-import java.lang.String;
-import java.util.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.bar.title",
-        description = "example.ace.chart.bar.description",
-        example = "/resources/examples/ace/chart/chartBar.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="ChartBar.xhtml",
-                        resource = "/resources/examples/ace/chart/chartBar.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="ChartBarBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartBarBean.java")
-        }
-)
 @ManagedBean(name= ChartBarBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartBarBean extends ComponentExampleImpl<ChartBarBean> implements Serializable {
+public class ChartBarBean implements Serializable {
     public static final String BEAN_NAME = "chartBarBean";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -79,16 +49,7 @@ public class ChartBarBean extends ComponentExampleImpl<ChartBarBean> implements 
     String [] ticks = {"May", "June", "July", "August"};
     String [] customColors = null;
 
-    public ChartBarBean() {
-        super(ChartBarBean.class);
-    }
-
     @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-        initModel();
-    }
-
     public void initModel(){
         /* set values in model so that they are applied to all non-set CartesianSeries.
            Create a Series object without any data and set all options that are for all or most

@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[qrcodeBean.title]}"/>
-    <ui:param name="description" value="#{msgs[qrcodeBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[qrcodeBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{qrcodeBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{qrcodeBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{qrcodeResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{qrcodeResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             

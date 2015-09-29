@@ -16,60 +16,14 @@
 
 package org.icefaces.samples.showcase.example.mobi.overview;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
 
-@ComponentExample(
-        title = "example.mobi.mobiOverview.title",
-        description = "example.mobi.mobiOverview.description",
-        example = "/showcase-mobile.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="mobiSuiteOverview.xhtml",
-                    resource = "/showcase-mobile.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MobiSuiteOverview.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/mobi/overview/MobiSuiteOverviewBean.java"),
-            //WIKI documentation
-            @ExampleResource(type = ResourceType.wiki,
-                    title="MOBI Components WIKI",
-                    resource = ResourceRootPath.FOR_WIKI+"MOBI+Components"),
-            //TLD Documentation
-            @ExampleResource(type = ResourceType.tld,
-                    title="MOBI Components TLD",
-                    resource = ResourceRootPath.FOR_ACE_TLD + "tld-summary.html")
-        }
-)
-@Menu(
-	title = "menu.mobi.mobiOverview.subMenu.title",
-	menuLinks = {
-                    @MenuLink(title = "menu.mobi.mobiOverview.subMenu.main", isDefault = true, exampleBeanName = MobiSuiteOverviewBean.BEAN_NAME)
-                }
-)
 @ManagedBean(name= MobiSuiteOverviewBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MobiSuiteOverviewBean extends ComponentExampleImpl<MobiSuiteOverviewBean> implements Serializable 
+public class MobiSuiteOverviewBean implements Serializable 
 {
     public static final String BEAN_NAME = "mobiSuiteOverview";
-    
-    public MobiSuiteOverviewBean() 
-    {
-        super(MobiSuiteOverviewBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

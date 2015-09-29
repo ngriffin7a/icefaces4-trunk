@@ -16,53 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.slider;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = SliderBean.BEAN_NAME,
-        title = "example.ace.slider.submition.title",
-        description = "example.ace.slider.submition.description",
-        example = "/resources/examples/ace/slider/sliderSubmition.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "sliderSubmition.xhtml",
-                        resource = "/resources/examples/ace/slider/sliderSubmition.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "SliderSubmitionExample.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/slider/SliderSubmitionExample.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name = SliderSubmitionExample.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SliderSubmitionExample extends ComponentExampleImpl<SliderSubmitionExample> implements Serializable {
+public class SliderSubmitionExample implements Serializable {
     
     public static final String BEAN_NAME = "sliderSubmitionExample";
 	public String getBeanName() { return BEAN_NAME; }
     private int autoValue;
     private int manualValue;
     
-    public SliderSubmitionExample() {
-        super(SliderSubmitionExample.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public int getAutoValue() {
         return autoValue;
     }

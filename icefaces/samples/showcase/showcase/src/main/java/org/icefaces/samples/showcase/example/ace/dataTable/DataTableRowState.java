@@ -16,54 +16,25 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
 import org.icefaces.ace.component.column.Column;
 import org.icefaces.ace.component.datatable.DataTable;
 import org.icefaces.ace.model.table.RowState;
 import org.icefaces.ace.model.table.RowStateMap;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collection;
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.util.FacesUtils;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.rowstate.title",
-        description = "example.ace.dataTable.rowstate.description",
-        example = "/resources/examples/ace/dataTable/dataTableRowState.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="dataTableRowState.xhtml",
-                        resource = "/resources/examples/ace/dataTable/dataTableRowState.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="DataTableRowState.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/dataTable/DataTableRowState.java"),
-				@ExampleResource(type = ResourceType.java,
-						title="Car.java",
-						resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-						"/example/ace/dataTable/Car.java")
-        }
-)
 @ManagedBean(name= DataTableRowState.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableRowState extends ComponentExampleImpl<DataTableRowState> implements Serializable {
+public class DataTableRowState implements Serializable {
     public static final String BEAN_NAME = "dataTableRowState";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -73,17 +44,11 @@ public class DataTableRowState extends ComponentExampleImpl<DataTableRowState> i
 
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableRowState() {
-        super(DataTableRowState.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
     }
 
     public Class getClazz() {
         return getClass();
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

@@ -16,36 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.maskedEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = MaskedEntryBean.BEAN_NAME,
-        title = "example.ace.maskedReqStyle.title",
-        description = "example.ace.maskedReqStyle.description",
-        example = "/resources/examples/ace/maskedEntry/maskedReqStyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="maskedReqStyle.xhtml",
-                    resource = "/resources/examples/ace/maskedEntry/maskedReqStyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MaskedReqStyle.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/maskedEntry/MaskedReqStyleBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= MaskedReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MaskedReqStyleBean extends ComponentExampleImpl<MaskedReqStyleBean> implements Serializable
+public class MaskedReqStyleBean implements Serializable
 {
     public static final String BEAN_NAME = "maskedReqStyleBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -57,11 +35,6 @@ public class MaskedReqStyleBean extends ComponentExampleImpl<MaskedReqStyleBean>
     private String mobilePhone;
     private String sin;
 
-
-    public MaskedReqStyleBean() {
-        super(MaskedReqStyleBean.class);
-    }
-    
     public String getReqColor() {
         return reqColor;
     }
@@ -110,11 +83,6 @@ public class MaskedReqStyleBean extends ComponentExampleImpl<MaskedReqStyleBean>
         this.workPhone = workPhone;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-	
 	private boolean useTheme = false;
 
     public boolean getUseTheme() {

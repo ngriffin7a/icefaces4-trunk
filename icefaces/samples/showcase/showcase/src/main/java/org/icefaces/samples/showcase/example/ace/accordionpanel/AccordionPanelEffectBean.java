@@ -16,46 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.accordionpanel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.FacesEvent;
-import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-@ComponentExample(
-        parent = AccordionPanelBean.BEAN_NAME,
-        title = "example.ace.accordionpanel.effect.title",
-        description = "example.ace.accordionpanel.effect.description",
-        example = "/resources/examples/ace/accordionpanel/accordionPanelEffect.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="accordionPanelEffect.xhtml",
-                    resource = "/resources/examples/ace/accordionpanel/accordionPanelEffect.xhtml")
-        }
-)
 @ManagedBean(name= AccordionPanelEffectBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AccordionPanelEffectBean extends ComponentExampleImpl<AccordionPanelEffectBean> implements Serializable {
+public class AccordionPanelEffectBean implements Serializable {
     public static final String BEAN_NAME = "accordionPanelEffectBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public AccordionPanelEffectBean() {
-        super(AccordionPanelEffectBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

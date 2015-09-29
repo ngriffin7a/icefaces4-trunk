@@ -16,37 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.textEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = TextEntryBean.BEAN_NAME,
-        title = "example.ace.textEntry.indicator.title",
-        description = "example.ace.textEntry.indicator.description",
-        example = "/resources/examples/ace/textEntry/textEntryIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textEntryIndicator.xhtml",
-                    resource = "/resources/examples/ace/textEntry/textEntryIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextEntryIndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textEntry/TextEntryIndicatorBean.java")
-        }
-)
 @ManagedBean(name= TextEntryIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TextEntryIndicatorBean extends ComponentExampleImpl<TextEntryIndicatorBean> implements Serializable
+public class TextEntryIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "textEntryIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -63,10 +41,6 @@ public class TextEntryIndicatorBean extends ComponentExampleImpl<TextEntryIndica
     private String province;
     private String country;
     
-    public TextEntryIndicatorBean() {
-        super(TextEntryIndicatorBean.class);
-    }
-
     public void applyRequired(ValueChangeEvent e) {
         required = (Boolean) e.getNewValue();
     }
@@ -157,10 +131,5 @@ public class TextEntryIndicatorBean extends ComponentExampleImpl<TextEntryIndica
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

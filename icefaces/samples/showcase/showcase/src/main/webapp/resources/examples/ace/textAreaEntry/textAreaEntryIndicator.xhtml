@@ -24,12 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[textAreaEntryIndicatorBean.title]}"/>
-    <ui:param name="description" value="#{msgs[textAreaEntryIndicatorBean.description]}"/>
-    <ui:param name="resourceValue" value="#{textAreaEntryIndicatorBean.exampleResource}"/> 
-    <ui:param name="wikiResources" value="#{textAreaEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{textAreaEntryResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="textEntryConfigForm">
             <ace:panel id="indicatorCustomizing" header="Indicator Customization" style="width: 100%;">

@@ -16,47 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.buttonGroup;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 
-@ComponentExample(
-    title = "example.ace.buttonGroup.title",
-    description = "example.ace.buttonGroup.description",
-    example = "/resources/examples/ace/buttonGroup/buttongroup.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                         title="buttongroup.xhtml",
-                         resource = "/resources/examples/ace/buttonGroup/buttongroup.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                         title="ButtonGroupBean.java",
-                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/buttonGroup/ButtonGroupBean.java")
-    }
-)
-
-@Menu(
-    title = "menu.ace.buttonGroup.subMenu.title",
-    menuLinks = {
-        @MenuLink(title = "menu.ace.buttonGroup.subMenu.main", isDefault = true,
-                  exampleBeanName = ButtonGroupBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= ButtonGroupBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ButtonGroupBean extends ComponentExampleImpl<ButtonGroupBean> implements Serializable {
+public class ButtonGroupBean implements Serializable {
 
     public static final String BEAN_NAME = "buttonGroup";
 	public String getBeanName() { return BEAN_NAME; }
@@ -71,15 +38,6 @@ public class ButtonGroupBean extends ComponentExampleImpl<ButtonGroupBean> imple
 	private boolean r4 = false;
 	private String checkboxDescription;
 	private String radioDescription;
-
-    public ButtonGroupBean() {
-        super(ButtonGroupBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public boolean isCb1() {
         return cb1;

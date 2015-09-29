@@ -16,52 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.slider;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 import javax.faces.event.ValueChangeEvent;
 
-@ComponentExample(
-        parent = SliderBean.BEAN_NAME,
-        title = "example.ace.slider.asyncinput.title",
-        description = "example.ace.slider.asyncinput.description",
-        example = "/resources/examples/ace/slider/slider-async-input.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "slider-async-input.xhtml",
-                        resource = "/resources/examples/ace/slider/slider-async-input.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "SliderAsyncInputBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/slider/SliderAsyncInputBean.java")
-        }
-)
 @ManagedBean(name = SliderAsyncInputBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SliderAsyncInputBean extends ComponentExampleImpl<SliderAsyncInputBean> implements Serializable {
+public class SliderAsyncInputBean implements Serializable {
     public static final String BEAN_NAME = "sliderAsyncInput";
 	public String getBeanName() { return BEAN_NAME; }
     private int sliderValue = 0;
     private boolean render = false;
-
-    public SliderAsyncInputBean() {
-        super(SliderAsyncInputBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public void sliderValueChanged(ValueChangeEvent e)
     {

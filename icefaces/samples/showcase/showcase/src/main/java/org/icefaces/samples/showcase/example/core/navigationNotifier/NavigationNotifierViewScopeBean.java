@@ -16,16 +16,20 @@
 
 package org.icefaces.samples.showcase.example.core.navigationNotifier;
 
-import javax.annotation.PostConstruct;
+import java.io.Serializable;
+
 import javax.annotation.PreDestroy;
 import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.event.*;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.PreValidateEvent;
+import javax.faces.event.SystemEvent;
+import javax.faces.event.SystemEventListener;
 import javax.faces.view.ViewScoped;
-import java.awt.event.ComponentEvent;
-import java.io.Serializable;
+
+import org.icefaces.samples.showcase.view.menu.ShowcaseMenu;
 
 @ManagedBean(name = NavigationNotifierViewScopeBean.BEAN_NAME)
 @ViewScoped
@@ -59,7 +63,7 @@ public class NavigationNotifierViewScopeBean implements Serializable {
 
     public String getNavigateBackURI() {
         final FacesContext context = FacesContext.getCurrentInstance();
-        return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?grp=aceMenu&exp=navigationNotifierBean");
+        return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?" + ShowcaseMenu.URL_PARAM_GROUP + "=aceMenu&" + ShowcaseMenu.URL_PARAM_DEMO + "=navigationNotifierBean");
     }
 
     @PreDestroy

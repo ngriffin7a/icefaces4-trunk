@@ -16,46 +16,23 @@
 
 package org.icefaces.samples.showcase.example.ace.menu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
 import javax.faces.component.UIComponent;
-import java.io.Serializable;
-import java.util.List;
-import java.util.ArrayList;
+import javax.faces.event.ActionEvent;
 
-import org.icefaces.ace.model.MenuModel;
-import org.icefaces.ace.model.DefaultMenuModel;
-import org.icefaces.ace.component.submenu.Submenu;
 import org.icefaces.ace.component.menuitem.MenuItem;
-import org.icefaces.samples.showcase.util.FacesUtils;
+import org.icefaces.ace.component.submenu.Submenu;
+import org.icefaces.ace.model.DefaultMenuModel;
+import org.icefaces.ace.model.MenuModel;
 
-@ComponentExample(
-        parent = MenuBean.BEAN_NAME,
-        title = "example.ace.menu.dynamic.title",
-        description = "example.ace.menu.dynamic.description",
-        example = "/resources/examples/ace/menu/menuDynamic.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="menuDynamic.xhtml",
-                    resource = "/resources/examples/ace/menu/menuDynamic.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MenuDynamic.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/menu/MenuDynamic.java")
-        }
-)
 @ManagedBean(name= MenuDynamic.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MenuDynamic extends ComponentExampleImpl<MenuDynamic> implements Serializable {
+public class MenuDynamic implements Serializable {
     public static final String BEAN_NAME = "menuDynamic";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -64,15 +41,9 @@ public class MenuDynamic extends ComponentExampleImpl<MenuDynamic> implements Se
     
     public MenuDynamic() 
     {
-        super(MenuDynamic.class);
         menuModel = new DefaultMenuModel();
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public MenuModel getMenuModel() { return menuModel; }
     
     public void setMenuModel(MenuModel menuModel) { this.menuModel = menuModel; }

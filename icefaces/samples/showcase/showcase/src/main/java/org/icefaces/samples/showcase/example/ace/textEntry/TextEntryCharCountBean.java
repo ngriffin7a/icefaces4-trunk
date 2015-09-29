@@ -18,48 +18,18 @@ package org.icefaces.samples.showcase.example.ace.textEntry;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-@ComponentExample(
-        parent = TextEntryBean.BEAN_NAME,
-        title = "example.ace.textEntry.charCount.title",
-        description = "example.ace.textEntry.charCount.description",
-        example = "/resources/examples/ace/textEntry/textEntryCharCount.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textEntryCharCount.xhtml",
-                    resource = "/resources/examples/ace/textEntry/textEntryCharCount.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextEntryCharCountBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textEntry/TextEntryCharCountBean.java")
-        }
-)
 @ManagedBean(name= TextEntryCharCountBean.BEAN_NAME)
 @ViewScoped
-public class TextEntryCharCountBean extends ComponentExampleImpl<TextEntryCharCountBean> implements Serializable
+public class TextEntryCharCountBean implements Serializable
 {
     public static final String BEAN_NAME = "textEntryCharCountBean";
 	public String getBeanName() { return BEAN_NAME; }
 	
 	private int maxlength = 20;
 	private String comment;
-    
-    public TextEntryCharCountBean() {
-        super(TextEntryCharCountBean.class);
-    }
     
     public int getMaxlength() {
 		return maxlength;
@@ -76,9 +46,4 @@ public class TextEntryCharCountBean extends ComponentExampleImpl<TextEntryCharCo
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-	@PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

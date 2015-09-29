@@ -16,47 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.slider;
 
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;                                                                       
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.slider.title",
-        description = "example.ace.slider.description",
-        example = "/resources/examples/ace/slider/slider.xhtml"
-)
-@ExampleResources(
-        resources ={
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="slider.xhtml",
-                    resource = "/resources/examples/ace/slider/slider.xhtml"),
-            @ExampleResource(type = ResourceType.java,
-                    title="SliderBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/slider/SliderBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.slider.subMenu.title",
-	menuLinks = {
-                    @MenuLink(title = "menu.ace.slider.subMenu.main", isDefault = true, exampleBeanName = SliderBean.BEAN_NAME),
-                    @MenuLink(title = "menu.ace.slider.subMenu.asyncinput", exampleBeanName = SliderAsyncInputBean.BEAN_NAME),
-                    @MenuLink(title = "menu.ace.slider.subMenu.listener", exampleBeanName = SliderListener.BEAN_NAME),
-	    @MenuLink(title = "menu.ace.slider.subMenu.submitionExample",    exampleBeanName = SliderSubmitionExample.BEAN_NAME)
-	    
-})
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= SliderBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SliderBean extends ComponentExampleImpl<SliderBean>
-        implements Serializable {
+public class SliderBean implements Serializable {
 
     public static final String BEAN_NAME = "slider";
 	public String getBeanName() { return BEAN_NAME; }
@@ -67,19 +34,12 @@ public class SliderBean extends ComponentExampleImpl<SliderBean>
     private int maxValue;
     private int sliderValue;
     private int stepPercent;
-    
 
     public SliderBean() {
-        super(SliderBean.class);
         initialaziInstanceVariables();
         this.sliderValue = 50;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private void initialaziInstanceVariables() {
            this.axis = "x";
            this.clickableRail =false;

@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[menuEvents.title]}"/>
-    <ui:param name="description" value="#{msgs[menuEvents.description]}"/>
-    <ui:param name="resourceValue" value="#{menuEvents.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{menuResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{menuResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             <h:panelGrid columns="2" columnClasses="menuStyle, menuLogStyle">

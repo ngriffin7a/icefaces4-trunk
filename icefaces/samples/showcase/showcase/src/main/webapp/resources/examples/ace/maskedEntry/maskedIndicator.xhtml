@@ -24,12 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[maskedIndicatorBean.title]}"/>
-    <ui:param name="description" value="#{msgs[maskedIndicatorBean.description]}"/>
-    <ui:param name="resourceValue" value="#{maskedIndicatorBean.exampleResource}"/>
-    <ui:param name="wikiResources" value="#{maskedEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{maskedEntryResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="configForm">
             <ace:panel id="indicatorCustomizing" header="Indicator Customization" style="width: 100%;">

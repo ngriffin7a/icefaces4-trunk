@@ -16,50 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.autocompleteentry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = AutoCompleteEntryBean.BEAN_NAME,
-        title = "example.ace.autocompleteentry.rows.title",
-        description = "example.ace.autocompleteentry.rows.description",
-        example = "/resources/examples/ace/autocompleteentry/autoCompleteEntryRows.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="autoCompleteEntryRows.xhtml",
-                    resource = "/resources/examples/ace/autocompleteentry/autoCompleteEntryRows.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="...RowsBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryRowsBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="AutoCompleteEntryBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= AutoCompleteEntryRowsBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AutoCompleteEntryRowsBean extends ComponentExampleImpl<AutoCompleteEntryRowsBean> implements Serializable
+public class AutoCompleteEntryRowsBean implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryRowsBean";
 	public String getBeanName() { return BEAN_NAME; }
     
     private String selectedText;
     private int rows = 6;
-    
-    public AutoCompleteEntryRowsBean() { 
-        super(AutoCompleteEntryRowsBean.class);
-    }
     
     public String getSelectedText() {
         return selectedText;
@@ -75,10 +45,5 @@ public class AutoCompleteEntryRowsBean extends ComponentExampleImpl<AutoComplete
     
     public void setRows(int rows) {
         this.rows = rows;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

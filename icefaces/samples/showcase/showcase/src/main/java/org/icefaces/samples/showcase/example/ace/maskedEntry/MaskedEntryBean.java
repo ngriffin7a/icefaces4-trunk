@@ -16,50 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.maskedEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.maskedEntry.title",
-        description = "example.ace.maskedEntry.description",
-        example = "/resources/examples/ace/maskedEntry/maskedEntry.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="maskedEntry.xhtml",
-                    resource = "/resources/examples/ace/maskedEntry/maskedEntry.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MaskedEntry.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/maskedEntry/MaskedEntryBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.maskedEntry.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.maskedEntry.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = MaskedEntryBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.maskedEntry.subMenu.label",
-                    exampleBeanName = MaskedLabelBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.maskedEntry.subMenu.indicator",
-                    exampleBeanName = MaskedIndicatorBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.maskedEntry.subMenu.reqStyle",
-                    exampleBeanName = MaskedReqStyleBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= MaskedEntryBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MaskedEntryBean extends ComponentExampleImpl<MaskedEntryBean> implements Serializable
-{
+public class MaskedEntryBean implements Serializable {
     public static final String BEAN_NAME = "maskedEntryBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -68,16 +32,6 @@ public class MaskedEntryBean extends ComponentExampleImpl<MaskedEntryBean> imple
     private String mobilePhone;
     private String sin;
     
-    public MaskedEntryBean()
-    {
-        super(MaskedEntryBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public String getDob() {
         return dob;
     }

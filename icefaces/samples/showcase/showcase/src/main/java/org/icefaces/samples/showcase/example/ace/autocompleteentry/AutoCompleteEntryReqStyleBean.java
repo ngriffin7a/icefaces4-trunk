@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.autocompleteentry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = AutoCompleteEntryBean.BEAN_NAME,
-        title = "example.ace.autocompleteentry.reqStyle.title",
-        description = "example.ace.autocompleteentry.reqStyle.description",
-        example = "/resources/examples/ace/autocompleteentry/autoCompleteEntryReqStyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="autoCompleteEntryReqStyle.xhtml",
-                    resource = "/resources/examples/ace/autocompleteentry/autoCompleteEntryReqStyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="...ReqStyleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryReqStyleBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="AutoCompleteEntryBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= AutoCompleteEntryReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AutoCompleteEntryReqStyleBean extends ComponentExampleImpl<AutoCompleteEntryReqStyleBean> implements Serializable
+public class AutoCompleteEntryReqStyleBean implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryReqStyleBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -58,11 +32,6 @@ public class AutoCompleteEntryReqStyleBean extends ComponentExampleImpl<AutoComp
     private String reqColor = "redRS";
     private String optColor = "greenRS";
 
-    public AutoCompleteEntryReqStyleBean() 
-    {
-        super(AutoCompleteEntryReqStyleBean.class);
-    }
-    
     public String getSelectedText1() { return selectedText1; }
     public String getSelectedText2() { return selectedText2; }
     
@@ -85,11 +54,6 @@ public class AutoCompleteEntryReqStyleBean extends ComponentExampleImpl<AutoComp
         this.optColor = optColor;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-	
 	private boolean useTheme = false;
 
     public boolean getUseTheme() {

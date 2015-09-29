@@ -16,46 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.ace.model.table.RowStateMap;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.selector.title",
-        description = "example.ace.dataTable.selector.description",
-        example = "/resources/examples/ace/dataTable/dataTableSelector.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTableSelector.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTableSelector.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableSelector.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableSelector.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
+
+import org.icefaces.ace.model.table.RowStateMap;
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= DataTableSelector.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableSelector extends ComponentExampleImpl<DataTableSelector> implements Serializable {
+public class DataTableSelector implements Serializable {
     public static final String BEAN_NAME = "dataTableSelector";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -72,13 +47,7 @@ public class DataTableSelector extends ComponentExampleImpl<DataTableSelector> i
     
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableSelector() {
-        super(DataTableSelector.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- VALUE CHANGE LISTENERS BEGIN

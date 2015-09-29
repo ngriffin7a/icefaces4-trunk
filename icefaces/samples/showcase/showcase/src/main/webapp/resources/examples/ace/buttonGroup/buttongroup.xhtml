@@ -23,15 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[buttonGroup.title]}"/>
-    <ui:param name="description" value="#{msgs[buttonGroup.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[buttonGroup.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{buttonGroup.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{buttonGroup.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{buttonGroupResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{buttonGroupResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
             <ace:panel>

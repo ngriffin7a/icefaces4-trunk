@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[globalTooltipBean.title]}"/>
-    <ui:param name="description" value="#{msgs[globalTooltipBean.description]}"/>
-    <ui:param name="resourceValue" value="#{globalTooltipBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{tooltipResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{tooltipResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             <ace:tooltip id="tooltip" global="true"/>

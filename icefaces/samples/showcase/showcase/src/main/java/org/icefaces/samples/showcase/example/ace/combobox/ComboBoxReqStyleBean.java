@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.combobox;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = ComboBoxBean.BEAN_NAME,
-        title = "example.ace.combobox.reqStyle.title",
-        description = "example.ace.combobox.reqStyle.description",
-        example = "/resources/examples/ace/combobox/comboBoxReqStyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="comboBoxReqStyle.xhtml",
-                    resource = "/resources/examples/ace/combobox/comboBoxReqStyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ComboBoxReqStyleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/combobox/ComboBoxReqStyleBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="ComboBoxBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/combobox/ComboBoxBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= ComboBoxReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ComboBoxReqStyleBean extends ComponentExampleImpl<ComboBoxReqStyleBean> implements Serializable
+public class ComboBoxReqStyleBean implements Serializable
 {
     public static final String BEAN_NAME = "comboBoxReqStyleBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -58,11 +32,6 @@ public class ComboBoxReqStyleBean extends ComponentExampleImpl<ComboBoxReqStyleB
     private String reqColor = "redRS";
     private String optColor = "greenRS";
 
-    public ComboBoxReqStyleBean() 
-    {
-        super(ComboBoxReqStyleBean.class);
-    }
-    
     public String getSelectedText1() { return selectedText1; }
     public String getSelectedText2() { return selectedText2; }
     
@@ -85,11 +54,6 @@ public class ComboBoxReqStyleBean extends ComponentExampleImpl<ComboBoxReqStyleB
         this.optColor = optColor;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-	
 	private boolean useTheme = false;
 
     public boolean getUseTheme() {

@@ -16,43 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.simpleselectonemenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.PositionBean;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = SimpleSelectOneMenuBean.BEAN_NAME,
-        title = "example.ace.simpleselectonemenu.label.title",
-        description = "example.ace.simpleselectonemenu.label.description",
-        example = "/resources/examples/ace/simpleselectonemenu/simpleSelectOneMenuLabel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="simpleSelectOneMenuLabel.xhtml",
-                    resource = "/resources/examples/ace/simpleselectonemenu/simpleSelectOneMenuLabel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="...LabelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/simpleselectonemenu/SimpleSelectOneMenuLabelBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="SimpleSelectOneMenuBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/simpleselectonemenu/SimpleSelectOneMenuBean.java")
-        }
-)
+import org.icefaces.samples.showcase.util.PositionBean;
+
 @ManagedBean(name= SimpleSelectOneMenuLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SimpleSelectOneMenuLabelBean extends ComponentExampleImpl<SimpleSelectOneMenuLabelBean> implements Serializable
+public class SimpleSelectOneMenuLabelBean implements Serializable
 {
     public static final String BEAN_NAME = "simpleSelectOneMenuLabelBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -68,11 +43,6 @@ public class SimpleSelectOneMenuLabelBean extends ComponentExampleImpl<SimpleSel
 		new SelectItem("bottom", "Bottom"),
 		new SelectItem("none", "None")
 	};
-	
-    public SimpleSelectOneMenuLabelBean() 
-    {
-        super(SimpleSelectOneMenuLabelBean.class);
-    }
 	
 	public SelectItem[] getLabelPositions() { return LABEL_POSITIONS; }
     
@@ -98,11 +68,6 @@ public class SimpleSelectOneMenuLabelBean extends ComponentExampleImpl<SimpleSel
     
     public void setLabelPosition(String labelPosition) {
         this.labelPosition = labelPosition;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
     
     public void positionChanged(ValueChangeEvent event) {

@@ -16,55 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.checkboxButtons;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.PositionBean;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
 
-import java.util.*;
-
-@ComponentExample(
-        parent = CheckboxButtonsBean.BEAN_NAME,
-        title = "example.ace.checkboxButtons.label.title",
-        description = "example.ace.checkboxButtons.label.description",
-        example = "/resources/examples/ace/checkboxButtons/checkboxButtonsLabel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="checkboxButtonsLabel.xhtml",
-                    resource = "/resources/examples/ace/checkboxButtons/checkboxButtonsLabel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="CheckboxButtonsLabelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/checkboxButtons/CheckboxButtonsLabelBean.java")
-        }
-)
 @ManagedBean(name= CheckboxButtonsLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class CheckboxButtonsLabelBean extends ComponentExampleImpl<CheckboxButtonsLabelBean> implements Serializable
+public class CheckboxButtonsLabelBean implements Serializable
 {
     public static final String BEAN_NAME = "checkboxButtonsLabelBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     private String labelPosition = "left";
-
-    public CheckboxButtonsLabelBean() 
-    {
-        super(CheckboxButtonsLabelBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
 	private List<String> selected = new ArrayList<String>();
 	public List<String> getSelected() { return selected; }

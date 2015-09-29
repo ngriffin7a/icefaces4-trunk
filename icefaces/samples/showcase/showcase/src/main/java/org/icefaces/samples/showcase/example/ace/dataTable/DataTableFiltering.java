@@ -16,41 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.filtering.title",
-        description = "example.ace.dataTable.filtering.description",
-        example = "/resources/examples/ace/dataTable/dataTableFiltering.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTableFiltering.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTableFiltering.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableFiltering.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableFiltering.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
+
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= DataTableFiltering.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableFiltering extends ComponentExampleImpl<DataTableFiltering> implements Serializable {
+public class DataTableFiltering implements Serializable {
     public static final String BEAN_NAME = "dataTableFiltering";
 	public String getBeanName() { return BEAN_NAME; }
     private List<Car> carsData;
@@ -63,13 +41,7 @@ public class DataTableFiltering extends ComponentExampleImpl<DataTableFiltering>
 
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableFiltering() {
-        super(DataTableFiltering.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

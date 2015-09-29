@@ -16,44 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
+
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.columnReordering.title",
-        description = "example.ace.dataTable.columnReordering.description",
-        example = "/resources/examples/ace/dataTable/dataTableColumnReordering.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="dataTableColumnReordering.xhtml",
-                        resource = "/resources/examples/ace/dataTable/dataTableColumnReordering.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="DataTableColumnReordering.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/dataTable/DataTableColumnReordering.java")
-        }
-)
 @ManagedBean(name= DataTableColumnReordering.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableColumnReordering extends ComponentExampleImpl<DataTableColumnReordering> implements Serializable
+public class DataTableColumnReordering implements Serializable
 {
     public static final String BEAN_NAME = "dataTableColumnReordering";
 	public String getBeanName() { return BEAN_NAME; }
@@ -62,13 +36,7 @@ public class DataTableColumnReordering extends ComponentExampleImpl<DataTableCol
 
     public DataTableColumnReordering() 
     {
-        super(DataTableColumnReordering.class);
         this.cars = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public List<Car> getCars() {

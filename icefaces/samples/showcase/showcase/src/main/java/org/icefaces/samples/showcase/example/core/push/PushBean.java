@@ -16,59 +16,18 @@
 
 package org.icefaces.samples.showcase.example.core.push;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.FacesUtils;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.CustomScoped;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "Push Component",
-        description = "The <b>icecore:push</b> component allows the configuration of Ajax Push behavior on a per-view basis.",
-        example = "/resources/examples/core/push.xhtml"
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ExampleResources(
-        resources = {
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="push.xhtml",
-                        resource = "/resources/examples/core/push.xhtml"),
-                @ExampleResource(type = ResourceType.java,
-                        title="PushBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/push/PushBean.java"),
-                @ExampleResource(type = ResourceType.java,
-                        title="PushWindowScopeBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/push/PushWindowScopeBean.java")
-        }
-)
-@Menu(
-    title = "menu.core.pushBean.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.core.pushBean.subMenu.main", isDefault = true, exampleBeanName = PushBean.BEAN_NAME)
-    }
-)
+import org.icefaces.samples.showcase.util.FacesUtils;
+
 @ManagedBean(name = PushBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PushBean extends ComponentExampleImpl<PushBean> implements Serializable {
+public class PushBean implements Serializable {
     public static final String BEAN_NAME = "pushBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public PushBean() {
-        super(PushBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public void selected() {
         PushWindowScopeBean managedBean = (PushWindowScopeBean) FacesUtils.getManagedBean(PushWindowScopeBean.BEAN_NAME);

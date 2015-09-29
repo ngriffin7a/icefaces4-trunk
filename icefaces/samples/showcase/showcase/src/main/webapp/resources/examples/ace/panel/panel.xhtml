@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[panelBean.title]}"/>
-    <ui:param name="description" value="#{msgs[panelBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[panelBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{panelBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{panelBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{panelResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{panelResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             <ace:panel id="panel" binding="#{panelComponent}"
@@ -51,7 +42,7 @@
                     </ace:menu>
                 </f:facet>
                 <h:panelGrid>
-                    <h:outputText value="ICEfaces 2 is an open-source Rich Internet Application (RIA) development framework based on the JavaServer Faces (JSF) 2 standard. Like its predecessor, ICEfaces 1.8, ICEfaces 2 extends JSF to simplify development and enhance the standard JSF feature set - simultaneously improving developer efficiency and expanding the spectrum of RIA capabilities that can be included in any JSF-based web application."/>
+                    <h:outputText value="ICEfaces is an open-source Rich Internet Application (RIA) development framework based on the JavaServer Faces (JSF) 2 standard. Like its predecessor, ICEfaces 1.8, ICEfaces 2+ extends JSF to simplify development and enhance the standard JSF feature set - simultaneously improving developer efficiency and expanding the spectrum of RIA capabilities that can be included in any JSF-based web application."/>
                     <h:outputText value="Adhering closely to the standard JSF 2 extension points allows ICEfaces to work transparently with the stock JSF framework, simplifying integration and fostering 3rd party compatibility with other JSF 2-compliant libraries."/>
                 </h:panelGrid>
                 <ace:ajax event="close" listener="#{panelBean.setButtonVisible}" execute="@this" render="form2"/>

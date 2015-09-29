@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.combobox;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = ComboBoxBean.BEAN_NAME,
-        title = "example.ace.combobox.indicator.title",
-        description = "example.ace.combobox.indicator.description",
-        example = "/resources/examples/ace/combobox/comboBoxIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="comboBoxIndicator.xhtml",
-                    resource = "/resources/examples/ace/combobox/comboBoxIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ComboBoxIndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/combobox/ComboBoxIndicatorBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="ComboBoxBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/combobox/ComboBoxBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= ComboBoxIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ComboBoxIndicatorBean extends ComponentExampleImpl<ComboBoxIndicatorBean> implements Serializable
+public class ComboBoxIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "comboBoxIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -59,11 +33,6 @@ public class ComboBoxIndicatorBean extends ComponentExampleImpl<ComboBoxIndicato
     private String optionalText = "Not mandatory.";
     private String position = "right";
 
-    public ComboBoxIndicatorBean() 
-    {
-        super(ComboBoxIndicatorBean.class);
-    }
-    
     public boolean getRequired() {
         return required;
     }
@@ -94,10 +63,5 @@ public class ComboBoxIndicatorBean extends ComponentExampleImpl<ComboBoxIndicato
     
     public void setPosition(String position) {
         this.position = position;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

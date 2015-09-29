@@ -23,13 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[tabProxy.title]}"/>
-    <ui:param name="description" value="#{msgs[tabProxy.description]}"/>
-    <ui:param name="resourceValue" value="#{tabProxy.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{tabSetResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{tabSetResources.tldResources}"/>
-    
     <ui:define name="example">
             
             <ace:tabSet id="myTabSet" cancelOnInvalid="#{not tabProxy.invalidSwitch}" clientSide="false" binding="#{proxiedTabSet}">

@@ -22,13 +22,6 @@
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
-    <ui:param name="title" value="#{pushBean.title}"/>
-    <ui:param name="description" value="#{pushBean.description}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[pushBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{pushBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{pushBean.exampleResource}"/>
-    <ui:param name="wikiResources" value="#{pushBeanResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{pushBeanResources.tldResources}"/>
 
     <ui:define name="example">
         <icecore:push group="#{pushWindowScopeBean.group}"/>

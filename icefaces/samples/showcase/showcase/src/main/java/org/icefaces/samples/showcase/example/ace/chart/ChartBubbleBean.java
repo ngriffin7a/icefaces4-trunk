@@ -16,41 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
-import org.icefaces.ace.model.chart.BubbleSeries;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.bubble.title",
-        description = "example.ace.chart.bubble.description",
-        example = "/resources/examples/ace/chart/chartBubble.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="ChartBubble.xhtml",
-                        resource = "/resources/examples/ace/chart/chartBubble.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="ChartBubbleBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartBubbleBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.ace.model.chart.BubbleSeries;
+
 @ManagedBean(name= ChartBubbleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartBubbleBean extends ComponentExampleImpl<ChartBubbleBean> implements Serializable {
+public class ChartBubbleBean implements Serializable {
     public static final String BEAN_NAME = "chartBubbleBean";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -82,20 +59,11 @@ public class ChartBubbleBean extends ComponentExampleImpl<ChartBubbleBean> imple
         }});
     }};
 
-    public ChartBubbleBean() {
-        super(ChartBubbleBean.class);
-    }
-
     public List<BubbleSeries> getBubbleData() {
         return bubbleData;
     }
 
     public void setBubbleData(List<BubbleSeries> bubbleData) {
         this.bubbleData = bubbleData;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

@@ -24,13 +24,6 @@
 				xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[panelStackFacelet.title]}"/>
-    <ui:param name="description" value="#{msgs[panelStackFacelet.description]}"/>
-    <ui:param name="resourceValue" value="#{panelStackFacelet.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{panelStackResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{panelStackResources.tldResources}"/>
-
     <ui:define name="example">
 <icecore:config mandatoryResource="textEntry textAreaEntry sliderEntry dateTimeEntry checkboxButton radioButton maskedEntry selectMenu" />
 

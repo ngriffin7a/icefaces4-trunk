@@ -16,43 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.resizable;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
+
 import org.icefaces.ace.event.ResizeEvent;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 
-@ComponentExample(
-        parent = ResizableBean.BEAN_NAME,
-        title = "example.ace.resizableListener.title",
-        description = "example.ace.resizableListener.description",
-        example = "/resources/examples/ace/resizable/resizeListener.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="resizeListener.xhtml",
-                    resource = "/resources/examples/ace/resizable/resizeListener.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ResizeListenerBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/resizable/ResizeListenerBean.java"),
-            
-            @ExampleResource(type = ResourceType.java,
-                    title="ImageSet.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/dataGenerators/ImageSet.java")
-        }
-)
 @ManagedBean(name= ResizeListenerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ResizeListenerBean extends ComponentExampleImpl<ResizeListenerBean> implements Serializable
+public class ResizeListenerBean implements Serializable
 {
     public static final String BEAN_NAME = "resizeListenerBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -64,15 +38,9 @@ public class ResizeListenerBean extends ComponentExampleImpl<ResizeListenerBean>
     /////////////---- CONSTRUCTOR BEGIN
     public ResizeListenerBean() 
     {
-        super(ResizeListenerBean.class);
         resizeParameters = "Resize panel to call its listener !";
         showImage = false;
         imageLocation = ImageSet.getImage(ImageSet.ImageSelect.PICTURE).getPath();
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- EVENT LISTENERS BEGIN

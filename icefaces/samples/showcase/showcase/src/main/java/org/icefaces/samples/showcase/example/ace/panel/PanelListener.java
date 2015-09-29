@@ -16,60 +16,27 @@
 
 package org.icefaces.samples.showcase.example.ace.panel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
-
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
 import org.icefaces.ace.event.CloseEvent;
 import org.icefaces.ace.event.ToggleEvent;
 
-@ComponentExample(
-        parent = PanelBean.BEAN_NAME,
-        title = "example.ace.panel.listener.title",
-        description = "example.ace.panel.listener.description",
-        example = "/resources/examples/ace/panel/panelListener.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="panelListener.xhtml",
-                    resource = "/resources/examples/ace/panel/panelListener.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PanelListener.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/panel/PanelListener.java")
-        }
-)
 @ManagedBean(name= PanelListener.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PanelListener extends ComponentExampleImpl<PanelListener> implements Serializable {
+public class PanelListener implements Serializable {
 
     public static final String BEAN_NAME = "panelListener";
 	public String getBeanName() { return BEAN_NAME; }
     private Format formatter = new SimpleDateFormat("HH:mm:ss");
     private String statusMessage = "No status yet.";
     private boolean reOpenButton = false;
-
-    
-    public PanelListener() {
-        super(PanelListener.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public String getStatusMessage() { return statusMessage; }
     

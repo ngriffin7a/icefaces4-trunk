@@ -15,40 +15,15 @@
  */
 
 package org.icefaces.samples.showcase.example.ace.notificationpanel;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = NotificationPanelBean.BEAN_NAME,
-        title = "example.ace.notificationpanel.client.title",
-        description = "example.ace.notificationpanel.client.description",
-        example = "/resources/examples/ace/notificationpanel/notificationPanelClient.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="notificationPanelClient.xhtml",
-                    resource = "/resources/examples/ace/notificationpanel/notificationPanelClient.xhtml")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= NotificationPanelClientBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class NotificationPanelClientBean extends ComponentExampleImpl<NotificationPanelClientBean> implements Serializable
+public class NotificationPanelClientBean implements Serializable
 {
     public static final String BEAN_NAME = "notificationPanelClient";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public NotificationPanelClientBean()
-    { super(NotificationPanelClientBean.class); }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

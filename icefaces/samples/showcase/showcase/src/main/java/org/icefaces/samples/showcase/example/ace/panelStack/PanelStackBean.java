@@ -16,54 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.panelStack;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
-import java.lang.String;
-import java.lang.System;
-import java.util.ArrayList;
-import java.util.List;
 
-@ComponentExample(
-        title = "example.ace.panelStack.title",
-        description = "example.ace.panelStack.description",
-        example = "/resources/examples/ace/panelStack/panelStackOverview.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="panelStackOverview.xhtml",
-                    resource = "/resources/examples/ace/panelStack/panelStackOverview.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PanelStackBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/panelStack/PanelStackBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.panelStack.subMenu.title",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.panelStack.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = PanelStackBean.BEAN_NAME),
-			@MenuLink(title = "menu.ace.panelStack.subMenu.client",
-					exampleBeanName = PanelStackClient.BEAN_NAME),
-			@MenuLink(title = "menu.ace.panelStack.subMenu.dataTable",
-                    exampleBeanName = PanelStackDataTable.BEAN_NAME),
-			@MenuLink(title = "menu.ace.panelStack.subMenu.facelet",
-                    exampleBeanName = PanelStackFacelet.BEAN_NAME)
-    }
-)
 @ManagedBean(name= PanelStackBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PanelStackBean extends ComponentExampleImpl<PanelStackBean> implements  Serializable {
+public class PanelStackBean implements  Serializable {
     public static final String BEAN_NAME = "panelStackBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -103,15 +63,6 @@ public class PanelStackBean extends ComponentExampleImpl<PanelStackBean> impleme
 
     public void setText2(String text2) {
         this.text2 = text2;
-    }
-
-    public PanelStackBean() {
-        super(PanelStackBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public String getCurrentId() {

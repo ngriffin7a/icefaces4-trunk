@@ -16,42 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.progressbar; 
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ComponentExample(
-        parent = ProgressBarBean.BEAN_NAME,
-        title = "example.ace.progressBarClientSideOnly.title",
-        description = "example.ace.progressBarClientSideOnly.description",
-        example = "/resources/examples/ace/progressbar/progressBarClient.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="progressBarClient.xhtml",
-                    resource = "/resources/examples/ace/progressbar/progressBarClient.xhtml")
-        }
-)
+
 @ManagedBean(name= ProgressBarClient.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ProgressBarClient extends ComponentExampleImpl<ProgressBarClient> implements Serializable {
+public class ProgressBarClient implements Serializable {
 
     public static final String BEAN_NAME = "progressBarClient";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public ProgressBarClient() {
-        super(ProgressBarClient.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

@@ -16,26 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.autocompleteentry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 @ManagedBean(name= AutoCompleteEntryData.BEAN_NAME)

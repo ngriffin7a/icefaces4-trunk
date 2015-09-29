@@ -16,37 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.maskedEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = MaskedEntryBean.BEAN_NAME,
-        title = "example.ace.maskedIndicator.title",
-        description = "example.ace.maskedIndicator.description",
-        example = "/resources/examples/ace/maskedEntry/maskedIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="maskedIndicator.xhtml",
-                    resource = "/resources/examples/ace/maskedEntry/maskedIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MaskedIndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/maskedEntry/MaskedIndicatorBean.java")
-        }
-)
 @ManagedBean(name= MaskedIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MaskedIndicatorBean extends ComponentExampleImpl<MaskedIndicatorBean> implements Serializable
+public class MaskedIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "maskedIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -59,11 +37,6 @@ public class MaskedIndicatorBean extends ComponentExampleImpl<MaskedIndicatorBea
     private String workPhone;
     private String mobilePhone;
     private String sin;
-
-
-    public MaskedIndicatorBean() {
-        super(MaskedIndicatorBean.class);
-    }
     
     public boolean getRequired() {
         return required;
@@ -135,10 +108,5 @@ public class MaskedIndicatorBean extends ComponentExampleImpl<MaskedIndicatorBea
 
     public void setSin(String sin) {
         this.sin = sin;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

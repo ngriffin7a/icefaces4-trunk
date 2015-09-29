@@ -16,42 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.menu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
-@ComponentExample(
-        parent = MenuBean.BEAN_NAME,
-        title = "example.ace.menu.type.title",
-        description = "example.ace.menu.type.description",
-        example = "/resources/examples/ace/menu/menuType.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="menuType.xhtml",
-                    resource = "/resources/examples/ace/menu/menuType.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MenuType.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/menu/MenuType.java")
-        }
-)
 @ManagedBean(name= MenuType.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MenuType extends ComponentExampleImpl<MenuType> implements Serializable {
+public class MenuType implements Serializable {
     public static final String BEAN_NAME = "menuType";
 	public String getBeanName() { return BEAN_NAME; }
     public final String DEFAULT_MESSAGE = "please select any menu item on the left";
@@ -61,19 +38,12 @@ public class MenuType extends ComponentExampleImpl<MenuType> implements Serializ
     private String message;
     private ArrayList<String> list;
     
-    
     public MenuType() {
-        super(MenuType.class);
         formatter = new SimpleDateFormat("HH:mm:ss");
         list = new ArrayList<String>(MAX_LIST_SIZE);
         list.add(DEFAULT_MESSAGE);
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public void fireAction(ActionEvent event)
     {
         String [] results = event.getComponent().getParent().getClientId().split(":");

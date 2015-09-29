@@ -16,86 +16,29 @@
 
 package org.icefaces.samples.showcase.example.ace.list;
 
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
-@ComponentExample(
-    title = "example.ace.list.title",
-    description = "example.ace.list.description",
-    example = "/resources/examples/ace/list/list.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                title="List.xhtml",
-                resource = "/resources/examples/ace/"+
-                        "list/list.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                title="ListBean.java",
-                resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                        "showcase/example/ace/list/ListBean.java")
-    }
-)
-@Menu(
-    title = "menu.ace.list.subMenu.title",
-    menuLinks = {
-            @MenuLink(title = "menu.ace.list.subMenu.main",
-                    isDefault = true, exampleBeanName = ListBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.selection",
-                    exampleBeanName = ListSelectionBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.selectionAjax",
-                    exampleBeanName = ListSelectionAjaxBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.selectionMini",
-                      exampleBeanName = ListSelectionMiniBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.reordering",
-                    exampleBeanName = ListReorderBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.reorderingAjax",
-                    exampleBeanName = ListReorderAjaxBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.drag",
-                    exampleBeanName = ListDragBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.dual",
-                    exampleBeanName = ListDualBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.multi",
-                    exampleBeanName = ListMultiBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.block",
-                    exampleBeanName = ListBlockBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.list.subMenu.blockComplex",
-                    exampleBeanName = ListBlockComplexBean.BEAN_NAME)
-    })
-
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
 @ManagedBean(name= ListBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ListBean extends ComponentExampleImpl<ListBean> implements Serializable {
+public class ListBean implements Serializable {
     public static final String BEAN_NAME = "listBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     public ListBean() {
-        super(ListBean.class);
-
         // Move some of cars to other lists at init
         List<Car> removals = carList.subList(6,10);
         fstDestCarList = new ArrayList<Car>(removals.subList(0, 2));
         sndDestCarList = new ArrayList<Car>(removals.subList(2, 4));
         carList = carList.subList(0,6);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     List<SelectItem> stringList = new ArrayList<SelectItem>() {{

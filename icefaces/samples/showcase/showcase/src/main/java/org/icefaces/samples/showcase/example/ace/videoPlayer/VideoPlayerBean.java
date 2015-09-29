@@ -16,60 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.videoPlayer;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.faces.event.ActionEvent;
-
-@ComponentExample(
-        title = "example.ace.videoPlayer.title",
-        description = "example.ace.videoPlayer.description",
-        example = "/resources/examples/ace/videoPlayer/videoPlayer.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="videoPlayer.xhtml",
-                    resource = "/resources/examples/ace/videoPlayer/videoPlayer.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="VideoPlayerBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/videoPlayer/VideoPlayerBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.videoPlayer.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.videoPlayer.subMenu.main", isDefault = true, exampleBeanName = VideoPlayerBean.BEAN_NAME)
-    }
-)
 
 @ManagedBean(name = VideoPlayerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class VideoPlayerBean extends ComponentExampleImpl<VideoPlayerBean> implements Serializable {
+public class VideoPlayerBean implements Serializable {
     public static final String BEAN_NAME = "videoPlayerBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    public VideoPlayerBean() {
-        super(VideoPlayerBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private boolean autoplay = false;
     private boolean newWindow = false;
     private boolean loop = false;

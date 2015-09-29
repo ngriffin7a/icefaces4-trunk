@@ -16,60 +16,28 @@
 
 package org.icefaces.samples.showcase.example.ace.rowExpansion;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
-import java.util.*;
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 import org.icefaces.samples.showcase.util.SimpleEntry;
 
-@ComponentExample(
-        title = "example.ace.rowExpansion.title",
-        description = "example.ace.rowExpansion.description",
-        example = "/resources/examples/ace/rowExpansion/rowExpansion.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="rowExpansion.xhtml",
-                    resource = "/resources/examples/ace/rowExpansion/rowExpansion.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="RowExpansionBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/rowExpansion/RowExpansionBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.rowExpansion.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.rowExpansion.subMenu.main", isDefault = true, exampleBeanName = RowExpansionBean.BEAN_NAME)
-    }
-)
-
 @ManagedBean(name = RowExpansionBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class RowExpansionBean extends ComponentExampleImpl<RowExpansionBean> implements Serializable {
+public class RowExpansionBean implements Serializable {
     public static final String BEAN_NAME = "rowExpansionBean";
 	public String getBeanName() { return BEAN_NAME; }
     
     public RowExpansionBean() {
-        super(RowExpansionBean.class);
         generateCarsData();
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     ArrayList<Map.Entry<Car,List>> carsData = null;
 
     private void generateCarsData() {

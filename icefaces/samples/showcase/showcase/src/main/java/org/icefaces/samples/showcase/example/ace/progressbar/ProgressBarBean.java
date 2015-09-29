@@ -16,49 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.progressbar;
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.faces.event.ActionEvent;
-import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 
-@ComponentExample(
-        title = "example.ace.progressbar.title",
-        description = "example.ace.progressbar.description",
-        example = "/resources/examples/ace/progressbar/progressBar.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="progressBar.xhtml",
-                    resource = "/resources/examples/ace/progressbar/progressBar.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ProgressBarBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/progressbar/ProgressBarBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.progressbar.subMenu.title",
-	menuLinks = {
-	         @MenuLink(title = "menu.ace.progressbar.subMenu.main", isDefault = true, exampleBeanName = ProgressBarBean.BEAN_NAME)
-                        ,@MenuLink(title = "menu.ace.progressbar.subMenu.polling", exampleBeanName = ProgressBarPolling.BEAN_NAME)
-                        ,@MenuLink(title = "menu.ace.progressbar.subMenu.push", exampleBeanName = ProgressBarPush.BEAN_NAME)
-                        ,@MenuLink(title = "menu.ace.progressbar.subMenu.client", exampleBeanName = ProgressBarClient.BEAN_NAME)
-                        ,@MenuLink(title = "menu.ace.progressbar.subMenu.clientAndServer", exampleBeanName = ProgressBarClientAndServer.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
+import org.icefaces.samples.showcase.dataGenerators.ImageSet;
+import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
+
 @ManagedBean(name= ProgressBarBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ProgressBarBean extends ComponentExampleImpl<ProgressBarBean> implements Serializable {
+public class ProgressBarBean implements Serializable {
     public static final String BEAN_NAME = "progressBarBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -72,18 +42,11 @@ public class ProgressBarBean extends ComponentExampleImpl<ProgressBarBean> imple
     
     /////////////---- CONSTRUCTOR BEGIN
     public ProgressBarBean() {
-        super(ProgressBarBean.class);
-        
         this.imagesOfCars = ImageSet.getImages(ImageSet.ImagesSelect.CARS);
         this.arrowForwardImage = ImageSet.getImage(ImageSet.ImageSelect.FORWARD_ARROW);
         this.arrowBackwardImage = ImageSet.getImage(ImageSet.ImageSelect.BACKWARD_ARROW);
         currentIndex = 0;
         setBeanVariables(currentIndex);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- ACTION LISTENERS BEGIN

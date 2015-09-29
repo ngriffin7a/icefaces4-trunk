@@ -2,35 +2,12 @@ package org.icefaces.samples.showcase.example.ace.submitMonitor;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-@ComponentExample(
-		parent = SubmitMonitorBean.BEAN_NAME,
-        title = "example.ace.submitMonitor.configuration.title",
-        description = "example.ace.submitMonitor.configuration.description",
-        example = "/resources/examples/ace/submitMonitor/submitMonitorConfiguration.xhtml"
-)
-@ExampleResources(
-        resources ={
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="submitMonitorConfiguration.xhtml",
-                    resource = "/resources/examples/ace/submitMonitor/submitMonitorConfiguration.xhtml"),
-            @ExampleResource(type = ResourceType.java,
-                    title="SubmitMonitorConfiguration.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/submitMonitor/SubmitMonitorConfiguration.java")
-        }
-)
 @ManagedBean(name= SubmitMonitorConfiguration.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SubmitMonitorConfiguration extends ComponentExampleImpl<SubmitMonitorConfiguration> implements Serializable {
+public class SubmitMonitorConfiguration implements Serializable {
     public static final String BEAN_NAME = "submitMonitorConfiguration";
     
 	public String getBeanName() { return BEAN_NAME; }
@@ -41,15 +18,6 @@ public class SubmitMonitorConfiguration extends ComponentExampleImpl<SubmitMonit
     private String sessionExpiredLabel = "Session expired";
     private boolean autoCenter = true;
     private boolean blockPanel = false;
-
-    public SubmitMonitorConfiguration() {
-        super(SubmitMonitorConfiguration.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public String getIdleLabel() {
         return idleLabel;

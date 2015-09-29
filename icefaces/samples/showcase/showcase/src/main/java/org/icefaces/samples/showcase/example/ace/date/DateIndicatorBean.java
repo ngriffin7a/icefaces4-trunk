@@ -16,41 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.date;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.ace.event.DateSelectEvent;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 import java.util.Date;
 
-@ComponentExample(
-        parent = DateEntryBean.BEAN_NAME,
-        title = "example.ace.dateentry.indicator.title",
-        description = "example.ace.dateentry.indicator.description",
-        example = "/resources/examples/ace/date/dateindicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dateindicator.xhtml",
-                    resource = "/resources/examples/ace/date/dateindicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DateIndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/date/DateIndicatorBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ValueChangeEvent;
+
 @ManagedBean(name= DateIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DateIndicatorBean extends ComponentExampleImpl<DateIndicatorBean> implements Serializable {
+public class DateIndicatorBean implements Serializable {
     public static final String BEAN_NAME = "dateIndicator";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -60,10 +35,6 @@ public class DateIndicatorBean extends ComponentExampleImpl<DateIndicatorBean> i
     private String optionalText = "Not mandatory.";
     private String position = "right";
 
-    public DateIndicatorBean() {
-        super(DateIndicatorBean.class);
-    }
-    
     public Date getSelectedDate() {
         return selectedDate;
     }
@@ -106,10 +77,5 @@ public class DateIndicatorBean extends ComponentExampleImpl<DateIndicatorBean> i
     
     public void setPosition(String position) {
         this.position = position;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

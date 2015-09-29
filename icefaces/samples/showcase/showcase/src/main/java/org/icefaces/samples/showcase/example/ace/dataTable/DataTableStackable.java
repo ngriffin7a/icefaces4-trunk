@@ -16,56 +16,24 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.stackable.title",
-        description = "example.ace.dataTable.stackable.description",
-        example = "/resources/examples/ace/dataTable/dataTableStackable.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="dataTableStackable.xhtml",
-                        resource = "/resources/examples/ace/dataTable/dataTableStackable.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="DataTableStackable.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/dataTable/DataTableStackable.java")
-        }
-)
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= DataTableStackable.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableStackable extends ComponentExampleImpl<DataTableStackable> implements Serializable {
+public class DataTableStackable implements Serializable {
     public static final String BEAN_NAME = "dataTableStackable";
 	public String getBeanName() { return BEAN_NAME; }
     private List<Car> carsData;
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableStackable() {
-        super(DataTableStackable.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

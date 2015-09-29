@@ -24,13 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-<ui:param name="title" value="#{msgs[treeNestedBean.title]}"/>
-<ui:param name="description" value="#{msgs[treeNestedBean.description]}"/>
-<ui:param name="resourceValue" value="#{treeNestedBean.exampleResource}"/>
-
-<ui:param name="wikiResources" value="#{treeResources.wikiResources}"/>
-<ui:param name="tldResources" value="#{treeResources.tldResources}"/>
-
 <ui:define name="example">
     <h:form> 
         <style type="text/css">

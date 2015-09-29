@@ -16,67 +16,28 @@
 
 package org.icefaces.samples.showcase.example.ace.file;
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.ace.component.fileentry.*;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
-@ComponentExample(
-        title = "example.ace.fileentry.title",
-        description = "example.ace.fileentry.description",
-        example = "/resources/examples/ace/fileentry/fileentry.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="FileEntry.xhtml",
-                    resource = "/resources/examples/ace/"+
-                               "fileentry/fileentry.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="FileEntryBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                               "showcase/example/ace/file/FileEntryBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.fileentry.subMenu.title",
-	menuLinks = {
-                    @MenuLink(title = "menu.ace.fileentry.subMenu.main", isDefault = true, exampleBeanName = FileEntryBean.BEAN_NAME), 
-                    @MenuLink(title = "menu.ace.fileentry.subMenu.listener", exampleBeanName = FileEntryListenerBean.BEAN_NAME),     
-                    @MenuLink(title = "menu.ace.fileentry.subMenu.validation",exampleBeanName = FileEntryValidationOptionsBean.BEAN_NAME),
-                    @MenuLink(title = "menu.ace.fileentry.subMenu.callback",exampleBeanName = FileEntryCallbackBean.BEAN_NAME)
-})
+import org.icefaces.ace.component.fileentry.FileEntry;
+import org.icefaces.ace.component.fileentry.FileEntryEvent;
+import org.icefaces.ace.component.fileentry.FileEntryResults;
+
 @ManagedBean(name= FileEntryBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class FileEntryBean extends ComponentExampleImpl<FileEntryBean> implements Serializable {
+public class FileEntryBean implements Serializable {
 
     public static final String BEAN_NAME = "fileEntry";
 	public String getBeanName() { return BEAN_NAME; }
     private List<UploadedFile> fileData = new ArrayList<UploadedFile>();
     private String totalFiles;
     private String totalSize;
-
-    public FileEntryBean() {
-        super(FileEntryBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public void sampleListener(FileEntryEvent e) {
         FileEntry fe = (FileEntry)e.getComponent();

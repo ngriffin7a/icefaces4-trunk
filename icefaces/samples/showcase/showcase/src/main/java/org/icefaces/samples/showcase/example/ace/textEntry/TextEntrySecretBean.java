@@ -16,47 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.textEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = TextEntryBean.BEAN_NAME,
-        title = "example.ace.textEntry.secret.title",
-        description = "example.ace.textEntry.secret.description",
-        example = "/resources/examples/ace/textEntry/textEntrySecret.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textEntrySecret.xhtml",
-                    resource = "/resources/examples/ace/textEntry/textEntrySecret.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextEntrySecretBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textEntry/TextEntrySecretBean.java")
-        }
-)
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 @ManagedBean(name= TextEntrySecretBean.BEAN_NAME)
 @ViewScoped
-public class TextEntrySecretBean extends ComponentExampleImpl<TextEntrySecretBean> implements Serializable
+public class TextEntrySecretBean implements Serializable
 {
     public static final String BEAN_NAME = "textEntrySecretBean";
 	public String getBeanName() { return BEAN_NAME; }
     
     private String username, password;
 	private boolean showPassword;
-    
-    public TextEntrySecretBean() {
-        super(TextEntrySecretBean.class);
-    }
     
     public String getUsername() {
         return username;
@@ -80,10 +53,5 @@ public class TextEntrySecretBean extends ComponentExampleImpl<TextEntrySecretBea
 
     public void setShowPassword(boolean showPassword) {
         this.showPassword = showPassword;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

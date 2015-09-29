@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[textEntryAutotabBean.title]}"/>
-    <ui:param name="description" value="#{msgs[textEntryAutotabBean.description]}"/>
-    <ui:param name="resourceValue" value="#{textEntryAutotabBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{textEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{textEntryResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="textEntryForm">
             <ace:panel id="personalInfoInputPanel" header="Personal Info">

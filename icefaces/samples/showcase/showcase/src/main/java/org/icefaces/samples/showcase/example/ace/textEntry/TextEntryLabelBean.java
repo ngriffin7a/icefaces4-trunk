@@ -16,39 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.textEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = TextEntryBean.BEAN_NAME,
-        title = "example.ace.textEntry.label.title",
-        description = "example.ace.textEntry.label.description",
-        example = "/resources/examples/ace/textEntry/textEntryLabel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textEntryLabel.xhtml",
-                    resource = "/resources/examples/ace/textEntry/textEntryLabel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextEntryLabelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textEntry/TextEntryLabelBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= TextEntryLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TextEntryLabelBean extends ComponentExampleImpl<TextEntryLabelBean> implements Serializable
+public class TextEntryLabelBean implements Serializable
 {
     public static final String BEAN_NAME = "textEntryLabelBean";
-
     
     private String firstLabelText = "First Name";
     private String lastLabelText = "Last Name";
@@ -61,10 +38,6 @@ public class TextEntryLabelBean extends ComponentExampleImpl<TextEntryLabelBean>
     private String province;
     private String country;
     
-    public TextEntryLabelBean() {
-        super(TextEntryLabelBean.class);
-    }
-
     public String getBeanName() { return BEAN_NAME; }
 
     public String getFirstLabelText() {
@@ -145,10 +118,5 @@ public class TextEntryLabelBean extends ComponentExampleImpl<TextEntryLabelBean>
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[dragDropOverviewBean.title]}"/>
-    <ui:param name="description" value="#{msgs[dragDropOverviewBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[dragDropOverviewBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{dragDropOverviewBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{dragDropOverviewBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{dragDropResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{dragDropResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             <h:panelGrid width="100%" columns="2"> 

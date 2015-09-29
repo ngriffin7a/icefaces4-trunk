@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[printerBean.title]}"/>
-    <ui:param name="description" value="#{msgs[printerBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[printerBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{printerBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{printerBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{printerResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{printerResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             

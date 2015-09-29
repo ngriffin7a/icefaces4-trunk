@@ -16,46 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.dataGenerators.VehicleGenerator;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.event.ActionEvent;
-import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.dynamic.title",
-        description = "example.ace.dataTable.dynamic.description",
-        example = "/resources/examples/ace/contextMenu/contextMenuTable.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "contextMenuTable.xhtml",
-                        resource = "/resources/examples/ace/contextMenu/contextMenuTable.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "DataTableDynamic.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase" +
-                                "/example/ace/dataTable/DataTableDynamic.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
+import org.icefaces.samples.showcase.dataGenerators.VehicleGenerator;
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name = DataTableDynamic.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableDynamic extends ComponentExampleImpl<DataTableDynamic> implements Serializable {
+public class DataTableDynamic implements Serializable {
     public static final String BEAN_NAME = "dataTableDynamic";
 	public String getBeanName() { return BEAN_NAME; }
     private static final int BULK_ADD_NUMBER = 5;
@@ -68,16 +42,10 @@ public class DataTableDynamic extends ComponentExampleImpl<DataTableDynamic> imp
     private int toEdit;
 
     public DataTableDynamic() {
-        super(DataTableDynamic.class);
         generator = new VehicleGenerator();
         toModify = new Car();
         carsData = getDefaultCars();
         chasisOptions = generator.getChassisPool();
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     ///////////////////////// ACTION LISTENERS //////////////////////////////////////////////////////////////////////////////

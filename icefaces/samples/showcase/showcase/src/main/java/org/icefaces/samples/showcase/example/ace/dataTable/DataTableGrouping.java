@@ -16,64 +16,33 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.ace.component.datatable.DataTable;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.FacesUtils;
-
-import javax.annotation.PostConstruct;
-import javax.faces.application.Application;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.grouping.title",
-        description = "example.ace.dataTable.grouping.description",
-        example = "/resources/examples/ace/dataTable/dataTableGrouping.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTableGrouping.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTableGrouping.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableGrouping.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableGrouping.java")
-        }
-)
+import javax.faces.application.Application;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+
+import org.icefaces.ace.component.datatable.DataTable;
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+import org.icefaces.samples.showcase.util.FacesUtils;
+
 @ManagedBean(name= DataTableGrouping.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableGrouping extends ComponentExampleImpl<DataTableGrouping> implements Serializable {
+public class DataTableGrouping implements Serializable {
     public static final String BEAN_NAME = "dataTableGrouping";
 	public String getBeanName() { return BEAN_NAME; }
     private List<Car> carsData;
 
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableGrouping() {
-        super(DataTableGrouping.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
     }
 
     public Class getClazz() {
         return getClass();
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

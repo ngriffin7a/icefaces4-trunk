@@ -24,15 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-<ui:param name="title" value="#{msgs[breadcrumbMenuBean.title]}"/>
-<ui:param name="description" value="#{msgs[breadcrumbMenuBean.description]}"/>
-<ui:param name="subMenuTitle" value="#{msgs[breadcrumbMenuBean.subMenuTitle]}"/>
-<ui:param name="subMenuLinks" value="#{breadcrumbMenuBean.subMenuLinks}"/>
-<ui:param name="resourceValue" value="#{breadcrumbMenuBean.exampleResource}"/>
-
-<ui:param name="wikiResources" value="#{breadcrumbMenuResources.wikiResources}"/>
-<ui:param name="tldResources" value="#{breadcrumbMenuResources.tldResources}"/>
-
 <ui:define name="example">
     <h:form id="crumb-form">
         <style type="text/css">

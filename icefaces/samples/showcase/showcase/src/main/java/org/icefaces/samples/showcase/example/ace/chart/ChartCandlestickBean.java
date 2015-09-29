@@ -16,41 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.ace.component.chart.Axis;
 import org.icefaces.ace.component.chart.AxisType;
 import org.icefaces.ace.model.chart.OHLCSeries;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.GregorianCalendar;
-import java.io.Serializable;
-
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.candlestick.title",
-        description = "example.ace.chart.candlestick.description",
-        example = "/resources/examples/ace/chart/chartCandlestick.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="ChartCandlestick.xhtml",
-                    resource = "/resources/examples/ace/chart/chartCandlestick.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ChartCandlestickBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartCandlestickBean.java")
-        }
-)
 @ManagedBean(name= ChartCandlestickBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartCandlestickBean extends ComponentExampleImpl<ChartCandlestickBean> implements Serializable
+public class ChartCandlestickBean implements Serializable
 {
     public static final String BEAN_NAME = "chartCandlestickBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -120,10 +100,6 @@ public class ChartCandlestickBean extends ComponentExampleImpl<ChartCandlestickB
             "<tr><td>low:</td><td>%s</td></tr> \n" +
             "<tr><td>close:</td><td>%s</td></tr></table>";
     
-    public ChartCandlestickBean() {
-        super(ChartCandlestickBean.class);
-    }
-    
     public List<OHLCSeries> getOhlcData() {
         return ohlcData;
     }
@@ -154,10 +130,5 @@ public class ChartCandlestickBean extends ComponentExampleImpl<ChartCandlestickB
 
     public void setFormatString(String formatString) {
         this.formatString = formatString;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

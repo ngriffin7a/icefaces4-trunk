@@ -16,48 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.gMapLayer;
 
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.validator.ValidatorException;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import javax.faces.bean.CustomScoped;
-import javax.annotation.PostConstruct;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
-@ComponentExample(
-        title = "example.ace.gMapLayer.title",
-        description = "example.ace.gMapLayer.description",
-        example = "/resources/examples/ace/gMapLayer/gMapLayer.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="gMapLayer.xhtml",
-                    resource = "/resources/examples/ace/gMapLayer/gMapLayer.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="GMapLayerBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapLayer/GMapLayerBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.gMapLayer.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.gMapLayer.subMenu.main", isDefault = true, exampleBeanName = GMapLayerBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= GMapLayerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class GMapLayerBean extends ComponentExampleImpl<GMapLayerBean> implements Serializable{
+public class GMapLayerBean implements Serializable{
     public static final String BEAN_NAME = "gMapLayerBean";
 	public String getBeanName() { return BEAN_NAME; }
 	private boolean bikeLayer = false;
@@ -69,10 +35,6 @@ public class GMapLayerBean extends ComponentExampleImpl<GMapLayerBean> implement
     private double lat = 40.7142;
     private double lon = -74.0064;
 
-	public GMapLayerBean() {
-        super(GMapLayerBean.class);
-    }
-	
     public boolean isBikeLayer() {
         return bikeLayer;
     }
@@ -171,9 +133,5 @@ public class GMapLayerBean extends ComponentExampleImpl<GMapLayerBean> implement
 
     public void setLon(double lon) {
         this.lon = lon;
-    }
-	@PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

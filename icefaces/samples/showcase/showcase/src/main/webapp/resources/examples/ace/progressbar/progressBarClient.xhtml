@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[progressBarClient.title]}"/>
-    <ui:param name="description" value="#{msgs[progressBarClient.description]}"/>
-    <ui:param name="resourceValue" value="#{progressBarClient.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{progressBarResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{progressBarResources.tldResources}"/>
-
     <ui:define name="example">
         <script type="text/javascript">
 			window.indeterminate = false;

@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.selectmenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = SelectMenuBean.BEAN_NAME,
-        title = "example.ace.selectmenu.indicator.title",
-        description = "example.ace.selectmenu.indicator.description",
-        example = "/resources/examples/ace/selectmenu/selectMenuIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="selectMenuIndicator.xhtml",
-                    resource = "/resources/examples/ace/selectmenu/selectMenuIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="SelectMenuIndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/selectmenu/SelectMenuIndicatorBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="SelectMenuBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/selectmenu/SelectMenuBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= SelectMenuIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SelectMenuIndicatorBean extends ComponentExampleImpl<SelectMenuIndicatorBean> implements Serializable
+public class SelectMenuIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "selectMenuIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -59,11 +33,6 @@ public class SelectMenuIndicatorBean extends ComponentExampleImpl<SelectMenuIndi
     private String optionalText = "Not mandatory.";
     private String position = "right";
 
-    public SelectMenuIndicatorBean() 
-    {
-        super(SelectMenuIndicatorBean.class);
-    }
-    
     public boolean getRequired() {
         return required;
     }
@@ -94,10 +63,5 @@ public class SelectMenuIndicatorBean extends ComponentExampleImpl<SelectMenuIndi
     
     public void setPosition(String position) {
         this.position = position;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[graphicImageBean.title]}"/>
-    <ui:param name="description" value="#{msgs[graphicImageBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[graphicImageBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{graphicImageBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{graphicImageBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{graphicImageResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{graphicImageResources.tldResources}"/>
-
     <ui:define name="example">
 		<h:form id="form">
 			<ace:panel id="graphicImagePanel" header="Images" style="width: 100%;">

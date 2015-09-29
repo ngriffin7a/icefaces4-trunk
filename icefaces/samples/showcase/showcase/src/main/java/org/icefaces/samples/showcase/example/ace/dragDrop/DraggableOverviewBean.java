@@ -17,37 +17,16 @@
 package org.icefaces.samples.showcase.example.ace.dragDrop;
 
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = DragDropOverviewBean.BEAN_NAME,
-        title = "example.ace.draggable.title",
-        description = "example.ace.draggable.description",
-        example = "/resources/examples/ace/dragDrop/draggableOverview.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="draggableOverview.xhtml",
-                    resource = "/resources/examples/ace/dragDrop/draggableOverview.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DraggableOverview.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dragDrop/DraggableOverviewBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.samples.showcase.dataGenerators.ImageSet;
+
 @ManagedBean(name= DraggableOverviewBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DraggableOverviewBean extends ComponentExampleImpl<DraggableOverviewBean> implements Serializable
+public class DraggableOverviewBean implements Serializable
 {
     public static final String BEAN_NAME = "draggableOverviewBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -62,7 +41,6 @@ public class DraggableOverviewBean extends ComponentExampleImpl<DraggableOvervie
     
     public DraggableOverviewBean()
     {
-        super(DraggableOverviewBean.class);
         image = ImageSet.getImage(ImageSet.ImageSelect.PICTURE);
         axisMovementConstraint = "x or y";
         helperMode = "original";
@@ -70,11 +48,6 @@ public class DraggableOverviewBean extends ComponentExampleImpl<DraggableOvervie
         gridMode ="1,1";
         revert = false;
         opacity = 1d;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public ImageSet.ImageInfo getImage() {

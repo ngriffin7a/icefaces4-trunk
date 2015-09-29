@@ -18,48 +18,18 @@ package org.icefaces.samples.showcase.example.ace.textAreaEntry;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-@ComponentExample(
-        parent = TextAreaEntryBean.BEAN_NAME,
-        title = "example.ace.textAreaEntry.charCount.title",
-        description = "example.ace.textAreaEntry.charCount.description",
-        example = "/resources/examples/ace/textAreaEntry/textAreaEntryCharCount.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textAreaEntryCharCount.xhtml",
-                    resource = "/resources/examples/ace/textAreaEntry/textAreaEntryCharCount.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextAreaEntryCharCountBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textAreaEntry/TextAreaEntryCharCountBean.java")
-        }
-)
 @ManagedBean(name= TextAreaEntryCharCountBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TextAreaEntryCharCountBean extends ComponentExampleImpl<TextAreaEntryCharCountBean> implements Serializable
+public class TextAreaEntryCharCountBean implements Serializable
 {
     public static final String BEAN_NAME = "textAreaEntryCharCountBean";
 	public String getBeanName() { return BEAN_NAME; }
     
 	private int maxlength = 50;
 	private String comment;
-    
-    public TextAreaEntryCharCountBean() {
-        super(TextAreaEntryCharCountBean.class);
-    }
     
     public int getMaxlength() {
 		return maxlength;
@@ -76,9 +46,4 @@ public class TextAreaEntryCharCountBean extends ComponentExampleImpl<TextAreaEnt
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

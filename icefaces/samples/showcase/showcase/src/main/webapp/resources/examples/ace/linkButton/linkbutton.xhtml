@@ -23,15 +23,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[linkButton.title]}"/>
-    <ui:param name="description" value="#{msgs[linkButton.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[linkButton.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{linkButton.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{linkButton.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{linkButtonResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{linkButtonResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form" style="text-align: center;">
             <ace:tabSet>
@@ -41,8 +32,8 @@
                                     value="PushButton example"
                                     action="#{linkButton.executeAction}">
                         <ace:ajax execute="@all" render="@all" onSuccess="updateAddressBarURL('aceMenu','pushButton');" />
-                        <f:param name="grp" value="aceMenu"/>
-                        <f:param name="exp" value="pushButton" />
+                        <f:param name="#{showcaseMenu.urlParamGroup}" value="aceMenu"/>
+                        <f:param name="#{showcaseMenu.urlParamDemo}" value="pushButton" />
                     </ace:linkButton>
                     via action.<br/>
 
@@ -52,8 +43,8 @@
                     <ace:linkButton id="linkBttnStatic"
                                     value="PushButton example"
                                     href="#{linkButton.staticNavigation}">
-                        <f:param name="grp" value="aceMenu"/>
-                        <f:param name="exp" value="pushButton"/>
+                        <f:param name="#{showcaseMenu.urlParamGroup}" value="aceMenu"/>
+                        <f:param name="#{showcaseMenu.urlParamDemo}" value="pushButton"/>
                     </ace:linkButton>
                     via href.<br/>
                 </ace:tabPane>

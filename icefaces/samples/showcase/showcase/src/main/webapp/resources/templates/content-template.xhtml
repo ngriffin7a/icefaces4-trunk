@@ -22,62 +22,65 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<!--
-Available ui:params to pass:
- title
- description
- resourceValue
--->
     <div class="example">
-        <ace:panel header="#{title}" id="examplePanel" styleClass="containerPanelStyle">
+        <ace:panel id="examplePanel" styleClass="containerPanelStyle">
         <div class="content">
-            <div class="desc">
-                <h:outputText value="#{description}" escape="false" nospan="true"/>
-            </div>
-            <h:panelGroup layout="block" styleClass="instance" rendered="#{navigationModel.renderAsExample}">
+            <h:panelGroup layout="block" styleClass="desc" rendered="#{userMenuState.selectedDemo.description ne null}">
+                <h:outputText value="#{userMenuState.selectedDemo.description}" escape="false" nospan="true"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="instance">
                 <ui:insert name="example"/>
             </h:panelGroup>
         </div>
             <f:facet name="header">
-				<h:outputText value="#{title}"  escape="false" />
-				<ace:menuBar direction="down left" styleClass="documentation-menu">
-					<ace:multiColumnSubmenu label="Documentation">
-						<ace:menuColumn>
-							<ace:submenu label="WIKI Documentation">
-								<c:forEach items="#{wikiResources}" var="wiki">
-								   <ace:menuItem value="#{wiki.title}" url="#{wiki.resource}" urlEncoding="none" target="_blank"/>
-								</c:forEach>
-							</ace:submenu>
-						</ace:menuColumn>
-						<ace:menuColumn>
-							<ace:submenu label="TLD Documentation">
-								<c:forEach items="#{tldResources}" var="tld">
-								   <ace:menuItem value="#{tld.title}" url="#{tld.resource}" urlEncoding="none" target="_blank"/>
-								</c:forEach>
-							</ace:submenu>
-						</ace:menuColumn>
-					</ace:multiColumnSubmenu>
-				</ace:menuBar>
+				<h:outputText value="#{userMenuState.selectedComponent.name} - #{userMenuState.selectedDemo.name}" escape="false" />
+				<c:if test="#{userMenuState.selectedComponent.hasResources}">
+					<ace:menuBar direction="down left" styleClass="documentation-menu">
+                        <ace:multiColumnSubmenu label="Documentation">
+                            <ace:menuColumn>
+                                <ace:submenu label="WIKI Documentation">
+                                    <c:forEach items="#{userMenuState.selectedComponent.resources}" var="wiki">
+                                       <c:if test="#{wiki.isWiki}">
+                                           <ace:menuItem value="#{empty wiki.name ? userMenuState.selectedComponent.name : wiki.name}" url="#{wiki.path}" urlEncoding="none" target="_blank"/>
+                                       </c:if>
+                                    </c:forEach>
+                                </ace:submenu>
+                            </ace:menuColumn>
+                            <ace:menuColumn>
+                                <ace:submenu label="TLD Documentation">
+                                    <c:forEach items="#{userMenuState.selectedComponent.resources}" var="tld">
+                                       <c:if test="#{tld.isTld}">
+                                           <ace:menuItem value="#{empty tld.name ? userMenuState.selectedComponent.name : tld.name}" url="#{tld.path}" urlEncoding="none" target="_blank"/>
+                                       </c:if>
+                                    </c:forEach>
+                                </ace:submenu>
+                            </ace:menuColumn>
+                        </ace:multiColumnSubmenu>
+					</ace:menuBar>
+				</c:if>
             </f:facet>
         </ace:panel>
 
-        <h:form id="sourceCodeForm" rendered="#{navigationModel.renderAsExample}">
-            <ace:panel id="sourceCodePanel" collapsed="#{navigationModel.sourceCodeToggleStatus}" toggleable="true" header="Source Code" styleClass="containerPanelStyle rimeHeightAdjustment">
-                <ace:ajax event="toggle" execute="@this"/>
-                <div class="resources">
-                    <ace:tabSet clientSide="true" selectedIndex="0"
-                                rendered="#{not empty resourceValue}">
-                        <c:forEach items="#{resourceValue}"
-                                   var="exRes">
-                            <ace:tabPane label="#{exRes.title}">
-								<div style="background-color:#fff;">
-									<h:outputText escape="false" value="#{sourceCodeLoaderConnection[exRes.resource]}" />
-								</div>
-                            </ace:tabPane>
-                        </c:forEach>
-                    </ace:tabSet>
-                </div>
-            </ace:panel>
-        </h:form>
+        <c:if test="#{userMenuState.selectedDemo.hasManySources}">
+	        <h:form id="sourceCodeForm">
+	            <ace:panel id="sourceCodePanel" collapsed="#{userMenuState.sourceCodeCollapsed}" toggleable="true"
+	                       header="Source Code" styleClass="containerPanelStyle rimeHeightAdjustment"
+	                       toggleSpeed="0">
+	                <ace:ajax event="toggle" execute="@this"/>
+	                <div class="resources">
+	                    <ace:tabSet clientSide="true" selectedIndex="0" rendered="#{!userMenuState.sourceCodeCollapsed}">
+	                        <c:forEach items="#{userMenuState.selectedDemo.sources}"
+	                                   var="exSource">
+	                            <ace:tabPane label="#{exSource.name}">
+									<div style="background-color:#fff;">
+										<h:outputText escape="false" value="#{sourceCodeLoaderConnection[exSource.path]}" />
+									</div>
+	                            </ace:tabPane>
+	                        </c:forEach>
+	                    </ace:tabSet>
+	                </div>
+	            </ace:panel>
+	        </h:form>
+        </c:if>
     </div>
 </ui:composition>

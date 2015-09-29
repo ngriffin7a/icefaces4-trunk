@@ -16,70 +16,29 @@
 
 package org.icefaces.samples.showcase.example.ace.graphicImage;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.faces.event.ActionEvent;
-
-import org.icefaces.ace.util.IceOutputResource;
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
-import java.net.URL;
 import javax.faces.context.FacesContext;
 
-@ComponentExample(
-        title = "example.ace.graphicImage.title",
-        description = "example.ace.graphicImage.description",
-        example = "/resources/examples/ace/graphicImage/graphicImage.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="graphicImage.xhtml",
-                    resource = "/resources/examples/ace/graphicImage/graphicImage.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="GraphicImageBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/graphicImage/GraphicImageBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.graphicImage.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.graphicImage.subMenu.main", isDefault = true, exampleBeanName = GraphicImageBean.BEAN_NAME)
-    }
-)
+import org.icefaces.ace.util.IceOutputResource;
+
 
 @ManagedBean(name = GraphicImageBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class GraphicImageBean extends ComponentExampleImpl<GraphicImageBean> implements Serializable {
+public class GraphicImageBean implements Serializable {
     public static final String BEAN_NAME = "graphicImageBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    public GraphicImageBean() {
-        super(GraphicImageBean.class);
-    }
-    
     @PostConstruct
     public void initMetaData() {
-        super.initMetaData();
 		// byte array image
 		String resourcePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/media/icemobile.png");
 		File file = new File(resourcePath);

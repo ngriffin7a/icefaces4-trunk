@@ -16,36 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.panel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = PanelBean.BEAN_NAME,
-        title = "example.ace.panel.toggle.title",
-        description = "example.ace.panel.toggle.description",
-        example = "/resources/examples/ace/panel/panelToggle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="panelToggle.xhtml",
-                    resource = "/resources/examples/ace/panel/panelToggle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PanelToggle.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/panel/PanelToggle.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= PanelToggle.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PanelToggle extends ComponentExampleImpl<PanelToggle> implements Serializable {
+public class PanelToggle implements Serializable {
 
     public static final String BEAN_NAME = "panelToggle";
 	public String getBeanName() { return BEAN_NAME; }
@@ -53,15 +31,6 @@ public class PanelToggle extends ComponentExampleImpl<PanelToggle> implements Se
     private boolean toggleable = true;
     private int speed = 700;
     
-    public PanelToggle() {
-        super(PanelToggle.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public boolean getToggleable() { return toggleable; }
     public int getSpeed() { return speed; }
     

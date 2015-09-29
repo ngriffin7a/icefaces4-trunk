@@ -16,39 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.progressbar; 
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
-@ComponentExample(
-        parent = ProgressBarBean.BEAN_NAME,
-        title = "example.ace.progressBarPoling.title",
-        description = "example.ace.progressBarPoling.description",
-        example = "/resources/examples/ace/progressbar/progressBarPolling.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="progressBarPolling.xhtml",
-                    resource = "/resources/examples/ace/progressbar/progressBarPolling.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ProgressBarPolling.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/progressbar/ProgressBarPolling.java")
-        }
-)
 @ManagedBean(name= ProgressBarPolling.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ProgressBarPolling extends ComponentExampleImpl<ProgressBarPolling> implements Serializable {
+public class ProgressBarPolling implements Serializable {
 
     public static final String BEAN_NAME = "progressBarPolling";
 	public String getBeanName() { return BEAN_NAME; }
@@ -60,13 +39,7 @@ public class ProgressBarPolling extends ComponentExampleImpl<ProgressBarPolling>
 	private boolean indeterminate;
 
     public ProgressBarPolling() {
-        super(ProgressBarPolling.class);
         initializeBean();
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public void processSelection(ValueChangeEvent e) {

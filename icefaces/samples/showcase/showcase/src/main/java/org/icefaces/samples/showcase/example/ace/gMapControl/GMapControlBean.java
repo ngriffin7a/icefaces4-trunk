@@ -16,48 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.gMapControl;
 
-import javax.el.MethodExpression;
-import javax.faces.application.*;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.component.*;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import java.util.ArrayList;
-import javax.faces.bean.CustomScoped;
-import javax.annotation.PostConstruct;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@ComponentExample(
-        title = "example.ace.gMapControl.title",
-        description = "example.ace.gMapControl.description",
-        example = "/resources/examples/ace/gMapControl/gMapControl.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="gMapControl.xhtml",
-                    resource = "/resources/examples/ace/gMapControl/gMapControl.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="GMapControlBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapControl/GMapControlBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.gMapControl.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.gMapControl.subMenu.main", isDefault = true, exampleBeanName = GMapControlBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= GMapControlBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class GMapControlBean extends ComponentExampleImpl<GMapControlBean> implements Serializable{
+public class GMapControlBean implements Serializable{
 	public static final String BEAN_NAME = "gMapControlBean";
 	public String getBeanName() { return BEAN_NAME; }
 	private String zoomStyle="DEFAULT";
@@ -215,12 +183,5 @@ public class GMapControlBean extends ComponentExampleImpl<GMapControlBean> imple
 
     public void setZoomLocation(String zoomLocation) {
         this.zoomLocation = zoomLocation;
-    }
-	public GMapControlBean() {
-        super(GMapControlBean.class);
-    }
-	@PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

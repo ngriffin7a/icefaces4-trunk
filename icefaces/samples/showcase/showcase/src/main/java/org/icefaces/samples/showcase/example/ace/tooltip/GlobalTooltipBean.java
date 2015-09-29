@@ -16,43 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.tooltip; 
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-
-@ComponentExample(
-        parent = TooltipOverviewBean.BEAN_NAME,
-        title = "example.ace.globalTooltip.title",
-        description = "example.ace.globalTooltip.description",
-        example = "/resources/examples/ace/tooltip/globalTooltip.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="globalTooltip.xhtml",
-                    resource = "/resources/examples/ace/tooltip/globalTooltip.xhtml")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name= GlobalTooltipBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class GlobalTooltipBean extends ComponentExampleImpl<GlobalTooltipBean> implements Serializable {
+public class GlobalTooltipBean implements Serializable {
 
     public static final String BEAN_NAME = "globalTooltipBean";
 	public String getBeanName() { return BEAN_NAME; }
-    /////////////---- CONSTRUCTOR BEGIN
-    public GlobalTooltipBean() {
-        super(GlobalTooltipBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

@@ -16,53 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.radioButtons;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-
-import java.util.*;
-
-@ComponentExample(
-    title = "example.ace.radioButtons.title",
-    description = "example.ace.radioButtons.description",
-    example = "/resources/examples/ace/radioButtons/radioButtons.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                         title="radioButtons.xhtml",
-                         resource = "/resources/examples/ace/radioButtons/radioButtons.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                         title="RadioButtonsBean.java",
-                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/radioButtons/RadioButtonsBean.java")
-    }
-)
-
-@Menu(
-    title = "menu.ace.radioButtons.subMenu.title",
-    menuLinks = {
-        @MenuLink(title = "menu.ace.radioButtons.subMenu.main", isDefault = true,
-                  exampleBeanName = RadioButtonsBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.radioButtons.subMenu.label", exampleBeanName = RadioButtonsLabelBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.radioButtons.subMenu.indicator", exampleBeanName = RadioButtonsIndicatorBean.BEAN_NAME),
-		@MenuLink(title = "menu.ace.radioButtons.subMenu.reqStyle", exampleBeanName = RadioButtonsReqStyleBean.BEAN_NAME)
-    }
-)
 
 @ManagedBean(name= RadioButtonsBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class RadioButtonsBean extends ComponentExampleImpl<RadioButtonsBean> implements Serializable {
+public class RadioButtonsBean implements Serializable {
 
     public static final String BEAN_NAME = "radioButtons";
 	public String getBeanName() { return BEAN_NAME; }
@@ -71,15 +34,9 @@ public class RadioButtonsBean extends ComponentExampleImpl<RadioButtonsBean> imp
 	private boolean mutuallyExclusive = false;
 
     public RadioButtonsBean() {
-        super(RadioButtonsBean.class);
 		selected.add("One");
 		selected.add("Three");
 		selected.add("Five");
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
 	public List<String> getSelected() { return selected; }
