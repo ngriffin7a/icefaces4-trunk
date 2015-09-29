@@ -26,6 +26,16 @@ import org.icefaces.samples.showcase.view.menu.Demo;
 import org.icefaces.samples.showcase.view.menu.DemoResource;
 import org.icefaces.samples.showcase.view.menu.DemoSource;
 
+/**
+ * Class containing the menu structure and layout of our categories, components, and demos
+ * This has been centralized for ease of readibility, modification, and understanding to new developers
+ * To add a demo follow the existing structure
+ * Specifically a CategoryGroup (such as "Input") is the top level parent in the menu hierarchy,
+ *  under which there is a set of ComponentGroup objects (such as "ace:textEntry") which have
+ *  a set of Demo objects (such as "Overview", "Label")
+ * You don't have to worry about the search box on the page, it will automatically be updated, as will URL bookmarkability
+ * You may need to modify messages.properties to put any strings for internationalization
+ */
 public class CentralDataList {
 	public static List<CategoryGroup> generate() {
 		List<CategoryGroup> toReturn = new ArrayList<CategoryGroup>();
