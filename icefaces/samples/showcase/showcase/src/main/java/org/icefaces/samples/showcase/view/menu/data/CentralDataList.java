@@ -27,14 +27,35 @@ import org.icefaces.samples.showcase.view.menu.DemoResource;
 import org.icefaces.samples.showcase.view.menu.DemoSource;
 
 /**
- * Class containing the menu structure and layout of our categories, components, and demos
- * This has been centralized for ease of readibility, modification, and understanding to new developers
- * To add a demo follow the existing structure
- * Specifically a CategoryGroup (such as "Input") is the top level parent in the menu hierarchy,
- *  under which there is a set of ComponentGroup objects (such as "ace:textEntry") which have
- *  a set of Demo objects (such as "Overview", "Label")
- * You don't have to worry about the search box on the page, it will automatically be updated, as will URL bookmarkability
- * You may need to modify messages.properties to put any strings for internationalization
+To add a new demo to the Component Showcase the main class you will work with is org.icefaces.samples.showcase.view.menu.data.CentralDataList
+Inside here you will see the structure for our menu navigation. A hierarchy order of CategoryGroup -> ComponentGroup -> Demo is used
+For example Input -> ace:textEntry -> Label Position
+
+1. Create your XHTML file for the demo under src/main/webapp/resources/example/ace/COMPONENT/demoName.xhtml with COMPONENT being something like "textEntry"
+This XHTML file is a template-client and uses template="/resources/templates/content-template.xhtml" and a <ui:define name="example"> for the main content
+
+2. If you require a backing bean create any Java classes under src/main/java/org/icefaces/samples/showcase/examples/ace/COMPONENT/BeanName.java
+These are standard beans, normally Window or View scoped
+
+3. Add your new demo to the CentralDataList.java class. You can follow the existing structure as a guide. You can see how ICE Core need a bit more setup compared to ACE, various examples with custom DemoResource and DemoSource lists, and a few full page refresh examples
+There are many flexible constructors for each of the objects, so you can customize the demo as much as you need.
+All URL bookmarkability and search box integration will be handled automatically for a properly structured demo.
+Note that we try to internationalize as many strings as we can in messages.properties. The convenience method msgs(String key) in CentralDataList can be used to easily retrieve strings.
+The classes involved...
+
+CategoryGroup: The main menu tier, has a "name" and a list of ComponentGroup objects
+
+ComponentGroup: A set of demos for a specific component (like ace:textEntry). Contains:
+name
+keywords (optional, comma separated list of phrases we want to search by)
+fullPageRefresh (false by default, set to true to ensure your demo page will refresh the entire browser if navigated to, such as for ace:gMap)
+list of DemoResource objects (basically links to Wiki and TLD. A convenience constructor handles a lot of this creation)
+list of Demo objects
+
+Demo: An individual demo for a component, such as Overview or Label Position for ace:textEntry
+name (should be unique within the component group)
+description (make sure to internationalize this one)
+list of DemoSource objects (used by the source code viewer on the page to show XHTML or Java source. The first XHTML page declared will be used as the demo content as well)
  */
 public class CentralDataList {
 	public static List<CategoryGroup> generate() {
@@ -79,31 +100,37 @@ public class CentralDataList {
 						 new DemoResource(DemoResource.Type.TLD, "icecore:loadBundle", DemoResource.CORE_TLD_PATH_BASE + "loadBundle.html", true) },
 						new Demo(msgs("overview"), msgs("example.core.loadBundleBean.description"),
 								new DemoSource[] { new DemoSource(DemoSource.Type.XHTML, "load-bundle.xhtml", DemoSource.CORE_XHTML_PATH_BASE, true),
-												   new DemoSource(DemoSource.Type.JAVA, "LoadBundleBean.java", DemoSource.CORE_JAVA_PATH_BASE + "loadBundle/", true) })),
+												   new DemoSource(DemoSource.Type.JAVA, "LoadBundleBean.java", DemoSource.CORE_JAVA_PATH_BASE + "loadBundle/", true),
+												   new DemoSource(DemoSource.Type.JAVA, "LoadBundleViewScopeBean.java", DemoSource.CORE_JAVA_PATH_BASE + "loadBundle/", true)})),
 				new ComponentGroup("icecore:navigationNotifier",
 						new DemoResource[] { new DemoResource(DemoResource.Type.WIKI, "navigationNotifier"),
 						 new DemoResource(DemoResource.Type.TLD, "icecore:navigationNotifier", DemoResource.CORE_TLD_PATH_BASE + "navigationNotifier.html", true) },
 						new Demo(msgs("overview"), msgs("example.core.navigationNotifierBean.description"), msgs("overview") + ", history manager",
 								new DemoSource[] { new DemoSource(DemoSource.Type.XHTML, "navigation-notifier.xhtml", DemoSource.CORE_XHTML_PATH_BASE, true),
-												   new DemoSource(DemoSource.Type.JAVA, "NavigationNotifierBean.java", DemoSource.CORE_JAVA_PATH_BASE + "navigationNotifier/", true) })),
+										           new DemoSource(DemoSource.Type.XHTML, "navigation-notifier-next.xhtml", DemoSource.CORE_XHTML_PATH_BASE, true),
+												   new DemoSource(DemoSource.Type.JAVA, "NavigationNotifierBean.java", DemoSource.CORE_JAVA_PATH_BASE + "navigationNotifier/", true),
+												   new DemoSource(DemoSource.Type.JAVA, "NavigationNotifierViewScopeBean.java", DemoSource.CORE_JAVA_PATH_BASE + "navigationNotifier/", true)})),
 				new ComponentGroup("icecore:push",
-						new DemoResource[] { new DemoResource(DemoResource.Type.WIKI, "navigationNotifier"),
-						 new DemoResource(DemoResource.Type.TLD, "icecore:navigationNotifier", DemoResource.CORE_TLD_PATH_BASE + "navigationNotifier.html", true) },
+						new DemoResource[] { new DemoResource(DemoResource.Type.WIKI, "push"),
+						 new DemoResource(DemoResource.Type.TLD, "icecore:push", DemoResource.CORE_TLD_PATH_BASE + "push.html", true) },
 						new Demo(msgs("overview"), msgs("example.core.pushBean.description"),
 								new DemoSource[] { new DemoSource(DemoSource.Type.XHTML, "push.xhtml", DemoSource.CORE_XHTML_PATH_BASE, true),
-												   new DemoSource(DemoSource.Type.JAVA, "PushBean.java", DemoSource.CORE_JAVA_PATH_BASE + "push/", true) })),
+												   new DemoSource(DemoSource.Type.JAVA, "PushBean.java", DemoSource.CORE_JAVA_PATH_BASE + "push/", true),
+												   new DemoSource(DemoSource.Type.JAVA, "PushWindowScopeBean.java", DemoSource.CORE_JAVA_PATH_BASE + "push/", true)})),
 				new ComponentGroup("icecore:redirect",
 						new DemoResource[] { new DemoResource(DemoResource.Type.WIKI, "redirect"),
 						 new DemoResource(DemoResource.Type.TLD, "icecore:redirect", DemoResource.CORE_TLD_PATH_BASE + "redirect.html", true) },
 						new Demo(msgs("overview"), msgs("example.core.redirectBean.description"),
 								new DemoSource[] { new DemoSource(DemoSource.Type.XHTML, "redirect.xhtml", DemoSource.CORE_XHTML_PATH_BASE, true),
-												   new DemoSource(DemoSource.Type.JAVA, "RedirectBean.java", DemoSource.CORE_JAVA_PATH_BASE + "redirect/", true) })),
+												   new DemoSource(DemoSource.Type.JAVA, "RedirectBean.java", DemoSource.CORE_JAVA_PATH_BASE + "redirect/", true),
+												   new DemoSource(DemoSource.Type.JAVA, "RedirectViewScopeBean.java", DemoSource.CORE_JAVA_PATH_BASE + "redirect/", true)})),
 				new ComponentGroup("icecore:refresh",
 						new DemoResource[] { new DemoResource(DemoResource.Type.WIKI, "refresh"),
 						 new DemoResource(DemoResource.Type.TLD, "icecore:refresh", DemoResource.CORE_TLD_PATH_BASE + "refresh.html", true) },
 						new Demo(msgs("overview"), msgs("example.core.refreshBean.description"),
 								new DemoSource[] { new DemoSource(DemoSource.Type.XHTML, "refresh.xhtml", DemoSource.CORE_XHTML_PATH_BASE, true),
-												   new DemoSource(DemoSource.Type.JAVA, "RefreshBean.java", DemoSource.CORE_JAVA_PATH_BASE + "refresh/", true) }))
+												   new DemoSource(DemoSource.Type.JAVA, "RefreshBean.java", DemoSource.CORE_JAVA_PATH_BASE + "refresh/", true),
+												   new DemoSource(DemoSource.Type.JAVA, "RefreshViewScopeBean.java", DemoSource.CORE_JAVA_PATH_BASE + "refresh/", true)}))
 		));
 		
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.ajax.title"),
@@ -185,15 +212,17 @@ public class CentralDataList {
 				new ComponentGroup("ace:sliderEntry", "SliderEntry", "sliderEntry.html",
 					new Demo(msgs("overview"), msgs("example.ace.slider.description"),
 							 "slider", "slider.xhtml", "SliderBean.java"),
-					new Demo(msgs("menu.ace.slider.subMenu.submitionExample"), msgs("example.ace.slider.submition.description"),
-							 "slider", "sliderSubmition.xhtml", "SliderSubmitionExample.java"),
+					new Demo(msgs("menu.ace.slider.subMenu.asyncinput"), msgs("example.ace.slider.asyncinput.description"),
+							 "slider", "slider-async-input.xhtml", "SliderAsyncInputBean.java"),
 					new Demo(msgs("menu.ace.slider.subMenu.listener"), msgs("example.ace.slider.listener.description"),
 							 "slider", "sliderListener.xhtml", "SliderListener.java"),
-					new Demo(msgs("menu.ace.slider.subMenu.asyncinput"), msgs("example.ace.slider.asyncinput.description"),
-							 "slider", "slider-async-input.xhtml", "SliderAsyncInputBean.java")),
+					new Demo(msgs("menu.ace.slider.subMenu.submitionExample"), msgs("example.ace.slider.submition.description"),
+							 "slider", "sliderSubmition.xhtml", "SliderSubmitionExample.java")),
 				new ComponentGroup("ace:textAreaEntry", "TextAreaEntry", "textAreaEntry.html", "inputTextArea",
 					new Demo(msgs("overview"), msgs("example.ace.textAreaEntry.description"),
 							 "textAreaEntry", "textAreaEntry.xhtml", "TextAreaEntryBean.java"),
+					new Demo(msgs("menu.ace.textAreaEntry.subMenu.charCount"), msgs("example.ace.textAreaEntry.charCount.description"),
+							 "textAreaEntry", "textAreaEntryCharCount.xhtml", "TextAreaEntryCharCountBean.java"),
 					new Demo(msgs("menu.ace.textAreaEntry.subMenu.label"), msgs("example.ace.textAreaEntry.label.description"),
 							 "textAreaEntry", "textAreaEntryLabel.xhtml", "TextAreaEntryLabelBean.java"),
 					new Demo(msgs("menu.ace.textAreaEntry.subMenu.indicator"), msgs("example.ace.textAreaEntry.indicator.description"),
@@ -207,6 +236,8 @@ public class CentralDataList {
 							 "textEntry", "textEntryAutotab.xhtml", "TextEntryAutotabBean.java"),
 					new Demo(msgs("menu.ace.textEntry.subMenu.secret"), msgs("example.ace.textEntry.secret.description"),
 							 "textEntry", "textEntrySecret.xhtml", "TextEntrySecretBean.java"),
+					new Demo(msgs("menu.ace.textEntry.subMenu.charCount"), msgs("example.ace.textEntry.charCount.description"),
+							 "textEntry", "textEntryCharCount.xhtml", "TextEntryCharCountBean.java"),
 					new Demo(msgs("menu.ace.textEntry.subMenu.label"), msgs("example.ace.textEntry.label.description"),
 							 "textEntry", "textEntryLabel.xhtml", "TextEntryLabelBean.java"),
 					new Demo(msgs("menu.ace.textEntry.subMenu.indicator"), msgs("example.ace.textEntry.indicator.description"),
@@ -299,10 +330,6 @@ public class CentralDataList {
 				new ComponentGroup("ace:list", "List", "list.html",
 						new Demo(msgs("overview"), msgs("example.ace.list.description"),
 								 "list", "list.xhtml", "ListBean.java"),
-						new Demo(msgs("menu.ace.list.subMenu.block"), msgs("example.ace.list.block.description"),
-								 "list", "listBlock.xhtml", "ListBlockBean.java"),
-						new Demo(msgs("menu.ace.list.subMenu.blockComplex"), msgs("example.ace.list.blockComplex.description"),
-								 "list", "listBlockComplex.xhtml", "ListBlockComplexBean.java"),
 						new Demo(msgs("menu.ace.list.subMenu.selection"), msgs("example.ace.list.selection.description"),
 								 "list", "listSelection.xhtml", "ListSelectionBean.java"),
 						new Demo(msgs("menu.ace.list.subMenu.selectionAjax"), msgs("example.ace.list.selectionAjax.description"),
@@ -318,7 +345,11 @@ public class CentralDataList {
 						new Demo(msgs("menu.ace.list.subMenu.dual"), msgs("example.ace.list.dual.description"),
 								 "list", "listDual.xhtml", "ListDualBean.java"),
 						new Demo(msgs("menu.ace.list.subMenu.multi"), msgs("example.ace.list.multi.description"),
-								 "list", "listMulti.xhtml", "ListMultiBean.java")),
+								 "list", "listMulti.xhtml", "ListMultiBean.java"),
+						new Demo(msgs("menu.ace.list.subMenu.block"), msgs("example.ace.list.block.description"),
+								 "list", "listBlock.xhtml", "ListBlockBean.java"),
+						new Demo(msgs("menu.ace.list.subMenu.blockComplex"), msgs("example.ace.list.blockComplex.description"),
+								 "list", "listBlockComplex.xhtml", "ListBlockComplexBean.java")),
 				new ComponentGroup("ace:selectMenu", "SelectMenu", "selectMenu.html",
 						new Demo(msgs("overview"), msgs("example.ace.selectmenu.description"),
 								 "selectmenu", "selectMenuOverview.xhtml", "SelectMenuBean.java"),
@@ -351,7 +382,9 @@ public class CentralDataList {
 						new DemoResource(DemoResource.Type.TLD, "ace:expansionToggler", "expansionToggler.html"),
 				}, "tabular, spreadsheet, grid",
 					new Demo(msgs("overview"), msgs("example.ace.dataTable.description"),
-							 "dataTable", "dataTable.xhtml", "DataTableBean.java"),
+							new DemoSource[] { new DemoSource(DemoSource.Type.XHTML, "dataTable.xhtml", "dataTable"), 
+											    new DemoSource(DemoSource.Type.JAVA, "DataTableBean.java", "dataTable"),
+											    new DemoSource(DemoSource.Type.JAVA, "Car.java", "dataTable") } ),
 					new Demo(msgs("menu.ace.dataTable.subMenu.click"), msgs("example.ace.dataTable.click.description"),
 							 "dataTable", "dataTableClick.xhtml", "DataTableClick.java"),
 					new Demo(msgs("menu.ace.dataTable.subMenu.columnReordering"), msgs("example.ace.dataTable.columnReordering.description"),
@@ -656,7 +689,9 @@ public class CentralDataList {
 						new Demo(msgs("menu.ace.chart.subMenu.dynamic"), msgs("example.ace.chart.dynamic.description"),
 								 "chart", "chartDynamic.xhtml", "ChartDynamicBean.java"),
 						new Demo(msgs("menu.ace.chart.subMenu.export"), msgs("example.ace.chart.export.description"),
-								 "chart", "chartExport.xhtml", "ChartExportBean.java"))
+								new DemoSource[] { new DemoSource(DemoSource.Type.XHTML, "chartExport.xhtml", "chart"),
+													new DemoSource(DemoSource.Type.JAVA, "ChartExportBean.java", "chart"),
+												    new DemoSource(DemoSource.Type.JAVA, "ChartCombinedBean.java", "chart") }))
 		));
 		
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.mapping.title"),
@@ -673,22 +708,22 @@ public class CentralDataList {
 								 "gMapControl", "gMapControl.xhtml", "GMapControlBean.java")),
 				new ComponentGroup("ace:gMapEvent", "GMap", "gMapEvent.html", true,
 						new Demo(msgs("overview"), msgs("example.ace.gMapEvent.description"),
-								 "gMapEvent", "gMapEvent.xhtml", "GMapControlBean.java")),
+								 "gMapEvent", "gMapEvent.xhtml", "GMapEventBean.java")),
 				new ComponentGroup("ace:gMapInfoWindow", "GMap", "gMapInfoWindow.html", true,
 						new Demo(msgs("overview"), msgs("example.ace.gMapInfoWindow.description"),
-								 "gMapInfoWindow", "gMapInfoWindow.xhtml", "GMapControlBean.java")),
+								 "gMapInfoWindow", "gMapInfoWindow.xhtml", "GMapInfoWindowBean.java")),
 				new ComponentGroup("ace:gMapLayer", "GMap", "gMapLayer.html", true,
 						new Demo(msgs("overview"), msgs("example.ace.gMapLayer.description"),
-								 "gMapLayer", "gMapLayer.xhtml", "GMapControlBean.java")),
+								 "gMapLayer", "gMapLayer.xhtml", "GMapLayerBean.java")),
 				new ComponentGroup("ace:gMapMarker", "GMap", "gMapMarker.html", true,
 						new Demo(msgs("overview"), msgs("example.ace.gMapMarker.description"),
-								 "gMapMarker", "gMapMarker.xhtml", "GMapControlBean.java")),
+								 "gMapMarker", "gMapMarker.xhtml", "GMapMarkerBean.java")),
 				new ComponentGroup("ace:gMapOverlay", "GMap", "gMapOverlay.html", true,
 						new Demo(msgs("overview"), msgs("example.ace.gMapOverlay.description"),
-								 "gMapOverlay", "gMapOverlay.xhtml", "GMapControlBean.java")),
+								 "gMapOverlay", "gMapOverlay.xhtml", "GMapOverlayBean.java")),
 				new ComponentGroup("ace:gMapServices", "GMap", "gMapServices.html", true,
 						new Demo(msgs("overview"), msgs("example.ace.gMapServices.description"),
-								 "gMapServices", "gMapServices.xhtml", "GMapControlBean.java"))
+								 "gMapServices", "gMapServices.xhtml", "GMapServicesBean.java"))
 		));
 		
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.media.title"),
@@ -718,7 +753,7 @@ public class CentralDataList {
 						new Demo(msgs("menu.ace.dragDrop.subMenu.draggable"), msgs("example.ace.draggable.description"),
 								 "dragDrop", "draggableOverview.xhtml", "DraggableOverviewBean.java"),
 						new Demo(msgs("menu.ace.dragDrop.subMenu.dataTableIntegration"), msgs("example.ace.dataTableIntegration.description"),
-								 "dragDrop", "dragDropOverview.xhtml", "DragDropOverviewBean.java")),
+								 "dragDrop", "dataTableIntegration.xhtml", "DataTableIntegrationBean.java")),
 				new ComponentGroup("ace:printer", "Printer", "printer.html",
 						new Demo(msgs("overview"), msgs("example.ace.printer.description"),
 								 "printer", "printerOverview.xhtml", "PrinterBean.java")),
@@ -728,7 +763,9 @@ public class CentralDataList {
 						new Demo(msgs("menu.ace.progressbar.subMenu.polling"), msgs("example.ace.progressBarPolling.description"),
 								 "progressbar", "progressBarPolling.xhtml", "ProgressBarPolling.java"),
 						new Demo(msgs("menu.ace.progressbar.subMenu.push"), msgs("example.ace.progressBarPush.description"),
-								 "progressbar", "progressBarPush.xhtml", "ProgressBarPush.java"),
+								new DemoSource[] { new DemoSource(DemoSource.Type.XHTML, "progressBarPush.xhtml", "progressbar"),
+											       new DemoSource(DemoSource.Type.JAVA, "ProgressBarPush.java", "progressbar"),
+											       new DemoSource(DemoSource.Type.JAVA, "ProgressBarTaskManager.java", "progressbar") }),
 						new Demo(msgs("menu.ace.progressbar.subMenu.client"), msgs("example.ace.progressBarClientSideOnly.description"),
 								 "progressbar", "progressBarClient.xhtml", "ProgressBarClient.java"),
 						new Demo(msgs("menu.ace.progressbar.subMenu.clientAndServer"), msgs("example.ace.progressBarClientAndServer.description"),

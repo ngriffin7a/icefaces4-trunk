@@ -53,8 +53,6 @@ import org.apache.commons.collections.bidimap.TreeBidiMap;
  * This class is intended to be called as if it were a map via EL.
  * 
  * See simple_resource_decorator.xhtml for an example of use.
- * @author Nils Lundquist 
- * @since 2.1
  */
 public class SourceCodeLoaderConnection implements Map, Serializable{
     // The max size of the cache of source code to hold. 
