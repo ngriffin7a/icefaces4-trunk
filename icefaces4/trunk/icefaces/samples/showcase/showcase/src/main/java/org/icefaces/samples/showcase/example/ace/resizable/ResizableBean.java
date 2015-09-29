@@ -16,51 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.resizable;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.resizable.title",
-        description = "example.ace.resizable.description",
-        example = "/resources/examples/ace/resizable/resizable.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="resizable.xhtml",
-                    resource = "/resources/examples/ace/resizable/resizable.xhtml")
-        }
-)
-@Menu(
-	title = "menu.ace.maskedEntry.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.resizable.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = ResizableBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.resizable.subMenu.resizeListener",
-                    exampleBeanName = ResizeListenerBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= ResizableBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ResizableBean extends ComponentExampleImpl<ResizableBean> implements Serializable
+public class ResizableBean implements Serializable
 {
     public static final String BEAN_NAME = "resizableBean";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public ResizableBean()
-    {
-        super(ResizableBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

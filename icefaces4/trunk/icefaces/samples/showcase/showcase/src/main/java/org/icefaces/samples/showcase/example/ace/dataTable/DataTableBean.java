@@ -16,85 +16,25 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-        title = "example.ace.dataTable.title",
-        description = "example.ace.dataTable.description",
-        example = "/resources/examples/ace/dataTable/dataTable.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTable.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTable.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableData.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/dataGenerators/utilityClasses/DataTableData.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="VehicleGenerator.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/dataGenerators/VehicleGenerator.java")
-            
-        }
-)
-//! Menu links in alphabetical order based on description in messages.proporties file
-@Menu(
-	title = "menu.ace.dataTable.subMenu.title",
-	menuLinks = {
-            @MenuLink(title = "menu.ace.dataTable.subMenu.main", isDefault = true, exampleBeanName = DataTableBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.click", exampleBeanName = DataTableClick.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.columnReordering", exampleBeanName = DataTableColumnReordering.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.columnResizing", exampleBeanName = DataTableColumnResizing.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.stackable", exampleBeanName = DataTableStackable.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.dynamicColumns", exampleBeanName = DataTableDynamicColumns.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.filtering", exampleBeanName = DataTableFiltering.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.find", exampleBeanName = DataTableFind.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.grouping", exampleBeanName = DataTableGrouping.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.lazyLoading", exampleBeanName = DataTableLazyLoading.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.paginator", exampleBeanName = DataTablePaginator.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.panelexpansion", exampleBeanName = DataTablePanelExpansion.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.pinning", exampleBeanName = DataTablePinning.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.listener", exampleBeanName = DataTableListener.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.rowstate", exampleBeanName = DataTableRowState.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.selector", exampleBeanName = DataTableSelector.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.scrolling", exampleBeanName = DataTableScrolling.BEAN_NAME),
-            @MenuLink(title = "menu.ace.dataTable.subMenu.sorting", exampleBeanName = DataTableSorting.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= DataTableBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableBean extends ComponentExampleImpl<DataTableBean> implements Serializable {
+public class DataTableBean implements Serializable {
     public static final String BEAN_NAME = "dataTableBean";
 	public String getBeanName() { return BEAN_NAME; }
     
     private List<Car> carsData;
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableBean() {
-        super(DataTableBean.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

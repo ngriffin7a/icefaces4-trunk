@@ -23,15 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[radioButton.title]}"/>
-    <ui:param name="description" value="#{msgs[radioButton.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[radioButton.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{radioButton.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{radioButton.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{radioButtonResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{radioButtonResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
             <ace:panel>

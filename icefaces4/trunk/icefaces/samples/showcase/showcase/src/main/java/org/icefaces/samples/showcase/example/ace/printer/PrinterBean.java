@@ -15,45 +15,19 @@
  */
 
 package org.icefaces.samples.showcase.example.ace.printer;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 import org.icefaces.samples.showcase.dataGenerators.VehicleGenerator;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-@ComponentExample(
-        title = "example.ace.printer.title",
-        description = "example.ace.printer.description",
-        example = "/resources/examples/ace/printer/printerOverview.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="printerOverview.xhtml",
-                    resource = "/resources/examples/ace/printer/printerOverview.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PrinterBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/printer/PrinterBean.java")
-        }
-)
-@Menu(
-            title = "menu.ace.printer.subMenu.title",
-            menuLinks = {
-                @MenuLink(title = "menu.ace.printer.subMenu.main", isDefault = true, exampleBeanName = PrinterBean.BEAN_NAME)
-            }
-)
 @ManagedBean(name= PrinterBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PrinterBean extends ComponentExampleImpl< PrinterBean > implements Serializable {
+public class PrinterBean implements Serializable {
     public static final String BEAN_NAME = "printerBean";
 	public String getBeanName() { return BEAN_NAME; }
     private ImageSet.ImageInfo image;
@@ -63,16 +37,10 @@ public class PrinterBean extends ComponentExampleImpl< PrinterBean > implements 
     
     public PrinterBean() 
     {
-        super(PrinterBean.class);
         image = ImageSet.getImage(ImageSet.ImageSelect.PICTURE);
         printerIcon = ImageSet.getImage(ImageSet.ImageSelect.PRINTER);
         VehicleGenerator generator = new VehicleGenerator();
         cars = generator.getRandomCars(10);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public ImageSet.ImageInfo getImage() {

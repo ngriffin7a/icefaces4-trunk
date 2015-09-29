@@ -16,57 +16,14 @@
 
 package org.icefaces.samples.showcase.example.core.refresh;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.CustomScoped;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "Refresh Component",
-        description = "The <b>&lt;icecore:refresh&gt;</b> component enables a view to be periodically refreshed via ajax without requiring a push connection.",
-        example = "/resources/examples/core/refresh.xhtml"
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ExampleResources(
-        resources = {
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="refresh.xhtml",
-                        resource = "/resources/examples/core/refresh.xhtml"),
-                @ExampleResource(type = ResourceType.java,
-                        title="RefreshBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/refresh/RefreshBean.java"),
-                @ExampleResource(type = ResourceType.java,
-                        title="RefreshViewScopeBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/refresh/RefreshViewScopeBean.java")
-        }
-)
-@Menu(
-    title = "menu.core.refreshBean.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.core.refreshBean.subMenu.main", isDefault = true, exampleBeanName = RefreshBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name = RefreshBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class RefreshBean extends ComponentExampleImpl<RefreshBean> implements Serializable {
+public class RefreshBean implements Serializable {
     public static final String BEAN_NAME = "refreshBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public RefreshBean() {
-        super(RefreshBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

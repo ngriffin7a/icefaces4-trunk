@@ -16,41 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.panel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = PanelBean.BEAN_NAME,
-        title = "example.ace.panel.menu.title",
-        description = "example.ace.panel.menu.description",
-        example = "/resources/examples/ace/panel/panelMenu.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="panelMenu.xhtml",
-                    resource = "/resources/examples/ace/panel/panelMenu.xhtml")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= PanelMenu.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PanelMenu extends ComponentExampleImpl<PanelMenu> implements Serializable {
+public class PanelMenu implements Serializable {
 
     public static final String BEAN_NAME = "panelMenu";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public PanelMenu() {
-        super(PanelMenu.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

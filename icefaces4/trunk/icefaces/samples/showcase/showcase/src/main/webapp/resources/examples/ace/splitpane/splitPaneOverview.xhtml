@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[splitPaneBean.title]}"/>
-    <ui:param name="description" value="#{msgs[splitPaneBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[splitPaneBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{splitPaneBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{splitPaneBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{splitPaneResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{splitPaneResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             

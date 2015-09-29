@@ -16,40 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.dataExporter;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.ace.model.table.RowStateMap;
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-@ComponentExample(
-        parent = DataExporterBean.BEAN_NAME,
-        title = "example.ace.dataExporter.rows.title",
-        description = "example.ace.dataExporter.rows.description",
-        example = "/resources/examples/ace/dataExporter/dataExporterRows.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataExporterRows.xhtml",
-                    resource = "/resources/examples/ace/dataExporter/dataExporterRows.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataExporterRows.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataExporter/DataExporterRows.java")
-        }
-)
 @ManagedBean(name= DataExporterRows.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataExporterRows extends ComponentExampleImpl<DataExporterRows> implements Serializable {
+public class DataExporterRows implements Serializable {
     public static final String BEAN_NAME = "dataExporterRows";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -57,16 +36,9 @@ public class DataExporterRows extends ComponentExampleImpl<DataExporterRows> imp
     private ArrayList<Car> cars;
     private RowStateMap stateMap;
 
-
     public DataExporterRows() 
     {
-        super(DataExporterRows.class);
         initializeLocalVariables();
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     private void initializeLocalVariables() {

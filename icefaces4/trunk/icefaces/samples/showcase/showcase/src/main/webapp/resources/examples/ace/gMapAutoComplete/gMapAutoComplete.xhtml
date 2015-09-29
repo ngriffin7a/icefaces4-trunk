@@ -24,15 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[gMapAutoCompleteBean.title]}"/>
-    <ui:param name="description" value="#{msgs[gMapAutoCompleteBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[gMapAutoCompleteBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{gMapAutoCompleteBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{gMapAutoCompleteBean.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{gMapAutoCompleteResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapAutoCompleteResources.tldResources}"/>
-
     <ui:define name="example">
     <h:form id="input">
     <ace:gMap style="width: 675px; height: 500px" id="gMap"><ace:gMapAutocomplete style="xAlign:left" window="${gMapAutoCompleteBean.showWindow}" address="${gMapAutoCompleteBean.address}" types="${gMapAutoCompleteBean.types}" url="${gMapAutoCompleteBean.url}"/></ace:gMap>

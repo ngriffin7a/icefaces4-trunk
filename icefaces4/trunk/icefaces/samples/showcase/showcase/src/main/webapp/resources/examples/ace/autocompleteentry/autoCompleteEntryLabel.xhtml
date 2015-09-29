@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[autoCompleteEntryLabelBean.title]}"/>
-    <ui:param name="description" value="#{msgs[autoCompleteEntryLabelBean.description]}"/>
-    <ui:param name="resourceValue" value="#{autoCompleteEntryLabelBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{autoCompleteEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{autoCompleteEntryResources.tldResources}"/>
-
     <ui:define name="example">
         
         <h:form id="inputForm">

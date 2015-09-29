@@ -16,42 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.breadcrumbmenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ExampleResources(
-        resources ={
-                @ExampleResource(type = ResourceType.wiki,
-                        title="ace:breadcrumbMenu",
-                        resource = ResourceRootPath.FOR_WIKI +"BreadcrumbMenu"),
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-                @ExampleResource(type = ResourceType.tld,
-                        title="ace:breadcrumbMenu",
-                        resource = ResourceRootPath.FOR_ACE_TLD + "breadcrumbMenu.html")
-        }
-)
 @ManagedBean(name= BreadcrumbMenuResources.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class BreadcrumbMenuResources extends ComponentExampleImpl<BreadcrumbMenuResources> implements Serializable {
+public class BreadcrumbMenuResources implements Serializable {
     public static final String BEAN_NAME = "breadcrumbMenuResources";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public BreadcrumbMenuResources()
-    {
-        super(BreadcrumbMenuResources.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 }

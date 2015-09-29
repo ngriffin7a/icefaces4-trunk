@@ -16,42 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.list;
 
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-    parent = ListBean.BEAN_NAME,
-    title = "example.ace.list.dual.title",
-    description = "example.ace.list.dual.description",
-    example = "/resources/examples/ace/list/listDual.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                title="ListDual.xhtml",
-                resource = "/resources/examples/ace/"+
-                        "list/listDual.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                title="ListDualBean.java",
-                resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                        "showcase/example/ace/list/ListDualBean.java")
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
+
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= ListDualBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ListDualBean extends ComponentExampleImpl<ListDualBean> implements Serializable {
+public class ListDualBean implements Serializable {
     public static final String BEAN_NAME = "listDualBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -68,15 +45,6 @@ public class ListDualBean extends ComponentExampleImpl<ListDualBean> implements 
     private List<SelectItem> destStringList = new ArrayList<SelectItem>() {{
         add(new SelectItem(DataTableData.CHASSIS_ALL[DataTableData.CHASSIS_ALL.length-1]));
     }};
-    
-    public ListDualBean() {
-        super(ListDualBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
     
     public String[] getAvailablePositions() {
         return AVAILABLE_POSITIONS;

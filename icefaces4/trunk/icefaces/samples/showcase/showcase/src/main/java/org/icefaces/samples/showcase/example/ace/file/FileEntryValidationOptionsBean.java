@@ -16,42 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.file;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = FileEntryBean.BEAN_NAME,
-        title = "menu.ace.fileentry.subMenu.validation",
-        description = "example.ace.fileentry.valid.description",
-        example = "/resources/examples/ace/fileentry/validation.xhtml"
-)
-@ExampleResources(
-resources ={
-    // xhtml
-    @ExampleResource(type = ResourceType.xhtml,
-            title="validation.xhtml",
-            resource = "/resources/examples/ace/"+
-                       "fileentry/validation.xhtml"),
-    // Java Source
-    @ExampleResource(type = ResourceType.java,
-            title="FileEntryValidationOptionsBean.java",
-            resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                       "showcase/example/ace/file/FileEntryValidationOptionsBean.java")
-}
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= FileEntryValidationOptionsBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class FileEntryValidationOptionsBean extends ComponentExampleImpl<FileEntryValidationOptionsBean>
-        implements Serializable {
-
+public class FileEntryValidationOptionsBean implements Serializable {
     public static final String BEAN_NAME = "fileEntryValidation";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -80,14 +52,5 @@ public class FileEntryValidationOptionsBean extends ComponentExampleImpl<FileEnt
 
     public String getMaxFileSizeMessage() {
         return "File size cannot exceed "+(maxFileSize/102400)*100+" KB";
-    }
-
-    public FileEntryValidationOptionsBean() {
-        super(FileEntryValidationOptionsBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

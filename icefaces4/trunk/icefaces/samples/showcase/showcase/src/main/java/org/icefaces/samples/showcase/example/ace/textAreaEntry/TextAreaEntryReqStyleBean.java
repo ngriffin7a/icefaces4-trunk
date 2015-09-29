@@ -16,46 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.textAreaEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = TextAreaEntryBean.BEAN_NAME,
-        title = "example.ace.textAreaEntry.reqStyle.title",
-        description = "example.ace.textAreaEntry.reqStyle.description",
-        example = "/resources/examples/ace/textAreaEntry/textAreaEntryReqStyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textAreaEntryReqStyle.xhtml",
-                    resource = "/resources/examples/ace/textAreaEntry/textAreaEntryReqStyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextAreaEntryReqStyleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textAreaEntry/TextAreaEntryReqStyleBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= TextAreaEntryReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TextAreaEntryReqStyleBean extends ComponentExampleImpl<TextAreaEntryReqStyleBean> implements Serializable
+public class TextAreaEntryReqStyleBean implements Serializable
 {
     public static final String BEAN_NAME = "textAreaEntryReqStyleBean";
 	public String getBeanName() { return BEAN_NAME; }
     
     private String reqColor = "redRS";
     private String optColor = "greenRS";
-    
-    public TextAreaEntryReqStyleBean() {
-        super(TextAreaEntryReqStyleBean.class);
-    }
     
     public String getReqColor() {
         return reqColor;
@@ -71,11 +45,6 @@ public class TextAreaEntryReqStyleBean extends ComponentExampleImpl<TextAreaEntr
     
     public void setOptColor(String optColor) {
         this.optColor = optColor;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 	
 	private boolean useTheme = false;

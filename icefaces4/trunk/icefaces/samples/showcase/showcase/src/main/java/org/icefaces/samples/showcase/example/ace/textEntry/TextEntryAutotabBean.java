@@ -16,37 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.textEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = TextEntryBean.BEAN_NAME,
-        title = "example.ace.textEntry.autotab.title",
-        description = "example.ace.textEntry.autotab.description",
-        example = "/resources/examples/ace/textEntry/textEntryAutotab.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textEntryAutotab.xhtml",
-                    resource = "/resources/examples/ace/textEntry/textEntryAutotab.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextEntryAutotabBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textEntry/TextEntryAutotabBean.java")
-        }
-)
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 @ManagedBean(name= TextEntryAutotabBean.BEAN_NAME)
 @ViewScoped
-public class TextEntryAutotabBean extends ComponentExampleImpl<TextEntryAutotabBean> implements Serializable
+public class TextEntryAutotabBean implements Serializable
 {
     public static final String BEAN_NAME = "textEntryAutotabBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -57,10 +34,6 @@ public class TextEntryAutotabBean extends ComponentExampleImpl<TextEntryAutotabB
     private int provinceLength = 2;
     
     private String firstName, lastName, city, province;
-    
-    public TextEntryAutotabBean() {
-        super(TextEntryAutotabBean.class);
-    }
     
     public int getFirstNameLength() {
         return firstNameLength;
@@ -124,10 +97,5 @@ public class TextEntryAutotabBean extends ComponentExampleImpl<TextEntryAutotabB
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

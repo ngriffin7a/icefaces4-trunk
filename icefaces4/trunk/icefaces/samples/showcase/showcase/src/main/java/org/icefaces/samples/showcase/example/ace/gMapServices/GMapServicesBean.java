@@ -16,45 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.gMapServices;
 
-import javax.el.MethodExpression;
-import javax.faces.application.*;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.component.*;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import java.util.ArrayList;
-import javax.faces.bean.CustomScoped;
-import javax.annotation.PostConstruct;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 import java.io.Serializable;
-@ComponentExample(
-        title = "example.ace.gMapServices.title",
-        description = "example.ace.gMapServices.description",
-        example = "/resources/examples/ace/gMapServices/gMapServices.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="gMapServices.xhtml",
-                    resource = "/resources/examples/ace/gMapServices/gMapServices.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="GMapServicesBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMapServices/GMapServicesBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.gMapServices.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.gMapServices.subMenu.main", isDefault = true, exampleBeanName = GMapServicesBean.BEAN_NAME)
-    }
-)
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= GMapServicesBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class GMapServicesBean extends ComponentExampleImpl<GMapServicesBean> implements Serializable{
+public class GMapServicesBean implements Serializable{
 	public static final String BEAN_NAME = "gMapServicesBean";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -62,10 +31,6 @@ public class GMapServicesBean extends ComponentExampleImpl<GMapServicesBean> imp
     private String options="optimizeWaypoints:true";
     private String travelMode="DRIVING";
 
-	public GMapServicesBean() {
-        super(GMapServicesBean.class);
-    }
-	
     public String getPoints() {
         return points;
     }
@@ -88,9 +53,5 @@ public class GMapServicesBean extends ComponentExampleImpl<GMapServicesBean> imp
 
     public void setTravelMode(String travelMode) {
         this.travelMode = travelMode;
-    }
-	@PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

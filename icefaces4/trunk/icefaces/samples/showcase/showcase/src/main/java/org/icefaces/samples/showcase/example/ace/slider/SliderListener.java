@@ -16,60 +16,27 @@
 
 package org.icefaces.samples.showcase.example.ace.slider;
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 import javax.faces.event.ValueChangeEvent;
-import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 
-@ComponentExample(
-        parent = SliderBean.BEAN_NAME,
-        title = "example.ace.slider.listener.title",
-        description = "example.ace.slider.listener.description",
-        example = "/resources/examples/ace/slider/sliderListener.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "sliderListener.xhtml",
-                        resource = "/resources/examples/ace/slider/sliderListener.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "SliderListener.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/slider/SliderListener.java"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "ImageSet.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/dataGenerators/ImageSet.java")
-        }
-)
+import org.icefaces.samples.showcase.dataGenerators.ImageSet;
+import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
+
 @ManagedBean(name = SliderListener.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SliderListener extends ComponentExampleImpl<SliderListener> implements Serializable {
+public class SliderListener implements Serializable {
     public static final String BEAN_NAME = "sliderListener";
 	public String getBeanName() { return BEAN_NAME; }
     private int sliderValue;
     private ImageSet.ImageInfo image;
 
     public SliderListener() {
-        super(SliderListener.class);
         initializeInstanceVariables();
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private void initializeInstanceVariables()
     {
         this.sliderValue = 0;

@@ -16,60 +16,26 @@
 
 package org.icefaces.samples.showcase.example.ace.cellEditor;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-@ComponentExample(
-        title = "example.ace.cellEditor.title",
-        description = "example.ace.cellEditor.description",
-        example = "/resources/examples/ace/cellEditor/cellEditor.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="cellEditor.xhtml",
-                    resource = "/resources/examples/ace/cellEditor/cellEditor.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="CellEditorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/cellEditor/CellEditorBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.cellEditor.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.cellEditor.subMenu.main", isDefault = true, exampleBeanName = CellEditorBean.BEAN_NAME)
-    }
-)
-
 @ManagedBean(name = CellEditorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class CellEditorBean extends ComponentExampleImpl<CellEditorBean> implements Serializable {
+public class CellEditorBean implements Serializable {
     public static final String BEAN_NAME = "cellEditorBean";
 	public String getBeanName() { return BEAN_NAME; }
     
     public CellEditorBean() {
-        super(CellEditorBean.class);
 		cars = new ArrayList<Car>(DataTableData.getDefaultData());
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private List<Car> cars;
 
     public List<Car> getCars() { return cars; }

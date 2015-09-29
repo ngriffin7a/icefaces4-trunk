@@ -16,45 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.combobox;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
-import java.util.*;
-
-import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import javax.faces.application.FacesMessage;
 
-@ComponentExample(
-		parent = ComboBoxBean.BEAN_NAME,
-        title = "example.ace.combobox.facet.title",
-        description = "example.ace.combobox.facet.description",
-        example = "/resources/examples/ace/combobox/comboBoxFacet.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="comboBoxFacet.xhtml",
-                    resource = "/resources/examples/ace/combobox/comboBoxFacet.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ComboBoxFacetBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/combobox/ComboBoxFacetBean.java")
-        }
-)
 @ManagedBean(name= ComboBoxFacetBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ComboBoxFacetBean extends ComponentExampleImpl< ComboBoxFacetBean > implements Serializable {
+public class ComboBoxFacetBean implements Serializable {
 
     public static final String BEAN_NAME = "comboBoxFacetBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -63,8 +38,6 @@ public class ComboBoxFacetBean extends ComponentExampleImpl< ComboBoxFacetBean >
 	private List<Color> backgroundColors;
     
     public ComboBoxFacetBean() {
-        super(ComboBoxFacetBean.class);
-		
 		backgroundColors = new ArrayList<Color>();
 		backgroundColors.add(new Color("Alice Blue", "#F0F8FF"));
 		backgroundColors.add(new Color("Beige", "#F5F5DC"));
@@ -98,11 +71,6 @@ public class ComboBoxFacetBean extends ComponentExampleImpl< ComboBoxFacetBean >
 		textColors.add(new Color("Pale Violet Red", "#DB7093"));
 		textColors.add(new Color("Sandy Brown", "#F4A460"));
 		textColors.add(new Color("Slate Blue", "#6A5ACD"));
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
 	private String textColor = "";

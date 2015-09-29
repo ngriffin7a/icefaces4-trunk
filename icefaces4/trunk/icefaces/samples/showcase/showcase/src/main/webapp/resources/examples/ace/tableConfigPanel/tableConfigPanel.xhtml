@@ -24,13 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[tableConfigPanelBean.title]}"/>
-    <ui:param name="description" value="#{msgs[tableConfigPanelBean.description]}"/>
-    <ui:param name="resourceValue" value="#{tableConfigPanelBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{tableConfigPanelResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{tableConfigPanelResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="carForm">
             <ace:dataTable id="carTable"

@@ -16,53 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.audioPlayer;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.audioPlayer.title",
-        description = "example.ace.audioPlayer.description",
-        example = "/resources/examples/ace/audioPlayer/audioPlayer.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="audioPlayer.xhtml",
-                    resource = "/resources/examples/ace/audioPlayer/audioPlayer.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AudioPlayerBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/audioPlayer/AudioPlayerBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.audioPlayer.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.audioPlayer.subMenu.main", isDefault = true, exampleBeanName = AudioPlayerBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name = AudioPlayerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AudioPlayerBean extends ComponentExampleImpl<AudioPlayerBean> implements Serializable {
+public class AudioPlayerBean implements Serializable {
     public static final String BEAN_NAME = "audioPlayerBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public AudioPlayerBean() {
-        super(AudioPlayerBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     private boolean autoplay = false;
     private boolean newWindow = false;

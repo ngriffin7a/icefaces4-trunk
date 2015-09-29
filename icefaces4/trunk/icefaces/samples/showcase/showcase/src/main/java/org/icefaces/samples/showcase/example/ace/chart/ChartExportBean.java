@@ -16,55 +16,24 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.export.title",
-        description = "example.ace.chart.export.description",
-        example = "/resources/examples/ace/chart/chartExport.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="ChartExport.xhtml",
-                        resource = "/resources/examples/ace/chart/chartExport.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="ChartExportBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartExportBean.java"),
-                @ExampleResource(type = ResourceType.java,
-                    title="ChartCombinedBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartCombinedBean.java")
-        }
-)
 @ManagedBean(name= ChartExportBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartExportBean extends ComponentExampleImpl<ChartExportBean> implements Serializable {
+public class ChartExportBean implements Serializable {
     public static final String BEAN_NAME = "chartExportBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     boolean requestOldIE;
 
-    public ChartExportBean() {
-        super(ChartExportBean.class);
-    }
-
     @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
+    public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext ec = context.getExternalContext();
         String ua = ec.getRequestHeaderMap().get("user-agent");

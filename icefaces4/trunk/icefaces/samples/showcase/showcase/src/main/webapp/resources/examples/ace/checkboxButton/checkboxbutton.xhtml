@@ -23,15 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[checkboxButton.title]}"/>
-    <ui:param name="description" value="#{msgs[checkboxButton.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[checkboxButton.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{checkboxButton.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{checkboxButton.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{checkboxButtonResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{checkboxButtonResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
             <ace:panel>

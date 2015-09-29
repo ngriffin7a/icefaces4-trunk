@@ -16,40 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.date;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.ace.event.DateSelectEvent;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.Date;
 
-@ComponentExample(
-        parent = DateEntryBean.BEAN_NAME,
-        title = "example.ace.dateentry.reqStyle.title",
-        description = "example.ace.dateentry.reqStyle.description",
-        example = "/resources/examples/ace/date/datereqstyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="datereqstyle.xhtml",
-                    resource = "/resources/examples/ace/date/datereqstyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DateReqStyleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/date/DateReqStyleBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DateReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DateReqStyleBean extends ComponentExampleImpl<DateReqStyleBean> implements Serializable {
+public class DateReqStyleBean implements Serializable {
     public static final String BEAN_NAME = "dateReqStyle";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -58,10 +33,6 @@ public class DateReqStyleBean extends ComponentExampleImpl<DateReqStyleBean> imp
     private String reqColor = "redRS";
     private String optColor = "greenRS";
 
-    public DateReqStyleBean() {
-        super(DateReqStyleBean.class);
-    }
-    
     public Date getSelectedDate1() {
         return selectedDate1;
     }
@@ -94,11 +65,6 @@ public class DateReqStyleBean extends ComponentExampleImpl<DateReqStyleBean> imp
         this.optColor = optColor;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-	
 	private boolean useTheme = false;
 
     public boolean getUseTheme() {

@@ -16,45 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.sorting.title",
-        description = "example.ace.dataTable.sorting.description",
-        example = "/resources/examples/ace/dataTable/dataTableSorting.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTableSorting.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTableSorting.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DataTableSorting.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableSorting extends ComponentExampleImpl<DataTableSorting> implements Serializable {
+public class DataTableSorting implements Serializable {
     public static final String BEAN_NAME = "dataTableSorting";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public DataTableSorting() {
-        super(DataTableSorting.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

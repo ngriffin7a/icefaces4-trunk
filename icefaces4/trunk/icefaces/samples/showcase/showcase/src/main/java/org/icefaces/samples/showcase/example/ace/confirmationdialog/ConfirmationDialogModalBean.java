@@ -16,44 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.confirmationdialog;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-		parent = ConfirmationDialogBean.BEAN_NAME,
-        title = "example.ace.confirmationdialog.modal.title",
-        description = "example.ace.confirmationdialog.modal.description",
-        example = "/resources/examples/ace/confirmationdialog/confirmationDialogModal.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="confirmationDialogModal.xhtml",
-                    resource = "/resources/examples/ace/confirmationdialog/confirmationDialogModal.xhtml")
-        }
-)
 @ManagedBean(name= ConfirmationDialogModalBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ConfirmationDialogModalBean extends ComponentExampleImpl<ConfirmationDialogModalBean> implements Serializable {
+public class ConfirmationDialogModalBean implements Serializable {
     public static final String BEAN_NAME = "confirmationDialogModalBean";
 	public String getBeanName() { return BEAN_NAME; }
 	
-    public ConfirmationDialogModalBean() {
-        super(ConfirmationDialogModalBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 	private String outcome = null;
 	
 	public void yes(ActionEvent actionEvent) { 

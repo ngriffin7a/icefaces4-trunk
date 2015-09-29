@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[dataTableRowState.title]}"/>
-    <ui:param name="description" value="#{msgs[dataTableRowState.description]}"/>
-    <ui:param name="resourceValue" value="#{dataTableRowState.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="controls">
             <h:panelGroup id="selection" style="display:inline-block; vertical-align: top; margin: .5em .25em;">

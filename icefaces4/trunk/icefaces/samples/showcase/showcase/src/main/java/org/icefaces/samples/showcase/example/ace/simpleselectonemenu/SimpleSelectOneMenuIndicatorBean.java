@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.simpleselectonemenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = SimpleSelectOneMenuBean.BEAN_NAME,
-        title = "example.ace.simpleselectonemenu.indicator.title",
-        description = "example.ace.simpleselectonemenu.indicator.description",
-        example = "/resources/examples/ace/simpleselectonemenu/simpleSelectOneMenuIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="simpleSelectOneMenuIndicator.xhtml",
-                    resource = "/resources/examples/ace/simpleselectonemenu/simpleSelectOneMenuIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="...IndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/simpleselectonemenu/SimpleSelectOneMenuIndicatorBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="SimpleSelectOneMenuBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/simpleselectonemenu/SimpleSelectOneMenuBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= SimpleSelectOneMenuIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SimpleSelectOneMenuIndicatorBean extends ComponentExampleImpl<SimpleSelectOneMenuIndicatorBean> implements Serializable
+public class SimpleSelectOneMenuIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "simpleSelectOneMenuIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -59,11 +33,6 @@ public class SimpleSelectOneMenuIndicatorBean extends ComponentExampleImpl<Simpl
     private String optionalText = "Not mandatory.";
     private String position = "right";
 
-    public SimpleSelectOneMenuIndicatorBean() 
-    {
-        super(SimpleSelectOneMenuIndicatorBean.class);
-    }
-    
     public boolean getRequired() {
         return required;
     }
@@ -94,10 +63,5 @@ public class SimpleSelectOneMenuIndicatorBean extends ComponentExampleImpl<Simpl
     
     public void setPosition(String position) {
         this.position = position;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

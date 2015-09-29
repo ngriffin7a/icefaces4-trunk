@@ -16,38 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.menu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
-@ComponentExample(
-        parent = MenuBean.BEAN_NAME,
-        title = "example.ace.menu.effect.title",
-        description = "example.ace.menu.effect.description",
-        example = "/resources/examples/ace/menu/menuEffect.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="menuEffect.xhtml",
-                    resource = "/resources/examples/ace/menu/menuEffect.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MenuEffect.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/menu/MenuEffect.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= MenuEffect.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MenuEffect extends ComponentExampleImpl<MenuEffect> implements Serializable {
+public class MenuEffect implements Serializable {
     public static final String BEAN_NAME = "menuEffect";
 	public String getBeanName() { return BEAN_NAME; }
     public static final String DEFAULT_EFFECT = "Slide";
@@ -57,18 +34,11 @@ public class MenuEffect extends ComponentExampleImpl<MenuEffect> implements Seri
     private int effectDuration;
     
     public MenuEffect() {
-        super(MenuEffect.class);
-        
         availableEffects = populateAvailableEffects();
         effectName = availableEffects.get(DEFAULT_EFFECT);
         effectDuration = 400;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private LinkedHashMap<String, String> populateAvailableEffects()
     {
         LinkedHashMap <String, String> list = new LinkedHashMap <String, String>();

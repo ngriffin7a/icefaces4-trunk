@@ -16,41 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 import javax.faces.model.SelectItem;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.paginator.title",
-        description = "example.ace.dataTable.paginator.description",
-        example = "/resources/examples/ace/dataTable/dataTablePaginator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTablePaginator.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTablePaginator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTablePaginator.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTablePaginator.java")
-        }
-)
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= DataTablePaginator.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTablePaginator extends ComponentExampleImpl<DataTablePaginator> implements Serializable {
+public class DataTablePaginator implements Serializable {
     public static final String BEAN_NAME = "dataTablePaginator";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -66,13 +44,7 @@ public class DataTablePaginator extends ComponentExampleImpl<DataTablePaginator>
     
     /////////////---- CONSTRUCTOR BEGIN
     public DataTablePaginator() {
-        super(DataTablePaginator.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

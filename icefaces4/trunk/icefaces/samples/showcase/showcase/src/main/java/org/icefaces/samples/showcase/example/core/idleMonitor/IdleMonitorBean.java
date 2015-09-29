@@ -16,56 +16,16 @@
 
 package org.icefaces.samples.showcase.example.core.idleMonitor;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "Idle Monitor Component",
-        description = "The <b>icecore:idleMonitor</b> renders the enclosed markup when the user has not interacted with the page for a defined period of time. The rendered markup is hidden when user resumes the activity. In this example you need to stop using the page for 10 seconds in order to see the warning.",
-        example = "/resources/examples/core/idle-monitor.xhtml"
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ExampleResources(
-        resources = {
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="idle-monitor.xhtml",
-                        resource = "/resources/examples/core/idle-monitor.xhtml"),
-                @ExampleResource(type = ResourceType.java,
-                        title="IdleMonitorBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/idleMonitor/IdleMonitorBean.java")
-        }
-)
-@Menu(
-    title = "menu.core.idleMonitorBean.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.core.idleMonitorBean.subMenu.main", isDefault = true, exampleBeanName = IdleMonitorBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name = IdleMonitorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class IdleMonitorBean extends ComponentExampleImpl<IdleMonitorBean> implements Serializable {
+public class IdleMonitorBean implements Serializable {
     public static final String BEAN_NAME = "idleMonitorBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     private String actionDescription;
-
-    public IdleMonitorBean() {
-        super(IdleMonitorBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

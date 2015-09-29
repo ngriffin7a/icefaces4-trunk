@@ -16,36 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.textEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = TextEntryBean.BEAN_NAME,
-        title = "example.ace.textEntry.reqStyle.title",
-        description = "example.ace.textEntry.reqStyle.description",
-        example = "/resources/examples/ace/textEntry/textEntryReqStyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textEntryReqStyle.xhtml",
-                    resource = "/resources/examples/ace/textEntry/textEntryReqStyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextEntryReqStyleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textEntry/TextEntryReqStyleBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= TextEntryReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TextEntryReqStyleBean extends ComponentExampleImpl<TextEntryReqStyleBean> implements Serializable
+public class TextEntryReqStyleBean implements Serializable
 {
     public static final String BEAN_NAME = "textEntryReqStyleBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -60,10 +38,6 @@ public class TextEntryReqStyleBean extends ComponentExampleImpl<TextEntryReqStyl
     private String province;
     private String country;
 
-    public TextEntryReqStyleBean() {
-        super(TextEntryReqStyleBean.class);
-    }
-    
     public String getReqColor() {
         return reqColor;
     }
@@ -136,11 +110,6 @@ public class TextEntryReqStyleBean extends ComponentExampleImpl<TextEntryReqStyl
         this.country = country;
     }
 
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-	
 	private boolean useTheme = false;
 
     public boolean getUseTheme() {

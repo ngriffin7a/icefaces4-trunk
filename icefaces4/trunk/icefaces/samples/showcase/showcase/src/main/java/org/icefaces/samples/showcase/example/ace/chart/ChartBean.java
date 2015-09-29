@@ -16,72 +16,19 @@
  
 package org.icefaces.samples.showcase.example.ace.chart;
 
+import java.io.Serializable;
+import java.util.Random;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.ace.component.chart.Axis;
 import org.icefaces.ace.component.chart.AxisType;
 import org.icefaces.ace.model.chart.CartesianSeries;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-@ComponentExample(
-    title = "example.ace.chart.title",
-    description = "example.ace.chart.description",
-    example = "/resources/examples/ace/chart/chart.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                title="Chart.xhtml",
-                resource = "/resources/examples/ace/chart/chart.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                title="ChartBean.java",
-                resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartBean.java")
-    }
-)
-@Menu(
-    title = "menu.ace.chart.subMenu.title",
-    menuLinks = {
-        @MenuLink(title = "menu.ace.chart.subMenu.main",
-                isDefault = true, exampleBeanName = ChartBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.bar",
-                exampleBeanName = ChartBarBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.bubble",
-                exampleBeanName = ChartBubbleBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.candlestick",
-                exampleBeanName = ChartCandlestickBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.donut",
-                exampleBeanName = ChartDonutBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.gauge",
-                exampleBeanName = ChartGaugeBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.line",
-                exampleBeanName = ChartLineBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.pie",
-                exampleBeanName = ChartPieBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.combined",
-                exampleBeanName = ChartCombinedBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.color",
-                exampleBeanName = ChartColorBean.BEAN_NAME),
-        @MenuLink(title="menu.ace.chart.subMenu.stacked",
-                exampleBeanName = ChartStackedBarBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.dynamic",
-                exampleBeanName = ChartDynamicBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.chart.subMenu.export",
-                exampleBeanName = ChartExportBean.BEAN_NAME)
-    }
-)
 
 @ManagedBean(name= ChartBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartBean extends ComponentExampleImpl<ChartBean> implements Serializable {
+public class ChartBean implements Serializable {
     public static final String BEAN_NAME = "chartBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -157,13 +104,4 @@ public class ChartBean extends ComponentExampleImpl<ChartBean> implements Serial
     public void setBarDemoYAxis(Axis barDemoYAxis) {
         this.barDemoYAxis = barDemoYAxis;
     }
-    
-    public ChartBean() {
-        super(ChartBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }    
 }

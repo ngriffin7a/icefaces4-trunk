@@ -16,47 +16,19 @@
  
 package org.icefaces.samples.showcase.example.ace.panelStack;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import java.util.Iterator;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
-import java.lang.String;
-import java.lang.System;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
 
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ComponentExample(
-        parent = PanelStackBean.BEAN_NAME,
-        title = "example.ace.panelStack.facelet.title",
-        description = "example.ace.panelStack.facelet.description",
-        example = "/resources/examples/ace/panelStack/panelStackFacelet.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="panelStackFacelet.xhtml",
-                    resource = "/resources/examples/ace/panelStack/panelStackFacelet.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PanelStackFacelet.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/panelStack/PanelStackFacelet.java")
-        }
-)
 
 @ManagedBean(name = PanelStackFacelet.BEAN_NAME)
 @CustomScoped(value = "#{window}")
 
 
-public class PanelStackFacelet extends ComponentExampleImpl<PanelStackFacelet> implements Serializable {
+public class PanelStackFacelet implements Serializable {
 
 	public static final String BEAN_NAME = "panelStackFacelet";
 	public String getBeanName() { return BEAN_NAME; }
@@ -84,15 +56,6 @@ public class PanelStackFacelet extends ComponentExampleImpl<PanelStackFacelet> i
 	private ArrayList<String> services;	
 	private Date selectedDate = new Date(System.currentTimeMillis());
 	
-	public PanelStackFacelet() {
-		  super(PanelStackFacelet.class);
-	}
-	
-	@PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 	public String getCurrentId() {
 		if(r1) currentId = "stackPane1";
 		else currentId = "stackPane2";

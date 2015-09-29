@@ -25,13 +25,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[chartExportBean.title]}"/>
-    <ui:param name="description" value="#{msgs[chartExportBean.description]}"/>
-    <ui:param name="resourceValue" value="#{chartExportBean.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{chartResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{chartResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="exportForm">
             <ace:dynamicResource rendered="#{chartCombinedBean.imageSaved}"

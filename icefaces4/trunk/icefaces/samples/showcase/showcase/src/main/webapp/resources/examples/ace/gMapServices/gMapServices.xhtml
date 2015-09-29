@@ -24,15 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[gMapServicesBean.title]}"/>
-    <ui:param name="description" value="#{msgs[gMapServicesBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[gMapServicesBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{gMapServicesBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{gMapServicesBean.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{gMapServicesResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{gMapServicesResources.tldResources}"/>
-
     <ui:define name="example">
     <ace:gMap id="gMapDirections"  style="width: 675px; height: 500px" latitude="0" longitude="0" zoomLevel="3">
         <ace:gMapServices name="Directions" points="${gMapServicesBean.points}" options="travelMode:'${gMapServicesBean.travelMode}',${gMapServicesBean.options}" div="directionsOut"/>

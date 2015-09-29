@@ -16,42 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.file;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.util.FacesUtils;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.Scanner;
 
-@ComponentExample(
-        parent = FileEntryBean.BEAN_NAME,
-        title = "menu.ace.fileentry.subMenu.multiple",
-        description = "example.ace.fileentry.multiple.description",
-        example = "/resources/examples/ace/fileentry/multiple.xhtml"
-)
-@ExampleResources(
-resources ={
-    // xhtml
-    @ExampleResource(type = ResourceType.xhtml,
-            title="multiple.xhtml",
-            resource = "/resources/examples/ace/"+
-                       "fileentry/multiple.xhtml"),
-    // Java Source
-    @ExampleResource(type = ResourceType.java,
-            title="FileEntryMultipleBean.java",
-            resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                       "showcase/example/ace/file/FileEntryMultipleBean.java")
-}
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.samples.showcase.util.FacesUtils;
+
 @ManagedBean(name= FileEntryMultipleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class FileEntryMultipleBean extends ComponentExampleImpl<FileEntryMultipleBean> implements Serializable {
+public class FileEntryMultipleBean implements Serializable {
 
     public static final String BEAN_NAME = "fileEntryMultiple";
 	public String getBeanName() { return BEAN_NAME; }
@@ -104,14 +79,5 @@ public class FileEntryMultipleBean extends ComponentExampleImpl<FileEntryMultipl
 
     public void setMaxFileCountMessage(String maxFileCountMessage) {
         this.maxFileCountMessage = maxFileCountMessage;
-    }
-
-    public FileEntryMultipleBean() {
-        super(FileEntryMultipleBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

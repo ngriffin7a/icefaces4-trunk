@@ -16,52 +16,22 @@
 
 package org.icefaces.samples.showcase.example.ace.menuBar;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ComponentExample(
-        parent = MenuBarBean.BEAN_NAME,
-        title = "example.ace.menuBar.click.title",
-        description = "example.ace.menuBar.click.description",
-        example = "/resources/examples/ace/menuBar/menuBarClick.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="menuBarClick.xhtml",
-                    resource = "/resources/examples/ace/menuBar/menuBarClick.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MenuBarClick.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/menuBar/MenuBarClick.java")
-        }
-)
 @ManagedBean(name= MenuBarClick.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MenuBarClick extends ComponentExampleImpl<MenuBarClick> implements Serializable {
+public class MenuBarClick implements Serializable {
     public static final String BEAN_NAME = "aceMenuBarClick";
 	public String getBeanName() { return BEAN_NAME; }
     private boolean clickToDisplay;
     
     public MenuBarClick() {
-        super(MenuBarClick.class);
-        
         clickToDisplay = false;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public boolean getClickToDisplay() { return clickToDisplay; }
     
     public void setClickToDisplay(boolean clickToDisplay) { this.clickToDisplay = clickToDisplay; }

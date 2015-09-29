@@ -23,13 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[sliderSubmitionExample.title]}"/>
-    <ui:param name="description" value="#{msgs[sliderSubmitionExample.description]}"/>
-    <ui:param name="resourceValue" value="#{sliderSubmitionExample.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{sliderEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{sliderEntryResources.tldResources}"/>
-
     <ui:define name="example">
         <h:panelGrid columns="2" styleClass="centeredPanelGrid">
             <ace:panel header="Basic Slider" style="height: 150px;">

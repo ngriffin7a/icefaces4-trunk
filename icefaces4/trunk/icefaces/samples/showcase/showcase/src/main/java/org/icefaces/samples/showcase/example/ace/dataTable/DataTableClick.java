@@ -16,65 +16,24 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.ace.component.celleditor.CellEditor;
-import org.icefaces.ace.event.DataTableCellClickEvent;
-import org.icefaces.ace.model.table.RowState;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import java.io.Serializable;
-import java.util.ArrayList;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.click.title",
-        description = "example.ace.dataTable.click.description",
-        example = "/resources/examples/ace/dataTable/dataTableClick.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                                 title="dataTableClick.xhtml",
-                                 resource = "/resources/examples/ace/dataTable/dataTableClick.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                                 title="DataTableClick.java",
-                                 resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                         "/example/ace/dataTable/DataTableClick.java"),
-                @ExampleResource(type = ResourceType.java,
-                                title="DataTableBean.java",
-                                resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                         "/example/ace/dataTable/DataTableBean.java")
-        }
-)
+import org.icefaces.ace.component.celleditor.CellEditor;
+import org.icefaces.ace.event.DataTableCellClickEvent;
+import org.icefaces.ace.model.table.RowState;
+
 @ManagedBean(name= DataTableClick.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableClick extends ComponentExampleImpl<DataTableClick> implements Serializable {
+public class DataTableClick implements Serializable {
     public static final String BEAN_NAME = "dataTableClick";
 	public String getBeanName() { return BEAN_NAME; }
     public String stateVar = "state";
-
-    public DataTableClick() {
-        super(DataTableClick.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
 	public void toggleSelect(AjaxBehaviorEvent event) {
          RowState state = (RowState) FacesContext.getCurrentInstance()

@@ -24,15 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[growlMessagesBean.title]}"/>
-    <ui:param name="description" value="#{msgs[growlMessagesBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[growlMessagesBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{growlMessagesBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{growlMessagesBean.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{growlMessagesResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{growlMessagesResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="messageDemoForm">
             <ace:panel header="Some important ace:growlMessages attributes">

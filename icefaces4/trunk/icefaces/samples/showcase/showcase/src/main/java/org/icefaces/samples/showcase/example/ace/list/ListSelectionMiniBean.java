@@ -16,56 +16,24 @@
 
 package org.icefaces.samples.showcase.example.ace.list;
 
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
-import java.util.*;
 
-@ComponentExample(
-    parent = ListBean.BEAN_NAME,
-    title = "example.ace.list.selectionMini.title",
-    description = "example.ace.list.selectionMini.description",
-    example = "/resources/examples/ace/list/listSelectionMini.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                title="ListSelectionMini.xhtml",
-                resource = "/resources/examples/ace/"+
-                        "list/listSelectionMini.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                title="ListSelectionMiniBean.java",
-                resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                        "showcase/example/ace/list/ListSelectionMiniBean.java")
-    }
-)
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+
 @ManagedBean(name= ListSelectionMiniBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ListSelectionMiniBean extends ComponentExampleImpl<ListSelectionMiniBean> {
+public class ListSelectionMiniBean implements Serializable {
     public static final String BEAN_NAME = "listSelectionMiniBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public ListSelectionMiniBean() {
-        super(ListSelectionMiniBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
-
 
     private List<SelectItem> selections = new ArrayList<SelectItem>();
     private Car selectItemObject = DataTableData.getDefaultData().subList(11,12).get(0);

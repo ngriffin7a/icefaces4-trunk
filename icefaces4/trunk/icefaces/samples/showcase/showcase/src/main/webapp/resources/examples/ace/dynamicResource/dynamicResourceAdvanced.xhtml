@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[dynamicResourceAdvancedBean.title]}"/>
-    <ui:param name="description" value="#{msgs[dynamicResourceAdvancedBean.description]}"/>
-    <ui:param name="resourceValue" value="#{dynamicResourceAdvancedBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{dynamicResourceResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{dynamicResourceResources.tldResources}"/>
-
     <ui:define name="example">
 
 		<h:form id="form">

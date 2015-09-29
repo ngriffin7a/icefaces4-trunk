@@ -16,55 +16,24 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.panelexpansion.title",
-        description = "example.ace.dataTable.panelexpansion.description",
-        example = "/resources/examples/ace/dataTable/dataTablePanelExpansion.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="dataTablePanelExpansion.xhtml",
-                        resource = "/resources/examples/ace/dataTable/dataTablePanelExpansion.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="DataTablePanelExpansion.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/dataTable/DataTablePanelExpansion.java")
-        }
-)
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= DataTablePanelExpansion.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTablePanelExpansion extends ComponentExampleImpl<DataTablePanelExpansion> implements Serializable {
+public class DataTablePanelExpansion implements Serializable {
     public static final String BEAN_NAME = "dataTablePanelExpansion";
 	public String getBeanName() { return BEAN_NAME; }
     private List<Car> carsData;
     /////////////---- CONSTRUCTOR BEGIN
     public DataTablePanelExpansion() {
-        super(DataTablePanelExpansion.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

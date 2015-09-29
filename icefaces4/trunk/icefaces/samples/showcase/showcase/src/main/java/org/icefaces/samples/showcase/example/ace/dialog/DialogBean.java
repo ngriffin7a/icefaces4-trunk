@@ -16,64 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.dialog;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.dialog.title",
-        description = "example.ace.dialog.description",
-        example = "/resources/examples/ace/dialog/dialog.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dialog.xhtml",
-                    resource = "/resources/examples/ace/dialog/dialog.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="Dialog.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dialog/DialogBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.dialog.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.dialog.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = DialogBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.dialog.subMenu.effectsAndSize",
-                    exampleBeanName = DialogEffectsAndSizeBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.dialog.subMenu.modalDialog",
-                    exampleBeanName = ModalDialogBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DialogBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DialogBean extends ComponentExampleImpl<DialogBean> implements Serializable 
+public class DialogBean implements Serializable 
 {
     public static final String BEAN_NAME = "dialogBean";
 	public String getBeanName() { return BEAN_NAME; }
     private String firstName;
     private String lastName;
     
-    
-    public DialogBean() 
-    {
-        super(DialogBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public String getFirstName() {
         return firstName;
     }

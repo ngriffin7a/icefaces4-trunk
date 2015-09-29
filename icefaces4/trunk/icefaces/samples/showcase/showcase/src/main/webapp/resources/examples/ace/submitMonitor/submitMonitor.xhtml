@@ -24,15 +24,6 @@
     xmlns:icecore="http://www.icefaces.org/icefaces/core"
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[submitMonitor.title]}"/>
-    <ui:param name="description" value="#{msgs[submitMonitor.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[submitMonitor.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{submitMonitor.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{submitMonitor.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{submitMonitorResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{submitMonitorResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="demoForm">
             <h:panelGroup id="overall" layout="block">

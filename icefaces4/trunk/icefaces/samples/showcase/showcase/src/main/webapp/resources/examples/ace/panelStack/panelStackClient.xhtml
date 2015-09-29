@@ -23,13 +23,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[panelStackClient.title]}"/>
-    <ui:param name="description" value="#{msgs[panelStackClient.description]}"/>
-    <ui:param name="resourceValue" value="#{panelStackClient.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{panelStackResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{panelStackResources.tldResources}"/>
-
     <ui:define name="example">
 	<ace:panel>
 	 <h:form id="selectForm">	 

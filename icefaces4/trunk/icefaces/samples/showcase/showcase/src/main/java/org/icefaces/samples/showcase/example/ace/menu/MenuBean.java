@@ -16,56 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.menu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-@ComponentExample(
-        title = "example.ace.menu.title",
-        description = "example.ace.menu.description",
-        example = "/resources/examples/ace/menu/menu.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="menu.xhtml",
-                    resource = "/resources/examples/ace/menu/menu.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MenuBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/menu/MenuBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.menu.subMenu.title",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.menu.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = MenuBean.BEAN_NAME),
-            @MenuLink(title = "menu.ace.menu.subMenu.type",
-                exampleBeanName = MenuType.BEAN_NAME),
-            @MenuLink(title = "menu.ace.menu.subMenu.events",
-                exampleBeanName = MenuEvents.BEAN_NAME),
-            @MenuLink(title = "menu.ace.menu.subMenu.effect",
-                exampleBeanName = MenuEffect.BEAN_NAME),
-            @MenuLink(title = "menu.ace.menu.subMenu.display",
-                exampleBeanName = MenuDisplay.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
 @ManagedBean(name= MenuBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MenuBean extends ComponentExampleImpl<MenuBean> implements Serializable {
+public class MenuBean implements Serializable {
     
     public static final String BEAN_NAME = "menuBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -77,15 +40,9 @@ public class MenuBean extends ComponentExampleImpl<MenuBean> implements Serializ
     
     /////////////---- CONSTRUCTORS BEGIN
     public MenuBean() {
-        super(MenuBean.class);
         formatter = new SimpleDateFormat("HH:mm:ss");
         list = new ArrayList<String>(MAX_LIST_SIZE);
         list.add(DEFAULT_MESSAGE);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- ACTION LISTENER

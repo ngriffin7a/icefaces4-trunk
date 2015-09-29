@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.menu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = MenuBean.BEAN_NAME,
-        title = "example.ace.menu.display.title",
-        description = "example.ace.menu.display.description",
-        example = "/resources/examples/ace/menu/menuDisplay.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="menuDisplay.xhtml",
-                    resource = "/resources/examples/ace/menu/menuDisplay.xhtml")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= MenuDisplay.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MenuDisplay extends ComponentExampleImpl<MenuDisplay> implements Serializable {
+public class MenuDisplay implements Serializable {
     public static final String BEAN_NAME = "menuDisplay";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public MenuDisplay() {
-        super(MenuDisplay.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

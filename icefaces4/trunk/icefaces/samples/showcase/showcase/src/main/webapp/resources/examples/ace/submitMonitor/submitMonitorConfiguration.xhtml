@@ -24,13 +24,6 @@
     xmlns:icecore="http://www.icefaces.org/icefaces/core"
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[submitMonitorConfiguration.title]}"/>
-    <ui:param name="description" value="#{msgs[submitMonitorConfiguration.description]}"/>
-    <ui:param name="resourceValue" value="#{submitMonitorConfiguration.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{submitMonitorResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{submitMonitorResources.tldResources}"/>
-
     <ui:define name="example">
         <h:panelGrid id="completeExample" columns="2" style="width: 100%;">
             <ace:panel id="configPanel" header="Configuration Panel" style="height: 300px;">

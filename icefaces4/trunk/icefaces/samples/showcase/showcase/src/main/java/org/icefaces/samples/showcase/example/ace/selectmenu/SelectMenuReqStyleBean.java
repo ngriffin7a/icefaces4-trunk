@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.selectmenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = SelectMenuBean.BEAN_NAME,
-        title = "example.ace.selectmenu.reqStyle.title",
-        description = "example.ace.selectmenu.reqStyle.description",
-        example = "/resources/examples/ace/selectmenu/selectMenuReqStyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="selectMenuReqStyle.xhtml",
-                    resource = "/resources/examples/ace/selectmenu/selectMenuReqStyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="SelectMenuReqStyleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/selectmenu/SelectMenuReqStyleBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="SelectMenuBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/selectmenu/SelectMenuBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= SelectMenuReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SelectMenuReqStyleBean extends ComponentExampleImpl<SelectMenuReqStyleBean> implements Serializable
+public class SelectMenuReqStyleBean implements Serializable
 {
     public static final String BEAN_NAME = "selectMenuReqStyleBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -58,11 +32,6 @@ public class SelectMenuReqStyleBean extends ComponentExampleImpl<SelectMenuReqSt
     private String reqColor = "redRS";
     private String optColor = "greenRS";
 
-    public SelectMenuReqStyleBean() 
-    {
-        super(SelectMenuReqStyleBean.class);
-    }
-    
     public String getSelectedText1() { return selectedText1; }
     public String getSelectedText2() { return selectedText2; }
     
@@ -85,11 +54,6 @@ public class SelectMenuReqStyleBean extends ComponentExampleImpl<SelectMenuReqSt
         this.optColor = optColor;
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-	
 	private boolean useTheme = false;
 
     public boolean getUseTheme() {

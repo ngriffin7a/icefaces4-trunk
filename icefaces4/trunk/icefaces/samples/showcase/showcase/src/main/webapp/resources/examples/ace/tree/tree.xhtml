@@ -24,15 +24,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-<ui:param name="title" value="#{msgs[treeBean.title]}"/>
-<ui:param name="description" value="#{msgs[treeBean.description]}"/>
-<ui:param name="subMenuTitle" value="#{msgs[treeBean.subMenuTitle]}"/>
-<ui:param name="subMenuLinks" value="#{treeBean.subMenuLinks}"/>
-<ui:param name="resourceValue" value="#{treeBean.exampleResource}"/>
-
-<ui:param name="wikiResources" value="#{treeResources.wikiResources}"/>
-<ui:param name="tldResources" value="#{treeResources.tldResources}"/>
-
 <ui:define name="example">
     <h:form id="form">
         <style type="text/css">

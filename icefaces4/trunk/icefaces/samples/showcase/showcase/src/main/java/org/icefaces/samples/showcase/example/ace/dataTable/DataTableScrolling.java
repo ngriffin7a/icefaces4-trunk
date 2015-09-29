@@ -16,41 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.scrolling.title",
-        description = "example.ace.dataTable.scrolling.description",
-        example = "/resources/examples/ace/dataTable/dataTableScrolling.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTableScrolling.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTableScrolling.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableScrolling.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableScrolling.java")
-        }
-)
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= DataTableScrolling.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableScrolling extends ComponentExampleImpl<DataTableScrolling> implements Serializable {
+public class DataTableScrolling implements Serializable {
     public static final String BEAN_NAME = "dataTableScrolling";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -59,13 +36,7 @@ public class DataTableScrolling extends ComponentExampleImpl<DataTableScrolling>
     private List<Car> carsData;
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableScrolling() {
-        super(DataTableScrolling.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- GETTERS & SETTERS BEGIN

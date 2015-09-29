@@ -16,36 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.date;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.Date;
 
-@ComponentExample(
-        parent = DateEntryBean.BEAN_NAME,
-        title = "example.ace.dateentry.locale.title",
-        description = "example.ace.dateentry.locale.description",
-        example = "/resources/examples/ace/date/datelocale.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="datelocale.xhtml",
-                    resource = "/resources/examples/ace/date/datelocale.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DateLocaleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/date/DateLocaleBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DateLocaleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DateLocaleBean extends ComponentExampleImpl<DateLocaleBean> implements Serializable {
+public class DateLocaleBean implements Serializable {
     public static final String BEAN_NAME = "dateLocale";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -58,15 +37,6 @@ public class DateLocaleBean extends ComponentExampleImpl<DateLocaleBean> impleme
 
     public void setSelectedDate(Date selectedDate) {
         this.selectedDate = selectedDate;
-    }
-
-    public DateLocaleBean() {
-        super(DateLocaleBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public String getLocale() {

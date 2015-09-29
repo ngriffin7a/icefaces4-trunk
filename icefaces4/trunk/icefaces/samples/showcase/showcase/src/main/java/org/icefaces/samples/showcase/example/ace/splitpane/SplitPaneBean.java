@@ -15,52 +15,14 @@
  */
 
 package org.icefaces.samples.showcase.example.ace.splitpane;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.util.List;
 
-@ComponentExample(
-        title = "example.ace.splitpane.title",
-        description = "example.ace.splitpane.description",
-        example = "/resources/examples/ace/splitpane/splitPaneOverview.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="splitPaneOverview.xhtml",
-                    resource = "/resources/examples/ace/splitpane/splitPaneOverview.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="SplitPaneBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/splitpane/SplitPaneBean.java")
-        }
-)
-@Menu(
-            title = "menu.ace.splitpane.subMenu.title",
-            menuLinks = {
-                @MenuLink(title = "menu.ace.splitpane.subMenu.main", isDefault = true, exampleBeanName = SplitPaneBean.BEAN_NAME)
-            }
-)
 @ManagedBean(name= SplitPaneBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class SplitPaneBean extends ComponentExampleImpl< SplitPaneBean > implements Serializable {
+public class SplitPaneBean implements Serializable {
     public static final String BEAN_NAME = "splitPaneBean";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public SplitPaneBean() 
-    {
-        super(SplitPaneBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

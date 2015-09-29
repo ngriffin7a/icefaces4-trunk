@@ -16,38 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.confirmationdialog;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
-@ComponentExample(
-        parent = ConfirmationDialogBean.BEAN_NAME,
-        title = "example.ace.confirmationdialog.effect.title",
-        description = "example.ace.confirmationdialog.effect.description",
-        example = "/resources/examples/ace/confirmationdialog/confirmationDialogEffect.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="confirmationDialogEffect.xhtml",
-                    resource = "/resources/examples/ace/confirmationdialog/confirmationDialogEffect.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ConfirmationDialogEffect.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/confirmationdialog/ConfirmationDialogEffectBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
 @ManagedBean(name= ConfirmationDialogEffectBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ConfirmationDialogEffectBean extends ComponentExampleImpl<ConfirmationDialogEffectBean> implements Serializable {
+public class ConfirmationDialogEffectBean implements Serializable {
     public static final String BEAN_NAME = "confirmationDialogEffectBean";
 	public String getBeanName() { return BEAN_NAME; }
     private String showEffect;
@@ -57,18 +35,12 @@ public class ConfirmationDialogEffectBean extends ComponentExampleImpl<Confirmat
 	private LinkedHashMap<String, String> hideEffects;
 
     public ConfirmationDialogEffectBean() {
-        super(ConfirmationDialogEffectBean.class);
         outcome = null;
         
         showEffects = initializeDialogShowEffects();
 		hideEffects = initializeDialogHideEffects();
         showEffect = showEffects.get("Fade");
         hideEffect = hideEffects.get("Fade");
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
         private LinkedHashMap<String, String> initializeDialogShowEffects()

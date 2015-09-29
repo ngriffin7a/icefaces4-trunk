@@ -16,54 +16,22 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.ace.component.chart.Axis;
 import org.icefaces.ace.component.chart.AxisType;
 import org.icefaces.ace.model.chart.CartesianSeries;
 import org.icefaces.ace.model.chart.CartesianSeries.CartesianType;
-import org.icefaces.ace.model.chart.ChartSeries;
-import org.icefaces.ace.model.chart.DragConstraintAxis;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.lang.Boolean;
-import java.lang.Override;
-import java.lang.String;
-import java.util.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.stackedFill.title",
-        description = "example.ace.chart.stackedFill.description",
-        example = "/resources/examples/ace/chart/chartStackedBar.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="ChartStackedBar.xhtml",
-                        resource = "/resources/examples/ace/chart/chartStackedBar.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="ChartStackedBarBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartStackedBarBean.java")
-        }
-)
 @ManagedBean(name= ChartStackedBarBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartStackedBarBean extends ComponentExampleImpl<ChartStackedBarBean> implements Serializable {
+public class ChartStackedBarBean implements Serializable {
     public static final String BEAN_NAME = "chartStackedBarBean";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -73,13 +41,8 @@ public class ChartStackedBarBean extends ComponentExampleImpl<ChartStackedBarBea
     private CartesianSeries fillm1, fillm2, fillm3;
     String [] ticks = {"May", "June", "July", "August"};
 
-    public ChartStackedBarBean() {
-        super(ChartStackedBarBean.class);
-    }
-
     @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
+    public void init() {
         createBarFillModel();  /* creates model for default settings and data for fill data chart */
     }
 

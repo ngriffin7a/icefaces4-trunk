@@ -16,55 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.tree;
 
-import org.icefaces.ace.model.tree.NodeState;
-import org.icefaces.ace.model.tree.NodeStateCreationCallback;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-@ComponentExample(
-        parent = TreeBean.BEAN_NAME,
-        title = "example.ace.tree.reorder.title",
-        description = "example.ace.tree.reorder.description",
-        example = "/resources/examples/ace/tree/treeReorder.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="treeReorder.xhtml",
-                        resource = "/resources/examples/ace/tree/treeReorder.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="TreeReorderBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/tree/TreeReorderBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.ace.model.tree.NodeStateCreationCallback;
+
 @ManagedBean(name= TreeReorderBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TreeReorderBean extends ComponentExampleImpl<TreeReorderBean> implements Serializable {
+public class TreeReorderBean implements Serializable {
     public static final String BEAN_NAME = "treeReorderBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public TreeReorderBean() {
-        super(TreeReorderBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     private List<LocationNodeImpl> treeRoots = TreeDataFactory.getTreeRoots();
 

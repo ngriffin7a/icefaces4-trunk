@@ -16,38 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.checkboxButtons;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
-import java.util.*;
-
-@ComponentExample(
-        parent = CheckboxButtonsBean.BEAN_NAME,
-        title = "example.ace.checkboxButtons.indicator.title",
-        description = "example.ace.checkboxButtons.indicator.description",
-        example = "/resources/examples/ace/checkboxButtons/checkboxButtonsIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="checkboxButtonsIndicator.xhtml",
-                    resource = "/resources/examples/ace/checkboxButtons/checkboxButtonsIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="CheckboxButtonsIndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/checkboxButtons/CheckboxButtonsIndicatorBean.java")
-        }
-)
 @ManagedBean(name= CheckboxButtonsIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class CheckboxButtonsIndicatorBean extends ComponentExampleImpl<CheckboxButtonsIndicatorBean> implements Serializable
+public class CheckboxButtonsIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "checkboxButtonsIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -56,16 +34,6 @@ public class CheckboxButtonsIndicatorBean extends ComponentExampleImpl<CheckboxB
     private String requiredText = "This field is required.";
     private String optionalText = "Not mandatory.";
     private String position = "right";
-
-    public CheckboxButtonsIndicatorBean() 
-    {
-        super(CheckboxButtonsIndicatorBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
 	private List<String> selected = new ArrayList<String>();
 	public List<String> getSelected() { return selected; }

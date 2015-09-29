@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[progressBarPolling.title]}"/>
-    <ui:param name="description" value="#{msgs[progressBarPolling.description]}"/>
-    <ui:param name="resourceValue" value="#{progressBarPolling.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{progressBarResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{progressBarResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="exampleForm" prependId="false">
             <h:outputText value="Select an image to upload: " />

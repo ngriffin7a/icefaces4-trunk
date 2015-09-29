@@ -16,53 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.tooltip; 
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-
-@ComponentExample(
-        parent = TooltipOverviewBean.BEAN_NAME,
-        title = "example.ace.delegateTooltip.title",
-        description = "example.ace.delegateTooltip.description",
-        example = "/resources/examples/ace/tooltip/delegateTooltip.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="delegateTooltip.xhtml",
-                    resource = "/resources/examples/ace/tooltip/delegateTooltip.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DelegateTooltipBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/tooltip/DelegateTooltipBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name= DelegateTooltipBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DelegateTooltipBean extends ComponentExampleImpl<DelegateTooltipBean> implements Serializable {
+public class DelegateTooltipBean implements Serializable {
 
     public static final String BEAN_NAME = "delegateTooltipBean";
 	public String getBeanName() { return BEAN_NAME; }
-    /////////////---- CONSTRUCTOR BEGIN
-    public DelegateTooltipBean() {
-        super(DelegateTooltipBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 	
 	private Object data;
 	

@@ -16,39 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.dataExporter;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-@ComponentExample(
-        parent = DataExporterBean.BEAN_NAME,
-        title = "example.ace.dataExporter.excludeFromExport.title",
-        description = "example.ace.dataExporter.excludeFromExport.description",
-        example = "/resources/examples/ace/dataExporter/dataExporterExcludeFromExport.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataExporterExcludeFromExport.xhtml",
-                    resource = "/resources/examples/ace/dataExporter/dataExporterExcludeFromExport.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ExcludeFromExport.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataExporter/ExcludeFromExport.java")
-        }
-)
 @ManagedBean(name= ExcludeFromExport.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ExcludeFromExport extends ComponentExampleImpl<ExcludeFromExport> implements Serializable {
+public class ExcludeFromExport implements Serializable {
     public static final String BEAN_NAME = "excludeFromExport";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -58,15 +37,9 @@ public class ExcludeFromExport extends ComponentExampleImpl<ExcludeFromExport> i
     /////////////---- CONSTRUCTOR BEGIN
     public ExcludeFromExport() 
     {
-        super(ExcludeFromExport.class);
         initializeLocalVariables();
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     /////////////---- PRIVATE METHODS BEGIN
     private void initializeLocalVariables() {
         this.cars = new ArrayList<Car>(DataTableData.getDefaultData());

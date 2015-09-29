@@ -16,40 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.autocompleteentry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = AutoCompleteEntryBean.BEAN_NAME,
-        title = "example.ace.autocompleteentry.match.title",
-        description = "example.ace.autocompleteentry.match.description",
-        example = "/resources/examples/ace/autocompleteentry/autoCompleteEntryMatch.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="autoCompleteEntryMatch.xhtml",
-                    resource = "/resources/examples/ace/autocompleteentry/autoCompleteEntryMatch.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="...MatchBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryMatchBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="AutoCompleteEntryBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= AutoCompleteEntryMatchBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AutoCompleteEntryMatchBean extends ComponentExampleImpl<AutoCompleteEntryMatchBean> implements Serializable
+public class AutoCompleteEntryMatchBean implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryMatchBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -57,10 +31,6 @@ public class AutoCompleteEntryMatchBean extends ComponentExampleImpl<AutoComplet
     private String selectedText;
     private String filterMode = "startsWith";
     private boolean caseSensitive = false;
-    
-    public AutoCompleteEntryMatchBean() { 
-        super(AutoCompleteEntryMatchBean.class);
-    }
     
     public String getSelectedText() {
         return selectedText;
@@ -84,10 +54,5 @@ public class AutoCompleteEntryMatchBean extends ComponentExampleImpl<AutoComplet
     
     public void setCaseSensitive(boolean caseSensitive) {
         this.caseSensitive = caseSensitive;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

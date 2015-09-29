@@ -16,56 +16,28 @@
 
 package org.icefaces.samples.showcase.example.ace.tableConfigPanel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
-
-import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-@ComponentExample(
-        parent = TableConfigPanelBean.BEAN_NAME,
-        title = "example.ace.tableConfigPanel.advanced.title",
-        description = "example.ace.tableConfigPanel.advanced.description",
-        example = "/resources/examples/ace/tableConfigPanel/tableConfigPanelAdvanced.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="tableConfigPanelAdvanced.xhtml",
-                    resource = "/resources/examples/ace/tableConfigPanel/tableConfigPanelAdvanced.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TableConfigPanelAdvancedBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/tableConfigPanel/TableConfigPanelAdvancedBean.java")
-        }
-)
 @ManagedBean(name= TableConfigPanelAdvancedBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TableConfigPanelAdvancedBean extends ComponentExampleImpl<TableConfigPanelAdvancedBean> implements Serializable
+public class TableConfigPanelAdvancedBean implements Serializable
 {
     public static final String BEAN_NAME = "tableConfigPanelAdvancedBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     public TableConfigPanelAdvancedBean() {
-        super(TableConfigPanelAdvancedBean.class);
 		carsData = new ArrayList<Car>(DataTableData.getDefaultData());
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private List<Car> carsData;
 
     public List<Car> getCarsData() { return carsData; }

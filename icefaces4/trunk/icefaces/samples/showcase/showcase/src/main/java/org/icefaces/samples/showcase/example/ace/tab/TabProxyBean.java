@@ -16,43 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.tab;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.HashMap;
+
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-@ComponentExample(
-        parent = TabSetBean.BEAN_NAME,
-        title = "example.ace.tabSet.proxy.title",
-        description = "example.ace.tabSet.proxy.description",
-        example = "/resources/examples/ace/tab/tabset-proxy.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="tabset-proxy_side.xhtml",
-                    resource = "/resources/examples/ace/tab/tabset-proxy.xhtml"),
-            @ExampleResource(type = ResourceType.java,
-                    title="TabProxyBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/tab/TabProxyBean.java")
-        }
-)
 @ManagedBean(name = TabProxyBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TabProxyBean extends ComponentExampleImpl<TabProxyBean>
-        implements Serializable {
+public class TabProxyBean implements Serializable {
 
     public static final String BEAN_NAME = "tabProxy";
 	public String getBeanName() { return BEAN_NAME; }
@@ -61,7 +37,6 @@ public class TabProxyBean extends ComponentExampleImpl<TabProxyBean>
     private boolean invalidSwitch = false;
     private int secondTabSelection;
     HashMap<String, Integer> options;
-    
     
     public void validateSelection(FacesContext context, UIComponent component, Object value) throws ValidatorException{
         Integer submitedValue = (Integer)value;
@@ -95,7 +70,6 @@ public class TabProxyBean extends ComponentExampleImpl<TabProxyBean>
     }
 
     public TabProxyBean() {
-        super(TabProxyBean.class);
         options = new HashMap<String, Integer>();
         options.put("yes", 1);
         options.put("no", 0);
@@ -103,11 +77,6 @@ public class TabProxyBean extends ComponentExampleImpl<TabProxyBean>
 
     public HashMap<String, Integer> getOptions() {
         return options;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public void setOptions(HashMap<String, Integer> options) {

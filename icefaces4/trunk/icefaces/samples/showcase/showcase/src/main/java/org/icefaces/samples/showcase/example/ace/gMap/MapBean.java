@@ -17,52 +17,16 @@
 package org.icefaces.samples.showcase.example.ace.gMap;
 
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.validator.ValidatorException;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.faces.event.ActionEvent;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import java.util.Dictionary;
-import java.util.Enumeration;
+
 import javax.faces.bean.CustomScoped;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-
-@ComponentExample(
-    title = "example.ace.gMap.overview.title",
-    description = "example.ace.gMap.overview.description",
-    example = "/resources/examples/ace/gMap/gMapBasic.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                title="gMapBasic.xhtml",
-                resource = "/resources/examples/ace/gMap/gMapBasic.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                title="MapBean.java",
-                resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/gMap/MapBean.java")
-    }
-)
-@Menu(
-    title = "menu.ace.gMap.subMenu.title",
-    menuLinks = {
-        @MenuLink(title = "menu.ace.gMap.subMenu.overview",
-                isDefault = true, exampleBeanName = MapBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.gMap.subMenu.options",
-                exampleBeanName = MapOptionsBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 
 @ManagedBean (name=MapBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MapBean extends ComponentExampleImpl<MapBean> implements Serializable{
+public class MapBean implements Serializable{
 	public static final String BEAN_NAME = "mapBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -73,10 +37,6 @@ public class MapBean extends ComponentExampleImpl<MapBean> implements Serializab
     private boolean locateAddress = false;
     private String address ="Calgary Alberta";
 
-	public MapBean() {
-        super(MapBean.class);
-    }
-    
 	public String getType() {
         return type;
     }
@@ -139,10 +99,4 @@ public class MapBean extends ComponentExampleImpl<MapBean> implements Serializab
         locateAddress = true;
 		zoom = 12;
     }	
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-	
 }

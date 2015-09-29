@@ -23,13 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
     
-    <ui:param name="title" value="#{msgs[sliderListener.title]}"/>
-    <ui:param name="description" value="#{msgs[sliderListener.description]}"/>
-    <ui:param name="resourceValue" value="#{sliderListener.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{sliderEntryResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{sliderEntryResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             <ace:panel>

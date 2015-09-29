@@ -16,60 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.confirmationdialog;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.confirmationdialog.title",
-        description = "example.ace.confirmationdialog.description",
-        example = "/resources/examples/ace/confirmationdialog/confirmationDialog.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="confirmationDialog.xhtml",
-                    resource = "/resources/examples/ace/confirmationdialog/confirmationDialog.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ConfirmationDialog.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/confirmationdialog/ConfirmationDialogBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.confirmationdialog.subMenu.title",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.confirmationdialog.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = ConfirmationDialogBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.confirmationdialog.subMenu.modal",
-                    exampleBeanName = ConfirmationDialogModalBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.confirmationdialog.subMenu.effect",
-                    exampleBeanName = ConfirmationDialogEffectBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= ConfirmationDialogBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ConfirmationDialogBean extends ComponentExampleImpl<ConfirmationDialogBean> implements Serializable {
+public class ConfirmationDialogBean implements Serializable {
     public static final String BEAN_NAME = "confirmationDialogBean";
 	public String getBeanName() { return BEAN_NAME; }
     private String outcome = null;
-
-    public ConfirmationDialogBean() {
-        super(ConfirmationDialogBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public void yes(ActionEvent actionEvent) {
             outcome = "You are sure";

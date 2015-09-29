@@ -16,60 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.ajax;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.ajax.title",
-        description = "example.ace.ajax.description",
-        example = "/resources/examples/ace/ajax/ajax.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="ajax.xhtml",
-                    resource = "/resources/examples/ace/ajax/ajax.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AjaxBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/ajax/AjaxBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.ajax.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.ajax.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = AjaxBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.ajax.subMenu.advanced",
-                    exampleBeanName = AjaxAdvancedBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.ajax.subMenu.callbacks",
-                    exampleBeanName = AjaxCallbacksBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= AjaxBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AjaxBean extends ComponentExampleImpl<AjaxBean> implements Serializable 
+public class AjaxBean implements Serializable 
 {
     public static final String BEAN_NAME = "ajaxBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    public AjaxBean() {
-        super(AjaxBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     private boolean ajaxEnabled = true;
     private String textValue;
     private String selectValue;

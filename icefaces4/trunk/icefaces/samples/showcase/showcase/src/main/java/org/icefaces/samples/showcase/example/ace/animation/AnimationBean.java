@@ -16,46 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.animation;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.animation.title",
-        description = "example.ace.animation.description",
-        example = "/resources/examples/ace/animation/animation.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="animation.xhtml",
-                    resource = "/resources/examples/ace/animation/animation.xhtml")
-        }
-)
-@Menu(
-            title = "menu.ace.animation.subMenu.title",
-            menuLinks = {
-                @MenuLink(title = "menu.ace.animation.subMenu.main", isDefault = true, exampleBeanName = AnimationBean.BEAN_NAME)
-            }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= AnimationBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AnimationBean extends ComponentExampleImpl<AnimationBean> implements Serializable {
+public class AnimationBean implements Serializable {
     public static final String BEAN_NAME = "animationBean";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public AnimationBean() 
-    {
-        super(AnimationBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-    }
+}

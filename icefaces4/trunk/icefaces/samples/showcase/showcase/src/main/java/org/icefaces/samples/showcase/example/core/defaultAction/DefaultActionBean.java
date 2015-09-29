@@ -16,60 +16,20 @@
 
 package org.icefaces.samples.showcase.example.core.defaultAction;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        title = "DefaultAction Component",
-        description = "The <b>&lt;icecore:defaultAction&gt;</b> component allows users to execute actions triggered by key presses when no other component in the page will. The following key presses are wired to trigger default action: Enter, Esc, Left Arrow, F3. The rest of key presses are ignored.",
-        example = "/resources/examples/core/default-action.xhtml"
-)
-
-@ExampleResources(
-        resources = {
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="default-action.xhtml",
-                        resource = "/resources/examples/core/default-action.xhtml"),
-                @ExampleResource(type = ResourceType.java,
-                        title="DefaultActionBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/defaultAction/DefaultActionBean.java")
-        }
-)
-@Menu(
-    title = "menu.core.defaultActionBean.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.core.defaultActionBean.subMenu.main", isDefault = true, exampleBeanName = DefaultActionBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name = DefaultActionBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DefaultActionBean  extends ComponentExampleImpl<DefaultActionBean> implements Serializable {
+public class DefaultActionBean implements Serializable {
     public static final String BEAN_NAME = "defaultActionBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     private String actionDescription;
     private String a, b, c = "";
-
-    public DefaultActionBean() {
-        super(DefaultActionBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public String getActionDescription() {
         return actionDescription;

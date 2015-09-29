@@ -16,41 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.autocompleteentry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = AutoCompleteEntryBean.BEAN_NAME,
-        title = "example.ace.autocompleteentry.indicator.title",
-        description = "example.ace.autocompleteentry.indicator.description",
-        example = "/resources/examples/ace/autocompleteentry/autoCompleteEntryIndicator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="autoCompleteEntryIndicator.xhtml",
-                    resource = "/resources/examples/ace/autocompleteentry/autoCompleteEntryIndicator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="...IndicatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryIndicatorBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="AutoCompleteEntryBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryBean.java")
-        }
-)
 @ManagedBean(name= AutoCompleteEntryIndicatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AutoCompleteEntryIndicatorBean extends ComponentExampleImpl<AutoCompleteEntryIndicatorBean> implements Serializable
+public class AutoCompleteEntryIndicatorBean implements Serializable
 {
     public static final String BEAN_NAME = "autoCompleteEntryIndicatorBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -59,11 +33,6 @@ public class AutoCompleteEntryIndicatorBean extends ComponentExampleImpl<AutoCom
     private String requiredText = "This field is required.";
     private String optionalText = "Not mandatory.";
     private String position = "right";
-
-    public AutoCompleteEntryIndicatorBean() 
-    {
-        super(AutoCompleteEntryIndicatorBean.class);
-    }
 
     public void applyRequired(ValueChangeEvent e) {
         required = (Boolean) e.getNewValue();
@@ -99,10 +68,5 @@ public class AutoCompleteEntryIndicatorBean extends ComponentExampleImpl<AutoCom
     
     public void setPosition(String position) {
         this.position = position;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

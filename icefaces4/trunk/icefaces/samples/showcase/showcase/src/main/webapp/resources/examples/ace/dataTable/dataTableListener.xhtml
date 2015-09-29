@@ -24,13 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[dataTableListener.title]}"/>
-    <ui:param name="description" value="#{msgs[dataTableListener.description]}"/>
-    <ui:param name="resourceValue" value="#{dataTableListener.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{dataTableResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{dataTableResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="listenerForm">
            <ace:dataTable id="carTableSingleRow"

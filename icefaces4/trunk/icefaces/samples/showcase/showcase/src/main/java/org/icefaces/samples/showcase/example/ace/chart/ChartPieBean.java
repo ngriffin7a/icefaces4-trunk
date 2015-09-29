@@ -16,38 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
-import org.icefaces.ace.model.chart.SectorSeries;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.pie.title",
-        description = "example.ace.chart.pie.description",
-        example = "/resources/examples/ace/chart/chartPie.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="ChartPie.xhtml",
-                    resource = "/resources/examples/ace/chart/chartPie.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ChartPieBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartPieBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.ace.model.chart.SectorSeries;
+
 @ManagedBean(name= ChartPieBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartPieBean extends ComponentExampleImpl<ChartPieBean> implements Serializable
+public class ChartPieBean implements Serializable
 {
     public static final String BEAN_NAME = "chartPieBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -67,20 +47,11 @@ public class ChartPieBean extends ComponentExampleImpl<ChartPieBean> implements 
         }});
     }};
     
-    public ChartPieBean() {
-        super(ChartPieBean.class);
-    }
-    
     public List<SectorSeries> getPieData() {
         return pieData;
     }
 
     public void setPieData(List<SectorSeries> pieData) {
         this.pieData = pieData;
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

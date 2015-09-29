@@ -23,13 +23,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[chartDonutBean.title]}"/>
-    <ui:param name="description" value="#{msgs[chartDonutBean.description]}"/>
-    <ui:param name="resourceValue" value="#{chartDonutBean.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{chartResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{chartResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="donutForm">
             <ace:chart id="chart"

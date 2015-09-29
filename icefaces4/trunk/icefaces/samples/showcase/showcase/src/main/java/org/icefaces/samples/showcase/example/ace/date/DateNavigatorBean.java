@@ -16,56 +16,23 @@
 
 package org.icefaces.samples.showcase.example.ace.date;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.ace.event.DateSelectEvent;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ComponentExample(
-        parent = DateEntryBean.BEAN_NAME,
-        title = "example.ace.dateentry.navigator.title",
-        description = "example.ace.dateentry.navigator.description",
-        example = "/resources/examples/ace/date/datenavigator.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="datenavigator.xhtml",
-                    resource = "/resources/examples/ace/date/datenavigator.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DateNavigatorBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/date/DateNavigatorBean.java")
-        }
-)
+import org.icefaces.ace.event.DateSelectEvent;
+
 @ManagedBean(name= DateNavigatorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DateNavigatorBean extends ComponentExampleImpl<DateNavigatorBean> implements Serializable {
+public class DateNavigatorBean implements Serializable {
     public static final String BEAN_NAME = "dateNavigator";
 	public String getBeanName() { return BEAN_NAME; }
 
     private Date selectedDate = new Date(System.currentTimeMillis());
     private boolean enabled = true;
     
-    public DateNavigatorBean() {
-        super(DateNavigatorBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public void dateSelectListener(DateSelectEvent event) {
         this.selectedDate = event.getDate();
     }

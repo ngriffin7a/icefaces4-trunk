@@ -16,53 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.list;
 
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-    parent = ListBean.BEAN_NAME,
-    title = "example.ace.list.drag.title",
-    description = "example.ace.list.drag.description",
-    example = "/resources/examples/ace/list/listDrag.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                title="ListDrag.xhtml",
-                resource = "/resources/examples/ace/"+
-                        "list/listDrag.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                title="ListDragBean.java",
-                resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                        "showcase/example/ace/list/ListDragBean.java")
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
+
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= ListDragBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ListDragBean extends ComponentExampleImpl<ListDragBean> implements Serializable {
+public class ListDragBean implements Serializable {
     public static final String BEAN_NAME = "listDragBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public ListDragBean() {
-        super(ListDragBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     List<SelectItem> stringList = new ArrayList<SelectItem>() {{
         for (String s : DataTableData.CHASSIS_ALL) {

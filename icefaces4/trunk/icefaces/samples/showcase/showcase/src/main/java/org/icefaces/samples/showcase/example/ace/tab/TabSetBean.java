@@ -16,57 +16,22 @@
 
 package org.icefaces.samples.showcase.example.ace.tab;
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
+import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
 import org.icefaces.samples.showcase.example.ace.accordionpanel.Item;
 
-@ComponentExample(
-        title = "example.ace.tabSet.title",
-        description = "example.ace.tabSet.description",
-        example = "/resources/examples/ace/tab/tabset.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="tabset.xhtml",
-                    resource = "/resources/examples/ace/tab/tabset.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TabSetBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/tab/TabSetBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                        title = "ImageSet.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/dataGenerators/ImageSet.java")
-        }
-)
-@Menu(
-        title = "menu.ace.tabSet.subMenu.title",
-        menuLinks = {
-                @MenuLink(title = "menu.ace.tabSet.subMenu.main",
-                        isDefault = true,
-                        exampleBeanName = TabSetBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.tabSet.subMenu.clientSide",
-                        exampleBeanName = TabClientSideBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.tabSet.subMenu.serverSide",
-                        exampleBeanName = TabServerSideBean.BEAN_NAME),
-                @MenuLink(title = "menu.ace.tabSet.subMenu.proxy",
-                        exampleBeanName = TabProxyBean.BEAN_NAME)
-        })
 @ManagedBean(name= TabSetBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TabSetBean extends ComponentExampleImpl<TabSetBean> implements Serializable 
+public class TabSetBean implements Serializable 
 {
     public static final String BEAN_NAME = "tabSet";
 	public String getBeanName() { return BEAN_NAME; }
@@ -76,13 +41,7 @@ public class TabSetBean extends ComponentExampleImpl<TabSetBean> implements Seri
     private LinkedHashMap <String, Integer> toDoList;
 
     public TabSetBean() {
-        super(TabSetBean.class);
         initializeInstanceVariables();
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     private void initializeInstanceVariables()

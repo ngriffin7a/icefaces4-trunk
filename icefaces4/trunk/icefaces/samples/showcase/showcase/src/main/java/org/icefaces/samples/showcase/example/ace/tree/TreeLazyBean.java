@@ -16,40 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.tree;
 
-import org.icefaces.ace.model.tree.*;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = TreeBean.BEAN_NAME,
-        title = "example.ace.tree.lazy.title",
-        description = "example.ace.tree.lazy.description",
-        example = "/resources/examples/ace/tree/treeLazy.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="treeClient.xhtml",
-                        resource = "/resources/examples/ace/tree/treeLazy.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="TreeClientBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                                "/example/ace/tree/TreeLazyBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.ace.model.tree.LazyNodeDataModel;
+import org.icefaces.ace.model.tree.NodeState;
+import org.icefaces.ace.model.tree.NodeStateCreationCallback;
+import org.icefaces.ace.model.tree.NodeStateMap;
+
 @ManagedBean(name= TreeLazyBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TreeLazyBean extends ComponentExampleImpl<TreeLazyBean> implements Serializable {
+public class TreeLazyBean implements Serializable {
     public static final String BEAN_NAME = "treeLazyBean";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -63,10 +42,6 @@ public class TreeLazyBean extends ComponentExampleImpl<TreeLazyBean> implements 
             return newState;
         }
     };
-
-    public TreeLazyBean() {
-        super(TreeLazyBean.class);
-    }
 
     public LazyNodeDataModel<LocationNodeImpl> getLazyModel() {
         return lazyModel;
@@ -83,10 +58,4 @@ public class TreeLazyBean extends ComponentExampleImpl<TreeLazyBean> implements 
     public void setStateMap(NodeStateMap stateMap) {
         this.stateMap = stateMap;
     }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 }

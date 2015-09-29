@@ -16,45 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.list;
 
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.model.SelectItem;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@ComponentExample(
-    parent = ListBean.BEAN_NAME,
-    title = "example.ace.list.selection.title",
-    description = "example.ace.list.selection.description",
-    example = "/resources/examples/ace/list/listSelection.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                title="ListReorder.xhtml",
-                resource = "/resources/examples/ace/"+
-                        "list/listSelection.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                title="ListSelectionBean.java",
-                resource = "/WEB-INF/classes/org/icefaces/samples/"+
-                        "showcase/example/ace/list/ListSelectionBean.java")
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
+
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
+
 @ManagedBean(name= ListSelectionBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ListSelectionBean extends ComponentExampleImpl<ListSelectionBean> {
+public class ListSelectionBean implements Serializable {
     public static final String BEAN_NAME = "listSelectionBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -65,15 +40,6 @@ public class ListSelectionBean extends ComponentExampleImpl<ListSelectionBean> {
     }};
     private Set<Object> selections;
     private boolean multiSelect = true;
-
-    public ListSelectionBean() {
-        super(ListSelectionBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public List<SelectItem> getStringList() {
         return stringList;

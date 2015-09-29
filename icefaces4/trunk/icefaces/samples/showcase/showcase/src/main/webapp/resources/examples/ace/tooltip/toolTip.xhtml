@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[tooltipOverviewBean.title]}"/>
-    <ui:param name="description" value="#{msgs[tooltipOverviewBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[tooltipOverviewBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{tooltipOverviewBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{tooltipOverviewBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{tooltipResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{tooltipResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="form">
             

@@ -16,57 +16,14 @@
 
 package org.icefaces.samples.showcase.example.core.redirect;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "Redirect Component",
-        description = "The <b>&lt;icecore:redirect&gt;</b> component triggers a redirect immediately on page load, upon any user interaction causing a render of the tag, or at the server's discretion using push.",
-        example = "/resources/examples/core/redirect.xhtml"
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ExampleResources(
-        resources = {
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="redirect.xhtml",
-                        resource = "/resources/examples/core/redirect.xhtml"),
-                @ExampleResource(type = ResourceType.java,
-                        title="RedirectBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/redirect/RedirectBean.java"),
-                @ExampleResource(type = ResourceType.java,
-                        title="RedirectViewScopeBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/redirect/RedirectViewScopeBean.java")
-        }
-)
-@Menu(
-    title = "menu.core.redirectBean.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.core.redirectBean.subMenu.main", isDefault = true, exampleBeanName = RedirectBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name = RedirectBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class RedirectBean extends ComponentExampleImpl<RedirectBean> implements Serializable {
+public class RedirectBean implements Serializable {
     public static final String BEAN_NAME = "redirectBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public RedirectBean() {
-        super(RedirectBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

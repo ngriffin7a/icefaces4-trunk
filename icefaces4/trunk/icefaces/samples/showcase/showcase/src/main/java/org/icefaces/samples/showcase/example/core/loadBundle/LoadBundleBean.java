@@ -16,56 +16,14 @@
 
 package org.icefaces.samples.showcase.example.core.loadBundle;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "Load Bundle Component",
-        description = "The <b>&lt;icecore:loadBundle&gt;</b> component allows the loading of a resource bundle to be used for locale specific messages. The defined bundle is completely dynamic, meaning that if any of its attribute change at any time there will be no need to reload the page, session or application.",
-        example = "/resources/examples/core/load-bundle.xhtml"
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-@ExampleResources(
-        resources = {
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="loadBundle.xhtml",
-                        resource = "/resources/examples/core/load-bundle.xhtml"),
-                @ExampleResource(type = ResourceType.java,
-                        title="LoadBundleBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/loadBundle/LoadBundleBean.java"),
-                @ExampleResource(type = ResourceType.java,
-                        title="LoadBundleViewScopeBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/loadBundle/LoadBundleViewScopeBean.java")
-        }
-)
-@Menu(
-    title = "menu.core.loadBundleBean.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.core.loadBundleBean.subMenu.main", isDefault = true, exampleBeanName = LoadBundleBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name = LoadBundleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class LoadBundleBean extends ComponentExampleImpl<LoadBundleBean> implements Serializable {
+public class LoadBundleBean implements Serializable {
     public static final String BEAN_NAME = "loadBundleBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public LoadBundleBean() {
-        super(LoadBundleBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

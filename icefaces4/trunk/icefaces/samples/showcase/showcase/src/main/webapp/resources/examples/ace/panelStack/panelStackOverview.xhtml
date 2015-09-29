@@ -25,16 +25,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-
-	<ui:param name="title" value="#{msgs[panelStackBean.title]}"/>
-    <ui:param name="description" value="#{msgs[panelStackBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[panelStackBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{panelStackBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{panelStackBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{panelStackResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{panelStackResources.tldResources}"/>
-
 	<ui:define name="example">
 	
 	<ace:panel>	

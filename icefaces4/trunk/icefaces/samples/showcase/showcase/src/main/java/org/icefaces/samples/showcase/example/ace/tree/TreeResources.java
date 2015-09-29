@@ -16,44 +16,13 @@
 
 package org.icefaces.samples.showcase.example.ace.tree;
 
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-import org.icefaces.samples.showcase.metadata.context.ResourceRootPath;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ExampleResources(
-        resources ={
-                @ExampleResource(type = ResourceType.wiki,
-                        title="ace:tree",
-                        resource = ResourceRootPath.FOR_WIKI +"Tree"),
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 
-                @ExampleResource(type = ResourceType.tld,
-                        title="ace:tree",
-                        resource = ResourceRootPath.FOR_ACE_TLD + "tree.html"),
-
-                @ExampleResource(type = ResourceType.tld,
-                        title="ace:node",
-                        resource = ResourceRootPath.FOR_ACE_TLD + "node.html")
-        }
-)
 @ManagedBean(name= TreeResources.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TreeResources extends ComponentExampleImpl< TreeResources > implements Serializable {
+public class TreeResources implements Serializable {
     public static final String BEAN_NAME = "treeResources";
-    public TreeResources()
-    {
-        super(TreeResources.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 }

@@ -23,15 +23,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[chartGaugeBean.title]}"/>
-    <ui:param name="description" value="#{msgs[chartGaugeBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[chartGaugeBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{chartGaugeBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{chartGaugeBean.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{chartResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{chartResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id="canvasForm">
             <ace:chart id="chart"

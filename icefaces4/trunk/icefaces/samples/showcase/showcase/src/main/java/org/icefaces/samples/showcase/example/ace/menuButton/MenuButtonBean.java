@@ -16,48 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.menuButton;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.faces.event.ActionEvent;
 
-@ComponentExample(
-        title = "example.ace.menuButton.title",
-        description = "example.ace.menuButton.description",
-        example = "/resources/examples/ace/menuButton/menuButtonOverview.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="menuButton.xhtml",
-                    resource = "/resources/examples/ace/menuButton/menuButtonOverview.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MenuButtonBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/menuButton/MenuButtonBean.java")
-        }
-)
-@Menu(
-    title = "menu.ace.menuButton.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.ace.menuButton.subMenu.main", isDefault = true, exampleBeanName = MenuButtonBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
 
 @ManagedBean(name = MenuButtonBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MenuButtonBean extends ComponentExampleImpl<MenuButtonBean> implements Serializable {
+public class MenuButtonBean implements Serializable {
     public static final String BEAN_NAME = "menuButtonBean";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -69,17 +41,11 @@ public class MenuButtonBean extends ComponentExampleImpl<MenuButtonBean> impleme
     
     /////////////---- CONSTRUCTORS BEGIN
     public MenuButtonBean() {
-        super(MenuButtonBean.class);
         formatter = new SimpleDateFormat("HH:mm:ss");
         list = new ArrayList<String>(MAX_LIST_SIZE);
         list.add(DEFAULT_MESSAGE);
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     /////////////---- ACTION LISTENERS BEGIN
     public void fireAction(ActionEvent event) 
     {

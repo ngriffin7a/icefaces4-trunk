@@ -16,45 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.contextMenu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = ContextMenuBean.BEAN_NAME,
-        title = "example.ace.contextMenu.table.title",
-        description = "example.ace.contextMenu.table.description",
-        example = "/resources/examples/ace/contextMenu/contextMenuTable.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="contextMenuTable.xhtml",
-                    resource = "/resources/examples/ace/contextMenu/contextMenuTable.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableDynamic.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableDynamic.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= ContextMenuTable.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ContextMenuTable extends ComponentExampleImpl<ContextMenuTable> implements Serializable {
+public class ContextMenuTable implements Serializable {
     public static final String BEAN_NAME = "contextMenuTable";
 	public String getBeanName() { return BEAN_NAME; }
-    
-    public ContextMenuTable() {
-        super(ContextMenuTable.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

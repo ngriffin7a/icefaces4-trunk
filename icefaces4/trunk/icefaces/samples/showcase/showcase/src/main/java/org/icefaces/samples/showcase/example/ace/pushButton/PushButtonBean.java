@@ -16,65 +16,26 @@
 
 package org.icefaces.samples.showcase.example.ace.pushButton;
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;                                                                       
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
-import java.io.Serializable;
+
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
+import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
 
-
-@ComponentExample(
-        title = "example.ace.pushButton.title",
-        description = "example.ace.pushButton.description",
-        example = "/resources/examples/ace/pushButton/pushbutton.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="pushbutton.xhtml",
-                    resource = "/resources/examples/ace/pushButton/pushbutton.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PushButtonBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/pushButton/PushButtonBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.pushButton.subMenu.title",
-	menuLinks = 
-                {
-                    @MenuLink(title = "menu.ace.pushButton.subMenu.main", isDefault = true,
-                                     exampleBeanName = PushButtonBean.BEAN_NAME)
-                }
-)
 
 @ManagedBean(name= PushButtonBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PushButtonBean extends ComponentExampleImpl<PushButtonBean> implements Serializable {
+public class PushButtonBean implements Serializable {
 
     public static final String BEAN_NAME = "pushButton";
 	public String getBeanName() { return BEAN_NAME; }
     ImageSet.ImageInfo currentImage;
     
     public PushButtonBean() {
-        super(PushButtonBean.class);
         currentImage = ImageSet.getNextImage(currentImage);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public String executeAction() {

@@ -16,63 +16,19 @@
 
 package org.icefaces.samples.showcase.example.ace.radioButton;
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
 
-@ComponentExample(
-    title = "example.ace.radioButton.title",
-    description = "example.ace.radioButton.description",
-    example = "/resources/examples/ace/radioButton/radiobutton.xhtml"
-)
-@ExampleResources(
-    resources ={
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                         title="radiobutton.xhtml",
-                         resource = "/resources/examples/ace/radioButton/radiobutton.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                         title="RadioButtonBean.java",
-                         resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/radioButton/RadioButtonBean.java")
-    }
-)
-
-@Menu(
-    title = "menu.ace.radioButton.subMenu.title",
-    menuLinks = {
-        @MenuLink(title = "menu.ace.radioButton.subMenu.main", isDefault = true,
-                  exampleBeanName = RadioButtonBean.BEAN_NAME),
-        @MenuLink(title = "menu.ace.radioButton.subMenu.custom",
-                  exampleBeanName = RadioButtonCustomBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= RadioButtonBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class RadioButtonBean extends ComponentExampleImpl<RadioButtonBean> implements Serializable {
+public class RadioButtonBean implements Serializable {
 
     public static final String BEAN_NAME = "radioButton";
 	public String getBeanName() { return BEAN_NAME; }
     private boolean selected1 = true;
 	private boolean selected2 = false;
-
-    public RadioButtonBean() {
-        super(RadioButtonBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public boolean isSelected1() {
         return selected1;

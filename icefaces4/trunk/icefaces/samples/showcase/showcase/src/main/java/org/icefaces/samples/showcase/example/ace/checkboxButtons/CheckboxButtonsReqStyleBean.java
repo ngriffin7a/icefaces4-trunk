@@ -16,51 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.checkboxButtons;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.util.*;
 
-@ComponentExample(
-        parent = CheckboxButtonsBean.BEAN_NAME,
-        title = "example.ace.checkboxButtons.reqStyle.title",
-        description = "example.ace.checkboxButtons.reqStyle.description",
-        example = "/resources/examples/ace/checkboxButtons/checkboxButtonsReqStyle.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="checkboxButtonsReqStyle.xhtml",
-                    resource = "/resources/examples/ace/checkboxButtons/checkboxButtonsReqStyle.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="CheckboxButtonsReqStyleBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/checkboxButtons/CheckboxButtonsReqStyleBean.java")
-        }
-)
 @ManagedBean(name= CheckboxButtonsReqStyleBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class CheckboxButtonsReqStyleBean extends ComponentExampleImpl<CheckboxButtonsReqStyleBean> implements Serializable
+public class CheckboxButtonsReqStyleBean implements Serializable
 {
     public static final String BEAN_NAME = "checkboxButtonsReqStyleBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    public CheckboxButtonsReqStyleBean() 
-    {
-        super(CheckboxButtonsReqStyleBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 	private List<String> selected1 = new ArrayList<String>();
 	public List<String> getSelected1() { return selected1; }
 	public void setSelected1(List<String> selected1) { this.selected1 = selected1; }

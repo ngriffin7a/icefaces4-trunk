@@ -16,55 +16,22 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
-import org.icefaces.ace.component.chart.Axis;
-import org.icefaces.ace.component.chart.AxisType;
-import org.icefaces.ace.model.chart.CartesianSeries;
-import org.icefaces.ace.model.chart.DragConstraintAxis;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.line.title",
-        description = "example.ace.chart.line.description",
-        example = "/resources/examples/ace/chart/chartLine.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="ChartLine.xhtml",
-                        resource = "/resources/examples/ace/chart/chartLine.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="ChartLineBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartLineBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.ace.component.chart.Axis;
+import org.icefaces.ace.component.chart.AxisType;
+import org.icefaces.ace.model.chart.CartesianSeries;
+
 @ManagedBean(name= ChartLineBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartLineBean extends ComponentExampleImpl<ChartLineBean> implements Serializable {
+public class ChartLineBean implements Serializable {
     public static final String BEAN_NAME = "chartLineBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public ChartLineBean() {
-        super(ChartLineBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     private List<CartesianSeries> lineData = new ArrayList<CartesianSeries>() {{
         add(new CartesianSeries() {{

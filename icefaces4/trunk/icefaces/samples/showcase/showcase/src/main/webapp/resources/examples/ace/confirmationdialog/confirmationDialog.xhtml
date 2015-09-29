@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[confirmationDialogBean.title]}"/>
-    <ui:param name="description" value="#{msgs[confirmationDialogBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[confirmationDialogBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{confirmationDialogBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{confirmationDialogBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{confirmationDialogResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{confirmationDialogResources.tldResources}"/>
-    
     <ui:define name="example">
         <h:form id="form">
             <h:panelGrid styleClass="centeredPanelGrid">

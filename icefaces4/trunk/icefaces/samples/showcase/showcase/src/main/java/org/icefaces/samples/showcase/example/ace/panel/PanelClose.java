@@ -16,36 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.panel;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = PanelBean.BEAN_NAME,
-        title = "example.ace.panel.close.title",
-        description = "example.ace.panel.close.description",
-        example = "/resources/examples/ace/panel/panelClose.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="panelClose.xhtml",
-                    resource = "/resources/examples/ace/panel/panelClose.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="PanelClose.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/panel/PanelClose.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= PanelClose.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class PanelClose extends ComponentExampleImpl<PanelClose> implements Serializable {
+public class PanelClose implements Serializable {
 
     public static final String BEAN_NAME = "panelClose";
 	public String getBeanName() { return BEAN_NAME; }
@@ -53,15 +31,6 @@ public class PanelClose extends ComponentExampleImpl<PanelClose> implements Seri
     private boolean closable = true;
     private int speed = 700;
     
-    public PanelClose() {
-        super(PanelClose.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public boolean getClosable() { return closable; }
     public int getSpeed() { return speed; }
     

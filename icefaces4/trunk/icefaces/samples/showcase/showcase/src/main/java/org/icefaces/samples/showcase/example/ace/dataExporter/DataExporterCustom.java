@@ -16,60 +16,32 @@
 
 package org.icefaces.samples.showcase.example.ace.dataExporter;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-
-import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
-import javax.faces.model.SelectItem;
-
-import java.util.List;
-import java.util.ArrayList;
 import javax.faces.FacesException;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+
+import org.icefaces.ace.component.dataexporter.OuterTableCSVExporter;
 import org.icefaces.ace.component.datatable.DataTable;
 import org.icefaces.ace.component.panelexpansion.PanelExpansion;
-import org.icefaces.ace.component.dataexporter.OuterTableCSVExporter;
-import org.icefaces.ace.component.dataexporter.InnerTableCSVExporter;
 
-@ComponentExample(
-        parent = DataExporterBean.BEAN_NAME,
-        title = "example.ace.dataExporter.custom.title",
-        description = "example.ace.dataExporter.custom.description",
-        example = "/resources/examples/ace/dataExporter/dataExporterCustom.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataExporterCustom.xhtml",
-                    resource = "/resources/examples/ace/dataExporter/dataExporterCustom.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataExporterCustom.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataExporter/DataExporterCustom.java")
-        }
-)
 @ManagedBean(name= DataExporterCustom.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataExporterCustom extends ComponentExampleImpl<DataExporterCustom> implements Serializable {
+public class DataExporterCustom implements Serializable {
 	public static final String BEAN_NAME = "dataExporterCustom";
 	public String getBeanName() { return BEAN_NAME; }
 	
 	private static final String OUTER_TABLE_ID = "carTable";
 	
-    public DataExporterCustom() { 
-		super(DataExporterCustom.class);
-	}
-	
     @PostConstruct
     public void initMetaData() {
-        super.initMetaData();
         if (null == carsData){
             this.getRandomData();
         }

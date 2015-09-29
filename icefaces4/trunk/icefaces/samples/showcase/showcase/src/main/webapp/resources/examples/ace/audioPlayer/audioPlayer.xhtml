@@ -24,15 +24,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[audioPlayerBean.title]}"/>
-    <ui:param name="description" value="#{msgs[audioPlayerBean.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[audioPlayerBean.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{audioPlayerBean.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{audioPlayerBean.exampleResource}"/>
-    
-    <ui:param name="wikiResources" value="#{audioPlayerResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{audioPlayerResources.tldResources}"/>
-
     <ui:define name="example">
 
 		<h:form id="form">

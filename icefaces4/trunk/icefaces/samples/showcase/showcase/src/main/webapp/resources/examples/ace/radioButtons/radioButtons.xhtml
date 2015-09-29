@@ -23,15 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[radioButtons.title]}"/>
-    <ui:param name="description" value="#{msgs[radioButtons.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[radioButtons.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{radioButtons.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{radioButtons.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{radioButtonsResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{radioButtonsResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
 			<h:outputLabel for="mutuallyExclusive" value="Enable mutual exclusivity: " />

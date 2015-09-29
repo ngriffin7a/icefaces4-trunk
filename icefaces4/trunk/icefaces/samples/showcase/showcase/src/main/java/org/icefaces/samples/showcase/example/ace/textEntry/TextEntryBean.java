@@ -16,55 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.textEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        title = "example.ace.textEntry.title",
-        description = "example.ace.textEntry.description",
-        example = "/resources/examples/ace/textEntry/textEntry.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textEntry.xhtml",
-                    resource = "/resources/examples/ace/textEntry/textEntry.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextEntry.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textEntry/TextEntryBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.textEntry.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.textEntry.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = TextEntryBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.textEntry.subMenu.autotab",
-                    exampleBeanName = TextEntryAutotabBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.textEntry.subMenu.secret",
-                    exampleBeanName = TextEntrySecretBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.textEntry.subMenu.charCount",
-                    exampleBeanName = TextEntryCharCountBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.textEntry.subMenu.label",
-                    exampleBeanName = TextEntryLabelBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.textEntry.subMenu.indicator",
-                    exampleBeanName = TextEntryIndicatorBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.textEntry.subMenu.reqStyle",
-                    exampleBeanName = TextEntryReqStyleBean.BEAN_NAME)
-    }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= TextEntryBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TextEntryBean extends ComponentExampleImpl<TextEntryBean> implements Serializable
+public class TextEntryBean implements Serializable
 {
     public static final String BEAN_NAME = "textEntryBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -76,16 +35,6 @@ public class TextEntryBean extends ComponentExampleImpl<TextEntryBean> implement
     private String city;
     private String province;
     private String country;
-
-    public TextEntryBean()
-    {
-        super(TextEntryBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public String getFirstName() {
         return firstName;

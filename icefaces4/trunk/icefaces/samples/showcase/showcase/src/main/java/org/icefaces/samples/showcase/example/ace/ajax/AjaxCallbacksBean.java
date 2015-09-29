@@ -16,48 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.ajax;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = AjaxBean.BEAN_NAME,
-        title = "example.ace.ajax.callbacks.title",
-        description = "example.ace.ajax.callbacks.description",
-        example = "/resources/examples/ace/ajax/ajaxCallbacks.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="ajaxCallbacks.xhtml",
-                    resource = "/resources/examples/ace/ajax/ajaxCallbacks.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AjaxCallbacksBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/ajax/AjaxCallbacksBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= AjaxCallbacksBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AjaxCallbacksBean extends ComponentExampleImpl<AjaxCallbacksBean> implements Serializable
+public class AjaxCallbacksBean implements Serializable
 {
     public static final String BEAN_NAME = "ajaxCallbacksBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public AjaxCallbacksBean() {
-        super(AjaxCallbacksBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
 	private boolean value1 = true;
 	private boolean value2 = true;

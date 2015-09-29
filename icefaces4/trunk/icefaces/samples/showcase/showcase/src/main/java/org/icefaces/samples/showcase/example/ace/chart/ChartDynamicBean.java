@@ -16,48 +16,28 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
-import org.icefaces.ace.component.chart.Axis;
-import org.icefaces.ace.component.chart.AxisType;
-import org.icefaces.ace.event.PointValueChangeEvent;
-import org.icefaces.ace.event.SelectEvent;
-import org.icefaces.ace.event.SeriesSelectionEvent;
-import org.icefaces.ace.event.UnselectEvent;
-import org.icefaces.ace.model.chart.CartesianSeries;
-import org.icefaces.ace.model.chart.DragConstraintAxis;
-import org.icefaces.ace.model.table.RowStateMap;
-import org.icefaces.util.JavaScriptRunner;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.dynamic.title",
-        description = "example.ace.chart.dynamic.description",
-        example = "/resources/examples/ace/chart/chartDynamic.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="ChartDynamic.xhtml",
-                    resource = "/resources/examples/ace/chart/chartDynamic.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ChartDynamicBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartDynamicBean.java")
-        }
-)
+import org.icefaces.ace.component.chart.Axis;
+import org.icefaces.ace.component.chart.AxisType;
+import org.icefaces.ace.event.PointValueChangeEvent;
+import org.icefaces.ace.event.SelectEvent;
+import org.icefaces.ace.event.UnselectEvent;
+import org.icefaces.ace.model.chart.CartesianSeries;
+import org.icefaces.ace.model.chart.DragConstraintAxis;
+import org.icefaces.ace.model.table.RowStateMap;
+import org.icefaces.util.JavaScriptRunner;
+
 @ManagedBean(name= ChartDynamicBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartDynamicBean extends ComponentExampleImpl<ChartDynamicBean> implements Serializable
+public class ChartDynamicBean implements Serializable
 {
     public static final String BEAN_NAME = "chartDynamicBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -81,10 +61,6 @@ public class ChartDynamicBean extends ComponentExampleImpl<ChartDynamicBean> imp
         setLabel("Letter Axis");
         setTicks(new String[]{"A", "B", "C", "D"});
     }};
-    
-    public ChartDynamicBean() {
-        super(ChartDynamicBean.class);
-    }
     
     public Integer[][] getTableData() {
         return tableData;
@@ -119,8 +95,7 @@ public class ChartDynamicBean extends ComponentExampleImpl<ChartDynamicBean> imp
     }
     
     @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
+    public void init() {
         setupSelection();
     }
 

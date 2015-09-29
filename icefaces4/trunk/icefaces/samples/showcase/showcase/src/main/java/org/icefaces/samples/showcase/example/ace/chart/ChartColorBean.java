@@ -16,53 +16,23 @@
 
 package org.icefaces.samples.showcase.example.ace.chart;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.ace.component.chart.Axis;
 import org.icefaces.ace.component.chart.AxisType;
 import org.icefaces.ace.model.chart.CartesianSeries;
 import org.icefaces.ace.model.chart.SectorSeries;
 import org.icefaces.ace.model.chart.SectorSeries.SectorType;
-import org.icefaces.ace.model.chart.DragConstraintAxis;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
 
-import javax.faces.event.ValueChangeEvent;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.lang.Boolean;
-import java.lang.Override;
-import java.lang.String;
-import java.util.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@ComponentExample(
-        parent = ChartBean.BEAN_NAME,
-        title = "example.ace.chart.color.title",
-        description = "example.ace.chart.color.description",
-        example = "/resources/examples/ace/chart/chartColor.xhtml"
-)
-@ExampleResources(
-        resources ={
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="ChartColor.xhtml",
-                        resource = "/resources/examples/ace/chart/chartColor.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title="ChartColorBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/chart/ChartColorBean.java")
-        }
-)
 @ManagedBean(name= ChartColorBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ChartColorBean extends ComponentExampleImpl<ChartColorBean> implements Serializable {
+public class ChartColorBean implements Serializable {
     public static final String BEAN_NAME = "chartColorBean";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -79,13 +49,8 @@ public class ChartColorBean extends ComponentExampleImpl<ChartColorBean> impleme
     private boolean legend = true;
     private String[] customDefaultColor = colorSet;
 
-    public ChartColorBean() {
-        super(ChartColorBean.class);
-    }
-
     @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
+    public void init() {
         calculatePieData();
         createModels();
     }

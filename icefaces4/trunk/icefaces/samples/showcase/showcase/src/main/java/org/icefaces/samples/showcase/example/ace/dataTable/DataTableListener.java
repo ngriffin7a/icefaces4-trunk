@@ -16,43 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import org.icefaces.ace.model.table.RowStateMap;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 import org.icefaces.ace.event.SelectEvent;
 import org.icefaces.ace.event.UnselectEvent;
+import org.icefaces.ace.model.table.RowStateMap;
+import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.listener.title",
-        description = "example.ace.dataTable.listener.description",
-        example = "/resources/examples/ace/dataTable/dataTableListener.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTableListener.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTableListener.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableListener.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableListener.java")
-        }
-)
 @ManagedBean(name= DataTableListener.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableListener extends ComponentExampleImpl<DataTableListener> implements Serializable {
+public class DataTableListener implements Serializable {
     public static final String BEAN_NAME = "dataTableListener";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -65,13 +43,7 @@ public class DataTableListener extends ComponentExampleImpl<DataTableListener> i
     
     /////////////---- CONSTRUCTOR BEGIN
     public DataTableListener() {
-        super(DataTableListener.class);
         carsData = new ArrayList<Car>(DataTableData.getDefaultData());
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- EVENT LISTENERS BEGIN

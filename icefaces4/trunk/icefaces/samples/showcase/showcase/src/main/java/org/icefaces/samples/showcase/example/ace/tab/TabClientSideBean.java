@@ -17,51 +17,15 @@
 package org.icefaces.samples.showcase.example.ace.tab;
 
 
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = TabSetBean.BEAN_NAME,
-        title = "example.ace.tabSet.clientSide.title",
-        description = "example.ace.tabSet.clientSide.description",
-        example = "/resources/examples/ace/tab/tabset-client_side.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="tabset-client_side.xhtml",
-                    resource = "/resources/examples/ace/tab/tabset-client_side.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TabSetBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/tab/TabSetBean.java"),
-            @ExampleResource(type = ResourceType.java,
-                        title = "ImageSet.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/dataGenerators/ImageSet.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name = TabClientSideBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TabClientSideBean extends ComponentExampleImpl<TabClientSideBean> implements Serializable {
+public class TabClientSideBean implements Serializable {
 
     public static final String BEAN_NAME = "tabClientSide";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public TabClientSideBean() {
-        super(TabClientSideBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 }

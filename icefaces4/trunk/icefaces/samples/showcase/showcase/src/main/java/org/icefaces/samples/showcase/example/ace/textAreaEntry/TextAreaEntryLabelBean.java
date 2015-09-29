@@ -16,36 +16,14 @@
 
 package org.icefaces.samples.showcase.example.ace.textAreaEntry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = TextAreaEntryBean.BEAN_NAME,
-        title = "example.ace.textAreaEntry.label.title",
-        description = "example.ace.textAreaEntry.label.description",
-        example = "/resources/examples/ace/textAreaEntry/textAreaEntryLabel.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="textAreaEntryLabel.xhtml",
-                    resource = "/resources/examples/ace/textAreaEntry/textAreaEntryLabel.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="TextAreaEntryLabelBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/textAreaEntry/TextAreaEntryLabelBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= TextAreaEntryLabelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class TextAreaEntryLabelBean extends ComponentExampleImpl<TextAreaEntryLabelBean> implements Serializable
+public class TextAreaEntryLabelBean implements Serializable
 {
     public static final String BEAN_NAME = "textAreaEntryLabelBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -53,10 +31,6 @@ public class TextAreaEntryLabelBean extends ComponentExampleImpl<TextAreaEntryLa
     private String comment1LabelText = "Comments";
     private String comment2LabelText = "Additional Comments";
     private String labelPosition = "top";
-    
-    public TextAreaEntryLabelBean() {
-        super(TextAreaEntryLabelBean.class);
-    }
     
     public String getComment1LabelText() {
         return comment1LabelText;
@@ -80,10 +54,5 @@ public class TextAreaEntryLabelBean extends ComponentExampleImpl<TextAreaEntryLa
     
     public void setLabelPosition(String labelPosition) {
         this.labelPosition = labelPosition;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 }

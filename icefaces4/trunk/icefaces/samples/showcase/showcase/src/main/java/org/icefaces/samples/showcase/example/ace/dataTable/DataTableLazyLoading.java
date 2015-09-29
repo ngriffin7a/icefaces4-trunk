@@ -16,48 +16,24 @@
 
 package org.icefaces.samples.showcase.example.ace.dataTable;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
-import org.icefaces.ace.model.filter.ContainsFilterConstraint;
-import org.icefaces.ace.model.table.SortCriteria;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
 
+import org.icefaces.ace.model.filter.ContainsFilterConstraint;
 import org.icefaces.ace.model.table.LazyDataModel;
+import org.icefaces.ace.model.table.SortCriteria;
 import org.icefaces.samples.showcase.dataGenerators.VehicleGenerator;
-import org.icefaces.samples.showcase.example.ace.dataTable.Car;
 
-@ComponentExample(
-        parent = DataTableBean.BEAN_NAME,
-        title = "example.ace.dataTable.lazyLoading.title",
-        description = "example.ace.dataTable.lazyLoading.description",
-        example = "/resources/examples/ace/dataTable/dataTableLazyLoading.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataTableLazyLoading.xhtml",
-                    resource = "/resources/examples/ace/dataTable/dataTableLazyLoading.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableLazyLoading.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableLazyLoading.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="Car.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/Car.java")
-        }
-)
 @ManagedBean(name= DataTableLazyLoading.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataTableLazyLoading extends ComponentExampleImpl<DataTableLazyLoading> implements Serializable 
+public class DataTableLazyLoading implements Serializable 
 {
     public static final String BEAN_NAME = "dataTableLazyLoading";
 	public String getBeanName() { return BEAN_NAME; }
@@ -68,7 +44,6 @@ public class DataTableLazyLoading extends ComponentExampleImpl<DataTableLazyLoad
     private LazyDataModel<Car> carsData;
 
     public DataTableLazyLoading() {
-        super(DataTableLazyLoading.class);
         carsData = new LazyDataModel<Car>() {
             @Override
             public List<Car> load(int first, int pageSize,
@@ -153,11 +128,6 @@ public class DataTableLazyLoading extends ComponentExampleImpl<DataTableLazyLoad
             return value == null || !CONTAINS.applies(value.toString(), filterValue);
         }
         return false;
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     public LazyDataModel<Car> getCarsData() { return carsData; }

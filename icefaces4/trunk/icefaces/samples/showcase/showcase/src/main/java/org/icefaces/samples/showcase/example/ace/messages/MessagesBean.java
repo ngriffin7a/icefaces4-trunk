@@ -16,48 +16,20 @@
 
 package org.icefaces.samples.showcase.example.ace.messages;
 
-import org.icefaces.ace.component.textentry.TextEntry;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
+import java.util.HashMap;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import java.io.Serializable;
-import java.util.HashMap;
 
-@ComponentExample(
-        title = "example.ace.messages.title",
-        description = "example.ace.messages.description",
-        example = "/resources/examples/ace/messages/messages.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "messages.xhtml",
-                        resource = "/resources/examples/ace/messages/messages.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "MessagesBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase" +
-                                "/example/ace/messages/MessagesBean.java")
-        }
-)
-@Menu(
-        title = "menu.ace.messages.subMenu.main",
-        menuLinks = {
-                @MenuLink(title = "menu.ace.messages.subMenu.main",
-                        isDefault = true,
-                        exampleBeanName = MessagesBean.BEAN_NAME)
-        }
-)
+import org.icefaces.ace.component.textentry.TextEntry;
+
 @ManagedBean(name = MessagesBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MessagesBean extends ComponentExampleImpl<MessagesBean> implements Serializable {
+public class MessagesBean implements Serializable {
     public static final String BEAN_NAME = "messagesBean";
 	public String getBeanName() { return BEAN_NAME; }
 
@@ -75,15 +47,6 @@ public class MessagesBean extends ComponentExampleImpl<MessagesBean> implements 
         private static final long serialVersionUID = 6584997908723158778L;
     };
     private static String[] severityNames = {"Info", "Warn", "Error", "Fatal"};
-
-    public MessagesBean() {
-        super(MessagesBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public String getFullName() {
         return fullName;

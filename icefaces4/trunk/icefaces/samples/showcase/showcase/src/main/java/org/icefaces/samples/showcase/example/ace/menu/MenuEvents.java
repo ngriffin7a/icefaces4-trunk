@@ -16,52 +16,21 @@
 
 package org.icefaces.samples.showcase.example.ace.menu;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
-import java.io.Serializable;
 
-@ComponentExample(
-        parent = MenuBean.BEAN_NAME,
-        title = "example.ace.menu.events.title",
-        description = "example.ace.menu.events.description",
-        example = "/resources/examples/ace/menu/menuEvents.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="menuEvents.xhtml",
-                    resource = "/resources/examples/ace/menu/menuEvents.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="MenuEvents.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/menu/MenuEvents.java")
-        }
-)
 @ManagedBean(name= MenuEvents.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class MenuEvents extends ComponentExampleImpl<MenuEvents> implements Serializable {
+public class MenuEvents implements Serializable {
     public static final String BEAN_NAME = "menuEvents";
 	public String getBeanName() { return BEAN_NAME; }
     
     private String message;
     private String currentColor = "black";
     
-    public MenuEvents() {
-        super(MenuEvents.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     public String getMessage() { return message; }
     public String getCurrentColor() { return currentColor; }
     

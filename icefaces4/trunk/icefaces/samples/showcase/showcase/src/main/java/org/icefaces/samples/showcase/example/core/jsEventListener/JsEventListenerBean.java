@@ -16,61 +16,21 @@
 
 package org.icefaces.samples.showcase.example.core.jsEventListener;
 
-import org.icefaces.impl.component.JSEventListener;
-import org.icefaces.samples.showcase.metadata.annotation.ComponentExample;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResource;
-import org.icefaces.samples.showcase.metadata.annotation.ExampleResources;
-import org.icefaces.samples.showcase.metadata.annotation.ResourceType;
-import org.icefaces.samples.showcase.metadata.annotation.Menu;
-import org.icefaces.samples.showcase.metadata.annotation.MenuLink;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
-import javax.faces.view.ViewScoped;
-import java.io.Serializable;
 
-@ComponentExample(
-        title = "Javascript Event Listener Component",
-        description = "The <b>&lt;icecore:jsEventListener&gt;</b> component can be used to capture Javascript events and then notify a server side defined action listener. In this example only 'click' and 'keypress' events are captured.",
-        example = "/resources/examples/core/js-event-listener.xhtml"
-)
+import org.icefaces.impl.component.JSEventListener;
 
-@ExampleResources(
-        resources = {
-                @ExampleResource(type = ResourceType.xhtml,
-                        title="js-event-listener.xhtml",
-                        resource = "/resources/examples/core/js-event-listener.xhtml"),
-                @ExampleResource(type = ResourceType.java,
-                        title="JsEventListenerBean.java",
-                        resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/jsEventListener/JsEventListenerBean.java")
-        }
-)
-@Menu(
-    title = "menu.core.jsEventListenerBean.subMenu.title", 
-    menuLinks = {
-        @MenuLink(title = "menu.core.jsEventListenerBean.subMenu.main", isDefault = true, exampleBeanName = JsEventListenerBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name = JsEventListenerBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class JsEventListenerBean extends ComponentExampleImpl<JsEventListenerBean> implements Serializable {
+public class JsEventListenerBean implements Serializable {
     public static final String BEAN_NAME = "jsEventListenerBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     private JSEventListener.JSEvent actionEvent;
-
-    public JsEventListenerBean() {
-        super(JsEventListenerBean.class);
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
     public JSEventListener.JSEvent getActionEvent() {
         return actionEvent;

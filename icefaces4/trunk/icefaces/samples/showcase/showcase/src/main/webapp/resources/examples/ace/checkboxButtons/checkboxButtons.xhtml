@@ -23,15 +23,6 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
 
-    <ui:param name="title" value="#{msgs[checkboxButtons.title]}"/>
-    <ui:param name="description" value="#{msgs[checkboxButtons.description]}"/>
-    <ui:param name="subMenuTitle" value="#{msgs[checkboxButtons.subMenuTitle]}"/>
-    <ui:param name="subMenuLinks" value="#{checkboxButtons.subMenuLinks}"/>
-    <ui:param name="resourceValue" value="#{checkboxButtons.exampleResource}"/>
-
-    <ui:param name="wikiResources" value="#{checkboxButtonsResources.wikiResources}"/>
-    <ui:param name="tldResources" value="#{checkboxButtonsResources.tldResources}"/>
-
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
 			<h:outputLabel for="mutuallyExclusive" value="Enable mutual exclusivity: " />

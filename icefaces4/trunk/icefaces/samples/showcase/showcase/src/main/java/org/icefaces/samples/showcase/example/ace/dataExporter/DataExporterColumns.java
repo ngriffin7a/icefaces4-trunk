@@ -16,44 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.dataExporter;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@ComponentExample(
-        parent = DataExporterBean.BEAN_NAME,
-        title = "example.ace.dataExporter.columns.title",
-        description = "example.ace.dataExporter.columns.description",
-        example = "/resources/examples/ace/dataExporter/dataExporterColumns.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dataExporterColumns.xhtml",
-                    resource = "/resources/examples/ace/dataExporter/dataExporterColumns.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DataExporterColumns.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataExporter/DataExporterColumns.java"),
-            @ExampleResource(type = ResourceType.java,
-                    title="DataTableBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dataTable/DataTableBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DataExporterColumns.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DataExporterColumns extends ComponentExampleImpl<DataExporterColumns> implements Serializable {
+public class DataExporterColumns implements Serializable {
     public static final String BEAN_NAME = "dataExporterColumns";
 	public String getBeanName() { return BEAN_NAME; }
     
@@ -63,15 +37,9 @@ public class DataExporterColumns extends ComponentExampleImpl<DataExporterColumn
     private String type;
     
     public DataExporterColumns() {
-        super(DataExporterColumns.class);
         initializeVariables();
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     /////////////---- PRIVATE METHODS BEGIN
     private void initializeVariables() {
         this.options = new LinkedHashMap<String, Integer> ();

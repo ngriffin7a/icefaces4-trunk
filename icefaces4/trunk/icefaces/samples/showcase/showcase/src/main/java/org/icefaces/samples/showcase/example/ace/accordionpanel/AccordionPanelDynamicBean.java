@@ -16,39 +16,18 @@
 
 package org.icefaces.samples.showcase.example.ace.accordionpanel;
 
-import org.icefaces.samples.showcase.dataGenerators.ImageSet;
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
-import org.icefaces.ace.event.AccordionPaneChangeEvent;
 
-@ComponentExample(
-        parent = AccordionPanelBean.BEAN_NAME,
-        title = "example.ace.accordionpanel.dynamic.title",
-        description = "example.ace.accordionpanel.dynamic.description",
-        example = "/resources/examples/ace/accordionpanel/accordionPanelDynamic.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="accordionPanelDynamic.xhtml",
-                    resource = "/resources/examples/ace/accordionpanel/accordionPanelDynamic.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AccordionPanelDynamic.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/accordionpanel/AccordionPanelDynamicBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
+import org.icefaces.ace.event.AccordionPaneChangeEvent;
+import org.icefaces.samples.showcase.dataGenerators.ImageSet;
+
 @ManagedBean(name= AccordionPanelDynamicBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AccordionPanelDynamicBean extends ComponentExampleImpl<AccordionPanelDynamicBean> implements Serializable 
+public class AccordionPanelDynamicBean implements Serializable 
 {
     public static final String BEAN_NAME = "accordionPanelDynamicBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -60,15 +39,9 @@ public class AccordionPanelDynamicBean extends ComponentExampleImpl<AccordionPan
     
     public AccordionPanelDynamicBean() 
     {
-        super(AccordionPanelDynamicBean.class);
         initializeInstanceVariables();
     }
     
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
     ////////////////////////////////////////////ON TAB CHANGE EVENT BEGIN/////////////////////////////////////////////////
     public void onPaneChange(AccordionPaneChangeEvent event)
     {  

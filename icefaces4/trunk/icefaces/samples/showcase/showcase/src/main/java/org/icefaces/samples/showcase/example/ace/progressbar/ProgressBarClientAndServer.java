@@ -16,37 +16,16 @@
 
 package org.icefaces.samples.showcase.example.ace.progressbar; 
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
+import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
+
 import org.icefaces.ace.event.ProgressBarChangeEvent;
 
-
-@ComponentExample(
-        parent = ProgressBarBean.BEAN_NAME,
-        title = "example.ace.progressBarClientAndServer.title",
-        description = "example.ace.progressBarClientAndServer.description",
-        example = "/resources/examples/ace/progressbar/progressBarClientAndServer.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="progressBarClientAndServer.xhtml",
-                    resource = "/resources/examples/ace/progressbar/progressBarClientAndServer.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="ProgressBarClientAndServer.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/progressbar/ProgressBarClientAndServer.java")
-        }
-)
 @ManagedBean(name= ProgressBarClientAndServer.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ProgressBarClientAndServer extends ComponentExampleImpl<ProgressBarClientAndServer> implements Serializable {
+public class ProgressBarClientAndServer implements Serializable {
 
     public static final String BEAN_NAME = "progressBarClientAndServer";
 	public String getBeanName() { return BEAN_NAME; }
@@ -55,14 +34,8 @@ public class ProgressBarClientAndServer extends ComponentExampleImpl<ProgressBar
     /////////////---- CONSTRUCTOR BEGIN
     public ProgressBarClientAndServer() 
     {
-        super(ProgressBarClientAndServer.class);
         progressValue = 0;
         message = "";
-    }
-
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
     }
 
     /////////////---- EVENT LISTENERS BEGIN

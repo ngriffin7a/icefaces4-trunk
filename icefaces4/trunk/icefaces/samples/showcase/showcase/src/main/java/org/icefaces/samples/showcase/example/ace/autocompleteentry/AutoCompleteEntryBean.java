@@ -16,69 +16,22 @@
 
 package org.icefaces.samples.showcase.example.ace.autocompleteentry;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.faces.model.SelectItem;
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
-@ComponentExample(
-        title = "example.ace.autocompleteentry.title",
-        description = "example.ace.autocompleteentry.description",
-        example = "/resources/examples/ace/autocompleteentry/autoCompleteEntry.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="autoCompleteEntry.xhtml",
-                    resource = "/resources/examples/ace/autocompleteentry/autoCompleteEntry.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="AutoCompleteEntryBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/autocompleteentry/AutoCompleteEntryBean.java")
-        }
-)
-@Menu(
-	title = "menu.ace.autocompleteentry.subMenu.main",
-	menuLinks = {
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.main",
-	                isDefault = true,
-                    exampleBeanName = AutoCompleteEntryBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.select",
-                    exampleBeanName = AutoCompleteEntrySelectBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.facet",
-                    exampleBeanName = AutoCompleteEntryFacetBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.match",
-                    exampleBeanName = AutoCompleteEntryMatchBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.rows",
-                    exampleBeanName = AutoCompleteEntryRowsBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.lazy",
-                    exampleBeanName = AutoCompleteEntryLazyBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.label",
-                    exampleBeanName = AutoCompleteEntryLabelBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.indicator",
-                    exampleBeanName = AutoCompleteEntryIndicatorBean.BEAN_NAME),
-	        @MenuLink(title = "menu.ace.autocompleteentry.subMenu.reqStyle",
-                    exampleBeanName = AutoCompleteEntryReqStyleBean.BEAN_NAME)
-    }
-)
 @ManagedBean(name= AutoCompleteEntryBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class AutoCompleteEntryBean extends ComponentExampleImpl<AutoCompleteEntryBean> implements Serializable 
+public class AutoCompleteEntryBean implements Serializable 
 {
     public static final String BEAN_NAME = "autoCompleteEntryBean";
 	public String getBeanName() { return BEAN_NAME; }
@@ -86,15 +39,6 @@ public class AutoCompleteEntryBean extends ComponentExampleImpl<AutoCompleteEntr
     public static final String CITIES_FILENAME = "City-Names.txt";
 	public static final String RESOURCE_PATH = "/resources/selectinputtext/";
 	
-	public AutoCompleteEntryBean() {
-		super(AutoCompleteEntryBean.class);
-	}
-	
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
-
 	public List<SelectItem> cities;
 
     public List<SelectItem> getCities(){

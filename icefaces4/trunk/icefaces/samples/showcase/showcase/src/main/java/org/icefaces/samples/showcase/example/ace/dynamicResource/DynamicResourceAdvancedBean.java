@@ -16,48 +16,17 @@
 
 package org.icefaces.samples.showcase.example.ace.dynamicResource;
 
-import org.icefaces.samples.showcase.metadata.annotation.*;
-import org.icefaces.samples.showcase.metadata.context.ComponentExampleImpl;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
-@ComponentExample(
-        parent = DynamicResourceBean.BEAN_NAME,
-        title = "example.ace.dynamicResource.advanced.title",
-        description = "example.ace.dynamicResource.advanced.description",
-        example = "/resources/examples/ace/dynamicResource/dynamicResourceAdvanced.xhtml"
-)
-@ExampleResources(
-        resources ={
-            // xhtml
-            @ExampleResource(type = ResourceType.xhtml,
-                    title="dynamicResourceAdvanced.xhtml",
-                    resource = "/resources/examples/ace/dynamicResource/dynamicResourceAdvanced.xhtml"),
-            // Java Source
-            @ExampleResource(type = ResourceType.java,
-                    title="DynamicResourceAdvancedBean.java",
-                    resource = "/WEB-INF/classes/org/icefaces/samples/showcase"+
-                    "/example/ace/dynamicResource/DynamicResourceAdvancedBean.java")
-        }
-)
+import javax.faces.bean.CustomScoped;
+import javax.faces.bean.ManagedBean;
+
 @ManagedBean(name= DynamicResourceAdvancedBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class DynamicResourceAdvancedBean extends ComponentExampleImpl<DynamicResourceAdvancedBean> implements Serializable
+public class DynamicResourceAdvancedBean implements Serializable
 {
     public static final String BEAN_NAME = "dynamicResourceAdvancedBean";
 	public String getBeanName() { return BEAN_NAME; }
-
-    public DynamicResourceAdvancedBean() {
-        super(DynamicResourceAdvancedBean.class);
-    }
-    
-    @PostConstruct
-    public void initMetaData() {
-        super.initMetaData();
-    }
 
 	private String fileName = "icemobile.pdf";
 	private String target = "_blank";
