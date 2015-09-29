@@ -117,7 +117,7 @@ public class SourceCodeLoaderConnection implements Map, Serializable{
                 SOURCE_SERVLET_URL = fromFile;
             }
             else {
-                SOURCE_SERVLET_URL = "http://localhost:8080/comp-suite/";
+                SOURCE_SERVLET_URL = "http://localhost:8080/showcase/";
             }
         }
         SOURCE_SERVLET_URL += "sourcecodeStream.html?path=";
