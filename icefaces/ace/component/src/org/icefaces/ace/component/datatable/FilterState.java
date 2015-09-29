@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.column.ColumnType;
 import org.icefaces.ace.context.RequestContext;
 
 import javax.faces.context.FacesContext;
@@ -41,11 +42,11 @@ public class FilterState {
     public FilterState(FacesContext context, DataTable table) {
         String clientId = table.getClientId(context);
         Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-        Column filteredColumn = null;
 
         Map<String,Column> filterMap = table.getFilterMap();
 		for (Column column : filterMap.values()) {
 			String columnId = column.getClientId(context) + "_filter";
+			columnId = column.getType() == ColumnType.date ? columnId + "_input" : columnId;
 			saveState(column, params.get(columnId));
 		}
     }

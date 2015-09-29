@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.column.ColumnType;
 import org.icefaces.ace.component.tableconfigpanel.TableConfigPanel;
 import org.icefaces.ace.model.table.ColumnGroupModel;
 import org.icefaces.ace.model.table.ColumnModel;
@@ -24,14 +25,26 @@ import org.icefaces.ace.model.table.DepthFirstHeadTraversal;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
+import org.icefaces.util.EnvUtils;
 
+import org.icefaces.ace.component.datetimeentry.DateTimeEntry;
+import org.icefaces.ace.component.datetimeentry.DateTimeEntryRenderer;
+import org.icefaces.ace.component.datetimeentry.DateTimeEntryUtils;
+
+import javax.faces.application.Resource;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.model.SelectItem;
 import java.io.IOException;
 import java.util.*;
+
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class DataTableHeadRenderer {
     protected static void encodeTableHead(FacesContext context, DataTableRenderingContext tableContext) throws IOException {
@@ -363,30 +376,34 @@ public class DataTableHeadRenderer {
                 : DataTableConstants.COLUMN_FILTER_CLASS + " " + filterStyleClass;
 
         if (column.getValueExpression("filterOptions") == null) {
-            String filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
+			if (!(column.getType() == ColumnType.date)) {
+				String filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
 
-            writer.startElement(HTML.INPUT_ELEM, null);
-            writer.writeAttribute(HTML.ID_ATTR, filterId, null);
-            writer.writeAttribute(HTML.NAME_ATTR, filterId, null);
-            writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
-            writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
-            writer.writeAttribute("size", "1", null); // Webkit requires none zero/null size value to use CSS width correctly.
-            writer.writeAttribute("value", filterValue , null);
+				writer.startElement(HTML.INPUT_ELEM, null);
+				writer.writeAttribute(HTML.ID_ATTR, filterId, null);
+				writer.writeAttribute(HTML.NAME_ATTR, filterId, null);
+				writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
+				writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
+				writer.writeAttribute("size", "1", null); // Webkit requires none zero/null size value to use CSS width correctly.
+				writer.writeAttribute("value", filterValue , null);
 
-            if (filterEvent.equals("keyup") || filterEvent.equals("blur"))
-                writer.writeAttribute("on"+filterEvent, filterFunction , null);
+				if (filterEvent.equals("keyup") || filterEvent.equals("blur"))
+					writer.writeAttribute("on"+filterEvent, filterFunction , null);
 
-            if (column.getFilterStyle() != null)
-                writer.writeAttribute(HTML.STYLE_ELEM, column.getFilterStyle(), null);
+				if (column.getFilterStyle() != null)
+					writer.writeAttribute(HTML.STYLE_ELEM, column.getFilterStyle(), null);
 
-            writer.endElement(HTML.INPUT_ELEM);
+				writer.endElement(HTML.INPUT_ELEM);
 
-			writer.startElement(HTML.SPAN_ELEM, null);
-			writer.startElement(HTML.SCRIPT_ELEM, null);
-			writer.writeAttribute("type", "text/javascript", null);
-			writer.write("document.getElementById('"+filterId+"').submitOnEnter = 'disabled'; // "+filterValue);
-			writer.endElement(HTML.SCRIPT_ELEM);
-			writer.endElement(HTML.SPAN_ELEM);
+				writer.startElement(HTML.SPAN_ELEM, null);
+				writer.startElement(HTML.SCRIPT_ELEM, null);
+				writer.writeAttribute("type", "text/javascript", null);
+				writer.write("document.getElementById('"+filterId+"').submitOnEnter = 'disabled'; // "+filterValue);
+				writer.endElement(HTML.SCRIPT_ELEM);
+				writer.endElement(HTML.SPAN_ELEM);
+			} else {
+				encodeDatePicker(context, table, column, filterId, filterFunction);
+			}
         }
         else {
             writer.startElement("select", null);
@@ -418,6 +435,107 @@ public class DataTableHeadRenderer {
         }
 
     }
+
+	private static void encodeDatePicker(FacesContext context, DataTable table, Column column,
+			String clientId, String filterFunction) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+        String inputId = clientId + "_input";
+        Map paramMap = context.getExternalContext().getRequestParameterMap();
+        boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
+
+        writer.startElement("span", null);
+        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("class", "ui-column-filter", null);
+
+        // input
+        writer.startElement("input", null);
+        writer.writeAttribute("id", inputId, null);
+        writer.writeAttribute("name", inputId, null);
+        writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("tabindex", "0", null);
+		writer.writeAttribute("onchange", filterFunction , null);
+        if (ariaEnabled) {
+            writer.writeAttribute("role", "textbox", null);
+        }
+
+		String filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
+        writer.writeAttribute("value", filterValue, null);
+
+		writer.writeAttribute("class", "ui-inputfield ui-widget ui-state-default ui-corner-all", null);
+
+		writer.writeAttribute("size", "12", null);
+
+        writer.endElement("input");
+
+		encodeDatePickerScript(context, table, column, clientId);
+
+        writer.endElement("span");
+	}
+
+	private static void encodeDatePickerScript(FacesContext context, DataTable table, Column column,
+			String clientId) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+
+        writer.startElement("script", null);
+        writer.writeAttribute("type", "text/javascript", null);
+
+        String showOn = "both";
+        boolean timeOnly = false;
+        StringBuilder script = new StringBuilder();
+        JSONBuilder json = JSONBuilder.create();
+
+		String widgetVar = "widget_" + clientId.replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+        script.append("ice.ace.jq(function(){").append(widgetVar).append(" = new ");
+
+        Locale locale = Locale.getDefault();
+        json.beginMap()
+            .entry("widgetVar", widgetVar)
+            .entry("id", clientId)
+            .entry("popup", true)
+            .entry("locale", locale.toString())
+            .entryNonNullValue("pattern", 
+                DateTimeEntryUtils.parseTimeZone(DateTimeEntryUtils.convertPattern("yyyy-MM-dd"), locale, java.util.TimeZone.getDefault()));
+
+        json.entryNonNullValue("yearRange", "c-10:c+10");
+
+		String iconSrc = getResourceRequestPath(context, DateTimeEntry.POPUP_ICON);
+
+		json.entry("showOn", showOn)
+			.entry("buttonImage", iconSrc)
+			.entry("buttonImageOnly", false);
+
+		json.entry("showOtherMonths", true)
+			.entry("selectOtherMonths", false);
+
+        json.entry("disableHoverStyling", true);
+        json.entry("showCurrentAtPos", 0);
+        json.entry("clientId", clientId);
+        json.entry("buttonText", "");
+        json.entry("ariaEnabled", EnvUtils.isAriaEnabled(context));
+        json.entry("todayNowButtonsAlsoSelect", false);
+
+        Calendar calendar = Calendar.getInstance(locale);
+        SimpleDateFormat formatter = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
+        DateFormatSymbols dateFormatSymbols = formatter.getDateFormatSymbols();
+        DateTimeEntryRenderer.buildUnicodeArray(json, "monthNames", dateFormatSymbols.getMonths(), 0);
+        DateTimeEntryRenderer.buildUnicodeArray(json, "monthNamesShort", dateFormatSymbols.getShortMonths(), 0);
+        DateTimeEntryRenderer.buildUnicodeArray(json, "dayNames", dateFormatSymbols.getWeekdays(), 1);
+        DateTimeEntryRenderer.buildUnicodeArray(json, "dayNamesShort", dateFormatSymbols.getShortWeekdays(), 1);
+        DateTimeEntryRenderer.buildUnicodeArray(json, "dayNamesMin", dateFormatSymbols.getShortWeekdays(), 1);
+        json.entry("firstDay", calendar.getFirstDayOfWeek() - 1);
+
+        json.endMap();
+
+        writer.write("ice.ace.create('CalendarInit',[" + json + "]);");
+        writer.endElement("script");
+	}
+
+    protected static String getResourceRequestPath(FacesContext facesContext, String resourceName) {
+		Resource resource = facesContext.getApplication().getResourceHandler().createResource(resourceName, "icefaces.ace");
+
+        return resource.getRequestPath();
+	}
 
     protected static void encodeConfigPanelLaunchButton(ResponseWriter writer, DataTable component, boolean first) throws IOException {
         String jsId = CoreRenderer.resolveWidgetVar(component);

@@ -26,6 +26,7 @@ package org.icefaces.ace.component.datatable;
 
 import org.icefaces.ace.component.ajax.AjaxBehavior;
 import org.icefaces.ace.component.column.Column;
+import org.icefaces.ace.component.column.ColumnType;
 import org.icefaces.ace.component.column.IProxiableColumn;
 import org.icefaces.ace.component.columngroup.ColumnGroup;
 import org.icefaces.ace.component.expansiontoggler.ExpansionToggler;
@@ -1071,15 +1072,24 @@ public class DataTable extends DataTableBase implements Serializable {
     protected Map<String,Column> getFilterMap() {
         Map<String, Column> filterMap = new HashMap<String,Column>();
         ColumnGroup group = getColumnGroup("header");
+		FacesContext context = FacesContext.getCurrentInstance();
         if (group != null) {
             for (UIComponent child : group.getChildren())
                 if (child.isRendered()) for (UIComponent grandchild : child.getChildren())
-                    if (grandchild.isRendered() && grandchild.getValueExpression("filterBy") != null)
-                        filterMap.put(grandchild.getClientId(FacesContext.getCurrentInstance()) + "_filter", (Column)grandchild);
+                    if (grandchild.isRendered() && grandchild.getValueExpression("filterBy") != null) {
+						if (((Column)grandchild).getType() == ColumnType.date)
+							filterMap.put(grandchild.getClientId(context) + "_filter_input", (Column)grandchild);
+						else
+							filterMap.put(grandchild.getClientId(context) + "_filter", (Column)grandchild);
+					}
         } else
             for (Column column : getColumns())
-                if (column.getValueExpression("filterBy") != null)
-                    filterMap.put(column.getClientId(FacesContext.getCurrentInstance()) + "_filter", column);
+                if (column.getValueExpression("filterBy") != null) {
+					if (column.getType() == ColumnType.date)
+						filterMap.put(column.getClientId(context) + "_filter_input", column);
+					else
+						filterMap.put(column.getClientId(context) + "_filter", column);
+				}
         return filterMap;
     }
 

@@ -22,6 +22,7 @@ import javax.el.ELResolver;
 import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PropertyConstraintPredicate implements Predicate {
@@ -40,8 +41,10 @@ public class PropertyConstraintPredicate implements Predicate {
     public boolean evaluate(Object object) {
         Object value = filterBy.getValue(facesContext.getELContext());
 
-        if (value instanceof Date)
-            value = DateFormat.getDateInstance().format(value);
+        if (value instanceof Date) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			value = dateFormat.format(value);
+		}
 
         if (value != null)
             return filterConstraint.applies(value.toString(), filterValue);
