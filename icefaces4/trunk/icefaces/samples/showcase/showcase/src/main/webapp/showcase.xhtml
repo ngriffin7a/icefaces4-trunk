@@ -25,17 +25,6 @@
                 xmlns:showcase="http://xmlns.jcp.org/jsf/composite/components"
                 template="/resources/templates/main-template.xhtml">
 
-    <ui:define name="metadata">
-        <f:metadata>
-            <f:viewParam name="#{showcaseMenu.urlParamGroup}" required="false"
-                         value="#{userMenuState.paramComponent}"/>
-            <f:viewParam name="#{showcaseMenu.urlParamDemo}" required="false"
-                         value="#{userMenuState.paramDemo}"/>
-            <f:event type="preRenderView"
-                     listener="#{showcaseMenu.processParams}"/>
-        </f:metadata>
-    </ui:define>
-
     <ui:define name="suite-select-menu">
         <h:panelGroup layout="block" styleClass="headerCenter">
             <h:panelGroup layout="block" styleClass="headerLogo">
@@ -140,7 +129,7 @@
     </ui:define>
 
     <ui:define name="component-example">
-        <ui:include src="#{userMenuState.selectedDemo.includedPath}"/>
+        <ui:include src="#{paramHandler.selectedDemo.includedPath}"/>
     </ui:define>
 
 </ui:composition>

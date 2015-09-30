@@ -9,7 +9,7 @@ import org.icefaces.samples.showcase.view.menu.CategoryGroup;
 import org.icefaces.samples.showcase.view.menu.ComponentGroup;
 import org.icefaces.samples.showcase.view.menu.Demo;
 import org.icefaces.samples.showcase.view.menu.DemoSource;
-import org.icefaces.samples.showcase.view.menu.ShowcaseMenu;
+import org.icefaces.samples.showcase.view.menu.ParamHandler;
 import org.icefaces.samples.showcase.view.menu.UserMenuState;
 
 /**
@@ -28,16 +28,16 @@ public class LegacyUrlMapper {
 	
 	private static final String JAVA_SUFFIX = ".java";
 	
-	public static UserMenuState convert(List<CategoryGroup> currentMenu, UserMenuState currentState) {
-		boolean foundMatch = checkForMatch(currentMenu, currentState, currentState.getParamDemo());
+	public static UserMenuState convert(String paramComponent, String paramDemo, List<CategoryGroup> currentMenu, UserMenuState currentState) {
+		boolean foundMatch = checkForMatch(currentMenu, currentState, paramDemo);
 		
 		if (!foundMatch) {
 			// If we didn't find a match we will try a second approach
 			// We will try to look up the bean based on the passed URL param, such as "dateLabel" instead of a matching class name of "dateLabelBean"
 			// This is because some beans have incorrect names, but are still linked from legacy URLs
-			logger.log(Level.WARNING, "Initial attempt of a legacy URL yielded no results for " + ShowcaseMenu.URL_PARAM_GROUP + "=" + currentState.getParamComponent() + "&" + ShowcaseMenu.URL_PARAM_DEMO + "=" + currentState.getParamDemo() + ", trying bean lookup.");
+			logger.log(Level.WARNING, "Initial attempt of a legacy URL yielded no results for " + ParamHandler.URL_PARAM_GROUP + "=" + paramComponent + "&" + ParamHandler.URL_PARAM_DEMO + "=" + paramDemo + ", trying bean lookup.");
 			
-			Object possibleBean = FacesUtils.getManagedBean(currentState.getParamDemo().trim());
+			Object possibleBean = FacesUtils.getManagedBean(paramDemo.trim());
 			if (possibleBean != null) {
 				// If we found a bean then try to match again, this time using the simple class name to check against
 				foundMatch = checkForMatch(currentMenu, currentState, possibleBean.getClass().getSimpleName());
@@ -46,11 +46,11 @@ public class LegacyUrlMapper {
 		
 		// Finally log to the user if we were successful or not
 		if (foundMatch) {
-			logger.info("Converted a legacy URL from " + ShowcaseMenu.URL_PARAM_GROUP + "=" + currentState.getParamComponent() + "&" + ShowcaseMenu.URL_PARAM_DEMO + "=" + currentState.getParamDemo() +
+			logger.info("Converted a legacy URL from " + ParamHandler.URL_PARAM_GROUP + "=" + paramComponent + "&" + ParamHandler.URL_PARAM_DEMO + "=" + paramDemo +
 				    " to '" + currentState.getSelectedComponent().getName() + " " + currentState.getSelectedDemo().getName() + "'.");
 		}
 		else {
-			logger.log(Level.WARNING, "Could not find a current match for legacy URL " + ShowcaseMenu.URL_PARAM_GROUP + "=" + currentState.getParamComponent() + "&" + ShowcaseMenu.URL_PARAM_DEMO + "=" + currentState.getParamDemo() + ".");
+			logger.log(Level.WARNING, "Could not find a current match for legacy URL " + ParamHandler.URL_PARAM_GROUP + "=" + paramComponent + "&" + ParamHandler.URL_PARAM_DEMO + "=" + paramDemo + ".");
 		}
 		
 		return currentState;
@@ -60,7 +60,7 @@ public class LegacyUrlMapper {
 	 * Method to loop through a list of CategoryGroup objects, drilling down to the underlying Demo objects
 	 * We then check the DemoSource of each Demo for a matching Java filename to our passed "lookupParam"
 	 */
-	private static boolean checkForMatch(List<CategoryGroup> currentMenu, UserMenuState currentState, String lookupParam) {
+	private static boolean checkForMatch(List<CategoryGroup> currentMenu, UserMenuState currentState, String paramDemo) {
 		String beanName = null;
 		CategoryGroup loopCategory = null;
 		for (int i = 0; i < currentMenu.size(); i++) {
@@ -77,7 +77,7 @@ public class LegacyUrlMapper {
 										// Trim the source name (such as TextEntryBean.java) to a lowercase textentrybean to compare to the lowercase "exp" param value
 										beanName = loopSource.getName().toLowerCase().substring(0, loopSource.getName().toLowerCase().indexOf(JAVA_SUFFIX)).trim();
 										
-										if (beanName.equals(lookupParam.toLowerCase().trim())) {
+										if (beanName.equals(paramDemo.toLowerCase().trim())) {
 											currentState.setSelectedComponent(loopComponent);
 											currentState.setSelectedDemo(loopDemo);
 											currentState.setActiveIndex(i);
