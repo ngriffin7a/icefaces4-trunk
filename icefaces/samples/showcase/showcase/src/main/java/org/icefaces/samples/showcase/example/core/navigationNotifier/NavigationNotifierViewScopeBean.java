@@ -29,7 +29,7 @@ import javax.faces.event.PreValidateEvent;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 
-import org.icefaces.samples.showcase.view.menu.ShowcaseMenu;
+import org.icefaces.samples.showcase.view.menu.ParamHandler;
 
 @ManagedBean(name = NavigationNotifierViewScopeBean.BEAN_NAME)
 @ViewScoped
@@ -69,7 +69,7 @@ public class NavigationNotifierViewScopeBean implements Serializable {
 
 	public String getNavigateBackURI() {
         final FacesContext context = FacesContext.getCurrentInstance();
-        return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?" + ShowcaseMenu.URL_PARAM_GROUP + "=icecore:navigationNotifier&" + ShowcaseMenu.URL_PARAM_DEMO + "=Overview");
+        return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?" + ParamHandler.URL_PARAM_GROUP + "=icecore:navigationNotifier&" + ParamHandler.URL_PARAM_DEMO + "=Overview");
     }
 
     @PreDestroy

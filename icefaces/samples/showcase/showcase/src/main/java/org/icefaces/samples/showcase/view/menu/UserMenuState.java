@@ -32,10 +32,7 @@ public class UserMenuState implements Serializable {
 	private ComponentGroup selectedComponent;
 	private Demo selectedDemo;
 	private int activeIndex = 0;
-	private boolean checkedParam = false;
 	private boolean sourceCodeCollapsed = true;
-	private String paramComponent;
-	private String paramDemo;
 	
 	@PostConstruct
 	public void initUserMenuState() {
@@ -64,12 +61,6 @@ public class UserMenuState implements Serializable {
 	public void setActiveIndex(int activeIndex) {
 		this.activeIndex = activeIndex;
 	}
-	public boolean getCheckedParam() {
-		return checkedParam;
-	}
-	public void setCheckedParam(boolean checkedParam) {
-		this.checkedParam = checkedParam;
-	}
 	// Note we don't do anything with the searchFieldHolder getter/setter
 	// This is because changing the backing value would mean the component is considered changed
 	//  and therefore we'd get a 50kb+ update on the client
@@ -85,17 +76,5 @@ public class UserMenuState implements Serializable {
 	}
 	public void setSourceCodeCollapsed(boolean sourceCodeCollapsed) {
 		this.sourceCodeCollapsed = sourceCodeCollapsed;
-	}
-	public String getParamComponent() {
-		return paramComponent;
-	}
-	public void setParamComponent(String paramComponent) {
-		this.paramComponent = paramComponent;
-	}
-	public String getParamDemo() {
-		return paramDemo;
-	}
-	public void setParamDemo(String paramDemo) {
-		this.paramDemo = paramDemo;
 	}
 }
