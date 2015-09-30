@@ -165,11 +165,15 @@ public class ShowcaseMenu implements Serializable {
 			// This ensures the ui:include TagHandler is re-initialized with the proper demo content
 			// Note as mentioned this is a corner case only applicable if the user manually changes the browser URL,
 			//  we won't have to do this for menu navigation, external links, etc.
-			String link = HOME_PAGE + "?" + URL_PARAM_GROUP + "=" + menuState.getSelectedComponent().getName();
-			if (menuState.getSelectedDemo() != null) {
-				link += "&" + URL_PARAM_DEMO + "=" + menuState.getSelectedDemo().getName();
+			// Also note there is a second workaround for icecore:navigationNotifier as a double refresh would stop the detection
+			//  of the back button, so if our paramGroup is navigationNotifier we won't do anything
+			if (!menuState.getSelectedComponent().getName().equals("icecore:navigationNotifier")) {
+				String link = HOME_PAGE + "?" + URL_PARAM_GROUP + "=" + menuState.getSelectedComponent().getName();
+				if (menuState.getSelectedDemo() != null) {
+					link += "&" + URL_PARAM_DEMO + "=" + menuState.getSelectedDemo().getName();
+				}
+				FacesUtils.redirectBrowser(link);
 			}
-			FacesUtils.redirectBrowser(link);
 			
 			// Reset our parameters so we don't perform this step again
 			// They'll still be in the URL for bookmarking, until the user navigates somewhere else

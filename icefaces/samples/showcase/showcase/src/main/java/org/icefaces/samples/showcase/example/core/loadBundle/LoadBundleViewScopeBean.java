@@ -16,13 +16,13 @@
 
 package org.icefaces.samples.showcase.example.core.loadBundle;
 
+import java.io.Serializable;
+import java.util.Locale;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import java.io.Serializable;
-import java.util.Locale;
 
 @ManagedBean(name = LoadBundleViewScopeBean.BEAN_NAME)
 @ViewScoped
