@@ -21,13 +21,13 @@ import java.io.Serializable;
 import javax.annotation.PreDestroy;
 import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.PreValidateEvent;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
-import javax.faces.view.ViewScoped;
 
 import org.icefaces.samples.showcase.view.menu.ShowcaseMenu;
 
@@ -53,15 +53,21 @@ public class NavigationNotifierViewScopeBean implements Serializable {
         }
     };
 
-    public void navigationDetected() {
+    public String navigationDetectedEvent() {
         navigationDetected = true;
+        
+        return null;
     }
 
     public boolean getNavigationDetected() {
         return navigationDetected;
     }
 
-    public String getNavigateBackURI() {
+    public void setNavigationDetected(boolean navigationDetected) {
+		this.navigationDetected = navigationDetected;
+	}
+
+	public String getNavigateBackURI() {
         final FacesContext context = FacesContext.getCurrentInstance();
         return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?" + ShowcaseMenu.URL_PARAM_GROUP + "=icecore:navigationNotifier&" + ShowcaseMenu.URL_PARAM_DEMO + "=Overview");
     }
