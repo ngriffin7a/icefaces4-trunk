@@ -63,7 +63,7 @@ public class NavigationNotifierViewScopeBean implements Serializable {
 
     public String getNavigateBackURI() {
         final FacesContext context = FacesContext.getCurrentInstance();
-        return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?" + ShowcaseMenu.URL_PARAM_GROUP + "=aceMenu&" + ShowcaseMenu.URL_PARAM_DEMO + "=navigationNotifierBean");
+        return context.getApplication().getViewHandler().getResourceURL(context, "/showcase.jsf?" + ShowcaseMenu.URL_PARAM_GROUP + "=icecore:navigationNotifier&" + ShowcaseMenu.URL_PARAM_DEMO + "=Overview");
     }
 
     @PreDestroy
