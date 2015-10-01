@@ -334,6 +334,7 @@ public class DataTableRenderer extends CoreRenderer {
         writer.startElement(HTML.TBODY_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId + "_body", null);
         writer.writeAttribute(HTML.CLASS_ATTR, tbodyClass, null);
+        writer.writeAttribute(HTML.TABINDEX_ATTR, "0", null);
 
         if (hasData) {
             for (int i = first; i < (first + rowCountToRender); i++) {
