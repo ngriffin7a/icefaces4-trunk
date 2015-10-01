@@ -64,6 +64,8 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 				self.cfg.labelIsInField = false;
 			}
 			self.initialize(self.element, self.update, options, rowClass, highlightedRowClass, selectedRowClass, behaviors);
+            e.stopPropagation();
+            e.preventDefault();
 			if (ice.ace.SelectMenu.Browser.IE) {
 				self.updateNOW(self.content);
 			}
