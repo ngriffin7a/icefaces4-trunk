@@ -25,26 +25,23 @@ import javax.faces.event.ActionEvent;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
 
-
 @ManagedBean(name= PushButtonBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
 public class PushButtonBean implements Serializable {
 
     public static final String BEAN_NAME = "pushButton";
 	public String getBeanName() { return BEAN_NAME; }
-    ImageSet.ImageInfo currentImage;
+    private ImageSet.ImageInfo currentImage;
     
     public PushButtonBean() {
         currentImage = ImageSet.getNextImage(currentImage);
     }
 
     public String executeAction() {
-        //application logic can be added here
         return null;
     }
     
-    public void executeListener(ActionEvent event) 
-    {
+    public void executeListener(ActionEvent event) { 
         currentImage = ImageSet.getNextImage(currentImage);
     }
     
