@@ -42,7 +42,7 @@
 .ui-datatable .ui-header-column, .ui-datatable .ui-footer-column { padding:4px 10px; }
 .ui-datatable div.ui-header-column, .ui-datatable div.ui-footer-column { border:none; }
 
-.ui-datatable tbody.ui-datatable-data > tr:focus {
+.ui-datatable tbody.ui-datatable-data:focus, .ui-datatable tbody.ui-datatable-data > tr:focus {
     outline: none;
 }
 

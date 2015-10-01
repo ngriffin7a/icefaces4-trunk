@@ -36,7 +36,7 @@ ice.ace.DataTable.Paginator = function(table) {
             e.preventDefault();
             if (activeIndex < max) {
                 activeIndex++;
-                submit();
+                submit({isKeyRequest: true});
             }
         }
         //page up or left arrow key
@@ -44,20 +44,20 @@ ice.ace.DataTable.Paginator = function(table) {
             e.preventDefault();
             if (activeIndex > 1) {
                 activeIndex--;
-                submit();
+                submit({isKeyRequest: true});
             }
         }
         //home key
         if (keycode == 36) {
             e.preventDefault();
             activeIndex = 1;
-            submit();
+            submit({isKeyRequest: true});
         }
         //end key
         if (keycode == 35) {
             e.preventDefault();
             activeIndex = max;
-            submit();
+            submit({isKeyRequest: true});
         }
     };
 
@@ -274,9 +274,12 @@ ice.ace.DataTable.Paginator = function(table) {
             formId:table.cfg.formId
         };
 
-        var _self = table;
         options.onsuccess = function (responseXML) {
             if (table.cfg.scrollable) table.resizeScrolling();
+			if (conf.isKeyRequest) {
+				var clientId = table.id + '_body';
+				document.getElementById(clientId).focus(); // in order to allow subsequent keyboard pagination events
+			}
         };
 
         var params = {};
