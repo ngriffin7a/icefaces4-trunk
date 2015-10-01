@@ -34,6 +34,7 @@ ice.ace.DataTable.Paginator = function(table) {
         //page down or right arrow key
         if (keycode == 34 || keycode == 39) {
             e.preventDefault();
+			if (window['keyboardPaginationInProgress' + table.id]) return;
             if (activeIndex < max) {
                 activeIndex++;
                 submit({isKeyRequest: true});
@@ -42,6 +43,7 @@ ice.ace.DataTable.Paginator = function(table) {
         //page up or left arrow key
         if (keycode == 33 || keycode == 37) {
             e.preventDefault();
+			if (window['keyboardPaginationInProgress' + table.id]) return;
             if (activeIndex > 1) {
                 activeIndex--;
                 submit({isKeyRequest: true});
@@ -50,12 +52,14 @@ ice.ace.DataTable.Paginator = function(table) {
         //home key
         if (keycode == 36) {
             e.preventDefault();
+			if (window['keyboardPaginationInProgress' + table.id]) return;
             activeIndex = 1;
             submit({isKeyRequest: true});
         }
         //end key
         if (keycode == 35) {
             e.preventDefault();
+			if (window['keyboardPaginationInProgress' + table.id]) return;
             activeIndex = max;
             submit({isKeyRequest: true});
         }
@@ -263,6 +267,7 @@ ice.ace.DataTable.Paginator = function(table) {
 
     function submit(conf) {
         if (conf == undefined) conf = {};
+
         var newState = getState(),
             rowChangeEvent = conf.rowChangeEvent;
 
@@ -279,6 +284,7 @@ ice.ace.DataTable.Paginator = function(table) {
 			if (conf.isKeyRequest) {
 				var clientId = table.id + '_body';
 				document.getElementById(clientId).focus(); // in order to allow subsequent keyboard pagination events
+				setTimeout(function() { window['keyboardPaginationInProgress' + table.id] = false; }, 300);
 			}
         };
 
@@ -289,6 +295,9 @@ ice.ace.DataTable.Paginator = function(table) {
 
         options.params = params;
 
+		if (conf.isKeyRequest) {
+			window['keyboardPaginationInProgress' + table.id] = true;
+		}
 
         if (table.behaviors && table.behaviors.page && !rowChangeEvent) {
             ice.ace.ab(ice.ace.extendAjaxArgs(
