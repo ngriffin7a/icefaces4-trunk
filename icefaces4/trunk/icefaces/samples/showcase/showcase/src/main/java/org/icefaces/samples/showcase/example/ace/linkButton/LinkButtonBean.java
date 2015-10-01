@@ -16,7 +16,6 @@
 
 package org.icefaces.samples.showcase.example.ace.linkButton;
 
-
 import java.io.Serializable;
 
 import javax.faces.bean.CustomScoped;
@@ -25,28 +24,27 @@ import javax.faces.event.ActionEvent;
 
 import org.icefaces.samples.showcase.dataGenerators.ImageSet;
 import org.icefaces.samples.showcase.dataGenerators.ImageSet.ImageInfo;
+import org.icefaces.samples.showcase.view.menu.ShowcaseMenu;
 
 @ManagedBean(name=LinkButtonBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
 public class LinkButtonBean implements Serializable {
-
     public static final String BEAN_NAME = "linkButton";
 	public String getBeanName() { return BEAN_NAME; }
+	
     private String staticNavigation;
-    ImageSet.ImageInfo currentImage;
+    private ImageSet.ImageInfo currentImage;
     
     public LinkButtonBean() {
-        staticNavigation  = "showcase.jsf";
+        staticNavigation  = ShowcaseMenu.HOME_PAGE;
         currentImage = ImageSet.getNextImage(currentImage);
     }
     
     public String executeAction() {
-        //application logic can be added here
         return null;
     }
     
-    public void executeListener(ActionEvent event) 
-    {
+    public void executeListener(ActionEvent event) { 
         currentImage = ImageSet.getNextImage(currentImage);
     }
     

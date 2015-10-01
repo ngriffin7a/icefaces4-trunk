@@ -30,9 +30,9 @@
                     <ace:pushButton id="pushBttnAction"
                                     value="Go to LinkButton example"
                                     action="#{pushButton.executeAction}">
-                        <ace:ajax execute="@all" render="@all" onSuccess="updateAddressBarURL('aceMenu','linkButton');" />
-                        <f:param name="#{showcaseMenu.urlParamGroup}" value="aceMenu"/>
-                        <f:param name="#{showcaseMenu.urlParamDemo}" value="linkButton" />
+                        <ace:ajax execute="@all" render="@all" onSuccess="updateAddressBarURL('ace:linkButton','Overview');" />
+                        <f:param name="#{showcaseMenu.urlParamGroup}" value="ace:linkButton"/>
+                        <f:param name="#{showcaseMenu.urlParamDemo}" value="Overview" />
                     </ace:pushButton>
                 </ace:tabPane>
                 <ace:tabPane id="pane2" label="Action Listener">

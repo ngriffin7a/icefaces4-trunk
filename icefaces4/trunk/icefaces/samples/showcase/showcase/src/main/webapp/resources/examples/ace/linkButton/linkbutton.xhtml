@@ -31,9 +31,9 @@
                     <ace:linkButton id="linkBttnAction"
                                     value="PushButton example"
                                     action="#{linkButton.executeAction}">
-                        <ace:ajax execute="@all" render="@all" onSuccess="updateAddressBarURL('aceMenu','pushButton');" />
-                        <f:param name="#{showcaseMenu.urlParamGroup}" value="aceMenu"/>
-                        <f:param name="#{showcaseMenu.urlParamDemo}" value="pushButton" />
+                        <ace:ajax execute="@all" render="@all" onSuccess="updateAddressBarURL('ace:pushButton','Overview');" />
+                        <f:param name="#{showcaseMenu.urlParamGroup}" value="ace:pushButton"/>
+                        <f:param name="#{showcaseMenu.urlParamDemo}" value="Overview" />
                     </ace:linkButton>
                     via action.<br/>
 
@@ -43,8 +43,8 @@
                     <ace:linkButton id="linkBttnStatic"
                                     value="PushButton example"
                                     href="#{linkButton.staticNavigation}">
-                        <f:param name="#{showcaseMenu.urlParamGroup}" value="aceMenu"/>
-                        <f:param name="#{showcaseMenu.urlParamDemo}" value="pushButton"/>
+                        <f:param name="#{showcaseMenu.urlParamGroup}" value="ace:pushButton"/>
+                        <f:param name="#{showcaseMenu.urlParamDemo}" value="Overview"/>
                     </ace:linkButton>
                     via href.<br/>
                 </ace:tabPane>
