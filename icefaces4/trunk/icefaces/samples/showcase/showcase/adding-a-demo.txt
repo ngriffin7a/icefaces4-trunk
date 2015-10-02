@@ -4,14 +4,16 @@ To add a new demo to the Component Showcase the main class you will work with is
 Inside here you will see the structure for our menu navigation. A hierarchy order of CategoryGroup -> ComponentGroup -> Demo is used
 For example Input -> ace:textEntry -> Label Position
 
-1. Create your XHTML file for the demo under src/main/webapp/resources/example/ace/COMPONENT/demoName.xhtml with COMPONENT being something like "textEntry"
+1. Create your XHTML file for the demo under src/main/webapp/resources/examples/ace/COMPONENT/demoName.xhtml with COMPONENT being something like "textEntry"
 This XHTML file is a template-client and uses template="/resources/templates/content-template.xhtml" and a <ui:define name="example"> for the main content
 
-2. If you require a backing bean create any Java classes under src/main/java/org/icefaces/samples/showcase/examples/ace/COMPONENT/BeanName.java
+2. If you require a backing bean create any Java classes under src/main/java/org/icefaces/samples/showcase/example/ace/COMPONENT/BeanName.java
 These are standard beans, normally Window or View scoped
 
-3. Add your new demo to the CentralDataList.java class. You can follow the existing structure as a guide. You can see how ICE Core need a bit more setup compared to ACE, various examples with custom DemoResource and DemoSource lists, and a few full page refresh examples
+3. Add your new demo to the CentralDataList.java class, located at src/main/java/org/icefaces/samples/showcase/view/menu/data. You can follow the existing structure as a guide. You can see how ICE Core need a bit more 
+setup compared to ACE, various examples with custom DemoResource and DemoSource lists, and a few full page refresh examples
 There are many flexible constructors for each of the objects, so you can customize the demo as much as you need.
+If you are adding an ace demo with only one bean a simple example to follow would be the ajax component.
 All URL bookmarkability and search box integration will be handled automatically for a properly structured demo.
 Note that we try to internationalize as many strings as we can in messages.properties. The convenience method msgs(String key) in CentralDataList can be used to easily retrieve strings.
 The classes involved...
