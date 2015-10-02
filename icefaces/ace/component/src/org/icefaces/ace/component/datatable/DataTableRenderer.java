@@ -172,6 +172,7 @@ public class DataTableRenderer extends CoreRenderer {
         writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         writer.writeAttribute(HTML.CLASS_ATTR, containerClass, "styleClass");
+        writer.writeAttribute(HTML.TABINDEX_ATTR, "0", null);
 
         // Container Style
         if ((style = table.getStyle()) != null)
@@ -334,7 +335,6 @@ public class DataTableRenderer extends CoreRenderer {
         writer.startElement(HTML.TBODY_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId + "_body", null);
         writer.writeAttribute(HTML.CLASS_ATTR, tbodyClass, null);
-        writer.writeAttribute(HTML.TABINDEX_ATTR, "0", null);
 
         if (hasData) {
             for (int i = first; i < (first + rowCountToRender); i++) {
