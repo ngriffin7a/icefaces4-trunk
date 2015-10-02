@@ -65,7 +65,10 @@ ice.ace.DataTable.Paginator = function(table) {
         }
     };
 
-    this.tableContainer = ice.ace.jq(table.jqId);
+	if (table.cfg.scrollable)
+		this.tableContainer = ice.ace.jq(table.jqId + ' .ui-paginator');
+	else
+		this.tableContainer = ice.ace.jq(table.jqId);
     this.tableContainer.on('keydown', container.keyboardPagination);
 
     function initPageMarkup() {
@@ -282,8 +285,9 @@ ice.ace.DataTable.Paginator = function(table) {
         options.onsuccess = function (responseXML) {
             if (table.cfg.scrollable) table.resizeScrolling();
 			if (conf.isKeyRequest) {
-				var clientId = table.id + '_body';
-				document.getElementById(clientId).focus(); // in order to allow subsequent keyboard pagination events
+				if (!table.cfg.scrollable) {
+					document.getElementById(table.id).focus(); // in order to allow subsequent keyboard pagination events
+				}
 				setTimeout(function() { window['keyboardPaginationInProgress' + table.id] = false; }, 300);
 			}
         };
