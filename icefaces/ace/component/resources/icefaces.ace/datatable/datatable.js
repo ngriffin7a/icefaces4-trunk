@@ -1572,11 +1572,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 		this.addFillerSpaceToEnableScrolling();
 	}
 
-	window['liveScrolJustInitialized' + this.id] = true;
-	setTimeout(function() { window['liveScrolJustInitialized' + this.id] = false; }, 500);
-
     scrollBody.bind('scroll', function () {
-		if (window['liveScrolJustInitialized' + _self.id]) return;
         var $this = ice.ace.jq(this);
 		setTimeout(function() { // prevent multiple, repeated requests with short intervals
 			var $header = ice.ace.jq(_self.jqId + ' > div.ui-datatable-scrollable-header'),
