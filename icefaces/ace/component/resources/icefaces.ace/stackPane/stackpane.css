@@ -19,7 +19,7 @@
     visibility: visible;
     display: block;
 }
-.ace-stacktpane-hidden {
+.ace-stackpane-hidden {
     opacity: 0;
     visibility: hidden;
     height:0;

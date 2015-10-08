@@ -18,6 +18,7 @@ package org.icefaces.ace.component.stackpane;
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Implementation;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.meta.baseMeta.UIPanelMeta;
 
 
@@ -66,5 +67,9 @@ public class StackPaneMeta extends UIPanelMeta{
                      "This is ideal for static content. " +
                      "The facelet attribute is only relevant if this attribute is false.")
     private boolean client;
+
+
+    @Field(defaultValue="false")
+    private Boolean selected;
 
 }
