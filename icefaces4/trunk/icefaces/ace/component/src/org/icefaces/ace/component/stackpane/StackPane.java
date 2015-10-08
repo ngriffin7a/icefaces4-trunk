@@ -36,7 +36,7 @@ public class StackPane extends StackPaneBase {
     private static final List<UIComponent> NO_CHILDREN = new LinkedList<UIComponent>();
     private Runnable createChildren;
 
-    public void processDecodes(FacesContext context) {
+ /*   public void processDecodes(FacesContext context) {
         if (isSelected()) {
             createChildren();
             super.processDecodes(context);
@@ -145,5 +145,5 @@ public class StackPane extends StackPaneBase {
             c.setId(c.getId());
             resetClientId(c.getChildren());
         }
-    }
+    } */
 }

@@ -19,8 +19,7 @@ package org.icefaces.ace.component.panelstack;
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
 import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
-import org.icefaces.ace.meta.baseMeta.UIOutputMeta;
-import org.icefaces.ace.meta.baseMeta.UISeriesBaseMeta;
+import org.icefaces.ace.meta.baseMeta.UIPanelMeta;
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
@@ -32,6 +31,7 @@ import org.icefaces.resources.ICEResourceLibrary;
         componentClass = "org.icefaces.ace.component.panelstack.PanelStack",
         rendererClass = "org.icefaces.ace.component.panelstack.PanelStackRenderer",
         generatedClass = "org.icefaces.ace.component.panelstack.PanelStackBase",
+        handlerClass = "org.icefaces.ace.component.panelstack.StackHandler",
         componentType = "org.icefaces.PanelStack",
         rendererType = "org.icefaces.PanelStackRenderer",
         extendsClass = "javax.faces.component.UIOutput",
@@ -45,7 +45,7 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ICEResourceDependency(name = "util/blockui.js"),
 	@ICEResourceDependency(name = "panel/panel.js")
 })
-public class PanelStackMeta extends UIOutputMeta {
+public class PanelStackMeta extends UIPanelMeta {
 
      @Property( tlddoc="The id of the panel that is visible.")
      private String selectedId;

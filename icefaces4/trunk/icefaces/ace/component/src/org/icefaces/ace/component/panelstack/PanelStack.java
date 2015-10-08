@@ -16,13 +16,14 @@
 package org.icefaces.ace.component.panelstack;
 
 import javax.faces.context.FacesContext;
+import org.icefaces.ace.api.StackPaneController;
 
-public class PanelStack extends PanelStackBase {
+public class PanelStack extends PanelStackBase implements StackPaneController{
 
-    public Object getValue() {
+ /*   public Object getValue() {
         Object value = super.getValue();
         return value == null ? new Object[] { new Object() } : value;
-    }
+    } */
 }
 
 

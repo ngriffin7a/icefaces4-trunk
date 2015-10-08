@@ -28,20 +28,24 @@ import org.icefaces.ace.util.ComponentUtils;
 @ManagedBean(name="treeMonitor")
 @SessionScoped
 public class CompTreeMonitor implements java.io.Serializable {
+    private String node1="panelStackForm:stack1";
+    private String node2= "repeatForm";
 
     public int getTreeSize() {
-        String stackId1= "panelStackForm:stack1";
+        return getTreeSize(node1);
+    }
+    public int getTreeSize2(){
+        return getTreeSize(node2);
+    }
 
+    private int getTreeSize(String nodeId){
         FacesContext context = FacesContext.getCurrentInstance();
         UIViewRoot root = context.getViewRoot();
-        UIComponent stack = root.findComponent(stackId1);
-        if (null ==stack){
-            stack = ComponentUtils.findComponent(root, "stack1");
+        UIComponent element = root.findComponent(nodeId);
+        if (null==element) {
+            return -1;
         }
-        if (null==stack) {
-             return -1;
-        }
-        return countChildComponents(stack);
+        return countChildComponents(element);
     }
     private static int countChildComponents(UIComponent uic) {
         int children = 1;

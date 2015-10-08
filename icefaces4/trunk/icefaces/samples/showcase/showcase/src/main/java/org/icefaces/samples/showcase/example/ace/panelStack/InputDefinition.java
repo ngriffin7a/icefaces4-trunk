@@ -15,8 +15,13 @@
  */
 package org.icefaces.samples.showcase.example.ace.panelStack;
 
+
+import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+
 import java.io.Serializable;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InputDefinition implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -24,6 +29,7 @@ public class InputDefinition implements Serializable{
     private String title;
     private Object value;
     private boolean booleanVal = false;
+    private List<Car> carsList = new ArrayList<Car>();
 
 
     public InputDefinition(String type, String title,  Object value){
@@ -36,6 +42,12 @@ public class InputDefinition implements Serializable{
         this.type = type;
         this.title = title;
         this.booleanVal = bool;
+    }
+
+    public InputDefinition(String type, String title, List<Car> cars){
+        this.type=type;
+        this.title = title;
+        this.carsList = cars;
     }
 
 	public String getType() {
@@ -70,4 +82,11 @@ public class InputDefinition implements Serializable{
         this.title = title;
     }
 
+    public List<Car> getCarsList() {
+        return carsList;
+    }
+
+    public void setCarsList(List<Car> carsList) {
+        this.carsList = carsList;
+    }
 }
