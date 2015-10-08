@@ -17,5 +17,5 @@
 package org.icefaces.ace.component.column;
 
 public enum ColumnType {
-    text, bool, date, image;
+	TEXT, BOOLEAN, DATE, BYTE, SHORT, INT, LONG, FLOAT, DOUBLE;
 }

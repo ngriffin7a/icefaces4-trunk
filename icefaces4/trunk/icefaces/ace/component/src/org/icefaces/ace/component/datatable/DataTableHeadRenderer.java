@@ -371,38 +371,29 @@ public class DataTableHeadRenderer {
         String filterFunction = widgetVar + ".filter(event)";
         String filterStyleClass = column.getFilterStyleClass();
         String filterEvent = table.getFilterEvent();
+		boolean rangeFiltering = column.isFilterRange();
         filterStyleClass = filterStyleClass == null
                 ? DataTableConstants.COLUMN_FILTER_CLASS
                 : DataTableConstants.COLUMN_FILTER_CLASS + " " + filterStyleClass;
 
         if (column.getValueExpression("filterOptions") == null) {
-			if (!(column.getType() == ColumnType.date)) {
-				String filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
-
-				writer.startElement(HTML.INPUT_ELEM, null);
-				writer.writeAttribute(HTML.ID_ATTR, filterId, null);
-				writer.writeAttribute(HTML.NAME_ATTR, filterId, null);
-				writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
-				writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
-				writer.writeAttribute("size", "1", null); // Webkit requires none zero/null size value to use CSS width correctly.
-				writer.writeAttribute("value", filterValue , null);
-
-				if (filterEvent.equals("keyup") || filterEvent.equals("blur"))
-					writer.writeAttribute("on"+filterEvent, filterFunction , null);
-
-				if (column.getFilterStyle() != null)
-					writer.writeAttribute(HTML.STYLE_ELEM, column.getFilterStyle(), null);
-
-				writer.endElement(HTML.INPUT_ELEM);
-
-				writer.startElement(HTML.SPAN_ELEM, null);
-				writer.startElement(HTML.SCRIPT_ELEM, null);
-				writer.writeAttribute("type", "text/javascript", null);
-				writer.write("document.getElementById('"+filterId+"').submitOnEnter = 'disabled'; // "+filterValue);
-				writer.endElement(HTML.SCRIPT_ELEM);
-				writer.endElement(HTML.SPAN_ELEM);
+			if (!(column.getType() == ColumnType.DATE)) {
+				if (rangeFiltering && (column.getType() != ColumnType.TEXT && column.getType() != ColumnType.BOOLEAN)) {
+					encodeFilterField(context, tableContext, column, filterId, filterFunction, 
+						filterStyleClass, filterEvent, "_min");
+					encodeFilterField(context, tableContext, column, filterId, filterFunction, 
+						filterStyleClass, filterEvent, "_max");
+				} else {
+					encodeFilterField(context, tableContext, column, filterId, filterFunction, 
+						filterStyleClass, filterEvent, "");
+				}
 			} else {
-				encodeDatePicker(context, table, column, filterId, filterFunction);
+				if (rangeFiltering) {
+					encodeDatePicker(context, table, column, filterId, filterFunction, "_min");
+					encodeDatePicker(context, table, column, filterId, filterFunction, "_max");
+				} else {
+					encodeDatePicker(context, table, column, filterId, filterFunction, "");
+				}
 			}
         }
         else {
@@ -436,16 +427,48 @@ public class DataTableHeadRenderer {
 
     }
 
+	private static void encodeFilterField(FacesContext context, DataTableRenderingContext tableContext, Column column,
+			String filterId, String filterFunction, String filterStyleClass, String filterEvent, String suffix) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		Object filterValue;
+		if ("_min".equals(suffix)) filterValue = column.getFilterValueMin() != null ? column.getFilterValueMin() : "";
+		else if ("_max".equals(suffix)) filterValue = column.getFilterValueMax() != null ? column.getFilterValueMax() : "";
+		else filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
+
+		writer.startElement(HTML.INPUT_ELEM, null);
+		writer.writeAttribute(HTML.ID_ATTR, filterId + suffix, null);
+		writer.writeAttribute(HTML.NAME_ATTR, filterId + suffix, null);
+		writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
+		writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
+		writer.writeAttribute("size", "1", null); // Webkit requires none zero/null size value to use CSS width correctly.
+		writer.writeAttribute("value", filterValue , null);
+
+		if (filterEvent.equals("keyup") || filterEvent.equals("blur"))
+			writer.writeAttribute("on"+filterEvent, filterFunction , null);
+
+		if (column.getFilterStyle() != null)
+			writer.writeAttribute(HTML.STYLE_ELEM, column.getFilterStyle(), null);
+
+		writer.endElement(HTML.INPUT_ELEM);
+
+		writer.startElement(HTML.SPAN_ELEM, null);
+		writer.startElement(HTML.SCRIPT_ELEM, null);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.write("document.getElementById('"+filterId+suffix+"').submitOnEnter = 'disabled'; // "+filterValue);
+		writer.endElement(HTML.SCRIPT_ELEM);
+		writer.endElement(HTML.SPAN_ELEM);
+	}
+
 	private static void encodeDatePicker(FacesContext context, DataTable table, Column column,
-			String clientId, String filterFunction) throws IOException {
+			String clientId, String filterFunction, String suffix) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
-        String inputId = clientId + "_input";
+        String inputId = clientId + suffix + "_input";
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
 
         writer.startElement("span", null);
-        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("id", clientId + suffix, null);
         writer.writeAttribute("class", "ui-column-filter", null);
 
         // input
@@ -459,7 +482,20 @@ public class DataTableHeadRenderer {
             writer.writeAttribute("role", "textbox", null);
         }
 
-		String filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
+		Object filterValue;
+		if ("_min".equals(suffix)) {
+			filterValue = column.getFilterValueMin() != null ? column.getFilterValueMin() : "";
+		} else if ("_max".equals(suffix)) {
+			filterValue = column.getFilterValueMax() != null ? column.getFilterValueMax() : "";
+		} else filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
+
+		// convert date to string
+		if (filterValue instanceof Date) {
+			Locale locale = column.calculateLocale(context);
+			DateFormat format = new SimpleDateFormat(column.getFilterDatePattern(), locale);
+			filterValue = format.format((Date) filterValue);
+		}
+
         writer.writeAttribute("value", filterValue, null);
 
 		writer.writeAttribute("class", "ui-inputfield ui-widget ui-state-default ui-corner-all", null);
@@ -468,7 +504,7 @@ public class DataTableHeadRenderer {
 
         writer.endElement("input");
 
-		encodeDatePickerScript(context, table, column, clientId);
+		encodeDatePickerScript(context, table, column, clientId + suffix);
 
         writer.endElement("span");
 	}
@@ -488,14 +524,14 @@ public class DataTableHeadRenderer {
 		String widgetVar = "widget_" + clientId.replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
         script.append("ice.ace.jq(function(){").append(widgetVar).append(" = new ");
 
-        Locale locale = Locale.getDefault();
+        Locale locale = column.calculateLocale(context);
         json.beginMap()
             .entry("widgetVar", widgetVar)
             .entry("id", clientId)
             .entry("popup", true)
             .entry("locale", locale.toString())
             .entryNonNullValue("pattern", 
-                DateTimeEntryUtils.parseTimeZone(DateTimeEntryUtils.convertPattern("yyyy-MM-dd"), locale, java.util.TimeZone.getDefault()));
+                DateTimeEntryUtils.parseTimeZone(DateTimeEntryUtils.convertPattern(column.getFilterDatePattern()), locale, java.util.TimeZone.getDefault()));
 
         json.entryNonNullValue("yearRange", "c-10:c+10");
 

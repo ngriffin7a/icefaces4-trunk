@@ -89,7 +89,24 @@ public class ColumnMeta extends UIColumnMeta {
 	@Property(tlddoc="Defines the method of filter comparison used, default is \"startsWith\". " +
             "Types available include: \"contains\", \"exact\", \"startsWith\" and \"endsWith\".", defaultValue="startsWith")
 	private String filterMatchMode;
-	
+
+    @Property(tlddoc="If true, range filtering is enabled. When range filtering is enabled, two input fields will be rendered for filtering this column. The first one is to specify the minimum value and the second one is to specify the maximum value. All rows with values for this column in between this range will be matched. If only the minimum value is specified, all values greater than or equal to it will be matched; if only the maximum value is specified, all values less than or equal to it will be matched.",
+            defaultValue = "false", defaultValueType = DefaultValueType.EXPRESSION)
+    private boolean filterRange;
+
+    @Property(tlddoc="When range filtering is enabled, this property is used to access or to set the minimum filter value of the range. The value can't be a primitive type; use the corresponding wrapper object instead.")
+    private Object filterValueMin;
+
+    @Property(tlddoc="When range filtering is enabled, this property is used to access or to set the maximum filter value of the range. The value can't be a primitive type; use the corresponding wrapper object instead.")
+    private Object filterValueMax;
+
+    @Property(defaultValue = "yyyy-MM-dd", tlddoc = "DateFormat pattern for the date filter input. See the " +
+            "<a href=\"http://wiki.icefaces.org/display/ICE/DateTimeEntry\">DateTimeEntry Wiki Documentation</a> for limitations. ")
+    private String filterDatePattern;
+
+    @Property(tlddoc = "Locale to be used for the date filter input. Valid values can be a Locale string or java.util.Locale objects. Default is locale of view root.")
+    private Object filterDateLocale;
+
 	@Property(tlddoc="Defines the number of rows the rendered cell spans. Only " +
             "significant to Column components within a column group.", defaultValue="1")
 	private int rowspan;
@@ -144,13 +161,12 @@ public class ColumnMeta extends UIColumnMeta {
             "Having a value in this field indicates a column is pinned. 1 indexed.")
     private Integer pinningOrder;
 
-    @Property(defaultValue = "org.icefaces.ace.component.column.ColumnType.text",
+    @Property(defaultValue = "org.icefaces.ace.component.column.ColumnType.TEXT",
               defaultValueType = DefaultValueType.EXPRESSION,
               tlddoc = "Define the ColumnType of this column, determining how the " +
                       "'value' attribute of this component will be handled when filtering. Valid options " +
-                      "include : text, bool, date, image " +
-                      "(Date assumes the value object is a Date object, and "+
-                      "Image assumes the value is a representation of an image URL).")
+                      "include : TEXT, BOOLEAN, DATE, BYTE, SHORT, INT, LONG, FLOAT, and DOUBLE " +
+                      "(Letters must be capitalized because the value is an enum type and to avoid using the corresponding reserved words; DATE assumes the value object is a Date object).")
     ColumnType type;
 
 //    These per-feature configuration attributes will be used when the 'value' property is added to Column.
