@@ -289,4 +289,44 @@ public class ProxiedBodyColumn implements IProxiableColumn{
     public ColumnType getType() {
         return (isPropertySpecified(bodyColumn, "type") ? bodyColumn : headerColumn).getType();
     }
+
+    public void setFilterRange(boolean filterRange) {
+        (isPropertySpecified(bodyColumn, "filterRange") ? bodyColumn : headerColumn).setFilterRange(filterRange);
+    }
+
+    public boolean isFilterRange() {
+        return (isPropertySpecified(bodyColumn, "filterRange") ? bodyColumn : headerColumn).isFilterRange();
+    }
+
+    public void setFilterValueMin(Object filterValueMin) {
+        (isPropertySpecified(bodyColumn, "filterValueMin") ? bodyColumn : headerColumn).setFilterValueMin(filterValueMin);
+    }
+
+    public Object getFilterValueMin() {
+        return (isPropertySpecified(bodyColumn, "filterValueMin") ? bodyColumn : headerColumn).getFilterValueMin();
+    }
+
+    public void setFilterValueMax(Object filterValueMax) {
+        (isPropertySpecified(bodyColumn, "filterValueMax") ? bodyColumn : headerColumn).setFilterValueMax(filterValueMax);
+    }
+
+    public Object getFilterValueMax() {
+        return (isPropertySpecified(bodyColumn, "filterValueMax") ? bodyColumn : headerColumn).getFilterValueMax();
+    }
+
+    public void setFilterDatePattern(String filterDatePattern) {
+        (isPropertySpecified(bodyColumn, "filterDatePattern") ? bodyColumn : headerColumn).setFilterDatePattern(filterDatePattern);
+    }
+
+    public String getFilterDatePattern() {
+        return (isPropertySpecified(bodyColumn, "filterDatePattern") ? bodyColumn : headerColumn).getFilterDatePattern();
+    }
+
+    public void setFilterDateLocale(Object filterDateLocale) {
+        (isPropertySpecified(bodyColumn, "filterDateLocale") ? bodyColumn : headerColumn).setFilterDateLocale(filterDateLocale);
+    }
+
+    public Object getFilterDateLocale() {
+        return (isPropertySpecified(bodyColumn, "filterDateLocale") ? bodyColumn : headerColumn).getFilterDateLocale();
+    }
 }

@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
 import java.io.Serializable;
+import java.util.Locale;
 
 import org.icefaces.ace.component.datatable.DataTable;
 import org.icefaces.ace.model.filter.*;
@@ -168,5 +169,26 @@ public class Column extends ColumnBase implements IProxiableColumn, Serializable
 
     public boolean isPropertySet(String finder) {
         return super.isPropertySet(finder);
+    }
+
+    public Locale calculateLocale(FacesContext facesContext) {
+		Locale locale;
+		Object userLocale = getFilterDateLocale();
+		if (userLocale != null) {
+			if (userLocale instanceof String) {
+				String[] tokens = ((String) userLocale).split("_");
+				if (tokens.length == 1)
+					locale = new Locale(tokens[0], "");
+				else
+					locale = new Locale(tokens[0], tokens[1]);
+			} else if (userLocale instanceof Locale)
+				locale = (Locale) userLocale;
+			else
+				throw new IllegalArgumentException("Type:" + userLocale.getClass() + " is not a valid locale type for column:" + this.getClientId(facesContext));
+		} else {
+			locale = facesContext.getViewRoot().getLocale();
+		}
+
+        return locale;
     }
 }

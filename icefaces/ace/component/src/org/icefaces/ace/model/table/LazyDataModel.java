@@ -32,6 +32,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.icefaces.ace.component.column.Column;
+
 /**
  * Custom lazy loading DataModel to deal with huge datasets
  */
@@ -44,6 +46,8 @@ public abstract class LazyDataModel<T> extends DataModel implements Serializable
 	private int pageSize = 1;
 
 	private List<T> data;
+
+	private List<Column> columns;
 
 	public LazyDataModel() {
 		super();
@@ -90,6 +94,14 @@ public abstract class LazyDataModel<T> extends DataModel implements Serializable
 
     public void setRowCount(int rowCount) {
         this.rowCount = rowCount;
+    }
+
+    public List<Column> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<Column> columns) {
+        this.columns = columns;
     }
 
     public abstract List<T> load(int first, int pageSize, SortCriteria[] sortCriteria, Map<String,String> filters);

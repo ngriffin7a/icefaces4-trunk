@@ -111,18 +111,8 @@ public class DataTableDecoder {
         table.setFirst(0);
         table.setPage(1);
 
-        if (table.isLazy()) {
-            String filteredId = params.get(clientId + "_filteredColumn");
-            Column filteredColumn = null;
-
-            // If in lazy case, just save change to filter input. Load method must account for the rest.
-            Map<String,Column> filterMap = table.getFilterMap();
-            filteredColumn = filterMap.get(filteredId);
-            if (filteredColumn != null) filteredColumn.setFilterValue(params.get(filteredId));
-        } else {
-            table.savedFilterState = new FilterState(context, table);
-            table.applyFilters();
-        }
+		table.savedFilterState = new FilterState(context, table);
+		table.applyFilters();
     }
 
 

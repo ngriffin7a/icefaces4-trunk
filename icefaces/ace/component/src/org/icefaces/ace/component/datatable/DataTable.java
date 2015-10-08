@@ -47,6 +47,7 @@ import org.icefaces.ace.util.collections.AllPredicate;
 import org.icefaces.ace.util.collections.AnyPredicate;
 import org.icefaces.ace.util.collections.Predicate;
 import org.icefaces.ace.util.collections.PropertyConstraintPredicate;
+import org.icefaces.ace.util.collections.RangeConstraintPredicate;
 import org.icefaces.util.JavaScriptRunner;
 import org.icefaces.util.EnvUtils;
 
@@ -1077,7 +1078,7 @@ public class DataTable extends DataTableBase implements Serializable {
             for (UIComponent child : group.getChildren())
                 if (child.isRendered()) for (UIComponent grandchild : child.getChildren())
                     if (grandchild.isRendered() && grandchild.getValueExpression("filterBy") != null) {
-						if (((Column)grandchild).getType() == ColumnType.date)
+						if (((Column)grandchild).getType() == ColumnType.DATE)
 							filterMap.put(grandchild.getClientId(context) + "_filter_input", (Column)grandchild);
 						else
 							filterMap.put(grandchild.getClientId(context) + "_filter", (Column)grandchild);
@@ -1085,7 +1086,7 @@ public class DataTable extends DataTableBase implements Serializable {
         } else
             for (Column column : getColumns())
                 if (column.getValueExpression("filterBy") != null) {
-					if (column.getType() == ColumnType.date)
+					if (column.getType() == ColumnType.DATE)
 						filterMap.put(column.getClientId(context) + "_filter_input", column);
 					else
 						filterMap.put(column.getClientId(context) + "_filter", column);
@@ -1368,20 +1369,34 @@ public class DataTable extends DataTableBase implements Serializable {
 
             // Setup filter objects from column properties
             for (Column c : filterMap.values()) {
-                if (c.getFilterValue() != null && !c.getFilterValue().equals("")) {
-                    columnPredicates.add(
-                            new PropertyConstraintPredicate(context,
-                                    c.getValueExpression("filterBy"),
-                                    c.getFilterValue(),
-                                    c.getFilterConstraint()));
-                }
-                //TODO: Add global filter constraint configurability
-                if (hasGlobalFilter)
-                    globalPredicates.add(new PropertyConstraintPredicate(
-                            context,
-                            c.getValueExpression("filterBy"),
-                            globalFilter,
-                            new ContainsFilterConstraint()));
+				if (c.getType() == ColumnType.TEXT || !c.isFilterRange()) {
+					if (c.getFilterValue() != null && !c.getFilterValue().equals("")) {
+						columnPredicates.add(
+								new PropertyConstraintPredicate(context,
+										c.getValueExpression("filterBy"),
+										c.getFilterValue(),
+										c.getFilterConstraint(),
+										c));
+						// TODO: add a separate predicate for other types that doesn't take filterConstraint
+					}
+					//TODO: Add global filter constraint configurability
+					if (hasGlobalFilter && c.getType() == ColumnType.TEXT)
+						globalPredicates.add(new PropertyConstraintPredicate(
+								context,
+								c.getValueExpression("filterBy"),
+								globalFilter,
+								new ContainsFilterConstraint(),
+								c));
+				} else {
+					if (c.getFilterValueMin() != null || c.getFilterValueMax() != null) {
+						columnPredicates.add(
+								new RangeConstraintPredicate(context,
+										c.getValueExpression("filterBy"),
+										c.getFilterValueMin(),
+										c.getFilterValueMax(),
+										c.getType()));
+					}
+				}
             }
 
             if (globalPredicates.size() + columnPredicates.size() == 0)
@@ -1514,6 +1529,7 @@ public class DataTable extends DataTableBase implements Serializable {
     protected void loadLazyData() {
         LazyDataModel model = (LazyDataModel) getDataModel();
         model.setPageSize(getRows());
+		model.setColumns(getColumns(true));
         model.setWrappedData(model.load(getFirst(), getRows(), getSortCriteria(), getFilters()));
     }
 
