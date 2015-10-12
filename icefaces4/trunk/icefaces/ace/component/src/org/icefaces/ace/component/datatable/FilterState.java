@@ -55,7 +55,7 @@ public class FilterState {
 		for (Column column : filterMap.values()) {
 			String columnId = column.getClientId(context) + "_filter";
 			ColumnType type = column.getType();
-			if (type == ColumnType.TEXT || type == ColumnType.BOOLEAN || !column.isFilterRange()) {
+			if (type == ColumnType.TEXT || type == ColumnType.BOOLEAN || !column.isRangeFilter()) {
 				columnId = column.getType() == ColumnType.DATE ? columnId + "_input" : columnId;
 				saveState(column, params.get(columnId));
 			} else {
@@ -175,7 +175,7 @@ public class FilterState {
     }
 
     private void restoreState(Column column) {
-		if (!column.isFilterRange()) {
+		if (!column.isRangeFilter()) {
 			String val = valueMap.get(column);
 			if (val != null)
 				column.setFilterValue(val);

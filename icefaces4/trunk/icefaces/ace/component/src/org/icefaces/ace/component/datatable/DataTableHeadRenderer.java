@@ -371,7 +371,7 @@ public class DataTableHeadRenderer {
         String filterFunction = widgetVar + ".filter(event)";
         String filterStyleClass = column.getFilterStyleClass();
         String filterEvent = table.getFilterEvent();
-		boolean rangeFiltering = column.isFilterRange();
+		boolean rangeFiltering = column.isRangeFilter();
         filterStyleClass = filterStyleClass == null
                 ? DataTableConstants.COLUMN_FILTER_CLASS
                 : DataTableConstants.COLUMN_FILTER_CLASS + " " + filterStyleClass;
@@ -383,6 +383,9 @@ public class DataTableHeadRenderer {
 						filterStyleClass, filterEvent, "_min");
 					encodeFilterField(context, tableContext, column, filterId, filterFunction, 
 						filterStyleClass, filterEvent, "_max");
+				} else if (column.getType() == ColumnType.BOOLEAN) {
+					encodeBooleanMenu(context, tableContext, column, filterId, filterFunction, 
+						filterStyleClass);
 				} else {
 					encodeFilterField(context, tableContext, column, filterId, filterFunction, 
 						filterStyleClass, filterEvent, "");
@@ -427,6 +430,52 @@ public class DataTableHeadRenderer {
 
     }
 
+	private static void encodeBooleanMenu(FacesContext context, DataTableRenderingContext tableContext, Column column,
+			String filterId, String filterFunction, String filterStyleClass) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		Object filterValue = column.getFilterValue();
+		filterValue = filterValue != null ? filterValue : "";
+
+		writer.startElement(HTML.SELECT_ELEM, null);
+		writer.writeAttribute(HTML.ID_ATTR, filterId, null);
+		writer.writeAttribute(HTML.NAME_ATTR, filterId, null);
+		writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
+		writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
+		writer.writeAttribute("size", "1", null); // Webkit requires none zero/null size value to use CSS width correctly.
+		writer.writeAttribute("value", filterValue , null);
+
+		writer.startElement(HTML.OPTION_ELEM, null);
+		writer.writeAttribute("value", "", null);
+		writer.writeAttribute("label", "", null);
+		writer.endElement(HTML.OPTION_ELEM);
+
+		writer.startElement(HTML.OPTION_ELEM, null);
+		writer.writeAttribute("value", "true", null);
+		writer.writeAttribute("label", "True", null);
+		if ("true".equalsIgnoreCase((String) filterValue)) writer.writeAttribute("selected", "selected", null);
+		writer.endElement(HTML.OPTION_ELEM);
+
+		writer.startElement(HTML.OPTION_ELEM, null);
+		writer.writeAttribute("value", "false", null);
+		writer.writeAttribute("label", "False", null);
+		if (!"true".equalsIgnoreCase((String) filterValue)) writer.writeAttribute("selected", "selected", null);
+		writer.endElement(HTML.OPTION_ELEM);
+
+		writer.writeAttribute("onchange", filterFunction , null);
+
+		if (column.getFilterStyle() != null)
+			writer.writeAttribute(HTML.STYLE_ELEM, column.getFilterStyle(), null);
+
+		writer.endElement(HTML.SELECT_ELEM);
+
+		writer.startElement(HTML.SPAN_ELEM, null);
+		writer.startElement(HTML.SCRIPT_ELEM, null);
+		writer.writeAttribute("type", "text/javascript", null);
+		writer.write("document.getElementById('"+filterId+"').submitOnEnter = 'disabled'; // "+filterValue);
+		writer.endElement(HTML.SCRIPT_ELEM);
+		writer.endElement(HTML.SPAN_ELEM);
+	}
+
 	private static void encodeFilterField(FacesContext context, DataTableRenderingContext tableContext, Column column,
 			String filterId, String filterFunction, String filterStyleClass, String filterEvent, String suffix) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
@@ -435,6 +484,14 @@ public class DataTableHeadRenderer {
 		else if ("_max".equals(suffix)) filterValue = column.getFilterValueMax() != null ? column.getFilterValueMax() : "";
 		else filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
 
+		ColumnType type = column.getType();
+		boolean isNumber = type == ColumnType.BYTE
+				|| type == ColumnType.SHORT
+				|| type == ColumnType.INT
+				|| type == ColumnType.LONG
+				|| type == ColumnType.FLOAT
+				|| type == ColumnType.DOUBLE;
+
 		writer.startElement(HTML.INPUT_ELEM, null);
 		writer.writeAttribute(HTML.ID_ATTR, filterId + suffix, null);
 		writer.writeAttribute(HTML.NAME_ATTR, filterId + suffix, null);
@@ -442,6 +499,7 @@ public class DataTableHeadRenderer {
 		writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
 		writer.writeAttribute("size", "1", null); // Webkit requires none zero/null size value to use CSS width correctly.
 		writer.writeAttribute("value", filterValue , null);
+		if (isNumber) writer.writeAttribute("type", "number" , null);
 
 		if (filterEvent.equals("keyup") || filterEvent.equals("blur"))
 			writer.writeAttribute("on"+filterEvent, filterFunction , null);
@@ -455,6 +513,11 @@ public class DataTableHeadRenderer {
 		writer.startElement(HTML.SCRIPT_ELEM, null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write("document.getElementById('"+filterId+suffix+"').submitOnEnter = 'disabled'; // "+filterValue);
+
+		if (isNumber) {
+			writer.write("ice.ace.jq(document.getElementById('"+filterId+suffix+"')).on('keydown', ice.ace.DataTable.numberRestriction);");
+		}
+
 		writer.endElement(HTML.SCRIPT_ELEM);
 		writer.endElement(HTML.SPAN_ELEM);
 	}

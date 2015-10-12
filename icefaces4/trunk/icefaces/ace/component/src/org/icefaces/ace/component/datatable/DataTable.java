@@ -1175,6 +1175,36 @@ public class DataTable extends DataTableBase implements Serializable {
         return map;
     }
 
+    protected Map<String, Object> getMinFilters() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        for (IProxiableColumn c : getProxiedBodyColumns()) {
+            Object value = c.getFilterValueMin();
+            if (value != null) {
+				String columnKey = c.getLazyColumnKey();
+				if (columnKey != null)
+					map.put(columnKey, value);
+				else
+					map.put(ComponentUtils.resolveField(c.getValueExpression("filterBy")), value);
+			}
+        }
+        return map;
+    }
+
+    protected Map<String, Object> getMaxFilters() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        for (IProxiableColumn c : getProxiedBodyColumns()) {
+            Object value = c.getFilterValueMax();
+            if (value != null) {
+				String columnKey = c.getLazyColumnKey();
+				if (columnKey != null)
+					map.put(columnKey, value);
+				else
+					map.put(ComponentUtils.resolveField(c.getValueExpression("filterBy")), value);
+			}
+        }
+        return map;
+    }
+
     protected boolean hasHeaders() {
         for (UIComponent c : getChildren()) {
             if (c instanceof Column && ((c.getFacet("header") != null) || (((Column)c).getHeaderText() != null))) return true;
@@ -1369,7 +1399,7 @@ public class DataTable extends DataTableBase implements Serializable {
 
             // Setup filter objects from column properties
             for (Column c : filterMap.values()) {
-				if (c.getType() == ColumnType.TEXT || !c.isFilterRange()) {
+				if (c.getType() == ColumnType.TEXT || !c.isRangeFilter()) {
 					if (c.getFilterValue() != null && !c.getFilterValue().equals("")) {
 						columnPredicates.add(
 								new PropertyConstraintPredicate(context,
@@ -1529,8 +1559,9 @@ public class DataTable extends DataTableBase implements Serializable {
     protected void loadLazyData() {
         LazyDataModel model = (LazyDataModel) getDataModel();
         model.setPageSize(getRows());
-		model.setColumns(getColumns(true));
-        model.setWrappedData(model.load(getFirst(), getRows(), getSortCriteria(), getFilters()));
+		if (savedFilterState != null) savedFilterState.apply(this);
+        model.setWrappedData(model.load(getFirst(), getRows(), getSortCriteria(), getFilters(), 
+			getMinFilters(), getMaxFilters()));
     }
 
 
