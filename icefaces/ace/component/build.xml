@@ -299,8 +299,12 @@
         <minify src="${ace-menu.js.uncompressed}" dest="${ace-menu.js}"/>
         <echo message="Compressing ace-chart.js"/>
         <minify src="${ace-chart.js.uncompressed}" dest="${ace-chart.js}"/>
-		<echo message="Compressing jquery.js"/>
-		<minify src="${resources}/icefaces.ace/jquery/jquery.js" dest="${resources}/icefaces.ace/jquery/jquery.c.js"/>
+        <echo message="Compressing jquery.js"/>
+        <minify src="${resources}/icefaces.ace/jquery/jquery.js" dest="${resources}/icefaces.ace/jquery/jquery.c.js"/>
+        <echo message="Compressing jquery.validate.js"/>
+        <minify src="${resources}/icefaces.ace/jquery/validate/jquery.validate.js" dest="${resources}/icefaces.ace/jquery/validate/jquery.validate.c.js"/>
+        <echo message="Compressing additional-methods.js"/>
+        <minify src="${resources}/icefaces.ace/jquery/validate/additional-methods.js" dest="${resources}/icefaces.ace/jquery/validate/additional-methods.c.js"/>
 
 		<filelist id="batch">
 			<file name="${resources}/icefaces.ace/accordion/accordion.js"/>

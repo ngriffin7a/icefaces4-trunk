@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.textentry;
 
+import org.icefaces.ace.component.clientValidator.Validatable;
 import org.icefaces.ace.event.CharCountEvent;
 import org.icefaces.ace.util.Constants;
 import org.icefaces.component.Focusable;
@@ -27,15 +28,19 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import java.util.Map;
 
-public class TextEntry extends TextEntryBase implements Focusable {
+public class TextEntry extends TextEntryBase implements Focusable, Validatable {
     public final static String THEME_INPUT_CLASS = "ui-inputfield ui-textentry ui-widget ui-state-default ui-corner-all";
     public final static String PLAIN_INPUT_CLASS = "ui-textentry";
 
     public String getFocusedElementId() {
         return getClientId(FacesContext.getCurrentInstance()) + "_input";
     }
-	
-	// ----------------------------------------
+
+    public String getValidatedElementId(FacesContext context) {
+        return getClientId(FacesContext.getCurrentInstance()) + "_input";
+    }
+
+    // ----------------------------------------
 	// ----- imported from mobi:inputText -----
 	// ----------------------------------------
 	

@@ -535,7 +535,7 @@ public class CoreRenderer extends Renderer {
      * key if they prefer their own, or their locale is not available.
      * @return reference to resource bundle to get localised text for rendering
      */
-    public ResourceBundle getComponentResourceBundle(FacesContext context, String ACE_MESSAGES_BUNDLE){
+    public static ResourceBundle getComponentResourceBundle(FacesContext context, String ACE_MESSAGES_BUNDLE){
         Locale locale = context.getViewRoot().getLocale();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String bundleName = context.getApplication().getMessageBundle();

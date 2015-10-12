@@ -210,7 +210,7 @@ public class ComponentUtils {
         return items;
     }
 
-    public static String escapeJQueryId(String id) {
+    public static String idTojQuerySelector(String id) {
         return "#" + id.replaceAll(":", "\\\\\\\\:");
     }
 
