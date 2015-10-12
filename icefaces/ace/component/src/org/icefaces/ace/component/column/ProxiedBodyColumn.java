@@ -290,12 +290,12 @@ public class ProxiedBodyColumn implements IProxiableColumn{
         return (isPropertySpecified(bodyColumn, "type") ? bodyColumn : headerColumn).getType();
     }
 
-    public void setFilterRange(boolean filterRange) {
-        (isPropertySpecified(bodyColumn, "filterRange") ? bodyColumn : headerColumn).setFilterRange(filterRange);
+    public void setRangeFilter(boolean rangeFilter) {
+        (isPropertySpecified(bodyColumn, "rangeFilter") ? bodyColumn : headerColumn).setRangeFilter(rangeFilter);
     }
 
-    public boolean isFilterRange() {
-        return (isPropertySpecified(bodyColumn, "filterRange") ? bodyColumn : headerColumn).isFilterRange();
+    public boolean isRangeFilter() {
+        return (isPropertySpecified(bodyColumn, "rangeFilter") ? bodyColumn : headerColumn).isRangeFilter();
     }
 
     public void setFilterValueMin(Object filterValueMin) {

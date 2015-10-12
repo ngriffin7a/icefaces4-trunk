@@ -92,7 +92,7 @@ public class ColumnMeta extends UIColumnMeta {
 
     @Property(tlddoc="If true, range filtering is enabled. When range filtering is enabled, two input fields will be rendered for filtering this column. The first one is to specify the minimum value and the second one is to specify the maximum value. All rows with values for this column in between this range will be matched. If only the minimum value is specified, all values greater than or equal to it will be matched; if only the maximum value is specified, all values less than or equal to it will be matched.",
             defaultValue = "false", defaultValueType = DefaultValueType.EXPRESSION)
-    private boolean filterRange;
+    private boolean rangeFilter;
 
     @Property(tlddoc="When range filtering is enabled, this property is used to access or to set the minimum filter value of the range. The value can't be a primitive type; use the corresponding wrapper object instead.")
     private Object filterValueMin;

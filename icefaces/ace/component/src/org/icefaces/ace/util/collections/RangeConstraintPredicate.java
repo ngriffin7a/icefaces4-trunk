@@ -64,9 +64,11 @@ public class RangeConstraintPredicate implements Predicate {
 				} else if (minDate != null && maxDate == null) {
 					return rowDate.after(minDate);
 				} else if (minDate == null && maxDate != null) {
-					return rowDate.before(maxDate); // TODO: make sure it's applied up to the last second of the day
+					maxDate = new Date(maxDate.getTime() + 86399999);
+					return rowDate.before(maxDate);
 				} else if (minDate != null && maxDate != null) {
-					return (rowDate.after(minDate) && rowDate.before(maxDate)); // TODO: same as above
+					maxDate = new Date(maxDate.getTime() + 86399999);
+					return (rowDate.after(minDate) && rowDate.before(maxDate));
 				} else {
 					return true; // no filtering taking place
 				}

@@ -3642,3 +3642,12 @@ ice.ace.DataTable.prototype.adjustFooterWidth = function () {
 		footer.css('width', body.outerWidth() - (footer.outerWidth() - footer.width()) + 1);
 	}
 };
+
+ice.ace.DataTable.numberRestriction = function(event) {
+	var charCode = event.keyCode ? event.keyCode : event.which;
+	if (charCode != 45 && charCode != 46 && charCode > 31 
+		&& (charCode < 48 || charCode > 57))
+	return false;
+
+	return true;
+};

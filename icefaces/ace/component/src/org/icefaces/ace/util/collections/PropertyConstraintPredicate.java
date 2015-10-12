@@ -46,7 +46,7 @@ public class PropertyConstraintPredicate implements Predicate {
     public boolean evaluate(Object object) {
         Object value = filterBy.getValue(facesContext.getELContext());
 
-		if (this.column.getType() == ColumnType.TEXT || this.column.getType() == ColumnType.BOOLEAN) {
+		if (this.column.getType() == ColumnType.TEXT) {
 			if (value instanceof Date) {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				value = dateFormat.format(value);
@@ -58,6 +58,17 @@ public class PropertyConstraintPredicate implements Predicate {
 				return false;
 			else
 				return true;
+		} else if (this.column.getType() == ColumnType.BOOLEAN) {
+			if (value != null) {
+				if ("true".equalsIgnoreCase(filterValue)) {
+					return "true".equalsIgnoreCase((String) value);
+				} else {
+					return "false".equalsIgnoreCase((String) value);
+				}
+			} else if (filterValue != null)
+				return false;
+			else
+				return true;			
 		} else if (this.column.getType() == ColumnType.DATE) {
 			Date filterDate = null;
 			DateFormat dateFormat = new SimpleDateFormat(this.column.getFilterDatePattern(), 
