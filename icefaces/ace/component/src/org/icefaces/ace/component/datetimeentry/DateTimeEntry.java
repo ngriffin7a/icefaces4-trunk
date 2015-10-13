@@ -32,12 +32,11 @@
 
 package org.icefaces.ace.component.datetimeentry;
 
+import org.icefaces.ace.component.clientValidator.Validatable;
 import org.icefaces.ace.event.DateSelectEvent;
 import org.icefaces.ace.event.DateTextChangeEvent;
 import org.icefaces.ace.util.Constants;
-import org.icefaces.ace.util.Utils;
 import org.icefaces.component.Focusable;
-import org.icefaces.impl.util.Util;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -45,7 +44,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import java.util.*;
 
-public class DateTimeEntry extends DateTimeEntryBase implements Focusable {
+public class DateTimeEntry extends DateTimeEntryBase implements Focusable, Validatable {
     public final static String INPUT_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all";
 
     public static String POPUP_ICON = "datetimeentry/calendar_icon.png";
@@ -147,6 +146,10 @@ public class DateTimeEntry extends DateTimeEntryBase implements Focusable {
     }
 
     public String getFocusedElementId() {
+        return getClientId() + "_input";
+    }
+
+    public String getValidatedElementId() {
         return getClientId() + "_input";
     }
 }

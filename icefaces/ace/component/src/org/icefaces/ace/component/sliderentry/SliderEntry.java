@@ -39,6 +39,7 @@ import javax.el.ValueExpression;
 import javax.el.MethodExpression;
 import javax.faces.event.AbortProcessingException;
 
+import org.icefaces.ace.component.clientValidator.Validatable;
 import org.icefaces.component.Focusable;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
@@ -56,7 +57,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.ValueChangeEvent;
 
-public class SliderEntry extends SliderEntryBase implements Focusable {
+public class SliderEntry extends SliderEntryBase implements Focusable, Validatable {
 
 	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
 
@@ -108,6 +109,10 @@ public class SliderEntry extends SliderEntryBase implements Focusable {
 	}
 
     public String getFocusedElementId() {
+        return getClientId() + "_handle";
+    }
+
+    public String getValidatedElementId() {
         return getClientId() + "_handle";
     }
 }

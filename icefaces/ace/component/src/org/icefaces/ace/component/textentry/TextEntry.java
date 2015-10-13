@@ -33,11 +33,11 @@ public class TextEntry extends TextEntryBase implements Focusable, Validatable {
     public final static String PLAIN_INPUT_CLASS = "ui-textentry";
 
     public String getFocusedElementId() {
-        return getClientId(FacesContext.getCurrentInstance()) + "_input";
+        return getClientId() + "_input";
     }
 
-    public String getValidatedElementId(FacesContext context) {
-        return getClientId(FacesContext.getCurrentInstance()) + "_input";
+    public String getValidatedElementId() {
+        return getClientId() + "_input";
     }
 
     // ----------------------------------------
