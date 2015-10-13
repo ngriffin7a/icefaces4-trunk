@@ -27,11 +27,11 @@ import org.icefaces.resources.ICEResourceLibrary;
 @Component(
         tagName         = "clientValidateMinLength",
         componentClass  = "org.icefaces.ace.component.clientValidator.MinLengthValidator",
-        rendererClass   = "org.icefaces.ace.component.clientValidator.ClientValidatorRenderer",
+        rendererClass   = "org.icefaces.ace.component.clientValidator.ValidatorRenderer",
         generatedClass  = "org.icefaces.ace.component.clientValidator.MinLengthValidatorBase",
         extendsClass    = "javax.faces.component.UIComponentBase",
         componentType   = "org.icefaces.ace.component.MinLengthValidator",
-        rendererType    = "org.icefaces.ace.component.ClientValidatorRenderer",
+        rendererType    = "org.icefaces.ace.component.ValidatorRenderer",
         componentFamily = "org.icefaces.ace.component",
         tlddoc = "The ClientValidator is a ..... "
 )
