@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+        <h:form id="form">
+           <ace:dataTable id="eventsTable"
+                          value="#{dataTableFilteringDates.events}"
+                          var="event">
+                <ace:column id="car" headerText="Event ID">
+                    <h:outputText id="eventId" value="#{event.id}"/>
+                </ace:column>
+                <ace:column id="name" headerText="Event Type" filterBy="#{event.type}" 
+					filterOptions="#{dataTableFilteringDates.eventOptions}">
+                    <h:outputText id="eventType" value="#{event.type}"/>
+                </ace:column>
+                <ace:column id="chassis" headerText="Event Date" filterBy="#{event.date}" type="DATE" rangeFilter="true">
+                    <h:outputText id="eventDate" value="#{event.date}">
+						<f:convertDateTime pattern="dd-MMM-yyyy" />
+					</h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
