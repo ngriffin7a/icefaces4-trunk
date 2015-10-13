@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.maskedentry;
 
+import org.icefaces.ace.component.clientValidator.Validatable;
 import org.icefaces.ace.event.KeyPressEvent;
 import org.icefaces.component.Focusable;
 
@@ -26,7 +27,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import java.util.Map;
 
-public class MaskedEntry extends MaskedEntryBase implements Focusable {
+public class MaskedEntry extends MaskedEntryBase implements Focusable, Validatable {
 
 	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
 
@@ -53,6 +54,10 @@ public class MaskedEntry extends MaskedEntryBase implements Focusable {
 	}
 
     public String getFocusedElementId() {
-        return getClientId(FacesContext.getCurrentInstance()) + "_field";
+        return getClientId() + "_field";
+    }
+
+    public String getValidatedElementId() {
+        return getClientId() + "_field";
     }
 }

@@ -20,5 +20,5 @@ import javax.faces.context.FacesContext;
 
 public interface Validatable {
 
-    String getValidatedElementId(FacesContext context);
+    String getValidatedElementId();
 }

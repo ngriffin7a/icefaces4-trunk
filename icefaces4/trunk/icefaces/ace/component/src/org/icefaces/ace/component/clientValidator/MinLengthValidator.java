@@ -33,7 +33,7 @@ public class MinLengthValidator extends MinLengthValidatorBase {
         UIComponent validatedComponent = getParent();
         if (validatedComponent instanceof Validatable) {
             Validatable v = (Validatable) validatedComponent;
-            String id = v.getValidatedElementId(context);
+            String id = v.getValidatedElementId();
             String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
             UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
             ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");

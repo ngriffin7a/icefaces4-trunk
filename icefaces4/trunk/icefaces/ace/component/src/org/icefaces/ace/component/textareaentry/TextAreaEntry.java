@@ -16,7 +16,7 @@
 
 package org.icefaces.ace.component.textareaentry;
 
-import org.icefaces.ace.component.textareaentry.TextAreaEntryBase;
+import org.icefaces.ace.component.clientValidator.Validatable;
 import org.icefaces.ace.event.CharCountEvent;
 import org.icefaces.ace.util.Constants;
 import org.icefaces.component.Focusable;
@@ -26,12 +26,16 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import java.util.Map;
 
-public class TextAreaEntry extends TextAreaEntryBase implements Focusable {
+public class TextAreaEntry extends TextAreaEntryBase implements Focusable, Validatable {
     public final static String THEME_INPUT_CLASS = "ui-inputfield ui-textareaentry ui-widget ui-state-default ui-corner-all";
     public final static String PLAIN_INPUT_CLASS = "ui-textareaentry";
 
     public String getFocusedElementId() {
-        return getClientId(FacesContext.getCurrentInstance()) + "_input";
+        return getClientId() + "_input";
+    }
+
+    public String getValidatedElementId() {
+        return getClientId() + "_input";
     }
 
     public void queueEvent(FacesEvent event) {
