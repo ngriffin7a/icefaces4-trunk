@@ -3644,10 +3644,10 @@ ice.ace.DataTable.prototype.adjustFooterWidth = function () {
 };
 
 ice.ace.DataTable.numberRestriction = function(event) {
-	var charCode = event.keyCode ? event.keyCode : event.which;
-	if (charCode != 45 && charCode != 46 && charCode > 31 
+	var charCode = event.which;
+	if (charCode != 110 && charCode != 190 && charCode != 188 && charCode > 31 
 		&& (charCode < 48 || charCode > 57))
-	return false;
+			return false;
 
 	return true;
 };
