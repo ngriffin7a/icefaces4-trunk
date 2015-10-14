@@ -32,23 +32,13 @@
 
 package org.icefaces.ace.component.sliderentry;
 
-import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
-import javax.faces.component.UINamingContainer;
 import javax.el.ValueExpression;
 import javax.el.MethodExpression;
 import javax.faces.event.AbortProcessingException;
 
-import org.icefaces.ace.component.clientValidator.Validatable;
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.component.Focusable;
-import org.icefaces.resources.ICEResourceDependencies;
-import org.icefaces.resources.ICEResourceDependency;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Arrays;
-
-import org.icefaces.ace.util.Utils;
-import org.icefaces.impl.util.Util;
 
 import java.io.IOException;
 
@@ -57,7 +47,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.ValueChangeEvent;
 
-public class SliderEntry extends SliderEntryBase implements Focusable, Validatable {
+public class SliderEntry extends SliderEntryBase implements Focusable, Validateable {
 
 	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
 

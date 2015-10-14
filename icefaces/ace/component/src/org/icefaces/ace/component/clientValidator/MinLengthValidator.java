@@ -31,8 +31,8 @@ public class MinLengthValidator extends MinLengthValidatorBase {
 
     public void encodeBegin(FacesContext context) throws IOException {
         UIComponent validatedComponent = getParent();
-        if (validatedComponent instanceof Validatable) {
-            Validatable v = (Validatable) validatedComponent;
+        if (validatedComponent instanceof Validateable) {
+            Validateable v = (Validateable) validatedComponent;
             String id = v.getValidatedElementId();
             String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
             UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
