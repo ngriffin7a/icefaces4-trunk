@@ -492,6 +492,10 @@ public class DataTableHeadRenderer {
 				|| type == ColumnType.FLOAT
 				|| type == ColumnType.DOUBLE;
 
+		if (type == ColumnType.FLOAT || type == ColumnType.DOUBLE) {
+			filterValue = filterValue.toString().replaceAll("\\.0$", "");
+		}
+
 		writer.startElement(HTML.INPUT_ELEM, null);
 		writer.writeAttribute(HTML.ID_ATTR, filterId + suffix, null);
 		writer.writeAttribute(HTML.NAME_ATTR, filterId + suffix, null);
@@ -499,7 +503,9 @@ public class DataTableHeadRenderer {
 		writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
 		writer.writeAttribute("size", "1", null); // Webkit requires none zero/null size value to use CSS width correctly.
 		writer.writeAttribute("value", filterValue , null);
-		if (isNumber) writer.writeAttribute("type", "number" , null);
+		if (isNumber) {
+			writer.writeAttribute("onkeydown", "return ice.ace.DataTable.numberRestriction(event || window.event);", null);
+		}
 
 		if (filterEvent.equals("keyup") || filterEvent.equals("blur"))
 			writer.writeAttribute("on"+filterEvent, filterFunction , null);
@@ -513,10 +519,6 @@ public class DataTableHeadRenderer {
 		writer.startElement(HTML.SCRIPT_ELEM, null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write("document.getElementById('"+filterId+suffix+"').submitOnEnter = 'disabled'; // "+filterValue);
-
-		if (isNumber) {
-			writer.write("ice.ace.jq(document.getElementById('"+filterId+suffix+"')).on('keydown', ice.ace.DataTable.numberRestriction);");
-		}
 
 		writer.endElement(HTML.SCRIPT_ELEM);
 		writer.endElement(HTML.SPAN_ELEM);
