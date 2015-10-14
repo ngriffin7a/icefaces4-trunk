@@ -33,10 +33,11 @@
                     <h:outputText id="eventId" value="#{event.id}"/>
                 </ace:column>
                 <ace:column id="name" headerText="Event Type" filterBy="#{event.type}" 
-					filterOptions="#{dataTableFilteringDates.eventOptions}">
+					filterOptions="#{dataTableFilteringDates.eventOptions}" filterValue="#{dataTableFilteringDates.type}">
                     <h:outputText id="eventType" value="#{event.type}"/>
                 </ace:column>
-                <ace:column id="chassis" headerText="Event Date" filterBy="#{event.date}" type="DATE" rangeFilter="true">
+                <ace:column id="chassis" headerText="Event Date" filterBy="#{event.date}" type="DATE" rangeFilter="true"
+					filterValueMin="#{dataTableFilteringDates.minDate}" filterValueMax="#{dataTableFilteringDates.maxDate}">
                     <h:outputText id="eventDate" value="#{event.date}">
 						<f:convertDateTime pattern="dd-MMM-yyyy" />
 					</h:outputText>

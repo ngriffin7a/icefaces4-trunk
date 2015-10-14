@@ -55,4 +55,28 @@ public class DataTableFilteringRanges implements Serializable {
     public void setAccelOptions(List<SelectItem> accelOptions) {
         this.accelOptions = accelOptions;
     }
+
+	private Object minWeight;
+	public Object getMinWeight() { return minWeight; }
+	public void setMinWeight(Object minWeight) { this.minWeight = minWeight; }
+
+	private Object maxWeight;
+	public Object getMaxWeight() { return maxWeight; }
+	public void setMaxWeight(Object maxWeight) { this.maxWeight = maxWeight; }
+
+	private Object minMpg;
+	public Object getMinMpg() { return minMpg; }
+	public void setMinMpg(Object minMpg) { this.minMpg = minMpg; }
+
+	private Object maxMpg;
+	public Object getMaxMpg() { return maxMpg; }
+	public void setMaxMpg(Object maxMpg) { this.maxMpg = maxMpg; }
+
+	private Object minCost;
+	public Object getMinCost() { return minCost; }
+	public void setMinCost(Object minCost) { this.minCost = minCost; }
+
+	private Object maxCost;
+	public Object getMaxCost() { return maxCost; }
+	public void setMaxCost(Object maxCost) { this.maxCost = maxCost; }
 }
