@@ -57,4 +57,16 @@ public class DataTableFilteringDates implements Serializable {
 
     public List<SelectItem> getEventOptions() { return eventOptions; }
     public void setEventOptions(List<SelectItem> eventOptions) { this.eventOptions = eventOptions; }
+
+	private String type;
+	public String getType() { return type; }
+	public void setType(String type) { this.type = type; }
+
+	private Object minDate;
+	public Object getMinDate() { return minDate; }
+	public void setMinDate(Object minDate) { this.minDate = minDate; }
+
+	private Object maxDate;
+	public Object getMaxDate() { return maxDate; }
+	public void setMaxDate(Object maxDate) { this.maxDate = maxDate; }
 }
