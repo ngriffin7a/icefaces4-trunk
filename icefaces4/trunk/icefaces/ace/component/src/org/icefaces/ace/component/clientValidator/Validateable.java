@@ -16,9 +16,7 @@
 
 package org.icefaces.ace.component.clientValidator;
 
-import javax.faces.context.FacesContext;
-
-public interface Validatable {
+public interface Validateable {
 
     String getValidatedElementId();
 }

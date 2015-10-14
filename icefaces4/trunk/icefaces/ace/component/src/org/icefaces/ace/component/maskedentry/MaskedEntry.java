@@ -16,18 +16,16 @@
 
 package org.icefaces.ace.component.maskedentry;
 
-import org.icefaces.ace.component.clientValidator.Validatable;
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.ace.event.KeyPressEvent;
 import org.icefaces.component.Focusable;
 
 import javax.faces.context.FacesContext;
-import javax.faces.component.UINamingContainer;
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import java.util.Map;
 
-public class MaskedEntry extends MaskedEntryBase implements Focusable, Validatable {
+public class MaskedEntry extends MaskedEntryBase implements Focusable, Validateable {
 
 	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
 

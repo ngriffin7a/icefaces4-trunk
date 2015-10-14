@@ -16,7 +16,7 @@
 
 package org.icefaces.ace.component.autocompleteentry;
 
-import org.icefaces.ace.component.clientValidator.Validatable;
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.ace.event.TextChangeEvent;
 import org.icefaces.component.Focusable;
 
@@ -33,7 +33,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.el.MethodExpression;
 import java.util.*;
 
-public class AutoCompleteEntry extends AutoCompleteEntryBase implements NamingContainer, Focusable, Validatable {
+public class AutoCompleteEntry extends AutoCompleteEntryBase implements NamingContainer, Focusable, Validateable {
 
     private transient int index = -1;
 	
