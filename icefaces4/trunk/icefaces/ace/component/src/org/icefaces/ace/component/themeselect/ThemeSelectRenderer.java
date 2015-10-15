@@ -51,6 +51,8 @@ public class ThemeSelectRenderer extends InputRenderer {
         if (!component.isRendered()) {
             return;
         }
+		String label = themeSelectComponent.getLabel();
+		String labelPosition = themeSelectComponent.getLabelPosition();
         ResponseWriter writer = context.getResponseWriter();
         String clientId = component.getClientId(context);
         String selectId = "select_" + clientId;
@@ -62,6 +64,25 @@ public class ThemeSelectRenderer extends InputRenderer {
 
         writer.writeAttribute("class", "ui-select-theme" + (styleClass.equals("") ? "" : " " + styleClass), null);
 
+        if (label != null && !"".equals(label)
+			&& ("top".equalsIgnoreCase(labelPosition) || "left".equalsIgnoreCase(labelPosition))) {
+				boolean isTop = "top".equalsIgnoreCase(labelPosition);
+				writer.startElement("label", null);
+				writer.writeAttribute("id", "label_" + clientId, null);
+				writer.writeAttribute("for", clientId, null);
+				if (isTop) {
+					writer.writeAttribute("class", "ui-input-label", null);
+				} else {
+					writer.writeAttribute("class", "ui-input-label ui-input-label-left", null);
+				}
+				writer.write(label);
+				writer.endElement("label");
+				if (isTop) {
+					writer.startElement("br", null);
+					writer.endElement("br");
+				}
+        }
+
         writer.startElement("select", component);
         writer.writeAttribute("id", selectId, "id");
         writer.writeAttribute("name", selectId, "id");
@@ -72,7 +93,7 @@ public class ThemeSelectRenderer extends InputRenderer {
             stateClass = "ui-state-disabled";
         }
         writer.writeAttribute("class", "ui-widget " + stateClass + getStateStyleClasses(themeSelectComponent), null);
-        writeAttributes(context, themeSelectComponent, "accesskey", "dir", "label", "lang", "style", "tabindex", "title", "alt");
+        writeAttributes(context, themeSelectComponent, "accesskey", "dir", "lang", "style", "tabindex", "title", "alt");
         writerSelAriaAttrs(context, themeSelectComponent);
         renderOptions(context, themeSelectComponent);
         writer.endElement("select");
@@ -83,6 +104,25 @@ public class ThemeSelectRenderer extends InputRenderer {
         writer.writeAttribute("class", "ui-helper-hidden", null);
         writer.write(Integer.toString(themeSelectComponent.getSelectedTheme(context).hashCode()) + Integer.toString(themeSelectComponent.getThemeList(context).hashCode()));
         writer.endElement("span");
+
+        if (label != null && !"".equals(label)
+			&& ("bottom".equalsIgnoreCase(labelPosition) || "right".equalsIgnoreCase(labelPosition))) {
+				boolean isBottom = "bottom".equalsIgnoreCase(labelPosition);
+				if (isBottom) {
+					writer.startElement("br", null);
+					writer.endElement("br");
+				}
+				writer.startElement("label", null);
+				writer.writeAttribute("id", "label_" + clientId, null);
+				writer.writeAttribute("for", clientId, null);
+				if (isBottom) {
+					writer.writeAttribute("class", "ui-input-label", null);
+				} else {
+					writer.writeAttribute("class", "ui-input-label ui-input-label-right", null);
+				}
+				writer.write(label);
+				writer.endElement("label");
+        }
 
         writer.endElement("span");
     }

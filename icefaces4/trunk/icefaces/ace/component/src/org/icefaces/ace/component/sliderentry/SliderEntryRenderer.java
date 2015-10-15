@@ -38,7 +38,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import org.icefaces.ace.event.SlideEndEvent;
 
-import org.icefaces.ace.renderkit.CoreRenderer;
+import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
@@ -48,7 +48,7 @@ import org.icefaces.util.EnvUtils;
 import javax.faces.event.ValueChangeEvent;
 
 @MandatoryResourceComponent(tagName="sliderEntry", value="org.icefaces.ace.component.sliderentry.SliderEntry")
-public class SliderEntryRenderer extends CoreRenderer{
+public class SliderEntryRenderer extends InputRenderer{
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -114,14 +114,39 @@ public class SliderEntryRenderer extends CoreRenderer{
 		
 		String axis = slider.getAxis().toLowerCase();
 		boolean showLabels = slider.isShowLabels();
+		String label = slider.getLabel();
+		String labelPosition = slider.getLabelPosition();
+		boolean isInline = "left".equalsIgnoreCase(labelPosition) || "right".equalsIgnoreCase(labelPosition);
 		
 		writer.startElement("div", slider);
 		writer.writeAttribute("id", clientId , "id");
 		String style = slider.getStyle();
 		style = style == null ? "" : style;
+		style += isInline ? ";display:table; " : "";
 		writer.writeAttribute("style", style, null);
 		String styleClass = slider.getStyleClass();
 		writer.writeAttribute("class", "ui-sliderentry " + (styleClass != null ? styleClass : ""), null);
+
+        if (label != null && !"".equals(label)
+			&& ("top".equalsIgnoreCase(labelPosition) || "left".equalsIgnoreCase(labelPosition))) {
+				boolean isTop = "top".equalsIgnoreCase(labelPosition);
+				writer.startElement("label", null);
+				writer.writeAttribute("id", "label_" + clientId, null);
+				writer.writeAttribute("for", "", null);
+				if (isTop) {
+					writer.writeAttribute("style", "display:block; margin-bottom:3px;", null);
+					writer.writeAttribute("class", "ui-input-label", null);
+				} else {
+					writer.writeAttribute("style", "display:table-cell;", null);
+					writer.writeAttribute("class", "ui-input-label ui-input-label-left", null);
+				}
+				writer.write(label);
+				writer.endElement("label");
+				if (isTop) {
+					writer.startElement("br", null);
+					writer.endElement("br");
+				}
+        }
 		
 		writer.startElement("input", null);
 		writer.writeAttribute("id", clientId + "_hidden" , "id");
@@ -161,7 +186,8 @@ public class SliderEntryRenderer extends CoreRenderer{
 		if (showLabels && !"y".equals(axis)) {
 			sliderStyle += "float:left;";
 		}
-		writer.writeAttribute("style", sliderStyle, null);
+		String inlineStyle = isInline ? "display:table-cell; " : "";
+		writer.writeAttribute("style", inlineStyle + sliderStyle, null);
 		writer.endElement("div");
 		
 		// right/bottom label
@@ -186,6 +212,27 @@ public class SliderEntryRenderer extends CoreRenderer{
 			writer.writeAttribute("style", "clear:both;", null);
 			writer.endElement("div");
 		}
+
+        if (label != null && !"".equals(label)
+			&& ("bottom".equalsIgnoreCase(labelPosition) || "right".equalsIgnoreCase(labelPosition))) {
+				boolean isBottom = "bottom".equalsIgnoreCase(labelPosition);
+				if (isBottom) {
+					writer.startElement("br", null);
+					writer.endElement("br");
+				}
+				writer.startElement("label", null);
+				writer.writeAttribute("id", "label_" + clientId, null);
+				writer.writeAttribute("for", "", null);
+				if (isBottom) {
+					writer.writeAttribute("style", "display:block; margin-top:3px;", null);
+					writer.writeAttribute("class", "ui-input-label", null);
+				} else {
+					writer.writeAttribute("style", "display:table-cell;", null);
+					writer.writeAttribute("class", "ui-input-label ui-input-label-right", null);
+				}
+				writer.write(label);
+				writer.endElement("label");
+        }
 
 		writer.endElement("div");
 	}

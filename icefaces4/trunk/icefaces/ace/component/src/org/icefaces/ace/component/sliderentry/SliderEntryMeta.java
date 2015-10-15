@@ -174,4 +174,10 @@ public class SliderEntryMeta extends UIComponentBaseMeta {
             "with a return type of void. In the latter case, the method has no way of easily knowing what the new value " +
             "is, but this can be useful in cases where a notification is needed that \"this value changed\"." )
     private MethodExpression valueChangeListener;
+
+    @Property(tlddoc = "A localized user presentable name for this component.")
+    private String label;
+
+    @Property(tlddoc = "Position of label relative to input field. Supported values are \"left/right/top/bottom/none\". Default is \"none\".")
+    private String labelPosition;
 }
