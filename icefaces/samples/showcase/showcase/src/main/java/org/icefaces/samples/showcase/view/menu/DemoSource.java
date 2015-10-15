@@ -42,10 +42,10 @@ public class DemoSource {
 		// If we don't have a full path specified we'll create one
 		if (!fullPath) {
 			if (type == Type.XHTML) {
-				path = ACE_XHTML_PATH_BASE + path + File.separator;
+				path = ACE_XHTML_PATH_BASE + path + "/";
 			}
 			else if (type == Type.JAVA) {
-				path = ACE_JAVA_PATH_BASE + path + File.separator;
+				path = ACE_JAVA_PATH_BASE + path + "/";
 			}
 		}
 		
