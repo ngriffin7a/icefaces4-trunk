@@ -28,8 +28,7 @@
 
 		<h:form id="form">
             <ace:panel id="themePanel" header="Theme Selection" style="width: 100%;">
-				<h:outputText value="Select new theme: "/>
-				<ace:themeSelect value="#{themeSelectBean.theme}">
+				<ace:themeSelect value="#{themeSelectBean.theme}" label="Select new theme: " labelPosition="left">
 					<ace:ajax render="@all"/>
 				</ace:themeSelect>
 			</ace:panel>
