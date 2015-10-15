@@ -65,6 +65,7 @@ public class RadioButtonRenderer extends InputRenderer {
         RadioButton radioButton = (RadioButton) uiComponent;
         String clientId = uiComponent.getClientId(facesContext);
 		Map<String, Object> labelAttributes = getLabelAttributes(uiComponent);
+		labelAttributes.put("fieldClientId", clientId + "_button");
         String firstWrapperClass = "ice-ace-radiobutton-main";
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
 
@@ -90,6 +91,10 @@ public class RadioButtonRenderer extends InputRenderer {
         // Button Element
         writer.startElement(HTML.BUTTON_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
+		if (labelAttributes.get("label") != null
+			&& !"inField".equals(labelAttributes.get("labelPosition"))) {
+			writer.writeAttribute("aria-labelledby", "label_" + clientId, null);
+		}
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_button", null);
         writer.writeAttribute(HTML.NAME_ATTR, clientId+"_button", null);
 		String selectedClass = "";

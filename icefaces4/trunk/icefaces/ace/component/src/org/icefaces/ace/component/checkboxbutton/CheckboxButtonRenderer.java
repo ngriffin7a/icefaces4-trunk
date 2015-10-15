@@ -65,6 +65,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
         CheckboxButton checkbox = (CheckboxButton) uiComponent;
         String clientId = uiComponent.getClientId(facesContext);
 		Map<String, Object> labelAttributes = getLabelAttributes(uiComponent);
+		labelAttributes.put("fieldClientId", clientId + "_button");
         String firstWrapperClass = "yui-button yui-checkboxbutton-button ui-button ui-widget";
         String secondWrapperClass = "first-child";
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
@@ -93,6 +94,10 @@ public class CheckboxButtonRenderer extends InputRenderer {
         // Button Element
         writer.startElement(HTML.BUTTON_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
+		if (labelAttributes.get("label") != null
+			&& !"inField".equals(labelAttributes.get("labelPosition"))) {
+			writer.writeAttribute("aria-labelledby", "label_" + clientId, null);
+		}
         String buttonId = clientId + "_button";
         writer.writeAttribute(HTML.ID_ATTR, buttonId, null);
         writer.writeAttribute(HTML.NAME_ATTR, buttonId, null);

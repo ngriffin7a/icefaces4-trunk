@@ -50,6 +50,7 @@ ice.ace.Slider = function(id, cfg) {
 	}
 	var handle = ice.ace.jq(ice.ace.escapeClientId(this.id) + " .ui-slider-handle");
     handle.attr('id', this.id + '_handle');
+    if (cfg.label) handle.attr('aria-labelledby',  'label_' + this.id);
 	if (this.cfg.tabindex) handle.attr('tabindex', this.cfg.tabindex);
 
     //Slide handler
