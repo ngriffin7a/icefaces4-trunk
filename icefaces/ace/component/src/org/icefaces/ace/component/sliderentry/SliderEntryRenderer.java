@@ -132,7 +132,7 @@ public class SliderEntryRenderer extends InputRenderer{
 				boolean isTop = "top".equalsIgnoreCase(labelPosition);
 				writer.startElement("label", null);
 				writer.writeAttribute("id", "label_" + clientId, null);
-				writer.writeAttribute("for", "", null);
+				writer.writeAttribute("for", clientId + "_handle", null);
 				if (isTop) {
 					writer.writeAttribute("style", "display:block; margin-bottom:3px;", null);
 					writer.writeAttribute("class", "ui-input-label", null);
@@ -222,7 +222,7 @@ public class SliderEntryRenderer extends InputRenderer{
 				}
 				writer.startElement("label", null);
 				writer.writeAttribute("id", "label_" + clientId, null);
-				writer.writeAttribute("for", "", null);
+				writer.writeAttribute("for", clientId + "_handle", null);
 				if (isBottom) {
 					writer.writeAttribute("style", "display:block; margin-top:3px;", null);
 					writer.writeAttribute("class", "ui-input-label", null);
@@ -248,6 +248,8 @@ public class SliderEntryRenderer extends InputRenderer{
         Integer tabindex = slider.getTabindex();
         String orientation = "y".equals(slider.getAxis()) ? "vertical" : "horizontal";
         String length = slider.getLength();
+		String label = slider.getLabel();
+		label = label != null ? label : "";
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
@@ -266,7 +268,8 @@ public class SliderEntryRenderer extends InputRenderer{
           .entry("step", step)
           .entry("orientation", orientation)
           .entry("clickableRail", slider.isClickableRail())
-          .entry("ariaEnabled", ariaEnabled);
+          .entry("ariaEnabled", ariaEnabled)
+          .entry("label", label);
 
 		if (length.toLowerCase().indexOf("px") == -1) {
 			length += "px";

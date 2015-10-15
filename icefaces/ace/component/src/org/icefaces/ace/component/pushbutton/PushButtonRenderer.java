@@ -79,8 +79,6 @@ public class PushButtonRenderer extends CoreRenderer {
 
 		// second span
 		writer.startElement(HTML.SPAN_ELEM, null);
-        if (ariaEnabled)
-            encodeAriaAttributes(writer, pushButton);
 		writer.writeAttribute(HTML.CLASS_ATTR, "first-child", null);
 
 		// button element
@@ -117,27 +115,6 @@ public class PushButtonRenderer extends CoreRenderer {
         writer.endElement(HTML.BUTTON_ELEM);
         writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.DIV_ELEM);
-    }
-
-    private void encodeAriaAttributes(ResponseWriter writer, PushButton pushButton) throws IOException {
-        Object value = pushButton.getValue();
-        Object label = pushButton.getLabel();
-        String valueString = value == null ? null : value.toString();
-        String labelString = label == null ? null : label.toString();
-
-        if (labelString == null) labelString = valueString;
-
-        writer.writeAttribute(HTML.ROLE_ATTR, "button", null);
-
-        if (labelString != null) {
-            writer.writeAttribute(HTML.ARIA_DESCRIBED_BY_ATTR, labelString, null);
-        } else {
-            writer.writeAttribute(HTML.ARIA_DESCRIBED_BY_ATTR, "description unavailable", null);
-        }
-
-        if (pushButton.isDisabled()) {
-            writer.writeAttribute(HTML.ARIA_DISABLED_ATTR, true, null);
-        }
     }
 
     private void writeButtonValue(ResponseWriter writer, PushButton pushButton) throws IOException {

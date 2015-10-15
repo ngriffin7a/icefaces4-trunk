@@ -86,6 +86,9 @@ public class ThemeSelectRenderer extends InputRenderer {
         writer.startElement("select", component);
         writer.writeAttribute("id", selectId, "id");
         writer.writeAttribute("name", selectId, "id");
+		if (label != null) {
+			writer.writeAttribute("aria-labelledby", "label_" + clientId, null);
+		}
         ComponentUtils.enableOnElementUpdateNotify(writer, selectId);
         String stateClass = "ui-state-default";
         if (themeSelectComponent.isDisabled()) {

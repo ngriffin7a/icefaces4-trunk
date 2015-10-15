@@ -86,7 +86,6 @@ public class LinkButtonRenderer extends CoreRenderer {
         // second span but "first-child"- ugh.
         writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "first-child", null);
-        if (ariaEnabled) encodeAriaAttributes(writer, linkButton, doAction);
 
         // button element
         writer.startElement(HTML.ANCHOR_ELEM, null);
@@ -136,22 +135,6 @@ public class LinkButtonRenderer extends CoreRenderer {
         if (target != null) {
             writer.writeAttribute(HTML.TARGET_ATTR, target, null );
         }
-    }
-
-    private void encodeAriaAttributes(ResponseWriter writer, LinkButton button, boolean doAction) throws IOException {
-        writer.writeAttribute(HTML.ROLE_ATTR, doAction ? "button" : "link", null);
-        writer.writeAttribute(HTML.ARIA_LABELLED_BY_ATTR, button.getValue().toString(), null);
-
-        if (button.isDisabled()) {
-            writer.writeAttribute(HTML.ARIA_DISABLED_ATTR, true, null);
-        }
-
-        if (doAction) {
-            writer.writeAttribute(HTML.ARIA_DESCRIBED_BY_ATTR, "JSF action event source", null);
-        } else {
-            writer.writeAttribute(HTML.ARIA_DESCRIBED_BY_ATTR, "Standard HTML anchor", null);
-        }
-
     }
 
     private void encodeRootStyle(LinkButton linkButton, ResponseWriter writer) throws IOException {
