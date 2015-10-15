@@ -66,6 +66,9 @@ public class ThemeSelectMeta extends UIInputMeta {
     @Property(tlddoc = "A localized user presentable name for this component.")
     private String label;
 
+    @Property(tlddoc = "Position of label relative to input field. Supported values are \"left/right/top/bottom/none\". Default is \"none\".")
+    private String labelPosition;
+
     @Property(tlddoc = "CSS style(s) to be applied when this component is rendered.")
     private String style;
 
