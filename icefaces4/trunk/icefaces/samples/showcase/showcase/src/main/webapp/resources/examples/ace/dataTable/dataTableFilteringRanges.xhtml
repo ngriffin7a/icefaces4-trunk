@@ -38,7 +38,7 @@
                 <ace:column id="chassis" headerText="Chassis" filterBy="#{car.chassis}" filterMatchMode="contains">
                     <h:outputText id="chassisCell" value="#{car.chassis}"/>
                 </ace:column>
-                <ace:column id="weight" headerText="Weight" filterBy="#{car.weight}" type="INT" rangeFilter="true"
+                <ace:column id="weight" headerText="Weight" filterBy="#{car.weight}" type="INT" rangedFilter="true"
 					filterValueMin="#{dataTableFilteringRanges.minWeight}" filterValueMax="#{dataTableFilteringRanges.maxWeight}">
                     <h:outputText id="weightCell" value="#{car.weight}lbs."/>
                 </ace:column>
@@ -48,11 +48,11 @@
                             >
                     <h:outputText id="accelerationCell" value="#{car.acceleration}"/>
                 </ace:column>
-                <ace:column id="mpg" headerText="MPG" filterBy="#{car.mpg}" type="DOUBLE" rangeFilter="true"
+                <ace:column id="mpg" headerText="MPG" filterBy="#{car.mpg}" type="DOUBLE" rangedFilter="true"
 					filterValueMin="#{dataTableFilteringRanges.minMpg}" filterValueMax="#{dataTableFilteringRanges.maxMpg}">
                     <h:outputText id="mpgCell" value="#{car.mpg}"/>
                 </ace:column>
-                <ace:column id="cost" headerText="Cost" filterBy="#{car.cost}" type="DOUBLE" rangeFilter="true"
+                <ace:column id="cost" headerText="Cost" filterBy="#{car.cost}" type="DOUBLE" rangedFilter="true"
 					filterValueMin="#{dataTableFilteringRanges.minCost}" filterValueMax="#{dataTableFilteringRanges.maxCost}">
                     <h:outputText id="costCell" value="#{car.cost}">
                         <f:convertNumber type="currency"
