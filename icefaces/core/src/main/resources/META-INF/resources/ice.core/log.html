@@ -78,8 +78,7 @@
 
         function initControls() {
             var logEnable = document.getElementById('logEnable');
-            var value = window.localStorage ? localStorage['ice.localStorageLogHandler.enabled'] : false;
-            logEnable.checked = value ? true : false;
+            logEnable.checked = window.localStorage ? (localStorage['ice.localStorageLogHandler.enabled'] == 'yes') : false;
 
             var logSize = document.getElementById('logSize');
             logSize.value = window.localStorage ? (localStorage['ice.localStorageLogHandler.maxSize'] || 500) : 0;
@@ -95,21 +94,21 @@
     </script>
 </head>
 <body>
-<table style="border: 0px">
-    <tbody>
-    <tr>
-        <td colspan="2"><button onclick="cleanupLogStore();">Cleanup all log entries</button></td>
-    </tr>
-    <tr>
-        <td style="text-align: right;">Enable logging</td>
-        <td><input id="logEnable" type="checkbox" onclick="enableLogging(this.checked);"/></td>
-    </tr>
-    <tr>
-        <td style="text-align: right;">Maximum log size (kB)</td>
-        <td><input id="logSize" type="number" onclick="adjustSize(this.value);"/></td>
-    </tr>
-    </tbody>
-</table>
-<div style="overflow-y: scroll; height: 50em; border: 1px solid grey;" id="messages"/>
+    <table style="border: 0px">
+        <tbody>
+            <tr>
+                <td colspan="2"><button onclick="cleanupLogStore();">Cleanup all log entries</button></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Enable logging</td>
+                <td><input id="logEnable" type="checkbox" onclick="enableLogging(this.checked);"/></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Maximum log size (kB)</td>
+                <td><input id="logSize" type="number" onclick="adjustSize(this.value);"/></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="overflow-y: scroll; height: 50em; border: 1px solid grey;" id="messages"/>
 </body>
 </html>
