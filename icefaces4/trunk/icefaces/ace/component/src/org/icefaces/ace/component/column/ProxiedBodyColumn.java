@@ -282,20 +282,24 @@ public class ProxiedBodyColumn implements IProxiableColumn{
         return (isPropertySpecified(bodyColumn, "lazyColumnKey") ? bodyColumn : headerColumn).getLazyColumnKey();
     }
 
-    public void setType(ColumnType type) {
+    public void setType(String type) {
         (isPropertySpecified(bodyColumn, "type") ? bodyColumn : headerColumn).setType(type);
     }
 
-    public ColumnType getType() {
+    public String getType() {
         return (isPropertySpecified(bodyColumn, "type") ? bodyColumn : headerColumn).getType();
     }
 
-    public void setRangeFilter(boolean rangeFilter) {
-        (isPropertySpecified(bodyColumn, "rangeFilter") ? bodyColumn : headerColumn).setRangeFilter(rangeFilter);
+    public ColumnType getColumnType() {
+        return (isPropertySpecified(bodyColumn, "type") ? bodyColumn : headerColumn).getColumnType();
     }
 
-    public boolean isRangeFilter() {
-        return (isPropertySpecified(bodyColumn, "rangeFilter") ? bodyColumn : headerColumn).isRangeFilter();
+    public void setRangedFilter(boolean rangeFilter) {
+        (isPropertySpecified(bodyColumn, "rangedFilter") ? bodyColumn : headerColumn).setRangedFilter(rangeFilter);
+    }
+
+    public boolean isRangedFilter() {
+        return (isPropertySpecified(bodyColumn, "rangedFilter") ? bodyColumn : headerColumn).isRangedFilter();
     }
 
     public void setFilterValueMin(Object filterValueMin) {

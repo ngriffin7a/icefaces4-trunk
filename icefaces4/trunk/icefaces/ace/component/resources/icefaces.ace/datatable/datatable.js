@@ -2929,10 +2929,11 @@ ice.ace.DataTable.prototype.filter = function (evn) {
         formId:this.cfg.formId
     };
 
+	var input = evn.target ? evn.target : evn.srcElement;
     var _self = this;
     var params = {};
     params[this.id + "_filtering"] = true;
-    params[this.id + "_filteredColumn"] = ice.ace.jq((evn.target) ? evn.target : evn.srcElement).attr('id');
+    params[this.id + "_filteredColumn"] = ice.ace.jq(input).attr('id');
     options.params = params;
 
     if (this.behaviors)
@@ -2944,6 +2945,7 @@ ice.ace.DataTable.prototype.filter = function (evn) {
             return;
         }
 
+    if (ice.ace.jq(input).hasClass('hasDatepicker')) ice.setFocus('');
     ice.ace.AjaxRequest(options);
     ice.setFocus('');
 }
@@ -3645,9 +3647,41 @@ ice.ace.DataTable.prototype.adjustFooterWidth = function () {
 
 ice.ace.DataTable.numberRestriction = function(event) {
 	var charCode = event.which;
-	if (charCode != 110 && charCode != 190 && charCode != 188 && charCode > 31 
-		&& (charCode < 48 || charCode > 57))
-			return false;
+	switch(charCode) { // from jQuery.ui.keyCode
+		case 18:
+		case 8:
+		case 20:
+		case 188:
+		case 91:
+		case 91:
+		case 93:
+		case 17:
+		case 46:
+		case 40:
+		case 35:
+		case 27:
+		case 36:
+		case 45:
+		case 37:
+		case 93:
+		case 107:
+		case 110:
+		case 111:
+		case 108:
+		case 106:
+		case 109:
+		case 34:
+		case 33:
+		case 190:
+		case 39:
+		case 16:
+		case 9:
+		case 38:
+		case 91:
+			return true;
+	}
+	if (charCode > 31 && (charCode < 48 || charCode > 57))
+		return false;
 
 	return true;
 };

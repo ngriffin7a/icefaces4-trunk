@@ -54,9 +54,9 @@ public class FilterState {
         Map<String,Column> filterMap = table.getFilterMap();
 		for (Column column : filterMap.values()) {
 			String columnId = column.getClientId(context) + "_filter";
-			ColumnType type = column.getType();
-			if (type == ColumnType.TEXT || type == ColumnType.BOOLEAN || !column.isRangeFilter()) {
-				columnId = column.getType() == ColumnType.DATE ? columnId + "_input" : columnId;
+			ColumnType type = column.getColumnType();
+			if (type == ColumnType.TEXT || type == ColumnType.BOOLEAN || !column.isRangedFilter()) {
+				columnId = column.getColumnType() == ColumnType.DATE ? columnId + "_input" : columnId;
 				saveState(column, params.get(columnId));
 			} else {
 				String columnIdMin = columnId + "_min";
@@ -175,17 +175,15 @@ public class FilterState {
     }
 
     private void restoreState(Column column) {
-		if (!column.isRangeFilter()) {
+		if (!column.isRangedFilter()) {
 			String val = valueMap.get(column);
 			if (val != null)
 				column.setFilterValue(val);
 		} else {
 			Object minVal = minValueMap.get(column);
-			if (minVal != null)
-				column.setFilterValueMin(minVal);
+			column.setFilterValueMin(minVal);
 			Object maxVal = maxValueMap.get(column);
-			if (maxVal != null)
-				column.setFilterValueMax(maxVal);
+			column.setFilterValueMax(maxVal);
 		}
     }
 

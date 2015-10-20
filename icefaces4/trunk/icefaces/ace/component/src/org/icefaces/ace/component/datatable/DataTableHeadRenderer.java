@@ -371,19 +371,19 @@ public class DataTableHeadRenderer {
         String filterFunction = widgetVar + ".filter(event)";
         String filterStyleClass = column.getFilterStyleClass();
         String filterEvent = table.getFilterEvent();
-		boolean rangeFiltering = column.isRangeFilter();
+		boolean rangeFiltering = column.isRangedFilter();
         filterStyleClass = filterStyleClass == null
                 ? DataTableConstants.COLUMN_FILTER_CLASS
                 : DataTableConstants.COLUMN_FILTER_CLASS + " " + filterStyleClass;
 
         if (column.getValueExpression("filterOptions") == null) {
-			if (!(column.getType() == ColumnType.DATE)) {
-				if (rangeFiltering && (column.getType() != ColumnType.TEXT && column.getType() != ColumnType.BOOLEAN)) {
+			if (!(column.getColumnType() == ColumnType.DATE)) {
+				if (rangeFiltering && (column.getColumnType() != ColumnType.TEXT && column.getColumnType() != ColumnType.BOOLEAN)) {
 					encodeFilterField(context, tableContext, column, filterId, filterFunction, 
 						filterStyleClass, filterEvent, "_min");
 					encodeFilterField(context, tableContext, column, filterId, filterFunction, 
 						filterStyleClass, filterEvent, "_max");
-				} else if (column.getType() == ColumnType.BOOLEAN) {
+				} else if (column.getColumnType() == ColumnType.BOOLEAN) {
 					encodeBooleanMenu(context, tableContext, column, filterId, filterFunction, 
 						filterStyleClass);
 				} else {
@@ -447,6 +447,8 @@ public class DataTableHeadRenderer {
 		writer.startElement(HTML.OPTION_ELEM, null);
 		writer.writeAttribute("value", "", null);
 		writer.writeAttribute("label", "", null);
+		if (!"true".equalsIgnoreCase((String) filterValue)
+			&& !"false".equalsIgnoreCase((String) filterValue)) writer.writeAttribute("selected", "selected", null);
 		writer.endElement(HTML.OPTION_ELEM);
 
 		writer.startElement(HTML.OPTION_ELEM, null);
@@ -458,7 +460,7 @@ public class DataTableHeadRenderer {
 		writer.startElement(HTML.OPTION_ELEM, null);
 		writer.writeAttribute("value", "false", null);
 		writer.writeAttribute("label", "False", null);
-		if (!"true".equalsIgnoreCase((String) filterValue)) writer.writeAttribute("selected", "selected", null);
+		if ("false".equalsIgnoreCase((String) filterValue)) writer.writeAttribute("selected", "selected", null);
 		writer.endElement(HTML.OPTION_ELEM);
 
 		writer.writeAttribute("onchange", filterFunction , null);
@@ -484,7 +486,7 @@ public class DataTableHeadRenderer {
 		else if ("_max".equals(suffix)) filterValue = column.getFilterValueMax() != null ? column.getFilterValueMax() : "";
 		else filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
 
-		ColumnType type = column.getType();
+		ColumnType type = column.getColumnType();
 		boolean isNumber = type == ColumnType.BYTE
 				|| type == ColumnType.SHORT
 				|| type == ColumnType.INT
@@ -581,13 +583,12 @@ public class DataTableHeadRenderer {
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
 
-        String showOn = "both";
-        boolean timeOnly = false;
         StringBuilder script = new StringBuilder();
         JSONBuilder json = JSONBuilder.create();
 
+        writer.write("ice.ace.jq(function(){");
+
 		String widgetVar = "widget_" + clientId.replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-        script.append("ice.ace.jq(function(){").append(widgetVar).append(" = new ");
 
         Locale locale = column.calculateLocale(context);
         json.beginMap()
@@ -602,7 +603,7 @@ public class DataTableHeadRenderer {
 
 		String iconSrc = getResourceRequestPath(context, DateTimeEntry.POPUP_ICON);
 
-		json.entry("showOn", showOn)
+		json.entry("showOn", "both")
 			.entry("buttonImage", iconSrc)
 			.entry("buttonImageOnly", false);
 
@@ -629,6 +630,8 @@ public class DataTableHeadRenderer {
         json.endMap();
 
         writer.write("ice.ace.create('CalendarInit',[" + json + "]);");
+		writer.write("});");
+
         writer.endElement("script");
 	}
 

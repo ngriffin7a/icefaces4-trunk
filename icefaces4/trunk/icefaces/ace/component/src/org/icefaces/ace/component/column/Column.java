@@ -191,4 +191,18 @@ public class Column extends ColumnBase implements IProxiableColumn, Serializable
 
         return locale;
     }
+
+	public ColumnType getColumnType() {
+		String type = getType();
+		if ("boolean".equalsIgnoreCase(type)) return ColumnType.BOOLEAN;
+		if ("date".equalsIgnoreCase(type)) return ColumnType.DATE;
+		if ("byte".equalsIgnoreCase(type)) return ColumnType.BYTE;
+		if ("short".equalsIgnoreCase(type)) return ColumnType.SHORT;
+		if ("int".equalsIgnoreCase(type)) return ColumnType.INT;
+		if ("long".equalsIgnoreCase(type)) return ColumnType.LONG;
+		if ("float".equalsIgnoreCase(type)) return ColumnType.FLOAT;
+		if ("double".equalsIgnoreCase(type)) return ColumnType.DOUBLE;
+
+		return ColumnType.TEXT;
+	}
 }
