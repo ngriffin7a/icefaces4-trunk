@@ -34,10 +34,12 @@
                     var element = validElements[i];
                     element.className = element.className.replace(' ui-state-error', '');
                     var id = element.associatedValidationMessageId;
-                    var parent = document.getElementById(id);
-                    parent.innerHTML = '';
-                    if (parent.children.length == 0) {
-                        parent.className = parent.className.replace(' ui-state-error', '');
+                    if (id) {
+                        var parent = document.getElementById(id);
+                        parent.innerHTML = '';
+                        if (parent.children.length == 0) {
+                            parent.className = parent.className.replace(' ui-state-error', '');
+                        }
                     }
                 }
             }
