@@ -43,7 +43,7 @@ public class MinLengthValidator extends MinLengthValidatorBase {
             StringBuffer script = new StringBuffer();
             script.append("ice.ace.jq('");
             script.append(ComponentUtils.idTojQuerySelector(form.getClientId()));
-            script.append("').validate(); ice.ace.jq('");
+            script.append("').validate().settings.showErrors = function(){}; ice.ace.jq('");
             script.append(ComponentUtils.idTojQuerySelector(id));
             script.append("').rules('add', {minlength: ");
             script.append(getLength());
