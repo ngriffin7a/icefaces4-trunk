@@ -1566,10 +1566,10 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
     if (this.scrollLeft) scrollBody.scrollLeft(this.scrollLeft);
 
 	if (this.cfg.liveScroll) {
+		this.addFillerSpaceToEnableScrolling();
+
 		// just to allow live scrolling up right away
 		if (!this.scrollTop || (scrollBody.scrollTop() == 0)) scrollBody.scrollTop(1);
-
-		this.addFillerSpaceToEnableScrolling();
 	}
 
     scrollBody.bind('scroll', function () {
