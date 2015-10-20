@@ -46,7 +46,7 @@ public class PropertyConstraintPredicate implements Predicate {
     public boolean evaluate(Object object) {
         Object value = filterBy.getValue(facesContext.getELContext());
 
-		if (this.column.getType() == ColumnType.TEXT) {
+		if (this.column.getColumnType() == ColumnType.TEXT) {
 			if (value instanceof Date) {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				value = dateFormat.format(value);
@@ -58,25 +58,24 @@ public class PropertyConstraintPredicate implements Predicate {
 				return false;
 			else
 				return true;
-		} else if (this.column.getType() == ColumnType.BOOLEAN) {
+		} else if (this.column.getColumnType() == ColumnType.BOOLEAN) {
 			if (value != null) {
 				if ("true".equalsIgnoreCase(filterValue)) {
-					return "true".equalsIgnoreCase((String) value);
+					return (Boolean) value == true;
 				} else {
-					return "false".equalsIgnoreCase((String) value);
+					return (Boolean) value == false;
 				}
 			} else if (filterValue != null)
 				return false;
 			else
 				return true;			
-		} else if (this.column.getType() == ColumnType.DATE) {
+		} else if (this.column.getColumnType() == ColumnType.DATE) {
 			Date filterDate = null;
 			DateFormat dateFormat = new SimpleDateFormat(this.column.getFilterDatePattern(), 
 				this.column.calculateLocale(this.facesContext));
 			try {
 				if (filterValue != null && !"".equals(filterValue)) filterDate = dateFormat.parse(filterValue);
 			} catch (ParseException e) {
-				// TODO: log specified type and object type don't match
 				filterDate = null;
 			}
 
@@ -90,10 +89,9 @@ public class PropertyConstraintPredicate implements Predicate {
 				else
 					return true;
 			} else {
-				// TODO: log incorrect type
 				return false;
 			}
-		} else if (this.column.getType() == ColumnType.BYTE) {
+		} else if (this.column.getColumnType() == ColumnType.BYTE) {
 			Byte convertedValue = null;
 			Byte convertedFilterValue = null;
 			try {
@@ -112,7 +110,7 @@ public class PropertyConstraintPredicate implements Predicate {
 				return false;
 			else
 				return true;
-		} else if (this.column.getType() == ColumnType.SHORT) {
+		} else if (this.column.getColumnType() == ColumnType.SHORT) {
 			Short convertedValue = null;
 			Short convertedFilterValue = null;
 			try {
@@ -131,7 +129,7 @@ public class PropertyConstraintPredicate implements Predicate {
 				return false;
 			else
 				return true;
-		} else if (this.column.getType() == ColumnType.INT) {
+		} else if (this.column.getColumnType() == ColumnType.INT) {
 			Integer convertedValue = null;
 			Integer convertedFilterValue = null;
 			try {
@@ -150,7 +148,7 @@ public class PropertyConstraintPredicate implements Predicate {
 				return false;
 			else
 				return true;
-		} else if (this.column.getType() == ColumnType.LONG) {
+		} else if (this.column.getColumnType() == ColumnType.LONG) {
 			Long convertedValue = null;
 			Long convertedFilterValue = null;
 			try {
@@ -169,7 +167,7 @@ public class PropertyConstraintPredicate implements Predicate {
 				return false;
 			else
 				return true;
-		} else if (this.column.getType() == ColumnType.FLOAT) {
+		} else if (this.column.getColumnType() == ColumnType.FLOAT) {
 			Float convertedValue = null;
 			Float convertedFilterValue = null;
 			try {
@@ -188,7 +186,7 @@ public class PropertyConstraintPredicate implements Predicate {
 				return false;
 			else
 				return true;
-		} else if (this.column.getType() == ColumnType.DOUBLE) {
+		} else if (this.column.getColumnType() == ColumnType.DOUBLE) {
 			Double convertedValue = null;
 			Double convertedFilterValue = null;
 			try {

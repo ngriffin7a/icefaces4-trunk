@@ -1078,7 +1078,7 @@ public class DataTable extends DataTableBase implements Serializable {
             for (UIComponent child : group.getChildren())
                 if (child.isRendered()) for (UIComponent grandchild : child.getChildren())
                     if (grandchild.isRendered() && grandchild.getValueExpression("filterBy") != null) {
-						if (((Column)grandchild).getType() == ColumnType.DATE)
+						if (((Column)grandchild).getColumnType() == ColumnType.DATE)
 							filterMap.put(grandchild.getClientId(context) + "_filter_input", (Column)grandchild);
 						else
 							filterMap.put(grandchild.getClientId(context) + "_filter", (Column)grandchild);
@@ -1086,7 +1086,7 @@ public class DataTable extends DataTableBase implements Serializable {
         } else
             for (Column column : getColumns())
                 if (column.getValueExpression("filterBy") != null) {
-					if (column.getType() == ColumnType.DATE)
+					if (column.getColumnType() == ColumnType.DATE)
 						filterMap.put(column.getClientId(context) + "_filter_input", column);
 					else
 						filterMap.put(column.getClientId(context) + "_filter", column);
@@ -1399,7 +1399,7 @@ public class DataTable extends DataTableBase implements Serializable {
 
             // Setup filter objects from column properties
             for (Column c : filterMap.values()) {
-				if (c.getType() == ColumnType.TEXT || !c.isRangeFilter()) {
+				if (c.getColumnType() == ColumnType.TEXT || !c.isRangedFilter()) {
 					if (c.getFilterValue() != null && !c.getFilterValue().equals("")) {
 						columnPredicates.add(
 								new PropertyConstraintPredicate(context,
@@ -1410,7 +1410,7 @@ public class DataTable extends DataTableBase implements Serializable {
 						// TODO: add a separate predicate for other types that doesn't take filterConstraint
 					}
 					//TODO: Add global filter constraint configurability
-					if (hasGlobalFilter && c.getType() == ColumnType.TEXT)
+					if (hasGlobalFilter && c.getColumnType() == ColumnType.TEXT)
 						globalPredicates.add(new PropertyConstraintPredicate(
 								context,
 								c.getValueExpression("filterBy"),
@@ -1424,7 +1424,7 @@ public class DataTable extends DataTableBase implements Serializable {
 										c.getValueExpression("filterBy"),
 										c.getFilterValueMin(),
 										c.getFilterValueMax(),
-										c.getType()));
+										c.getColumnType()));
 					}
 				}
             }

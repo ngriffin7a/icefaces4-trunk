@@ -55,7 +55,6 @@ public class RangeConstraintPredicate implements Predicate {
 					if (filterValueMax != null) maxDate = (Date) filterValueMax;
 					rowDate = (Date) value;
 				} catch (Exception e) {
-					// TODO: log specified type and object type don't match
 					return false;
 				}
 
@@ -82,7 +81,6 @@ public class RangeConstraintPredicate implements Predicate {
 					if (filterValueMax != null) maxValue = (Byte) filterValueMax;
 					rowValue = (Byte) value;
 				} catch (Exception e) {
-					// TODO: log specified type and object type don't match
 					return false;
 				}
 
@@ -107,7 +105,6 @@ public class RangeConstraintPredicate implements Predicate {
 					if (filterValueMax != null) maxValue = (Short) filterValueMax;
 					rowValue = (Short) value;
 				} catch (Exception e) {
-					// TODO: log specified type and object type don't match
 					return false;
 				}
 
@@ -132,7 +129,6 @@ public class RangeConstraintPredicate implements Predicate {
 					if (filterValueMax != null) maxValue = (Integer) filterValueMax;
 					rowValue = (Integer) value;
 				} catch (Exception e) {
-					// TODO: log specified type and object type don't match
 					return false;
 				}
 
@@ -157,7 +153,6 @@ public class RangeConstraintPredicate implements Predicate {
 					if (filterValueMax != null) maxValue = (Long) filterValueMax;
 					rowValue = (Long) value;
 				} catch (Exception e) {
-					// TODO: log specified type and object type don't match
 					return false;
 				}
 
@@ -182,7 +177,6 @@ public class RangeConstraintPredicate implements Predicate {
 					if (filterValueMax != null) maxValue = (Float) filterValueMax;
 					rowValue = (Float) value;
 				} catch (Exception e) {
-					// TODO: log specified type and object type don't match
 					return false;
 				}
 
@@ -207,7 +201,6 @@ public class RangeConstraintPredicate implements Predicate {
 					if (filterValueMax != null) maxValue = (Double) filterValueMax;
 					rowValue = (Double) value;
 				} catch (Exception e) {
-					// TODO: log specified type and object type don't match
 					return false;
 				}
 
@@ -223,7 +216,6 @@ public class RangeConstraintPredicate implements Predicate {
 					return true; // no filtering taking place
 				}
 			} else {
-				// TODO: log specified type and object type don't match
 				return false;
 			}
 		} else if (filterValueMin != null || filterValueMax != null) {

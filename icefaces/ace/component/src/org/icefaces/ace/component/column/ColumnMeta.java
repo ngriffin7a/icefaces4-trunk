@@ -92,7 +92,7 @@ public class ColumnMeta extends UIColumnMeta {
 
     @Property(tlddoc="If true, range filtering is enabled. When range filtering is enabled, two input fields will be rendered for filtering this column. The first one is to specify the minimum value and the second one is to specify the maximum value. All rows with values for this column in between this range will be matched. If only the minimum value is specified, all values greater than or equal to it will be matched; if only the maximum value is specified, all values less than or equal to it will be matched.",
             defaultValue = "false", defaultValueType = DefaultValueType.EXPRESSION)
-    private boolean rangeFilter;
+    private boolean rangedFilter;
 
     @Property(tlddoc="When range filtering is enabled, this property is used to access or to set the minimum filter value of the range. The value can't be a primitive type; use the corresponding wrapper object instead.")
     private Object filterValueMin;
@@ -161,13 +161,13 @@ public class ColumnMeta extends UIColumnMeta {
             "Having a value in this field indicates a column is pinned. 1 indexed.")
     private Integer pinningOrder;
 
-    @Property(defaultValue = "org.icefaces.ace.component.column.ColumnType.TEXT",
+    @Property(defaultValue = "text",
               defaultValueType = DefaultValueType.EXPRESSION,
-              tlddoc = "Define the ColumnType of this column, determining how the " +
+              tlddoc = "Specifies the data type of this column, determining how the " +
                       "'value' attribute of this component will be handled when filtering. Valid options " +
-                      "include : TEXT, BOOLEAN, DATE, BYTE, SHORT, INT, LONG, FLOAT, and DOUBLE " +
-                      "(Letters must be capitalized because the value is an enum type and to avoid using the corresponding reserved words; DATE assumes the value object is a Date object).")
-    ColumnType type;
+                      "include : 'text', 'boolean', 'date', 'byte', 'short', 'int', 'long', 'float', and 'double' " +
+                      "(when 'text' is used, all values are treated as strings; 'date' assumes the value object is a Date object).")
+    String type;
 
 //    These per-feature configuration attributes will be used when the 'value' property is added to Column.
 //    Until then they are redundant.
