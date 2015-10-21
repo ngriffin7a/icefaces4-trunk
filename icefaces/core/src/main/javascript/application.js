@@ -498,7 +498,7 @@ if (!window.ice.icefaces) {
             var c = configurationOf(lookupElementById(retrieveUpdateFormID(viewID)));
             //cache retrieve update callback
             if (!c.ajaxRefresh) {
-                c.ajaxRefresh = retrieveUpdate(viewID);
+                c.ajaxRefresh = retrieveUpdate(viewID, retryIntervals);
             }
             c.ajaxRefresh();
         };
