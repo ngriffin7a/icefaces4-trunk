@@ -76,6 +76,7 @@ public class EnvUtils {
     public static String PUBLIC_CONTEXT_PATH = "org.icefaces.publicContextPath";
     public static String REDIRECT_ON_EXCEPTION_MAPPING = "org.icefaces.redirectOnExceptionMapping";
     public static String NAMESPACE_PARAMETERS = "com.sun.faces.namespaceParameters";
+    public static String UPDATE_NETWORK_ERROR_RETRY_TIMEOUTS = "org.icefaces.updateNetworkErrorRetryTimeouts";
 
 
     //Parameters configurable using context parameters but only in compatibility mode
@@ -1255,6 +1256,10 @@ public class EnvUtils {
         return EnvConfig.getEnvConfig(context).namespaceParameters && (context.getViewRoot() instanceof NamingContainer)
                 ? context.getViewRoot().getContainerClientId(context) : "";
     }
+
+    public static String getUpdateNetworkErrorRetryTimeouts(FacesContext context) {
+        return EnvConfig.getEnvConfig(context).updateNetworkErrorRetryTimeouts;
+    }
 }
 
 class EnvConfig {
@@ -1299,6 +1304,7 @@ class EnvConfig {
     public String publicContextPath;
     public String redirectOnExceptionMapping;
     public boolean namespaceParameters;
+    public String updateNetworkErrorRetryTimeouts;
 
     public EnvConfig(Map initMap) {
         init(initMap);
@@ -1343,6 +1349,7 @@ class EnvConfig {
         fileEntryRequireJavascript = decodeBoolean(initMap, EnvUtils.ACE_FILE_ENTRY_REQUIRE_JAVASCRIPT, true, info);
         publicContextPath = decodeString(initMap, EnvUtils.PUBLIC_CONTEXT_PATH, null, info);
         redirectOnExceptionMapping = decodeString(initMap, EnvUtils.REDIRECT_ON_EXCEPTION_MAPPING, null, info);
+        updateNetworkErrorRetryTimeouts = decodeString(initMap, EnvUtils.UPDATE_NETWORK_ERROR_RETRY_TIMEOUTS, "1000 2000 3000", info);
 
         log.info("ICEfaces Configuration: \n" + info);
     }

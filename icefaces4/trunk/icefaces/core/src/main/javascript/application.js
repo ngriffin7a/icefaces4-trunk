@@ -250,7 +250,20 @@ if (!window.ice.icefaces) {
 
         var viewIDs = [];
 
-        function requestForUpdates(viewID) {
+        function timedRetryAbort(retryAction, abortAction, timeouts) {
+            var index = 0;
+            var errorActions = inject(reverse(timeouts), [abortAction], function(actions, interval) {
+                return insert(actions, curry(runOnce, Delay(retryAction, interval)));
+            });
+            return function() {
+                if (index < errorActions.length) {
+                    apply(errorActions[index], arguments);
+                    index++;
+                }
+            };
+        }
+
+        function requestForUpdates(viewID, retries) {
             append(viewIDs, viewID);
             var formID = retrieveUpdateFormID(viewID);
             var form = lookupElementById(formID);
@@ -265,22 +278,28 @@ if (!window.ice.icefaces) {
                         'ice.submit.type': 'ice.push',
                         'ice.view': viewID,
                         'ice.window': namespace.window,
-                        render: '@all'
+                        render: '@all',
+                        onerror: retries
                     };
                     jsf.ajax.request(form, null, options);
                 } catch (e) {
                     warn(logger, 'failed to pick updates', e);
+                    throw e;
                 }
             }
         }
 
-        function retrieveUpdate(viewID) {
+        function retrieveUpdate(viewID, retryIntervals) {
             //delay issuing the request until no submit event is in progress
             var delayedUpdates = function()  {
                 if (eventInProgress)  {
                     setTimeout(delayedUpdates, 20);
                 } else {
-                    requestForUpdates(viewID);
+                    var retries = timedRetryAbort(function () {
+                        info(logger, 'retrying to pick updates for view ' + viewID);
+                        requestForUpdates(viewID, retries);
+                    }, broadcaster(networkErrorListeners), retryIntervals || [1000, 2000, 4000]);
+                    requestForUpdates(viewID, retries);
                 }
             };
             return delayedUpdates;
@@ -414,7 +433,9 @@ if (!window.ice.icefaces) {
                     broadcast(perRequestServerErrorListeners, [ e.responseCode, e.responseText, containsXMLData(xmlContent) ? xmlContent : null]);
                 } else if (e.status == 'httpError' || e.status == 'malformedXML') {
                     warn(logger, 'HTTP error [code: ' + e.responseCode + ']: ' + e.description + '\n' + e.responseText);
-                    broadcast(perRequestNetworkErrorListeners, [ e.responseCode, e.description]);
+                    if (not(e.source && containsSubstring(e.source.id, '-retrieve-update'))) {
+                        broadcast(perRequestNetworkErrorListeners, [e.responseCode, e.description]);
+                    }
                 } else {
                     //If the error falls through the other conditions, just log it.
                     error(logger, 'Error [status: ' + e.status + ' code: ' + e.responseCode + ']: ' + e.description + '\n' + e.responseText);
@@ -470,7 +491,7 @@ if (!window.ice.icefaces) {
         namespace.sef = submitExecuteForm;
         namespace.fullSubmit = fullSubmit;
 
-        namespace.ajaxRefresh = function(viewID) {
+        namespace.ajaxRefresh = function(viewID, retryIntervals) {
             viewID = viewID || (document.body.configuration ? document.body.configuration.viewID : null);
             if (!viewID) {
                 throw 'viewID parameter required';
@@ -531,8 +552,9 @@ if (!window.ice.icefaces) {
             }
         };
 
-        namespace.setupPush = function(viewID) {
-            var retrieveViewUpdate = retrieveUpdate(viewID);
+        namespace.setupPush = function(viewID, retryIntervals) {
+            var intervals = asArray(collect(split(retryIntervals, ' '), Number));
+            var retrieveViewUpdate = retrieveUpdate(viewID, intervals);
             ice.push.register([viewID], retrieveViewUpdate);
             ice.onBlockingConnectionReEstablished(retrieveViewUpdate);
             var unsetupPush = curry(namespace.unsetupPush, viewID);
@@ -546,9 +568,10 @@ if (!window.ice.icefaces) {
             ice.push.deregister([viewID]);
         };
 
-        namespace.setupRefresh = function(viewID, interval, duration, id) {
+        namespace.setupRefresh = function(viewID, interval, duration, id, retryIntervals) {
             var times = duration < 0 ? null : Math.floor(duration / interval);
-            var requestUpdate = retrieveUpdate(viewID);
+            var intervals = asArray(collect(split(retryIntervals, ' '), Number));
+            var requestUpdate = retrieveUpdate(viewID, intervals);
             var delay = Delay(requestUpdate, interval);
             run(delay, times);
             var stopDelay = curry(stop, delay);
