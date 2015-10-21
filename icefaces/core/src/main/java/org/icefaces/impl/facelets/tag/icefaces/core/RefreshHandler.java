@@ -107,6 +107,8 @@ public class RefreshHandler extends TagHandler {
             writer.writeText(duration, null);
             writer.writeText(", '", null);
             writer.writeText(clientId, null);
+            writer.writeText("', '", null);
+            writer.writeText(EnvUtils.getUpdateNetworkErrorRetryTimeouts(context), null);
             writer.writeText("');", null);
             writer.endElement("script");
             writer.endElement("span");
