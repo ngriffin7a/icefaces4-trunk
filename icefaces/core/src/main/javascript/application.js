@@ -284,7 +284,6 @@ if (!window.ice.icefaces) {
                     jsf.ajax.request(form, null, options);
                 } catch (e) {
                     warn(logger, 'failed to pick updates', e);
-                    throw e;
                 }
             }
         }
