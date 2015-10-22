@@ -441,26 +441,24 @@ public class DataTableHeadRenderer {
 		writer.writeAttribute(HTML.NAME_ATTR, filterId, null);
 		writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
 		writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
-		writer.writeAttribute("size", "1", null); // Webkit requires none zero/null size value to use CSS width correctly.
 		writer.writeAttribute("value", filterValue , null);
 
 		writer.startElement(HTML.OPTION_ELEM, null);
 		writer.writeAttribute("value", "", null);
-		writer.writeAttribute("label", "", null);
 		if (!"true".equalsIgnoreCase((String) filterValue)
 			&& !"false".equalsIgnoreCase((String) filterValue)) writer.writeAttribute("selected", "selected", null);
 		writer.endElement(HTML.OPTION_ELEM);
 
 		writer.startElement(HTML.OPTION_ELEM, null);
 		writer.writeAttribute("value", "true", null);
-		writer.writeAttribute("label", "True", null);
 		if ("true".equalsIgnoreCase((String) filterValue)) writer.writeAttribute("selected", "selected", null);
+		writer.write("True");
 		writer.endElement(HTML.OPTION_ELEM);
 
 		writer.startElement(HTML.OPTION_ELEM, null);
 		writer.writeAttribute("value", "false", null);
-		writer.writeAttribute("label", "False", null);
 		if ("false".equalsIgnoreCase((String) filterValue)) writer.writeAttribute("selected", "selected", null);
+		writer.write("False");
 		writer.endElement(HTML.OPTION_ELEM);
 
 		writer.writeAttribute("onchange", filterFunction , null);
