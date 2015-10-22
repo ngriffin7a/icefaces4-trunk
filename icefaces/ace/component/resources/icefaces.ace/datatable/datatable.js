@@ -1763,9 +1763,9 @@ ice.ace.DataTable.prototype.addFillerSpaceToEnableScrolling = function () {
 	}
 
 	var bodyTable = this.element.find(this.scrollBodySelector).children('table');
-	var marginBottom = scrollBodyHeight - currentRowsHeight + 10;
 	if (currentRowsHeight <= scrollBodyHeight) {
-		bodyTable.css('margin-bottom', marginBottom + 'px');
+		var marginBottom = scrollBodyHeight - currentRowsHeight + 10;
+		bodyTable.css('margin-bottom', scrollBodyHeight + 'px');
 	} else {
 		bodyTable.css('margin-bottom', '0');
 	}
