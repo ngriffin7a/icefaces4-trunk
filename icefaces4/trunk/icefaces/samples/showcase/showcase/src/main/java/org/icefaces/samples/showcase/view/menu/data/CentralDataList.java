@@ -498,8 +498,6 @@ public class CentralDataList {
 								 "panelStack", "panelStackOverview.xhtml", "PanelStackBean.java"),
 						new Demo(msgs("menu.ace.panelStack.subMenu.client"), msgs("example.ace.panelStack.client.description"),
 								 "panelStack", "panelStackClient.xhtml", "PanelStackClient.java"),
-						new Demo(msgs("menu.ace.panelStack.subMenu.repeat"), msgs("example.ace.panelStack.repeat.description"),
-								 "panelStack", "panelStackRepeat.xhtml", "PanelStackRepeat.java"),
 						new Demo(msgs("menu.ace.panelStack.subMenu.facelet"), msgs("example.ace.panelStack.facelet.description"),
 								 "panelStack", "panelStackFacelet.xhtml", "PanelStackFacelet.java")),
 				new ComponentGroup("ace:splitPane", "SplitPane", "splitPane.html",
