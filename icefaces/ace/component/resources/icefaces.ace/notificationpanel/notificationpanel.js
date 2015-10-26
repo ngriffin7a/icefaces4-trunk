@@ -34,42 +34,36 @@ ice.ace.NotificationBar = function(id, cfg) {
     this.cfg = cfg;
     this.jqId = ice.ace.escapeClientId(id);
     this.jq = ice.ace.jq(this.jqId);
-    this.init();
-    var _self = this;
-  //  this.jq.find("script").remove();
-    if (this.cfg.visible) {
-        if (this.barIsHidden()){
-            ice.ace.NotificationPanels[this.id].show();
-            ice.ace.jq(_self.jq).css({'display':'block'});
-        }
-    } else {
-        if (this.barIsBlock()){
-            ice.ace.NotificationPanels[this.id].hide();
-            ice.ace.jq(this.jq).css({'display':'none'});
-        }
+    var init = false;
+    if (init==false && ice.ace.NotificationPanels[this.id]){
+        init = true;
     }
-    ice.ace.NotificationPanels[this.id] = _self;
-};
-
-ice.ace.NotificationBar.prototype.barIsHidden = function() {
-    return ice.ace.jq(this.jq).css('display') == 'none';
-};
-
-ice.ace.NotificationBar.prototype.barIsBlock = function() {
-    return ice.ace.jq(this.jq).css('display') == 'block';
-};
-
-ice.ace.NotificationBar.prototype.init = function () {
     ice.ace.jq(this.jq).css(this.cfg.position, '0');
     ice.ace.jq(this.jq).css("left", '0');
-    ice.ace.jq(this.jq).css({'display':'none'});
+    if (this.cfg.visible){
+         if (init==true && ice.ace.NotificationPanels[this.id].cfg.visible != this.cfg.visible){
+            ice.ace.jq(this.jq).hide();
+            this.show();
+        } else {
+            ice.ace.jq(this.jq).show();
+        }
+    } else {
+        if (init==true && ice.ace.NotificationPanels[this.id].cfg.visible != this.cfg.visible){
+            ice.ace.jq(this.jq).show();
+            this.hide();
+        } else {
+            ice.ace.jq(this.jq).hide();
+        }
+    }
+    ice.ace.NotificationPanels[this.id] = this;
 };
+
 
 ice.ace.NotificationBar.prototype.show = function() {
     if (this.cfg.effect === "slide")
-        ice.ace.jq(this.jq).slideDown(this.cfg.effect);
+        ice.ace.jq(this.jq).slideDown(this.cfg.effectSpeed);
     else if (this.cfg.effect === "fade")
-        ice.ace.jq(this.jq).fadeIn(this.cfg.effect);
+        ice.ace.jq(this.jq).fadeIn(this.cfg.effectSpeed);
     else if (this.cfg.effect === "none")
         ice.ace.jq(this.jq).show();
     if (!this.cfg.visible) {
@@ -86,9 +80,9 @@ ice.ace.NotificationBar.prototype.show = function() {
 
 ice.ace.NotificationBar.prototype.hide = function() {
     if (this.cfg.effect === "slide")
-        ice.ace.jq(this.jq).slideUp(this.cfg.effect);
+        ice.ace.jq(this.jq).slideUp(this.cfg.effectSpeed);
     else if (this.cfg.effect === "fade")
-        ice.ace.jq(this.jq).fadeOut(this.cfg.effect);
+        ice.ace.jq(this.jq).fadeOut(this.cfg.effectSpeed);
     else if (this.cfg.effect === "none")
         ice.ace.jq(this.jq).hide();
     if (this.cfg.visible){

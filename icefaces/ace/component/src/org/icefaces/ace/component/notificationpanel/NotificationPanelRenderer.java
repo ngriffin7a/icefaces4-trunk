@@ -51,7 +51,8 @@ public class NotificationPanelRenderer extends CoreRenderer {
 	protected void encodeMarkup(FacesContext facesContext, NotificationPanel bar) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
         String barStyleClass = bar.getStyleClass();
-        String styleClass = barStyleClass == null ? "ui-notificationbar" : "ui-notificationbar " + barStyleClass;
+        String baseStyleClass="ui-notificationbar";
+        String styleClass = barStyleClass == null ? baseStyleClass : baseStyleClass+" " + barStyleClass;
 		UIComponent close = bar.getFacet("close");
 		
 		writer.startElement("div", bar);
@@ -103,7 +104,6 @@ public class NotificationPanelRenderer extends CoreRenderer {
         encodeClientBehaviors(facesContext, bar, json);
 
         json.endMap().endArray().endFunction();
-
         writer.write(json.toString());
 		writer.write("});");
 		
