@@ -333,4 +333,12 @@ public class ProxiedBodyColumn implements IProxiableColumn{
     public Object getFilterDateLocale() {
         return (isPropertySpecified(bodyColumn, "filterDateLocale") ? bodyColumn : headerColumn).getFilterDateLocale();
     }
+
+    public void setDisplayPriority(Integer displayPriority) {
+        (isPropertySpecified(bodyColumn, "displayPriority") ? bodyColumn : headerColumn).setDisplayPriority(displayPriority);
+    }
+
+    public Integer getDisplayPriority() {
+        return (isPropertySpecified(bodyColumn, "displayPriority") ? bodyColumn : headerColumn).getDisplayPriority();
+    }
 }

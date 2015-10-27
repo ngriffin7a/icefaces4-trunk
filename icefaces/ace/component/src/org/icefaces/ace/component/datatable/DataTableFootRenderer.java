@@ -93,6 +93,10 @@ public class DataTableFootRenderer {
             String footerClass = styleClass != null
                     ? DataTableConstants.COLUMN_FOOTER_CLASS + " " + styleClass
                     : DataTableConstants.COLUMN_FOOTER_CLASS;
+			Integer displayPriority = column.getDisplayPriority();
+			if (displayPriority != null) {
+				footerClass += " ui-table-priority-" + displayPriority; 
+			}
 
             writer.startElement(HTML.TD_ELEM, null);
             writer.writeAttribute(HTML.CLASS_ATTR, footerClass, null);

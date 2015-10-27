@@ -346,3 +346,91 @@
 .ui-datatable .ui-datatable-scrollable-header {
     zoom:1;
 }
+
+/* ---------- Column Priorities ---------- */
+
+/* remove 'width: 100%' from table when viewport width is less than 70em 
+    in order to prevent the table from keeping its original width */
+@media only all {
+	.ui-datatable.ui-responsive, .ui-datatable.ui-responsive table {
+		width: auto;
+	}
+}
+
+@media screen and (min-width: 70em) {
+	.ui-datatable.ui-responsive, .ui-datatable.ui-responsive table {
+		width: 100%;
+	}
+}
+
+/*!
+* jQuery Mobile 1.4.5
+* Git HEAD hash: 68e55e78b292634d3991c795f06f5e37a512decc <> Date: Fri Oct 31 2014 17:33:30 UTC
+* http://jquerymobile.com
+*
+* Copyright 2010, 2014 jQuery Foundation, Inc. and othercontributors
+* Released under the MIT license.
+* http://jquery.org/license
+*
+*/
+
+/* Hide all prioritized columns by default */
+@media only all {
+	.ui-datatable.ui-responsive th.ui-table-priority-6,
+	.ui-datatable.ui-responsive td.ui-table-priority-6,
+	.ui-datatable.ui-responsive th.ui-table-priority-5,
+	.ui-datatable.ui-responsive td.ui-table-priority-5,
+	.ui-datatable.ui-responsive th.ui-table-priority-4,
+	.ui-datatable.ui-responsive td.ui-table-priority-4,
+	.ui-datatable.ui-responsive th.ui-table-priority-3,
+	.ui-datatable.ui-responsive td.ui-table-priority-3,
+	.ui-datatable.ui-responsive th.ui-table-priority-2,
+	.ui-datatable.ui-responsive td.ui-table-priority-2,
+	.ui-datatable.ui-responsive th.ui-table-priority-1,
+	.ui-datatable.ui-responsive td.ui-table-priority-1 {
+		display: none;
+	}
+}
+/* Preset breakpoints if ".ui-responsive" class added to table */
+/* Show priority 1 at 320px (20em x 16px) */
+@media screen and (min-width: 20em) {
+	.ui-datatable.ui-responsive th.ui-table-priority-1,
+	.ui-datatable.ui-responsive td.ui-table-priority-1 {
+		display: table-cell;
+	}
+}
+/* Show priority 2 at 480px (30em x 16px) */
+@media screen and (min-width: 30em) {
+	.ui-datatable.ui-responsive th.ui-table-priority-2,
+	.ui-datatable.ui-responsive td.ui-table-priority-2 {
+		display: table-cell;
+	}
+}
+/* Show priority 3 at 640px (40em x 16px) */
+@media screen and (min-width: 40em) {
+	.ui-datatable.ui-responsive th.ui-table-priority-3,
+	.ui-datatable.ui-responsive td.ui-table-priority-3 {
+		display: table-cell;
+	}
+}
+/* Show priority 4 at 800px (50em x 16px) */
+@media screen and (min-width: 50em) {
+	.ui-datatable.ui-responsive th.ui-table-priority-4,
+	.ui-datatable.ui-responsive td.ui-table-priority-4 {
+		display: table-cell;
+	}
+}
+/* Show priority 5 at 960px (60em x 16px) */
+@media screen and (min-width: 60em) {
+	.ui-datatable.ui-responsive th.ui-table-priority-5,
+	.ui-datatable.ui-responsive td.ui-table-priority-5 {
+		display: table-cell;
+	}
+}
+/* Show priority 6 at 1,120px (70em x 16px) */
+@media screen and (min-width: 70em) {
+	.ui-datatable.ui-responsive th.ui-table-priority-6,
+	.ui-datatable.ui-responsive td.ui-table-priority-6 {
+		display: table-cell;
+	}
+}

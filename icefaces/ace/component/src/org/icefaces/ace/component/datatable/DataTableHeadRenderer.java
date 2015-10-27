@@ -157,6 +157,10 @@ public class DataTableHeadRenderer {
             columnClass = (column.hasSortPriority() && !isNextStacked)
                     ? columnClass + " ui-state-active"
                     : columnClass;
+			Integer displayPriority = column.getDisplayPriority();
+			if (displayPriority != null) {
+				columnClass += " ui-table-priority-" + displayPriority;
+			}
 
             writer.startElement(HTML.TH_ELEM, null);
             writer.writeAttribute(HTML.CLASS_ATTR, columnClass, null);

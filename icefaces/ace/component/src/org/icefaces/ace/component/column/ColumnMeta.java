@@ -161,6 +161,15 @@ public class ColumnMeta extends UIColumnMeta {
             "Having a value in this field indicates a column is pinned. 1 indexed.")
     private Integer pinningOrder;
 
+    @Property(tlddoc = "Enables responsive column display for this column by specifying "+
+			"a priority value that ranges from 1 to 6, with lower numerical values representing higher priorities. " +
+			"A prioritized column is subject to being conditionally displayed in the client, based on the user agent's " +
+			"viewport width. Columns with higher priority take precedence over columns with lower priority. Columns that don't " + "have this attribute set will always be displayed. As for stacked columns, the ace:column component at the top of " + "a column stack dictates the display priority of the rendered column in the client. As for multi-row headers" +
+			"(i.e. ace:columnGroup/ace:row), each header column must have this attribute set, and if it's a parent " +
+			"header column, its value must be the same as that of its highest priority child, otherwise the parent will remain " +
+			"visible when all its children are hidden, taking up space.")
+    private Integer displayPriority;
+
     @Property(defaultValue = "text",
               defaultValueType = DefaultValueType.EXPRESSION,
               tlddoc = "Specifies the data type of this column, determining how the " +
