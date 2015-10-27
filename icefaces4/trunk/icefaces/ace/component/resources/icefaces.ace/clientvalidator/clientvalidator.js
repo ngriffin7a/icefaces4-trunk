@@ -16,18 +16,22 @@
 
 
 (function() {
+    function formOf(id) {
+        var cursor = document.getElementById(id);
+        while (cursor) {
+            if (cursor.nodeName.toLowerCase() == 'form') {
+                return cursor;
+            }
+            cursor = cursor.parentNode;
+        }
+
+        return null;
+    }
+
     window.addEventListener('load', function () {
         var old = ice.fullSubmit;
         ice.fullSubmit = function (execute, render, event, element, additionalParameters, callbacks) {
-            var cursor = element;
-            var form;
-            while (cursor) {
-                if (cursor.nodeName.toLowerCase() == 'form') {
-                    form = cursor;
-                }
-                cursor = cursor.parentNode;
-            }
-
+            var form = formOf(element.id);
             var validElements = ice.ace.jq(form).validate().validElements();
             if (validElements) {
                 for (var i = 0, l = validElements.length; i < l; i++) {
@@ -53,7 +57,7 @@
     ice.ace.clientValidationMessageFor = function (id, text) {
         return function (parameter, element) {
             element.associatedValidationMessageId = id;
-            var selector = '#' + id.replace(':', '\\:') + ' .ui-faces-message-text';
+            var selector = ice.ace.escapeClientId(id) + ' .ui-faces-message-text';
             var messageElement = ice.ace.jq(selector)[0];
             if (messageElement) {
                 if (messageElement.innerHTML != text) {
@@ -74,4 +78,28 @@
             return '';
         }
     };
+    
+    ice.ace.setupClientValidation = function(id, rule, config, messageId,  message) {
+        var form = formOf(id);
+        if (!form.enabledValidation) {
+            ice.ace.jq(ice.ace.escapeClientId(form.id)).validate().settings.showErrors = function(){};
+            form.enabledValidation = true;
+        }
+
+        function setup() {
+            var selector = ice.ace.escapeClientId(id);
+
+            ice.ace.jq(selector).rules('remove', rule);
+
+            var ruleConfig = {};
+            ruleConfig[rule] = config;
+            var messageConfig = {};
+            messageConfig[rule] = ice.ace.clientValidationMessageFor(messageId + '_msg', message);
+            ruleConfig['messages'] = messageConfig;
+
+            ice.ace.jq(selector).rules('add', ruleConfig);
+        }
+        ice.onElementUpdate(id, setup);
+        setup();
+    }
 })();
