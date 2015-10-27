@@ -167,6 +167,16 @@ public class DataTableRenderer extends CoreRenderer {
             }
         }
 
+		List<IProxiableColumn> columns  = table.getProxiedBodyColumns();
+        for (int i = 0; i < columns.size(); i++) {
+            IProxiableColumn c = columns.get(i);
+            Integer priority = c.getDisplayPriority();
+            if (priority != null) {
+				containerClass += " ui-responsive";
+				break;
+			}
+        }
+
         // Container
         writer.startElement(HTML.DIV_ELEM, table);
         writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);

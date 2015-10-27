@@ -231,6 +231,11 @@ public class DataTableRowRenderer {
                 if (cellContext.selected)
                     columnStyleClass += " ui-state-active ui-selected";
 
+				Integer displayPriority = column.getDisplayPriority();
+				if (displayPriority != null) {
+					columnStyleClass += " ui-table-priority-" + displayPriority; 
+				}
+
                 writer.writeAttribute(HTML.CLASS_ATTR, userRowStyleClass + " " + columnStyleClass, null);
 
                 if (cellContext.resizable) writer.startElement(HTML.DIV_ELEM, null);
