@@ -30,6 +30,11 @@ ice.ace.DataTable.Paginator = function(table) {
     this.container = container;
 
     container.keyboardPagination = function(e) {
+		if (table.cfg.filterEvent) {
+			var target = ice.ace.jq(e.target);
+			if (target.hasClass('ui-column-filter')) return true;
+		}
+
         var keycode = e.which;
         //page down or right arrow key
         if (keycode == 34 || keycode == 39) {
