@@ -64,7 +64,6 @@ public class NotificationPanelBean implements Serializable {
 
     private void initializeBeanVariables()
     {
-        this.effect="fade";
         imageLocation = "/resources/css/images/dragdrop/vwBeatle.png";
         imageAlt = "VW Beatle";
         imageDescription = "The Volkswagen Type 1, widely known as the Volkswagen Beetle and Volkswagen Bug, is an economy car"

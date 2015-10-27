@@ -82,7 +82,10 @@ public class NotificationPanelRenderer extends CoreRenderer {
 	private void encodeScript(FacesContext facesContext, NotificationPanel bar) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = bar.getClientId(facesContext);
-
+        String effect = bar.getEffect();
+        if (effect.isEmpty()){
+            effect="fade";
+        }
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write("ice.ace.jq(document).ready(function(){");
@@ -96,7 +99,7 @@ public class NotificationPanelRenderer extends CoreRenderer {
             .beginMap()
 
             .entry("position", bar.getPosition())
-            .entry("effect", bar.getEffect())
+            .entry("effect", effect)
             .entry("effectSpeed", bar.getEffectSpeed())
             .entry("visible", bar.isVisible())
             .entry("ariaEnabled", EnvUtils.isAriaEnabled(facesContext));
