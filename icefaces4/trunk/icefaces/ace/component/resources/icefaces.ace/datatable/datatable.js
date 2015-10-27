@@ -1569,7 +1569,7 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
 		this.addFillerSpaceToEnableScrolling();
 
 		// just to allow live scrolling up right away
-		if (!this.scrollTop || (scrollBody.scrollTop() == 0)) scrollBody.scrollTop(1);
+		setTimeout(function(){if (!_self.scrollTop || (scrollBody.scrollTop() == 0)) scrollBody.scrollTop(1)},100);
 	}
 
     scrollBody.bind('scroll', function () {
@@ -1765,7 +1765,7 @@ ice.ace.DataTable.prototype.addFillerSpaceToEnableScrolling = function () {
 	var bodyTable = this.element.find(this.scrollBodySelector).children('table');
 	if (currentRowsHeight <= scrollBodyHeight) {
 		var marginBottom = scrollBodyHeight - currentRowsHeight + 10;
-		bodyTable.css('margin-bottom', scrollBodyHeight + 'px');
+		bodyTable.css('margin-bottom', marginBottom + 'px');
 	} else {
 		bodyTable.css('margin-bottom', '0');
 	}
