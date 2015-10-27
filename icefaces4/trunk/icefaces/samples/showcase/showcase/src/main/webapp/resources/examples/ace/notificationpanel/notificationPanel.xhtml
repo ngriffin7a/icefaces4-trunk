@@ -27,17 +27,26 @@
     <ui:define name="example">
         <h:form id="form">
             
-            <h:panelGrid id="commandButtons" styleClass="centeredPanelGrid">
+            <h:panelGrid id="commandButtons" styleClass="centeredPanelGrid" columns="1">
+                <ace:simpleSelectOneMenu id="ss1mnu"
+                                         label="Choose effect:-"
+                                         labelPosition="left"
+                                         value="#{notificationPanelBean.effect}">
+                    <f:selectItem itemValue="slide" itemLabel="slide"/>
+                    <f:selectItem itemValue="fade" itemLabel="fade"/>
+                    <f:selectItem itemValue="none" itemLabel="none"/>
+                    <ace:ajax execute="@this" render="@all"/>
+                </ace:simpleSelectOneMenu>
                 <f:ajax execute="@this" render="@form">
                     <h:commandButton id="serverBttn" value="#{notificationPanelBean.visible ? 'Hide' : 'Show'} using server" actionListener="#{notificationPanelBean.showAppropriateButton}"/>
                 </f:ajax>
             </h:panelGrid>
 		 
             <ace:notificationPanel id="notificationPanel"
-                                               visible="#{notificationPanelBean.visible}"
-                                               position="top"
-                                               effect="slide" effectSpeed="slow"
-                                               >
+                                   visible="#{notificationPanelBean.visible}"
+                                   position="top"
+                                   effect="#{notificationPanelBean.effect}"
+                                   effectSpeed="slow"   >
                     <ace:ajax event="close" execute="@this" render="@form" listener="#{notificationPanelBean.closeListener}"/>
                     <ace:ajax event="display" execute="@this" render="@form" listener="#{notificationPanelBean.displayListener}"/>
                 <f:facet name="close">

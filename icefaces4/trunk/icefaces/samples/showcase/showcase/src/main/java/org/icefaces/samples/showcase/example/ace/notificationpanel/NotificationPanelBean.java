@@ -22,6 +22,7 @@ import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import java.lang.String;
 
 @ManagedBean(name= NotificationPanelBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
@@ -33,6 +34,7 @@ public class NotificationPanelBean implements Serializable {
     private String imageAlt;
     private String imageDescription;
     private boolean visible;
+    private String effect;
 
     public NotificationPanelBean()
     {
@@ -45,15 +47,24 @@ public class NotificationPanelBean implements Serializable {
    }
    
    public void closeListener(AjaxBehaviorEvent event) {
-        visible = false;
+        visible = false; //need this when using the close icon on the header
     }
 
     public void displayListener(AjaxBehaviorEvent event) {
-        visible = true;
+       // Can place any code required when the panel is displayed here...
     }
 
-   private void initializeBeanVariables() 
+    public String getEffect() {
+        return effect;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
+    }
+
+    private void initializeBeanVariables()
     {
+        this.effect="fade";
         imageLocation = "/resources/css/images/dragdrop/vwBeatle.png";
         imageAlt = "VW Beatle";
         imageDescription = "The Volkswagen Type 1, widely known as the Volkswagen Beetle and Volkswagen Bug, is an economy car"
@@ -70,4 +81,6 @@ public class NotificationPanelBean implements Serializable {
     public void setImageLocation(String imageLocation) { this.imageLocation = imageLocation; }
     public boolean isVisible() {return visible;}
     public void setVisible(boolean visible) {this.visible = visible;}
+
+
 }
