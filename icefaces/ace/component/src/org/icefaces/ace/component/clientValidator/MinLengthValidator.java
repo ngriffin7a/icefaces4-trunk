@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MinLengthValidator extends MinLengthValidatorBase {
@@ -32,15 +33,16 @@ public class MinLengthValidator extends MinLengthValidatorBase {
     public void encodeBegin(FacesContext context) throws IOException {
         UIComponent validatedComponent = getParent();
         if (validatedComponent instanceof Validateable) {
-            Validateable v = (Validateable) validatedComponent;
-            String id = v.getValidatedElementId();
-            String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
-            UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
-            ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
-            String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+            final Validateable v = (Validateable) validatedComponent;
+            final String id = v.getValidatedElementId();
+            final String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
+            final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
+            final List<UIComponent> children = form.getChildren();
+            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
+            final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
                     "org.icefaces.ace.component.minlengthvalidator.", "message", "Required length is {0}.");
 
-            StringBuffer script = new StringBuffer();
+            final StringBuffer script = new StringBuffer();
             script.append("ice.ace.jq('");
             script.append(ComponentUtils.idTojQuerySelector(form.getClientId()));
             script.append("').validate().settings.showErrors = function(){}; ice.ace.jq('");
@@ -54,7 +56,7 @@ public class MinLengthValidator extends MinLengthValidatorBase {
             script.append("')");
             script.append("}})");
 
-            JavaScriptRunner.runScript(context, script.toString());
+            children.add(new ScriptOutputWriter(script.toString()));
         }
     }
 
