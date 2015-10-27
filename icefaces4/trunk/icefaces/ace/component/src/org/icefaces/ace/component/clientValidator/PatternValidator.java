@@ -19,27 +19,30 @@ package org.icefaces.ace.component.clientValidator;
 import org.icefaces.ace.component.message.Message;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.ComponentUtils;
-import org.icefaces.util.JavaScriptRunner;
+import org.icefaces.impl.event.UIOutputWriter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PatternValidator extends PatternValidatorBase {
 
     public void encodeBegin(FacesContext context) throws IOException {
-        UIComponent validatedComponent = getParent();
+        final UIComponent validatedComponent = getParent();
         if (validatedComponent instanceof Validateable) {
-            Validateable v = (Validateable) validatedComponent;
-            String id = v.getValidatedElementId();
-            String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
-            UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
-            ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
-            String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+            final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
+            final List<UIComponent> children = form.getChildren();
+            final Validateable v = (Validateable) validatedComponent;
+            final String id = v.getValidatedElementId();
+            final String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
+            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
+            final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
                     "org.icefaces.ace.component.patternvalidator.", "message", "Invalid format.");
 
-            StringBuffer script = new StringBuffer();
+            final StringBuffer script = new StringBuffer();
             script.append("ice.ace.jq('");
             script.append(ComponentUtils.idTojQuerySelector(form.getClientId()));
             script.append("').validate().settings.showErrors = function(){}; ice.ace.jq('");
@@ -53,7 +56,7 @@ public class PatternValidator extends PatternValidatorBase {
             script.append("')");
             script.append("}})");
 
-            JavaScriptRunner.runScript(context, script.toString());
+            children.add(new ScriptOutputWriter(script.toString()));
         }
     }
 
