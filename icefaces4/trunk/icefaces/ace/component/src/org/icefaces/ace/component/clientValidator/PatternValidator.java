@@ -43,9 +43,13 @@ public class PatternValidator extends PatternValidatorBase {
                     "org.icefaces.ace.component.patternvalidator.", "message", "Invalid format.");
 
             final StringBuffer script = new StringBuffer();
+            if (form.getAttributes().get(Validateable.class.getName()) == null) {
+                form.getAttributes().put(Validateable.class.getName(), true);
+                script.append("ice.ace.jq('");
+                script.append(ComponentUtils.idTojQuerySelector(form.getClientId()));
+                script.append("').validate().settings.showErrors = function(){};");
+            }
             script.append("ice.ace.jq('");
-            script.append(ComponentUtils.idTojQuerySelector(form.getClientId()));
-            script.append("').validate().settings.showErrors = function(){}; ice.ace.jq('");
             script.append(ComponentUtils.idTojQuerySelector(id));
             script.append("').rules('add', {pattern: /");
             script.append(getPattern());
