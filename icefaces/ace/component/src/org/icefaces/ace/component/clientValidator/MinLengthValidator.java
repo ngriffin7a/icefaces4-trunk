@@ -43,22 +43,15 @@ public class MinLengthValidator extends MinLengthValidatorBase {
                     "org.icefaces.ace.component.minlengthvalidator.", "message", "Required length is {0}.");
 
             final StringBuffer script = new StringBuffer();
-            if (form.getAttributes().get(Validateable.class.getName()) == null) {
-                form.getAttributes().put(Validateable.class.getName(), true);
-                script.append("ice.ace.jq('");
-                script.append(ComponentUtils.idTojQuerySelector(form.getClientId()));
-                script.append("').validate().settings.showErrors = function(){};");
-            }
-            script.append("ice.ace.jq('");
-            script.append(ComponentUtils.idTojQuerySelector(id));
-            script.append("').rules('add', {minlength: ");
+            script.append("ice.ace.setupClientValidation('");
+            script.append(id);
+            script.append("', 'minlength', ");
             script.append(getLength());
-            script.append(", messages: {minlength: ice.ace.clientValidationMessageFor('");
+            script.append(", '");
             script.append(messageClientId);
-            script.append("_msg', '");
+            script.append("', '");
             script.append(MessageFormat.format(message, getLength()));
             script.append("')");
-            script.append("}})");
 
             children.add(new ScriptOutputWriter(script.toString()));
         }

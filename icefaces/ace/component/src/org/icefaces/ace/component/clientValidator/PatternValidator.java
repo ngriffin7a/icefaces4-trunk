@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,22 +44,15 @@ public class PatternValidator extends PatternValidatorBase {
                     "org.icefaces.ace.component.patternvalidator.", "message", "Invalid format.");
 
             final StringBuffer script = new StringBuffer();
-            if (form.getAttributes().get(Validateable.class.getName()) == null) {
-                form.getAttributes().put(Validateable.class.getName(), true);
-                script.append("ice.ace.jq('");
-                script.append(ComponentUtils.idTojQuerySelector(form.getClientId()));
-                script.append("').validate().settings.showErrors = function(){};");
-            }
-            script.append("ice.ace.jq('");
-            script.append(ComponentUtils.idTojQuerySelector(id));
-            script.append("').rules('add', {pattern: /");
+            script.append("ice.ace.setupClientValidation('");
+            script.append(id);
+            script.append("', 'pattern', '");
             script.append(getPattern());
-            script.append("/, messages: {pattern: ice.ace.clientValidationMessageFor('");
+            script.append("', '");
             script.append(messageClientId);
-            script.append("_msg', '");
-            script.append(message);
+            script.append("', '");
+            script.append(MessageFormat.format(message, getPattern()));
             script.append("')");
-            script.append("}})");
 
             children.add(new ScriptOutputWriter(script.toString()));
         }
