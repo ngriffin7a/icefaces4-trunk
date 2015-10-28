@@ -307,9 +307,14 @@ public class ClientDescriptor implements Serializable {
     public boolean isChromeBrowser(){
         return _userAgentInfo.isChrome();
     }
-    
+
+    /**
+     * ICE-10828 note that IF4 does not support iOS4, so just assume if iOS it is now > iOS4 and has
+     * native date time support.
+     * @return
+     */
     public boolean isHasNativeDatePicker() {
-        return isIOS5() || isIOS6() || isIOS7() || isIOS8() || isBlackBerryOS() || isChromeBrowser() || _userAgentInfo.isFirefoxAndroid();
+        return isIOS() || isBlackBerryOS() || isChromeBrowser() || _userAgentInfo.isFirefoxAndroid();
     }
 	
 	public boolean isAndroidBrowser(){
