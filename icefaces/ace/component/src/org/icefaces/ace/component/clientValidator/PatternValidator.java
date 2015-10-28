@@ -46,9 +46,9 @@ public class PatternValidator extends PatternValidatorBase {
             final StringBuffer script = new StringBuffer();
             script.append("ice.ace.setupClientValidation('");
             script.append(id);
-            script.append("', 'pattern', '");
+            script.append("', 'pattern', /");
             script.append(getPattern());
-            script.append("', '");
+            script.append("/, '");
             script.append(messageClientId);
             script.append("', '");
             script.append(MessageFormat.format(message, getPattern()));
