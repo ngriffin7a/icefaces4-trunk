@@ -552,7 +552,7 @@ public class DateSpinnerRenderer extends InputRenderer {
      * @param component dateSpinner to test isUseNative.
      * @return ture if the native dialog should be used
      */
-    private boolean shouldUseNative(DateSpinner component) {
+    static boolean shouldUseNative(DateSpinner component) {
         return component.isUseNative() && Utils.getClientDescriptor().isHasNativeDatePicker();
     }
 

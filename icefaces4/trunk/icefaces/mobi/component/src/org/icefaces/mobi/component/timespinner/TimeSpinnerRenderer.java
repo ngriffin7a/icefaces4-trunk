@@ -487,7 +487,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         }
     }
 
-    private boolean shouldUseNative(TimeSpinner component) {
+    static boolean shouldUseNative(TimeSpinner component) {
        return component.isUseNative() && Utils.getClientDescriptor().isHasNativeDatePicker();
     }
 
