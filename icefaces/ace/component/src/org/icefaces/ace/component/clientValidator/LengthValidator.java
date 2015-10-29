@@ -28,11 +28,32 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MinLengthValidator extends MinLengthValidatorBase {
+public class LengthValidator extends LengthValidatorBase {
 
     public void encodeBegin(FacesContext context) throws IOException {
         UIComponent validatedComponent = getParent();
         if (validatedComponent instanceof Validateable) {
+            final Integer min = getMin();
+            final Integer max = getMax();
+            final String validatorConfiguration;
+            final String rule;
+            if (min == null) {
+                if (max == null) {
+                    return;
+                } else {
+                    rule = "maxlength";
+                    validatorConfiguration = String.valueOf(max);
+                }
+            } else {
+                if (max == null) {
+                    rule = "minlength";
+                    validatorConfiguration = String.valueOf(min);
+                } else {
+                    rule = "rangelength";
+                    validatorConfiguration = "[" + String.valueOf(min) + ", " + String.valueOf(max) + "]";
+                }
+            }
+
             final Validateable v = (Validateable) validatedComponent;
             final String id = v.getValidatedElementId();
             final String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
@@ -40,17 +61,19 @@ public class MinLengthValidator extends MinLengthValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.minlengthvalidator.", "message", "Required length is {0}.");
+                    "org.icefaces.ace.component.clientvalidation.", rule, "Required length is minimum {0} and maximum {1}.");
 
             final StringBuffer script = new StringBuffer();
             script.append("ice.ace.setupClientValidation('");
             script.append(id);
-            script.append("', 'minlength', ");
-            script.append(getLength());
+            script.append("', '");
+            script.append(rule);
+            script.append("', ");
+            script.append(validatorConfiguration);
             script.append(", '");
             script.append(messageClientId);
             script.append("', '");
-            script.append(MessageFormat.format(message, getLength()));
+            script.append(MessageFormat.format(message, min, max));
             script.append("')");
 
             children.add(new ScriptOutputWriter(script.toString()));
