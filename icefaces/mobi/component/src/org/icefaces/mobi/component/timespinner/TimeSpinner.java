@@ -17,15 +17,17 @@
 package org.icefaces.mobi.component.timespinner;
 
 
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.ace.util.Attribute;
 import org.icefaces.ace.util.Utils;
+import org.icefaces.mobi.component.datespinner.DateSpinnerRenderer;
 
 import javax.faces.context.FacesContext;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
-public class TimeSpinner extends TimeSpinnerBase {
+public class TimeSpinner extends TimeSpinnerBase implements Validateable {
 
     private static Logger logger = Logger.getLogger(TimeSpinner.class.getName());
     public static final String BLACKOUT_PNL_CLASS = "mobi-time-bg";
@@ -148,5 +150,13 @@ public class TimeSpinner extends TimeSpinnerBase {
 
     public void setTouchEnabled(boolean touchEnabled) {
         this.touchEnabled = touchEnabled;
+    }
+
+    public String getValidatedElementId() {
+        if (TimeSpinnerRenderer.shouldUseNative(this)) {
+            return getClientId();
+        } else {
+            return getClientId() + "_input";
+        }
     }
 }

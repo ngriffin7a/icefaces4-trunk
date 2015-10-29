@@ -17,6 +17,7 @@
 package org.icefaces.mobi.component.datespinner;
 
 
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.ace.util.Attribute;
 import org.icefaces.ace.util.Utils;
 
@@ -25,7 +26,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
-public class DateSpinner extends DateSpinnerBase {
+public class DateSpinner extends DateSpinnerBase implements Validateable {
 
     private static Logger logger = Logger.getLogger(DateSpinner.class.getName());
 
@@ -151,5 +152,13 @@ public class DateSpinner extends DateSpinnerBase {
 
     public void setTouchEnabled(boolean touchEnabled) {
         this.touchEnabled = touchEnabled;
+    }
+
+    public String getValidatedElementId() {
+        if (DateSpinnerRenderer.shouldUseNative(this)) {
+            return getClientId();
+        } else {
+            return getClientId() + "_input";
+        }
     }
 }
