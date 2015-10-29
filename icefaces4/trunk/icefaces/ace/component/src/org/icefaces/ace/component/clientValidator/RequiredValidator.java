@@ -47,7 +47,7 @@ public class RequiredValidator extends RequiredValidatorBase {
             script.append("', '");
             script.append("required");
             script.append("', ");
-            script.append(isRequired());
+            script.append(isEnabled());
             script.append(", '");
             script.append(messageClientId);
             script.append("', '");
