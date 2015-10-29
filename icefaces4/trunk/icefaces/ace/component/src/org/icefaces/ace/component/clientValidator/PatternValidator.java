@@ -41,7 +41,7 @@ public class PatternValidator extends PatternValidatorBase {
             final String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.patternvalidator.", "message", "Invalid format.");
+                    "org.icefaces.ace.component.clientvalidation.", "pattern", "Invalid format.");
 
             final StringBuffer script = new StringBuffer();
             script.append("ice.ace.setupClientValidation('");
