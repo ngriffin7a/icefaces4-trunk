@@ -25,12 +25,12 @@ import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
 
 @Component(
-        tagName         = "clientValidateMinLength",
-        componentClass  = "org.icefaces.ace.component.clientValidator.MinLengthValidator",
+        tagName         = "clientValidateLength",
+        componentClass  = "org.icefaces.ace.component.clientValidator.LengthValidator",
         rendererClass   = "org.icefaces.ace.component.clientValidator.ValidatorRenderer",
-        generatedClass  = "org.icefaces.ace.component.clientValidator.MinLengthValidatorBase",
+        generatedClass  = "org.icefaces.ace.component.clientValidator.LengthValidatorBase",
         extendsClass    = "javax.faces.component.UIComponentBase",
-        componentType   = "org.icefaces.ace.component.MinLengthValidator",
+        componentType   = "org.icefaces.ace.component.LengthValidator",
         rendererType    = "org.icefaces.ace.component.ValidatorRenderer",
         componentFamily = "org.icefaces.ace.component",
         tlddoc = "The ClientValidator is a ..... "
@@ -42,7 +42,10 @@ import org.icefaces.resources.ICEResourceLibrary;
         @ICEResourceDependency(name = "jquery/validate/additional-methods.js"),
         @ICEResourceDependency(name = "clientvalidator/clientvalidator.js"),
 })
-public class MinLengthValidatorMeta extends UIComponentBaseMeta {
+public class LengthValidatorMeta extends UIComponentBaseMeta {
         @Property(tlddoc = "Required minimum length.")
-        private Integer length;
+        private Integer min;
+
+        @Property(tlddoc = "Required maximum length.")
+        private Integer max;
 }
