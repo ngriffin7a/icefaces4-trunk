@@ -347,22 +347,6 @@
     zoom:1;
 }
 
-/* ---------- Column Priorities ---------- */
-
-/* remove 'width: 100%' from table when viewport width is less than 70em 
-    in order to prevent the table from keeping its original width */
-@media only all {
-	.ui-datatable.ui-responsive, .ui-datatable.ui-responsive table {
-		width: auto;
-	}
-}
-
-@media screen and (min-width: 70em) {
-	.ui-datatable.ui-responsive, .ui-datatable.ui-responsive table {
-		width: 100%;
-	}
-}
-
 /*!
 * jQuery Mobile 1.4.5
 * Git HEAD hash: 68e55e78b292634d3991c795f06f5e37a512decc <> Date: Fri Oct 31 2014 17:33:30 UTC
