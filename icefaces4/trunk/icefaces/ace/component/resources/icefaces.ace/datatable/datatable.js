@@ -375,7 +375,8 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
         }
     });
 
-    if (this.cfg.filterEvent == "enter")
+    if (this.cfg.filterEvent == "enter") {
+		this.element.off('keydown', this.filterSelector);
         this.element.on('keydown', this.filterSelector, function (event) {
             event.stopPropagation();
             var keyCode = event.keyCode || event.which;
@@ -388,8 +389,10 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
                 _self.filter(event);
             }
         });
+	}
 
-    else if (this.cfg.filterEvent == "change")
+    else if (this.cfg.filterEvent == "change") {
+		this.element.off('keyup', this.filterSelector);
         this.element.on('keyup', this.filterSelector, function (event) {
             var _event = event;
             var keyCode = event.keyCode || event.which;
@@ -402,7 +405,9 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
                 }, 400);
             }
         });
+	}
 
+	this.element.off('input', this.filterSelector);
     this.element.on('input', this.filterSelector, function (event) {
         if ((event.target || event.srcElement).value == '') {
             _self.filter(event);
@@ -2947,7 +2952,6 @@ ice.ace.DataTable.prototype.filter = function (evn) {
 
     if (ice.ace.jq(input).hasClass('hasDatepicker')) ice.setFocus('');
     ice.ace.AjaxRequest(options);
-    ice.setFocus('');
 }
 
 ice.ace.DataTable.prototype.doSelectionEvent = function (type, deselection, element) {
