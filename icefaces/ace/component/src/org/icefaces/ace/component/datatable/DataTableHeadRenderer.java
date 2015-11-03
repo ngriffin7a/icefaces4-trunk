@@ -512,7 +512,7 @@ public class DataTableHeadRenderer {
 		}
 
 		if (filterEvent.equals("keyup") || filterEvent.equals("blur"))
-			writer.writeAttribute("on"+filterEvent, filterFunction , null);
+			writer.writeAttribute("on"+filterEvent, "ice.setFocus('"+filterId+suffix+"');"+filterFunction , null);
 
 		if (column.getFilterStyle() != null)
 			writer.writeAttribute(HTML.STYLE_ELEM, column.getFilterStyle(), null);
