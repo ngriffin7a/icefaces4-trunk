@@ -205,6 +205,7 @@
 
 .ui-datatable .ui-column-filter {
     width:100%;
+	box-sizing: border-box;
     display:block;
     margin:auto;
     margin-top:.2em;
