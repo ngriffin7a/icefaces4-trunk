@@ -40,9 +40,13 @@ public class MessageMatcher implements SystemEventListener {
         } else {
             throw new FacesException("Unknown message type component");
         }
-        final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-        final UIComponent c = ComponentUtils.findComponent(viewRoot, target);
-        c.getAttributes().put(component.getClass().getName(), component.getClientId());
+        if (target == null || target.isEmpty()) {
+            throw new FacesException("'for' attribute undefined for component " + component.getId());
+        } else {
+            final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
+            final UIComponent c = ComponentUtils.findComponent(viewRoot, target);
+            c.getAttributes().put(component.getClass().getName(), component.getClientId());
+        }
     }
 
     public boolean isListenerForSource(Object source) {
