@@ -56,7 +56,7 @@ public class LengthValidator extends LengthValidatorBase {
 
             final Validateable v = (Validateable) validatedComponent;
             final String id = v.getValidatedElementId();
-            final String messageClientId = (String) validatedComponent.getAttributes().get(Message.class.getName());
+            final String messageClientId = MessageMatcher.lookupMessageClientId(validatedComponent);
             final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
@@ -74,7 +74,9 @@ public class LengthValidator extends LengthValidatorBase {
             script.append(messageClientId);
             script.append("', '");
             script.append(MessageFormat.format(message, min, max));
-            script.append("')");
+            script.append("', ");
+            script.append(MessageMatcher.isMultipleMessage(validatedComponent));
+            script.append(")");
 
             children.add(new ScriptOutputWriter(script.toString()));
         }
