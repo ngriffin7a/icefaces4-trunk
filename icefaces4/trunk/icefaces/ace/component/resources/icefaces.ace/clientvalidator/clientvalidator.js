@@ -56,8 +56,9 @@
 
     function clientValidationMessageFor(id, text) {
         return function (parameter, element) {
-            element.associatedValidationMessageId = id + '_msg';
-            var selector = ice.ace.escapeClientId(element.associatedValidationMessageId) + ' .ui-faces-message-text';
+            var messageId = id + '_msg';
+            element.associatedValidationMessageId = messageId;
+            var selector = ice.ace.escapeClientId(messageId) + ' .ui-faces-message-text';
             var messageElement = ice.ace.jq(selector)[0];
             if (messageElement) {
                 if (messageElement.innerHTML != text) {
@@ -65,7 +66,7 @@
                 }
             } else {
                 element.className += ' ui-state-error';
-                var node = document.getElementById(id);
+                var node = document.getElementById(messageId);
                 node.className = 'ui-widget ui-corner-all ui-state-error';
                 var icon = node.appendChild(document.createElement('span'));
                 icon.className = 'ui-faces-message-icon';
@@ -81,14 +82,14 @@
 
     function clientValidationMessagesFor(id, text, rule) {
         return function (parameter, element) {
-            element.associatedValidationMessageId = id + '_' + rule;
-
-            var node = document.getElementById(element.associatedValidationMessageId);
+            var messageId = id + '_' + rule;
+            element.associatedValidationMessageId = messageId;
+            var node = document.getElementById(messageId);
             if (!node) {
                 element.className += ' ui-state-error';
                 var container = document.getElementById(id);
                 node = container.appendChild(document.createElement('div'));
-                node.id = element.associatedValidationMessageId;
+                node.id = messageId;
                 node.className = 'ui-corner-all ui-state-error';
                 var icon = node.appendChild(document.createElement('span'));
                 icon.className = 'ui-icon ui-icon-alert';
