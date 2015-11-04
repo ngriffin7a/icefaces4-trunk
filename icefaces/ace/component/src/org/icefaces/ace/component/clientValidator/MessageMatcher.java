@@ -17,25 +17,46 @@
 package org.icefaces.ace.component.clientValidator;
 
 import org.icefaces.ace.component.message.Message;
+import org.icefaces.ace.component.messages.Messages;
 import org.icefaces.ace.util.ComponentUtils;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
+import java.util.Map;
 
 public class MessageMatcher implements SystemEventListener {
     public void processEvent(SystemEvent event) throws AbortProcessingException {
-        final Message message = (Message) event.getSource();
+        final UIComponent component = (UIComponent) event.getSource();
+        final String target;
+        if (component instanceof Message) {
+            target = ((Message) component).getFor();
+        } else if (component instanceof Messages) {
+            target = ((Messages) component).getFor();
+        } else {
+            throw new FacesException("Unknown message type component");
+        }
         final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-        final String id = message.getFor();
-        final UIComponent c = ComponentUtils.findComponent(viewRoot, id);
-        c.getAttributes().put(Message.class.getName(), message.getClientId());
+        final UIComponent c = ComponentUtils.findComponent(viewRoot, target);
+        c.getAttributes().put(component.getClass().getName(), component.getClientId());
     }
 
     public boolean isListenerForSource(Object source) {
-        return source instanceof Message;
+        return source instanceof Message || source instanceof Messages;
+    }
+
+
+    static boolean isMultipleMessage(UIComponent validatedComponent){
+        final Map<String, Object> attributes = validatedComponent.getAttributes();
+        return attributes.containsKey(Messages.class.getName());
+    }
+
+    static String lookupMessageClientId(UIComponent validatedComponent) {
+        final Map<String, Object> attributes = validatedComponent.getAttributes();
+        return (String) attributes.get(isMultipleMessage(validatedComponent) ? Messages.class.getName() : Message.class.getName());
     }
 }
