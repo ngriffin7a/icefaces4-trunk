@@ -47,7 +47,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.ValueChangeEvent;
 
-public class SliderEntry extends SliderEntryBase implements Focusable, Validateable {
+public class SliderEntry extends SliderEntryBase implements Focusable {
 
 	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
 
@@ -99,10 +99,6 @@ public class SliderEntry extends SliderEntryBase implements Focusable, Validatea
 	}
 
     public String getFocusedElementId() {
-        return getClientId() + "_handle";
-    }
-
-    public String getValidatedElementId() {
         return getClientId() + "_handle";
     }
 }
