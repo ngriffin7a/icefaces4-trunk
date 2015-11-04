@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.fileentry;
 
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.component.Focusable;
@@ -39,7 +40,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FileEntry extends FileEntryBase implements Focusable {
+public class FileEntry extends FileEntryBase implements Focusable, Validateable {
     private static Logger log = Logger.getLogger(FileEntry.class.getName());
     private static final String RESULTS_KEY = "org.icefaces.ace.component.fileEntry.results";
     private static final String EVENT_KEY = "org.icefaces.ace.component.fileEntry.events";
@@ -344,6 +345,10 @@ public class FileEntry extends FileEntryBase implements Focusable {
     }
 
     public String getFocusedElementId() {
+        return getClientId();
+    }
+
+    public String getValidatedElementId() {
         return getClientId();
     }
 }

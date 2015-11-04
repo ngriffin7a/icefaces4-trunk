@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.selectmenu;
 
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.component.Focusable;
 
 import javax.faces.component.NamingContainer;
@@ -36,7 +37,7 @@ import javax.faces.application.FacesMessage;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class SelectMenu extends SelectMenuBase implements NamingContainer, Focusable {
+public class SelectMenu extends SelectMenuBase implements NamingContainer, Focusable, Validateable {
 
     private transient int index = -1;
 	
@@ -313,5 +314,9 @@ public class SelectMenu extends SelectMenuBase implements NamingContainer, Focus
 
     public String getFocusedElementId() {
         return getClientId() + "_link";
+    }
+
+    public String getValidatedElementId() {
+        return getClientId() + "_input";
     }
 }
