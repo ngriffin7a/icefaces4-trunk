@@ -17,15 +17,19 @@
 package org.icefaces.ace.component.radiobutton;
 
 
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.component.Focusable;
 
 import javax.faces.context.FacesContext;
 
-public class RadioButton extends RadioButtonBase implements Focusable {
+public class RadioButton extends RadioButtonBase implements Focusable, Validateable {
 
     public String getFocusedElementId() {
-        return getClientId(FacesContext.getCurrentInstance()) + "_button";
+        return getClientId() + "_button";
     }
 
+    public String getValidatedElementId() {
+        return getClientId() + "_button";
+    }
 }
 

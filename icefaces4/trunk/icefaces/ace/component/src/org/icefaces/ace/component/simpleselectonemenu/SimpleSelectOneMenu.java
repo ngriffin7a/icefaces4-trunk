@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.simpleselectonemenu;
 
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.component.Focusable;
 import org.icefaces.ace.util.SelectItemsIterator;
 import org.icefaces.ace.util.SelectUtils;
@@ -36,7 +37,7 @@ import javax.faces.application.FacesMessage;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focusable {
+public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focusable, Validateable {
 	
     public Iterator getItemListIterator() {
 		List list = getItemList();
@@ -63,7 +64,11 @@ public class SimpleSelectOneMenu extends SimpleSelectOneMenuBase implements Focu
     public String getFocusedElementId() {
         return getClientId() + "_input";
     }
-	
+
+	public String getValidatedElementId() {
+		return getClientId() + "_input";
+	}
+
 	@Override
 	protected void validateValue(FacesContext facesContext, Object submittedValue) {
 

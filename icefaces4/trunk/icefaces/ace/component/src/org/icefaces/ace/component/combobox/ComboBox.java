@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.combobox;
 
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.component.Focusable;
 
 import javax.faces.component.NamingContainer;
@@ -36,7 +37,7 @@ import javax.faces.application.FacesMessage;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class ComboBox extends ComboBoxBase implements NamingContainer, Focusable {
+public class ComboBox extends ComboBoxBase implements NamingContainer, Focusable, Validateable {
 
     private transient int index = -1;
 	
@@ -154,6 +155,10 @@ public class ComboBox extends ComboBoxBase implements NamingContainer, Focusable
     }
 
     public String getFocusedElementId() {
+        return getClientId() + "_input";
+    }
+
+    public String getValidatedElementId() {
         return getClientId() + "_input";
     }
 }
