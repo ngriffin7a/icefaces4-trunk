@@ -16,10 +16,11 @@
 
 package org.icefaces.samples.showcase.view.menu;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentGroup {
+public class ComponentGroup implements Serializable {
 	private String name;
 	private String keywords;
 	private boolean fullPageRefresh = false;

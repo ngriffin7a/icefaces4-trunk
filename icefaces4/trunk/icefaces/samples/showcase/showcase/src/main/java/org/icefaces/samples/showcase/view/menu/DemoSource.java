@@ -17,8 +17,9 @@
 package org.icefaces.samples.showcase.view.menu;
 
 import java.io.File;
+import java.io.Serializable;
 
-public class DemoSource {
+public class DemoSource implements Serializable {
 	public static final String ACE_JAVA_PATH_BASE = "/WEB-INF/classes/org/icefaces/samples/showcase/example/ace/";
 	public static final String ACE_XHTML_PATH_BASE = "/resources/examples/ace/";
 	public static final String CORE_JAVA_PATH_BASE = "/WEB-INF/classes/org/icefaces/samples/showcase/example/core/";

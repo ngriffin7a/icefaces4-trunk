@@ -16,10 +16,11 @@
 
 package org.icefaces.samples.showcase.view.menu;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Demo {
+public class Demo implements Serializable{
 	private String name;
 	private String description;
 	private List<DemoSource> sources = new ArrayList<DemoSource>(2);
