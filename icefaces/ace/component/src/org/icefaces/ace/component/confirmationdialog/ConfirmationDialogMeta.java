@@ -47,9 +47,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 })
 
 public class ConfirmationDialogMeta extends UIPanelMeta {
-
-	@Property(tlddoc="Name of the widget to access client side api")
-	private String widgetVar;
 	
 	@Property(tlddoc="Text to be displayed in body.")
 	private String message;

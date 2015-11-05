@@ -60,9 +60,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 	tlddoc="Fired any time the text input field loses focus.", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="valueChange")
 public class MaskedEntryMeta extends HtmlInputTextMeta {
-
-	@Property(tlddoc="Name of the widget variable to access client side api.")
-    private String widgetVar;
 	
 	@Property(required=Required.yes, tlddoc="Masked input for separating input texts with given pattern. \nThese mask definitions can be used: \na - Represents an alpha character (A-Z,a-z) \n9 - Represents a numeric character (0-9) \n* - Represents an alphanumeric character (A-Z,a-z,0-9). All input is optional. Any character not in the definitions list will be automatically entered for the user as they type.")
 	private String mask;

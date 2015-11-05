@@ -53,9 +53,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 }, defaultEvent="close")
 
 public class DialogMeta extends UIPanelMeta {
-
-	@Property(tlddoc="Name of the widget to access client side api")
-	private String widgetVar;
 	
 	@Property(tlddoc="Header text")
 	private String header;

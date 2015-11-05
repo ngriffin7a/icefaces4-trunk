@@ -83,7 +83,6 @@ public class PanelRenderer extends CoreRenderer {
         writer.writeAttribute("type", "text/javascript", null);
 
         JSONBuilder jb = JSONBuilder.create()
-            .initialiseVar(this.resolveWidgetVar(panel))
             .beginFunction("ice.ace.create")
             .item("Panel")
             .beginArray()
@@ -201,7 +200,6 @@ public class PanelRenderer extends CoreRenderer {
 
     protected void encodeHeader(FacesContext context, Panel panel, Map<String, Object> domUpdateMap) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        String widgetVar = this.resolveWidgetVar(panel);
         UIComponent header = panel.getFacet("header");
         String headerText = panel.getHeader();
         String clientId = panel.getClientId(context);

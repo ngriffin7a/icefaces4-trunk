@@ -54,9 +54,6 @@ import javax.el.MethodExpression;
 }, defaultEvent="panechange")
 
 public class AccordionMeta extends UIPanelMeta {
-
-	@Property(tlddoc="Name of the widget to access client side api")
-	private String widgetVar;
 	
 	@Property(tlddoc="Index of the active pane.", defaultValue="0")
 	private int activeIndex;

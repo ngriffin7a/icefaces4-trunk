@@ -79,9 +79,6 @@ import javax.el.MethodExpression;
 	defaultEvent="slideEnd" )
 	
 public class SliderEntryMeta extends UIComponentBaseMeta {
-
-	@Property( tlddoc="The JavaScript object name that implements the client-side JavaScript API for this component." )
-	private String widgetVar;
 	
 	@Property( 
 		tlddoc="The minimum int value that can be selected in the value-entry range represented by the slider bar.",

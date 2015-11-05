@@ -52,8 +52,6 @@ import javax.el.ValueExpression;
     @ICEResourceDependency(name = "util/ace-menu.js")
 })
 public class ContextMenuMeta extends UIComponentBaseMeta {
-    @Property(tlddoc = "Javascript variable name of the wrapped widget.")
-    private String widgetVar;
 
     @Property(name = "for", tlddoc = "Server side id of the component to attach to.")
     private String forValue;

@@ -71,10 +71,6 @@ public class ChartMeta extends UIComponentBaseMeta {
                 "Define a title of the entire chart.")
     private String title;
 
-    @Property(tlddoc = "The JavaScript global component instance name. " +
-            "Must be unique among components on a page. ")
-    private String widgetVar;
-
     @Property(tlddoc =
                 "Define an individual instance or List of ChartSeries objects to draw on this plot.")
     private Object value;
@@ -180,7 +176,7 @@ public class ChartMeta extends UIComponentBaseMeta {
                 "Enable the default handling of the chart when rendered into a hidden page region. The" +
                 "chart polls its hidden status, looking for when it is shown, and then completes its initialization." +
                 "This can be expensive in environments of reduced JavaScript performance with many charts and a complex DOM." +
-                "When this is disabled, upon revealing a chart, to ensure it is correctly displayed, 'chartWidgetvar.replot()' " +
+                "When this is disabled, upon revealing a chart, to ensure it is correctly displayed, 'ice.ace.instance('chartId').replot()' " +
                 "must be called.",
             defaultValue = "true", defaultValueType = DefaultValueType.EXPRESSION)
     private Boolean hiddenInitPolling;

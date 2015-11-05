@@ -55,7 +55,6 @@ ice.ace.radiobutton = function(clientId, options) {
         ice.ace.jq(this.jqId).on("keypress", function(e) { self.onAriaKeypress(e); });
 		
     var unload = function() {
-        // Unload WidgetVar
         // Unload events
         ice.ace.jq(self.jqId).off("click mouseenter mouseleave keypress");
     }

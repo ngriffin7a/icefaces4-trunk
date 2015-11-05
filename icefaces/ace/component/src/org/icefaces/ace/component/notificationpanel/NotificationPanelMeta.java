@@ -53,8 +53,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ClientEvent(name="display", tlddoc="Fired when the panel is displayed.", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="close")
 public class NotificationPanelMeta extends UIComponentBaseMeta {
-    @Property(tlddoc = "Name of the client side widget.")
-    private String widgetVar;
 
     @Property(tlddoc = "Style of the container element.")
     private String style;
