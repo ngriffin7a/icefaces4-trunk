@@ -520,6 +520,7 @@ public class DataTableHeadRenderer {
 		writer.endElement(HTML.INPUT_ELEM);
 
 		writer.startElement(HTML.SPAN_ELEM, null);
+		writer.writeAttribute(HTML.ID_ATTR, filterId + suffix + "_script", null);
 		writer.startElement(HTML.SCRIPT_ELEM, null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write("document.getElementById('"+filterId+suffix+"').submitOnEnter = 'disabled'; // "+filterValue);
