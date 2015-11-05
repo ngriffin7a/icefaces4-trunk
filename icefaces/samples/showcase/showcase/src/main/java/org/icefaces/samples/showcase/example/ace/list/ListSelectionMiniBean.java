@@ -55,7 +55,7 @@ public class ListSelectionMiniBean implements Serializable {
     }
 
     public void setSelections(List<SelectItem> selections) {
-        this.selections = selections;
+        this.selections = new ArrayList(selections);
     }
 
     public Car getSelectItemObject() {

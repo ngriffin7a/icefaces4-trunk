@@ -39,14 +39,14 @@ public class ListBlockBean implements Serializable {
         }
     }};
 
-    List<Car> carList = DataTableData.getDefaultData().subList(0,10);
+    List<Car> carList = new ArrayList(DataTableData.getDefaultData().subList(0,10));
 
     public List<SelectItem> getStringList() {
         return stringList;
     }
 
     public void setStringList(List<SelectItem> stringList) {
-        this.stringList = stringList;
+        this.stringList = new ArrayList(stringList);
     }
 
     public List<Car> getCarList() {
@@ -54,6 +54,6 @@ public class ListBlockBean implements Serializable {
     }
 
     public void setCarList(List<Car> carList) {
-        this.carList = carList;
+        this.carList = new ArrayList(carList);
     }
 }
