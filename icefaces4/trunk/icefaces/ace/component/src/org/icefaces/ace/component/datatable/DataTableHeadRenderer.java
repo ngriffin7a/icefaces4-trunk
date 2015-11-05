@@ -558,28 +558,38 @@ public class DataTableHeadRenderer {
 			filterValue = column.getFilterValueMax() != null ? column.getFilterValueMax() : "";
 		} else filterValue = column.getFilterValue() != null ? column.getFilterValue() : "";
 
+		String datePattern = column.getFilterDatePattern();
+
 		// convert date to string
 		if (filterValue instanceof Date) {
 			Locale locale = column.calculateLocale(context);
-			DateFormat format = new SimpleDateFormat(column.getFilterDatePattern(), locale);
+			DateFormat format = new SimpleDateFormat(datePattern, locale);
 			filterValue = format.format((Date) filterValue);
 		}
 
-        writer.writeAttribute("value", filterValue, null);
+		String inFieldLabelClass = "ui-input-label-infield";
+		boolean labelIsInField = false;
+		if (filterValue != null && !"".equals(filterValue)) {
+			writer.writeAttribute("value", filterValue, null);
+		} else {
+			writer.writeAttribute("value", datePattern, null);
+			labelIsInField = true;
+		}
 
-		writer.writeAttribute("class", "ui-inputfield ui-widget ui-state-default ui-corner-all", null);
+		writer.writeAttribute("class", "ui-inputfield ui-widget ui-state-default ui-corner-all" 
+			+ (labelIsInField ? " " + inFieldLabelClass : ""), null);
 
 		writer.writeAttribute("size", "12", null);
 
         writer.endElement("input");
 
-		encodeDatePickerScript(context, table, column, clientId + suffix);
+		encodeDatePickerScript(context, table, column, clientId + suffix, labelIsInField, datePattern, inFieldLabelClass);
 
         writer.endElement("span");
 	}
 
 	private static void encodeDatePickerScript(FacesContext context, DataTable table, Column column,
-			String clientId) throws IOException {
+			String clientId, boolean labelIsInField, String datePattern, String InFieldLabelClass) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
         writer.startElement("script", null);
@@ -598,6 +608,9 @@ public class DataTableHeadRenderer {
             .entry("id", clientId)
             .entry("popup", true)
             .entry("locale", locale.toString())
+			.entryNonNullValue("inFieldLabel", datePattern)
+			.entry("inFieldLabelStyleClass", InFieldLabelClass)
+			.entry("labelIsInField", labelIsInField)
             .entryNonNullValue("pattern", 
                 DateTimeEntryUtils.parseTimeZone(DateTimeEntryUtils.convertPattern(column.getFilterDatePattern()), locale, java.util.TimeZone.getDefault()));
 
@@ -633,6 +646,7 @@ public class DataTableHeadRenderer {
 
         writer.write("ice.ace.create('CalendarInit',[" + json + "]);");
 		writer.write("});");
+		writer.write("document.getElementById('"+clientId+"_input').submitOnEnter = 'disabled';");
 
         writer.endElement("script");
 	}
