@@ -3682,6 +3682,17 @@ ice.ace.DataTable.numberRestriction = function(event) {
 		case 9:
 		case 38:
 		case 91:
+		case 96:
+		case 97:
+		case 98:
+		case 99:
+		case 100:
+		case 101:
+		case 102:
+		case 103:
+		case 104:
+		case 105:
+		case 110:
 			return true;
 	}
 	if (charCode > 31 && (charCode < 48 || charCode > 57))

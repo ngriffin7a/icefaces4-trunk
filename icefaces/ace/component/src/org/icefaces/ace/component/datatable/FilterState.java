@@ -72,9 +72,12 @@ public class FilterState {
 					Date dateMax = null;
 					try {
 						if (inputDateMin != null && !"".equals(inputDateMin)) dateMin = format.parse(inputDateMin);
-						if (inputDateMax != null && !"".equals(inputDateMax)) dateMax = format.parse(inputDateMax);
 					} catch (ParseException e) {
 						dateMin = null;
+					}
+					try {
+						if (inputDateMax != null && !"".equals(inputDateMax)) dateMax = format.parse(inputDateMax);
+					} catch (ParseException e) {
 						dateMax = null;
 					}
 					saveState(column, dateMin, dateMax);
