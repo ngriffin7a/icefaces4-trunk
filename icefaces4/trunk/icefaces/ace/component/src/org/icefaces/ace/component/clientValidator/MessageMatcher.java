@@ -49,7 +49,15 @@ public class MessageMatcher implements SystemEventListener {
             }
         } else {
             final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-            final UIComponent c = ComponentUtils.findComponent(viewRoot, target);
+            //search by component ID
+            UIComponent c = ComponentUtils.findComponent(viewRoot, target);
+            if (c == null) {
+                //search by client ID
+                c = viewRoot.findComponent(target);
+            }
+            if (c == null) {
+                throw new FacesException("Cannot find component " + target);
+            }
             c.getAttributes().put(component.getClass().getName(), component.getClientId());
         }
     }
