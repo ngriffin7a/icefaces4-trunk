@@ -40,8 +40,13 @@ public class MessageMatcher implements SystemEventListener {
         } else {
             throw new FacesException("Unknown message type component");
         }
-        if (target == null || target.isEmpty()) {
-            throw new FacesException("'for' attribute undefined for component " + component.getId());
+        if (target == null || target.isEmpty() || "@all".equals(target)) {
+            if (component instanceof Message) {
+                throw new FacesException("'for' attribute undefined for message component " + component.getId());
+            } else {
+                final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
+                viewRoot.getAttributes().put(Messages.class.getName(), component.getClientId());
+            }
         } else {
             final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
             final UIComponent c = ComponentUtils.findComponent(viewRoot, target);
@@ -56,11 +61,17 @@ public class MessageMatcher implements SystemEventListener {
 
     static boolean isMultipleMessage(UIComponent validatedComponent){
         final Map<String, Object> attributes = validatedComponent.getAttributes();
-        return attributes.containsKey(Messages.class.getName());
+        return attributes.containsKey(Messages.class.getName()) || FacesContext.getCurrentInstance().getViewRoot().getAttributes().containsKey(Messages.class.getName());
     }
 
     static String lookupMessageClientId(UIComponent validatedComponent) {
-        final Map<String, Object> attributes = validatedComponent.getAttributes();
-        return (String) attributes.get(isMultipleMessage(validatedComponent) ? Messages.class.getName() : Message.class.getName());
+        final Map<String, Object> componentAttributes = validatedComponent.getAttributes();
+        final String id = (String) componentAttributes.get(isMultipleMessage(validatedComponent) ? Messages.class.getName() : Message.class.getName());
+        if (id == null) {
+            final Map<String, Object> rootAttributes = FacesContext.getCurrentInstance().getViewRoot().getAttributes();
+            return (String) rootAttributes.get(Messages.class.getName());
+        } else {
+            return id;
+        }
     }
 }
