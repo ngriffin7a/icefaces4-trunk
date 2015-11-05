@@ -61,7 +61,6 @@ public class MenuRenderer extends BaseMenuRenderer {
 		ResponseWriter writer = context.getResponseWriter();
         Menu menu = (Menu) abstractMenu;
 		String clientId = menu.getClientId(context);
-		String widgetVar = this.resolveWidgetVar(menu);
         String position = menu.getPosition();
         String type = menu.getType();
 
@@ -69,8 +68,7 @@ public class MenuRenderer extends BaseMenuRenderer {
 		writer.writeAttribute("type", "text/javascript", null);
 
         JSONBuilder json = JSONBuilder.create();
-        json.initialiseVar(widgetVar)
-            .beginFunction("ice.ace.create")
+        json.beginFunction("ice.ace.create")
             .item("Menu")
             .beginArray()
             .item(clientId)

@@ -57,9 +57,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 }, defaultEvent="resize")
 
 public class ResizableMeta extends UIComponentBaseMeta {
-
-	@Property(tlddoc="Name of the widget to access client-side API.")
-	private String widgetVar;
 	
 	@Property(name="for", tlddoc="Specifies the id of the component to make resizable.")
 	private String forValue;

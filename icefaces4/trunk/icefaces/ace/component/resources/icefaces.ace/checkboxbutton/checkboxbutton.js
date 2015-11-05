@@ -59,7 +59,6 @@ ice.ace.checkboxbutton = function(clientId, options) {
         this.addStateCSSClasses('hover');
 
     var unload = function() {
-        // Unload WidgetVar
         // Unload events
         ice.ace.jq(self.jqId).off("click mouseenter mouseleave keypress");
     }

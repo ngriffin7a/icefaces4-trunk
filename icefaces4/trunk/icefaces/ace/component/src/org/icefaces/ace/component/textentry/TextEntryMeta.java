@@ -59,9 +59,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 }, defaultEvent = "valueChange")
 public class TextEntryMeta extends HtmlInputTextMeta {
 
-    @Property(tlddoc = "Name of the widget variable to access client-side API.")
-    private String widgetVar;
-
     @Property(tlddoc = "Indicator indicating that the user is required to provide a submitted value for this input component.")
     private String requiredIndicator;
 

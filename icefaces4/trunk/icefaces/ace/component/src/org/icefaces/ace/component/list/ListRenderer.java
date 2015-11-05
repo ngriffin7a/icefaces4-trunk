@@ -345,7 +345,6 @@ public class ListRenderer extends CoreRenderer {
     }
 
     private void encodeScript(FacesContext context, ResponseWriter writer, ACEList component) throws IOException {
-        String widgetVar = resolveWidgetVar(component);
         String clientId = component.getClientId(context);
 
         writer.startElement(HTML.SPAN_ELEM, null);
@@ -359,7 +358,7 @@ public class ListRenderer extends CoreRenderer {
         String dropGroup = component.getDropGroup();
         boolean selectItemModel = component.isSelectItemModel();
 
-        JSONBuilder cfgBuilder = JSONBuilder.create().initialiseVar(widgetVar)
+        JSONBuilder cfgBuilder = JSONBuilder.create()
                 .beginFunction("ice.ace.create").item("List").beginArray()
                 .item(clientId);
 

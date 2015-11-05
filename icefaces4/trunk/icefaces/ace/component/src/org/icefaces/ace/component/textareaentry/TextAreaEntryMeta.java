@@ -57,9 +57,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 }, defaultEvent = "valueChange")
 public class TextAreaEntryMeta extends UIInputMeta {
 
-    @Property(tlddoc = "Name of the widget variable to access client-side API.")
-    private String widgetVar;
-
     @Property(implementation = Implementation.EXISTS_IN_SUPERCLASS,
             tlddoc="The inline style of the component, rendered on the element of the component.")
 	private String style;

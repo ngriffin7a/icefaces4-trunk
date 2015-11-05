@@ -65,9 +65,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 }, defaultEvent="toggle")
 
 public class PanelMeta extends UIPanelMeta {
-
-	@Property(tlddoc="Name of the widget variable to access the client side api.")
-	private String widgetVar;
 	
 	@Property(tlddoc="Header text of the panel.")
 	private String header;

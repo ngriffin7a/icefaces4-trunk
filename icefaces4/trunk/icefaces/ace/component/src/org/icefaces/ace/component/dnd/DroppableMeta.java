@@ -57,8 +57,7 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ICEResourceDependency(name = "dnd/dragdrop.js")
 })
 public class DroppableMeta extends UIComponentBaseMeta {
-    @Property(tlddoc = "The JavaScript component instance variable name.")
-    String widgetVar;
+
     @Property(name = "for",
               tlddoc = "Id of the component to add the droppable behavior to.")
     String forValue;

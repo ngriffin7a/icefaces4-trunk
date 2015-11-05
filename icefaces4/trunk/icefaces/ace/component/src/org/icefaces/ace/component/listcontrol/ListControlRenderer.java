@@ -264,7 +264,6 @@ public class ListControlRenderer extends CoreRenderer {
     }
 
     private void encodeScript(FacesContext context, ResponseWriter writer, ListControl control) throws IOException {
-        String widgetVar = resolveWidgetVar(control);
         String clientId = control.getClientId(context);
         ListControlRenderContext renderContext = ((ListControlRenderContext)control.getRenderContext());
 
@@ -273,7 +272,7 @@ public class ListControlRenderer extends CoreRenderer {
         writer.startElement(HTML.SCRIPT_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
 
-        JSONBuilder cfgBuilder = JSONBuilder.create().initialiseVar(widgetVar)
+        JSONBuilder cfgBuilder = JSONBuilder.create()
                 .beginFunction("ice.ace.create").item("ListControl")
                 .beginArray().item(clientId);
 

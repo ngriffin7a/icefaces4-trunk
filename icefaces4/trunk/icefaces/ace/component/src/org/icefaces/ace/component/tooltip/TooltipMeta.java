@@ -51,9 +51,6 @@ import javax.el.ValueExpression;
 
 public class TooltipMeta extends UIOutputMeta {
 
-	@Property(tlddoc="Name of the widget to access client side api")
-	private String widgetVar;
-
 	@Property(tlddoc="Boolean value specifying whether to create tooltips for all elements with a title attribute using the title attribute value.", defaultValue="false")
 	private boolean global;
 

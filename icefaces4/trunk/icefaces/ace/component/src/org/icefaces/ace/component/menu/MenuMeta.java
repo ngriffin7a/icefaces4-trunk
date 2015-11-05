@@ -49,8 +49,6 @@ import org.icefaces.resources.ICEResourceLibrary;
     @ICEResourceDependency(name = "util/ace-menu.js")
 })
 public class MenuMeta extends UIComponentBaseMeta {
-    @Property(tlddoc = "Javascript variable name of the wrapped widget.")
-    private String widgetVar;
 
     @Property(tlddoc = "org.icefaces.ace.model.MenuModel instance to create menus programmatically. " +
             "For the menuitem and submenu components, use explicit ids, and " +

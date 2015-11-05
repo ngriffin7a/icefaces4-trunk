@@ -98,7 +98,6 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
     protected void encodeScript(FacesContext context, AbstractMenu abstractMenu) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
         ContextMenu menu = (ContextMenu) abstractMenu;
-		String widgetVar = this.resolveWidgetVar(menu);
 		String clientId = menu.getClientId(context);
 		String delegateId = menu.getForDelegate();
 		
@@ -108,8 +107,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
         writer.write("ice.ace.jq(function() {");
 
         JSONBuilder json = JSONBuilder.create();
-        json.initialiseVar(widgetVar)
-            .beginFunction("ice.ace.create")
+        json.beginFunction("ice.ace.create")
             .item("ContextMenu")
             .beginArray()
             .item(clientId)

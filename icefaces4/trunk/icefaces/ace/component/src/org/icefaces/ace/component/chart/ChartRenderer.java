@@ -131,7 +131,6 @@ public class ChartRenderer extends CoreRenderer {
     }
 
     private void encodeScript(FacesContext context, ResponseWriter writer, String clientId, Chart component) throws IOException {
-        String widgetVar = resolveWidgetVar(component);
         List<ChartSeries> data = (List<ChartSeries>)component.getValue();
         ChartSeries seriesDefaults = component.getDefaultSeriesConfig();
         Boolean stacking = component.isStackSeries();
@@ -144,7 +143,7 @@ public class ChartRenderer extends CoreRenderer {
 
         String title = component.getTitle();
 
-        JSONBuilder json = JSONBuilder.create().initialiseVar(widgetVar)
+        JSONBuilder json = JSONBuilder.create()
                 .beginFunction("ice.ace.create").item("Chart")
                 .beginArray().item(clientId);
 

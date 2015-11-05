@@ -64,12 +64,11 @@ public class MenuBarRenderer extends BaseMenuRenderer {
 		ResponseWriter writer = context.getResponseWriter();
         MenuBar menubar = (MenuBar) abstractMenu;
 		String clientId = menubar.getClientId(context);
-		String widgetVar = this.resolveWidgetVar(menubar);
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
-        JSONBuilder json = JSONBuilder.create().initialiseVar(widgetVar);
+        JSONBuilder json = JSONBuilder.create();
 
         json.beginFunction("ice.ace.create")
             .item("Menubar")
