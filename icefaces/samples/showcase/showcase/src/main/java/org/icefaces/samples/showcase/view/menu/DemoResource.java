@@ -16,7 +16,9 @@
 
 package org.icefaces.samples.showcase.view.menu;
 
-public class DemoResource {
+import java.io.Serializable;
+
+public class DemoResource implements Serializable {
     public static final String WIKI_PATH_BASE = "http://wiki.icesoft.org/display/ICE/";
     public static final String ACE_TLD_PATH_BASE = "http://res.icesoft.org/docs/v4_latest/ace/tld/ace/";
     public static final String CORE_TLD_PATH_BASE = "http://res.icesoft.org/docs/v4_latest/core/comps/tld/icecore/";
