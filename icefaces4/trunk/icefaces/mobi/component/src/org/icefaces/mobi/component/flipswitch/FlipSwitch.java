@@ -16,6 +16,7 @@
 
 package org.icefaces.mobi.component.flipswitch;
 
+import org.icefaces.ace.component.clientValidator.Validateable;
 import org.icefaces.ace.util.Attribute;
 import org.icefaces.impl.util.Util;
 
@@ -27,7 +28,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.ValueChangeEvent;
 
 
-public class FlipSwitch extends FlipSwitchBase {
+public class FlipSwitch extends FlipSwitchBase implements Validateable {
     //src is NOT part of the pass through attributes
     public static final String FLIPSWITCH_ON_CLASS = "mobi-flipswitch mobi-flipswitch-on ui-widget";
     public static final String FLIPSWITCH_OFF_CLASS = "mobi-flipswitch mobi-flipswitch-off ui-widget";
@@ -47,8 +48,7 @@ public class FlipSwitch extends FlipSwitchBase {
 		return booleanAttNames;
 	}
 
- /*   public String getDefaultEventName(){
-        return "activate";
-    } */
-
+    public String getValidatedElementId() {
+        return getClientId() + "_hidden";
+    }
 }
