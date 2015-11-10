@@ -57,14 +57,6 @@ import org.icefaces.ace.util.JSONBuilder;
 public class CoreRenderer extends Renderer {
     private static final Logger logger = Logger.getLogger(CoreRenderer.class.getName());
 
-    public static String resolveWidgetVar(UIComponent component) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String userWidgetVar = (String)component.getAttributes().get("widgetVar");
-
-		if (userWidgetVar != null) return userWidgetVar;
-		 else return "widget_" + component.getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
 	protected void renderChildren(FacesContext facesContext, UIComponent component) throws IOException {
 		for (Iterator<UIComponent> iterator = component.getChildren().iterator(); iterator.hasNext();) {
 			UIComponent child = (UIComponent) iterator.next();
