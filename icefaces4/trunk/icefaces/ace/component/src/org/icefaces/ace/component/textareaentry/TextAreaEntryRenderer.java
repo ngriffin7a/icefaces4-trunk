@@ -156,8 +156,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
         }
 		
         JSONBuilder jb = JSONBuilder.create();
-        jb.initialiseVar(resolveWidgetVar(textAreaEntry))
-          .beginFunction("ice.ace.lazy")
+        jb.beginFunction("ice.ace.lazy")
                 .item("TextAreaEntry")
                 .beginArray()
                 .item(clientId)

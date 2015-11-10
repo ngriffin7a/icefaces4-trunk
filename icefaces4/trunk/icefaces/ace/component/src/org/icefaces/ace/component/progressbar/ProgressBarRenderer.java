@@ -118,7 +118,6 @@ public class ProgressBarRenderer extends CoreRenderer {
         writer.write("ice.ace.jq(function() {");
 
         JSONBuilder json = JSONBuilder.create()
-            .initialiseWindowVar(this.resolveWidgetVar(progressBar))
             .beginFunction("ice.ace.create")
             .item("ProgressBar")
             .beginArray()

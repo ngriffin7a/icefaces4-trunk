@@ -258,7 +258,7 @@ ice.ace.DataTable = function (id, cfg) {
 
 	var self = this;
     // Setup unload callback if not already done
-    if (!window[this.cfg.widgetVar]) {
+    if (!ice.ace.instance(this.id)) {
         ice.onElementUpdate(this.id, function() { ice.ace.destroy(self.id); });
     }
 
@@ -356,7 +356,6 @@ ice.ace.DataTable.prototype.destroy = function() {
         this.paginator.destroy();
         delete this.paginator;
     }
-    window[this.cfg.widgetVar] = undefined;
 
     var clientState = {scrollTop : this.scrollTop, scrollLeft : this.scrollLeft};
 

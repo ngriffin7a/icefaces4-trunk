@@ -170,12 +170,12 @@ ice.ace.Calendar.prototype.disable = function() {
 
 ice.ace.Calendar.prototype.destroy = function() {
     if (this.pickerFn) this.jq[this.pickerFn]("destroy");
-    window[this.cfg.widgetVar] = this.jq = this.cfg.altField = null;
+    this.jq = this.cfg.altField = null;
 };
 
 ice.ace.CalendarInit = function(options) {
     ice.ace.jq().ready(function() {
-        var widgetVar = options.widgetVar, id = options.id;
+        var id = options.id;
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
         var trigger = null, triggerClass = ice.ace.jq.datepicker._triggerClass;
         var defaults = ice.ace.jq.datepicker._defaults;
@@ -190,28 +190,26 @@ ice.ace.CalendarInit = function(options) {
             ice.onElementUpdate(id, function () {
                 widget.destroy();
                 initEltSet.remove();
-                window[widgetVar] = null;
-                try{delete window[widgetVar];} catch(e) {}
             });
             return widget;
         };
         var initAndShow = function() {
-            if (window[widgetVar]) return;
+            if (ice.ace.instance(id)) return;
             if (trigger) trigger.remove();
-            window[widgetVar] = create();
-            if (!window[widgetVar].pickerFn) return;
-            window[widgetVar].jq[window[widgetVar].pickerFn]("show");
+            create();
+            if (!ice.ace.instance(id).pickerFn) return;
+            ice.ace.instance(id).jq[ice.ace.instance(id).pickerFn]("show");
         };
         var behavior = options.behaviors && options.behaviors.dateTextChange;
 
         if (!options.popup) {
-            window[widgetVar] = create();
+            create();
             return;
         }
 
 		ice.ace.lazy.registry[id] = function() {
 			if (trigger) trigger.remove();
-			return window[widgetVar] = create();
+			return create();
 		};
 
         input.one("focus", function() {
@@ -225,7 +223,6 @@ ice.ace.CalendarInit = function(options) {
 
         initEltSet = initEltSet.add(input);
 
-        window[widgetVar] = null;
         if (ice.ace.jq.inArray(showOn, ["button","both"]) >= 0) {
             trigger = buttonImageOnly ?
                 ice.ace.jq('<img/>').addClass(triggerClass).
@@ -247,8 +244,6 @@ ice.ace.CalendarInit = function(options) {
         ice.onElementUpdate(id, function() {
             // .remove cleans jQuery state unlike .unbind
             initEltSet.remove();
-            window[widgetVar] = null;
-            try{delete window[widgetVar];} catch(e) {}
         });
     });
 };

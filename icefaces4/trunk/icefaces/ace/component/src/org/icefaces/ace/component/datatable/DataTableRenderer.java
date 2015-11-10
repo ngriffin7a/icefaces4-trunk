@@ -412,18 +412,16 @@ public class DataTableRenderer extends CoreRenderer {
         final boolean scrollIE8Like7 = Boolean.parseBoolean(context.getExternalContext().getInitParameter("org.icefaces.ace.datatable.scroll.ie8like7"));
         final boolean noHover = Boolean.parseBoolean(context.getExternalContext().getInitParameter("org.icefaces.ace.datatable.selection.nohover"));
         final boolean noHidden = Boolean.parseBoolean(context.getExternalContext().getInitParameter("org.icefaces.ace.datatable.scroll.nohiddencheck"));
-        final String widgetVar = resolveWidgetVar(table);
         final boolean devMode = FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development);
 		final boolean liveScroll = table.isLiveScroll();
 		final boolean nestedTable = table.isNestedTable();
 
-        JSONBuilder json = JSONBuilder.create().initialiseVar(widgetVar)
+        JSONBuilder json = JSONBuilder.create()
                 .beginFunction("ice.ace.create").item("DataTable").beginArray()
                 .item(clientId);
 
         json.beginMap();
         json.entry("formId", form.getClientId(context));
-        json.entry("widgetVar", widgetVar);
         json.entryNonNullValue("configPanel", table.getTableConfigPanel());
         if (filtering) json.entry("filterEvent", filterEvent);
         if (sorting) json.entry("sorting", true);

@@ -81,8 +81,7 @@ public class ResizableRenderer extends CoreRenderer {
             writer.write("ice.ace.jq(function(){");
 
 		JSONBuilder jb = JSONBuilder.create();
-		jb.initialiseVar(this.resolveWidgetVar(resizable))
-          .beginFunction("ice.ace.create")
+		jb.beginFunction("ice.ace.create")
           .item("Resizable")
           .beginArray()
 	      .item(clientId)

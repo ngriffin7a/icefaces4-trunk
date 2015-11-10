@@ -138,9 +138,6 @@ public class DataTableMeta extends UIDataMeta {
     /* ##################################################################### */
     /* ############################ Misc. Prop. ############################ */
     /* ##################################################################### */
-    @Property(tlddoc = "The JavaScript global component instance name. " +
-            "Must be unique among components on a page. ")
-    private String widgetVar;
 
     @Property(tlddoc = "Disable all features of the data table.", defaultValue = "false",
             defaultValueType= DefaultValueType.EXPRESSION)
@@ -208,7 +205,7 @@ public class DataTableMeta extends UIDataMeta {
             "JavaScript. This can be expensive in environments of reduced JavaScript performance with " +
             "many tables and a complex DOM. When this is disabled, upon revealing a hidden " +
             "scrollable table, to ensure it is sized correctly the JS " +
-            "'tableWidgetVar.resizeScrolling()' function must be called.",
+            "resizeScrolling() function must be called on the table instance in the client side.",
             defaultValue = "true", defaultValueType = DefaultValueType.EXPRESSION)
     private Boolean hiddenScrollableSizing;
 

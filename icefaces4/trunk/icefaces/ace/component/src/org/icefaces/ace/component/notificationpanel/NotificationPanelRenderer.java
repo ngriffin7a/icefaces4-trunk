@@ -67,7 +67,7 @@ public class NotificationPanelRenderer extends CoreRenderer {
         if(close != null) {
 			writer.startElement("span", null);
 			writer.writeAttribute("class", "ui-notificationbar-close", null);
-			writer.writeAttribute("onclick", this.resolveWidgetVar(bar) + ".hide()", null);
+			writer.writeAttribute("onclick", "ice.ace.instance('"+bar.getClientId(facesContext)+"').hide()", null);
 			renderChild(facesContext, close);
 			writer.endElement("span");
 		}
@@ -91,8 +91,7 @@ public class NotificationPanelRenderer extends CoreRenderer {
 		writer.write("ice.ace.jq(document).ready(function(){");
 
         JSONBuilder json = JSONBuilder.create();
-        json.initialiseWindowVar(this.resolveWidgetVar(bar))
-            .beginFunction("ice.ace.create")
+        json.beginFunction("ice.ace.create")
             .item("NotificationBar")
             .beginArray()
             .item(clientId)

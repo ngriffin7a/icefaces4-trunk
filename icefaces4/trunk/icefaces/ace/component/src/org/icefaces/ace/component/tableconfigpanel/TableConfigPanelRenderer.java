@@ -71,7 +71,6 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
         DataTable table = (DataTable)component.getTargetedDatatable();
         String tableId = table.getClientId(context);
         String clientId = component.getClientId(context);
-        String jsId = this.resolveWidgetVar(component);
         ResponseWriter writer = context.getResponseWriter();
 
         writer.startElement(HTML.DIV_ELEM, component);
@@ -470,7 +469,6 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
     private void writeJavascript(TableConfigPanelRenderState state,
             String clientId, String tableId, TableConfigPanel component,
             boolean isSingleSort) throws IOException {
-        String jsId = this.resolveWidgetVar(component);
         String handle = component.getDragHandle();
         Integer left = component.getOffsetLeft();
         Integer top = component.getOffsetTop();
@@ -479,7 +477,7 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
         state.writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
 
         JSONBuilder json = new JSONBuilder()
-                .initialiseVar(jsId).beginFunction("ice.ace.create")
+                .beginFunction("ice.ace.create")
                 .item("TableConf").beginArray().item(clientId)
                 .beginMap();
 

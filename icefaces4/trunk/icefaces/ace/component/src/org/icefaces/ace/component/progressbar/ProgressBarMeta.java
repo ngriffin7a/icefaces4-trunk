@@ -55,8 +55,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ClientEvent(name="change", javadoc="Fired when the value of the progressbar changes.", tlddoc="Fired when the value of the progressbar changes.", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="complete")
 public class ProgressBarMeta extends UIComponentBaseMeta {
-    @Property(tlddoc = "Name of the client side widget.")
-    private String widgetVar;
 
     @Property(defaultValue = "0", tlddoc = "Value of the progress bar.")
     private int value;

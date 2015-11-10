@@ -255,8 +255,7 @@ public class SliderEntryRenderer extends InputRenderer{
 		writer.writeAttribute("type", "text/javascript", null);
 
 		JSONBuilder jb = JSONBuilder.create();
-        jb.initialiseVar(this.resolveWidgetVar(slider))
-          .beginFunction("ice.ace.create")
+        jb.beginFunction("ice.ace.create")
           .item("Slider")
           .beginArray()
 	      .item(clientId)
