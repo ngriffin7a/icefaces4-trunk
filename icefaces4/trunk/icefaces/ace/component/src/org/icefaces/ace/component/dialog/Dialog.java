@@ -52,6 +52,8 @@ import javax.faces.event.PhaseId;
 public class Dialog extends DialogBase {
 
 	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
+    static final String SHOW_CLASS = "ace-dialog" ;
+    static final String HIDE_CLASS = "ace-dialog-hidden ";
     
     @Override
     public void queueEvent(FacesEvent event) {

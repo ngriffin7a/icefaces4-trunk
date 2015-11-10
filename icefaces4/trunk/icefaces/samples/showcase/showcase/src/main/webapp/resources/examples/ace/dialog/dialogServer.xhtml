@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+        <h:form id="submitForm">
+            <center>
+                <h:commandButton id="show" value="#{'Show Dialog'}" actionListener="#{dialogServerBean.show}" type="button">
+                        <f:ajax execute="@this" render="@all"/>
+                </h:commandButton>
+            </center>
+        </h:form>
+        <h:panelGroup>
+            <ace:dialog id="dialog"
+                        binding="#{dialog}"
+                        visible="#{dialogServerBean.visible}"
+                        header="A sample dialog overview example using Server visible property"
+                        closable="false"
+                        modal="true"
+                        draggable="false"
+                        showEffect="clip"
+                        hideEffect="fade"
+                        width="400">
+                
+                <h:form id="inputForm2">
+                    <h:panelGrid columns="2" width="100%">
+                        <h:outputLabel id="firstNameLabel" for="firstNameInputField" value="First Name:"/>
+                        <h:inputText id="firstNameInputField" value="#{dialogServerBean.firstName}" />
+
+                        <h:outputLabel id="lastNameLabel" for="lastNameInputField" value="Last Name:"/>
+                        <h:inputText id="lastNameInputField" value="#{dialogServerBean.lastName}"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid width="100%" style="text-align: center;" columns="1">
+                   <!--     <h:commandButton id="submitBtn" value="Client api with ajax listener" onclick="ice.ace.instance('#{dialog.clientId}').hide();">
+                            <f:ajax listener="#{dialogServerBean.closeFAjax}"/>
+                        </h:commandButton> -->
+
+                        <h:commandButton id="submitServer" value="Server Submit" actionListener="#{dialogServerBean.hide}">
+                        </h:commandButton>
+                    </h:panelGrid>
+                </h:form>
+                
+           </ace:dialog>
+		</h:panelGroup>
+            
+        <h:form id="outputForm2">
+            <h:panelGrid id="outputPanel" columns="2">
+                <h:outputLabel value="Entered text: " for="enteredName"/>
+                <h:outputText id="enteredName" value="#{dialogServerBean.firstName} #{dialogServerBean.lastName}"/>
+            </h:panelGrid>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>

@@ -549,6 +549,8 @@ public class CentralDataList {
 							 "dialog", "dialog.xhtml", "DialogBean.java"),
 					new Demo(msgs("menu.ace.dialog.subMenu.modalDialog"), msgs("example.ace.dialog.modalDialog.description"),
 							 "dialog", "modalDialog.xhtml", "ModalDialogBean.java"),
+                    new Demo(msgs("menu.ace.dialog.subMenu.serverDialog"), msgs("example.ace.dialog.serverDialog.description"),
+							 "dialog", "dialogServer.xhtml", "DialogServerBean.java"),
 					new Demo(msgs("menu.ace.dialog.subMenu.effectsAndSize"), msgs("example.ace.dialog.dialogEffectAndSize.description"),
 							 "dialog", "dialogEffectsAndSize.xhtml", "DialogEffectsAndSizeBean.java")),
 			new ComponentGroup("ace:notificationPanel", "NotificationPanel", "notificationPanel.html",
