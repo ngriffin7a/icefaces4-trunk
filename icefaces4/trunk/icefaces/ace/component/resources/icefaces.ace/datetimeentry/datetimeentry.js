@@ -106,6 +106,10 @@ ice.ace.Calendar.prototype.bindDateSelectListener = function() {
 
     if(this.cfg.behaviors) {
         this.cfg.onSelect = function(dateText, input) {
+            if (input.input) {
+                //trigger synthetic 'change' event to run client side validation on date/time selection
+                input.input.change();
+            }
             var dateSelectBehavior = _self.cfg.behaviors['dateSelect'];
 
             if (dateSelectBehavior) {
