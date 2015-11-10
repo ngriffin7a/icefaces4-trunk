@@ -33,9 +33,12 @@
 if (!window.ice['ace']) {
     window.ice.ace = {};
 }
+if (!ice.ace.DialogPanels) ice.ace.DialogPanels = {};
 ice.ace.Dialog = function(parentID, cfg) {
 	var id = parentID + "_main";
+
     var callee = arguments.callee, prevAceDialog = callee[id], jqo;
+    ice.ace.DialogPanels[id] = prevAceDialog;
     if (prevAceDialog) {
         jqo = prevAceDialog.jq;
         if (jqo.dialog("isOpen")) {
@@ -47,6 +50,7 @@ ice.ace.Dialog = function(parentID, cfg) {
     this.cfg = cfg;
     this.jqId = ice.ace.escapeClientId(id);
     this.jq = ice.ace.jq(this.jqId);
+
     var _self = this, closable = this.cfg.closable;
 	var root = this.jq.get(0);
 	
@@ -117,16 +121,21 @@ ice.ace.Dialog = function(parentID, cfg) {
 	dialogParent.attr('style', style + ';' + this.cfg.dialogStyle);
 
     ice.onElementUpdate(parentID, function() {
-        _self.jq.dialog('close');
+        if (_self.cfg.isVisible){
+            _self.hide();
+        }  else {
+            _self.jq.dialog('close');
+        }
+        _self.setupEventHandlers(id);
     });
-
-    //Event handlers
+  //Event handlers
     this.jq.bind('dialogclose', function(event, ui) {
         _self.onHide(event, ui);
     });
     this.jq.bind('dialogopen', function(event, ui) {
         _self.onShow(event, ui);
     });
+
 
     //Hide close icon if dialog is not closable
     if (closable == false) {
@@ -137,19 +146,35 @@ ice.ace.Dialog = function(parentID, cfg) {
     if (this.cfg.showHeader == false) {
         this.jq.parent().children('.ui-dialog-titlebar').hide();
     }
-
-    //Relocate dialog to body if appendToBody is true
-//    if(this.cfg.appendToBody) {
-//        this.jq.parent().appendTo(document.body);
-//    }
-
+    if (this.cfg.isVisible){
+        this.show();
+    }
+    if (this.cfg.isVisible==false){
+        this.hide();
+    }
     callee[id] = this;
 };
+
+ice.ace.Dialog.prototype.setupEventHandlers = function(id){
+    //Event handlers
+    this.jq.bind('dialogclose', function(event, ui) {
+        ice.ace.DialogPanels[id].onHide(event, ui);
+    });
+    this.jq.bind('dialogopen', function(event, ui) {
+        ice.ace.DialogPanels[id].onShow(event, ui);
+    });
+};
+
 
 ice.ace.Dialog.prototype.show = function() {
 	var self = this;
     var focusOn = this.cfg.setFocus;
     setTimeout(function() {
+       var dialogParent = self.jq.parent();
+       if (dialogParent.hasClass("ace-dialog-hidden")) {
+                dialogParent.removeClass("ace-dialog-hidden");
+                dialogParent.children().removeClass("ace-dialog-hidden");
+        }
         self.jq.dialog('open');
 		self.resizeMaps();
         if ('**none' != focusOn) {
@@ -163,7 +188,18 @@ ice.ace.Dialog.prototype.show = function() {
 
 ice.ace.Dialog.prototype.hide = function() {
 	var self = this;
-    setTimeout(function(){self.jq.dialog('close');},1);
+    setTimeout(function(){
+        self.jq.dialog('close');
+        if (self.cfg.isVisible){
+            var oldClass = self.jq.dialogClass;
+            self.cfg.isVisible=false;
+            var dialogParent = self.jq.parent();
+            if (dialogParent.hasClass("ace-dialog")) {
+                dialogParent.removeClass("ace-dialog");
+                dialogParent.addClass("ace-dialog-hidden");
+            }
+        }
+    },1);
 };
 
 /**
@@ -194,12 +230,12 @@ ice.ace.Dialog.prototype.onHide = function(event, ui) {
 ice.ace.Dialog.prototype.ajaxHide = function() {
     if (this.cfg.behaviors) {
         var closeBehavior = this.cfg.behaviors['close'];
-
         if (closeBehavior) {
             ice.ace.ab(closeBehavior);
         }
     }
 }
+
 
 ice.ace.Dialog.prototype.focusInput = function(id) {
 	var self = this;

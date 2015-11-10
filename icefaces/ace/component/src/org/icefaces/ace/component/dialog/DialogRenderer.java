@@ -45,6 +45,7 @@ import org.icefaces.util.CoreComponentUtils;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @MandatoryResourceComponent(tagName="dialog", value="org.icefaces.ace.component.dialog.Dialog")
 public class DialogRenderer extends CoreRenderer {
@@ -103,7 +104,11 @@ public class DialogRenderer extends CoreRenderer {
           .entry("minHeight", dialog.getMinHeight())
           .entry("setFocus", setFocusID);
 
-        String styleClass = dialog.getStyleClass();
+        String baseclass = dialog.HIDE_CLASS;
+        if (dialog.isVisible()){
+            baseclass = dialog.SHOW_CLASS;
+        }
+        String styleClass = baseclass;
 		String style = dialog.getStyle();
         String showEffect = dialog.getShowEffect();
         String hideEffect = dialog.getHideEffect();
@@ -181,11 +186,16 @@ public class DialogRenderer extends CoreRenderer {
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = dialog.getClientId(facesContext);
         String headerText = dialog.getHeader();
-
+        String baseclass = dialog.HIDE_CLASS;
+        if (dialog.isVisible()){
+            baseclass = dialog.SHOW_CLASS;
+        }
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId + "_main", null);
-        writer.writeAttribute("style", "display:none", null);
-
+        if (dialog.getStyleClass() !=null && dialog.getStyleClass().trim().length()>0){
+            baseclass += dialog.getStyleClass();
+        }
+        writer.writeAttribute("class", baseclass, null);
 		UIComponent headerFacet = (UIComponent) dialog.getFacet("header");
         if (headerFacet != null) {
 			writer.startElement("div", null);
@@ -229,4 +239,6 @@ public class DialogRenderer extends CoreRenderer {
         }
         return result;
     }
+
+
 }
