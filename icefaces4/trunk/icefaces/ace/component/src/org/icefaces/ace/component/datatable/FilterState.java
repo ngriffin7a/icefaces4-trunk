@@ -184,9 +184,11 @@ public class FilterState {
 				column.setFilterValue(val);
 		} else {
 			Object minVal = minValueMap.get(column);
-			column.setFilterValueMin(minVal);
+			if (minVal != null)
+				column.setFilterValueMin(minVal);
 			Object maxVal = maxValueMap.get(column);
-			column.setFilterValueMax(maxVal);
+			if (maxVal != null)
+				column.setFilterValueMax(maxVal);
 		}
     }
 
