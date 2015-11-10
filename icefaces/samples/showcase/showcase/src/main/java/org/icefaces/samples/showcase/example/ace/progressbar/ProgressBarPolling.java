@@ -97,12 +97,12 @@ public class ProgressBarPolling implements Serializable {
         currentSelection = null;
     }
     private ArrayList<UploadObject> populatePendingUploads() {
-        //note: UploadObject.widgetVarName MUST BE UNIQUE
+        //note: UploadObject.imageDescription MUST BE UNIQUE
         ArrayList<UploadObject> uploadList = new ArrayList<UploadObject>();
-        uploadList.add( new UploadObject(0, "Laptop", "/resources/css/images/dragdrop/laptop.png", "Laptop",false,false,false) );
-        uploadList.add( new UploadObject(0, "PDA", "/resources/css/images/dragdrop/pda.png", "PDA",false,false,false));
-        uploadList.add( new UploadObject(0, "Monitor", "/resources/css/images/dragdrop/monitor.png", "Monitor",false,false,false) );
-        uploadList.add( new UploadObject(0, "Desktop", "/resources/css/images/dragdrop/desktop.png", "Desktop",false,false,false) );
+        uploadList.add( new UploadObject(0, "Laptop", "/resources/css/images/dragdrop/laptop.png", false,false,false) );
+        uploadList.add( new UploadObject(0, "PDA", "/resources/css/images/dragdrop/pda.png", false,false,false));
+        uploadList.add( new UploadObject(0, "Monitor", "/resources/css/images/dragdrop/monitor.png", false,false,false) );
+        uploadList.add( new UploadObject(0, "Desktop", "/resources/css/images/dragdrop/desktop.png", false,false,false) );
         Collections.shuffle(uploadList);
         return uploadList;
     }
@@ -112,7 +112,7 @@ public class ProgressBarPolling implements Serializable {
         //search in uploads list
         if(! uploads.isEmpty()) {
             for (UploadObject object : uploads) {
-                if(object.getWidgetVarName().equals(matchingCriteria)) {
+                if(object.getImageDescription().equals(matchingCriteria)) {
                       matchingUpload = object;
                       matchFound = true;
                       break;
@@ -123,7 +123,7 @@ public class ProgressBarPolling implements Serializable {
         if(!matchFound) {
             if(! pendingUploads.isEmpty()) {
                 for (UploadObject object : pendingUploads)  {
-                    if(object.getWidgetVarName().equals(matchingCriteria)) {
+                    if(object.getImageDescription().equals(matchingCriteria)) {
                         matchingUpload = object;
                         break;
                     }
@@ -137,16 +137,14 @@ public class ProgressBarPolling implements Serializable {
         private int progressValue;
         private String imageDescription;
         private String imagePath;
-        private String widgetVarName;
         private boolean ready; // is true when upload has been selected, but not started
         private boolean active; // is true when upload is in progress
         private boolean completed; // is true when upload has been completed
 
-        public UploadObject(int progressValue, String imageDescription, String imagePath, String widgetVarName,boolean ready, boolean active, boolean completed) {
+        public UploadObject(int progressValue, String imageDescription, String imagePath, boolean ready, boolean active, boolean completed) {
             this.progressValue = progressValue;
             this.imageDescription = imageDescription;
             this.imagePath = imagePath;
-            this.widgetVarName = widgetVarName;
             this.active = active;
             this.completed = completed;
             this.ready = ready;
@@ -173,8 +171,6 @@ public class ProgressBarPolling implements Serializable {
         public void setImagePath(String imagePath) { this.imagePath = imagePath;}
         public boolean isReady() { return ready;}
         public void setReady(boolean ready) { this.ready = ready;}
-        public String getWidgetVarName() { return widgetVarName;}
-        public void setWidgetVarName(String widgetVarName) { this.widgetVarName = widgetVarName;}
     }
     ///////////////////////////////////////////INNER CLASS END///////////////////////////////////////////////////////////////
     

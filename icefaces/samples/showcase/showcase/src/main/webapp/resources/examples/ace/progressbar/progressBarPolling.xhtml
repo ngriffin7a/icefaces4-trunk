@@ -34,7 +34,7 @@
 
                     <f:selectItem itemValue="none" itemLabel="-Select an image to upload-"/>
                     <f:selectItems  value="#{progressBarPolling.pendingUploads}" var="pendingUpload"
-									itemValue="#{pendingUpload.widgetVarName}"
+									itemValue="#{pendingUpload.imageDescription}"
 									itemLabel="#{pendingUpload.imageDescription}"/>
                     <f:ajax execute="@this" render="@this uploadManagerContainer" event="change"/>
             </h:selectOneMenu>
