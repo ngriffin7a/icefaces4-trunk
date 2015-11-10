@@ -37,13 +37,9 @@
                 for (var i = 0, l = validElements.length; i < l; i++) {
                     var element = validElements[i];
                     element.className = element.className.replace(' ui-state-error', '');
-                    var id = element.associatedValidationMessageId;
-                    if (id) {
-                        var parent = document.getElementById(id);
-                        parent.innerHTML = '';
-                        if (parent.children.length == 0) {
-                            parent.className = parent.className.replace(' ui-state-error', '');
-                        }
+                    var cleanupValidationMessage = element.cleanupValidationMessage;
+                    if (cleanupValidationMessage) {
+                        cleanupValidationMessage();
                     }
                 }
             }
@@ -57,16 +53,9 @@
     function clientValidationMessageFor(id, text) {
         return function (parameter, element) {
             var messageId = id + '_msg';
-            element.associatedValidationMessageId = messageId;
-            var selector = ice.ace.escapeClientId(messageId) + ' .ui-faces-message-text';
-            var messageElement = ice.ace.jq(selector)[0];
-            if (messageElement) {
-                if (messageElement.innerHTML != text) {
-                    messageElement.innerHTML = text;
-                }
-            } else {
+            var node = document.getElementById(messageId);
+            if (!node) {
                 element.className += ' ui-state-error';
-                var node = document.getElementById(messageId);
                 node.className = 'ui-widget ui-corner-all ui-state-error';
                 var icon = node.appendChild(document.createElement('span'));
                 icon.className = 'ui-faces-message-icon';
@@ -75,25 +64,36 @@
                 var message = node.appendChild(document.createElement('span'));
                 message.className = 'ui-faces-message-text';
                 message.appendChild(document.createTextNode(text));
+
+                element.cleanupValidationMessage = function () {
+                    node.removeChild(icon);
+                    node.removeChild(message);
+                };
             }
+
             return '';
         }
     }
 
-    function clientValidationMessagesFor(id, text, rule) {
+    function clientValidationMessagesFor(id, text) {
         return function (parameter, element) {
-            var messageId = id + '_' + rule;
-            element.associatedValidationMessageId = messageId;
+            var messageId = id + '_msg_' + element.id;
+            var container = document.getElementById(id);
             var node = document.getElementById(messageId);
             if (!node) {
                 element.className += ' ui-state-error';
-                var container = document.getElementById(id);
                 node = container.appendChild(document.createElement('div'));
                 node.id = messageId;
                 node.className = 'ui-corner-all ui-state-error';
                 var icon = node.appendChild(document.createElement('span'));
                 icon.className = 'ui-icon ui-icon-alert';
                 node.appendChild(document.createTextNode(text));
+
+                element.cleanupValidationMessage = function () {
+                    container.removeChild(node);
+                };
+            } else {
+                node.childNodes[1].textContent = text;
             }
 
             return '';
