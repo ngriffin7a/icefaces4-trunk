@@ -106,7 +106,6 @@ public class MaskedEntryRenderer extends InputRenderer {
 		}
 
 		JSONBuilder jb = JSONBuilder.create()
-            .initialiseVar(this.resolveWidgetVar(maskedEntry))
             .beginFunction("ice.ace.create")
             .item("InputMask")
             .beginArray()

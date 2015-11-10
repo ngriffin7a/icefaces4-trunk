@@ -101,8 +101,7 @@ public class DroppableRenderer extends CoreRenderer {
 
 		JSONBuilder jb = JSONBuilder.create();
 
-        jb.initialiseVar(this.resolveWidgetVar(droppable))
-          .beginFunction("ice.ace.create")
+        jb.beginFunction("ice.ace.create")
           .item("Droppable")
           .beginArray()
           .item(clientId)

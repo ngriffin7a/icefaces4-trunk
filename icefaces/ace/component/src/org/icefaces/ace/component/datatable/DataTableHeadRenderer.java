@@ -301,7 +301,7 @@ public class DataTableHeadRenderer {
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default ui-corner-all", null);
         writer.writeAttribute(HTML.HREF_ATTR, "#", null);
         writer.writeAttribute(HTML.ONCLICK_ATTR,
-                CoreRenderer.resolveWidgetVar(tableContext.getTable())+".pinThisColumn(event);return false;", null);
+                "ice.ace.instance('"+tableContext.getTable().getClientId(context)+"').pinThisColumn(event);return false;", null);
         writer.startElement(HTML.SPAN_ELEM, null);
 
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-icon", null);
@@ -370,9 +370,8 @@ public class DataTableHeadRenderer {
         ResponseWriter writer = context.getResponseWriter();
         DataTable table = tableContext.getTable();
 
-        String widgetVar = CoreRenderer.resolveWidgetVar(table);
         String filterId = column.getClientId(context) + "_filter";
-        String filterFunction = widgetVar + ".filter(event)";
+        String filterFunction = "ice.ace.instance('"+table.getClientId(context)+"').filter(event)";
         String filterStyleClass = column.getFilterStyleClass();
         String filterEvent = table.getFilterEvent();
 		boolean rangeFiltering = column.isRangedFilter();
@@ -601,11 +600,8 @@ public class DataTableHeadRenderer {
 
         writer.write("ice.ace.jq(function(){");
 
-		String widgetVar = "widget_" + clientId.replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-
         Locale locale = column.calculateLocale(context);
         json.beginMap()
-            .entry("widgetVar", widgetVar)
             .entry("id", clientId)
             .entry("popup", true)
             .entry("locale", locale.toString())
@@ -659,10 +655,6 @@ public class DataTableHeadRenderer {
 	}
 
     protected static void encodeConfigPanelLaunchButton(ResponseWriter writer, DataTable component, boolean first) throws IOException {
-        String jsId = CoreRenderer.resolveWidgetVar(component);
-
-        String panelJsId = CoreRenderer
-                .resolveWidgetVar(component.findTableConfigPanel(FacesContext.getCurrentInstance()));
 
         TableConfigPanel configPanel = component.findTableConfigPanel(FacesContext.getCurrentInstance());
 
@@ -673,7 +665,6 @@ public class DataTableHeadRenderer {
                     .item("TableConfLauncher")
                     .beginArray()
                     .item(clientId + "_tableconf_launch")
-                    .item(panelJsId, false)
                     .endArray()
                     .endFunction();
 

@@ -117,8 +117,7 @@ public class AccordionRenderer extends CoreRenderer {
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
-        jb.initialiseVar(resolveWidgetVar(acco))
-          .beginFunction("ice.ace.create")
+        jb.beginFunction("ice.ace.create")
           .item("AccordionPanel")
           .beginArray()
           .item(clientId)

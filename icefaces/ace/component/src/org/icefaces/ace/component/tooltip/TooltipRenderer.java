@@ -147,8 +147,7 @@ public class TooltipRenderer extends CoreRenderer {
 
         String delegateId = tooltip.getForDelegate();
         JSONBuilder jb = JSONBuilder.create();
-		jb.initialiseVar(this.resolveWidgetVar(tooltip))
-          .beginFunction("ice.ace.create")
+		jb.beginFunction("ice.ace.create")
           .item("Tooltip")
           .beginArray()
           .item(clientId)

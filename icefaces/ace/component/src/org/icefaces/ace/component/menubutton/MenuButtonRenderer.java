@@ -138,8 +138,7 @@ public class MenuButtonRenderer extends BaseMenuRenderer {
 	private String getInitCall(ResponseWriter writer, MenuButton button, String clientId)  throws IOException {
         JSONBuilder json = JSONBuilder.create();
 
-        json.initialiseVar(this.resolveWidgetVar(button))
-            .beginFunction("ice.ace.create")
+        json.beginFunction("ice.ace.create")
             .item("MenuButton")
 
             .beginArray()

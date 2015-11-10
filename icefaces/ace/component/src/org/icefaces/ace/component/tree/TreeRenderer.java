@@ -76,7 +76,7 @@ public class TreeRenderer extends CoreRenderer {
     @Override
     public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
         Tree tree = (Tree) component;
-        TreeRendererContext renderContext = new TreeRendererContext(tree, resolveWidgetVar(tree));
+        TreeRendererContext renderContext = new TreeRendererContext(tree);
         ResponseWriter writer = facesContext.getResponseWriter();
 
         openContainerElement(writer, facesContext, renderContext);
@@ -128,7 +128,6 @@ public class TreeRenderer extends CoreRenderer {
         Tree tree = renderContext.getTree();
         KeySegmentConverter converter = tree.getKeyConverter();
         String clientId  = tree.getClientId(facesContext);
-        String widgetVar = renderContext.getWidgetVar();
         boolean selection = renderContext.isSelection();
         boolean expansion = renderContext.isExpansion();
         boolean reordering = renderContext.isReordering();
@@ -137,11 +136,10 @@ public class TreeRenderer extends CoreRenderer {
                 converter instanceof NodeModelListSequenceKeyConverter;
 		String handle = tree.getDragHandle();
 
-        confJson.initialiseVar(widgetVar).beginFunction("ice.ace.create").item("Tree")
+        confJson.beginFunction("ice.ace.create").item("Tree")
                 .beginArray()
                 .item(clientId)
                 .beginMap()
-                .entry("widgetVar", widgetVar)
                 .entry("expansionMode", tree.getExpansionMode().name())
                 .entry("selectionMode", tree.getSelectionMode().name())
                 .entry("indexIds", indexIds);
@@ -203,7 +201,6 @@ public class TreeRenderer extends CoreRenderer {
         String nodeClass = NODE_CLASS;
         String nodeWrapperClass = NODE_WRAPPER_CLASS;
         String dotSource = renderContext.getDotURL();
-        String widgetVar = renderContext.getWidgetVar();
         String id = tree.getClientId(facesContext);
         boolean expanded = state.isExpanded();
         boolean isClientExpansion = renderContext.getExpansionMode().isClient();
@@ -274,7 +271,7 @@ public class TreeRenderer extends CoreRenderer {
         if (renderContext.isReordering()) {
             writer.startElement(HTML.SCRIPT_ELEM, null);
             writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
-            writer.write("if (window['"+widgetVar+"']) "+widgetVar+".rs('"+id+"');");
+            writer.write("if (ice.ace.instance('"+id+"')) ice.ace.instance('"+id+"').rs('"+id+"');");
             writer.endElement(HTML.SCRIPT_ELEM);
         }
 

@@ -352,18 +352,6 @@ public class ComponentUtils {
         return result;
     }
 
-    public static String getWidgetVar(String id) {
-        UIComponent component = findComponent(FacesContext.getCurrentInstance().getViewRoot(), id);
-        Renderer renderer = FacesContext.getCurrentInstance().getRenderKit()
-                .getRenderer(component.getFamily(), component.getRendererType());
-
-        if (component == null) throw new FacesException("Cannot find component " + id + " in view.");
-        else if (!(renderer instanceof CoreRenderer))
-            throw new FacesException("Component with id " + id + " is not derived from CoreRenderer.");
-
-        return ((CoreRenderer) renderer).resolveWidgetVar(component);
-    }
-
     public static boolean isLiteralText(UIComponent component) {
         return component.getFamily().equalsIgnoreCase("facelets.LiteralText");
     }

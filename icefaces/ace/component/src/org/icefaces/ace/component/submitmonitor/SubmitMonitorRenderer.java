@@ -56,7 +56,6 @@ public class SubmitMonitorRenderer extends CoreRenderer {
 
         writer.startElement(HTML.SCRIPT_ELEM, null);
         JSONBuilder json = JSONBuilder.create();
-        json.initialiseVar(resolveWidgetVar(monitor));
         json.beginFunction("ice.ace.create");
         json.item("SubmitMonitor");
         json.beginArray();

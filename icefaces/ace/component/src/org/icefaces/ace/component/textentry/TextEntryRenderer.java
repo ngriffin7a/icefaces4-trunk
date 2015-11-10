@@ -169,8 +169,7 @@ public class TextEntryRenderer extends InputRenderer {
         Utils.writeConcatenatedStyleClasses(writer, defaultClass, styleClass);
 		
         JSONBuilder jb = JSONBuilder.create();
-        jb.initialiseVar(this.resolveWidgetVar(textEntry))
-          .beginFunction("ice.ace.lazy")
+        jb.beginFunction("ice.ace.lazy")
           .item("TextEntry")
           .beginArray()
           .item(clientId)

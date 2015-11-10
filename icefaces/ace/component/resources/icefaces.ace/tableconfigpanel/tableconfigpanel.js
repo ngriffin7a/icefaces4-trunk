@@ -17,12 +17,13 @@
 if (!window.ice['ace']) {
     window.ice.ace = {};
 }
-ice.ace.TableConfLauncher = function(clientId, panelJsId) {
+ice.ace.TableConfLauncher = function(clientId) {
     var launcher = ice.ace.jq(ice.ace.escapeClientId(clientId));
 
     var activate = function(e) {
         var panel = ice.ace.jq(ice.ace.escapeClientId(clientId.replace('_tableconf_launch', ''))),
             modal = panel.next('.ui-tableconf-modal');
+		var panelJsId = ice.ace.instance(clientId);
 
         panel.toggle();
         modal.toggle();

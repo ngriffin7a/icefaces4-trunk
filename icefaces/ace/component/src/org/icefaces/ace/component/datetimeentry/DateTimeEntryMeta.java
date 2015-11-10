@@ -53,8 +53,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ClientEvent(name="dateTextChange", defaultExecute="@this", defaultRender="@all", tlddoc="Fired when date text is changed and input field loses focus.", javadoc="Fired when date text is changed and input field loses focus.", argumentClass="org.icefaces.ace.event.DateTextChangeEvent")
 }, defaultEvent="dateSelect")
 public class DateTimeEntryMeta extends UIInputMeta {
-    @Property(tlddoc = "Name of the client side widget.")
-    private String widgetVar;
 
     @Property(tlddoc = "Set a minimum selectable date. Date string or java.util.Date object. Default is no limit.")
     private Object mindate;

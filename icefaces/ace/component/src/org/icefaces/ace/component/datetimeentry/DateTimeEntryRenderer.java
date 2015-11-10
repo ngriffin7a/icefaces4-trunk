@@ -230,11 +230,10 @@ public class DateTimeEntryRenderer extends InputRenderer {
         //likewise maxDateTime takes precendence for setting maxDate, maxHour and maxMinute
 
 
-        script.append("ice.ace.jq(function(){").append(resolveWidgetVar(dateTimeEntry)).append(" = new ");
+        script.append("ice.ace.jq(function(){").append(" new ");
 
         Locale locale = dateTimeEntry.calculateLocale(context);
         json.beginMap()
-            .entry("widgetVar", resolveWidgetVar(dateTimeEntry))
             .entry("id", clientId)
             .entry("popup", dateTimeEntry.isPopup())
             .entry("locale", locale.toString())
