@@ -224,7 +224,7 @@ public class SelectMenuRenderer extends InputRenderer {
 
 		// render style, style class and required state as a comment to cause a full component update when they change
 		writer.writeText("// " + selectMenu.getStyle() + " " + selectMenu.getStyleClass() + " "
-			+ getStateStyleClasses(selectMenu) + " " + selectMenu.isRequired(), null);
+			+ getStateStyleClasses(selectMenu) + " " + selectMenu.getWidth() + " " + selectMenu.isRequired(), null);
 
         writer.endElement("script");
 		
