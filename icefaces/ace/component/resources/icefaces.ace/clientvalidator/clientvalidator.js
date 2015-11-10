@@ -53,22 +53,25 @@
     function clientValidationMessageFor(id, text) {
         return function (parameter, element) {
             var messageId = id + '_msg';
-            var node = document.getElementById(messageId);
-            if (!node) {
+            var container = document.getElementById(messageId);
+            if (container.childNodes.length == 0) {
                 element.className += ' ui-state-error';
-                node.className = 'ui-widget ui-corner-all ui-state-error';
-                var icon = node.appendChild(document.createElement('span'));
+                container.className = 'ui-widget ui-corner-all ui-state-error';
+                var icon = container.appendChild(document.createElement('span'));
                 icon.className = 'ui-faces-message-icon';
                 var iconAlert = icon.appendChild(document.createElement('span'));
                 iconAlert.className = 'ui-icon ui-icon-alert';
-                var message = node.appendChild(document.createElement('span'));
+                var message = container.appendChild(document.createElement('span'));
                 message.className = 'ui-faces-message-text';
                 message.appendChild(document.createTextNode(text));
 
                 element.cleanupValidationMessage = function () {
-                    node.removeChild(icon);
-                    node.removeChild(message);
+                    container.className = '';
+                    container.removeChild(icon);
+                    container.removeChild(message);
                 };
+            } else {
+                container.childNodes[1].innerHTML = text;
             }
 
             return '';
