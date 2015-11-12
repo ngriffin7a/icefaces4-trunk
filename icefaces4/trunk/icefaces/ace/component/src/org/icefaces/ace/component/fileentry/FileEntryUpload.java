@@ -797,6 +797,8 @@ public class FileEntryUpload implements PhaseListener {
                         }
                         finally {
                             in.close();
+							out.flush();
+							out.close();
                         }
                     }
                 }
