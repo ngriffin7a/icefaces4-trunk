@@ -32,7 +32,10 @@
         var old = ice.fullSubmit;
         ice.fullSubmit = function (execute, render, event, element, additionalParameters, callbacks) {
             var form = formOf(element.id);
-            var validElements = ice.ace.jq(form).validate().validElements();
+            var jqForm = ice.ace.jq(form);
+            var isValidForm = jqForm.valid();
+            var validationResult = jqForm.validate();
+            var validElements = validationResult.validElements();
             if (validElements) {
                 for (var i = 0, l = validElements.length; i < l; i++) {
                     var element = validElements[i];
@@ -44,7 +47,7 @@
                 }
             }
 
-            if (form && ice.ace.jq(form).valid()) {
+            if (form && isValidForm) {
                 old(execute, render, event, element, additionalParameters, callbacks);
             }
         };
