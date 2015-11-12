@@ -63,10 +63,10 @@ public class RangeConstraintPredicate implements Predicate {
 				} else if (minDate != null && maxDate == null) {
 					return rowDate.after(minDate);
 				} else if (minDate == null && maxDate != null) {
-					maxDate = new Date(maxDate.getTime() + 86399999);
+					maxDate = new Date(maxDate.getTime() + 86399999); // include all milliseconds of a day
 					return rowDate.before(maxDate);
 				} else if (minDate != null && maxDate != null) {
-					maxDate = new Date(maxDate.getTime() + 86399999);
+					maxDate = new Date(maxDate.getTime() + 86399999); // include all milliseconds of a day
 					return (rowDate.after(minDate) && rowDate.before(maxDate));
 				} else {
 					return true; // no filtering taking place
@@ -84,9 +84,19 @@ public class RangeConstraintPredicate implements Predicate {
 					return false;
 				}
 
-				if (rowValue == minValue || rowValue == maxValue) {
-					return true;
-				} else if (minValue != null && maxValue == null) {
+				if (rowValue != null) {
+					if (minValue != null) {
+						byte rowVal = rowValue.byteValue();
+						byte minVal = minValue.byteValue();
+						if (rowVal == minVal) return true;
+					}
+					if (maxValue != null) {
+						byte rowVal = rowValue.byteValue();
+						byte maxVal = maxValue.byteValue();
+						if (rowVal == maxVal) return true;
+					}
+				}
+				if (minValue != null && maxValue == null) {
 					return rowValue > minValue;
 				} else if (minValue == null && maxValue != null) {
 					return rowValue < maxValue;
@@ -108,9 +118,19 @@ public class RangeConstraintPredicate implements Predicate {
 					return false;
 				}
 
-				if (rowValue == minValue || rowValue == maxValue) {
-					return true;
-				} else if (minValue != null && maxValue == null) {
+				if (rowValue != null) {
+					if (minValue != null) {
+						short rowVal = rowValue.shortValue();
+						short minVal = minValue.shortValue();
+						if (rowVal == minVal) return true;
+					}
+					if (maxValue != null) {
+						short rowVal = rowValue.shortValue();
+						short maxVal = maxValue.shortValue();
+						if (rowVal == maxVal) return true;
+					}
+				}
+				if (minValue != null && maxValue == null) {
 					return rowValue > minValue;
 				} else if (minValue == null && maxValue != null) {
 					return rowValue < maxValue;
@@ -132,9 +152,19 @@ public class RangeConstraintPredicate implements Predicate {
 					return false;
 				}
 
-				if (rowValue == minValue || rowValue == maxValue) {
-					return true;
-				} else if (minValue != null && maxValue == null) {
+				if (rowValue != null) {
+					if (minValue != null) {
+						int rowVal = rowValue.intValue();
+						int minVal = minValue.intValue();
+						if (rowVal == minVal) return true;
+					}
+					if (maxValue != null) {
+						int rowVal = rowValue.intValue();
+						int maxVal = maxValue.intValue();
+						if (rowVal == maxVal) return true;
+					}
+				}
+				if (minValue != null && maxValue == null) {
 					return rowValue > minValue;
 				} else if (minValue == null && maxValue != null) {
 					return rowValue < maxValue;
@@ -156,9 +186,19 @@ public class RangeConstraintPredicate implements Predicate {
 					return false;
 				}
 
-				if (rowValue == minValue || rowValue == maxValue) {
-					return true;
-				} else if (minValue != null && maxValue == null) {
+				if (rowValue != null) {
+					if (minValue != null) {
+						long rowVal = rowValue.longValue();
+						long minVal = minValue.longValue();
+						if (rowVal == minVal) return true;
+					}
+					if (maxValue != null) {
+						long rowVal = rowValue.longValue();
+						long maxVal = maxValue.longValue();
+						if (rowVal == maxVal) return true;
+					}
+				}
+				if (minValue != null && maxValue == null) {
 					return rowValue > minValue;
 				} else if (minValue == null && maxValue != null) {
 					return rowValue < maxValue;
@@ -180,9 +220,19 @@ public class RangeConstraintPredicate implements Predicate {
 					return false;
 				}
 
-				if (rowValue == minValue || rowValue == maxValue) {
-					return true;
-				} else if (minValue != null && maxValue == null) {
+				if (rowValue != null) {
+					if (minValue != null) {
+						float rowVal = rowValue.floatValue();
+						float minVal = minValue.floatValue();
+						if (rowVal == minVal) return true;
+					}
+					if (maxValue != null) {
+						float rowVal = rowValue.floatValue();
+						float maxVal = maxValue.floatValue();
+						if (rowVal == maxVal) return true;
+					}
+				}
+				if (minValue != null && maxValue == null) {
 					return rowValue > minValue;
 				} else if (minValue == null && maxValue != null) {
 					return rowValue < maxValue;
@@ -204,9 +254,19 @@ public class RangeConstraintPredicate implements Predicate {
 					return false;
 				}
 
-				if (rowValue == minValue || rowValue == maxValue) {
-					return true;
-				} else if (minValue != null && maxValue == null) {
+				if (rowValue != null) {
+					if (minValue != null) {
+						double rowVal = rowValue.doubleValue();
+						double minVal = minValue.doubleValue();
+						if (rowVal == minVal) return true;
+					}
+					if (maxValue != null) {
+						double rowVal = rowValue.doubleValue();
+						double maxVal = maxValue.doubleValue();
+						if (rowVal == maxVal) return true;
+					}
+				}
+				if (minValue != null && maxValue == null) {
 					return rowValue > minValue;
 				} else if (minValue == null && maxValue != null) {
 					return rowValue < maxValue;

@@ -36,6 +36,8 @@ public class FilterState {
     Map<Column, String> valueMap = new HashMap<Column, String>();
     Map<Column, Object> minValueMap = new HashMap<Column, Object>();
     Map<Column, Object> maxValueMap = new HashMap<Column, Object>();
+    Map<Column, String> minSubmittedValueMap = new HashMap<Column, String>();
+    Map<Column, String> maxSubmittedValueMap = new HashMap<Column, String>();
 
     public FilterState() {}
 
@@ -50,6 +52,10 @@ public class FilterState {
     public FilterState(FacesContext context, DataTable table) {
         String clientId = table.getClientId(context);
         Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+
+		// restore submitted value maps
+		minSubmittedValueMap = new HashMap<Column, String>();
+		maxSubmittedValueMap = new HashMap<Column, String>();
 
         Map<String,Column> filterMap = table.getFilterMap();
 		for (Column column : filterMap.values()) {
@@ -81,6 +87,7 @@ public class FilterState {
 						dateMax = null;
 					}
 					saveState(column, dateMin, dateMax);
+					saveSubmittedValues(column, inputDateMin, inputDateMax);
 				} else if (type == ColumnType.BYTE) {
 					String inputMin = params.get(columnIdMin);
 					String inputMax = params.get(columnIdMax);
@@ -94,6 +101,7 @@ public class FilterState {
 						max = null;
 					}
 					saveState(column, min, max);
+					saveSubmittedValues(column, inputMin, inputMax);
 				} else if (type == ColumnType.SHORT) {
 					String inputMin = params.get(columnIdMin);
 					String inputMax = params.get(columnIdMax);
@@ -107,6 +115,7 @@ public class FilterState {
 						max = null;
 					}
 					saveState(column, min, max);
+					saveSubmittedValues(column, inputMin, inputMax);
 				} else if (type == ColumnType.INT) {
 					String inputMin = params.get(columnIdMin);
 					String inputMax = params.get(columnIdMax);
@@ -120,6 +129,7 @@ public class FilterState {
 						max = null;
 					}
 					saveState(column, min, max);
+					saveSubmittedValues(column, inputMin, inputMax);
 				} else if (type == ColumnType.LONG) {
 					String inputMin = params.get(columnIdMin);
 					String inputMax = params.get(columnIdMax);
@@ -133,6 +143,7 @@ public class FilterState {
 						max = null;
 					}
 					saveState(column, min, max);
+					saveSubmittedValues(column, inputMin, inputMax);
 				} else if (type == ColumnType.FLOAT) {
 					String inputMin = params.get(columnIdMin);
 					String inputMax = params.get(columnIdMax);
@@ -146,6 +157,7 @@ public class FilterState {
 						max = null;
 					}
 					saveState(column, min, max);
+					saveSubmittedValues(column, inputMin, inputMax);
 				} else if (type == ColumnType.DOUBLE) {
 					String inputMin = params.get(columnIdMin);
 					String inputMax = params.get(columnIdMax);
@@ -159,6 +171,7 @@ public class FilterState {
 						max = null;
 					}
 					saveState(column, min, max);
+					saveSubmittedValues(column, inputMin, inputMax);
 				}
 			}
 		}
@@ -177,6 +190,11 @@ public class FilterState {
         maxValueMap.put(column, valueMax);
     }
 
+    public void saveSubmittedValues(Column column, String inputMin, String inputMax) {
+        minSubmittedValueMap.put(column, inputMin);
+        maxSubmittedValueMap.put(column, inputMax);
+    }
+
     private void restoreState(Column column) {
 		if (!column.isRangedFilter()) {
 			String val = valueMap.get(column);
@@ -184,10 +202,12 @@ public class FilterState {
 				column.setFilterValue(val);
 		} else {
 			Object minVal = minValueMap.get(column);
-			if (minVal != null)
+			String submittedMinVal = minSubmittedValueMap.get(column);
+			if (minVal != null || (submittedMinVal != null && "".equals(submittedMinVal.trim())))
 				column.setFilterValueMin(minVal);
 			Object maxVal = maxValueMap.get(column);
-			if (maxVal != null)
+			String submittedMaxVal = maxSubmittedValueMap.get(column);
+			if (maxVal != null || (submittedMaxVal != null && "".equals(submittedMaxVal.trim())))
 				column.setFilterValueMax(maxVal);
 		}
     }
