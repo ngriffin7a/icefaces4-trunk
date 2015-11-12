@@ -16,6 +16,7 @@
 
 package org.icefaces.samples.showcase.example.ace.file;
 
+import java.io.File;
 import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
@@ -41,6 +42,8 @@ public class FileEntryListenerBean implements Serializable
         for (FileEntryResults.FileInfo file : results.getFiles()) {
             if (file.isSaved()) {
                 if (!file.getContentType().equals("application/pdf")){
+					File fileObject = file.getFile();
+					if (fileObject != null) (new File(fileObject.getAbsolutePath())).delete();
                     file.updateStatus(new FileEntryStatus() {
                             public boolean isSuccess() {
                                 return false;
