@@ -25,8 +25,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
+import javax.faces.event.PhaseId;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
+import javax.faces.view.facelets.FaceletException;
 import java.util.Map;
 
 public class MessageMatcher implements SystemEventListener {
@@ -55,15 +57,14 @@ public class MessageMatcher implements SystemEventListener {
                 //search by client ID
                 c = viewRoot.findComponent(target);
             }
-            if (c == null) {
-                throw new FacesException("Cannot find component " + target);
+            if (c != null) {
+                c.getAttributes().put(component.getClass().getName(), component.getClientId());
             }
-            c.getAttributes().put(component.getClass().getName(), component.getClientId());
         }
     }
 
     public boolean isListenerForSource(Object source) {
-        return source instanceof Message || source instanceof Messages;
+        return FacesContext.getCurrentInstance().getCurrentPhaseId() != PhaseId.RESTORE_VIEW && (source instanceof Message || source instanceof Messages);
     }
 
 
@@ -77,7 +78,12 @@ public class MessageMatcher implements SystemEventListener {
         final String id = (String) componentAttributes.get(isMultipleMessage(validatedComponent) ? Messages.class.getName() : Message.class.getName());
         if (id == null) {
             final Map<String, Object> rootAttributes = FacesContext.getCurrentInstance().getViewRoot().getAttributes();
-            return (String) rootAttributes.get(Messages.class.getName());
+            String viewMessagesId = (String) rootAttributes.get(Messages.class.getName());
+            if (viewMessagesId == null) {
+                throw new FaceletException("Cannot find message/s component assigned to " + validatedComponent.getId());
+            } else {
+                return viewMessagesId;
+            }
         } else {
             return id;
         }
