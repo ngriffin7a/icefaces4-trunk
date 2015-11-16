@@ -64,7 +64,7 @@ public class MessageMatcher implements SystemEventListener {
     }
 
     public boolean isListenerForSource(Object source) {
-        return FacesContext.getCurrentInstance().getCurrentPhaseId() != PhaseId.RESTORE_VIEW && (source instanceof Message || source instanceof Messages);
+        return source instanceof Message || source instanceof Messages;
     }
 
 
