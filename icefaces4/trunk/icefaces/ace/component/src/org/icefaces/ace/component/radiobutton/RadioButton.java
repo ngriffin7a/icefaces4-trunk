@@ -29,7 +29,7 @@ public class RadioButton extends RadioButtonBase implements Focusable, Validatea
     }
 
     public String getValidatedElementId() {
-        return getClientId() + "_button";
+        return getClientId() + "_hidden";
     }
 }
 
