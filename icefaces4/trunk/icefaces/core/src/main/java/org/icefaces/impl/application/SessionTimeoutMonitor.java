@@ -16,22 +16,17 @@
 
 package org.icefaces.impl.application;
 
-import org.icefaces.impl.push.servlet.ICEpushResourceHandler;
 import org.icefaces.util.EnvUtils;
 
 import javax.faces.application.ResourceHandler;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Logger;
 
 public class SessionTimeoutMonitor extends SessionAwareResourceHandlerWrapper {
     private static final Logger Log = Logger.getLogger(SessionTimeoutMonitor.class.getName());
     private ResourceHandler handler;
-    private int c = 0;
 
     public SessionTimeoutMonitor(ResourceHandler handler) {
         this.handler = handler;
@@ -49,21 +44,6 @@ public class SessionTimeoutMonitor extends SessionAwareResourceHandlerWrapper {
         HttpSession httpSession = EnvUtils.getSafeSession(context);
         Long lastAccessTime = (Long) httpSession.getAttribute(SessionTimeoutMonitor.class.getName());
         boolean isPushRelatedRequest = EnvUtils.isPushRequest(context);
-        ExternalContext ec = context.getExternalContext();
-        Map<String, String> parameterMap = ec.getRequestParameterMap();
-        String reqParam = parameterMap.get("ice.submit.type");
-
-        if ("ice.push".equals(reqParam) && (c++ > 1 && c < 35)) {
-            try {
-                HttpServletResponse r = (HttpServletResponse) context.getExternalContext().getResponse();
-                r.setStatus(0, "");
-                r.getOutputStream().write(0);
-                r.flushBuffer();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         if (lastAccessTime == null || !isPushRelatedRequest) {
             lastAccessTime = System.currentTimeMillis();
             httpSession.setAttribute(SessionTimeoutMonitor.class.getName(), System.currentTimeMillis());
