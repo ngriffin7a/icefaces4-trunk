@@ -154,10 +154,13 @@ public class CheckboxButtonRenderer extends InputRenderer {
         CheckboxButton checkbox = (CheckboxButton) uiComponent;
         Object val = checkbox.getValue();
 
+        String hiddenId = clientId + "_hidden";
         writer.startElement("input", uiComponent);
-        writer.writeAttribute("type", "hidden", null);
+        writer.writeAttribute("type", "text", null);
+        writer.writeAttribute("style", "visibility: hidden", null);
         writer.writeAttribute("autocomplete", "off", null);
-        writer.writeAttribute("name",clientId+"_hidden", null);
+        writer.writeAttribute("id", hiddenId, null);
+        writer.writeAttribute("name", hiddenId, null);
         writer.writeAttribute("value",val, null);
         writer.endElement("input");
 

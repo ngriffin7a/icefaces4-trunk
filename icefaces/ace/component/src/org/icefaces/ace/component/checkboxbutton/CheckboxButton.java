@@ -31,7 +31,7 @@ public class CheckboxButton extends CheckboxButtonBase implements Focusable, Val
     }
 
     public String getValidatedElementId() {
-        return getClientId() + "_button";
+        return getClientId() + "_hidden";
     }
 }
 
