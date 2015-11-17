@@ -157,12 +157,14 @@ ice.ace.Dialog = function(parentID, cfg) {
 
 ice.ace.Dialog.prototype.setupEventHandlers = function(id){
     //Event handlers
-    this.jq.bind('dialogclose', function(event, ui) {
-        ice.ace.DialogPanels[id].onHide(event, ui);
-    });
-    this.jq.bind('dialogopen', function(event, ui) {
-        ice.ace.DialogPanels[id].onShow(event, ui);
-    });
+    if (ice.ace.DialogPanels && ice.ace.DialogPanels[id]) {
+        this.jq.bind('dialogclose', function(event, ui) {
+            ice.ace.DialogPanels[id].onHide(event, ui);
+        });
+        this.jq.bind('dialogopen', function(event, ui) {
+            ice.ace.DialogPanels[id].onShow(event, ui);
+        });
+    }
 };
 
 
