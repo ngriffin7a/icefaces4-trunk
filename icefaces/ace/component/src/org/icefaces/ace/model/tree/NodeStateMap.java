@@ -156,7 +156,11 @@ public class NodeStateMap implements Map<Object, NodeState>, Serializable {
 
 	// Util
 	public void populateEntireMap() {
-		for (Object o : map.keySet()) addChildren(o);
+		// create static key set first to avoid ConcurrentModificationException exceptions
+		HashSet<Object> keySet = new HashSet<Object>();
+		for (Object o : map.keySet()) keySet.add(o);
+
+		for (Object o : keySet) addChildren(o);
 	}
 
 	private void addChildren(Object o) {
