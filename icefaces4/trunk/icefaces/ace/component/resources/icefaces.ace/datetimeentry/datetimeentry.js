@@ -173,6 +173,8 @@ ice.ace.Calendar.prototype.destroy = function() {
     this.jq = this.cfg.altField = null;
 };
 
+ice.ace.Calendar.instances = {}; // keep track of initialized instances
+
 ice.ace.CalendarInit = function(options) {
     ice.ace.jq().ready(function() {
         var id = options.id;
@@ -191,6 +193,7 @@ ice.ace.CalendarInit = function(options) {
                 widget.destroy();
                 initEltSet.remove();
             });
+			ice.ace.Calendar.instances[id] = true;
             return widget;
         };
         var initAndShow = function() {
@@ -206,6 +209,12 @@ ice.ace.CalendarInit = function(options) {
             create();
             return;
         }
+
+		// if instance was previously initialized, create right away and return
+		if (ice.ace.Calendar.instances[id]) {
+			create();
+			return;
+		}
 
 		ice.ace.lazy.registry[id] = function() {
 			if (trigger) trigger.remove();
