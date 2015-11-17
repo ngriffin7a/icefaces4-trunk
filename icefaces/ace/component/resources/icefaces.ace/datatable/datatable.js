@@ -2926,6 +2926,7 @@ ice.ace.DataTable.prototype.sort = function (headerCells, savedState) {
 }
 
 ice.ace.DataTable.prototype.filter = function (evn) {
+	if (this.filterObserver) clearTimeout(this.filterObserver);
     var options = {
         source:this.id,
         render:(this.cfg.configPanel) ? this.id + " " + this.cfg.configPanel : this.id,
@@ -2949,8 +2950,11 @@ ice.ace.DataTable.prototype.filter = function (evn) {
             return;
         }
 
-    if (ice.ace.jq(input).hasClass('hasDatepicker')) ice.setFocus('');
-    ice.ace.AjaxRequest(options);
+	this.filterObserver = setTimeout(function() {
+		if (ice.ace.jq(input).hasClass('hasDatepicker')) ice.setFocus('');
+		ice.ace.AjaxRequest(options);
+		_self.filterObserver = null;
+	}, 200);
 }
 
 ice.ace.DataTable.prototype.doSelectionEvent = function (type, deselection, element) {
