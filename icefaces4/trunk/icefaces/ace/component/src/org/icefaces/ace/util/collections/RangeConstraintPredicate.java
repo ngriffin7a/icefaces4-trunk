@@ -58,16 +58,19 @@ public class RangeConstraintPredicate implements Predicate {
 					return false;
 				}
 
-				if (rowDate.equals(minDate) || rowDate.equals(maxDate)) {
-					return true;
-				} else if (minDate != null && maxDate == null) {
-					return rowDate.after(minDate);
+				long rowDateMillis = rowDate.getTime();
+				if (minDate != null && maxDate == null) {
+					long minDateMillis = minDate.getTime();
+					return rowDateMillis >= minDateMillis;
 				} else if (minDate == null && maxDate != null) {
-					maxDate = new Date(maxDate.getTime() + 86399999); // include all milliseconds of a day
-					return rowDate.before(maxDate);
+					long maxDateMillis = maxDate.getTime();
+					maxDateMillis += 86399999; // include all milliseconds of a day
+					return rowDateMillis <= maxDateMillis;
 				} else if (minDate != null && maxDate != null) {
-					maxDate = new Date(maxDate.getTime() + 86399999); // include all milliseconds of a day
-					return (rowDate.after(minDate) && rowDate.before(maxDate));
+					long minDateMillis = minDate.getTime();
+					long maxDateMillis = maxDate.getTime();
+					maxDateMillis += 86399999; // include all milliseconds of a day
+					return (rowDateMillis >= minDateMillis && rowDateMillis <= maxDateMillis);
 				} else {
 					return true; // no filtering taking place
 				}
