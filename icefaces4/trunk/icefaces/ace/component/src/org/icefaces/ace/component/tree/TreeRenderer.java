@@ -271,7 +271,7 @@ public class TreeRenderer extends CoreRenderer {
         if (renderContext.isReordering()) {
             writer.startElement(HTML.SCRIPT_ELEM, null);
             writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
-            writer.write("if (ice.ace.instance('"+id+"')) ice.ace.instance('"+id+"').rs('"+id+"');");
+            writer.write("if (ice.ace.instance('"+renderContext.getRootClientId()+"')) ice.ace.instance('"+renderContext.getRootClientId()+"').rs('"+id+"');");
             writer.endElement(HTML.SCRIPT_ELEM);
         }
 

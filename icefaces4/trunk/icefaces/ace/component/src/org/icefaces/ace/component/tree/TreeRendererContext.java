@@ -32,9 +32,11 @@ public class TreeRendererContext {
     private TreeSelectionMode treeSelectionMode;
     private TreeExpansionMode treeExpansionMode;
     private String dotURL;
+	private String rootClientId;
 
     public TreeRendererContext(Tree tree) {
         this.tree = tree;
+        rootClientId = tree.getClientId(FacesContext.getCurrentInstance());
         expansion = tree.isExpansion();
         selection = tree.isSelection();
         reordering = tree.isReordering();
@@ -87,5 +89,9 @@ public class TreeRendererContext {
 
     public boolean isReordering() {
         return reordering;
+    }
+
+    public String getRootClientId() {
+        return rootClientId;
     }
 }
