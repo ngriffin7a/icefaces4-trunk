@@ -94,7 +94,11 @@ ice.ace.ConfirmDialog.prototype.show = function() {
 
 ice.ace.ConfirmDialog.prototype.hide = function() {
 	var jq = this.jq;
-    setTimeout(function(){jq.dialog('close');},1);
+    setTimeout(function(){
+        if (jq.dialog('isOpen')){
+            jq.dialog('close');
+        }
+    },1);
 };
 
 ice.ace.ConfirmDialog.browser = function() {
