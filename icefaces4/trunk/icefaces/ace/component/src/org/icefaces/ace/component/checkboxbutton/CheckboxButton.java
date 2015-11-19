@@ -24,14 +24,10 @@ import org.icefaces.impl.util.Util;
 import javax.faces.context.FacesContext;
 
 
-public class CheckboxButton extends CheckboxButtonBase implements Focusable, Validateable {
+public class CheckboxButton extends CheckboxButtonBase implements Focusable {
 
     public String getFocusedElementId() {
         return getClientId() + "_button";
-    }
-
-    public String getValidatedElementId() {
-        return getClientId() + "_hidden";
     }
 }
 
