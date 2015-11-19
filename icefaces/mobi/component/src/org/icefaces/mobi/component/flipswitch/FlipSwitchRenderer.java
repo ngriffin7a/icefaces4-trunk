@@ -115,16 +115,15 @@ public class FlipSwitchRenderer extends CoreRenderer {
         writer.startElement(HTML.SPAN_ELEM, null);
 
         boolean switchVal = (Boolean) flipswitch.getValue();
-        writer.writeAttribute("class", "mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-default" + (switchVal ? " ui-state-active" : ""), null);
+        writer.writeAttribute("class", "mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-default" + (switchVal ? " ui-state-active" : "" ), null);
         writer.write(labelOn);
         writer.endElement(HTML.SPAN_ELEM);
+        writeHiddenField(uiComponent, clientId, writer, switchVal, disabled);
 
         writer.startElement(HTML.SPAN_ELEM, null);
         writer.writeAttribute("class", "mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default" + (!switchVal ? " ui-state-active" : "" ), null);
         writer.write(labelOff);
         writer.endElement(HTML.SPAN_ELEM);
-
-        writeHiddenField(uiComponent, clientId, writer, switchVal, disabled);
 
         writer.startElement(HTML.SCRIPT_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
@@ -140,8 +139,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
     private void writeHiddenField(UIComponent uiComponent, String clientId,
                                   ResponseWriter writer, boolean switchValue, boolean disabled) throws IOException {
         writer.startElement("input", uiComponent);
-        writer.writeAttribute("type", "text", null);
-        writer.writeAttribute("style", "visibility: hidden; width: 0; height: 0; margin 0; padding: 0;", null);
+        writer.writeAttribute("type", "hidden", null);
         writer.writeAttribute("name", clientId + "_hidden", null);
         writer.writeAttribute("id", clientId + "_hidden", null);
         writer.writeAttribute("value", switchValue, null);

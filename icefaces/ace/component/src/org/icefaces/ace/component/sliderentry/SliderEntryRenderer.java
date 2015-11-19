@@ -151,8 +151,7 @@ public class SliderEntryRenderer extends InputRenderer{
 		writer.startElement("input", null);
 		writer.writeAttribute("id", clientId + "_hidden" , "id");
 		writer.writeAttribute("name", clientId + "_hidden" , "name");
-		writer.writeAttribute("type", "text" , "type");
-		writer.writeAttribute("style", "visibility: hidden; width: 0; height: 0; margin 0; padding: 0;", null);
+		writer.writeAttribute("type", "hidden" , "type");
 		writer.writeAttribute("value", slider.getValue() , "value");
         writer.writeAttribute(HTML.AUTOCOMPLETE_ATTR, "off", null);
 

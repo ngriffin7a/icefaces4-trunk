@@ -22,14 +22,10 @@ import org.icefaces.component.Focusable;
 
 import javax.faces.context.FacesContext;
 
-public class RadioButton extends RadioButtonBase implements Focusable, Validateable {
+public class RadioButton extends RadioButtonBase implements Focusable {
 
     public String getFocusedElementId() {
         return getClientId() + "_button";
-    }
-
-    public String getValidatedElementId() {
-        return getClientId() + "_hidden";
     }
 }
 

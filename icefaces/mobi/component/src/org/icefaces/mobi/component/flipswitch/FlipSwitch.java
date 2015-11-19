@@ -28,7 +28,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.ValueChangeEvent;
 
 
-public class FlipSwitch extends FlipSwitchBase implements Validateable {
+public class FlipSwitch extends FlipSwitchBase {
     //src is NOT part of the pass through attributes
     public static final String FLIPSWITCH_ON_CLASS = "mobi-flipswitch mobi-flipswitch-on ui-widget";
     public static final String FLIPSWITCH_OFF_CLASS = "mobi-flipswitch mobi-flipswitch-off ui-widget";
@@ -47,8 +47,4 @@ public class FlipSwitch extends FlipSwitchBase implements Validateable {
 	public Attribute[] getBooleanAttNames() {
 		return booleanAttNames;
 	}
-
-    public String getValidatedElementId() {
-        return getClientId() + "_hidden";
-    }
 }
