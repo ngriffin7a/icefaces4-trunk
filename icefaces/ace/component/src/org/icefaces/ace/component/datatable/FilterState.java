@@ -87,6 +87,8 @@ public class FilterState {
 						dateMax = null;
 					}
 					saveState(column, dateMin, dateMax);
+					if (inputDateMin == null) inputDateMin = "";
+					if (inputDateMax == null) inputDateMax = "";
 					saveSubmittedValues(column, inputDateMin, inputDateMax);
 				} else if (type == ColumnType.BYTE) {
 					String inputMin = params.get(columnIdMin);
