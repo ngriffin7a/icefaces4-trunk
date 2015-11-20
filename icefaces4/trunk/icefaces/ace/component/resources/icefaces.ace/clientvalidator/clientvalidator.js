@@ -42,7 +42,11 @@
                     element.className = element.className.replace(' ui-state-error', '');
                     var cleanupValidationMessage = element.cleanupValidationMessage;
                     if (cleanupValidationMessage) {
-                        cleanupValidationMessage();
+                        try {
+                            cleanupValidationMessage();
+                        } catch (ex) {
+                            //the node is cleared a second time
+                        }
                     }
                 }
             }

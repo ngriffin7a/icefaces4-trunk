@@ -29,36 +29,31 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 import javax.faces.view.facelets.FaceletException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MessageMatcher implements SystemEventListener {
+    private static final String MESSAGE_MAP = MessageMatcher.class.getName() + ".messageMap";
+    private static final String MESSAGES_MAP = MessageMatcher.class.getName() + ".messagesMap";
+//    private static final String LABEL_MAP = MessageMatcher.class.getName() + ".labelMap";
+//    private static final String LABEL_REVERSE_MAP = MessageMatcher.class.getName() + ".labelReverseMap";
+    private static final String ALL = "@all";
+
     public void processEvent(SystemEvent event) throws AbortProcessingException {
         final UIComponent component = (UIComponent) event.getSource();
-        final String target;
         if (component instanceof Message) {
-            target = ((Message) component).getFor();
-        } else if (component instanceof Messages) {
-            target = ((Messages) component).getFor();
-        } else {
-            throw new FacesException("Unknown message type component");
-        }
-        if (target == null || target.isEmpty() || "@all".equals(target)) {
-            if (component instanceof Message) {
+            final String target = ((Message) component).getFor();
+            if (target == null || target.isEmpty() || ALL.equals(target)) {
                 throw new FacesException("'for' attribute undefined for message component " + component.getId());
             } else {
-                final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-                viewRoot.getAttributes().put(Messages.class.getName(), component.getClientId());
+                getMap(MESSAGE_MAP).put(target, component.getClientId());
             }
-        } else {
-            final UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-            //search by component ID
-            UIComponent c = ComponentUtils.findComponent(viewRoot, target);
-            if (c == null) {
-                //search by client ID
-                c = viewRoot.findComponent(target);
-            }
-            if (c != null) {
-                c.getAttributes().put(component.getClass().getName(), component.getClientId());
+        } else if (component instanceof Messages) {
+            final String target = ((Messages) component).getFor();
+            if (target == null || target.isEmpty() || ALL.equals(target)) {
+                getMap(MESSAGES_MAP).put(ALL, component.getClientId());
+            } else {
+                getMap(MESSAGES_MAP).put(target, component.getClientId());
             }
         }
     }
@@ -67,25 +62,52 @@ public class MessageMatcher implements SystemEventListener {
         return source instanceof Message || source instanceof Messages;
     }
 
-
-    static boolean isMultipleMessage(UIComponent validatedComponent){
-        final Map<String, Object> attributes = validatedComponent.getAttributes();
-        return attributes.containsKey(Messages.class.getName()) || FacesContext.getCurrentInstance().getViewRoot().getAttributes().containsKey(Messages.class.getName());
+    static boolean isMultipleMessage(UIComponent validatedComponent) {
+        final Map messageMap = getMap(MESSAGE_MAP);
+        if (messageMap.containsKey(validatedComponent.getId()) || messageMap.containsKey(validatedComponent.getClientId())) {
+            return false;
+        } else {
+            final Map messagesMap = getMap(MESSAGES_MAP);
+            return messagesMap.containsKey(validatedComponent.getId()) || messagesMap.containsKey(validatedComponent.getClientId()) || messagesMap.containsKey(ALL);
+        }
     }
 
     static String lookupMessageClientId(UIComponent validatedComponent) {
-        final Map<String, Object> componentAttributes = validatedComponent.getAttributes();
-        final String id = (String) componentAttributes.get(isMultipleMessage(validatedComponent) ? Messages.class.getName() : Message.class.getName());
+        String id;
+        if (isMultipleMessage(validatedComponent)) {
+            final Map<String, String> messagesMap = getMap(MESSAGES_MAP);
+            id = messagesMap.get(validatedComponent.getId());
+            if (id == null) {
+                id = messagesMap.get(validatedComponent.getClientId());
+            }
+        } else {
+            final Map<String, String>  messageMap = getMap(MESSAGE_MAP);
+            id = messageMap.get(validatedComponent.getId());
+            if (id == null) {
+                id = messageMap.get(validatedComponent.getClientId());
+            }
+        }
+        //use the catch all ace:messages component if the is one
         if (id == null) {
-            final Map<String, Object> rootAttributes = FacesContext.getCurrentInstance().getViewRoot().getAttributes();
-            String viewMessagesId = (String) rootAttributes.get(Messages.class.getName());
-            if (viewMessagesId == null) {
+            final Map<String, String> messagesMap = getMap(MESSAGES_MAP);
+            String allMessagesId = messagesMap.get(ALL);
+            if (allMessagesId == null) {
                 throw new FaceletException("Cannot find message/s component assigned to " + validatedComponent.getId());
             } else {
-                return viewMessagesId;
+                return allMessagesId;
             }
         } else {
             return id;
         }
+    }
+
+    private static Map<String, String> getMap(String type) {
+        Map attributes = FacesContext.getCurrentInstance().getViewRoot().getAttributes();
+        Map messageMap = (Map) attributes.get(type);
+        if (messageMap == null) {
+            messageMap = new HashMap();
+            attributes.put(type, messageMap);
+        }
+        return (Map) messageMap;
     }
 }
