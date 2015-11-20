@@ -43,7 +43,7 @@
             </h:form>
             <h:form id="upload-form">
                 <h:panelGrid styleClass="centeredPanelGrid">
-                    <ace:fileEntry id="file-entry"
+                    <ace:fileEntry id="file-entryListener"
                                    maxFileSize="#{fileEntryValidation.maxFileSize}"
                                    maxFileSizeMessage="#{fileEntryValidation.maxFileSizeMessage}"
                                    required="true"
@@ -53,7 +53,7 @@
 
                 <h:panelGrid styleClass="centeredPanelGrid">
                     <h:commandButton id="submitBtn" type="submit" value="Send File"/>
-                    <ace:messages id="msgs"/>
+                    <ace:message for="upload-form:file-entryListener" id="msgsListener"/>
                 </h:panelGrid>
             </h:form>
         </ace:panel>

@@ -25,29 +25,30 @@
                 template="/resources/templates/content-template.xhtml">
 
     <ui:define name="example">
-        <h:form id="form">
+        <icecore:config messagePersistence="false"/>
+        <h:form id="formGm">
             <ace:panel id="employeeInfoInputPanel" header="Employee Info">
                 <h:panelGrid id="employeeInputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
-                    <ace:textEntry id="fullNameInput" value="#{messagesBean.fullName}" label="Full Name" labelPosition="left">
-                        <ace:ajax event="blur" render="allMsgs" listener="#{messagesBean.blurListener}"/>
+                    <ace:textEntry id="fullNameInputA" value="#{messagesBean.fullName}" label="Full Name" labelPosition="left">
+                        <ace:ajax event="blur" render="allMsgsA" listener="#{messagesBean.blurListener}"/>
                     </ace:textEntry>
 
-                    <ace:textEntry id="dateOfBirthInput" value="#{messagesBean.dateOfBirth}" label="Date of Birth" labelPosition="left">
-                        <ace:ajax event="blur" render="allMsgs" listener="#{messagesBean.blurListener}"/>
+                    <ace:textEntry id="dateOfBirthInputA" value="#{messagesBean.dateOfBirth}" label="Date of Birth" labelPosition="left">
+                        <ace:ajax event="blur" render="allMsgsA" listener="#{messagesBean.blurListener}"/>
                     </ace:textEntry>
 
-                    <ace:textEntry id="majorInput" value="#{messagesBean.major}" label="Major" labelPosition="left">
-                        <ace:ajax event="blur" render="allMsgs" listener="#{messagesBean.blurListener}"/>
+                    <ace:textEntry id="majorInputA" value="#{messagesBean.major}" label="Major" labelPosition="left">
+                        <ace:ajax event="blur" render="allMsgsA" listener="#{messagesBean.blurListener}"/>
                     </ace:textEntry>
 
-                    <ace:textEntry id="workingSinceInput" value="#{messagesBean.workingSince}" label="Working Since" labelPosition="left">
-                        <ace:ajax event="blur" render="allMsgs" listener="#{messagesBean.blurListener}"/>
+                    <ace:textEntry id="workingSinceInputA" value="#{messagesBean.workingSince}" label="Working Since" labelPosition="left">
+                        <ace:ajax event="blur" render="allMsgsA" listener="#{messagesBean.blurListener}"/>
                     </ace:textEntry>
                 </h:panelGrid>
             </ace:panel>
 
             <ace:panel id="employeeInfoOutputPanel" header="All Faces Messages">
-                <ace:messages id="allMsgs" initEffect="highlight" changeEffect="puff"/>
+                <ace:messages id="allMsgsA" initEffect="highlight" changeEffect="puff"/>
             </ace:panel>
         </h:form>
 

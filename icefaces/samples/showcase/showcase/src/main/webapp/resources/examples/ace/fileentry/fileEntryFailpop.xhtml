@@ -46,7 +46,7 @@
             </h:form>
             <h:form id="form2">
                 <span class="top">
-                    <ace:fileEntry id="file-entry"
+                    <ace:fileEntry id="file-entryfp"
                         style-class="top"
                         fileEntryListener="#{fileEntryFailPop.popupValidationListener}"/>
                 </span>
@@ -55,7 +55,7 @@
                         <h:commandButton id="subBtn" class="submit" type="submit" value="Send File"/>
                     </span>
                     <span class="messages top">
-                        <ace:messages id="msgs"/>
+                        <ace:message for="form2:file-entryfp" id="msgsfp"/>
                     </span>
                 </div>
             </h:form>

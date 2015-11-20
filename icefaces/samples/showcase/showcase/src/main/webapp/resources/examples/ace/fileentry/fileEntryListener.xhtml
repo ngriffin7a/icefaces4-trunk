@@ -28,13 +28,13 @@
             
             <ace:panel>
                <h:panelGrid styleClass="centeredPanelGrid">
-                    <ace:fileEntry id="fileEntry"
-                                           fileEntryListener="#{fileEntryListener.customValidator}"/>
+                    <ace:fileEntry id="fileEntryListener"
+                         fileEntryListener="#{fileEntryListener.customValidator}"/>
                </h:panelGrid>
                 
                 <h:panelGrid styleClass="centeredPanelGrid">
                      <h:commandButton id="submitBtn" type="submit" value="Send File"/>
-                     <ace:message id="msg" for="example-form:fileEntry"/>
+                     <ace:message id="msg" for="example-form:fileEntryListener"/>
                 </h:panelGrid>
        </ace:panel>
             
