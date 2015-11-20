@@ -58,9 +58,9 @@ public class MultiColumnSubmenuMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Specifies whether the 'positionLeft' and 'positionRight' attributes are relative to the submenu label or the menu bar. It also affects centering when using the value 'center' in 'direction. Possible values are 'label' and 'menubar'. The default value is 'label'.")
     private String relativeTo;
 	
-    @Property(tlddoc = "Style class of the submenu header.")
+    @Property(tlddoc = "Style class of the submenu header (contents of the 'header' facet).")
     private String headerClass;
 	
-    @Property(tlddoc = "Style class of the submenu footer.")
+    @Property(tlddoc = "Style class of the submenu footer (contents of the 'footer' facet).")
     private String footerClass;
 }
