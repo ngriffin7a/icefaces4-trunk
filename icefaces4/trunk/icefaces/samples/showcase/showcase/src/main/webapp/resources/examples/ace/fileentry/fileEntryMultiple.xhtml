@@ -47,7 +47,7 @@
             </h:form>
             <h:form id="form2">
                 <span class="top">
-                    <ace:fileEntry id="file-entry"
+                    <ace:fileEntry id="file-entryMultiple"
                         style-class="top"
                         maxFileCount="#{fileEntryMultiple.maxFileCount}"
                         maxFileCountMessage="#{fileEntryMultiple.maxFileCountMessage}"
@@ -59,7 +59,7 @@
                         <h:commandButton id="submitBtn" class="submit" type="submit" value="Send File"/>
                     </span>
                     <span class="messages top">
-                        <ace:messages id="msgs"/>
+                        <ace:message for="form2:file-entryMultiple" id="msgsMultiple"/>
                     </span>
                 </div>
             </h:form>

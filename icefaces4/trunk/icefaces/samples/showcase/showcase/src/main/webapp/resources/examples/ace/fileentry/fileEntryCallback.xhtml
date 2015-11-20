@@ -27,11 +27,11 @@
 		<h:form id="example-form">
 			<ace:panel>
 				<h:panelGrid styleClass="centeredPanelGrid">
-					<ace:fileEntry id="fileEntry" callback="#{fileEntryCallback}" />
+					<ace:fileEntry id="fileEntryCallback" callback="#{fileEntryCallback}" />
 				</h:panelGrid>
 				<h:panelGrid styleClass="centeredPanelGrid">
 					<h:commandButton id="submitBtn" type="submit" value="Send File" />
-					<ace:messages id="msg" for="example-form:fileEntry" showDetail="true" />
+					<ace:message id="msg" for="example-form:fileEntryCallback" showDetail="true" />
 				</h:panelGrid>
 			</ace:panel>
 		</h:form>
