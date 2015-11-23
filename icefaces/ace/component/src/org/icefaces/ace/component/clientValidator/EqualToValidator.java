@@ -46,17 +46,7 @@ public class EqualToValidator extends EqualToValidatorBase {
             final UIComponent otherComponent = ComponentUtils.findComponent(context.getViewRoot(), getTo());
             if (otherComponent instanceof Validateable) {
                 final String otherId = ((Validateable) otherComponent).getValidatedElementId();
-                String label = "";
-                try {
-                    Method m = otherComponent.getClass().getMethod("getLabel");
-                    label = (String) m.invoke(otherComponent);
-                } catch (NoSuchMethodException e) {
-                    label = "";
-                } catch (InvocationTargetException e) {
-                    label = "";
-                } catch (IllegalAccessException e) {
-                    label = "";
-                }
+                String label = MessageMatcher.lookupLabel(otherComponent);
 
                 final StringBuffer script = new StringBuffer();
                 script.append("ice.ace.setupClientValidation('");

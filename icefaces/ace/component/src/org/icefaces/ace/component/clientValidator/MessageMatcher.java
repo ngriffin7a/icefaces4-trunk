@@ -23,20 +23,22 @@ import org.icefaces.ace.util.ComponentUtils;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
+import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.PhaseId;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 import javax.faces.view.facelets.FaceletException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MessageMatcher implements SystemEventListener {
     private static final String MESSAGE_MAP = MessageMatcher.class.getName() + ".messageMap";
     private static final String MESSAGES_MAP = MessageMatcher.class.getName() + ".messagesMap";
-//    private static final String LABEL_MAP = MessageMatcher.class.getName() + ".labelMap";
-//    private static final String LABEL_REVERSE_MAP = MessageMatcher.class.getName() + ".labelReverseMap";
+    private static final String LABEL_MAP = MessageMatcher.class.getName() + ".labelMap";
     private static final String ALL = "@all";
 
     public void processEvent(SystemEvent event) throws AbortProcessingException {
@@ -55,11 +57,17 @@ public class MessageMatcher implements SystemEventListener {
             } else {
                 getMap(MESSAGES_MAP).put(target, component.getClientId());
             }
+        } else if (component instanceof HtmlOutputLabel) {
+            final String target = ((HtmlOutputLabel) component).getFor();
+            if (target != null && !target.isEmpty()) {
+                String label = (String) ((HtmlOutputLabel) component).getValue();
+                getMap(LABEL_MAP).put(target, label);
+            }
         }
     }
 
     public boolean isListenerForSource(Object source) {
-        return source instanceof Message || source instanceof Messages;
+        return source instanceof Message || source instanceof Messages || source instanceof HtmlOutputLabel;
     }
 
     static boolean isMultipleMessage(UIComponent validatedComponent) {
@@ -99,6 +107,31 @@ public class MessageMatcher implements SystemEventListener {
         } else {
             return id;
         }
+    }
+
+    static String lookupLabel(UIComponent validatedComponent) {
+        String label;
+        //try finding label attribute
+        try {
+            Method m = validatedComponent.getClass().getMethod("getLabel");
+            label = (String) m.invoke(validatedComponent);
+        } catch (NoSuchMethodException e) {
+            label = "";
+        } catch (InvocationTargetException e) {
+            label = "";
+        } catch (IllegalAccessException e) {
+            label = "";
+        }
+        //try finding a referencing h:outputLabel
+        if (label == null || label.isEmpty()) {
+            final Map<String, String> labelMap = getMap(LABEL_MAP);
+            label = labelMap.get(validatedComponent.getId());
+            if (label == null) {
+                label = labelMap.get(validatedComponent.getClientId());
+            }
+        }
+
+        return label;
     }
 
     private static Map<String, String> getMap(String type) {
