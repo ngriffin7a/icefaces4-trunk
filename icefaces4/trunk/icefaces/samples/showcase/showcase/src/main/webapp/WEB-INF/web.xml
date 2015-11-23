@@ -39,7 +39,11 @@
         	<!-- Use Development mode for debugging, results in uncompressed resources being loaded.
         	<param-value>Development</param-value>
         	-->
-
+    </context-param>
+    <!-- following context-param enforces the @PreDestroy methods to get called and clean up the server -->
+    <context-param>
+        <param-name>com.sun.faces.injectionProvider</param-name>
+        <param-value>com.sun.faces.vendor.WebContainerInjectionProvider</param-value>
     </context-param>
     
     <context-param>
