@@ -41,7 +41,8 @@ public class PatternValidator extends PatternValidatorBase {
             final String messageClientId = MessageMatcher.lookupMessageClientId(validatedComponent);
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", "pattern", "Invalid format.");
+                    "org.icefaces.ace.component.clientvalidation.", "pattern", "{0} has an invalid format.");
+            final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();
             script.append("ice.ace.setupClientValidation('");
@@ -51,7 +52,7 @@ public class PatternValidator extends PatternValidatorBase {
             script.append("/, '");
             script.append(messageClientId);
             script.append("', '");
-            script.append(MessageFormat.format(message, getPattern()));
+            script.append(MessageFormat.format(message, label, getPattern()));
             script.append("', ");
             script.append(MessageMatcher.isMultipleMessage(validatedComponent));
             script.append(")");

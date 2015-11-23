@@ -23,6 +23,7 @@ import org.icefaces.ace.util.ComponentUtils;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,7 +39,8 @@ public class DecimalValidator extends DecimalValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", "decimal", "Decimal value is required.");
+                    "org.icefaces.ace.component.clientvalidation.", "decimal", "{0} requires decimal value.");
+            final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();
             script.append("ice.ace.setupClientValidation('");
@@ -50,7 +52,7 @@ public class DecimalValidator extends DecimalValidatorBase {
             script.append(", '");
             script.append(messageClientId);
             script.append("', '");
-            script.append(message);
+            script.append(MessageFormat.format(message, label));
             script.append("', ");
             script.append(MessageMatcher.isMultipleMessage(validatedComponent));
             script.append(")");

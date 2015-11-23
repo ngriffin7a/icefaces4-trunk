@@ -41,12 +41,13 @@ public class EqualToValidator extends EqualToValidatorBase {
             final String messageClientId = MessageMatcher.lookupMessageClientId(validatedComponent);
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", "equalTo", "Input value not equal to  {0} 's value.");
+                    "org.icefaces.ace.component.clientvalidation.", "equalTo", "{0} value not equal to value of {1}.");
 
             final UIComponent otherComponent = ComponentUtils.findComponent(context.getViewRoot(), getTo());
             if (otherComponent instanceof Validateable) {
                 final String otherId = ((Validateable) otherComponent).getValidatedElementId();
-                String label = MessageMatcher.lookupLabel(otherComponent);
+                String label = MessageMatcher.lookupLabel(validatedComponent);
+                String otherLabel = MessageMatcher.lookupLabel(otherComponent);
 
                 final StringBuffer script = new StringBuffer();
                 script.append("ice.ace.setupClientValidation('");
@@ -56,7 +57,7 @@ public class EqualToValidator extends EqualToValidatorBase {
                 script.append("', '");
                 script.append(messageClientId);
                 script.append("', '");
-                script.append(MessageFormat.format(message, label));
+                script.append(MessageFormat.format(message, label, otherLabel));
                 script.append("', ");
                 script.append(MessageMatcher.isMultipleMessage(validatedComponent));
                 script.append(")");
