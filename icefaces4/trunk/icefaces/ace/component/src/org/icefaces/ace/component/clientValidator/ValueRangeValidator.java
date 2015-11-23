@@ -60,7 +60,8 @@ public class ValueRangeValidator extends ValueRangeValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", rule, "Required value is minimum {0} and maximum {1}.");
+                    "org.icefaces.ace.component.clientvalidation.", rule, "{0} requires a value of minimum {1} and maximum {2}.");
+            final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();
             script.append("ice.ace.setupClientValidation('");
@@ -72,7 +73,7 @@ public class ValueRangeValidator extends ValueRangeValidatorBase {
             script.append(", '");
             script.append(messageClientId);
             script.append("', '");
-            script.append(MessageFormat.format(message, min, max));
+            script.append(MessageFormat.format(message, label, min, max));
             script.append("', ");
             script.append(MessageMatcher.isMultipleMessage(validatedComponent));
             script.append(")");

@@ -61,7 +61,8 @@ public class LengthValidator extends LengthValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", rule, "Required length is minimum {0} and maximum {1}.");
+                    "org.icefaces.ace.component.clientvalidation.", rule, "{0} requires minimum {1} characters and allows the maximum of {2} characters.");
+            final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();
             script.append("ice.ace.setupClientValidation('");
@@ -73,7 +74,7 @@ public class LengthValidator extends LengthValidatorBase {
             script.append(", '");
             script.append(messageClientId);
             script.append("', '");
-            script.append(MessageFormat.format(message, min, max));
+            script.append(MessageFormat.format(message, label, min, max));
             script.append("', ");
             script.append(MessageMatcher.isMultipleMessage(validatedComponent));
             script.append(")");
