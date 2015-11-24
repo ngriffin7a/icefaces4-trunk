@@ -150,6 +150,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		writer.startElement("input", null);
         writer.writeAttribute("type", "text", null);
         writer.writeAttribute("style", "visibility: hidden; width: 1px; height: 1px; padding: 0; margin 0; border: none;", null);
+        writer.writeAttribute("id", inputClientId, null);
         writer.writeAttribute("name", inputClientId, null);
         writer.writeAttribute("value", value, null);
 		if (disabled) writer.writeAttribute("disabled", "disabled", null);

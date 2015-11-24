@@ -34,7 +34,7 @@ ice.ace.ComboBox = function(id, updateId, rowClass, highlightedRowClass, selecte
 	this.element = $element.get(0);
 	this.element.submitOnEnter = 'disabled';
 	this.element.id = this.id + "_input";
-	this.hidden = this.root.find('input[type=hidden]').get(0);
+	this.hidden = document.getElementById(id + '_hidden');
 	var $downArrowButton = $box.find('.ui-combobox-button');
 	this.downArrowButton = $downArrowButton.eq(0);
 	if (ice.ace.jq.browser.msie) {// ie7 fix

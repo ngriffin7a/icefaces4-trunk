@@ -156,9 +156,12 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.endElement("span");
 		
 		// hidden input
+		String hiddenInputId = clientId + "_hidden";
 		writer.startElement("input", null);
-		writer.writeAttribute("type", "hidden", null);
-		writer.writeAttribute("name", clientId + "_hidden", null);
+		writer.writeAttribute("type", "text", null);
+		writer.writeAttribute("style", "visibility: hidden; width: 1px; height: 1px; padding: 0; margin 0; border: none;", null);
+		writer.writeAttribute("id", hiddenInputId, null);
+		writer.writeAttribute("name", hiddenInputId, null);
         writer.writeAttribute("value", _value, null);
 		if (disabled) writer.writeAttribute("disabled", "disabled", null);
 		if (readonly) writer.writeAttribute("readonly", "readonly", null);
@@ -283,10 +286,6 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.writeText("})();", null);
 		writer.endElement("script");
 		writer.endElement("span");
-	}
-
-	public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException {
-
 	}
 
 	public void populateList(FacesContext facesContext, ComboBox comboBox) throws IOException {
