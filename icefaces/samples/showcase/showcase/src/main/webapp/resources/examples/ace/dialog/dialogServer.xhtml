@@ -33,8 +33,7 @@
             </center>
         </h:form>
         <h:panelGroup>
-            <ace:dialog id="dialog"
-                        binding="#{dialog}"
+            <ace:dialog id="dialogServer"
                         visible="#{dialogServerBean.visible}"
                         header="A sample dialog overview example using Server visible property"
                         closable="false"
@@ -54,10 +53,6 @@
                     </h:panelGrid>
 
                     <h:panelGrid width="100%" style="text-align: center;" columns="1">
-                   <!--     <h:commandButton id="submitBtn" value="Client api with ajax listener" onclick="ice.ace.instance('#{dialog.clientId}').hide();">
-                            <f:ajax listener="#{dialogServerBean.closeFAjax}"/>
-                        </h:commandButton> -->
-
                         <h:commandButton id="submitServer" value="Server Submit" actionListener="#{dialogServerBean.hide}">
                         </h:commandButton>
                     </h:panelGrid>
