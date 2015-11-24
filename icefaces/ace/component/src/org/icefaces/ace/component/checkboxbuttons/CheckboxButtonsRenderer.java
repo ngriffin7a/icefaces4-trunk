@@ -132,12 +132,14 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		int i = 0;
 		if (!checkboxButtons.isValid()) {
 			while (selectItemsIterator.hasNext()) {
-				encodeButton(context, checkboxButtons, i++, (SelectItem) selectItemsIterator.next(), converter, checkboxButtons.getSubmittedValue());
+				encodeButton(context, checkboxButtons, i++, selectItemsIterator.next(), converter, checkboxButtons.getSubmittedValue());
 			}
+            encodeSelect(context, checkboxButtons, new SelectItemsIterator(context, checkboxButtons), converter, checkboxButtons.getSubmittedValue());
 		} else {
 			while (selectItemsIterator.hasNext()) {
-				encodeButton(context, checkboxButtons, i++, (SelectItem) selectItemsIterator.next(), converter, currentSelections);
+				encodeButton(context, checkboxButtons, i++, selectItemsIterator.next(), converter, currentSelections);
 			}
+            encodeSelect(context, checkboxButtons, new SelectItemsIterator(context, checkboxButtons), converter, currentSelections);
 		}
 
 		if ("bottom".equalsIgnoreCase(indicatorPosition)) {
@@ -157,13 +159,39 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		writer.endElement("div");
     }
 
+    private void encodeSelect(FacesContext facesContext, CheckboxButtons checkboxButtons, SelectItemsIterator selectItemsIterator, Converter converter, Object currentSelections) throws IOException {
+        ResponseWriter writer = facesContext.getResponseWriter();
+        String id = checkboxButtons.getClientId(facesContext);
+        writer.startElement("select", checkboxButtons);
+        writer.writeAttribute("id", id + "_options", null);
+        writer.writeAttribute("name", id, null);
+        writer.writeAttribute("multiple", "multiple", null);
+        writer.writeAttribute("style", "visibility: hidden; width: 1px; height: 1px; padding: 0; margin 0; border: none;", null);
+        int i = 0;
+        while (selectItemsIterator.hasNext()) {
+            SelectItem item = selectItemsIterator.next();
+            Object value = getConvertedValueForClient(facesContext, checkboxButtons, item.getValue());
+            boolean selected = isSelected(facesContext, checkboxButtons, value, currentSelections, converter);
+            String clientId = checkboxButtons.getClientId(facesContext) + ":" + i + "_option";
+
+            writer.startElement("option", checkboxButtons);
+            if (selected) writer.writeAttribute("selected", "selected", null);
+            writer.writeAttribute("id", clientId, null);
+            writer.writeAttribute("value", value, null);
+            writer.writeText(value, null);
+            writer.endElement("option");
+            i++;
+        }
+        writer.endElement("option");
+    }
+
 	private void encodeButton(FacesContext facesContext, CheckboxButtons checkboxButtons, int index, SelectItem item, Converter converter, Object currentSelections) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
 
         String clientId = checkboxButtons.getClientId(facesContext) + ":" + index;
 		String labelPosition = checkboxButtons.getLabelPosition();
 
-		String label = item.getLabel();
+        String label = item.getLabel();
 		Object value = getConvertedValueForClient(facesContext, checkboxButtons, item.getValue());
 		boolean selected = isSelected(facesContext, checkboxButtons, value, currentSelections, converter);
 
@@ -250,13 +278,6 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 				writer.endElement("label");
 			}
 		}
-
-        writer.startElement("input", checkboxButtons);
-        writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("autocomplete", "off", null);
-        if (selected) writer.writeAttribute("name", checkboxButtons.getClientId(facesContext), null);
-        writer.writeAttribute("value", value, null);
-        writer.endElement("input");
 
 		// register checkbox with group
         writer.startElement("script", null);

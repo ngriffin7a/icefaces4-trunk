@@ -24,7 +24,7 @@ ice.ace.checkboxbutton = function(clientId, options) {
     this.jqId = ice.ace.escapeClientId(clientId);
     this.spanSelector = this.jqId + " > span"
     this.innerSpanSelector = this.jqId + " > span > span"
-    this.fieldSelector = this.jqId + " > input"
+    this.fieldSelector = this.jqId + "_option"
     this.buttonSelector = this.jqId + " > span > span > button"
     this.iconSelector = this.buttonSelector + " > span.fa"
 
@@ -61,7 +61,7 @@ ice.ace.checkboxbutton = function(clientId, options) {
     var unload = function() {
         // Unload events
         ice.ace.jq(self.jqId).off("click mouseenter mouseleave keypress");
-    }
+    };
 
     ice.onElementUpdate(this.id, unload);
 };
@@ -73,7 +73,7 @@ ice.ace.checkboxbutton.register = function(clientId, groupId) {
         groups[groupId] = groups[groupId] || {};
         groups[groupId][clientId] = clientId;
     }
-}
+};
 
 ice.ace.checkboxbutton.prototype.isChecked = function() {
     if (this.options.checkboxButtons) {
@@ -85,10 +85,10 @@ ice.ace.checkboxbutton.prototype.isChecked = function() {
 
 ice.ace.checkboxbutton.prototype.setChecked = function(bool) {
     if (this.options.checkboxButtons) {
-		if (!ice.ace.jq(this.fieldSelector).attr('name'))
-			ice.ace.jq(this.fieldSelector).attr('name', this.options.checkboxButtons);
-		else 
-			ice.ace.jq(this.fieldSelector).attr('name', '');
+		if (!ice.ace.jq(this.fieldSelector).attr('selected'))
+			ice.ace.jq(this.fieldSelector).attr('selected', "selected");
+		else
+			ice.ace.jq(this.fieldSelector).removeAttr('selected');
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
 	}
@@ -131,7 +131,7 @@ ice.ace.checkboxbutton.prototype.onAriaKeypress = function (e) {
             innerSpan.attr("aria-checked", false);
         }
     }
-}
+};
 
 ice.ace.checkboxbutton.prototype.toggleCheckbox = function (activeButton) {
     var newValue = !this.isChecked();
