@@ -84,6 +84,10 @@ public abstract class LazyNodeDataModel<K> extends NodeDataModel<K> {
         }
     }
 
+	public K getParentData() {
+		return parentMap.get(getData());
+	}
+
     @Override
     public K navToChild(Object keySegment) {
         // Navigate straight to index if default integer index

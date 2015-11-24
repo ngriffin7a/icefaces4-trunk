@@ -27,6 +27,7 @@ import org.icefaces.util.JavaScriptRunner;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.model.DataModel;
 import java.io.IOException;
 import java.lang.String;
 import java.util.Iterator;
@@ -299,8 +300,21 @@ public class TreeRenderer extends CoreRenderer {
         String expandedClass = NODE_EXPANDED_ICON_CLASS;
         String contractedClass = NODE_CONTRACTED_ICON_CLASS;
         String dotSource = renderContext.getDotURL();
+		Tree tree = renderContext.getTree();
         boolean lazy = renderContext.isLazy();
-        boolean leaf = lazy ? false : renderContext.getTree().isLeaf(); // prevent attempt at loading children in lazy mode
+        boolean leaf = lazy ? false : tree.isLeaf(); // prevent attempt at loading children in lazy mode
+
+		DataModel model = tree.getDataModel();
+		if (model != null && model instanceof LazyNodeDataModel) {
+			Object parent = ((LazyNodeDataModel) model).getParentData();
+			if (parent != null) {
+				NodeStateMap stateMap = tree.getStateMap();
+				NodeState parentState = stateMap.get(parent);
+				if (parentState.isExpanded()) {
+					leaf = tree.isLeaf(); // do load children in lazy mode only if immediate parent is expanded
+				}
+			}
+		}
 
 		if (leaf)
 			; // don't add anything to icon class
