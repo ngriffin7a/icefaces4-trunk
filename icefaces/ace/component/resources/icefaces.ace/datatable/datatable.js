@@ -1212,14 +1212,16 @@ ice.ace.DataTable.prototype.setupSelectionHover = function () {
         selector = this.isCellSelectionEnabled()
             ? this.cellSelector
             : this.rowSelector,
-        hoverSelector = '> tbody.ui-datatable-data > tr.ui-state-hover,  > tbody.ui-datatable-data > tr > td.ui-state-hover';
+        hoverSelector = '> tbody.ui-datatable-data > tr.ui-state-hover,  > tbody.ui-datatable-data > tr > td.ui-state-hover'
+			+ ', > tbody.ui-datatable-data > tr.ui-datatable-state-active-hover'
+			+ ', > tbody.ui-datatable-data > tr > td.ui-datatable-state-active-hover';
 
     this.element.find(this.bodyTableSelector).parent()
         .bind('mouseleave', function () {
-            ice.ace.jq(this).find(hoverSelector).removeClass('ui-state-hover');
+            ice.ace.jq(this).find(hoverSelector).removeClass('ui-state-hover ui-datatable-state-active-hover');
         })
         .find('thead').bind('mouseenter', function () {
-            ice.ace.jq(this).siblings().closest('table').find(hoverSelector).removeClass('ui-state-hover');
+            ice.ace.jq(this).siblings().closest('table').find(hoverSelector).removeClass('ui-state-hover ui-datatable-state-active-hover');
         });
 
     this.element
@@ -1227,20 +1229,28 @@ ice.ace.DataTable.prototype.setupSelectionHover = function () {
         .on('mouseenter', selector, function (e) {
             var src = ice.ace.jq(e.currentTarget);
 
-            src.siblings().removeClass('ui-state-hover');
-            src.siblings().children('td').removeClass('ui-state-hover');
+            src.siblings().removeClass('ui-state-hover ui-datatable-state-active-hover');
+            src.siblings().children('td').removeClass('ui-state-hover ui-datatable-state-active-hover');
 
             // Skip conditional rows and their cells
             if (src.hasClass('dt-cond-row') || src.parent().hasClass('dt-cond-row'))
                 return;
 
-            src.addClass('ui-state-hover');
-            src.children('td').addClass('ui-state-hover');
+			if (src.hasClass('ui-state-active')) {
+				src.addClass('ui-datatable-state-active-hover');
+				src.children('td').addClass('ui-datatable-state-active-hover');
+			} else {
+				src.addClass('ui-state-hover');
+				src.children('td').addClass('ui-state-hover');
+			}
 
             if (_self.isCellSelectionEnabled()) {
                 src.parent().siblings()
                             .children('.ui-state-hover')
                             .removeClass('ui-state-hover');
+                src.parent().siblings()
+                            .children('.ui-datatable-state-active-hover')
+                            .removeClass('ui-datatable-state-active-hover');
             }
         });
 }
