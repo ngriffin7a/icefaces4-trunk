@@ -16,5 +16,11 @@
 
 package org.icefaces.ace.component.checkboxbuttons;
 
-public class CheckboxButtons extends CheckboxButtonsBase {
+import org.icefaces.ace.component.clientValidator.Validateable;
+
+public class CheckboxButtons extends CheckboxButtonsBase implements Validateable {
+
+    public String getValidatedElementId() {
+        return getClientId() + "_options";
+    }
 }
