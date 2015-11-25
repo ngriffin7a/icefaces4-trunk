@@ -16,5 +16,11 @@
 
 package org.icefaces.ace.component.radiobuttons;
 
-public class RadioButtons extends RadioButtonsBase {
+import org.icefaces.ace.component.clientValidator.Validateable;
+
+public class RadioButtons extends RadioButtonsBase implements Validateable {
+
+    public String getValidatedElementId() {
+        return getClientId() + "_options";
+    }
 }
