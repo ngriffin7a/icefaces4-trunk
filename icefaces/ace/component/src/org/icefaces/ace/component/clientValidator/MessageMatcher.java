@@ -129,6 +129,9 @@ public class MessageMatcher implements SystemEventListener {
             if (label == null) {
                 label = labelMap.get(validatedComponent.getClientId());
             }
+            if (label == null) {
+                label = "";
+            }
         }
 
         return label;

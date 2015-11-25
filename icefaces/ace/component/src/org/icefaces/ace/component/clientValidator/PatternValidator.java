@@ -41,7 +41,7 @@ public class PatternValidator extends PatternValidatorBase {
             final String messageClientId = MessageMatcher.lookupMessageClientId(validatedComponent);
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", "pattern", "{0} has an invalid format.");
+                    "org.icefaces.ace.component.clientvalidation.", "pattern", "Entry {0} is malformed.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();
