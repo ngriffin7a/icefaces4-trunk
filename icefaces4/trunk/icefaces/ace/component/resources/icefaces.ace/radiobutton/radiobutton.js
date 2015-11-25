@@ -24,7 +24,7 @@ ice.ace.radiobutton = function(clientId, options) {
     this.jqId = ice.ace.escapeClientId(clientId);
     this.spanSelector = this.jqId + " > span"
     this.innerSpanSelector = this.jqId + " > span > span"
-    this.fieldSelector = this.jqId + " > input"
+    this.fieldSelector = this.jqId + "_option"
     this.buttonSelector = this.jqId + " > span > span > button"
     this.iconSelector = this.buttonSelector + " > span.fa"
 
@@ -73,7 +73,7 @@ ice.ace.radiobutton.register = function(clientId, groupId) {
 
 ice.ace.radiobutton.prototype.isChecked = function() {
     if (this.options.radioButtons) {
-        return (!!ice.ace.jq(this.fieldSelector).attr('name'));
+        return (!!ice.ace.jq(this.fieldSelector).attr('selected'));
     } else {
 		return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
 	}
@@ -81,10 +81,10 @@ ice.ace.radiobutton.prototype.isChecked = function() {
 
 ice.ace.radiobutton.prototype.setChecked = function(bool) {
     if (this.options.radioButtons) {
-		if (!ice.ace.jq(this.fieldSelector).attr('name'))
-			ice.ace.jq(this.fieldSelector).attr('name', this.options.radioButtons);
-		else if (!bool)
-			ice.ace.jq(this.fieldSelector).attr('name', '');
+        if (!ice.ace.jq(this.fieldSelector).attr('selected'))
+            ice.ace.jq(this.fieldSelector).attr('selected', "selected");
+        else
+            ice.ace.jq(this.fieldSelector).removeAttr('selected');
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
 	}

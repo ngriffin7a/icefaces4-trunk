@@ -77,7 +77,7 @@ ice.ace.checkboxbutton.register = function(clientId, groupId) {
 
 ice.ace.checkboxbutton.prototype.isChecked = function() {
     if (this.options.checkboxButtons) {
-        return (!!ice.ace.jq(this.fieldSelector).attr('name'));
+        return (!!ice.ace.jq(this.fieldSelector).attr('selected'));
     } else {
 		return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
 	}

@@ -27,6 +27,7 @@
 package org.icefaces.ace.component.radiobuttons;
 
 
+import org.icefaces.ace.component.checkboxbuttons.CheckboxButtons;
 import org.icefaces.render.MandatoryResourceComponent;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -131,12 +132,14 @@ public class RadioButtonsRenderer extends InputRenderer {
 		int i = 0;
 		if (!radioButtons.isValid()) {
 			while (selectItemsIterator.hasNext()) {
-				encodeButton(context, radioButtons, i++, (SelectItem) selectItemsIterator.next(), converter, radioButtons.getSubmittedValue());
+				encodeButton(context, radioButtons, i++, selectItemsIterator.next(), converter, radioButtons.getSubmittedValue());
 			}
+            encodeSelect(context, radioButtons, new SelectItemsIterator(context, radioButtons), converter, radioButtons.getSubmittedValue());
 		} else {
 			while (selectItemsIterator.hasNext()) {
-				encodeButton(context, radioButtons, i++, (SelectItem) selectItemsIterator.next(), converter, currentSelections);
+				encodeButton(context, radioButtons, i++, selectItemsIterator.next(), converter, currentSelections);
 			}
+            encodeSelect(context, radioButtons, new SelectItemsIterator(context, radioButtons), converter, currentSelections);
 		}
 
 		if ("bottom".equalsIgnoreCase(indicatorPosition)) {
@@ -156,7 +159,32 @@ public class RadioButtonsRenderer extends InputRenderer {
 		writer.endElement("div");
     }
 
-	private void encodeButton(FacesContext facesContext, RadioButtons radioButtons, int index, SelectItem item, Converter converter, Object currentSelections) throws IOException {
+    private void encodeSelect(FacesContext facesContext, RadioButtons radioButtons, SelectItemsIterator selectItemsIterator, Converter converter, Object currentSelections) throws IOException {
+        ResponseWriter writer = facesContext.getResponseWriter();
+        String id = radioButtons.getClientId(facesContext);
+        writer.startElement("select", radioButtons);
+        writer.writeAttribute("id", id + "_options", null);
+        writer.writeAttribute("name", id, null);
+        writer.writeAttribute("style", "visibility: hidden; width: 1px; height: 1px; padding: 0; margin 0; border: none;", null);
+        int i = 0;
+        while (selectItemsIterator.hasNext()) {
+            SelectItem item = selectItemsIterator.next();
+            Object value = getConvertedValueForClient(facesContext, radioButtons, item.getValue());
+            boolean selected = isSelected(facesContext, radioButtons, value, currentSelections, converter);
+            String clientId = radioButtons.getClientId(facesContext) + ":" + i + "_option";
+
+            writer.startElement("option", radioButtons);
+            if (selected) writer.writeAttribute("selected", "selected", null);
+            writer.writeAttribute("id", clientId, null);
+            writer.writeAttribute("value", value, null);
+            writer.writeText(value, null);
+            writer.endElement("option");
+            i++;
+        }
+        writer.endElement("option");
+    }
+
+    private void encodeButton(FacesContext facesContext, RadioButtons radioButtons, int index, SelectItem item, Converter converter, Object currentSelections) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
 
         String clientId = radioButtons.getClientId(facesContext) + ":" + index;
@@ -247,13 +275,6 @@ public class RadioButtonsRenderer extends InputRenderer {
 				writer.endElement("label");
 			}
 		}
-
-        writer.startElement("input", radioButtons);
-        writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("autocomplete", "off", null);
-        if (selected) writer.writeAttribute("name", radioButtons.getClientId(facesContext), null);
-        writer.writeAttribute("value", value, null);
-        writer.endElement("input");
 
 		// register radio button with group
         writer.startElement("script", null);
