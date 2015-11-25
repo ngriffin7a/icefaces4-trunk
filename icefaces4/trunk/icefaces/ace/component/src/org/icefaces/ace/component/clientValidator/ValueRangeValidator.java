@@ -60,7 +60,7 @@ public class ValueRangeValidator extends ValueRangeValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", rule, "{0} requires a value of minimum {1} and maximum {2}.");
+                    "org.icefaces.ace.component.clientvalidation.", rule, "Entry {0} requires a value between {1} and {2}.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();

@@ -39,7 +39,7 @@ public class RequiredValidator extends RequiredValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", "required", "{0} is required.");
+                    "org.icefaces.ace.component.clientvalidation.", "required", "Entry {0} is required.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();

@@ -39,7 +39,7 @@ public class DecimalValidator extends DecimalValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", "decimal", "{0} requires decimal value.");
+                    "org.icefaces.ace.component.clientvalidation.", "decimal", "Entry {0} requires a decimal value.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();
