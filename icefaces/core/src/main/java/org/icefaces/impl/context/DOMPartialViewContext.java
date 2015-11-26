@@ -650,7 +650,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
 
                         //Should be constant, but may vary with JSF implementation
                         String SELECTED = "selected=\"true\"";
-                        Matcher tagMatcher = OPTION_TAG.matcher(optionBody);
+                        Matcher tagMatcher = OPTION_TAG.matcher(Matcher.quoteReplacement(optionBody));
                         StringBuffer outBuffer = new StringBuffer();
                         while (tagMatcher.find()) {
                             String optionTag = tagMatcher.group(0);
