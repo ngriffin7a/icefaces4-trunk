@@ -293,8 +293,7 @@ public class RadioButtonsRenderer extends InputRenderer {
           .beginMap()
           .entry("groupId", groupId)
           .entry("ariaEnabled", ariaEnabled)
-          .entry("radioButtons", radioButtons.getClientId(facesContext))
-          .entry("mutuallyExclusive", radioButtons.isMutuallyExclusive());
+          .entry("radioButtons", radioButtons.getClientId(facesContext));
 
 		if (disabled) jb.entry("disabled", true);
 

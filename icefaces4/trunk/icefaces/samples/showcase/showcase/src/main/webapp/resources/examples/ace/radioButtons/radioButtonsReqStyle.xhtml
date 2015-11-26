@@ -65,7 +65,7 @@
             <ace:panel header="Radio Buttons" styleClass="#{radioButtonsReqStyleBean.useTheme ? '' : 'required-styling-demo'}">
 			<h:panelGrid columns="1" width="100%" styleClass="textEntryInputTable">
 				<h:panelGroup styleClass="#{radioButtonsReqStyleBean.reqColor}">
-					<ace:radioButtons id="radioButtonsRequired1" header="Required ace:radioButtons" mutuallyExclusive="true" value="#{radioButtonsReqStyleBean.selected1}" required="true">
+					<ace:radioButtons id="radioButtonsRequired1" header="Required ace:radioButtons" value="#{radioButtonsReqStyleBean.selected1}" required="true">
 						<f:selectItem itemLabel="One" itemValue="One" />
 						<f:selectItem itemLabel="Two" itemValue="Two" />
 						<f:selectItem itemLabel="Three" itemValue="Three" />
@@ -84,7 +84,7 @@
 				</h:panelGroup>
 
 				<h:panelGroup styleClass="#{radioButtonsReqStyleBean.optColor}">
-					<ace:radioButtons id="radioButtonsRequired2" header="Optional ace:radioButtons" mutuallyExclusive="true" value="#{radioButtonsReqStyleBean.selected2}" required="false" styleClass="#{radioButtonsReqStyleBean.optColor}">
+					<ace:radioButtons id="radioButtonsRequired2" header="Optional ace:radioButtons" value="#{radioButtonsReqStyleBean.selected2}" required="false" styleClass="#{radioButtonsReqStyleBean.optColor}">
 						<f:selectItem itemLabel="One" itemValue="One" />
 						<f:selectItem itemLabel="Two" itemValue="Two" />
 						<f:selectItem itemLabel="Three" itemValue="Three" />
