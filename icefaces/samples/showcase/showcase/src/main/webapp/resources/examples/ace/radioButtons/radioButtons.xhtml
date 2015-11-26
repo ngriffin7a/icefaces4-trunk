@@ -25,12 +25,8 @@
 
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
-			<h:outputLabel for="mutuallyExclusive" value="Enable mutual exclusivity: " />
-			<h:selectBooleanCheckbox id="mutuallyExclusive" value="#{radioButtons.mutuallyExclusive}">
-				<f:ajax render="@form" />
-			</h:selectBooleanCheckbox>
             <ace:panel>
-				<ace:radioButtons id="radioButtons" header="Using ace:radioButtons" mutuallyExclusive="#{radioButtons.mutuallyExclusive}" value="#{radioButtons.selected}" labelPosition="top">
+				<ace:radioButtons id="radioButtons" header="Using ace:radioButtons" value="#{radioButtons.selected}" labelPosition="top">
 					<f:selectItem itemLabel="One" itemValue="One" />
 					<f:selectItem itemLabel="Two" itemValue="Two" />
 					<f:selectItem itemLabel="Three" itemValue="Three" />

@@ -50,8 +50,6 @@ import org.icefaces.ace.meta.annotation.ClientEvent;
             defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="valueChange")
 public class RadioButtonsMeta extends UISelectManyMeta {
-    @Property(tlddoc = "If true, only one button in the group can be selected at one time, selecting a new button deselects the previously selected one.", defaultValue = "false")
-    private boolean mutuallyExclusive;
 
     @Property(tlddoc = "Header text for the button group.")
     private String header;

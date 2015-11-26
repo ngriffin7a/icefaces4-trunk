@@ -24,7 +24,7 @@ ice.ace.radiobutton = function(clientId, options) {
     this.jqId = ice.ace.escapeClientId(clientId);
     this.spanSelector = this.jqId + " > span"
     this.innerSpanSelector = this.jqId + " > span > span"
-    this.fieldSelector = this.jqId + "_option"
+    this.fieldSelector = this.jqId + " > input"
     this.buttonSelector = this.jqId + " > span > span > button"
     this.iconSelector = this.buttonSelector + " > span.fa"
 
@@ -41,9 +41,7 @@ ice.ace.radiobutton = function(clientId, options) {
     if (!options.disabled)
         ice.ace.jq(this.jqId).on("click", function () {
 			if (self.options.radioButtons) {
-				if (self.options.mutuallyExclusive) {
-					ice.ace.radiobutton.toggleOthers(self.options, self.id);
-				}
+				ice.ace.radiobutton.toggleOthers(self.options, self.id);
 				self.toggleCheckbox(true);
 			} else {
 				ice.ace.radiobutton.toggleOthers(self.options, self.id);
@@ -73,7 +71,7 @@ ice.ace.radiobutton.register = function(clientId, groupId) {
 
 ice.ace.radiobutton.prototype.isChecked = function() {
     if (this.options.radioButtons) {
-        return (!!ice.ace.jq(this.fieldSelector).attr('selected'));
+        return (!!ice.ace.jq(this.fieldSelector).attr('name'));
     } else {
 		return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
 	}
@@ -81,10 +79,10 @@ ice.ace.radiobutton.prototype.isChecked = function() {
 
 ice.ace.radiobutton.prototype.setChecked = function(bool) {
     if (this.options.radioButtons) {
-        if (!ice.ace.jq(this.fieldSelector).attr('selected'))
-            ice.ace.jq(this.fieldSelector).attr('selected', "selected");
-        else
-            ice.ace.jq(this.fieldSelector).removeAttr('selected');
+		if (!ice.ace.jq(this.fieldSelector).attr('name'))
+			ice.ace.jq(this.fieldSelector).attr('name', this.options.radioButtons);
+		else if (!bool)
+			ice.ace.jq(this.fieldSelector).attr('name', '');
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
 	}

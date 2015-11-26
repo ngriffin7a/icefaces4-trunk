@@ -31,19 +31,13 @@ public class RadioButtonsBean implements Serializable {
 	public String getBeanName() { return BEAN_NAME; }
 
 	private List<String> selected = new ArrayList<String>();
-	private boolean mutuallyExclusive = false;
 
     public RadioButtonsBean() {
 		selected.add("One");
-		selected.add("Three");
-		selected.add("Five");
     }
 
 	public List<String> getSelected() { return selected; }
 	public void setSelected(List<String> selected) { this.selected = selected; }
-
-	public boolean isMutuallyExclusive() { return mutuallyExclusive; }
-	public void setMutuallyExclusive(boolean mutuallyExclusive) { this.mutuallyExclusive = mutuallyExclusive; }
 
 	public String getSelectedString() {
 		String result = "";
