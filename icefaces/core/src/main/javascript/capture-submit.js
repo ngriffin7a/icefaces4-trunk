@@ -102,7 +102,7 @@
                             element.id = element.name;
                         }
                     }
-                    if (mojarra && arguments.callee.caller == mojarra.jsfcljs) {
+                    if (window.mojarra && arguments.callee.caller == window.mojarra.jsfcljs) {
                         //just submit the form, the Form.onsubmit is invoked on a different event
                         //Mojarra will add its own hidden input elements before and remove them after the submit
                         submit(null, f);
