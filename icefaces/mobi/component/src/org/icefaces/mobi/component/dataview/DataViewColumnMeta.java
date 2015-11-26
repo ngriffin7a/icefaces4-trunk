@@ -62,6 +62,7 @@ public class DataViewColumnMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Flag indicating that characters that are sensitive in HTML and XML markup must be escaped.", defaultValue = "true")
     boolean escape;
 
-    @Field // MyFaces -  converter must be state saved, cannot cache at component instance level
+	// MyFaces -  converter must be state saved, cannot cache at component instance level
+    @Property(tlddoc = "Converter instance registered with this component (Only applicable to date columns, must extend DateTimeConverter).")
     Converter converter;
 }
