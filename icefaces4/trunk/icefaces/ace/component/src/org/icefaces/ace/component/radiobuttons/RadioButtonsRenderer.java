@@ -46,7 +46,6 @@ import javax.el.ExpressionFactory;
 import javax.el.ELException;
 import java.lang.reflect.Array;
 import javax.el.ValueExpression;
-import javax.faces.component.UISelectMany;
 import javax.faces.FacesException;
 import javax.faces.application.Application;
 
@@ -64,15 +63,13 @@ public class RadioButtonsRenderer extends InputRenderer {
         RadioButtons radioButtons = (RadioButtons) component;
 		String clientId = radioButtons.getClientId(context);
 
-		Map<String, String[]> requestParameterValuesMap =
-			  context.getExternalContext().getRequestParameterValuesMap();
-		if (requestParameterValuesMap.containsKey(clientId)) {
-			String newValues[] = requestParameterValuesMap.get(clientId);
-			radioButtons.setSubmittedValue(newValues);
+		Map<String, String> requestParameterValues =
+			  context.getExternalContext().getRequestParameterMap();
+		if (requestParameterValues.containsKey(clientId)) {
+			String newValue = requestParameterValues.get(clientId);
+			radioButtons.setSubmittedValue(newValue);
 		} else {
-			// Use the empty array, not null, to distinguish
-			// between a deselected UISelectMany and a disabled one
-			radioButtons.setSubmittedValue(new String[0]);
+			radioButtons.setSubmittedValue(null);
 		}
 		decodeBehaviors(context, radioButtons);
     }
@@ -125,7 +122,7 @@ public class RadioButtonsRenderer extends InputRenderer {
 		}
 
 		// render buttons
-		Object currentSelections = getCurrentSelectedValues(radioButtons);
+		Object currentSelection = radioButtons.getValue();
         Converter converter = radioButtons.getConverter();
 		SelectItemsIterator selectItemsIterator = new SelectItemsIterator(context, radioButtons);
 		int i = 0;
@@ -135,7 +132,7 @@ public class RadioButtonsRenderer extends InputRenderer {
 			}
 		} else {
 			while (selectItemsIterator.hasNext()) {
-				encodeButton(context, radioButtons, i++, selectItemsIterator.next(), converter, currentSelections);
+				encodeButton(context, radioButtons, i++, selectItemsIterator.next(), converter, currentSelection);
 			}
 		}
 
@@ -156,7 +153,7 @@ public class RadioButtonsRenderer extends InputRenderer {
 		writer.endElement("div");
     }
 
-	private void encodeButton(FacesContext facesContext, RadioButtons radioButtons, int index, SelectItem item, Converter converter, Object currentSelections) throws IOException {
+	private void encodeButton(FacesContext facesContext, RadioButtons radioButtons, int index, SelectItem item, Converter converter, Object currentSelection) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
 
         String clientId = radioButtons.getClientId(facesContext) + ":" + index;
@@ -164,7 +161,7 @@ public class RadioButtonsRenderer extends InputRenderer {
 
 		String label = item.getLabel();
 		Object value = getConvertedValueForClient(facesContext, radioButtons, item.getValue());
-		boolean selected = isSelected(facesContext, radioButtons, value, currentSelections, converter);
+		boolean selected = isSelected(item.getValue(), currentSelection);
 
         String firstWrapperClass = "ice-ace-radiobutton-main";
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
@@ -339,336 +336,11 @@ public class RadioButtonsRenderer extends InputRenderer {
         writer.writeAttribute(HTML.CLASS_ATTR, iconClass, null);
     }
 
-    protected boolean isSelected(FacesContext context,
-                                 UIComponent component,
-                                 Object itemValue,
-                                 Object valueArray,
-                                 Converter converter) {
+    protected boolean isSelected(Object itemValue, Object currentSelection) {
 
-        if (itemValue == null && valueArray == null) {
-            return true;
-        }
-        if (null != valueArray) {
-            if (!valueArray.getClass().isArray()) {
-                return valueArray.equals(itemValue);
-            }
-            int len = Array.getLength(valueArray);
-            for (int i = 0; i < len; i++) {
-                Object value = Array.get(valueArray, i);
-                if (value == null && itemValue == null) {
-                    return true;
-                } else {
-                    if ((value == null) ^ (itemValue == null)) {
-                        continue;
-                    }
-                    Object compareValue;
-                    if (converter == null) {
-                        compareValue = coerceToModelType(context,
-                                                        itemValue,
-                                                        value.getClass());
-                    } else {
-                        compareValue = itemValue;
-                        if (compareValue instanceof String && !(value instanceof String)) {
-                            // type mismatch between the time and the value we're
-                            // comparing.  Invoke the Converter.
-                            compareValue = converter.getAsObject(context,
-                                                                component,
-                                                                (String) compareValue);
-                        }
-                    }
-
-                    if (value.equals(compareValue)) {
-                        return (true);
-                    }
-                }
-            }
-        }
-        return false;
-
-    }
-
-    protected Object coerceToModelType(FacesContext ctx,
-                                       Object value,
-                                       Class itemValueType) {
-
-        Object newValue;
-        try {
-            ExpressionFactory ef = ctx.getApplication().getExpressionFactory();
-            newValue = ef.coerceToType(value, itemValueType);
-        } catch (ELException ele) {
-            newValue = value;
-        } catch (IllegalArgumentException iae) {
-            // If coerceToType fails, per the docs it should throw
-            // an ELException, however, GF 9.0 and 9.0u1 will throw
-            // an IllegalArgumentException instead (see GF issue 1527).
-            newValue = value;
-        }
-
-        return newValue;
-
-    }
-
-    protected Object getCurrentSelectedValues(RadioButtons radioButtons) {
-
-            Object value = radioButtons.getValue();
-            if (value == null) {
-                return null;
-            } else if (value instanceof Collection) {
-                return ((Collection) value).toArray();
-            } else if (value.getClass().isArray()) {
-                if (Array.getLength(value) == 0) {
-                    return null;
-                }
-            } else if (!value.getClass().isArray()) {
-/*                logger.warning(
-                    "The UISelectMany value should be an array or a collection type, the actual type is " +
-                    value.getClass().getName());*/
-            }
-
-            return value;
-    }
-
-    @Override
-    public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue) throws ConverterException {
-		UISelectMany uiSelectMany = (UISelectMany) component;
-		String[] newValues = (String[]) submittedValue;
-
-		// if we have no local value, try to get the valueExpression.
-		ValueExpression valueExpression =
-			  uiSelectMany.getValueExpression("value");
-
-		Object result = newValues; // default case, set local value
-		boolean throwException = false;
-
-		// If we have a ValueExpression
-		if (null != valueExpression) {
-			Class modelType = valueExpression.getType(context.getELContext());
-			// Does the valueExpression resolve properly to something with
-			// a type?
-			if (modelType != null) {
-				result = convertSelectManyValuesForModel(context,
-														 uiSelectMany,
-														 modelType,
-														 newValues);
-			}
-			// If it could not be converted, as a fall back try the type of
-			// the valueExpression's current value covering some edge cases such
-			// as where the current value came from a Map.
-			if(result == null) {
-				Object value = valueExpression.getValue(context.getELContext());
-				if(value != null) {
-					result = convertSelectManyValuesForModel(context,
-															 uiSelectMany,
-															 value.getClass(),
-															 newValues);
-				}
-			}
-			if(result == null) {
-				throwException = true;
-			}
-		} else {
-			// No ValueExpression, just use Object array.
-			result = convertSelectManyValues(context, uiSelectMany,
-											 Object[].class,
-											 newValues);
-		}
-		if (throwException) {
-			StringBuffer values = new StringBuffer();
-			if (null != newValues) {
-				for (int i = 0; i < newValues.length; i++) {
-					if (i == 0) {
-						values.append(newValues[i]);
-					} else {
-						values.append(' ').append(newValues[i]);
-					}
-				}
-			}
-			Object[] params = {
-				  values.toString(),
-				  valueExpression.getExpressionString()
-			};
-			throw new ConverterException("Couldn't convert " + values.toString()
-				+ " (" + valueExpression.getExpressionString() + ")");
-		}
-
-		return result;
-    }
-
-	protected Object convertSelectManyValuesForModel(FacesContext context,
-													 UISelectMany uiSelectMany,
-													 Class modelType,
-													 String[] newValues) {
-
-		if (modelType.isArray()) {
-			return convertSelectManyValues(context,
-										   uiSelectMany,
-										   modelType,
-										   newValues);
-		} else if (Collection.class.isAssignableFrom(modelType)) {
-			Object[] values = (Object[]) convertSelectManyValues(context,
-																 uiSelectMany,
-																 Object[].class,
-																 newValues);
-
-			Collection targetCollection = bestGuess(modelType, values.length);
-
-			//noinspection ManualArrayToCollectionCopy
-			for (Object v : values) {
-				//noinspection unchecked
-				targetCollection.add(v);
-			}
-
-			return targetCollection;
-		} else if (Object.class.equals(modelType)) {
-			return convertSelectManyValues(context,
-										   uiSelectMany,
-										   Object[].class,
-										   newValues);
-		} else {
-			throw new FacesException("Target model Type is not a Collection or Array");
-		}
-	}
-
-	protected Object convertSelectManyValues(FacesContext context,
-											 UISelectMany uiSelectMany,
-											 Class arrayClass,
-											 String[] newValues)
-		  throws ConverterException {
-
-		Object result;
-		Converter converter;
-		int len = (null != newValues ? newValues.length : 0);
-
-		Class elementType = arrayClass.getComponentType();
-
-		// Optimization: If the elementType is String, we don't need
-		// conversion.  Just return newValues.
-		if (elementType.equals(String.class)) {
-			return newValues;
-		}
-
-		try {
-			result = Array.newInstance(elementType, len);
-		} catch (Exception e) {
-			throw new ConverterException(e);
-		}
-
-		// bail out now if we have no new values, returning our
-		// oh-so-useful zero-length array.
-		if (null == newValues) {
-			return result;
-		}
-
-		// obtain a converter.
-
-		// attached converter takes priority
-		if (null == (converter = uiSelectMany.getConverter())) {
-			// Otherwise, look for a by-type converter
-			if (null == (converter = getConverterForClass(elementType,
-															   context))) {
-				// if that fails, and the attached values are of Object type,
-				// we don't need conversion.
-				if (elementType.equals(Object.class)) {
-					return newValues;
-				}
-				StringBuffer valueStr = new StringBuffer();
-				for (int i = 0; i < len; i++) {
-					if (i == 0) {
-						valueStr.append(newValues[i]);
-					} else {
-						valueStr.append(' ').append(newValues[i]);
-					}
-				}
-				Object[] params = {
-					  valueStr.toString(),
-					  "null Converter"
-				};
-
-				throw new ConverterException("Couldn't convert " + valueStr.toString()
-					+ " (null Converter)");
-			}
-		}
-
-		assert(null != result);
-		if (elementType.isPrimitive()) {
-			for (int i = 0; i < len; i++) {
-				if (elementType.equals(Boolean.TYPE)) {
-					Array.setBoolean(result, i,
-									 ((Boolean) converter.getAsObject(context,
-																	  uiSelectMany,
-																	  newValues[i])));
-				} else if (elementType.equals(Byte.TYPE)) {
-					Array.setByte(result, i,
-								  ((Byte) converter.getAsObject(context,
-																uiSelectMany,
-																newValues[i])));
-				} else if (elementType.equals(Double.TYPE)) {
-					Array.setDouble(result, i,
-									((Double) converter.getAsObject(context,
-																	uiSelectMany,
-																	newValues[i])));
-				} else if (elementType.equals(Float.TYPE)) {
-					Array.setFloat(result, i,
-								   ((Float) converter.getAsObject(context,
-																  uiSelectMany,
-																  newValues[i])));
-				} else if (elementType.equals(Integer.TYPE)) {
-					Array.setInt(result, i,
-								 ((Integer) converter.getAsObject(context,
-																  uiSelectMany,
-																  newValues[i])));
-				} else if (elementType.equals(Character.TYPE)) {
-					Array.setChar(result, i,
-								  ((Character) converter.getAsObject(context,
-																	 uiSelectMany,
-																	 newValues[i])));
-				} else if (elementType.equals(Short.TYPE)) {
-					Array.setShort(result, i,
-								   ((Short) converter.getAsObject(context,
-																  uiSelectMany,
-																  newValues[i])));
-				} else if (elementType.equals(Long.TYPE)) {
-					Array.setLong(result, i,
-								  ((Long) converter.getAsObject(context,
-																uiSelectMany,
-																newValues[i])));
-				}
-			}
-		} else {
-			for (int i = 0; i < len; i++) {
-				Array.set(result, i, converter.getAsObject(context,
-														   uiSelectMany,
-														   newValues[i]));
-			}
-		}
-		return result;
-	}
-
-    protected Converter getConverterForClass(Class converterClass, FacesContext context) {
-        if (converterClass == null) {
-            return null;
-        }
-        try {            
-            Application application = context.getApplication();
-            return (application.createConverter(converterClass));
-        } catch (Exception e) {
-            return (null);
-        }
-    }
-
-    protected Collection bestGuess(Class<? extends Collection> type, int initialSize) {
-
-        if (SortedSet.class.isAssignableFrom(type)) {
-            return new TreeSet();
-        } else if (Queue.class.isAssignableFrom(type)) {
-           return new LinkedList(); 
-        } else if (Set.class.isAssignableFrom(type)) {
-            return new HashSet(initialSize);
-        } else {
-            // this covers the where type is List or Collection
-            return new ArrayList(initialSize);
-        }
-
+		if (currentSelection == null) return false;
+		if (itemValue == null) return false;
+		return currentSelection.equals(itemValue);
     }
 
 	public String getConvertedValueForClient(FacesContext context, UIComponent component, Object value) throws ConverterException {
