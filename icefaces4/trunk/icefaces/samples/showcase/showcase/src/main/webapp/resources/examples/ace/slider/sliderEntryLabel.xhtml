@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+        <h:form id="sliderEntryConfigForm">
+
+            <ace:panel id="labelCustomizing" header="Label Customization">
+                <h:panelGrid width="50%" columns="2" cellpadding="6" cellspacing="6">
+                     <h:outputLabel for="labelText" value="Label Text:"/>
+                     <h:inputText id="labelText" value="#{sliderEntryLabelBean.sliderLabelText}" maxlength="250">
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:inputText>
+                                          
+                     <h:outputLabel for="positionIn" value="Label Position:"/>
+                     <ace:simpleSelectOneMenu id="positionIn" value="#{sliderEntryLabelBean.labelPosition}">
+                        <ace:ajax execute="@this" />
+                        <f:selectItems value="#{positionBean.sliderLabelPositions}"/>
+                     </ace:simpleSelectOneMenu>
+                     
+                     <h:outputLabel for="showLabels" value="Show sliderEntry min/max labels?"/>
+                     <h:selectBooleanCheckbox id="showLabels" value="#{sliderEntryLabelBean.showLabels}">     
+                        <f:ajax execute="@this" render="@all"/>
+                     </h:selectBooleanCheckbox>   
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+
+        <h:form id="sliderEntryForm">     
+            <ace:panel id="inputPanel" header="Comments">
+                <h:panelGrid id="inputGrid" columns="1" width="100%" styleClass="textEntryInputTable">                    
+                    <ace:sliderEntry id="labelTextInput" 
+                                    label="#{sliderEntryLabelBean.sliderLabelText}" 
+                                    labelPosition="#{sliderEntryLabelBean.labelPosition}" 
+                                    showLabels="#{sliderEntryLabelBean.showLabels}"
+                                    value="#{sliderEntryLabelBean.value}">
+                        <ace:ajax event="slideEnd" execute="@this" render="@form" />
+                    </ace:sliderEntry>
+                    <h:outputText id="sliderValue" value="Value: #{sliderEntryLabelBean.value}"/>              
+                </h:panelGrid>
+            </ace:panel>            
+        </h:form>
+        
+    </ui:define>
+</ui:composition>
+
