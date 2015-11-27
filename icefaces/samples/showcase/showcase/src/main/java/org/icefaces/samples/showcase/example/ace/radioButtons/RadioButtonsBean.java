@@ -17,8 +17,6 @@
 package org.icefaces.samples.showcase.example.ace.radioButtons;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
@@ -30,21 +28,19 @@ public class RadioButtonsBean implements Serializable {
     public static final String BEAN_NAME = "radioButtons";
 	public String getBeanName() { return BEAN_NAME; }
 
-	private List<String> selected = new ArrayList<String>();
+	private String selected = "";
 
     public RadioButtonsBean() {
-		selected.add("One");
+		selected = "One";
     }
 
-	public List<String> getSelected() { return selected; }
-	public void setSelected(List<String> selected) { this.selected = selected; }
+	public String getSelected() { return selected; }
+	public void setSelected(String selected) { this.selected = selected; }
 
 	public String getSelectedString() {
 		String result = "";
 		if (selected != null) {
 			result += selected.toString();
-			result = result.replace("[", "");
-			result = result.replace("]", "");
 			if ("".equals(result)) {
 				result = "None";
 			}

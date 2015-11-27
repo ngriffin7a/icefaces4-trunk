@@ -18,7 +18,7 @@ package org.icefaces.ace.component.radiobuttons;
 
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
-import org.icefaces.ace.meta.baseMeta.UISelectManyMeta;
+import org.icefaces.ace.meta.baseMeta.UISelectOneMeta;
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
@@ -31,7 +31,7 @@ import org.icefaces.ace.meta.annotation.ClientEvent;
         componentClass = "org.icefaces.ace.component.radiobuttons.RadioButtons",
         rendererClass = "org.icefaces.ace.component.radiobuttons.RadioButtonsRenderer",
         generatedClass = "org.icefaces.ace.component.radiobuttons.RadioButtonsBase",
-        extendsClass = "javax.faces.component.UISelectMany",
+        extendsClass = "javax.faces.component.UISelectOne",
         componentType = "org.icefaces.ace.component.RadioButtons",
         rendererType = "org.icefaces.ace.component.RadioButtonsRenderer",
         componentFamily = "org.icefaces.ace.component.RadioButtons",
@@ -49,7 +49,7 @@ import org.icefaces.ace.meta.annotation.ClientEvent;
             tlddoc="Fired when the value changes by selecting/deselecting a radio button.",
             defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="valueChange")
-public class RadioButtonsMeta extends UISelectManyMeta {
+public class RadioButtonsMeta extends UISelectOneMeta {
 
     @Property(tlddoc = "Header text for the button group.")
     private String header;
