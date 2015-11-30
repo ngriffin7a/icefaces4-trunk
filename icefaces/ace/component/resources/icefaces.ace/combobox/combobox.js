@@ -473,7 +473,10 @@ ice.ace.ComboBox.prototype = {
 			if (this.blurObserver) clearTimeout(this.blurObserver);
 			this.ajaxBlur.params = this.ajaxBlur.params || {};
 			var self = this;
-			this.blurObserver = setTimeout(function() { try{ice.ace.ab(self.ajaxBlur);}catch(e){} }, 390);
+			this.blurObserver = setTimeout(function() {
+				if (!document.getElementById(self.id)) return;
+				try{ice.ace.ab(self.ajaxBlur);}catch(e){}
+			}, 390);
 		}
     },
 
