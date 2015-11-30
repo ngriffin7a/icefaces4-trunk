@@ -593,3 +593,11 @@ body, table {
 .row-state-table input[type="text"] {
 	width:90%;
 }
+
+.search-box {
+	font-size: 8pt;
+}
+
+.search-box .ui-inputfield {
+	font-size: 1em;
+}
