@@ -309,10 +309,17 @@ ice.ace.InputMask = function(id, cfg) {
     this.jq.change(function() { ice.setFocus(''); });
     //Client behaviors
 	var behaviors = this.cfg.behaviors;
+	var self = this;
     if(behaviors) {
 		var element = this.jq;
 		if (behaviors.blur) {
-			element.bind('blur', function() { ice.setFocus(''); ice.ace.ab.call(element, behaviors.blur); });
+			element.bind('blur', function() {
+				ice.setFocus('');
+				setTimeout(function() {
+					if (document.getElementById(self.id+'_field') === element.get(0))
+						ice.ace.ab.call(element, behaviors.blur);
+				}, 300);
+			});
 		}
 		if (behaviors.change) {
 			element.bind('change', function() { ice.ace.ab.call(element, behaviors.change); });
