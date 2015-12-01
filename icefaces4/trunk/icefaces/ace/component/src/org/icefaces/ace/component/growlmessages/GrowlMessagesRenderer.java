@@ -64,9 +64,18 @@ public class GrowlMessagesRenderer extends Renderer {
 //        String style = messages.getStyle();
 //        String styleClass = (styleClass = messages.getStyleClass()) == null ? "" : " " + styleClass;
         String sourceMethod = "encodeEnd";
-
+        List<String> idsInView = new ArrayList<String>();
         if (forId.equals("@all")) {
             messageIter = messages.isGlobalOnly() ? context.getMessages(null) : context.getMessages();
+        } else if (forId.equals("@inView")){
+            idsInView = ComponentUtils.findIdsInView(context);
+            messageIter = Collections.emptyList().iterator();
+            if (idsInView.isEmpty()){
+                logger.logp(Level.WARNING, logger.getName(), sourceMethod, " no components in view for use of @inView value");
+                messageIter = Collections.emptyList().iterator();
+            }else  {
+                 messageIter = ComponentUtils.getMessagesInView(context, idsInView);
+            }
         } else {
             UIComponent forComponent = forId.equals("") ? null : messages.findComponent(forId);
             if (forComponent == null) {
@@ -116,6 +125,7 @@ public class GrowlMessagesRenderer extends Renderer {
         while (messageIter.hasNext()) {
             FacesMessage facesMessage = (FacesMessage) messageIter.next();
             if (!facesMessage.isRendered() || messages.isRedisplay()) {
+               // System.out.println(" growlmessage renderer message="+facesMessage.getDetail()) ;
                 encodeMessage(writer, messages, facesMessage, jb);
             }
         }
@@ -185,4 +195,6 @@ public class GrowlMessagesRenderer extends Renderer {
             jb.entry(durationName, duration);
         }
     }
+
 }
+
