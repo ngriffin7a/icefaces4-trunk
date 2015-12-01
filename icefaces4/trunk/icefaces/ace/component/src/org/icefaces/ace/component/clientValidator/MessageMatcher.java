@@ -116,11 +116,11 @@ public class MessageMatcher implements SystemEventListener {
             Method m = validatedComponent.getClass().getMethod("getLabel");
             label = (String) m.invoke(validatedComponent);
         } catch (NoSuchMethodException e) {
-            label = "";
+            label = null;
         } catch (InvocationTargetException e) {
-            label = "";
+            label = null;
         } catch (IllegalAccessException e) {
-            label = "";
+            label = null;
         }
         //try finding a referencing h:outputLabel
         if (label == null || label.isEmpty()) {
@@ -130,7 +130,8 @@ public class MessageMatcher implements SystemEventListener {
                 label = labelMap.get(validatedComponent.getClientId());
             }
             if (label == null) {
-                label = "";
+                //fallback to using Id as the label
+                label = validatedComponent.getId();
             }
         }
 
