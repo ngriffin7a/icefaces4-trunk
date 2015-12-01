@@ -46,6 +46,8 @@
                 <h:outputLabel value="Date:" for="date"/>
 				<h:panelGroup>
 					<mobi:dateSpinner useNative="#{dateBean.useNative}" id="date"
+                                      yearStart="2000"
+                                      yearEnd="2018"
 									  readonly="#{dateBean.readonly}"
 									 value="#{dateBean.dateInput}">
 						<f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="#{dateBean.timeZone}"/>
