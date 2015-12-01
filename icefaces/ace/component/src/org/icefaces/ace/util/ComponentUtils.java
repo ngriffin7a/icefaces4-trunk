@@ -40,6 +40,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
+import javax.faces.application.FacesMessage;
 import javax.faces.render.Renderer;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -358,5 +359,59 @@ public class ComponentUtils {
 
     public static void enableOnElementUpdateNotify(ResponseWriter writer, String id) throws IOException {
         CoreUtils.enableOnElementUpdateNotify(writer, id);
+    }
+
+    /**
+     * used by GrowlMessagesRenderer and MessagesRenderer for option @inView
+     * @param context
+     * @return
+     */
+    public static List<String> findIdsInView(FacesContext context){
+        List<String> idList = new ArrayList<String>();
+        UIViewRoot root =  context.getViewRoot();
+        for (UIComponent uic : root.getChildren()){
+            getChildIds(uic,idList,context);
+        }
+        return idList;
+    }
+
+    /**
+     *
+     * @param uic
+     * @param idList
+     * @param context
+     */
+    private static void  getChildIds(UIComponent uic, List<String> idList, FacesContext context) {
+        idList.add(uic.getClientId(context));
+        if (uic.getChildren().size() > 0) {
+           Iterator<UIComponent> iter = uic.getFacetsAndChildren();
+           while (iter.hasNext()) {
+               UIComponent child = iter.next();
+            //   if (child instanceof UIInput){ do we want to just include UIINput or EditableValueHolders?
+                   getChildIds(child, idList, context);
+             //  }
+           }
+        }
+    }
+
+    /**
+     * used by GrowlMessagesRenderer and MessagesRenderer for option @inView
+     * @param context
+     * @param idsInView
+     * @return
+     */
+    public static Iterator<FacesMessage> getMessagesInView(FacesContext context, List<String> idsInView){
+        List<FacesMessage> compiledList = new ArrayList<FacesMessage>();
+        for (String id: idsInView ){
+            if (context.getMessages(id).hasNext() ){
+                Iterator msgIt =  context.getMessages(id);
+                while(msgIt.hasNext()){
+                    FacesMessage fm = (FacesMessage)msgIt.next();
+                //    System.out.println(" adding message="+fm.getSummary() +" for id="+id);
+                    compiledList.add(fm);
+                }
+            }
+        }
+        return compiledList.iterator();
     }
 }

@@ -59,7 +59,9 @@ public class MessagesMeta extends UIMessagesMeta {
                     "as the target component, this must be the component " +
                     "identifier. Otherwise, it must be an absolute component " +
                     "identifier (starting with \":\")." +
-                    " Leave out or use \"@all\" to output global messages.")
+                    " Leave out or use \"@all\" to output global messages." +
+                    " If you only want the components within the current view, you can use " +
+                    " \"@inView\".  Default value for this is @all")
     private String forValue;
 
     @Property(tlddoc = "CSS style(s) to be applied when this component is rendered.")

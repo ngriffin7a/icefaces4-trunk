@@ -191,8 +191,22 @@ public class MessagesRenderer extends Renderer {
 
     private Map<String, ArrayList<FacesMessage>> getMsgs(Messages component, FacesContext context) {
         Map<String, ArrayList<FacesMessage>> msgs = new LinkedHashMap<String, ArrayList<FacesMessage>>();
-        String forId = (forId = component.getFor()) == null ? "@all" : forId.trim();
-        if (forId.equals("@all")) {
+        List<String> forList = new ArrayList<String>();
+        String forId = (component.getFor()) == null ? "@all" : component.getFor().trim();
+
+        if (forId.equals("@inView")){
+            forList = ComponentUtils.findIdsInView(context);
+            if (forList.isEmpty()){
+                logger.logp(Level.WARNING, logger.getName(),"getMsgs", " list of comps in view is empty -- will default to global");
+                addMsgs(context, null, msgs);
+            } else {
+                for (String id: forList){
+                    addMsgs(context, id, msgs);
+                }
+            }
+        }
+
+        else if (forId.equals("@all")) {
             if (component.isGlobalOnly()) {
                 addMsgs(context, null, msgs);
             } else {
@@ -218,10 +232,12 @@ public class MessagesRenderer extends Renderer {
             clientId = "*";
         }
         while (iterator.hasNext()) {
+            FacesMessage msg = iterator.next();
+           // System.out.println(" msg for id="+clientId+" is ="+msg.getSummary());
             if (!msgs.containsKey(clientId)) {
                 msgs.put(clientId, new ArrayList<FacesMessage>());
             }
-            msgs.get(clientId).add(iterator.next());
+            msgs.get(clientId).add(msg);
         }
     }
 
