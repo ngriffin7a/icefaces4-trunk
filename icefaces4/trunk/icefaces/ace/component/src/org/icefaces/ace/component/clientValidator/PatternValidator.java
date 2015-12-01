@@ -55,6 +55,8 @@ public class PatternValidator extends PatternValidatorBase {
             script.append(MessageFormat.format(message, label, getPattern()));
             script.append("', ");
             script.append(MessageMatcher.isMultipleMessage(validatedComponent));
+            script.append(", ");
+            script.append(validatedComponent.getAttributes().get("immediate"));
             script.append(")");
 
             children.add(new ScriptOutputWriter(script.toString()));
