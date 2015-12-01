@@ -157,7 +157,11 @@ mobi.datespinner = {
     },
 
     writeTitle:function (clientId, date) {
-        document.getElementById(clientId + '_title').childNodes[1].innerHTML = ' ' + date.toDateString();
+        var titleElem = document.getElementById(clientId + '_title').childNodes[1];
+        if (Object.prototype.toString.call(date) ==="[object Date]"){
+           titleElem.innerHTML = ' ' + date.toDateString();
+        }
+
     },
 
     daysInMonth:function (iMnth, iYr) {
