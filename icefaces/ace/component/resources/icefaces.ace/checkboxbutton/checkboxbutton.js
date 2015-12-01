@@ -24,7 +24,8 @@ ice.ace.checkboxbutton = function(clientId, options) {
     this.jqId = ice.ace.escapeClientId(clientId);
     this.spanSelector = this.jqId + " > span"
     this.innerSpanSelector = this.jqId + " > span > span"
-    this.fieldSelector = this.jqId + " > input"
+    this.optionSelector = this.jqId + "_option";
+    this.fieldSelector = this.jqId + " > input";
     this.buttonSelector = this.jqId + " > span > span > button"
     this.iconSelector = this.buttonSelector + " > span.fa"
 
@@ -77,7 +78,7 @@ ice.ace.checkboxbutton.register = function(clientId, groupId) {
 
 ice.ace.checkboxbutton.prototype.isChecked = function() {
     if (this.options.checkboxButtons) {
-        return (!!ice.ace.jq(this.fieldSelector).attr('name'));
+        return (!!ice.ace.jq(this.optionSelector).attr('selected'));
     } else {
 		return ice.ace.jq(this.fieldSelector).val() == 'true' ? true : false;
 	}
@@ -85,10 +86,10 @@ ice.ace.checkboxbutton.prototype.isChecked = function() {
 
 ice.ace.checkboxbutton.prototype.setChecked = function(bool) {
     if (this.options.checkboxButtons) {
-		if (!ice.ace.jq(this.fieldSelector).attr('name'))
-			ice.ace.jq(this.fieldSelector).attr('name', this.options.checkboxButtons);
+		if (!ice.ace.jq(this.optionSelector).attr('selected'))
+			ice.ace.jq(this.optionSelector).attr('selected', "selected");
 		else
-			ice.ace.jq(this.fieldSelector).attr('name', '');
+			ice.ace.jq(this.optionSelector).removeAttr('selected');
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
 	}
