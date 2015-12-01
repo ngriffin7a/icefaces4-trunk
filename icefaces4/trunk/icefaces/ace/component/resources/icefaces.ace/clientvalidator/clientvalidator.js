@@ -40,6 +40,21 @@
         return false;
     }
 
+    function cleanupMessages(elements) {
+        for (var i = 0, l = elements.length; i < l; i++) {
+            var element = elements[i];
+            element.className = element.className.replace(' ui-state-error', '');
+            var cleanupValidationMessage = element.cleanupValidationMessage;
+            if (cleanupValidationMessage) {
+                try {
+                    cleanupValidationMessage();
+                } catch (ex) {
+                    //the node is cleared a second time
+                }
+            }
+        }
+    }
+
     window.addEventListener('load', function () {
         var old = ice.fullSubmit;
         ice.fullSubmit = function (execute, render, event, element, additionalParameters, callbacks) {
@@ -49,18 +64,7 @@
             var validationResult = jqForm.validate();
             var validElements = validationResult.validElements();
             if (validElements) {
-                for (var i = 0, l = validElements.length; i < l; i++) {
-                    var validElement = validElements[i];
-                    validElement.className = validElement.className.replace(' ui-state-error', '');
-                    var cleanupValidationMessage = validElement.cleanupValidationMessage;
-                    if (cleanupValidationMessage) {
-                        try {
-                            cleanupValidationMessage();
-                        } catch (ex) {
-                            //the node is cleared a second time
-                        }
-                    }
-                }
+                cleanupMessages(validationResult);
             }
 
             var skipValidation = false;
@@ -68,7 +72,9 @@
             for (var j = 0, k = invalidElements.length; j < k; j++) {
                 var invalidElement = invalidElements[j];
                 if (isParent(element, invalidElement) && invalidElement.immediate) {
-                    skipValidation = true; break;
+                    skipValidation = true;
+                    cleanupMessages(invalidElements);
+                    break;
                 }
             }
 
