@@ -40,6 +40,13 @@ public class PositionBean {
         new SelectItem("bottom", "Bottom"),
         new SelectItem("none", "None")
     };
+    public static final SelectItem[] THEMESELECT_LABEL_POSITIONS = new SelectItem[] {    	
+    	new SelectItem("left", "Left"),
+        new SelectItem("right", "Right"),
+        new SelectItem("top", "Top"),
+        new SelectItem("bottom", "Bottom"),
+        new SelectItem("none", "None")
+    };
     public static final SelectItem[] INDICATOR_POSITIONS = new SelectItem[] {
         new SelectItem("left", "Left"),
         new SelectItem("right", "Right"),
@@ -53,6 +60,8 @@ public class PositionBean {
     public SelectItem[] getLabelPositions() { return LABEL_POSITIONS; }
     
     public SelectItem[] getSliderLabelPositions() { return SLIDER_LABEL_POSITIONS; }
+    
+    public SelectItem[] getThemeSelectLabelPositions() { return THEMESELECT_LABEL_POSITIONS; }
     
     public SelectItem[] getIndicatorPositions() { return INDICATOR_POSITIONS; }
 }

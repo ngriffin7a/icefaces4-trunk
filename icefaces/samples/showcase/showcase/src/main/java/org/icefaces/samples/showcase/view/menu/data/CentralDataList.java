@@ -373,7 +373,12 @@ public class CentralDataList {
 						new Demo(msgs("menu.ace.simpleselectonemenu.subMenu.indicator"), msgs("example.ace.simpleselectonemenu.indicator.description"),
 								 "simpleselectonemenu", "simpleSelectOneMenuIndicator.xhtml", "SimpleSelectOneMenuIndicatorBean.java"),
 						new Demo(msgs("menu.ace.simpleselectonemenu.subMenu.reqStyle"), msgs("example.ace.simpleselectonemenu.reqStyle.description"),
-								 "simpleselectonemenu", "simpleSelectOneMenuReqStyle.xhtml", "SimpleSelectOneMenuReqStyleBean.java"))
+								 "simpleselectonemenu", "simpleSelectOneMenuReqStyle.xhtml", "SimpleSelectOneMenuReqStyleBean.java")),
+				new ComponentGroup("ace:themeSelect", "ThemeSelect", "themeSelect.html",
+						new Demo(msgs("overview"), msgs("example.ace.themeSelect.description"),
+								 "themeSelect", "themeSelect.xhtml", "ThemeSelectBean.java"),
+						new Demo(msgs("menu.ace.themeSelect.subMenu.label"), msgs("example.ace.themeSelect.label.description"),
+								 "themeSelect", "themeSelectLabel.xhtml", "ThemeSelectLabelBean.java"))
 		));
 		
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.datatable.title"),
@@ -787,10 +792,7 @@ public class CentralDataList {
 						new Demo(msgs("overview"), msgs("example.ace.resizable.description"),
 								 "resizable", "resizable.xhtml", "ResizableBean.java"),
 						new Demo(msgs("menu.ace.resizable.subMenu.resizeListener"), msgs("example.ace.resizableListener.description"),
-								 "resizable", "resizeListener.xhtml", "ResizeListenerBean.java")),
-				new ComponentGroup("ace:themeSelect", "ThemeSelect", "themeSelect.html",
-						new Demo(msgs("overview"), msgs("example.ace.themeSelect.description"),
-								 "themeSelect", "themeSelect.xhtml", "ThemeSelectBean.java"))
+								 "resizable", "resizeListener.xhtml", "ResizeListenerBean.java"))
 		));
 		
 		return toReturn;
