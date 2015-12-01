@@ -299,6 +299,7 @@ ice.ace.InputMask = function(id, cfg) {
     this.jqId = ice.ace.escapeClientId(id);
     this.jq = ice.ace.jq(this.jqId).find('input[name="'+this.id+'_field"]');
 	this.jq.attr('id', this.id + '_field');
+	this.jq.get(0).submitOnEnter = 'disabled';
 
     if (this.cfg.mask) {
         this.cfg.mask = "?" + this.cfg.mask.replace(/\?/g, "");
@@ -337,6 +338,15 @@ ice.ace.InputMask = function(id, cfg) {
 			});
 		}
     }
+	if (!behaviors || !behaviors.change) {
+		this.jq.bind('keydown', function(e) {
+			if (e.keyCode == 13) {
+				ice.s(e, self.jq.get(0));
+				e.stopPropagation();
+				return false;
+			}
+		});
+	}
 
     //Visuals
     if(this.cfg.theme != false) {
