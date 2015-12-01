@@ -25,7 +25,6 @@
                 template="/resources/templates/content-template.xhtml">
 
     <ui:define name="example">
-        <icecore:config messagePersistence="false"/>
         <h:form id="messageDemoForm">
             <ace:panel header="Some important ace:growlMessages attributes">
                 <h:panelGrid columns="4" width="100%" columnClasses="growl-attr-col,growl-attr-col,growl-attr-col,growl-attr-col">
@@ -91,7 +90,8 @@
                                 actionListener="#{growlMessagesBean.listener}" />
             </ace:panel>
 
-            <ace:growlMessages id="allMsgsGrowl" autoHide="#{growlMessagesBean.autoHide}"
+            <ace:growlMessages  id="allMsgsGrowl" autoHide="#{growlMessagesBean.autoHide}"
+                                for="@inView"
                                closeAll="#{growlMessagesBean.closeAll}"
                                maxVisibleMessages="#{growlMessagesBean.maxVisibleMessages}"
                                position="#{growlMessagesBean.position}"/>

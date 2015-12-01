@@ -25,7 +25,7 @@
                 template="/resources/templates/content-template.xhtml">
 
     <ui:define name="example">
-        <icecore:config messagePersistence="false"/>
+    <!--    <icecore:config messagePersistence="false"/>  -->
         <h:form id="formGm">
             <ace:panel id="employeeInfoInputPanel" header="Employee Info">
                 <h:panelGrid id="employeeInputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
@@ -48,7 +48,9 @@
             </ace:panel>
 
             <ace:panel id="employeeInfoOutputPanel" header="All Faces Messages">
-                <ace:messages id="allMsgsA" initEffect="highlight" changeEffect="puff"/>
+                <ace:messages id="allMsgsA" initEffect="highlight"
+                              for="@inView"
+                              changeEffect="puff" />
             </ace:panel>
         </h:form>
 
