@@ -179,7 +179,8 @@ public class TextEntryRenderer extends InputRenderer {
           .entry("secret", textEntry.isSecret())
           .entry("originalType", type)
           .entry("indicatorPosition", indicatorPosition)
-          .entry("labelPosition", labelPosition);
+                .entry("labelPosition", labelPosition)
+                .entry("immediate", textEntry.isImmediate());
 
         encodeClientBehaviors(context, textEntry, jb);
 

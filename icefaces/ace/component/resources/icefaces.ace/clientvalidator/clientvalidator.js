@@ -28,6 +28,18 @@
         return null;
     }
 
+    function isParent(parent, element) {
+        var cursor = element;
+        while (cursor) {
+            if (cursor == parent) {
+                return true;
+            }
+            cursor = cursor.parentNode;
+        }
+
+        return false;
+    }
+
     window.addEventListener('load', function () {
         var old = ice.fullSubmit;
         ice.fullSubmit = function (execute, render, event, element, additionalParameters, callbacks) {
@@ -38,9 +50,9 @@
             var validElements = validationResult.validElements();
             if (validElements) {
                 for (var i = 0, l = validElements.length; i < l; i++) {
-                    var element = validElements[i];
-                    element.className = element.className.replace(' ui-state-error', '');
-                    var cleanupValidationMessage = element.cleanupValidationMessage;
+                    var validElement = validElements[i];
+                    validElement.className = validElement.className.replace(' ui-state-error', '');
+                    var cleanupValidationMessage = validElement.cleanupValidationMessage;
                     if (cleanupValidationMessage) {
                         try {
                             cleanupValidationMessage();
@@ -51,7 +63,16 @@
                 }
             }
 
-            if (form && isValidForm) {
+            var skipValidation = false;
+            var invalidElements = validationResult.invalidElements();
+            for (var j = 0, k = invalidElements.length; j < k; j++) {
+                var invalidElement = invalidElements[j];
+                if (isParent(element, invalidElement) && invalidElement.immediate) {
+                    skipValidation = true; break;
+                }
+            }
+
+            if (skipValidation || (form && isValidForm)) {
                 old(execute, render, event, element, additionalParameters, callbacks);
             }
         };
@@ -110,7 +131,7 @@
         }
     }
 
-    ice.ace.setupClientValidation = function(id, rule, config, messageId,  message, multiple) {
+    ice.ace.setupClientValidation = function(id, rule, config, messageId,  message, multiple, immediate) {
         var form = formOf(id);
         if (!form.enabledValidation) {
             ice.ace.jq(ice.ace.escapeClientId(form.id)).validate().settings.showErrors = function(){};
@@ -129,6 +150,7 @@
             ruleConfig['messages'] = messageConfig;
 
             ice.ace.jq(selector).rules('add', ruleConfig);
+            document.getElementById(id).immediate = immediate;
         }
         ice.onElementUpdate(id, setup);
         setup();

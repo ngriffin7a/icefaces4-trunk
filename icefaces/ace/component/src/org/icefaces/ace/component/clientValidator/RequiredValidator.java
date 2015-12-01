@@ -55,6 +55,8 @@ public class RequiredValidator extends RequiredValidatorBase {
             script.append(MessageFormat.format(message, label));
             script.append("', ");
             script.append(MessageMatcher.isMultipleMessage(validatedComponent));
+            script.append(", ");
+            script.append(validatedComponent.getAttributes().get("immediate"));
             script.append(")");
 
             children.add(new ScriptOutputWriter(script.toString()));
