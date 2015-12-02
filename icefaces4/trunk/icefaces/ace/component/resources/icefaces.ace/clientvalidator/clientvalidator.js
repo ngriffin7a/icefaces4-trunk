@@ -64,7 +64,7 @@
             var validationResult = jqForm.validate();
             var validElements = validationResult.validElements();
             if (validElements) {
-                cleanupMessages(validationResult);
+                cleanupMessages(validElements);
             }
 
             var skipValidation = false;
