@@ -416,6 +416,8 @@ public class CentralDataList {
 							 "dataTable", "dataTableGrouping.xhtml", "DataTableGrouping.java"),
 					new Demo(msgs("menu.ace.dataTable.subMenu.lazyLoading"), msgs("example.ace.dataTable.lazyLoading.description"),
 							 "dataTable", "dataTableLazyLoading.xhtml", "DataTableLazyLoading.java"),
+					new Demo(msgs("menu.ace.dataTable.subMenu.liveScrolling"), msgs("example.ace.dataTable.liveScrolling.description"),
+							 "dataTable", "dataTableLiveScrolling.xhtml", "DataTableLiveScrolling.java"),
 					new Demo(msgs("menu.ace.dataTable.subMenu.paginator"), msgs("example.ace.dataTable.paginator.description"),
 							 "dataTable", "dataTablePaginator.xhtml", "DataTablePaginator.java"),
 					new Demo(msgs("menu.ace.dataTable.subMenu.panelexpansion"), msgs("example.ace.dataTable.panelexpansion.description"),
