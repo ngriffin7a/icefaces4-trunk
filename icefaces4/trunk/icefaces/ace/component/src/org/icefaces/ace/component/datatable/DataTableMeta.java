@@ -365,7 +365,7 @@ public class DataTableMeta extends UIDataMeta {
     /* ##################################################################### */
     @Property(tlddoc = "Defines a code word indicating method of table element selection." +
             " Available values include: \"multiple\", \"single\"," +
-            " \"cellblock\", \"cellrange\" and \"singlecell\".")
+            " \"cellblock\", \"cellrange\", \"multiplecell\" and \"singlecell\".")
     private String selectionMode;
 
     @Property(tlddoc = "Enable to require a double-click to fire row/cell selection events.")
