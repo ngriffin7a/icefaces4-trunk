@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition   xmlns="http://www.w3.org/1999/xhtml"
+                            xmlns:h="http://xmlns.jcp.org/jsf/html"
+                            xmlns:f="http://xmlns.jcp.org/jsf/core"
+                            xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                            xmlns:ace="http://www.icefaces.org/icefaces/components"
+                            xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                            template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+        <h:form id="form">
+           <h:panelGrid columns="3">
+                <h:outputLabel for="paginatorIn" value="Enable Paginator:"/>
+                <h:selectBooleanCheckbox id="paginatorIn" value="#{dataTableLiveScrolling.paginator}">
+                    <f:ajax render="@form" execute="@this" />
+                </h:selectBooleanCheckbox>
+                <ace:message id="pagMsg" for="paginatorIn"/>
+           </h:panelGrid>                
+           <ace:dataTable id="carTable"
+                                  value="#{dataTableLiveScrolling.carsData}"
+                                  var="car"
+                                  lazy="true"
+                                  rows="10"
+                                  paginator="#{dataTableLiveScrolling.paginator}"
+                                  pageCount="5"
+                                  rowIndexVar="row"
+                                  scrollable="true"
+                                  liveScroll="true"
+                                  liveScrollBufferPages="3"
+                                  >
+               <ace:column id="rowNumber" headerText="Row #" footerText="Row #">
+                    <h:outputText id="rowNumberCell" value="#{row}"/>
+                </ace:column>
+                <ace:column id="id" headerText="ID" footerText="ID">
+                    <h:outputText id="idCell" value="#{car.id}"/>
+                </ace:column>
+               <ace:column id="name" headerText="Name" footerText="Name"
+                           sortBy="#{car.name}" filterBy="#{car.name}">
+                   <h:outputText id="nameCell" value="#{car.name}"/>
+               </ace:column>
+               <ace:column id="chassis" headerText="Chassis" footerText="Chassis"
+                           sortBy="#{car.chassis}" filterBy="#{car.chassis}">
+                   <h:outputText id="chassisCell" value="#{car.chassis}"/>
+               </ace:column>
+                <ace:column id="year" headerText="Year" footerText="Year"
+                            sortBy="#{car.year}" filterBy="#{car.year}">
+                    <h:outputText id="yearCell" value="#{car.year}"/>
+                </ace:column>
+                <ace:column id="color" headerText="Color" footerText="Color"
+                            sortBy="#{car.color}" filterBy="#{car.color}">
+                    <h:outputText id="colorCell" value="#{car.color}"/>
+                </ace:column>
+                <ace:column id="mpg" headerText="MPG" footerText="MPG"
+                            sortBy="#{car.mpg}" filterBy="#{car.mpg}">
+                    <h:outputText id="mpgCell" value="#{car.mpg}"/>
+                </ace:column>
+                <ace:column id="cost" headerText="Cost" footerText="Cost"
+                            sortBy="#{car.cost}" filterBy="#{car.cost}">
+                    <h:outputText id="costCell" value="#{car.cost}">
+                        <f:convertNumber type="currency"
+                                         currencySymbol="$"
+                                         groupingUsed="true"
+                                         minFractionDigits="2"
+                                         maxFractionDigits="2"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
