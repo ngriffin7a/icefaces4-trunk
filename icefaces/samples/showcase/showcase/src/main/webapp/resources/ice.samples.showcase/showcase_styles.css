@@ -543,7 +543,6 @@ div.ui-widget.ui-widget-content.wijmo-wijmenu.ui-corner-all.ui-helper-clearfix.p
 body, table {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: .95em;
-	color: #000000;
 }
 
 .ice-ace-menu-bar .ui-widget.ui-widget-content.wijmo-wijmenu.ui-corner-all.ui-helper-clearfix.wijmo-wijmenu-horizontal.documentation-menu .wijmo-wijmenu-link { border-width:0; width: 100%; height: 100%;}
