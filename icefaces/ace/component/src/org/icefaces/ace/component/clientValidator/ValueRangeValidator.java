@@ -16,7 +16,6 @@
 
 package org.icefaces.ace.component.clientValidator;
 
-import org.icefaces.ace.component.message.Message;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 
@@ -55,7 +54,7 @@ public class ValueRangeValidator extends ValueRangeValidatorBase {
 
             final Validateable v = (Validateable) validatedComponent;
             final String id = v.getValidatedElementId();
-            final String messageClientId = MessageMatcher.lookupMessageClientId(validatedComponent);
+            final String messageClientId = MessageMatcher.lookupMessageConfig(validatedComponent);
             final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
@@ -70,13 +69,11 @@ public class ValueRangeValidator extends ValueRangeValidatorBase {
             script.append(rule);
             script.append("', ");
             script.append(validatorConfiguration);
-            script.append(", '");
+            script.append(", ");
             script.append(messageClientId);
-            script.append("', '");
+            script.append(", '");
             script.append(MessageFormat.format(message, label, min, max));
             script.append("', ");
-            script.append(MessageMatcher.isMultipleMessage(validatedComponent));
-            script.append(", ");
             script.append(validatedComponent.getAttributes().get("immediate"));
             script.append(")");
 

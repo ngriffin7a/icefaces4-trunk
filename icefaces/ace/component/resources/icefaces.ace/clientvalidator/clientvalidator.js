@@ -137,7 +137,17 @@
         }
     }
 
-    ice.ace.setupClientValidation = function(id, rule, config, messageId,  message, multiple, immediate) {
+    function clientValidationGrowlMessagesFor(id, messageText, config) {
+        return function (parameter, element) {
+            config.msgs = [{text: messageText, icon: 'alert', state: 'error', sticky: false}];
+
+            ice.ace.GrowlMessages(id, config);
+            element.cleanupValidationMessage = function () {
+            };
+        }
+    }
+
+    ice.ace.setupClientValidation = function (id, rule, config, messageType, message, immediate) {
         var form = formOf(id);
         if (!form.enabledValidation) {
             ice.ace.jq(ice.ace.escapeClientId(form.id)).validate().settings.showErrors = function(){};
@@ -151,9 +161,15 @@
 
             var ruleConfig = {};
             ruleConfig[rule] = config;
-            var messageConfig = {};
-            messageConfig[rule] = (multiple ? clientValidationMessagesFor : clientValidationMessageFor)(messageId, message, rule);
-            ruleConfig['messages'] = messageConfig;
+            var messageCreator = {};
+            if (messageType.aceMessage) {
+                messageCreator[rule] = clientValidationMessageFor(messageType.id, message);
+            } else if (messageType.aceMessages) {
+                messageCreator[rule] = clientValidationMessagesFor(messageType.id, message);
+            } else if (messageType.aceGrowlMessages) {
+                messageCreator[rule] = clientValidationGrowlMessagesFor(messageType.id, message, messageType.configuration);
+            }
+            ruleConfig['messages'] = messageCreator;
 
             ice.ace.jq(selector).rules('add', ruleConfig);
             document.getElementById(id).immediate = immediate;

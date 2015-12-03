@@ -187,13 +187,34 @@ public class GrowlMessagesRenderer extends Renderer {
         }
     }
 
-    private void durationEntry(JSONBuilder jb, String durationName, String duration) {
+    private static void durationEntry(JSONBuilder jb, String durationName, String duration) {
         try {
             jb.entry(durationName, Integer.parseInt(duration));
         } catch (NumberFormatException e) {
             duration = durationSet.contains(duration) ? duration : "_default";
             jb.entry(durationName, duration);
         }
+    }
+
+    public static String generateGrowlOptionsScript(GrowlMessages messages) {
+        JSONBuilder jb = JSONBuilder.create();
+        jb.beginMap();
+        int pool = messages.getMaxVisibleMessages();
+        int life = messages.getDisplayDuration();
+        String position = messages.getPosition();
+        String glue = messages.getMessageOrder();
+        jb.entry("pool", pool > 0 ? pool : 0)
+                .entry("header", messages.getHeader())
+                .entry("group", messages.getMessageStyleClass())
+                .entry("position", positionSet.contains(position) ? position : "top-right")
+                .entry("glue", glueSet.contains(glue) ? glue : "after")
+                .entry("life", life > 0 ? life : 3000)
+                .entry("closer", messages.isCloseAll());
+        durationEntry(jb, "openDuration", messages.getShowEffectDuration());
+        durationEntry(jb, "closeDuration", messages.getHideEffectDuration());
+
+        jb.beginArray("msgs").endArray().endMap();
+        return jb.toString();
     }
 
 }

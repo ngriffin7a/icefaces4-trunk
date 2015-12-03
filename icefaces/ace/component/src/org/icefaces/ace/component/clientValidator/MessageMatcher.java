@@ -16,9 +16,12 @@
 
 package org.icefaces.ace.component.clientValidator;
 
+import org.icefaces.ace.component.growlmessages.GrowlMessages;
+import org.icefaces.ace.component.growlmessages.GrowlMessagesRenderer;
 import org.icefaces.ace.component.message.Message;
 import org.icefaces.ace.component.messages.Messages;
 import org.icefaces.ace.util.ComponentUtils;
+import org.icefaces.ace.util.JSONBuilder;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -30,14 +33,16 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 import javax.faces.view.facelets.FaceletException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MessageMatcher implements SystemEventListener {
     private static final String MESSAGE_MAP = MessageMatcher.class.getName() + ".messageMap";
     private static final String MESSAGES_MAP = MessageMatcher.class.getName() + ".messagesMap";
+    private static final String GROWL_MESSAGES_MAP = MessageMatcher.class.getName() + ".growlMessagesMap";
+    private static final String GROWL_MESSAGES_CONFIGURATION_MAP = MessageMatcher.class.getName() + ".growlMessagesConfigurationMap";
     private static final String LABEL_MAP = MessageMatcher.class.getName() + ".labelMap";
     private static final String ALL = "@all";
 
@@ -57,6 +62,16 @@ public class MessageMatcher implements SystemEventListener {
             } else {
                 getMap(MESSAGES_MAP).put(target, component.getClientId());
             }
+        } else if (component instanceof GrowlMessages) {
+            final String target = ((GrowlMessages) component).getFor();
+            final String configuration = GrowlMessagesRenderer.generateGrowlOptionsScript((GrowlMessages) component);
+            if (target == null || target.isEmpty() || ALL.equals(target)) {
+                getMap(GROWL_MESSAGES_MAP).put(ALL, component.getClientId());
+                getMap(GROWL_MESSAGES_CONFIGURATION_MAP).put(ALL, configuration);
+            } else {
+                getMap(GROWL_MESSAGES_MAP).put(target, component.getClientId());
+                getMap(GROWL_MESSAGES_CONFIGURATION_MAP).put(target, configuration);
+            }
         } else if (component instanceof HtmlOutputLabel) {
             final String target = ((HtmlOutputLabel) component).getFor();
             if (target != null && !target.isEmpty()) {
@@ -67,46 +82,50 @@ public class MessageMatcher implements SystemEventListener {
     }
 
     public boolean isListenerForSource(Object source) {
-        return source instanceof Message || source instanceof Messages || source instanceof HtmlOutputLabel;
+        return source instanceof Message || source instanceof Messages || source instanceof GrowlMessages || source instanceof HtmlOutputLabel;
     }
 
-    static boolean isMultipleMessage(UIComponent validatedComponent) {
-        final Map messageMap = getMap(MESSAGE_MAP);
-        if (messageMap.containsKey(validatedComponent.getId()) || messageMap.containsKey(validatedComponent.getClientId())) {
-            return false;
-        } else {
-            final Map messagesMap = getMap(MESSAGES_MAP);
-            return messagesMap.containsKey(validatedComponent.getId()) || messagesMap.containsKey(validatedComponent.getClientId()) || messagesMap.containsKey(ALL);
-        }
-    }
-
-    static String lookupMessageClientId(UIComponent validatedComponent) {
-        String id;
-        if (isMultipleMessage(validatedComponent)) {
-            final Map<String, String> messagesMap = getMap(MESSAGES_MAP);
-            id = messagesMap.get(validatedComponent.getId());
-            if (id == null) {
-                id = messagesMap.get(validatedComponent.getClientId());
-            }
-        } else {
-            final Map<String, String>  messageMap = getMap(MESSAGE_MAP);
-            id = messageMap.get(validatedComponent.getId());
-            if (id == null) {
-                id = messageMap.get(validatedComponent.getClientId());
-            }
-        }
-        //use the catch all ace:messages component if the is one
+    private static String lookupByIdOrClientId(UIComponent component, String mapType) {
+        final Map<String, String> messagesMap = getMap(mapType);
+        String id = messagesMap.get(component.getId());
         if (id == null) {
-            final Map<String, String> messagesMap = getMap(MESSAGES_MAP);
-            String allMessagesId = messagesMap.get(ALL);
-            if (allMessagesId == null) {
-                throw new FaceletException("Cannot find message/s component assigned to " + validatedComponent.getId());
-            } else {
-                return allMessagesId;
-            }
+            return messagesMap.get(component.getClientId());
         } else {
             return id;
         }
+    }
+
+    static String lookupMessageConfig(UIComponent validatedComponent) {
+        String id = lookupByIdOrClientId(validatedComponent, MESSAGE_MAP);
+        if (id != null) {
+            return "{aceMessage: true, id: '" + id + "'}";
+        }
+        id = lookupByIdOrClientId(validatedComponent, MESSAGES_MAP);
+        if (id != null) {
+            return "{aceMessages: true, id: '" + id + "'}";
+        }
+        id = lookupByIdOrClientId(validatedComponent, GROWL_MESSAGES_MAP);
+        if (id != null) {
+            String configuration = lookupByIdOrClientId(validatedComponent, GROWL_MESSAGES_CONFIGURATION_MAP);
+            return "{aceGrowlMessages: true, id: '" + id + "', configuration: " + configuration + "}";
+        }
+
+        //use the catch all ace:messages component if there is one
+        if (id == null) {
+            String allMessagesId = getMap(MESSAGES_MAP).get(ALL);
+
+            if (allMessagesId == null) {
+                final String growlMessagesId = getMap(GROWL_MESSAGES_MAP).get(ALL);
+                if (growlMessagesId != null) {
+                    String configuration = getMap(GROWL_MESSAGES_CONFIGURATION_MAP).get(ALL);
+                    return "{aceGrowlMessages: true, id: '" + growlMessagesId + "', configuration: " + configuration + "}";
+                }
+            } else {
+                return "{aceMessages: true, id: '" + allMessagesId + "'}";
+            }
+        }
+
+        throw new FaceletException("Cannot find message/s component assigned to " + validatedComponent.getId());
     }
 
     static String lookupLabel(UIComponent validatedComponent) {

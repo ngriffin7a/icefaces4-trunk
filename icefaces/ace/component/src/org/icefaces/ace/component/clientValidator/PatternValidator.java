@@ -16,14 +16,11 @@
 
 package org.icefaces.ace.component.clientValidator;
 
-import org.icefaces.ace.component.message.Message;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.ComponentUtils;
-import org.icefaces.impl.event.UIOutputWriter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
@@ -38,7 +35,7 @@ public class PatternValidator extends PatternValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final Validateable v = (Validateable) validatedComponent;
             final String id = v.getValidatedElementId();
-            final String messageClientId = MessageMatcher.lookupMessageClientId(validatedComponent);
+            final String messageConfig = MessageMatcher.lookupMessageConfig(validatedComponent);
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
                     "org.icefaces.ace.component.clientvalidation.", "pattern", "Entry {0} is malformed.");
@@ -49,13 +46,11 @@ public class PatternValidator extends PatternValidatorBase {
             script.append(id);
             script.append("', 'pattern', /");
             script.append(getPattern());
-            script.append("/, '");
-            script.append(messageClientId);
-            script.append("', '");
+            script.append("/, ");
+            script.append(messageConfig);
+            script.append(", '");
             script.append(MessageFormat.format(message, label, getPattern()));
             script.append("', ");
-            script.append(MessageMatcher.isMultipleMessage(validatedComponent));
-            script.append(", ");
             script.append(validatedComponent.getAttributes().get("immediate"));
             script.append(")");
 
