@@ -430,6 +430,8 @@ public class CentralDataList {
 							 "dataTable", "dataTableRowState.xhtml", "DataTableRowState.java"),
 					new Demo(msgs("menu.ace.dataTable.subMenu.selector"), msgs("example.ace.dataTable.selector.description"),
 							 "dataTable", "dataTableSelector.xhtml", "DataTableSelector.java"),
+					new Demo(msgs("menu.ace.dataTable.subMenu.selectorClient"), msgs("example.ace.dataTable.selectorClient.description"),
+							 "dataTable", "dataTableSelectorClient.xhtml", "DataTableSelectorClient.java"),
 					new Demo(msgs("menu.ace.dataTable.subMenu.scrolling"), msgs("example.ace.dataTable.scrolling.description"),
 							 "dataTable", "dataTableScrolling.xhtml", "DataTableScrolling.java"),
 					new Demo(msgs("menu.ace.dataTable.subMenu.sorting"), msgs("example.ace.dataTable.sorting.description"),
