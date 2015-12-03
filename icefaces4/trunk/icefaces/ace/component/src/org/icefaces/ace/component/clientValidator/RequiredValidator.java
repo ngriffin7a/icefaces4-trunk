@@ -16,7 +16,6 @@
 
 package org.icefaces.ace.component.clientValidator;
 
-import org.icefaces.ace.component.message.Message;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 
@@ -34,7 +33,7 @@ public class RequiredValidator extends RequiredValidatorBase {
         if (validatedComponent instanceof Validateable) {
             final Validateable v = (Validateable) validatedComponent;
             final String id = v.getValidatedElementId();
-            final String messageClientId = MessageMatcher.lookupMessageClientId(validatedComponent);
+            final String messageConfig = MessageMatcher.lookupMessageConfig(validatedComponent);
             final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
@@ -49,13 +48,11 @@ public class RequiredValidator extends RequiredValidatorBase {
             script.append("required");
             script.append("', ");
             script.append(isEnabled());
+            script.append(", ");
+            script.append(messageConfig);
             script.append(", '");
-            script.append(messageClientId);
-            script.append("', '");
             script.append(MessageFormat.format(message, label));
             script.append("', ");
-            script.append(MessageMatcher.isMultipleMessage(validatedComponent));
-            script.append(", ");
             script.append(validatedComponent.getAttributes().get("immediate"));
             script.append(")");
 
