@@ -191,8 +191,8 @@ ice.ace.Dialog.prototype.show = function() {
 ice.ace.Dialog.prototype.hide = function() {
 	var self = this;
     setTimeout(function(){
-        self.jq.dialog('close');
         if (self.cfg.isVisible){
+            self.jq.dialog('close');
             var oldClass = self.jq.dialogClass;
             self.cfg.isVisible=false;
             var dialogParent = self.jq.parent();
