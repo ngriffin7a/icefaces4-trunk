@@ -59,7 +59,7 @@ public class LengthValidator extends LengthValidatorBase {
             final List<UIComponent> children = form.getChildren();
             final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
             final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
-                    "org.icefaces.ace.component.clientvalidation.", rule, "Entry {0} requires a minimum of {1} and allows a maximum of {2} items.");
+                    "org.icefaces.ace.component.clientvalidation.", rule, "{0} length must be between {1} and {2}.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 
             final StringBuffer script = new StringBuffer();
