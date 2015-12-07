@@ -57,7 +57,7 @@
 
     window.addEventListener('load', function () {
         var old = ice.fullSubmit;
-        ice.fullSubmit = function (execute, render, event, element, additionalParameters, callbacks) {
+        ice.submitFunction = function (element, event, options) {
             var form = formOf(element.id);
             var jqForm = ice.ace.jq(form);
             var isValidForm = jqForm.valid();
@@ -79,7 +79,7 @@
             }
 
             if (skipValidation || (form && isValidForm)) {
-                old(execute, render, event, element, additionalParameters, callbacks);
+                old(element, event, options);
             }
         };
     });
