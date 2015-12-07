@@ -139,11 +139,17 @@
 
     function clientValidationGrowlMessagesFor(id, messageText, config) {
         return function (parameter, element) {
-            config.msgs = [{text: messageText, icon: 'alert', state: 'error', sticky: false}];
+            if (!element.validationMessageDisplayed) {
+                config.msgs = [{text: messageText, icon: 'alert', state: 'error', sticky: false}];
 
-            ice.ace.GrowlMessages(id, config);
-            element.cleanupValidationMessage = function () {
-            };
+                ice.ace.GrowlMessages(id, config);
+                element.validationMessageDisplayed = true;
+                ice.ace.jq('#jGrowl').bind('jGrowl.beforeClose', function () {
+                    delete element.validationMessageDisplayed;
+                });
+                element.cleanupValidationMessage = function () {
+                };
+            }
         }
     }
 
