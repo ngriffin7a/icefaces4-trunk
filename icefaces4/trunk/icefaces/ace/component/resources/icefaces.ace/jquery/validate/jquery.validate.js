@@ -6,6 +6,7 @@
  * Copyright (c) 2015 Jörn Zaefferer
  * Released under the MIT license
  */
+(function (jQuery) {
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 		define( ["jquery"], factory );
@@ -1396,6 +1397,6 @@ if ( $.ajaxPrefilter ) {
 }
 
 }));
-
+})(jQuery || ice.ace.jq);
 
 
