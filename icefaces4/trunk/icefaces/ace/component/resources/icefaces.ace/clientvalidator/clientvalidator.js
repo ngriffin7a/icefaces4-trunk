@@ -56,7 +56,7 @@
     }
 
     window.addEventListener('load', function () {
-        var old = ice.fullSubmit;
+        var old = ice.submitFunction;
         ice.submitFunction = function (element, event, options) {
             var form = formOf(element.id);
             var jqForm = ice.ace.jq(form);
