@@ -203,17 +203,23 @@ public class GrowlMessagesRenderer extends Renderer {
         int life = messages.getDisplayDuration();
         String position = messages.getPosition();
         String glue = messages.getMessageOrder();
-        jb.entry("pool", pool > 0 ? pool : 0)
-                .entry("header", messages.getHeader())
-                .entry("group", messages.getMessageStyleClass())
-                .entry("position", positionSet.contains(position) ? position : "top-right")
-                .entry("glue", glueSet.contains(glue) ? glue : "after")
-                .entry("life", life > 0 ? life : 3000)
-                .entry("closer", messages.isCloseAll());
+        jb.entry("pool", pool > 0 ? pool : 0).
+                entry("header", messages.getHeader()).
+                entry("group", messages.getMessageStyleClass()).
+                entry("position", positionSet.contains(position) ? position : "top-right").
+                entry("glue", glueSet.contains(glue) ? glue : "after").
+                entry("life", life > 0 ? life : 3000).
+                entry("closer", messages.isCloseAll());
         durationEntry(jb, "openDuration", messages.getShowEffectDuration());
         durationEntry(jb, "closeDuration", messages.getHideEffectDuration());
 
-        jb.beginArray("msgs").endArray().endMap();
+        Integer stickyOrdinal = (stickyOrdinal = severityMap.get(messages.getAutoHide())) == null ? 4 : stickyOrdinal;
+        jb.beginArray("msgs").beginMap().
+                entry("text", "").
+                entry("icon", "alert").
+                entry("state", "error").
+                entry("sticky", (3 > stickyOrdinal)).
+                endMap().endArray().endMap();
         return jb.toString();
     }
 

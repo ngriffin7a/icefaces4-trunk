@@ -16,6 +16,9 @@
 
 
 (function() {
+    function noop() {
+    }
+
     function formOf(id) {
         var cursor = document.getElementById(id);
         while (cursor) {
@@ -139,16 +142,29 @@
 
     function clientValidationGrowlMessagesFor(id, messageText, config) {
         return function (parameter, element) {
-            if (!element.validationMessageDisplayed) {
-                config.msgs = [{text: messageText, icon: 'alert', state: 'error', sticky: false}];
-
+            if (element.validationMessageDisplayed) {
+                if (element.validationMessageDisplayed != messageText) {
+                    var messages = ice.ace.jq('#jGrowl > .jGrowl-notification');
+                    messages.each(function (index, messageContainer) {
+                        //remove old message and add the new one when the validation message changes for the given component
+                        if (messageContainer.innerHTML.indexOf(element.validationMessageDisplayed) >= 0) {
+                            messageContainer.parentElement.removeChild(messageContainer);
+                            config.msgs[0].text = messageText;
+                            ice.ace.GrowlMessages(id, config);
+                        }
+                    });
+                    element.validationMessageDisplayed = messageText;
+                }
+            } else {
+                config.msgs[0].text = messageText;
                 ice.ace.GrowlMessages(id, config);
-                element.validationMessageDisplayed = true;
-                ice.ace.jq('#jGrowl').bind('jGrowl.beforeClose', function () {
-                    delete element.validationMessageDisplayed;
+                element.validationMessageDisplayed = messageText;
+                ice.ace.jq('#jGrowl').bind('jGrowl.close', function (messageContainer) {
+                    if (messageContainer.target.innerHTML.indexOf(messageText) >= 0) {
+                        delete element.validationMessageDisplayed;
+                    }
                 });
-                element.cleanupValidationMessage = function () {
-                };
+                element.cleanupValidationMessage = noop;
             }
         }
     }
