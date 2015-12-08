@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+
+			<h:form id="infoForm">			
+			<h:panelGrid id="inputGrid2" columns="1" width="100%"
+				styleClass="textEntryInputTable">				
+				<ace:textEntry id="userName" label="User Name: " labelPosition="left"
+					value="#{clientValidateLength.userName}" optionalIndicator=" max 8 characters" indicatorPosition="bottom">
+					<ace:ajax render="@form"/>
+					<ace:clientValidateRequired />
+					<ace:clientValidateLength max="8" />
+				</ace:textEntry>
+				<ace:textAreaEntry id="comment" label="Comment: " labelPosition="left"
+					value="#{clientValidateLength.comment}" optionalIndicator=" max 30 characters" indicatorPosition="bottom">
+					<ace:ajax render="@form"/>
+					<ace:clientValidateRequired />	
+					<ace:clientValidateLength max="30" />
+				</ace:textAreaEntry>	
+				<ace:pushButton value="Submit" />
+				<ace:growlMessages id="message" for="@all" autoHide="false"/>
+			</h:panelGrid>
+			</h:form>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+
+			<h:form id="lengthRangeForm">
+			<h:panelGrid id="inputGrid" columns="1" width="100%"
+				styleClass="textEntryInputTable">
+				<p>The <b>ace:checkboxButtons</b> below use an <b>ace:clientValidateLength</b> with the min attribute set to 2 and the max attribute set to 4. </p>
+				<ace:checkboxButtons id="selections"
+					header="Select from 2 to 4 options"
+					value="#{clientValidateLength.selected}" labelPosition="top"
+					style="width: 500px;">
+					<f:selectItem itemLabel="Java" itemValue="One" />
+					<f:selectItem itemLabel="C" itemValue="Two" />
+					<f:selectItem itemLabel="Python" itemValue="Three" />
+					<f:selectItem itemLabel="PHP" itemValue="Four" />
+					<f:selectItem itemLabel="JavaScript" itemValue="Five" />
+					<ace:ajax render="@form"/>
+					<ace:clientValidateRequired />
+					<ace:clientValidateLength min="2" max="4" />
+				</ace:checkboxButtons>
+				<ace:message id="message1" for="selections" />
+				<ace:pushButton id="submitButton" value="Submit" />
+			</h:panelGrid>
+			</h:form>
+			
+    </ui:define>
+</ui:composition>

@@ -754,6 +754,34 @@ public class CentralDataList {
 						new Demo(msgs("overview"), msgs("example.ace.videoPlayer.description"),
 								 "videoPlayer", "videoPlayer.xhtml", "VideoPlayerBean.java"))
 		));
+	
+		toReturn.add(new CategoryGroup(msgs("menu.ace.group.validator.title"),
+				new ComponentGroup("ace:clientValidateRequired", "client", "clientValidateRequired",
+					new Demo(msgs("overview"), msgs("example.ace.clientValidateRequired.description"),
+							"clientValidateRequired", "clientValidateRequired.xhtml", "ClientValidateRequiredBean.java")),
+				new ComponentGroup("ace:clientValidateLength", "client", "clientValidateLength",
+					new Demo(msgs("menu.ace.clientValidateLength.subMenu.minimum"), msgs("example.ace.clientValidateLength.minimum.description"),
+							"clientValidateLength", "clientValidateLengthMin.xhtml", "ClientValidateLengthBean.java"),
+					new Demo(msgs("menu.ace.clientValidateLength.subMenu.maximum"), msgs("example.ace.clientValidateLength.maximum.description"),
+							"clientValidateLength", "clientValidateLengthMax.xhtml", "ClientValidateLengthBean.java"),
+					new Demo(msgs("menu.ace.clientValidateLength.subMenu.range"), msgs("example.ace.clientValidateLength.range.description"),
+							"clientValidateLength", "clientValidateLengthRange.xhtml", "ClientValidateLengthBean.java")),
+				new ComponentGroup("ace:clientValidateValueRange", "client", "clientValidateValueRange",
+					new Demo(msgs("menu.ace.clientValidateValueRange.subMenu.minimum"), msgs("example.ace.clientValidateValueRange.minimum.description"),
+							"clientValidateValueRange", "clientValidateValueRangeMin.xhtml", "ClientValidateRangeBean.java"),
+					new Demo(msgs("menu.ace.clientValidateValueRange.subMenu.maximum"), msgs("example.ace.clientValidateValueRange.maximum.description"),
+							"clientValidateValueRange", "clientValidateValueRangeMax.xhtml", "ClientValidateRangeBean.java"),
+					new Demo(msgs("menu.ace.clientValidateValueRange.subMenu.range"), msgs("example.ace.clientValidateValueRange.range.description"),
+							"clientValidateValueRange", "clientValidateValueRangeMinMax.xhtml", "ClientValidateRangeBean.java")),
+				new ComponentGroup("ace:clientValidateDecimal", "client", "clientValidateDecimal",
+					new Demo(msgs("overview"), msgs("example.ace.clientValidateDecimal.description"),
+							"clientValidateDecimal", "clientValidateDecimal.xhtml", "ClientValidateDecimalBean.java")),
+				new ComponentGroup("ace:clientValidatePattern", "client", "clientValidatePattern", 
+					new Demo(msgs("overview"), msgs("example.ace.clientValidatePattern.description"),
+							"clientValidatePattern", "clientValidatePattern.xhtml", "ClientValidatePatternBean.java"))
+					
+		));
+		
 		
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.misc.title"),
 				new ComponentGroup("ace:animation", "Animation", "animation.html",
