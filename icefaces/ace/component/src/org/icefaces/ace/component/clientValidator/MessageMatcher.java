@@ -45,6 +45,7 @@ public class MessageMatcher implements SystemEventListener {
     private static final String GROWL_MESSAGES_CONFIGURATION_MAP = MessageMatcher.class.getName() + ".growlMessagesConfigurationMap";
     private static final String LABEL_MAP = MessageMatcher.class.getName() + ".labelMap";
     private static final String ALL = "@all";
+    private static final String IN_VIEW = "@inView";
 
     public void processEvent(SystemEvent event) throws AbortProcessingException {
         final UIComponent component = (UIComponent) event.getSource();
@@ -68,6 +69,9 @@ public class MessageMatcher implements SystemEventListener {
             if (target == null || target.isEmpty() || ALL.equals(target)) {
                 getMap(GROWL_MESSAGES_MAP).put(ALL, component.getClientId());
                 getMap(GROWL_MESSAGES_CONFIGURATION_MAP).put(ALL, configuration);
+            } else if (IN_VIEW.equals(target)) {
+                getMap(GROWL_MESSAGES_MAP).put(IN_VIEW, component.getClientId());
+                getMap(GROWL_MESSAGES_CONFIGURATION_MAP).put(IN_VIEW, configuration);
             } else {
                 getMap(GROWL_MESSAGES_MAP).put(target, component.getClientId());
                 getMap(GROWL_MESSAGES_CONFIGURATION_MAP).put(target, configuration);
@@ -115,10 +119,19 @@ public class MessageMatcher implements SystemEventListener {
             String allMessagesId = getMap(MESSAGES_MAP).get(ALL);
 
             if (allMessagesId == null) {
-                final String growlMessagesId = getMap(GROWL_MESSAGES_MAP).get(ALL);
-                if (growlMessagesId != null) {
+                final Map<String, String> growlMap = getMap(GROWL_MESSAGES_MAP);
+                final String growlMessagesForAllId = growlMap.get(ALL);
+                if (growlMessagesForAllId != null) {
                     String configuration = getMap(GROWL_MESSAGES_CONFIGURATION_MAP).get(ALL);
-                    return "{aceGrowlMessages: true, id: '" + growlMessagesId + "', configuration: " + configuration + "}";
+                    return "{aceGrowlMessages: true, id: '" + growlMessagesForAllId + "', configuration: " + configuration + "}";
+                }
+                final String growlMessagesForInViewId = growlMap.get(IN_VIEW);
+                if (growlMessagesForInViewId != null) {
+                    List idsInView = ComponentUtils.findIdsInView(FacesContext.getCurrentInstance());
+                    if (idsInView.contains(validatedComponent.getClientId())) {
+                        String configuration = getMap(GROWL_MESSAGES_CONFIGURATION_MAP).get(IN_VIEW);
+                        return "{aceGrowlMessages: true, id: '" + growlMessagesForInViewId + "', configuration: " + configuration + "}";
+                    }
                 }
             } else {
                 return "{aceMessages: true, id: '" + allMessagesId + "'}";
