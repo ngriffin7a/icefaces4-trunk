@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+
+	<h:form id="rangeMinForm">
+		<ace:panel id="panel1" >
+			<p>
+				Validation should appear if a blur event takes place when the value
+				in the ace:textEntry contains a number lower than 5.
+				Input such as 6 or A5 should fail validation.
+			</p>
+			<h:panelGrid id="inputGrid" columns="1" width="100%"
+				styleClass="textEntryInputTable">
+				<ace:textEntry id="textEntry1" value="#{clientValidateValueRangeBean.value1}" 
+				label="Input Value: " labelPosition="left" size="8">
+					<ace:ajax render="@form" event="blur" />
+					<ace:clientValidateRequired />
+					<ace:clientValidateValueRange min="5" />
+				</ace:textEntry>
+				<ace:pushButton id="formSubmit" value="Submit" />
+				<ace:message id="message1" for="textEntry1" />
+				<h:outputText id="textOut" value="Value: #{clientValidateValueRangeBean.value1}" />
+			</h:panelGrid>
+		</ace:panel>
+	</h:form>
+
+    </ui:define>
+</ui:composition>
