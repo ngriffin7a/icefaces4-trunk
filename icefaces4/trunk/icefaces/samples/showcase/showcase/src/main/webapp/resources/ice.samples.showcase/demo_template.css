@@ -177,14 +177,14 @@ a:link, a:visited {
 
 .primary {
 	display: inline-block;
-    width: 775px;
+    width: 760px;
 }                           
 
 .menu {
 	vertical-align: top;
 	display: inline-block;
     margin-right: 10px;
-    width: 235px; 
+    width: 250px; 
     font-size: 10pt;
 }
 
