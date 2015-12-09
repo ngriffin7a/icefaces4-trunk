@@ -164,7 +164,16 @@
                         delete element.validationMessageDisplayed;
                     }
                 });
-                element.cleanupValidationMessage = noop;
+                element.cleanupValidationMessage = function () {
+                    var messages = ice.ace.jq('#jGrowl > .jGrowl-notification');
+                    messages.each(function (index, messageContainer) {
+                        //remove old message and add the new one when the validation message changes for the given component
+                        if (messageContainer.innerHTML.indexOf(element.validationMessageDisplayed) >= 0) {
+                            messageContainer.parentElement.removeChild(messageContainer);
+                            delete element.validationMessageDisplayed;
+                        }
+                    });
+                };
             }
         }
     }
