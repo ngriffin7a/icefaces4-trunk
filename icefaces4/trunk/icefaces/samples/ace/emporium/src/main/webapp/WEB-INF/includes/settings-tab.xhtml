@@ -54,9 +54,11 @@
             
             <h:graphicImage id="taboHelp" library="images" name="help.png"/>
             <h:outputLabel for="tabo" value="Tab Orientation:"/>
-            <h:selectOneRadio id="tabo" value="#{settingsBean.tabOrientation}" required="true">
+            <!-- TODO ICE-10713 - We shouldn't need to manually specify labelPosition, it should default to left to allow this as a drop-in replacement -->
+            <ace:radioButtons id="tabo" value="#{settingsBean.tabOrientation}" required="true" labelPosition="left"
+                              styleClass="ace-radio-buttons-override">
                 <f:selectItems value="#{listData.tabOrientations}"/>
-            </h:selectOneRadio>
+            </ace:radioButtons>
             <ace:message for="tabo"/>
             
             <c:if test="#{!testFlags.testGrowlMessages}">

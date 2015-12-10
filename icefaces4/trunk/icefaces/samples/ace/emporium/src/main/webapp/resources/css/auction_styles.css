@@ -32,6 +32,10 @@
 	height: 25px;
 }
 
+.ui-datatable-header {
+	overflow-y: hidden;
+}
+
 .ui-notificationbar {
     height: 65px;
     overflow-y: scroll;
@@ -56,6 +60,20 @@
 .ui-tabset .ui-tabs-nav div em {
 	float: none;
 	display: block;
+}
+
+.ui-datatable-state-active-hover {
+    opacity: 1;
+}
+
+.ui-column-filter {
+	max-width: 150px;
+}
+
+.ace-radio-buttons-override {
+	border: 0;
+	background: transparent;
+	text-align: left;
 }
 
 /* Page Styles */
@@ -181,7 +199,7 @@
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 	height: 0;
 }
 
