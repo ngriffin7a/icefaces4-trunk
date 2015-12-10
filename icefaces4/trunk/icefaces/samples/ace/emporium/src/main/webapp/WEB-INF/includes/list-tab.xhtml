@@ -47,11 +47,9 @@
 		            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
 		                             actionListener="#{tabController.postAuctionTab}"
 		                             immediate="true" styleClass="floatR"/>
-		            <mobi:largeView>
-	                    <h:commandButton image="resources/images/filter.png" title="Filter the auction list"
-	                                     actionListener="#{auctionController.toggleFilter}"
-	                                     immediate="true" styleClass="floatR"/>
-                    </mobi:largeView>
+                    <h:commandButton image="resources/images/filter.png" title="Filter the auction list"
+                                     actionListener="#{auctionController.toggleFilter}"
+                                     immediate="true" styleClass="floatR"/>
                     <emporium:dataExporters target="a" fileName="auction-list" includeFooters="false" popup="true"/>
 	            </h:panelGroup>
 	        </f:facet>
