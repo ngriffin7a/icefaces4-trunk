@@ -116,18 +116,28 @@ public class MessageMatcher implements SystemEventListener {
 
         //use the catch all ace:messages component if there is one
         if (id == null) {
-            String allMessagesId = getMap(MESSAGES_MAP).get(ALL);
+            final Map<String, String> messagesMap = getMap(MESSAGES_MAP);
+            final String allMessagesId = messagesMap.get(ALL);
 
             if (allMessagesId == null) {
+                final String messagesForInViewId = messagesMap.get(IN_VIEW);
+                if (messagesForInViewId != null) {
+                    final List idsInView = ComponentUtils.findIdsInView(FacesContext.getCurrentInstance());
+                    if (idsInView.contains(validatedComponent.getClientId())) {
+                        return "{aceMessages: true, id: '" + messagesForInViewId + "'}";
+                    }
+                }
+
                 final Map<String, String> growlMap = getMap(GROWL_MESSAGES_MAP);
                 final String growlMessagesForAllId = growlMap.get(ALL);
                 if (growlMessagesForAllId != null) {
                     String configuration = getMap(GROWL_MESSAGES_CONFIGURATION_MAP).get(ALL);
                     return "{aceGrowlMessages: true, id: '" + growlMessagesForAllId + "', configuration: " + configuration + "}";
                 }
+
                 final String growlMessagesForInViewId = growlMap.get(IN_VIEW);
                 if (growlMessagesForInViewId != null) {
-                    List idsInView = ComponentUtils.findIdsInView(FacesContext.getCurrentInstance());
+                    final List idsInView = ComponentUtils.findIdsInView(FacesContext.getCurrentInstance());
                     if (idsInView.contains(validatedComponent.getClientId())) {
                         String configuration = getMap(GROWL_MESSAGES_CONFIGURATION_MAP).get(IN_VIEW);
                         return "{aceGrowlMessages: true, id: '" + growlMessagesForInViewId + "', configuration: " + configuration + "}";
