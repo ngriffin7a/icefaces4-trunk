@@ -88,9 +88,10 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         ExternalContext externalContext = facesContext.getExternalContext();
         Map parameters = externalContext.getRequestParameterMap();
         if (isDisposeWindowRequest(parameters)) {
-            //force the running of the JSF lifecycle so that the registered phase listener has a chance to destroy
-            //the @WindowDisposed annotated view scope beans
-            return false;
+            String windowID = (String) parameters.get(WindowParameter);
+            disposeWindow(facesContext, windowID);
+
+            return true;
         }
         return wrapped.isResourceRequest(facesContext);
     }
@@ -650,28 +651,6 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             if (event.getPhaseId() == PhaseId.RESTORE_VIEW) {
                 boolean customWindowTracking = !"url".equals(context.getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
                 WindowScopeManager.determineWindowID(context, customWindowTracking);
-            }
-
-            ExternalContext externalContext = context.getExternalContext();
-            Map parameters = externalContext.getRequestParameterMap();
-            if (event.getPhaseId() == PhaseId.RENDER_RESPONSE && isDisposeWindowRequest(parameters)) {
-                //shortcut the lifecycle to avoid running it with certain parts discarded or disposed
-                context.responseComplete();
-                String windowID = (String) parameters.get(WindowParameter);
-                disposeWindow(context, windowID);
-                //do not remove pushIDs from ICEpush, they will just expire (or kept if the pushIDs are parked for cloud push notifications)
-//                if (EnvUtils.isICEpushPresent()) {
-//                    try {
-//                        String[] viewIDs = externalContext.getRequestParameterValuesMap().get("ice.view");
-//                        for (int i = 0; i < viewIDs.length; i++) {
-//                            SessionViewManager.get(context).removeView(viewIDs[i]);
-//                        }
-//                    } catch (RuntimeException e) {
-//                        //missing ice.view parameters means that none of the views within the page
-//                        //was registered with PushRenderer before page unload
-//                        log.log(Level.FINE, "Exception during dispose-window ", e);
-//                    }
-//                }
             }
         }
 
