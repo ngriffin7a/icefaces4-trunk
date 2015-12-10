@@ -27,9 +27,17 @@
     <ui:define name="example">
 
 			<h:form id="lengthRangeForm">
+			<ace:panel>
 			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">
-				<p>The <b>ace:checkboxButtons</b> below use an <b>ace:clientValidateLength</b> with the min attribute set to 2 and the max attribute set to 4. </p>
+				<p>The <b>&lt;ace:textEntry&gt;</b> uses an <b>&lt;ace:clientValidateLength&gt;</b> with the minimum attribute set to 4 and the maximum attribute set to 8. </p>
+					<ace:textEntry id="userName" label="User Name " labelPosition="left"
+					value="#{clientValidateLength.userName}" >
+					<ace:clientValidateRequired />
+					<ace:clientValidateLength minimum="4" maximum="8" />
+				</ace:textEntry>
+				<br /><br />
+				<p>The <b>ace:checkboxButtons</b> use an <b>ace:clientValidateLength</b> with the minimum attribute set to 2 and the maximum attribute set to 4. </p>
 				<ace:checkboxButtons id="selections"
 					header="Select from 2 to 4 options"
 					value="#{clientValidateLength.selected}" labelPosition="top"
@@ -39,13 +47,16 @@
 					<f:selectItem itemLabel="Python" itemValue="Three" />
 					<f:selectItem itemLabel="PHP" itemValue="Four" />
 					<f:selectItem itemLabel="JavaScript" itemValue="Five" />
-					<ace:ajax render="@form"/>
 					<ace:clientValidateRequired />
-					<ace:clientValidateLength min="2" max="4" />
+					<ace:clientValidateLength minimum="2" maximum="4" />
 				</ace:checkboxButtons>
-				<ace:message id="message1" for="selections" />
+				<br />
 				<ace:pushButton id="submitButton" value="Submit" />
+				<div id="messageDiv" style="width: 400px;">
+				<ace:messages id="messages1" for="@inView" />
+				</div>
 			</h:panelGrid>
+			</ace:panel>
 			</h:form>
 			
     </ui:define>

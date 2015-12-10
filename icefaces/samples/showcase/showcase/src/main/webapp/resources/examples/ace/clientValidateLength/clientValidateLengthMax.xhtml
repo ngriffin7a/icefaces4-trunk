@@ -26,24 +26,24 @@
 
     <ui:define name="example">
 
-			<h:form id="infoForm">			
-			<h:panelGrid id="inputGrid2" columns="1" width="100%"
+			<h:form id="lengthMaxForm">			
+			<ace:panel>
+			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">				
 				<ace:textEntry id="userName" label="User Name " labelPosition="left"
-					value="#{clientValidateLength.userName}" optionalIndicator=" max 8 characters" indicatorPosition="bottom">
-					<ace:ajax execute="@form" render="@form"/>
+					value="#{clientValidateLength.userName}" optionalIndicator=" maximum 8 characters" indicatorPosition="bottom">
 					<ace:clientValidateRequired />
-					<ace:clientValidateLength max="8" />
+					<ace:clientValidateLength maximum="8" />
 				</ace:textEntry>
 				<ace:textAreaEntry id="comment" label="Comment " labelPosition="left"
-					value="#{clientValidateLength.comment}" optionalIndicator=" max 30 characters" indicatorPosition="bottom">
-					<ace:ajax execute="@form" render="@form"/>
+					value="#{clientValidateLength.comment}" optionalIndicator=" maximum 30 characters" indicatorPosition="bottom">
 					<ace:clientValidateRequired />	
-					<ace:clientValidateLength max="30" />
+					<ace:clientValidateLength maximum="30" />
 				</ace:textAreaEntry>	
 				<ace:pushButton value="Submit" />
 				<ace:growlMessages id="message" for="@inView" autoHide="false"/>
 			</h:panelGrid>
+			</ace:panel>
 			</h:form>
 
     </ui:define>
