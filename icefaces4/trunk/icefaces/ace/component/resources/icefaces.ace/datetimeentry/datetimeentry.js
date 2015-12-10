@@ -256,3 +256,16 @@ ice.ace.CalendarInit = function(options) {
         });
     });
 };
+
+ice.ace.Calendar.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var instance = ice.ace.instanceNoLazyInit(id);
+	if (instance) instance.setDate(null);
+	var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
+	if (inFieldLabel) {
+		input.attr({name: id + "_label"});
+		input.val(inFieldLabel);
+		input.addClass(inFieldLabelStyleClass);
+	} else {
+		input.val('');
+	}
+};

@@ -73,6 +73,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
         // Root Container
         writer.startElement(HTML.DIV_ELEM, uiComponent);
         writer.writeAttribute(HTML.ID_ATTR, clientId, null);
+		renderResetSettings(facesContext, uiComponent);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
         encodeScript(facesContext, writer, checkbox, clientId, EventType.HOVER);
@@ -312,4 +313,21 @@ public class CheckboxButtonRenderer extends InputRenderer {
 
         writer.writeAttribute(HTML.CLASS_ATTR, styleClassVal, null);
     }
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context);
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("checkboxbutton");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.item(EnvUtils.isAriaEnabled(context));
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
+	}
 }

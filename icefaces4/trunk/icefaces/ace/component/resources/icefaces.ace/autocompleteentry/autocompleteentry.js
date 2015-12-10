@@ -1004,3 +1004,15 @@ ice.ace.Autocompleter.preventBackspaceNavigationHandler = function (e) {
 		e.preventDefault();return false;
 	}
 };
+
+ice.ace.Autocompleter.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var input = ice.ace.jq(ice.ace.escapeClientId(id));
+	if (inFieldLabel) {
+		input.attr({name: ''});
+		input.val(inFieldLabel);
+		input.addClass(inFieldLabelStyleClass);
+		input.data("labelIsInField", true);
+	} else {
+		input.val('');
+	}
+};

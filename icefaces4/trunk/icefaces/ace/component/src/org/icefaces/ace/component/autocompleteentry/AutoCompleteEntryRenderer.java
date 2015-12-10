@@ -161,6 +161,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
         writer.startElement("div", uiComponent);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", "ui-autocompleteentry " + autoCompleteEntry.getStyleClass(), null);
+		renderResetSettings(facesContext, uiComponent);
 
         writeLabelAndIndicatorBefore(labelAttributes);
 
@@ -708,5 +709,29 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 		}
 		
 		return (value != null ? value.toString() : "");
+	}
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context) + "_input";
+		String label = (String) component.getAttributes().get("label");
+		String labelPosition = (String) component.getAttributes().get("labelPosition");
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("Autocompleter");
+		jb.beginArray();
+		jb.item(clientId);
+
+		if ("inField".equals(labelPosition)) {
+			jb.item(label);
+			jb.item(IN_FIELD_LABEL_STYLE_CLASS);
+		}
+
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
 	}
 }

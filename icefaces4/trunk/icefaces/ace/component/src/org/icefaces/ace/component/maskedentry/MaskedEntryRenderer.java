@@ -151,6 +151,8 @@ public class MaskedEntryRenderer extends InputRenderer {
 
 		writer.startElement("span", maskedEntry);
 		writer.writeAttribute("id", clientId, null);
+		renderResetSettings(context, maskedEntry);
+
 		writer.startElement("input", null);
 		writer.writeAttribute("name", fieldClientId, null);
 		writer.writeAttribute("type", "text", null);
@@ -210,5 +212,29 @@ public class MaskedEntryRenderer extends InputRenderer {
 		encodeScript(context, maskedEntry, label, hasLabel, labelPosition, indicator, hasIndicator, indicatorPosition);
 		
 		writer.endElement("span");
+	}
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context) + "_field";
+		String label = (String) component.getAttributes().get("label");
+		String labelPosition = (String) component.getAttributes().get("labelPosition");
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("InputMask");
+		jb.beginArray();
+		jb.item(clientId);
+
+		if ("inField".equals(labelPosition)) {
+			jb.item(label);
+			jb.item(IN_FIELD_LABEL_STYLE_CLASS);
+		}
+
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
 	}
 }

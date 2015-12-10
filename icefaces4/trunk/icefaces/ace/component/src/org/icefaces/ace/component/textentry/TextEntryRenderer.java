@@ -75,6 +75,7 @@ public class TextEntryRenderer extends InputRenderer {
 
         writer.startElement("span", component);
         writer.writeAttribute("id", clientId, "clientId");
+		renderResetSettings(context, component);
 
         String defaultClass = themeForms() ? TextEntry.THEME_INPUT_CLASS : TextEntry.PLAIN_INPUT_CLASS;
         String styleClass = textEntry.getStyleClass();
@@ -204,7 +205,39 @@ public class TextEntryRenderer extends InputRenderer {
 		writer.endElement("span");
 
         writer.endElement("span");
+	}
 
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		TextEntry textEntry = (TextEntry) component;
 
+		String clientId = textEntry.getClientId(context);
+		String label = (String) component.getAttributes().get("label");
+		String labelPosition = (String) component.getAttributes().get("labelPosition");
+
+		String type = textEntry.validateType(textEntry.getType());
+		ClientDescriptor client = Utils.getClientDescriptor();
+		String typeVal = (String) textEntry.getAttributes().get("type");
+		if (type.equals("date") && client.isAndroidOS() && client.isICEmobileContainer()) {
+			typeVal = "text";
+		}
+		type = typeVal;
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("TextEntry");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.item(textEntry.isSecret());
+		jb.item(type);
+
+		if ("inField".equals(labelPosition)) {
+			jb.item(label);
+		}
+
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
 	}
 }

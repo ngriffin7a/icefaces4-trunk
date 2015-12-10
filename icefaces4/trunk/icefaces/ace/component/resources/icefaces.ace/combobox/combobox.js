@@ -982,3 +982,19 @@ ice.ace.ComboBox.prototype = {
 		} else list.fadeOut(this.effects.hideLength);
 	}
 };
+
+ice.ace.ComboBox.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var instance = ice.ace.ComboBoxes[id];
+	if (instance && instance.initialized) {
+		instance.updateValue('');
+	} else {
+		var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
+		if (inFieldLabel) {
+			input.val(inFieldLabel);
+			input.addClass(inFieldLabelStyleClass);
+			input.data("labelIsInField", true);
+		} else {
+			input.val('');
+		}
+	}
+};
