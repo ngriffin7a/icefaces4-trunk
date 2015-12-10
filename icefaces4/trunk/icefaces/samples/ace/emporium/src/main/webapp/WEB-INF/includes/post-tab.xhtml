@@ -32,11 +32,13 @@
 	        
 	        <h:outputLabel for="itemNIn" value="Item Name:"/>
 	        <ace:textEntry id="itemNIn" value="#{postBean.toAdd.name}"
-	                       required="true" maxlength="20"
+	                       maxlength="20"
 	                       autocapitalize="true" autocorrect="true"
 	                       placeholder="Enter item name"
 	                       requiredIndicator="*"
 	                       validator="UniqueItemNameValidator">
+	            <!-- TODO ICE-5377 - Unresponsive script at the moment -->          
+	            <ace:clientValidateRequired />
 	            <f:validateLength minimum="3" maximum="20"/>
 	        </ace:textEntry>
 	        <ace:message for="itemNIn"/>
