@@ -38,9 +38,8 @@
 				styleClass="textEntryInputTable">
 				<ace:textEntry id="textEntry1" value="#{clientValidateValueRangeBean.value3}" 
 				label="Input Value " labelPosition="left" size="8">
-					<ace:ajax render="@form" event="blur" />
 					<ace:clientValidateRequired />
-					<ace:clientValidateValueRange min="10" max="20" />
+					<ace:clientValidateValueRange minimum="10" maximum="20" />
 				</ace:textEntry>
 				<ace:pushButton id="formSubmit" value="Submit" />
 				<ace:message id="message1" for="textEntry1" />
