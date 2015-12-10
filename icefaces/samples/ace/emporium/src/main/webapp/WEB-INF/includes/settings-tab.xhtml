@@ -31,13 +31,15 @@
             <ace:textEntry id="nameIn" value="#{settingsBean.name}" required="true"
                            autocapitalize="on" autocomplete="on" maxlength="15"
                            placeholder="Enter your name">
-                <f:validateLength minimum="3" maximum="15"/>
+                <ace:clientValidateRequired />
+                <ace:clientValidateLength min="3" max="15"/>
             </ace:textEntry>
             <ace:message for="nameIn"/>
             
             <h:graphicImage id="sLocHelp" library="images" name="help.png"/>
             <h:outputLabel for="sLoc" value="Your Location:"/>
             <ace:simpleSelectOneMenu id="sLoc" value="#{settingsBean.location}" required="true">
+                <ace:clientValidateRequired />
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
             </ace:simpleSelectOneMenu>
@@ -47,8 +49,9 @@
             <h:outputLabel for="dbid" value="Default Bid Increment ($):"/>
             <ace:textEntry id="dbid" value="#{settingsBean.bidIncrement}" required="true"
                            maxlength="5">
+                <ace:clientValidateRequired />
+                <ace:clientValidateValueRange min="1" max="100"/>
                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                <f:validateDoubleRange minimum="1.0" maximum="100.0"/>
             </ace:textEntry>
             <ace:message for="dbid"/>
             
@@ -57,6 +60,7 @@
             <!-- TODO ICE-10713 - We shouldn't need to manually specify labelPosition, it should default to left to allow this as a drop-in replacement -->
             <ace:radioButtons id="tabo" value="#{settingsBean.tabOrientation}" required="true" labelPosition="left"
                               styleClass="ace-radio-buttons-override">
+                <ace:clientValidateRequired />
                 <f:selectItems value="#{listData.tabOrientations}"/>
             </ace:radioButtons>
             <ace:message for="tabo"/>

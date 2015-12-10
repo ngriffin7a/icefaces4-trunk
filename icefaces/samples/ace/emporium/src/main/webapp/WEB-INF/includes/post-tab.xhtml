@@ -35,11 +35,10 @@
 	                       maxlength="20"
 	                       autocapitalize="true" autocorrect="true"
 	                       placeholder="Enter item name"
-	                       requiredIndicator="*"
+	                       required="true" requiredIndicator="*"
 	                       validator="UniqueItemNameValidator">
-	            <!-- TODO ICE-5377 - Unresponsive script at the moment -->          
 	            <ace:clientValidateRequired />
-	            <f:validateLength minimum="3" maximum="20"/>
+	            <ace:clientValidateLength min="3" max="20"/>
 	        </ace:textEntry>
 	        <ace:message for="itemNIn"/>
 	        
@@ -55,7 +54,7 @@
 	        <ace:textAreaEntry id="descIn" value="#{postBean.toAdd.description}"
 	                           rows="2" maxlength="500"
 	                           resizable="true">
-	           <f:validateLength minimum="0" maximum="500"/>
+               <ace:clientValidateLength min="0" max="500"/>
 	        </ace:textAreaEntry>
 	        <ace:message for="descIn"/>
 	        
@@ -71,7 +70,8 @@
 	        <ace:textEntry id="priceIn" value="#{postBean.toAdd.price}"
 	                       required="true" requiredIndicator="*"
 	                       maxlength="8">
-	            <f:validateDoubleRange minimum="0.1" maximum="1000"/>
+                <ace:clientValidateRequired />
+                <ace:clientValidateValueRange min="0.1" max="1000"/>
 	            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
 	        </ace:textEntry>
 	        <ace:message for="priceIn"/>
@@ -83,7 +83,9 @@
 	                           required="true" requiredIndicator="*"
 	                           mindate="#{auctionController.minExpiryDate}" maxdate="#{auctionController.maxExpiryDate}"
 	                           showOn="both"
-	                           pattern="MM/dd/yyyy h:mm a"/>
+	                           pattern="MM/dd/yyyy h:mm a">
+	            <ace:clientValidateRequired />
+	        </ace:dateTimeEntry>
 	        <ace:message for="expiryIn"/>
 	        
             <h:outputText value="Additional Details" style="font-weight: bold;"/>
@@ -93,7 +95,7 @@
 	        <ace:textEntry id="sellerName" value="#{postBean.toAdd.sellerName}"
                            autocapitalize="on" autocomplete="on" maxlength="15"
                            placeholder="Enter your name">
-                <f:validateLength minimum="3" maximum="15"/>
+                <ace:clientValidateLength min="3" max="15"/>
             </ace:textEntry>
 	        <ace:message for="sellerName"/>
 	        
@@ -108,7 +110,8 @@
 	        <ace:textEntry id="shippingIn" value="#{postBean.toAdd.shippingCost}"
 	                       required="true" requiredIndicator="*"
 	                       maxlength="5">
-	           <f:validateDoubleRange minimum="1.0" maximum="20.0"/>
+               <ace:clientValidateRequired />
+               <ace:clientValidateValueRange min="1" max="20"/>
 	           <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
 	        </ace:textEntry>
 	        <ace:message for="shippingIn"/>
