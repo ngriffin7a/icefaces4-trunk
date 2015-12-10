@@ -29,20 +29,20 @@
 			<h:form id="infoForm">			
 			<h:panelGrid id="inputGrid2" columns="1" width="100%"
 				styleClass="textEntryInputTable">				
-				<ace:textEntry id="userName" label="User Name: " labelPosition="left"
+				<ace:textEntry id="userName" label="User Name " labelPosition="left"
 					value="#{clientValidateLength.userName}" optionalIndicator=" max 8 characters" indicatorPosition="bottom">
-					<ace:ajax render="@form"/>
+					<ace:ajax execute="@form" render="@form"/>
 					<ace:clientValidateRequired />
 					<ace:clientValidateLength max="8" />
 				</ace:textEntry>
-				<ace:textAreaEntry id="comment" label="Comment: " labelPosition="left"
+				<ace:textAreaEntry id="comment" label="Comment " labelPosition="left"
 					value="#{clientValidateLength.comment}" optionalIndicator=" max 30 characters" indicatorPosition="bottom">
-					<ace:ajax render="@form"/>
+					<ace:ajax execute="@form" render="@form"/>
 					<ace:clientValidateRequired />	
 					<ace:clientValidateLength max="30" />
 				</ace:textAreaEntry>	
 				<ace:pushButton value="Submit" />
-				<ace:growlMessages id="message" for="@all" autoHide="false"/>
+				<ace:growlMessages id="message" for="@inView" autoHide="false"/>
 			</h:panelGrid>
 			</h:form>
 
