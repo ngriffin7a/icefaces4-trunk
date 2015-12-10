@@ -419,7 +419,9 @@ ice.ace.resetForm = function(node) {
 			case "text": 
 			case "password": 
 			case "textarea":
-			case "hidden":	
+			case "hidden":
+			case "date":
+			case "time":
 				elements[i].value = ""; 
 				break;
 			case "radio":
@@ -439,6 +441,7 @@ ice.ace.resetForm = function(node) {
 
 	form.find('*[data-ice-reset]').each(function(i, e) {
 		var array = eval(e.getAttribute('data-ice-reset'));
-		ice.ace[array[0]].reset.apply(this, array[1]);
+		if (array[0] == 'flipswitch') mobi[array[0]].reset.apply(this, array[1]);
+		else ice.ace[array[0]].reset.apply(this, array[1]);
 	});
 };

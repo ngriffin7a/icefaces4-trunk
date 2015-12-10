@@ -18,6 +18,7 @@ package org.icefaces.mobi.component.flipswitch;
 
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
+import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.UserAgentInfo;
@@ -77,6 +78,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
 
         writer.startElement(HTML.ANCHOR_ELEM, uiComponent);
         writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
+		renderResetSettings(facesContext, uiComponent);
         writer.writeAttribute(HTML.NAME_ATTR, clientId, HTML.NAME_ATTR);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         String styleClass = FlipSwitch.FLIPSWITCH_OFF_CLASS;
@@ -193,4 +195,20 @@ public class FlipSwitchRenderer extends CoreRenderer {
         }
         return false;
     }
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context);
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("flipswitch");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
+	}
 }

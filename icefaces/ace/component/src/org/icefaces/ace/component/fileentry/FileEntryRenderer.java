@@ -52,6 +52,7 @@ public class FileEntryRenderer extends Renderer {
         ResponseWriter writer = facesContext.getResponseWriter();
         writer.startElement("div", uiComponent);
         writer.writeAttribute("id", clientId + "_container", "clientId");
+		renderResetSettings(facesContext, uiComponent);
         boolean disabled = fileEntry.isDisabled();
         boolean multiple = fileEntry.isMultiple();
         boolean autoUpload = fileEntry.isAutoUpload();
@@ -287,4 +288,22 @@ public class FileEntryRenderer extends Renderer {
                 fileEntry, filesUploadedThisLifecycle);
         fileEntry.queueEvent(event);
     }
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		FileEntry fileEntry = (FileEntry) component;
+
+		String clientId = component.getClientId(context);
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("fileentry");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.item(fileEntry.isMultiple());
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
+	}
 }

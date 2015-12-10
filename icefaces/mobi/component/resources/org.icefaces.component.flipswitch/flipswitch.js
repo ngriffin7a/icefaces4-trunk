@@ -107,3 +107,14 @@ mobi.flipswitch = {
     }
 };
 
+mobi.flipswitch.reset = function(id) {
+	var element = document.getElementById(id);
+	var hidden = document.getElementById(id + "_hidden");
+
+	if (element && hidden) {
+		element.className = 'mobi-flipswitch mobi-flipswitch-off ui-widget';
+		element.children[0].className = 'mobi-flipswitch-txt-on ui-button ui-corner-all ui-state-default';
+		element.children[2].className = 'mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default ui-state-active';
+		hidden.value = 'off';
+	};
+};
