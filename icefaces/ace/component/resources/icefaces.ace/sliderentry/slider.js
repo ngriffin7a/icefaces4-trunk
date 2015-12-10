@@ -133,3 +133,7 @@ ice.ace.Slider.updateValue = function(id, value) {
 		root.children('div').eq(1).slider('value', value);
 	}
 };
+
+ice.ace.Slider.reset = function(id, value) {
+	ice.ace.Slider.updateValue(id, value);
+};

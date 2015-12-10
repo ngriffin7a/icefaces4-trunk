@@ -67,6 +67,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
 
         writer.startElement("span", component);
         writer.writeAttribute("id", clientId, "clientId");
+		renderResetSettings(context, component);
 
         Map<String, Object> labelAttributes = getLabelAttributes(component);
 		labelAttributes.put("fieldClientId", clientId + "_input");
@@ -185,4 +186,28 @@ public class TextAreaEntryRenderer extends InputRenderer {
             System.out.println(entry.getKey() + " = " + entry.getValue() + ";");
         }
     }
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context);
+		String label = (String) component.getAttributes().get("label");
+		String labelPosition = (String) component.getAttributes().get("labelPosition");
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("TextAreaEntry");
+		jb.beginArray();
+		jb.item(clientId);
+
+		if ("inField".equals(labelPosition)) {
+			jb.item(label);
+			jb.item(IN_FIELD_LABEL_STYLE_CLASS);
+		}
+
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
+	}
 }

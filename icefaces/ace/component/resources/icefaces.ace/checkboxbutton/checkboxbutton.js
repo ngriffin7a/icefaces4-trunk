@@ -189,3 +189,27 @@ ice.ace.checkboxbutton.toggleOthers = function (options, clientId) {
         }
     }
 };
+
+ice.ace.checkboxbutton.reset = function(id, ariaEnabled, multiple) {
+    var jqId = ice.ace.escapeClientId(id);
+    var innerSpanSelector = jqId + " > span > span";
+    var buttonSelector = jqId + " > span > span > button";
+    var iconSelector = buttonSelector + " > span.fa";
+
+	if (multiple) {
+		var optionSelector = jqId + "_option";
+		ice.ace.jq(optionSelector).removeAttr('selected');
+	} else {
+		var fieldSelector = jqId + " > input";
+		ice.ace.jq(fieldSelector).val('false');
+	}
+
+	ice.ace.jq(buttonSelector).removeClass('ice-checkboxbutton-checked')
+			 .addClass('ice-checkboxbutton-unchecked');
+	ice.ace.jq(iconSelector).removeClass('fa-check-square-o')
+			 .addClass('fa-square-o');
+
+    if (ariaEnabled) {
+        ice.ace.jq(innerSpanSelector).attr("aria-checked", false);
+    }
+};

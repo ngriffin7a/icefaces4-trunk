@@ -104,6 +104,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
 
         writer.startElement("span", dateTimeEntry);
         writer.writeAttribute("id", clientId, null);
+		renderResetSettings(context, dateTimeEntry);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         String style = dateTimeEntry.getStyle();
         if(style != null) writer.writeAttribute("style", style, null);
@@ -440,4 +441,31 @@ public class DateTimeEntryRenderer extends InputRenderer {
         }
         json.endArray();
     }
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		DateTimeEntry dateTimeEntry = (DateTimeEntry) component;
+		if (!dateTimeEntry.isPopup()) return;
+
+		String clientId = component.getClientId(context);
+		String label = (String) component.getAttributes().get("label");
+		String labelPosition = (String) component.getAttributes().get("labelPosition");
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("Calendar");
+		jb.beginArray();
+		jb.item(clientId);
+
+		if ("inField".equals(labelPosition)) {
+			jb.item(label);
+			jb.item(IN_FIELD_LABEL_STYLE_CLASS);
+		}
+
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
+	}
 }

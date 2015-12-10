@@ -194,3 +194,26 @@ ice.ace.radiobutton.toggleOthers = function (options, clientId) {
         }
     }
 };
+
+ice.ace.radiobutton.reset = function(id, ariaEnabled, multiple) {
+    var jqId = ice.ace.escapeClientId(id);
+    var innerSpanSelector = jqId + " > span > span";
+    var buttonSelector = jqId + " > span > span > button";
+    var iconSelector = buttonSelector + " > span.fa";
+	var fieldSelector = jqId + " > input";
+
+	if (multiple) {
+		ice.ace.jq(fieldSelector).attr('name', '');
+	} else {
+		ice.ace.jq(fieldSelector).val('false');
+	}
+
+	ice.ace.jq(buttonSelector).removeClass('ice-ace-radiobutton-selected')
+			 .addClass('ice-ace-radiobutton-unselected');
+	ice.ace.jq(iconSelector).removeClass('fa-dot-circle-o')
+			 .addClass('fa-circle-o');
+
+    if (ariaEnabled) {
+        ice.ace.jq(innerSpanSelector).attr("aria-checked", false);
+    }
+};

@@ -516,7 +516,7 @@ ice.ace.SelectMenu.prototype = {
 			return;
 		}
         if (ice.ace.jq.trim(this.displayedValue.innerHTML) == '&nbsp;' && this.cfg.inFieldLabel) {
-			this.displayedValue.innerHTML = this.replaceSpaces(this.cfg.inFieldLabel);
+			this.displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(this.cfg.inFieldLabel);
             element.addClass(this.cfg.inFieldLabelStyleClass);
             element.data("labelIsInField", true);
         }
@@ -887,25 +887,20 @@ ice.ace.SelectMenu.prototype = {
 			if (currentEntry) {
 				var labelSpan = ice.ace.jq(currentEntry).find('.'+ice.ace.SelectMenu.LABEL_CLASS).get(0);
 				var label = ice.ace.SelectMenu.collectTextNodesIgnoreClass(labelSpan, ice.ace.SelectMenu.IGNORE_CLASS);
-				this.displayedValue.innerHTML = this.replaceSpaces(label);
+				this.displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(label);
 			} else {
 				this.displayedValue.innerHTML = '&nbsp;';
 			}
 		} else {
 			var element = ice.ace.jq(this.element);
 			if (this.cfg.inFieldLabel) {
-				this.displayedValue.innerHTML = this.replaceSpaces(this.cfg.inFieldLabel);
+				this.displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(this.cfg.inFieldLabel);
 				element.addClass(this.cfg.inFieldLabelStyleClass);
 				element.data("labelIsInField", true);
 			} else {
 				this.displayedValue.innerHTML = '&nbsp;';
 			}
 		}
-	},
-	
-	replaceSpaces: function(str) {
-		if (str) return str.replace(/ /g, '&nbsp;');
-		else return '&nbsp;';
 	},
 	
 	// update selected index if value was changed programmatically or was pre-selected
@@ -946,5 +941,29 @@ ice.ace.SelectMenu.prototype = {
 				|| e == 'fold' || e == 'puff' || e == 'pulsate' || e == 'scale' || e == 'slide') {
 			list.hide(e, {}, this.effects.hideLength);
 		} else list.fadeOut(this.effects.hideLength);
+	}
+};
+
+ice.ace.SelectMenu.replaceSpaces = function(str) {
+	if (str) return str.replace(/ /g, '&nbsp;');
+	else return '&nbsp;';
+};
+
+ice.ace.SelectMenu.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var instance = ice.ace.SelectMenus[id];
+	if (instance && instance.initialized) {
+		instance.updateValue('');
+	} else {
+		var element = ice.ace.jq(ice.ace.escapeClientId(id)).find('.ui-selectmenu-value');
+		var displayedValue = element.find('span').get(0);
+		var input = ice.ace.jq(ice.ace.escapeClientId(id)).find('input[name="'+id+'_input"]');
+		input.val('');
+		if (inFieldLabel) {
+			displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(inFieldLabel);
+			element.addClass(inFieldLabelStyleClass);
+			element.data("labelIsInField", true);
+		} else {
+			displayedValue.innerHTML = '&nbsp;';
+		}
 	}
 };

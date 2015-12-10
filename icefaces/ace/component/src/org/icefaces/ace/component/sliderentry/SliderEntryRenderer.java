@@ -120,6 +120,7 @@ public class SliderEntryRenderer extends InputRenderer{
 		
 		writer.startElement("div", slider);
 		writer.writeAttribute("id", clientId , "id");
+		renderResetSettings(context, slider);
 		String style = slider.getStyle();
 		style = style == null ? "" : style;
 		style += isInline ? ";display:table; " : "";
@@ -301,5 +302,23 @@ public class SliderEntryRenderer extends InputRenderer{
 		writer.write("ice.ace.Slider.updateValue('"+clientId+"', "+slider.getValue()+");");
 		writer.endElement("script");
 		writer.endElement("span");
+	}
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context);
+		SliderEntry slider = (SliderEntry) component;
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("Slider");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.item(slider.getMin());
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
 	}
 }

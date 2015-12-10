@@ -353,3 +353,15 @@ ice.ace.InputMask = function(id, cfg) {
         ice.ace.util.bindHoverFocusStyle(this.jq);
     }
 }
+
+ice.ace.InputMask.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var input = ice.ace.jq(ice.ace.escapeClientId(id));
+	if (inFieldLabel) {
+		input.val(inFieldLabel);
+		input.addClass(inFieldLabelStyleClass);
+		input.data("labelIsInField", true);
+		input.attr({name: input.attr("id") + "_label"});
+	} else {
+		input.val('');
+	}
+};

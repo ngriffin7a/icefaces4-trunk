@@ -202,6 +202,7 @@ public class CheckboxButtonsRenderer extends InputRenderer {
         // Root Container
         writer.startElement(HTML.DIV_ELEM, checkboxButtons);
         writer.writeAttribute(HTML.ID_ATTR, clientId, null);
+		renderResetSettings(facesContext, clientId);
 //        ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
         writer.writeAttribute(HTML.CLASS_ATTR, "ice-checkboxbutton", null);
@@ -717,5 +718,21 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		}
 		
 		return (value != null ? value.toString() : "");
+	}
+
+	protected void renderResetSettings(FacesContext context, String clientId) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("checkboxbutton");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.item(EnvUtils.isAriaEnabled(context));
+		jb.item(true);
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
 	}
 }

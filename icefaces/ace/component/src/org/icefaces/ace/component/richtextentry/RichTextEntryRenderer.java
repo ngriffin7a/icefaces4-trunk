@@ -46,6 +46,7 @@ public class RichTextEntryRenderer extends InputRenderer {
 		if (richTextEntry.getStyle() != null) {
 			writer.writeAttribute("style", richTextEntry.getStyle(), null);
 		}
+		renderResetSettings(facesContext, uiComponent);
 
 		writer.startElement("textarea", uiComponent);
 		writer.writeAttribute("name", clientId, null);
@@ -105,4 +106,20 @@ public class RichTextEntryRenderer extends InputRenderer {
 
         return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, path);
     }
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context);
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("richtextentry");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
+	}
 }

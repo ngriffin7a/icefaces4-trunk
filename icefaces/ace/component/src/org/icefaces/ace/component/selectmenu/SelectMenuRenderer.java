@@ -96,6 +96,7 @@ public class SelectMenuRenderer extends InputRenderer {
         writer.startElement("div", uiComponent);
         writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", "ui-selectmenu ui-widget " + selectMenu.getStyleClass(), null);
+		renderResetSettings(facesContext, uiComponent);
 		String dir = selectMenu.getDir();
 		if (dir != null) writer.writeAttribute("data-dir", dir, null);
 		String lang = selectMenu.getLang();
@@ -454,5 +455,29 @@ public class SelectMenuRenderer extends InputRenderer {
 		}
 		
 		return (value != null ? value.toString() : "");
+	}
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context);
+		String label = (String) component.getAttributes().get("label");
+		String labelPosition = (String) component.getAttributes().get("labelPosition");
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("SelectMenu");
+		jb.beginArray();
+		jb.item(clientId);
+
+		if ("inField".equals(labelPosition)) {
+			jb.item(label);
+			jb.item(IN_FIELD_LABEL_STYLE_CLASS);
+		}
+
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
 	}
 }

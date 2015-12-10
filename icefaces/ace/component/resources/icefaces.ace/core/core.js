@@ -42,6 +42,12 @@ ice.ace.instance = function(id) {
 	return null;
 };
 
+ice.ace.instanceNoLazyInit = function(id) {
+	var element = document.getElementById(id);
+	if (element && element.widget) return element.widget;
+	return null;
+};
+
 ice.ace.destroy = function(id) {
     var elem = document.getElementById(id);
     var widget = elem.widget;
@@ -387,4 +393,52 @@ ice.ace.AjaxResponse.updateElem = function(id, content) {
         //selects
         controls.filter("select:not([data-role='slider'])" ).selectmenu();
     }
+};
+
+ice.ace.resetForm = function(node) {
+	if (typeof node === 'string') node = ice.ace.escapeClientId(node);
+	var form = ice.ace.jq(node);
+	if (!form.get(0)) return;
+
+	var elements = form.get(0).elements;
+	for(var i = 0; i < elements.length; i++) {
+		var field_type = elements[i].type.toLowerCase();
+		var name = elements[i].name;
+		if (name == form.attr('id')) continue;
+		switch(name) {
+			case "ice.window":
+			case "ice.view":
+			case "javax.faces.ViewState":
+			case "javax.faces.ClientWindow":
+				continue;
+				break;
+			default:
+				break;
+		}
+		switch(field_type) {
+			case "text": 
+			case "password": 
+			case "textarea":
+			case "hidden":	
+				elements[i].value = ""; 
+				break;
+			case "radio":
+			case "checkbox":
+				if (elements[i].checked) {
+					elements[i].checked = false; 
+				}
+				break;
+			case "select-one":
+			case "select-multi":
+				elements[i].selectedIndex = -1;
+				break;
+			default: 
+				break;
+		}
+	}
+
+	form.find('*[data-ice-reset]').each(function(i, e) {
+		var array = eval(e.getAttribute('data-ice-reset'));
+		ice.ace[array[0]].reset.apply(this, array[1]);
+	});
 };

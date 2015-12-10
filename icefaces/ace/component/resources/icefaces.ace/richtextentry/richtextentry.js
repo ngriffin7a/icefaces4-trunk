@@ -150,3 +150,12 @@ ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _ski
 		editorInstance.on('beforeCommandExec', onCommand);
     } catch(e) {}
 };
+
+ice.ace.richtextentry.reset = function(editor) {
+	try {
+		if (CKEDITOR.instances[editor]) {
+			CKEDITOR.instances[editor].setData('');
+			document.getElementById(editor).value = '';
+		}
+	} catch(e) {}
+};
