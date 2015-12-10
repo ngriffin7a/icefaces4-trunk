@@ -58,7 +58,6 @@
 	        <ace:message for="descIn"/>
 	        
 	        <h:outputLabel for="conditionIn" value="Item Condition:"/>
-	        <!-- TODO ICE-10736 - Currently the ace:simpleSelectOneMenu is firing the noSelectionOption validation even when required is false/unspecified -->
 	        <ace:simpleSelectOneMenu id="conditionIn" value="#{postBean.toAdd.condition}">
 	            <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
 	            <f:selectItems value="#{postBean.toAdd.conditions}" var="condition"
@@ -97,14 +96,13 @@
 	        <ace:message for="sellerName"/>
 	        
 	        <h:outputLabel for="sellerLoc" value="Your Seller Location:"/>
-	        <!-- TODO ICE-10736 - Currently the ace:simpleSelectOneMenu is firing the noSelectionOption validation even when required is false/unspecified -->
             <ace:simpleSelectOneMenu id="sellerLoc" value="#{postBean.toAdd.sellerLocation}">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
             </ace:simpleSelectOneMenu>
 	        <ace:message for="sellerLoc"/>
 	        
-	        <h:outputLabel for="shippingIn" value="Shipping Price ($):"/>
+	        <h:outputLabel for="shippingIn" value="Shipping Cost ($):"/>
 	        <ace:textEntry id="shippingIn" value="#{postBean.toAdd.shippingCost}"
 	                       required="true" requiredIndicator="*"
 	                       maxlength="5">
@@ -114,7 +112,6 @@
 	        <ace:message for="shippingIn"/>
 	        
 	        <h:outputLabel for="deliveryIn" value="Estimated Delivery:"/>
-	        <!-- TODO ICE-10736 - Currently the ace:simpleSelectOneMenu is firing the noSelectionOption validation even when required is false/unspecified -->
             <ace:simpleSelectOneMenu id="deliveryIn" value="#{postBean.toAdd.estimatedDelivery}">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{postBean.toAdd.deliveries}" var="delivery"

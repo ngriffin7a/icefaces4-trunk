@@ -42,7 +42,7 @@ import org.icefaces.util.JavaScriptRunner;
 @ManagedBean(name=AuctionController.BEAN_NAME)
 @ApplicationScoped
 public class AuctionController implements Serializable {
-	private static final long serialVersionUID = 1566584488199697566L;
+	private static final long serialVersionUID = 3607118000488437060L;
 
 	private static final Logger log = Logger.getLogger(AuctionController.class.getName());
 	
@@ -127,6 +127,11 @@ public class AuctionController implements Serializable {
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		bidBean.stopBidding();
 		bidBean.unselectRows();
+	}
+	
+	public void toggleFilter(ActionEvent event) {
+		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
+		bidBean.setRenderFilter(!bidBean.isRenderFilter());
 	}
 	
 	public void openGraphPriceDialog(ActionEvent event) {

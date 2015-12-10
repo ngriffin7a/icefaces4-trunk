@@ -30,7 +30,7 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 @ManagedBean(name=BidBean.BEAN_NAME)
 @ViewScoped
 public class BidBean implements Serializable {
-	private static final long serialVersionUID = 6875028567468983012L;
+	private static final long serialVersionUID = 1517509014530895068L;
 
 	public static final String BEAN_NAME = "bidBean";
 	
@@ -39,6 +39,7 @@ public class BidBean implements Serializable {
 	private Double currentBid;
 	private AuctionItem bidItem;
 	private RowStateMap stateMap;
+	private boolean renderFilter = false;
 
 	public boolean isRenderBidPanel() {
 		return renderBidPanel;
@@ -70,7 +71,13 @@ public class BidBean implements Serializable {
 	public void setStateMap(RowStateMap stateMap) {
 		this.stateMap = stateMap;
 	}
-
+	public boolean isRenderFilter() {
+		return renderFilter;
+	}
+	public void setRenderFilter(boolean renderFilter) {
+		this.renderFilter = renderFilter;
+	}
+	
 	public void startBidding(AuctionItem item) {
 		setBidItem(item);
 		updateBidding();

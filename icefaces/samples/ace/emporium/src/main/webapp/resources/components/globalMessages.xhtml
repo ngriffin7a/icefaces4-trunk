@@ -30,7 +30,7 @@
 	        <c:when test="#{!testFlags.testGrowlMessages}">
 		        <ace:notificationPanel id="mp"
 		                               visible="#{globalMessage.hasNew}" position="#{cc.attrs.position}"
-		                               effect="slide" effectSpeed="slow"
+		                               effect="slide"
 		                               style="background: #{settingsBean.notificationBackground}; color: #{settingsBean.notificationForeground};">
 		            <h:panelGrid id="mpw" columns="1" styleClass="notificationBarWrap">
 		                <f:facet name="header">

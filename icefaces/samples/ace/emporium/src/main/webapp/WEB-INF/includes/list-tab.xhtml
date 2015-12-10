@@ -46,13 +46,19 @@
 		            <h:outputText value="Auction List (#{auctionService.auctionsSize} items)"/>
 		            <h:commandButton image="resources/images/post-auction.png" title="Add your own auction item"
 		                             actionListener="#{tabController.postAuctionTab}"
-		                             immediate="true"
-		                             styleClass="floatR"/>
-	                <emporium:dataExporters target="a" fileName="auction-list" includeFooters="false" popup="true"/>
+		                             immediate="true" styleClass="floatR"/>
+		            <mobi:largeView>
+	                    <h:commandButton image="resources/images/filter.png" title="Filter the auction list"
+	                                     actionListener="#{auctionController.toggleFilter}"
+	                                     immediate="true" styleClass="floatR"/>
+                    </mobi:largeView>
+                    <emporium:dataExporters target="a" fileName="auction-list" includeFooters="false" popup="true"/>
 	            </h:panelGroup>
 	        </f:facet>
+	        <!-- TODO ICE-10886 - Change how these filters are dynamically displayed to use a new attribute instead of inline EL for a style class -->
 	        <ace:column headerText="Name" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
-	                    configurable="false">
+	                    configurable="false"
+	                    type="TEXT" filterBy="#{item.name}" filterMatchMode="contains" filterStyleClass="#{bidBean.renderFilter ? '' : 'hidden'}">
 				<h:commandButton rendered="#{item.allowRemoval}"
 					             image="resources/images/remove.png"
 					             title="Remove your posted auction item"
@@ -63,17 +69,20 @@
 				</h:commandButton>
 	            #{item.name}
 	        </ace:column>
-	        <ace:column headerText="Price" styleClass="w30R#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+	        <ace:column headerText="Price" styleClass="w30R#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
+	                    type="DOUBLE" rangedFilter="true" filterBy="#{item.price}" filterStyleClass="#{bidBean.renderFilter ? '' : 'hidden'}">
 	            <h:outputText id="p" value="#{item.price}">
 	                <f:convertNumber type="currency" currencySymbol="$"/>
 	            </h:outputText>
 	        </ace:column>
-	        <ace:column headerText="Shipping Cost" styleClass="alignR#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+	        <ace:column headerText="Shipping" styleClass="alignR#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
+	                    type="DOUBLE" rangedFilter="true" filterBy="#{item.shippingCost}" filterStyleClass="#{bidBean.renderFilter ? '' : 'hidden'}">
 	            <h:outputText id="sc" value="#{item.shippingCost}">
 	                <f:convertNumber type="currency" currencySymbol="$"/>
 	            </h:outputText>
 	        </ace:column>
-	        <ace:column headerText="Bids" styleClass="w10#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
+	        <ace:column headerText="Bids" styleClass="w10#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}"
+	                    type="INT" rangedFilter="true" filterBy="#{item.bids}" filterStyleClass="#{bidBean.renderFilter ? '' : 'hidden'}">
 	            #{item.bids}
 	        </ace:column>
 	        <ace:column headerText="Time Left" styleClass="w30#{not empty globalMessage.lastUpdated and item eq globalMessage.lastUpdated ? ' updateC' : ''}">
