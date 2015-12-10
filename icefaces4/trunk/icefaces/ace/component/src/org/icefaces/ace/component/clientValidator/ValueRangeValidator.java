@@ -31,24 +31,24 @@ public class ValueRangeValidator extends ValueRangeValidatorBase {
     public void encodeBegin(FacesContext context) throws IOException {
         UIComponent validatedComponent = getParent();
         if (validatedComponent instanceof Validateable) {
-            final Float min = getMin();
-            final Float max = getMax();
+            final Float minimum = getMinimum();
+            final Float maximum = getMaximum();
             final String validatorConfiguration;
             final String rule;
-            if (min == null) {
-                if (max == null) {
+            if (minimum == null) {
+                if (maximum == null) {
                     return;
                 } else {
                     rule = "max";
-                    validatorConfiguration = String.valueOf(max);
+                    validatorConfiguration = String.valueOf(maximum);
                 }
             } else {
-                if (max == null) {
+                if (maximum == null) {
                     rule = "min";
-                    validatorConfiguration = String.valueOf(min);
+                    validatorConfiguration = String.valueOf(minimum);
                 } else {
                     rule = "range";
-                    validatorConfiguration = "[" + String.valueOf(min) + ", " + String.valueOf(max) + "]";
+                    validatorConfiguration = "[" + String.valueOf(minimum) + ", " + String.valueOf(maximum) + "]";
                 }
             }
 
@@ -72,7 +72,7 @@ public class ValueRangeValidator extends ValueRangeValidatorBase {
             script.append(", ");
             script.append(messageClientId);
             script.append(", '");
-            script.append(MessageFormat.format(message, label, min, max));
+            script.append(MessageFormat.format(message, label, minimum, maximum));
             script.append("', ");
             script.append(validatedComponent.getAttributes().get("immediate"));
             script.append(")");

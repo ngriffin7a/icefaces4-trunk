@@ -31,24 +31,24 @@ public class LengthValidator extends LengthValidatorBase {
     public void encodeBegin(FacesContext context) throws IOException {
         UIComponent validatedComponent = getParent();
         if (validatedComponent instanceof Validateable) {
-            final Integer min = getMin();
-            final Integer max = getMax();
+            final Integer minimum = getMinimum();
+            final Integer maximum = getMaximum();
             final String validatorConfiguration;
             final String rule;
-            if (min == null) {
-                if (max == null) {
+            if (minimum == null) {
+                if (maximum == null) {
                     return;
                 } else {
                     rule = "maxlength";
-                    validatorConfiguration = String.valueOf(max);
+                    validatorConfiguration = String.valueOf(maximum);
                 }
             } else {
-                if (max == null) {
+                if (maximum == null) {
                     rule = "minlength";
-                    validatorConfiguration = String.valueOf(min);
+                    validatorConfiguration = String.valueOf(minimum);
                 } else {
                     rule = "rangelength";
-                    validatorConfiguration = "[" + String.valueOf(min) + ", " + String.valueOf(max) + "]";
+                    validatorConfiguration = "[" + String.valueOf(minimum) + ", " + String.valueOf(maximum) + "]";
                 }
             }
 
@@ -72,7 +72,7 @@ public class LengthValidator extends LengthValidatorBase {
             script.append(", ");
             script.append(messageConfig);
             script.append(", '");
-            script.append(MessageFormat.format(message, label, min, max));
+            script.append(MessageFormat.format(message, label, minimum, maximum));
             script.append("', ");
             script.append(validatedComponent.getAttributes().get("immediate"));
             script.append(")");

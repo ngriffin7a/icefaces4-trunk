@@ -44,8 +44,8 @@ import org.icefaces.resources.ICEResourceLibrary;
 })
 public class LengthValidatorMeta extends UIComponentBaseMeta {
         @Property(tlddoc = "Required minimum length.")
-        private Integer min;
+        private Integer minimum;
 
         @Property(tlddoc = "Required maximum length.")
-        private Integer max;
+        private Integer maximum;
 }
