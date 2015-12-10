@@ -44,8 +44,8 @@ import org.icefaces.resources.ICEResourceLibrary;
 })
 public class ValueRangeValidatorMeta extends UIComponentBaseMeta {
         @Property(tlddoc = "Required minimum value.")
-        private Float min;
+        private Float minimum;
 
         @Property(tlddoc = "Required maximum value.")
-        private Float max;
+        private Float maximum;
 }
