@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+	<style type="text/css">    
+        .ui-menu-multicolumn-header {     
+		font-weight: bold;	
+		background-color: #99bbff;
+        width: 400px;
+		height: 23px;		
+		} 
+		
+		.ui-menu-multicolumn-footer {  
+		background-color: #99bbff;
+		font-style: italic;
+        width: 400px;
+		height: 23px;		
+		}	
+		
+		.right {
+		position: absolute;
+		right: 8px;
+		}		
+    </style>
+
+       <h:form id="headerFooterForm">            
+          <ace:panel>      
+			<ace:menuBar id="menubar" autoSubmenuDisplay="false" >
+			<ace:multiColumnSubmenu label="Menu 1"
+				headerClass=".ui-menu-multicolumn-header"
+				footerClass=".ui-menu-multicolumn-footer" >				
+				<f:facet name="header" >
+				<h:outputText value="Item List 1" />
+				<div class="right">
+				<h:commandLink id="infoLink1" value="Info" title="tooltip" style="color: #ffff66; font-style: italic;"/>				
+				  <ace:tooltip id="tooltip1" for="infoLink1" value="This tooltip could display useful information about Class A items"
+				  style="font-style: italic; font-size:small;"/>	
+					</div>
+				</f:facet>					
+				<ace:menuColumn>
+					<ace:menuItem value="Item 1.1.1">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 1.1.2">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 1.2.1">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 1.2.2">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+				</ace:menuColumn>
+				<ace:menuColumn>
+					<ace:menuItem value="Item 1.3.1">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 1.3.2">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 1.3.3">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 1.3.4">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+				</ace:menuColumn>
+				<f:facet name="footer" header="footer text">								
+				<h:outputText value="Class A items" />	
+				</f:facet>
+			</ace:multiColumnSubmenu>
+			
+			<ace:multiColumnSubmenu label="Menu 2"
+				headerClass=".ui-menu-multicolumn-header"
+				footerClass=".ui-menu-multicolumn-footer" >
+				<f:facet name="header">				
+				<h:outputText value="Item List 2" />
+					<div class="right">
+				<h:commandLink id="infoLink2" value="Info" title="tooltip" style="color: #ffff66; font-style: italic;"/>				
+				  <ace:tooltip id="tooltip2" for="infoLink2" value="This tooltip could display useful information about Class B items"
+				  style="font-style: italic; font-size:small;"/>	
+					</div>					
+				</f:facet>
+				<ace:menuColumn autoflow="4" width="140">
+					<ace:menuItem value="Item 2.1.1">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.2">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.3">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.4">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.5">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.6">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.7">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.8">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.9">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+					<ace:menuItem value="Item 2.1.10">
+						<ace:ajax event="activate" execute="@this" render="@form" />
+					</ace:menuItem>
+				</ace:menuColumn>
+				
+				<f:facet name="footer">			
+				<h:outputText value="Class B items" />				
+				</f:facet>
+			</ace:multiColumnSubmenu>
+		</ace:menuBar>
+	   </ace:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

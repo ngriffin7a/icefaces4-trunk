@@ -647,7 +647,9 @@ public class CentralDataList {
 								 "menuSeparator", "menuSeparator.xhtml", "MenuSeparatorBean.java")),
 				new ComponentGroup("ace:multiColumnSubmenu", "MultiColumnSubmenu", "multiColumnSubmenu.html",
 						new Demo(msgs("overview"), msgs("example.ace.multiColumnSubmenu.description"),
-								 "multiColumnSubmenu", "multiColumnSubmenu.xhtml", "MultiColumnSubmenuBean.java"))
+								 "multiColumnSubmenu", "multiColumnSubmenu.xhtml", "MultiColumnSubmenuBean.java"),
+						new Demo(msgs("menu.ace.multiColumnSubmenu.subMenu.headerfooter"), msgs("example.ace.multiColumnSubmenu.headerfooter.description"),
+								 "multiColumnSubmenu", "multiColumnSubmenuHeaderFooter.xhtml", "MultiColumnSubmenuBean.java"))
 		));
 		
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.messages.title"),
@@ -776,7 +778,7 @@ public class CentralDataList {
 				new ComponentGroup("ace:clientValidateDecimal", "client", "clientValidateDecimal",
 					new Demo(msgs("overview"), msgs("example.ace.clientValidateDecimal.description"),
 							"clientValidateDecimal", "clientValidateDecimal.xhtml", "ClientValidateDecimalBean.java")),
-				new ComponentGroup("ace:clientValidatePattern", "client", "clientValidatePattern", 
+				new ComponentGroup("ace:clientValidatePattern", "client", "clientValidatePattern",
 					new Demo(msgs("overview"), msgs("example.ace.clientValidatePattern.description"),
 							"clientValidatePattern", "clientValidatePattern.xhtml", "ClientValidatePatternBean.java"))
 					

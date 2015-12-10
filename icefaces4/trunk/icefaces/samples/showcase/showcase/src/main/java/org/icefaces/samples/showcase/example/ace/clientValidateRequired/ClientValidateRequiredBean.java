@@ -29,24 +29,12 @@ import javax.faces.model.SelectItem;
 public class ClientValidateRequiredBean implements Serializable {
 	
 	public static final String BEAN_NAME = "clientValidateRequiredBean";
-	public String getBeanName() { return BEAN_NAME; }
-		
+	public String getBeanName() { return BEAN_NAME; }		
 	
 	private String name;
 	private String city;
 	
-	private SelectItem[] cities = new SelectItem[] {
-			new SelectItem(""),
-	        new SelectItem("Victoria"),
-	        new SelectItem("Vancouver"),
-	        new SelectItem("Edmonton"),
-	        new SelectItem("Calgary"),
-	        new SelectItem("Saskatoon"),
-	        new SelectItem("Regina"),
-	        new SelectItem("Winnipeg"),
-	     };
-	
-	 private List<String> selected = new ArrayList<String>();	 
+	private List<String> selected = new ArrayList<String>();	 
 
 	public String getName() {
 		return name;
@@ -62,14 +50,6 @@ public class ClientValidateRequiredBean implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	public SelectItem[] getCities() {
-		return cities;
-	}
-
-	public void setCities(SelectItem[] cities) {
-		this.cities = cities;
 	}
 
 	public List<String> getSelected() {

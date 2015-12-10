@@ -27,19 +27,17 @@
     <ui:define name="example">
 
 	<h:form id="requiredForm">
-		<ace:panel id="panel1" header=" Info">
+		<ace:panel id="panel1" >
 			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">
 				<ace:textEntry id="textEntry1"
-					value="#{clientValidateRequiredBean.name}" label="Name: "
+					value="#{clientValidateRequiredBean.name}" label="Name "
 					labelPosition="left">
-					<ace:ajax event="blur" execute="@form" />
-					<ace:clientValidateRequired />
+				<ace:clientValidateRequired />
 				</ace:textEntry>
 				<ace:textEntry id="textEntry2"
-					value="#{clientValidateRequiredBean.city}" label="City: "
+					value="#{clientValidateRequiredBean.city}" label="City "
 					labelPosition="left">
-					<ace:ajax event="blur" execute="@form" />
 					<ace:clientValidateRequired />
 				</ace:textEntry>
 				<ace:checkboxButtons id="transportMode" header="Transportation Mode:"
@@ -49,7 +47,6 @@
 					<f:selectItem itemLabel="Bike" itemValue="Two" />
 					<f:selectItem itemLabel="Transit" itemValue="Three" />
 					<f:selectItem itemLabel="Drive" itemValue="Four" />
-					<ace:ajax execute="@this" render="messageGrid" />
 					<ace:clientValidateRequired />
 				</ace:checkboxButtons>
 				<ace:pushButton id="formSubmit" value="Submit" />

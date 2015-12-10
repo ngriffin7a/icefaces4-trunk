@@ -25,11 +25,12 @@
     template="/resources/templates/content-template.xhtml">
 
     <ui:define name="example">
-
-			<h:form id="checkBoxForm">
-			<h:panelGrid id="inputGrid" columns="1" width="100%"
-				styleClass="textEntryInputTable">
-				<p>The <b>ace:checkboxButtons</b> below use an <b>ace:clientValidateLength</b> with the min attribute set to 2. </p>
+		
+		<ace:panel id="panel1" >
+		<h:panelGrid id="inputGrid" columns="1" width="100%"
+				styleClass="textEntryInputTable" >
+			<h:form id="checkBoxForm">				
+				<p>The <b>&lt;ace:checkboxButtons&gt;</b> use an <b>&lt;ace:clientValidateLength&gt;</b> with the min attribute set to 2. </p>
 				<ace:checkboxButtons id="selections"
 					header="Choose your 2 favorite ace:components"
 					value="#{clientValidateLength.selected}" labelPosition="top"
@@ -38,29 +39,26 @@
 					<f:selectItem itemLabel="comboBox" itemValue="Two" />
 					<f:selectItem itemLabel="sliderEntry" itemValue="Three" />
 					<f:selectItem itemLabel="dataTable" itemValue="Four" />
-					<ace:ajax render="@form"/>
 					<ace:clientValidateRequired />
 					<ace:clientValidateLength min="2" />
 				</ace:checkboxButtons>
-				<ace:pushButton id="submit1" value="Submit" />
-				<ace:message id="message1" for="selections" />
-			</h:panelGrid>
-			</h:form>
-			<br /><br />
-			<h:form id="passwordForm">
-			<h:panelGrid id="inputGrid2" columns="1" width="100%"
-				styleClass="textEntryInputTable">
-				<p>The <b>ace:textEntry</b> below uses an <b>ace:clientValidateLength</b> with the min attribute set to 8. </p>
-				<ace:textEntry id="password" label="Password: " labelPosition="left"
+			<br /><br />			
+				<p>The <b>&lt;ace:textEntry&gt;</b> uses an <b>&lt;ace:clientValidateLength&gt;</b> with the min attribute set to 8. </p>
+				<ace:textEntry id="password" label="Password " labelPosition="left"
 					value="#{clientValidateLength.password}" secret="true">
-					<ace:ajax render="@form"/>
 					<ace:clientValidateRequired />
 					<ace:clientValidateLength min="8" />
 				</ace:textEntry>
-				<ace:pushButton id="submit2" value="Submit" />
-				<ace:message id="message2" for="password" />
-			</h:panelGrid>
+				<br />
+				<ace:pushButton id="submit" value="Submit" />
+				<br />
+				<div id="messageDiv" style="width: 400px;">
+				<ace:messages id="messages1" for="@inView" />
+				</div>
 			</h:form>
+		</h:panelGrid>
+		</ace:panel>
+			
 
     </ui:define>
 </ui:composition>

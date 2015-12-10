@@ -31,12 +31,13 @@
 			<p>
 				Validation should appear if a blur event takes place when the value
 				in the ace:textEntry contains a number lower than than 10 or higher than 20.
-				Input such as 36 or A5 should fail validation.
+				Input such as 36 or A5 should fail validation.<br /><br />
+				Validation messages will appear in an <b>&lt;ace:message component&gt;</b>.
 			</p>
 			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">
 				<ace:textEntry id="textEntry1" value="#{clientValidateValueRangeBean.value3}" 
-				label="Input Value: " labelPosition="left" size="8">
+				label="Input Value " labelPosition="left" size="8">
 					<ace:ajax render="@form" event="blur" />
 					<ace:clientValidateRequired />
 					<ace:clientValidateValueRange min="10" max="20" />
