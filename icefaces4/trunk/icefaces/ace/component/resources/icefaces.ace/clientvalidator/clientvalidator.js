@@ -58,34 +58,32 @@
         }
     }
 
-    window.addEventListener('load', function () {
-        var old = ice.submitFunction;
-        ice.submitFunction = function (element, event, options) {
-            var form = formOf(element.id);
-            var jqForm = ice.ace.jq(form);
-            var isValidForm = jqForm.valid();
-            var validationResult = jqForm.validate();
-            var validElements = validationResult.validElements();
-            if (validElements) {
-                cleanupMessages(validElements);
-            }
+    var old = ice.submitFunction;
+    ice.submitFunction = function (element, event, options) {
+        var form = formOf(element.id);
+        var jqForm = ice.ace.jq(form);
+        var isValidForm = jqForm.valid();
+        var validationResult = jqForm.validate();
+        var validElements = validationResult.validElements();
+        if (validElements) {
+            cleanupMessages(validElements);
+        }
 
-            var skipValidation = false;
-            var invalidElements = validationResult.invalidElements();
-            for (var j = 0, k = invalidElements.length; j < k; j++) {
-                var invalidElement = invalidElements[j];
-                if (isParent(element, invalidElement) && invalidElement.immediate) {
-                    skipValidation = true;
-                    cleanupMessages(invalidElements);
-                    break;
-                }
+        var skipValidation = false;
+        var invalidElements = validationResult.invalidElements();
+        for (var j = 0, k = invalidElements.length; j < k; j++) {
+            var invalidElement = invalidElements[j];
+            if (isParent(element, invalidElement) && invalidElement.immediate) {
+                skipValidation = true;
+                cleanupMessages(invalidElements);
+                break;
             }
+        }
 
-            if (skipValidation || (form && isValidForm)) {
-                old(element, event, options);
-            }
-        };
-    });
+        if (skipValidation || (form && isValidForm)) {
+            old(element, event, options);
+        }
+    };
 
     function clientValidationMessageFor(id, text) {
         return function (parameter, element) {
