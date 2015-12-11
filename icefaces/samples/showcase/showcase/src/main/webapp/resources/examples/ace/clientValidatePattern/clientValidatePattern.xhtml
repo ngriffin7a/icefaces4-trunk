@@ -33,12 +33,11 @@
 			<p>
 			This ace:textEntry accepts input in the form of a standard ip address
 			from 0.0.0.0 to 255.255.255.255, where none of the octets contain a
-			number higher than 255. Any other type of input should cause a validation message to appear. <br /> 
-			A regex is hard coded into the ace:clientValidatePattern pattern attribute. <br />
+			number higher than 255. Any other type of input should cause a validation message to appear. 
+			A regex is hard coded into the ace:clientValidatePattern pattern attribute. 
 		    </p>
 			<ace:textEntry id="textEntry1" value="#{clientValidatePatternBean.value1}"
 				label="IP address" labelPosition="left" >
-				<ace:ajax render="@form" event="blur" />
 				<ace:clientValidateRequired />
 				<ace:clientValidatePattern
 					pattern="^(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\.){3}([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))$" />
@@ -59,11 +58,10 @@
 				XXX@XXX.ZZZ, where the Xs can contain any reasonable amount of
 				characters. The Zs must contain 2 or more letters. <br />
 				If the "." or the "@" are missing a validation message should appear.
-			A regex is hard coded into the ace:clientValidatePattern pattern attribute. <br />
+			A regex is hard coded into the ace:clientValidatePattern pattern attribute. 
 		    </p>
 			<ace:textEntry id="textEntry2" value="#{clientValidatePatternBean.value2}"
 				label="email address" labelPosition="left" >
-				<ace:ajax render="@form" event="blur" />
 				<ace:clientValidateRequired />
 				<ace:clientValidatePattern
 					pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
