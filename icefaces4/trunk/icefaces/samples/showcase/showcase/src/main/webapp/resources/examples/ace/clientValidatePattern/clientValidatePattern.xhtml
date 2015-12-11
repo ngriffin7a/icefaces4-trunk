@@ -31,7 +31,7 @@
 			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">
 			<p>
-			This ace:textEntry accepts input in the form of a standard ip address
+			This <b>&lt;ace:textEntry&gt;</b> accepts input in the form of a standard ip address
 			from 0.0.0.0 to 255.255.255.255, where none of the octets contain a
 			number higher than 255. Any other type of input should cause a validation message to appear. 
 			A regex is hard coded into the ace:clientValidatePattern pattern attribute. 
@@ -54,14 +54,14 @@
 			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">
 			<p>
-			This ace:textEntry accepts an email address in the form of
+			This <b>&lt;ace:textEntry&gt;</b> accepts an email address in the form of
 				XXX@XXX.ZZZ, where the Xs can contain any reasonable amount of
 				characters. The Zs must contain 2 or more letters. <br />
 				If the "." or the "@" are missing a validation message should appear.
 			A regex is hard coded into the ace:clientValidatePattern pattern attribute. 
 		    </p>
 			<ace:textEntry id="textEntry2" value="#{clientValidatePatternBean.value2}"
-				label="email address" labelPosition="left" >
+				label="Email address" labelPosition="left" >
 				<ace:clientValidateRequired />
 				<ace:clientValidatePattern
 					pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />

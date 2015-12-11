@@ -29,7 +29,7 @@
 		<h:form id="decimalForm">
 		<ace:panel id="panel1">
 			<p>
-				Validation should appear if a blur event takes place when the value
+				Validation should appear if the value
 				in the ace:textEntry contains anything other than a decimal number.
 				Example 1 or 1.12. Input such as 1.2A or A1 should fail
 				validation.
@@ -37,7 +37,7 @@
 			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">
 				<ace:textEntry id="textEntry1" value="#{clientValidateDecimalBean.value1}" 
-				label="Decimal Value " labelPosition="left" size="8">
+				label="Amount" labelPosition="left" size="8">
 					<ace:clientValidateRequired />
 					<ace:clientValidateDecimal />
 				</ace:textEntry>

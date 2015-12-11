@@ -27,20 +27,20 @@
     <ui:define name="example">
 
 			<h:form id="lengthRangeForm">
-			<ace:panel>
+			<ace:panel id="panel1">
 			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">
 				<p>The <b>&lt;ace:textEntry&gt;</b> uses an <b>&lt;ace:clientValidateLength&gt;</b> with the minimum attribute set to 4 and the maximum attribute set to 8. </p>
 					<ace:textEntry id="userName" label="User Name " labelPosition="left"
-					value="#{clientValidateLength.userName}" >
+					value="#{clientValidateLength.userName2}" >
 					<ace:clientValidateRequired />
 					<ace:clientValidateLength minimum="4" maximum="8" />
 				</ace:textEntry>
 				<br /><br />
-				<p>The <b>ace:checkboxButtons</b> use an <b>ace:clientValidateLength</b> with the minimum attribute set to 2 and the maximum attribute set to 4. </p>
-				<ace:checkboxButtons id="selections"
+				<p>The <b>&lt;ace:checkboxButtons&gt;</b> use an <b>&lt;ace:clientValidateLength&gt;</b> with the minimum attribute set to 2 and the maximum attribute set to 4. </p>
+				<ace:checkboxButtons id="Selections"
 					header="Select from 2 to 4 options"
-					value="#{clientValidateLength.selected}" labelPosition="top"
+					value="#{clientValidateLength.selected2}" labelPosition="top"
 					style="width: 500px;">
 					<f:selectItem itemLabel="Java" itemValue="One" />
 					<f:selectItem itemLabel="C" itemValue="Two" />
