@@ -26,12 +26,12 @@
 
     <ui:define name="example">
 		
-		<ace:panel id="panel1" >
+		<ace:panel id="panel1">
 		<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable" >
 			<h:form id="checkBoxForm">				
 				<p>The <b>&lt;ace:checkboxButtons&gt;</b> use an <b>&lt;ace:clientValidateLength&gt;</b> with the minimum attribute set to 2. </p>
-				<ace:checkboxButtons id="selections"
+				<ace:checkboxButtons id="Selections"
 					header="Choose your 2 favorite ace:components"
 					value="#{clientValidateLength.selected}" labelPosition="top"
 					style="width: 500px;">
@@ -43,11 +43,11 @@
 					<ace:clientValidateLength minimum="2" />
 				</ace:checkboxButtons>
 			<br /><br />			
-				<p>The <b>&lt;ace:textEntry&gt;</b> uses an <b>&lt;ace:clientValidateLength&gt;</b> with the minimum attribute set to 8. </p>
+				<p>The <b>&lt;ace:textEntry&gt;</b> uses an <b>&lt;ace:clientValidateLength&gt;</b> with the minimum attribute set to 5. </p>
 				<ace:textEntry id="password" label="Password " labelPosition="left"
 					value="#{clientValidateLength.password}" secret="true">
 					<ace:clientValidateRequired />
-					<ace:clientValidateLength minimum="8" />
+					<ace:clientValidateLength minimum="5" />
 				</ace:textEntry>
 				<br />
 				<ace:pushButton id="submit" value="Submit" />

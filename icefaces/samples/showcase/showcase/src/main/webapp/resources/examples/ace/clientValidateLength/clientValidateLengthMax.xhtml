@@ -27,18 +27,18 @@
     <ui:define name="example">
 
 			<h:form id="lengthMaxForm">			
-			<ace:panel>
+			<ace:panel id="panel1">
 			<h:panelGrid id="inputGrid" columns="1" width="100%"
 				styleClass="textEntryInputTable">				
 				<ace:textEntry id="userName" label="User Name " labelPosition="left"
-					value="#{clientValidateLength.userName}" optionalIndicator=" maximum 8 characters" indicatorPosition="bottom">
+					value="#{clientValidateLength.userName}" optionalIndicator=" maximum 5 characters" indicatorPosition="bottom">
 					<ace:clientValidateRequired />
-					<ace:clientValidateLength maximum="8" />
+					<ace:clientValidateLength maximum="5" />
 				</ace:textEntry>
 				<ace:textAreaEntry id="comment" label="Comment " labelPosition="left"
-					value="#{clientValidateLength.comment}" optionalIndicator=" maximum 30 characters" indicatorPosition="bottom">
+					value="#{clientValidateLength.comment}" optionalIndicator=" maximum 20 characters" indicatorPosition="bottom">
 					<ace:clientValidateRequired />	
-					<ace:clientValidateLength maximum="30" />
+					<ace:clientValidateLength maximum="20" />
 				</ace:textAreaEntry>	
 				<ace:pushButton value="Submit" />
 				<ace:growlMessages id="message" for="@inView" autoHide="false"/>

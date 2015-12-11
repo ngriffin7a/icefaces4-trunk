@@ -35,9 +35,11 @@ public class ClientValidateLengthBean implements Serializable {
 
 	private String password = "";	
 	private String userName = "";
+	private String userName2 = "";
 	private String comment = "";
 	
-    private List<String> selected = new ArrayList<String>();	 
+    private List<String> selected = new ArrayList<String>();	
+	private List<String> selected2 = new ArrayList<String>();	
 
 	
 	public String getPassword() {
@@ -56,6 +58,14 @@ public class ClientValidateLengthBean implements Serializable {
 		this.userName = userName;
 	}
 	
+	public String getUserName2() {
+		return userName2;
+	}
+
+	public void setUserName2(String userName2) {
+		this.userName2 = userName2;
+	}
+	
 	public String getComment() {
 		return comment;
 	}
@@ -71,6 +81,14 @@ public class ClientValidateLengthBean implements Serializable {
 
 	public void setSelected(List<String> selected) {
 		this.selected = selected;
+	}
+	
+	public List<String> getSelected2() {
+		return selected2;
+	}
+
+	public void setSelected2(List<String> selected2) {
+		this.selected2 = selected2;
 	}
 	
 	
