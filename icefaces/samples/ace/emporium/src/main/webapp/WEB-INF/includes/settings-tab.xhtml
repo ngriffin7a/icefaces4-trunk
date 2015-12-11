@@ -32,7 +32,7 @@
                            autocapitalize="on" autocomplete="on" maxlength="15"
                            placeholder="Enter your name">
                 <ace:clientValidateRequired />
-                <ace:clientValidateLength min="3" max="15"/>
+                <ace:clientValidateLength minimum="3" maximum="15"/>
             </ace:textEntry>
             <ace:message for="nameIn"/>
             
@@ -50,7 +50,7 @@
             <ace:textEntry id="dbid" value="#{settingsBean.bidIncrement}" required="true"
                            maxlength="5">
                 <ace:clientValidateRequired />
-                <ace:clientValidateValueRange min="1" max="100"/>
+                <ace:clientValidateValueRange minimum="1" maximum="100"/>
                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
             </ace:textEntry>
             <ace:message for="dbid"/>
@@ -87,7 +87,7 @@
 				<ace:sliderEntry id="pWidth"
 				                 axis="x" length="200px"
 				                 animate="true" clickableRail="true"
-				                 min="200" max="2000"
+				                 minimum="200" maximum="2000"
 				                 value="#{settingsBean.popupWidth}">
 					<ace:ajax event="slideEnd" execute="@this" render="pWidthWrap" />
 				</ace:sliderEntry>
