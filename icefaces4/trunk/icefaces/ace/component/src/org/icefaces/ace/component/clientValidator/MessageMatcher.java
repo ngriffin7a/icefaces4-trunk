@@ -20,6 +20,7 @@ import org.icefaces.ace.component.growlmessages.GrowlMessages;
 import org.icefaces.ace.component.growlmessages.GrowlMessagesRenderer;
 import org.icefaces.ace.component.message.Message;
 import org.icefaces.ace.component.messages.Messages;
+import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.JSONBuilder;
 
@@ -40,41 +41,38 @@ import java.util.*;
 
 public class MessageMatcher implements SystemEventListener {
     private static final String MESSAGE_MAP = MessageMatcher.class.getName() + ".messageMap";
-    private static final String MESSAGES_MAP = MessageMatcher.class.getName() + ".messagesMap";
-    private static final String GROWL_MESSAGES_MAP = MessageMatcher.class.getName() + ".growlMessagesMap";
-    private static final String GROWL_MESSAGES_CONFIGURATION_MAP = MessageMatcher.class.getName() + ".growlMessagesConfigurationMap";
     private static final String LABEL_MAP = MessageMatcher.class.getName() + ".labelMap";
     private static final String ALL = "@all";
     private static final String IN_VIEW = "@inView";
 
     public void processEvent(SystemEvent event) throws AbortProcessingException {
         final UIComponent component = (UIComponent) event.getSource();
+        final Map<String, Object> messagesMap = getMap(MESSAGE_MAP);
         if (component instanceof Message) {
             final String target = ((Message) component).getFor();
             if (target == null || target.isEmpty() || ALL.equals(target)) {
                 throw new FacesException("'for' attribute undefined for message component " + component.getId());
             } else {
-                getMap(MESSAGE_MAP).put(target, component.getClientId());
+                messagesMap.put(target, new MessageEntry(component));
             }
         } else if (component instanceof Messages) {
             final String target = ((Messages) component).getFor();
             if (target == null || target.isEmpty() || ALL.equals(target)) {
-                getMap(MESSAGES_MAP).put(ALL, component.getClientId());
+                messagesMap.put(ALL, new MessagesEntry(component));
+            } else if (IN_VIEW.equals(target)) {
+                messagesMap.put(IN_VIEW, new MessagesEntry(component));
             } else {
-                getMap(MESSAGES_MAP).put(target, component.getClientId());
+                messagesMap.put(target, new MessagesEntry(component));
             }
         } else if (component instanceof GrowlMessages) {
             final String target = ((GrowlMessages) component).getFor();
             final String configuration = GrowlMessagesRenderer.generateGrowlOptionsScript((GrowlMessages) component);
             if (target == null || target.isEmpty() || ALL.equals(target)) {
-                getMap(GROWL_MESSAGES_MAP).put(ALL, component.getClientId());
-                getMap(GROWL_MESSAGES_CONFIGURATION_MAP).put(ALL, configuration);
+                messagesMap.put(ALL, new GrowlEntry(component, configuration));
             } else if (IN_VIEW.equals(target)) {
-                getMap(GROWL_MESSAGES_MAP).put(IN_VIEW, component.getClientId());
-                getMap(GROWL_MESSAGES_CONFIGURATION_MAP).put(IN_VIEW, configuration);
+                messagesMap.put(IN_VIEW, new GrowlEntry(component, configuration));
             } else {
-                getMap(GROWL_MESSAGES_MAP).put(target, component.getClientId());
-                getMap(GROWL_MESSAGES_CONFIGURATION_MAP).put(target, configuration);
+                messagesMap.put(target, new GrowlEntry(component, configuration));
             }
         } else if (component instanceof HtmlOutputLabel) {
             final String target = ((HtmlOutputLabel) component).getFor();
@@ -89,63 +87,34 @@ public class MessageMatcher implements SystemEventListener {
         return source instanceof Message || source instanceof Messages || source instanceof GrowlMessages || source instanceof HtmlOutputLabel;
     }
 
-    private static String lookupByIdOrClientId(UIComponent component, String mapType) {
-        final Map<String, String> messagesMap = getMap(mapType);
-        String id = messagesMap.get(component.getId());
+    private static Entry lookupByIdOrClientId(UIComponent component, Map messagesMap) {
+        Entry id = (Entry) messagesMap.get(component.getId());
         if (id == null) {
-            return messagesMap.get(component.getClientId());
+            return (Entry) messagesMap.get(component.getClientId());
         } else {
             return id;
         }
     }
 
     static String lookupMessageConfig(UIComponent validatedComponent) {
-        String id = lookupByIdOrClientId(validatedComponent, MESSAGE_MAP);
-        if (id != null) {
-            return "{aceMessage: true, id: '" + id + "'}";
-        }
-        id = lookupByIdOrClientId(validatedComponent, MESSAGES_MAP);
-        if (id != null) {
-            return "{aceMessages: true, id: '" + id + "'}";
-        }
-        id = lookupByIdOrClientId(validatedComponent, GROWL_MESSAGES_MAP);
-        if (id != null) {
-            String configuration = lookupByIdOrClientId(validatedComponent, GROWL_MESSAGES_CONFIGURATION_MAP);
-            return "{aceGrowlMessages: true, id: '" + id + "', configuration: " + configuration + "}";
+        final Map<String, Object> messageMap = getMap(MESSAGE_MAP);
+
+        final Entry entry = lookupByIdOrClientId(validatedComponent, messageMap);
+        if (entry != null && entry.isInComponentTree()) {
+            return entry.getMessageConfiguration();
         }
 
-        //use the catch all ace:messages component if there is one
-        if (id == null) {
-            final Map<String, String> messagesMap = getMap(MESSAGES_MAP);
-            final String allMessagesId = messagesMap.get(ALL);
-
-            if (allMessagesId == null) {
-                final String messagesForInViewId = messagesMap.get(IN_VIEW);
-                if (messagesForInViewId != null) {
-                    final List idsInView = ComponentUtils.findIdsInView(FacesContext.getCurrentInstance());
-                    if (idsInView.contains(validatedComponent.getClientId())) {
-                        return "{aceMessages: true, id: '" + messagesForInViewId + "'}";
-                    }
-                }
-
-                final Map<String, String> growlMap = getMap(GROWL_MESSAGES_MAP);
-                final String growlMessagesForAllId = growlMap.get(ALL);
-                if (growlMessagesForAllId != null) {
-                    String configuration = getMap(GROWL_MESSAGES_CONFIGURATION_MAP).get(ALL);
-                    return "{aceGrowlMessages: true, id: '" + growlMessagesForAllId + "', configuration: " + configuration + "}";
-                }
-
-                final String growlMessagesForInViewId = growlMap.get(IN_VIEW);
-                if (growlMessagesForInViewId != null) {
-                    final List idsInView = ComponentUtils.findIdsInView(FacesContext.getCurrentInstance());
-                    if (idsInView.contains(validatedComponent.getClientId())) {
-                        String configuration = getMap(GROWL_MESSAGES_CONFIGURATION_MAP).get(IN_VIEW);
-                        return "{aceGrowlMessages: true, id: '" + growlMessagesForInViewId + "', configuration: " + configuration + "}";
-                    }
-                }
-            } else {
-                return "{aceMessages: true, id: '" + allMessagesId + "'}";
+        final Entry inViewEntry = (Entry) messageMap.get(IN_VIEW);
+        if (inViewEntry != null && inViewEntry.isInComponentTree()) {
+            final List idsInView = ComponentUtils.findIdsInView(FacesContext.getCurrentInstance());
+            if (idsInView.contains(validatedComponent.getClientId())) {
+                return inViewEntry.getMessageConfiguration();
             }
+        }
+
+        final Entry allEntry = (Entry) messageMap.get(ALL);
+        if (allEntry != null && allEntry.isInComponentTree()) {
+            return allEntry.getMessageConfiguration();
         }
 
         throw new FaceletException("Cannot find message/s component assigned to " + validatedComponent.getId());
@@ -166,10 +135,10 @@ public class MessageMatcher implements SystemEventListener {
         }
         //try finding a referencing h:outputLabel
         if (label == null || label.isEmpty()) {
-            final Map<String, String> labelMap = getMap(LABEL_MAP);
-            label = labelMap.get(validatedComponent.getId());
+            final Map<String, Object> labelMap = getMap(LABEL_MAP);
+            label = (String) labelMap.get(validatedComponent.getId());
             if (label == null) {
-                label = labelMap.get(validatedComponent.getClientId());
+                label = (String) labelMap.get(validatedComponent.getClientId());
             }
             if (label == null) {
                 //fallback to using Id as the label
@@ -180,7 +149,7 @@ public class MessageMatcher implements SystemEventListener {
         return label;
     }
 
-    private static Map<String, String> getMap(String type) {
+    private static Map<String, Object> getMap(String type) {
         Map attributes = FacesContext.getCurrentInstance().getViewRoot().getAttributes();
         Map messageMap = (Map) attributes.get(type);
         if (messageMap == null) {
@@ -188,5 +157,66 @@ public class MessageMatcher implements SystemEventListener {
             attributes.put(type, messageMap);
         }
         return (Map) messageMap;
+    }
+
+    private interface Entry {
+        boolean isInComponentTree();
+
+        String getMessageConfiguration();
+    }
+
+    private class MessageEntry implements Entry {
+        private String id;
+        private String clientId;
+
+        public MessageEntry(UIComponent component) {
+            this.id = component.getId();
+        }
+
+        public boolean isInComponentTree() {
+            return ComponentUtils.findComponent(FacesContext.getCurrentInstance().getViewRoot(), id) != null;
+        }
+
+        public String getMessageConfiguration() {
+            return "{aceMessage: true, id: '" + clientId + "'}";
+        }
+    }
+
+    private class MessagesEntry implements Entry {
+        private String id;
+        private String clientId;
+
+        public MessagesEntry(UIComponent component) {
+            this.id = component.getId();
+            this.clientId = component.getClientId();
+        }
+
+        public boolean isInComponentTree() {
+            return ComponentUtils.findComponent(FacesContext.getCurrentInstance().getViewRoot(), id) != null;
+        }
+
+        public String getMessageConfiguration() {
+            return "{aceMessages: true, id: '" + clientId + "'}";
+        }
+    }
+
+    private class GrowlEntry implements Entry {
+        private String id;
+        private String clientId;
+        private String configuration;
+
+        public GrowlEntry(UIComponent component, String configuration) {
+            this.id = component.getId();
+            this.clientId = component.getClientId();
+            this.configuration = configuration;
+        }
+
+        public boolean isInComponentTree() {
+            return ComponentUtils.findComponent(FacesContext.getCurrentInstance().getViewRoot(), id) != null;
+        }
+
+        public String getMessageConfiguration() {
+            return "{aceGrowlMessages: true, id: '" + clientId + "', configuration: " + configuration + "}";
+        }
     }
 }

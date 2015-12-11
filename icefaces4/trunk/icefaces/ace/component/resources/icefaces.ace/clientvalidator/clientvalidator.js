@@ -203,7 +203,6 @@
             ice.ace.jq(selector).rules('add', ruleConfig);
             document.getElementById(id).immediate = immediate;
         }
-        ice.onElementUpdate(id, setup);
         setup();
     }
 })();
