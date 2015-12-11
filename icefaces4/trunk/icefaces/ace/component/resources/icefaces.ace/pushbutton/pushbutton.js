@@ -88,12 +88,18 @@ ice.ace.pushbutton.prototype.onClick = function () {
     else
         ice.ace.jq(options).extend(singleOptions);
 
+	var submit = true;
+	if (this.cfg.reset) submit = false;
+	if (this.cfg.fullSubmit) submit = true;
+
+	if (this.cfg.reset) ice.ace.resetForm(this.cfg.reset);
+
     if (this.cfg.behaviors && this.cfg.behaviors.action) {
         ice.ace.ab(ice.ace.extendAjaxArgs(
                 this.cfg.behaviors.action,
                 ice.ace.clearExecRender(options))
         );
-    } else
+    } else if (submit)
         ice.ace.ab(options);
 };
 

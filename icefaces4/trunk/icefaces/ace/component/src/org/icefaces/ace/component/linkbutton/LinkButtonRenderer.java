@@ -174,6 +174,13 @@ public class LinkButtonRenderer extends CoreRenderer {
             json.endMap();
         }
 
+		if (linkButton.isReset()) {
+			UIComponent parentForm = ComponentUtils.findParentForm(facesContext, linkButton);
+			if (parentForm != null) {
+				json.entry("reset", parentForm.getClientId(facesContext));
+			}
+		}
+
         json.endMap().endArray().endFunction();
 		
 		return json.toString();
