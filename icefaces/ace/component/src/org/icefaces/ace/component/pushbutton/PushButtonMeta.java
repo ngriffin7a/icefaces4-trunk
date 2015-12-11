@@ -71,4 +71,7 @@ public class PushButtonMeta extends UICommandMeta {
 
     @Property(tlddoc="The inline style of the component, rendered on the root div of the component.")
     private String style;
+
+    @Property (defaultValue="false", tlddoc="If true, the button will act as a client-side reset button, resetting all fields and components in the form it is contained in. It will not submit the form unless the component has a listener or an ajax event attached to it.")
+    private boolean reset;
 }

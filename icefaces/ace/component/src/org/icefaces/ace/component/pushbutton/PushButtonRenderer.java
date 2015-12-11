@@ -173,6 +173,13 @@ public class PushButtonRenderer extends CoreRenderer {
             json.endMap();
         }
 
+		if (pushButton.isReset()) {
+			UIComponent parentForm = ComponentUtils.findParentForm(facesContext, pushButton);
+			if (parentForm != null) {
+				json.entry("reset", parentForm.getClientId(facesContext));
+			}
+		}
+
         json.endMap().endArray().endFunction();
 		
 		return json.toString();
