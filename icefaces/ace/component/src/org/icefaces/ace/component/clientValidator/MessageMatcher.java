@@ -161,20 +161,18 @@ public class MessageMatcher implements SystemEventListener {
 
     private interface Entry {
         boolean isInComponentTree();
-
         String getMessageConfiguration();
     }
 
     private class MessageEntry implements Entry {
-        private String id;
         private String clientId;
 
         public MessageEntry(UIComponent component) {
-            this.id = component.getId();
+            this.clientId = component.getClientId();
         }
 
         public boolean isInComponentTree() {
-            return ComponentUtils.findComponent(FacesContext.getCurrentInstance().getViewRoot(), id) != null;
+            return FacesContext.getCurrentInstance().getViewRoot().findComponent(clientId) != null;
         }
 
         public String getMessageConfiguration() {
@@ -183,16 +181,13 @@ public class MessageMatcher implements SystemEventListener {
     }
 
     private class MessagesEntry implements Entry {
-        private String id;
         private String clientId;
 
         public MessagesEntry(UIComponent component) {
-            this.id = component.getId();
             this.clientId = component.getClientId();
         }
-
         public boolean isInComponentTree() {
-            return ComponentUtils.findComponent(FacesContext.getCurrentInstance().getViewRoot(), id) != null;
+            return FacesContext.getCurrentInstance().getViewRoot().findComponent(clientId) != null;
         }
 
         public String getMessageConfiguration() {
@@ -201,18 +196,16 @@ public class MessageMatcher implements SystemEventListener {
     }
 
     private class GrowlEntry implements Entry {
-        private String id;
         private String clientId;
         private String configuration;
 
         public GrowlEntry(UIComponent component, String configuration) {
-            this.id = component.getId();
             this.clientId = component.getClientId();
             this.configuration = configuration;
         }
 
         public boolean isInComponentTree() {
-            return ComponentUtils.findComponent(FacesContext.getCurrentInstance().getViewRoot(), id) != null;
+            return FacesContext.getCurrentInstance().getViewRoot().findComponent(clientId) != null;
         }
 
         public String getMessageConfiguration() {
