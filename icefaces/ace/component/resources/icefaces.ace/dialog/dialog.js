@@ -172,6 +172,7 @@ ice.ace.Dialog.prototype.show = function() {
 	var self = this;
     var focusOn = this.cfg.setFocus;
     setTimeout(function() {
+       self.cfg.isVisible=true;
        var dialogParent = self.jq.parent();
        if (dialogParent.hasClass("ace-dialog-hidden")) {
                 dialogParent.removeClass("ace-dialog-hidden");
