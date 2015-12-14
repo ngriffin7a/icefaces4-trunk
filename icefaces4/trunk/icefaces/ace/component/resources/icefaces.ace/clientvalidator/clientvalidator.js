@@ -31,13 +31,17 @@
         return null;
     }
 
-    function isParent(parent, element) {
-        var cursor = element;
-        while (cursor) {
-            if (cursor == parent) {
-                return true;
+    function isImmediate(element) {
+        if (ice.ace.immediateComponents) {
+            var cursor = element;
+            while (cursor) {
+                for (var i = 0, l = ice.ace.immediateComponents.length; i < l; i++) {
+                    if (cursor.id == ice.ace.immediateComponents[i]) {
+                        return true;
+                    }
+                }
+                cursor = cursor.parentNode;
             }
-            cursor = cursor.parentNode;
         }
 
         return false;
@@ -70,14 +74,9 @@
         }
 
         var skipValidation = false;
-        var invalidElements = validationResult.invalidElements();
-        for (var j = 0, k = invalidElements.length; j < k; j++) {
-            var invalidElement = invalidElements[j];
-            if (isParent(element, invalidElement) && invalidElement.immediate) {
-                skipValidation = true;
-                cleanupMessages(invalidElements);
-                break;
-            }
+        if (isImmediate(element)) {
+            skipValidation = true;
+            cleanupMessages(validationResult.invalidElements());
         }
 
         if (skipValidation || (form && isValidForm)) {
