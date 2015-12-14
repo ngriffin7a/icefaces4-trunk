@@ -237,7 +237,8 @@ public class RadioButtonsRenderer extends InputRenderer {
 				writer.endElement("br");
 			}
 			if ("right".equalsIgnoreCase(labelPosition)
-					|| "bottom".equalsIgnoreCase(labelPosition)) {
+					|| "bottom".equalsIgnoreCase(labelPosition)
+					|| labelPosition == null || "".equals(labelPosition)) {
 				writer.startElement("label", null);
 				writer.writeAttribute("id", "label_" + clientId, null);
 				writer.writeAttribute("for", clientId, null);
