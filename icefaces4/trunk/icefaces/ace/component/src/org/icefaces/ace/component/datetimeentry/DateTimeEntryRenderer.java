@@ -446,7 +446,6 @@ public class DateTimeEntryRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 
 		DateTimeEntry dateTimeEntry = (DateTimeEntry) component;
-		if (!dateTimeEntry.isPopup()) return;
 
 		String clientId = component.getClientId(context);
 		String label = (String) component.getAttributes().get("label");
