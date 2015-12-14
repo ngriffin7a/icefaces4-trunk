@@ -26,6 +26,13 @@
 
     <ui:define name="example">
         <h:form id="form">
+            <h:panelGrid columns="3">                
+                <h:selectBooleanCheckbox id="cancelDisplay" value="#{delegateTooltipBean.cancelListener}">
+                    <f:ajax render="@form" execute="@form" />
+                </h:selectBooleanCheckbox>
+                <h:outputLabel for="cancelDisplay" value=" Display tooltips for even-numbered rows only (via delegateDisplayListener)"/>
+                <ace:message id="cancelDisplayMsg" for="cancelDisplay"/>                
+            </h:panelGrid>
 			<ace:delegate id="tooltipDelegate">
 				<ace:dataTable id="carTable"
 										value="#{dataTableBean.carsData}"
@@ -53,7 +60,8 @@
 				   
 				</ace:dataTable>
 			</ace:delegate>
-			<ace:tooltip id="tooltip" for="carName" forDelegate="tooltipDelegate" fetch="#{car}" store="#{delegateTooltipBean.data}">
+			<ace:tooltip id="tooltip" for="carName" forDelegate="tooltipDelegate" fetch="#{car}" 
+                        store="#{delegateTooltipBean.data}" delegateDisplayListener="#{delegateTooltipBean.listener}">
 				<h:outputText value="Chassis: #{delegateTooltipBean.data.chassis}"/><br/><br/>
 				<h:outputText value="Weight: #{delegateTooltipBean.data.weight}lbs."/><br/><br/>
 				<h:outputText value="Accel: #{delegateTooltipBean.data.acceleration}"/><br/><br/>
