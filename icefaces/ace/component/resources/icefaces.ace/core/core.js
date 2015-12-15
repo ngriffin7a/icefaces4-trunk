@@ -161,7 +161,6 @@ ice.ace.extendAjaxArgs = function(callArguments, options) {
         node       = options.node,
         event      = options.event,
         onstart    = options.onstart,
-        onsubmit = options.onsubmit,
         onerror    = options.onerror,
         onsuccess  = options.onsuccess,
         oncomplete = options.oncomplete;
@@ -208,18 +207,6 @@ ice.ace.extendAjaxArgs = function(callArguments, options) {
             }
         } else {
             callArguments['onstart'] = onstart;
-        }
-    }
-
-    if (onsubmit) {
-        if (callArguments['onsubmit']) {
-            var existingSubmitCall = callArguments['onsubmit'];
-            callArguments['onsubmit'] = function (xhr) {
-                var ret = existingSubmitCall(xhr);
-                return onsubmit(xhr) && ret;
-            }
-        } else {
-            callArguments['onsubmit'] = onsubmit;
         }
     }
 
@@ -336,13 +323,6 @@ ice.ace.AjaxRequest = function(cfg) {
             // Decode special customUpdate and callbackParam request portions
             ice.ace.AjaxResponse.call(context, responseXML);
         });
-
-        if (cfg.onsubmit) {
-            // Do onsubmit
-            onBeforeSubmit(function () {
-                cfg.onsubmit.call(context, null /*xhr*/, null /*status*/, context.args);
-            });
-        }
 
         if (cfg.oncomplete) {
             // Do oncomplete
