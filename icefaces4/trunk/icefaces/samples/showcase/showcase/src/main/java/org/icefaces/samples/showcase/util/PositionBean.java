@@ -33,6 +33,13 @@ public class PositionBean {
         new SelectItem(POS_INFIELD, "In Field"),
         new SelectItem("none", "None")
     };
+    public static final SelectItem[] RBUTTONS_LABEL_POSITIONS = new SelectItem[] {    	
+    	new SelectItem("left", "Left"),
+        new SelectItem("right", "Right"),
+        new SelectItem("top", "Top"),
+        new SelectItem("bottom", "Bottom"),
+        new SelectItem("none", "None")
+    };
     public static final SelectItem[] SLIDER_LABEL_POSITIONS = new SelectItem[] {
         new SelectItem("left", "Left"),
         new SelectItem("right", "Right"),
@@ -58,6 +65,8 @@ public class PositionBean {
     };
     
     public SelectItem[] getLabelPositions() { return LABEL_POSITIONS; }
+    
+    public SelectItem[] getRadioButtonsLabelPositions() { return RBUTTONS_LABEL_POSITIONS; }
     
     public SelectItem[] getSliderLabelPositions() { return SLIDER_LABEL_POSITIONS; }
     
