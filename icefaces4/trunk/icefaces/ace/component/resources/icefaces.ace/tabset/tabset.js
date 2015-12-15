@@ -76,6 +76,8 @@ ice.ace.tabset = {
             ice.ace.tabset.consoleLog(false, 'tabSet.tabChange  currentIndex: ' + currentIndex);
             var tabIndexInfo = clientId + '='+ currentIndex;
             var doOnSuccess = function() {
+                ice.ace.jq(tabview._contentParent).css({opacity: 1});
+
                 if (rootElem.suppressServerSideTransition) {
                     rootElem.suppressServerSideTransition = null;
                     return;
@@ -141,6 +143,9 @@ ice.ace.tabset = {
             var params = function(parameter) {
 							//parameter('ice.focus', event.newValue.get('element').firstChild.id);
                             parameter('onevent', function(data) {
+                                if (data.status == 'begin') {
+                                    ice.ace.jq(tabview._contentParent).css({opacity: 0.4});
+                                }
                                 if (data.status == 'success' && event.newValue == cachedNewTab) {
                                     doOnSuccess();
                                 }
@@ -177,9 +182,18 @@ ice.ace.tabset = {
                             targetElement.id = clientId;
                             var otherParams = {};
                             var submitBehaviourStartTime = new Date().getTime();
+                            var overlay = function () {
+                                ice.ace.jq(tabview._contentParent).css({opacity: 0.4});
+                            };
 							var ajaxArgs = ice.ace.extendAjaxArgs(
                                     sJSFProps.behaviors.serverSideTabChange,
-                                    {params: otherParams, execute: "@this", render: "@this", onsuccess: doOnSuccess});
+                                {
+                                    params: otherParams,
+                                    execute: "@this",
+                                    render: "@this",
+                                    onsubmit: overlay,
+                                    onsuccess: doOnSuccess
+                                });
 							// if there's a proxy, then the 'source' will be its client id
 							var proxy = document.getElementById(clientId + '_tsc');
 							if (proxy) ajaxArgs.source = proxy;
@@ -325,7 +339,6 @@ ice.ace.tabset = {
 	   //console.info('effect >>> '+ jsfProps.effect );
  
 	   tabview.addListener('activeTabChange', tabChange);
-       tabview.addListener('beforeActiveTabChange', function (e) { ice.ace.jq(tabview._contentParent).css({opacity:0.4}); });
        bindYUI(tabview);
 
        ice.ace.tabset.consoleLog(true, "ace:tabSet - ID: " + clientId + " - initialize - " + (new Date().getTime() - initializeStartTime) + "ms");
