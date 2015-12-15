@@ -26,19 +26,23 @@
                header="New Auction Item to Add (maximum #{auctionController.maxPostedAuctions})" headerAlign="center"
                rendered="#{postBean.postedCount lt auctionController.maxPostedAuctions}">
         <ace:ajax execute="@this" render="@form">
-	    <h:panelGrid columns="4" cellpadding="4" cellspacing="4" styleClass="postTable">
+	    <h:panelGrid columns="3" cellpadding="4" cellspacing="4" styleClass="postTable">
+            <h:outputText value="Item Details" style="font-weight: bold;"/>
+            <h:outputText value=""/><h:outputText value=""/>
+            
+	        <h:outputLabel for="itemNIn" value="Item Name:"/>
 	        <ace:textEntry id="itemNIn" value="#{postBean.toAdd.name}"
 	                       maxlength="20"
 	                       autocapitalize="true" autocorrect="true"
 	                       placeholder="Enter item name"
 	                       required="true" requiredIndicator="*"
-	                       label="Item Name" labelPosition="top"
 	                       validator="UniqueItemNameValidator">
 	            <ace:clientValidateRequired />
 	            <ace:clientValidateLength minimum="3" maximum="20"/>
 	        </ace:textEntry>
 	        <ace:message for="itemNIn"/>
 	        
+	        <h:outputLabel for="itemIIn" value="Item Image:"/>
             <h:commandLink id="itemIIn" actionListener="#{auctionController.openItemImageDialog}" immediate="true"
                            disabled="#{!auctionImage.validParentDir}" onclick="ice.ace.instance('ip:imagePopup').show();">
 		        <h:graphicImage library="#{auctionImage.imageLibrary}" name="#{postBean.toAdd.imageName}#{auctionImage.extension}"
@@ -46,70 +50,74 @@
             </h:commandLink>
 	        <ace:message for="itemIIn"/>
 	        
+	        <h:outputLabel for="descIn" value="Item Description:"/>
 	        <ace:textAreaEntry id="descIn" value="#{postBean.toAdd.description}"
 	                           rows="2" maxlength="500"
-	                           resizable="true"
-	                           label="Item Description" labelPosition="top">
+	                           resizable="true">
                <ace:clientValidateLength minimum="0" maximum="500"/>
 	        </ace:textAreaEntry>
 	        <ace:message for="descIn"/>
 	        
-	        <ace:simpleSelectOneMenu id="conditionIn" value="#{postBean.toAdd.condition}" label="Item Condition" labelPosition="top">
+	        <h:outputLabel for="conditionIn" value="Item Condition:"/>
+	        <ace:simpleSelectOneMenu id="conditionIn" value="#{postBean.toAdd.condition}">
 	            <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
 	            <f:selectItems value="#{postBean.toAdd.conditions}" var="condition"
 	                           itemValue="#{condition}" itemLabel="#{condition.value}"/>
 	        </ace:simpleSelectOneMenu>
 	        <ace:message for="conditionIn"/>
 	        
+	        <h:outputLabel for="priceIn" value="Starting Price ($):"/>
 	        <ace:textEntry id="priceIn" value="#{postBean.toAdd.price}"
 	                       required="true" requiredIndicator="*"
-	                       maxlength="8"
-	                       label="Starting Price ($)" labelPosition="top">
+	                       maxlength="8">
                 <ace:clientValidateRequired />
                 <ace:clientValidateValueRange minimum="0.1" maximum="1000"/>
 	            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
 	        </ace:textEntry>
 	        <ace:message for="priceIn"/>
 	        
+	        <h:outputLabel for="expiryIn" value="Expiry Date:"/>
 	        <ace:dateTimeEntry id="expiryIn" value="#{postBean.expiryDate}"
 	                           navigator="false" renderAsPopup="true" readOnlyInputText="true"
 	                           popupIcon="resources/images/calendar.png"
 	                           required="true" requiredIndicator="*"
 	                           mindate="#{auctionController.minExpiryDate}" maxdate="#{auctionController.maxExpiryDate}"
 	                           showOn="both"
-	                           label="Expiry Date" labelPosition="top"
  	                           pattern="MM/dd/yyyy h:mm a">
 	            <ace:clientValidateRequired />
 	        </ace:dateTimeEntry>
 	        <ace:message for="expiryIn"/>
 	        
+            <h:outputText value="Additional Details" style="font-weight: bold;"/>
+            <h:outputText value=""/><h:outputText value=""/>
+            
+            <h:outputLabel for="sellerName" value="Your Seller Name:"/>
 	        <ace:textEntry id="sellerName" value="#{postBean.toAdd.sellerName}"
                            autocapitalize="on" autocomplete="on" maxlength="15"
-                           placeholder="Enter your name"
-                           label="Your Seller Name" labelPosition="top">
+                           placeholder="Enter your name">
                 <ace:clientValidateLength minimum="3" maximum="15"/>
             </ace:textEntry>
 	        <ace:message for="sellerName"/>
 	        
-            <ace:simpleSelectOneMenu id="sellerLoc" value="#{postBean.toAdd.sellerLocation}"
-                                     label="Your Seller Location" labelPosition="top">
+	        <h:outputLabel for="sellerLoc" value="Your Seller Location:"/>
+            <ace:simpleSelectOneMenu id="sellerLoc" value="#{postBean.toAdd.sellerLocation}">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
             </ace:simpleSelectOneMenu>
 	        <ace:message for="sellerLoc"/>
 	        
+	        <h:outputLabel for="shippingIn" value="Shipping Cost ($):"/>
 	        <ace:textEntry id="shippingIn" value="#{postBean.toAdd.shippingCost}"
 	                       required="true" requiredIndicator="*"
-	                       maxlength="5"
-	                       label="Shipping Cost($)" labelPosition="top">
+	                       maxlength="5">
                <ace:clientValidateRequired />
                <ace:clientValidateValueRange minimum="1" maximum="20"/>
 	           <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
 	        </ace:textEntry>
 	        <ace:message for="shippingIn"/>
-	        
-            <ace:simpleSelectOneMenu id="deliveryIn" value="#{postBean.toAdd.estimatedDelivery}"
-                                     label="Estimated Delivery" labelPosition="top">
+
+            <h:outputLabel for="deliveryIn" value="Estimated Delivery:"/>
+            <ace:simpleSelectOneMenu id="deliveryIn" value="#{postBean.toAdd.estimatedDelivery}">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{postBean.toAdd.deliveries}" var="delivery"
                                itemValue="#{delivery}" itemLabel="#{delivery.value}"/>
