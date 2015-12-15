@@ -23,6 +23,7 @@
                 xmlns:emporium="http://xmlns.jcp.org/jsf/composite/components">
     <icecore:defaultAction actionListener="#{settingsController.save}" key="Enter"/>
     
+    <!-- ICE-10894 - When client-side validators work properly with tabSet we will want to use them here -->
     <ace:panel closable="false" collapsed="false" toggleable="false"
                header="Application Settings" headerAlign="center">
         <h:panelGrid columns="4" cellpadding="4" cellspacing="4" styleClass="postTable">
@@ -31,8 +32,7 @@
             <ace:textEntry id="nameIn" value="#{settingsBean.name}" required="true"
                            autocapitalize="on" autocomplete="on" maxlength="15"
                            placeholder="Enter your name">
-                <ace:clientValidateRequired />
-                <ace:clientValidateLength minimum="3" maximum="15"/>
+                <f:validateLength minimum="3" maximum="15"/>
             </ace:textEntry>
             <ace:message for="nameIn"/>
             
@@ -49,9 +49,8 @@
             <h:outputLabel for="dbid" value="Default Bid Increment ($):"/>
             <ace:textEntry id="dbid" value="#{settingsBean.bidIncrement}" required="true"
                            maxlength="5">
-                <ace:clientValidateRequired />
-                <ace:clientValidateValueRange minimum="1" maximum="100"/>
-                <ace:clientValidateDecimal/>
+                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                <f:validateDoubleRange minimum="1.0" maximum="100.0"/>
             </ace:textEntry>
             <ace:message for="dbid"/>
             
@@ -59,7 +58,6 @@
             <h:outputLabel for="tabo" value="Tab Orientation:"/>
             <ace:radioButtons id="tabo" value="#{settingsBean.tabOrientation}" required="true"
                               styleClass="ace-radio-buttons-override">
-                <ace:clientValidateRequired />
                 <f:selectItems value="#{listData.tabOrientations}"/>
             </ace:radioButtons>
             <ace:message for="tabo"/>
