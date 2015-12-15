@@ -99,11 +99,14 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		writer.writeAttribute("id", inputClientId, null);
 		writer.writeAttribute("name", inputClientId, null);
 		String stateClass = simpleSelectOneMenu.isDisabled() ? "ui-state-disabled" : "ui-state-default";
-		writer.writeAttribute("class", "ui-widget ui-inputfield " + stateClass + getStateStyleClasses(simpleSelectOneMenu) + inFieldLabelStyleClass, null);
-		writer.writeAttribute("style", simpleSelectOneMenu.getStyle(), null);
+		String styleClass = stateClass + getStateStyleClasses(simpleSelectOneMenu) + inFieldLabelStyleClass;
+		writer.writeAttribute("class", "ui-widget ui-inputfield " + styleClass, null);
+		String style = simpleSelectOneMenu.getStyle();
+		writer.writeAttribute("style", style, null);
+		Map<String, Object> ariaAttributes = null;
 		if (ariaEnabled) {
 			writer.writeAttribute("role", "select", null);
-            Map<String, Object> ariaAttributes = new HashMap<String, Object>();
+            ariaAttributes = new HashMap<String, Object>();
 			ariaAttributes.put("required", simpleSelectOneMenu.isRequired());
 			ariaAttributes.put("disabled", simpleSelectOneMenu.isDisabled());
 			ariaAttributes.put("invalid", !simpleSelectOneMenu.isValid());
@@ -122,7 +125,17 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		String title = simpleSelectOneMenu.getTitle();
 		if (title != null) writer.writeAttribute("title", title, null);
 		
-		populateList(facesContext, simpleSelectOneMenu);
+		StringBuffer hashBuffer = new StringBuffer();
+		hashBuffer.append(styleClass).append(style).append(accesskey).append(dir).append(disabled)
+			.append(lang).append(tabindex).append(title).append(simpleSelectOneMenu.isValid())
+			.append(simpleSelectOneMenu.isRequired());
+		if (ariaEnabled && ariaAttributes != null) {
+			hashBuffer.append(labelAttributes.get("label"))
+			.append(labelAttributes.get("labelPosition")).append(ariaAttributes.get("autocomplete"))
+			.append(ariaAttributes.get("multiline")).append(ariaAttributes.get("readonly"));
+		}
+
+		populateList(facesContext, simpleSelectOneMenu, hashBuffer);
 		
 		writer.endElement("select");
 		
@@ -139,13 +152,16 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 			writer.startElement("script", null);
 			writer.writeAttribute("type", "text/javascript", null);
 			writer.writeText("ice.ace.SimpleSelectOneMenu('" + clientId + "', " + jb.toString() + ");", null);
+			// hashcode to detect changes in the <select> element and cause an update of this script element 
+			writer.writeText("// " + hashBuffer.toString().hashCode(), null);
 			writer.endElement("script");
 		}
 		
 		writer.endElement("span");
     }
 
-    public void populateList(FacesContext facesContext, SimpleSelectOneMenu simpleSelectOneMenu) throws IOException {
+    public void populateList(FacesContext facesContext, SimpleSelectOneMenu simpleSelectOneMenu,
+		StringBuffer hashBuffer) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		Object submittedValue = simpleSelectOneMenu.getSubmittedValue();
         boolean readonly = simpleSelectOneMenu.isReadonly();
@@ -186,7 +202,9 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 					sb.append("<option value=\"" + (itemValue == null ? "" : itemValue) + "\"" + selected + role + ">").append(itemLabel).append("</option>");
 				}
 			}
-			writer.write(sb.toString());
+			String result = sb.toString();
+			writer.write(result);
+			hashBuffer.append(result);
 		}
     }
 		
