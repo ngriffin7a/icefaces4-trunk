@@ -70,7 +70,7 @@ public class RadioButtonsMeta extends UISelectOneMeta {
             "Supported values are \"left/right/top/bottom/none\".", defaultValue="bottom")
     private String indicatorPosition;
 
-    @Property(tlddoc = "Position of the individual radio button labels relative to their input fields. Supported values are \"left/right/top/bottom/inField/none\".", defaultValue="right")
+    @Property(tlddoc = "Position of the individual radio button labels relative to their input fields. Supported values are \"left/right/top/bottom/none\".", defaultValue="right")
     private String labelPosition;
 
 }
