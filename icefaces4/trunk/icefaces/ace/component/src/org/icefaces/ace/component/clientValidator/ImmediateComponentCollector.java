@@ -43,7 +43,7 @@ public class ImmediateComponentCollector implements SystemEventListener {
         //collect components marked with immediate="true"
         while (!queue.isEmpty()) {
             UIComponent component = queue.remove(0);
-            Iterator<UIComponent> kids = component.getChildren().iterator();
+            Iterator<UIComponent> kids = component.getFacetsAndChildren();
             while (kids.hasNext()) {
                 queue.add(kids.next());
             }
