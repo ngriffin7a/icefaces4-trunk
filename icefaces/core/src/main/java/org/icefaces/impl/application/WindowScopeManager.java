@@ -84,16 +84,23 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         wrapped.handleResourceRequest(facesContext);
     }
 
-    public boolean isSessionAwareResourceRequest(FacesContext facesContext) {
+    public boolean isResourceRequest(FacesContext facesContext) {
         ExternalContext externalContext = facesContext.getExternalContext();
         Map parameters = externalContext.getRequestParameterMap();
         if (isDisposeWindowRequest(parameters)) {
-            String windowID = (String) parameters.get(WindowParameter);
-            disposeWindow(facesContext, windowID);
-
-            return true;
+            //force the running of the JSF lifecycle so that the registered phase listener has a chance to destroy
+            //the @WindowDisposed annotated view scope beans
+            //
+            //avoid running JSF lifecycle when session is not yet created (for example when dispose window request is
+            //received first after the application was restarted)
+            return facesContext.getExternalContext().getSession(false) == null;
         }
-        return wrapped.isResourceRequest(facesContext);
+
+        return super.isResourceRequest(facesContext);
+    }
+
+    public boolean isSessionAwareResourceRequest(FacesContext context) {
+        return wrapped.isResourceRequest(context);
     }
 
     public static ScopeMap lookupWindowScope(FacesContext context) {
@@ -651,6 +658,15 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             if (event.getPhaseId() == PhaseId.RESTORE_VIEW) {
                 boolean customWindowTracking = !"url".equals(context.getExternalContext().getInitParameter("javax.faces.CLIENT_WINDOW_MODE"));
                 WindowScopeManager.determineWindowID(context, customWindowTracking);
+            }
+
+            ExternalContext externalContext = context.getExternalContext();
+            Map parameters = externalContext.getRequestParameterMap();
+            if (event.getPhaseId() == PhaseId.RENDER_RESPONSE && isDisposeWindowRequest(parameters)) {
+                //shortcut the lifecycle to avoid running it with certain parts discarded or disposed
+                context.responseComplete();
+                String windowID = (String) parameters.get(WindowParameter);
+                disposeWindow(context, windowID);
             }
         }
 
