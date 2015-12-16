@@ -1005,7 +1005,7 @@ ice.ace.Autocompleter.preventBackspaceNavigationHandler = function (e) {
 	}
 };
 
-ice.ace.Autocompleter.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+ice.ace.Autocompleter.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var input = ice.ace.jq(ice.ace.escapeClientId(id));
 	if (inFieldLabel) {
 		input.attr({name: ''});

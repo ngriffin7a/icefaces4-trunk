@@ -191,7 +191,7 @@ ice.ace.TextEntry.nextTabElement = function(currElement) {
     }
 };
 
-ice.ace.TextEntry.reset = function(id, secret, originalType, embeddedLabel) {
+ice.ace.TextEntry.clear = function(id, secret, originalType, embeddedLabel) {
 	var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
 	try { if (secret) input.attr({type: originalType}); } catch (e) {}
 	if (embeddedLabel) {

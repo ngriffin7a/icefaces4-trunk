@@ -116,7 +116,7 @@ ice.ace.jq(document).on("keydown keypress", function(e){
     }
 });
 
-ice.ace.TextAreaEntry.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+ice.ace.TextAreaEntry.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
 	if (inFieldLabel) {
 		input.attr({name: id + "_label"});

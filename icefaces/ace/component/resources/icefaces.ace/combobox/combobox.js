@@ -983,7 +983,7 @@ ice.ace.ComboBox.prototype = {
 	}
 };
 
-ice.ace.ComboBox.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+ice.ace.ComboBox.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var instance = ice.ace.ComboBoxes[id];
 	if (instance && instance.initialized) {
 		instance.updateValue('');

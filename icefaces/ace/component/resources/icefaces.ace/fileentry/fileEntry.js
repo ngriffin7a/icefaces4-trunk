@@ -569,7 +569,7 @@ ice.ace.fileentry = {
     }
 };
 
-ice.ace.fileentry.reset = function(id, multiple) {
+ice.ace.fileentry.clear = function(id, multiple) {
 	if (multiple) ice.ace.fileentry.clearFileSelection(id);
 	else {
 		var root = document.getElementById(id + '_container');

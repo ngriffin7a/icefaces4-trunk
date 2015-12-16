@@ -190,7 +190,7 @@ ice.ace.checkboxbutton.toggleOthers = function (options, clientId) {
     }
 };
 
-ice.ace.checkboxbutton.reset = function(id, ariaEnabled, multiple) {
+ice.ace.checkboxbutton.clear = function(id, ariaEnabled, multiple) {
     var jqId = ice.ace.escapeClientId(id);
     var innerSpanSelector = jqId + " > span > span";
     var buttonSelector = jqId + " > span > span > button";
