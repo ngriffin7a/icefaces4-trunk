@@ -949,7 +949,7 @@ ice.ace.SelectMenu.replaceSpaces = function(str) {
 	else return '&nbsp;';
 };
 
-ice.ace.SelectMenu.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+ice.ace.SelectMenu.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var instance = ice.ace.SelectMenus[id];
 	if (instance && instance.initialized) {
 		instance.updateValue('');

@@ -395,7 +395,7 @@ ice.ace.AjaxResponse.updateElem = function(id, content) {
     }
 };
 
-ice.ace.resetForm = function(node) {
+ice.ace.clearForm = function(node) {
 	if (typeof node === 'string') node = ice.ace.escapeClientId(node);
 	var form = ice.ace.jq(node);
 	if (!form.get(0)) return;
@@ -441,7 +441,7 @@ ice.ace.resetForm = function(node) {
 
 	form.find('*[data-ice-reset]').each(function(i, e) {
 		var array = eval(e.getAttribute('data-ice-reset'));
-		if (array[0] == 'flipswitch') mobi[array[0]].reset.apply(this, array[1]);
-		else ice.ace[array[0]].reset.apply(this, array[1]);
+		if (array[0] == 'flipswitch') mobi[array[0]].clear.apply(this, array[1]);
+		else ice.ace[array[0]].clear.apply(this, array[1]);
 	});
 };

@@ -151,7 +151,7 @@ ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _ski
     } catch(e) {}
 };
 
-ice.ace.richtextentry.reset = function(editor) {
+ice.ace.richtextentry.clear = function(editor) {
 	try {
 		if (CKEDITOR.instances[editor]) {
 			CKEDITOR.instances[editor].setData('');

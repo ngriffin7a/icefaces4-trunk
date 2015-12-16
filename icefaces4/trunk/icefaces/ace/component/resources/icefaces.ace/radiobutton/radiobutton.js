@@ -195,7 +195,7 @@ ice.ace.radiobutton.toggleOthers = function (options, clientId) {
     }
 };
 
-ice.ace.radiobutton.reset = function(id, ariaEnabled, multiple) {
+ice.ace.radiobutton.clear = function(id, ariaEnabled, multiple) {
     var jqId = ice.ace.escapeClientId(id);
     var innerSpanSelector = jqId + " > span > span";
     var buttonSelector = jqId + " > span > span > button";

@@ -134,6 +134,6 @@ ice.ace.Slider.updateValue = function(id, value) {
 	}
 };
 
-ice.ace.Slider.reset = function(id, value) {
+ice.ace.Slider.clear = function(id, value) {
 	ice.ace.Slider.updateValue(id, value);
 };

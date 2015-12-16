@@ -354,7 +354,7 @@ ice.ace.InputMask = function(id, cfg) {
     }
 }
 
-ice.ace.InputMask.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+ice.ace.InputMask.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var input = ice.ace.jq(ice.ace.escapeClientId(id));
 	if (inFieldLabel) {
 		input.val(inFieldLabel);

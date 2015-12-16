@@ -107,7 +107,7 @@ mobi.flipswitch = {
     }
 };
 
-mobi.flipswitch.reset = function(id) {
+mobi.flipswitch.clear = function(id) {
 	var element = document.getElementById(id);
 	var hidden = document.getElementById(id + "_hidden");
 
