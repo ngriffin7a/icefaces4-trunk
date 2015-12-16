@@ -96,7 +96,7 @@ public class PushButtonRenderer extends CoreRenderer {
         if (tabindex != null)
             writer.writeAttribute(HTML.TABINDEX_ATTR, tabindex, null);
 
-        renderPassThruAttributes(facesContext, pushButton, HTML.BUTTON_ATTRS, new String[]{"style"});
+        renderPassThruAttributes(facesContext, pushButton, HTML.BUTTON_ATTRS, new String[]{"style", "type"});
 
         // yet another span
         writer.startElement(HTML.SPAN_ELEM, null);
@@ -173,10 +173,10 @@ public class PushButtonRenderer extends CoreRenderer {
             json.endMap();
         }
 
-		if (pushButton.isReset()) {
+		if ("clear".equalsIgnoreCase(pushButton.getType())) {
 			UIComponent parentForm = ComponentUtils.findParentForm(facesContext, pushButton);
 			if (parentForm != null) {
-				json.entry("reset", parentForm.getClientId(facesContext));
+				json.entry("clear", parentForm.getClientId(facesContext));
 			}
 		}
 
