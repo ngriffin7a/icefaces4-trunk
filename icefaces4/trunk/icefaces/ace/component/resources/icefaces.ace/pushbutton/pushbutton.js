@@ -89,10 +89,10 @@ ice.ace.pushbutton.prototype.onClick = function () {
         ice.ace.jq(options).extend(singleOptions);
 
 	var submit = true;
-	if (this.cfg.reset) submit = false;
+	if (this.cfg.clear) submit = false;
 	if (this.cfg.fullSubmit) submit = true;
 
-	if (this.cfg.reset) ice.ace.resetForm(this.cfg.reset);
+	if (this.cfg.clear) ice.ace.clearForm(this.cfg.clear);
 
     if (this.cfg.behaviors && this.cfg.behaviors.action) {
         ice.ace.ab(ice.ace.extendAjaxArgs(
@@ -101,6 +101,8 @@ ice.ace.pushbutton.prototype.onClick = function () {
         );
     } else if (submit)
         ice.ace.ab(options);
+
+    if (this.cfg.clear) return false;
 };
 
 ice.ace.pushbutton.prototype.changeStyleState = function(state) {
