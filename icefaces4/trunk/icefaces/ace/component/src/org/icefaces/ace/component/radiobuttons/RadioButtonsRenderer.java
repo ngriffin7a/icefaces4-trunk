@@ -252,6 +252,7 @@ public class RadioButtonsRenderer extends InputRenderer {
         writer.writeAttribute("autocomplete", "off", null);
         if (selected) writer.writeAttribute("name", radioButtons.getClientId(facesContext), null);
         writer.writeAttribute("value", value, null);
+		writer.writeAttribute("data-value", value, null);
         writer.endElement("input");
 
 		// register radio button with group
