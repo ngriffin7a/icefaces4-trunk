@@ -203,7 +203,9 @@ ice.ace.radiobutton.reset = function(id, ariaEnabled, multiple) {
 	var fieldSelector = jqId + " > input";
 
 	if (multiple) {
-		ice.ace.jq(fieldSelector).attr('name', '');
+		var field = ice.ace.jq(fieldSelector);
+		field.attr('name', '');
+		field.attr('value', field.attr('data-value')); // value is fixed in ace:radioButtons
 	} else {
 		ice.ace.jq(fieldSelector).val('false');
 	}
