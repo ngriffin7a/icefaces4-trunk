@@ -35,7 +35,9 @@ if (!window.ice.icefaces) {
         namespace.configuration = new Object();
         namespace.disableDefaultErrorPopups = false;
         //define primitive submit function to allow overriding it later in special environments
-        namespace.submitFunction = jsf.ajax.request;
+        namespace.submitFunction = function (source, event, options) {
+            jsf.ajax.request(source, event, options);
+        };
 
         function detectByReference(ref) {
             return function(o) {
