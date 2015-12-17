@@ -22,12 +22,12 @@ ice.ace.checkboxbutton = function(clientId, options) {
     // Selectors
     this.id = clientId;
     this.jqId = ice.ace.escapeClientId(clientId);
-    this.spanSelector = this.jqId + " > span"
-    this.innerSpanSelector = this.jqId + " > span > span"
-    this.optionSelector = this.jqId + "_option";
+    this.spanSelector = this.jqId + " > span";
+    this.innerSpanSelector = this.jqId + " > span > span";
+    this.optionSelector = ice.ace.escapeClientId(options.checkboxButtons) + " >> option[title='" + this.id + "']";
     this.fieldSelector = this.jqId + " > input";
-    this.buttonSelector = this.jqId + " > span > span > button"
-    this.iconSelector = this.buttonSelector + " > span.fa"
+    this.buttonSelector = this.jqId + " > span > span > button";
+    this.iconSelector = this.buttonSelector + " > span.fa";
 
     // References
     this.button = ice.ace.jq(this.buttonSelector);
