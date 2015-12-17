@@ -515,7 +515,7 @@ ice.ace.SelectMenu.prototype = {
 			this.element.focus();
 			return;
 		}
-        if (ice.ace.jq.trim(this.displayedValue.innerHTML) == '&nbsp;' && this.cfg.inFieldLabel) {
+        if (this.selectedIndex == -1 && ice.ace.jq.trim(this.displayedValue.innerHTML) == '&nbsp;' && this.cfg.inFieldLabel) {
 			this.displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(this.cfg.inFieldLabel);
             element.addClass(this.cfg.inFieldLabelStyleClass);
             element.data("labelIsInField", true);
