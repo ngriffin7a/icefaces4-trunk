@@ -31,12 +31,15 @@
         return null;
     }
 
-    function isImmediate(element) {
+    function isImmediate(element, options) {
         if (ice.ace.immediateComponents) {
             var cursor = element;
             while (cursor) {
                 for (var i = 0, l = ice.ace.immediateComponents.length; i < l; i++) {
-                    if (cursor.id == ice.ace.immediateComponents[i]) {
+                    var entry = ice.ace.immediateComponents[i];
+                    //verify if the submit event type matches the one defined (the event is undefined when 'immediate'
+                    //is defined for the component)
+                    if (cursor.id == entry[0] && options['javax.faces.behavior.event'] == entry[1]) {
                         return true;
                     }
                 }
@@ -62,8 +65,8 @@
         }
     }
 
-    var old = ice.submitFunction;
-    ice.submitFunction = function (element, event, options) {
+    var old = jsf.ajax.request;
+    jsf.ajax.request = function (element, event, options) {
         var form = formOf(element.id);
         var jqForm = ice.ace.jq(form);
         var isValidForm = jqForm.valid();
@@ -74,7 +77,7 @@
         }
 
         var skipValidation = false;
-        if (isImmediate(element)) {
+        if (isImmediate(element, options)) {
             skipValidation = true;
             cleanupMessages(validationResult.invalidElements());
         }
