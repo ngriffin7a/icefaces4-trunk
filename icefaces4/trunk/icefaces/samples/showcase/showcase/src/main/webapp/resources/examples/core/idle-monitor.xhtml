@@ -22,9 +22,13 @@
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
-    <ui:define name="example">
-                <icecore:idleMonitor interval="10">
-                    <h5 id="idleMonitor" style="color: red;">You stopped using the application 10 seconds ago!</h5>
+     <ui:define name="example">
+                <icecore:idleMonitor interval="10" userActiveEvents="keypress mouseover">
+                    <h5 id="idleMonitor" style="color: red;">
+                        You stopped using the application 10 seconds ago! </h5>
+                     <p><i><b> Please move the mouse (mouseover) or press any key
+                        (keypress) to dismiss this popup. </b></i>  </p>
+
                 </icecore:idleMonitor>
     </ui:define>
 </ui:composition>
