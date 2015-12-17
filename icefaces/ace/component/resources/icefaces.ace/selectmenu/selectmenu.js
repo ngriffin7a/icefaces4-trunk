@@ -888,15 +888,20 @@ ice.ace.SelectMenu.prototype = {
 				var labelSpan = ice.ace.jq(currentEntry).find('.'+ice.ace.SelectMenu.LABEL_CLASS).get(0);
 				var label = ice.ace.SelectMenu.collectTextNodesIgnoreClass(labelSpan, ice.ace.SelectMenu.IGNORE_CLASS);
 				this.displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(label);
+				if (this.cfg.inFieldLabel) {
+					var $displayedValue = ice.ace.jq(this.displayedValue);
+					$displayedValue.removeClass(this.cfg.inFieldLabelStyleClass);
+					$displayedValue.data("labelIsInField", false);
+				}
 			} else {
 				this.displayedValue.innerHTML = '&nbsp;';
 			}
 		} else {
-			var element = ice.ace.jq(this.element);
 			if (this.cfg.inFieldLabel) {
 				this.displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(this.cfg.inFieldLabel);
-				element.addClass(this.cfg.inFieldLabelStyleClass);
-				element.data("labelIsInField", true);
+				var $displayedValue = ice.ace.jq(this.displayedValue);
+				$displayedValue.addClass(this.cfg.inFieldLabelStyleClass);
+				$displayedValue.data("labelIsInField", true);
 			} else {
 				this.displayedValue.innerHTML = '&nbsp;';
 			}
@@ -954,14 +959,15 @@ ice.ace.SelectMenu.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	if (instance && instance.initialized) {
 		instance.updateValue('');
 	} else {
-		var element = ice.ace.jq(ice.ace.escapeClientId(id)).find('.ui-selectmenu-value');
+		var element = ice.ace.jq(ice.ace.escapeClientId(id));
 		var displayedValue = element.find('span').get(0);
 		var input = ice.ace.jq(ice.ace.escapeClientId(id)).find('input[name="'+id+'_input"]');
 		input.val('');
 		if (inFieldLabel) {
 			displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(inFieldLabel);
-			element.addClass(inFieldLabelStyleClass);
-			element.data("labelIsInField", true);
+			var $displayedValue = ice.ace.jq(displayedValue);
+			$displayedValue.addClass(inFieldLabelStyleClass);
+			$displayedValue.data("labelIsInField", true);
 		} else {
 			displayedValue.innerHTML = '&nbsp;';
 		}
