@@ -25,18 +25,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.collections.OrderedBidiMap;
-import org.apache.commons.collections.bidimap.TreeBidiMap;
 
 @ManagedBean
 @ApplicationScoped  
@@ -47,26 +46,19 @@ import org.apache.commons.collections.bidimap.TreeBidiMap;
  * Path to an instance of SourceCodeLoaderServlet must be set by the 
  * context-param SOURCE_SERVLET_URL in web.xml.
  *
- * The maximum number of bytes of formatted source that can be cached
- * must be set by the context-param MAX_CACHE_SIZE in web.xml.
- *        
  * This class is intended to be called as if it were a map via EL.
- * 
- * See simple_resource_decorator.xhtml for an example of use.
  */
 public class SourceCodeLoaderConnection implements Map, Serializable{
-    // The max size of the cache of source code to hold. 
-    // Doesn't include overhead of data structures.
-    private static Integer MAX_CACHE_SIZE;
+    // The max number of source code strings (one per file) to store 
+    private static final Integer MAX_CACHED_SOURCES = 50;
     // String URL to the local instance of SourceCodeLoaderServlet
     private static String SOURCE_SERVLET_URL;
+    
     private boolean brokenUrl = false;
-    // Cached files sorted from oldest to youngest 
-    // Bidimap to enforce uniques keys & efficient lookup of oldest value  
-    // Key of path; val is tuple of path, source & timestamp; sort by asc. time
-    private TreeBidiMap cache = new TreeBidiMap();  
-    // Size of source cache in bytes
-    private long cacheSize = 0; 
+    // Cached source code so we don't have to re-read strings forever
+    // Note we use a LinkedHashMap so the order is predictable, for removing in case we reach full size
+    // Uses the source code path as a the key, and the value is the formatted source
+    private Map<String,String> cache = new LinkedHashMap<String,String>(MAX_CACHED_SOURCES);
     // Logger reference
     private Logger logger;
 	// true if initial request was made using SSL
@@ -76,18 +68,13 @@ public class SourceCodeLoaderConnection implements Map, Serializable{
 
     // Set logger, load the Servlet URL and cache size contstants from web.xml
     @PostConstruct
-    private void initialize() {   
+    private void initialize() {
         // If no logger exists for this class, create and add a new one
         if ((logger = LogManager.getLogManager().getLogger(this.getClass().getName())) == null) {
             logger = Logger.getLogger(this.getClass().getName());
             LogManager.getLogManager().addLogger(logger);
         }
 
-        // Pull the maximum cache size from web.xml using FacesUtils
-        // We'll default this value if it isn't found
-        MAX_CACHE_SIZE =
-            Integer.parseInt(FacesUtils.getFacesParameter("org.icefaces.samples.showcase.MAX_SOURCE_CACHE_SIZE", "20971520"));
-        
         // Next we'll try to build a URL to load the source from
         // This is basically http://localhost:8080/showcase/, but the port and address could change
         // We'll try to dynamically get this from the ExternalContext request, otherwise we'll check it from the web.xml
@@ -121,8 +108,6 @@ public class SourceCodeLoaderConnection implements Map, Serializable{
             }
         }
         SOURCE_SERVLET_URL += "sourcecodeStream.html?path=";
-        
-        //logger.info("Reading source code from url [" + SOURCE_SERVLET_URL + "].");
     }
 
     /**
@@ -139,8 +124,7 @@ public class SourceCodeLoaderConnection implements Map, Serializable{
      * could not be UTF-8 encoded.
      */
     public String get(Object sourceCodePathObj) {
-        if (SOURCE_SERVLET_URL == null || MAX_CACHE_SIZE == null ||
-           !(sourceCodePathObj instanceof String)) {
+        if (SOURCE_SERVLET_URL == null || !(sourceCodePathObj instanceof String)) {
             return null;
         }
         
@@ -154,24 +138,13 @@ public class SourceCodeLoaderConnection implements Map, Serializable{
            return "";
         }
         
-        CachedSource cs;
-        // Only allow the cache to be accessed by a single user when being used
-        // within one of these blocks.   
+        // Check our cache for the matching source file, to avoid re-reading it
         synchronized(cache) {
-            // Search the cache for formatted source code from this path. If it is 
-            // found, update the formatted source code with the current timestamp 
-            // and return the cached source.  
-            if ((cs = (CachedSource)cache.get(sourceCodePath)) != null) {
-                logger.finer("Source Cache Hit.");
-                logger.finest("Hit: " + sourceCodePath); 
-                cs.timestamp = System.currentTimeMillis()/1000;
-                cache.put(cs.path, cs);
-                return cs.source;
-            }
+        	String cachedSource = null;
+        	if ((cachedSource = cache.get(sourceCodePath)) != null) {
+        		return cachedSource;
+        	}
         }
-
-        logger.finer("Source Cache Miss.");
-        logger.finest("Miss: " + sourceCodePath);
         
         URL servletUrl = null;
         InputStream inputStream = null;
@@ -211,22 +184,19 @@ public class SourceCodeLoaderConnection implements Map, Serializable{
                               :
                               buf.toString();
                 
-                synchronized(cache) {
-                    // If cache is full, remove files until the newly loaded string
-                    // will fit and add it to the cache
-                    while ((ret.length()*16) + cacheSize > MAX_CACHE_SIZE) { 
-                        OrderedBidiMap iCache = cache.inverseOrderedBidiMap();
-                        CachedSource c = (CachedSource)iCache.firstKey(); 
-                        cache.remove(c.path);
-                        cacheSize -= c.source.length()*16; 
-                        logger.finer("Cache Oversized. Removing oldest file.");
-                        logger.finest("Removed: " + c.path);
-                    }
-                    cache.put(sourceCodePath, new CachedSource(sourceCodePath, ret));
-                    cacheSize += ret.length()*16;
+                // Add the formatted source string to our cache
+                if (cache != null) {
+                	// If we're full remove the first item by key
+                	if (cache.size() >= MAX_CACHED_SOURCES) {
+                		logger.fine("Cache is full (size " + MAX_CACHED_SOURCES + "), removing an element to make space");
+                		cache.remove(cache.keySet().iterator().next());
+                	}
+                	
+                	synchronized(cache) {
+                		cache.put(sourceCodePath, ret);
+                	}
                 }
                 
-                // Return newly loaded and cached source
                 return ret; 
             } catch (MalformedURLException e) {
                logger.severe("Attempted to connect to malformed URL.");
@@ -255,48 +225,7 @@ public class SourceCodeLoaderConnection implements Map, Serializable{
         }
         
         return "";
-    }  
-
-    // Private data structure to associate a path, source and timestamp 
-    // with methods to implement Comparable such that the oldest timestamped
-    // source is considered the lowest valued, and only equal if their paths
-    // are equal.
-    private class CachedSource implements Comparable {
-        public String path;
-        public String source;
-        public Long timestamp;
-        
-        public CachedSource(String path, String source) {
-            this.path = path;
-            this.source = source;
-            timestamp = System.currentTimeMillis()/1000;
-        }
-        
-        public int compareTo(Object c) {
-            if (c instanceof CachedSource) {    
-                if (this.path.equals(((CachedSource)c).path)) return 0;   
-                if (this.timestamp > ((CachedSource)c).timestamp) return -1;
-                if (this.timestamp <= ((CachedSource)c).timestamp) return 1;
-            } return -1;
-        }  
-        
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + ((path == null) ? 0 : path.hashCode());
-            return result;
-        }     
-        
-        @Override   
-        public boolean equals(Object c) {
-            if (c != null && c instanceof CachedSource) {
-                if (this.path.equals(((CachedSource)c).path)) return true;   
-                return false;
-            } return false;
-        }
-    }   
-    
+    }
     
     /**
     * Map interface stub
