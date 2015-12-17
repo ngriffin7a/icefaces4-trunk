@@ -172,11 +172,11 @@ public class CheckboxButtonsRenderer extends InputRenderer {
             SelectItem item = selectItemsIterator.next();
             Object value = getConvertedValueForClient(facesContext, checkboxButtons, item.getValue());
             boolean selected = isSelected(facesContext, checkboxButtons, value, currentSelections, converter);
-            String clientId = checkboxButtons.getClientId(facesContext) + ":" + i + "_option";
+            String clientId = checkboxButtons.getClientId(facesContext) + ":" + i;
 
             writer.startElement("option", checkboxButtons);
             if (selected) writer.writeAttribute("selected", "selected", null);
-            writer.writeAttribute("id", clientId, null);
+            writer.writeAttribute("title", clientId, null);
             writer.writeAttribute("value", value, null);
             writer.writeText(value, null);
             writer.endElement("option");
