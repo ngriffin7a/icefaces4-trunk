@@ -132,7 +132,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		// text span
 		writer.startElement("span", null);
 		writer.writeAttribute("style", selectMenu.getStyle(), null);
-		writer.writeAttribute("class", "ui-inputfield ui-widget-content ui-corner-left " + inFieldLabelStyleClass, null);
+		writer.writeAttribute("class", "ui-inputfield ui-corner-left " + inFieldLabelStyleClass, null);
 		if (dir != null) writer.writeAttribute("dir", dir, null);
 		writer.endElement("span");
 		
