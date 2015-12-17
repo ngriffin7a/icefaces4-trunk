@@ -133,7 +133,7 @@
                     container.removeChild(node);
                 };
             } else {
-                node.childNodes[1].textContent = text;
+                node.childNodes[1].nodeValue = text;
             }
 
             return '';
