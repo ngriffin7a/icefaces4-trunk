@@ -16,8 +16,6 @@
 
 package org.icefaces.samples.showcase.example.ace.tree;
 
-import org.apache.commons.collections.IteratorUtils;
-
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import java.io.Serializable;
@@ -100,9 +98,10 @@ public class LocationNodeImpl implements MutableTreeNode, Serializable {
     }
 
     public Enumeration children() {
-        if (children == null)
-            return IteratorUtils.asEnumeration(IteratorUtils.emptyIterator());
-        return IteratorUtils.asEnumeration(children.iterator());
+        if (children == null) {
+        	return Collections.enumeration(Collections.emptyList());
+        }
+        return Collections.enumeration(children);
     }
 
     public Integer getPopulation() {
