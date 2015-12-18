@@ -41,32 +41,36 @@
 				margin-left: 6px;
 			}
         </style>
-            <ace:pushButton id="expAllBtn" 
-                            value="Expand nodes" 
-                            action="#{treeExpansionBean.expandAll}">
-                <ace:ajax execute="@all" render="@all" />
-            </ace:pushButton>
-            <ace:pushButton id="cntrctAllBtn" 
-                            value="Contract nodes" 
-                            action="#{treeExpansionBean.contractAll}">
-                <ace:ajax execute="@all" render="@all" />
-            </ace:pushButton>
-        <ace:tree id="tree"
-                expansion="true"
-                stateMap="#{treeExpansionBean.stateMap}"
-                value="#{treeExpansionBean.treeRoots}"
-                var="node"
-                type="#{node.type}">
-            <ace:node type="country">
-                Country: <h:outputText value="#{node.name}" />
-            </ace:node>
-            <ace:node type="province">
-                Province: <h:outputText value="#{node.name}" />
-            </ace:node>
-            <ace:node>
-                City: <h:outputText value="#{node.name}" />
-            </ace:node>
-        </ace:tree>
+		<h:panelGroup layout="block">
+			<ace:linkButton id="expAllBtn" 
+							value="Expand nodes" 
+							action="#{treeExpansionBean.expandAll}">
+				<ace:ajax execute="@all" render="@all" />
+			</ace:linkButton>
+			<ace:linkButton id="cntrctAllBtn" 
+							value="Contract nodes" 
+							action="#{treeExpansionBean.contractAll}">
+				<ace:ajax execute="@all" render="@all" />
+			</ace:linkButton>
+		</h:panelGroup>
+		<h:panelGroup layout="block">
+			<ace:tree id="tree"
+					expansion="true"
+					stateMap="#{treeExpansionBean.stateMap}"
+					value="#{treeExpansionBean.treeRoots}"
+					var="node"
+					type="#{node.type}">
+				<ace:node type="country">
+					Country: <h:outputText value="#{node.name}" />
+				</ace:node>
+				<ace:node type="province">
+					Province: <h:outputText value="#{node.name}" />
+				</ace:node>
+				<ace:node>
+					City: <h:outputText value="#{node.name}" />
+				</ace:node>
+			</ace:tree>
+		</h:panelGroup>
     </h:form>
 </ui:define>
 </ui:composition>
