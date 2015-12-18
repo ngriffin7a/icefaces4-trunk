@@ -45,7 +45,9 @@
                     <ace:textEntry id="maxIn"
                                    value="#{textEntryCharCountBean.maxlength}"
                                    size="3" maxlength="3" required="true"
-                                   labelPosition="left"  label="Max Length:">
+                                   labelPosition="left"  label="Max Length:"
+                                   converterMessage="Specified attribute is not between the expected values of 1 and 250."
+                                   validatorMessage="Specified attribute is not between the expected values of 1 and 250.">
                         <f:validateLongRange minimum="1" maximum="250"/>
                         <ace:ajax event="valueChange" render="@form" execute="@form"/>
                     </ace:textEntry>
