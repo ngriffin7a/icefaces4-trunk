@@ -179,6 +179,7 @@ ice.ace.Dialog.prototype.show = function() {
                 dialogParent.children().removeClass("ace-dialog-hidden");
         }
         self.jq.dialog('open');
+		self.resizeScrollableTables();
 		self.resizeMaps();
         if ('**none' != focusOn) {
             self.focusInput(focusOn);
@@ -272,7 +273,18 @@ ice.ace.Dialog.prototype.resizeMaps = function() {
 			map.setCenter(center);
 		}
 	});
-}
+};
+
+ice.ace.Dialog.prototype.resizeScrollableTables = function() {
+	var tables = this.jq.find('.ui-datatable-scrollable');
+	tables.each(function(){
+		var id = this.id;
+		if (id) {
+			var table = ice.ace.instance(id);
+			table.resizeScrolling();
+		}
+	});
+};
 
 ice.ace.Dialog.browser = function() {
     if (ice.ace.jq.browser.msie)
