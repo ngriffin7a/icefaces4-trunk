@@ -212,7 +212,6 @@ public class TextEntryRenderer extends InputRenderer {
 		TextEntry textEntry = (TextEntry) component;
 
 		String clientId = textEntry.getClientId(context);
-		String label = (String) component.getAttributes().get("label");
 		String labelPosition = (String) component.getAttributes().get("labelPosition");
 
 		String type = textEntry.validateType(textEntry.getType());
@@ -232,6 +231,21 @@ public class TextEntryRenderer extends InputRenderer {
 		jb.item(type);
 
 		if ("inField".equals(labelPosition)) {
+			String label = (String) component.getAttributes().get("label");	
+			String indicatorPosition = (String) component.getAttributes().get("indicatorPosition");
+			String optionalIndicator = (String) component.getAttributes().get("optionalIndicator");
+			String requiredIndicator = (String) component.getAttributes().get("requiredIndicator");
+			if ("labelLeft".equals(indicatorPosition)) {
+				if (textEntry.isRequired())
+					label = requiredIndicator + label;
+				else
+					label = optionalIndicator + label;
+			} else if ("labelRight".equals(indicatorPosition)) {
+				if (textEntry.isRequired())
+					label = label + requiredIndicator;
+				else
+					label = label + optionalIndicator;
+			}
 			jb.item(label);
 		}
 
