@@ -218,7 +218,6 @@ public class MaskedEntryRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 
 		String clientId = component.getClientId(context) + "_field";
-		String label = (String) component.getAttributes().get("label");
 		String labelPosition = (String) component.getAttributes().get("labelPosition");
 
 		JSONBuilder jb = JSONBuilder.create();
@@ -228,6 +227,22 @@ public class MaskedEntryRenderer extends InputRenderer {
 		jb.item(clientId);
 
 		if ("inField".equals(labelPosition)) {
+			MaskedEntry maskedEntry = (MaskedEntry) component;
+			String label = (String) component.getAttributes().get("label");	
+			String indicatorPosition = (String) component.getAttributes().get("indicatorPosition");
+			String optionalIndicator = (String) component.getAttributes().get("optionalIndicator");
+			String requiredIndicator = (String) component.getAttributes().get("requiredIndicator");
+			if ("labelLeft".equals(indicatorPosition)) {
+				if (maskedEntry.isRequired())
+					label = requiredIndicator + label;
+				else
+					label = optionalIndicator + label;
+			} else if ("labelRight".equals(indicatorPosition)) {
+				if (maskedEntry.isRequired())
+					label = label + requiredIndicator;
+				else
+					label = label + optionalIndicator;
+			}
 			jb.item(label);
 			jb.item(IN_FIELD_LABEL_STYLE_CLASS);
 		}
