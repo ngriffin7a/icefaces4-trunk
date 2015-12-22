@@ -874,13 +874,14 @@ ice.ace.SelectMenu.prototype = {
 		this.element.focus();
     },
 	
-	updateValue: function(value) {
+	updateValue: function(value, isClear) {
 		if (value) {
 			this.input.value = value;
 		} else {
 			this.input.value = '';
 		}
-		this.updateSelectedIndex();
+		if (isClear) this.selectedIndex = -1;
+		else this.updateSelectedIndex();
 		// update label
 		if (this.selectedIndex > -1) {
 			var currentEntry = this.getEntry(this.selectedIndex);
@@ -957,7 +958,7 @@ ice.ace.SelectMenu.replaceSpaces = function(str) {
 ice.ace.SelectMenu.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var instance = ice.ace.SelectMenus[id];
 	if (instance && instance.initialized) {
-		instance.updateValue('');
+		instance.updateValue('', true);
 	} else {
 		var element = ice.ace.jq(ice.ace.escapeClientId(id));
 		var displayedValue = element.find('span').get(0);
