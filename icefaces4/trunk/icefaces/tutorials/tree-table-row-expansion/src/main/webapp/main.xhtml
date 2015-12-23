@@ -31,9 +31,9 @@
 
     <ui:define name="example">
         <h:form id="exampleForm">
-            <ace:dataTable var="row" value="#{backing.data}">
+            <ace:dataTable id="table" var="row" value="#{backing.data}">
                 <ace:column>
-                    <ace:expansionToggler />
+                    <ace:expansionToggler id="toggler"/>
                 </ace:column>
                 <ace:column>
                     #{row.organization.name}
