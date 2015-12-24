@@ -84,6 +84,18 @@
             logSize.value = window.localStorage ? (localStorage['ice.localStorageLogHandler.maxSize'] || 500) : 0;
         }
 
+        function copyToClipboard(e) {
+            e.preventDefault();
+            var input = document.createElement('textarea');
+            document.body.appendChild(input);
+            input.value = window.localStorage['ice.localStorageLogHandler.store'].replace(/%%/g, '\r\n');
+            input.select();
+            // Copy it to the clipboard
+            document.execCommand("copy");
+            document.body.removeChild(input);
+
+        }
+
         if (window.attachEvent) {
             window.attachEvent('onload', loadRecordedLogs);
             window.attachEvent('onload', initControls);
@@ -98,6 +110,9 @@
         <tbody>
             <tr>
                 <td colspan="2"><button onclick="cleanupLogStore();">Cleanup all log entries</button></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button onclick="copyToClipboard(event);">Copy log to clipboard</button></td>
             </tr>
             <tr>
                 <td style="text-align: right;">Enable logging</td>
