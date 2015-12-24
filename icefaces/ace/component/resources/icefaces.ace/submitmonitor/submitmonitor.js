@@ -339,10 +339,12 @@
                         beforeUpdate[uniqueId] = null;
                     }
 
-                    for (var i = 0, l = cleanupCallbacks.length; i < l; i++) {
-                        cleanupCallbacks[i]();
+                    if (cleanupCallbacks) {
+                        for (var i = 0, l = cleanupCallbacks.length; i < l; i++) {
+                            cleanupCallbacks[i]();
+                        }
+                        cleanupCallbacks.length = 0;
                     }
-                    cleanupCallbacks.length = 0;
                 }, 270);
                 return isBeforeSubmit;
             }
