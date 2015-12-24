@@ -338,14 +338,11 @@
                         cleanBeforeUpdate[uniqueId] = null;
                         beforeUpdate[uniqueId] = null;
                     }
-                    if (cleanServerError) {
-                        cleanServerError();
-                        cleanServerError = null;
+
+                    for (var i = 0, l = cleanupCallbacks.length; i < l; i++) {
+                        cleanupCallbacks[i]();
                     }
-                    if (cleanNetworkError) {
-                        cleanNetworkError();
-                        cleanNetworkError = null;
-                    }
+                    cleanupCallbacks.length = 0;
                 }, 270);
                 return isBeforeSubmit;
             }
@@ -448,21 +445,41 @@
             }
         });
 
-        var cleanServerError = window.ice.onServerError(function() {
+        var cleanupCallbacks = [];
+
+        cleanupCallbacks.push(window.ice.onServerError(function() {
             if (handleCleanup(false)) {
                 return;
             }
             anticipatePossibleSecondSubmit = UNANTICIPATED;
             changeState(SERVER_ERROR);
-        });
+        }));
 
-        var cleanNetworkError = window.ice.onNetworkError(function() {
+        cleanupCallbacks.push(window.ice.onNetworkError(function() {
             if (handleCleanup(false)) {
                 return;
             }
             anticipatePossibleSecondSubmit = UNANTICIPATED;
             changeState(NETWORK_ERROR);
-        });
+        }));
+
+        cleanupCallbacks.push(window.ice.onSessionExpiry(function() {
+            if (handleCleanup(false)) {
+                return;
+            }
+            anticipatePossibleSecondSubmit = UNANTICIPATED;
+            changeState(SESSION_EXPIRED);
+        }));
+
+        if (ice.push) {
+            cleanupCallbacks.push(window.ice.onBlockingConnectionLost(function() {
+                if (handleCleanup(false)) {
+                    return;
+                }
+                anticipatePossibleSecondSubmit = UNANTICIPATED;
+                changeState(NETWORK_ERROR);
+            }));
+        }
 
         changeState(IDLE);
     };
