@@ -33,7 +33,7 @@ import org.icefaces.resources.ICEResourceLibrary;
         componentType   = "org.icefaces.ace.component.RequiredValidator",
         rendererType    = "org.icefaces.ace.component.ValidatorRenderer",
         componentFamily = "org.icefaces.ace.component",
-        tlddoc = "The ClientValidator is a ..... "
+        tlddoc = "The RequiredValidator validates the input of the enclosing component by allowing the form submission to occur only when a non empty value was entered."
 )
 
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)

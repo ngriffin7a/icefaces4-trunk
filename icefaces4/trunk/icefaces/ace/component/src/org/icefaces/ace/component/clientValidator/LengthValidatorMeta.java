@@ -33,7 +33,7 @@ import org.icefaces.resources.ICEResourceLibrary;
         componentType   = "org.icefaces.ace.component.LengthValidator",
         rendererType    = "org.icefaces.ace.component.ValidatorRenderer",
         componentFamily = "org.icefaces.ace.component",
-        tlddoc = "The ClientValidator is a ..... "
+        tlddoc = "The LengthValidator validates the input of the enclosing component by allowing it to have the specified length."
 )
 
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
