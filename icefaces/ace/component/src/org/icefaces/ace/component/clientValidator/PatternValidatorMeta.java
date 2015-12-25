@@ -33,7 +33,7 @@ import org.icefaces.resources.ICEResourceLibrary;
         componentType   = "org.icefaces.ace.component.PatternValidator",
         rendererType    = "org.icefaces.ace.component.ValidatorRenderer",
         componentFamily = "org.icefaces.ace.component",
-        tlddoc = "The ClientValidator is a ..... "
+        tlddoc = "The PatternValidator validates the input of the enclosing component by allowing only values that conform to the specified pattern to be submitted."
 )
 
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
