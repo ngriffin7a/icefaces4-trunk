@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Global logging</title>
+    <script type="text/javascript" src="file-saver.js.jsf?ln=ice.core"></script>
     <script type="text/javascript">
 
         function scrollToBottom(element) {
@@ -97,6 +98,11 @@
 
         }
 
+        function downloadLog() {
+            var blob = new Blob([window.localStorage['ice.localStorageLogHandler.store'].replace(/%%/g, '\r\n')], { type: 'text/plain;charset=utf-8' });
+            saveAs(blob, 'icefaces.log');
+        }
+
         if (window.attachEvent) {
             window.attachEvent('onload', loadRecordedLogs);
             window.attachEvent('onload', initControls);
@@ -114,6 +120,9 @@
             </tr>
             <tr>
                 <td colspan="2"><button onclick="copyToClipboard(event);">Copy log to clipboard</button></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button onclick="downloadLog();">Download log</button></td>
             </tr>
             <tr>
                 <td style="text-align: right;">Enable logging</td>
