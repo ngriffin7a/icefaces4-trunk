@@ -105,8 +105,8 @@
         
         <f:facet name="footer">
             <h:panelGrid columns="2">
-                <ace:pushButton value="Submit" actionListener="#{settingsController.save}"/>
-                <ace:pushButton value="Cancel" actionListener="#{tabController.auctionListTab}" immediate="true"/>
+                <ace:pushButton id="submitBttn" value="Submit" actionListener="#{settingsController.save}"/>
+                <ace:pushButton id="cancelBttn" value="Cancel" actionListener="#{tabController.auctionListTab}" immediate="true"/>
             </h:panelGrid>
         </f:facet>
     </ace:panel>
