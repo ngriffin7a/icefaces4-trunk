@@ -34,13 +34,13 @@
 	                <f:selectItems value="#{chatService.rooms}" var="room"
 	                               itemLabel="#{room.name} (#{room.occupantsSize} occupants)" itemValue="#{room.name}"/>
 	            </ace:simpleSelectOneMenu>
-	            <emporium:chatPosition label="Position:"/>
+	            <emporium:chatPosition id="chatPosition" label="Position:"/>
 	            <ace:message for="roomIn"/>
 	            
 	            <f:facet name="footer">
 	                <h:panelGrid columns="3">
-			            <ace:pushButton value="Join Room" actionListener="#{chatController.joinRoom}"/>
-			            <ace:pushButton value="Cancel" actionListener="#{tabController.auctionListTab}"
+			            <ace:pushButton id="joinBttn" value="Join Room" actionListener="#{chatController.joinRoom}"/>
+			            <ace:pushButton id="cancelBttn" value="Cancel" actionListener="#{tabController.auctionListTab}"
 			                            rendered="#{chatBean.isPositionTab}" immediate="true"/>
 		            </h:panelGrid>
 	            </f:facet>
@@ -67,7 +67,7 @@
 		                #{occupant}
 		            </ace:column>
 		            <f:facet name="footer">
-		                <ace:pushButton value="Leave Room" immediate="true"
+		                <ace:pushButton id="leaveBttn" value="Leave Room" immediate="true"
 		                                actionListener="#{chatController.leaveRoom}"
 		                                title="Leave the current chat room and return to the available list"/>
 		            </f:facet>

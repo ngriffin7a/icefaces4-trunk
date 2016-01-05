@@ -26,18 +26,18 @@
     
     <composite:implementation>
         <h:panelGrid columns="4" styleClass="floatR" style="width: auto;">
-            <h:outputText value="#{cc.attrs.label}"/>
-	        <h:commandButton image="resources/images/chat-tab.png" immediate="true"
+            <h:outputText id="posLabel" value="#{cc.attrs.label}"/>
+	        <h:commandButton id="lockBttn" image="resources/images/chat-tab.png" immediate="true"
 	                         title="Lock the chat panel into a tab"
 	                         actionListener="#{chatController.positionTab}"
 	                         disabled="#{chatBean.isPositionTab}"
 	                         styleClass="positionButton"/>
-	        <h:commandButton image="resources/images/chat-popup.png" immediate="true"
+	        <h:commandButton id="popupBttn" image="resources/images/chat-popup.png" immediate="true"
 	                         title="Popup the chat panel into a dialog"
 	                         actionListener="#{chatController.positionPopup}"
 	                         disabled="#{chatBean.isPositionPopup}"
                              styleClass="positionButton"/>
-	        <h:commandButton image="resources/images/chat-bottom.png" immediate="true"
+	        <h:commandButton id="bottomBttn" image="resources/images/chat-bottom.png" immediate="true"
 	                         title="Move the chat panel into a notification bar at the bottom"
 	                         actionListener="#{chatController.positionBottom}"
 	                         disabled="#{chatBean.isPositionBottom}"
