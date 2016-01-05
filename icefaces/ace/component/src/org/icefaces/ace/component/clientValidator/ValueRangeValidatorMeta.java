@@ -33,7 +33,7 @@ import org.icefaces.resources.ICEResourceLibrary;
         componentType   = "org.icefaces.ace.component.ValueRangeValidator",
         rendererType    = "org.icefaces.ace.component.ValidatorRenderer",
         componentFamily = "org.icefaces.ace.component",
-        tlddoc = "The ClientValidator is a ..... "
+        tlddoc = "The ClientValidator  validates the input of the enclosing component by allowing only values within the defined range to be submitted."
 )
 
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
