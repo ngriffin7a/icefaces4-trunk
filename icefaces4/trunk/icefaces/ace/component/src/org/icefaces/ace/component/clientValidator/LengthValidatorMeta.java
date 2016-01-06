@@ -33,7 +33,8 @@ import org.icefaces.resources.ICEResourceLibrary;
         componentType   = "org.icefaces.ace.component.LengthValidator",
         rendererType    = "org.icefaces.ace.component.ValidatorRenderer",
         componentFamily = "org.icefaces.ace.component",
-        tlddoc = "The LengthValidator validates the input of the enclosing component by allowing it to submit its content only when the length is within the defined limits."
+        tlddoc = "The ClientValidateLength component validates the input of the enclosing component by allowing it to submit its content only when the length is within the defined minimum and/or maximum range." +
+                "<p>For more information, see the <a href=\"http://wiki.icefaces.org/display/ICE/ClientValidateLength\">ClientValidateLength Wiki Documentation</a>."
 )
 
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
