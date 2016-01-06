@@ -87,22 +87,25 @@
         }
 
         function copyToClipboard(e) {
-            e.preventDefault();
-            var input = document.createElement('textarea');
-            document.body.appendChild(input);
-            var storage = window.localStorage['ice.localStorageLogHandler.store'] || '';
-            input.value = storage.replace(/%%/g, '\r\n');
-            input.select();
-            // Copy it to the clipboard
-            document.execCommand("copy");
-            document.body.removeChild(input);
-
+            if (window.localStorage) {
+                e.preventDefault();
+                var input = document.createElement('textarea');
+                document.body.appendChild(input);
+                var storage = window.localStorage['ice.localStorageLogHandler.store'] || '';
+                input.value = storage.replace(/%%/g, '\r\n');
+                input.select();
+                // Copy it to the clipboard
+                document.execCommand("copy");
+                document.body.removeChild(input);
+            }
         }
 
         function downloadLog() {
-            var storage = window.localStorage['ice.localStorageLogHandler.store'] || '';
-            var blob = new Blob([storage.replace(/%%/g, '\r\n')], { type: 'text/plain;charset=utf-8' });
-            saveAs(blob, 'icefaces.log');
+            if (window.localStorage) {
+                var storage = window.localStorage['ice.localStorageLogHandler.store'] || '';
+                var blob = new Blob([storage.replace(/%%/g, '\r\n')], {type: 'text/plain;charset=utf-8'});
+                saveAs(blob, 'icefaces.log');
+            }
         }
 
         if (window.attachEvent) {
