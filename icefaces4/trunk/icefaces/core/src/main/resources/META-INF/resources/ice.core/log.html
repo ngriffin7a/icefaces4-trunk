@@ -31,7 +31,7 @@
 
         function cleanupLogStore() {
             if (window.localStorage) {
-                localStorage['ice.localStorageLogHandler.store'] = '';
+                window.localStorage['ice.localStorageLogHandler.store'] = '';
                 document.getElementById('messages').innerHTML = '';
             }
         }
@@ -43,7 +43,7 @@
                 return;
             }
 
-            var previousMessages = localStorage['ice.localStorageLogHandler.store'];
+            var previousMessages = window.localStorage['ice.localStorageLogHandler.store'];
             var messages = previousMessages ? previousMessages.split('%%') : [];
             for (var i = 0, l = messages.length; i < l; i++) {
                 log(logContainer, messages[i]);
@@ -65,32 +65,33 @@
         function enableLogging(enable) {
             if (window.localStorage) {
                 if (enable) {
-                    localStorage.setItem('ice.localStorageLogHandler.enabled', 'yes');
+                    window.localStorage.setItem('ice.localStorageLogHandler.enabled', 'yes');
                 } else {
-                    localStorage.removeItem('ice.localStorageLogHandler.enabled');
+                    window.localStorage.removeItem('ice.localStorageLogHandler.enabled');
                 }
             }
         }
 
         function adjustSize(value) {
             if (window.localStorage) {
-                localStorage['ice.localStorageLogHandler.enabled'] = Number(value);
+                window.localStorage['ice.localStorageLogHandler.enabled'] = Number(value);
             }
         }
 
         function initControls() {
             var logEnable = document.getElementById('logEnable');
-            logEnable.checked = window.localStorage ? (localStorage['ice.localStorageLogHandler.enabled'] == 'yes') : false;
+            logEnable.checked = window.localStorage ? (window.localStorage['ice.localStorageLogHandler.enabled'] == 'yes') : false;
 
             var logSize = document.getElementById('logSize');
-            logSize.value = window.localStorage ? (localStorage['ice.localStorageLogHandler.maxSize'] || 500) : 0;
+            logSize.value = window.localStorage ? (window.localStorage['ice.localStorageLogHandler.maxSize'] || 500) : 0;
         }
 
         function copyToClipboard(e) {
             e.preventDefault();
             var input = document.createElement('textarea');
             document.body.appendChild(input);
-            input.value = window.localStorage['ice.localStorageLogHandler.store'].replace(/%%/g, '\r\n');
+            var storage = window.localStorage['ice.localStorageLogHandler.store'] || '';
+            input.value = storage.replace(/%%/g, '\r\n');
             input.select();
             // Copy it to the clipboard
             document.execCommand("copy");
@@ -99,7 +100,8 @@
         }
 
         function downloadLog() {
-            var blob = new Blob([window.localStorage['ice.localStorageLogHandler.store'].replace(/%%/g, '\r\n')], { type: 'text/plain;charset=utf-8' });
+            var storage = window.localStorage['ice.localStorageLogHandler.store'] || '';
+            var blob = new Blob([storage.replace(/%%/g, '\r\n')], { type: 'text/plain;charset=utf-8' });
             saveAs(blob, 'icefaces.log');
         }
 
