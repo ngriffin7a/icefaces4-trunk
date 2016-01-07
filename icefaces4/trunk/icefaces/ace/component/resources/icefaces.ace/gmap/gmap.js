@@ -317,7 +317,7 @@ ice.ace.gMap.getGMapWrapper = function (id) {
         GMapRepository = newRepository;
     }
 
-    ice.ace.gMap.addMarker = function (ele, markerID, Lat, Lon, options) {
+    ice.ace.gMap.addMarker = function (ele, markerID, Lat, Lon, address, options) {
         var wrapper = ice.ace.gMap.getGMapWrapper(ele);
         var marker = wrapper.markers[markerID];
         if (marker == null || marker.getMap() == null) {
@@ -328,9 +328,23 @@ ice.ace.gMap.getGMapWrapper = function (id) {
                 markerOps = {};
             }
             markerOps.map = wrapper.getRealGMap();
-            markerOps.position = new google.maps.LatLng(Lat, Lon);
-            var marker = new google.maps.Marker(markerOps);
-            wrapper.markers[markerID] = marker;
+			if (address) {
+				var initGeocoder = new google.maps.Geocoder();
+				initGeocoder.geocode({ 'address': address }, function (results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						var result = results[0];
+						if (result) {
+							markerOps.position = result.geometry.location;
+							var marker = new google.maps.Marker(markerOps);
+							wrapper.markers[markerID] = marker;
+						}
+					}
+				});
+			} else {
+				markerOps.position = new google.maps.LatLng(Lat, Lon);
+				var marker = new google.maps.Marker(markerOps);
+				wrapper.markers[markerID] = marker;
+			}
         }
     }
 

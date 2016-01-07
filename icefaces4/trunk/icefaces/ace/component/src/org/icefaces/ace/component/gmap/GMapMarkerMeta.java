@@ -61,4 +61,7 @@ public class GMapMarkerMeta extends UIPanelMeta {
 
     @Property(tlddoc = "Set to true to remove the marker from the map", defaultValue = "false")
     private Boolean disabled;
+
+    @Property(tlddoc = "The address to locate via the Google Maps Geocoder API, at which the marker will be placed after a successful geocoding request. This attribute takes precedence over latitude and longitude.")
+    private String address;
 }
