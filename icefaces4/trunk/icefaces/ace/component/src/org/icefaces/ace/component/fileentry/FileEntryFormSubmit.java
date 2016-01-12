@@ -224,7 +224,7 @@ public class FileEntryFormSubmit implements SystemEventListener {
         }
 
         public boolean isListenerForSource(Object source) {
-            return true;
+			return source instanceof UIForm && findFileEntry((UIForm) source) != null;
         }
     }
 }
