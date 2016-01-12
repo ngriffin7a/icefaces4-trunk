@@ -30,6 +30,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -111,4 +112,28 @@ public class CoreUtils {
         String facetName = EnvUtils.isMojarra() ? "javax_faces_location_" + target.toUpperCase() : target;
         return root.getFacets().get(facetName);
     }
+
+    public static UIComponent findComponent(UIComponent base, String id) {
+        if (id.equals(base.getId())) {
+            return base;
+        } else {
+            UIComponent kid;
+            UIComponent result = null;
+            Iterator<UIComponent> kids = base.getFacetsAndChildren();
+            while (kids.hasNext() && (result == null)) {
+                kid = kids.next();
+                if (id.equals(kid.getId())) {
+                    result = kid;
+                    break;
+                }
+                result = findComponent(kid, id);
+                if (result != null) {
+                    break;
+                }
+            }
+
+            return result;
+        }
+    }
+
 }

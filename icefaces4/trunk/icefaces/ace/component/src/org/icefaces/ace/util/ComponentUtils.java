@@ -333,24 +333,7 @@ public class ComponentUtils {
     }
 
     public static UIComponent findComponent(UIComponent base, String id) {
-        if (id.equals(base.getId()))
-            return base;
-
-        UIComponent kid = null;
-        UIComponent result = null;
-        Iterator<UIComponent> kids = base.getFacetsAndChildren();
-        while (kids.hasNext() && (result == null)) {
-            kid = (UIComponent) kids.next();
-            if (id.equals(kid.getId())) {
-                result = kid;
-                break;
-            }
-            result = findComponent(kid, id);
-            if (result != null) {
-                break;
-            }
-        }
-        return result;
+        CoreUtils.findComponent(base, id);
     }
 
     public static boolean isLiteralText(UIComponent component) {

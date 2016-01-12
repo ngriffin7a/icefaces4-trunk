@@ -17,7 +17,9 @@
 package org.icefaces.impl.context;
 
 import org.icefaces.impl.event.FixViewState;
+import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.impl.util.DOMUtils;
+import org.icefaces.impl.util.Util;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.util.FocusController;
 import org.icefaces.util.JavaScriptRunner;
@@ -144,11 +146,12 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                 facesContext.setResponseWriter(writer);
 
                 Document oldDOM = writer.getOldDocument();
-                applyBrowserChanges(getRenderIds(), getExecuteIds(), ec.getRequestParameterValuesMap(), oldDOM);
+                UIViewRoot viewRoot = facesContext.getViewRoot();
+
+                applyBrowserChanges(getRenderIds(), normaliseToClientIds(getExecuteIds(), viewRoot), ec.getRequestParameterValuesMap(), oldDOM);
                 writer.setDocument(oldDOM);
                 writer.saveOldDocument();
 
-                UIViewRoot viewRoot = facesContext.getViewRoot();
                 List<DOMUtils.EditOperation> diffs = null;
                 Collection<String> customIds = null;
                 Document newDOM = null;
@@ -173,7 +176,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                     }
                 } else {
                     writer.startSubtreeRendering(oldDOM);
-                    Collection<String> renderIds = getRenderIds();
+                    Collection<String> renderIds = normaliseToClientIds(getRenderIds(), viewRoot);
 
                     resetValues(viewRoot, renderIds);
 
@@ -326,6 +329,21 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
     public boolean isResetValues() {
         Object value = facesContext.getExternalContext().getRequestParameterMap().get("javax.faces.partial.resetValues");
         return (null != value && "true".equals(value)) ? true : false;
+    }
+
+    private Collection<String> normaliseToClientIds(Collection<String> ids, UIViewRoot root) {
+        ArrayList<String> newIds = new ArrayList<String>(ids.size());
+        for (String id : ids) {
+            UIComponent c = root.findComponent(id);
+            if (c == null) {
+                c = CoreUtils.findComponent(root, id);
+            }
+            if (c != null) {
+                newIds.add(c.getClientId());
+            }
+        }
+
+        return newIds;
     }
 
     private void resetValues(UIViewRoot viewRoot, Collection<String> renderIds) {
