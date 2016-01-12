@@ -72,6 +72,6 @@ public class PushButtonMeta extends UICommandMeta {
     @Property(tlddoc="The inline style of the component, rendered on the root div of the component.")
     private String style;
 
-    @Property (defaultValue="button", tlddoc="Specifies the button type. The possible values are 'button' and 'clear'. The 'button' type is the original and standard mode, where the button submits the form when activated. If the type is 'clear', the component acts in a special way: the button will act in a client-side mode, clearing all fields and components in the form it is contained in. It will not submit the form unless the component has a listener or an ajax event attached to it.")
+    @Property (defaultValue="button", tlddoc="Specifies the button type. The possible values are 'button', 'submit' and 'clear'. The 'button' type is the original and standard mode, where the button submits the form when activated. The 'submit' type lets the browser handle the request natively, without ICEfaces intervention (Note that if the component has a listener or an ajax event attached to it an additional request will be made, handled by ICEfaces). If the type is 'clear', the component acts in a special way: the button will act in a client-side mode, clearing all fields and components in the form it is contained in. It will not submit the form unless the component has a listener or an ajax event attached to it.")
     private String type;
 }
