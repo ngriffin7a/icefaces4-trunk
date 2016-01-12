@@ -50,7 +50,7 @@
             <tr style="border:1px solid black;border-collapse:collapse;">
                 <td style="border:1px solid black;border-collapse:collapse;">Map:</td>
                 <td style="border:1px solid black;border-collapse:collapse;">if (Math.abs(map.getCenter().lat())>30||<br/>Math.abs(map.getCenter().lng())>20)<br/>
-						&nbsp;&nbsp;&nbsp;&nbsp;map.setCenter(new google.maps.LatLng(0,0));</td>
+						map.setCenter(new google.maps.LatLng(0,0));</td>
                 <td style="border:1px solid black;border-collapse:collapse;">End drag</td>
                 <td style="border:1px solid black;border-collapse:collapse;">Resets the map to beginning location if dragged too far from start.</td>
             </tr>
@@ -58,13 +58,13 @@
                 <td style="border:1px solid black;border-collapse:collapse;">Marker:</td>
                 <td style="border:1px solid black;border-collapse:collapse;">
 				if(map.getZoom()&lt;7){<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;map.setCenter(component.getPosition());<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;map.setZoom(18);<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;map.setMapTypeId(google.maps.MapTypeId.HYBRID);<br/>
+					map.setCenter(component.getPosition());<br/>
+					map.setZoom(18);<br/>
+					map.setMapTypeId(google.maps.MapTypeId.HYBRID);<br/>
 				}else{<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;map.setCenter(new google.maps.LatLng(0,0));<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;map.setZoom(4);<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;map.setMapTypeId(google.maps.MapTypeId.ROADMAP);<br/>
+					map.setCenter(new google.maps.LatLng(0,0));<br/>
+					map.setZoom(4);<br/>
+					map.setMapTypeId(google.maps.MapTypeId.ROADMAP);<br/>
 				}
                 </td>
                 <td style="border:1px solid black;border-collapse:collapse;">Click</td>
@@ -80,11 +80,11 @@
                 <td style="border:1px solid black;border-collapse:collapse;">Circle:</td>
                 <td style="border:1px solid black;border-collapse:collapse;">
 				if (component.getRadius()>600000)<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;component.setOptions({fillColor:'red'});<br/>
+					component.setOptions({fillColor:'red'});<br/>
 				else if(component.getRadius()&lt;375000)<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;component.setOptions({fillColor:'blue'});<br/>
+					component.setOptions({fillColor:'blue'});<br/>
 				else<br/>
-					&nbsp;&nbsp;&nbsp;&nbsp;component.setOptions({fillColor:'green'});</td>
+					component.setOptions({fillColor:'green'});</td>
                 <td style="border:1px solid black;border-collapse:collapse;">Resizing</td>
                 <td style="border:1px solid black;border-collapse:collapse;">Changes the circle's fill colour based upon the current radius.</td>
             </tr>
