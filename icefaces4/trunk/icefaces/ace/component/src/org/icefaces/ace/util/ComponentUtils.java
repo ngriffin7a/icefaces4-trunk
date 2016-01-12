@@ -333,7 +333,7 @@ public class ComponentUtils {
     }
 
     public static UIComponent findComponent(UIComponent base, String id) {
-        CoreUtils.findComponent(base, id);
+        return CoreUtils.findComponent(base, id);
     }
 
     public static boolean isLiteralText(UIComponent component) {
