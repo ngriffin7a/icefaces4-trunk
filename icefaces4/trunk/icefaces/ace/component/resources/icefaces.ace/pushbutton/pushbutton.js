@@ -89,7 +89,7 @@ ice.ace.pushbutton.prototype.onClick = function () {
         ice.ace.jq(options).extend(singleOptions);
 
 	var submit = true;
-	if (this.cfg.clear) submit = false;
+	if (this.cfg.clear || this.cfg.submit) submit = false;
 	if (this.cfg.fullSubmit) submit = true;
 
 	if (this.cfg.clear) ice.ace.clearForm(this.cfg.clear);
