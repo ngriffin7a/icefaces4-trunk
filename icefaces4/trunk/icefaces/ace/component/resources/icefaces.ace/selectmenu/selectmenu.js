@@ -914,7 +914,8 @@ ice.ace.SelectMenu.prototype = {
 		if (typeof this.selectedIndex != 'number' && !this.selectedIndex) this.selectedIndex = -1;
 		var currentEntry = this.getEntry(this.selectedIndex);
 		if ((currentEntry && (this.input.value != ice.ace.SelectMenu.collectTextNodesIgnoreClass(currentEntry, ice.ace.SelectMenu.LABEL_CLASS)))
-			|| (this.selectedIndex == -1 && this.input.value)) {
+			|| (this.selectedIndex == -1 && this.input.value)
+			|| (!currentEntry && this.input.value)) {
 			var found = false;
 			for (var i = 0; i < this.entryCount; i++) {
 				var entry = this.getEntry(i);
