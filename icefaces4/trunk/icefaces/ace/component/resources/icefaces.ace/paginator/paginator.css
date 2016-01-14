@@ -25,6 +25,8 @@
 .ui-paginator-last,
 .ui-paginator-first,
 .ui-paginator-previous,
+.ui-paginator-rewind,
+.ui-paginator-forward,
 .ui-paginator-current {
     display:inline-block;
     padding:2px 6px;
@@ -41,6 +43,8 @@
 
 .ui-paginator-next .ui-icon,
 .ui-paginator-previous .ui-icon,
+.ui-paginator-rewind .ui-icon,
+.ui-paginator-forward .ui-icon,
 .ui-paginator-first .ui-icon,
 .ui-paginator-last .ui-icon {
     overflow:inherit;
