@@ -305,8 +305,8 @@ public class DataTableMeta extends UIDataMeta {
     private String currentPageReportTemplate;
 
     @Property(tlddoc = "Defines a coded string representing the controls available as part of" +
-            " the paginator. Default is: \"{FirstPageLink} {PreviousPageLink} " +
-            "{PageLinks} {NextPageLink} {LastPageLink}\".")
+            " the paginator. Default is: \"{FirstPageLink} {FastRewind} {PreviousPageLink} " +
+            "{PageLinks} {NextPageLink} {FastForward} {LastPageLink}\". (Note: {FastRewind} and {FastForward} move 3 pages at a time backward or forward, respectively)")
     private String paginatorTemplate;
 
     @Property(tlddoc = "Defines the location of the paginator if enabled. Available " +

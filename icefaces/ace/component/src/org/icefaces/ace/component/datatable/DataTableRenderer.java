@@ -494,6 +494,8 @@ public class DataTableRenderer extends CoreRenderer {
         String last = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "LAST_LABEL", "Last");
         String next = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "NEXT_LABEL", "Next");
         String prev = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "PREV_LABEL", "Prev");
+        String rewind = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "FAST_REWIND_LABEL", "Fast Rewind");
+        String forward = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "FAST_FORWARD_LABEL", "Fast Forward");
         configJson.beginMap();
         configJson.entry("rowsPerPage", table.getRows());
         configJson.entry("totalRecords", table.getRowCount());
@@ -502,6 +504,8 @@ public class DataTableRenderer extends CoreRenderer {
         configJson.entry("lastLbl", last);
         configJson.entry("nextLbl", next);
         configJson.entry("prevLbl", prev);
+        configJson.entry("rewindLbl", rewind);
+        configJson.entry("forwardLbl", forward);
         configJson.entry("containers", "[" + paginatorContainers + "]", true);
         configJson.entryNonNullValue("template", template);
         configJson.entryNonNullValue("pageReportTemplate", currPgTemplate);
