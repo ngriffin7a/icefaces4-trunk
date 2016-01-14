@@ -359,20 +359,6 @@
 					}
 				});
                 ice.mobi.addListener(element, "touchstart", isRowEvent(rowTouchStart));
-                ice.mobi.addListener(element, "click", function(e) {
-					if (!activationTimeout) {
-						activationTimeout = setTimeout(function() {
-								var tr = closest(e.srcElement || e.target, "tr");
-								if (tr && im.matches(tr, bodyRowSelector)) {
-									e.delegateTarget = tr;
-									activateRow(e);
-								}
-								clearTimeout(activationTimeout);
-								activationTimeout = null;
-							}
-						,100);
-					}
-				});
             } else {
                 ice.mobi.addListener(element, "click", isRowEvent(activateRow));
             }
