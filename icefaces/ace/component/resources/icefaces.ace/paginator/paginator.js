@@ -29,6 +29,7 @@ ice.ace.DataTable.Paginator = function(table) {
         labels.prev = cfg.prevLbl,
         labels.rewind = cfg.rewindLbl,
         labels.forward = cfg.forwardLbl,
+        pagesToSkip = cfg.pagesToSkip > 0 ? cfg.pagesToSkip : 3,
     this.container = container;
 
     container.keyboardPagination = function(e) {
@@ -262,11 +263,11 @@ ice.ace.DataTable.Paginator = function(table) {
                 if (control.hasClass('ui-paginator-last'))
                     activeIndex = max;
                 if (control.hasClass('ui-paginator-rewind') && activeIndex > 1) {
-                    activeIndex = activeIndex - 3;
+                    activeIndex = activeIndex - pagesToSkip;
                     activeIndex = activeIndex < 1 ? 1 : activeIndex;
                 }
                 if (control.hasClass('ui-paginator-forward') && activeIndex < max) {
-                    activeIndex = activeIndex + 3;
+                    activeIndex = activeIndex + pagesToSkip;
                     activeIndex = activeIndex > max ? max : activeIndex;
                 }
 
