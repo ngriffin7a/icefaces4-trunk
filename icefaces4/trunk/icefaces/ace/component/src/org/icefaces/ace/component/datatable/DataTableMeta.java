@@ -306,8 +306,11 @@ public class DataTableMeta extends UIDataMeta {
 
     @Property(tlddoc = "Defines a coded string representing the controls available as part of" +
             " the paginator. Default is: \"{FirstPageLink} {FastRewind} {PreviousPageLink} " +
-            "{PageLinks} {NextPageLink} {FastForward} {LastPageLink}\". (Note: {FastRewind} and {FastForward} move 3 pages at a time backward or forward, respectively)")
+            "{PageLinks} {NextPageLink} {FastForward} {LastPageLink}\". (Note: {FastRewind} and {FastForward} skip a number of pages backward or forward, respectively. This number is defined by the 'pagesToSkip' property.)")
     private String paginatorTemplate;
+
+    @Property(tlddoc = "Defines the number of pages to skip when pressing the FastRewind and FastForward buttons.", defaultValue = "3")
+    private int pagesToSkip;
 
     @Property(tlddoc = "Defines the location of the paginator if enabled. Available " +
             "options are top, bottom, or the default, both.", defaultValue = "both")

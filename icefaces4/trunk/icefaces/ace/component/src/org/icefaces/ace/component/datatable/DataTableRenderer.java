@@ -506,6 +506,7 @@ public class DataTableRenderer extends CoreRenderer {
         configJson.entry("prevLbl", prev);
         configJson.entry("rewindLbl", rewind);
         configJson.entry("forwardLbl", forward);
+        configJson.entry("pagesToSkip", table.getPagesToSkip());
         configJson.entry("containers", "[" + paginatorContainers + "]", true);
         configJson.entryNonNullValue("template", template);
         configJson.entryNonNullValue("pageReportTemplate", currPgTemplate);
