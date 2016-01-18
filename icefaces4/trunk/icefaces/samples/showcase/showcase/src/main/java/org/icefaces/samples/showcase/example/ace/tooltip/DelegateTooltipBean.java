@@ -25,12 +25,15 @@ import javax.faces.bean.ManagedBean;
 
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
+import org.icefaces.samples.showcase.util.FacesUtils;
+
 
 @ManagedBean(name= DelegateTooltipBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
 public class DelegateTooltipBean implements Serializable {
 
-    public static final String BEAN_NAME = "delegateTooltipBean";
+	private static final long serialVersionUID = 1L;
+	public static final String BEAN_NAME = "delegateTooltipBean";
 	public String getBeanName() { return BEAN_NAME; }
 	
 	private Object data;
@@ -64,28 +67,38 @@ public class DelegateTooltipBean implements Serializable {
     public void setCancelListener(boolean cancelListener) {
         this.cancelListener = cancelListener;
     }
-        
+     
     public void listener(org.icefaces.ace.event.TooltipDelegateDisplayEvent event) {
+       	
+    	int index = extractIndex();
+    	
+    	if(cancelListener != false) {        	
+    		if (index%2==0){
+    			//odd rows    				
+    			event.cancelDisplay();    		
+    		}
+        	else {
+        		//even rows
+        		//do nothing      		
+        	}
+    	}    	        
+    }
+
+	private int extractIndex() {
+		//extract 'form:tooltip_activeComponent' request parameter, which has the client id of the component that triggered the tooltip
+    	String reqParam = FacesUtils.getRequestParameter("form:tooltip_activeComponent");
+    	
+    	//expected format is 'form:carTable:7:carName'   	
+    	int startIndex = "form:carTable:".length();    	
+    	int endIndex = reqParam.lastIndexOf(":");	  	
     	int index = 0;
     	
-        for (int i=0; i<carList.size(); i++){
-        	
-        	index = ((Car)carList.get(i)).getId();
-        	
-        	if(cancelListener != false) {        	
-        		if (index%2==0){
-        			//odd rows
-        			System.out.println("index=" + index);
-        			System.out.println("cancelListener=" + cancelListener);
-        		
-        			event.cancelDisplay();                
-        		}
-	        	else {
-	        		//even rows
-	        		//do nothing      		
-	        	}
-        	}
-        }        
-    }
+    	try {    		
+    		index = Integer.parseInt(reqParam.substring(startIndex, endIndex).trim());   		  
+        } catch (NumberFormatException nfe) {
+        	System.out.println("NumberFormatException: " + nfe.getMessage());
+        }   	
+		return index;
+	}
     
 }
