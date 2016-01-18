@@ -19,7 +19,6 @@ package org.icefaces.impl.context;
 import org.icefaces.impl.event.FixViewState;
 import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.impl.util.DOMUtils;
-import org.icefaces.impl.util.Util;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.util.FocusController;
 import org.icefaces.util.JavaScriptRunner;
@@ -334,9 +333,11 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
     private Collection<String> normaliseToClientIds(Collection<String> ids, UIViewRoot root) {
         ArrayList<String> newIds = new ArrayList<String>(ids.size());
         for (String id : ids) {
-            UIComponent c = root.findComponent(id);
+            long s = System.currentTimeMillis();
+            UIComponent c = CoreUtils.findComponentByClientId(root, id);
+            System.out.println("delta: " + (System.currentTimeMillis() - s) + "ms");
             if (c == null) {
-                c = CoreUtils.findComponent(root, id);
+                c = CoreUtils.findComponentById(root, id);
             }
             if (c != null) {
                 newIds.add(c.getClientId());

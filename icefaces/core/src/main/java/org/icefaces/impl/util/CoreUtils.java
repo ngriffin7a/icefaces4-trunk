@@ -16,21 +16,17 @@
 
 package org.icefaces.impl.util;
 
-import com.sun.faces.facelets.tag.jsf.ComponentSupport;
 import org.icefaces.impl.context.DOMPartialViewContext;
 import org.icefaces.util.EnvUtils;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.event.PhaseEvent;
-import javax.faces.event.PhaseId;
-import javax.faces.event.PhaseListener;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -113,27 +109,41 @@ public class CoreUtils {
         return root.getFacets().get(facetName);
     }
 
-    public static UIComponent findComponent(UIComponent base, String id) {
-        if (id.equals(base.getId())) {
-            return base;
-        } else {
-            UIComponent kid;
-            UIComponent result = null;
-            Iterator<UIComponent> kids = base.getFacetsAndChildren();
-            while (kids.hasNext() && (result == null)) {
-                kid = kids.next();
-                if (id.equals(kid.getId())) {
-                    result = kid;
-                    break;
-                }
-                result = findComponent(kid, id);
-                if (result != null) {
-                    break;
+    public static UIComponent findComponentById(UIComponent base, String id) {
+        LinkedList<UIComponent> queue = new LinkedList();
+        queue.addLast(base);
+
+        while (!queue.isEmpty()) {
+            UIComponent c = queue.removeFirst();
+            if (id.equals(c.getId())) {
+                return c;
+            } else {
+                Iterator<UIComponent> kids = c.getFacetsAndChildren();
+                while (kids.hasNext()) {
+                    queue.addLast(kids.next());
                 }
             }
-
-            return result;
         }
+
+        return null;
     }
 
+    public static UIComponent findComponentByClientId(UIComponent base, String clientId) {
+        LinkedList<UIComponent> queue = new LinkedList();
+        queue.addLast(base);
+
+        while (!queue.isEmpty()) {
+            UIComponent c = queue.removeFirst();
+            if (clientId.equals(c.getClientId())) {
+                return c;
+            } else {
+                Iterator<UIComponent> kids = c.getFacetsAndChildren();
+                while (kids.hasNext()) {
+                    queue.addLast(kids.next());
+                }
+            }
+        }
+
+        return null;
+    }
 }

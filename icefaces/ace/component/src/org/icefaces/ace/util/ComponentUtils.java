@@ -27,8 +27,6 @@
  */
 package org.icefaces.ace.util;
 
-import org.icefaces.ace.renderkit.CoreRenderer;
-import org.icefaces.impl.context.DOMPartialViewContext;
 import org.icefaces.impl.util.CoreUtils;
 
 import javax.el.ValueExpression;
@@ -41,7 +39,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.faces.application.FacesMessage;
-import javax.faces.render.Renderer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -333,7 +330,7 @@ public class ComponentUtils {
     }
 
     public static UIComponent findComponent(UIComponent base, String id) {
-        return CoreUtils.findComponent(base, id);
+        return CoreUtils.findComponentById(base, id);
     }
 
     public static boolean isLiteralText(UIComponent component) {
