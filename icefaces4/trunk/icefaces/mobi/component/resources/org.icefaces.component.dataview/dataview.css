@@ -70,6 +70,12 @@
 /******************************************************************************/
 
 /******************************* ICEsoft Styles *******************************/
+
+div.mobi-dv-mst {
+    display: table;
+    width: 100%;
+}
+
 .mobi-dv-mst > div {
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
