@@ -333,9 +333,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
     private Collection<String> normaliseToClientIds(Collection<String> ids, UIViewRoot root) {
         ArrayList<String> newIds = new ArrayList<String>(ids.size());
         for (String id : ids) {
-            long s = System.currentTimeMillis();
             UIComponent c = CoreUtils.findComponentByClientId(root, id);
-            System.out.println("delta: " + (System.currentTimeMillis() - s) + "ms");
             if (c == null) {
                 c = CoreUtils.findComponentById(root, id);
             }
