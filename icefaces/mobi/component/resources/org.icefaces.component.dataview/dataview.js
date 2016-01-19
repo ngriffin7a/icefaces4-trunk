@@ -346,6 +346,7 @@
 					if (!activationTimeout) {
                         //stop from triggering the synthetic click event
                         e.stopPropagation();
+                        e.preventDefault();
 						activationTimeout = setTimeout(function() {
                                 try {
                                     var tr = closest(e.srcElement || e.target, "tr");
