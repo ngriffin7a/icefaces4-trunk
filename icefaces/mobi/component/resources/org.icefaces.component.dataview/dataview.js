@@ -347,13 +347,16 @@
                         //stop from triggering the synthetic click event
                         e.stopPropagation();
 						activationTimeout = setTimeout(function() {
-								var tr = closest(e.srcElement || e.target, "tr");
-								if (tr && im.matches(tr, bodyRowSelector)) {
-									e.delegateTarget = tr;
-									rowTouchEnd(e);
-								}
-								clearTimeout(activationTimeout);
-								activationTimeout = null;
+                                try {
+                                    var tr = closest(e.srcElement || e.target, "tr");
+                                    if (tr && im.matches(tr, bodyRowSelector)) {
+                                        e.delegateTarget = tr;
+                                        rowTouchEnd(e);
+                                    }
+                                } finally {
+                                    clearTimeout(activationTimeout);
+                                    activationTimeout = null;
+                                }
 							}
 						,100);
 					}
