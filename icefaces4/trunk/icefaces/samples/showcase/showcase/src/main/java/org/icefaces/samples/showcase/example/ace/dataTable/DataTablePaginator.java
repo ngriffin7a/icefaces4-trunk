@@ -37,9 +37,11 @@ public class DataTablePaginator implements Serializable {
                                                            new SelectItem("both", "Both") };
     
     private boolean paginator = true;
+    private boolean fastControls = false;
     private String position = POSITION_AVAILABLE[0].getValue().toString();
     private List<Car> carsData;
     private int rows = 10;
+    private int pagesToSkip = 3;
     private int startPage = 1;
     
     /////////////---- CONSTRUCTOR BEGIN
@@ -49,8 +51,10 @@ public class DataTablePaginator implements Serializable {
 
     /////////////---- GETTERS & SETTERS BEGIN
     public boolean getPaginator() { return paginator; }
+    public boolean getFastControls() { return fastControls; }
     public String getPosition() { return position; }
     public int getRows() { return rows; }
+    public int getPagesToSkip() { return pagesToSkip; }
     public int getStartPage() { return startPage; }
     public SelectItem[] getPositionAvailable() { return POSITION_AVAILABLE; }
     public List<Car> getCarsData() { return carsData; }
@@ -59,11 +63,13 @@ public class DataTablePaginator implements Serializable {
     }
     
     public void setPaginator(boolean paginator) { this.paginator = paginator; }
+    public void setFastControls(boolean fastControls) { this.fastControls = fastControls; }
     public void setPosition(String position) { this.position = position; }
     public void setRows(int rows) {
         this.rows = rows;
         setStartPage(getStartPage());
     }
+    public void setPagesToSkip(int pagesToSkip) { this.pagesToSkip = pagesToSkip; }
     public void setStartPage(int startPage) {
         this.startPage = startPage;
         int maxPages = getStartPageMaximum();
