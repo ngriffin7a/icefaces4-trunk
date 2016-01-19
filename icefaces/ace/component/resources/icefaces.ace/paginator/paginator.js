@@ -18,7 +18,7 @@ ice.ace.DataTable.Paginator = function(table) {
     var labels = {} ;
     var cfg = table.cfg.paginator,
         container = ice.ace.jq(table.jqId + ' > .ui-paginator'),
-        template = cfg.template || "{FirstPageLink} {FastRewind} {PreviousPageLink} {PageLinks} {NextPageLink} {FastForward} {LastPageLink}",
+        template = cfg.template || "{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}",
         pageReportTemplate = cfg.pageReportTemplate || '\({currentPage} of {totalPages}\)',
         activeIndex = cfg.initialPage,
     // Maximum number of pages given total row count, if rowsPerPage zero set to 1.
