@@ -122,7 +122,7 @@ public class MicrophoneRenderer extends Renderer {
         uiScript.append(firstLine);
         String secondLine=" if (buttonElem) { " +
                 "var existingTextElem = buttonElem.firstChild; " +
-                "if (existingTextElem){" +
+                "if (existingTextElem && (typeof arg['value'] != 'undefined')){" +
                 "     existingTextElem.innerHTML='"+capturedLabel+"';" +
                 "} " +
              "}};"  ;
