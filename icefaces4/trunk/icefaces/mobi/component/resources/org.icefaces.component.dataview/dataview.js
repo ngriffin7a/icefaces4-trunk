@@ -329,7 +329,7 @@
 		var activationTimeout = null;
 
         function initActivationEvents() {
-            var element = getNode('elem'),
+            var element = getNode('body'),
                 /* filter events for those bubbled from tr elems */
                 isRowEvent = function(callback) {
                     return function(e) {
@@ -339,7 +339,7 @@
                             callback(e);
                         }
                     };
-                }
+                };
 
             if (isTouchDevice) {
                 ice.mobi.addListener(element, "touchend", function(e) {
