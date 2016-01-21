@@ -8585,6 +8585,17 @@
             }
             else {
                 var date = new Date();
+				if (this._get(inst, 'timeZoneIsSet')) { // ICE-10918
+					var timeZoneOffset = this._get(inst, 'timeZoneOffset');
+
+					var localTime_msec = date.getTime(); // milliseconds since Jan 1 1970
+					var offsetUTC_min = date.getTimezoneOffset(); // UTC offset in minutes (accounts for DST)
+					var offsetUTC_msec = offsetUTC_min * 60000; // UTC offset in milliseconds
+					var UTC_msec = localTime_msec + offsetUTC_msec; // UTC time in milliseconds
+					var targetTime_msec = UTC_msec + timeZoneOffset; // target location's time in milliseconds
+
+					date = new Date(targetTime_msec);
+				}
                 inst.selectedDay = date.getDate();
                 inst.drawMonth = inst.selectedMonth = date.getMonth();
                 inst.drawYear = inst.selectedYear = date.getFullYear();
@@ -9183,6 +9194,17 @@
         /* Generate the HTML for the current state of the date picker. */
         _generateHTML: function(inst) {
             var today = new Date();
+			if (this._get(inst, 'timeZoneIsSet')) { // ICE-10918
+				var timeZoneOffset = this._get(inst, 'timeZoneOffset');
+
+				var localTime_msec = today.getTime(); // milliseconds since Jan 1 1970
+				var offsetUTC_min = today.getTimezoneOffset(); // UTC offset in minutes (accounts for DST)
+				var offsetUTC_msec = offsetUTC_min * 60000; // UTC offset in milliseconds
+				var UTC_msec = localTime_msec + offsetUTC_msec; // UTC time in milliseconds
+				var targetTime_msec = UTC_msec + timeZoneOffset; // target location's time in milliseconds
+
+				today = new Date(targetTime_msec);
+			}
             today = this._daylightSavingAdjust(
                     new Date(today.getFullYear(), today.getMonth(), today.getDate())); // clear time
             var isRTL = this._get(inst, 'isRTL');

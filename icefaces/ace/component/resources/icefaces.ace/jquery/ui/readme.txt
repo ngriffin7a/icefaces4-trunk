@@ -22,3 +22,4 @@ ICE-10190: fix to hide the datepicker root/placeholder node when aria-hidden="tr
 ICE-10261: added 'activeNoEvent' option to the Accordion widget to allow activating an accordion pane without triggering the 'changestart' event and without focusing on the pane header
 ICE-10290: use the relocated jQuery definitions in ice.ace.jq when jQuery global variable is no longer present (after jQuery.noConflict(true) was invoked)
 ICE-10470: fix to avoid setting explicit heights of panes when the accordion isn't visible at initialization time, in order to avoid zero-valued heights
+ICE-10918: fix for honouring the selected time zone when pressing the Today/Now button

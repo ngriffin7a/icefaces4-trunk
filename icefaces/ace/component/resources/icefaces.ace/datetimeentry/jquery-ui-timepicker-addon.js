@@ -1411,6 +1411,17 @@
         var tp_inst = this._get(inst, 'timepicker');
         selectLocalTimeZone(tp_inst);
         var now = new Date();
+		if (this._get(inst, 'timeZoneIsSet')) { // ICE-10918
+			var timeZoneOffset = this._get(inst, 'timeZoneOffset');
+
+			var localTime_msec = now.getTime(); // milliseconds since Jan 1 1970
+			var offsetUTC_min = now.getTimezoneOffset(); // UTC offset in minutes (accounts for DST)
+			var offsetUTC_msec = offsetUTC_min * 60000; // UTC offset in milliseconds
+			var UTC_msec = localTime_msec + offsetUTC_msec; // UTC time in milliseconds
+			var targetTime_msec = UTC_msec + timeZoneOffset; // target location's time in milliseconds
+
+			now = new Date(targetTime_msec);
+		}
         this._setTime(inst, now);
         inst.gotoToday = false;
     };
