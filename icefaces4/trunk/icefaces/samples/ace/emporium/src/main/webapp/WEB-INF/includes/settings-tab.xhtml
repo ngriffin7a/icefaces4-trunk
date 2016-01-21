@@ -39,7 +39,6 @@
             <h:graphicImage id="sLocHelp" library="images" name="help.png"/>
             <h:outputLabel for="sLoc" value="Your Location:"/>
             <ace:simpleSelectOneMenu id="sLoc" value="#{settingsBean.location}" required="true">
-                <ace:clientValidateRequired />
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
             </ace:simpleSelectOneMenu>
