@@ -234,5 +234,18 @@
 		    </h:form>
 	    </c:if>
     </mobi:largeView>
-    </h:panelGroup>
+
+    <h:form prependId="false">
+		<ace:dialog id="expiredPopup" closable="false" closeOnEscape="false"
+			        modal="true" draggable="false" resizable="false"
+			        header="Session Expired">
+			<h:panelGrid columns="1" cellpadding="10" style="text-align: center;">
+		        Your session has expired from inactivity.
+		        <f:facet name="footer">
+				    <h:button onclick="location.reload();return false;" value="Refresh"/>
+				</f:facet>
+			</h:panelGrid>
+		</ace:dialog>
+	</h:form>
+	</h:panelGroup>
 </ui:composition>

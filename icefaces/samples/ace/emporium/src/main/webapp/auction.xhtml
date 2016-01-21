@@ -55,7 +55,12 @@
     <f:event type="preRenderView" listener="#{settingsController.initializeTheme}"/>
     <ace:themeSelect value="#{settingsBean.themeName}" styleClass="hidden"
                      rendered="#{!settingsBean.hasSetTheme}"/>
-
+    <script>
+	    ice.onSessionExpiry(function() {
+	    	ice.ace.instance('expiredPopup').show();
+	    });
+    </script>
+    
     <mobi:largeView>
 	    <table cellspacing="0" cellpadding="0"><tr>
 	       <td valign="bottom"><h:graphicImage library="images" name="banner_hdr_auction.jpg"/></td>
