@@ -86,8 +86,17 @@ public class AuctionController implements Serializable {
 		
 		BidBean bidBean = (BidBean)FacesUtils.getManagedBean(BidBean.BEAN_NAME);
 		
-		// Need to validate two cases: bid is less than current price OR bid is over max bid increase compared to price
-		// First validate that the bid actually exceeds the price we're comparing to
+		// Need to validate three cases: is item expired, bid is less than current price OR bid is over max bid increase compared to price
+		// First check if the bid item has expired
+		// This is technically a rare case as the view should update to disallow bidding on expired items, but it's best to check
+		if (bidBean.getBidItem().isExpired()) {
+			FacesUtils.addGlobalWarnMessage("Selected item has expired.");
+			
+			cancelBid(event);
+			return;
+		}
+		
+		// Then validate that the bid actually exceeds the price we're comparing to
 		if (bidBean.getCurrentBid() <= bidBean.getBidItem().getPrice()) {
 			FacesUtils.addWarnMessage(parentId, "Note your bid does not exceed the current price of " +
 					NumberFormat.getCurrencyInstance().format(bidBean.getBidItem().getPrice()) + ", updating your current bid.");

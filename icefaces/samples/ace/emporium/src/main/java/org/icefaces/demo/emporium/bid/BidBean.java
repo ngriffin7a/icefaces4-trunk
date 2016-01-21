@@ -47,6 +47,18 @@ public class BidBean implements Serializable {
 	public void setRenderBidPanel(boolean renderBidPanel) {
 		this.renderBidPanel = renderBidPanel;
 	}
+	public boolean getCheckRenderBidPanel() {
+		// Before checking our renderBidPanel flag let's make sure our item isn't expired
+		if (bidItem != null) {
+			// If it is we'll stop bidding and reset our row selection state
+			if (bidItem.isExpired()) {
+				stopBidding();
+				unselectRows();
+			}
+		}
+		
+		return renderBidPanel;
+	}
 	public boolean isShowHistoryDialog() {
 		return showHistoryDialog;
 	}
