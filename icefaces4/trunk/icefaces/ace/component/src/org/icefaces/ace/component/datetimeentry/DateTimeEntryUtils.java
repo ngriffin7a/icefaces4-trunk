@@ -33,6 +33,7 @@ import java.util.Date;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.*;
@@ -142,5 +143,24 @@ public class DateTimeEntryUtils {
 		parsedValue = zmatcher.replaceAll("'"+z+"'");
 
 		return parsedValue;
+	}
+
+	public static int getTimeZoneOffset(DateTimeEntry dateTimeEntry) {
+		Object usertimeZone = dateTimeEntry.getTimeZone();
+		if (usertimeZone != null) {
+			if (usertimeZone instanceof String) {
+				TimeZone tz = TimeZone.getTimeZone((String) usertimeZone);
+				Calendar cal = Calendar.getInstance(tz);
+				return tz.getOffset(cal.getTimeInMillis());
+			} else if (usertimeZone instanceof TimeZone) {
+				TimeZone tz = (TimeZone) usertimeZone;
+				Calendar cal = Calendar.getInstance(tz);
+				return tz.getOffset(cal.getTimeInMillis());
+			} else {
+				return 0;
+			}
+		} else {
+			return 0;
+		}
 	}
 }

@@ -238,6 +238,8 @@ public class DateTimeEntryRenderer extends InputRenderer {
             .entry("id", clientId)
             .entry("popup", dateTimeEntry.isPopup())
             .entry("locale", locale.toString())
+            .entry("timeZoneIsSet", dateTimeEntry.getTimeZone() != null)
+            .entry("timeZoneOffset", DateTimeEntryUtils.getTimeZoneOffset(dateTimeEntry))
             .entryNonNullValue("pattern", 
                 DateTimeEntryUtils.parseTimeZone(DateTimeEntryUtils.convertPattern(dateTimeEntry.getPattern()), locale, dateTimeEntry.calculateTimeZone()));
 
