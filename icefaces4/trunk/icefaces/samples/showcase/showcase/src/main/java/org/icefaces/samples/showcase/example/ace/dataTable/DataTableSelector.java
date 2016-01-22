@@ -36,6 +36,7 @@ public class DataTableSelector implements Serializable {
 
     private static final SelectItem[] AVAILABLE_MODES = { new SelectItem("single", "Single Row"),
                                                           new SelectItem("multiple", "Multiple Rows"),
+                                                          new SelectItem("enhMultiple", "Multiple Rows (Enhanced)"),
                                                           new SelectItem("singlecell", "Single Cell"),
                                                           new SelectItem("multiplecell", "Multiple Cell") };
 
