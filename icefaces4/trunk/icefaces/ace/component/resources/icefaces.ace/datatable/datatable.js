@@ -1031,12 +1031,23 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
     function doRowSelect (event) {
         var row = ice.ace.jq(event.currentTarget);
 
-        if (!this.isSingleSelection() && event.shiftKey && this.lastSelectIndex > -1)
-            this.doMultiRowSelectionEvent(this.lastSelectIndex, row);
-        else if (row.hasClass('ui-selected'))
-            this.doSelectionEvent('row', true, row);
-        else
-            this.doSelectionEvent('row', false, row);
+		if (!this.isSingleSelection() && event.shiftKey && this.lastSelectIndex > -1)
+			this.doMultiRowSelectionEvent(this.lastSelectIndex, row);
+		else if (!this.isEnhancedSelection()) {
+			if (row.hasClass('ui-selected'))
+				this.doSelectionEvent('row', true, row);
+			else
+				this.doSelectionEvent('row', false, row);
+		} else {
+			var metaKey = event.metaKey || event.ctrlKey;
+			if (metaKey) {
+				if (row.hasClass('ui-selected'))
+					this.doSelectionEvent('row', true, row);
+				else
+					this.doSelectionEvent('row', false, row);
+			} else if (!row.hasClass('ui-selected'))
+				this.doSelectionEvent('row', false, row, true);
+		}
 
         this.lastSelectIndex = row.index();
     }
@@ -2967,7 +2978,7 @@ ice.ace.DataTable.prototype.filter = function (evn) {
 	}, 200);
 }
 
-ice.ace.DataTable.prototype.doSelectionEvent = function (type, deselection, element) {
+ice.ace.DataTable.prototype.doSelectionEvent = function (type, deselection, element, deselectOthers) {
     // Get Id(s) //
     var targetId, deselectedId, firstRowSelected, adjustStyle = !this.cfg.instantSelect;
     if (type == 'row') {
@@ -3003,6 +3014,22 @@ ice.ace.DataTable.prototype.doSelectionEvent = function (type, deselection, elem
             // The new selection will be the only member of the delta
             this.selection = [];
         }
+
+		if (deselectOthers) {
+			// Add current selection to deselection delta
+			if (!this.deselection) this.deselection = [];
+			var deselectionArray = this.deselection;
+			element.siblings('.ui-selected').each(function() {
+				deselectionArray.push(ice.ace.jq(this).attr('id').split('_row_')[1]);
+			});
+
+			// The new selection will be the only member of the delta
+			this.selection = [];
+
+			if (adjustStyle) {
+				element.siblings('.ui-selected').removeClass('ui-selected ui-state-active');
+			}
+		}
 
         if (adjustStyle) {
             // Add selected styling
@@ -3641,7 +3668,13 @@ ice.ace.DataTable.prototype.isSingleSelection = function () {
 };
 
 ice.ace.DataTable.prototype.isSelectionEnabled = function () {
-    return this.cfg.selectionMode == 'single' || this.cfg.selectionMode == 'multiple' || this.isCellSelectionEnabled();
+    return this.cfg.selectionMode == 'single' || this.cfg.selectionMode == 'multiple' || this.isEnhancedSelection() || this.isCellSelectionEnabled();
+};
+
+ice.ace.DataTable.prototype.isEnhancedSelection = function () {
+    if (this.cfg.selectionMode) {
+		return this.cfg.selectionMode.toLowerCase() == 'enhmultiple';
+	} else return false;
 };
 
 ice.ace.DataTable.prototype.isCellSelectionEnabled = function () {

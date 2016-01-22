@@ -367,8 +367,8 @@ public class DataTableMeta extends UIDataMeta {
     /* ########################## Selection Prop. ########################## */
     /* ##################################################################### */
     @Property(tlddoc = "Defines a code word indicating method of table element selection." +
-            " Available values include: \"multiple\", \"single\"," +
-            " \"cellblock\", \"cellrange\", \"multiplecell\" and \"singlecell\".")
+            " Available values include: \"multiple\", \"single\", \"enhMultiple\"," +
+            " \"cellblock\", \"cellrange\", \"multiplecell\" and \"singlecell\". The enhanced multiple mode (\"enhMultiple\") works in the following way. Single clicking a row will select it and deselect all other rows. No toggling occurs unless the Ctrl/Command key is held, in which case the other rows won't be deselected. Holding the Shift key will cause the range of rows between the last selected row and the current one to be selected.")
     private String selectionMode;
 
     @Property(tlddoc = "Enable to require a double-click to fire row/cell selection events.")
