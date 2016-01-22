@@ -242,7 +242,7 @@
 			<h:panelGrid columns="1" cellpadding="10" style="text-align: center;">
 		        Your session has expired from inactivity.
 		        <f:facet name="footer">
-				    <ace:pushButton onclick="location.reload();return false;" value="Refresh"/>
+				    <ace:pushButton onclick="ice.ace.instance('expiredPopup').hide(); location.reload(); return false;" value="Refresh"/>
 				</f:facet>
 			</h:panelGrid>
 		</ace:dialog>
