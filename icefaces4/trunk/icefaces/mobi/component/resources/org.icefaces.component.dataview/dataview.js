@@ -205,26 +205,9 @@
                 fullHeight = maxHeight - headHeight - footHeight - 1;
 
             /* set height to full visible size of parent */
-            if( isNumber(fullHeight) )
+            if(isNumber(fullHeight) && fullHeight > 0) {
                 bodyDivWrapper.style.height = fullHeight + 'px';
-
-            /* set height to full visible size of parent minus
-             height of all following elements */
-            var container = getScrollableContainer(element),
-                bottomResize = function() {
-                    if (!container){
-                     //   console.log (" NO CONTAINER SO RETURN");
-                        return;
-                    }
-                    fullHeight -= (container.scrollHeight - container.clientHeight);
-                    if( isNumber(fullHeight)){
-                        if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i))
-                            fullHeight += 60;
-                        bodyDivWrapper.style.height = fullHeight + 'px';
-                    }
-                };
-
-            if (container) bottomResize();
+            }
         }
 
         var touchedHeadCellIndex = {},
