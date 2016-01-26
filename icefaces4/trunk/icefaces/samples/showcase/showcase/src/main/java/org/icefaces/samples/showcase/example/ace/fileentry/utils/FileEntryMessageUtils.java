@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.file.utils;
+package org.icefaces.samples.showcase.example.ace.fileentry.utils;
 
 import java.util.ResourceBundle;
 
