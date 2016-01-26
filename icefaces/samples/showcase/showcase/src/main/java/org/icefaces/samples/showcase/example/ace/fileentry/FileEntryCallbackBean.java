@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.file;
+package org.icefaces.samples.showcase.example.ace.fileentry;
 
 import java.io.Serializable;
 import java.security.MessageDigest;
@@ -30,7 +30,7 @@ import javax.faces.context.FacesContext;
 import org.icefaces.ace.component.fileentry.FileEntryCallback;
 import org.icefaces.ace.component.fileentry.FileEntryResults;
 import org.icefaces.ace.component.fileentry.FileEntryStatus;
-import org.icefaces.samples.showcase.example.ace.file.utils.FileEntryMessageUtils;
+import org.icefaces.samples.showcase.example.ace.fileentry.utils.FileEntryMessageUtils;
 
 @ManagedBean(name = FileEntryCallbackBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")

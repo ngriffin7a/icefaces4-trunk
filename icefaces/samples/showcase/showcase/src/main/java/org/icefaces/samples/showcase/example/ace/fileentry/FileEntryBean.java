@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.samples.showcase.example.ace.file;
+package org.icefaces.samples.showcase.example.ace.fileentry;
 
 import java.io.File;
 import java.io.Serializable;
