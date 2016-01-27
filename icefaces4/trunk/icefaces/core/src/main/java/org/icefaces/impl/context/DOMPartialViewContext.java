@@ -553,7 +553,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         for (int i = 0; i < inputElementsLength; i++) {
             Element inputElement = (Element) inputElements.item(i);
             String id = inputElement.getAttribute("id");
-            if (!"".equals(id)) {
+            if (id != null && !"".equals(id)) {
                 String name;
                 if (parameters.containsKey(id) && shouldApplyChange(executeIds, id, document) && shouldApplyChange(renderIds, id, document)) {
 
