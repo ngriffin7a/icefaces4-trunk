@@ -75,7 +75,7 @@ public class PropagatingNavigationHandler extends ConfigurableNavigationHandler 
 
         viewRoot = context.getViewRoot();
         NavigationCase navigationCase = getNavigationCase(context, fromAction, outcome);
-        if (EnvUtils.isLiferay() || (navigationCase != null && !navigationCase.isRedirect())) {
+        if (EnvUtils.isPortal() || (navigationCase != null && !navigationCase.isRedirect())) {
             viewMap = viewRoot.getViewMap();
             viewMap.putAll(propagated);
             if (null != oldDOM) {
