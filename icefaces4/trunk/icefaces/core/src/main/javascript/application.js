@@ -432,9 +432,14 @@ if (!window.ice.icefaces) {
 
                     info(logger, 'received error message [code: ' + e.responseCode + ']: ' + e.responseText);
                     broadcast(perRequestServerErrorListeners, [ e.responseCode, e.responseText, containsXMLData(xmlContent) ? xmlContent : null]);
-                } else if (e.status == 'httpError' || e.status == 'malformedXML') {
+                } else if (e.status == 'httpError') {
                     warn(logger, 'HTTP error [code: ' + e.responseCode + ']: ' + e.description + '\n' + e.responseText);
                     if (not(e.source && containsSubstring(e.source.id, '-retrieve-update'))) {
+                        broadcast(perRequestNetworkErrorListeners, [e.responseCode, e.description]);
+                    }
+                } else if (e.status == 'malformedXML') {
+                    warn(logger, 'HTML parsing or JS evaluation error [code: ' + e.responseCode + ']: ' + e.description + '\n' + e.responseText);
+                    if (e.responseCode > 200) {
                         broadcast(perRequestNetworkErrorListeners, [e.responseCode, e.description]);
                     }
                 } else {
