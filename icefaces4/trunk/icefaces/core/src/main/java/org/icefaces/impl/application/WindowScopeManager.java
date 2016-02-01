@@ -234,7 +234,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         Object synchronizationMonitor = safeSession.getAttribute(SessionSynchronizationMonitor);
         if (synchronizationMonitor == null) {
             log.log(Level.FINE, "synchronization monitor not set by session listener");
-            synchronizationMonitor = new SynchronizationMonitorObject();
+            synchronizationMonitor = new String();
             safeSession.setAttribute(SessionSynchronizationMonitor, synchronizationMonitor);
         }
         return synchronizationMonitor;
@@ -368,7 +368,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static void sessionCreated(HttpSession session) {
-        session.setAttribute(SessionSynchronizationMonitor, new SynchronizationMonitorObject());
+        session.setAttribute(SessionSynchronizationMonitor, new String());
     }
 
     public static class ScopeMap extends HashMap {
@@ -797,9 +797,6 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
                 }
             }
         }
-    }
-
-    private static class SynchronizationMonitorObject implements Serializable {
     }
 
     private static class CustomClientWindow extends ClientWindow {
