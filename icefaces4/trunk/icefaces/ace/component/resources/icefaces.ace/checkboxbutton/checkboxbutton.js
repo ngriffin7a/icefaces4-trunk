@@ -31,6 +31,8 @@ ice.ace.checkboxbutton = function(clientId, options) {
         this.optionSelector = ice.ace.escapeClientId(options.checkboxButtons) + " >> option[title='" + this.id + "']";
     }
 
+	ice.ace.checkboxbutton.setResetValue(clientId, options.checkboxButtons);
+
     // References
     this.button = ice.ace.jq(this.buttonSelector);
     this.icon = ice.ace.jq(this.iconSelector);
@@ -193,13 +195,15 @@ ice.ace.checkboxbutton.toggleOthers = function (options, clientId) {
 };
 
 ice.ace.checkboxbutton.clear = function(id, ariaEnabled, multiple) {
+	if (typeof ice.ace.resetValues[id] == 'undefined') ice.ace.checkboxbutton.setResetValue(id, multiple);
+
     var jqId = ice.ace.escapeClientId(id);
     var innerSpanSelector = jqId + " > span > span";
     var buttonSelector = jqId + " > span > span > button";
     var iconSelector = buttonSelector + " > span.fa";
 
 	if (multiple) {
-		var optionSelector = jqId + "_option";
+		var optionSelector = ice.ace.jq("option[title='" + id + "']");
 		ice.ace.jq(optionSelector).removeAttr('selected');
 	} else {
 		var fieldSelector = jqId + " > input";
@@ -214,4 +218,59 @@ ice.ace.checkboxbutton.clear = function(id, ariaEnabled, multiple) {
     if (ariaEnabled) {
         ice.ace.jq(innerSpanSelector).attr("aria-checked", false);
     }
+};
+
+ice.ace.checkboxbutton.reset = function(id, ariaEnabled, multiple) {
+	var value = ice.ace.resetValues[id];
+	if (!ice.ace.isEmpty(value)) {
+		var jqId = ice.ace.escapeClientId(id);
+		var innerSpanSelector = jqId + " > span > span";
+		var buttonSelector = jqId + " > span > span > button";
+		var iconSelector = buttonSelector + " > span.fa";
+
+		if (multiple) {
+			var optionSelector = ice.ace.jq("option[title='" + id + "']");
+			if (value === true) ice.ace.jq(optionSelector).attr('selected', 'selected');
+			else ice.ace.jq(optionSelector).removeAttr('selected');
+		} else {
+			var fieldSelector = jqId + " > input";
+			if (value === true) ice.ace.jq(fieldSelector).val('true');
+			else ice.ace.jq(fieldSelector).val('false');
+		}
+
+		if (value === true) {
+			ice.ace.jq(buttonSelector).removeClass('ice-checkboxbutton-unchecked')
+					 .addClass('ice-checkboxbutton-checked');
+			ice.ace.jq(iconSelector).removeClass('fa-square-o')
+					 .addClass('fa-check-square-o');
+		} else {
+			ice.ace.jq(buttonSelector).removeClass('ice-checkboxbutton-checked')
+					 .addClass('ice-checkboxbutton-unchecked');
+			ice.ace.jq(iconSelector).removeClass('fa-check-square-o')
+					 .addClass('fa-square-o');
+		}
+
+		if (ariaEnabled) {
+			if (value === true) ice.ace.jq(innerSpanSelector).attr("aria-checked", true);
+			else ice.ace.jq(innerSpanSelector).attr("aria-checked", false);
+		}
+	} else ice.ace.checkboxbutton.setResetValue(id, multiple);
+};
+
+ice.ace.checkboxbutton.setResetValue = function(id, multiple) {
+	if (typeof ice.ace.resetValues[id] == 'undefined') {
+		var jqId = ice.ace.escapeClientId(id);
+		if (multiple) {
+			var optionSelector = ice.ace.escapeClientId(multiple) + " >> option[title='" + id + "']";
+			if (ice.ace.jq(optionSelector).attr('selected'))
+				ice.ace.setResetValue(id, true);
+			else
+				ice.ace.setResetValue(id, false);
+		} else {
+			var fieldSelector = jqId + " > input";
+			var initialValue = ice.ace.jq(fieldSelector).val();
+			if (initialValue === 'true') ice.ace.setResetValue(id, true);
+			else ice.ace.setResetValue(id, false);
+		}
+	}
 };

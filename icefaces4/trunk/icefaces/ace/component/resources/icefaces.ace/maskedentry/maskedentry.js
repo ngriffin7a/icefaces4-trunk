@@ -307,6 +307,10 @@ ice.ace.InputMask = function(id, cfg) {
     if (this.cfg.mask) // only add functionality if mask was provided, otherwise degrade to simple text input
 	this.jq.mask(this.cfg.mask, this.cfg);
 
+	if (this.cfg.inFieldLabel) {
+		if (!this.cfg.labelIsInField) ice.ace.setResetValue(this.jq.attr('id'), this.jq.val());
+	} else ice.ace.setResetValue(this.jq.attr('id'), this.jq.val());
+
     this.jq.change(function() { ice.setFocus(''); });
     //Client behaviors
 	var behaviors = this.cfg.behaviors;
@@ -359,9 +363,14 @@ ice.ace.InputMask.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	if (inFieldLabel) {
 		input.val(inFieldLabel);
 		input.addClass(inFieldLabelStyleClass);
-		input.data("labelIsInField", true);
+		input.data("inFieldLabelStyleClasslabelIsInField", true);
 		input.attr({name: input.attr("id") + "_label"});
 	} else {
 		input.val('');
 	}
+};
+
+ice.ace.InputMask.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var value = ice.ace.resetValues[id];
+	if (!ice.ace.isEmpty(value)) ice.ace.jq(ice.ace.escapeClientId(id)).val(value);
 };

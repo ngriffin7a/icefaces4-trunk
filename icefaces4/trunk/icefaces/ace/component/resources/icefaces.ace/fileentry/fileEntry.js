@@ -576,3 +576,7 @@ ice.ace.fileentry.clear = function(id, multiple) {
 		if (root) root.innerHTML = root.innerHTML;
 	}
 };
+
+ice.ace.fileentry.reset = function(id, multiple) {
+	ice.ace.fileentry.clear(id, multiple);
+};

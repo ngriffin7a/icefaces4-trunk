@@ -116,6 +116,7 @@ ice.ace.richtextentry.renderEditor = function(editor, defaultToolbar, lang, _ski
 			readOnly: isReadOnly
         });
         editorInstance.setData(document.getElementById(editor).value);
+		ice.ace.setResetValue(editor, document.getElementById(editor).value);
         if (behaviors && behaviors.behaviors) {
 			if (behaviors.behaviors.save) editorInstance.ajaxSave = behaviors.behaviors.save;
 			if (behaviors.behaviors.blur) editorInstance.ajaxBlur = behaviors.behaviors.blur;
@@ -156,6 +157,18 @@ ice.ace.richtextentry.clear = function(editor) {
 		if (CKEDITOR.instances[editor]) {
 			CKEDITOR.instances[editor].setData('');
 			document.getElementById(editor).value = '';
+		}
+	} catch(e) {}
+};
+
+ice.ace.richtextentry.reset = function(editor) {
+	try {
+		if (CKEDITOR.instances[editor]) {
+			var value = ice.ace.resetValues[editor];
+			if (!ice.ace.isEmpty(value)) {
+				CKEDITOR.instances[editor].setData(value);
+				document.getElementById(editor).value = value;
+			}
 		}
 	} catch(e) {}
 };

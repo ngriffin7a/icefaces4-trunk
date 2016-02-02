@@ -875,6 +875,7 @@ ice.ace.SelectMenu.prototype = {
     },
 	
 	updateValue: function(value, isClear) {
+		ice.ace.setResetValue(this.id, [value, value]);
 		if (value) {
 			this.input.value = value;
 		} else {
@@ -889,6 +890,7 @@ ice.ace.SelectMenu.prototype = {
 				var labelSpan = ice.ace.jq(currentEntry).find('.'+ice.ace.SelectMenu.LABEL_CLASS).get(0);
 				var label = ice.ace.SelectMenu.collectTextNodesIgnoreClass(labelSpan, ice.ace.SelectMenu.IGNORE_CLASS);
 				this.displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(label);
+				ice.ace.setResetValue(this.id, [value, label]);
 				if (this.cfg.inFieldLabel) {
 					var $displayedValue = ice.ace.jq(this.displayedValue);
 					$displayedValue.removeClass(this.cfg.inFieldLabelStyleClass);
@@ -972,6 +974,22 @@ ice.ace.SelectMenu.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 			$displayedValue.data("labelIsInField", true);
 		} else {
 			displayedValue.innerHTML = '&nbsp;';
+		}
+	}
+};
+
+ice.ace.SelectMenu.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var value = ice.ace.resetValues[id];
+	if (!ice.ace.isEmpty(value)) {
+		var instance = ice.ace.SelectMenus[id];
+		if (instance && instance.initialized) instance.updateValue(value[0]);
+		else {
+			try {
+				ice.ace.jq(ice.ace.escapeClientId(id + "_input")).val(value[0]);
+				var element = ice.ace.jq(ice.ace.escapeClientId(id));
+				var displayedValue = element.find('span').get(0);
+				displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(value[1]);
+			} catch (e) { }
 		}
 	}
 };

@@ -148,6 +148,7 @@ public class FlipSwitchRenderer extends CoreRenderer {
         if (disabled) {
             writer.writeAttribute("disabled", "disabled", null);
         }
+		writer.writeAttribute("data-ice-clear-ignore", "true", null);
         writer.endElement("input");
     }
 
