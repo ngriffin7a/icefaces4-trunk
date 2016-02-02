@@ -335,7 +335,16 @@
                                     var tr = closest(e.srcElement || e.target, "tr");
                                     if (tr && im.matches(tr, bodyRowSelector)) {
                                         e.delegateTarget = tr;
+
+                                        //remove focus from the any previously used input element to allow row selection
+                                        //without having the keyboard popup
+                                        var activeElement = document.activeElement;
+                                        if (activeElement && ['text', 'number', 'email', 'tel', 'search', 'url', 'password'].indexOf(activeElement.type) > -1) {
+                                            activeElement.blur();
+                                            ice.setFocus('');
+                                        }
                                         rowTouchEnd(e);
+
                                     }
                                 } finally {
                                     clearTimeout(activationTimeout);
