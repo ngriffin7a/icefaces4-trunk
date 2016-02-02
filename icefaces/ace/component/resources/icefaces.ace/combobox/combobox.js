@@ -904,6 +904,7 @@ ice.ace.ComboBox.prototype = {
     },
 	
 	updateValue: function(value) {
+		ice.ace.setResetValue(this.id, [value, value]);
 		if (value) {
 			this.hidden.value = value;
 		} else {
@@ -925,6 +926,7 @@ ice.ace.ComboBox.prototype = {
 				var labelSpan = ice.ace.jq(currentEntry).find('.'+ice.ace.ComboBox.LABEL_CLASS).get(0);
 				var label = ice.ace.ComboBox.collectTextNodesIgnoreClass(labelSpan, ice.ace.ComboBox.IGNORE_CLASS);
 				this.element.value = label;
+				ice.ace.setResetValue(this.id, [value, label]);
 			} else {
 				this.element.value = value;
 			}
@@ -995,6 +997,20 @@ ice.ace.ComboBox.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 			input.data("labelIsInField", true);
 		} else {
 			input.val('');
+		}
+	}
+};
+
+ice.ace.ComboBox.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var value = ice.ace.resetValues[id];
+	if (!ice.ace.isEmpty(value)) {
+		var instance = ice.ace.ComboBoxes[id];
+		if (instance && instance.initialized) instance.updateValue(value[0]);
+		else {
+			try {
+				ice.ace.jq(ice.ace.escapeClientId(id + "_hidden")).val(value[0])
+				ice.ace.jq(ice.ace.escapeClientId(id + "_input")).val(value[1]);
+			} catch (e) { }
 		}
 	}
 };

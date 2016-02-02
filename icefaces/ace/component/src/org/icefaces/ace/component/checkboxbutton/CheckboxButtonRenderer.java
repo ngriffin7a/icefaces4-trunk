@@ -160,6 +160,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
         writer.writeAttribute("autocomplete", "off", null);
         writer.writeAttribute("name",clientId+"_hidden", null);
         writer.writeAttribute("value",val, null);
+        writer.writeAttribute("data-ice-clear-ignore", "true", null);
         writer.endElement("input");
 
 		// register checkbox with group

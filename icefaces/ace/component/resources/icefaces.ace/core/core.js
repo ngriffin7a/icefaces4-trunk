@@ -402,6 +402,8 @@ ice.ace.clearForm = function(node) {
 
 	var elements = form.get(0).elements;
 	for(var i = 0; i < elements.length; i++) {
+		var ignore = elements[i].getAttribute('data-ice-clear-ignore');
+		if (ignore) continue;
 		var field_type = elements[i].type.toLowerCase();
 		var name = elements[i].name;
 		if (name == form.attr('id')) continue;
@@ -444,4 +446,33 @@ ice.ace.clearForm = function(node) {
 		if (array[0] == 'flipswitch') mobi[array[0]].clear.apply(this, array[1]);
 		else ice.ace[array[0]].clear.apply(this, array[1]);
 	});
+};
+
+if (!ice.ace['resetValues']) ice.ace.resetValues = {};
+
+ice.ace.resetForm = function(node) {
+	if (typeof node === 'string') node = ice.ace.escapeClientId(node);
+	var form = ice.ace.jq(node);
+	if (!form.get(0)) return;
+
+	form.get(0).reset();
+
+	form.find('*[data-ice-reset]').each(function(i, e) {
+		var array = eval(e.getAttribute('data-ice-reset'));
+		if (array[0] == 'flipswitch') mobi[array[0]].reset.apply(this, array[1]);
+		else ice.ace[array[0]].reset.apply(this, array[1]);
+	});
+};
+
+ice.ace.setResetValue = function(id, value) {
+	if (typeof ice.ace.resetValues[id] == 'undefined') {
+		var element = ice.ace.jq(ice.ace.escapeClientId(id));
+		if (!element.get(0)) return;
+
+		ice.ace.resetValues[id] = value;
+	}
+};
+
+ice.ace.isEmpty = function(value) {
+	return typeof value == 'undefined' || value === null || value === '';
 };

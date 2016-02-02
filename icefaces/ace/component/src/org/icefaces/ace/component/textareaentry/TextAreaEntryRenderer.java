@@ -99,6 +99,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
         writer.startElement("textarea", null);
         writer.writeAttribute("id", clientId + "_input", null);
         writer.writeAttribute("name", clientId + "_input", null);
+		writer.writeAttribute("data-ice-clear-ignore", "true", null);
         if (ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }

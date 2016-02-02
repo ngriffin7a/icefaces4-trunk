@@ -77,6 +77,8 @@ ice.ace.Calendar = function(id, cfg) {
         }
     }
 
+	ice.ace.setResetValue(this.id, this.getDate());
+
     //Client behaviors and input skinning
     if(this.cfg.popup) {
         if(this.cfg.behaviors) {
@@ -267,5 +269,13 @@ ice.ace.Calendar.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 		input.addClass(inFieldLabelStyleClass);
 	} else {
 		input.val('');
+	}
+};
+
+ice.ace.Calendar.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var instance = ice.ace.instanceNoLazyInit(id);
+	if (instance) {
+		var value = ice.ace.resetValues[id];
+		if (!ice.ace.isEmpty(value)) instance.setDate(value);
 	}
 };

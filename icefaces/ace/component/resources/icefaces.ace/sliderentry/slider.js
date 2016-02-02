@@ -127,6 +127,7 @@ ice.ace.Slider.prototype.disable = function() {
 }
 
 ice.ace.Slider.updateValue = function(id, value) {
+	ice.ace.setResetValue(id, value);
 	var root = ice.ace.jq(ice.ace.escapeClientId(id));
 	var handle = root.find('.ui-slider-handle');
 	if (!handle.hasClass('ui-state-active')) {
@@ -136,4 +137,9 @@ ice.ace.Slider.updateValue = function(id, value) {
 
 ice.ace.Slider.clear = function(id, value) {
 	ice.ace.Slider.updateValue(id, value);
+};
+
+ice.ace.Slider.reset = function(id, value) {
+	var resetValue = ice.ace.resetValues[id];
+	if (!ice.ace.isEmpty(resetValue)) ice.ace.Slider.updateValue(id, resetValue);
 };

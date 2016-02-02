@@ -31,8 +31,8 @@ ice.ace.TextEntry = function(id, cfg) {
 			this.jq.attr({name: inputId});
 			this.jq.val("");
 			this.jq.removeClass("ui-input-label-infield");
-		}
-	}
+		} else ice.ace.setResetValue(this.id, this.jq.val());
+	} else ice.ace.setResetValue(this.id, this.jq.val());
 
     if (cfg.autoTab) {
         this.jq.keypress(
@@ -192,7 +192,8 @@ ice.ace.TextEntry.nextTabElement = function(currElement) {
 };
 
 ice.ace.TextEntry.clear = function(id, secret, originalType, embeddedLabel) {
-	var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
+	var input = ice.ace.jq(ice.ace.escapeClientId(id) + " input.ui-textentry");
+	ice.ace.setResetValue(id, input.val());
 	try { if (secret) input.attr({type: originalType}); } catch (e) {}
 	if (embeddedLabel) {
 		input.attr({name: id + "_label"});
@@ -200,5 +201,18 @@ ice.ace.TextEntry.clear = function(id, secret, originalType, embeddedLabel) {
 		input.addClass("ui-input-label-infield");
 	} else {
 		input.val('');
+	}
+};
+
+ice.ace.TextEntry.reset = function(id, secret, originalType, embeddedLabel) {
+	var value = ice.ace.resetValues[id];
+	if (!ice.ace.isEmpty(value)) {
+		var input = ice.ace.jq(ice.ace.escapeClientId(id) + " input.ui-textentry");
+		try { if (self.cfg.secret) input.attr({type: 'password'}); } catch (e) {}
+		if (embeddedLabel) {
+			input.attr({name: input.attr('id')});
+			input.removeClass("ui-input-label-infield");
+		}
+		input.val(value);
 	}
 };

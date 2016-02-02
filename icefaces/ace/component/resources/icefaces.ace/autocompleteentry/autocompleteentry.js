@@ -967,9 +967,10 @@ ice.ace.Autocompleter.prototype = {
 	
 	updateField: function(value, focus) {
 		var currentValue = this.element.value;
+		ice.ace.setResetValue(this.element.id, value);
 		if (currentValue.indexOf(value) != 0)
 			this.element.value = value;
-		if (value == '') this.element.value = '';
+		if (value === '') this.element.value = '';
 		if (focus && ice.ace.jq.support.leadingWhitespace) this.element.focus(); // browsers other than IE7/8
 		if (!ice.ace.jq.support.leadingWhitespace) { // force IE7/8 to set focus on the text field
 			var element = this.element;
@@ -1015,4 +1016,9 @@ ice.ace.Autocompleter.clear = function(id, inFieldLabel, inFieldLabelStyleClass)
 	} else {
 		input.val('');
 	}
+};
+
+ice.ace.Autocompleter.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var value = ice.ace.resetValues[id];
+	if (!ice.ace.isEmpty(value)) ice.ace.jq(ice.ace.escapeClientId(id)).val(value);
 };

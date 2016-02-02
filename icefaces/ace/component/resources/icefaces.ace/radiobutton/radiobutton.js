@@ -33,6 +33,8 @@ ice.ace.radiobutton = function(clientId, options) {
     this.icon = ice.ace.jq(this.iconSelector);
     var self = this;
 
+	ice.ace.radiobutton.setResetValue(clientId, options.radioButtons);
+
     // Event Binding
     ice.ace.jq(this.jqId)
             .on("mouseenter", function() { self.addStateCSSClasses('hover'); })
@@ -196,6 +198,8 @@ ice.ace.radiobutton.toggleOthers = function (options, clientId) {
 };
 
 ice.ace.radiobutton.clear = function(id, ariaEnabled, multiple) {
+	if (typeof ice.ace.resetValues[id] == 'undefined') ice.ace.radiobutton.setResetValue(id, multiple);
+
     var jqId = ice.ace.escapeClientId(id);
     var innerSpanSelector = jqId + " > span > span";
     var buttonSelector = jqId + " > span > span > button";
@@ -218,4 +222,54 @@ ice.ace.radiobutton.clear = function(id, ariaEnabled, multiple) {
     if (ariaEnabled) {
         ice.ace.jq(innerSpanSelector).attr("aria-checked", false);
     }
+};
+
+ice.ace.radiobutton.reset = function(id, ariaEnabled, multiple) {
+	var value = ice.ace.resetValues[id];
+	if (!ice.ace.isEmpty(value)) {
+		var jqId = ice.ace.escapeClientId(id);
+		var innerSpanSelector = jqId + " > span > span";
+		var buttonSelector = jqId + " > span > span > button";
+		var iconSelector = buttonSelector + " > span.fa";
+		var fieldSelector = jqId + " > input";
+
+		if (multiple) {
+			var field = ice.ace.jq(fieldSelector);
+			field.attr('value', field.attr('data-value')); // value is fixed in ace:radioButtons
+			if (value === true) field.attr('name', multiple);
+			else field.attr('name', '');
+		} else {
+			if (value === true) ice.ace.jq(fieldSelector).val('true');
+			else ice.ace.jq(fieldSelector).val('false');
+		}
+
+		if (value === true) {
+			ice.ace.jq(buttonSelector).removeClass('ice-ace-radiobutton-unselected')
+					 .addClass('ice-ace-radiobutton-selected');
+			ice.ace.jq(iconSelector).removeClass('fa-circle-o')
+					 .addClass('fa-dot-circle-o');
+		} else {
+			ice.ace.jq(buttonSelector).removeClass('ice-ace-radiobutton-selected')
+					 .addClass('ice-ace-radiobutton-unselected');
+			ice.ace.jq(iconSelector).removeClass('fa-dot-circle-o')
+					 .addClass('fa-circle-o');
+		}
+
+		if (ariaEnabled) {
+			if (value === true) ice.ace.jq(innerSpanSelector).attr("aria-checked", true);
+			else ice.ace.jq(innerSpanSelector).attr("aria-checked", false);
+		}
+	} else ice.ace.checkboxbutton.setResetValue(id, multiple);
+};
+
+ice.ace.radiobutton.setResetValue = function(id, multiple) {
+	if (typeof ice.ace.resetValues[id] == 'undefined') {
+		var jqId = ice.ace.escapeClientId(id);
+		var field = ice.ace.jq(jqId + " > input");
+		if (multiple) {
+			ice.ace.setResetValue(id, !!field.attr('name'));
+		} else {
+			ice.ace.setResetValue(id, field.val() == 'true' ? true : false);
+		}
+	}
 };
