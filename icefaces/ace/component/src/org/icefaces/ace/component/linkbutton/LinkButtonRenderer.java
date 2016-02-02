@@ -174,10 +174,16 @@ public class LinkButtonRenderer extends CoreRenderer {
             json.endMap();
         }
 
-		if ("clear".equalsIgnoreCase(linkButton.getType())) {
+		String type = linkButton.getType();
+		if ("clear".equalsIgnoreCase(type)) {
 			UIComponent parentForm = ComponentUtils.findParentForm(facesContext, linkButton);
 			if (parentForm != null) {
 				json.entry("clear", parentForm.getClientId(facesContext));
+			}
+		} else if ("reset".equalsIgnoreCase(type)) {
+			UIComponent parentForm = ComponentUtils.findParentForm(facesContext, linkButton);
+			if (parentForm != null) {
+				json.entry("reset", parentForm.getClientId(facesContext));
 			}
 		}
 

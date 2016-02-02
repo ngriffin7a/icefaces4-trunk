@@ -181,6 +181,11 @@ public class PushButtonRenderer extends CoreRenderer {
 			if (parentForm != null) {
 				json.entry("clear", parentForm.getClientId(facesContext));
 			}
+		} else if ("reset".equalsIgnoreCase(type)) {
+			UIComponent parentForm = ComponentUtils.findParentForm(facesContext, pushButton);
+			if (parentForm != null) {
+				json.entry("reset", parentForm.getClientId(facesContext));
+			}
 		} else if ("submit".equalsIgnoreCase(type)) {
 			json.entry("submit", true);
 		}
