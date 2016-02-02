@@ -139,7 +139,7 @@ public class PushButtonRenderer extends CoreRenderer {
         String style = pushButton.getStyle();
 
         if (styleClass != null)
-            rootStyle = " " + styleClass;
+            rootStyle += " " + styleClass;
 
         if (style != null)
             writer.writeAttribute(HTML.STYLE_ATTR, style, null);
