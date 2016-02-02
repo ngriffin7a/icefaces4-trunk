@@ -54,7 +54,7 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 		this.initialize(this.element, this.update, options, rowClass, highlightedRowClass, selectedRowClass, behaviors);
 	} else {
 		var self = this;
-		$element.on('focus', function() {
+		$element.on('focus', function(e) {
 			$element.off('focus');
 			$element.children().off('click');
 			if ($element.data("labelIsInField")) {
@@ -64,6 +64,7 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 				self.cfg.labelIsInField = false;
 			}
 			self.initialize(self.element, self.update, options, rowClass, highlightedRowClass, selectedRowClass, behaviors);
+			self.onFocus(e);
 		});
         $element.children().on('click', function(e) {
             $element.off('focus');
@@ -389,9 +390,7 @@ ice.ace.SelectMenu.prototype = {
 				default:
 					if (event.which > 0) this.markFirstMatch(event.which);
                     this.selectEntry();
-                    if (this.cfg.showListOnInput) {
-                        this.updateNOW(this.content);
-                    }
+					this.updateNOW(this.content);
 					event.stopPropagation();
 					event.preventDefault();
 					return;
@@ -486,7 +485,7 @@ ice.ace.SelectMenu.prototype = {
     },
 
     onClick: function(event) {
-        if (this.hideObserver) clearTimeout(this.hideObserver);
+		if (this.hideObserver) clearTimeout(this.hideObserver);
         if (this.blurObserver) clearTimeout(this.blurObserver);
 		var $element = ice.ace.jq(event.currentTarget).closest('div');
 		var element = $element.get(0);
@@ -541,16 +540,28 @@ ice.ace.SelectMenu.prototype = {
             element.removeClass(this.cfg.inFieldLabelStyleClass);
             element.data("labelIsInField", false);
         }
-    },
+		if (!this.cfg.showListOnInput) {
+			this.hasFocus = true;
+			this.render();
+		}
+		//disable temporarely onclick callback to avoid showing then hiding immediately the menu options
+		var self = this;
+		var original = this.onElementClick;
+		this.onElementClick = function() {
+		};
+		setTimeout(function() {
+			console.info('rewire onElementClick');
+			self.onElementClick = original;
+		}, 100);
+	},
 	
 	onElementClick: function(event) {
 		if (this.active) {
 			this.hide();
-			if (this.hideObserver) clearTimeout(this.hideObserver);
-			if (this.blurObserver) clearTimeout(this.blurObserver);
-		} else {
-			if (this.hideObserver) clearTimeout(this.hideObserver);
-			if (this.blurObserver) clearTimeout(this.blurObserver);
+		}
+        if (this.hideObserver) clearTimeout(this.hideObserver);
+        if (this.blurObserver) clearTimeout(this.blurObserver);
+		if (!this.cfg.showListOnInput) {
 			this.updateNOW(this.content);
 		}
 	},
