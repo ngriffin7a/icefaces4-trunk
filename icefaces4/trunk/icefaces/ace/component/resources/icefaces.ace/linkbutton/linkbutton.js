@@ -65,6 +65,7 @@ ice.ace.linkButton.prototype.onClick = function () {
     };
 
 	if (this.cfg.clear) ice.ace.clearForm(this.cfg.clear);
+	else if (this.cfg.reset) ice.ace.resetForm(this.cfg.reset);
 
     if (this.cfg.behaviors && this.cfg.behaviors.action) {
         ice.ace.ab(ice.ace.extendAjaxArgs(
@@ -74,14 +75,14 @@ ice.ace.linkButton.prototype.onClick = function () {
     } else if (this.cfg.hasAction) {
         ice.ace.jq(options).extend(fullOptions);
         ice.ace.ab(options);
-    } else if (!hasHref && !this.cfg.clear) {
+    } else if (!hasHref && !this.cfg.clear && !this.cfg.reset) {
         ice.ace.jq(options).extend(singleOptions);
         ice.ace.ab(options);
     }
 
     // Skip default anchor behavior if missing an href or if
     // a listener/behavior is attached to the component or if this is a clear button
-    if (!hasHref || this.cfg.hasAction || this.cfg.behaviors || this.cfg.clear)
+    if (!hasHref || this.cfg.hasAction || this.cfg.behaviors || this.cfg.clear || this.cfg.reset)
         return false;
 };
 
