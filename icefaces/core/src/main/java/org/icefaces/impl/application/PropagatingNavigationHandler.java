@@ -70,12 +70,12 @@ public class PropagatingNavigationHandler extends ConfigurableNavigationHandler 
             }
         }
         Object oldDOM = viewMap.get(DOMResponseWriter.OLD_DOM);
+        NavigationCase navigationCase = getNavigationCase(context, fromAction, outcome);
 
         wrapped.handleNavigation(context, fromAction, outcome);
 
         viewRoot = context.getViewRoot();
-        NavigationCase navigationCase = getNavigationCase(context, fromAction, outcome);
-        if (EnvUtils.isPortal() || (navigationCase != null && !navigationCase.isRedirect())) {
+        if (navigationCase != null && !navigationCase.isRedirect()) {
             viewMap = viewRoot.getViewMap();
             viewMap.putAll(propagated);
             if (null != oldDOM) {
