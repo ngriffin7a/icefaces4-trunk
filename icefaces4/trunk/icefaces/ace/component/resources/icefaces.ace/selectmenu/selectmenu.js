@@ -543,16 +543,16 @@ ice.ace.SelectMenu.prototype = {
 		if (!this.cfg.showListOnInput) {
 			this.hasFocus = true;
 			this.render();
+
+			//disable temporarely onclick callback to avoid showing then hiding immediately the menu options
+			var self = this;
+			var original = this.onElementClick;
+			this.onElementClick = function() {
+			};
+			setTimeout(function() {
+				self.onElementClick = original;
+			}, 100);
 		}
-		//disable temporarely onclick callback to avoid showing then hiding immediately the menu options
-		var self = this;
-		var original = this.onElementClick;
-		this.onElementClick = function() {
-		};
-		setTimeout(function() {
-			console.info('rewire onElementClick');
-			self.onElementClick = original;
-		}, 100);
 	},
 	
 	onElementClick: function(event) {
@@ -561,7 +561,7 @@ ice.ace.SelectMenu.prototype = {
 		}
         if (this.hideObserver) clearTimeout(this.hideObserver);
         if (this.blurObserver) clearTimeout(this.blurObserver);
-		if (!this.cfg.showListOnInput) {
+		if (ice.ace.jq(event.target).hasClass('fa-chevron-down') || !this.cfg.showListOnInput) {
 			this.updateNOW(this.content);
 		}
 	},
