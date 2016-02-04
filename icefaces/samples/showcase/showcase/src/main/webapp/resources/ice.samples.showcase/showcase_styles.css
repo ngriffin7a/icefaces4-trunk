@@ -599,4 +599,6 @@ body, table {
 
 .search-box .ui-inputfield {
 	font-size: 1em;
+	padding-top: 4px;
+	padding-bottom: 5px;
 }
