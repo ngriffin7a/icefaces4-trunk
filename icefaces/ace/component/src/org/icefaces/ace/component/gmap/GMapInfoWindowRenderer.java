@@ -44,6 +44,7 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
         String clientId = infoWindow.getClientId(context);
         String mapId;
         String markerId = "none";
+		boolean addressBasedMarker = false;
 
         // main container
         writer.startElement("span", null);
@@ -63,10 +64,12 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("ice.ace.jq(function() {");
-		UIComponent parentMarker = getParentMarker(infoWindow);
+		GMapMarker parentMarker = getParentMarker(infoWindow);
             if (parentMarker != null) {
                 markerId = parentMarker.getClientId(context);
                 mapId = GMapRenderer.getMapClientId(context, infoWindow);
+				String address = parentMarker.getAddress();
+				addressBasedMarker = address != null && !"".equals(address);
             } else {
                 mapId = GMapRenderer.getMapClientId(context, infoWindow);
             }
@@ -84,6 +87,7 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
 					.item(markerId)
 					.item(infoWindow.isShowOnClick())
 					.item(infoWindow.isStartOpen())
+					.item(addressBasedMarker)
 				.endFunction();
                 writer.write(jb.toString());
 				writer.write("});");
@@ -100,6 +104,7 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
 						.item(markerId)
 						.item(infoWindow.isShowOnClick())
 						.item(infoWindow.isStartOpen())
+						.item(addressBasedMarker)
 					.endFunction();
                     writer.write(jb.toString());
                     writer.write("});");
@@ -115,6 +120,7 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
 						.item(markerId)
 						.item(infoWindow.isShowOnClick())
 						.item(infoWindow.isStartOpen())
+						.item(addressBasedMarker)
 					.endFunction();
                     writer.write(jb.toString());
                     writer.write("});");
@@ -144,10 +150,10 @@ public class GMapInfoWindowRenderer extends CoreRenderer {
         return true;
     }
 
-	protected static UIComponent getParentMarker(UIComponent component) {
+	protected static GMapMarker getParentMarker(UIComponent component) {
 		UIComponent parent = component.getParent();
 		while(parent != null) {
-			if (parent instanceof GMapMarker) return parent;
+			if (parent instanceof GMapMarker) return ((GMapMarker) parent);
 			parent = parent.getParent();
 		}
 		return null;
