@@ -147,7 +147,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                 Document oldDOM = writer.getOldDocument();
                 UIViewRoot viewRoot = facesContext.getViewRoot();
 
-                applyBrowserChanges(getRenderIds(), normaliseToClientIds(getExecuteIds(), viewRoot), ec.getRequestParameterValuesMap(), oldDOM);
+                applyBrowserChanges(getRenderIds(), getExecuteIds(), ec.getRequestParameterValuesMap(), oldDOM);
                 writer.setDocument(oldDOM);
                 writer.saveOldDocument();
 
@@ -175,7 +175,7 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
                     }
                 } else {
                     writer.startSubtreeRendering(oldDOM);
-                    Collection<String> renderIds = normaliseToClientIds(getRenderIds(), viewRoot);
+                    Collection<String> renderIds = getRenderIds();
 
                     resetValues(viewRoot, renderIds);
 
@@ -328,21 +328,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
     public boolean isResetValues() {
         Object value = facesContext.getExternalContext().getRequestParameterMap().get("javax.faces.partial.resetValues");
         return (null != value && "true".equals(value)) ? true : false;
-    }
-
-    private Collection<String> normaliseToClientIds(Collection<String> ids, UIViewRoot root) {
-        ArrayList<String> newIds = new ArrayList<String>(ids.size());
-        for (String id : ids) {
-            UIComponent c = CoreUtils.findComponentByClientId(root, id);
-            if (c == null) {
-                c = CoreUtils.findComponentById(root, id);
-            }
-            if (c != null) {
-                newIds.add(c.getClientId());
-            }
-        }
-
-        return newIds;
     }
 
     private void resetValues(UIViewRoot viewRoot, Collection<String> renderIds) {
