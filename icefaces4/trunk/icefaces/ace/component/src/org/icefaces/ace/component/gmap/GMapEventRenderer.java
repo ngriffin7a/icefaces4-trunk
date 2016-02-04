@@ -72,6 +72,11 @@ public class GMapEventRenderer extends CoreRenderer {
 			throw new FacesException("ace:gMapEvent component '" + gMapEvent.getId() + "' is not nested inside an ace:gMap component.");
 		}
 		UIComponent gMapComponentParent = getGMapComponentParent(gMapEvent);
+		boolean addressBasedMarker = false;
+		if (gMapComponentParent instanceof GMapMarker) {
+			String address = ((GMapMarker) gMapComponentParent).getAddress();
+			addressBasedMarker = address != null && !"".equals(address);
+		}
 		JSONBuilder jb = JSONBuilder.create();
 		if (!gMapEvent.isDisabled()) {
 			jb.beginFunction("ice.ace.gMap.addEvent")
@@ -83,6 +88,7 @@ public class GMapEventRenderer extends CoreRenderer {
 				.item(gMapEvent.getRendererType())
 				.item(gMapEvent.getScriptToUse())
 				.item((gMapEvent.getListener() != null))
+				.item(addressBasedMarker)
 			.endFunction();
 		} else {
 			jb.beginFunction("ice.ace.gMap.removeEvent")
