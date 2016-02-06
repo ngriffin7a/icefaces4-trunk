@@ -23,7 +23,7 @@
 <!--    <groupId>com.icesoft.icefaces-ee</groupId> -->
 
 	<artifactId>bundle-parent</artifactId>
-    <version>4.2.0-SNAPSHOT-SNAPSHOT</version>
+    <version>4.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>ICEfaces</name>
     <description>ICEfaces Parent Project</description>
