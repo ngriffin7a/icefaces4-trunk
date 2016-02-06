@@ -64,7 +64,6 @@ ice.ace.SelectMenu = function(id, updateId, rowClass, highlightedRowClass, selec
 				self.cfg.labelIsInField = false;
 			}
 			self.initialize(self.element, self.update, options, rowClass, highlightedRowClass, selectedRowClass, behaviors);
-			self.onFocus(e);
 		});
         $element.children().on('click', function(e) {
             $element.off('focus');
@@ -390,7 +389,9 @@ ice.ace.SelectMenu.prototype = {
 				default:
 					if (event.which > 0) this.markFirstMatch(event.which);
                     this.selectEntry();
-					this.updateNOW(this.content);
+					if (this.cfg.showListOnInput) {
+						this.updateNOW(this.content);
+					}
 					event.stopPropagation();
 					event.preventDefault();
 					return;
@@ -540,19 +541,6 @@ ice.ace.SelectMenu.prototype = {
             element.removeClass(this.cfg.inFieldLabelStyleClass);
             element.data("labelIsInField", false);
         }
-		if (!this.cfg.showListOnInput) {
-			this.hasFocus = true;
-			this.render();
-
-			//disable temporarely onclick callback to avoid showing then hiding immediately the menu options
-			var self = this;
-			var original = this.onElementClick;
-			this.onElementClick = function() {
-			};
-			setTimeout(function() {
-				self.onElementClick = original;
-			}, 100);
-		}
 	},
 	
 	onElementClick: function(event) {
@@ -561,9 +549,7 @@ ice.ace.SelectMenu.prototype = {
 		}
         if (this.hideObserver) clearTimeout(this.hideObserver);
         if (this.blurObserver) clearTimeout(this.blurObserver);
-		if (ice.ace.jq(event.target).hasClass('fa-chevron-down') || !this.cfg.showListOnInput) {
-			this.updateNOW(this.content);
-		}
+		this.updateNOW(this.content);
 	},
 
     render: function() {
