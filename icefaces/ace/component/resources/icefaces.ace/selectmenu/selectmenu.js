@@ -977,16 +977,18 @@ ice.ace.SelectMenu.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 
 ice.ace.SelectMenu.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var value = ice.ace.resetValues[id];
-	if (!ice.ace.isEmpty(value)) {
-		var instance = ice.ace.SelectMenus[id];
-		if (instance && instance.initialized) instance.updateValue(value[0]);
-		else {
-			try {
-				ice.ace.jq(ice.ace.escapeClientId(id + "_input")).val(value[0]);
-				var element = ice.ace.jq(ice.ace.escapeClientId(id));
-				var displayedValue = element.find('span').get(0);
-				displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(value[1]);
-			} catch (e) { }
-		}
+	if (ice.ace.isSet(value)) {
+		if (value[0]) {
+			var instance = ice.ace.SelectMenus[id];
+			if (instance && instance.initialized) instance.updateValue(value[0]);
+			else {
+				try {
+					ice.ace.jq(ice.ace.escapeClientId(id + "_input")).val(value[0]);
+					var element = ice.ace.jq(ice.ace.escapeClientId(id));
+					var displayedValue = element.find('span').get(0);
+					displayedValue.innerHTML = ice.ace.SelectMenu.replaceSpaces(value[1]);
+				} catch (e) { }
+			}
+		} else ice.ace.SelectMenu.clear(id, inFieldLabel, inFieldLabelStyleClass);
 	}
 };

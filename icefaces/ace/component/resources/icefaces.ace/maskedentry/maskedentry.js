@@ -309,6 +309,7 @@ ice.ace.InputMask = function(id, cfg) {
 
 	if (this.cfg.inFieldLabel) {
 		if (!this.cfg.labelIsInField) ice.ace.setResetValue(this.jq.attr('id'), this.jq.val());
+		else ice.ace.setResetValue(this.jq.attr('id'), '');
 	} else ice.ace.setResetValue(this.jq.attr('id'), this.jq.val());
 
     this.jq.change(function() { ice.setFocus(''); });
@@ -360,10 +361,12 @@ ice.ace.InputMask = function(id, cfg) {
 
 ice.ace.InputMask.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var input = ice.ace.jq(ice.ace.escapeClientId(id));
+	if (!input.hasClass(inFieldLabelStyleClass))
+		ice.ace.setResetValue(id, input.val());
 	if (inFieldLabel) {
 		input.val(inFieldLabel);
 		input.addClass(inFieldLabelStyleClass);
-		input.data("inFieldLabelStyleClasslabelIsInField", true);
+		input.data("labelIsInField", true);
 		input.attr({name: input.attr("id") + "_label"});
 	} else {
 		input.val('');
@@ -372,5 +375,15 @@ ice.ace.InputMask.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 
 ice.ace.InputMask.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var value = ice.ace.resetValues[id];
-	if (!ice.ace.isEmpty(value)) ice.ace.jq(ice.ace.escapeClientId(id)).val(value);
+	if (ice.ace.isSet(value)) {
+		var input = ice.ace.jq(ice.ace.escapeClientId(id));
+		if (value) {
+			if (inFieldLabel) {
+				input.removeClass(inFieldLabelStyleClass);
+				input.data("labelIsInField", false);
+				input.attr({name: input.attr("id")});
+			}
+			input.val(value);
+		} else ice.ace.InputMask.clear(id, inFieldLabel, inFieldLabelStyleClass);
+	}
 };

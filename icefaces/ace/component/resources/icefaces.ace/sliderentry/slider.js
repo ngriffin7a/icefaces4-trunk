@@ -141,5 +141,5 @@ ice.ace.Slider.clear = function(id, value) {
 
 ice.ace.Slider.reset = function(id, value) {
 	var resetValue = ice.ace.resetValues[id];
-	if (!ice.ace.isEmpty(resetValue)) ice.ace.Slider.updateValue(id, resetValue);
+	if (ice.ace.isSet(resetValue)) ice.ace.Slider.updateValue(id, resetValue);
 };

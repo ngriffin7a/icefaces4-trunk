@@ -33,7 +33,7 @@ ice.ace.TextAreaEntry = function(id, cfg) {
 			this.jq.attr({name: inputId});
 			this.jq.val("");
 			this.jq.removeClass(cfg.inFieldLabelStyleClass);
-		} else ice.ace.setResetValue(this.id, this.jq.val());
+		}
         this.jq.focus(
             function() {
                 var input = jQ(this);
@@ -51,7 +51,11 @@ ice.ace.TextAreaEntry = function(id, cfg) {
                     input.addClass(cfg.inFieldLabelStyleClass);
                 }
             });
-    } else ice.ace.setResetValue(this.id, this.jq.val());
+    }
+
+	if (!this.jq.hasClass(cfg.inFieldLabelStyleClass))
+		ice.ace.setResetValue(this.id, this.jq.val());
+
     this.jq.blur(function() {
         ice.setFocus();
     });
@@ -118,7 +122,8 @@ ice.ace.jq(document).on("keydown keypress", function(e){
 
 ice.ace.TextAreaEntry.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
-	ice.ace.setResetValue(id, input.val());
+	if (!input.hasClass("ui-input-label-infield"))
+		ice.ace.setResetValue(id, input.val());
 	if (inFieldLabel) {
 		input.attr({name: id + "_label"});
 		input.val(inFieldLabel);
@@ -130,12 +135,14 @@ ice.ace.TextAreaEntry.clear = function(id, inFieldLabel, inFieldLabelStyleClass)
 
 ice.ace.TextAreaEntry.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var value = ice.ace.resetValues[id];
-	if (!ice.ace.isEmpty(value)) {
+	if (ice.ace.isSet(value)) {
 		var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
-		if (inFieldLabel) {
-			input.attr({name: input.attr('id')});
-			input.removeClass("ui-input-label-infield");
-		}
-		input.val(value);
+		if (value) {
+			if (inFieldLabel) {
+				input.attr({name: input.attr('id')});
+				input.removeClass("ui-input-label-infield");
+			}
+			input.val(value);
+		} else ice.ace.TextAreaEntry.clear(id, inFieldLabel, inFieldLabelStyleClass);
 	}
 };

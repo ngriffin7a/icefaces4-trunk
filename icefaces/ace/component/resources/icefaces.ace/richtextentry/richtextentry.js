@@ -165,7 +165,7 @@ ice.ace.richtextentry.reset = function(editor) {
 	try {
 		if (CKEDITOR.instances[editor]) {
 			var value = ice.ace.resetValues[editor];
-			if (!ice.ace.isEmpty(value)) {
+			if (ice.ace.isSet(value)) {
 				CKEDITOR.instances[editor].setData(value);
 				document.getElementById(editor).value = value;
 			}

@@ -222,7 +222,7 @@ ice.ace.checkboxbutton.clear = function(id, ariaEnabled, multiple) {
 
 ice.ace.checkboxbutton.reset = function(id, ariaEnabled, multiple) {
 	var value = ice.ace.resetValues[id];
-	if (!ice.ace.isEmpty(value)) {
+	if (ice.ace.isSet(value)) {
 		var jqId = ice.ace.escapeClientId(id);
 		var innerSpanSelector = jqId + " > span > span";
 		var buttonSelector = jqId + " > span > span > button";

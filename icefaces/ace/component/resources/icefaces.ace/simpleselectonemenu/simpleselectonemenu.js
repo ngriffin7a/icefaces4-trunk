@@ -16,6 +16,16 @@
 
 ice.ace.SimpleSelectOneMenu = function(id, cfg) {
 var $select = ice.ace.jq(ice.ace.escapeClientId(id)).find('select');
+ice.ace.setResetValue(id, $select.val());
 $select.off('change').on('change', function(e){ e.stopPropagation(); if (cfg.behaviors && cfg.behaviors.change) ice.ace.ab(cfg.behaviors.change); });
 $select.off('blur').on('blur', function(e){ e.stopPropagation(); if (cfg.behaviors && cfg.behaviors.blur) {ice.setFocus('');ice.ace.ab(cfg.behaviors.blur);}});
+};
+
+ice.ace.SimpleSelectOneMenu.clear = function(id) {
+// no need to do anything
+};
+
+ice.ace.SimpleSelectOneMenu.reset = function(id) {
+var value = ice.ace.resetValues[id];
+if (ice.ace.isSet(value)) ice.ace.jq(ice.ace.escapeClientId(id)).find('select').val(value);
 };

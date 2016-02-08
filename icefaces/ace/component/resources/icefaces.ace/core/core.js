@@ -473,6 +473,6 @@ ice.ace.setResetValue = function(id, value) {
 	}
 };
 
-ice.ace.isEmpty = function(value) {
-	return typeof value == 'undefined' || value === null || value === '';
+ice.ace.isSet = function(value) {
+	return !(typeof value == 'undefined' || value === null);
 };

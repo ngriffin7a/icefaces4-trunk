@@ -226,7 +226,7 @@ ice.ace.radiobutton.clear = function(id, ariaEnabled, multiple) {
 
 ice.ace.radiobutton.reset = function(id, ariaEnabled, multiple) {
 	var value = ice.ace.resetValues[id];
-	if (!ice.ace.isEmpty(value)) {
+	if (ice.ace.isSet(value)) {
 		var jqId = ice.ace.escapeClientId(id);
 		var innerSpanSelector = jqId + " > span > span";
 		var buttonSelector = jqId + " > span > span > button";
