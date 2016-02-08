@@ -276,6 +276,6 @@ ice.ace.Calendar.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var instance = ice.ace.instanceNoLazyInit(id);
 	if (instance) {
 		var value = ice.ace.resetValues[id];
-		if (!ice.ace.isEmpty(value)) instance.setDate(value);
+		if (ice.ace.isSet(value)) instance.setDate(value);
 	}
 };

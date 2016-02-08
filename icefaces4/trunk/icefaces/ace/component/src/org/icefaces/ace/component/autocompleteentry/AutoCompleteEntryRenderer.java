@@ -341,7 +341,8 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
         writer.writeAttribute("type", "text/javascript", null);
         writer.writeText("(function() {", null);
         writer.writeText("var instance = ice.ace.Autocompleters[\"" + clientId + "\"];", null);
-        writer.writeText("instance.updateField('" + escapeJavascriptString(renderedValue) + "', " + focus + ");", null);
+        writer.writeText("instance.updateField('" + escapeJavascriptString(renderedValue) + "', " + focus + ", "
+			+ (labelIsInField ? (value != null ? value : "''") : "null") + ");", null);
         writer.writeText("})();", null);
         writer.endElement("script");
         writer.endElement("span");

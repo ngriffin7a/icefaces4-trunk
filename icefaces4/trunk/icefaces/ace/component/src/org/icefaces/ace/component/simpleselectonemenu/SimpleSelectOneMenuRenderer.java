@@ -91,6 +91,7 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
         writer.startElement("span", uiComponent);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", "ui-simpleselectonemenu " + simpleSelectOneMenu.getStyleClass(), null);
+		renderResetSettings(facesContext, uiComponent);
 
 		writeLabelAndIndicatorBefore(labelAttributes);
 		
@@ -141,6 +142,8 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		
 		writeLabelAndIndicatorAfter(labelAttributes);
 
+		writer.startElement("script", null);
+		writer.writeAttribute("type", "text/javascript", null);
 		if (!simpleSelectOneMenu.getClientBehaviors().isEmpty()) {
 			// script
 			JSONBuilder jb = JSONBuilder.create();
@@ -149,13 +152,13 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 			encodeClientBehaviors(facesContext, simpleSelectOneMenu, jb);
 			jb.endMap();
 			
-			writer.startElement("script", null);
-			writer.writeAttribute("type", "text/javascript", null);
 			writer.writeText("ice.ace.SimpleSelectOneMenu('" + clientId + "', " + jb.toString() + ");", null);
-			// hashcode to detect changes in the <select> element and cause an update of this script element 
-			writer.writeText("// " + hashBuffer.toString().hashCode(), null);
-			writer.endElement("script");
 		}
+		writer.writeText("ice.ace.setResetValue('"+clientId+"', "
+			+ "ice.ace.jq(ice.ace.escapeClientId('"+clientId+"')).find('select').val());", null);
+		// hashcode to detect changes in the <select> element and cause an update of this script element 
+		writer.writeText("// " + hashBuffer.toString().hashCode(), null);
+		writer.endElement("script");
 		
 		writer.endElement("span");
     }
@@ -233,5 +236,21 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		}
 		
 		return (value != null ? value.toString() : "");
+	}
+
+	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		String clientId = component.getClientId(context);
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("SimpleSelectOneMenu");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
 	}
 }

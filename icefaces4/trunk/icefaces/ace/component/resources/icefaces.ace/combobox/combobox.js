@@ -1003,14 +1003,16 @@ ice.ace.ComboBox.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
 
 ice.ace.ComboBox.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
 	var value = ice.ace.resetValues[id];
-	if (!ice.ace.isEmpty(value)) {
-		var instance = ice.ace.ComboBoxes[id];
-		if (instance && instance.initialized) instance.updateValue(value[0]);
-		else {
-			try {
-				ice.ace.jq(ice.ace.escapeClientId(id + "_hidden")).val(value[0])
-				ice.ace.jq(ice.ace.escapeClientId(id + "_input")).val(value[1]);
-			} catch (e) { }
-		}
+	if (ice.ace.isSet(value)) {
+		if (value[0]) {
+			var instance = ice.ace.ComboBoxes[id];
+			if (instance && instance.initialized) instance.updateValue(value[0]);
+			else {
+				try {
+					ice.ace.jq(ice.ace.escapeClientId(id + "_hidden")).val(value[0])
+					ice.ace.jq(ice.ace.escapeClientId(id + "_input")).val(value[1]);
+				} catch (e) { }
+			}
+		} else ice.ace.ComboBox.clear(id, inFieldLabel, inFieldLabelStyleClass);
 	}
 };
