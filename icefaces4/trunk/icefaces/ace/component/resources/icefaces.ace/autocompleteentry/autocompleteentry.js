@@ -64,7 +64,10 @@ ice.ace.Autocompleter = function(id, updateId, rowClass, selectedRowClass, delay
 				$element.data("labelIsInField", false);
 				self.cfg.labelIsInField = false;
 			}
-			self.initialize(self.element, self.update, options, rowClass, selectedRowClass, behaviors); 
+			setTimeout(function() { // avoid race condition on FF, ICE-10941
+				$element.get(0).focus();
+				self.initialize(self.element, self.update, options, rowClass, selectedRowClass, behaviors);
+			}, 50);
 		});
 	}
 };
@@ -172,7 +175,9 @@ ice.ace.Autocompleter.prototype = {
         ice.ace.jq(this.update).hide();
         ice.ace.jq(this.element).data("labelIsInField", this.cfg.labelIsInField);
 		ice.ace.jq(this.element).on("blur", function(e) { self.onBlur.call(self, e); });
-		ice.ace.jq(this.element).on("focus", function(e) { self.onFocus.call(self, e); });
+		ice.ace.jq(this.element).on("focus", function(e) { setTimeout(function() { // ICE-10941
+			self.onFocus.call(self, e);
+		}, 50); });
         var keyEvent = "keypress";
         if (ice.ace.Autocompleter.Browser.IE || ice.ace.Autocompleter.Browser.WebKit
 			|| !!navigator.userAgent.match(/Trident.*rv\:11\./)) { // IE11
