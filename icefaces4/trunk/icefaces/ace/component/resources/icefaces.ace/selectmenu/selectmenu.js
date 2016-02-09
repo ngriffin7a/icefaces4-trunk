@@ -114,6 +114,7 @@ KEY_BACKSPACE: 8,
 KEY_TAB:       9,
 KEY_RETURN:   13,
 KEY_ESC:      27,
+KEY_SPACE:    32,
 KEY_LEFT:     37,
 KEY_UP:       38,
 KEY_RIGHT:    39,
@@ -409,6 +410,12 @@ ice.ace.SelectMenu.prototype = {
 					event.preventDefault();
                     return;
                 case ice.ace.SelectMenu.keys.KEY_ESC:
+                    this.hide();
+                    this.active = false;
+					event.stopPropagation();
+					event.preventDefault();
+                    return;
+				case ice.ace.SelectMenu.keys.KEY_SPACE:
                     this.hide();
                     this.active = false;
 					event.stopPropagation();
