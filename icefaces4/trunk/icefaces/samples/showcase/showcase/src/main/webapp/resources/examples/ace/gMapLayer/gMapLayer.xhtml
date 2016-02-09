@@ -21,6 +21,8 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{msgs['example.ace.gMapLayer.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.gMapLayer.description']}"/>
 
     <ui:define name="example">
     <ace:gMap id="gMapLayer"  style="width: 675px; height: 500px" zoomLevel="16" latitude="${gMapLayerBean.lat}" longitude="${gMapLayerBean.lon}">
