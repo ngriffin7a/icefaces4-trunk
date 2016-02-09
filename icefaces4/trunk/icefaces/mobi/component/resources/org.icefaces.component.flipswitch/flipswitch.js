@@ -124,7 +124,7 @@ mobi.flipswitch.clear = function(id) {
 
 mobi.flipswitch.reset = function(id) {
 	var value = ice.ace.resetValues[id];
-	if (!ice.ace.isEmpty(value)) {
+	if (ice.ace.isSet(value)) {
 		var element = document.getElementById(id);
 		var hidden = document.getElementById(id + "_hidden");
 
