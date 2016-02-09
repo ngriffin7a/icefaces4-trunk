@@ -21,7 +21,9 @@
     xmlns:ace="http://www.icefaces.org/icefaces/components" 
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
-    
+    <ui:param name="title" value="#{msgs['example.ace.slider.submition.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.slider.submition.description']}"/>
+
     <ui:define name="example">
         <h:panelGrid columns="2" styleClass="centeredPanelGrid">
             <ace:panel header="Basic Slider" style="height: 150px;">

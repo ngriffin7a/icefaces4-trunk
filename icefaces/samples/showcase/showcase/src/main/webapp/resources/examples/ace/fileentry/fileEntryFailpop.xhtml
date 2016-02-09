@@ -21,7 +21,9 @@
     xmlns:ace="http://www.icefaces.org/icefaces/components" 
     xmlns:ui="http://java.sun.com/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
-    
+    <ui:param name="title" value="#{msgs['example.ace.fileentry.failpop.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.fileentry.failpop.description']}"/>
+
     <ui:define name="example">
         <div class="instance">
         <span class="row">

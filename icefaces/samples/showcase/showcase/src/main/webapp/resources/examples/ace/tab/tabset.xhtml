@@ -22,7 +22,9 @@
     xmlns:ace="http://www.icefaces.org/icefaces/components" 
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
-    
+    <ui:param name="title" value="#{msgs['example.ace.tabSet.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.tabSet.description']}"/>
+
     <ui:define name="example">
         <h:form id="form">
             <ace:tabSet id="sampleTabSet" clientSide="false">

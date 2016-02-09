@@ -21,6 +21,8 @@
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{msgs['example.ace.list.dual.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.list.dual.description']}"/>
 
     <ui:param value="#{listDualBean}" name="backing" />
 

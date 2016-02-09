@@ -22,7 +22,9 @@
     xmlns:ace="http://www.icefaces.org/icefaces/components"
     xmlns:icecore="http://www.icefaces.org/icefaces/core"
     template="/resources/templates/content-template.xhtml">
-    
+    <ui:param name="title" value="#{msgs['example.ace.submitMonitor.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.submitMonitor.description']}"/>
+
     <ui:define name="example">
         <h:form id="demoForm">
             <h:panelGroup id="overall" layout="block">

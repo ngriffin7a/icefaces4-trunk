@@ -21,7 +21,9 @@
     xmlns:ace="http://www.icefaces.org/icefaces/components" 
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
-    
+    <ui:param name="title" value="#{msgs['example.ace.slider.listener.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.slider.listener.description']}"/>
+
     <ui:define name="example">
         <h:form id="form">
             <ace:panel>
