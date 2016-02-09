@@ -21,7 +21,9 @@
     xmlns:ace="http://www.icefaces.org/icefaces/components" 
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
-    
+    <ui:param name="title" value="#{msgs['example.ace.checkboxButton.custom.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.checkboxButton.custom.description']}"/>
+
     <ui:define name="example">
         <style type="text/css">
             .ice-checkboxbutton button {

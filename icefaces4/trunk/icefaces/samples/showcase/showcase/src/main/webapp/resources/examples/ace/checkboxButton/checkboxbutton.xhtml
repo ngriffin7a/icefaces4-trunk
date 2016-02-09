@@ -21,7 +21,9 @@
     xmlns:ace="http://www.icefaces.org/icefaces/components" 
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
     template="/resources/templates/content-template.xhtml">
-    
+    <ui:param name="title" value="#{msgs['example.ace.checkboxButton.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.checkboxButton.description']}"/>
+
     <ui:define name="example">
         <h:form id= "form" style="text-align: center">
             <ace:panel>
