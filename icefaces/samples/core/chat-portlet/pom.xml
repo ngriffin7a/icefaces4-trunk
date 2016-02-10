@@ -158,12 +158,17 @@
 				<dependency>
 					<groupId>com.liferay.faces.bridge</groupId>
 					<artifactId>liferay-faces-bridge-ext</artifactId>
-					<version>1.0.0</version>
+					<version>3.0.0</version>
+				</dependency>
+				<dependency>
+					<groupId>com.liferay.faces.util</groupId>
+					<artifactId>liferay-faces-util</artifactId>
+					<version>3.0.0</version>
 				</dependency>
 				<dependency>
 					<groupId>com.liferay.faces.portal</groupId>
 					<artifactId>liferay-faces-portal</artifactId>
-					<version>1.0.0</version>
+					<version>3.0.0</version>
 				</dependency>
                 <dependency>
                     <groupId>javax.portlet</groupId>
