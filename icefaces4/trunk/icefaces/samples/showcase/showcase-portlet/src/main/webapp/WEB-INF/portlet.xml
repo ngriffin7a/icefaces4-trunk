@@ -1890,7 +1890,7 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/fileentry/validation.xhtml</value>
+            <value>/resources/examples/ace/fileentry/fileEntryValidation.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
