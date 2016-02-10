@@ -134,17 +134,16 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>javax.portlet</groupId>
-                    <artifactId>portlet-api</artifactId>
-                    <version>${portlet.api.version}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>com.liferay.faces</groupId>
-                    <artifactId>liferay-faces-bridge-impl</artifactId>
-                    <version>${liferayfaces.version}</version>
+			<dependencies>
+    			<dependency>
+       				<groupId>com.liferay.faces.alloy</groupId>
+       				<artifactId>liferay-faces-alloy</artifactId>
+       				<version>2.0.0</version>
+    			</dependency>
+				<dependency>
+					<groupId>com.liferay.faces.bridge</groupId>
+					<artifactId>liferay-faces-bridge-impl</artifactId>
+					<version>4.0.0</version>
                     <exclusions>
                         <exclusion>
                             <groupId>com.sun.faces</groupId>
@@ -155,6 +154,22 @@
                             <artifactId>jsf-impl</artifactId>
                         </exclusion>
                     </exclusions>
+				</dependency>
+				<dependency>
+					<groupId>com.liferay.faces.bridge</groupId>
+					<artifactId>liferay-faces-bridge-ext</artifactId>
+					<version>1.0.0</version>
+				</dependency>
+				<dependency>
+					<groupId>com.liferay.faces.portal</groupId>
+					<artifactId>liferay-faces-portal</artifactId>
+					<version>1.0.0</version>
+				</dependency>
+                <dependency>
+                    <groupId>javax.portlet</groupId>
+                    <artifactId>portlet-api</artifactId>
+                    <version>${portlet.api.version}</version>
+                    <scope>provided</scope>
                 </dependency>
             </dependencies>
         </profile>
