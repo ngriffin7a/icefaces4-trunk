@@ -273,7 +273,7 @@
             <fileset dir="${bundle.dir.bin}/samples/core/chat-portlet" includes="build.xml"/>
         </subant>
 
-        <!-- Not yet ready to distribute the Liferay Faces Bridge yet. -->
+        <!-- Do not distribute the Liferay Faces Bridge libs with ICEfaces. -->
         <delete dir="${bundle.dir.bin}/lib/portlets/liferayfaces"/>
     </target>
 
@@ -306,7 +306,7 @@
         <delete dir="${bundle.dir.src}/samples/dist"/>
         <delete dir="${bundle.dir.src}/samples/core/test"/>        
         <delete dir="${bundle.dir.src}/samples/core/basic"/>
-
+		<!-- Do not distribute the Liferay Faces Bridge libs with ICEfaces. -->
         <delete dir="${bundle.dir.src}/lib/portlets/liferayfaces"/>
     </target>
 
