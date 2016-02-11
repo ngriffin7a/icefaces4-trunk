@@ -32,7 +32,7 @@ import org.icefaces.demo.emporium.util.StringUtil;
 @ManagedBean(name=ChatBean.BEAN_NAME)
 @CustomScoped(value="#{window}")
 public class ChatBean implements Serializable {
-	private static final long serialVersionUID = -8509188996141426216L;
+	private static final long serialVersionUID = -6920205329693817691L;
 	
 	public static final String BEAN_NAME = "chatBean";
 	private static final Logger log = Logger.getLogger(ChatBean.class.getName());
@@ -55,12 +55,18 @@ public class ChatBean implements Serializable {
 	private String currentMessage;
 	private ChatPosition position = ChatPosition.TAB;
 	private boolean renderOccupants = true;
+	private ChatService chatService;
+	private SettingsBean settingsBean;
 	
 	@PostConstruct
 	public void initChatBean() {
+		// Initialize some beans
+		chatService = (ChatService)FacesUtils.getManagedBean(ChatService.BEAN_NAME);
+		settingsBean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
+		
 		if (TestFlags.TEST_AUTOJOIN_CHAT) {
 			// Join our default room
-			((ChatService)FacesUtils.getManagedBean(ChatService.BEAN_NAME)).joinDefaultRoom(this);
+			chatService.joinDefaultRoom(this);
 		}
 	}
 	
@@ -69,7 +75,9 @@ public class ChatBean implements Serializable {
 		if (currentRoom != null) {
 			log.info("ChatBean timed out, removing user " + getName() + " from chat room " + currentRoom.getName());
 			
-			((ChatService)FacesUtils.getManagedBean(ChatService.BEAN_NAME)).leaveRoom(this, true);
+			if (chatService != null) {
+				chatService.leaveRoom(this, true);
+			}
 		}
 	}
 	
@@ -89,7 +97,6 @@ public class ChatBean implements Serializable {
 		// Try to get our name each time from the SettingsBean
 		// This saves us having to manually sync the names between beans
 		try{
-			SettingsBean settingsBean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
 			if ((settingsBean != null) && (StringUtil.validString(settingsBean.getName()))) {
 				cachedName = settingsBean.getName();
 				return settingsBean.getName();
