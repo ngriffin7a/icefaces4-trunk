@@ -27,21 +27,21 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 
 import org.icefaces.application.ProductInfo;
 import org.icefaces.demo.emporium.bid.model.AuctionItem;
 import org.icefaces.demo.emporium.bid.util.AuctionItemGenerator;
 import org.icefaces.demo.emporium.message.GlobalMessageBean;
 import org.icefaces.demo.emporium.test.TestFlags;
-import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.StringUtil;
 import org.icefaces.demo.emporium.util.TimestampUtil;
 import org.icefaces.demo.emporium.watcher.AuctionWatcher;
 
-@ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
+@ManagedBean(name=AuctionService.BEAN_NAME)
 @ApplicationScoped
 public class AuctionService implements Serializable {
-	private static final long serialVersionUID = -2464887058754854650L;
+	private static final long serialVersionUID = -7792292390252586384L;
 	
 	public static final String BEAN_NAME = "auctionService";
 	private static final Logger log = Logger.getLogger(AuctionService.class.getName());
@@ -52,14 +52,14 @@ public class AuctionService implements Serializable {
 	private List<AuctionItem> auctions = new Vector<AuctionItem>(MINIMUM_ITEMS);
 	private String productInfoString;
 	private String startTime = TimestampUtil.deploystamp();
+	
+	@ManagedProperty(value="#{" + GlobalMessageBean.BEAN_NAME + "}")
 	private GlobalMessageBean globalMessage;
 	
 	@PostConstruct
 	public void initAuctionService() {
 		log.info(TestFlags.getLogStatus());
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
-		
-		globalMessage = (GlobalMessageBean)FacesUtils.getManagedBean(GlobalMessageBean.BEAN_NAME);
 		
 		generateDefaultData();
 		
@@ -207,6 +207,14 @@ public class AuctionService implements Serializable {
 
 	public void setAuctions(List<AuctionItem> auctions) {
 		this.auctions = auctions;
+	}
+	
+	public GlobalMessageBean getGlobalMessage() {
+		return globalMessage;
+	}
+
+	public void setGlobalMessage(GlobalMessageBean globalMessage) {
+		this.globalMessage = globalMessage;
 	}
 	
 	public String getStartTime() {
