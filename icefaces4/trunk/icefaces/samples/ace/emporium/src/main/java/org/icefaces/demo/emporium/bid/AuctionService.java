@@ -41,7 +41,7 @@ import org.icefaces.demo.emporium.watcher.AuctionWatcher;
 @ManagedBean(name=AuctionService.BEAN_NAME,eager=true)
 @ApplicationScoped
 public class AuctionService implements Serializable {
-	private static final long serialVersionUID = -6062882608397004977L;
+	private static final long serialVersionUID = -2464887058754854650L;
 	
 	public static final String BEAN_NAME = "auctionService";
 	private static final Logger log = Logger.getLogger(AuctionService.class.getName());
@@ -52,11 +52,14 @@ public class AuctionService implements Serializable {
 	private List<AuctionItem> auctions = new Vector<AuctionItem>(MINIMUM_ITEMS);
 	private String productInfoString;
 	private String startTime = TimestampUtil.deploystamp();
+	private GlobalMessageBean globalMessage;
 	
 	@PostConstruct
 	public void initAuctionService() {
 		log.info(TestFlags.getLogStatus());
 		log.info("Starting up AuctionService, generating " + MINIMUM_ITEMS + " auction items.");
+		
+		globalMessage = (GlobalMessageBean)FacesUtils.getManagedBean(GlobalMessageBean.BEAN_NAME);
 		
 		generateDefaultData();
 		
@@ -125,7 +128,6 @@ public class AuctionService implements Serializable {
 		sortAuctions();
 		
 		if (!silent) {
-			GlobalMessageBean globalMessage = (GlobalMessageBean)FacesUtils.getManagedBean(GlobalMessageBean.BEAN_NAME);
 			if (globalMessage != null) {
 				globalMessage.setLastUpdated(toAdd);
 				
@@ -145,7 +147,6 @@ public class AuctionService implements Serializable {
 		if (auctions.remove(toRemove)) {
 			sortAuctions();
 			
-			GlobalMessageBean globalMessage = (GlobalMessageBean)FacesUtils.getManagedBean(GlobalMessageBean.BEAN_NAME);
 			if (globalMessage != null) {
 				if (toRemove.getBids() > 0) {
 					globalMessage.addMessage("Auction won for item '" + toRemove.getName() + "' with " + toRemove.getBids() + " bids and a winning price of " +
@@ -171,7 +172,6 @@ public class AuctionService implements Serializable {
 			double oldPrice = toUpdate.getPrice();
 			toUpdate.placeBid(newBid);
 			
-			GlobalMessageBean globalMessage = (GlobalMessageBean)FacesUtils.getManagedBean(GlobalMessageBean.BEAN_NAME);
 			if (globalMessage != null) {
 				globalMessage.setLastUpdated(toUpdate);
 				
