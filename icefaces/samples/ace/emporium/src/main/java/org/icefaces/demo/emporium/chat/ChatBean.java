@@ -23,16 +23,16 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 
 import org.icefaces.demo.emporium.settings.SettingsBean;
 import org.icefaces.demo.emporium.test.TestFlags;
-import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.StringUtil;
 
 @ManagedBean(name=ChatBean.BEAN_NAME)
 @CustomScoped(value="#{window}")
 public class ChatBean implements Serializable {
-	private static final long serialVersionUID = -6920205329693817691L;
+	private static final long serialVersionUID = -1437691596104071036L;
 	
 	public static final String BEAN_NAME = "chatBean";
 	private static final Logger log = Logger.getLogger(ChatBean.class.getName());
@@ -55,29 +55,28 @@ public class ChatBean implements Serializable {
 	private String currentMessage;
 	private ChatPosition position = ChatPosition.TAB;
 	private boolean renderOccupants = true;
-	private ChatService chatService;
+	
+	@ManagedProperty(value="#{" + SettingsBean.BEAN_NAME + "}")
 	private SettingsBean settingsBean;
+	
+	@ManagedProperty(value="#{" + ChatService.BEAN_NAME + "}")
+	private ChatService service;
 	
 	@PostConstruct
 	public void initChatBean() {
-		// Initialize some beans
-		chatService = (ChatService)FacesUtils.getManagedBean(ChatService.BEAN_NAME);
-		settingsBean = (SettingsBean)FacesUtils.getManagedBean(SettingsBean.BEAN_NAME);
-		
 		if (TestFlags.TEST_AUTOJOIN_CHAT) {
 			// Join our default room
-			chatService.joinDefaultRoom(this);
+			if (service != null) {
+				service.joinDefaultRoom(this);
+			}
 		}
 	}
 	
 	@PreDestroy
 	public void cleanupChatBean() {
-		if (currentRoom != null) {
+		if ((currentRoom != null) && (service != null)) {
 			log.info("ChatBean timed out, removing user " + getName() + " from chat room " + currentRoom.getName());
-			
-			if (chatService != null) {
-				chatService.leaveRoom(this, true);
-			}
+			service.leaveRoom(this, true);
 		}
 	}
 	
@@ -148,6 +147,22 @@ public class ChatBean implements Serializable {
 
 	public void setRenderOccupants(boolean renderOccupants) {
 		this.renderOccupants = renderOccupants;
+	}
+	
+	public SettingsBean getSettingsBean() {
+		return settingsBean;
+	}
+
+	public void setSettingsBean(SettingsBean settingsBean) {
+		this.settingsBean = settingsBean;
+	}
+
+	public ChatService getService() {
+		return service;
+	}
+
+	public void setService(ChatService service) {
+		this.service = service;
 	}
 	
 	public boolean getIsPositionTab() {
