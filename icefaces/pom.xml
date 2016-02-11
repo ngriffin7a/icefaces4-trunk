@@ -121,7 +121,7 @@
 
         <icesoft.company.name>ICEsoft Technologies Inc.</icesoft.company.name>
         <icesoft.copyright>ICEsoft Technologies Canada Corp., All Rights Reserved.</icesoft.copyright>
-        <icesoft.copyright.year>2015</icesoft.copyright.year>
+        <icesoft.copyright.year>2016</icesoft.copyright.year>
 
         <javadoc.title>
             ${icefaces.product.name} Java API Documentation
@@ -134,9 +134,9 @@
         </tld.title>
 
         <!-- Versions of JSF implementations -->
-        <mojarra.version>2.2.12</mojarra.version>
+        <mojarra.version>2.2.13</mojarra.version>
 
-        <myfaces.version>2.2.8</myfaces.version> 
+        <myfaces.version>2.2.9</myfaces.version> 
 
         <!-- Various library versions settable from one place -->
         <annotation.version>1.0</annotation.version>
@@ -146,7 +146,10 @@
         <servlet.api.version>3.0.1</servlet.api.version>
 
         <!-- Use with Liferay 6.2 -->
-        <liferayfaces.version>4.2.0-m2</liferayfaces.version>
+        <liferayfaces.version>4.2.5-ga6</liferayfaces.version>
+
+        <!-- Use with Apache Pluto -->
+        <pluto.version>2.0.2</pluto.version>
 
         <!-- To avoid warnings about platform dependent actions when copying resources -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
