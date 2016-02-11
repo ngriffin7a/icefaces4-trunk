@@ -28,16 +28,17 @@ import org.icefaces.demo.emporium.util.FacesUtils;
 @ManagedBean(name=UserBean.BEAN_NAME)
 @SessionScoped
 public class UserBean implements Serializable {
-	private static final long serialVersionUID = 8933424884253776964L;
+	private static final long serialVersionUID = -4964023012859095320L;
 
 	public static final String BEAN_NAME = "userBean";
 	
 	private boolean authenticated = false;
 	private boolean locked = false; // Potentially lock a session from further Auth attempts
+	private UserCounter counter;
 	
 	@PostConstruct
 	public void initUserBean() {
-		UserCounter counter = (UserCounter)FacesUtils.getManagedBean(UserCounter.BEAN_NAME);
+		counter = (UserCounter)FacesUtils.getManagedBean(UserCounter.BEAN_NAME);
 		if (counter != null) {
 			counter.countUser();
 		}
@@ -45,7 +46,6 @@ public class UserBean implements Serializable {
 	
 	@PreDestroy
 	public void cleanupUserBean() {
-		UserCounter counter = (UserCounter)FacesUtils.getManagedBean(UserCounter.BEAN_NAME);
 		if (counter != null) {
 			counter.cleanupUser();
 		}
