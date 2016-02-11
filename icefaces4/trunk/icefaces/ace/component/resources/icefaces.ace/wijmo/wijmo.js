@@ -3897,7 +3897,7 @@ function wijmoASPNetParseOptions(o) {
 		
 		_unregisterDocumentClickHandler: function() { // ICE-8699
 			if (this._documentClickHandler) {
-				$(document).unbind("click.wijmenudoc", this._documentClickHandler);
+				$(document).unbind("click contextmenu.wijmenudoc", this._documentClickHandler);
 				this._documentClickHandler = null;
 			}
 		},
