@@ -116,7 +116,7 @@ public class TextEntryRenderer extends InputRenderer {
         String embeddedLabel = null;
         String nameToRender = clientId + "_input";
         String valueToRender = null;
-		if (textEntry.isValid()) {
+		if (textEntry.isValid() || textEntry.getSubmittedValue() == null) {
 			valueToRender = textEntry.isRedisplay() ? ComponentUtils.getStringValueToRender(context, textEntry) : "";
 		} else {
 			valueToRender = (String) textEntry.getSubmittedValue();
