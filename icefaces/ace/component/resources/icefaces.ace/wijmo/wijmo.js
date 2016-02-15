@@ -4136,6 +4136,7 @@ function wijmoASPNetParseOptions(o) {
 				}
 				self._hideSubmenu(self.domObject.menucontainer);
 			}
+			self._unregisterDocumentClickHandler(); // ICE-10942
 		},
 
 		hideAllMenus: function () {
