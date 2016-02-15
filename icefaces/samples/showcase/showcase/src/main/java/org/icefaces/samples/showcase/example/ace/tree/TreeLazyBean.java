@@ -34,14 +34,7 @@ public class TreeLazyBean implements Serializable {
 
     private NodeStateMap stateMap;
     private LazyNodeDataModel<LocationNodeImpl> lazyModel = new ExampleLazyModel();
-    private NodeStateCreationCallback initState = new NodeStateCreationCallback() {
-        public NodeState initializeState(NodeState newState, Object node) {
-            LocationNodeImpl loc = (LocationNodeImpl) node;
-            if (loc.getType().equals("country"))
-                newState.setExpanded(true);
-            return newState;
-        }
-    };
+    private NodeStateCreationCallback initState = new TreeNodeStateCreationCallback();
 
     public LazyNodeDataModel<LocationNodeImpl> getLazyModel() {
         return lazyModel;
@@ -57,5 +50,14 @@ public class TreeLazyBean implements Serializable {
 
     public void setStateMap(NodeStateMap stateMap) {
         this.stateMap = stateMap;
+    }
+
+    private static class TreeNodeStateCreationCallback implements NodeStateCreationCallback, Serializable {
+        public NodeState initializeState(NodeState newState, Object node) {
+            LocationNodeImpl loc = (LocationNodeImpl) node;
+            if (loc.getType().equals("country"))
+                newState.setExpanded(true);
+            return newState;
+        }
     }
 }
