@@ -18,11 +18,12 @@ package org.icefaces.samples.showcase.example.ace.tree;
 
 import org.icefaces.ace.model.tree.LazyNodeDataModel;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ExampleLazyModel extends LazyNodeDataModel<LocationNodeImpl> {
+public class ExampleLazyModel extends LazyNodeDataModel<LocationNodeImpl> implements Serializable {
     private List<LocationNodeImpl> treeRoots = TreeDataFactory.getTreeRoots();
 
     @Override
