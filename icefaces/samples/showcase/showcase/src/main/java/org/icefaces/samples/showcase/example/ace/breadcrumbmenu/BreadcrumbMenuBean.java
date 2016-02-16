@@ -67,14 +67,7 @@ public class BreadcrumbMenuBean implements Serializable {
     private MenuModel menuModel1;
     private MenuModel menuModel2;
 
-    private NodeStateCreationCallback contractProvinceInit = new NodeStateCreationCallback() {
-        public NodeState initializeState(NodeState newState, Object node) {
-            LocationNodeImpl loc = (LocationNodeImpl) node;
-            if (loc.getType().equals("country"))
-                newState.setExpanded(true);
-            return newState;
-        }
-    };
+    private NodeStateCreationCallback contractProvinceInit = new TreeNodeStateCreationCallback();
 
     public List<LocationNodeImpl> getTreeRoots() {
         return treeRoots;
@@ -148,6 +141,15 @@ public class BreadcrumbMenuBean implements Serializable {
 
     public void setMenuModel1(MenuModel menuModel1) {
         this.menuModel1 = menuModel1;
+    }
+
+    private static class TreeNodeStateCreationCallback implements NodeStateCreationCallback, Serializable {
+        public NodeState initializeState(NodeState newState, Object node) {
+            LocationNodeImpl loc = (LocationNodeImpl) node;
+            if (loc.getType().equals("country"))
+                newState.setExpanded(true);
+            return newState;
+        }
     }
 
     class MenuItemActionListener implements ActionListener {
