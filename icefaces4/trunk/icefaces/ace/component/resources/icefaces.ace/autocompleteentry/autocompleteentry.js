@@ -566,7 +566,10 @@ ice.ace.Autocompleter.prototype = {
 			this.ajaxBlur.params = this.ajaxBlur.params || {};
 			this.ajaxBlur.params[this.id + '_hardSubmit'] = true;
 			var self = this;
-			this.blurObserver = setTimeout(function() { try{ice.ace.ab(self.ajaxBlur);}catch(e){} }, 390);
+			this.blurObserver = setTimeout(function() {
+				if (!document.getElementById(self.id)) return;
+				try{ice.ace.ab(self.ajaxBlur);}catch(e){}
+			}, 390);
 		}
     },
 
