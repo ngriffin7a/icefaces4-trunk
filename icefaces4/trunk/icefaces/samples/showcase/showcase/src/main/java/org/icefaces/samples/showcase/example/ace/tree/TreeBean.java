@@ -37,14 +37,7 @@ public class TreeBean implements Serializable {
     private List<LocationNodeImpl> treeRoots = TreeDataFactory.getTreeRoots();
     private NodeStateMap stateMap;
 
-    private transient NodeStateCreationCallback contractProvinceInit = new NodeStateCreationCallback() {
-        public NodeState initializeState(NodeState newState, Object node) {
-            LocationNodeImpl loc = (LocationNodeImpl) node;
-            if (loc.getType().equals("country"))
-                newState.setExpanded(true);
-            return newState;
-        }
-    };
+    private transient NodeStateCreationCallback contractProvinceInit = new TreeNodeStateCreationCallback();
 
     public List<LocationNodeImpl> getTreeRoots() {
         return treeRoots;
@@ -77,4 +70,12 @@ public class TreeBean implements Serializable {
         return stateMap.getSelected();
     }
 
+    private static class TreeNodeStateCreationCallback implements NodeStateCreationCallback, Serializable {
+        public NodeState initializeState(NodeState newState, Object node) {
+            LocationNodeImpl loc = (LocationNodeImpl) node;
+            if (loc.getType().equals("country"))
+                newState.setExpanded(true);
+            return newState;
+        }
+    }
 }
