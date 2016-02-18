@@ -152,6 +152,11 @@ public class FileEntryFormSubmit implements SystemEventListener {
                     if (progressPushId == null) {
                         progressPushId = PushUtils.getPushId(context, form);
                         windowMap.put(FileEntryFormSubmit.class.getName(), progressPushId);
+                    } else {
+                        //register the pushID with the upload progress group in case window scope is not enabled for
+                        //the application and a window scope map is reused for all windows
+                        String groupName = PushUtils.getPushGroupName(context, form);
+                        PushUtils.addPushGroupMember(groupName, progressPushId);
                     }
                 }
 
