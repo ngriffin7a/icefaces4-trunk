@@ -212,6 +212,15 @@ ice.ace.CalendarInit = function(options) {
             return;
         }
 
+        input.one("focus", function() {
+            if (behavior) {
+                input.off('change').on('change', function() {
+                    ice.setFocus();
+                    ice.ace.ab(behavior);
+                });
+            }
+        });
+
 		// if instance was previously initialized, create right away and return
 		if (ice.ace.Calendar.instances[id]) {
 			create();
@@ -222,15 +231,6 @@ ice.ace.CalendarInit = function(options) {
 			if (trigger) trigger.remove();
 			return create();
 		};
-
-        input.one("focus", function() {
-            if (behavior) {
-                input.bind('change', function() {
-                    ice.setFocus();
-                    ice.ace.ab(behavior);
-                });
-            }
-        });
 
         initEltSet = initEltSet.add(input);
 
