@@ -63,7 +63,7 @@
        <h:form id="demoForm">    
             <ace:panel header="Checkbox Buttons" styleClass="#{checkboxButtonsReqStyleBean.useTheme ? '' : 'required-styling-demo'}">
 			<h:panelGrid columns="1" width="100%" styleClass="textEntryInputTable">
-				<h:panelGroup styleClass="#{checkboxButtonsReqStyleBean.reqColor}">
+				<h:panelGroup id="requiredPanel" styleClass="#{checkboxButtonsReqStyleBean.reqColor}">
 					<ace:checkboxButtons id="checkboxButtonsRequired1" header="Required ace:checkboxButtons" mutuallyExclusive="true" value="#{checkboxButtonsReqStyleBean.selected1}" required="true">
 						<f:selectItem itemLabel="One" itemValue="One" />
 						<f:selectItem itemLabel="Two" itemValue="Two" />
@@ -74,13 +74,13 @@
 					</ace:checkboxButtons>
 				</h:panelGroup>
 				<h:panelGroup>
-					<ace:message for="checkboxButtonsRequired1"/>
+					<ace:message id="messageOut" for="checkboxButtonsRequired1"/>
 				</h:panelGroup>
 				<h:panelGroup>
 					The selected checkbox for the required field is:
 					<h:outputText id="checkboxDescriptionRequired1" value="#{checkboxButtonsReqStyleBean.selected1String}" style="font-weight: bold;"/>
 				</h:panelGroup>
-				<h:panelGroup styleClass="#{checkboxButtonsReqStyleBean.optColor}">
+				<h:panelGroup id="optionalPanel" styleClass="#{checkboxButtonsReqStyleBean.optColor}">
 					<ace:checkboxButtons id="checkboxButtonsRequired2" header="Optional ace:checkboxButtons" mutuallyExclusive="true" value="#{checkboxButtonsReqStyleBean.selected2}" required="false">
 						<f:selectItem itemLabel="One" itemValue="One" />
 						<f:selectItem itemLabel="Two" itemValue="Two" />
