@@ -52,25 +52,25 @@
                       value="#{backing.selections}">
                 <ace:ajax event="select" render="@form" />
                 <ace:ajax event="deselect" render="@form" />
-                <f:selectItem itemValue="#{backing.selectItemObject}"
+                <f:selectItem id="selItem" itemValue="#{backing.selectItemObject}"
                               itemLabel="#{backing.selectItemObject.name}"
                               itemDisabled="true"/>
 
-                <f:selectItems value="#{backing.selectItemMap}" />
+                <f:selectItems id="selItems" value="#{backing.selectItemMap}" />
             </ace:list>
 
-            <h:panelGroup>
-                <h:panelGroup styleClass="outPane"
+            <h:panelGroup id="pg1">
+                <h:panelGroup id="pg2" styleClass="outPane"
                               style="vertical-align: middle">
-                    <ui:repeat value="#{backing.selections}" var="car">
-                        <h:panelGroup styleClass="iblock">
+                    <ui:repeat id="selections" value="#{backing.selections}" var="car">
+                        <h:panelGroup id="pg3" styleClass="iblock">
                             <h:panelGrid columns="2">
                                 <f:facet name="header">
-                                    <h:outputText value="#{car.name}" /><hr/>
+                                    <h:outputText id="nameOut" value="#{car.name}" /><hr/>
                                 </f:facet>
-                                Chassis: <h:outputText value="#{car.chassis}" />
-                                Weight: <h:outputText value="#{car.weight}" />
-                                Accel: <h:outputText value="#{car.acceleration}" />
+                                Chassis: <h:outputText id="chassisOut" value="#{car.chassis}" />
+                                Weight: <h:outputText id="weightOut" value="#{car.weight}" />
+                                Accel: <h:outputText id="accelOut" value="#{car.acceleration}" />
                             </h:panelGrid>
                         </h:panelGroup>
                     </ui:repeat>
