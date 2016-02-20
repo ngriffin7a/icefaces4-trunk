@@ -220,7 +220,22 @@ ice.ace.SelectMenu.prototype = {
         var keyEvent = "keypress";
         if (ice.ace.SelectMenu.Browser.IE || ice.ace.SelectMenu.Browser.WebKit) {
             keyEvent = "keydown";
-        }
+        } else {
+			ice.ace.jq(this.element).on('keydown', function(e) {
+				if (e.keyCode == ice.ace.SelectMenu.keys.KEY_SPACE) {
+					if (!self.active) {
+						self.render();
+						e.stopPropagation();
+						e.preventDefault();
+					} else {
+						self.hide();
+						self.active = false;
+						e.stopPropagation();
+						e.preventDefault();
+					}
+				}
+			});
+		}
 		ice.ace.jq(this.element).on(keyEvent, function(e) { self.onKeyPress.call(self, e); } );
 		ice.ace.jq(this.update).on("mousedown", function(e) {
 			self.clickWithinBoundaries = true;
