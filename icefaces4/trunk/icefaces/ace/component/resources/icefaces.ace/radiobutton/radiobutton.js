@@ -81,9 +81,10 @@ ice.ace.radiobutton.prototype.isChecked = function() {
 
 ice.ace.radiobutton.prototype.setChecked = function(bool) {
     if (this.options.radioButtons) {
-		if (!ice.ace.jq(this.fieldSelector).attr('name'))
+		if (!ice.ace.jq(this.fieldSelector).attr('name')) {
 			ice.ace.jq(this.fieldSelector).attr('name', this.options.radioButtons);
-		else if (!bool)
+			ice.ace.jq(ice.ace.escapeClientId(this.options.radioButtons) + '_empty').attr('name', '');
+		} else if (!bool)
 			ice.ace.jq(this.fieldSelector).attr('name', '');
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
@@ -210,6 +211,7 @@ ice.ace.radiobutton.clear = function(id, ariaEnabled, multiple) {
 		var field = ice.ace.jq(fieldSelector);
 		field.attr('name', '');
 		field.attr('value', field.attr('data-value')); // value is fixed in ace:radioButtons
+		ice.ace.jq(ice.ace.escapeClientId(multiple) + '_empty').attr('name', multiple);
 	} else {
 		ice.ace.jq(fieldSelector).val('false');
 	}
@@ -238,6 +240,11 @@ ice.ace.radiobutton.reset = function(id, ariaEnabled, multiple) {
 			field.attr('value', field.attr('data-value')); // value is fixed in ace:radioButtons
 			if (value === true) field.attr('name', multiple);
 			else field.attr('name', '');
+			if (ice.ace.resetValues[multiple]) { // if anything was selected...
+				ice.ace.jq(ice.ace.escapeClientId(multiple) + '_empty').attr('name', '');
+			} else {
+				ice.ace.jq(ice.ace.escapeClientId(multiple) + '_empty').attr('name', multiple);
+			}
 		} else {
 			if (value === true) ice.ace.jq(fieldSelector).val('true');
 			else ice.ace.jq(fieldSelector).val('false');
@@ -267,7 +274,9 @@ ice.ace.radiobutton.setResetValue = function(id, multiple) {
 		var jqId = ice.ace.escapeClientId(id);
 		var field = ice.ace.jq(jqId + " > input");
 		if (multiple) {
-			ice.ace.setResetValue(id, !!field.attr('name'));
+			var value = !!field.attr('name');
+			ice.ace.setResetValue(id, value);
+			if (value) ice.ace.setResetValue(multiple, true); // take note that something was selected
 		} else {
 			ice.ace.setResetValue(id, field.val() == 'true' ? true : false);
 		}
