@@ -1794,8 +1794,12 @@ QTIP = $.fn.qtip = function(options, notation, newValue)
 
 			// Find next available ID, or use custom ID if provided
 			id = $.isArray(opts.id) ? opts.id[i] : opts.id;
-			if (QTIP.api[id]) QTIP.api[id].destroy(true);
-			id = !id || id === FALSE || id.length < 1 || id;
+			if (opts.forComponents) { // ICE-10893
+				id = !id || id === FALSE || id.length < 1 || QTIP.api[id] ? QTIP.nextid++ : id;
+			} else {
+				if (QTIP.api[id]) QTIP.api[id].destroy(true);
+				id = !id || id === FALSE || id.length < 1 || id;
+			}
 
 			// Initialize the qTip and re-grab newly sanitized options
 			api = init($(this), id, opts);
