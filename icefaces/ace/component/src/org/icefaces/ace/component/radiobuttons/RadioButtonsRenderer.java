@@ -79,12 +79,13 @@ public class RadioButtonsRenderer extends InputRenderer {
         super.encodeBegin(context, component);
         ResponseWriter writer = context.getResponseWriter();
         RadioButtons radioButtons = (RadioButtons) component;
+		String clientId = radioButtons.getClientId(context);
         String style = (style = radioButtons.getStyle()) == null ? "" : style.trim();
         String styleClass = (styleClass = radioButtons.getStyleClass()) == null ? "" : styleClass.trim();
         styleClass += (styleClass.length() > 0 ? " " : "") + "ice-ace-radiobuttons ui-widget ui-widget-content ui-corner-all " +getStateStyleClasses(radioButtons);
 
         writer.startElement("div", component);
-        writer.writeAttribute("id", component.getClientId(context), "id");
+        writer.writeAttribute("id", clientId, "id");
         if (style.length() > 0) {
             writer.writeAttribute("style", style, "style");
         }
@@ -148,6 +149,20 @@ public class RadioButtonsRenderer extends InputRenderer {
 					writer.write(indicator);
 					writer.endElement("span");
 				}
+		}
+
+		if (required) {
+			writer.startElement("input", radioButtons);
+			writer.writeAttribute("id", clientId + "_empty", null);
+			writer.writeAttribute("type", "hidden", null);
+			writer.writeAttribute("autocomplete", "off", null);
+			Object value = radioButtons.getValue();
+			if (value == null || "".equals(value)) {
+				writer.writeAttribute("name", clientId, null);
+			}
+			writer.writeAttribute("value", "", null);
+			writer.writeAttribute("data-ice-clear-ignore", "true", null);
+			writer.endElement("input");
 		}
 
 		writer.endElement("div");
