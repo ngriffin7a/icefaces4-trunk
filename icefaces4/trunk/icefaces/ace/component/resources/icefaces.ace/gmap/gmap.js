@@ -826,10 +826,11 @@ ice.ace.gMap.addMarkerCallback = function(id, callback){
         win = new google.maps.InfoWindow();
         win.setPosition(position);
         win.setContent(content);
-        if (options != "none")
-        {
-            win.setOptions(eval("({" + options + "})"));
-        }
+        if (options != "none") {
+            win.setOptions(eval("({" + options + (addressBasedMarker ? ',disableAutoPan:true' : '') + "})"));
+        } else if (addressBasedMarker) {
+			win.setOptions({disableAutoPan:true});
+		}
         if (markerId != "none")
         {
 			var attachToMarker = function() {
