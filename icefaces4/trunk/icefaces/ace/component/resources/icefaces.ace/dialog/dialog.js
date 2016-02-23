@@ -276,12 +276,13 @@ ice.ace.Dialog.prototype.resizeMaps = function() {
 };
 
 ice.ace.Dialog.prototype.resizeScrollableTables = function() {
-	var tables = this.jq.find('.ui-datatable-scrollable');
+	var tables = this.jq.find('.ui-datatable');
 	tables.each(function(){
 		var id = this.id;
 		if (id) {
 			var table = ice.ace.instance(id);
-			table.resizeScrolling();
+			if (table.cfg.scrollable) table.resizeScrolling();
+			if (table.cfg.paginator) table.resizePaginator();
 		}
 	});
 };
