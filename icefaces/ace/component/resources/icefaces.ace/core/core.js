@@ -407,6 +407,7 @@ ice.ace.clearForm = function(node) {
 		var field_type = elements[i].type.toLowerCase();
 		var name = elements[i].name;
 		if (name == form.attr('id')) continue;
+		if (name == form.attr('id') + '_SUBMIT') continue; // MyFaces
 		switch(name) {
 			case "ice.window":
 			case "ice.view":
