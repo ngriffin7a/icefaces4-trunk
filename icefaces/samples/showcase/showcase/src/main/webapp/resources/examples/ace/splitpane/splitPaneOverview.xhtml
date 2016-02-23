@@ -32,20 +32,20 @@
 					columnDivider="50">
 
 					<f:facet name="left" id="leftFacet">
-						<h:outputText value="h:outputText in Left Facet" />
-						<h:panelGroup>
+						<h:outputText id="out1" value="h:outputText in Left Facet" />
+						<h:panelGroup id="pg1">
 							<p>Left pane content example</p>
 						</h:panelGroup>
-						<ace:panel header="Left panel">
+						<ace:panel id="leftPanel" header="Left panel">
 							More content...
 						</ace:panel>
 					</f:facet>
 					<f:facet name="right" id="rightFacet">
-						<h:outputText value="h:outputText in Right Facet" />
-						<h:panelGroup>
+						<h:outputText id="out2" value="h:outputText in Right Facet" />
+						<h:panelGroup id="pg2">
 							<p>Right pane content example</p>
 						</h:panelGroup>
-						<ace:panel header="Right panel">
+						<ace:panel id="rightPanel"  header="Right panel">
 							More content...
 						</ace:panel>
 					</f:facet>
