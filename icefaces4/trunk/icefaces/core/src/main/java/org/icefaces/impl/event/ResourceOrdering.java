@@ -241,6 +241,7 @@ public class ResourceOrdering implements SystemEventListener {
         ArrayList<UIComponent> orderedCSSChildren = new ArrayList();
         ArrayList<UIComponent> orderedUnknownTypeChildren = new ArrayList();
 
+        ArrayList<String> duplicateCheckList = new ArrayList<String>();
         for (ResourceEntry resourceEntry : masterDependencyList) {
             List children = resourceContainer.getChildren();
             for (UIComponent next : new ArrayList<UIComponent>(children)) {
@@ -250,12 +251,16 @@ public class ResourceOrdering implements SystemEventListener {
 
                 if (resourceEntry.name.equals(name) && resourceEntry.library.equals(library)) {
                     root.removeComponentResource(context, next, target);
-                    if (name.endsWith(JS)) {
-                        orderedJSChildren.add(next);
-                    } else if (name.endsWith(CSS)) {
-                        orderedCSSChildren.add(next);
-                    } else {
-                        orderedUnknownTypeChildren.add(next);
+                    final String nameAndLibrary = name + "::" + library;
+                    if (!duplicateCheckList.contains(nameAndLibrary)) {
+                        if (name.endsWith(JS)) {
+                            orderedJSChildren.add(next);
+                        } else if (name.endsWith(CSS)) {
+                            orderedCSSChildren.add(next);
+                        } else {
+                            orderedUnknownTypeChildren.add(next);
+                        }
+                        duplicateCheckList.add(nameAndLibrary);
                     }
                 }
             }
