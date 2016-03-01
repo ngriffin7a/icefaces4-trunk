@@ -277,7 +277,9 @@ public class TabSetRenderer extends CoreRenderer {
         // Write out the safe
         writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId+"_safe", HTML.ID_ATTR);
-        writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", HTML.STYLE_ATTR);
+        if (selectedIndex == 0) {
+            writer.writeAttribute(HTML.STYLE_ATTR, "display:none;", HTML.STYLE_ATTR);
+        }
         recursivelyRenderSafe(facesContext, writer, tabSet, safeIdPrefix,
                 visitedTabClientIds, renderWithoutUpdate, 0);
         writer.endElement(HTML.DIV_ELEM);
