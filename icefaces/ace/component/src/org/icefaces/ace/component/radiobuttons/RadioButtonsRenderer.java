@@ -67,7 +67,11 @@ public class RadioButtonsRenderer extends InputRenderer {
 			  context.getExternalContext().getRequestParameterMap();
 		if (requestParameterValues.containsKey(clientId)) {
 			String newValue = requestParameterValues.get(clientId);
-			radioButtons.setSubmittedValue(newValue);
+			if ("".equals(newValue)) {
+				radioButtons.setSubmittedValue(null);
+				radioButtons.setValue(null);
+			} else
+				radioButtons.setSubmittedValue(newValue);
 		} else {
 			radioButtons.setSubmittedValue(null);
 		}
@@ -151,19 +155,17 @@ public class RadioButtonsRenderer extends InputRenderer {
 				}
 		}
 
-		if (required) {
-			writer.startElement("input", radioButtons);
-			writer.writeAttribute("id", clientId + "_empty", null);
-			writer.writeAttribute("type", "hidden", null);
-			writer.writeAttribute("autocomplete", "off", null);
-			Object value = radioButtons.getValue();
-			if (value == null || "".equals(value)) {
-				writer.writeAttribute("name", clientId, null);
-			}
-			writer.writeAttribute("value", "", null);
-			writer.writeAttribute("data-ice-clear-ignore", "true", null);
-			writer.endElement("input");
+		writer.startElement("input", radioButtons);
+		writer.writeAttribute("id", clientId + "_empty", null);
+		writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("autocomplete", "off", null);
+		Object value = radioButtons.getValue();
+		if (value == null || "".equals(value)) {
+			writer.writeAttribute("name", clientId, null);
 		}
+		writer.writeAttribute("value", "", null);
+		writer.writeAttribute("data-ice-clear-ignore", "true", null);
+		writer.endElement("input");
 
 		writer.endElement("div");
     }
