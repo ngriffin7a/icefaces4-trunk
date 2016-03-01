@@ -50,7 +50,7 @@ public class SessionTimeoutMonitor extends SessionAwareResourceHandlerWrapper {
         }
 
         int maxInactiveInterval = httpSession.getMaxInactiveInterval();
-        if (System.currentTimeMillis() - lastAccessTime > maxInactiveInterval * 1000) {
+        if ((System.currentTimeMillis() - lastAccessTime) / 1000 > maxInactiveInterval) {
             Log.fine("invalidating session enforcing strictSessionTimeout");
             httpSession.removeAttribute(SessionTimeoutMonitor.class.getName());
             context.getExternalContext().invalidateSession();
