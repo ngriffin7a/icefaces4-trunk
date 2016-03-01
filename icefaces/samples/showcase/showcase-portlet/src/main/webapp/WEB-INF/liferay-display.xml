@@ -249,7 +249,7 @@
                 <portlet id="tree"/>
                 <portlet id="treeClient"/>
                 <portlet id="treeLazy"/>
-                <portlet id="treeNested"/>
+                <portlet id="treeExpansion"/>
                 <portlet id="treeReorder"/>
                 <portlet id="treeSelection"/>
             </category>

@@ -1153,7 +1153,7 @@
     </portlet>
     
     <portlet>
-        <portlet-name>treeNested</portlet-name>
+        <portlet-name>treeExpansion</portlet-name>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <ajaxable>false</ajaxable>

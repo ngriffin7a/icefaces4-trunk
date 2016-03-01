@@ -2721,7 +2721,7 @@
     </portlet>
     <portlet>
         <portlet-name>multiColumnSubmenu</portlet-name>
-        <display-name>Context Menu Multi Column</display-name>
+        <display-name>Multi Column Submenu</display-name>
         <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
@@ -2736,7 +2736,7 @@
             <portlet-mode>view</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Context Menu Multi Column</title>
+            <title>Multi Column Submenu</title>
             <keywords>ICEfaces Component Suite Showcase ACE Context Menu Multi Column</keywords>
         </portlet-info>
     </portlet>
@@ -3831,8 +3831,8 @@
     </portlet>
     
     <portlet>
-        <portlet-name>treeNested</portlet-name>
-        <display-name>Tree Nested</display-name>
+        <portlet-name>treeExpansion</portlet-name>
+        <display-name>Tree Expansion</display-name>
         <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
@@ -3840,15 +3840,15 @@
         </init-param>
         <init-param>
             <name>org.icefaces.demo.viewPath</name>
-            <value>/resources/examples/ace/tree/treeNested.xhtml</value>
+            <value>/resources/examples/ace/tree/treeExpansion.xhtml</value>
         </init-param>
         <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>view</portlet-mode>
         </supports>
         <portlet-info>
-            <title>Tree Nested</title>
-            <keywords>ICEfaces ACE Component Showcase Tree Nested</keywords>
+            <title>Tree Expansion</title>
+            <keywords>ICEfaces ACE Component Showcase Tree Expansion</keywords>
         </portlet-info>
     </portlet>
     
