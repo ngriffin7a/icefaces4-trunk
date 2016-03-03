@@ -8393,7 +8393,7 @@
                             width: inst.dpDiv.outerWidth(), height: inst.dpDiv.outerHeight()});
                     }
                 };
-                inst.dpDiv.zIndex($(input).zIndex()+1);
+                inst.dpDiv.zIndex($(input).zIndex()+10); // ICE-10970
                 $.datepicker._datepickerShowing = true;
                 if (inst.settings.ariaEnabled) {
                     inst.dpDiv.attr("aria-hidden", false);
