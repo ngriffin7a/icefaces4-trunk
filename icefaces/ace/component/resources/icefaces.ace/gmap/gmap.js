@@ -329,18 +329,22 @@ ice.ace.gMap.getGMapWrapper = function (id) {
             }
             markerOps.map = wrapper.getRealGMap();
 			if (address) {
+				markerOps.position = new google.maps.LatLng(0, 0);
+				var visible = markerOps.visible === false ? false : true;
+				markerOps.visible = false;
+				var addressMarker = new google.maps.Marker(markerOps);
+				wrapper.markers[markerID] = addressMarker;
 				var initGeocoder = new google.maps.Geocoder();
 				initGeocoder.geocode({ 'address': address }, function (results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						var result = results[0];
 						if (result) {
-							markerOps.position = result.geometry.location;
-							var marker = new google.maps.Marker(markerOps);
-							wrapper.markers[markerID] = marker;
+							addressMarker.setPosition(result.geometry.location);
+							addressMarker.setVisible(visible);
 							var callbacks = ice.ace.gMap.markerCallbacks[markerID];
 							if (callbacks) {
 								while (callbacks.length > 0)
-									callbacks.pop().call(marker);
+									callbacks.pop().call(addressMarker);
 							}
 						}
 					}
@@ -818,22 +822,22 @@ ice.ace.gMap.addMarkerCallback = function(id, callback){
     }
 
     ice.ace.gMap.addGWindow = function (ele, winId, content, position,options,markerId,showOnClick,startOpen, addressBasedMarker) {
-        var wrapper = ice.ace.gMap.getGMapWrapper(ele);
-        var map = ice.ace.gMap.getGMapWrapper(ele).getRealGMap();
-        var win = wrapper.infoWindows[winId];
-        if (win != null)
-            win.close();
-        win = new google.maps.InfoWindow();
-        win.setPosition(position);
-        win.setContent(content);
-        if (options != "none") {
-            win.setOptions(eval("({" + options + (addressBasedMarker ? ',disableAutoPan:true' : '') + "})"));
-        } else if (addressBasedMarker) {
-			win.setOptions({disableAutoPan:true});
-		}
-        if (markerId != "none")
-        {
-			var attachToMarker = function() {
+		var init = function() {
+			var wrapper = ice.ace.gMap.getGMapWrapper(ele);
+			var map = ice.ace.gMap.getGMapWrapper(ele).getRealGMap();
+			var win = wrapper.infoWindows[winId];
+			if (win != null)
+				win.close();
+			win = new google.maps.InfoWindow();
+			win.setPosition(position);
+			win.setContent(content);
+			if (options != "none") {
+				win.setOptions(eval("({" + options + (addressBasedMarker ? ',disableAutoPan:true' : '') + "})"));
+			} else if (addressBasedMarker) {
+				win.setOptions({disableAutoPan:true});
+			}
+			if (markerId != "none")
+			{
 				var marker = wrapper.markers[markerId];
 				if(showOnClick)
 				{
@@ -846,19 +850,19 @@ ice.ace.gMap.addMarkerCallback = function(id, callback){
 				}
 				else
 					win.open(map,marker);
-			};
-			if (addressBasedMarker) ice.ace.gMap.addMarkerCallback(markerId, attachToMarker);
-			else attachToMarker();
-        }
-        else
-        {
-            win.open(map);
-            ice.ace.gMap.getGMapWrapper(ele).freeWindows[winId]=win;
-        }
-		google.maps.event.addDomListener(win,"closeclick",function(){
-			ice.ace.gMap.removeGWindow(ele,winId)
-		});
-        ice.ace.gMap.getGMapWrapper(ele).infoWindows[winId]=win;
+			}
+			else
+			{
+				win.open(map);
+				ice.ace.gMap.getGMapWrapper(ele).freeWindows[winId]=win;
+			}
+			google.maps.event.addDomListener(win,"closeclick",function(){
+				ice.ace.gMap.removeGWindow(ele,winId)
+			});
+			ice.ace.gMap.getGMapWrapper(ele).infoWindows[winId]=win;
+		};
+		if (addressBasedMarker) ice.ace.gMap.addMarkerCallback(markerId, init);
+		else init();
     }
 
     ice.ace.gMap.removeGWindow = function(mapId,winId){
