@@ -68,7 +68,9 @@ public class RadioButtonsRenderer extends InputRenderer {
 		if (requestParameterValues.containsKey(clientId)) {
 			String newValue = requestParameterValues.get(clientId);
 			if ("".equals(newValue)) {
-				radioButtons.setSubmittedValue(null);
+				if (radioButtons.isRequired()) radioButtons.setSubmittedValue("");
+				else radioButtons.setSubmittedValue(null);
+
 				radioButtons.setValue(null);
 			} else
 				radioButtons.setSubmittedValue(newValue);
