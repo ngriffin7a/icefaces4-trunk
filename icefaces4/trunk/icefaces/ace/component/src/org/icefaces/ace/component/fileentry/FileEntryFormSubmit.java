@@ -99,16 +99,11 @@ public class FileEntryFormSubmit implements SystemEventListener {
                 String viewId = context.getViewRoot().getViewId();
                 String actionURL = context.getApplication().getViewHandler().getActionURL(context, viewId);
                 ExternalContext externalContext = context.getExternalContext();
-                String viewState = context.getApplication().getStateManager().getViewState(context);
 
                 StringBuffer url = new StringBuffer(actionURL);
                 url.append(actionURL.contains("?") ? "&" : "?");
                 url.append(FILE_ENTRY_MULTIPART_MARKER);
                 url.append("=true");
-                url.append("&");
-                url.append(ResponseStateManager.VIEW_STATE_PARAM);
-                url.append("=");
-                url.append(EnvUtils.isMyFaces() ? URLEncoder.encode(viewState, "UTF-8") : viewState);
                 url.append("&ice.window=");
                 url.append(externalContext.getClientWindow().getId());
                 url.append("&ice.view=");
