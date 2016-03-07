@@ -18,18 +18,16 @@ package org.icefaces.ace.component.clientValidator;
 
 import org.icefaces.util.JavaScriptRunner;
 
-import javax.faces.component.ActionSource;
-import javax.faces.component.EditableValueHolder;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.*;
 import javax.faces.component.behavior.AjaxBehavior;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.context.FacesContext;
 import javax.faces.event.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class ImmediateComponentCollector implements SystemEventListener {
-
 
     public boolean isListenerForSource(Object source) {
         return true;
@@ -73,12 +71,20 @@ public class ImmediateComponentCollector implements SystemEventListener {
     }
 
     private ImmediateEntry isImmediate(UIComponent component) {
-        ImmediateEntry immediate = null;
-
         if (component instanceof EditableValueHolder && ((EditableValueHolder) component).isImmediate()) {
-            immediate = new ImmediateEntry(component.getClientId());
-        } else if (component instanceof ActionSource && ((ActionSource) component).isImmediate()) {
-            immediate = new ImmediateEntry(component.getClientId());
+            return new ImmediateEntry(component.getClientId());
+        }
+
+        if (component instanceof ActionSource && ((ActionSource) component).isImmediate()) {
+            return new ImmediateEntry(component.getClientId());
+        }
+
+        if (component instanceof UIInput && ((UIInput) component).isImmediate()) {
+            return new ImmediateEntry(component.getClientId());
+        }
+
+        if (component instanceof UICommand && ((UICommand) component).isImmediate()) {
+            return new ImmediateEntry(component.getClientId());
         }
 
         if (component instanceof UIComponentBase) {
@@ -88,13 +94,29 @@ public class ImmediateComponentCollector implements SystemEventListener {
                 for (ClientBehavior behavior : behaviors) {
                     if ((behavior instanceof AjaxBehavior && ((AjaxBehavior) behavior).isImmediate()) ||
                             (behavior instanceof org.icefaces.ace.component.ajax.AjaxBehavior && ((org.icefaces.ace.component.ajax.AjaxBehavior) behavior).isImmediate())) {
-                        immediate = new ImmediateEntry(component.getClientId(), entry.getKey());
+                        return new ImmediateEntry(component.getClientId(), entry.getKey());
                     }
                 }
             }
         }
 
-        return immediate;
+
+        try {
+            final Method isImmediateMethod = component.getClass().getMethod("isImmediate");
+            if (((Boolean) isImmediateMethod.invoke(component)).booleanValue()) {
+                return new ImmediateEntry(component.getClientId());
+            }
+        } catch (NoSuchMethodException e) {
+            //could not find the 'isImmediate' method on this component
+        } catch (InvocationTargetException e) {
+            //could not find the 'isImmediate' method on this component
+        } catch (IllegalAccessException e) {
+            //could not find the 'isImmediate' method on this component
+        } catch (ClassCastException e) {
+            //could not find the 'isImmediate' method on this component
+        }
+
+        return null;
     }
 
     private static class ImmediateEntry {
