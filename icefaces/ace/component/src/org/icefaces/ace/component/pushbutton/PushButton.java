@@ -17,12 +17,16 @@
 package org.icefaces.ace.component.pushbutton;
 
 import org.icefaces.ace.util.Utils;
+import org.icefaces.component.Focusable;
 import org.icefaces.impl.util.Util;
 
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.component.UIOutput;
 
-public class PushButton extends PushButtonBase {	
+public class PushButton extends PushButtonBase implements Focusable {
 
+    public String getFocusedElementId() {
+        return getClientId() + "_button";
+    }
 }

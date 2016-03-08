@@ -17,8 +17,12 @@
 package org.icefaces.ace.component.linkbutton;
 
 import org.icefaces.ace.util.Utils;
+import org.icefaces.component.Focusable;
 import org.icefaces.impl.util.Util;
 
-public class LinkButton extends LinkButtonBase {
+public class LinkButton extends LinkButtonBase implements Focusable {
 
+    public String getFocusedElementId() {
+        return getClientId() + "_link";
+    }
 }

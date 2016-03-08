@@ -89,6 +89,7 @@ public class LinkButtonRenderer extends CoreRenderer {
 
         // button element
         writer.startElement(HTML.ANCHOR_ELEM, null);
+        writer.writeAttribute(HTML.ID_ATTR, clientId + "_link", null);
 
         if (tabindex != null)
             writer.writeAttribute(HTML.TABINDEX_ATTR, tabindex, null);

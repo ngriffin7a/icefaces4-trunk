@@ -86,7 +86,9 @@ public class PushButtonRenderer extends CoreRenderer {
 		String type = pushButton.getType();
 		type = "submit".equalsIgnoreCase(type) ? "submit" : "button";
 		writer.writeAttribute(HTML.TYPE_ATTR, type, null);
-        writer.writeAttribute(HTML.NAME_ATTR, clientId+"_button", null);
+        final String buttonId = clientId + "_button";
+        writer.writeAttribute(HTML.ID_ATTR, buttonId, null);
+        writer.writeAttribute(HTML.NAME_ATTR, buttonId, null);
 
         if (disabled)
             writer.writeAttribute(HTML.CLASS_ATTR, "ui-button ui-widget ui-state-disabled ui-corner-all", null);
