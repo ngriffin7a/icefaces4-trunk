@@ -18,7 +18,9 @@ package org.icefaces.ace.component.tree;
 
 import org.icefaces.ace.component.node.Node;
 import org.icefaces.ace.event.TableFilterEvent;
+import org.icefaces.ace.event.TreeEvent;
 import org.icefaces.ace.model.tree.*;
+import org.icefaces.ace.util.Constants;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
@@ -264,9 +266,40 @@ public class Tree<N> extends TreeBase implements Serializable {
         if (parent == null) {
             throw new IllegalStateException();
         } else {
-            parent.queueEvent(new WrapperEvent(this, event, getKey()));
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+			String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+			if (eventName != null && event instanceof AjaxBehaviorEvent 
+					&& (eventName.equals("expand") || eventName.equals("contract")
+						|| eventName.equals("select") || eventName.equals("deselect")
+						|| eventName.equals("reorder"))) {
+					AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+					TreeEvent treeEvent = new TreeEvent(this, behaviorEvent.getBehavior(), null, eventName);
+					treeEvent.setPhaseId(PhaseId.INVOKE_APPLICATION);
+					parent.queueEvent(new WrapperEvent(this, treeEvent, getRequestNodeKey(context, eventName)));
+			} else {
+				parent.queueEvent(new WrapperEvent(this, event, getKey()));
+			}
         }
     }
+
+	private NodeKey getRequestNodeKey(FacesContext context, String eventName) {
+		TreeDecoder treeDecoder = new TreeDecoder(context, this);
+		NodeKey key = NodeKey.ROOT_KEY;
+		if (eventName.equals("expand")) {
+			key = treeDecoder.getExpandNodeKey();
+		} else if (eventName.equals("contract")) {
+			key = treeDecoder.getContractNodeKey();
+		} else if (eventName.equals("select")) {
+			key = treeDecoder.getSelectNodeKey();
+		} else if (eventName.equals("deselect")) {
+			key = treeDecoder.getDeselectNodeKey();
+		} else if (eventName.equals("reorder")) {
+			key = treeDecoder.getReorderNodeKey();
+		}
+		return key;
+	}
 
     @Override
     public void processUpdates(FacesContext context) {
@@ -347,6 +380,9 @@ public class Tree<N> extends TreeBase implements Serializable {
                 compositeParent.pushComponentToEL(context, null);
             }
             source.pushComponentToEL(context, null);
+			if (rowEvent instanceof TreeEvent) {
+				((TreeEvent) rowEvent).setObject(getData());
+			}
             source.broadcast(rowEvent);
         } finally {
             source.popComponentFromEL(context);

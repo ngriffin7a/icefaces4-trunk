@@ -171,4 +171,70 @@ public class TreeDecoder<N> {
         if (paramMap == null)
             paramMap = context.getExternalContext().getRequestParameterMap();
     }
+
+	NodeKey getExpandNodeKey() {
+		String expandedJSON = getRequestParam(clientId + EXPANSION_SUFFIX);
+		NodeKey key = NodeKey.ROOT_KEY;
+		try {
+			JSONArray array = new JSONArray(expandedJSON);
+
+			if (array.length() > 0)
+				key = tree.getKeyConverter().parseSegments(array.getString(0).split(seperator));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return key;
+	}
+
+	NodeKey getContractNodeKey() {
+		String contractedJSON = getRequestParam(clientId + CONTRACTION_SUFFIX);
+		NodeKey key = NodeKey.ROOT_KEY;
+		try {
+			JSONArray array = new JSONArray(contractedJSON);
+
+			if (array.length() > 0)
+				key = tree.getKeyConverter().parseSegments(array.getString(0).split(seperator));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return key;
+	}
+
+	NodeKey getSelectNodeKey() {
+		String selectedJSON = getRequestParam(clientId + SELECTION_SUFFIX);
+		NodeKey key = NodeKey.ROOT_KEY;
+		try {
+			JSONArray array = new JSONArray(selectedJSON);
+
+			if (array.length() > 0)
+				key = tree.getKeyConverter().parseSegments(array.getString(0).split(seperator));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return key;
+	}
+
+	NodeKey getDeselectNodeKey() {
+		String deselectedJSON = getRequestParam(clientId + DESELECTION_SUFFIX);
+		NodeKey key = NodeKey.ROOT_KEY;
+		try {
+			JSONArray array = new JSONArray(deselectedJSON);
+
+			if (array.length() > 0)
+				key = tree.getKeyConverter().parseSegments(array.getString(0).split(seperator));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return key;
+	}
+
+	NodeKey getReorderNodeKey() {
+		NodeKey key = NodeKey.ROOT_KEY;
+		String reorderString = getRequestParam(clientId + REORDER_SUFFIX);
+		if (reorderString != null && !"".equals(reorderString)) {
+			String[] reorderParts = reorderString.split(">");
+			key = tree.getKeyConverter().parseSegments(reorderParts[0].split(seperator));
+		}
+		return key;
+	}
 }
