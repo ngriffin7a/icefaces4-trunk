@@ -22,6 +22,7 @@ import javax.faces.FacesException;
 import javax.faces.context.*;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -39,7 +40,6 @@ public class RedirectOnSessionExpiryHandler extends ExceptionHandlerWrapper {
     @Override
     public void handle() throws FacesException {
         FacesContext fc = FacesContext.getCurrentInstance();
-        String uri = EnvUtils.getSessionExpiredRedirectURI(fc);
 
         boolean redirect = false;
         for (Iterator<ExceptionQueuedEvent> iter = getUnhandledExceptionQueuedEvents().iterator(); iter.hasNext(); ) {
@@ -47,21 +47,32 @@ public class RedirectOnSessionExpiryHandler extends ExceptionHandlerWrapper {
             ExceptionQueuedEventContext queueContext = (ExceptionQueuedEventContext) event.getSource();
             Throwable ex = queueContext.getException();
 
-            if (ex instanceof SessionExpiredException && uri != null) {
+            if (ex instanceof SessionExpiredException) {
                 redirect = true;
             }
         }
 
         if (redirect) {
-            PartialResponseWriter writer = fc.getPartialViewContext().getPartialResponseWriter();
-            String resolvedURI = fc.getApplication().getViewHandler().getResourceURL(fc, uri);
-            try {
-                writer.startDocument();
-                writer.redirect(resolvedURI);
-                writer.endDocument();
-                fc.responseComplete();
-            } catch (IOException e) {
-                throw new FacesException(e);
+            final String uri;
+            final HttpSession session = EnvUtils.getSafeSession(FacesContext.getCurrentInstance(), false);
+            final String sessionTimeoutRedirectURI = EnvUtils.getSessionTimeoutRedirectURI(fc);
+            if ((System.currentTimeMillis() - session.getLastAccessedTime()) / 1000 < session.getMaxInactiveInterval() && sessionTimeoutRedirectURI != null) {
+                uri = sessionTimeoutRedirectURI;
+            } else {
+                uri = EnvUtils.getSessionExpiredRedirectURI(fc);
+            }
+
+            if (uri != null) {
+                PartialResponseWriter writer = fc.getPartialViewContext().getPartialResponseWriter();
+                String resolvedURI = fc.getApplication().getViewHandler().getResourceURL(fc, uri);
+                try {
+                    writer.startDocument();
+                    writer.redirect(resolvedURI);
+                    writer.endDocument();
+                    fc.responseComplete();
+                } catch (IOException e) {
+                    throw new FacesException(e);
+                }
             }
         } else {
             handler.handle();

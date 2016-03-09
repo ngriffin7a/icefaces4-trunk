@@ -82,6 +82,7 @@ public class EnvUtils {
     //Parameters configurable using context parameters but only in compatibility mode
     public static String CONNECTION_LOST_REDIRECT_URI = "org.icefaces.connectionLostRedirectURI";
     public static String SESSION_EXPIRED_REDIRECT_URI = "org.icefaces.sessionExpiredRedirectURI";
+    public static String SESSION_TIMEOUT_REDIRECT_URI = "org.icefaces.sessionTimeoutRedirectURI";
 
     //Parameters configurable on a per page-basis as attributes of <ice:config/>
     public static String ICEFACES_RENDER = "org.icefaces.render";
@@ -615,6 +616,21 @@ public class EnvUtils {
      */
     public static String getSessionExpiredRedirectURI(FacesContext facesContext) {
         return EnvConfig.getEnvConfig(facesContext).sessionExpiredRedirectURI;
+    }
+
+
+    /**
+     * Returns the value of the context parameter org.icefaces.sessionTimeoutRedirectURI.  The default value is the String
+     * "null" and indicates that no URI has been set and the default behaviour is taken when the session timeouts.  Setting
+     * a URI value tells ICEfaces to redirect to that view if the Ajax Push connection is lost.
+     * <p/>
+     * Note: This value is only relevant when running ICEfaces 2+ with the compatible component suite:
+     *
+     * @param facesContext The current FacesContext instance used to access the application map.
+     * @return Returns the current setting of org.icefaces.sessionTimeoutRedirectURI.  The default is the String "null".
+     */
+    public static String getSessionTimeoutRedirectURI(FacesContext facesContext) {
+        return EnvConfig.getEnvConfig(facesContext).sessionTimeoutRedirectURI;
     }
 
     /**
@@ -1303,6 +1319,7 @@ class EnvConfig {
     boolean lazyPush;
     boolean pushActive;
     String sessionExpiredRedirectURI;
+    String sessionTimeoutRedirectURI;
     boolean standardFormSerialization;
     boolean strictSessionTimeout;
     boolean subtreeDiff;
@@ -1353,6 +1370,7 @@ class EnvConfig {
         includeScrollOffsets = decodeBoolean(initMap, EnvUtils.INCLUDE_SCROLL_OFFSETS, true, info);
         reloadOnUpdateFailure = decodeBoolean(initMap, EnvUtils.RELOAD_ON_UPDATE_FAILURE, false, info);
         sessionExpiredRedirectURI = decodeString(initMap, EnvUtils.SESSION_EXPIRED_REDIRECT_URI, null, info);
+        sessionTimeoutRedirectURI = decodeString(initMap, EnvUtils.SESSION_TIMEOUT_REDIRECT_URI, null, info);
         standardFormSerialization = decodeBoolean(initMap, EnvUtils.STANDARD_FORM_SERIALIZATION, false, info);
         strictSessionTimeout = decodeBoolean(initMap, EnvUtils.STRICT_SESSION_TIMEOUT, false, info);
         subtreeDiff = decodeBoolean(initMap, EnvUtils.SUBTREE_DIFF, true, info);
