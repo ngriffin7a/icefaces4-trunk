@@ -56,7 +56,7 @@ public class RedirectOnSessionExpiryHandler extends ExceptionHandlerWrapper {
             final String uri;
             final HttpSession session = EnvUtils.getSafeSession(FacesContext.getCurrentInstance(), false);
             final String sessionTimeoutRedirectURI = EnvUtils.getSessionTimeoutRedirectURI(fc);
-            if ((System.currentTimeMillis() - session.getLastAccessedTime()) / 1000 < session.getMaxInactiveInterval() && sessionTimeoutRedirectURI != null) {
+            if (session != null && (System.currentTimeMillis() - session.getLastAccessedTime()) / 1000 < session.getMaxInactiveInterval() && sessionTimeoutRedirectURI != null) {
                 uri = sessionTimeoutRedirectURI;
             } else {
                 uri = EnvUtils.getSessionExpiredRedirectURI(fc);
