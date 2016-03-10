@@ -548,7 +548,9 @@ public class CentralDataList {
 					new Demo(msgs("menu.ace.tree.subMenu.selection"), msgs("example.ace.tree.selection.description"),
 							 "tree", "treeSelection.xhtml", "TreeSelectionBean.java"),
 					new Demo(msgs("menu.ace.tree.subMenu.expansion"), msgs("example.ace.tree.expansion.description"),
-							 "tree", "treeExpansion.xhtml", "TreeExpansionBean.java"))
+							 "tree", "treeExpansion.xhtml", "TreeExpansionBean.java"),
+					new Demo(msgs("menu.ace.tree.subMenu.event"), msgs("example.ace.tree.event.description"),
+							 "tree", "treeEvent.xhtml", "TreeEventBean.java"))
 		));
 
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.dialogs.title"),
