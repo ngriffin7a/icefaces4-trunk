@@ -358,5 +358,11 @@ public class TreeRenderer extends CoreRenderer {
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
         writer.writeAttribute(HTML.CLASS_ATTR, TREE_CONTAINER_CLASS, null);
+
+		String accesskey = renderContext.getTree().getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			writer.writeAttribute("tabindex", "0", null);
+		}
     }
 }

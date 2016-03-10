@@ -345,6 +345,11 @@ public class DataTableRenderer extends CoreRenderer {
         writer.startElement(HTML.TBODY_ELEM, null);
         writer.writeAttribute(HTML.ID_ATTR, clientId + "_body", null);
         writer.writeAttribute(HTML.CLASS_ATTR, tbodyClass, null);
+		String accesskey = table.getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			writer.writeAttribute("tabindex", "0", null);
+		}
 
         if (hasData) {
             for (int i = first; i < (first + rowCountToRender); i++) {

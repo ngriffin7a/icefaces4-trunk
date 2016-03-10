@@ -81,4 +81,7 @@ public class RadioButtonMeta extends UISelectBooleanMeta {
 
     @Property(tlddoc = "ID of button group component if this button is outside of the button group but wants to logically belong to the group.")
     private String group;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

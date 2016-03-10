@@ -130,7 +130,14 @@ public class DateTimeEntryRenderer extends InputRenderer {
         PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, dateTimeEntry) ;
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", type, null);
-		writer.writeAttribute("tabindex", dateTimeEntry.getTabindex(), null);
+		String tabindex = dateTimeEntry.getTabindex();
+		if (tabindex != null)
+			writer.writeAttribute("tabindex", tabindex, null);
+		String accesskey = dateTimeEntry.getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
+		}
         if (popup && ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }

@@ -99,5 +99,8 @@ public class VideoPlayerMeta extends UIComponentBaseMeta {
 
     @Property(defaultValue = "Integer.MIN_VALUE", tlddoc = "The maximum height of video area.")
     private int height;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
  }
 

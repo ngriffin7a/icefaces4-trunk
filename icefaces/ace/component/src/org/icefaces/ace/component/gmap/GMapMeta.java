@@ -80,6 +80,9 @@ public class GMapMeta extends UIPanelMeta {
 
     @Property(tlddoc = "The classname for the main gMap div.")
     private String styleClass;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 	
 	@Field
 	private String oldLatitude;

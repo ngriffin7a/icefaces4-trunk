@@ -71,4 +71,6 @@ public class MenuItemMeta extends UICommandMeta {
     @Property(tlddoc = "Boolean value to disable/enable the menu item. The menu item will still be shown but with different styling, and clicking on it will not trigger any action.")
     private boolean disabled;	
 	
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

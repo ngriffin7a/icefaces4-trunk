@@ -72,4 +72,6 @@ public class DynamicResourceMeta {
     @Property(tlddoc="The scope in which the resource will be stored. The values can be 'flash', 'view', window', 'session', and 'application'. When not specified the 'session' scope is used.")
     private String scope;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

@@ -145,6 +145,9 @@ public class SelectMenuMeta extends UIInputMeta {
     @Property(tlddoc = "Boolean value that indicates whether the popup list should be displayed when typing in the text field or only when clicking the down arrow button.", defaultValue="true")
     private boolean showListOnInput;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
+
     @Field()
     private List itemList;
 }

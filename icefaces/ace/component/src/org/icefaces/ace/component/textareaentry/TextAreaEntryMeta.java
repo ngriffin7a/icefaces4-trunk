@@ -103,4 +103,7 @@ public class TextAreaEntryMeta extends UIInputMeta {
 
     @Property(tlddoc = "Flag indicating that this component will prohibit changes by the user. The element may receive focus unless it has also been disabled. A value of false causes no attribute to be rendered, while a value of true causes the attribute to be rendered as readonly=\"readonly\".", defaultValue = "false")
     private boolean readonly;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

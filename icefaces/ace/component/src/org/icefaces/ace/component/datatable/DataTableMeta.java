@@ -217,6 +217,9 @@ public class DataTableMeta extends UIDataMeta {
     @Property(tlddoc = "Causes a caption element to be rendered with the specified text, in order to facilitate better screen reader support and accessibility for this table.")
 	private String caption;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
+
     // ID of the configPanel that has been associated with this table, used for
     // component lookups during decodes.
     @Field(defaultValue = "null", defaultValueIsStringLiteral = false)
@@ -333,6 +336,9 @@ public class DataTableMeta extends UIDataMeta {
             "To return the table to the first page, 'first' must be set to 0, or 'page' must be set to 1." +
             "Alternately the table has a convenience method for this, DataTable.resetPagination().")
     private boolean paginator;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String paginatorAccesskey;
 
 
 

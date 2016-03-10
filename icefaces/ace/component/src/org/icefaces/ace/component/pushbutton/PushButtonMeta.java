@@ -74,4 +74,7 @@ public class PushButtonMeta extends UICommandMeta {
 
     @Property (defaultValue="button", tlddoc="Specifies the button type. The possible values are 'button', 'submit', 'clear' and 'reset'. The 'button' type is the original and standard mode, where the button submits the form when activated. The 'submit' type lets the browser handle the request natively, without ICEfaces intervention (Note that if the component has a listener or an ajax event attached to it an additional request will be made, handled by ICEfaces). If the type is 'clear', the component acts in a special way: the button will act in a client-side mode, clearing all fields and components in the form it is contained in. If the type is 'reset', the component will reset all the input elements and components to their original values at the time they were loaded. The button will not submit the form in the 'clear' and 'reset' modes, unless the component has a listener or an ajax event attached to it.")
     private String type;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

@@ -85,6 +85,11 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 			String helpText = menuItem.getHelpText();
             writer.writeAttribute("id", clientId, null);
 			writer.writeAttribute("title", (helpText != null ? helpText : ""), null);
+			String accesskey = menuItem.getAccesskey();
+			if (accesskey != null) {
+				writer.writeAttribute("accesskey", accesskey, null);
+				writer.writeAttribute("tabindex", "0", null);
+			}
 			if (menuItem.isDisabled() || disabledParent) {
 				writer.writeAttribute("class", "ui-state-disabled", null);
 			} else {

@@ -47,6 +47,11 @@ public class DynamicResourceRenderer extends Renderer {
                 }
                 writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
                 writer.writeAttribute(HTML.VALUE_ATTR, label, null);
+				String accesskey = dynamicResource.getAccesskey();
+				if (accesskey != null) {
+					writer.writeAttribute("accesskey", accesskey, null);
+					writer.writeAttribute("tabindex", "0", null);
+				}
                 writer.writeAttribute(HTML.ONCLICK_ATTR, "window.open('" + resource.getRequestPath() + "');", null);
                 writeStyleAttributes(dynamicResource, writer);
                 writer.endElement(HTML.INPUT_ELEM);
@@ -56,6 +61,11 @@ public class DynamicResourceRenderer extends Renderer {
                 } else {
                     writer.startElement(HTML.ANCHOR_ELEM, null);
                     writer.writeAttribute(HTML.HREF_ATTR, resource.getRequestPath(), null);
+					String accesskey = dynamicResource.getAccesskey();
+					if (accesskey != null) {
+						writer.writeAttribute("accesskey", accesskey, null);
+						writer.writeAttribute("tabindex", "0", null);
+					}
                     String target = dynamicResource.getTarget();
                     if (target != null) {
                         writer.writeAttribute(HTML.TARGET_ATTR, target, null);

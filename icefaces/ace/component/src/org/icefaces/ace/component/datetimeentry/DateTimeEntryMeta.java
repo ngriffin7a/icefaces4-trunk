@@ -212,4 +212,6 @@ public class DateTimeEntryMeta extends UIInputMeta {
     @Property(tlddoc = "Set a maximum selectable date and time. Must be java.util.Date object. Default is no limit.")
     private Object maxDateTime;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

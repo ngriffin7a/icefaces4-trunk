@@ -65,6 +65,11 @@ public class GMapRenderer extends CoreRenderer {
         writer.startElement("div", component);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("style", "height:100%; width:100%", null);
+		String accesskey = gmap.getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			writer.writeAttribute("tabindex", "0", null);
+		}
         writer.endElement("div");
         writer.endElement("div");
         makeFields(writer, clientId, "lat");
