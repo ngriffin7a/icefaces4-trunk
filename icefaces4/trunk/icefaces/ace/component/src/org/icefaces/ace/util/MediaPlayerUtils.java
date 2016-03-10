@@ -168,6 +168,12 @@ public class MediaPlayerUtils {
         if (mediaObject instanceof byte[]) {
 			writer.writeAttribute("data-hashcode", mediaObject.hashCode(), null);
 		}
+		//accesskey
+		Object accesskey = uic.getAttributes().get("accesskey");
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			writer.writeAttribute("tabindex", "0", null);
+		}
     }
     
     public static void encodeBaseMediaElementEnd(ResponseWriter writer, UIComponent uic, 

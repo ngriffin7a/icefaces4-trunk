@@ -41,4 +41,7 @@ public class AccordionPaneMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc="Text that appears in the header of the pane.")
     private String title;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

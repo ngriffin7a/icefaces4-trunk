@@ -81,6 +81,9 @@ public class MenuButtonMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Set to true when the entire menu needs to be updated in the client, such as when an individual menu item changes label or styling, and the entire menu needs to be reinitialized in the client in order to get all the styling and behaviour re-applied to the new HTML nodes. The value of this attribute will be automatically set to false by the component after consuming it (if applicable).", defaultValue = "false")
     private Boolean forceMenuUpdate;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
+
     @Field(defaultValue = "0", defaultValueIsStringLiteral = false)
     protected Integer forceUpdateCounter;
 

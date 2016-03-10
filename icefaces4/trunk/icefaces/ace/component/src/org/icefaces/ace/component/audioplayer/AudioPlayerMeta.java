@@ -86,6 +86,9 @@ public class AudioPlayerMeta extends UIComponentBaseMeta {
     @Property(defaultValue = "false", tlddoc="  audio will be muted if true for html5 compliant desktop browsers only. Default is false")
     private boolean muted;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
+
     @Field
     private String srcAttribute;
 }

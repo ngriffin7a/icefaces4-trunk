@@ -69,5 +69,6 @@ public class GMapAutocompleteMeta extends UIPanelMeta {
     private String offset;
     @Property(tlddoc = "Determine whether or not to display an Info Window with information on the selected point.", defaultValue="true")
     private boolean window;
-
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

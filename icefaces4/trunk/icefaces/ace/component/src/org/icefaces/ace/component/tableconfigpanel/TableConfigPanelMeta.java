@@ -98,6 +98,9 @@ public class TableConfigPanelMeta extends UIComponentBaseMeta {
         defaultValue = "false", defaultValueType = DefaultValueType.EXPRESSION)
     Boolean modal;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
+
     @Field(defaultValue = "0")
     Integer forcedRenderCount;
 }

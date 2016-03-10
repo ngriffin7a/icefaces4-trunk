@@ -63,6 +63,11 @@ public class GMapAutocompleteRenderer extends CoreRenderer {
         writer.writeAttribute("type", "text", null);
         writer.writeAttribute("size", autocomplete.getSize(), null);
         writer.writeAttribute("style", autocomplete.getStyle(), null);
+		String accesskey = autocomplete.getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			writer.writeAttribute("tabindex", "0", null);
+		}
 		String address = autocomplete.getAddress();
 		address = address == null ? "" : address;
 		writer.writeAttribute("value", address, null);

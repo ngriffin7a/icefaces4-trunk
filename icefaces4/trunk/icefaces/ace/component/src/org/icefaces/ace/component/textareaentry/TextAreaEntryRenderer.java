@@ -128,6 +128,9 @@ public class TextAreaEntryRenderer extends InputRenderer {
 
         renderPassThruAttributes(context, textAreaEntry, HTML.TEXTAREA_ATTRS);
 
+		String accesskey = textAreaEntry.getAccesskey();
+		if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
+
         if (ariaEnabled) {
             final TextAreaEntry compoent = (TextAreaEntry) component;
             Map<String, Object> ariaAttributes = new HashMap<String, Object>() {{

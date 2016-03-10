@@ -180,6 +180,8 @@ public class AccordionRenderer extends CoreRenderer {
 				//title
 				writer.startElement("h3", null);
                 writer.writeAttribute("id", clientId + "_header", null);
+				String accesskey = tab.getAccesskey();
+				if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
 				writer.startElement("a", null);
 				writer.writeAttribute("href", "#", null);
 				if(tab.getTitle() != null) {

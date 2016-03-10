@@ -117,6 +117,11 @@ public class SelectMenuRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId + "_link", null);
 		String tabindex = selectMenu.getTabindex();
 		if (tabindex != null) writer.writeAttribute("tabindex", tabindex, null);
+		String accesskey = selectMenu.getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
+		}
 		else writer.writeAttribute("tabindex", "0", null);
 		if (ariaEnabled) {
 			writer.writeAttribute("role", "select", null);

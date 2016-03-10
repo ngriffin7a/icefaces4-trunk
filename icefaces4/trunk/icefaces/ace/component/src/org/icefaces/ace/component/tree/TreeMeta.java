@@ -153,4 +153,7 @@ public class TreeMeta extends UIDataMeta {
 	
 	@Property(tlddoc = "Specifies the jQuery selector(s) of the elements inside the node container that will be used as the drag handle(s). If this attribute isn't specified, any point of the node container can initiate the dragging action. The selectors are relative to the node's root element. When using multiple selectors, separate them by commas. The handles apply to all nodes defined in the tree.")
 	String dragHandle;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

@@ -680,6 +680,11 @@ public class DataTableHeadRenderer {
             writer.writeAttribute(HTML.ONFOCUS_ATTR, script, null);
             writer.writeAttribute(HTML.TABINDEX_ATTR, 0, null);
             writer.writeAttribute(HTML.ID_ATTR, clientId +"_tableconf_launch", null);
+			String accesskey = configPanel.getAccesskey();
+			if (accesskey != null) {
+				writer.writeAttribute("accesskey", accesskey, null);
+				writer.writeAttribute("tabindex", "0", null);
+			}
 
             writer.startElement(HTML.SPAN_ELEM, null);
             writer.writeAttribute(HTML.CLASS_ATTR, "ui-icon ui-icon-gear", null);

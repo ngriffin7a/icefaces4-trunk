@@ -81,6 +81,11 @@ public class MenuButtonRenderer extends BaseMenuRenderer {
 		writer.writeAttribute("id", buttonId, null);
 		writer.writeAttribute("name", buttonId, null);
 		writer.writeAttribute("type", "button", null);
+		String accesskey = button.getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			writer.writeAttribute("tabindex", "0", null);
+		}
 		if(button.getValue() != null) {
 			writer.write(button.getValue());
 		}
