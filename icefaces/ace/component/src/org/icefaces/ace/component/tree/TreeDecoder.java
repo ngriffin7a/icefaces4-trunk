@@ -231,9 +231,17 @@ public class TreeDecoder<N> {
 	NodeKey getReorderNodeKey() {
 		NodeKey key = NodeKey.ROOT_KEY;
 		String reorderString = getRequestParam(clientId + REORDER_SUFFIX);
+
 		if (reorderString != null && !"".equals(reorderString)) {
 			String[] reorderParts = reorderString.split(">");
-			key = tree.getKeyConverter().parseSegments(reorderParts[0].split(seperator));
+			String[] destParts = reorderParts[1].split("@");
+			String[] destContainer = destParts[0].split(seperator);
+			String[] segments = new String[destContainer.length+1];
+			segments[destContainer.length] = destParts[1];
+			for (int i = 0; i < destContainer.length; i++) {
+				segments[i] = destContainer[i];
+			}
+			key = tree.getKeyConverter().parseSegments(segments);
 		}
 		return key;
 	}
