@@ -89,8 +89,6 @@ public class LinkButtonRenderer extends CoreRenderer {
 
         // button element
         writer.startElement(HTML.ANCHOR_ELEM, null);
-        writer.writeAttribute(HTML.ID_ATTR, clientId + "_link", null);
-
         if (tabindex != null)
             writer.writeAttribute(HTML.TABINDEX_ATTR, tabindex, null);
 
@@ -108,6 +106,13 @@ public class LinkButtonRenderer extends CoreRenderer {
         writer.write(value);
 
         writer.endElement(HTML.ANCHOR_ELEM);
+
+        writer.startElement(HTML.SCRIPT_ELEM, null);
+        writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
+        //assign ID here so that focus manager can focus the link but ID assigning will not interfere with the DOM updates
+        writer.writeText("document.getElementById('" + clientId + "').getElementsByTagName('a')[0].id = '" + clientId + "_link';", null);
+        writer.endElement(HTML.SCRIPT_ELEM);
+
         writer.endElement(HTML.SPAN_ELEM);
         writer.endElement(HTML.SPAN_ELEM);
         if (!disabled) encodeScript(facesContext, writer, HTML.ONMOUSEOVER_ATTR,

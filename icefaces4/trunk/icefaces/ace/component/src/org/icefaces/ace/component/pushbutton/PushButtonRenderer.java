@@ -87,7 +87,6 @@ public class PushButtonRenderer extends CoreRenderer {
 		type = "submit".equalsIgnoreCase(type) ? "submit" : "button";
 		writer.writeAttribute(HTML.TYPE_ATTR, type, null);
         final String buttonId = clientId + "_button";
-        writer.writeAttribute(HTML.ID_ATTR, buttonId, null);
         writer.writeAttribute(HTML.NAME_ATTR, buttonId, null);
 
         if (disabled)
@@ -109,7 +108,9 @@ public class PushButtonRenderer extends CoreRenderer {
 
         writer.startElement(HTML.SCRIPT_ELEM, null);
         writer.writeAttribute(HTML.TYPE_ATTR, "text/javascript", null);
-		writer.writeText(getScript(facesContext, writer, pushButton, clientId), null);
+        //assign ID here so that focus manager can focus the button but ID assigning will not interfere with the DOM updates
+        writer.writeText("document.getElementById('" + clientId + "').getElementsByTagName('button')[0].id = '" + clientId + "_button';", null);
+        writer.writeText(getScript(facesContext, writer, pushButton, clientId), null);
         writer.endElement(HTML.SCRIPT_ELEM);
     }
 	
