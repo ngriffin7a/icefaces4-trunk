@@ -16,5 +16,11 @@
 
 package org.icefaces.ace.component.radiobuttons;
 
-public class RadioButtons extends RadioButtonsBase {
+import org.icefaces.component.Focusable;
+
+public class RadioButtons extends RadioButtonsBase implements Focusable {
+
+    public String getFocusedElementId() {
+        return getClientId() + ":0_button";
+    }
 }

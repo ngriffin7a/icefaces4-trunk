@@ -17,10 +17,15 @@
 package org.icefaces.ace.component.checkboxbuttons;
 
 import org.icefaces.ace.component.clientValidator.Validateable;
+import org.icefaces.component.Focusable;
 
-public class CheckboxButtons extends CheckboxButtonsBase implements Validateable {
+public class CheckboxButtons extends CheckboxButtonsBase implements Validateable, Focusable {
 
     public String getValidatedElementId() {
         return getClientId() + "_options";
+    }
+
+    public String getFocusedElementId() {
+        return getClientId() + ":0_button";
     }
 }
