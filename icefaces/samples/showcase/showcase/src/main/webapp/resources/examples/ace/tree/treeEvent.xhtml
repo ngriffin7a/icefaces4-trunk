@@ -1,0 +1,101 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{msgs['example.ace.tree.event.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.tree.event.description']}"/>
+
+    <ui:define name="example">
+    <h:form id="form">
+        <style type="text/css">
+            #form\3Atree {
+                line-height: 1 !important;
+                height:205px;
+                width:230px;
+                overflow: auto;
+                position:relative;
+                text-align: left;
+            }
+            #form\3Atree table {
+                font-size: 1em;
+            }
+            #form > table > tr {
+                vertical-align: top;
+            }
+            .eqCell {
+                width:50%;
+                text-align: center;
+            }
+            ul.output {
+                height:184px;
+                width:120px;
+                display:inline-block;
+                overflow: auto;
+                padding-left: 1em;
+                list-style: disc inside;
+            }
+            .if-node-sw > div.if-node-ln > img {
+                margin-left: 6px;
+            }
+        </style>
+        <h:panelGrid columns="2" width="100%" style="margin: auto;" columnClasses="eqCell,eqCell">
+            <ace:tree id="tree"
+                      expansion="true"
+                      selection="true"
+                      reordering="true"
+                      value="#{treeBean.treeRoots}"
+                      stateCreationCallback="#{treeBean.contractProvinceInit}"
+                      var="node"
+                      stateMap="#{treeBean.stateMap}"
+                      stateVar="nState"
+                      type="#{node.type}">
+                
+                <ace:ajax event="select" listener="#{treeEventBean.treeEventListener}" />
+                <ace:ajax event="deselect" listener="#{treeEventBean.treeEventListener}" />
+                <ace:ajax event="expand" listener="#{treeEventBean.treeEventListener}" />
+                <ace:ajax event="contract" listener="#{treeEventBean.treeEventListener}" />
+                <ace:ajax event="reorder" listener="#{treeEventBean.treeEventListener}" />
+                
+                <ace:node type="country">
+                    Country: <h:outputText value="#{node.name}" />
+                </ace:node>
+                <ace:node type="province">
+                    Province: <h:outputText value="#{node.name}" />
+                </ace:node>
+                // Default node type
+                <ace:node>
+                    City: <h:outputText value="#{node.name}" />
+                </ace:node>
+            </ace:tree>
+            
+            <ace:panel header="Tree Events Log">
+                <h:dataTable id="message" value="#{treeEventBean.list}" var="message">
+                    <h:column>
+                        <h:outputText id="msg" value="#{message}"/>
+                    </h:column>
+                </h:dataTable>
+            </ace:panel>
+        </h:panelGrid>
+    </h:form>
+</ui:define>
+</ui:composition>
