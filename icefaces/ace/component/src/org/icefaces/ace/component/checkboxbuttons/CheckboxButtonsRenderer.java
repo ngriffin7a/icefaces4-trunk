@@ -182,7 +182,7 @@ public class CheckboxButtonsRenderer extends InputRenderer {
             writer.endElement("option");
             i++;
         }
-        writer.endElement("option");
+        writer.endElement("select");
     }
 
 	private void encodeButton(FacesContext facesContext, CheckboxButtons checkboxButtons, int index, SelectItem item, Converter converter, Object currentSelections) throws IOException {
