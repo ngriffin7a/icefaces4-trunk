@@ -16,11 +16,18 @@
 
 package org.icefaces.impl.push.servlet;
 
-import org.icefaces.impl.event.DebugTagListener;
-import org.icefaces.util.EnvUtils;
-import org.icepush.PushContext;
-import org.icepush.servlet.MainServlet;
-import org.icepush.util.ExtensionRegistry;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.EventListener;
+import java.util.Iterator;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javax.faces.FactoryFinder;
 import javax.faces.application.Resource;
@@ -35,34 +42,32 @@ import javax.faces.event.PostAddToViewEvent;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
-public class ICEpushResourceHandler extends ResourceHandlerWrapper implements PhaseListener {
-    private static final Logger log = Logger.getLogger(ICEpushResourceHandler.class.getName());
+import org.icefaces.impl.event.DebugTagListener;
+import org.icefaces.util.EnvUtils;
+import org.icepush.servlet.MainServlet;
+import org.icepush.util.ExtensionRegistry;
+
+public class ICEpushResourceHandler
+extends ResourceHandlerWrapper
+implements EventListener, PhaseListener, Serializable {
+    private static final Logger LOGGER = Logger.getLogger(ICEpushResourceHandler.class.getName());
+
     public static final String BLOCKING_CONNECTION_RESOURCE_NAME = "listen.icepush.xml";
     public static final String CREATE_PUSH_ID_RESOURCE_NAME = "create-push-id.icepush.txt";
     public static final String NOTIFY_RESOURCE_NAME = "notify.icepush.txt";
     public static final String ADD_GROUP_MEMBER_RESOURCE_NAME = "add-group-member.icepush.txt";
     public static final String REMOVE_GROUP_MEMBER_RESOURCE_NAME = "remove-group-member.icepush.txt";
-    private static final Collection RESOURCES = Arrays.asList(
+    private static final Collection RESOURCES =
+        Arrays.asList(
             BLOCKING_CONNECTION_RESOURCE_NAME,
             NOTIFY_RESOURCE_NAME,
             CREATE_PUSH_ID_RESOURCE_NAME,
             ADD_GROUP_MEMBER_RESOURCE_NAME,
             REMOVE_GROUP_MEMBER_RESOURCE_NAME
-    );
+        );
 
     private static final ReentrantLock lock = new ReentrantLock();
     private static final Condition condition = lock.newCondition();
@@ -85,22 +90,22 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
                 final ICEpushResourceHandlerImpl impl = new ICEpushResourceHandlerImpl();
                 this.resourceHandler = new BlockingICEpushResourceHandlerWrapper(impl);
                 new Thread(
-                        new Runnable() {
-                            public void run() {
-                                ICEpushResourceHandler.this.resourceHandler.initialize(resourceHandler, servletContext, ICEpushResourceHandler.this);
-                                ICEpushResourceHandler.this.resourceHandler = impl;
-                                lock.lock();
-                                try {
-                                    condition.signalAll();
-                                } finally {
-                                    lock.unlock();
-                                }
+                    new Runnable() {
+                        public void run() {
+                            ICEpushResourceHandler.this.resourceHandler.initialize(resourceHandler, servletContext, ICEpushResourceHandler.this);
+                            ICEpushResourceHandler.this.resourceHandler = impl;
+                            lock.lock();
+                            try {
+                                condition.signalAll();
+                            } finally {
+                                lock.unlock();
                             }
-                        }).start();
+                        }
+                    }).start();
             }
         } else {
             this.resourceHandler = new ProxyICEpushResourceHandler(resourceHandler);
-            log.log(Level.INFO, "Ajax Push Resource Handling not available.");
+            LOGGER.log(Level.INFO, "Ajax Push Resource Handling not available.");
         }
     }
 
@@ -112,7 +117,8 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
         resourceHandler.beforePhase(event);
     }
 
-    public Resource createResource(final String resourceName, String libraryName, final String contentType) {
+    @Override
+    public Resource createResource(final String resourceName, final String libraryName, final String contentType) {
         return resourceHandler.createResource(resourceName, libraryName, contentType);
     }
 
@@ -120,6 +126,7 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
         return resourceHandler.getPhaseId();
     }
 
+    @Override
     public ResourceHandler getWrapped() {
         return resourceHandler.getWrapped();
     }
@@ -134,13 +141,14 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
         return resourceHandler.isResourceRequest(facesContext);
     }
 
-    public static void notifyContextShutdown(ServletContext context) {
+    public static void notifyContextShutdown(final ServletContext servletContext) {
         try {
-            ((ICEpushResourceHandler) context.getAttribute(ICEpushResourceHandler.class.getName())).shutdownMainServlet();
-        } catch (Throwable t) {
+            ((ICEpushResourceHandler)servletContext.getAttribute(ICEpushResourceHandler.class.getName())).
+                shutdownMainServlet();
+        } catch (final Throwable throwable) {
             //no need to log this exception for optional Ajax Push, but may be
             //useful for diagnosing other failures
-            log.log(Level.FINE, "MainServlet not found in application scope: " + t);
+            LOGGER.log(Level.FINE, "MainServlet not found in application scope: " + throwable);
         }
     }
 
@@ -148,55 +156,53 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
         resourceHandler.shutdownMainServlet();
     }
 
-    private static abstract class AbstractICEpushResourceHandler extends ResourceHandlerWrapper implements PhaseListener {
-        abstract void initialize(ResourceHandler resourceHandler, ServletContext servletContext, ICEpushResourceHandler icePushResourceHandler);
+    private static abstract class AbstractICEpushResourceHandler
+    extends ResourceHandlerWrapper
+    implements EventListener, PhaseListener, Serializable {
+        protected abstract void initialize(
+            ResourceHandler resourceHandler, ServletContext servletContext,
+            ICEpushResourceHandler icePushResourceHandler);
 
-        abstract void shutdownMainServlet();
+        protected abstract void shutdownMainServlet();
     }
 
-    private static class ICEpushResourceHandlerImpl extends AbstractICEpushResourceHandler {
+    private static class ICEpushResourceHandlerImpl
+    extends AbstractICEpushResourceHandler
+    implements EventListener, PhaseListener, Serializable {
+        private static final Logger LOGGER = Logger.getLogger(ICEpushResourceHandlerImpl.class.getName());
+
         private static final Pattern ICEpushRequestPattern = Pattern.compile(".*\\.icepush");
         private static final String RESOURCE_KEY = "javax.faces.resource";
-        private static final String BROWSERID_COOKIE = "ice.push.browser";
 
-        private ResourceHandler resourceHandler;
+        private final Lock mainServletLock = new ReentrantLock();
+
         private MainServlet mainServlet;
+        private ResourceHandler resourceHandler;
         private ServletContext servletContext;
+
+        private ICEpushResourceHandlerImpl() {
+        }
 
         public void afterPhase(final PhaseEvent event) {
             // Do nothing.
         }
 
         public void beforePhase(final PhaseEvent event) {
-            if (mainServlet == null) {
-                Class mainServletClass = (Class) ExtensionRegistry.getBestExtension(servletContext, "org.icepush.MainServlet");
-                try {
-                    Method mainServletGet = mainServletClass
-                        .getMethod("getInstance",
-                            new Class[]{ServletContext.class});
-                    mainServlet = (MainServlet) mainServletGet
-                        .invoke(null, servletContext);
-                } catch (Exception e) {
-                    log.log(Level.SEVERE, "Cannot instantiate extension org.icepush.MainServlet.", e);
-                    throw new RuntimeException(e);
-                }
-            }
+            getMainServlet();
         }
 
         public PhaseId getPhaseId() {
             return PhaseId.RESTORE_VIEW;
         }
 
+        @Override
         public ResourceHandler getWrapped() {
             return resourceHandler;
         }
 
         @Override
-        public void handleResourceRequest(final FacesContext facesContext) throws IOException {
-            if (null == mainServlet) {
-                resourceHandler.handleResourceRequest(facesContext);
-                return;
-            }
+        public void handleResourceRequest(final FacesContext facesContext)
+        throws IOException {
             String resourceName = facesContext.getExternalContext()
                     .getRequestParameterMap().get(RESOURCE_KEY);
 
@@ -207,7 +213,7 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
 
             if (RESOURCES.contains(resourceName)) {
                 try {
-                    mainServlet.service(request, response);
+                    getMainServlet().service(request, response);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -220,7 +226,7 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
             String requestURI = request.getRequestURI();
             if (ICEpushRequestPattern.matcher(requestURI).find()) {
                 try {
-                    mainServlet.service(request, response);
+                    getMainServlet().service(request, response);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -230,11 +236,11 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
                 } catch (IOException e) {
                     //capture & log Tomcat specific exception
                     if (e.getClass().getName().endsWith("ClientAbortException")) {
-                        log.fine("Browser closed the connection prematurely for " + requestURI);
+                        LOGGER.fine("Browser closed the connection prematurely for " + requestURI);
                     } else if ("Broken pipe".equals(e.getMessage())) {
-                        log.fine("Browser connection was severed " + requestURI);
+                        LOGGER.fine("Browser connection was severed " + requestURI);
                     } else if (e.getMessage().contains("Connection reset by peer")) {
-                        log.fine("Browser reset the connection for " + requestURI);
+                        LOGGER.fine("Browser reset the connection for " + requestURI);
                     } else {
                         throw e;
                     }
@@ -255,14 +261,45 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
             }
             HttpServletRequest servletRequest = (HttpServletRequest) externalContext.getRequest();
             String requestURI = servletRequest.getRequestURI();
-            return resourceHandler.isResourceRequest(facesContext) || ICEpushRequestPattern.matcher(requestURI).find();
+            boolean _check1 = resourceHandler.isResourceRequest(facesContext);
+            boolean _check2 = ICEpushRequestPattern.matcher(requestURI).find();
+            return _check1 || _check2;
         }
 
-        void initialize(final ResourceHandler resourceHandler, final ServletContext servletContext, final ICEpushResourceHandler icePushResourceHandler) {
+        protected MainServlet getMainServlet() {
+            getMainServletLock().lock();
+            try {
+                if (mainServlet == null) {
+                    try {
+                        mainServlet =
+                            (MainServlet)
+                                ((Class)ExtensionRegistry.getBestExtension(servletContext, "org.icepush.MainServlet")).
+                                    getMethod("getInstance", new Class[]{ServletContext.class}).
+                                        invoke(null, servletContext);
+                    } catch (final Exception exception) {
+                        LOGGER.log(Level.SEVERE, "Cannot instantiate extension org.icepush.MainServlet.", exception);
+                        throw new RuntimeException(exception);
+                    }
+                }
+                return mainServlet;
+            } finally {
+                getMainServletLock().unlock();
+            }
+        }
+
+        protected Lock getMainServletLock() {
+            return mainServletLock;
+        }
+
+        @Override
+        protected void initialize(
+            final ResourceHandler resourceHandler, final ServletContext servletContext,
+            final ICEpushResourceHandler icePushResourceHandler) {
+
             this.resourceHandler = resourceHandler;
             this.servletContext = servletContext;
-            servletContext.setAttribute(ICEpushResourceHandler.class.getName(), icePushResourceHandler);
-            LifecycleFactory lifecycleFactory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+            this.servletContext.setAttribute(ICEpushResourceHandler.class.getName(), icePushResourceHandler);
+            LifecycleFactory lifecycleFactory = (LifecycleFactory)FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
             Iterator<String> lifecycleIds = lifecycleFactory.getLifecycleIds();
             while (lifecycleIds.hasNext()) {
                 String lifecycleId = lifecycleIds.next();
@@ -271,12 +308,17 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
             }
         }
 
-        void shutdownMainServlet() {
-            mainServlet.shutdown();
+        @Override
+        protected void shutdownMainServlet() {
+            getMainServlet().shutdown();
         }
     }
 
-    private static class BlockingICEpushResourceHandlerWrapper extends AbstractICEpushResourceHandler {
+    private static class BlockingICEpushResourceHandlerWrapper
+    extends AbstractICEpushResourceHandler
+    implements EventListener, PhaseListener, Serializable {
+        private static final Logger LOGGER = Logger.getLogger(BlockingICEpushResourceHandlerWrapper.class.getName());
+
         private final ICEpushResourceHandlerImpl resourceHandler;
 
         private BlockingICEpushResourceHandlerWrapper(final ICEpushResourceHandlerImpl resourceHandler) {
@@ -371,6 +413,7 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
             }
         }
 
+        @Override
         public ResourceHandler getWrapped() {
             lock.lock();
             try {
@@ -384,7 +427,8 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
         }
 
         @Override
-        public void handleResourceRequest(final FacesContext facesContext) throws IOException {
+        public void handleResourceRequest(final FacesContext facesContext)
+        throws IOException {
             lock.lock();
             try {
                 if (resourceHandler.mainServlet == null) {
@@ -422,11 +466,16 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
             }
         }
 
-        void initialize(final ResourceHandler resourceHandler, final ServletContext servletContext, final ICEpushResourceHandler icePushResourceHandler) {
+        @Override
+        protected void initialize(
+            final ResourceHandler resourceHandler, final ServletContext servletContext,
+            final ICEpushResourceHandler icePushResourceHandler) {
+
             this.resourceHandler.initialize(resourceHandler, servletContext, icePushResourceHandler);
         }
 
-        void shutdownMainServlet() {
+        @Override
+        protected void shutdownMainServlet() {
             lock.lock();
             try {
                 if (resourceHandler.mainServlet == null) {
@@ -439,32 +488,45 @@ public class ICEpushResourceHandler extends ResourceHandlerWrapper implements Ph
         }
     }
 
-    private static class ProxyICEpushResourceHandler extends AbstractICEpushResourceHandler {
+    private static class ProxyICEpushResourceHandler
+    extends AbstractICEpushResourceHandler
+    implements EventListener, PhaseListener, Serializable {
+        private static final Logger LOGGER = Logger.getLogger(ProxyICEpushResourceHandler.class.getName());
+
         private final ResourceHandler resourceHandler;
 
-        public ProxyICEpushResourceHandler(ResourceHandler resourceHandler) {
+        public ProxyICEpushResourceHandler(final ResourceHandler resourceHandler) {
             this.resourceHandler = resourceHandler;
         }
 
-        void initialize(ResourceHandler resourceHandler, ServletContext servletContext, ICEpushResourceHandler icePushResourceHandler) {
+        public void afterPhase(final PhaseEvent event) {
+            // Do nothing.
         }
 
-        void shutdownMainServlet() {
-        }
-
-        public void afterPhase(PhaseEvent event) {
-        }
-
-        public void beforePhase(PhaseEvent event) {
+        public void beforePhase(final PhaseEvent event) {
+            // Do nothing.
         }
 
         public PhaseId getPhaseId() {
             return null;
         }
 
+        @Override
         public ResourceHandler getWrapped() {
             return resourceHandler;
         }
-    }
 
+        @Override
+        protected void initialize(
+            final ResourceHandler resourceHandler, final ServletContext servletContext,
+            final ICEpushResourceHandler icePushResourceHandler) {
+
+            // Do nothing.
+        }
+
+        @Override
+        protected void shutdownMainServlet() {
+            // Do nothing.
+        }
+    }
 }
