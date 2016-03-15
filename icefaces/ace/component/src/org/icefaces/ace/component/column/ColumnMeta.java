@@ -179,6 +179,9 @@ public class ColumnMeta extends UIColumnMeta {
                       "(when 'text' is used, all values are treated as strings; 'date' assumes the value object is a Date object).")
     String type;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to the filter input of this column, if filtering is enabled for this column, or to the ascending sort button, if sorting is enabled for this column.")
+	String accesskey;
+
 //    These per-feature configuration attributes will be used when the 'value' property is added to Column.
 //    Until then they are redundant.
 //    @Property(tlddoc="Enables per-column control of column sorting when either the " +

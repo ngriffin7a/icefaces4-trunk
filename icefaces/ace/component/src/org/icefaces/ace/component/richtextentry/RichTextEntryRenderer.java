@@ -93,6 +93,17 @@ public class RichTextEntryRenderer extends InputRenderer {
 		
 		writer.endElement("script");
 		writer.endElement("span");
+
+		writer.startElement("button", null);
+		writer.writeAttribute("id", clientId + "_accesskey_proxy", null);
+		String accesskey = richTextEntry.getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+			writer.writeAttribute("onfocus", "CKEDITOR.instances['" + clientId + "'].focus();", null);
+			writer.writeAttribute("style", "width:0;height:0;border:0;background-color:transparent;"
+				+ "cursor:pointer;overflow:hidden;outline:none;", null);
+		}
+		writer.endElement("button");
     }
 	
     // taken from com.icesoft.faces.util.CoreUtils

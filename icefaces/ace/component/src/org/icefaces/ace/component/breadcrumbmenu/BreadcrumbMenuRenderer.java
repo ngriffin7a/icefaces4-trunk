@@ -67,6 +67,10 @@ public class BreadcrumbMenuRenderer extends BaseMenuRenderer {
             menuItem = menuItems.get(i);
             if (i == 0) {
                 menuItem.setIcon("ui-icon ui-icon-home");
+				String accesskey = breadcrumbMenu.getAccesskey();
+				if (accesskey != null) {
+					menuItem.setAccesskey(accesskey);
+				}
             } else {
                 menuItem.setIcon("ui-icon ui-icon-arrowthick-1-e");
             }

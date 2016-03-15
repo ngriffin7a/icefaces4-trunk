@@ -337,7 +337,7 @@ public class DataTableMeta extends UIDataMeta {
             "Alternately the table has a convenience method for this, DataTable.resetPagination().")
     private boolean paginator;
 
-	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to the current page button.")
 	String paginatorAccesskey;
 
 

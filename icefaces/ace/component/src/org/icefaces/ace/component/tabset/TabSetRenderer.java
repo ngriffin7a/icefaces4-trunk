@@ -405,6 +405,12 @@ public class TabSetRenderer extends CoreRenderer {
         }
         writer.writeAttribute(HTML.ID_ATTR, clientId+ "tab"+ index, HTML.ID_ATTR);
         writer.writeAttribute(HTML.CLASS_ATTR, "yui-navdiv", HTML.CLASS_ATTR);           
+		writer.writeAttribute("tabindex", "0", null);
+		String accesskey = ((TabPane)tab).getAccesskey();
+		if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
+		writer.writeAttribute("onfocus", "var c = ice.ace.getJSContext('"+tabSet.getClientId(facesContext)+"');"
+			+"if (c) {var t = c.getComponent(); if(t) t.set('activeIndex', "+index+");}", null);
+
         writer.startElement("em", tab);
         writer.writeAttribute(HTML.ID_ATTR, clientId+ "Lbl", HTML.ID_ATTR); 
         //tab header can have input elements, we don't want tab to consume any event that was initiated by an input 

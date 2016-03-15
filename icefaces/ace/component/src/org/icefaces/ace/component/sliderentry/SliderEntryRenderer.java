@@ -251,6 +251,7 @@ public class SliderEntryRenderer extends InputRenderer{
         String length = slider.getLength();
 		String label = slider.getLabel();
 		label = label != null ? label : "";
+		String accesskey = slider.getAccesskey();
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
@@ -270,6 +271,7 @@ public class SliderEntryRenderer extends InputRenderer{
           .entry("clickableRail", slider.isClickableRail())
           .entry("ariaEnabled", ariaEnabled)
           .entry("label", label);
+			if (accesskey != null) jb.entry("accesskey", accesskey);
 
 		if (length.toLowerCase().indexOf("px") == -1) {
 			length += "px";
