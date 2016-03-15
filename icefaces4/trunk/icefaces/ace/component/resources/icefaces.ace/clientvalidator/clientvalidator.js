@@ -39,8 +39,14 @@
                     var entry = ice.ace.immediateComponents[i];
                     //verify if the submit event type matches the one defined (the event is undefined when 'immediate'
                     //is defined for the component)
-                    if (cursor.id == entry[0] && options['javax.faces.behavior.event'] == entry[1]) {
-                        return true;
+                    var id = entry[0];
+                    if (cursor.id == id) {
+                        var eventType = entry[1];
+                        if (eventType) {
+                            return options['javax.faces.behavior.event'] == eventType;
+                        } else {
+                            return true;
+                        }
                     }
                 }
                 cursor = cursor.parentNode;
