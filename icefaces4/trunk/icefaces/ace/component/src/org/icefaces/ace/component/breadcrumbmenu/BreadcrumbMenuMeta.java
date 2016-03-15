@@ -62,4 +62,7 @@ public class BreadcrumbMenuMeta extends UIComponentBaseMeta {
     private String styleClass;
 
     private AbstractMenu am; // need this for resolving dependence on AbstractMenu when compiling Base class
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to the first focusable item in the menu. This accesskey value overrides any possible accesskey value that the menu item itself could have.")
+	String accesskey;
 }

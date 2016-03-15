@@ -62,4 +62,7 @@ public class RowEditorMeta extends UIComponentBaseMeta {
             "a browser tooltip when hovering over the icon. The default for this tooltip is defined" +
             "in the ace messages bundle for easy i18n.")
     private String cancelTitle;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component. In output mode the focus goes to the pencil button; in input mode the focus goes to the checkmark button. The value for this attribute should dynamically assign a different key for each row, otherwise, all rows would have the same access key, and it would only work for the last one.")
+	String accesskey;
 }

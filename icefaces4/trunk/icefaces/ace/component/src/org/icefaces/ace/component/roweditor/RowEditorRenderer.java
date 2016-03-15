@@ -152,6 +152,10 @@ public class RowEditorRenderer extends CoreRenderer {
                 writer.writeAttribute("title", BUTTON.START.getTitle(editor), null);
                 writer.writeAttribute("class", "ui-icon ui-icon-pencil", null);
                 writer.writeAttribute("tabindex", "0", null);
+				String accesskey = editor.getAccesskey();
+				if (accesskey != null) {
+					writer.writeAttribute("accesskey", accesskey, null);
+				}
                 writer.endElement("a");
             }
 
@@ -161,6 +165,10 @@ public class RowEditorRenderer extends CoreRenderer {
                 writer.writeAttribute("title", BUTTON.SUBMIT.getTitle(editor), null);
                 writer.writeAttribute("class", "ui-icon ui-icon-check", null);
                 writer.writeAttribute("tabindex", "0", null);
+				String accesskey = editor.getAccesskey();
+				if (accesskey != null) {
+					writer.writeAttribute("accesskey", accesskey, null);
+				}
                 writer.endElement("a");
 
                 writer.startElement("a", null);

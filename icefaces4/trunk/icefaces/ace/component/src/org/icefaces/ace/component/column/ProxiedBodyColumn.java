@@ -341,4 +341,12 @@ public class ProxiedBodyColumn implements IProxiableColumn{
     public Integer getDisplayPriority() {
         return (isPropertySpecified(bodyColumn, "displayPriority") ? bodyColumn : headerColumn).getDisplayPriority();
     }
+
+    public void setAccesskey(String accesskey) {
+        (isPropertySpecified(bodyColumn, "accesskey") ? bodyColumn : headerColumn).setFooterText(accesskey);
+    }
+
+    public String getAccesskey() {
+        return (isPropertySpecified(bodyColumn, "accesskey") ? bodyColumn : headerColumn).getFooterText();
+    }
 }

@@ -52,6 +52,10 @@ ice.ace.Slider = function(id, cfg) {
     handle.attr('id', this.id + '_handle');
     if (cfg.label) handle.attr('aria-labelledby',  'label_' + this.id);
 	if (this.cfg.tabindex) handle.attr('tabindex', this.cfg.tabindex);
+	if (this.cfg.accesskey) {
+		if (!this.cfg.tabindex) handle.attr('tabindex', '0');
+		handle.attr('accesskey', this.cfg.accesskey);
+	}
 
     //Slide handler
 	this.jq.bind('slide', function(event, ui) {

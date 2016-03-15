@@ -177,4 +177,7 @@ public class SliderEntryMeta extends UIComponentBaseMeta {
 
     @Property(tlddoc = "Position of label relative to input field. Supported values are \"left/right/top/bottom/none\". Default is \"none\".")
     private String labelPosition;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to the slider handle.")
+	String accesskey;
 }

@@ -94,4 +94,7 @@ public class RichTextEntryMeta extends UIInputMeta {
 	
     @Property(tlddoc = "By default the data of the editor will only be saved when its 'Save' button is clicked. Any other submit request will not save its data. In order to save its data on any submit request like inputText does, this attribute can be set to true.", defaultValue="false")
     private boolean saveOnSubmit;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to the editing area of this component.")
+	String accesskey;
 }

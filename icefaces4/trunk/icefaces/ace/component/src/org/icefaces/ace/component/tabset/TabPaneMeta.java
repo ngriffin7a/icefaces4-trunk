@@ -78,6 +78,8 @@ public class TabPaneMeta extends UIComponentBaseMeta {
         defaultValueType = DefaultValueType.STRING_LITERAL)
     private String cache;
 
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this tab header and activates it.")
+	String accesskey;
     
     @Facets
     class FacetsMeta{

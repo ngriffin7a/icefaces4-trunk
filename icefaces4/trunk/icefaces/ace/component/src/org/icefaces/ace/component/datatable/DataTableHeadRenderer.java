@@ -332,6 +332,10 @@ public class DataTableHeadRenderer {
 			if (column.hasSortPriority() && column.isSortAscending())
 				writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_UP_CLASS + " ui-toggled", null);
 			else writer.writeAttribute(HTML.CLASS_ATTR, DataTableConstants.SORTABLE_COLUMN_ICON_UP_CLASS, null);
+			if (!tableContext.isColumnFilterable()) {
+				String accesskey = column.getAccesskey();
+				if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
+			}
 			writer.endElement(HTML.ANCHOR_ELEM);
 
 			writer.startElement(HTML.ANCHOR_ELEM, null);
@@ -409,6 +413,10 @@ public class DataTableHeadRenderer {
             writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
             writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
             writer.writeAttribute("onchange", filterFunction, null);
+			String accesskey = column.getAccesskey();
+			if (accesskey != null) {
+				writer.writeAttribute("accesskey", accesskey, null);				
+			}
 
             SelectItem[] itemsArray = (SelectItem[]) getFilterOptions(column);
             Object filterVal = column.getFilterValue();
@@ -445,6 +453,10 @@ public class DataTableHeadRenderer {
 		writer.writeAttribute(HTML.TABINDEX_ATTR, tableContext.getTabIndex(), null);
 		writer.writeAttribute(HTML.CLASS_ATTR, filterStyleClass, null);
 		writer.writeAttribute("value", filterValue , null);
+		String accesskey = column.getAccesskey();
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+		}
 
 		writer.startElement(HTML.OPTION_ELEM, null);
 		writer.writeAttribute("value", "", null);
@@ -515,6 +527,11 @@ public class DataTableHeadRenderer {
 
 		if (column.getFilterStyle() != null)
 			writer.writeAttribute(HTML.STYLE_ELEM, column.getFilterStyle(), null);
+
+		if ("".equals(suffix) || "_min".equals(suffix)) {
+			String accesskey = column.getAccesskey();
+			if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
+		}
 
 		writer.endElement(HTML.INPUT_ELEM);
 

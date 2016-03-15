@@ -138,6 +138,10 @@ public class FileEntryRenderer extends Renderer {
         }
         writer.startElement("input", null);
         writer.writeAttribute("type", "file", "type");
+		Object accesskey = uiComponent.getAttributes().get("accesskey");
+		if (accesskey != null) {
+			writer.writeAttribute("accesskey", accesskey, null);
+		}
 
         String identifier = fileEntry.getClientId(facesContext);
         writer.writeAttribute("id", identifier, "clientId");
@@ -147,6 +151,10 @@ public class FileEntryRenderer extends Renderer {
         }
         if (multiple) {
             writer.writeAttribute("multiple", "multiple", "multiple");
+			if (accesskey != null) {
+				writer.writeAttribute("onfocus", "this.parentNode.className += ' ui-state-hover';", null);
+				writer.writeAttribute("onblur", "this.parentNode.className = this.parentNode.className.replace( /(?:^|\\s)ui-state-hover(?!\\S)/g, '');", null);
+			}
         }
         if (disabled) {
             writer.writeAttribute("disabled", "true", "disabled");

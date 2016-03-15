@@ -501,6 +501,7 @@ public class DataTableRenderer extends CoreRenderer {
         String prev = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "PREV_LABEL", "Prev");
         String rewind = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "FAST_REWIND_LABEL", "Fast Rewind");
         String forward = getLocalisedMessageFromBundle(bundle, PAG_MESSAGE_KEY_PREFIX, "FAST_FORWARD_LABEL", "Fast Forward");
+		String accesskey = table.getPaginatorAccesskey();
         configJson.beginMap();
         configJson.entry("rowsPerPage", table.getRows());
         configJson.entry("totalRecords", table.getRowCount());
@@ -518,6 +519,7 @@ public class DataTableRenderer extends CoreRenderer {
         if (notAlwaysVis) configJson.entry("alwaysVisible",false);
         if (disabled) configJson.entry("pageLinks", 1);
         else configJson.entry("pageLinks", table.getPageCount());
+		if (accesskey != null) configJson.entry("accesskey", accesskey);
 
         if (rowCounts != null && !"".equals(rowCounts)) {
             String[] rowCountArray = rowCounts.split(",");

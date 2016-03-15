@@ -272,4 +272,7 @@ public class FileEntryMeta extends UIComponentBaseMeta {
         "times in succession to add more files to be uploaded.",
         defaultValueType = DefaultValueType.EXPRESSION, defaultValue="false")
     private boolean multiple;
+
+	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
+	String accesskey;
 }

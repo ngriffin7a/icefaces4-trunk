@@ -159,7 +159,8 @@ ice.ace.DataTable.Paginator = function(table) {
 
                 for (var i = startPage; i <= (cfg.pageLinks + startPage - 1) && ((i-1) * cfg.rowsPerPage < cfg.totalRecords); i++) {
                     if (i == activeIndex) {
-                        markup += '<a  href="#" class="ui-paginator-page ui-state-default ui-corner-all ui-paginator-current-page ui-state-active" style="cursor: default;" id="' + currentPageButtonID + '" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0">'+i+'</a>';
+						var accesskey = cfg.accesskey ? 'accesskey="' + cfg.accesskey + '"' : '';
+                        markup += '<a  href="#" class="ui-paginator-page ui-state-default ui-corner-all ui-paginator-current-page ui-state-active" style="cursor: default;" id="' + currentPageButtonID + '" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0" ' + accesskey + '>'+i+'</a>';
                     }
                     else
                         markup += '<a href="#" class="ui-paginator-page ui-state-default ui-corner-all" onclick="ice.setFocus(\'' + currentPageButtonID + '\');" onkeydown="var e = event || window.event; if (e.keyCode == 32 || e.keyCode == 13) { this.click();return false; }" tabindex="0">'+i+'</a>';
