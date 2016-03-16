@@ -361,7 +361,7 @@ ice.ace.tabset = {
 		   var f = document.getElementById(_form.id + 'yti');
 		   //if tabindex holder is not exist already, then create it lazily.
 		   if (!f && createIt) {
-			   f = ice.ace.tabset.createHiddenField(tabset, _form.id + 'yti');
+			   f = ice.ace.tabset.createHiddenField(_form, _form.id + 'yti');
 		   }
 	       return f 
 	   } else {

@@ -83,7 +83,10 @@
         }
 
         var skipValidation = false;
-        if (isImmediate(element, options)) {
+        var targetElementID = options['ice.event.target'];
+        //second try for finding for finding enclosing immediate component root is for components that use submitting
+        //element located outside of the component markup
+        if (isImmediate(element, options) || (targetElementID && isImmediate(document.getElementById(targetElementID), options))) {
             skipValidation = true;
             cleanupMessages(validationResult.invalidElements());
         }
