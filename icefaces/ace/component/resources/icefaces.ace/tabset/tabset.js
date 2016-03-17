@@ -191,6 +191,7 @@ ice.ace.tabset = {
                     }
                     if (!haveBehaviour) {
                         var submitServerSideStartTime = new Date().getTime();
+                        ice.setFocus('');
                         ice.submit(event, targetElement, params);
                         ice.ace.tabset.consoleLog(true, "ace:tabSet - ID: " + clientId + " - submit SS - " + (new Date().getTime() - submitServerSideStartTime) + "ms");
                     }
