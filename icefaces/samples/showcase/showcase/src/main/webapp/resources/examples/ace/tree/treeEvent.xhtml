@@ -63,10 +63,10 @@
                       expansion="true"
                       selection="true"
                       reordering="true"
-                      value="#{treeBean.treeRoots}"
-                      stateCreationCallback="#{treeBean.contractProvinceInit}"
+                      value="#{treeEventBean.treeRoots}"
+                      stateCreationCallback="#{treeEventBean.expandAllInit}"
                       var="node"
-                      stateMap="#{treeBean.stateMap}"
+                      stateMap="#{treeEventBean.stateMap}"
                       stateVar="nState"
                       type="#{node.type}">
                 

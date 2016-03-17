@@ -20,16 +20,16 @@ import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import org.icefaces.ace.event.TreeEvent;
+import org.icefaces.ace.model.tree.NodeStateCreationCallback;
+import org.icefaces.ace.model.tree.NodeStateMap;
 
 @ManagedBean(name = TreeEventBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
@@ -38,15 +38,14 @@ public class TreeEventBean implements Serializable {
 
 	public static final String BEAN_NAME = "treeEventBean";
 
-	public String getBeanName() {
-		return BEAN_NAME;
-	}
-
 	public final String DEFAULT_MESSAGE = "Please select/deselect/expand/contract/reorder tree nodes";
 	public final int MAX_LIST_SIZE = 20;
 	private Format formatter;
 	private String message;
 	private ArrayList<String> list;
+	private List<LocationNodeImpl> treeRoots = TreeDataFactory.getTreeRoots();
+    private NodeStateCreationCallback expandAllInit = new ExpandAllNodeInitCallback();    
+	private NodeStateMap stateMap;
 
 	public TreeEventBean() {
 		formatter = new SimpleDateFormat("HH:mm:ss");
@@ -89,6 +88,10 @@ public class TreeEventBean implements Serializable {
 		}
 	}
 
+	public String getBeanName() {
+		return BEAN_NAME;
+	}
+	
 	public ArrayList<String> getList() {
 		return list;
 	}
@@ -103,6 +106,22 @@ public class TreeEventBean implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}	
+	
+	public List<LocationNodeImpl> getTreeRoots() {
+        return treeRoots;
+    }
+
+    public NodeStateCreationCallback getExpandAllInit() {
+        return expandAllInit;
+    }
+    
+    public NodeStateMap getStateMap() {
+		return stateMap;
+	}
+
+	public void setStateMap(NodeStateMap stateMap) {
+		this.stateMap = stateMap;
 	}
 
 }
