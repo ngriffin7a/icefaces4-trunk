@@ -236,13 +236,23 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
     }
 
     public void endDocument() throws IOException {
-        boolean isPartialRequest = FacesContext.getCurrentInstance().getPartialViewContext().isPartialRequest();
+        final FacesContext context = FacesContext.getCurrentInstance();
+        boolean isPartialRequest = context.getPartialViewContext().isPartialRequest();
 
-        if (FacesContext.getCurrentInstance().isProjectStage(ProjectStage.Development)) {
+        if (context.isProjectStage(ProjectStage.Development)) {
             if (log.isLoggable(Level.WARNING)) {
                 if (cursor != document) {
                     logUnclosedNode(document);
                 }
+            }
+        }
+
+        //add 'id' attribute to the 'html' element to allow for attribute updating
+        final Element documentElement = document.getDocumentElement();
+        if (EnvUtils.getDiffConfig(context).indexOf("att") > -1 && documentElement != null) {
+            String value = documentElement.getAttribute("id");
+            if (value == null || value.isEmpty()) {
+                documentElement.setAttribute("id", "javax_faces_viewroot");
             }
         }
 
@@ -257,7 +267,7 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
             }
         }
 
-        if (null != document.getDocumentElement()) {
+        if (null != documentElement) {
             for (Node stateNode : stateNodes) {
                 Node parent = stateNode.getParentNode();
                 if(parent != null){
