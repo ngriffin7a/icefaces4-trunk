@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
   ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
   ~
@@ -26,7 +27,7 @@
     <ui:param name="description" value="#{msgs['example.ace.dragDrop.description']}"/>
 
     <ui:define name="example">
-        <h:form id="form">
+        <h:form id="form" style="overflow-y:auto;">
             <h:panelGrid width="100%" columns="2"> 
                 <ace:dataTable id="sortingList"
                                          value="#{dragDropOverviewBean.items}"
