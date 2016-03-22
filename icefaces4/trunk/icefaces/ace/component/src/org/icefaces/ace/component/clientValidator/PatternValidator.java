@@ -26,7 +26,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PatternValidator extends PatternValidatorBase {
+public class PatternValidator extends PatternValidatorBase implements Validator {
 
     public void encodeBegin(FacesContext context) throws IOException {
         final UIComponent validatedComponent = getParent();

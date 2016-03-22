@@ -26,7 +26,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DecimalValidator extends DecimalValidatorBase {
+public class DecimalValidator extends DecimalValidatorBase implements Validator {
 
     public void encodeBegin(FacesContext context) throws IOException {
         UIComponent validatedComponent = getParent();
