@@ -40,9 +40,12 @@ public class ImmediateComponentCollector implements SystemEventListener {
 
         FacesContext context = FacesContext.getCurrentInstance();
         queue.add(context.getViewRoot());
+        boolean validatorPresent = false;
         //collect components marked with immediate="true"
+        //also detect if client validators are defined
         while (!queue.isEmpty()) {
             UIComponent component = queue.remove(0);
+            validatorPresent = validatorPresent || component instanceof Validator;
             Iterator<UIComponent> kids = component.getFacetsAndChildren();
             while (kids.hasNext()) {
                 queue.add(kids.next());
@@ -55,7 +58,7 @@ public class ImmediateComponentCollector implements SystemEventListener {
         }
 
         //define ice.ace.immediateComponents arrays with the list of 'immediate' components
-        if (!immediateComponents.isEmpty()) {
+        if (validatorPresent && !immediateComponents.isEmpty()) {
             StringBuffer buffer = new StringBuffer();
             buffer.append("window.ice.ace.immediateComponents = [");
             for (Iterator<ImmediateEntry> iterator = immediateComponents.iterator(); iterator.hasNext(); ) {
