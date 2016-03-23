@@ -249,7 +249,8 @@ public class DOMResponseWriter extends ResponseWriterWrapper {
 
         //add 'id' attribute to the 'html' element to allow for attribute updating
         final Element documentElement = document.getDocumentElement();
-        if (EnvUtils.getDiffConfig(context).indexOf("att") > -1 && documentElement != null) {
+        final String diffConfig = EnvUtils.getDiffConfig(context);
+        if (diffConfig != null && diffConfig.indexOf("att") > -1 && documentElement != null) {
             String value = documentElement.getAttribute("id");
             if (value == null || value.isEmpty()) {
                 documentElement.setAttribute("id", "javax_faces_viewroot");
