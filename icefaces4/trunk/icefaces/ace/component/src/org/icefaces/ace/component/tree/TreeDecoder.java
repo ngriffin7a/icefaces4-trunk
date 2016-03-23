@@ -29,7 +29,7 @@ public class TreeDecoder<N> {
     private FacesContext context;
     private Tree<N> tree;
     private Map<String, String> paramMap;
-    private String seperator;
+    private String separator;
     private String clientId;
 
     private static final String EXPANSION_SUFFIX = "_expand";
@@ -41,7 +41,7 @@ public class TreeDecoder<N> {
     public TreeDecoder(FacesContext context, Tree<N> tree) {
         this.context = context;
         this.tree = tree;
-        this.seperator = Character.toString(UINamingContainer.getSeparatorChar(context));
+        this.separator = Character.toString(UINamingContainer.getSeparatorChar(context));
         this.clientId = tree.getClientId(context);
     }
 
@@ -70,10 +70,10 @@ public class TreeDecoder<N> {
         String reorderString = getRequestParam(clientId + REORDER_SUFFIX);
         String[] reorderParts = reorderString.split(">");
         String[] destParts = reorderParts[1].split("@");
-        NodeKey sourceKey = tree.getKeyConverter().parseSegments(reorderParts[0].split(seperator));
+        NodeKey sourceKey = tree.getKeyConverter().parseSegments(reorderParts[0].split(separator));
         NodeKey destKey = clientId.equals(destParts[0])
                 ? NodeKey.ROOT_KEY
-                : tree.getKeyConverter().parseSegments(destParts[0].split(seperator));
+                : tree.getKeyConverter().parseSegments(destParts[0].split(separator));
         int index = Integer.parseInt(destParts[1]);
 
         tree.setKey(sourceKey);
@@ -94,7 +94,7 @@ public class TreeDecoder<N> {
             JSONArray array = new JSONArray(deselectedJSON);
 
             for (int i = 0; i < array.length(); i++) {
-                tree.setKey(tree.getKeyConverter().parseSegments(array.getString(i).split(seperator)));
+                tree.setKey(tree.getKeyConverter().parseSegments(array.getString(i).split(separator)));
                 tree.getStateMap()
                         .get(tree.getData())
                         .setSelected(false);
@@ -111,7 +111,7 @@ public class TreeDecoder<N> {
             JSONArray array = new JSONArray(contractedJSON);
 
             for (int i = 0; i < array.length(); i++) {
-                tree.setKey(tree.getKeyConverter().parseSegments(array.getString(i).split(seperator)));
+                tree.setKey(tree.getKeyConverter().parseSegments(array.getString(i).split(separator)));
                 tree.getStateMap()
                         .get(tree.getData())
                         .setExpanded(false);
@@ -128,7 +128,7 @@ public class TreeDecoder<N> {
             JSONArray array = new JSONArray(expandedJSON);
 
             for (int i = 0; i < array.length(); i++) {
-                tree.setKey(tree.getKeyConverter().parseSegments(array.getString(i).split(seperator)));
+                tree.setKey(tree.getKeyConverter().parseSegments(array.getString(i).split(separator)));
                 tree.getStateMap()
                         .get(tree.getData())
                         .setExpanded(true);
@@ -145,7 +145,7 @@ public class TreeDecoder<N> {
             JSONArray array = new JSONArray(selectedJSON);
 
             for (int i = 0; i < array.length(); i++) {
-                tree.setKey(tree.getKeyConverter().parseSegments(array.getString(i).split(seperator)));
+                tree.setKey(tree.getKeyConverter().parseSegments(array.getString(i).split(separator)));
                 tree.getStateMap()
                         .get(tree.getData())
                         .setSelected(true);
@@ -179,7 +179,7 @@ public class TreeDecoder<N> {
 			JSONArray array = new JSONArray(expandedJSON);
 
 			if (array.length() > 0)
-				key = tree.getKeyConverter().parseSegments(array.getString(0).split(seperator));
+				key = tree.getKeyConverter().parseSegments(array.getString(0).split(separator));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -193,7 +193,7 @@ public class TreeDecoder<N> {
 			JSONArray array = new JSONArray(contractedJSON);
 
 			if (array.length() > 0)
-				key = tree.getKeyConverter().parseSegments(array.getString(0).split(seperator));
+				key = tree.getKeyConverter().parseSegments(array.getString(0).split(separator));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -207,7 +207,7 @@ public class TreeDecoder<N> {
 			JSONArray array = new JSONArray(selectedJSON);
 
 			if (array.length() > 0)
-				key = tree.getKeyConverter().parseSegments(array.getString(0).split(seperator));
+				key = tree.getKeyConverter().parseSegments(array.getString(0).split(separator));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -221,7 +221,7 @@ public class TreeDecoder<N> {
 			JSONArray array = new JSONArray(deselectedJSON);
 
 			if (array.length() > 0)
-				key = tree.getKeyConverter().parseSegments(array.getString(0).split(seperator));
+				key = tree.getKeyConverter().parseSegments(array.getString(0).split(separator));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -235,7 +235,37 @@ public class TreeDecoder<N> {
 		if (reorderString != null && !"".equals(reorderString)) {
 			String[] reorderParts = reorderString.split(">");
 			String[] destParts = reorderParts[1].split("@");
-			String[] destContainer = destParts[0].split(seperator);
+			if (clientId.equals(destParts[0])) { // node was moved to root level
+				return tree.getKeyConverter().parseSegments(new String[]{destParts[1]});
+			}
+			// special case when node above is moved inside a sibling, need to adjust index
+			if (reorderParts[0].length() <= destParts[0].length()) {
+				String[] reorderSplit = reorderParts[0].split(separator);
+				String[] destSplit = destParts[0].split(separator);
+				int sourceIndex = Integer.parseInt(reorderSplit[reorderSplit.length-1]);
+				int destIndex = Integer.parseInt(destSplit[reorderSplit.length-1]);
+				if (sourceIndex < destIndex) { // adjust for the node above that was removed
+					--destIndex;
+					destSplit[reorderSplit.length-1] = "" + destIndex;
+				}
+				String reorderJoin = "";
+				String reorderParentJoin = "";
+				for (int i = 0; i < reorderSplit.length; i++) {
+					reorderJoin += reorderSplit[i];
+					if (i < reorderSplit.length-1) reorderJoin += separator;
+					if (i < reorderSplit.length-1) {
+						reorderParentJoin += reorderSplit[i] + separator;
+					}
+				}
+				String destJoin = "";
+				for (int i = 0; i < destSplit.length; i++) {
+					destJoin += destSplit[i];
+					if (i < destSplit.length-1) destJoin += separator;
+				}
+				// if the source node was moved inside a sibling, update node path
+				if (destJoin.startsWith(reorderParentJoin)) destParts[0] = destJoin;
+			}
+			String[] destContainer = destParts[0].split(separator);
 			String[] segments = new String[destContainer.length+1];
 			segments[destContainer.length] = destParts[1];
 			for (int i = 0; i < destContainer.length; i++) {
