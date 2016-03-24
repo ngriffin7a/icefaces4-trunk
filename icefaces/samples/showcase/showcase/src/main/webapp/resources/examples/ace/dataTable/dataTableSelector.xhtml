@@ -53,13 +53,13 @@
         <br/>               
         <h:panelGrid columns="4">         
             <ace:pushButton id="selectAllRows" value="Select All" rendered="#{dataTableSelector.selectionMode=='multiple'}" 
-                            onclick="ice.ace.instance('form:selectionTable').selectAllRows();return false;" />        
+                            onclick="ice.ace.instance('#{dataTableBindings.tables[dataTableSelector.clazz].clientId}').selectAllRows();return false;" />        
             <ace:pushButton id="selectAllCells" value="Select All" rendered="#{dataTableSelector.selectionMode=='multiplecell'}" 
-                            onclick="ice.ace.instance('form:selectionTable').selectAllCells();return false;" />                     
+                            onclick="ice.ace.instance('#{dataTableBindings.tables[dataTableSelector.clazz].clientId}').selectAllCells();return false;" />                     
             <ace:pushButton id="unselectAllRows" value="Unselect All" rendered="#{dataTableSelector.selectionMode=='multiple'}" 
-                            onclick="ice.ace.instance('form:selectionTable').deselectAllRows();return false;" />        
+                            onclick="ice.ace.instance('#{dataTableBindings.tables[dataTableSelector.clazz].clientId}').deselectAllRows();return false;" />        
             <ace:pushButton id="unselectAllCells" value="Unselect All" rendered="#{dataTableSelector.selectionMode=='multiplecell'}" 
-                            onclick="ice.ace.instance('form:selectionTable').deselectAllCells();return false;" />     
+                            onclick="ice.ace.instance('#{dataTableBindings.tables[dataTableSelector.clazz].clientId}').deselectAllCells();return false;" />     
         </h:panelGrid>     
         <ace:dataTable id="selectionTable"
                       binding="#{dataTableBindings.tables[dataTableSelector.clazz]}"
