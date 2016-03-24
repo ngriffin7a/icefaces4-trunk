@@ -77,6 +77,7 @@ public class EnvUtils {
     public static String REDIRECT_ON_EXCEPTION_MAPPING = "org.icefaces.redirectOnExceptionMapping";
     public static String NAMESPACE_PARAMETERS = "com.sun.faces.namespaceParameters";
     public static String UPDATE_NETWORK_ERROR_RETRY_TIMEOUTS = "org.icefaces.updateNetworkErrorRetryTimeouts";
+    public static String FETCH_PENDING_NOTIFICATIONS_ONLOAD = "org.icefaces.fetchPendingNotificationsOnLoad";
 
 
     //Parameters configurable using context parameters but only in compatibility mode
@@ -1299,6 +1300,18 @@ public class EnvUtils {
     public static String getUpdateNetworkErrorRetryTimeouts(FacesContext context) {
         return EnvConfig.getEnvConfig(context).updateNetworkErrorRetryTimeouts;
     }
+
+    /**
+     * Returns the value of the context parameter org.icefaces.fetchPendingNotificationsOnLoad.  The default value is 'true'
+     * and indicates that whenever the blocking connection switches over to another window each window will make a request for
+     * updates that were pottentially issued during the switch.
+     *
+     * @param context The current FacesContext instance used to access the application map.
+     * @return Returns the current setting of org.icefaces.fetchPendingNotificationsOnLoad.  The default is 'true'.
+     */
+    public static boolean getFetchPendingNotificationsOnLoad(FacesContext context) {
+        return EnvConfig.getEnvConfig(context).fetchPendingNotificationsOnLoad;
+    }
 }
 
 class EnvConfig {
@@ -1345,6 +1358,7 @@ class EnvConfig {
     public String redirectOnExceptionMapping;
     public boolean namespaceParameters;
     public String updateNetworkErrorRetryTimeouts;
+    public boolean fetchPendingNotificationsOnLoad;
 
     public EnvConfig(Map initMap) {
         init(initMap);
@@ -1391,6 +1405,7 @@ class EnvConfig {
         publicContextPath = decodeString(initMap, EnvUtils.PUBLIC_CONTEXT_PATH, null, info);
         redirectOnExceptionMapping = decodeString(initMap, EnvUtils.REDIRECT_ON_EXCEPTION_MAPPING, null, info);
         updateNetworkErrorRetryTimeouts = decodeString(initMap, EnvUtils.UPDATE_NETWORK_ERROR_RETRY_TIMEOUTS, "1000 2000 3000", info);
+        fetchPendingNotificationsOnLoad = decodeBoolean(initMap, EnvUtils.FETCH_PENDING_NOTIFICATIONS_ONLOAD, true, info);
 
         log.info("ICEfaces Configuration: \n" + info);
     }

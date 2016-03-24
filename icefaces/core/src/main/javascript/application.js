@@ -558,11 +558,13 @@ if (!window.ice.icefaces) {
             }
         };
 
-        namespace.setupPush = function(viewID, retryIntervals) {
+        namespace.setupPush = function(viewID, retryIntervals, fetchPendingNotifications) {
             var intervals = asArray(collect(split(retryIntervals, ' '), Number));
             var retrieveViewUpdate = retrieveUpdate(viewID, intervals);
             ice.push.register([viewID], retrieveViewUpdate);
-            ice.onBlockingConnectionReEstablished(retrieveViewUpdate);
+            if (fetchPendingNotifications) {
+                ice.onBlockingConnectionReEstablished(retrieveViewUpdate);
+            }
             var unsetupPush = curry(namespace.unsetupPush, viewID);
             namespace.onSessionExpiry(unsetupPush);
             namespace.onNetworkError(unsetupPush);

@@ -206,6 +206,7 @@ public class BridgeSetup implements SystemEventListener {
 
             if (EnvUtils.isICEpushPresent()) {
                 final String retriesOnNetworkError = EnvUtils.getUpdateNetworkErrorRetryTimeouts(context);
+                final boolean fetchPendingNotificationsOnLoad = EnvUtils.getFetchPendingNotificationsOnLoad(context);
                 UIOutputWriter icepushSetup = new UIOutputWriter() {
                     public void encode(ResponseWriter writer,
                                        FacesContext context) throws
@@ -216,7 +217,11 @@ public class BridgeSetup implements SystemEventListener {
                         writer.writeAttribute("id", this.getClientId(context), null);
                         writer.startElement("script", this);
                         writer.writeAttribute("type", "text/javascript", null);
-                        writer.write(LazyPushManager.get(context).enablePush(context, viewID) ? "ice.setupPush('" + viewID + "', '" + retriesOnNetworkError + "');" : "ice.unsetupPush('" + viewID + "');");
+                        if (LazyPushManager.get(context).enablePush(context, viewID)) {
+                            writer.write("ice.setupPush('" + viewID + "', '" + retriesOnNetworkError + "', " + fetchPendingNotificationsOnLoad + ");");
+                        } else {
+                            writer.write("ice.unsetupPush('" + viewID + "');");
+                        }
                         ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
                         Resource blockingConnectionResource = resourceHandler.createResource(ICEpushResourceHandler.BLOCKING_CONNECTION_RESOURCE_NAME, null, "text/xml");
                         Resource createPushIdResource = resourceHandler.createResource(ICEpushResourceHandler.CREATE_PUSH_ID_RESOURCE_NAME, null, "text/plain");
