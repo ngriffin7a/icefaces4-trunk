@@ -37,7 +37,7 @@
                                  label="Download chart"
 								 id="downloadButton"/>
 
-            <ace:chart id="chart"
+            <ace:chart id="chart" binding="#{chartExport}"
                        height="300"
                        width="689"
                        animated="false"
@@ -56,7 +56,7 @@
                        imageExportListener="#{chartCombinedBean.saveImage}"/>
         </h:form>
         <script type="text/javascript">
-            setTimeout(function() {ice.ace.instance('exportForm:chart').exportToServer();}, 250);
+            setTimeout(function() {ice.ace.instance('#{chartExport.clientId}').exportToServer();}, 250);
         </script>
 
     </ui:define>
