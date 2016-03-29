@@ -71,7 +71,14 @@ public class XMLExporter extends Exporter {
     	List<String> footers = getFacetTexts(columns, ColumnType.FOOTER);
     	String var = table.getVar().toLowerCase();
     	
-    	builder.append("<?xml version=\"1.0\"?>\n");
+		try {
+			"".toString().getBytes(encodingType);
+		} catch (Exception e) {
+			encodingType = "UTF-8";
+			java.util.logging.Logger.getLogger(this.getClass().getName()).warning("Unsupported encoding specified in ace:dataExporter component with id '"+component.getId()+"' in view "+facesContext.getViewRoot().getViewId()+". Defaulting to UTF-8 instead.");
+		}
+
+    	builder.append("<?xml version=\"1.0\" encoding=\"" + encodingType + "\"?>\n");
     	builder.append("<" + table.getId() + ">\n");
     	
 		Object model = table.getModel();
@@ -130,10 +137,10 @@ public class XMLExporter extends Exporter {
     	builder.append("</" + table.getId() + ">");
     	
     	table.setRowIndex(-1);
-    	
-		byte[] bytes = builder.toString().getBytes();
+
+		byte[] bytes = builder.toString().getBytes(encodingType);
 		
-		return registerResource(bytes, filename + ".xml", "text/xml");
+		return registerResource(bytes, filename + ".xml", "text/xml; charset=" + encodingType);
 	}
 	
 	protected void exportChildRows(FacesContext context, TreeDataModel rootModel, RowStateMap rowStateMap,
