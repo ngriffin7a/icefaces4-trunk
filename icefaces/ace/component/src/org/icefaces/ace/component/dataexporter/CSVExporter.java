@@ -128,10 +128,17 @@ public class CSVExporter extends Exporter {
 		}
     	
     	table.setRowIndex(-1);
-        
-		byte[] bytes = builder.toString().getBytes();
+
+		byte[] bytes;
+		try {
+			bytes = builder.toString().getBytes(encodingType);
+		} catch (Exception e) {
+			bytes = builder.toString().getBytes("UTF-8");
+			encodingType = "UTF-8";
+			java.util.logging.Logger.getLogger(this.getClass().getName()).warning("Unsupported encoding specified in ace:dataExporter component with id '"+component.getId()+"' in view "+facesContext.getViewRoot().getViewId()+". Defaulting to UTF-8 instead.");
+		}
 		
-		return registerResource(bytes, filename + ".csv", "text/csv");
+		return registerResource(bytes, filename + ".csv", "text/csv; charset=" + encodingType);
 	}
 	
 	protected void exportChildRows(FacesContext context, TreeDataModel rootModel, RowStateMap rowStateMap,

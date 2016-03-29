@@ -53,7 +53,7 @@ public class DataExporter extends DataExporterBase {
 				String target = getTarget();
 				UIComponent targetComponent = null;
 				if (target == null) {
-					java.util.logging.Logger.getLogger(this.getClass().getName()).warning("Required attribute 'target' is null in ace:dataExporter component with id "+getId()+" in view "+FacesContext.getCurrentInstance().getViewRoot().getViewId()+".");
+					java.util.logging.Logger.getLogger(this.getClass().getName()).warning("Required attribute 'target' is null in ace:dataExporter component with id '"+getId()+"' in view "+FacesContext.getCurrentInstance().getViewRoot().getViewId()+".");
 				} else {
 					targetComponent = event.getComponent().findComponent(target);
 				}
