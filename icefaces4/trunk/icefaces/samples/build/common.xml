@@ -65,19 +65,22 @@
     <patternset id="lib.distribute">
         <patternset id="lib.distribute.ice" 
         	includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icepush.lib.name}.jar ${icefaces-mobi.lib.name}.jar">
-            <exclude name="${icefaces.lib.name}.jar"        if="no-icefaces"/>
 
-            <exclude name="${icefaces-ace.lib.name}.jar"    if="no-icefaces"/>
-            <exclude name="${icefaces-ace.lib.name}.jar"    unless="ace"/>
+            <exclude name="${icefaces.lib.name}.jar"      if="no-icefaces" />
 
-            <exclude name="${icepush.lib.name}.jar"         if="no-icefaces"/>
-            <exclude name="${icepush.lib.name}.jar"         if="no-icepush"/>
-        	<exclude name="${icefaces-mobi.lib.name}.jar"   unless="mobi"/>
+            <exclude name="${icefaces-ace.lib.name}.jar"  if="no-icefaces" />
+            <exclude name="${icefaces-ace.lib.name}.jar"  unless="ace" />
+
+            <exclude name="${icepush.lib.name}.jar"       if="no-icefaces" />
+            <exclude name="${icepush.lib.name}.jar"       if="no-icepush" />
+            <exclude name="${icefaces-mobi.lib.name}.jar" unless="mobi" />
         </patternset>
 
         <!-- By default, include these libs in all ace samples unless explicity excluded  -->
         <patternset id="lib.distribute.common">
-            <include name="jstl.jar"                unless="no-jstl"/>
+            <include name="jstl.jar"                    unless="no-jstl" />
+            <include name="mongo-java-driver-3.0.3.jar" unless="no-icepush" />
+            <include name="morphia-1.1.1.jar"           unless="no-icepush" />
         </patternset>
 
     </patternset>
