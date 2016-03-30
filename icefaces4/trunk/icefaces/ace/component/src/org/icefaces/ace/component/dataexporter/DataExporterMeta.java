@@ -87,7 +87,7 @@ public class DataExporterMeta extends UIComponentBaseMeta {
 	@Property(required=Required.no, tlddoc="Defines a public void method to invoke after the PDF or XLS document has been generated, allowing developers to manipulate the document. It must take a single argument of type Object. The object will be of type com.lowagie.text.Document (iText library) for PDF documents and of type org.apache.poi.ss.usermodel.Workbook (Apache POI library) for XLS documents.", expression = Expression.METHOD_EXPRESSION, methodExpressionArgument="Object")
 	private MethodExpression postProcessor;
 	
-	@Property(required=Required.no, tlddoc="Define a character encoding to use.", defaultValue="UTF-8")
+	@Property(required=Required.no, tlddoc="Define a character encoding to use. Valid values will depend on the host system and format in use. For plain text formats (CSV and XML), the encoding has to be supported by the JVM running the server. Typically, these values include UTF-8, UTF-16, US-ASCII, ISO-8859-1, among others. For the PDF format, this attribute is only applicable if a custom font is also specified via the 'pdfFont' attribute, and the encoding has to be supported by such font. For the XLS format, this attributr is not applicable; Unicode is used by default.", defaultValue="UTF-8")
 	private String encoding;
 	
 	@Property(required=Required.no, tlddoc="Disable whether column headers should be included at the top of the file. This is not applicable when attribute 'type' is set to 'xml'.", defaultValue="true")
@@ -113,4 +113,7 @@ public class DataExporterMeta extends UIComponentBaseMeta {
 
 	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
 	String accesskey;
+
+	@Property(tlddoc = "The absolute path in the host system (e.g. C:\\Windows\\Fonts\\arial.ttf) to a font file to be used in the PDF exporting instead of the default font. If specifying a custom 'encoding' value, it has to be supported by this custom font. Note that the default font does not support unicode characters, so a custom font has to be set in order to support these characters.")
+	String pdfFont;
 }

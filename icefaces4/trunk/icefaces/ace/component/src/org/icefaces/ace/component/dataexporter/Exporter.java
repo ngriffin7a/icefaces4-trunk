@@ -77,6 +77,7 @@ public abstract class Exporter {
 	protected boolean selectedRowsOnly;
 	protected boolean userColumnOrder;
 	protected boolean expandedOnly;
+	protected String pdfFont;
 	private HashMap<Row, List<UIColumn>> headerRowColumns = new HashMap<Row, List<UIColumn>>();
 	
 	public void setUp(DataExporter component, DataTable table) {
@@ -95,6 +96,7 @@ public abstract class Exporter {
 		selectedRowsOnly = component.isSelectedRowsOnly();
 		userColumnOrder = component.isUserColumnOrder();
 		expandedOnly = component.isExpandedOnly();
+		pdfFont = component.getPdfFont();
 	}
 
     public abstract String export(FacesContext facesContext, DataExporter component, DataTable table) throws IOException;
