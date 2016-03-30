@@ -33,6 +33,7 @@
     <property file="./build.properties"/>
 
     <property name="icepush.dist.dir" location="icepush/core/build/dist"/>
+    <property name="icepush.lib.dir" location="icepush/lib"/>
     <property name="lib.dir" location="lib"/>
 
 
@@ -51,6 +52,12 @@
             <propertyset refid="build.properties"/>
         </subant>
         <copy file="${icepush.dist.dir}/${icepush.lib.name}.jar"
+              todir="${lib.dir}"
+              overwrite="true"/>
+        <copy file="${icepush.lib.dir}/mongo-java-driver-3.0.3.jar"
+              todir="${lib.dir}"
+              overwrite="true"/>
+        <copy file="${icepush.lib.dir}/morphia-1.1.1.jar"
               todir="${lib.dir}"
               overwrite="true"/>
     </target>
@@ -119,6 +126,8 @@
                 <include name="${icefaces-ace.lib.name}.jar" />
                 <include name="${icefaces-mobi.lib.name}.jar" />
                 <include name="${icepush.lib.name}.jar" if="isOSBundle" />
+                <include name="mongo-java-driver-3.0.3.jar" if="isOSBundle" />
+                <include name="morphia-1.1.1.jar" if="isOSBundle" />
             </fileset>
         </delete>
     </target>
