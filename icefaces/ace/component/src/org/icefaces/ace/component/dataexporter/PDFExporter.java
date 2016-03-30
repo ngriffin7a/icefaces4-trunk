@@ -165,10 +165,18 @@ public class PDFExporter extends Exporter {
     	//PdfPTable pdfTable = new PdfPTable(numberOfColumns);
     	//Font font = FontFactory.getFont(FontFactory.TIMES, encoding);
 		
-		Object font = fontFactoryClass.getMethod("getFont", new Class[] { String.class, String.class }).invoke(null, new Object[] { "Times", encoding });
+		if (pdfFont != null) {
+			if ("UTF-8".equalsIgnoreCase(encoding) 
+				|| "UTF8".equalsIgnoreCase(encoding) 
+				|| "Unicode".equalsIgnoreCase(encoding))
+					encoding = "Identity-H";
+		} else {
+			pdfFont = "Times";
+		}
+		Object font = fontFactoryClass.getMethod("getFont", new Class[] { String.class, String.class }).invoke(null, new Object[] { pdfFont, encoding });
     	//Font headerFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
 		
-		Object headerFont = fontFactoryClass.getMethod("getFont", new Class[] { String.class, String.class, float.class, int.class }).invoke(null, new Object[] { "Times", encoding, new Integer(12), new Integer(1) });
+		Object headerFont = fontFactoryClass.getMethod("getFont", new Class[] { String.class, String.class, float.class, int.class }).invoke(null, new Object[] { pdfFont, encoding, new Integer(12), new Integer(1) });
     	
 		Object model = table.getModel();
 		TreeDataModel rootModel = null;
