@@ -13,22 +13,83 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
 package org.icefaces.application;
 
-import java.util.HashMap;
-import java.util.Map;
+import static org.icesoft.util.ObjectUtilities.*;
+import static org.icesoft.util.PreCondition.checkArgument;
+import static org.icesoft.util.StringUtilities.isNotNullAndIsNotEmpty;
 
-public class PushMessage extends PushOptions {
-    public static String SUBJECT = "subject";
-    public static String DETAIL = "detail";
+import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-    public PushMessage(String subject)  {
-        getAttributes().put(SUBJECT, subject);
+public class PushMessage
+extends PushOptions {
+    private static final Logger LOGGER = Logger.getLogger(PushMessage.class.getName());
+
+    public static final String SUBJECT = "subject";
+    public static final String DETAIL = "detail";
+    public static final String TARGET_URI = "targetURI";
+
+    public PushMessage(final String subject, final String detail, final URI targetURI)
+    throws IllegalArgumentException {
+        setSubject(subject);
+        setDetail(detail);
+        setTargetURI(targetURI);
     }
-    
-    public PushMessage(String subject, String detail)  {
-        getAttributes().put(SUBJECT, subject);
-        getAttributes().put(DETAIL, detail);
+
+    public PushMessage(final String subject, final URI targetURI)
+    throws IllegalArgumentException {
+        setSubject(subject);
+        setTargetURI(targetURI);
+    }
+
+    public String getDetail() {
+        return (String)getAttribute(DETAIL);
+    }
+
+    public String getSubject() {
+        return (String)getAttribute(SUBJECT);
+    }
+
+    public String getTargetUri() {
+        return (String)getAttribute(TARGET_URI);
+    }
+
+    public void setDetail(final String detail)
+    throws IllegalArgumentException {
+        checkArgument(
+            isNotNullAndIsNotEmpty(detail),
+            "Illegal argument detail: '" + detail + "'.  Argument cannot be null or empty."
+        );
+        putAttribute(DETAIL, detail);
+    }
+
+    public void setSubject(final String subject)
+    throws IllegalArgumentException {
+        checkArgument(
+            isNotNullAndIsNotEmpty(subject),
+            "Illegal argument subject: '" + subject + "'.  Argument cannot be null or empty."
+        );
+        putAttribute(SUBJECT, subject);
+    }
+
+    public void setTargetURI(final URI targetURI)
+    throws IllegalArgumentException {
+        checkArgument(
+            isNotNull(targetURI),
+            "Illegal argument targetURI: '" + targetURI + "'.  Argument cannot be null."
+        );
+        putAttribute(TARGET_URI, targetURI.toString());
+    }
+
+    @Override
+    public String toString() {
+        return
+            new StringBuilder().
+                append("PushMessage[").
+                    append(classMembersToString()).
+                append("]").
+                    toString();
     }
 }

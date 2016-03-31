@@ -26,6 +26,28 @@ extends PushOptions {
     public static final String PUSH_OTHERS = "pushOthers";
 
     public PushOthers() {
-        getAttributes().put(PUSH_OTHERS, true);
+        putAttribute(PUSH_OTHERS, true);
+    }
+
+    public PushOthers(final boolean pushOthers) {
+        putAttribute(PUSH_OTHERS, pushOthers);
+    }
+
+    public boolean getPushOthers() {
+        return (Boolean)getAttribute(PUSH_OTHERS);
+    }
+
+    public void setPushOthers(final boolean pushOthers) {
+        putAttribute(PUSH_OTHERS, pushOthers);
+    }
+
+    @Override
+    public String toString() {
+        return
+            new StringBuilder().
+                append("PushOthers[").
+                    append(classMembersToString()).
+                append("]").
+                    toString();
     }
 }
