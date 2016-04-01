@@ -64,7 +64,6 @@ public class MenuBarRenderer extends BaseMenuRenderer {
 		ResponseWriter writer = context.getResponseWriter();
         MenuBar menubar = (MenuBar) abstractMenu;
 		String clientId = menubar.getClientId(context);
-
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
@@ -80,7 +79,8 @@ public class MenuBarRenderer extends BaseMenuRenderer {
             .entry("direction", menubar.getDirection())
             .entryNonNullValue("styleClass", menubar.getStyleClass())
             .entryNonNullValue("style", menubar.getStyle())
-
+				.entry("hideDelay", menubar.getHideDelay())
+				.entry("showDelay", menubar.getShowDelay())
             .beginMap("animation")
             .entry("animated", menubar.getEffect())
             .entry("duration", menubar.getEffectDuration())
