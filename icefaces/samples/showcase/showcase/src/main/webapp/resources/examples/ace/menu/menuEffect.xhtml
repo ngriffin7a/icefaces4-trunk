@@ -53,12 +53,40 @@
                                              stepPercent="25">
                                 <ace:ajax event="slideEnd" execute="@this" render="@form" />
                             </ace:sliderEntry>
+
+                                <h:outputLabel id="hideDelay" value="Hide Delay (#{menuEffect.hideDelay} ms):" for="hideDelaycntrl"/>
+                             <h:panelGroup>
+                                 <ace:sliderEntry id="hideDelaycntrl"
+                                                    clickableRail="true"
+                                                    min="100"
+                                                    max="1100"
+                                                    value="#{menuEffect.hideDelay}"
+                                                    showLabels="true"
+                                                    stepPercent="25">
+                                     <ace:ajax event="slideEnd" execute="@this" render="@form" />
+                                 </ace:sliderEntry>
+                             </h:panelGroup>
+                             <h:outputLabel id="showDelay" value="Show Delay (#{menuEffect.showDelay} ms):" for="showDelaycntrl"/>
+                                     <h:panelGroup>
+                                         <ace:sliderEntry id="showDelaycntrl"
+                                                            clickableRail="true"
+                                                            min="100"
+                                                            max="1100"
+                                                            value="#{menuEffect.showDelay}"
+                                                            showLabels="true"
+                                                            stepPercent="25">
+                                             <ace:ajax event="slideEnd" execute="@this" render="@form" />
+                                         </ace:sliderEntry>
+                                     </h:panelGroup>
+
                         </h:panelGroup>
                     </h:panelGrid>
                 </ace:panel>
                 
                 <ace:menu id="menu" type="tiered"
                       effect="#{menuEffect.effectName}"
+                          hideDelay="#{menuEffect.hideDelay}"
+                          showDelay = "#{menuEffect.showDelay}"
                       effectDuration="#{menuEffect.effectDuration}">
 
                     <ace:submenu label="File">

@@ -66,6 +66,12 @@ public class MenuBarMeta extends UIComponentBaseMeta {
     @Property(tlddoc = "Sets the effect duration in milliseconds.", defaultValue = "400")
     private int effectDuration;
 
+    @Property(tlddoc = "determines how many millisenconds to delay before hiding the submenu in a fly-out menu", defaultValue="400")
+    private int hideDelay;
+
+    @Property(tlddoc="determines how many milliseconds to delay before showing the submenu in a fly-out menu", defaultValue="400")
+    private int showDelay;
+
     @Property(tlddoc = "Style of the main container element.")
     private String style;
 

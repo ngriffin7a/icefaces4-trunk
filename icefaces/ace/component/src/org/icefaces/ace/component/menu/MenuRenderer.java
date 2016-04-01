@@ -106,7 +106,8 @@ public class MenuRenderer extends BaseMenuRenderer {
         }
 		
 		if (isPlainMultiColumn(menu)) json.entry("plainMultiColumnMenu", true);
-
+        json.entry("hideDelay", menu.getHideDelay());
+        json.entry("showDelay", menu.getShowDelay());
         json.entryNonNullValue("styleClass", menu.getStyleClass())
             .entryNonNullValue("style", menu.getStyle())
             .endMap()

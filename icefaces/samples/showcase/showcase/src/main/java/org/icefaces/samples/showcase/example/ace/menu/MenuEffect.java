@@ -32,11 +32,15 @@ public class MenuEffect implements Serializable {
     private LinkedHashMap <String, String> availableEffects;
     private String effectName;
     private int effectDuration;
+    private int hideDelay;
+    private int showDelay;
     
     public MenuEffect() {
         availableEffects = populateAvailableEffects();
         effectName = availableEffects.get(DEFAULT_EFFECT);
         effectDuration = 400;
+        hideDelay = 400;
+        showDelay =400;
     }
     
     private LinkedHashMap<String, String> populateAvailableEffects()
@@ -53,4 +57,20 @@ public class MenuEffect implements Serializable {
     
     public void setEffectName(String effectName) { this.effectName = effectName; }
     public void setEffectDuration(int effectDuration) { this.effectDuration = effectDuration; }
+
+    public int getHideDelay() {
+        return hideDelay;
+    }
+
+    public void setHideDelay(int hideDelay) {
+        this.hideDelay = hideDelay;
+    }
+
+    public int getShowDelay() {
+        return showDelay;
+    }
+
+    public void setShowDelay(int showDelay) {
+        this.showDelay = showDelay;
+    }
 }

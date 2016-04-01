@@ -1,4 +1,4 @@
-/* 
+/*
 * Original Code Copyright Prime Technology.
 * Subsequent Code Modifications Copyright 2011-2014 ICEsoft Technologies Canada Corp. (c)
 * 
@@ -233,8 +233,10 @@ ice.ace.Menubar = function(id, cfg) {
 
 
     this.jq.wijmenu(this.cfg);
+    this.jq.wijmenu("option", "hideDelay", cfg.hideDelay);
+   	this.jq.wijmenu("option", "showDelay", cfg.showDelay);
 	ice.ace.jq(this.jqId).attr('style', '');
-
+    this.jq.wijmenu('refresh');
     if(this.cfg.style)
         this.jq.parent().parent().attr('style', this.cfg.style);
     if(this.cfg.styleClass)
@@ -270,6 +272,8 @@ ice.ace.Menu = function(id, cfg) {
 
     this.jq.wijmenu(this.cfg);
 	ice.ace.jq(this.jqId).attr('style', '');
+	this.jq.wijmenu("option", "hideDelay", cfg.hideDelay);
+	this.jq.wijmenu("option", "showDelay", cfg.showDelay);
 	this.jq.wijmenu('refresh');
 
     this.element = this.jq.parent().parent();       //overlay element
