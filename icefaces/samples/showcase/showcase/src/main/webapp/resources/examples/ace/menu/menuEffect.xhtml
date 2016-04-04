@@ -34,16 +34,16 @@
                <ace:panel>
                     <h:panelGrid styleClass="centeredPanelGridWithBorderSpacing" columns="2"> 
                         <h:outputLabel value="Effect Type:" for="effectType"/>
-                            <ace:simpleSelectOneMenu    id="effectType"
+                        <ace:simpleSelectOneMenu    id="effectType"
                                                 value="#{menuEffect.effectName}">
                                 <f:selectItems value="#{menuEffect.availableEffects}"
                                                var="type"
                                                itemValue="#{type.value}"
                                                itemLabel="#{type.key}"/>
                                 <ace:ajax execute="@this" render="@form" />
-                            </ace:simpleSelectOneMenu>
-                            <h:outputLabel id="effectDur" value="Effect Duration (#{menuEffect.effectDuration} ms):" for="effectDuration"/>
-                            <h:panelGroup>
+                        </ace:simpleSelectOneMenu>
+                        <h:outputLabel id="effectDur" value="Effect Duration (#{menuEffect.effectDuration} ms):" for="effectDuration"/>
+                        <h:panelGroup>
                             <ace:sliderEntry id="effectDuration"
                                              clickableRail="true"
                                              min="100"
@@ -53,10 +53,10 @@
                                              stepPercent="25">
                                 <ace:ajax event="slideEnd" execute="@this" render="@form" />
                             </ace:sliderEntry>
-
-                                <h:outputLabel id="hideDelay" value="Hide Delay (#{menuEffect.hideDelay} ms):" for="hideDelaycntrl"/>
-                             <h:panelGroup>
-                                 <ace:sliderEntry id="hideDelaycntrl"
+                         </h:panelGroup>
+                         <h:outputLabel id="hideDelay" value="Hide Delay (#{menuEffect.hideDelay} ms):" for="hideDelaycntrl"/>
+                         <h:panelGroup>
+                             <ace:sliderEntry id="hideDelaycntrl"
                                                     clickableRail="true"
                                                     min="100"
                                                     max="1100"
@@ -64,10 +64,10 @@
                                                     showLabels="true"
                                                     stepPercent="25">
                                      <ace:ajax event="slideEnd" execute="@this" render="@form" />
-                                 </ace:sliderEntry>
-                             </h:panelGroup>
-                             <h:outputLabel id="showDelay" value="Show Delay (#{menuEffect.showDelay} ms):" for="showDelaycntrl"/>
-                                     <h:panelGroup>
+                              </ace:sliderEntry>
+                          </h:panelGroup>
+                          <h:outputLabel id="showDelay" value="Show Delay (#{menuEffect.showDelay} ms):" for="showDelaycntrl"/>
+                          <h:panelGroup>
                                          <ace:sliderEntry id="showDelaycntrl"
                                                             clickableRail="true"
                                                             min="100"
@@ -77,10 +77,10 @@
                                                             stepPercent="25">
                                              <ace:ajax event="slideEnd" execute="@this" render="@form" />
                                          </ace:sliderEntry>
-                                     </h:panelGroup>
+                          </h:panelGroup>
 
-                        </h:panelGroup>
-                    </h:panelGrid>
+                        </h:panelGrid>
+
                 </ace:panel>
                 
                 <ace:menu id="menu" type="tiered"
