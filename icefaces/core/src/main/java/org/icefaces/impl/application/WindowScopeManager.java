@@ -18,7 +18,6 @@ package org.icefaces.impl.application;
 
 import org.icefaces.bean.AllWindowsClosed;
 import org.icefaces.bean.WindowDisposed;
-import org.icefaces.impl.push.SessionViewManager;
 import org.icefaces.util.EnvUtils;
 
 import javax.annotation.PreDestroy;
@@ -43,6 +42,7 @@ import java.net.MalformedURLException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     public static final String SessionSynchronizationMonitor = WindowScopeManager.class.getName() + "$SessionSynchronizationMonitor";
@@ -52,6 +52,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     private static final Logger log = Logger.getLogger(WindowScopeManager.class.getName());
     private static final String seed = Integer.toString(new Random().nextInt(1000), 36);
     private static SharedMapLookupStrategy sharedMapLookupStrategy;
+    private static Pattern VERIFY_WINDOW_ID = Pattern.compile("\\w*");
 
     static {
         boolean isLiferay;
@@ -211,7 +212,13 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
 
                     //unknown window scope, corresponding ScopeMap might have been erased when not used (no beans stored in it)
                     //most probably a postback received after the server or application was restarted
-                    ScopeMap scopeMap = new ScopeMap(id, context);
+                    final ScopeMap scopeMap;
+                    //verify if this unknown ID is actually a rogue window ID
+                    if (VERIFY_WINDOW_ID.matcher(id).matches()) {
+                        scopeMap = new ScopeMap(id, context);
+                    } else {
+                        scopeMap = new ScopeMap(context);
+                    }
                     scopeMap.activate(state);
                     associateWindowID(scopeMap.id, requestMap);
                     return scopeMap.id;
