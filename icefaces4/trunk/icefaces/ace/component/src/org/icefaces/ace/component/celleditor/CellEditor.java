@@ -43,6 +43,9 @@ import org.icefaces.resources.ICEResourceDependencies;
 
 import java.util.*;
 
+import javax.faces.model.DataModel;
+import org.icefaces.ace.model.table.TreeDataModel;
+
 @ICEResourceDependencies({
 
 })
@@ -71,14 +74,21 @@ public class CellEditor extends CellEditorBase {
 				table = table.getParent();
 
 			if (table != null) {
+				// check if this is a child row
+				DataModel model = ((DataTable)table).getModel();
+				TreeDataModel treeDataModel = null;
+				boolean inSubrows = false;
+                if (model instanceof TreeDataModel) {
+                    treeDataModel = (TreeDataModel) model;
+				}
+				if (treeDataModel != null && treeDataModel.isRootIndexSet()) {
+					inSubrows = true;
+				}
+
 				int currentRowIndex = ((DataTable)table).getRowIndex();
+				String editSubmit = ((DataTable)table).getEditSubmitParameter();
 
-				// get table client id without row index
-				((DataTable)table).setRowIndex(-1);
-				String editSubmit = context.getExternalContext().getRequestParameterMap().get(table.getClientId(context)+"_editSubmit");
-				((DataTable)table).setRowIndex(currentRowIndex);
-
-				if (editSubmit != null) {
+				if (!inSubrows) {
 					int editRowIndex = -1;
 					try {
 						editRowIndex = Integer.parseInt(editSubmit.trim());
@@ -87,7 +97,10 @@ public class CellEditor extends CellEditorBase {
 						super.processDecodes(context);
 					}
 				} else {
-					super.processDecodes(context);
+					String rootIndex = treeDataModel.getRootIndex();
+					if (!"".equals(rootIndex) && editSubmit.equals(rootIndex+"."+currentRowIndex)) {
+						super.processDecodes(context);
+					}
 				}
 			}
 		} else {

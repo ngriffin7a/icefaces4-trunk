@@ -93,6 +93,8 @@ public class DataTable extends DataTableBase implements Serializable {
 	// used to associate a client id with a state, in order to avoid sharing/overriding states in the case of nested tables
     transient protected Map<String, SelectionDeltaState> savedSelectionChanges = new HashMap<String, SelectionDeltaState>();
     transient protected boolean decoded = false;
+	transient protected String editSubmit = null;
+	public String getEditSubmitParameter() { return editSubmit; }
 
     static {
         try {
@@ -455,6 +457,10 @@ public class DataTable extends DataTableBase implements Serializable {
         }
 
         pushComponentToEL(context, this);
+
+		// save editSubmit parameter for cell deitors
+		editSubmit = context.getExternalContext().getRequestParameterMap().get(getClientId(context)+"_editSubmit");
+
         //super.preDecode() - private and difficult to port
 		if (isAlwaysExecuteContents() || !isTableFeatureRequest(context))
 			iterate(context, PhaseId.APPLY_REQUEST_VALUES);
