@@ -88,19 +88,23 @@ public class CellEditor extends CellEditorBase {
 				int currentRowIndex = ((DataTable)table).getRowIndex();
 				String editSubmit = ((DataTable)table).getEditSubmitParameter();
 
-				if (!inSubrows) {
-					int editRowIndex = -1;
-					try {
-						editRowIndex = Integer.parseInt(editSubmit.trim());
-					} catch (Exception e) {}
-					if (currentRowIndex == editRowIndex) {
-						super.processDecodes(context);
+				if (editSubmit != null) {
+					if (!inSubrows) {
+						int editRowIndex = -1;
+						try {
+							editRowIndex = Integer.parseInt(editSubmit.trim());
+						} catch (Exception e) {}
+						if (currentRowIndex == editRowIndex) {
+							super.processDecodes(context);
+						}
+					} else {
+						String rootIndex = treeDataModel.getRootIndex();
+						if (!"".equals(rootIndex) && editSubmit.equals(rootIndex+"."+currentRowIndex)) {
+							super.processDecodes(context);
+						}
 					}
 				} else {
-					String rootIndex = treeDataModel.getRootIndex();
-					if (!"".equals(rootIndex) && editSubmit.equals(rootIndex+"."+currentRowIndex)) {
-						super.processDecodes(context);
-					}
+					super.processDecodes(context);
 				}
 			}
 		} else {
