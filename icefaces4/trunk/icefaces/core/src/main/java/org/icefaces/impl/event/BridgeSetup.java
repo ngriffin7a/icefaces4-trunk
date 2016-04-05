@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class BridgeSetup implements SystemEventListener {
     public final static String ViewState = BridgeSetup.class.getName() + "::ViewState";
@@ -47,6 +48,7 @@ public class BridgeSetup implements SystemEventListener {
     public final static String ICE_CORE_LIB = "ice.core";
     public final static String ICE_PUSH_LIB = "ice.push";
     private final static Logger log = Logger.getLogger(BridgeSetup.class.getName());
+    private static Pattern VERIFY_VIEW_ID = Pattern.compile("\\w*\\:\\w*");
 
     private final boolean standardFormSerialization;
     private final boolean reloadOnUpdateFailure;
@@ -271,7 +273,9 @@ public class BridgeSetup implements SystemEventListener {
         final String viewIDParameter = externalContext.getRequestParameterMap().get("ice.view");
         //keep viewID sticky until page is unloaded
         BridgeSetup bridgeSetup = (BridgeSetup) externalContext.getApplicationMap().get(BRIDGE_SETUP);
-        final String viewID = viewIDParameter == null ? bridgeSetup.generateViewID(context) : viewIDParameter;
+        //verify if the viewIDParameter is actually a rogue view ID
+        final String viewID = viewIDParameter == null || !VERIFY_VIEW_ID.matcher(viewIDParameter).matches() ?
+                bridgeSetup.generateViewID(context) : viewIDParameter;
         //save the calculated view state key so that other parts of the framework will use the same key
         externalContext.getRequestMap().put(ViewState, viewID);
         return viewID;
