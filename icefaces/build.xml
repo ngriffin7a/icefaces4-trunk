@@ -41,8 +41,16 @@
         <subant>
             <fileset dir=".">
                 <include name="icepush/util/build.xml" />
+            </fileset>
+            <propertyset refid="build.properties"/>
+            <target name="clean" />
+            <target name="jar" />
+        </subant>
+        <subant>
+            <fileset dir=".">
                 <include name="icepush/cloud/build.xml" />
             </fileset>
+            <propertyset refid="build.properties"/>
             <target name="clean" />
             <target name="jar" />
         </subant>
