@@ -13,18 +13,11 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.icefaces.ace.component.stackpane;
 
-import org.icefaces.ace.component.panelstack.PanelStack;
+package org.icefaces.ace.meta.baseMeta;
 
-import javax.faces.component.UIComponent;
-
-import java.util.logging.Logger;
-
-public class StackPane extends StackPaneBase {
-    private static final Logger logger = Logger.getLogger(StackPane.class.toString());
-
-    public static final String CONTENT_SELECTED = "ace-stackpane ";
-    public static final String CONTENT_HIDDEN = "ace-stackpane-hidden ";
-
+/**
+ * These are the properties for javax.faces.component.UINamingContainer
+ */
+public class UINamingContainerMeta extends UIComponentBaseMeta {
 }
