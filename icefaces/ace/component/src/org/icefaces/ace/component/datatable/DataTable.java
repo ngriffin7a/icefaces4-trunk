@@ -1738,6 +1738,10 @@ public class DataTable extends DataTableBase implements Serializable {
         RowStateMap stateMap = null;
 
         if (visitRows) {
+			if (model.getRowCount() == 0) {
+				resetValue();
+				getDataModel();
+			}
             stateMap = this.getStateMap();
             rows = getRows(true);
             // If a indeterminate number of rows are shown, visit all rows.
