@@ -116,6 +116,11 @@ public class DateSpinnerRenderer extends InputRenderer {
             if (readonly) {
                 writer.writeAttribute("readonly", component, "readonly");
             }
+
+            String dateMin = String.valueOf(spinner.getYearStart()) + "-01-01T12:00:00";
+            String dateEnd = String.valueOf(spinner.getYearEnd())+"-12-31T12:00:00";
+            writer.writeAttribute("min", dateMin, "min");
+            writer.writeAttribute("max", dateEnd, "max");
             boolean noJs = false;
             if (readonly || disabled){
                 noJs = true;
@@ -124,7 +129,8 @@ public class DateSpinnerRenderer extends InputRenderer {
                 String event = spinner.getDefaultEventName(context);
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
                 cbhCall = cbhCall.replace("\"", "\'");
-                writer.writeAttribute("onchange", "ice.ace.ab("+cbhCall+");", null);
+              //  writer.writeAttribute("onchange", "ice.ace.ab("+cbhCall+");", null);
+                writer.writeAttribute("onchange","mobi.datespinner.dateSubmit("+cbhCall+",'"+clientId+"');", null);
             }
 			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
 					((DateSpinner) component).getCommonAttributeNames());
@@ -337,8 +343,18 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId + "_script", "id");
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
-        writer.write("mobi.datespinner.init('" + clientId + "'," + yrInt + ","
-                + mnthInt + "," + dateInt + ",'" + findPattern(spinner) + "');");
+        java.lang.String cfg = "{";
+         cfg += "yrInt:" + yrInt ;
+         cfg += ",mnthInt:" + mnthInt;
+         cfg += ",dateInt:" + dateInt;
+         cfg += ", format: '" +findPattern(spinner)+"'";
+         cfg += ", yrMin: "+spinner.getYearStart();
+         cfg += ", yrMax: "+spinner.getYearEnd();
+        cfg += ", readonly: "+spinner.isReadonly();
+ 	//	cfg += encodeClientBehaviors(context, spinner, "action").toString();
+         cfg += "}";
+
+        writer.write("mobi.datespinner.init('" + clientId + "'," +cfg+ ");");
         writer.endElement("script");
         writer.endElement("span");
     }
