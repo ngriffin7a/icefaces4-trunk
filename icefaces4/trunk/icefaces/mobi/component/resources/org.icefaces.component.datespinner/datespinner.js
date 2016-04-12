@@ -22,7 +22,14 @@ mobi.datespinner = {
     opened:{},
     centerCalculation:{},
     scrollEvent:{},
-    init:function (clientId, yrSel, mSel, dSel, format) {
+    cfg: {},
+    init:function (clientId, cfgIn ) {
+        var yrSel = cfgIn.yrInt;
+        var mSel = cfgIn.mnthInt;
+        var dSel = cfgIn.dateInt;
+        var format = cfgIn.format;
+        this.cfg[clientId] = cfgIn;
+        
         var idPanel = clientId + "_bg";
         if (!document.getElementById(idPanel).className) {
             document.getElementById(idPanel).className = 'mobi-date-bg-inv';
@@ -147,11 +154,11 @@ mobi.datespinner = {
         var mInt = this.getIntValue(clientId + "_mInt");
         var yInt = this.getIntValue(clientId + "_yInt");
         var dInt = this.getIntValue(dId);
-        var upDate = this.validate(yInt, mInt, dInt);
+        var upDate = this.validate(clientId, yInt, mInt, dInt);
         if (!upDate) {
             dInt = this.daysInMonth(mInt, yInt);
             dEl.innerHTML = dInt;
-            upDate = this.validate(yInt, mInt, dInt);
+            upDate = this.validate(clientId, yInt, mInt, dInt);
         }
         this.writeTitle(clientId, upDate);
     },
@@ -169,9 +176,16 @@ mobi.datespinner = {
         return aDate.getDate();
     },
 
-    validate:function (iY, iM, iD) {
+    validate:function (clientId, iY, iM, iD) {
         if (iY != parseInt(iY, 10) || iM != parseInt(iM, 10) || iD != parseInt(iD, 10)) return false;
         iM--;
+        var cfgtmp = this.cfg[clientId];
+        if (iY < cfgtmp.yrMin){
+            iY = yrMin;
+        }
+        if (iY > cfgtmp.yrMax){
+            iY = yrMax;
+        }
         var newDate = new Date(iY, iM, iD);
         if ((iY == newDate.getFullYear()) && (iM == newDate.getMonth()) && (iD == newDate.getDate())) {
             return newDate;
@@ -230,15 +244,26 @@ mobi.datespinner = {
         this.dateSubmit(cfg, clientId);
         this.close(clientId);
     },
-    dateSubmit: function(cfg, clientId) {
-            this.cfg = cfg;
-            var event = this.cfg.event;
-            var behaviors = this.cfg.behaviors;
-            if (behaviors) {
-                if (behaviors.change) {
-                    ice.ace.ab(behaviors.change);
+    dateSubmit: function(cfgIn, clientId) {
+           // this.cfg = cfgIn;
+            this.cfg[clientId] = cfgIn;
+            var dId = clientId + "_dInt";
+            var mInt = this.getIntValue(clientId + "_mInt");
+            var yInt = this.getIntValue(clientId + "_yInt");
+            var dInt = this.getIntValue(dId);
+            var upDate = this.validate(clientId, yInt, mInt, dInt);
+            if (upDate){
+                var event = this.cfg[clientId].event;
+                var behaviors = this.cfg[clientId].behaviors;
+                if (behaviors) {
+                    if (behaviors.change) {
+                        ice.ace.ab(behaviors.change);
+                    }
                 }
+            } else {
+                console.log(" date value not valid so will not submit");
             }
+
     },
     inputSubmit: function(clientId, cfg){
         if (this.opened[clientId]==true){
@@ -247,7 +272,16 @@ mobi.datespinner = {
 		ice.setFocus('');
         var hiddenEl = document.getElementById(clientId + '_hidden');
         var inputEl = document.getElementById(clientId + '_input');
-        hiddenEl.value= inputEl.value;
+        var dateVal = inputEl.value;
+        var cfgTmp = this.cfg[clientId];
+        if (dateVal < cfgTmp.yrMin){
+            dateVal.setFullYear(cfgTmp.yrMin);
+        }
+        if (dateVal > cfgTmp.yrMax){
+            dateVal.setFullYear(cfgTmp.yrMax);
+        }
+        hiddenEl.value= dateVal;
+
         this.dateSubmit(cfg, clientId);
     },
     toggle:function (clientId) {
