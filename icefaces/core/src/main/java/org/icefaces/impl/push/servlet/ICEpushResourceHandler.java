@@ -60,13 +60,19 @@ implements EventListener, PhaseListener, Serializable {
     public static final String NOTIFY_RESOURCE_NAME = "notify.icepush.txt";
     public static final String ADD_GROUP_MEMBER_RESOURCE_NAME = "add-group-member.icepush.txt";
     public static final String REMOVE_GROUP_MEMBER_RESOURCE_NAME = "remove-group-member.icepush.txt";
+    public static final String ADD_NOTIFY_BACK_URI_NAME = "add-notify-back-uri.icepush.txt";
+    public static final String HAS_NOTIFY_BACK_URI_NAME = "has-notify-back-uri.icepush.txt";
+    public static final String REMOVE_NOTIFY_BACK_URI_NAME = "remove-notify-back-uri.icepush.txt";
     private static final Collection RESOURCES =
         Arrays.asList(
             BLOCKING_CONNECTION_RESOURCE_NAME,
             NOTIFY_RESOURCE_NAME,
             CREATE_PUSH_ID_RESOURCE_NAME,
             ADD_GROUP_MEMBER_RESOURCE_NAME,
-            REMOVE_GROUP_MEMBER_RESOURCE_NAME
+            REMOVE_GROUP_MEMBER_RESOURCE_NAME,
+            ADD_NOTIFY_BACK_URI_NAME,
+            HAS_NOTIFY_BACK_URI_NAME,
+            REMOVE_NOTIFY_BACK_URI_NAME
         );
 
     private static final ReentrantLock lock = new ReentrantLock();

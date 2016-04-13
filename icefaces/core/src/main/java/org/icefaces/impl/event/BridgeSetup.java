@@ -230,6 +230,9 @@ public class BridgeSetup implements SystemEventListener {
                         Resource notifyResource = resourceHandler.createResource(ICEpushResourceHandler.NOTIFY_RESOURCE_NAME, null, "text/plain");
                         Resource addGroupMemberResource = resourceHandler.createResource(ICEpushResourceHandler.ADD_GROUP_MEMBER_RESOURCE_NAME, null, "text/plain");
                         Resource removeGroupMemberResource = resourceHandler.createResource(ICEpushResourceHandler.REMOVE_GROUP_MEMBER_RESOURCE_NAME, null, "text/plain");
+                        Resource addNotifyBackURIResource = resourceHandler.createResource(ICEpushResourceHandler.ADD_NOTIFY_BACK_URI_NAME, null, "text/plain");
+                        Resource hasNotifyBackURIResource = resourceHandler.createResource(ICEpushResourceHandler.HAS_NOTIFY_BACK_URI_NAME, null, "text/plain");
+                        Resource removeNotifyBackURIResource = resourceHandler.createResource(ICEpushResourceHandler.REMOVE_NOTIFY_BACK_URI_NAME, null, "text/plain");
 
                         boolean isPortalEnvironment = EnvUtils.instanceofPortletRequest(externalContext.getRequest());
                         String contextPath = isPortalEnvironment ? "/" : externalContext.getRequestContextPath();
@@ -239,6 +242,9 @@ public class BridgeSetup implements SystemEventListener {
                         writer.write("ice.push.configuration.notifyURI=\"" + notifyResource.getRequestPath() + "\";");
                         writer.write("ice.push.configuration.addGroupMemberURI=\"" + addGroupMemberResource.getRequestPath() + "\";");
                         writer.write("ice.push.configuration.removeGroupMemberURI=\"" + removeGroupMemberResource.getRequestPath() + "\";");
+                        writer.write("ice.push.configuration.addNotifyBackURIURI=\"" + addNotifyBackURIResource.getRequestPath() + "\";");
+                        writer.write("ice.push.configuration.hasNotifyBackURIURI=\"" + hasNotifyBackURIResource.getRequestPath() + "\";");
+                        writer.write("ice.push.configuration.removeNotifyBackURIURI=\"" + removeNotifyBackURIResource.getRequestPath() + "\";");
                         writer.write("ice.push.configuration.parameterPrefix=\"" + EnvUtils.getParameterNamespace(context) + "\";");
                         boolean isAuxUpload =
                                 EnvUtils.isAuxUploadBrowser(context);
