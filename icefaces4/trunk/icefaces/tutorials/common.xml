@@ -44,7 +44,9 @@
                                                       
     <property name="icefaces.lib.name" value="icefaces" />                                                                         
     <property name="icefaces-ace.lib.name" value="icefaces-ace" />
-    <property name="icepush.lib.name" value="icepush" />    
+    <property name="icepush.lib.name" value="icepush" />
+	<property name="mongo.lib.name" value="mongo-java-driver*" />    
+	<property name="morphia.lib.name" value="morphia*" />  
     
     <!-- Check which JSF implementation to use and set the appropriate sub-directory  -->
     <condition property="jsf.impl.dir" value="${myfaces.lib.dir}" else="${mojarra.lib.dir}">
@@ -64,7 +66,7 @@
     </patternset>
    
     <patternset id="lib.distribute">
-        <patternset id="lib.distribute.ice" includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar  ${icepush.lib.name}.jar jstl.jar">
+        <patternset id="lib.distribute.ice" includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar  ${icepush.lib.name}.jar jstl.jar ${mongo.lib.name}.jar ${morphia.lib.name}.jar">
             <exclude name="${icefaces.lib.name}.jar"        if="no-icefaces"/>
 
             <exclude name="${icefaces-ace.lib.name}.jar"    if="no-icefaces"/>
