@@ -134,6 +134,11 @@ ice.ace.tabset = {
 
                 var contentParent = ice.ace.jq(tabview._contentParent);
 				contentParent.css({opacity:1});
+				var firstFocusable = contentParent.find(':focusable:visible:enabled:first');
+				if (firstFocusable.size() > 0) {
+					firstFocusable.off('keydown', ice.ace.tabset.focusActiveTab)
+						.on('keydown', ice.ace.tabset.focusActiveTab);
+				}
 				ice.ace.tabset.resizeMaps(contentParent);
                 cachedNewTab = null;
                 ice.ace.tabset.consoleLog(false, 'tabSet.tabChange.doOnSuccess  EXIT');
@@ -156,7 +161,14 @@ ice.ace.tabset = {
                         ice.ace.tabset.consoleLog(true, "ace:tabSet - ID: " + clientId + " - submit CS - " + (new Date().getTime() - submitClientSideStartTime) + "ms");
                     }
                 }
-                ice.ace.jq(tabview._contentParent).css({opacity:1});
+                var contentParent = ice.ace.jq(tabview._contentParent);
+				contentParent.css({opacity:1});
+				var firstFocusable = contentParent.find(':focusable:visible:enabled:first');
+				if (firstFocusable.size() > 0) {
+					firstFocusable.off('keydown', ice.ace.tabset.focusActiveTab)
+						.on('keydown', ice.ace.tabset.focusActiveTab);
+				}
+				ice.ace.tabset.resizeMaps(contentParent);
             } else {
                 var targetElement = ice.ace.tabset.getTabIndexField(rootElem, true);
                 if(targetElement) {
@@ -243,22 +255,27 @@ ice.ace.tabset = {
                 switch (charCode) {
                    case 37://Left
                    case 38://Up
+                     initElem.keyEvent = true;
                      goPrevious(target);
                      break;
                      
                    case 39://Right
                    case 40://Down
+                     initElem.keyEvent = true;
                      goNext(target);
                      break;                     
                     
                    case 36: //HOME
+                     initElem.keyEvent = true;
                      goFirst(target);
                      break;                   
                      
                    case 35: //End  
+                     initElem.keyEvent = true;
                      goLast(target);
                      break;    
                 }
+				setTimeout(function() { initElem.keyEvent = false; }, 100);
            };
        }
        var onKeyPress = function(event, index) {
@@ -274,6 +291,8 @@ ice.ace.tabset = {
             if (isEnter) {
                tabview.set('activeIndex', index);
 			   event.cancelBubble = true;
+			   event.preventDefault();
+			   event.stopPropagation();
             }
        };
        
@@ -330,6 +349,12 @@ ice.ace.tabset = {
             ice.ace.jq(tabview._contentParent).css({opacity: 0.4});
         });
        bindYUI(tabview);
+
+		var firstFocusable = ice.ace.jq(tabview._contentParent).find(':focusable:visible:enabled:first');
+		if (firstFocusable.size() > 0) {
+			firstFocusable.off('keydown', ice.ace.tabset.focusActiveTab)
+				.on('keydown', ice.ace.tabset.focusActiveTab);
+		}
 
        ice.ace.tabset.consoleLog(true, "ace:tabSet - ID: " + clientId + " - initialize - " + (new Date().getTime() - initializeStartTime) + "ms");
    },
@@ -807,6 +832,19 @@ ice.ace.tabset = {
 			if (targetElement) {
 				targetElement.value = '';
 			}
+		}
+	},
+
+	focusActiveTab: function(e) {
+		if (e.shiftKey) {
+			var keyCode = e.keyCode || e.which; 
+			if (keyCode == 9) {
+				e.preventDefault();
+				var parents = ice.ace.jq(e.target).parents('.yui-navset');
+				if (parents.size() > 0) {
+					ice.ace.jq(parents.get(0)).find(' > ul > li.ui-state-active > div').focus();
+				}
+			} 
 		}
 	}
 };
