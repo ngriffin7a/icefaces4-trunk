@@ -44,9 +44,7 @@ public class CloudPushRenderer extends Renderer {
         final String source = context.getExternalContext().getRequestParameterMap().get("javax.faces.source");
         final Map<String, Object> sessionMap = context.getExternalContext().getSessionMap();
 
-        if (component.getClientId().equals(source) && sessionMap.get(CloudPushRenderer.class.getName()) != Boolean.TRUE) {
-            Application application = context.getApplication();
-            application.subscribeToEvent(PreRenderComponentEvent.class, new AddBridgeitJsResource(application));
+        if (component.getClientId().equals(source)) {
             sessionMap.put(CloudPushRenderer.class.getName(), true);
         }
     }
@@ -78,29 +76,6 @@ public class CloudPushRenderer extends Renderer {
             writer.endElement("script");
             writer.endElement("span");
             writer.endElement(BUTTON_ELEM);
-        }
-    }
-
-    private static class AddBridgeitJsResource implements SystemEventListener {
-        private final Application application;
-
-        public AddBridgeitJsResource(Application application) {
-            this.application = application;
-        }
-
-        public void processEvent(SystemEvent event) throws AbortProcessingException {
-            String name = "core/bridgeit.js";
-            String library = "icefaces.mobi";
-            String target = "head";
-            String rendererType = application.getResourceHandler().getRendererTypeForResourceName(name);
-            UIViewRoot viewRoot = (UIViewRoot) event.getSource();
-            CoreUtils.setInView(viewRoot, target, false);
-            viewRoot.addComponentResource(FacesContext.getCurrentInstance(), ResourceOutputUtil.createResourceComponent(name, library, rendererType, true), target);
-            CoreUtils.setInView(viewRoot, target, true);
-        }
-
-        public boolean isListenerForSource(Object source) {
-            return source instanceof UIViewRoot;
         }
     }
 }
