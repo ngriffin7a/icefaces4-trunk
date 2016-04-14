@@ -17,19 +17,39 @@
 package org.icefaces.mobi.component.cloudpush;
 
 import java.io.IOException;
+import java.util.Map;
 
+import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.PreRenderComponentEvent;
+import javax.faces.event.SystemEvent;
+import javax.faces.event.SystemEventListener;
 import javax.faces.render.Renderer;
 import javax.servlet.http.HttpServletRequest;
 
+import org.icefaces.impl.event.ResourceOutputUtil;
+import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.util.ClientDescriptor;
 
 import static org.icefaces.ace.util.HTML.*;
 
 public class CloudPushRenderer extends Renderer {
+
+    public void decode(FacesContext context, UIComponent component) {
+        final String source = context.getExternalContext().getRequestParameterMap().get("javax.faces.source");
+        final Map<String, Object> sessionMap = context.getExternalContext().getSessionMap();
+
+        if (component.getClientId().equals(source) && sessionMap.get(CloudPushRenderer.class.getName()) != Boolean.TRUE) {
+            Application application = context.getApplication();
+            application.subscribeToEvent(PreRenderComponentEvent.class, new AddBridgeitJsResource(application));
+            sessionMap.put(CloudPushRenderer.class.getName(), true);
+        }
+    }
 
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
         CloudPush cloudPush = (CloudPush) uiComponent;
@@ -44,8 +64,8 @@ public class CloudPushRenderer extends Renderer {
             writer.writeAttribute(ID_ATTR, clientId);
 			writer.writeAttribute(CLASS_ATTR, "mobi-cloud-push");
             writer.writeAttribute(NAME_ATTR, clientId + "_button");
-            writer.writeAttribute(TYPE_ATTR, "button");
-            String script = desktopBrowser ? "ice.push.parkInactivePushIds('mailto:" + email + "');" : "bridgeit.register();return false;";
+            writer.writeAttribute(TYPE_ATTR, "submit");
+            String script = "ice.s(this.form, this); " + (desktopBrowser ? "ice.push.parkInactivePushIds('mailto:" + email + "');" : "bridgeit.register();return false;");
             writer.writeAttribute(ONCLICK_ATTR, script);
             writer.startElement(SPAN_ELEM, cloudPush);
             writer.writeText(cloudPush.getButtonLabel());
@@ -58,6 +78,29 @@ public class CloudPushRenderer extends Renderer {
             writer.endElement("script");
             writer.endElement("span");
             writer.endElement(BUTTON_ELEM);
+        }
+    }
+
+    private static class AddBridgeitJsResource implements SystemEventListener {
+        private final Application application;
+
+        public AddBridgeitJsResource(Application application) {
+            this.application = application;
+        }
+
+        public void processEvent(SystemEvent event) throws AbortProcessingException {
+            String name = "core/bridgeit.js";
+            String library = "icefaces.mobi";
+            String target = "head";
+            String rendererType = application.getResourceHandler().getRendererTypeForResourceName(name);
+            UIViewRoot viewRoot = (UIViewRoot) event.getSource();
+            CoreUtils.setInView(viewRoot, target, false);
+            viewRoot.addComponentResource(FacesContext.getCurrentInstance(), ResourceOutputUtil.createResourceComponent(name, library, rendererType, true), target);
+            CoreUtils.setInView(viewRoot, target, true);
+        }
+
+        public boolean isListenerForSource(Object source) {
+            return source instanceof UIViewRoot;
         }
     }
 }
