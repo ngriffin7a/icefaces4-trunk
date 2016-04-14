@@ -381,6 +381,7 @@ public class TabSetRenderer extends CoreRenderer {
     private static void renderTabNav(FacesContext facesContext, TabSet tabSet, UIComponent tab, int index) throws IOException {
 
     	String clientId = tab.getClientId(facesContext);
+		String tabSetClientId = tabSet.getClientId(facesContext);
         ResponseWriter writer = facesContext.getResponseWriter();
         writer.startElement(HTML.LI_ELEM, null);
         if (EnvUtils.isAriaEnabled(facesContext)) {
@@ -408,8 +409,13 @@ public class TabSetRenderer extends CoreRenderer {
 		writer.writeAttribute("tabindex", "0", null);
 		String accesskey = ((TabPane)tab).getAccesskey();
 		if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
-		writer.writeAttribute("onfocus", "var c = ice.ace.getJSContext('"+tabSet.getClientId(facesContext)+"');"
-			+"if (c) {var t = c.getComponent(); if(t) t.set('activeIndex', "+index+");}", null);
+		// if receiving focus via a supported keyboard event (arrow keys, home, end), keep focus
+		// otherwise, forward focus to first focusable element in the tab pane body
+		writer.writeAttribute("onfocus", "var c = ice.ace.getJSContext('"+tabSetClientId+"');"
+			+ "if (c) {var t = c.getComponent(); if(t && t.get('activeIndex') != "+index+") "
+			+ "if (!document.getElementById('"+tabSetClientId+"').keyEvent) "
+			+ "{var e = ice.ace.jq(ice.ace.escapeClientId('"+tabSetClientId+"')).find('.ui-tabs-panel')"
+			+ ".find(':focusable:visible:enabled:first'); if (e.size() > 0) e.focus();}}", null);
 
         writer.startElement("em", tab);
         writer.writeAttribute(HTML.ID_ATTR, clientId+ "Lbl", HTML.ID_ATTR); 
