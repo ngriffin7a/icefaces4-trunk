@@ -251,7 +251,10 @@ mobi.datespinner = {
             var mInt = this.getIntValue(clientId + "_mInt");
             var yInt = this.getIntValue(clientId + "_yInt");
             var dInt = this.getIntValue(dId);
-            var upDate = this.validate(clientId, yInt, mInt, dInt);
+            var upDate = true;
+            if (dInt && mInt && yInt){
+                upDate = this.validate(clientId, yInt, mInt, dInt);
+            }
             if (upDate){
                 var event = this.cfg[clientId].event;
                 var behaviors = this.cfg[clientId].behaviors;
@@ -265,24 +268,34 @@ mobi.datespinner = {
             }
 
     },
+    inputNative: function(clientId, behaviors){
+        var dateElem = document.getElementById(clientId);
+        var dateError = document.getElementById(clientId+"_error");
+        var value = new Date(dateElem.value);
+        var dateMin = new Date(dateElem.min) ;
+        var dateMax = new Date(dateElem.max);
+        if (value < dateMin || value > dateMax){
+           dateError.innerHTML = "Date needs to be within "+dateMin.toDateString() +" and "+dateMax.toDateString();
+           dateError.style.display="inherit";
+        } else {
+           dateError.style.display= "none";
+            ice.ace.ab(behaviors);
+        }
+    },
     inputSubmit: function(clientId, cfg){
         if (this.opened[clientId]==true){
             return;
         }
+        this.cfg[clientId]=cfg;
 		ice.setFocus('');
         var hiddenEl = document.getElementById(clientId + '_hidden');
         var inputEl = document.getElementById(clientId + '_input');
-        var dateVal = inputEl.value;
         var cfgTmp = this.cfg[clientId];
-        if (dateVal < cfgTmp.yrMin){
-            dateVal.setFullYear(cfgTmp.yrMin);
-        }
-        if (dateVal > cfgTmp.yrMax){
-            dateVal.setFullYear(cfgTmp.yrMax);
-        }
-        hiddenEl.value= dateVal;
-
-        this.dateSubmit(cfg, clientId);
+        if (inputEl && inputEl.value) {
+            var dateVal = new Date(inputEl.value);
+            hiddenEl.value = dateVal;
+         }
+         this.dateSubmit(cfg, clientId);
     },
     toggle:function (clientId) {
         if (!this.opened[clientId]) {
