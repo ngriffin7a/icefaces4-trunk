@@ -180,10 +180,14 @@ mobi.datespinner = {
         if (iY != parseInt(iY, 10) || iM != parseInt(iM, 10) || iD != parseInt(iD, 10)) return false;
         iM--;
         var cfgtmp = this.cfg[clientId];
-        if (iY < cfgtmp.yrMin){
+        var yrMin = cfgtmp.yrMin;
+        var yrMax = cfgtmp.yrMax;
+        if (iY < yrMin){
             iY = yrMin;
+            var yElem = document.getElementById(clientId + "_yInt");
+            yElem.innerHTML=iY;
         }
-        if (iY > cfgtmp.yrMax){
+        if (iY > yrMax){
             iY = yrMax;
         }
         var newDate = new Date(iY, iM, iD);
@@ -245,28 +249,22 @@ mobi.datespinner = {
         this.close(clientId);
     },
     dateSubmit: function(cfgIn, clientId) {
-           // this.cfg = cfgIn;
-            this.cfg[clientId] = cfgIn;
-            var dId = clientId + "_dInt";
-            var mInt = this.getIntValue(clientId + "_mInt");
-            var yInt = this.getIntValue(clientId + "_yInt");
-            var dInt = this.getIntValue(dId);
-            var upDate = true;
-            if (dInt && mInt && yInt){
-                upDate = this.validate(clientId, yInt, mInt, dInt);
-            }
-            if (upDate){
-                var event = this.cfg[clientId].event;
-                var behaviors = this.cfg[clientId].behaviors;
-                if (behaviors) {
-                    if (behaviors.change) {
-                        ice.ace.ab(behaviors.change);
-                    }
+        this.cfg[clientId] = cfgIn;
+        var dId = clientId + "_dInt";
+        var mInt = this.getIntValue(clientId + "_mInt");
+        var yInt = this.getIntValue(clientId + "_yInt");
+        var dInt = this.getIntValue(dId);
+        if (this.validate(clientId, yInt, mInt, dInt)){
+            var event = this.cfg[clientId].event;
+            var behaviors = this.cfg[clientId].behaviors;
+            if (behaviors) {
+                if (behaviors.change) {
+                    ice.ace.ab(behaviors.change);
                 }
-            } else {
-                console.log(" date value not valid so will not submit");
             }
-
+        } else {
+            console.log(" date value not valid so will not submit");
+        }
     },
     inputNative: function(clientId, behaviors){
         var dateElem = document.getElementById(clientId);
@@ -287,15 +285,28 @@ mobi.datespinner = {
             return;
         }
         this.cfg[clientId]=cfg;
-		ice.setFocus('');
+        ice.setFocus('');
         var hiddenEl = document.getElementById(clientId + '_hidden');
         var inputEl = document.getElementById(clientId + '_input');
-        var cfgTmp = this.cfg[clientId];
         if (inputEl && inputEl.value) {
-            var dateVal = new Date(inputEl.value);
-            hiddenEl.value = dateVal;
-         }
-         this.dateSubmit(cfg, clientId);
+            var value = new Date(inputEl.value);
+            var yearVal = value.getFullYear();
+            if (yearVal >= cfg.yrMin && yearVal <= cfg.yrMax){
+                hiddenEl.value = inputEl.value;
+                console.log("will submit hiddenValue ="+hiddenEl.value);
+                var event = cfg.event;
+                var behaviors = cfg.behaviors;
+                if (behaviors) {
+                    if (behaviors.change) {
+                        ice.ace.ab(behaviors.change);
+                    }
+                }
+            } else {
+                console.log(" year must be within "+cfg.yrMin+" and "+cfg.yrMax);
+            }
+
+        }
+
     },
     toggle:function (clientId) {
         if (!this.opened[clientId]) {
