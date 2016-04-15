@@ -130,7 +130,6 @@ public class DateSpinnerRenderer extends InputRenderer {
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
                 cbhCall = cbhCall.replace("\"", "\'");
               //  writer.writeAttribute("onchange", "ice.ace.ab("+cbhCall+");", null);
-              //  writer.writeAttribute("onchange","mobi.datespinner.dateSubmit("+cbhCall+",'"+clientId+"');", null);
                 writer.writeAttribute("onchange","mobi.datespinner.inputNative('"+clientId+"',"+cbhCall+");", null);
             }
 			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
@@ -165,6 +164,8 @@ public class DateSpinnerRenderer extends InputRenderer {
         String inputCallStart = "mobi.datespinner.inputSubmit('";
         String jsCallStart = "mobi.datespinner.select('";
         builder2.append(clientId).append("',{ event: event");
+        builder2.append(", yrMin:"+dateSpinner.getYearStart());
+        builder2.append(", yrMax:"+dateSpinner.getYearEnd());
         if (hasBehaviors) {
             String behaviors = this.encodeClientBehaviors(context, cbh, "change").toString();
             behaviors = behaviors.replace("\"", "\'");
@@ -349,13 +350,14 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         java.lang.String cfg = "{";
-         cfg += "yrInt:" + yrInt ;
-         cfg += ",mnthInt:" + mnthInt;
-         cfg += ",dateInt:" + dateInt;
-         cfg += ", format: '" +findPattern(spinner)+"'";
-         cfg += ", yrMin: "+spinner.getYearStart();
-         cfg += ", yrMax: "+spinner.getYearEnd();
+        cfg += "yrInt:" + yrInt ;
+        cfg += ",mnthInt:" + mnthInt;
+        cfg += ",dateInt:" + dateInt;
+        cfg += ", format: '" +findPattern(spinner)+"'";
+        cfg += ", yrMin: "+spinner.getYearStart();
+        cfg += ", yrMax: "+spinner.getYearEnd();
         cfg += ", readonly: "+spinner.isReadonly();
+        cfg += ",useNative: " +spinner.isUseNative();
  	//	cfg += encodeClientBehaviors(context, spinner, "action").toString();
          cfg += "}";
 
