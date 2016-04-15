@@ -130,11 +130,16 @@ public class DateSpinnerRenderer extends InputRenderer {
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
                 cbhCall = cbhCall.replace("\"", "\'");
               //  writer.writeAttribute("onchange", "ice.ace.ab("+cbhCall+");", null);
-                writer.writeAttribute("onchange","mobi.datespinner.dateSubmit("+cbhCall+",'"+clientId+"');", null);
+              //  writer.writeAttribute("onchange","mobi.datespinner.dateSubmit("+cbhCall+",'"+clientId+"');", null);
+                writer.writeAttribute("onchange","mobi.datespinner.inputNative('"+clientId+"',"+cbhCall+");", null);
             }
 			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
 					((DateSpinner) component).getCommonAttributeNames());
             writer.endElement("input");
+            writer.startElement("span", component);
+            writer.writeAttribute("id", clientId+"_error", null);
+            writer.writeAttribute("style", "display:none;", null);
+            writer.endElement("span");
         } else {
             writeJavascriptFile(context, component, JS_NAME, JS_MIN_NAME, JS_LIBRARY);
             String value = encodeValue(spinner, initialValue);
