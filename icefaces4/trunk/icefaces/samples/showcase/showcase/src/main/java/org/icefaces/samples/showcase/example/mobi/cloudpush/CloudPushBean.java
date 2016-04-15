@@ -30,7 +30,11 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -112,20 +116,40 @@ public class CloudPushBean implements Serializable {
      * @param event jsf action event
      */
     public void sendPriorityPushMessage(ActionEvent event) {
-        final PushMessage myMessage = new PushMessage(subject, message, null);
-        clearPreviousPushMessage();
-        final PortableRenderer portable = PushRenderer.getPortableRenderer();
-        scheduledPushExecutor.schedule(new Runnable() {
-            public void run() {
-                try {
-                    assignPreviousPushMessage();
-                    portable.render(renderGroup, myMessage);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        String referer =
+            ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).
+                getHeader("Referer");
+        try {
+            final PushMessage myMessage = new PushMessage(subject, message, new URI(referer));
+            clearPreviousPushMessage();
+            final PortableRenderer portable = PushRenderer.getPortableRenderer();
+            scheduledPushExecutor.schedule(new Runnable() {
+                public void run() {
+                    try {
+                        assignPreviousPushMessage();
+                        portable.render(renderGroup, myMessage);
+                        if (log.isLoggable(Level.FINE)) {
+                            log.log(
+                                Level.FINE,
+                                "Priority push message sent with " +
+                                    "Subject '" + myMessage.getSubject() + "', " +
+                                    "Detail '" + myMessage.getDetail() + "', and " +
+                                    "Target-URI '" + myMessage.getTargetUri() + "'."
+                            );
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+            }, notificationDelay, TimeUnit.SECONDS);
+        } catch (final URISyntaxException exception) {
+            if (log.isLoggable(Level.WARNING)) {
+                log.log(
+                    Level.WARNING,
+                    "Unable to send priority push message due to a syntax error in target URI '" + referer + "'."
+                );
             }
-        }, notificationDelay, TimeUnit.SECONDS);
-
+        }
     }
 
     /**
