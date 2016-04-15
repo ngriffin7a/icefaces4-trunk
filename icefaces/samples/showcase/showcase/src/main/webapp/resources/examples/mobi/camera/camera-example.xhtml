@@ -87,7 +87,7 @@
 
     </h:form>
 
-    <h:form prependId="false">
+    <h:form id="dimensionsForm" prependId="false" style="display:block">
 
         <h3>Image Dimension Settings</h3>
         
@@ -111,5 +111,13 @@
         </mobi:fieldsetGroup>
 
     </h:form>
+    
+    <script type="text/javascript">
+        (function() {
+            if (!bridgeit.isSupportedPlatform('camera')) {   
+                document.getElementById('dimensionsForm').style.display='none';
+            } 
+        })();
+    </script>
 
 </ui:composition>
