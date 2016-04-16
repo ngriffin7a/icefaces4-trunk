@@ -29,5 +29,7 @@
         <resource-handler>org.icefaces.mobi.renderkit.MobiSymbolicResourceHandler</resource-handler>
 		<resource-handler>org.icefaces.mobi.component.geotrack.GeoTrackResourceHandler</resource-handler>
     </application>
-
+    <lifecycle>
+        <phase-listener>org.icefaces.mobi.component.cloudpush.AddBridgeitJsResource</phase-listener>
+    </lifecycle>
 </faces-config>
