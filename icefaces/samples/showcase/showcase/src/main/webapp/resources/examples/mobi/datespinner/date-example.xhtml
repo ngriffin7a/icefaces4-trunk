@@ -24,18 +24,18 @@
              xmlns:mobi="http://www.icesoft.com/icefaces/mobile/component">
 
     <h3>Date Time Spinners</h3>
-    <h:form id="dateSpinnerForm">
+    <h:form id="dateSpinnerInputForm">
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow style="padding-bottom:15px;">
                 <h:outputLabel for="useNative" value="Use Native:" style="display:inline-block;margin-top:5px;"/>
                 <mobi:flipswitch id="useNative" value="#{dateBean.useNative}">
-                    <ace:ajax render="dateSpinnerForm" execute="dateSpinnerForm"/>
+                    <ace:ajax render="dateSpinnerInputForm dateSpinnerForm" execute="dateSpinnerInputForm"/>
                 </mobi:flipswitch>&#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow style="padding-bottom:15px;">
                 <h:outputLabel for="readonly" value="Read Only:" style="display:inline-block;margin-top:5px;"/>
                 <mobi:flipswitch id="readonly" value="#{dateBean.readonly}">
-                    <ace:ajax render="dateSpinnerForm" execute="dateSpinnerForm"/>
+                    <ace:ajax render="dateSpinnerInputForm dateSpinnerForm" execute="dateSpinnerInputForm"/>
                 </mobi:flipswitch>&#160;
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
@@ -45,6 +45,8 @@
                 YearEnd: 2018
             </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
+        </h:form>
+        <h:form id="dateSpinnerForm">
         
         <mobi:fieldsetGroup>
            <!-- date spinner -->
@@ -57,7 +59,7 @@
 									  readonly="#{dateBean.readonly}"
 									 value="#{dateBean.dateInput}">
 						<f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="#{dateBean.timeZone}"/>
-						<ace:ajax />
+						<ace:ajax execute="@this" render="@all" />
 					</mobi:dateSpinner>&#160;
 				</h:panelGroup>
             </mobi:fieldsetRow>
@@ -67,7 +69,7 @@
 				<h:panelGroup>
 					<mobi:timeSpinner id="time" useNative="#{dateBean.useNative}" timeZone="#{dateBean.timeZone}"
 									 value="#{dateBean.timeInput}" readonly="#{dateBean.readonly}">
-						<ace:ajax />
+						<ace:ajax execute="@this" render="@all"/>
 					</mobi:timeSpinner>&#160;
 				</h:panelGroup>
             </mobi:fieldsetRow>
