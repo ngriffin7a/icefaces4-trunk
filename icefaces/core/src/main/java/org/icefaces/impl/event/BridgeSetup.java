@@ -293,7 +293,8 @@ public class BridgeSetup implements SystemEventListener {
             return pushContext.createPushId(EnvUtils.getSafeRequest(context), EnvUtils.getSafeResponse(context));
         }
 
-        return "v" + Integer.toString(hashCode(), 36) + Integer.toString(++seed, 36);
+        //follow the string pattern used by ICEpush to not trigger view ID validation
+        return "v" + Integer.toString(hashCode(), 36) + Integer.toString(++seed, 36) + ":0";
     }
 
     /**
