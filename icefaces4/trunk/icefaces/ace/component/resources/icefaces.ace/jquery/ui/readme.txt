@@ -24,3 +24,4 @@ ICE-10290: use the relocated jQuery definitions in ice.ace.jq when jQuery global
 ICE-10470: fix to avoid setting explicit heights of panes when the accordion isn't visible at initialization time, in order to avoid zero-valued heights
 ICE-10918: fix for honouring the selected time zone when pressing the Today/Now button
 ICE-10970: increased z-index of popup datepicker
+ICE-10735: added onclick="this.focus();" to slider handle for accesskey purposes on Chrome

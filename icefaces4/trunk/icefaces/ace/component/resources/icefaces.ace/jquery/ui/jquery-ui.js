@@ -7033,7 +7033,7 @@
             var self = this,
                     o = this.options,
                     existingHandles = this.element.find( ".ui-slider-handle" ).addClass( "ui-state-default ui-corner-all" ),
-                    handle = "<a class='ui-slider-handle ui-state-default ui-corner-all' href='#'" + ariaAttrStr + "></a>",
+                    handle = "<a onclick=\"this.focus();\" class='ui-slider-handle ui-state-default ui-corner-all' href='#'" + ariaAttrStr + "></a>", // ICE-10735
                     handleCount = ( o.values && o.values.length ) || 1,
                     handles = [];
 

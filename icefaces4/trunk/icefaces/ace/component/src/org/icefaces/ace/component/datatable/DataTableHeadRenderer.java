@@ -700,7 +700,7 @@ public class DataTableHeadRenderer {
 			String accesskey = configPanel.getAccesskey();
 			if (accesskey != null) {
 				writer.writeAttribute("accesskey", accesskey, null);
-				writer.writeAttribute("tabindex", "0", null);
+				writer.writeAttribute("onclick", "this.focus();event.stopPropagation();", null);
 			}
 
             writer.startElement(HTML.SPAN_ELEM, null);
