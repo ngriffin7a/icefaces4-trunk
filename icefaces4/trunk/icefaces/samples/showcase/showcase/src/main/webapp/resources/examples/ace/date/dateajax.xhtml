@@ -63,7 +63,7 @@
                                      listener="#{dateAjax.dateSelectListener}"
                                      render="selectedDate"/>
 					<ace:ajax event="dateTextChange"
-						listener="#{dateAjax.dateTextChangeListener}" render="selectedDate" />
+						listener="#{dateAjax.dateTextChangeListener}" render="selectedDate @this" />
 				</ace:dateTimeEntry>
 			</h:panelGrid>
 		</h:form>
