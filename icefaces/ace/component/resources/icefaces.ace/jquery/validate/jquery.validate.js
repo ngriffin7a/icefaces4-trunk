@@ -1397,6 +1397,6 @@ if ( $.ajaxPrefilter ) {
 }
 
 }));
-})(jQuery || ice.ace.jq);
+})(ice.ace.jq);
 
 

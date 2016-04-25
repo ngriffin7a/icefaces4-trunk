@@ -999,4 +999,4 @@
 		}, "Your ZIP-code must be in the range 902xx-xxxx to 905xx-xxxx");
 
 	}));
-})(jQuery || ice.ace.jq);
+})(ice.ace.jq);
