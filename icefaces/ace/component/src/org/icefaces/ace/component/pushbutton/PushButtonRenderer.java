@@ -88,6 +88,9 @@ public class PushButtonRenderer extends CoreRenderer {
 		writer.writeAttribute(HTML.TYPE_ATTR, type, null);
         final String buttonId = clientId + "_button";
         writer.writeAttribute(HTML.NAME_ATTR, buttonId, null);
+		String style = pushButton.getStyle();
+		if (style != null)
+			writer.writeAttribute(HTML.STYLE_ATTR, style, null);
 
         if (disabled)
             writer.writeAttribute(HTML.CLASS_ATTR, "ui-button ui-widget ui-state-disabled ui-corner-all", null);
@@ -139,13 +142,9 @@ public class PushButtonRenderer extends CoreRenderer {
     private void encodeRootStyle(ResponseWriter writer, PushButton pushButton) throws IOException {
         String rootStyle = "ice-pushbutton";
         String styleClass = pushButton.getStyleClass();
-        String style = pushButton.getStyle();
 
         if (styleClass != null)
             rootStyle += " " + styleClass;
-
-        if (style != null)
-            writer.writeAttribute(HTML.STYLE_ATTR, style, null);
 
         writer.writeAttribute(HTML.CLASS_ATTR, rootStyle, null);
     }

@@ -283,6 +283,10 @@ public class CheckboxButtonRenderer extends InputRenderer {
         if (!buttonClasses.equals("")) {
             writer.writeAttribute(HTML.CLASS_ATTR, buttonClasses.trim(), null);
         }
+		
+		String style = checkbox.getStyle();
+		if (style != null && style.trim().length() > 0)
+			writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
     }
 
     private void encodeIconStyle(ResponseWriter writer, CheckboxButton checkbox) throws IOException {
@@ -304,13 +308,9 @@ public class CheckboxButtonRenderer extends InputRenderer {
     private void encodeRootStyle(ResponseWriter writer, CheckboxButton checkbox) throws IOException {
         String styleClass = checkbox.getStyleClass();
         String styleClassVal = "ice-checkboxbutton";
-        String style = checkbox.getStyle();
 
         if (styleClass != null && styleClass.trim().length() > 0)
             styleClassVal += " " + styleClass;
-
-        if (style != null && style.trim().length() > 0)
-            writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
 
         writer.writeAttribute(HTML.CLASS_ATTR, styleClassVal, null);
     }
