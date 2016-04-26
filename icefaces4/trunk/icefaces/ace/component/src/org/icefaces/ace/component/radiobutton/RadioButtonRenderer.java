@@ -249,6 +249,10 @@ public class RadioButtonRenderer extends InputRenderer {
         if (!buttonClasses.equals("")) {
             writer.writeAttribute(HTML.CLASS_ATTR, buttonClasses.trim(), null);
         }
+
+		String style = radioButton.getStyle();
+		if (style != null && style.trim().length() > 0)
+			writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
     }
 
     private void encodeIconStyle(ResponseWriter writer, RadioButton radioButton) throws IOException {
@@ -270,13 +274,9 @@ public class RadioButtonRenderer extends InputRenderer {
     private void encodeRootStyle(ResponseWriter writer, RadioButton radioButton) throws IOException {
         String styleClass = radioButton.getStyleClass();
         String styleClassVal = "ice-ace-radiobutton";
-        String style = radioButton.getStyle();
 
         if (styleClass != null && styleClass.trim().length() > 0)
             styleClassVal += " " + styleClass;
-
-        if (style != null && style.trim().length() > 0)
-            writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
 
         writer.writeAttribute(HTML.CLASS_ATTR, styleClassVal, null);
     }

@@ -91,6 +91,10 @@ public class LinkButtonRenderer extends CoreRenderer {
         writer.startElement(HTML.ANCHOR_ELEM, null);
         if (tabindex != null)
             writer.writeAttribute(HTML.TABINDEX_ATTR, tabindex, null);
+		String style = linkButton.getStyle();
+		if (style != null && style.trim().length() > 0) {
+			writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
+		}
 
         renderPassThruAttributes(facesContext, linkButton, HTML.LINK_ATTRS, excludedAttributes);
 
@@ -150,10 +154,6 @@ public class LinkButtonRenderer extends CoreRenderer {
             styleClassVal = " " + styleClass;
         }
         writer.writeAttribute(HTML.CLASS_ATTR, "ice-linkbutton" + styleClassVal, null);
-        String style = linkButton.getStyle();
-        if (style != null && style.trim().length() > 0) {
-            writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
-        }
     }
 
     private String getScript(FacesContext facesContext, ResponseWriter writer,
