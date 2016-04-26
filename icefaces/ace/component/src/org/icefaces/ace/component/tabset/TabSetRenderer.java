@@ -412,10 +412,12 @@ public class TabSetRenderer extends CoreRenderer {
 		// if receiving focus via a supported keyboard event (arrow keys, home, end), keep focus
 		// otherwise, forward focus to first focusable element in the tab pane body
 		writer.writeAttribute("onfocus", "var c = ice.ace.getJSContext('"+tabSetClientId+"');"
+			+ "var r = document.getElementById('"+tabSetClientId+"');"
 			+ "if (c) {var t = c.getComponent(); if(t && t.get('activeIndex') != "+index+") "
-			+ "if (!document.getElementById('"+tabSetClientId+"').keyEvent) "
-			+ "{var e = ice.ace.jq(ice.ace.escapeClientId('"+tabSetClientId+"')).find('.ui-tabs-panel')"
-			+ ".find(':focusable:visible:enabled:first'); if (e.size() > 0) e.focus();}}", null);
+			+ "if (!r.keyEvent && !r.mouseDown) {var e = ice.ace.jq(r)"
+			+ ".find('.ui-tabs-panel').find(':focusable:visible:enabled:first');"
+			+ "if (e.size() > 0) e.focus();}}", null);
+        writer.writeAttribute(HTML.ONMOUSEDOWN_ATTR, "document.getElementById('"+tabSetClientId+"').mouseDown = true;setTimeout(function(){document.getElementById('"+tabSetClientId+"').mouseDown = false;},1000);", null);
 
         writer.startElement("em", tab);
         writer.writeAttribute(HTML.ID_ATTR, clientId+ "Lbl", HTML.ID_ATTR); 
