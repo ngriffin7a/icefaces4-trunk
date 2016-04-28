@@ -51,7 +51,7 @@ ice.ace.BlockUI.disableControls = function(id) {
 		e.onkeydown = ice.ace.BlockUI.eventSink;
 		e.onclick = ice.ace.BlockUI.eventSink;
 	});
-}
+};
 
 ice.ace.BlockUI.createOverlay = function(id) {
 	var target = document.getElementById(id);
@@ -85,4 +85,4 @@ ice.ace.BlockUI.enableControls = function(id) {
 		ice.ace.jq.data(e, 'blockui-onkeydown', null);
 		ice.ace.jq.data(e, 'blockui-onclick', null);
 	});
-}
+};
