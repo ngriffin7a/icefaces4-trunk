@@ -1397,6 +1397,7 @@ if ( $.ajaxPrefilter ) {
 }
 
 }));
-})(ice.ace.jq);
+//try ice.ace.jq first for the cases when ice.ace is defined in the coalesced JS and this file loaded separately
+})((ice.ace && ice.ace.jq) || jQuery);
 
 

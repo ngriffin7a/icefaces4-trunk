@@ -14,7 +14,6 @@
  * governing permissions and limitations under the License.
  */
 
-
 (function() {
     function noop() {
     }
@@ -121,7 +120,7 @@
             }
 
             return '';
-        }
+        };
     }
 
     function clientValidationMessagesFor(id, text) {
@@ -184,13 +183,13 @@
                     });
                 };
             }
-        }
+        };
     }
 
     ice.ace.setupClientValidation = function (id, rule, config, messageType, message, immediate) {
         var form = formOf(id);
         if (!form.enabledValidation) {
-            ice.ace.jq(ice.ace.escapeClientId(form.id)).validate().settings.showErrors = function(){};
+            ice.ace.jq(ice.ace.escapeClientId(form.id)).validate().settings.showErrors = noop;
             form.enabledValidation = true;
         }
 
@@ -214,6 +213,7 @@
             ice.ace.jq(selector).rules('add', ruleConfig);
             document.getElementById(id).immediate = immediate;
         }
+
         setup();
-    }
+    };
 })();

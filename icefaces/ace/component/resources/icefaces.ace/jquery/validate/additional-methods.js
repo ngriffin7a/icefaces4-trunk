@@ -999,4 +999,5 @@
 		}, "Your ZIP-code must be in the range 902xx-xxxx to 905xx-xxxx");
 
 	}));
-})(ice.ace.jq);
+//try ice.ace.jq first for the cases when ice.ace is defined in the coalesced JS and this file loaded separately
+})((ice.ace && ice.ace.jq) || jQuery);
