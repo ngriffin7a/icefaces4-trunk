@@ -48,7 +48,21 @@ ice.ace.TextEntry = function(id, cfg) {
 			this.changeType('password');
 			if (cfg.autoTab) this.attachAutoTabEvents();
 			var self = this;
-			setTimeout(function(){self.jq.focus();}, 0);
+			setTimeout(function() {
+				var element = self.jq.get(0);
+				element.focus();
+				if (element.value.length > 0) {
+					if (element.createTextRange) { // IE
+						var fieldRange = element.createTextRange();  
+						fieldRange.moveStart('character', element.value.length);  
+						fieldRange.collapse(false);  
+						fieldRange.select();
+					} else { // other browsers
+						var length = element.value.length;  
+						element.setSelectionRange(length, length);  
+					}
+				}
+			}, 0);
 		}
 	}
     this.jq.blur(function() {
