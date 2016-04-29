@@ -100,9 +100,11 @@ public class RichTextEntryRenderer extends InputRenderer {
 		if (accesskey != null) {
 			writer.writeAttribute("accesskey", accesskey, null);
 			writer.writeAttribute("onfocus", "CKEDITOR.instances['" + clientId + "'].focus();", null);
-			writer.writeAttribute("style", "width:0;height:0;border:0;background-color:transparent;"
-				+ "cursor:pointer;overflow:hidden;outline:none;", null);
 		}
+		writer.writeAttribute("style", "width:0;height:0;border:0;background-color:transparent;"
+			+ "cursor:pointer;overflow:hidden;outline:none;", null);
+		writer.writeAttribute("onclick", "return false;", null);
+		writer.writeAttribute("name", "", null);
 		writer.endElement("button");
     }
 	
