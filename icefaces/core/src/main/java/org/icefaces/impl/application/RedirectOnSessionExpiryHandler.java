@@ -73,8 +73,6 @@ public class RedirectOnSessionExpiryHandler extends ExceptionHandlerWrapper {
                 } catch (IOException e) {
                     throw new FacesException(e);
                 }
-            } else {
-                handler.handle();
             }
         } else {
             handler.handle();
