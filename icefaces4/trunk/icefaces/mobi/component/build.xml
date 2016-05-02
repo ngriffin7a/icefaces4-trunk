@@ -371,7 +371,7 @@
                 <include name="META-INF/resources/org*/**"/>
                 <include name="META-INF/resources/icefaces.mobi/**"/>
             </fileset>
-            <fileset dir="${src}" includes="org/icefaces/ace/resources/"/>
+            <fileset dir="${src}" includes="org/icefaces/mobi/resources/"/>
         </jar>
         <copy file="${dist}/${icefaces-mobi.lib.name}.jar" todir="${lib.dir}"
               overwrite="true"/>

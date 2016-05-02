@@ -17,6 +17,7 @@
 if (!window['mobi']) {
     window.mobi = {};
 }
+
 mobi.datespinner = {
     pattern:{}, //supported formats are dd/MM/yyyy, MM-dd-yyyy, dd-MM-yyyy, yyyy-MM-dd, yyyy-dd-MM
     opened:{},
@@ -160,6 +161,10 @@ mobi.datespinner = {
             dEl.innerHTML = dInt;
             upDate = this.validate(clientId, yInt, mInt, dInt);
         }
+        var hiddenEl = document.getElementById(clientId + '_hidden');
+        var inputEl = document.getElementById(clientId + '_input');
+       // inputEl.value= upDate.toDateString();
+        hiddenEl.value = inputEl.value;
         this.writeTitle(clientId, upDate);
     },
 
@@ -206,6 +211,7 @@ mobi.datespinner = {
     },
     select:function (clientId, cfg) {
         //
+        console.log(" select!");
         var inputEl = document.getElementById(clientId + '_input');
         var hiddenEl = document.getElementById(clientId + '_hidden');
         var dInt = this.getIntValue(clientId + "_dInt");
@@ -251,33 +257,39 @@ mobi.datespinner = {
     dateSubmit: function(cfgIn, clientId) {
         this.cfg[clientId] = cfgIn;
         var dId = clientId + "_dInt";
+        var dateElemId = clientId+"+input" ;
+        var dateElem = document.getElementById(dateElemId);
         var mInt = this.getIntValue(clientId + "_mInt");
         var yInt = this.getIntValue(clientId + "_yInt");
         var dInt = this.getIntValue(dId);
         if (this.validate(clientId, yInt, mInt, dInt)){
-            var event = this.cfg[clientId].event;
-            var behaviors = this.cfg[clientId].behaviors;
+            var behaviors = cfgIn.behaviors;
             if (behaviors) {
-                if (behaviors.change) {
-                    ice.ace.ab(behaviors.change);
+                if (behaviors.event=='change') {
+                    ice.ace.ab(behaviors);
                 }
             }
         } else {
             console.log(" date value not valid so will not submit");
         }
     },
-    inputNative: function(clientId, behaviors){
+    inputNative: function(clientId, behaviors, errorMessage){
+        console.log("inputNative");
         var dateElem = document.getElementById(clientId);
         var dateError = document.getElementById(clientId+"_error");
         var value = new Date(dateElem.value);
         var dateMin = new Date(dateElem.min) ;
         var dateMax = new Date(dateElem.max);
         if (value < dateMin || value > dateMax){
-           dateError.innerHTML = "Date needs to be within "+dateMin.toDateString() +" and "+dateMax.toDateString();
+           dateError.innerHTML = errorMessage;
            dateError.style.display="inherit";
         } else {
            dateError.style.display= "none";
-            ice.ace.ab(behaviors);
+            if (behaviors && behaviors.event == 'change') {
+                ice.ace.ab(behaviors);
+            }else {
+                console.log(" no behaviors ...should be no submit");
+            }
         }
     },
     inputSubmit: function(clientId, cfg){
@@ -286,25 +298,41 @@ mobi.datespinner = {
         }
         this.cfg[clientId]=cfg;
         ice.setFocus('');
+        var errorMessage=cfg.errorMessage;
         var hiddenEl = document.getElementById(clientId + '_hidden');
         var inputEl = document.getElementById(clientId + '_input');
+        var dateError = document.getElementById(clientId+"_error");
         if (inputEl && inputEl.value) {
             var value = new Date(inputEl.value);
             var yearVal = value.getFullYear();
             if (yearVal >= cfg.yrMin && yearVal <= cfg.yrMax){
-                hiddenEl.value = inputEl.value;
-                console.log("will submit hiddenValue ="+hiddenEl.value);
-                var event = cfg.event;
-                var behaviors = cfg.behaviors;
-                if (behaviors) {
-                    if (behaviors.change) {
-                        ice.ace.ab(behaviors.change);
-                    }
-                }
-            } else {
-                console.log(" year must be within "+cfg.yrMin+" and "+cfg.yrMax);
+                dateError.style.display= "none";
             }
-
+            else {
+                if (yearVal < cfg.yrMin) {
+                    dateError.innerHTML = errorMessage;
+                    dateError.style.display = "inherit";
+                    value.setFullYear(cfg.yrMin);
+                    inputEl.value = value.toDateString();
+                }
+                if (yearVal > cfg.yrMax) {
+                    dateError.innerHTML = errorMessage;
+                    dateError.style.display = "inherit";
+                    value.setFullYear(cfg.yrMax);
+                    inputEl.value = value.toDateString();
+                }
+            }
+            hiddenEl.value = inputEl.value;
+            console.log("will submit hiddenValue ="+hiddenEl.value);
+            var event = cfg.event;
+            var behaviors = cfg.behaviors;
+            if (behaviors) { //will work as long as there is only a single event defined
+                    ice.ace.ab(behaviors);
+            } else {
+                console.log("no behaviors");
+            }
+        } else {
+            console.log(" year must be within "+cfg.yrMin+" and "+cfg.yrMax);
         }
 
     },
@@ -361,5 +389,4 @@ mobi.datespinner = {
         this.pattern[clientId] = null;
         this.opened[clientId] = null;
     }
-
 };

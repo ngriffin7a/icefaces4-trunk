@@ -21,6 +21,7 @@ import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.ComponentUtils;
+import org.icefaces.ace.renderkit.CoreRenderer;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -33,9 +34,11 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,10 +70,15 @@ public class DateSpinnerRenderer extends InputRenderer {
         String hiddenValue = context.getExternalContext().getRequestParameterMap().get(clientId + "_hidden");
         boolean inputNull = isValueBlank(inputValue);
         boolean hiddenNull = isValueBlank(hiddenValue);
+
         if (!inputNull || (inputNull && hiddenNull)) {
-            dateSpinner.setSubmittedValue(inputValue);
-        } else if (hiddenNull) {
-            dateSpinner.setSubmittedValue(hiddenValue);
+            if (withindateRange(dateSpinner, inputValue)) {
+                dateSpinner.setSubmittedValue(inputValue);
+            }
+        } else if (!hiddenNull) {
+            if (withindateRange(dateSpinner, hiddenValue)){
+                dateSpinner.setSubmittedValue(hiddenValue);
+            }
         }
         decodeBehaviors(context, dateSpinner);
     }
@@ -85,8 +93,15 @@ public class DateSpinnerRenderer extends InputRenderer {
         boolean hasBehaviors = !cbh.getClientBehaviors().isEmpty();
         spinner.setTouchEnabled(Utils.isTouchEventEnabled(context));
         String initialValue = ComponentUtils.getStringValueToRender(context, component);
-        // detect if an iOS device
+        final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.mobi.resources.messages");
+        final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+                        "org.icefaces.mobi.component.datespinner.", "yearRange", "Year requires a value between {0} and {1}.");
+        String errorMessage = MessageFormat.format(message, Integer.toString(spinner.getYearStart()), Integer.toString(spinner.getYearEnd()));
+
+        // detect if an using browser html type date
         if (shouldUseNative(spinner)) {
+            writer.startElement("div", component);
+            writer.writeAttribute("id", clientId+"_nwrap", null);
             writer.startElement("input", component);
             writer.writeAttribute("type", "date", "type");
             writer.writeAttribute("id", clientId, null);
@@ -129,26 +144,32 @@ public class DateSpinnerRenderer extends InputRenderer {
                 String event = spinner.getDefaultEventName(context);
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
                 cbhCall = cbhCall.replace("\"", "\'");
-              //  writer.writeAttribute("onchange", "ice.ace.ab("+cbhCall+");", null);
-                writer.writeAttribute("onchange","mobi.datespinner.inputNative('"+clientId+"',"+cbhCall+");", null);
+                writer.writeAttribute(event,"mobi.datespinner.inputNative('"+clientId+"',"+cbhCall+", '"+errorMessage+"');", null);
             }
 			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
 					((DateSpinner) component).getCommonAttributeNames());
             writer.endElement("input");
-            writer.startElement("span", component);
-            writer.writeAttribute("id", clientId+"_error", null);
-            writer.writeAttribute("style", "display:none;", null);
-            writer.endElement("span");
+            generateErrorMessageSpan(component, writer, clientId);
+            writer.endElement("div");
         } else {
             writeJavascriptFile(context, component, JS_NAME, JS_MIN_NAME, JS_LIBRARY);
             String value = encodeValue(spinner, initialValue);
-            encodeMarkup(context, component, value, hasBehaviors);
-            encodeScript(context, component);
+            encodeMarkup(context, component, value, hasBehaviors, errorMessage);
+            encodeScript(context, component, hasBehaviors, errorMessage);
+            generateErrorMessageSpan(component, writer, clientId);
         }
     }
 
+    private void generateErrorMessageSpan(UIComponent component, ResponseWriter writer, String clientId) throws IOException {
+        writer.startElement("span", component);
+        writer.writeAttribute("id", clientId+"_error", null);
+        writer.writeAttribute("style", "display:none;", null);
+        writer.endElement("span");
+    }
+
     protected void encodeMarkup(FacesContext context, UIComponent uiComponent,
-                                String value, boolean hasBehaviors)
+                                String value, boolean hasBehaviors,
+                                String errorMessage)
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         DateSpinner dateSpinner = (DateSpinner) uiComponent;
@@ -163,13 +184,14 @@ public class DateSpinnerRenderer extends InputRenderer {
         StringBuilder builder2 = new StringBuilder(255);
         String inputCallStart = "mobi.datespinner.inputSubmit('";
         String jsCallStart = "mobi.datespinner.select('";
-        builder2.append(clientId).append("',{ event: event");
+        builder2.append(clientId).append("',{ event:'"+eventStr+"'");
         builder2.append(", yrMin:"+dateSpinner.getYearStart());
         builder2.append(", yrMax:"+dateSpinner.getYearEnd());
+        builder2.append(", errorMessage: '"+errorMessage+"'");
         if (hasBehaviors) {
-            String behaviors = this.encodeClientBehaviors(context, cbh, "change").toString();
+            String behaviors = this.buildAjaxRequest(context, cbh, "change").toString();
             behaviors = behaviors.replace("\"", "\'");
-            builder2.append(behaviors);
+            builder2.append(", behaviors: "+ behaviors);
         }
         builder2.append("});");
         boolean disabledOrReadonly = false;
@@ -330,12 +352,13 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.endElement("input");
 
         writer.endElement("div");                                        //end of button container
-
         writer.endElement("div");                                         //end of entire container
     }
 
     public void encodeScript(FacesContext context,
-                             UIComponent uiComponent) throws IOException {
+                             UIComponent uiComponent,
+                             boolean hasBehaviors,
+                             String errorMessage) throws IOException {
         //need to initialize the component on the page and can also
         ResponseWriter writer = context.getResponseWriter();
         DateSpinner spinner = (DateSpinner) uiComponent;
@@ -349,7 +372,7 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId + "_script", "id");
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
-        java.lang.String cfg = "{";
+        String cfg = "{";
         cfg += "yrInt:" + yrInt ;
         cfg += ",mnthInt:" + mnthInt;
         cfg += ",dateInt:" + dateInt;
@@ -358,8 +381,12 @@ public class DateSpinnerRenderer extends InputRenderer {
         cfg += ", yrMax: "+spinner.getYearEnd();
         cfg += ", readonly: "+spinner.isReadonly();
         cfg += ",useNative: " +spinner.isUseNative();
- 	//	cfg += encodeClientBehaviors(context, spinner, "action").toString();
-         cfg += "}";
+        cfg += ", errorMessage: '"+errorMessage+"'";
+
+ 		if (hasBehaviors){
+            cfg += encodeClientBehaviors(context, spinner, "change").toString();
+        }
+        cfg += "}";
 
         writer.write("mobi.datespinner.init('" + clientId + "'," +cfg+ ");");
         writer.endElement("script");
@@ -517,7 +544,13 @@ public class DateSpinnerRenderer extends InputRenderer {
     private void setIntValues(DateSpinner spinner, Date aDate) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(aDate);
-        spinner.setYearInt(cal.get(Calendar.YEAR));
+        int tempYear = cal.get(Calendar.YEAR);
+        if (tempYear < spinner.getYearStart()){
+            tempYear = spinner.getYearStart();
+        } if (tempYear > spinner.getYearEnd()){
+            tempYear = spinner.getYearEnd();
+        }
+        spinner.setYearInt(tempYear);
         spinner.setMonthInt(cal.get(Calendar.MONTH) + 1);  //month is 0-indexed 0 = jan, 1=feb, etc
         spinner.setDayInt(cal.get(Calendar.DAY_OF_MONTH));
     }
@@ -612,6 +645,40 @@ public class DateSpinnerRenderer extends InputRenderer {
             pattern = tmp.getPattern();
         }
         return pattern;
+    }
+
+    private boolean withindateRange(DateSpinner spinner, String inputVal){
+        if (inputVal==null)return false;
+        String pattern = findPattern(spinner);
+        SimpleDateFormat df2 = new SimpleDateFormat(pattern);
+        if (spinner.getTimeZone() !=null){
+            Object zoneObj = spinner.getTimeZone();
+            if (zoneObj instanceof java.util.TimeZone) {
+                java.util.TimeZone tz = (java.util.TimeZone)zoneObj;
+                df2.setTimeZone(tz);
+            } else if (zoneObj instanceof String){
+                java.util.TimeZone tz = java.util.TimeZone.getTimeZone(zoneObj.toString());
+                df2.setTimeZone(tz);
+            }
+        }
+        try {
+            Date dateObj = df2.parse(inputVal);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dateObj);
+            int tempYear = cal.get(Calendar.YEAR);
+            if (tempYear >= spinner.getYearStart() && tempYear <= spinner.getYearEnd()) {
+                return true;
+            } else {
+                logger.info(" Year value of "+tempYear+" must be within yearStart "+spinner.getYearStart()+"" +
+                        " and yearEnd "+spinner.getYearEnd()+" attribute values");
+                return false;
+            }
+        }catch(ParseException pe){
+            if (logger.isLoggable(Level.FINE) ) {
+                logger.info(" unable to parse date to check year range");
+            }
+        }
+        return false;
     }
 
 }
