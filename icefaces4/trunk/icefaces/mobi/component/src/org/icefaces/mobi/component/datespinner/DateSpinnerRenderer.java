@@ -30,6 +30,8 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.DateTimeConverter;
+import javax.faces.validator.ValidatorException;
+import javax.faces.application.FacesMessage;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -70,11 +72,22 @@ public class DateSpinnerRenderer extends InputRenderer {
         String hiddenValue = context.getExternalContext().getRequestParameterMap().get(clientId + "_hidden");
         boolean inputNull = isValueBlank(inputValue);
         boolean hiddenNull = isValueBlank(hiddenValue);
-
+        if (inputNull && dateSpinner.isRequired()){
+            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.mobi.resources.messages");
+            final String validmessage = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+                              "org.icefaces.mobi.component.datespinner.", "required", "Validation Error, the date value for id {0} is required.");
+            String errorMessage = MessageFormat.format(validmessage, dateSpinner.getClientId());
+            FacesMessage message = new FacesMessage();
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            message.setSummary(errorMessage);
+            message.setDetail(errorMessage);
+            context.addMessage(clientId, message);
+        }
         if (!inputNull || (inputNull && hiddenNull)) {
             if (withindateRange(dateSpinner, inputValue)) {
                 dateSpinner.setSubmittedValue(inputValue);
             }
+
         } else if (!hiddenNull) {
             if (withindateRange(dateSpinner, hiddenValue)){
                 dateSpinner.setSubmittedValue(hiddenValue);
