@@ -72,7 +72,8 @@
 
     var old = jsf.ajax.request;
     jsf.ajax.request = function (element, event, options) {
-        var form = formOf(element.id);
+        var e = ((typeof element) == 'string') ? document.getElementById(element) : element;
+        var form = formOf(e.id);
         var jqForm = ice.ace.jq(form);
         var isValidForm = jqForm.valid();
         var validationResult = jqForm.validate();
