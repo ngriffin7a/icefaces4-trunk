@@ -20,6 +20,7 @@ import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
 import org.icefaces.ace.meta.annotation.ClientEvent;
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.meta.baseMeta.UIInputMeta;
 
 import javax.faces.application.ResourceDependencies;
@@ -52,10 +53,14 @@ public class DateSpinnerMeta extends UIInputMeta {
     @Property(defaultValue = "yyyy-MM-dd", tlddoc = "The DateFormat pattern.")
     private String pattern;
 
-    @Property(defaultValue = "1980", tlddoc = "The first year to appear in the dateScroller.")
+    @Property(defaultValue = "1980", tlddoc = "The first year to appear in the dateScroller. Some validation is provided for input fields, for example" +
+            " when useNative is true and then the property org.icefaces.mobi.component.datespinner.yearRange may be overwritten for  a" +
+            " custom validation message.")
     private int yearStart;
 
-    @Property(defaultValue = "2020", tlddoc = "The last year to appear in the dateScroller.")
+    @Property(defaultValue = "2020", tlddoc = "The last year to appear in the dateScroller. Some validation is provided for input fields, for example" +
+                " when useNative is true and then the property org.icefaces.mobi.component.datespinner.yearRange may be overwritten for  a" +
+                " custom validation message.")
     private int yearEnd;
 
     @Property(defaultValue = "10", tlddoc = "Width, in characters, of the input text field string containing the value of the selected date.")
