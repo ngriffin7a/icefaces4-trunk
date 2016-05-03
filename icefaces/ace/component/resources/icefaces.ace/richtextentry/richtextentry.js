@@ -19,6 +19,7 @@ if (!window.ice['ace']) window.ice.ace = {};
 ice.ace.richtextentry = {};
 ice.ace.richtextentry.registry = {};
 
+if (!CKEDITOR.plugins.get('aceSave')) // only add if not already registered
 CKEDITOR.plugins.add('aceSave', {
     init:function(a) {
         var cmd = a.addCommand('save', {exec:ice.ace.richtextentry.CKsaveAjax})
