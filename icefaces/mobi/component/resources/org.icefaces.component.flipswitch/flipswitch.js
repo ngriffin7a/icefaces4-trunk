@@ -21,7 +21,6 @@ if (!window['mobi']) {
 
 mobi.flipswitch = {
     lastTime: 0,
-
     init: function (clientId, cfg) {
         // Mobi-526 filter double clicks
         if (cfg.transHack) {
@@ -58,7 +57,11 @@ mobi.flipswitch = {
                 this.flipperEl.children[2].className = 'mobi-flipswitch-txt-off ui-button ui-corner-all ui-state-default ui-state-active';
                 value = false;
             }
-			ice.ace.setResetValue(clientId, !value);
+			if (ice.ace){
+                ice.ace.setResetValue(clientId, !value);
+            } else {
+                console.log(" ace ajax required for reset functionality") ;
+            }
             var hidden = this.id + "_hidden";
             var thisEl = document.getElementById(hidden);
             if (thisEl) {
@@ -109,8 +112,7 @@ mobi.flipswitch = {
 };
 
 mobi.flipswitch.clear = function(id) {
-	if (typeof ice.ace.resetValues[id] == 'undefined') mobi.flipswitch.setResetValue(id);
-
+	if (ice.ace && typeof ice.ace.resetValues[id] == 'undefined') mobi.flipswitch.setResetValue(id);
 	var element = document.getElementById(id);
 	var hidden = document.getElementById(id + "_hidden");
 
@@ -146,7 +148,7 @@ mobi.flipswitch.reset = function(id) {
 
 mobi.flipswitch.setResetValue = function(id) {
 	var flipperEl = document.getElementById(id);
-	if (flipperEl) {
+	if (flipperEl && ice.ace) {
 		if (flipperEl.className.indexOf('-off ') > 0) ice.ace.setResetValue(id, false);
 		else ice.ace.setResetValue(id, true);
 	}
