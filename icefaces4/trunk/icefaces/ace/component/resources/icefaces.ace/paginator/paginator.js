@@ -37,7 +37,7 @@ ice.ace.DataTable.Paginator = function(table) {
 		if (table.cfg.filterEvent) {
 			if (target.hasClass('ui-column-filter')) return true;
 		}
-		if (target.is('input,textarea,select,button,.ui-slider-handle')) return true;
+		if (target.is('input,textarea,select,button,.ui-selectmenu-value,.ui-slider-handle')) return true;
 
         var keycode = e.which;
         //page down or right arrow key
