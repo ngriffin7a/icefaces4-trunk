@@ -62,14 +62,15 @@ public class GMapRenderer extends CoreRenderer {
         writer.writeAttribute("id", clientId + "_wrapper", null);
         writer.writeAttribute("class", "ice-ace-gmap " + gmap.getStyleClass(), null);
         writer.writeAttribute("style", gmap.getStyle(), null);
-        writer.startElement("div", component);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("style", "height:100%; width:100%", null);
 		String accesskey = gmap.getAccesskey();
 		if (accesskey != null) {
 			writer.writeAttribute("accesskey", accesskey, null);
 			writer.writeAttribute("tabindex", "0", null);
+			writer.writeAttribute("onclick", "this.focus();", null);
 		}
+        writer.startElement("div", component);
+        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("style", "height:100%; width:100%", null);
         writer.endElement("div");
         writer.endElement("div");
         makeFields(writer, clientId, "lat");
