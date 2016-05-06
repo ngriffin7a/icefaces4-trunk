@@ -122,7 +122,7 @@ public class SelectMenuRenderer extends InputRenderer {
 			writer.writeAttribute("accesskey", accesskey, null);
 			if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
 		}
-		else writer.writeAttribute("tabindex", "0", null);
+		else if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
 		if (ariaEnabled) {
 			writer.writeAttribute("role", "select", null);
             final SelectMenu component = (SelectMenu) uiComponent;
