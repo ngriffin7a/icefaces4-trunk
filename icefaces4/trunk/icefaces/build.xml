@@ -30,6 +30,7 @@
         <propertyref name="bundle.name"/>
     </propertyset>
 
+    <property file="../ee-build.properties"/>
     <property file="./build.properties"/>
 
     <property name="icepush.dist.dir" location="icepush/core/build/dist"/>
