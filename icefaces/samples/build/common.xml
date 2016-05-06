@@ -22,6 +22,7 @@
          from both places. -->
     <property file="../../../../ee-bundle.properties"/>
     <property file="../../../ee-bundle.properties"/>
+    <property file="../../../../ee-build.properties"/>
     <property file="../../../build.properties"/>
 
     <property name="icefaces.base.dir" location="../.."/>
@@ -64,7 +65,7 @@
 
     <patternset id="lib.distribute">
         <patternset id="lib.distribute.ice" 
-        	includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icepush.lib.name}.jar ${icefaces-mobi.lib.name}.jar">
+        	includes="${icefaces.lib.name}.jar ${icefaces-ace.lib.name}.jar ${icepush.lib.name}.jar ${icepush.lib.dependencies} ${icefaces-mobi.lib.name}.jar">
 
             <exclude name="${icefaces.lib.name}.jar"      if="no-icefaces" />
 
@@ -73,14 +74,13 @@
 
             <exclude name="${icepush.lib.name}.jar"       if="no-icefaces" />
             <exclude name="${icepush.lib.name}.jar"       if="no-icepush" />
+            <exclude name="${icepush.lib.dependencies}.jar" if="no-icepush" />
             <exclude name="${icefaces-mobi.lib.name}.jar" unless="mobi" />
         </patternset>
 
         <!-- By default, include these libs in all ace samples unless explicity excluded  -->
         <patternset id="lib.distribute.common">
             <include name="jstl.jar"                    unless="no-jstl" />
-            <include name="mongo-java-driver-3.0.3.jar" unless="no-icepush" />
-            <include name="morphia-1.1.1.jar"           unless="no-icepush" />
         </patternset>
 
     </patternset>
