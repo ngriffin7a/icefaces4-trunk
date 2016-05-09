@@ -54,6 +54,7 @@ public class ThemeSelect extends ThemeSelectBase {
         String theme;
         while (urls.hasMoreElements()) {
             url = urls.nextElement();
+            System.out.println("resource url: " + url);
             if (matcher.reset(url.toString()).matches()) {
                 theme = matcher.group(1);
                 if (theme!=null ){
