@@ -71,40 +71,45 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
     @Override
     public void handle() throws FacesException {
         boolean sessionExpired = false;
-        for (Iterator<ExceptionQueuedEvent> iter = getUnhandledExceptionQueuedEvents().iterator(); iter.hasNext(); ) {
-            ExceptionQueuedEvent event = iter.next();
-            ExceptionQueuedEventContext queueContext = (ExceptionQueuedEventContext) event.getSource();
-            Throwable ex = queueContext.getException();
+        final FacesContext fc = FacesContext.getCurrentInstance();
+        final ExternalContext ec = fc.getExternalContext();
+        final Iterator<ExceptionQueuedEvent> exceptionQueuedEventIterator = getUnhandledExceptionQueuedEvents().iterator();
+        if (exceptionQueuedEventIterator.hasNext()) {
+            for (Iterator<ExceptionQueuedEvent> iter = exceptionQueuedEventIterator; iter.hasNext(); ) {
+                ExceptionQueuedEvent event = iter.next();
+                ExceptionQueuedEventContext queueContext = (ExceptionQueuedEventContext) event.getSource();
+                Throwable ex = queueContext.getException();
 
-            FacesContext fc = FacesContext.getCurrentInstance();
-            if (fc.isProjectStage(ProjectStage.Development)) {
-                log.log(Level.WARNING,"queued exception", ex);
-            }
+                if (fc.isProjectStage(ProjectStage.Development)) {
+                    log.log(Level.WARNING, "queued exception", ex);
+                }
 
-            if ((ex instanceof ViewExpiredException) && PhaseId.RESTORE_VIEW.equals(queueContext.getPhaseId())) {
+                if (ex instanceof ViewExpiredException && PhaseId.RESTORE_VIEW.equals(queueContext.getPhaseId())) {
+                    ViewExpiredException vex = (ViewExpiredException) ex;
+                    String viewId = vex.getViewId();
 
-                ViewExpiredException vex = (ViewExpiredException)ex;
-                String viewId = vex.getViewId();
+                    Object sessObj = ec.getSession(false);
 
-                ExternalContext ec = fc.getExternalContext();
-                Object sessObj = ec.getSession(false);
+                    boolean isPortalEnvironment = EnvUtils.instanceofPortletSession(sessObj);
 
-                boolean isPortalEnvironment = EnvUtils.instanceofPortletSession(sessObj);
-
-                if (sessObj != null || !isPortalEnvironment) {
-                    if (!isValidSession(fc,viewId) || isPortalEnvironment) {
-                        //Remove the ViewExpiredException and set the sessionExpired flag so that we know
-                        //to add the SessionExpiredException which is done late to avoid ConcurrentModificationException.
-                        iter.remove();
-                        sessionExpired = true;
-                        break;
+                    if (sessObj != null || !isPortalEnvironment) {
+                        if (!isValidSession(fc, viewId) || isPortalEnvironment) {
+                            //Remove the ViewExpiredException and set the sessionExpired flag so that we know
+                            //to add the SessionExpiredException which is done late to avoid ConcurrentModificationException.
+                            iter.remove();
+                            sessionExpired = true;
+                            break;
+                        }
                     }
                 }
+            }
+        } else {
+            if (PhaseId.RESTORE_VIEW.equals(fc.getCurrentPhaseId())) {
+                ec.getSessionMap().put(this.getClass().getName() + "Marker", true);
             }
         }
 
         //Do the processing outside of the iterator to avoid ConcurrentModificationException
-        FacesContext fc = FacesContext.getCurrentInstance();
         if (sessionExpired) {
             Application app = fc.getApplication();
             final HttpSession session = EnvUtils.getSafeSession(fc, false);
@@ -146,7 +151,9 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
             int maxInactive = httpSession.getMaxInactiveInterval();
             long now = System.currentTimeMillis();
 
-            if (!newSession && (now - lastAccessed) <= (maxInactive * 1000)) {
+            Object marker = httpSession.getAttribute(this.getClass().getName() + "Marker");
+            //verify presence of the marker, when missing the session was expired
+            if (!newSession && (now - lastAccessed) <= (maxInactive * 1000) && marker != null) {
                 validSession = true;
             }
 
