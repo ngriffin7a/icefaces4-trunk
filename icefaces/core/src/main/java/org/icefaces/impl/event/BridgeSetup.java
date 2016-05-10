@@ -103,7 +103,7 @@ public class BridgeSetup implements SystemEventListener {
         CoreUtils.setInView(root, "body", true);
 
         //force page load on IE when new tab is opened with "Duplicate Tab"
-        if (!context.isPostback()) {
+        if (!context.isPostback() && !EnvUtils.isPortal()) {
             ExternalContext externalContext = context.getExternalContext();
             externalContext.setResponseHeader("Cache-Control", "no-cache, no-store, must-revalidate, private");
             externalContext.setResponseHeader("Expires", "-1");
