@@ -356,6 +356,9 @@
 		{i: "skins/office2013/editor.css", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/editor.css']}"},
 		{i: "skins/office2013/editor_gecko.css", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/editor.css']}"},
 		{i: "skins/office2013/editor_ie.css", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/editor.css']}"},
+		{i: "skins/office2013/editor_ie7.css", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/editor.css']}"},
+		{i: "skins/office2013/editor_ie8.css", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/editor.css']}"},
+		{i: "skins/office2013/editor_iequirks.css", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/editor.css']}"},
 		{i: "skins/office2013/icons.png", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/icons.png']}"},
 		{i: "skins/office2013/icons_hidpi.png", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/icons_hidpi.png']}"},
 		{i: "skins/office2013/images/arrow.png", o: "#{resource['icefaces.ace:richtextentry/ckeditor/skins/office2013/images/arrow.png']}"},
@@ -518,7 +521,7 @@
 
 		for (var i = 0, l = mappings.length; i < l; i++) {
 			var m = mappings[i];
-			if (m.i == r) { return m.o;}
+			if (m && m.i == r) { return m.o;}
 		}
 		return false;
 	};
