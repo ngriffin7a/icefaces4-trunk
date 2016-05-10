@@ -59,6 +59,10 @@ public class HeadBodyListener implements SystemEventListener {
                     if (log.isLoggable(Level.FINER)) {
                         log.log(Level.FINER, "head detected");
                     }
+
+                    if (EnvUtils.isPortal()) {
+                        c.getChildren().clear();
+                    }
                 }
             }
         }
