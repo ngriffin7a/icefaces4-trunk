@@ -48,13 +48,12 @@ public class ThemeSelect extends ThemeSelectBase {
             }
         }
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        Enumeration<URL> urls = classLoader.getResources("META-INF/resources");
+        Enumeration<URL> urls = classLoader.getResources("META-INF/resources/");
         URL url;
         Matcher matcher = Pattern.compile(".*/(\\w*(\\-)?\\w*)\\.jar!?/META-INF/resources/?").matcher("");
         String theme;
         while (urls.hasMoreElements()) {
             url = urls.nextElement();
-            System.out.println("resource url: " + url);
             if (matcher.reset(url.toString()).matches()) {
                 theme = matcher.group(1);
                 if (theme!=null ){
