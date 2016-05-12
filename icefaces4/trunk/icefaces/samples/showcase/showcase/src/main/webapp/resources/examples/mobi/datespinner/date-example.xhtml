@@ -38,15 +38,9 @@
                     <ace:ajax render="dateSpinnerInputForm dateSpinnerForm" execute="dateSpinnerInputForm"/>
                 </mobi:flipswitch>&#160;
             </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                YearStart: 2000
-            </mobi:fieldsetRow>
-            <mobi:fieldsetRow>
-                YearEnd: 2018
-            </mobi:fieldsetRow>
         </mobi:fieldsetGroup>
-        </h:form>
-        <h:form id="dateSpinnerForm">
+    </h:form>
+    <h:form id="dateSpinnerForm">
         
         <mobi:fieldsetGroup>
            <!-- date spinner -->
@@ -57,7 +51,7 @@
                                       yearStart="2000"
                                       yearEnd="2018"
 									  readonly="#{dateBean.readonly}"
-									 value="#{dateBean.dateInput}">
+									  value="#{dateBean.dateInput}">
 						<f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="#{dateBean.timeZone}"/>
 						<ace:ajax execute="@this" render="@all" />
 					</mobi:dateSpinner>&#160;
@@ -95,6 +89,5 @@
         </mobi:fieldsetGroup>
         
     </h:form>
-
 
 </ui:composition>
