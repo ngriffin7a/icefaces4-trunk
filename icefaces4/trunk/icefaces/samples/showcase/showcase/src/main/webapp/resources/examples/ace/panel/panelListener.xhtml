@@ -44,7 +44,7 @@
             <ace:pushButton value="ShowPanel" id="pb1"
                     rendered="#{panelListener.reOpenButton}"
                     actionListener="#{panelListener.buttonNotVisible}">
-                <ace:ajax onComplete="var myPanel = ice.ace.instance('form:panel'); if (myPanel.isClosed()){ myPanel.show(); }  return true;" execute="@this" render="@form"/>
+                <ace:ajax onComplete="var myPanel = ice.ace.instance('#{panelListenerComponent.clientId}'); if (myPanel.isClosed()){ myPanel.show(); }  return true;" execute="@this" render="@form"/>
             </ace:pushButton>
         </h:form>
 
