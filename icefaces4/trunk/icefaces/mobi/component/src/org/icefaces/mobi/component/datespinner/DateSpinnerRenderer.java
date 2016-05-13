@@ -88,11 +88,11 @@ public class DateSpinnerRenderer extends InputRenderer {
                 dateSpinner.setSubmittedValue(inputValue);
             }
 
-        } else if (!hiddenNull) {
+        }/* else if (!hiddenNull) {
             if (withindateRange(dateSpinner, hiddenValue)){
                 dateSpinner.setSubmittedValue(hiddenValue);
             }
-        }
+        } */
         decodeBehaviors(context, dateSpinner);
     }
 
