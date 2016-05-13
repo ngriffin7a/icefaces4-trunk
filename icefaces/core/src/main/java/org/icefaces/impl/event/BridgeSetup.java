@@ -48,7 +48,7 @@ public class BridgeSetup implements SystemEventListener {
     public final static String ICE_CORE_LIB = "ice.core";
     public final static String ICE_PUSH_LIB = "ice.push";
     private final static Logger log = Logger.getLogger(BridgeSetup.class.getName());
-    private static Pattern VERIFY_VIEW_ID = Pattern.compile("-?\\w*\\:-?\\w*");
+    private static Pattern VERIFY_VIEW_ID = Pattern.compile("\\w*\\:\\w*");
 
     private final boolean standardFormSerialization;
     private final boolean reloadOnUpdateFailure;
