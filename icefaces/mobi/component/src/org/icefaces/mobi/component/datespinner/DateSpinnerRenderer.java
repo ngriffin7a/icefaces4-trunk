@@ -61,6 +61,7 @@ public class DateSpinnerRenderer extends InputRenderer {
 
         DateSpinner dateSpinner = (DateSpinner) component;
         String clientId = dateSpinner.getClientId(context);
+
         if (dateSpinner.isDisabled()) {
             return;
         }
@@ -83,7 +84,7 @@ public class DateSpinnerRenderer extends InputRenderer {
             message.setDetail(errorMessage);
             context.addMessage(clientId, message);
         }
-        if (!inputNull || (inputNull && hiddenNull)) {
+        if (!inputNull ) {
             if (withindateRange(dateSpinner, inputValue)) {
                 dateSpinner.setSubmittedValue(inputValue);
             }

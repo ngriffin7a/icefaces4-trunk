@@ -275,6 +275,7 @@ mobi.datespinner = {
         var dateElem = document.getElementById(clientId);
         var dateError = document.getElementById(clientId+"_error");
         var value = new Date(dateElem.value);
+        ice.setFocus('');
         var dateMin = new Date(dateElem.min) ;
         var dateMax = new Date(dateElem.max);
         if (value < dateMin || value > dateMax){
@@ -282,7 +283,7 @@ mobi.datespinner = {
            dateError.style.display="inherit";
         } else {
            dateError.style.display= "none";
-            if (behaviors && behaviors.event == 'change') {
+            if (behaviors ) {
                 ice.ace.ab(behaviors);
             }
         }
