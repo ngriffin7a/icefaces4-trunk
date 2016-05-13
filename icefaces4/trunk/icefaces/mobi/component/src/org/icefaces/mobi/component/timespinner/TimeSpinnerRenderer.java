@@ -48,6 +48,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
+
         TimeSpinner timeSpinner = (TimeSpinner) component;
         String clientId = timeSpinner.getClientId(context);
         if (timeSpinner.isDisabled()) {
@@ -55,7 +56,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
         }
         String inputField = clientId + "_input";
         String inputValue = context.getExternalContext().getRequestParameterMap().get(inputField);
-        
+
         if (shouldUseNative(timeSpinner)) {
             inputValue = context.getExternalContext().getRequestParameterMap().get(clientId);
             String twenty4HrString = convertToClock(inputValue, 24);
@@ -111,10 +112,11 @@ public class TimeSpinnerRenderer extends InputRenderer {
                 writer.writeAttribute("readonly", component, "readonly");
             }
             if (!readonly && !disabled && hasBehaviors) {
-                String event = spinner.getDefaultEventName(context);
+                String event="onchange";
+               // String event = spinner.getDefaultEventName(context);
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
                 cbhCall = cbhCall.replace("\"", "\'");
-               writer.writeAttribute(event, "ice.ace.ab("+cbhCall+");", null) ;
+               writer.writeAttribute(event, "ice.setFocus(''); ice.ace.ab("+cbhCall+");", null) ;
               //  writer.writeAttribute(event, "mobi.timespinner.inputNative('"+clientId+"',"+cbhCall+");", null);
             }
 			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
