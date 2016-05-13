@@ -178,7 +178,7 @@ mobi.timespinner = {
         }
     },
     inputNative: function(clientId, behaviors){
-        ice.setFocus('');
+        console.log('inputNative');
         if (behaviors && behaviors.event == 'change') {
             ice.ace.ab(behaviors);
         }

@@ -114,8 +114,8 @@ public class TimeSpinnerRenderer extends InputRenderer {
                 String event = spinner.getDefaultEventName(context);
                 String cbhCall = this.buildAjaxRequest(context, cbh, event);
                 cbhCall = cbhCall.replace("\"", "\'");
-                System.out.println(" cbhCall="+cbhCall);
-                writer.writeAttribute(event, "mobi.timespinner.inputNative('"+clientId+"',"+cbhCall+");", null);
+               writer.writeAttribute(event, "ice.ace.ab("+cbhCall+");", null) ;
+              //  writer.writeAttribute(event, "mobi.timespinner.inputNative('"+clientId+"',"+cbhCall+");", null);
             }
 			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
 					((TimeSpinner) component).getCommonAttributeNames());
