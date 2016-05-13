@@ -269,12 +269,9 @@ mobi.datespinner = {
                     ice.ace.ab(behaviors);
                 }
             }
-        } else {
-            console.log(" date value not valid so will not submit");
         }
     },
     inputNative: function(clientId, behaviors, errorMessage){
-        console.log("inputNative");
         var dateElem = document.getElementById(clientId);
         var dateError = document.getElementById(clientId+"_error");
         var value = new Date(dateElem.value);
@@ -287,8 +284,6 @@ mobi.datespinner = {
            dateError.style.display= "none";
             if (behaviors && behaviors.event == 'change') {
                 ice.ace.ab(behaviors);
-            }else {
-                console.log(" no behaviors ...should be no submit");
             }
         }
     },
@@ -323,13 +318,10 @@ mobi.datespinner = {
                 }
             }
             hiddenEl.value = inputEl.value;
-            console.log("will submit hiddenValue ="+hiddenEl.value);
             var event = cfg.event;
             var behaviors = cfg.behaviors;
             if (behaviors) { //will work as long as there is only a single event defined
-                    ice.ace.ab(behaviors);
-            } else {
-                console.log("no behaviors");
+                ice.ace.ab(behaviors);
             }
         } else {
             console.log(" year must be within "+cfg.yrMin+" and "+cfg.yrMax);

@@ -111,15 +111,11 @@ public class TimeSpinnerRenderer extends InputRenderer {
                 writer.writeAttribute("readonly", component, "readonly");
             }
             if (!readonly && !disabled && hasBehaviors) {
-                StringBuilder onblur = new StringBuilder(255);
-                onblur.append("mobi.timespinner.inputSubmit('").append(clientId).append("',{ event: event");
-                if (hasBehaviors) {
-                    String behaviors = this.encodeClientBehaviors(context, cbh, "change").toString();
-                    behaviors = behaviors.replace("\"", "\'");
-                    onblur.append(behaviors);
-                }
-                onblur.append("});");
-                writer.writeAttribute("onblur", onblur.toString(), null);
+                String event = spinner.getDefaultEventName(context);
+                String cbhCall = this.buildAjaxRequest(context, cbh, event);
+                cbhCall = cbhCall.replace("\"", "\'");
+                System.out.println(" cbhCall="+cbhCall);
+                writer.writeAttribute(event, "mobi.timespinner.inputNative('"+clientId+"',"+cbhCall+");", null);
             }
 			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
 					((TimeSpinner) component).getCommonAttributeNames());

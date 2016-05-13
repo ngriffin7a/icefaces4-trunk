@@ -177,6 +177,12 @@ mobi.timespinner = {
             }
         }
     },
+    inputNative: function(clientId, behaviors){
+        ice.setFocus('');
+        if (behaviors && behaviors.event == 'change') {
+            ice.ace.ab(behaviors);
+        }
+    },
     toggle:function (clientId) {
         if (!this.opened[clientId]) {
             this.open(clientId);
