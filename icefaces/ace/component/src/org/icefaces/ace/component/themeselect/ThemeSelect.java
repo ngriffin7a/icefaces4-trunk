@@ -57,7 +57,7 @@ public class ThemeSelect extends ThemeSelectBase {
             if (matcher.reset(url.toString()).matches()) {
                 theme = matcher.group(1);
                 if (theme!=null ){
-                    url = classLoader.getResource("META-INF/resources/ace-" + theme);
+                    url = classLoader.getResource("META-INF/resources/ace-" + theme + "/");
                     if (url != null) {
                         resource = resourceHandler.createResource("theme.css", "ace-" + theme);
                         if (resource != null) {
