@@ -60,20 +60,6 @@ public class HeadBodyListener implements SystemEventListener {
                     if (log.isLoggable(Level.FINER)) {
                         log.log(Level.FINER, "head detected");
                     }
-
-                    //stop rendering head content with the exception of resources defined by h:outputScript or h:outputStylesheet
-                    if (EnvUtils.isPortal()) {
-                        ArrayList filteredChildren = new ArrayList();
-                        List<UIComponent> headChildren = c.getChildren();
-                        for (UIComponent child: headChildren) {
-                            final String type = child.getRendererType();
-                            if (type != null && type.startsWith("javax.faces.resource")) {
-                                filteredChildren.add(child);
-                            }
-                        }
-                        headChildren.clear();
-                        headChildren.addAll(filteredChildren);
-                    }
                 }
             }
         }
