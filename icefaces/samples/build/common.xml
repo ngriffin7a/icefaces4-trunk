@@ -23,6 +23,7 @@
     <property file="../../../../ee-bundle.properties"/>
     <property file="../../../ee-bundle.properties"/>
     <property file="../../../../ee-build.properties"/>
+    <property file="../../../ee-build.properties"/>
     <property file="../../../build.properties"/>
 
     <property name="icefaces.base.dir" location="../.."/>
@@ -74,7 +75,7 @@
 
             <exclude name="${icepush.lib.name}.jar"       if="no-icefaces" />
             <exclude name="${icepush.lib.name}.jar"       if="no-icepush" />
-            <exclude name="${icepush.lib.dependencies}.jar" if="no-icepush" />
+            <exclude name="${icepush.lib.dependencies}"   if="no-icepush" />
             <exclude name="${icefaces-mobi.lib.name}.jar" unless="mobi" />
         </patternset>
 
