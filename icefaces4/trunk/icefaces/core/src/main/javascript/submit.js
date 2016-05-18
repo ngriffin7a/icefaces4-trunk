@@ -184,21 +184,11 @@ var singleSubmit;
         } catch (e) {
             debug(logger, "singleSubmit failed " + e);
         } finally {
-            if (window.myfaces) {
-                //myfaces queue does not serialize
-                //until the request is sent, so we must delay
-                append(onAfterUpdateListeners, function() {
-                    each(clonedElements, function(c) {
-                        form.removeChild(c);
-                    });
-                });
-            } else {
-                each(clonedElements, function(c) {
-                    form.removeChild(c);
-                });
-            }
+            each(clonedElements, function(c) {
+                form.removeChild(c);
+            });
         }
-    }
+    };
 
     singleSubmitExecuteThis = function(event, idorelement, additionalParameters, callbacks) {
         var element = idOrElement(idorelement);
