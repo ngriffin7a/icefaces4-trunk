@@ -16,25 +16,18 @@
 
 package org.icefaces.mobi.component.cloudpush;
 
-import java.io.IOException;
-import java.util.Map;
-
-import javax.faces.application.Application;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.PreRenderComponentEvent;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
-import javax.faces.render.Renderer;
-import javax.servlet.http.HttpServletRequest;
-
-import org.icefaces.impl.event.ResourceOutputUtil;
-import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.mobi.renderkit.ResponseWriterWrapper;
 import org.icefaces.util.ClientDescriptor;
+import org.icefaces.util.EnvUtils;
+import org.icepush.PushContext;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.render.Renderer;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Map;
 
 import static org.icefaces.ace.util.HTML.*;
 
@@ -57,7 +50,12 @@ public class CloudPushRenderer extends Renderer {
 		// button element
         final String email = cloudPush.getEmail();
         final boolean desktopBrowser = clientDescriptor.isDesktopBrowser() || clientDescriptor.isSimulator();
-        if (!desktopBrowser || (email != null && email.length() > 0)) {
+
+        final PushContext pushContext = PushContext.getInstance(EnvUtils.getSafeContext(facesContext));
+        final Cookie browserIDCookie = (Cookie) facesContext.getExternalContext().getRequestCookieMap().get("ice.push.browser");
+        final boolean cloudPushEnabled = browserIDCookie == null ? false : pushContext.hasNotifyBackURI(browserIDCookie.getValue());
+
+        if (!cloudPushEnabled && (!desktopBrowser || (email != null && email.length() > 0))) {
             writer.startElement(BUTTON_ELEM, cloudPush);
             writer.writeAttribute(ID_ATTR, clientId);
 			writer.writeAttribute(CLASS_ATTR, "mobi-cloud-push");
