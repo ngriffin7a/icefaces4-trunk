@@ -45,7 +45,7 @@
     background-color: rgba(0,0,0,.1);
 }
 
-.mobi-flipswitch-txt-on, .mobi-flipswitch-txt-off {
+span.mobi-flipswitch-txt-on.ui-button, span.mobi-flipswitch-txt-off.ui-button {
     font-size: 15px;
     display: inline-block;
     text-align: center;
