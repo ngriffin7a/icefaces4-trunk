@@ -199,7 +199,10 @@ ice.ace.CalendarInit = function(options) {
             return widget;
         };
         var initAndShow = function() {
-            if (ice.ace.instance(id)) return;
+            if (ice.ace.instance(id)) {
+				ice.ace.instance(id).jq[ice.ace.instance(id).pickerFn]("show");
+				return;
+			}
             if (trigger) trigger.remove();
             create();
             if (!ice.ace.instance(id).pickerFn) return;
