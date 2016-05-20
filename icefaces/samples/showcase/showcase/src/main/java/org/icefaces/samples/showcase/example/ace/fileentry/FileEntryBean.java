@@ -88,8 +88,9 @@ public class FileEntryBean implements Serializable {
     }
 
 
-    public static class UploadedFile {
-        private String name;
+    public static class UploadedFile implements Serializable {
+        private static final long serialVersionUID = 4803879439245875558L;
+		private String name;
         private String size;
         private String contentType;
         private String info;
