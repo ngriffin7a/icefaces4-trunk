@@ -77,7 +77,9 @@ public class FileEntryCallbackBean implements FileEntryCallback, Serializable {
 
 	}
 
-	private static class InvalidFileStatus implements FileEntryStatus {
+	private static class InvalidFileStatus implements FileEntryStatus, Serializable {
+
+		private static final long serialVersionUID = -8970901096973731657L;
 
 		public boolean isSuccess() {
 			return false;
@@ -93,8 +95,10 @@ public class FileEntryCallbackBean implements FileEntryCallback, Serializable {
 		}
 	}
 
-	private static class UploadSuccessStatus implements FileEntryStatus {
+	private static class UploadSuccessStatus implements FileEntryStatus, Serializable {
 
+		private static final long serialVersionUID = 5737086952765222416L;
+		
 		public boolean isSuccess() {
 			return true;
 		}
