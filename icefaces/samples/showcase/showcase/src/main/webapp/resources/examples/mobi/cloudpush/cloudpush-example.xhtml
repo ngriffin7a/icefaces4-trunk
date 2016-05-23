@@ -93,9 +93,7 @@
                     </h:panelGrid>
                 </div>
 				<div>
-					<span onclick="this.style.cssText='display:none;';document.getElementById('emailDiv').style.cssText='display:none;';document.getElementById('pushType').style.cssText='display:block;';" class="mobi-center-cloudpush">
-						<mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
-					</span>
+                    <mobi:cloudPush id="cloudPushButton" email="#{cloudPushBean.email}"/>
                 </div>
                 <div id="pushType" style="display:none;">
                     <div>
