@@ -298,18 +298,13 @@ ice.ace.fileentry = {
             oldEncoding = formElem.enctype;
             formElem.enctype = 'multipart/form-data';
         }
-        
-        var hSrc = ice.ace.fileentry.addHiddenInput(
-            formElem, 'javax.faces.source', context.sourceid);
-        var hParEx = ice.ace.fileentry.addHiddenInput(
-            formElem, 'javax.faces.partial.execute', context_execute);
-        var hParRend = ice.ace.fileentry.addHiddenInput(
-            formElem, 'javax.faces.partial.render', context.render);
-        var hParAjax = ice.ace.fileentry.addHiddenInput(
-            formElem, 'javax.faces.partial.ajax', 'true');
+
+        ice.ace.fileentry.addOrUpdateHiddenInput(formElem, 'javax.faces.source', context.sourceid);
+        ice.ace.fileentry.addOrUpdateHiddenInput(formElem, 'javax.faces.partial.execute', context_execute);
+        ice.ace.fileentry.addOrUpdateHiddenInput(formElem, 'javax.faces.partial.render', context.render);
+        ice.ace.fileentry.addOrUpdateHiddenInput(formElem, 'javax.faces.partial.ajax', 'true');
         // Flag specifying javascript, to differentiate our non-javascript mode
-        var hIceAjax = ice.ace.fileentry.addHiddenInput(
-            formElem, 'ice.fileEntry.ajaxResponse', 'true');
+        ice.ace.fileentry.addOrUpdateHiddenInput(formElem, 'ice.fileEntry.ajaxResponse', 'true');
 
         formElem.target = iframeId;
         var iframeElem = document.getElementById(iframeId);
@@ -323,16 +318,15 @@ ice.ace.fileentry = {
                 formElem.enctype = oldEncoding;
             }
             formElem.target = "_self";
-            
-            // This worked in FF, but not IE 8, so use explicit vars below
-            // formElem.removeChild( formElem.elements['javax.faces.source'] );
-            
-            formElem.removeChild( hSrc );
-            formElem.removeChild( hParEx );
-            formElem.removeChild( hParRend );
-            formElem.removeChild( hParAjax );
-            formElem.removeChild( hIceAjax );
 
+            //re-lookup elements in case they were changed by an update
+            var elementsToRemove = ['javax.faces.source', 'javax.faces.partial.execute', 'javax.faces.partial.render', 'javax.faces.partial.ajax', 'ice.fileEntry.ajaxResponse'];
+            for (var i = 0, l = elementsToRemove.length; i < l; i++) {
+                var element = formElem.elements[elementsToRemove[i]];
+                if (element) {
+                    formElem.removeChild(element);
+                }
+            }
             // Set every fileEntry component in the form into the complete
             // state, which hides the progress
             ice.ace.fileentry.setFormFileEntryStates(formElem, "complete", false);
@@ -427,13 +421,19 @@ ice.ace.fileentry = {
         });
     },
 
-    addHiddenInput : function(formElem, hiddenName, val) {
-        var inputElem = document.createElement('input');
-        inputElem.setAttribute('type','hidden');
-        inputElem.setAttribute('name',hiddenName);
-        inputElem.setAttribute('autocomplete', 'off');
+    addOrUpdateHiddenInput : function(formElem, hiddenName, val) {
+        var inputElem = formElem[hiddenName];
+        var missing = !inputElem;
+        if (missing) {
+            inputElem = document.createElement('input');
+            inputElem.setAttribute('type','hidden');
+            inputElem.setAttribute('name',hiddenName);
+            inputElem.setAttribute('autocomplete', 'off');
+        }
         inputElem.setAttribute('value',val);
-        formElem.appendChild(inputElem);
+        if (missing) {
+            formElem.appendChild(inputElem);
+        }
         return inputElem;
     },
 
