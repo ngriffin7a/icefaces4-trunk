@@ -216,6 +216,23 @@ if (!window.ice.icefaces) {
         namespace.onLoad = curry(onLoad, window);
         namespace.onBeforeUnload = curry(onBeforeUnload, window);
         namespace.onUnload = curry(onUnload, window);
+        namespace.onPortletRemove = function(setupID, callback) {
+            if (window.Liferay) {
+                window.Liferay.bind('closePortlet', function (event) {
+                    var container = document.getElementById('_' + event.portletId + '_');
+                    var cursor = document.getElementById(setupID);
+                    while (cursor) {
+                        if (cursor == container) {
+                            callback();
+                            break;
+                        } else {
+                            cursor = cursor.parentNode;
+                        }
+                    }
+                });
+            }
+        };
+
 
         var handler = LocalStorageLogHandler(window.console && window.console.log ? ConsoleLogHandler(debug) : WindowLogHandler(debug, window.location.href));
         var logger = Logger([ 'icefaces' ], handler);
@@ -558,7 +575,7 @@ if (!window.ice.icefaces) {
             }
         };
 
-        namespace.setupPush = function(viewID, retryIntervals, fetchPendingNotifications) {
+        namespace.setupPush = function(setupID, viewID, retryIntervals, fetchPendingNotifications) {
             var intervals = asArray(collect(split(retryIntervals, ' '), Number));
             var retrieveViewUpdate = retrieveUpdate(viewID, intervals);
             ice.push.register([viewID], retrieveViewUpdate);
@@ -570,6 +587,7 @@ if (!window.ice.icefaces) {
             namespace.onNetworkError(unsetupPush);
             namespace.onServerError(unsetupPush);
             namespace.onUnload(unsetupPush);
+            namespace.onPortletRemove(setupID, unsetupPush);
         };
 
         namespace.unsetupPush = function(viewID) {

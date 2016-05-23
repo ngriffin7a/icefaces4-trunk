@@ -256,9 +256,13 @@ ice.ace.fileentry = {
         }
 
         if (progressPushId) {
-            var regPushIds = [progressPushId];
-            window.ice.push.register(regPushIds, function(pushedIds) {
+            var ids = [progressPushId];
+            window.ice.push.register(ids, function(pushedIds) {
                 ice.ace.fileentry.onProgress(pushedIds, progressResourcePath);
+            });
+
+            ice.onPortletRemove(formId, function () {
+                window.ice.push.deregister(ids);
             });
         }
 
