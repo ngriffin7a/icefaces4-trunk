@@ -216,11 +216,12 @@ public class BridgeSetup implements SystemEventListener {
                         SessionViewManager.get(context).addView(viewID);
                         //need a span to make sure JSF bridge evaluates included script properly
                         writer.startElement("span", this);
-                        writer.writeAttribute("id", this.getClientId(context), null);
+                        final String clientId = this.getClientId(context);
+                        writer.writeAttribute("id", clientId, null);
                         writer.startElement("script", this);
                         writer.writeAttribute("type", "text/javascript", null);
                         if (LazyPushManager.get(context).enablePush(context, viewID)) {
-                            writer.write("ice.setupPush('" + viewID + "', '" + retriesOnNetworkError + "', " + fetchPendingNotificationsOnLoad + ");");
+                            writer.write("ice.setupPush('" + clientId + "', '" + viewID + "', '" + retriesOnNetworkError + "', " + fetchPendingNotificationsOnLoad + ");");
                         } else {
                             writer.write("ice.unsetupPush('" + viewID + "');");
                         }
