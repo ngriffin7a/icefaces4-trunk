@@ -96,6 +96,20 @@
         }
     };
 
+	function updateContainerClassName(value) {
+		if (!value) return '';
+		var ret = value.replace('ui-state-highlight', '');
+		ret = ret.indexOf('ui-state-error') > -1 ? ret : ret + ' ui-state-error';
+		return ret;
+	}
+
+	function updateIconClassName(value) {
+		if (!value) return '';
+		var ret = value.replace('ui-icon-info', '');
+		ret = ret.indexOf('ui-icon-alert') > -1 ? ret : ret + ' ui-icon-alert';
+		return ret;
+	}
+
     function clientValidationMessageFor(id, text) {
         return function (parameter, element) {
             var messageId = id + '_msg';
@@ -117,6 +131,11 @@
                     container.removeChild(message);
                 };
             } else {
+				if (element.className.indexOf('ui-state-error') == -1)
+					element.className += ' ui-state-error';
+				container.className = updateContainerClassName(container.className);
+                container.childNodes[0].childNodes[0].className = 
+					updateIconClassName(container.childNodes[0].childNodes[0].className);
                 container.childNodes[1].innerHTML = text;
             }
 
@@ -142,6 +161,11 @@
                     container.removeChild(node);
                 };
             } else {
+				if (element.className.indexOf('ui-state-error') == -1)
+					element.className += ' ui-state-error';
+				node.className = updateContainerClassName(node.className);
+                node.childNodes[0].childNodes[0].className = 
+					updateIconClassName(node.childNodes[0].childNodes[0].className);
                 node.childNodes[1].nodeValue = text;
             }
 
