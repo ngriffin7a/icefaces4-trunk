@@ -177,8 +177,13 @@ ice.ace.fileentry = {
             //    i.contentDocument.document;
             var d = i.contentDocument;
             if ((d instanceof XMLDocument || "xmlEncoding" in d) && d.documentElement.nodeName != 'HTML') {
-                var serializer = new XMLSerializer();
-                var responseText = serializer.serializeToString(d);
+                var responseText;
+                if (window.XMLSerializer) {
+                    var serializer = new XMLSerializer();
+                    responseText = serializer.serializeToString(d);
+                } else {
+                    responseText = "";
+                }
                 //i.contentDocument.document.body?i.contentDocument.document.body.innerHTML:null;
                 ice.ace.fileentry.response(d, responseText, context);
             }
@@ -192,8 +197,12 @@ ice.ace.fileentry = {
                 responseText = d.xml;
                 //i.contentWindow.document.body?ii.contentWindow.document.body.innerHTML:null;
             } else {
-                var serializer = new XMLSerializer();
-                responseText = serializer.serializeToString(d);
+                if (window.XMLSerializer) {
+                    var serializer = new XMLSerializer();
+                    responseText = serializer.serializeToString(d);
+                } else {
+                    responseText = "";
+                }
             }
 
             if (d.getElementsByTagName("error-name").length > 0) {
