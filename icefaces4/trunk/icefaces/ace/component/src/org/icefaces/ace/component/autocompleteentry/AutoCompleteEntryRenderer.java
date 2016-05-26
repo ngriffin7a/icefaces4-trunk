@@ -342,11 +342,14 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
         writer.writeText("(function() {", null);
         writer.writeText("var instance = ice.ace.Autocompleters[\"" + clientId + "\"];", null);
         writer.writeText("instance.updateField('" + escapeJavascriptString(renderedValue) + "', " + focus + ", "
-			+ (labelIsInField ? (value != null ? value : "''") : "null") + ");", null);
+			+ (labelIsInField ? (value != null ? "'" + value + "'" : "''") : "null") + ");", null);
         writer.writeText("})();", null);
         writer.endElement("script");
         writer.endElement("span");
 		
+		if (sourceId != null && !(sourceId.toString().equals(clientId) || sourceId.toString().equals(clientId + "_input"))) {
+			autoCompleteEntry.setPopulateList(false);
+		}
 		encodeList(facesContext, autoCompleteEntry);
     }
 
