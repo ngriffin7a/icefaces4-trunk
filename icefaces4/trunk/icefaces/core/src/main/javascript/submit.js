@@ -98,7 +98,16 @@ var singleSubmit;
         var form = document.getElementById(singleSubmitFormID(viewID));
         var clonedElements = [];
         try {
-            var clonedElement = form.appendChild(element.cloneNode(true));
+            var clonedElement = element.cloneNode(true);
+            var scripts = clonedElement.getElementsByTagName('script');
+            //remove inline scripts to avoid their execution in IE when inserted into the document
+            each(scripts, function(s) {
+                var parentNode = s.parentNode;
+                if (parentNode) {
+                    parentNode.removeChild(s);
+                }
+            });
+            form.appendChild(clonedElement);
             append(clonedElements, clonedElement);
 
             var tagName = toLowerCase(element.nodeName);
