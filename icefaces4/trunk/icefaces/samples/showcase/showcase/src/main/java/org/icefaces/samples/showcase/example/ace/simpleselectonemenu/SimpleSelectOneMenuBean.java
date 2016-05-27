@@ -85,7 +85,7 @@ public class SimpleSelectOneMenuBean implements Serializable {
 		quebecCities.add(new SelectItem("Montreal"));
 		quebecCities.add(new SelectItem("Quebec City"));
 		quebecCities.add(new SelectItem("Sherbrooke"));
-		quebecCities.add(new SelectItem("Trois Rivi�res"));
+		quebecCities.add(new SelectItem("Trois Rivi\u00E8res"));
 		newfoundlandCities = new ArrayList<SelectItem>();
 		newfoundlandCities.add(new SelectItem(""));
 		newfoundlandCities.add(new SelectItem("Corner Brook"));
