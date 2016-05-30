@@ -102,9 +102,12 @@ var singleSubmit;
             var scripts = clonedElement.getElementsByTagName('script');
             //remove inline scripts to avoid their execution in IE when inserted into the document
             each(scripts, function(s) {
-                var parentNode = s.parentNode;
-                if (parentNode) {
-                    parentNode.removeChild(s);
+                //IE can return null items in the child list
+                if (s) {
+                    var parentNode = s.parentNode;
+                    if (parentNode) {
+                        parentNode.removeChild(s);
+                    }
                 }
             });
             form.appendChild(clonedElement);
