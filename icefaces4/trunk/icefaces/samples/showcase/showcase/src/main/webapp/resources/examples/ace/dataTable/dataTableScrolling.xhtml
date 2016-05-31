@@ -106,9 +106,9 @@
         </h:form>
 
         <h:form id="form3" style="padding-top: 1em;">
-            <h:commandButton id="show" value="Show Table Popup" onclick="ice.ace.instance('form3:dialog').show();" type="button"/>
+            <h:commandButton id="show" value="Show Table Popup" onclick="ice.ace.instance('#{dataTableScrollingDialogComponent.clientId}').show();" type="button"/>
 
-            <ace:dialog id="dialog"
+            <ace:dialog id="dialog" binding="#{dataTableScrollingDialogComponent}"
                         header="Scrollable Table Sample"
                         closable="true"
                         modal="true"
