@@ -62,7 +62,8 @@
 				</ace:dataTable>
 			</ace:delegate>
 			<ace:tooltip id="tooltip" for="carName" forDelegate="tooltipDelegate" fetch="#{car}" 
-                        store="#{delegateTooltipBean.data}" delegateDisplayListener="#{delegateTooltipBean.listener}">
+                        store="#{delegateTooltipBean.data}" delegateDisplayListener="#{delegateTooltipBean.listener}"
+                        binding="#{delegateTooltipBean.tooltip}">
 				<h:outputText value="Chassis: #{delegateTooltipBean.data.chassis}"/><br/><br/>
 				<h:outputText value="Weight: #{delegateTooltipBean.data.weight}lbs."/><br/><br/>
 				<h:outputText value="Accel: #{delegateTooltipBean.data.acceleration}"/><br/><br/>
