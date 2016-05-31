@@ -15,3 +15,4 @@
  */
 
 .ui-notificationbar{position:fixed;width:100%;height:100px;padding:10px;z-index:10;}.ui-notificationbar-close{position:absolute;right:3em;top:1em;cursor:pointer;font-size:24px;}
+.portlet-content .ui-notificationbar {position:absolute;}.portlet-content .ui-notificationbar-close {right:1em;}
