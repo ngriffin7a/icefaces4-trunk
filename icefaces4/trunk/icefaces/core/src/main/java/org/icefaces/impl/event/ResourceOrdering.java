@@ -269,15 +269,21 @@ public class ResourceOrdering implements SystemEventListener {
         List<UIComponent> remainingChildren = new ArrayList<UIComponent>(resourceContainer.getChildren());
         for (UIComponent next: remainingChildren) {
             root.removeComponentResource(context, next, target);
-            String name = (String) next.getAttributes().get("name");
-            if (name == null) {
-                orderedUnknownTypeChildren.add(next);
-            } else if (name.endsWith(JS)) {
-                orderedJSChildren.add(next);
-            } else if (name.endsWith(CSS)) {
-                orderedCSSChildren.add(next);
-            } else {
-                orderedUnknownTypeChildren.add(next);
+            final Map attributes = next.getAttributes();
+            final String name = (String) attributes.get("name");
+            final String library = normalizeLibraryName((String) attributes.get("library"));
+            final String nameAndLibrary = name + "::" + library;
+            if (!duplicateCheckList.contains(nameAndLibrary)) {
+                if (name == null) {
+                    orderedUnknownTypeChildren.add(next);
+                } else if (name.endsWith(JS)) {
+                    orderedJSChildren.add(next);
+                } else if (name.endsWith(CSS)) {
+                    orderedCSSChildren.add(next);
+                } else {
+                    orderedUnknownTypeChildren.add(next);
+                }
+                duplicateCheckList.add(nameAndLibrary);
             }
         }
 
