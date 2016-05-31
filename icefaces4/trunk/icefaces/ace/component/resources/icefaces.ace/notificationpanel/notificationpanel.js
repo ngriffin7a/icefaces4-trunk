@@ -38,21 +38,41 @@ ice.ace.NotificationBar = function(id, cfg) {
     if (init==false && ice.ace.NotificationPanels[this.id]){
         init = true;
     }
-    ice.ace.jq(this.jq).css(this.cfg.position, '0');
-    ice.ace.jq(this.jq).css("left", '0');
+
+	var portlet = ice.ace.NotificationBar.getPortletContainer(this.jq.get(0));
+	if (!portlet) {
+		this.jq.css(this.cfg.position, '0');
+		this.jq.css("left", '0');
+	} else {
+		// obtain position of portlet
+		var $portlet = ice.ace.jq(portlet);
+		var portletPosition = $portlet.position();
+		var portletWidth = $portlet.outerWidth();
+		var leftBorder = parseInt(this.jq.css('border-left-width'));
+		var rightBorder = parseInt(this.jq.css('border-right-width'));
+		var leftPadding = parseInt(this.jq.css('padding-left'));
+		var rightPadding = parseInt(this.jq.css('padding-right'));
+		var computedWidth = portletWidth - leftBorder - rightBorder - leftPadding - rightPadding;
+		//this.cfg.position
+		// obtain width of portlet
+		// set all those values to the panel
+		// can't be 'fixed', need to use different style classes
+		this.jq.css({'left':portletPosition.left, 'top':portletPosition.top, 'width': computedWidth});
+	}
+
     if (this.cfg.visible){
          if (init==true && ice.ace.NotificationPanels[this.id].cfg.visible != this.cfg.visible){
-            ice.ace.jq(this.jq).hide();
+            this.jq.hide();
             this.show();
         } else {
-            ice.ace.jq(this.jq).show();
+            this.jq.show();
         }
     } else {
         if (init==true && ice.ace.NotificationPanels[this.id].cfg.visible != this.cfg.visible){
-            ice.ace.jq(this.jq).show();
+            this.jq.show();
             this.hide();
         } else {
-            ice.ace.jq(this.jq).hide();
+            this.jq.hide();
         }
     }
     ice.ace.NotificationPanels[this.id] = this;
@@ -95,4 +115,10 @@ ice.ace.NotificationBar.prototype.hide = function() {
     if (behaviour) {
         ice.ace.ab(behaviour);
     }
+};
+
+ice.ace.NotificationBar.getPortletContainer = function(node) {
+	if (!node) return null;
+	if (ice.ace.jq(node).hasClass('portlet-content')) return node;
+	return ice.ace.NotificationBar.getPortletContainer(node.parentNode);
 };
