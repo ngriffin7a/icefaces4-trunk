@@ -22,7 +22,7 @@
     <portlet>
         <portlet-name>chat-ice-portlet</portlet-name>
         <display-name>Chat</display-name>
-        <portlet-class>org.portletfaces.bridge.GenericFacesPortlet</portlet-class>
+        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
         <init-param>
             <name>javax.portlet.faces.defaultViewId.view</name>
             <value>/chat.xhtml</value>
