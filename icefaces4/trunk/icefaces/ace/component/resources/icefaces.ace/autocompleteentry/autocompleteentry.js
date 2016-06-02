@@ -588,7 +588,6 @@ ice.ace.Autocompleter.prototype = {
 			var fieldRange = this.element.createTextRange();  
 			fieldRange.moveStart('character', this.element.value.length);  
 			fieldRange.collapse(false);  
-			fieldRange.select();
 		}
        }  
       else {
