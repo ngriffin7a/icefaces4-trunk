@@ -587,7 +587,12 @@ ice.ace.Autocompleter.prototype = {
 		if (this.element.value.length > 0) {
 			var fieldRange = this.element.createTextRange();  
 			fieldRange.moveStart('character', this.element.value.length);  
-			fieldRange.collapse(false);  
+			fieldRange.collapse(false);
+            try {
+                fieldRange.select();
+            } catch (ex) {
+                //call sometimes throws an "Unspecified error" for some reason
+            }
 		}
        }  
       else {
