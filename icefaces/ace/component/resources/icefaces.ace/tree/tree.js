@@ -244,6 +244,8 @@ ice.ace.Tree.prototype.sendNodeDeselectionRequest = function(node) {
     } else {
         ice.ace.AjaxRequest(options);
     }
+
+	this.element.find(this.jqId+"_deselect").val('');
 };
 
 ice.ace.Tree.prototype.sendNodeSelectionRequest = function(node) {
@@ -266,6 +268,8 @@ ice.ace.Tree.prototype.sendNodeSelectionRequest = function(node) {
     } else {
         ice.ace.AjaxRequest(options);
     }
+
+	this.element.find(this.jqId+"_select").val('');
 };
 
 ice.ace.Tree.prototype.doClientDeselection = function(node, wrap) {
