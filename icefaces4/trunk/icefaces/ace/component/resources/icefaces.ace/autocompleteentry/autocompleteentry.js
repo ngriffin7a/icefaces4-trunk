@@ -280,7 +280,7 @@ ice.ace.Autocompleter.prototype = {
 				updateHeight = updateHeight > this.height ? this.height : updateHeight;
 				var winHeight = ice.ace.jq(window).height();
 				var docHeight = ice.ace.jq(document).height();
-				var scrollTop = ice.ace.jq(document).scrollTop()
+				var scrollTop = ice.ace.jq(document).scrollTop();
 				var lengthAbove = pos.top - scrollTop;
 				var lengthBelow = scrollTop + winHeight - pos.top - element.offsetHeight;
 				if (lengthBelow < updateHeight) {
@@ -577,29 +577,28 @@ ice.ace.Autocompleter.prototype = {
         var input = ice.ace.jq(this.element);
         if (input.data("labelIsInField")) {
             input.val("");
-			input.attr({name: this.element.id});
+            input.attr({name: this.element.id});
             input.removeClass(this.cfg.inFieldLabelStyleClass);
             input.data("labelIsInField", false);
         }
-      if (this.element.createTextRange) {
-       //IE  
-	  this.element.focus();
-		if (this.element.value.length > 0) {
-			var fieldRange = this.element.createTextRange();  
-			fieldRange.moveStart('character', this.element.value.length);  
-			fieldRange.collapse(false);
+        if (this.element.createTextRange) {
+            //IE
             try {
-                fieldRange.select();
+                this.element.focus();
+                if (this.element.value.length > 0) {
+                    var fieldRange = this.element.createTextRange();
+                    fieldRange.moveStart('character', this.element.value.length);
+                    fieldRange.collapse(false);
+                        fieldRange.select();
+                }
             } catch (ex) {
-                //call sometimes throws an "Unspecified error" for some reason
+                //calls on this.element sometimes throws an "Unspecified error" for some reason
             }
-		}
-       }  
-      else {
-       this.element.focus();
-       var length = this.element.value.length;  
-       this.element.setSelectionRange(length, length);  
-      } 
+        } else {
+            this.element.focus();
+            var length = this.element.value.length;
+            this.element.setSelectionRange(length, length);
+        }
     },
 
     // ICE-3830
