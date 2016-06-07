@@ -98,19 +98,18 @@ var singleSubmit;
         var form = document.getElementById(singleSubmitFormID(viewID));
         var clonedElements = [];
         try {
-            var clonedElement = element.cloneNode(true);
-            var scripts = clonedElement.getElementsByTagName('script');
-            //remove inline scripts to avoid their execution in IE when inserted into the document
-            each(scripts, function(s) {
-                //IE can return null items in the child list
-                if (s) {
-                    var parentNode = s.parentNode;
-                    if (parentNode) {
-                        parentNode.removeChild(s);
+            var clonedElement = element.cloneNode(false);
+            function cloneChildren(src, dst) {
+                each(src.childNodes, function (s) {
+                    if (s.nodeName != 'SCRIPT') {
+                        var d = dst.appendChild(s.cloneNode(false));
+                        cloneChildren(s, d);
                     }
-                }
-            });
+                });
+            }
+            cloneChildren(element, clonedElement);
             form.appendChild(clonedElement);
+
             append(clonedElements, clonedElement);
 
             var tagName = toLowerCase(element.nodeName);
