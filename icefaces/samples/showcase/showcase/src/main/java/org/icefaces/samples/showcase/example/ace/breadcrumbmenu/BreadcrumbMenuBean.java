@@ -124,7 +124,7 @@ public class BreadcrumbMenuBean implements Serializable {
             menuItem.setId(treeId + "-crumb-1" + nodeId);
             menuItem.setValue(node.getName());
             menuItem.setUrl(urlMap.get(node.getName()));
-//            menuItem.setTarget("_blank");
+            menuItem.setTarget("_blank");
             menuModel1.addMenuItem(menuItem);
 
             menuItem = new MenuItem();
