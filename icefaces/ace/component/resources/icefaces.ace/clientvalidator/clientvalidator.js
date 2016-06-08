@@ -164,8 +164,8 @@
 				if (element.className.indexOf('ui-state-error') == -1)
 					element.className += ' ui-state-error';
 				node.className = updateContainerClassName(node.className);
-                node.childNodes[0].childNodes[0].className = 
-					updateIconClassName(node.childNodes[0].childNodes[0].className);
+                node.childNodes[0].className = 
+					updateIconClassName(node.childNodes[0].className);
                 node.childNodes[1].nodeValue = text;
             }
 
