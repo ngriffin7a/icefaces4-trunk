@@ -21,7 +21,7 @@
         version="2.1">
     <description>
     </description>
-    <tlib-version>4.0.0</tlib-version>
+    <tlib-version>4.2.0</tlib-version>
     <short-name>icecore</short-name>
     <uri>http://icefaces.org/tld/core</uri>
     <listener>
