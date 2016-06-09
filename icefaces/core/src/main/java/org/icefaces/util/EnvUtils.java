@@ -16,6 +16,10 @@
 
 package org.icefaces.util;
 
+
+import javax.servlet.http.HttpServletRequest;
+
+
 import org.icefaces.application.ProductInfo;
 import org.icefaces.bean.WindowDisposed;
 import org.icefaces.impl.application.AuxUploadResourceHandler;
@@ -37,6 +41,9 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
+
 
 public class EnvUtils {
 
@@ -168,6 +175,7 @@ public class EnvUtils {
             log.log(Level.FINE, "WebSphere Portal class not available: ", t);
         }
     }
+
 
     //Use reflection to identify if a Pluto Portal specific class is available.
     private static Class PlutoPortalClass;
@@ -786,6 +794,43 @@ public class EnvUtils {
         return icepushPresent;
     }
 
+    //ICE-10792 Use reflection to determine if myfaces context-param org.apache.myfaces.REFRESH_TRANSIENT_BUILD_ON_PSS_PRESERVE_STATE is used
+    private static boolean myFacesRefreshTransientProperty;
+
+    static{
+        try {
+            if (isMyFaces()) {
+                Class MyfacesConfigClass;
+                MyfacesConfigClass = Class.forName("org.apache.myfaces.shared.config.MyfacesConfig");
+                if (MyfacesConfigClass != null) {
+                    ExternalContext ctx= FacesContext.getCurrentInstance().getExternalContext();
+                    Class[] noparams = new Class[0];
+                    Class[] partype = new Class[1];
+                    partype[0] = javax.faces.context.ExternalContext.class;
+                    Object obj = MyfacesConfigClass.newInstance();
+                    java.lang.reflect.Method method1 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSSPreserveState", noparams);
+                    java.lang.reflect.Method initMethod = MyfacesConfigClass.getMethod("getCurrentInstance", partype[0]);
+                    Object myfacesConfigInstance = initMethod.invoke(null,ctx);
+                    if (myfacesConfigInstance !=null){
+                        Object returnValue = method1.invoke(myfacesConfigInstance, noparams);
+                        java.lang.reflect.Method method2 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSS", noparams);
+                        Object returnValue2 = method2.invoke(myfacesConfigInstance, noparams);
+                        java.lang.reflect.Method method3 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSSAuto", noparams);
+                        Object returnValue3 = method3.invoke(myfacesConfigInstance, noparams);
+                        myFacesRefreshTransientProperty= (String.valueOf(returnValue2).equals("true") && String.valueOf(returnValue).equals("true"));
+                    }
+                }
+            }
+        }catch(Throwable t){
+          //  t.printStackTrace();
+            log.log(Level.FINE, "MyfacesConfig class not available or methods to determine refreshTransientBuildonPSS", t);
+        }
+
+    }
+    public static boolean isMyfacesRefreshTransientforPSS(){
+        return  myFacesRefreshTransientProperty;
+    }
+
     public static boolean hasHeadAndBodyComponents(FacesContext facesContext) {
         //ICE-5613: ICEfaces must have h:head and h:body tags to render resources into
         //Without these components, ICEfaces is disabled.
@@ -1066,6 +1111,8 @@ public class EnvUtils {
         }
         return stateMarker;
     }
+
+
 
     public static boolean containsBeans(Map<String, Object> scopeMap) {
         //skip the objects saved in the map by ICEfaces framework while testing for the existence of beans

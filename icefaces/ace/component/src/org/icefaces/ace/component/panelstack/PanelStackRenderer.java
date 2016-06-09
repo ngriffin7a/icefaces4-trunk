@@ -19,6 +19,7 @@ package org.icefaces.ace.component.panelstack;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.component.stackpane.StackPane;
 import org.icefaces.ace.util.HTML;
+import org.icefaces.util.EnvUtils;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -51,27 +52,48 @@ public class PanelStackRenderer extends CoreRenderer {
     }
 
     public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException{
+        PanelStack container = (PanelStack) uiComponent;
+        String selectedString =  container.getSelectedId();
+        //check to see if this is myfaces and if the context-params are set to true
+        // if so, then only use renderer logic rather than handler logic.
+
         for (UIComponent child : uiComponent.getChildren()) {
-             if (!(child instanceof StackPane) && logger.isLoggable(Level.FINER)){
-                 logger.finer("all children must be of type stackPane");
-                 return;
-             }else {
-             Map attributes = child.getAttributes();
-             boolean notSet = false;
-             StackPane pane = (StackPane) child;
-             if (attributes.get("selFlag")!=null){
-                pane.setSelected(Boolean.TRUE);
-                notSet = true;
-             } else {
-                 pane.setSelected(Boolean.FALSE);
-             }
-             PanelStack container = (PanelStack) uiComponent;
-             if (child.getId().endsWith(container.getSelectedId()) && notSet==false){
-                    //check to see if handler set the value!!
-               //      logger.info(" HANDLER unable to set selected value!!!");
-                     pane.setSelected(Boolean.TRUE);
-                 }
-             }
+            //if myfaces is used and context-params are not valid, dont use handler selFlag
+            StackPane pane = (StackPane) child;
+            if (!(child instanceof StackPane) && logger.isLoggable(Level.FINER)) {
+                logger.finer("all children of ace:panelStack must be of type stackPane");
+                return;
+            } else {
+                /* ICE-10792 myfaces requires params to allow el updates for component handler to be evaluated in pre render */
+                if (EnvUtils.isMyFaces() && !EnvUtils.isMyfacesRefreshTransientforPSS()) {
+                    if (facesContext.getApplication().getProjectStage().toString().toLowerCase().trim().equals("development")){
+                        logger.info("Handler is not used with Myfaces unless both org.apache.myfaces.REFRESH_TRANSIENT_BUILD_ON_PSS" +
+                                " and org.apache.myfaces.REFRESH_TRANSIENT_BUILD_ON_PSS_PRESERVE_STATE context-params are true");
+                    }
+                    if (child.getId().equals(container.getSelectedId())) {
+                        pane.setSelected(Boolean.TRUE);
+                    } else {
+                        pane.setSelected(Boolean.FALSE);
+                    }
+                } else {
+                    Map attributes = child.getAttributes();
+                    boolean notSet = false;
+                    if (attributes.get("selFlag") != null) {
+                        pane.setSelected(Boolean.TRUE);
+                        notSet = true;
+                    } else {
+                        pane.setSelected(Boolean.FALSE);
+                    }
+
+                    if (child.getId().endsWith(container.getSelectedId()) && notSet == false) {
+                        //check to see if handler set the value!!
+                        //      logger.info(" HANDLER unable to set selected value!!!");
+                        pane.setSelected(Boolean.TRUE);
+                    }
+
+                }
+            }
+
         }
         super.renderChildren(facesContext, uiComponent);
     }
