@@ -45,7 +45,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.AbortProcessingException;
 import org.icefaces.ace.event.TooltipDelegateDisplayEvent;
 
-public class Tooltip extends TooltipBase{
+public class Tooltip extends TooltipBase implements java.io.Serializable {
 
 	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
 
