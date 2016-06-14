@@ -19,12 +19,18 @@ package org.icefaces.demo.emporium.bid.model;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import org.icefaces.demo.emporium.util.FacesUtils;
 import org.icefaces.demo.emporium.util.StringUtil;
@@ -41,35 +47,35 @@ public class AuctionImage implements Serializable {
 	public static final String DEFAULT_NAME = "unknown";
 	public static final String EXTENSION = ".jpg";
 	
-	private static final File parentDir = generateParentDir();
+	private static final String parentDir = generateParentDir();
 	private String[] cachedImagesList; // List of images (including extension)
 	
-	private static File generateParentDir() {
-		File[] files = FacesUtils.getResourcesDirectory().listFiles();
-		File toReturn = null;
-		for (File f : files) {
-			if (IMAGE_LIBRARY.equals(f.getName())) {
-				toReturn = f;
-			}
+	private static String generateParentDir() {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		String imageDirectory = "/resources/" + IMAGE_LIBRARY;
+		URL toReturn = null;
+		try {
+			toReturn = externalContext.getResource(imageDirectory);
+		} catch (MalformedURLException e) {
+			//ignore
 		}
 
-		if ((toReturn == null) || (!toReturn.exists()) || (!toReturn.isDirectory()) || (!toReturn.canRead())) {
+		if (toReturn == null) {
 			log.log(Level.SEVERE, "Desired item image directory " + toReturn + " does not exist or isn't readable. This means all images will be " + DEFAULT_NAME + EXTENSION);
-			
-			toReturn = null;
-		}
-		else {
-			log.info("Item image directory " + toReturn.getAbsolutePath() + " valid with " + toReturn.list().length + " files.");
+		} else {
+			Set<String> imagePaths = externalContext.getResourcePaths(imageDirectory);
+			log.info("Item image directory " + toReturn.getPath() + " valid with " + imagePaths.size() + " files.");
 		}
 		
-		return toReturn;
+		return imageDirectory;
 	}
-	
+
 	public boolean isValidParentDir() {
 		return parentDir != null;
 	}
-	
+
 	public static String staticConvertNameToImageName(String name) {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		// First of all we won't assign any images until we know we have a valid parentDir (ideally resources/items/) to pull from
 		if (parentDir != null) {
 			// The image name format is all lowercase, spaces replaced with underscores
@@ -82,45 +88,51 @@ public class AuctionImage implements Serializable {
 				String imageName = new String(name);
 				
 				// Next we have to check that the image actually exists
-				File toCheck = new File(parentDir, imageName + EXTENSION);
-				if ((toCheck != null) && (toCheck.exists()) && (toCheck.isFile()) && (toCheck.canRead())) {
+				URL toCheck = null;
+				try {
+					toCheck = externalContext.getResource(parentDir + "/" + imageName + EXTENSION);
+				} catch (MalformedURLException e) {
+					//ignore
+				}
+				if (toCheck != null) {
 					return imageName;
 				}
 			}
 		}
 		return DEFAULT_NAME;
 	}
-	
+
 	public String convertNameToImageName(String name) {
 		return staticConvertNameToImageName(name);
 	}
-	
+
 	public String[] getImagesList() {
-		if (cachedImagesList == null) {
-			if (isValidParentDir()) {
-				cachedImagesList = parentDir.list(new FilenameFilter() {
-					@Override
-	                public boolean accept(File dir, String name) {
-	                    return name.toLowerCase().endsWith(EXTENSION) && (!name.toLowerCase().startsWith(DEFAULT_NAME));
-	                }
-				});
+		if (cachedImagesList == null & isValidParentDir()) {
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			Set<String> fileNames = externalContext.getResourcePaths(parentDir);
+			TreeSet<String> imageFileNames = new TreeSet<String>();
+			for (String name : fileNames) {
+				if (name.toLowerCase().endsWith(EXTENSION) && (!name.toLowerCase().startsWith(DEFAULT_NAME))) {
+					imageFileNames.add(name);
+				}
 			}
-			Arrays.sort(cachedImagesList);
+			cachedImagesList = imageFileNames.toArray(new String[0]);
 		}
+
 		return cachedImagesList;
 	}
-	
+
 	public int getNumberOfImages() {
 		if (getImagesList() != null) {
 			return cachedImagesList.length;
 		}
 		return 0;
 	}
-	
+
 	public String getImageLibrary() {
 		return IMAGE_LIBRARY;
 	}
-	
+
 	public String getDefaultName() {
 		return DEFAULT_NAME;
 	}
