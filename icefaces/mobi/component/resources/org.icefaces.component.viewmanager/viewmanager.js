@@ -129,7 +129,7 @@
             if( splashNode ){
                 splashNode.children[0].style.height = '' + (currentHeight - 39) + 'px';
             }
-        }, 100);
+        }, 500);
     }
     
     function getTransitionFunctions(reverse){
