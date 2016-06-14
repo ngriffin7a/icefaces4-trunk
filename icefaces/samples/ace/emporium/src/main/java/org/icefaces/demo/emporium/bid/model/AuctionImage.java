@@ -45,8 +45,14 @@ public class AuctionImage implements Serializable {
 	private String[] cachedImagesList; // List of images (including extension)
 	
 	private static File generateParentDir() {
-		File toReturn = new File(FacesUtils.getResourcesDirectory(), IMAGE_LIBRARY);
-		
+		File[] files = FacesUtils.getResourcesDirectory().listFiles();
+		File toReturn = null;
+		for (File f : files) {
+			if (IMAGE_LIBRARY.equals(f.getName())) {
+				toReturn = f;
+			}
+		}
+
 		if ((toReturn == null) || (!toReturn.exists()) || (!toReturn.isDirectory()) || (!toReturn.canRead())) {
 			log.log(Level.SEVERE, "Desired item image directory " + toReturn + " does not exist or isn't readable. This means all images will be " + DEFAULT_NAME + EXTENSION);
 			
