@@ -34,22 +34,22 @@
     <h:outputStylesheet library="css" name="auction_styles.css"/>
     <link href="./resources/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
     <link href="./resources/images/favicon.ico" rel="icon" type="image/x-icon"/>
-    
-    <mobi:largeView>
-	    <script type="text/javascript">
-		    function focusBid() {
-		    	var bidIn = document.getElementById('a:bidIn_input');
-		    	if (bidIn) {
-			    	bidIn.focus();
-			    	bidIn.select();
-		    	}
-		    }
-	    </script>
-    </mobi:largeView>
 </h:head>
 
 <h:body>
-    <h:outputText value="#{pushBean.init}" styleClass="hidden"/>
+	<mobi:largeView>
+		<script type="text/javascript">
+			function focusBid() {
+				var bidIn = document.getElementById('a:bidIn_input');
+				if (bidIn) {
+					bidIn.focus();
+					bidIn.select();
+				}
+			}
+		</script>
+	</mobi:largeView>
+
+	<h:outputText value="#{pushBean.init}" styleClass="hidden"/>
     <h:outputText value="#{bidRobot.init}" styleClass="hidden"/>
     <h:outputText value="#{userBean.init}" styleClass="hidden"/>
     <f:event type="preRenderView" listener="#{settingsController.initializeTheme}"/>
