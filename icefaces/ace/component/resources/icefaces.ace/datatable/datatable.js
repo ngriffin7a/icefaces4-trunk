@@ -3289,6 +3289,7 @@ ice.ace.DataTable.prototype.loadExpandedRows = function (row) {
         _self = this;
 
     options.onsuccess = function (responseXML) {
+		_self.showChildRows(row.attr('id'));
         if (_self.cfg.scrollable) _self.setupScrolling();
         return false;
     };
@@ -3350,6 +3351,22 @@ ice.ace.DataTable.prototype.loadExpandedPanelContent = function (row) {
     ice.ace.AjaxRequest(options);
 }
 
+ice.ace.DataTable.prototype.showChildRows = function(rowId) {
+	var _self = this;
+	var showTargets = ice.ace.jq(this.jqId + ' > div > table > tbody.ui-datatable-data > tr[id^="' + rowId + '."]');
+	showTargets.each(function (i, e) {
+		var childRow = ice.ace.jq(e);
+		// only process first-level children
+		if (childRow.attr('id').replace(rowId, '').split('.').length == 2) {
+			if (childRow.css('display') == 'none') {
+				childRow.css('display','');
+			}
+			if (childRow.hasClass('ui-expanded-row')) {
+				_self.showChildRows(childRow.attr('id'));
+			}
+		}
+	});
+};
 
 /* #########################################################################
 ########################### Row Editing #################################
