@@ -245,7 +245,7 @@ implements EventListener, PhaseListener, Serializable {
                         LOGGER.fine("Browser closed the connection prematurely for " + requestURI);
                     } else if ("Broken pipe".equals(e.getMessage())) {
                         LOGGER.fine("Browser connection was severed " + requestURI);
-                    } else if (e.getMessage().contains("Connection reset by peer")) {
+                    } else if (e.getMessage() != null && e.getMessage().contains("Connection reset by peer")) {
                         LOGGER.fine("Browser reset the connection for " + requestURI);
                     } else {
                         throw e;
