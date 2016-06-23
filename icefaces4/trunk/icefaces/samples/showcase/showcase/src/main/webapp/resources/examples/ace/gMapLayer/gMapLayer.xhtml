@@ -48,15 +48,16 @@
                    visible="${gMapLayerBean.kmlLayer}"
                    >
             <h:outputLabel for="kmlLayer" value="Options for KML"/>
-            <h:inputText id="kmlLayer" value="${gMapLayerBean.kmlURL}" size="60"><f:ajax render="@all"/></h:inputText>
-            <br/><br/>
-            <p>Use the above textbox to submit a URL to render a KML Map layer from. A few examples:<br/>
-                http://coinatlantic.ca/kmlfiles/EnvironmentCanadaAtlantic/ECHydrometricNL.kml - Envirnoment Canada Realtime Hydroelectric<br/>
-                http://www.austindarts.org/darts.kml - Darts locations in Austin Texas<br/>
-                http://www.ourairports.com/countries/CA/NT/airports.kml - Northwest Territories Airports
-                </p>
-				<br/>
+            <h:inputText id="kmlLayer" value="${gMapLayerBean.kmlURL}" size="55"><f:ajax render="@all"/></h:inputText>
 				<h:commandButton value="Submit" type="submit"/>
+            <br/><br/>
+            <p>Use the above textbox to submit a URL to render a KML Map layer from. A few examples:</p>
+				<ul style="list-style-type: circle;">
+                <li>http://coinatlantic.ca/kmlfiles/EnvironmentCanadaAtlantic/ECHydrometricNL.kml - Envirnoment Canada Realtime Hydroelectric</li>
+                <li>http://www.austindarts.org/darts.kml - Darts locations in Austin Texas</li>
+                <li>https://developers.google.com/maps/documentation/javascript/tutorials/westcampus.kml - Google campus locations</li>
+                <li>http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml - Chicago Train Lines</li>
+				</ul>
             </ace:panel>
 			
     </h:form>
