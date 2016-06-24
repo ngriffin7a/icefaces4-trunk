@@ -94,7 +94,6 @@ public class MobiJSFUtils {
         Iterator iter = keySet.iterator();
         while(iter.hasNext()){
             String key = (String)iter.next();
-            System.out.println("auxMap: " + key + "=" + auxMap.get(key));
         }
         try {
             part = request.getPart(partUploadName);
