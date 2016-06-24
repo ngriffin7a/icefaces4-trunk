@@ -18,8 +18,6 @@ package org.icefaces.samples.showcase.example.mobi.geolocation;
 
 
 import org.icefaces.mobi.util.MobiJSFUtils;
-//import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-//import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;
 import org.icefaces.util.ClientDescriptor;
 
 import javax.faces.bean.ManagedBean;
@@ -28,31 +26,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
-/*
-@Destination(
-    title = "example.input.geolocation.destination.title.short",
-    titleExt = "example.input.geolocation.destination.title.long",
-    titleBack = "example.input.geolocation.destination.title.back"
-)
-@Example(
-    descriptionPath = "/WEB-INF/includes/examples/input/geolocation-desc.xhtml",
-    examplePath = "/WEB-INF/includes/examples/input/geolocation-example.xhtml",
-    resourcesPath = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-    resources = {
-        // xhtml
-        @ExampleResource(type = ResourceType.xhtml,
-                         title = "geolocation-example.xhtml",
-                         resource = "/WEB-INF/includes/examples/input/geolocation-example.xhtml"),
-        // Java Source
-        @ExampleResource(type = ResourceType.java,
-                         title = "GeoLocationBean.java",
-                         resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                             "/view/examples/input/geolocation/GeoLocationBean.java")
-    }
-)
-*/
+
 @ManagedBean(name = GeoLocationBean.BEAN_NAME)
 @SessionScoped
 public class GeoLocationBean /*extends ExampleImpl<GeoLocationBean>*/ implements

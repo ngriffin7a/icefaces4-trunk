@@ -16,8 +16,7 @@
 
 package org.icefaces.samples.showcase.example.mobi.dataview;
 
-//import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-//import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;
+
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -25,30 +24,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-@Destination(
-        title = "example.layout.dataview.destination.title.short",
-        titleExt = "example.layout.dataview.destination.title.long",
-        titleBack = "example.layout.dataview.destination.title.back"
-)
-@Example(
-        descriptionPath = "/WEB-INF/includes/examples/layout/dataview-desc.xhtml",
-        examplePath = "/WEB-INF/includes/examples/layout/dataview-example.xhtml",
-        resourcesPath  = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                                 title = "dataview-example.xhtml",
-                                 resource = "/WEB-INF/includes/examples/layout/dataview-example.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                                 title = "DataViewBean.java",
-                                 resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                                         "/view/examples/layout/dataview/DataViewBean.java")
-        }
-)*/
+
 @ManagedBean(name = DataViewBean.BEAN_NAME)
 @SessionScoped
 public class DataViewBean /*extends ExampleImpl<DataViewBean>*/

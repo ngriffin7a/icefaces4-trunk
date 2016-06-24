@@ -17,38 +17,12 @@
 package org.icefaces.samples.showcase.example.mobi.flipswitch;
 
 
-//import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-//import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
-/*
-@Destination(
-        title = "example.input.flipswitch.destination.title.short",
-        titleExt = "example.input.flipswitch.destination.title.long",
-        titleBack = "example.input.flipswitch.destination.title.back"
-)
-@Example(
-        descriptionPath = "/WEB-INF/includes/examples/input/flip-switch-desc.xhtml",
-        examplePath = "/WEB-INF/includes/examples/input/flip-switch-example.xhtml",
-        resourcesPath = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "flipSwitch-example.xhtml",
-                        resource = "/WEB-INF/includes/examples/input/flip-switch-example.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "FlipSwitchBean.java",
-                        resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                                "/view/examples/input/flipSwitch/FlipSwitchBean.java")
-        }
-)
-*/
+
 @ManagedBean(name = FlipSwitchBean.BEAN_NAME)
 @SessionScoped
 public class FlipSwitchBean /*extends ExampleImpl<FlipSwitchBean>*/ implements

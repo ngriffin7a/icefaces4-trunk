@@ -17,8 +17,7 @@
 package org.icefaces.samples.showcase.example.mobi.camera;
 
 import org.icefaces.samples.showcase.util.DeviceInput;
-/*import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;*/
+
 
 import javax.annotation.PreDestroy;
 import javax.faces.application.Resource;
@@ -34,31 +33,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
-@Destination(
-        title = "example.device.camera.destination.title.short",
-        titleExt = "example.device.camera.destination.title.long",
-        titleBack = "example.device.camera.destination.title.back"
-)
-@Example(
-        descriptionPath = "/WEB-INF/includes/examples/device/camera-desc.xhtml",
-        examplePath = "/WEB-INF/includes/examples/device/camera-example.xhtml",
-        resourcesPath = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "camera-example.xhtml",
-                        resource = "/WEB-INF/includes/examples/device/camera-example.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "CameraBean.java",
-                        resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                                "/view/examples/device/camera/CameraBean.java")
-        }
-)
-*/
+
 @ManagedBean(name = CameraBean.BEAN_NAME)
 @SessionScoped
 public class CameraBean /*extends ExampleImpl<CameraBean>*/ implements

@@ -17,8 +17,6 @@
 package org.icefaces.samples.showcase.example.mobi.scan;
 
 
-//import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-//import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -35,31 +33,7 @@ import java.io.Serializable;
  * <b>mobi:qrcode</b>The qrcode component is used to generate a QR code given
  * an input string.  The string is converted into a valid QR graphic image.
  */
-/*
-@Destination(
-        title = "example.device.qrcode.destination.title.short",
-        titleExt = "example.device.qrcode.destination.title.long",
-        titleBack = "example.device.qrcode.destination.title.back"
-)
-@Example(
-        descriptionPath = "/WEB-INF/includes/examples/device/qrcode-desc.xhtml",
-        examplePath = "/WEB-INF/includes/examples/device/qrcode-example.xhtml",
-        resourcesPath = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "qrcode-example.xhtml",
-                        resource = "/WEB-INF/includes/examples/device/qrcode-example.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "QrCodeBean.java",
-                        resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                                "/view/examples/device/qrcode/QrCodeBean.java")
-        }
-)
-*/
+
 @ManagedBean(name = QrCodeBean.BEAN_NAME)
 @ViewScoped
 public class QrCodeBean /*extends ExampleImpl<QrCodeBean>*/ implements
