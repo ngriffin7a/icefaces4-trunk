@@ -18,8 +18,7 @@ package org.icefaces.samples.showcase.example.mobi.microphone;
 
 import org.icefaces.samples.showcase.util.FacesUtils;
 import org.icefaces.samples.showcase.util.DeviceInput;
-//import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-//import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;
+
 
 import javax.annotation.PreDestroy;
 import javax.faces.application.Resource;
@@ -44,33 +43,10 @@ import java.util.logging.Logger;
  * to be sent to the server and once there audio controls are presented to play
  * the sound bite.
  */
-/*
-@Destination(
-        title = "example.device.microphone.destination.title.short",
-        titleExt = "example.device.microphone.destination.title.long",
-        titleBack = "example.device.microphone.destination.title.back"
-)
-@Example(
-        descriptionPath = "/WEB-INF/includes/examples/device/microphone-desc.xhtml",
-        examplePath = "/WEB-INF/includes/examples/device/microphone-example.xhtml",
-        resourcesPath = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "microphone-example.xhtml",
-                        resource = "/WEB-INF/includes/examples/device/microphone-example.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "MicrophoneBean.java",
-                        resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                                "/view/examples/device/microphone/MicrophoneBean.java")
-        }
-)*/
+
 @ManagedBean(name = MicrophoneBean.BEAN_NAME)
 @SessionScoped
-public class MicrophoneBean /*extends ExampleImpl<MicrophoneBean>*/ implements
+public class MicrophoneBean implements
         Serializable {
 
     private static final Logger logger =

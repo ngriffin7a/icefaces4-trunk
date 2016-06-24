@@ -17,37 +17,12 @@
 package org.icefaces.samples.showcase.example.mobi.datespinner;
 
 
-/*import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;*/
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.Date;
-/*
-@Destination(
-        title = "example.input.dateSpinner.destination.title.short",
-        titleExt = "example.input.dateSpinner.destination.title.long",
-        titleBack = "example.input.dateSpinner.destination.title.back"
-)
-@Example(
-        descriptionPath = "/WEB-INF/includes/examples/input/date-desc.xhtml",
-        examplePath = "/WEB-INF/includes/examples/input/date-example.xhtml",
-        resourcesPath = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "date-example.xhtml",
-                        resource = "/WEB-INF/includes/examples/input/date-example.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "DateBean.java",
-                        resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                                "/view/examples/input/dateSpinner/DateBean.java")
-        }
-)*/
+
 
 @ManagedBean(name = DateBean.BEAN_NAME)
 @SessionScoped

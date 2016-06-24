@@ -16,8 +16,6 @@
 
 package org.icefaces.samples.showcase.example.mobi.outputlist;
 
-//import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-//import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -25,33 +23,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
-/*
-@Destination(
-        title = "example.layout.list.destination.title.short",
-        titleExt = "example.layout.list.destination.title.long",
-        titleBack = "example.layout.list.destination.title.back"
-)
-@Example(
-        descriptionPath = "/WEB-INF/includes/examples/layout/list-desc.xhtml",
-        examplePath = "/WEB-INF/includes/examples/layout/list-example.xhtml",
-        resourcesPath = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "list-example.xhtml",
-                        resource = "/WEB-INF/includes/examples/layout/list-example.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "ListBean.java",
-                        resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                                "/view/examples/layout/list/ListBean.java")
-        }
-)*/
+
 @ManagedBean(name = ListBean.BEAN_NAME)
 @SessionScoped
 public class ListBean /*extends ExampleImpl<ListBean>*/ implements

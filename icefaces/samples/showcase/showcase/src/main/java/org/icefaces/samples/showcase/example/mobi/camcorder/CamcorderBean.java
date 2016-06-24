@@ -32,8 +32,7 @@ import org.icefaces.ace.util.IceOutputResource;
 
 import org.icefaces.samples.showcase.util.FacesUtils;
 import org.icefaces.samples.showcase.util.DeviceInput;
-/*import org.icemobile.samples.mobileshowcase.view.metadata.annotation.*;
-import org.icemobile.samples.mobileshowcase.view.metadata.context.ExampleImpl;*/
+
 
 import javax.annotation.PreDestroy;
 import javax.faces.application.Resource;
@@ -48,31 +47,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-/*
-@Destination(
-        title = "example.device.camcorder.destination.title.short",
-        titleExt = "example.device.camcorder.destination.title.long",
-        titleBack = "example.device.camcorder.destination.title.back"
-)
-@Example(
-        descriptionPath = "/WEB-INF/includes/examples/device/camcorder-desc.xhtml",
-        examplePath = "/WEB-INF/includes/examples/device/camcorder-example.xhtml",
-        resourcesPath = "/WEB-INF/includes/examples/example-resources.xhtml"
-)
-@ExampleResources(
-        resources = {
-                // xhtml
-                @ExampleResource(type = ResourceType.xhtml,
-                        title = "camcorder-example.xhtml",
-                        resource = "/WEB-INF/includes/examples/device/camcorder-example.xhtml"),
-                // Java Source
-                @ExampleResource(type = ResourceType.java,
-                        title = "CamcorderBean.java",
-                        resource = "/WEB-INF/classes/org/icemobile/samples/mobileshowcase" +
-                                "/view/examples/device/camcorder/CamcorderBean.java")
-        }
-)
-*/
+
 @ManagedBean(name = CamcorderBean.BEAN_NAME)
 @SessionScoped
 public class CamcorderBean /*extends ExampleImpl<CamcorderBean>*/ implements

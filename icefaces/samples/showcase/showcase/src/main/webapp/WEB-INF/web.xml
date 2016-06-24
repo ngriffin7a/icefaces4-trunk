@@ -33,7 +33,7 @@
 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        	<param-value>Production</param-value>
+        	<param-value>Development</param-value>
 
         	<!-- Use Development mode for debugging, results in uncompressed resources being loaded.
         	<param-value>Development</param-value>
@@ -55,7 +55,7 @@
         <param-value>true</param-value>
     </context-param>
 
-    <context-param>
+    <!--  <context-param>
         <param-name>org.apache.myfaces.REFRESH_TRANSIENT_BUILD_ON_PSS</param-name>
         <param-value>true</param-value>
     </context-param>
@@ -63,7 +63,7 @@
     <context-param>
         <param-name>org.apache.myfaces.REFRESH_TRANSIENT_BUILD_ON_PSS_PRESERVE_STATE</param-name>
         <param-value>true</param-value>
-    </context-param>
+    </context-param> -->
     
     <context-param>
         <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
