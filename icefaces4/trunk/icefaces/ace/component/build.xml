@@ -92,6 +92,10 @@
     <property name="jsf.lib.dir" value="${jsf.impl.dir}/2.2" />
     <echo message="JSF lib dir: ${jsf.lib.dir}"/>
 
+
+    <condition property="javadocs.dir.default" value="${javadocs.dir}" else="./javadoc">
+        <isset property="javadocs.dir" />
+    </condition>
     <!-- Check if release.type is set, and if so append it after the tertiary value -->
     <condition property="version.string"
                value="${version.primary}.${version.secondary}.${version.tertiary}.${release.type}">
@@ -542,13 +546,25 @@
     <target name="dist" depends="lib,tlddoc,javadoc-no-compile"
             description="Generate the complete ICEfaces Advanced Components distribution (lib + javadoc, tld doc)">
     </target>
-
+    <target name="src-jar" depends="generate">
+            <jar destfile="${lib.dir}/${icefaces-ace.lib.name}-source.jar">
+                <fileset dir="${src}" includes="**/*.java"/>
+                <fileset dir="build/generated"  includes="**/*.java" />
+                <fileset dir="build/generated-interfaces" includes="**/*.java"/>
+            </jar>
+        </target>
+        <target name="javadoc-jar" depends="javadoc">
+            <jar destfile="${lib.dir}/${icefaces-ace.lib.name}-javadoc.jar">
+                <fileset dir="${javadocs.dir.default}" includes="**/*"/>
+            </jar>
+        </target>
     <target name="javadoc" depends="compile" description="Generate the component JavaDoc Documentation in HTML format.">
         <antcall target="javadoc-no-compile"/>
     </target>
 
     <target name="javadoc-no-compile">
-        <delete dir="${javadocs.dir}"/>
+        <delete dir="${javadocs.dir.default}"/>
+        <mkdir  dir="${javadocs.dir.default}"/>
         <javadoc destdir="${java.doc}"
                  classpathref="javadoc.classpath"
                  windowtitle="${javadoc.title}" failonerror="true"
@@ -719,24 +735,6 @@
         </sequential>
     </macrodef>
 
-    <!--
-        <macrodef name="gen.tld.doc">
-            <attribute name="tld.file"/>
-            <sequential>
-                <delete dir="${tld.doc}"/>
-                <mkdir dir="${tld.doc}"/>
-                <java jar="${tld.jar}/tlddoc.jar" fork="true" failonerror="true">
-                    <arg value="-d"/>
-                    <arg value="${tld.doc}"/>
-                    <arg value="-doctitle"/>
-                    <arg value="${generator.tld.doc.overall.name} ${generator.tld.doc.version}"/>
-                    <arg value="-windowtitle"/>
-                    <arg value="${generator.tld.doc.overall.name} ${generator.tld.doc.version}"/>
-                    <arg value="@{tld.file}"/>
-                </java>
-            </sequential>
-        </macrodef>
-    -->
 
     <target name="tlddoc"
             description="Generate the component TLD Documentation in HTML format.">

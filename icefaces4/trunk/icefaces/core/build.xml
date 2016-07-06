@@ -57,6 +57,9 @@
     <property name="javadoc.header" value="${product} ${product.lib} ${version.string}&lt;br&gt;Java API Documentation" />
     <property name="tld.title" value="${product} ${product.lib} ${version.string} Tag Library Reference" />
 
+    <condition property="javadocs.dir.default" value="${javadocs.dir}" else="./javadoc">
+        <isset property="javadocs.dir" />
+    </condition>
     <tstamp>
         <format property="build.time" pattern="yyyy-MM-dd hh:mm:ss"/>
     </tstamp>
@@ -184,9 +187,19 @@
               overwrite="true"/>
     </target>
 
-
+    <target name="src-jar" depends="">
+        <jar destfile="${lib.dir}/${icefaces.lib.name}-source.jar">
+            <fileset dir="${java.dir}" includes="**/*.java"/>
+        </jar>
+    </target>
+    <target name="javadoc-jar" depends="javadoc">
+        <jar destfile="${lib.dir}/${icefaces.lib.name}-javadoc.jar">
+            <fileset dir="${javadocs.dir.default}" includes="**/*"/>
+        </jar>
+    </target>
     <target name="javadoc">
-        <delete dir="${javadocs.dir}"/>
+        <delete dir="${javadocs.dir.default}"/>
+        <mkdir dir="${javadocs.dir.default}" />
         <javadoc destdir="${javadocs.dir}"
                  windowtitle="${javadoc.title}"
                  failonerror="true"
