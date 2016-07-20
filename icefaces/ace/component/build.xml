@@ -18,7 +18,7 @@
     <description>
         ICEfaces Advanced Components build file.
     </description>
-
+    <import file="../../common-tasks.xml"/>
     <!-- This property file is only used for EE builds and overrides various
          property values if it is available. -->
     <property file="../../../ee-bundle.properties"/>
@@ -546,6 +546,9 @@
     <target name="dist" depends="lib,tlddoc,javadoc-no-compile"
             description="Generate the complete ICEfaces Advanced Components distribution (lib + javadoc, tld doc)">
     </target>
+    <target name="build.src.javadoc" depends="src-jar, javadoc-jar">
+
+    </target>
     <target name="src-jar" depends="generate">
             <jar destfile="${lib.dir}/${icefaces-ace.lib.name}-source.jar">
                 <fileset dir="${src}" includes="**/*.java"/>
@@ -558,7 +561,7 @@
                 <fileset dir="${javadocs.dir.default}" includes="**/*"/>
             </jar>
         </target>
-    <target name="javadoc" depends="compile" description="Generate the component JavaDoc Documentation in HTML format.">
+    <target name="javadoc" depends="get-java-version, compile" description="Generate the component JavaDoc Documentation in HTML format.">
         <antcall target="javadoc-no-compile"/>
     </target>
 
@@ -569,7 +572,8 @@
                  classpathref="javadoc.classpath"
                  windowtitle="${javadoc.title}" failonerror="true"
                  bottom="Copyright ${year} ${copyright}"
-                 useexternalfile="true">
+                 useexternalfile="true"
+                 additionalparam="${javadoc.doclint.none}">
             <fileset dir="." defaultexcludes="yes">
                 <include name="src/**/*.java"/>
                 <include name="build/generated/support/**/*.java"/>

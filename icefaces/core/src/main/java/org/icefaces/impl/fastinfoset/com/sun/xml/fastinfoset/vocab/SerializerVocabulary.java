@@ -40,10 +40,11 @@ import org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.util.FixedEntryStri
 import org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.util.KeyIntMap;
 import org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.util.LocalNameQualifiedNamesMap;
 import org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.util.StringIntMap;
+import org.icefaces.impl.fastinfoset.org.jvnet.fastinfoset.Vocabulary;
 import java.util.Iterator;
 import javax.xml.namespace.QName;
 
-public class SerializerVocabulary extends Vocabulary {
+public class SerializerVocabulary extends org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.vocab.Vocabulary {
     public final StringIntMap restrictedAlphabet;
     public final StringIntMap encodingAlgorithm;
 
