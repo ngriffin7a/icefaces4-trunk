@@ -15,7 +15,7 @@
   -->
 
 <project name="icefaces4" default="world">
-
+    <import file="common-tasks.xml"/>
     <!-- This property file is only used for EE builds and overrides various
          property values if it is available. -->
     <property file="../ee-bundle.properties"/>
@@ -253,12 +253,12 @@
         </subant>
         <move file="${bundle.dir.bin}/core/build/javadocs" tofile="${bundle.dir.bin}/docs/core/api"/>
 
-        <subant target="javadoc">
+        <subant target="build.src.javadoc">
             <fileset dir="${bundle.dir.bin}/ace/component" includes="build.xml"/>
         </subant>
         <move file="${bundle.dir.bin}/ace/component/build/doc/javadoc" tofile="${bundle.dir.bin}/docs/ace/api"/>
 
-        <subant target="javadoc">
+        <subant target="build.src.javadoc">
             <fileset dir="${bundle.dir.bin}/mobi/component" includes="build.xml"/>
         </subant>
         <move file="${bundle.dir.bin}/mobi/component/build/doc/javadoc" tofile="${bundle.dir.bin}/docs/mobi/api"/>
@@ -335,6 +335,15 @@
        	</subant>
 	    <move file="./icepush/core/build/javadocs" tofile="./docs/icepush/api"/>
     </target>
+    <target name="build.src.javadoc" depends="get-java-version"
+             description="Build jars sources and javadocs">
+         <subant target="build.src.javadoc">
+             <fileset dir="./core" includes="build.xml"/>
+             <fileset dir="./ace/component" includes="build.xml"/>
+             <fileset dir="./mobi/component" includes="build.xml"/>
+         </subant>
+
+     </target>
 
 </project>
 

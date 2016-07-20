@@ -18,7 +18,7 @@
     <description>
         ICEfaces mobi components build file.
     </description>
-
+    <import file="../../common-tasks.xml"/>
     <!-- This property file is only used for EE builds and overrides various
          property values if it is available. -->
     <property file="../../../ee-bundle.properties"/>
@@ -383,6 +383,9 @@
     <target name="dist" depends="lib,tlddoc,javadoc-no-compile"
             description="Generate the complete ICEfaces Advanced Components distribution (lib + javadoc, tld doc)">
     </target>
+    <target name="build.src.javadoc" depends="src-jar, javadoc-jar">
+
+    </target>
     <target name="src-jar" depends="generate">
           <jar destfile="${lib.dir}/${icefaces-mobi.lib.name}-source.jar">
               <fileset dir="${src}" includes="**/*.java"/>
@@ -399,14 +402,15 @@
         <antcall target="javadoc-no-compile"/>
     </target>
 
-    <target name="javadoc-no-compile">
+    <target name="javadoc-no-compile" depends="get-java-version">
         <delete dir="${javadocs.dir.default}"/>
         <mkdir dir="${javadocs.dir.default}"/>
         <javadoc destdir="${java.doc}"
                  classpathref="javadoc.classpath"
                  windowtitle="${javadoc.title}" failonerror="true"
                  bottom="Copyright ${year} ${copyright}"
-                 useexternalfile="true">
+                 useexternalfile="true"
+                 additionalparam="${javadoc.doclint.none}">
             <fileset dir="." defaultexcludes="yes">
                 <include name="src/**/*.java"/>
                 <include name="build/generated/support/**/*.java"/>

@@ -46,10 +46,11 @@ import org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.util.QualifiedNameA
 import org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.util.StringArray;
 import org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.util.StringIntMap;
 import org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.util.ValueArray;
+import org.icefaces.impl.fastinfoset.org.jvnet.fastinfoset.Vocabulary;
 import java.util.Iterator;
 import javax.xml.namespace.QName;
 
-public class ParserVocabulary extends Vocabulary {
+public class ParserVocabulary extends org.icefaces.impl.fastinfoset.com.sun.xml.fastinfoset.vocab.Vocabulary {
     public static final String IDENTIFYING_STRING_TABLE_MAXIMUM_ITEMS_PEOPERTY = 
         "com.sun.xml.fastinfoset.vocab.ParserVocabulary.IdentifyingStringTable.maximumItems";
     public static final String NON_IDENTIFYING_STRING_TABLE_MAXIMUM_ITEMS_PEOPERTY = 

@@ -15,7 +15,7 @@
   -->
 
 <project name="icefaces" default="lib">
-	
+	 <import file="../common-tasks.xml"/>
     <!-- This property file is only used for EE builds and overrides various
          property values if it is available. -->
     <property file="../../ee-bundle.properties"/>
@@ -186,7 +186,9 @@
               todir="${lib.dir}"
               overwrite="true"/>
     </target>
+    <target name="build.src.javadoc" depends="src-jar, javadoc-jar">
 
+    </target>
     <target name="src-jar" depends="">
         <jar destfile="${lib.dir}/${icefaces.lib.name}-source.jar">
             <fileset dir="${java.dir}" includes="**/*.java"/>
@@ -197,14 +199,16 @@
             <fileset dir="${javadocs.dir.default}" includes="**/*"/>
         </jar>
     </target>
-    <target name="javadoc">
+    <target name="javadoc" depends="get-java-version" description="Create javadocs.  Will determine which version
+                           of java is being used to determine if doclints flag is available, for example java 1.8.">
         <delete dir="${javadocs.dir.default}"/>
         <mkdir dir="${javadocs.dir.default}" />
         <javadoc destdir="${javadocs.dir}"
                  windowtitle="${javadoc.title}"
                  failonerror="true"
         	     bottom="Copyright ${year} ${copyright}"
-                 useexternalfile="true" >
+                 useexternalfile="true"
+                 additionalparam="${javadoc.doclint.none}">
             <fileset dir="${java.dir}" defaultexcludes="yes">
                 <include name="org/icefaces/bean/*.java"/>
                 <include name="org/icefaces/util/EnvUtils.java"/>
