@@ -105,39 +105,44 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
     }
 
     public static ScopeMap lookupWindowScope(FacesContext context) {
-        final ExternalContext externalContext = context.getExternalContext();
-        final Map<String, String> parameterMap = externalContext.getRequestParameterMap();
-        final ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
-        //stop looking up the scope map for resources that do not have 'ice.window' parameter in their URL
-        //to avoid creating new window scope maps that will never be used again
-        if (externalContext.getRequest() != null && !parameterMap.containsKey(WindowParameter) && resourceHandler.isResourceRequest(context)) {
-            return null;
-        }
+        try {
+            final ExternalContext externalContext = context.getExternalContext();
+            final Map<String, String> parameterMap = externalContext.getRequestParameterMap();
+            final ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
+            //stop looking up the scope map for resources that do not have 'ice.window' parameter in their URL
+            //to avoid creating new window scope maps that will never be used again
+            if (externalContext.getRequest() != null && !parameterMap.containsKey(WindowParameter) && resourceHandler.isResourceRequest(context)) {
+                return null;
+            }
 
-        String id = lookupAssociatedWindowID(externalContext.getRequestMap());
-        State state = getState(context);
-        if (state == null)  {
-            return null;
-        } else {
-            Object synchronizationMonitor = getSynchronizationObject(context);
+            String id = lookupAssociatedWindowID(externalContext.getRequestMap());
+            State state = getState(context);
+            if (state == null)  {
+                return null;
+            } else {
+                Object synchronizationMonitor = getSynchronizationObject(context);
 
-            //ICE-10174, ICE-10254
-            synchronized (synchronizationMonitor) {
-                ScopeMap map = (ScopeMap) state.windowScopedMaps.get(id);
-                //return the scope map even for requests that arrive after the dispose-window request was received
-                if (map == null) {
-                    for (Object scopeMap : state.disposedWindowScopedMaps) {
-                        ScopeMap next = (ScopeMap) scopeMap;
-                        if (next.id != null && next.id.equals(id)) {
-                            return next;
+                //ICE-10174, ICE-10254
+                synchronized (synchronizationMonitor) {
+                    ScopeMap map = (ScopeMap) state.windowScopedMaps.get(id);
+                    //return the scope map even for requests that arrive after the dispose-window request was received
+                    if (map == null) {
+                        for (Object scopeMap : state.disposedWindowScopedMaps) {
+                            ScopeMap next = (ScopeMap) scopeMap;
+                            if (next.id != null && next.id.equals(id)) {
+                                return next;
+                            }
                         }
-                    }
 
-                    return null;
-                } else {
-                    return map;
+                        return null;
+                    } else {
+                        return map;
+                    }
                 }
             }
+        } catch (Exception ex) {
+            log.log(Level.FINE, "Cannot acquire the window corresponding scope map yet.", ex);
+            return null;
         }
     }
 
