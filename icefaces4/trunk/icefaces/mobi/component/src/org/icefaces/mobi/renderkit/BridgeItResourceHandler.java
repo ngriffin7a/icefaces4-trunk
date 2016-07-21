@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.Map;
 
 public class BridgeItResourceHandler extends ResourceHandlerWrapper {
-    private static final String DEFAULT_BRIDGEIT_JS_URI = "http://api.bridgeit.mobi/bridgeit/v1.x-latest/bridgeit.js";
+    private static final String DEFAULT_BRIDGEIT_JS_URI = "https://api.bridgeit.mobi/bridgeit/v1.x-latest/bridgeit.js";
     private static String BRIDGEIT_JS_URI = "org.icefaces.mobi.bridgeit.javaScriptURI";
 	private static final String BRIDGEIT_API = "core/bridgeit.js";
 	private static final String ICEFACES_MOBI_LIB = "icefaces.mobi";
