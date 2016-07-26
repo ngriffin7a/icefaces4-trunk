@@ -565,7 +565,7 @@
         <antcall target="javadoc-no-compile"/>
     </target>
 
-    <target name="javadoc-no-compile">
+    <target name="javadoc-no-compile" depends="get-java-version">
         <delete dir="${javadocs.dir.default}"/>
         <mkdir  dir="${javadocs.dir.default}"/>
         <javadoc destdir="${java.doc}"
