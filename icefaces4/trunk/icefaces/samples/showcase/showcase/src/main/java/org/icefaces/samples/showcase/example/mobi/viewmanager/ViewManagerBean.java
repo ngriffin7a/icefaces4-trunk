@@ -25,13 +25,13 @@ import java.util.Stack;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.util.ClientDescriptor;
 
 @ManagedBean(name = ViewManagerBean.BEAN_NAME)
-@SessionScoped
+@ViewScoped
 public class ViewManagerBean implements Serializable {
 
     public static final String BEAN_NAME = "viewManagerBean";
