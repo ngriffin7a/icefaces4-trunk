@@ -46,4 +46,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 public class RequiredValidatorMeta extends UIComponentBaseMeta {
         @Property(tlddoc = "Enables or disables required validation.", defaultValue="true")
         private Boolean enabled;
+        @Property(tlddoc = "Trigger validation on specified event.", defaultValue="")
+        private String validateOn;
 }

@@ -49,4 +49,7 @@ public class ValueRangeValidatorMeta extends UIComponentBaseMeta {
 
         @Property(tlddoc = "Required maximum value.")
         private Float maximum;
+
+        @Property(tlddoc = "Trigger validation on specified event.", defaultValue="")
+        private String validateOn;
 }
