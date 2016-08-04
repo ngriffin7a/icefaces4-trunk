@@ -49,4 +49,7 @@ public class LengthValidatorMeta extends UIComponentBaseMeta {
 
         @Property(tlddoc = "Required maximum length.")
         private Integer maximum;
+
+        @Property(tlddoc = "Trigger validation on specified event.", defaultValue="")
+        private String validateOn;
 }

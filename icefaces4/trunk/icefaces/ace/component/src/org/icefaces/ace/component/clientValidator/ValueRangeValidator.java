@@ -75,7 +75,8 @@ public class ValueRangeValidator extends ValueRangeValidatorBase implements Vali
             script.append(MessageFormat.format(message, label, minimum, maximum));
             script.append("', ");
             script.append(validatedComponent.getAttributes().get("immediate"));
-            script.append(")");
+            script.append(");");
+            script.append(RenderUtil.writeTriggerValidationOn(getValidateOn(), id));
 
             children.add(new ScriptOutputWriter(script.toString()));
         }

@@ -46,4 +46,7 @@ import org.icefaces.resources.ICEResourceLibrary;
 public class PatternValidatorMeta extends UIComponentBaseMeta {
         @Property(tlddoc = "The Regex for the input pattern.")
         private String pattern;
+
+        @Property(tlddoc = "Trigger validation on specified event.", defaultValue="")
+        private String validateOn;
 }
