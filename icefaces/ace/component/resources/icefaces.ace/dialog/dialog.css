@@ -16,7 +16,7 @@
 
 .ace-dialog {
     opacity:1;
-    visibility: visible;
+    visibility: inherit;
     display: block;
 }
 .ace-dialog-hidden {

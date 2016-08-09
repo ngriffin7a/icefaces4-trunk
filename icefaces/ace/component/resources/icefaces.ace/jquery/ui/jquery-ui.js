@@ -6868,8 +6868,11 @@
             }
 
             var $el = (this.oldInstances.pop() || $('<div></div>').addClass('ui-widget-overlay'))
-                    .appendTo(document.body)
+                    .appendTo(dialog.element.parent().parent().parent()[0])
                     .css({
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
                         width: this.width(),
                         height: this.height()
                     });
