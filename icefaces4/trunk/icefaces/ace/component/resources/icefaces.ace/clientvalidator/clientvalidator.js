@@ -241,4 +241,15 @@
 
         setup();
     };
+
+    ice.ace.triggerValidationOn = function(id, eventType) {
+        var element = document.getElementById(id);
+        element.addEventListener(eventType, function() {
+            var jqElement = ice.ace.jq(element);
+            var valid = jqElement.valid();
+            if (valid) {
+                cleanupMessages([element]);
+            }
+        });
+    };
 })();
