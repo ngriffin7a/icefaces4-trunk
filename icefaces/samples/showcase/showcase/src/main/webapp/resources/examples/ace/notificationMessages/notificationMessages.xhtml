@@ -1,0 +1,74 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:icecore="http://www.icefaces.org/icefaces/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+        <h:form id="messageDemoForm">
+            <ace:panel header="Some important ace:notificationMessages attributes">
+                <h:panelGrid columns="4" width="100%">
+                    <h:outputText value="autoHide"/>
+                    <ace:simpleSelectOneMenu id="hideSelector" value="#{notificationMessagesBean.autoHide}">
+                        <f:selectItem itemValue="false" itemLabel="false"/>
+                        <f:selectItem itemValue="true" itemLabel="true"/>
+                        <ace:ajax render="demoform2:allMsgsNotification"/>
+                    </ace:simpleSelectOneMenu>
+
+                    <h:outputText value="header"/>
+                    <h:inputText id="headerInput" value="#{notificationMessagesBean.header}">
+                        <f:ajax event="change"/>
+                    </h:inputText>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+        <h:form id="demoform2">
+            <ace:panel id="personalInfoInputPanel" header="Choose the types of messages to show">
+                <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
+					
+					<h:panelGroup>
+						<ace:checkboxButton id="infoBox" value="#{notificationMessagesBean.info}" />
+						<h:outputText value=" Info" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<ace:checkboxButton id="warnBox" value="#{notificationMessagesBean.warn}" />
+						<h:outputText value=" Warn" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<ace:checkboxButton id="errorBox" value="#{notificationMessagesBean.error}" />
+						<h:outputText value=" Error" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<ace:checkboxButton id="fatalBox" value="#{notificationMessagesBean.fatal}" />
+						<h:outputText value=" Fatal" />
+					</h:panelGroup>
+					
+                </h:panelGrid>
+				<ace:pushButton id="messageButton" value="Show Messages"
+                                actionListener="#{notificationMessagesBean.listener}" />
+            </ace:panel>
+
+            <ace:notificationMessages  id="allMsgsNotification" header="#{notificationMessagesBean.header}" autoHide="#{notificationMessagesBean.autoHide}"
+                                for="@inView"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
