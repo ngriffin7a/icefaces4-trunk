@@ -343,5 +343,9 @@
         </requires>
     </resource>
 
-
+    <resource name="notificationMessage/notificationMessage.js" library="icefaces.ace">
+        <requires>
+            <resource name="bridge.js" library="ice.core"/>
+        </requires>
+    </resource>
 </dependencies>
