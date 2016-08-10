@@ -660,8 +660,11 @@ public class CentralDataList {
 		
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.messages.title"),
 				new ComponentGroup("ace:growlMessages", "GrowlMessages", "growlMessages.html",
-					new Demo(msgs("overview"), msgs("example.ace.growlmessages.description"),
-							 "growlmessages", "growlmessages.xhtml", "GrowlMessagesBean.java")),
+						new Demo(msgs("overview"), msgs("example.ace.growlmessages.description"),
+								"growlmessages", "growlmessages.xhtml", "GrowlMessagesBean.java")),
+				new ComponentGroup("ace:notificationMessages", "NotificationMessages", "notificationMessages.html",
+						new Demo(msgs("overview"), msgs("example.ace.notificationMessages.description"),
+								"notificationMessages", "notificationMessages.xhtml", "NotificationMessagesBean.java")),
 				new ComponentGroup("ace:message", "Message", "message.html",
 						new Demo(msgs("overview"), msgs("example.ace.message.description"),
 								 "message", "message.xhtml", "MessageBean.java")),
