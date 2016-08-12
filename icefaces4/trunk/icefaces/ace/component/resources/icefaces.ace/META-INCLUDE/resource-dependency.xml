@@ -343,6 +343,16 @@
         </requires>
     </resource>
 
+    <resource name="colorpicker/spectrum.js" library="icefaces.ace">
+        <requires>
+            <resource name="util/ace-core.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
+    <resource name="colorpicker/colorpicker.js" library="icefaces.ace">
+        <requires>
+            <resource name="colorpicker/spectrum.js" library="icefaces.ace"/>
+        </requires>
+    </resource>
     <resource name="notificationMessage/notificationMessage.js" library="icefaces.ace">
         <requires>
             <resource name="bridge.js" library="ice.core"/>
