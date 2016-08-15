@@ -55,7 +55,7 @@ ice.ace.AccordionPanel = function(id, cfg) {
     });
     
     setTimeout(function() { _self.jq.accordion('resize'); }, 100); // for calculating correct heights when inside tabSet
-}
+};
 
 /**
  * TabChange handler
@@ -67,7 +67,7 @@ ice.ace.AccordionPanel.prototype.onTabChange = function(event, ui) {
     ice.ace.jq(this.activeId).val(ui.options.active);
 
 	this.fireAjaxTabChangeEvent(panel);
-}
+};
 
 /**
  * Fires an ajax tabChangeEvent if a tabChangeListener is defined on server side
@@ -78,8 +78,8 @@ ice.ace.AccordionPanel.prototype.fireAjaxTabChangeEvent = function(panel) {
         source: this.id,
         execute: this.id,
 		render: this.id
-    },
-    behaviourArgs = this.cfg && this.cfg.behaviors && this.cfg.behaviors.panechange;
+    };
+    var behaviourArgs = this.cfg && this.cfg.behaviors && this.cfg.behaviors.panechange;
 	if (this.cfg.ajaxTabChange) {
 		options.execute = formId;
 		options.render = '@all';
@@ -110,4 +110,4 @@ ice.ace.AccordionPanel.prototype.collapseAll = function() {
 ice.ace.AccordionPanel.prototype.setActiveIndex = function(index) {
 	if (this.jq.accordion("option", "active") == index) return;
     this.jq.accordion('option', 'activeNoEvent', index);
-}
+};

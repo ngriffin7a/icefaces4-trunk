@@ -48,8 +48,8 @@ ice.ace.animation.run = function(args, options, speed, callback) {
 		
 		node.dequeue();
 	});
-}
+};
 
 ice.ace.animation.register = function(args, callback) {
 
-}
+};
