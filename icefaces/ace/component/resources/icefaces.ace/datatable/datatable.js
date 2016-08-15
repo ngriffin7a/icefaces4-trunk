@@ -254,7 +254,7 @@ ice.ace.DataTable = function (id, cfg) {
 
     // Explicitly dereference helper variables & old DT instance.
     oldInstance = null;
-    rowEditors = null;
+    var rowEditors = null;
 
 	var self = this;
     // Setup unload callback if not already done
@@ -279,7 +279,7 @@ ice.ace.DataTable = function (id, cfg) {
 
 	this.justInstantiated = true;
 	setTimeout(function() { self.justInstantiated = false; }, 500);
-}
+};
 
 
 // Selectors
@@ -360,7 +360,7 @@ ice.ace.DataTable.prototype.destroy = function() {
     var clientState = {scrollTop : this.scrollTop, scrollLeft : this.scrollLeft};
 
     return clientState;
-}
+};
 
 ice.ace.DataTable.filterEventListeners = {};
 ice.ace.DataTable.prototype.setupFilterEvents = function () {
@@ -416,7 +416,7 @@ ice.ace.DataTable.prototype.setupFilterEvents = function () {
 
 ice.ace.DataTable.prototype.setupPaginator = function () {
     this.paginator = new ice.ace.DataTable.Paginator(this);
-}
+};
 
 ice.ace.DataTable.prototype.restoreSortState = function(savedState) {
     this.element.find(this.sortColumnSelector + ' a.ui-icon').removeClass('ui-toggled').fadeTo(0,0.33);
@@ -459,7 +459,7 @@ ice.ace.DataTable.prototype.saveSortState = function() {
     });
 
     return [this.sortOrder, sortState];
-}
+};
 
 ice.ace.DataTable.prototype.setupSortRequest = function (_self, $this, event, headerClick, altY, altMeta) {
     var topCarat = $this.find(".ui-icon-triangle-1-n")[0],
@@ -551,7 +551,7 @@ ice.ace.DataTable.prototype.setupSortRequest = function (_self, $this, event, he
     _self.sort(_self.sortOrder, savedState);
 
     return false;
-}
+};
 
 ice.ace.DataTable.prototype.setupSortEvents = function () {
     var _self = this;
@@ -565,7 +565,7 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
                 var $this = ice.ace.jq(this),
                     topCarat = ice.ace.jq($this.find(".ui-icon-triangle-1-n")[0]),
                     bottomCarat = ice.ace.jq($this.find(".ui-icon-triangle-1-s")[0]);
-                selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
+                var selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
 
                 // If the target of the event is not a layout element or
                 // the target is a child of a sortable-control do not process event.
@@ -592,7 +592,7 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
                 var $this = ice.ace.jq(this),
                     topCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-n")[0]),
                     bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
-                selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
+                var selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
 
                 if (_self.cfg.clickableHeaderSorting && !selectionMade) {
                     topCarat.fadeTo(0, .66);
@@ -612,12 +612,12 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
                     bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
 
                 if (!bottomCarat.hasClass('ui-toggled'))
-                    if (topCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                    if (topCarat.hasClass('ui-toggled') && _self.cfg.clickableHeaderSorting)
                         bottomCarat.fadeTo(0, 0);
                     else bottomCarat.fadeTo(0, .33);
 
                 if (!topCarat.hasClass('ui-toggled'))
-                    if (bottomCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                    if (bottomCarat.hasClass('ui-toggled') && _self.cfg.clickableHeaderSorting)
                         topCarat.fadeTo(0, 0);
                     else topCarat.fadeTo(0, .33);
 
@@ -677,12 +677,12 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
                 bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
 
             if (!bottomCarat.hasClass('ui-toggled'))
-                if (topCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                if (topCarat.hasClass('ui-toggled') && _self.cfg.clickableHeaderSorting)
                     bottomCarat.fadeTo(0, 0);
                 else bottomCarat.fadeTo(0, .33);
 
             if (!topCarat.hasClass('ui-toggled'))
-                if (bottomCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                if (bottomCarat.hasClass('ui-toggled') && _self.cfg.clickableHeaderSorting)
                     topCarat.fadeTo(0, 0);
                 else topCarat.fadeTo(0, .33);
 
@@ -713,7 +713,7 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
             var $this = ice.ace.jq(this),
                 topCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-n")[0]),
                 bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
-            selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
+            var selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
 
             if (_self.cfg.clickableHeaderSorting && selectionMade) {
                 if (!topCarat.hasClass('ui-toggled')) topCarat.fadeTo(0, 0);
@@ -723,7 +723,7 @@ ice.ace.DataTable.prototype.setupSortEvents = function () {
                 if (!bottomCarat.hasClass('ui-toggled')) bottomCarat.fadeTo(0, .33);
             }
         });
-}
+};
 
 ice.ace.DataTable.prototype.setupClickableHeaderEventsForColumn = function (id) {
     var _self = this;
@@ -737,7 +737,7 @@ ice.ace.DataTable.prototype.setupClickableHeaderEventsForColumn = function (id) 
                 var $this = ice.ace.jq(this),
                     topCarat = ice.ace.jq($this.find(".ui-icon-triangle-1-n")[0]),
                     bottomCarat = ice.ace.jq($this.find(".ui-icon-triangle-1-s")[0]);
-                selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
+                var selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
 
                 // If the target of the event is not a layout element or
                 // the target is a child of a sortable-control do not process event.
@@ -764,7 +764,7 @@ ice.ace.DataTable.prototype.setupClickableHeaderEventsForColumn = function (id) 
                 var $this = ice.ace.jq(this),
                     topCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-n")[0]),
                     bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
-                selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
+                var selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
 
                 if (_self.cfg.clickableHeaderSorting && !selectionMade) {
                     topCarat.fadeTo(0, .66);
@@ -784,12 +784,12 @@ ice.ace.DataTable.prototype.setupClickableHeaderEventsForColumn = function (id) 
                     bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
 
                 if (!bottomCarat.hasClass('ui-toggled'))
-                    if (topCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                    if (topCarat.hasClass('ui-toggled') && _self.cfg.clickableHeaderSorting)
                         bottomCarat.fadeTo(0, 0);
                     else bottomCarat.fadeTo(0, .33);
 
                 if (!topCarat.hasClass('ui-toggled'))
-                    if (bottomCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                    if (bottomCarat.hasClass('ui-toggled') && _self.cfg.clickableHeaderSorting)
                         topCarat.fadeTo(0, 0);
                     else topCarat.fadeTo(0, .33);
 
@@ -799,7 +799,7 @@ ice.ace.DataTable.prototype.setupClickableHeaderEventsForColumn = function (id) 
                     $this.closest('div.ui-sortable-column').removeClass('ui-state-hover');
             });
     }
-}
+};
 
 ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
     var _self = this;
@@ -853,12 +853,12 @@ ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
                 bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
 
             if (!bottomCarat.hasClass('ui-toggled'))
-                if (topCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                if (topCarat.hasClass('ui-toggled') && _self.cfg.clickableHeaderSorting)
                     bottomCarat.fadeTo(0, 0);
                 else bottomCarat.fadeTo(0, .33);
 
             if (!topCarat.hasClass('ui-toggled'))
-                if (bottomCarat.hasClass('ui-toggled') & _self.cfg.clickableHeaderSorting)
+                if (bottomCarat.hasClass('ui-toggled') && _self.cfg.clickableHeaderSorting)
                     topCarat.fadeTo(0, 0);
                 else topCarat.fadeTo(0, .33);
 
@@ -871,7 +871,7 @@ ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
             var $this = ice.ace.jq(this),
                 topCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-n")[0]),
                 bottomCarat = ice.ace.jq($this.find("a.ui-icon-triangle-1-s")[0]);
-            selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
+            var selectionMade = bottomCarat.hasClass('ui-toggled') || topCarat.hasClass('ui-toggled');
 
             if (_self.cfg.clickableHeaderSorting && selectionMade) {
                 if (!topCarat.hasClass('ui-toggled')) topCarat.fadeTo(0, 0);
@@ -904,7 +904,7 @@ ice.ace.DataTable.prototype.setupSortEventsForColumn = function (id) {
                 return false;
             }
         });
-}
+};
 
 ice.ace.DataTable.prototype.setupClickEvents = function() {
      function setupCellClick(obsList, options) {
@@ -916,8 +916,8 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
                     curObs(event);
                 }
             }),
-            self = this,
-            timeout = options.noDbl ? 0 : 350
+            self = this;
+            timeout = options.noDbl ? 0 : 350;
 
         this.element.on('click', this.cellSelector, function (event) {
             if (self.blockCellClick == true) return;
@@ -941,7 +941,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
                 }, timeout);
             }
         });
-    };
+    }
 
     function setupRowClick(obsList, options) {
         if (obsList.length == 0) return;
@@ -974,7 +974,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
                 }, timeout);
             }
         });
-    };
+    }
 
     function setupCellDoubleClick(obsList, options) {
         if (obsList.length == 0) return;
@@ -1001,7 +1001,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
 			if (window.getSelection) window.getSelection().removeAllRanges();
 			else if (document.selection) document.selection.empty();
         });
-    };
+    }
 
     function setupRowDoubleClick(obsList, options) {
         if (obsList.length == 0) return;
@@ -1026,7 +1026,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
                 // console.log('row double click');
             }
         });
-    };
+    }
 
     function doRowSelect (event) {
         var row = ice.ace.jq(event.currentTarget);
@@ -1080,8 +1080,8 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
         cellClickObs.push(function(e) {
             var opts = { params : {} };
 
-            opts.params[this.id + '_rowIndex'] = getRowIndex(e),
-            opts.params[this.id + '_colIndex'] = getCellIndex(e)
+            opts.params[this.id + '_rowIndex'] = getRowIndex(e);
+            opts.params[this.id + '_colIndex'] = getCellIndex(e);
 
             ice.ace.ab(ice.ace.extendAjaxArgs(self.behaviors.cellClick, opts));
         });
@@ -1091,8 +1091,8 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
         cellDblClickObs.push(function(e) {
             var opts = { params : {} };
 
-            opts.params[this.id + '_rowIndex'] = getRowIndex(e),
-            opts.params[this.id + '_colIndex'] = getCellIndex(e)
+            opts.params[this.id + '_rowIndex'] = getRowIndex(e);
+            opts.params[this.id + '_colIndex'] = getCellIndex(e);
 
             ice.ace.ab(ice.ace.extendAjaxArgs(self.behaviors.cellDblClick,opts));
         });
@@ -1139,7 +1139,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
         setupCellDoubleClick.call(this, cellDblClickObs, options);
         setupRowDoubleClick.call(this, rowDblClickObs, options);
     }
-}
+};
 
 ice.ace.DataTable.preventTextSelectionDouble = function (event) {
 	if (event.shiftKey) {
@@ -1264,7 +1264,7 @@ ice.ace.DataTable.prototype.setupSelectionHover = function () {
                             .removeClass('ui-datatable-state-active-hover');
             }
         });
-}
+};
 
 ice.ace.DataTable.prototype.selectAllRows = function () {
 
@@ -1328,7 +1328,7 @@ ice.ace.DataTable.prototype.selectAllRows = function () {
 
         ice.ace.AjaxRequest(options);
     }
-}
+};
 
 ice.ace.DataTable.prototype.deselectAllRows = function () {
 
@@ -1392,7 +1392,7 @@ ice.ace.DataTable.prototype.deselectAllRows = function () {
 
         ice.ace.AjaxRequest(options);
     }
-}
+};
 
 ice.ace.DataTable.prototype.selectAllCells = function () {
 
@@ -1453,7 +1453,7 @@ ice.ace.DataTable.prototype.selectAllCells = function () {
 
         ice.ace.AjaxRequest(options);
     }
-}
+};
 
 ice.ace.DataTable.prototype.deselectAllCells = function () {
 
@@ -1514,7 +1514,7 @@ ice.ace.DataTable.prototype.deselectAllCells = function () {
 
         ice.ace.AjaxRequest(options);
     }
-}
+};
 
 ice.ace.DataTable.prototype.setupReorderableColumns = function () {
     var _self = this;
@@ -1531,7 +1531,7 @@ ice.ace.DataTable.prototype.setupReorderableColumns = function () {
             if (_self.reorderStart != _self.reorderEnd)
                 _self.reorderColumns(_self.reorderStart, _self.reorderEnd);
         });
-}
+};
 
 ice.ace.DataTable.prototype.setupRowExpansionEvents = function () {
     var table = this;
@@ -1552,7 +1552,7 @@ ice.ace.DataTable.prototype.setupRowExpansionEvents = function () {
             event.stopPropagation();
             table.toggleExpansion(this);
         });
-}
+};
 
 ice.ace.DataTable.prototype.setupPanelExpansionEvents = function () {
     var table = this;
@@ -1573,7 +1573,7 @@ ice.ace.DataTable.prototype.setupPanelExpansionEvents = function () {
             event.stopPropagation();
             table.toggleExpansion(this);
         });
-}
+};
 
 ice.ace.DataTable.prototype.setupScrolling = function () {
     var startTime = new Date().getTime(),
@@ -1767,14 +1767,14 @@ ice.ace.DataTable.prototype.setupScrolling = function () {
             clearTimeout(delayedCleanUpResizeToken);
             delayedCleanUpResizeToken = setTimeout(delayedCleanUpResize, 100);
         }
-    }
+    };
 
     ice.ace.jq(window).bind('resize', this.scrollableResizeCallback);
 
     if (window.console && this.cfg.devMode) {
         console.log("ace:dataTable - ID: " + this.id + " - setupScrolling - " + (new Date().getTime() - startTime)/1000 + "s");
     }
-}
+};
 
 ice.ace.DataTable.prototype.addFillerSpaceToEnableScrolling = function () {
 
@@ -1794,7 +1794,7 @@ ice.ace.DataTable.prototype.addFillerSpaceToEnableScrolling = function () {
 	} else {
 		bodyTable.css('margin-bottom', '0');
 	}
-}
+};
 
 ice.ace.DataTable.prototype.shouldLiveScrollBefore = function() {
 
@@ -1820,7 +1820,7 @@ ice.ace.DataTable.prototype.shouldLiveScrollBefore = function() {
 	}
 
 	return (scrollBody.scrollTop() + scrollBody.innerHeight()) > firstRowsHeight;
-}
+};
 
 ice.ace.DataTable.prototype.setupResizableColumns = function () {
     //Add resizers
@@ -1829,10 +1829,10 @@ ice.ace.DataTable.prototype.setupResizableColumns = function () {
             .append('<div class="ui-column-resizer"></div>');
 
     //Setup resizing
-    this.columnWidthsCookie = this.id + '_columnWidths',
-        resizers = ice.ace.jq(this.jqId + ' > div > table > thead > tr > th > div > div.ui-column-resizer'),
-        columns = ice.ace.jq(this.jqId + ' > div > table > thead > tr > th'),
-        _self = this;
+    this.columnWidthsCookie = this.id + '_columnWidths';
+        var resizers = ice.ace.jq(this.jqId + ' > div > table > thead > tr > th > div > div.ui-column-resizer');
+        var columns = ice.ace.jq(this.jqId + ' > div > table > thead > tr > th');
+        var _self = this;
 
     resizers.draggable({
         axis:'x',
@@ -1863,7 +1863,7 @@ ice.ace.DataTable.prototype.setupResizableColumns = function () {
             ice.ace.jq(columns.get(i)).css('width', widths[i]);
         }
     }
-}
+};
 
 ice.ace.DataTable.prototype.sizingHasWaited = false;
 ice.ace.DataTable.prototype.resizeScrolling = function () {
@@ -1934,7 +1934,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
             dupeHead = bodyTable.find(' > thead');
             dupeFoot = bodyTable.find(' > tfoot');
             bodyFirstConditional = ice.ace.jq(this.jqId + ' > div.ui-datatable-scrollable-body:first > table > tbody > tr:visible:first').is('.dt-cond-row');
-        }
+        };
         initializeVar();
 
 		if (ice.ace.DataTableStylesheets[this.id]) { // remove previous column size rules
@@ -1966,7 +1966,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
             footerTable.parent().css('overflow', '');
             headerTable.css('width', '');
             footerTable.css('width', '');
-        }
+        };
         resetScrollingOverflow();
 
         if (!ie7) {
@@ -2016,7 +2016,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
                 headerTable.parent().css('padding-right', '17px');
                 footerTable.parent().css('padding-right', '17px');
             }
-        }
+        };
         if (ie7) ie7ScrollbarFix();
 
         // Get Duplicate Sizing
@@ -2048,7 +2048,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
             headerTable.css('table-layout', 'fixed');
             bodyTable.css('table-layout', 'fixed');
             footerTable.css('table-layout', 'fixed');
-        }
+        };
         if (ie7) tableLayout();
 
         // Set Duplicate Sizing
@@ -2223,8 +2223,8 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
                 .find('td').attr('rowspan', 1);
 
             bodyTable.css('margin-top',0 - firstNonCond.height());
-        }
-        if (bodyFirstConditional & !ie7)
+        };
+        if (bodyFirstConditional && !ie7)
             firstRowConditionalHandling();
 
         // Hide Duplicate Segments
@@ -2252,12 +2252,12 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
 		var self = this;
 		setTimeout(function(){self.resizeScrolling()}, 100);
 	}
-}
+};
 
 ice.ace.DataTable.prototype.resizePaginator = function () {
 	var width = this.element.find('table').outerWidth();
 	this.element.find('.ui-paginator').css('width', width-6);
-}
+};
 
 ice.ace.DataTable.prototype.initializePinningState = function() {
     this.readPinningState();
@@ -2366,7 +2366,7 @@ ice.ace.DataTable.prototype.repairPinnedColumn = function(i) {
     };
 
     tbody.parent().bind('scroll', this.columnPinScrollListener[i]);
-}
+};
 
 ice.ace.DataTable.prototype.fixPinnedColumnPositions = function(state) {
     var table = this,
@@ -2381,7 +2381,7 @@ ice.ace.DataTable.prototype.fixPinnedColumnPositions = function(state) {
             table.repairPinnedColumn(i + 1);
         }
     });
-}
+};
 
 ice.ace.DataTable.prototype.pinThisColumn = function(event) {
     var target = (event && event.target) ? event.target : window.event.srcElement,
@@ -2396,7 +2396,7 @@ ice.ace.DataTable.prototype.pinThisColumn = function(event) {
         if (ie7) this.ie7PinColumn(cell.index() + 1);
         else this.pinColumn(cell.index() + 1);
     }
-}
+};
 
 ice.ace.DataTable.prototype.ie7UnpinColumn = function(i) {
     var safari = ice.ace.jq.browser.safari,
@@ -2440,10 +2440,10 @@ ice.ace.DataTable.prototype.ie7UnpinColumn = function(i) {
 
     // Send request
     if (this.behaviors && this.behaviors.unpin) {
-        var options = { source: this.id }
+        var options = { source: this.id };
         ice.ace.ab(ice.ace.extendAjaxArgs(this.behaviors.unpin, options));
     }
-}
+};
 
 ice.ace.DataTable.prototype.unpinColumn = function(i) {
     var safari = ice.ace.jq.browser.safari,
@@ -2469,7 +2469,7 @@ ice.ace.DataTable.prototype.unpinColumn = function(i) {
         tbody.parent().unbind('scroll', this.columnPinScrollListener[i]);
 
     bodyCells.add(footCells).add(headCells).css('position','').css('height','')
-            .css('top','').css('left','').removeClass('pinned')
+            .css('top','').css('left','').removeClass('pinned');
 
     if (safari || chrome) offsetWidth = offsetWidth + 1;
 
@@ -2496,10 +2496,10 @@ ice.ace.DataTable.prototype.unpinColumn = function(i) {
     if (this.behaviors && this.behaviors.unpin) {
         var options = {
             source: this.id
-        }
+        };
         ice.ace.ab(ice.ace.extendAjaxArgs(this.behaviors.unpin, options));
     }
-}
+};
 
 ice.ace.DataTable.prototype.pinColumn = function(i) {
     var safari = ice.ace.jq.browser.safari,
@@ -2660,11 +2660,11 @@ ice.ace.DataTable.prototype.pinColumn = function(i) {
     if (!isInit && this.behaviors && this.behaviors.pin) {
         var options = {
             source: this.id
-        }
+        };
 
         ice.ace.ab(ice.ace.extendAjaxArgs(this.behaviors.pin, options));
     }
-}
+};
 
 ice.ace.DataTable.prototype.ie7PinColumn = function(i) {
     var tbody = ice.ace.jq(this.jqId + ' > div.ui-datatable-scrollable-body > table'),
@@ -2757,18 +2757,18 @@ ice.ace.DataTable.prototype.ie7PinColumn = function(i) {
             e.style.top = (e.offsetTop + (cachedScrollTopVal - scrollTopVal)) + "px";
         });
         cachedScrollTopVal = scrollTopVal;
-    }
+    };
 
     tbody.parent().bind('scroll', this.columnPinScrollListener[i - 1]);
 
     if (!isInit && this.behaviors && this.behaviors.pin) {
         var options = {
             source: this.id
-        }
+        };
 
         ice.ace.ab(ice.ace.extendAjaxArgs(this.behaviors.pin, options));
     }
-}
+};
 
 ice.ace.DataTable.prototype.getPinnedColumns = function() {
     var table = this,
@@ -2778,11 +2778,11 @@ ice.ace.DataTable.prototype.getPinnedColumns = function() {
     return tbody.find('> tbody > tr:first-child > td.pinned').sort(function(a,b) {
         return table.columnPinOrder[ice.ace.jq(a).index()] - table.columnPinOrder[ice.ace.jq(b).index()];
     });
-}
+};
 
 ice.ace.DataTable.prototype.getNextPinnedIndex = function(i) {
     return this.getPinnedColumns().length;
-}
+};
 
 ice.ace.DataTable.prototype.writePinningState = function () {
     ice.ace.jq(this.pinningHolder).val(JSON.stringify(this.columnPinOrder));
@@ -2817,7 +2817,7 @@ ice.ace.DataTable.prototype.setupDisabledStyling = function () {
         .css({backgroundColor:'#EDEDED', opacity:0.8});
 
     ice.ace.jq(this.jqId).addClass('ui-disabled');
-}
+};
 
 /* #########################################################################
 ############################### Requests ################################
@@ -2849,7 +2849,7 @@ ice.ace.DataTable.prototype.reorderColumns = function (oldIndex, newIndex) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.paginate = function (newState) {
     var options = {
@@ -2883,7 +2883,7 @@ ice.ace.DataTable.prototype.paginate = function (newState) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.sort = function (headerCells, savedState) {
     var options = {
@@ -2899,7 +2899,7 @@ ice.ace.DataTable.prototype.sort = function (headerCells, savedState) {
                 extensions = xmlDoc.getElementsByTagName("extension"),
                 args = {};
 
-        for (i = 0; i < extensions.length; i++) {
+        for (var i = 0; i < extensions.length; i++) {
             var extension = extensions[i];
             if (extension.getAttributeNode('aceCallbackParam')) {
                 var jsonObj = ice.ace.jq.parseJSON(extension.firstChild.data);
@@ -2944,7 +2944,7 @@ ice.ace.DataTable.prototype.sort = function (headerCells, savedState) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.filter = function (evn) {
 	if (this.filterObserver) clearTimeout(this.filterObserver);
@@ -2976,7 +2976,7 @@ ice.ace.DataTable.prototype.filter = function (evn) {
 		ice.ace.AjaxRequest(options);
 		_self.filterObserver = null;
 	}, 200);
-}
+};
 
 ice.ace.DataTable.prototype.doSelectionEvent = function (type, deselection, element, deselectOthers) {
     // Get Id(s) //
@@ -3109,7 +3109,7 @@ ice.ace.DataTable.prototype.doSelectionEvent = function (type, deselection, elem
 
         ice.ace.AjaxRequest(options);
     }
-}
+};
 
 ice.ace.DataTable.prototype.doMultiRowSelectionEvent = function (lastIndex, current) {
     var self = this,
@@ -3172,7 +3172,7 @@ ice.ace.DataTable.prototype.doMultiRowSelectionEvent = function (lastIndex, curr
 
         ice.ace.AjaxRequest(options);
     }
-}
+};
 
 
 /* #########################################################################
@@ -3182,7 +3182,7 @@ ice.ace.DataTable.prototype.toggleExpansion = function (expanderElement) {
     var expander = ice.ace.jq(expanderElement),
         row = expander.closest('tr'),
         expanded = row.hasClass('ui-expanded-row');
-    $this = (this);
+    var $this = (this);
 
     if (expanded) {
         var removeTargets = row.siblings('[id^="' + row.attr('id') + '."]');
@@ -3203,7 +3203,7 @@ ice.ace.DataTable.prototype.toggleExpansion = function (expanderElement) {
         if (expander.hasClass('ui-row-panel-toggler')) this.loadExpandedPanelContent(row);
         else this.loadExpandedRows(row);
     }
-}
+};
 
 ice.ace.DataTable.prototype.sendPanelContractionRequest = function (row) {
     var options = {
@@ -3213,7 +3213,7 @@ ice.ace.DataTable.prototype.sendPanelContractionRequest = function (row) {
             formId:this.cfg.formId
         },
         rowId = row.attr('id').split('_row_')[1];
-    _self = this;
+    var _self = this;
 
 	if (this.cfg.nestedTable) { // only this way the inner tables get to execute
 		options.execute = '@form';
@@ -3239,7 +3239,7 @@ ice.ace.DataTable.prototype.sendPanelContractionRequest = function (row) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.sendRowContractionRequest = function (row) {
     var options = {
@@ -3249,7 +3249,7 @@ ice.ace.DataTable.prototype.sendRowContractionRequest = function (row) {
             formId:this.cfg.formId
         },
         rowId = row.attr('id').split('_row_')[1];
-    _self = this;
+    var _self = this;
 
 	if (this.cfg.nestedTable) { // only this way the inner tables get to execute
 		options.execute = '@form';
@@ -3258,7 +3258,7 @@ ice.ace.DataTable.prototype.sendRowContractionRequest = function (row) {
 
     var params = {};
     params[this.id + ':' + rowId + '_rowExpansion'] = this.id;
-    ;
+
     options.params = params;
 
     options.onsuccess = function (responseXML) {
@@ -3276,7 +3276,7 @@ ice.ace.DataTable.prototype.sendRowContractionRequest = function (row) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.loadExpandedRows = function (row) {
     var options = {
@@ -3313,7 +3313,7 @@ ice.ace.DataTable.prototype.loadExpandedRows = function (row) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.loadExpandedPanelContent = function (row) {
     var options = {
@@ -3349,7 +3349,7 @@ ice.ace.DataTable.prototype.loadExpandedPanelContent = function (row) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.showChildRows = function(rowId) {
 	var _self = this;
@@ -3380,19 +3380,19 @@ ice.ace.DataTable.prototype.showEditors = function (element) {
     var row = ice.ace.jq(element).closest('tr');
 	row.on('click', ice.ace.DataTable.preventSelection);
     this.doRowEditShowRequest(element);
-}
+};
 
 ice.ace.DataTable.prototype.saveRowEdit = function (element) {
     var row = ice.ace.jq(element).closest('tr');
 	row.off('click', ice.ace.DataTable.preventSelection);
     this.doRowEditSaveRequest(element);
-}
+};
 
 ice.ace.DataTable.prototype.cancelRowEdit = function (element) {
     var row = ice.ace.jq(element).closest('tr');
 	row.off('click', ice.ace.DataTable.preventSelection);
     this.doRowEditCancelRequest(element);
-}
+};
 
 ice.ace.DataTable.prototype.doRowEditShowRequest = function (element) {
     var row = ice.ace.jq(element).closest('tr'),
@@ -3443,7 +3443,7 @@ ice.ace.DataTable.prototype.doRowEditShowRequest = function (element) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.doRowEditCancelRequest = function (element) {
     var row = ice.ace.jq(element).closest('tr'),
@@ -3490,7 +3490,7 @@ ice.ace.DataTable.prototype.doRowEditCancelRequest = function (element) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.doRowEditSaveRequest = function (element) {
     var row = ice.ace.jq(element).closest('tr'),
@@ -3517,7 +3517,7 @@ ice.ace.DataTable.prototype.doRowEditSaveRequest = function (element) {
             extensions = xmlDoc.getElementsByTagName("extension");
 
         _self.args = {};
-        for (i = 0; i < extensions.length; i++) {
+        for (var i = 0; i < extensions.length; i++) {
             var extension = extensions[i];
             if (extension.getAttributeNode('aceCallbackParam')) {
                 var jsonObj = ice.ace.jq.parseJSON(extension.firstChild.data);
@@ -3549,11 +3549,11 @@ ice.ace.DataTable.prototype.doRowEditSaveRequest = function (element) {
         }
 
     ice.ace.AjaxRequest(options);
-}
+};
 
 ice.ace.DataTable.prototype.getRowEditors = function () {
     return this.element.find(this.cellEditorSelector.replace(/link/g, ''));
-}
+};
 
 ice.ace.DataTable.prototype.setupCellEditorEvents = function (rowEditors) {
     var _self = this;
@@ -3617,7 +3617,7 @@ ice.ace.DataTable.prototype.setupCellEditorEvents = function (rowEditors) {
 
     rowEditors.closest('tr').find(' > div.ui-cell-editor > span > input')
             .bind('keypress', inputCellKeypress);
-}
+};
 
 ice.ace.DataTable.removeInputNames = function (parentId) {
 	ice.ace.jq(ice.ace.escapeClientId(parentId)).find('input, select, textarea, button').each(function(i,e) {
@@ -3678,7 +3678,7 @@ ice.ace.DataTable.prototype.readSelections = function () {
         deselectionVal = ice.ace.jq(this.deselectionHolder).val();
     this.selection = (selectionVal == '') ? [] : selectionVal.split(',');
     this.deselection = (deselectionVal == '') ? [] : deselectionVal.split(',');
-}
+};
 
 ice.ace.DataTable.prototype.isSingleSelection = function () {
     return this.cfg.selectionMode == 'single' || this.cfg.selectionMode === 'singlecell';
