@@ -56,7 +56,7 @@ ice.ace.Tooltip = function(id, cfg) {
 	var styleClasses = 'ui-widget-content ice-ace-tooltip ui-corner-all';
 	var showTip = false;
     if (this.cfg.speechBubble) {
-		styleClasses += ' ice-ace-speechbubble'
+		styleClasses += ' ice-ace-speechbubble';
 		showTip = true;
     }
 	styleClasses += (this.cfg.styleClass ? ' ' + this.cfg.styleClass : '');
@@ -82,7 +82,7 @@ ice.ace.Tooltip = function(id, cfg) {
 		content.css('left', -10000);
 		content.attr('style', contentStyle + ' display: block !important;');
 		content.find('img').each(function(i,e) {
-			var self = ice.ace.jq(e);;
+			var self = ice.ace.jq(e);
 			var width = self.width();
 			var height = self.height();
 			e.width = width;
@@ -109,7 +109,7 @@ ice.ace.Tooltip = function(id, cfg) {
 						}
 					}
 					return '';
-				}
+				};
 				var targetComponent = findTargetComponent(event.target);
 				if (targetComponent) {
 					var instanceId = ice.ace.escapeClientId(targetComponent);

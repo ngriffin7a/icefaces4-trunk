@@ -38,7 +38,7 @@ ice.ace.Draggable = function(id, cfg) {
 	}
 	
     this.jq.draggable(this.cfg);
-}
+};
 
 ice.ace.Draggable.prototype.setupDragStartHandler = function() {
     this.cfg.formId = ice.ace.jq(ice.ace.escapeClientId(this.id)).parents('form:first').attr('id');
@@ -70,7 +70,7 @@ ice.ace.Draggable.prototype.setupDragStartHandler = function() {
             );
         } else ice.ace.AjaxRequest(options);
     };
-}
+};
 
 ice.ace.Droppable = function(id, cfg) {
     this.id = id;
@@ -79,7 +79,7 @@ ice.ace.Droppable = function(id, cfg) {
     this.setupDropHandler();
 	
     ice.ace.jq(ice.ace.escapeClientId(this.cfg.target)).droppable(this.cfg);
-}
+};
 
 ice.ace.Droppable.prototype.setupDropHandler = function() {
     this.cfg.formId = ice.ace.jq(ice.ace.escapeClientId(this.id)).parents('form:first').attr('id');
@@ -112,4 +112,4 @@ ice.ace.Droppable.prototype.setupDropHandler = function() {
             );
         } else ice.ace.AjaxRequest(options);
     };
-}
+};

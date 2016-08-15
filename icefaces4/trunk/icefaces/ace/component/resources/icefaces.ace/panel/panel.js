@@ -58,7 +58,7 @@ ice.ace.Panel = function(id, cfg) {
     if(!this.cfg.visible) {
         ice.ace.jq(this.jqId).css('display','none');
     }
-}
+};
 
 ice.ace.Panel.prototype.toggle = function() {
     if(this.cfg.collapsed) {
@@ -95,7 +95,7 @@ ice.ace.Panel.prototype.toggle = function() {
 				}
 			}
         });
-}
+};
 
 ice.ace.Panel.prototype.close = function() {
     this.visibleStateHolder.val(false);
@@ -112,17 +112,17 @@ ice.ace.Panel.prototype.close = function() {
             }
         }
     );
-}
+};
 
 ice.ace.Panel.prototype.show = function() {
     ice.ace.jq(this.jqId).fadeIn(this.cfg.closeSpeed);
 	
     this.visibleStateHolder.val(true);
-}
+};
 
 ice.ace.Panel.prototype.isClosed = function(){
     return ice.ace.jq(this.jqId).css('display')=='none';
-}
+};
 
 
 ice.ace.Panel.prototype.setupToggleTrigger = function() {
@@ -132,7 +132,7 @@ ice.ace.Panel.prototype.setupToggleTrigger = function() {
     this.setupTriggerVisuals(trigger);
     
     trigger.click(function() {_self.toggle();});
-}
+};
 
 ice.ace.Panel.prototype.setupCloseTrigger = function() {
     var _self = this,
@@ -141,15 +141,15 @@ ice.ace.Panel.prototype.setupCloseTrigger = function() {
     this.setupTriggerVisuals(trigger);
     
     trigger.click(function() {_self.close();});
-}
+};
 
 ice.ace.Panel.prototype.setupMenuTrigger = function() {
     var trigger = ice.ace.jq(this.jqId + '_menu').parent();
 
     this.setupTriggerVisuals(trigger);
-}
+};
 
 ice.ace.Panel.prototype.setupTriggerVisuals = function(trigger) {
     trigger.mouseover(function() {ice.ace.jq(this).addClass('ui-state-hover');})
             .mouseout(function() {ice.ace.jq(this).removeClass('ui-state-hover');});
-}
+};
