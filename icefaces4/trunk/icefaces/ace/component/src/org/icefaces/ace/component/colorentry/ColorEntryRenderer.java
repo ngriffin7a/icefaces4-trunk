@@ -1,33 +1,26 @@
-package org.icefaces.ace.component.colorpicker;
+package org.icefaces.ace.component.colorentry;
 
 
 import org.icefaces.ace.renderkit.InputRenderer;
-import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
-import org.icefaces.ace.util.Utils;
 import org.icefaces.render.MandatoryResourceComponent;
-import org.icefaces.util.CoreComponentUtils;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.ace.util.ComponentUtils;
 
-import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.PhaseId;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
-/**
- * Created by jguglielmin on 2016-07-25.
- */
-@MandatoryResourceComponent(tagName="colorPicker", value="org.icefaces.ace.component.colorpicker.ColorPicker")
-public class ColorPickerRenderer extends InputRenderer {
+
+@MandatoryResourceComponent(tagName="colorEntry", value="ColorEntry")
+public class ColorEntryRenderer extends InputRenderer {
     @Override
      public void decode(FacesContext facesContext, UIComponent component) {
-         ColorPicker picker = (ColorPicker) component;
+         ColorEntry picker = (ColorEntry) component;
          String clientId = picker.getClientId(facesContext);
          Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
          if(picker.isDisabled() || picker.isReadonly()) {
@@ -42,7 +35,7 @@ public class ColorPickerRenderer extends InputRenderer {
 
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        ColorPicker picker = (ColorPicker) component;
+        ColorEntry picker = (ColorEntry) component;
         ResponseWriter writer = context.getResponseWriter();
         String clientId = picker.getClientId(context);
         /* TODO aria support */
@@ -52,7 +45,7 @@ public class ColorPickerRenderer extends InputRenderer {
         renderResetSettings(context, component);
 
         String styleClass = picker.getStyleClass();
-        String defaultClass = themeForms() ? ColorPicker.THEME_INPUT_CLASS : ColorPicker.PLAIN_INPUT_CLASS;
+        String defaultClass = themeForms() ? ColorEntry.THEME_INPUT_CLASS : ColorEntry.PLAIN_INPUT_CLASS;
         defaultClass += getStateStyleClasses(picker);
         Map<String, Object> labelAttributes = getLabelAttributes(component);
         labelAttributes.put("fieldClientId", clientId + "_input");
@@ -89,7 +82,7 @@ public class ColorPickerRenderer extends InputRenderer {
             writer.writeAttribute("value", valueToRender , null);
 
             if (ariaEnabled) {
-                final ColorPicker comp = (ColorPicker) component;
+                final ColorEntry comp = (ColorEntry) component;
                 Map<String, Object> ariaAttributes = new HashMap<String, Object>() {{
                     put("readonly", comp.isReadonly());
                     put("required", comp.isRequired());
@@ -109,14 +102,17 @@ public class ColorPickerRenderer extends InputRenderer {
 
         JSONBuilder jb = JSONBuilder.create();
         jb.beginFunction("ice.ace.create")
-                .item("ColorPicker")
+                .item("ColorEntry")
                 .beginArray()
                 .item(clientId)
                 .beginMap()
                 .beginMap("options")
                 .entry("preferredFormat", picker.getPreferredFormat().getValue())
                 .entry("showPalette", picker.isShowPalette())
+                .entry("allowEmpty", picker.isAllowEmpty())
+                .entry("showInput", picker.isShowInput())
                 .entry("showPaletteOnly", picker.isShowPaletteOnly())
+                .entry("togglePaletteOnly", picker.isTogglePaletteOnly())
                 .entry("showInitial", picker.isShowInitial())
                 .entry("showInput", picker.isShowInput())
                 .entry("showButtons", picker.isShowButtons())
@@ -130,6 +126,28 @@ public class ColorPickerRenderer extends InputRenderer {
         if (picker.getColor() !=null) {
             jb.entry("color", picker.getColor());
         }
+        if (picker.getTogglePaletteMoreText() !=null){
+            jb.entry("togglePaletteMoreText", picker.getTogglePaletteMoreText());
+        }
+        if (picker.getTogglePaletteLessText() !=null){
+            jb.entry("togglePaletteLessText", picker.getTogglePaletteLessText());
+        }
+        if (picker.getStyleClass() !=null ){
+            jb.entry("replacerClassName", picker.getStyleClass());
+        }
+        if (picker.getPaletteList()!=null){
+            jb.beginArray("palette") ;
+            List<String[]> list = picker.getPaletteList();
+            for (String[] palette: list){
+                jb.beginArray();
+                for (String colorVal: palette){
+                    jb.item(colorVal);
+                }
+                jb.endArray();
+            }
+            jb.endArray();
+        }
+
         jb.endMap();
 
         encodeClientBehaviors(context, picker, jb);
@@ -155,14 +173,14 @@ public class ColorPickerRenderer extends InputRenderer {
 
     protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
     		ResponseWriter writer = context.getResponseWriter();
-    		ColorPicker picker = (ColorPicker) component;
+    		ColorEntry picker = (ColorEntry) component;
 
     		String clientId = picker.getClientId(context);
     		String labelPosition = (String) component.getAttributes().get("labelPosition");
 
     		JSONBuilder jb = JSONBuilder.create();
     		jb.beginArray();
-    		jb.item("ColorPicker");
+    		jb.item("ColorEntry");
     		jb.beginArray();
     		jb.item(clientId);
 

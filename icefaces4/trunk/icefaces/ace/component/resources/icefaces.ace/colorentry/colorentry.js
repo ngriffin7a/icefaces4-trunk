@@ -1,11 +1,11 @@
 if (!window['ice']) window.ice = {};
 if (!window.ice['ace']) window.ice.ace = {};
 
-//if (!ice.ace.Colorpicker.registry)  ice.ace.Colorpicker.registry = {};
+//if (!ice.ace.ColorEntry.registry)  ice.ace.ColorEntry.registry = {};
 
-if (!ice.ace.ColorPickers) ice.ace.Colorpickers = {};
+if (!ice.ace.ColorEntrys) ice.ace.ColorEntrys = {};
 
-ice.ace.ColorPicker = function(id, cfg) {
+ice.ace.ColorEntry = function(id, cfg) {
     ice.ace.jq().ready(function() {
         var pickerId = ice.ace.escapeClientId(id);
         this.jq = ice.ace.jq(pickerId);
@@ -26,16 +26,18 @@ ice.ace.ColorPicker = function(id, cfg) {
 
 
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
-        var colorVal = options.color || "#f00";
+        if (options.color){
+            var colorVal = options.color ;
+            console.log(" color is ="+colorVal);
+        }
         var self = this;
 
-        console.log(" color is ="+colorVal);
         if (ice.ace.instance(id)) {
             ice.ace.jq(input).spectrum(options);
         };
 
 		// if instance was previously initialized, create right away and return
-		if (ice.ace.Colorpickers[id]) {
+		if (ice.ace.ColorEntrys[id]) {
 			//return;
 		}
 
@@ -47,7 +49,7 @@ ice.ace.ColorPicker = function(id, cfg) {
     });
 };
 
-ice.ace.ColorPicker.prototype.attachBehaviors = function() {
+ice.ace.ColorEntry.prototype.attachBehaviors = function() {
     console.log(" attachBehaviors");
 	var self = this;
     self.jq.on('change', function () {

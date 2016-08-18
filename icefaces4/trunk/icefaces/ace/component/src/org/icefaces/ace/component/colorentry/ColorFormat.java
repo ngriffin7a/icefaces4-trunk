@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 
-package org.icefaces.ace.component.colorpicker;
+package org.icefaces.ace.component.colorentry;
 
 public enum ColorFormat {
 

@@ -1,0 +1,76 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{msgs['example.ace.colorEntry.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.colorEntry.description']}"/>
+
+    <ui:define name="example">
+        <h:form id="colorEntryForm">
+            <ace:panel id="colorInputPanel" header="ColorEntry" styleClass="required-styling-demo">
+                <h:panelGrid id="inputGrid" columns="1" width="100%" >
+                    <ace:colorEntry id="colorInput" value="#{colorEntryBean.basicValue}"
+                               showPalette="false"
+                               label="Basic Example" labelPosition="left">
+                        <ace:ajax execute="@this" render="@all" />
+                    </ace:colorEntry>
+                    <ace:colorEntry id="colorInput2" value="#{colorEntryBean.colorValue}"
+                                label="Initial Color Yellow" labelPosition="left"
+                                color="yellow">
+                         <ace:ajax execute="@this" render="@all" />
+                    </ace:colorEntry>
+                    <ace:colorEntry id="colorInput3" value="#{colorEntryBean.allowEmptyValue}"
+                                allowEmpty="true"
+                                showPaletteOnly="true"
+                                label="Allow Empty Value and Palette only" labelPosition="left">
+                         <ace:ajax execute="@this" render="@all" />
+                     </ace:colorEntry>
+                    <ace:colorEntry id="colorInput4" value="#{colorEntryBean.showButtonsValue}"
+                                     showButtons="true"
+                                     showPalette="true"
+                                     label="Show Buttons and Palette" labelPosition="left">
+                        <ace:ajax execute="@this" render="@all"/>
+                    </ace:colorEntry>
+                    <ace:colorEntry id="colorInput5" value="#{colorEntryBean.showInputValue}"
+                                   showInput="true"
+                                   showButtons="true"
+                                   label="Show Input" labelPosition="left">
+                        <ace:ajax execute="@this" render="@all"/>
+                    </ace:colorEntry>
+                </h:panelGrid>
+            </ace:panel>
+
+            <ace:panel id="colorOutputPanel" header="Entered data">
+                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
+                    <h:outputText id="basicValue" value="Color selected from basic example: #{colorEntryBean.basicValue}"/>
+                    <h:outputText id="colorValue" value="Color Selected from initial color example: #{colorEntryBean.colorValue}" />
+                    <h:outputText id="allowEmptyValue" value="Color Selected from allowEmpty example: #{colorEntryBean.allowEmptyValue}" />
+                    <h:outputText id="showButtonsValue" value="Color Selected from allowEmpty example: #{colorEntryBean.showButtonsValue}" />
+                    <h:outputText id="showInputValue" value="Color Selected from showInput example: #{colorEntryBean.showInputValue}" />
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
