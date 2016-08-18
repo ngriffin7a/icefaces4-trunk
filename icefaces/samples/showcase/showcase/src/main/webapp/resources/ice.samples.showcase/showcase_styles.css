@@ -602,3 +602,15 @@ body, table {
 	padding-top: 4px;
 	padding-bottom: 5px;
 }
+
+.colorEntryCustom1{
+    background: purple;
+}
+
+.colorEntryCustom2{
+    background: blue;
+}
+
+.colorEntryCustom3{
+    background: green;
+}
