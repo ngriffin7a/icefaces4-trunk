@@ -84,6 +84,7 @@ public class AccordionMeta extends UIPanelMeta {
 	
 	@Property(tlddoc="Server side listener to invoke when active pane changes", expression= Expression.METHOD_EXPRESSION, methodExpressionArgument="org.icefaces.ace.event.AccordionPaneChangeEvent")
 	private MethodExpression paneChangeListener;
-	
-	
+
+	@Field
+	private String tabTitles;
 }
