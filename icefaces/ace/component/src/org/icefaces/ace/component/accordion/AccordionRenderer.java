@@ -133,7 +133,9 @@ public class AccordionRenderer extends CoreRenderer {
 		if (acco.isFillSpace()) jb.entry("fillSpace", true);
 		if (acco.isDisabled()) jb.entry("disabled", true);
         if (hasTabChangeListener) jb.entry("ajaxTabChange", true);
-
+		if (acco.getTabTitles() !=null){
+			jb.entry("hashcode", acco.getTabTitles());
+		}
         encodeClientBehaviors(context, acco, jb);
 
         jb.endMap()
@@ -147,7 +149,7 @@ public class AccordionRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId + "_activeIndexScript", null);
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("(function() {var i = ice.ace.instance('"+clientId+"'); if (i) i.setActiveIndex("+(activeIndex < 0 ? "false" : "" + activeIndex)+");})();");
+		writer.write("ice.ace.jq().ready(function() {var i = ice.ace.instance('"+clientId+"'); if (i) i.setActiveIndex("+(activeIndex < 0 ? "false" : "" + activeIndex)+");})();");
 		writer.endElement("script");
 		writer.endElement("span");
 	}
@@ -169,7 +171,7 @@ public class AccordionRenderer extends CoreRenderer {
 	
 	protected void encodeTabs(FacesContext context, Accordion acco) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		
+		String titles = "";
 		for(int i=0; i < acco.getChildCount(); i++) {
 			UIComponent kid = acco.getChildren().get(i);
 			
@@ -186,10 +188,10 @@ public class AccordionRenderer extends CoreRenderer {
 				writer.writeAttribute("href", "#", null);
 				if(tab.getTitle() != null) {
 					writer.write(tab.getTitle());
+					titles+=tab.getTitle();
 				}
 				writer.endElement("a");
 				writer.endElement("h3");
-				
 				//content
 				writer.startElement("div", null);
                 writer.writeAttribute("id", clientId, null);
@@ -201,6 +203,9 @@ public class AccordionRenderer extends CoreRenderer {
                 
 				writer.endElement("div");
 				writer.endElement("div");
+			}
+			if (!titles.isEmpty()){
+				acco.setTabTitles(titles);
 			}
 		}
 	}
