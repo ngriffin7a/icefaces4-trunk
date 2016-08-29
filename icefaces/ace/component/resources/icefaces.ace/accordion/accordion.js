@@ -111,3 +111,10 @@ ice.ace.AccordionPanel.prototype.setActiveIndex = function(index) {
 	if (this.jq.accordion("option", "active") == index) return;
     this.jq.accordion('option', 'activeNoEvent', index);
 };
+
+ice.ace.AccordionPanel.activate = function(id, activeIndex) {
+    var i = ice.ace.instance(id);
+    if (i) {
+        i.setActiveIndex(activeIndex < 0 ? false : activeIndex);
+    }
+};
