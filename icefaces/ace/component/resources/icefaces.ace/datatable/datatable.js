@@ -3763,3 +3763,17 @@ ice.ace.DataTable.numberRestriction = function(event) {
 
 	return true;
 };
+
+ice.ace.DataTable.setupSortEventsForColumn = function(clientId) {
+    var table = ice.ace.instance(clientId);
+    if (table) {
+        table.setupSortEventsForColumn(clientId + '_sortControl');
+    }
+};
+
+ice.ace.DataTable.setupClickableHeaderEventsForColumn = function(tableClientId, columnClientId) {
+    var table = ice.ace.instance(tableClientId);
+    if (table) {
+        table.setupClickableHeaderEventsForColumn(columnClientId);
+    }
+};
