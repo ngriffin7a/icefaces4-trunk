@@ -975,6 +975,10 @@ ice.ace.Autocompleter.prototype = {
 			}, 50);
 		}
     },
+
+    extractAndUpdateNOW: function() {
+        this.updateNOW(ice.ace.jq(ice.ace.escapeClientId(this.id + '_update')).get(0).firstChild.innerHTML);
+    },
 	
 	updateField: function(value, focus, actualValue) {
 		var currentValue = this.element.value;
