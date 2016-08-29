@@ -597,3 +597,19 @@ ice.ace.fileentry.clear = function(id, multiple) {
 ice.ace.fileentry.reset = function(id, multiple) {
 	ice.ace.fileentry.clear(id, multiple);
 };
+
+ice.ace.fileentry.addButtons = function(clientId) {
+    var root = ice.ace.jq(ice.ace.escapeClientId(clientId));
+    var addFilesButton = root.find('.buttons').find('> span').eq(0);
+    addFilesButton.addClass('add-files ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary');
+    addFilesButton.find('span').attr('style', '');
+    root.find('.start').attr('style', '');
+    root.find('.cancel').attr('style', '');
+};
+
+ice.ace.fileentry.clearSelectionOnKeyDown = function(event, element) {
+    var k = event.keyCode || event.charCode;
+    if (k == 8 || k == 46) {
+        ice.ace.fileentry.clearSingleFileSelection(element.parentNode.parentNode.id);
+    }
+};

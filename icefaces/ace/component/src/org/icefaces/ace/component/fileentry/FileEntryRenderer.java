@@ -147,7 +147,7 @@ public class FileEntryRenderer extends Renderer {
         writer.writeAttribute("id", identifier, "clientId");
         writer.writeAttribute("name", identifier, "clientId");
         if (!multiple) {
-            writer.writeAttribute("onkeydown", "var k = event.keyCode || event.charCode; if (k == 8 || k == 46) ice.ace.fileentry.clearSingleFileSelection(this.parentNode.parentNode.id);", null);
+            writer.writeAttribute("onkeydown", "ice.ace.fileentry.clearSelectionOnKeyDown(event, this);", null);
         }
         if (multiple) {
             writer.writeAttribute("multiple", "multiple", "multiple");
@@ -232,14 +232,7 @@ public class FileEntryRenderer extends Renderer {
             String formId = form.getClientId(facesContext);
 			writer.startElement("script", null);
 			writer.writeAttribute("type", "text/javascript", null);
-			writer.writeText("ice.ace.jq(function(){"
-				+ "var root = ice.ace.jq(ice.ace.escapeClientId('" + formId + "'));"
-				+ "var addFilesButton = root.find('.buttons').find('> span').eq(0);"
-				+ "addFilesButton.addClass('add-files ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary');"
-				+ "addFilesButton.find('span').attr('style', '');"
-				+ "root.find('.start').attr('style', '');"
-				+ "root.find('.cancel').attr('style', '');"
-				+ "});", uiComponent, null);
+			writer.writeText("ice.ace.fileentry.addButtons('" + formId + "');", uiComponent, null);
 			writer.endElement("script");
         }
 
