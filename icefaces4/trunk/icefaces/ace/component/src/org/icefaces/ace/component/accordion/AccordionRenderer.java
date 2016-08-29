@@ -149,7 +149,7 @@ public class AccordionRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId + "_activeIndexScript", null);
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("(function() {var i = ice.ace.instance('"+clientId+"'); if (i) i.setActiveIndex("+(activeIndex < 0 ? "false" : "" + activeIndex)+");})();");
+		writer.write("ice.ace.AccordionPanel.activate('" + clientId + "', '" + activeIndex + "');");
 		writer.endElement("script");
 		writer.endElement("span");
 	}
