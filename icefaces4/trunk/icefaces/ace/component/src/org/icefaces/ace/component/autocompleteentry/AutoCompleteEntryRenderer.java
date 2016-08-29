@@ -314,7 +314,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 		}
 
         writer.endElement("script");
-		
+
 		String renderedValue = null;
 		Object valueObject = autoCompleteEntry.getValue();
 		String value = valueObject != null ? getConvertedValueForClient(facesContext, autoCompleteEntry, valueObject) : null;
@@ -335,18 +335,9 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 		autoCompleteEntry.setSubmittedText(null);
 
         // field update script
-        writer.startElement("span", null);
-        writer.writeAttribute("id", clientId + "_fieldupdate", null);
-        writer.startElement("script", null);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.writeText("(function() {", null);
-        writer.writeText("var instance = ice.ace.Autocompleters[\"" + clientId + "\"];", null);
-        writer.writeText("instance.updateField('" + escapeJavascriptString(renderedValue) + "', " + focus + ", "
-			+ (labelIsInField ? (value != null ? "'" + value + "'" : "''") : "null") + ");", null);
-        writer.writeText("})();", null);
-        writer.endElement("script");
-        writer.endElement("span");
-		
+		encodeDynamicScript(writer, clientId + "_fieldupdate", "ice.ace.Autocompleters[\"" + clientId + "\"].updateField('" + escapeJavascriptString(renderedValue) + "', " + focus + ", "
+			+ (labelIsInField ? (value != null ? "'" + value + "'" : "''") : "null") + ");");
+
 		if (sourceId != null && !(sourceId.toString().equals(clientId) || sourceId.toString().equals(clientId + "_input"))) {
 			autoCompleteEntry.setPopulateList(false);
 		}
@@ -362,11 +353,8 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 		} else if (autoCompleteEntry.getText() != null && autoCompleteEntry.isPopulateList()) {
 			populateList(facesContext, autoCompleteEntry);
         } else {
-            writer.startElement("div", null);
-			writer.writeAttribute("id", clientId + "_update", null);
 			String call = "ice.ace.Autocompleters[\"" + clientId + "\"].updateNOW('');";
-			encodeDynamicScript(facesContext, autoCompleteEntry, call);
-			writer.endElement("div");
+			encodeDynamicScript(writer, clientId + "_update", call);
 		}
     }
 
@@ -434,8 +422,8 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 
 			writer.endElement("div");
             String call = "ice.ace.Autocompleters[\"" + clientId +
-                    "\"].updateNOW(ice.ace.jq(ice.ace.escapeClientId('" + clientId + "_update')).get(0).firstChild.innerHTML);";
-            encodeDynamicScript(facesContext, autoCompleteEntry, call + "// " + text + " " + timestamp);
+                    "\"].extractAndUpdateNOW();";
+            encodeDynamicScript(writer, null, call + "// " + text + " " + timestamp);
 			writer.endElement("div");
         } else {
             if (matches.hasNext()) {
@@ -470,7 +458,7 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
                 sb.append("</div>");
                 String call = "ice.ace.Autocompleters[\"" + clientId + "\"]" +
                         ".updateNOW('" + escapeSingleQuote(sb.toString()) + "');";
-                encodeDynamicScript(facesContext, autoCompleteEntry, call + "// " + text + " " + timestamp);
+                encodeDynamicScript(writer, null, call + "// " + text + " " + timestamp);
             }
         }
 		writer.endElement("div");
@@ -564,11 +552,11 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 		writer.endElement("div");
     }
 
-    public void encodeDynamicScript(FacesContext facesContext, UIComponent uiComponent, String call) throws IOException {
-		ResponseWriter writer = facesContext.getResponseWriter();
-        String clientId = uiComponent.getClientId(facesContext);
-		
+	private void encodeDynamicScript(ResponseWriter writer, String clientId, String call) throws IOException {
 		writer.startElement("span", null);
+		if (clientId != null) {
+			writer.writeAttribute("id", clientId, null);
+		}
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.writeText(call, null);
@@ -577,7 +565,6 @@ public class AutoCompleteEntryRenderer extends InputRenderer {
 	}
 		
 	public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
-
 	}
 	
 	public static boolean isHardSubmit(FacesContext facesContext, UIComponent component) {
