@@ -2078,7 +2078,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
                 // Set Duplicate Header Sizing to Body Columns
                 // Equiv of max width
                 var index = /ui-col-([0-9]+)/g.exec(bodySingleCols[i].parentNode.className)[1],
-                    selector =  this.jqId+' .ui-col-'+index+' > div';
+                    selector =  this.jqId+' > div > table > tbody > tr > td.ui-col-'+index+' > div';
 				text += selector + ' { width:' + bodyColumnWidth + 'px; }\n';
 
                 // Adjust last column size to stop prevent horizontal scrollbar / align vertical
@@ -2089,7 +2089,7 @@ ice.ace.DataTable.prototype.resizeScrolling = function () {
                 }
 
                 // Equiv of min width
-                selector =  this.jqId+' .ui-col-'+index;
+                selector =  this.jqId+' > div > table > tbody > tr > td.ui-col-'+index;
 				text += selector + ' { width:' + bodyColumnWidth + 'px; }\n';
             }
 
