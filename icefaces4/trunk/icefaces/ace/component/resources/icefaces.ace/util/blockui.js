@@ -35,6 +35,13 @@ ice.ace.BlockUI.activate = function(id) {
 	target.append(overlay);
 };
 
+ice.ace.BlockUI.scheduleActivation = function(id, delay) {
+	setTimeout(function() {
+		ice.ace.BlockUI.activate(id);
+	}, delay);
+};
+
+
 ice.ace.BlockUI.disableControls = function(id) {
 	var target = ice.ace.jq(ice.ace.escapeClientId(id));
 	target.find('input, select, label, textarea, button, a').each(function(i,e) {

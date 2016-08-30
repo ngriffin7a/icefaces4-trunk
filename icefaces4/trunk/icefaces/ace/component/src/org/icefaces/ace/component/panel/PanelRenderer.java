@@ -179,7 +179,7 @@ public class PanelRenderer extends CoreRenderer {
                     writer.writeAttribute("type", "text/javascript", null);
                     if (disableInputs) {
                         // keep disabled across updates
-                        writer.write("setTimeout(function() {ice.ace.BlockUI.activate('" + clientId + "_content');}, 1); //" + System.currentTimeMillis());
+                        writer.write("ice.ace.BlockUI.scheduleActivation('" + clientId + "_content', 1); //" + System.currentTimeMillis());
                     } else if (previousDisableInputs) {
                         // only render when there's a change from disabled to enabled
                         writer.write("ice.ace.BlockUI.deactivate('" + clientId + "_content');");
