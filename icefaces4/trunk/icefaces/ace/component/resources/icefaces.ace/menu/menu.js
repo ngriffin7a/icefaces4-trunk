@@ -334,7 +334,14 @@ ice.ace.MenuButton = function(id, cfg) {
         this.root.attr('style', this.cfg.style);
     if(this.cfg.styleClass)
         this.root.addClass(this.cfg.styleClass);
-}
+};
+
+ice.ace.MenuButton.initializeOnUpdate = function(id, callback) {
+	var b = ice.ace.jq(ice.ace.escapeClientId(id));
+	if (!b.hasClass('ui-button')) {
+		callback();
+	}
+};
 
 /*
  *  ContextMenu Widget
