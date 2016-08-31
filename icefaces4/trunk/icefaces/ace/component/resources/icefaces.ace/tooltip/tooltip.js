@@ -180,22 +180,24 @@ ice.ace.Tooltip.endsWith = function(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 };
 
-var showCfg = ['mouseover', 500, 'slideDown', 500];
 ice.ace.Tooltip.activate = function(config, txt, showConfig, hideConfig) {
-	config.content = {
-		text: txt ? txt : function () {
+	ice.ace.jq(function() {
+		var textEntry = txt ? txt : function () {
 			return document.getElementById(config.id + '_content').innerHTML;
-		}
-	};
-	config.show = {
-		'event': showConfig[0], 'delay': showConfig[1], 'effect': function () {
-			ice.ace.jq(this)[showConfig[2]](showConfig[3]);
-		}
-	};
-	config.hide = {
-		'event': hideConfig[0], 'delay': hideConfig[1], 'fixed': true, 'effect': function () {
-			ice.ace.jq(this)[hideConfig[2]](hideConfig[3]);
-		}
-	};
-    ice.ace.create('Tooltip', [config.id, config]);
+		};
+		config['content'] = {
+			text: textEntry
+		};
+		config.show = {
+			'event': showConfig[0], 'delay': showConfig[1], 'effect': function () {
+				ice.ace.jq(this)[showConfig[2]](showConfig[3]);
+			}
+		};
+		config.hide = {
+			'event': hideConfig[0], 'delay': hideConfig[1], 'fixed': true, 'effect': function () {
+				ice.ace.jq(this)[hideConfig[2]](hideConfig[3]);
+			}
+		};
+		ice.ace.create('Tooltip', [config.id, config]);
+	});
 };
