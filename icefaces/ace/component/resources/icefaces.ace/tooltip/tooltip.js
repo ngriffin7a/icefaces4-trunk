@@ -182,11 +182,10 @@ ice.ace.Tooltip.endsWith = function(str, suffix) {
 
 ice.ace.Tooltip.activate = function(config, txt, showConfig, hideConfig) {
 	ice.ace.jq(function() {
-		var textEntry = txt ? txt : function () {
-			return document.getElementById(config.id + '_content').innerHTML;
-		};
-		config['content'] = {
-			text: textEntry
+		config.content = {
+			text: txt ? txt : function () {
+				return document.getElementById(config.id + '_content').innerHTML;
+			}
 		};
 		config.show = {
 			'event': showConfig[0], 'delay': showConfig[1], 'effect': function () {
