@@ -178,12 +178,6 @@ public class TooltipRenderer extends CoreRenderer {
 			} else {
 				jb.entry("forComponent", (String) owner);
 			}
-			jb.endMap();
-			if(tooltip.getValue() == null)
-				jb.item("");
-			else {
-				jb.item(ComponentUtils.getStringValueToRender(facesContext, tooltip).replaceAll("'", "\\\\'"));
-			}
 		} else if (delegateId != null) {
 			UIComponent delegateComponent = CoreComponentUtils.findComponentInView(facesContext.getViewRoot(), delegateId);
 			if (delegateComponent != null && delegateComponent instanceof Delegate) {
@@ -192,12 +186,13 @@ public class TooltipRenderer extends CoreRenderer {
 			} else {
 				throw new FacesException("Cannot find delegate component \"" + delegateId + "\" in view or it is not an instance of <ace:delegate>.");
 			}
-			jb.endMap();
-			if(tooltip.getValue() == null)
-				jb.item("");
-			else {
-				jb.item(ComponentUtils.getStringValueToRender(facesContext, tooltip).replaceAll("'", "\\\\'"));
-			}
+		}
+		jb.endMap();
+
+		if(tooltip.getValue() == null)
+			jb.item("");
+		else {
+			jb.item(ComponentUtils.getStringValueToRender(facesContext, tooltip).replaceAll("'", "\\\\'"));
 		}
 
 		//Events
