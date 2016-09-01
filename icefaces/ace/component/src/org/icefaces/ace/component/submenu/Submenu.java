@@ -80,60 +80,52 @@ public class Submenu extends SubmenuBase implements java.io.Serializable {
 
 	public String getScript() {
 
-		String clientId = getClientId(getFacesContext());
+		final FacesContext context = getFacesContext();
+		String clientId = getClientId(context);
 		boolean hasAjaxBehavior = false;
-		
-		StringBuilder command = new StringBuilder();
-		command.append("var self = this; setTimeout(function() { var f = function(opt){");
+
+		StringBuilder submitWithBehavioursCommand = new StringBuilder();
+		submitWithBehavioursCommand.append("ice.ace.Menubar.submitWithBehaviours(event, this, ["); // dynamically set the id to the node so that it can be handled by the submit functions
 		// ClientBehaviors
 		Map<String,List<ClientBehavior>> behaviorEvents = getClientBehaviors();
-		if (!behaviorEvents.isEmpty()) {
+		if(!behaviorEvents.isEmpty()) {
 			List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
 			for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get("action").iterator(); behaviorIter.hasNext();) {
 				ClientBehavior behavior = behaviorIter.next();
 				if (behavior instanceof AjaxBehavior)
 					hasAjaxBehavior = true;
-				ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(getFacesContext(), this, "action", clientId, params);
+				ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, this, "action", clientId, params);
 				String script = behavior.getScript(cbc);    //could be null if disabled
 
 				if(script != null) {
-					command.append("ice.ace.ab(ice.ace.extendAjaxArgs(");
-					command.append(script);
-					command.append(", opt));");
+					submitWithBehavioursCommand.append(script);
+					if (behaviorIter.hasNext()) {
+						submitWithBehavioursCommand.append(",");
+					}
 				}
 			}
 		}
-		command.append("}; ");
-		
+		submitWithBehavioursCommand.append("]); ");
+
+		StringBuilder submitWithParametersCommand = new StringBuilder();
 		if (!hasAjaxBehavior && (getActionExpression() != null || getActionListeners().length > 0)) {
-			command.append("self.id = '" + clientId + "'; ice.s(event, self");
-			
-			StringBuilder parameters = new StringBuilder();
-			parameters.append(",function(p){");
+			submitWithParametersCommand.append("ice.ace.Menubar.submitWithParameters(event, this, '" + clientId + "'");
 			for(UIComponent child : getChildren()) {
 				if(child instanceof UIParameter) {
+					submitWithParametersCommand.append(", '");
 					UIParameter param = (UIParameter) child;
-					
-					parameters.append("p('");
-					parameters.append(param.getName());
-					parameters.append("','");
-					parameters.append(String.valueOf(param.getValue()));
-					parameters.append("');");
+					submitWithParametersCommand.append(param.getName());
+					submitWithParametersCommand.append("','");
+					submitWithParametersCommand.append(String.valueOf(param.getValue()));
+					submitWithParametersCommand.append("'");
 				}
 			}
-			parameters.append("});");
-			
-			command.append(parameters.toString());
-		} else {
-			command.append("f({node:self});"); // call behaviors function
+			submitWithParametersCommand.append(");");
 		}
 
-		command.append("}, 10);"); // close timeout
-
+		StringBuilder command = hasAjaxBehavior ? submitWithBehavioursCommand : submitWithParametersCommand;
 		String customOnclick = getOnclick();
-		String onclick = customOnclick == null ? command.toString() : customOnclick + ";" + command.toString();
-
-		return onclick;
+		return customOnclick == null ? command.toString() : customOnclick + ";" + command.toString();
 	}
 
     protected FacesContext getFacesContext() {
