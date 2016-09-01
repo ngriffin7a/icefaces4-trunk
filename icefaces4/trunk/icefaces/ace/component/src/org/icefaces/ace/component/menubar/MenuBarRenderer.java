@@ -66,7 +66,10 @@ public class MenuBarRenderer extends BaseMenuRenderer {
 		String clientId = menubar.getClientId(context);
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-
+		String submenuLabels = "";
+		if (menubar.getSubmenuLabels()!=null){
+		   submenuLabels = menubar.getSubmenuLabels();
+		}
         JSONBuilder json = JSONBuilder.create();
 
         json.beginFunction("ice.ace.create")
@@ -79,8 +82,9 @@ public class MenuBarRenderer extends BaseMenuRenderer {
             .entry("direction", menubar.getDirection())
             .entryNonNullValue("styleClass", menubar.getStyleClass())
             .entryNonNullValue("style", menubar.getStyle())
-				.entry("hideDelay", menubar.getHideDelay())
-				.entry("showDelay", menubar.getShowDelay())
+			.entry("hideDelay", menubar.getHideDelay())
+			.entry("showDelay", menubar.getShowDelay())
+			.entryNonNullValue("hashcode",submenuLabels.hashCode())
             .beginMap("animation")
             .entry("animated", menubar.getEffect())
             .entry("duration", menubar.getEffectDuration())
@@ -142,7 +146,7 @@ public class MenuBarRenderer extends BaseMenuRenderer {
                     // we just need <li></li>
 					writer.writeAttribute("id", child.getClientId(context), "id");
                 } else if(child instanceof Submenu) {
-                    encodeSubmenu(context, (Submenu) child);
+                    encodeSubmenu(context, (Submenu) child, component);
                 } else if(child instanceof MultiColumnSubmenu) {
 					encodeMultiColumnSubmenu(context, (MultiColumnSubmenu) child);
 				}
@@ -152,16 +156,18 @@ public class MenuBarRenderer extends BaseMenuRenderer {
         }
     }
 
-	protected void encodeSubmenu(FacesContext context, Submenu submenu) throws IOException{
+	protected void encodeSubmenu(FacesContext context, Submenu submenu, UIComponent component) throws IOException{
 		ResponseWriter writer = context.getResponseWriter();
 		UIComponent labelFacet = submenu.getFacet("label");
         String icon = submenu.getIcon();
 		boolean disabled = submenu.isDisabled();
-
+		String submenuLabels = "";
         //title
 		if(labelFacet == null) {
             String label = submenu.getLabel();
-
+			if (label !=null && label.length()>0){
+				submenuLabels+=label;
+			}
 			writer.startElement("a", null);
 			if (disabled) {
 				writer.writeAttribute("class", "ui-state-disabled", null);
@@ -218,5 +224,16 @@ public class MenuBarRenderer extends BaseMenuRenderer {
 
 			writer.endElement("ul");
 		}
+		/* ICE_11127 for hashcode if labels change values to update script */
+		if (component instanceof AbstractMenu){
+			AbstractMenu am = (AbstractMenu)component;
+			MenuBar mb = (MenuBar)am;
+			String submenuLabelsPrevious = mb.getSubmenuLabels();
+			if (submenuLabelsPrevious !=null && submenuLabelsPrevious.length()>0){
+				submenuLabels+= submenuLabelsPrevious;
+			}
+			mb.setSubmenuLabels(submenuLabels);
+		}
+
 	}
 }
