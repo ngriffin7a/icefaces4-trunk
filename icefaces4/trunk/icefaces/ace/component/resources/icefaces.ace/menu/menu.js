@@ -241,7 +241,26 @@ ice.ace.Menubar = function(id, cfg) {
         this.jq.parent().parent().attr('style', this.cfg.style);
     if(this.cfg.styleClass)
         this.jq.parent().parent().addClass(this.cfg.styleClass);
-}
+};
+
+ice.ace.Menubar.submitWithBehaviours = function(event, element, behaviours) {
+	setTimeout(function () {
+		for (var i = 0, l = behaviours.length; i < l; i++) {
+			var behaviour = behaviours[i];
+			ice.ace.ab(ice.ace.extendAjaxArgs(behaviour, {node: element}));
+		}
+	}, 10);
+};
+
+ice.ace.Menubar.submitWithParameters = function(event, element, id) {
+	element.id = id;
+	var args = arguments;
+	ice.s(event, element, function(p) {
+		for (var i = 3, l = args.length; i + 1 < l; i = i + 2) {
+			p(args[i], args[i + 1]);
+		}
+	});
+};
 
 /**
  *  Menubar Widget

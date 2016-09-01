@@ -106,60 +106,8 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 						throw new FacesException("Menubar must be inside a form element");
 					}
 
-					String formClientId = form.getClientId(context);
-					
-					boolean hasAjaxBehavior = false;
-					
-					StringBuilder command = new StringBuilder();
-					command.append("var self = this; setTimeout(function() { var f = function(opt){"); // dynamically set the id to the node so that it can be handled by the submit functions
-					// ClientBehaviors
-					Map<String,List<ClientBehavior>> behaviorEvents = menuItem.getClientBehaviors();
-					if(!behaviorEvents.isEmpty()) {
-						List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
-						for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get("action").iterator(); behaviorIter.hasNext();) {
-							ClientBehavior behavior = behaviorIter.next();
-							if (behavior instanceof AjaxBehavior)
-								hasAjaxBehavior = true;
-							ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, menuItem, "action", clientId, params);
-							String script = behavior.getScript(cbc);    //could be null if disabled
 
-							if(script != null) {
-								command.append("ice.ace.ab(ice.ace.extendAjaxArgs(");
-								command.append(script);
-								command.append(", opt));");
-							}
-						}
-					}
-					command.append("}; ");
-					
-					if (!hasAjaxBehavior && (menuItem.getActionExpression() != null || menuItem.getActionListeners().length > 0)) {
-						command.append("self.id = '" + clientId + "'; ice.s(event, self");
-						
-						StringBuilder parameters = new StringBuilder();
-						parameters.append(",function(p){");
-						for(UIComponent child : menuItem.getChildren()) {
-							if(child instanceof UIParameter) {
-								UIParameter param = (UIParameter) child;
-								
-								parameters.append("p('");
-								parameters.append(param.getName());
-								parameters.append("','");
-								parameters.append(String.valueOf(param.getValue()));
-								parameters.append("');");
-							}
-						}
-						parameters.append("});");
-						
-						command.append(parameters.toString());
-					} else {
-						command.append("f({node:self});"); // call behaviors function
-					}
-					
-					command.append("}, 10);"); // close timeout
-
-					String customOnclick = menuItem.getOnclick();
-					String onclick = customOnclick == null ? command.toString() : customOnclick + ";" + command.toString();
-
+					String onclick = getScript(context, menuItem);
 					writer.writeAttribute("onclick", onclick, null);
 				}
 			}
@@ -184,7 +132,55 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
             writer.endElement("a");
 		}
 	}
-	
+
+	private static String getScript(FacesContext context, MenuItem menuItem) {
+		String clientId = menuItem.getClientId(context);
+		boolean hasAjaxBehavior = false;
+
+		StringBuilder submitWithBehavioursCommand = new StringBuilder();
+		submitWithBehavioursCommand.append("ice.ace.Menubar.submitWithBehaviours(event, this, ["); // dynamically set the id to the node so that it can be handled by the submit functions
+		// ClientBehaviors
+		Map<String,List<ClientBehavior>> behaviorEvents = menuItem.getClientBehaviors();
+		if(!behaviorEvents.isEmpty()) {
+            List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
+            for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get("action").iterator(); behaviorIter.hasNext();) {
+                ClientBehavior behavior = behaviorIter.next();
+                if (behavior instanceof AjaxBehavior)
+                    hasAjaxBehavior = true;
+                ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, menuItem, "action", clientId, params);
+                String script = behavior.getScript(cbc);    //could be null if disabled
+
+                if(script != null) {
+                    submitWithBehavioursCommand.append(script);
+                    if (behaviorIter.hasNext()) {
+                        submitWithBehavioursCommand.append(",");
+                    }
+                }
+            }
+        }
+		submitWithBehavioursCommand.append("]); ");
+
+		StringBuilder submitWithParametersCommand = new StringBuilder();
+		if (!hasAjaxBehavior && (menuItem.getActionExpression() != null || menuItem.getActionListeners().length > 0)) {
+            submitWithParametersCommand.append("ice.ace.Menubar.submitWithParameters(event, this, '" + clientId + "'");
+            for(UIComponent child : menuItem.getChildren()) {
+                if(child instanceof UIParameter) {
+                    submitWithParametersCommand.append(", '");
+                    UIParameter param = (UIParameter) child;
+                    submitWithParametersCommand.append(param.getName());
+                    submitWithParametersCommand.append("','");
+                    submitWithParametersCommand.append(String.valueOf(param.getValue()));
+                    submitWithParametersCommand.append("'");
+                }
+            }
+            submitWithParametersCommand.append(");");
+        }
+
+		StringBuilder command = hasAjaxBehavior ? submitWithBehavioursCommand : submitWithParametersCommand;
+		String customOnclick = menuItem.getOnclick();
+		return customOnclick == null ? command.toString() : customOnclick + ";" + command.toString();
+	}
+
 	protected void encodeMenuSeparator(FacesContext context, UIComponent menuSeparator) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("li", null);
