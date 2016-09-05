@@ -23,6 +23,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -75,8 +76,9 @@ public class LengthValidator extends LengthValidatorBase implements Validator {
             script.append(MessageFormat.format(message, label, minimum, maximum));
             script.append("', ");
             script.append(validatedComponent.getAttributes().get("immediate"));
-            script.append(");");
-            script.append(RenderUtil.writeTriggerValidationOn(getValidateOn(), id));
+            script.append(", '");
+            script.append(String.join(" ", getValidateOn().split(" ")));
+            script.append("');");
 
             children.add(new ScriptOutputWriter(script.toString()));
         }
