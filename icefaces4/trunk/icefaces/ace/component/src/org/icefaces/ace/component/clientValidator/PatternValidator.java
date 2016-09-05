@@ -53,7 +53,7 @@ public class PatternValidator extends PatternValidatorBase implements Validator 
             script.append("', ");
             script.append(validatedComponent.getAttributes().get("immediate"));
             script.append(", '");
-            script.append(String.join(" ", getValidateOn().split(" ")));
+            script.append(getValidateOn());
             script.append("');");
 
             children.add(new ScriptOutputWriter(script.toString()));
