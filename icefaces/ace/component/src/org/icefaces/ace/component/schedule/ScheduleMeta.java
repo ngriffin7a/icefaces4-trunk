@@ -43,12 +43,11 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ICEResourceDependency(name = "schedule/underscore.js"),
 	@ICEResourceDependency(name = "schedule/moment.js"),
 	@ICEResourceDependency(name = "schedule/clndr.js"),
-    @ICEResourceDependency(name = "schedule/schedule.css"),
     @ICEResourceDependency(name = "schedule/schedule.js")
 })
 public class ScheduleMeta extends UIComponentBaseMeta {
 
-	@Property(tlddoc = "Temporary atribute. The value of this attribute is a JSON object with the configuration that the underlying library, CLNDR.js , takes to display an event calendar in the client. Eventually, this attribute will be removed, and more specific attributes will be added. The job of the Renderer class will be to translate the values of this component's attributes into a correct JSON object with the configuration that CLNDR.js will understand to build the event calendar on the client. There will also be a mechanism to avoid having to rebuild the entire component in the client whenever there's a slight configuration change.")
-	private String configuration;
+	@Property(tlddoc = "The value should be a List or an Array of org.icefaces.ace.model.schedule.ScheduleEvent objects to be displayed on the schedule. Alternatively, the value can be an instance of org.icefaces.ace.model.schedule.LazyScheduleModel to work in a lazy-loading mode.")
+	private Object value;
 }
 
