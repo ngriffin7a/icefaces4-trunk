@@ -36,15 +36,15 @@ import java.util.List;
 })
 @ClientBehaviorHolder(events = {
         @ClientEvent(name="valueChange", javadoc="Fired when the component detects value is changed.",
-                tlddoc="Fired when the original input changes. Only happens when the inptu is closed or the choose button is clicked",
+                tlddoc="Fired when the original input changes. Only happens when the input is closed or the choose button is clicked",
                 defaultRender="@all", defaultExecute="@this")
 }, defaultEvent = "valueChange")
 public class ColorEntryMeta extends HtmlInputTextMeta{
 
-    @Property(tlddoc="preferred format to display the chosen color under the input field.  Valid values are hex, hex3, hsl, rbg,name, none",
+    @Property(tlddoc="This is the preferred format to display the chosen color under the input field.  Valid values are hex, hex3, hsl, rbg, name, none",
             defaultValue="ColorFormat.HEX",
             defaultValueType = DefaultValueType.EXPRESSION)
-    private ColorFormat preferredFormat;
+    private ColorFormat valueFormat;
 
     @Property(defaultValue="false", tlddoc="If true, showInput will show an input field that a value can be entered into.")
     private boolean showInput;
@@ -56,9 +56,9 @@ public class ColorEntryMeta extends HtmlInputTextMeta{
     private String cancelButtonText;
 
     @Property(defaultValue="choose")
-    private String chooseText;
+    private String selectButtonLabel;
 
-    @Property(defaultValue="false", tlddoc="If showInput is true, this attribute will show the initial value within the input field.")
+    @Property(defaultValue="true", tlddoc="If showInput is true (default), this attribute will show the initial value within the input field.")
     private boolean showInitial;
 
     @Property(defaultValue="true", tlddoc="show the palette that can be selected.")
@@ -71,11 +71,8 @@ public class ColorEntryMeta extends HtmlInputTextMeta{
     @Property(defaultValue="true", tlddoc="When true, the colorpicker will show the previous selections made. This is true by default")
     private boolean showSelectionPalette;
 
-    @Property(defaultValue="2", tlddoc=" when showSelectionPalette is true, this is the maximum number of previous color choices which will be shown.  Default is 2.")
+    @Property(defaultValue="2", tlddoc=" when showSelectionPalette is true, this is the maximum number of previous color choices which will be shown in the selection Palette.  Default is 2.")
     private int maxSelectionSize;
-
-    @Property(defaultValue="false", tlddoc=" when this is true the selection may be left empty.  not to be used with required attribute, obviously...")
-    private boolean allowEmpty;
 
     @Property(tlddoc="A list of available palettes may be used for the user to select from.  This must be a list of String arrays at this time")
     private List<String[]> paletteList;
@@ -89,7 +86,7 @@ public class ColorEntryMeta extends HtmlInputTextMeta{
     @Property(defaultValue="less", tlddoc="Text shown for togglePaletteOnly when more and less palettes than can be viewed in view area.")
     private String togglePaletteLessText;
 
-    @Property(tlddoc="The initial color shown by the widget.")
+    @Property(tlddoc="A color can be selected which is shown when the colorEntry component is first displayed. Afer a color is selected . ")
     private String color;
 
     /* from textEntry */
@@ -112,4 +109,12 @@ public class ColorEntryMeta extends HtmlInputTextMeta{
 
     @Property(tlddoc = "Position of label relative to input field. Supported values are \"left/right/top/bottom/none\". Default is \"none\".")
     private String labelPosition;
+
+    @Property(
+   		tlddoc="Custom inline CSS styles to use for this component. These styles are generally applied to the root DOM element of the component. This is intended for per-component basic style customizations. Note that due to browser CSS precedence rules, CSS rendered on a DOM element will take precedence over the external stylesheets used to provide the ThemeRoller theme on this component. If the CSS properties applied with this attribute do not affect the DOM element you want to style, you may need to create a custom theme styleClass for the theme CSS class that targets the particular DOM elements you wish to customize.")
+   	private String style;
+
+   	@Property(
+   		tlddoc="Custom CSS style class(es) to use for this component. These style classes can be defined in your page or in a theme CSS file.")
+   	private String styleClass;
 }

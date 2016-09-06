@@ -26,6 +26,19 @@
     <ui:param name="description" value="#{msgs['example.ace.colorEntry.description']}"/>
 
     <ui:define name="example">
+        <style type="text/css">
+            .colorEntryCustom1{
+                background: purple;
+            }
+
+            .colorEntryCustom2{
+                background: blue;
+            }
+
+            .colorEntryCustom3{
+                background: green;
+            }
+        </style>
         <h:form id="inputOptionsForm">
             <ace:panel id="inpOptionsPan" header="Options">
                 <h:panelGrid id="inputOptions" columns="2">
@@ -41,6 +54,10 @@
                     <h:inputText id="cancelText" value="#{colorEntryCustomBean.cancelText}" >
                         <f:ajax execute="@this" render="@all"/>
                     </h:inputText>
+                    <h:selectOneMenu id="valueFormat" value="#{colorEntryCustomBean.valueFormat}">
+                          <f:selectItems value="#{colorEntryCustomBean.colorFormats}"/>
+                          <f:ajax execute="@this" render="@all"/>
+                      </h:selectOneMenu>
                     <h:selectOneMenu id="replacerClass" value="#{colorEntryCustomBean.customStyleClass}">
                         <f:selectItem itemLabel="purple background" itemValue="colorEntryCustom1"/>
                         <f:selectItem itemLabel="blue background" itemValue="colorEntryCustom2"/>
@@ -54,8 +71,9 @@
             <ace:panel id="colorInputPanel" header="ColorEntry - Customizable" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" >
                     <ace:colorEntry id="colorInput" value="#{colorEntryCustomBean.value}"
+                               valueFormat="#{colorEntryCustomBean.valueFormat}"
                                showButtons="#{colorEntryCustomBean.showButtons}"
-                               chooseText="#{colorEntryCustomBean.chooseText}"
+                               selectButtonLabel="#{colorEntryCustomBean.chooseText}"
                                cancelButtonText="#{colorEntryCustomBean.cancelText}"
                                styleClass="#{colorEntryCustomBean.customStyleClass}"
                                label="Customizable" labelPosition="left">

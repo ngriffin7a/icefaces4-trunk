@@ -10,20 +10,32 @@ ice.ace.ColorEntry = function(id, cfg) {
         var pickerId = ice.ace.escapeClientId(id);
         this.jq = ice.ace.jq(pickerId);
         var options= cfg.options;
-        var changeFn = function(){console.log(" change fn")} ;
-        if (cfg.behaviors) {
-            var changeFnvals = cfg.behaviors;
-            changeFn = function()
-            {
-                var self = this;
-              /*  self.jq.on('change', function () {
-                    console.log(" change event!!!!!"); */
-                    ice.ace.ab(cfg.behaviors.change);
-               // });
-            }
-            options.change=changeFn;
+        var hideFn = function(){
+      //      console.log(" in hide fn");
         }
+        var changeFn = function()
+        {
+            var t =  ice.ace.jq(input).spectrum("get");
+            var valueFormat= cfg.options.preferredFormat;
+            if (valueFormat=="hex"){
+                t.toHex();
+            } else if (valueFormat == "hsl"){
+                t.toHsl();
+            } else if (valueFormat == "rgb") {
+                t.toRgbString();
+            }else if (valueFormat == "hsv"){
+                t.toHsvString();
+            } else {
+                t.toHexString();
+            }
+            console.log(" value t="+t+" format="+valueFormat);
+            if (cfg.behaviors) {
+                ice.ace.ab(cfg.behaviors.change);
+            }
 
+        }
+        options.change=changeFn;
+        options.hide=hideFn;
 
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
         if (options.color){
@@ -40,7 +52,6 @@ ice.ace.ColorEntry = function(id, cfg) {
 		if (ice.ace.ColorEntrys[id]) {
 			//return;
 		}
-
 
         ice.onElementUpdate(id, function() {
             // .remove cleans jQuery state unlike .unbind
