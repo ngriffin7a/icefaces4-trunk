@@ -332,15 +332,19 @@ ice.mobi.addListener(document, "touchstart", function(){});
 
 (function(){
     ice.mobi.sizePagePanelsToViewPort = function(){
+        console.log("sizePagePanels....");
         var desktop = document.documentElement.className.indexOf('desktop') > -1;
         if( !desktop ){
+            console.log(" not desktop");
             var pagePanels = document.querySelectorAll(".mobi-pagePanel"), i=0;
+            console.log(" pagePanels.length="+pagePanels.length);
             while( i < pagePanels.length ){
                 var hasHeader = pagePanels[i].querySelectorAll(".mobi-pagePanel-header").length > 0;
                 var hasFixedHeader = pagePanels[i].querySelectorAll(".mobi-pagePanel-header.ui-header-fixed").length > 0;
                 var hasFooter = pagePanels[i].querySelectorAll(".mobi-pagePanel-footer").length > 0;
                 var hasFixedFooter = pagePanels[i].querySelectorAll(".mobi-pagePanel-footer.ui-footer-fixed").length > 0;
                 var pagePanelBodyMinHeight = window.innerHeight;
+                console.log(" innerHeight="+window.innerHeight+" hasHeader="+hasHeader+" hasFixedHeader")
                 if( hasHeader && !hasFixedHeader ){
                     pagePanelBodyMinHeight -= 40;
                 }

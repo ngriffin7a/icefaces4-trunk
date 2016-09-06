@@ -40,19 +40,12 @@
                          <ace:ajax execute="@this" render="@all" />
                     </ace:colorEntry>
                     <ace:colorEntry id="colorInput3" value="#{colorEntryBean.allowEmptyValue}"
-                                allowEmpty="true"
+                                required="true"
                                 showPaletteOnly="true"
-                                label="Allow Empty Value and Palette only" labelPosition="left">
+                                label="Required and Show Palette only" labelPosition="left">
                          <ace:ajax execute="@this" render="@all" />
                      </ace:colorEntry>
-                    <ace:colorEntry id="colorInput4" value="#{colorEntryBean.showButtonsValue}"
-                                     showButtons="true"
-                                     showPalette="true"
-                                     label="Show Buttons and Palette" labelPosition="left">
-                        <ace:ajax execute="@this" render="@all"/>
-                    </ace:colorEntry>
-                    <ace:colorEntry id="colorInput5" value="#{colorEntryBean.showInputValue}"
-                                   showInput="true"
+                    <ace:colorEntry id="colorInput4" value="#{colorEntryBean.showInputValue}"
                                    showButtons="true"
                                    label="Show Input" labelPosition="left">
                         <ace:ajax execute="@this" render="@all"/>
@@ -65,7 +58,6 @@
                     <h:outputText id="basicValue" value="Color selected from basic example: #{colorEntryBean.basicValue}"/>
                     <h:outputText id="colorValue" value="Color Selected from initial color example: #{colorEntryBean.colorValue}" />
                     <h:outputText id="allowEmptyValue" value="Color Selected from allowEmpty example: #{colorEntryBean.allowEmptyValue}" />
-                    <h:outputText id="showButtonsValue" value="Color Selected from allowEmpty example: #{colorEntryBean.showButtonsValue}" />
                     <h:outputText id="showInputValue" value="Color Selected from showInput example: #{colorEntryBean.showInputValue}" />
                 </h:panelGrid>
             </ace:panel>

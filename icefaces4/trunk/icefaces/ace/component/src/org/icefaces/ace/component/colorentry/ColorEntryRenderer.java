@@ -98,8 +98,11 @@ public class ColorEntryRenderer extends InputRenderer {
             if(style != null) writer.writeAttribute("style", style, "style");
         //    String styleClass= picker.getStyleClass();
          //   Utils.writeConcatenatedStyleClasses(writer, defaultClass, styleClass);
-
-
+        String preferredFormat = picker.getValueFormat().HEX3.getValue();
+        if (picker.getValueFormat()!=null){
+            preferredFormat = picker.getValueFormat().getValue();
+        }
+        int maxSelectionSize = picker.getMaxSelectionSize();
         JSONBuilder jb = JSONBuilder.create();
         jb.beginFunction("ice.ace.create")
                 .item("ColorEntry")
@@ -107,9 +110,8 @@ public class ColorEntryRenderer extends InputRenderer {
                 .item(clientId)
                 .beginMap()
                 .beginMap("options")
-                .entry("preferredFormat", picker.getPreferredFormat().getValue())
+                .entry("preferredFormat", preferredFormat)
                 .entry("showPalette", picker.isShowPalette())
-                .entry("allowEmpty", picker.isAllowEmpty())
                 .entry("showInput", picker.isShowInput())
                 .entry("showPaletteOnly", picker.isShowPaletteOnly())
                 .entry("togglePaletteOnly", picker.isTogglePaletteOnly())
@@ -117,14 +119,17 @@ public class ColorEntryRenderer extends InputRenderer {
                 .entry("showInput", picker.isShowInput())
                 .entry("showButtons", picker.isShowButtons())
                 .entry("disabled", picker.isDisabled())
-                .entry("chooseText", picker.getChooseText())
+                .entry("chooseText", picker.getSelectButtonLabel())
                 .entry("disabled", picker.isDisabled())
                 .entry("cancelText", picker.getCancelButtonText())
-                .entry("maxSelectionSize", picker.getMaxSelectionSize())
+                .entry("maxSelectionSize", maxSelectionSize)
                 .entry("showSelectionPalette", picker.isShowSelectionPalette());
 
         if (picker.getColor() !=null) {
             jb.entry("color", picker.getColor());
+        }
+        if (!picker.isRequired()){
+            jb.entry("allowEmpty", "true");
         }
         if (picker.getTogglePaletteMoreText() !=null){
             jb.entry("togglePaletteMoreText", picker.getTogglePaletteMoreText());

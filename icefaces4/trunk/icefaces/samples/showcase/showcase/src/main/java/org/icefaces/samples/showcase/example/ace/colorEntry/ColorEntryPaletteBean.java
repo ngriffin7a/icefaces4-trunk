@@ -34,7 +34,7 @@ public class ColorEntryPaletteBean implements Serializable
     private boolean showPalette, showPaletteOnly,
                                    togglePaletteOnly,
                                    showSelectionPalette;
-    private int maxSelectionSize;
+    private int maxSelectionSize=3;
     private String[] togglePalette1 ={
              "#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"
     } ;

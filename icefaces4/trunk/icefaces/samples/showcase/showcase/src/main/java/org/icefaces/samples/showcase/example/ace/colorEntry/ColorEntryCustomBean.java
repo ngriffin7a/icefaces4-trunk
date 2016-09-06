@@ -19,6 +19,7 @@ package org.icefaces.samples.showcase.example.ace.colorEntry;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
+import org.icefaces.ace.component.colorentry.ColorFormat;
 
 @ManagedBean(name= ColorEntryCustomBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
@@ -27,8 +28,9 @@ public class ColorEntryCustomBean implements Serializable
     public static final String BEAN_NAME = "colorEntryCustomBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    private String value, chooseText, cancelText, customStyleClass;
-    private boolean showButtons;
+    private String value, chooseText="Choose", cancelText="Cancel", customStyleClass="colorEntryCustom1";
+    private boolean showButtons=true;
+    private ColorFormat valueFormat;
 
     public String getValue() {
         return value;
@@ -68,5 +70,16 @@ public class ColorEntryCustomBean implements Serializable
 
     public void setShowButtons(boolean showButtons) {
         this.showButtons = showButtons;
+    }
+
+    public ColorFormat[] getColorFormats(){
+        return ColorFormat.values();
+    }
+    public ColorFormat getValueFormat() {
+        return valueFormat;
+    }
+
+    public void setValueFormat(ColorFormat valueFormat) {
+        this.valueFormat = valueFormat;
     }
 }
