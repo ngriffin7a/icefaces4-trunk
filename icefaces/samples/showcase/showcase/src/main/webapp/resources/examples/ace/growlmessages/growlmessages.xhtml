@@ -60,6 +60,13 @@
                         <f:selectItem itemValue="bottom-right" itemLabel="bottom-right"/>
                         <ace:ajax render="demoform2:allMsgsGrowl"/>
                     </ace:simpleSelectOneMenu>
+
+                    <h:outputText value="useNativeNotifications"/>
+                    <ace:simpleSelectOneMenu id="nativeNotifications" value="#{growlMessagesBean.nativeNotifications}">
+                        <f:selectItem itemValue="false" itemLabel="false"/>
+                        <f:selectItem itemValue="true" itemLabel="true"/>
+                        <ace:ajax render="demoform2:allMsgsGrowl"/>
+                    </ace:simpleSelectOneMenu>
                 </h:panelGrid>
             </ace:panel>
         </h:form>
@@ -93,7 +100,7 @@
                                 for="@inView"
                                closeAll="#{growlMessagesBean.closeAll}"
                                maxVisibleMessages="#{growlMessagesBean.maxVisibleMessages}"
-                               position="#{growlMessagesBean.position}"/>
+                               position="#{growlMessagesBean.position}" useNativeNotifications="#{growlMessagesBean.nativeNotifications}"/>
         </h:form>
     </ui:define>
 </ui:composition>

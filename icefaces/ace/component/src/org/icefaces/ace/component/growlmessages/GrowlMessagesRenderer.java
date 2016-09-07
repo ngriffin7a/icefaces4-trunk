@@ -130,7 +130,9 @@ public class GrowlMessagesRenderer extends Renderer {
             }
         }
         jb = JSONBuilder.create();
-        jb.endArray().endMap().endArray().endFunction();
+        jb.endArray().endMap().
+            item(messages.isUseNativeNotifications()).
+            endArray().endFunction();
         writer.write(jb + "//" + UUID.randomUUID());
         writer.endElement("script");
         writer.endElement("span");
