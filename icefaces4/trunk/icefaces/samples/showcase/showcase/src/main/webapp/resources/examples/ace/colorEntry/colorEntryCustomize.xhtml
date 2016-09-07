@@ -54,10 +54,12 @@
                     <h:inputText id="cancelText" value="#{colorEntryCustomBean.cancelText}" >
                         <f:ajax execute="@this" render="@all"/>
                     </h:inputText>
+                    <h:outputLabel for="valueFormat" value="Choose format of Value"/>
                     <h:selectOneMenu id="valueFormat" value="#{colorEntryCustomBean.valueFormat}">
                           <f:selectItems value="#{colorEntryCustomBean.colorFormats}"/>
                           <f:ajax execute="@this" render="@all"/>
                       </h:selectOneMenu>
+                    <h:outputLabel for="replacerClass" value="Extra styling to be applied"/>
                     <h:selectOneMenu id="replacerClass" value="#{colorEntryCustomBean.customStyleClass}">
                         <f:selectItem itemLabel="purple background" itemValue="colorEntryCustom1"/>
                         <f:selectItem itemLabel="blue background" itemValue="colorEntryCustom2"/>
