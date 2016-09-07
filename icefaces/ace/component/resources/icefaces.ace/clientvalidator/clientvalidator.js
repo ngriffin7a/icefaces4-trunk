@@ -211,7 +211,7 @@
         };
     }
 
-    ice.ace.setupClientValidation = function (id, rule, config, messageType, message, immediate) {
+    ice.ace.setupClientValidation = function (id, rule, config, messageType, message, immediate, customEvents) {
         var form = formOf(id);
         if (!form.enabledValidation) {
             ice.ace.jq(ice.ace.escapeClientId(form.id)).validate().settings.showErrors = noop;
@@ -234,6 +234,10 @@
                 messageCreator[rule] = clientValidationGrowlMessagesFor(messageType.id, message, messageType.configuration);
             }
             ruleConfig['messages'] = messageCreator;
+            if (customEvents && customEvents.length > 0) {
+                disableDefaultEvents(ruleConfig);
+                triggerValidationOn(id, customEvents);
+            }
 
             ice.ace.jq(selector).rules('add', ruleConfig);
             document.getElementById(id).immediate = immediate;
@@ -242,14 +246,27 @@
         setup();
     };
 
-    ice.ace.triggerValidationOn = function(id, eventType) {
+    function triggerValidationOn(id, events) {
         var element = document.getElementById(id);
-        element.addEventListener(eventType, function() {
-            var jqElement = ice.ace.jq(element);
-            var valid = jqElement.valid();
-            if (valid) {
-                cleanupMessages([element]);
+        var eventTypes = events.split(' ');
+        for (var i = 0; i < eventTypes.length; i++) {
+            var eventType = eventTypes[i];
+            if (eventType) {
+                element.addEventListener(eventType, function () {
+                    var jqElement = ice.ace.jq(element);
+                    var valid = jqElement.valid();
+                    if (valid) {
+                        cleanupMessages([element]);
+                    }
+                });
             }
-        });
-    };
+        }
+    }
+
+    function disableDefaultEvents(ruleConfig) {
+        ruleConfig['onsubmit'] = false;
+        ruleConfig['onfocusout'] = false;
+        ruleConfig['onkeyup'] = false;
+        ruleConfig['onclick'] = false;
+    }
 })();
