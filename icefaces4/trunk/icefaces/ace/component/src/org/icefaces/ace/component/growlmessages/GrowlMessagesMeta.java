@@ -91,6 +91,9 @@ public class GrowlMessagesMeta extends UIMessagesMeta {
     @Property(tlddoc = "Duration (also called \"speed\" in jQuery) of hide effect. Values and default same as for showEffectDuration.", defaultValue = "_default")
     private String hideEffectDuration;
 
+    @Property(tlddoc = "Enable native browser notifications instead of using Growl notifications.", defaultValue = "false")
+    private boolean useNativeNotifications;
+
 /*
     @Property(tlddoc = "Effect to run to show a message. One of \"blind\", \"bounce\", \"clip\", \"drop\", \"explode\", \"fade\", \"fold\", \"highlight\", \"puff\", \"pulsate\", \"scale\", \"shake\", \"size\", \"slide\".", defaultValue = "fade")
     private String showEffect;
