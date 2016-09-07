@@ -17,18 +17,20 @@ ice.ace.ColorEntry = function(id, cfg) {
         {
             var t =  ice.ace.jq(input).spectrum("get");
             var valueFormat= cfg.options.preferredFormat;
-            if (valueFormat=="hex"){
+            var convertValue = false;
+            if (t && valueFormat)convertValue=true;
+            if (convertValue && valueFormat=="hex"){
                 t.toHex();
-            } else if (valueFormat == "hsl"){
+            } else if (convertValue && valueFormat == "hsl"){
                 t.toHsl();
-            } else if (valueFormat == "rgb") {
+            } else if (convertValue && valueFormat == "rgb") {
                 t.toRgbString();
-            }else if (valueFormat == "hsv"){
+            }else if (convertValue && valueFormat == "hsv"){
                 t.toHsvString();
-            } else {
+            } else if (convertValue){
                 t.toHexString();
             }
-            console.log(" value t="+t+" format="+valueFormat);
+          //  console.log(" value t="+t+" format="+valueFormat);
             if (cfg.behaviors) {
                 ice.ace.ab(cfg.behaviors.change);
             }

@@ -49,7 +49,8 @@ public class ColorEntryMeta extends HtmlInputTextMeta{
     @Property(defaultValue="false", tlddoc="If true, showInput will show an input field that a value can be entered into.")
     private boolean showInput;
 
-    @Property(defaultValue="false")
+    @Property(defaultValue="false", tlddoc="The buttons on the color chooser may or may not be shown.  The text for these controls may be cusomized using " +
+            "cancelButtonText and selectButtonLabel attributes.  The default is false or that they will not be shown.")
     private boolean showButtons;
 
     @Property(defaultValue="cancel")
