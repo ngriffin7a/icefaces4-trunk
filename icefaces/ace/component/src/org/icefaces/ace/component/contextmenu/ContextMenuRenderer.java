@@ -251,7 +251,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
 			if (label.length() > 0) submenuLabels += label;
 		}
 
-		/* ICE_11127 for hashcode if labels change values to update script */
+		/* ICE_11137 for hashcode if labels change values to update script */
 		if (component instanceof AbstractMenu){
 			AbstractMenu am = (AbstractMenu) component;
 			ContextMenu cm = (ContextMenu) am;
