@@ -51,8 +51,8 @@ ice.ace.GrowlMessages = function (id, cfg, nativeNotifications) {
         }
     }
 
-    if (nativeNotifications) {
-        Notification.requestPermission(function (permission) {
+    if (nativeNotifications && window.Notification) {
+        window.Notification.requestPermission(function (permission) {
             if (permission === "granted") {
                 runNativeNotifications();
             } else {
