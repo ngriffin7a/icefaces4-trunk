@@ -65,7 +65,7 @@ public class MenuItemMeta extends UICommandMeta {
     @Property(tlddoc = "Javascript event handler for click event. If this function explicitly returns 'false', then the request to the server will be cancelled.")
     private String onclick;
 
-    @Property(tlddoc = "Path of the menuitem image.")
+    @Property(tlddoc = "CSS class name(s) containing the styling to display an icon.")
     private String icon;
 
     @Property(tlddoc = "Boolean value to disable/enable the menu item. The menu item will still be shown but with different styling, and clicking on it will not trigger any action.")
