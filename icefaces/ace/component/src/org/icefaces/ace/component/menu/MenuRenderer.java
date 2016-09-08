@@ -63,6 +63,10 @@ public class MenuRenderer extends BaseMenuRenderer {
 		String clientId = menu.getClientId(context);
         String position = menu.getPosition();
         String type = menu.getType();
+		String submenuLabels = "";
+		if (menu.getSubmenuLabels()!=null){
+		   submenuLabels = menu.getSubmenuLabels();
+		}
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
@@ -110,6 +114,7 @@ public class MenuRenderer extends BaseMenuRenderer {
         json.entry("showDelay", menu.getShowDelay());
         json.entryNonNullValue("styleClass", menu.getStyleClass())
             .entryNonNullValue("style", menu.getStyle())
+            .entryNonNullValue("hashcode",submenuLabels.hashCode())
             .endMap()
             .endArray()
             .endFunction();
@@ -193,7 +198,7 @@ public class MenuRenderer extends BaseMenuRenderer {
                     // we just need <li></li>
 					writer.writeAttribute("id", child.getClientId(context), "id");
                 } else if(child instanceof Submenu) {
-                    encodeTieredSubmenu(context, (Submenu) child);
+                    encodeTieredSubmenu(context, (Submenu) child, component);
                 } else if(child instanceof MultiColumnSubmenu) {
 					encodeMultiColumnSubmenu(context, (MultiColumnSubmenu) child);
 				}
@@ -203,11 +208,12 @@ public class MenuRenderer extends BaseMenuRenderer {
         }
     }
 
-	protected void encodeTieredSubmenu(FacesContext context, Submenu submenu) throws IOException{
+	protected void encodeTieredSubmenu(FacesContext context, Submenu submenu, UIComponent component) throws IOException{
 		ResponseWriter writer = context.getResponseWriter();
         String icon = submenu.getIcon();
         String label = submenu.getLabel();
 		boolean disabled = submenu.isDisabled();
+		String submenuLabels = "";
 
         //title
         writer.startElement("a", null);
@@ -235,7 +241,20 @@ public class MenuRenderer extends BaseMenuRenderer {
             Utils.writeConcatenatedStyleClasses(writer, "wijmo-wijmenu-text", submenu.getStyleClass());
             writer.write(submenu.getLabel());
             writer.endElement("span");
+
+			if (label.length() > 0) submenuLabels += label;
         }
+
+		/* ICE_11136 for hashcode if labels change values to update script */
+		if (component instanceof AbstractMenu){
+			AbstractMenu am = (AbstractMenu) component;
+			Menu m = (Menu) am;
+			String submenuLabelsPrevious = m.getSubmenuLabels();
+			if (submenuLabelsPrevious != null && submenuLabelsPrevious.length() > 0){
+				submenuLabels += submenuLabelsPrevious;
+			}
+			m.setSubmenuLabels(submenuLabels);
+		}
 
         writer.endElement("a");
 
