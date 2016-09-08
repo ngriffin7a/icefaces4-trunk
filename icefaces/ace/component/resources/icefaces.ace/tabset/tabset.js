@@ -481,7 +481,7 @@ ice.ace.tabset = {
                    var rootElem = document.getElementById(clientId);
                    rootElem.suppressServerSideTransition = null;
                }
-               if (jsProps.showEffect) {
+               if (jsProps.showEffect && jsProps.activeTabChangeRequest) {
                    var node = tabviewObj.getTab(index).get('contentEl').childNodes[0];
                    if (jsProps.showEffect == 'fade') ice.ace.jq(node).hide();
                    if (node) ice.ace.animation.run({node: node, name: jsProps.showEffect}, {mode: 'show'}, jsProps.showEffectLength);
