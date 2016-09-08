@@ -100,6 +100,10 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
         ContextMenu menu = (ContextMenu) abstractMenu;
 		String clientId = menu.getClientId(context);
 		String delegateId = menu.getForDelegate();
+		String submenuLabels = "";
+		if (menu.getSubmenuLabels()!=null){
+		   submenuLabels = menu.getSubmenuLabels();
+		}
 		
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
@@ -140,7 +144,8 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
             .endMap()
 
             .entryNonNullValue("styleClass", menu.getStyleClass())
-            .entryNonNullValue("style", menu.getStyle());
+            .entryNonNullValue("style", menu.getStyle())
+            .entryNonNullValue("hashcode",submenuLabels.hashCode());
 			
             json.endMap()
             .endArray()
@@ -196,7 +201,7 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
                 if(child instanceof MenuItem) {
                     encodeMenuItem(context, (MenuItem) child);
                 } else if(child instanceof Submenu) {
-                    encodeSubmenu(context, (Submenu) child);
+                    encodeSubmenu(context, (Submenu) child, component);
                 } else if(child instanceof MenuSeparator) {
                     // we just need <li></li>
 					writer.writeAttribute("id", child.getClientId(context), "id");
@@ -209,12 +214,13 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
         }
     }
 	
-	protected void encodeSubmenu(FacesContext context, Submenu submenu) throws IOException{
+	protected void encodeSubmenu(FacesContext context, Submenu submenu, UIComponent component) throws IOException{
 		ResponseWriter writer = context.getResponseWriter();
         String icon = submenu.getIcon();
 
 		String label = submenu.getLabel();
 		boolean disabled = submenu.isDisabled();
+		String submenuLabels = "";
 
 		writer.startElement("a", null);
 		if (disabled) {
@@ -241,6 +247,19 @@ public class ContextMenuRenderer extends BaseMenuRenderer {
 			Utils.writeConcatenatedStyleClasses(writer, "wijmo-wijmenu-text", submenu.getStyleClass());
 			writer.write(submenu.getLabel());
 			writer.endElement("span");
+
+			if (label.length() > 0) submenuLabels += label;
+		}
+
+		/* ICE_11127 for hashcode if labels change values to update script */
+		if (component instanceof AbstractMenu){
+			AbstractMenu am = (AbstractMenu) component;
+			ContextMenu cm = (ContextMenu) am;
+			String submenuLabelsPrevious = cm.getSubmenuLabels();
+			if (submenuLabelsPrevious != null && submenuLabelsPrevious.length() > 0){
+				submenuLabels += submenuLabelsPrevious;
+			}
+			cm.setSubmenuLabels(submenuLabels);
 		}
 
 		writer.endElement("a");
