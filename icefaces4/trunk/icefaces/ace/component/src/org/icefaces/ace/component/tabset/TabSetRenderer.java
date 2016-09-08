@@ -297,6 +297,7 @@ public class TabSetRenderer extends CoreRenderer {
             entry("orientation", orientation).
             entry("showEffect", showEffect).
             entry("showEffectLength", showEffectLength).
+            entry("activeTabChangeRequest", decSelIdx != null).
         endMap().
         beginMap().
             entry("devMode", facesContext.isProjectStage(ProjectStage.Development)).
