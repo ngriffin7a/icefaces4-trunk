@@ -114,4 +114,7 @@ public class MenuMeta extends UIComponentBaseMeta {
     protected Integer forceUpdateCounter;
 
     private AbstractMenu am; // need this for solving dependence on AbstractMenu when compiling MenuBase
+
+    @Field
+    private String submenuLabels;
 }
