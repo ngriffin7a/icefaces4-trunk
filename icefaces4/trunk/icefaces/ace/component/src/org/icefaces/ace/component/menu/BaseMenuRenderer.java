@@ -91,8 +91,9 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 				writer.writeAttribute("tabindex", "0", null);
 			}
 			if (menuItem.isDisabled() || disabledParent) {
-				writer.writeAttribute("class", "ui-state-disabled", null);
+				writer.writeAttribute("class", "ui-state-disabled wijmo-wijmenu-link ui-corner-all", null);
 			} else {
+				writer.writeAttribute("class", "wijmo-wijmenu-link ui-corner-all", null);
 				String url = menuItem.getUrl();
 				if(url != null) {
 					writer.writeAttribute("href", getEncodedURL(context, menuItem.getUrlEncoding(), url, menuItem.getUrlParameters()), null);
