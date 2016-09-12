@@ -235,7 +235,9 @@
             }
             ruleConfig['messages'] = messageCreator;
             if (customEvents && customEvents.length > 0) {
-                disableDefaultEvents(ruleConfig);
+                var jqForm = ice.ace.jq(ice.ace.escapeClientId(form.id));
+                //disable default event listeners per entire form (not possible to go finer grain with current API)
+                disableDefaultEvents(jqForm.validate().settings);
                 triggerValidationOn(id, customEvents);
             }
 
