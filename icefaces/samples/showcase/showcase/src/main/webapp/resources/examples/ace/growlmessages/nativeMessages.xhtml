@@ -42,63 +42,37 @@
                         <f:selectItem itemValue="true" itemLabel="true"/>
                         <ace:ajax render="demoform2:allMsgsGrowl"/>
                     </ace:simpleSelectOneMenu>
-
-                    <h:outputText value="closeAll"/>
-                    <ace:checkboxButton id="closeAllBox" value="#{growlMessagesBean.closeAll}">
-                        <ace:ajax render="demoform2:allMsgsGrowl"/>
-                    </ace:checkboxButton>
-
-                    <h:outputText value="maxVisibleMessages"/>
-                    <ace:simpleSelectOneMenu id="maxMessages" value="#{growlMessagesBean.maxVisibleMessages}">
-                        <f:selectItem itemValue="0" itemLabel="0"/>
-                        <f:selectItem itemValue="1" itemLabel="1"/>
-                        <f:selectItem itemValue="2" itemLabel="2"/>
-                        <f:selectItem itemValue="3" itemLabel="3"/>
-                        <ace:ajax render="demoform2:allMsgsGrowl"/>
-                    </ace:simpleSelectOneMenu>
-
-                    <h:outputText value="position"/>
-                    <ace:simpleSelectOneMenu id="messagePosition" value="#{growlMessagesBean.position}">
-                        <f:selectItem itemValue="top-left" itemLabel="top-left"/>
-                        <f:selectItem itemValue="top-right" itemLabel="top-right"/>
-                        <f:selectItem itemValue="bottom-left" itemLabel="bottom-left"/>
-                        <f:selectItem itemValue="bottom-right" itemLabel="bottom-right"/>
-                        <ace:ajax render="demoform2:allMsgsGrowl"/>
-                    </ace:simpleSelectOneMenu>
                 </h:panelGrid>
             </ace:panel>
         </h:form>
         <h:form id="demoform2">
             <ace:panel id="personalInfoInputPanel" header="Choose the types of messages to show">
                 <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
-					
-					<h:panelGroup>
-						<ace:checkboxButton id="infoBox" value="#{growlMessagesBean.info}" />
-						<h:outputText value=" Info" />
-					</h:panelGroup>
-					<h:panelGroup>
-						<ace:checkboxButton id="warnBox" value="#{growlMessagesBean.warn}" />
-						<h:outputText value=" Warn" />
-					</h:panelGroup>
-					<h:panelGroup>
-						<ace:checkboxButton id="errorBox" value="#{growlMessagesBean.error}" />
-						<h:outputText value=" Error" />
-					</h:panelGroup>
-					<h:panelGroup>
-						<ace:checkboxButton id="fatalBox" value="#{growlMessagesBean.fatal}" />
-						<h:outputText value=" Fatal" />
-					</h:panelGroup>
-					
+
+                    <h:panelGroup>
+                        <ace:checkboxButton id="infoBox" value="#{growlMessagesBean.info}" />
+                        <h:outputText value=" Info" />
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <ace:checkboxButton id="warnBox" value="#{growlMessagesBean.warn}" />
+                        <h:outputText value=" Warn" />
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <ace:checkboxButton id="errorBox" value="#{growlMessagesBean.error}" />
+                        <h:outputText value=" Error" />
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <ace:checkboxButton id="fatalBox" value="#{growlMessagesBean.fatal}" />
+                        <h:outputText value=" Fatal" />
+                    </h:panelGroup>
+
                 </h:panelGrid>
-				<ace:pushButton id="messageButton" value="Show Messages"
+                <ace:pushButton id="messageButton" value="Show Messages"
                                 actionListener="#{growlMessagesBean.listener}" />
             </ace:panel>
 
             <ace:growlMessages  id="allMsgsGrowl" autoHide="#{growlMessagesBean.autoHide}"
-                                for="@inView"
-                               closeAll="#{growlMessagesBean.closeAll}"
-                               maxVisibleMessages="#{growlMessagesBean.maxVisibleMessages}"
-                               position="#{growlMessagesBean.position}" header="#{growlMessagesBean.header}"/>
+                                for="@inView" header="#{growlMessagesBean.header}" useNativeNotifications="true"/>
         </h:form>
     </ui:define>
 </ui:composition>
