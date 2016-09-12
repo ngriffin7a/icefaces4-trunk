@@ -47,4 +47,11 @@ public class SubmitMonitorBean implements Serializable {
 	public void sleepListener(ValueChangeEvent event) {
 		sleep();
 	}
+	
+	public void forceError() {
+		sleep(SLEEP);
+		// This is an intentional error so we can demonstrate the ace:submitMonitor serverError state
+		int divideByZeroError = 5/0;
+	}	
+	
 }

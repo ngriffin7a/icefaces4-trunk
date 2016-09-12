@@ -41,7 +41,7 @@
 
     <developers>
         <developer>
-            <name>ICEsoft Technologies, Inc.</name>
+            <name>ICEsoft Technologies Canada Corp.</name>
             <email>product.support@icesoft.com</email>
         </developer>
     </developers>
@@ -385,10 +385,24 @@
                             </dependency>
                         </dependencies>
                     </plugin>
+                          <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jarsigner-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <id>sign</id>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
                 </plugins>
             </build>
         </profile>
 
+<!-- old signer profile
         <profile>
             <id>sign-artifacts</id>
             <activation>
@@ -414,7 +428,7 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile> -->
 
         <profile>
             <id>deployRemote</id>
