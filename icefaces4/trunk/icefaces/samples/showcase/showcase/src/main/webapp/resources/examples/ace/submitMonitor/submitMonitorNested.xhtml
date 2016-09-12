@@ -46,19 +46,17 @@
 
 		<h:form id="demoForm" prependId="false">
 			<ace:submitMonitor id="submitMonitorPage" blockUI="@all"
-				               autoCenter="true" serverErrorLabel="Server Error!" activeLabel="Monitor: entire page" />
+				               autoCenter="true" activeLabel="Monitor: entire page" />
 				               
 			<ace:panel id="panel" header="Example Panel">
 				<ace:submitMonitor id="submitMonitorPanel" for="panel"
-					               blockUI="panel" autoCenter="true"
+					               blockUI="@all" autoCenter="true"
 					               activeLabel="Monitor: example panel"
-					               serverErrorLabel="Panel Server Error!"
 					               rendered="#{submitMonitorNested.renderPanel}"/>
 	            
 				<h:panelGroup id="wrapper" layout="block">
 					<ace:submitMonitor id="submitMonitorWrapper" for="wrapper"
-						               blockUI="wrapper" autoCenter="true" activeLabel="Monitor: list only"
-						               serverErrorLabel="Wrapper Server Error!"
+						               blockUI="@all" autoCenter="true" activeLabel="Monitor: list only"
 						               rendered="#{submitMonitorNested.renderList}"/>
 					<h:outputLabel for="list" value="Example List:" />
 					<h:selectOneMenu id="list" valueChangeListener="#{submitMonitor.sleepListener}">
@@ -74,7 +72,7 @@
 			</ace:panel>
 			
             <ace:pushButton id="submitPage" label="Submit Page"
-                            actionListener="#{submitMonitor.forceError}" />
+                            actionListener="#{submitMonitor.sleep}" />
 		</h:form>
 	</ui:define>
 </ui:composition>
