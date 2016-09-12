@@ -36,7 +36,7 @@ public class GrowlMessagesBean implements Serializable {
     private boolean closeAll = true;
     private int maxVisibleMessages = 0;
     private String position = "top-right";
-	private boolean nativeNotifications;
+	private String header = "";
 	
 	private boolean info;
 	private boolean warn;
@@ -75,12 +75,12 @@ public class GrowlMessagesBean implements Serializable {
         this.position = position;
     }
 
-	public boolean isNativeNotifications() {
-		return nativeNotifications;
+	public String getHeader() {
+		return header;
 	}
 
-	public void setNativeNotifications(boolean nativeNotifications) {
-		this.nativeNotifications = nativeNotifications;
+	public void setHeader(String header) {
+		this.header = header;
 	}
 
 	public boolean getInfo() {
