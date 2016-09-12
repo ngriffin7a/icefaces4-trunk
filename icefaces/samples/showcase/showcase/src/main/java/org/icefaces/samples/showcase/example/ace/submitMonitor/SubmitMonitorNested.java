@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
-
 
 @ManagedBean(name= SubmitMonitorNested.BEAN_NAME)
 @CustomScoped(value = "#{window}")
@@ -31,12 +29,4 @@ public class SubmitMonitorNested implements Serializable {
 	public void setRenderList(boolean renderList) {
 		this.renderList = renderList;
 	}
-	
-	public void forceError(ActionEvent event) {
-		// This is an intentional error so we can demonstrate the ace:submitMonitor serverError state
-		int divideByZeroError = 5/0;
-	}	
-
-	
-	
 }
