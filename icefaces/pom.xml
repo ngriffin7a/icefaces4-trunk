@@ -385,7 +385,8 @@
                             </dependency>
                         </dependencies>
                     </plugin>
-                          <plugin>
+<!-- temp remove signing task
+	<plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jarsigner-plugin</artifactId>
         <version>1.4</version>
@@ -398,6 +399,7 @@
           </execution>
         </executions>
       </plugin>
+      -->
                 </plugins>
             </build>
         </profile>
