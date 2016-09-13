@@ -32,9 +32,9 @@ public class ScheduleEvent {
     public String getTitle() { return title; }
 	public void setTitle(String title) { this.title = title; }
 
-	private int duration; // minutes
-    public int getDuration() { return duration; }
-	public void setDuration(int duration) { this.duration = duration; }
+	private Date endDate;
+    public Date getEndDate() { return endDate; }
+	public void setEndDate(Date endDate) { this.date = endDate; }
 
 	private String location;
     public String getLocation() { return location; }
@@ -44,7 +44,11 @@ public class ScheduleEvent {
     public String getStyleClass() { return styleClass; }
 	public void setStyleClass(String styleClass) { this.styleClass = styleClass; }
 
-	private String description;
-    public String getDescription() { return description; }
-	public void setDescription(String description) { this.description = description; }
+	private String notes;
+    public String getNotes() { return notes; }
+	public void setNotes(String notes) { this.notes = notes; }
+
+	private String data; // arbitrary data do used with custom templates
+    public String getData() { return data; }
+	public void setData(String data) { this.data = data; }
 }
