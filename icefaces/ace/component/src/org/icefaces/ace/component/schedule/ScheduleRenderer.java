@@ -38,45 +38,24 @@ public class ScheduleRenderer extends Renderer {
 		Schedule schedule = (Schedule) component;
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = component.getClientId();
+		String template = "";
+		String templateName = schedule.getTemplate();
+		if ("full".equalsIgnoreCase(templateName)) {
+			template = ScheduleTemplates.full;
+			templateName = "full";
+		} else if ("mini".equalsIgnoreCase(templateName)) {
+			template = ScheduleTemplates.mini;
+			templateName = "mini";
+		} else {
+			templateName = "custom";
+		}
 
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId, null);
 
 		writer.startElement("div", null);
         writer.write("<script type=\"text/template\" id=\"" + clientId + "_template\">"
-            +"<div class=\"clndr-controls ui-state-active\">"
-              +"<div class=\"clndr-previous-button\">&lt;</div>"
-              +"<div class=\"clndr-next-button\">&gt;</div>"
-              +"<div class=\"current-month\"><%= month %> <%= year %></div>"
-
-            +"</div>"
-            +"<div class=\"clndr-grid ui-widget-content\">"
-              +"<div class=\"days-of-the-week clearfix ui-state-default\">"
-                +"<% _.each(daysOfTheWeek, function(day) { %>"
-                  +"<div class=\"header-day\"><%= day %></div>"
-                +"<% }); %>"
-              +"</div>"
-              +"<div class=\"days\">"
-                +"<% _.each(days, function(day) { %>"
-                  +"<div class=\"<%= day.classes %> ui-widget-content\" id=\"<%= day.id %>\">"
-                  +"<% if (day.classes.indexOf('today') > -1) %><div class=\"ui-state-highlight\"><% ; %>"
-                  +"<div class=\"day-number\"><%= day.day %></div>"
-                  +"<% _.each(day.events, function(event) { if (day.classes.indexOf('adjacent-month') == -1) %><div class=\"ui-state-hover ui-corner-all\">"
-                  +"<%= event.title %></div><% }); %>"
-                  +"<% if (day.classes.indexOf('today') > -1) %></div><% ; %>"
-                +"</div><% }); %>"
-              +"</div>"
-            +"</div>"
-            +"<div class=\"event-listing ui-widget-content\">"
-              +"<div class=\"event-listing-title ui-state-default\">EVENTS THIS MONTH</div>"
-              +"<% _.each(eventsThisMonth, function(event) { %>"
-                  +"<div class=\"event-item\">"
-                    +"<div class=\"event-item-name\"><%= event.title %></div>"
-                    +"<div class=\"event-item-location\"><%= event.location %></div>"
-                  +"</div>"
-                +"<% }); %>"
-            +"</div>"
-          +"</script>");
+			+ template + "</script>");
 		writer.endElement("div");
 
 		// get events
@@ -89,30 +68,44 @@ public class ScheduleRenderer extends Renderer {
 		}
 
 		// render event data
-		JSONBuilder events = JSONBuilder.create();
-		events.beginArray();
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginFunction("ice.ace.create")
+			.item("Schedule")
+			.beginArray()
+				.item(clientId)
+				.beginMap()
+					.beginArray("events");
 
-		Iterator<ScheduleEvent> iterator = eventList.iterator();
-		while (iterator.hasNext()) {
-			ScheduleEvent scheduleEvent = iterator.next();
-			events.beginMap();
-			events.entry("date", convertDateToClientFormat(scheduleEvent.getDate()));
-			events.entry("title", scheduleEvent.getTitle());
-			events.entry("location", scheduleEvent.getLocation());
-			events.endMap();
-		}
+					Iterator<ScheduleEvent> iterator = eventList.iterator();
+					while (iterator.hasNext()) {
+						ScheduleEvent scheduleEvent = iterator.next();
+						jb.beginMap();
+						jb.entry("date", convertDateToClientFormat(scheduleEvent.getDate()));
+						jb.entry("time", convertTimeToClientFormat(scheduleEvent.getDate()));
+						jb.entry("title", scheduleEvent.getTitle());
+						jb.entry("location", scheduleEvent.getLocation());
+						jb.entry("notes", scheduleEvent.getNotes());
+						jb.endMap();
+					}
 
-		events.endArray();
+					jb.endArray()
+				.endMap()
+			.endArray()
+          .endFunction();
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "ice-ace-schedule ui-widget", null);
+		writer.writeAttribute("class", "ice-ace-schedule ui-widget " + templateName, null);
 		writer.endElement("div");
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		writer.write("ice.ace.schedule.renderSchedule('"
-			+ clientId + "', " + events.toString() + ");");
+		writer.write(jb.toString());
 		writer.endElement("script");
+
+		writer.startElement("div", null);
+		writer.writeAttribute("class", "event-details", null);
+		writer.writeAttribute("title", "Event Details", null);
+		writer.endElement("div");
 
 		writer.endElement("div");
 	}
@@ -123,6 +116,20 @@ public class ScheduleRenderer extends Renderer {
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH) + 1;
 		int day = cal.get(Calendar.DATE);
-		return (year + "-" + month + "-" + day);
+		return (year + "-" + addLeadingZero(month) + month + "-" + addLeadingZero(day) + day);
+	}
+
+	private String convertTimeToClientFormat(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int minute = cal.get(Calendar.MINUTE);
+		String ampm = cal.get(Calendar.AM_PM) == Calendar.AM ? "am" : "pm";
+		return (addLeadingZero(hour) + hour + ":" + addLeadingZero(minute) + minute + " " + ampm);
+	}
+
+	private String addLeadingZero(int value) {
+		if (value < 10) return "0";
+		return "";
 	}
 }
