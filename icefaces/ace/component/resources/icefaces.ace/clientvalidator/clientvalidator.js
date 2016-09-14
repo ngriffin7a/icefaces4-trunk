@@ -241,15 +241,18 @@
             messageCreator[rule] = clientValidationGrowlMessagesFor(messageType.id, message, messageType.configuration);
         }
         ruleConfig['messages'] = messageCreator;
+
+        var element = document.getElementById(id);
         if (customEvents && customEvents.length > 0) {
             var jqForm = ice.ace.jq(ice.ace.escapeClientId(form.id));
             //disable default event listeners per entire form (not possible to go finer grain with current API)
-            disableDefaultEvents(jqForm.validate().settings);
+            disableDefaultEvents(jqForm.validate());
             triggerValidationOn(id, customEvents);
+            element.customValidation = true;
         }
 
         ice.ace.jq(selector).rules('add', ruleConfig);
-        document.getElementById(id).immediate = immediate;
+        element.immediate = immediate;
     };
 
     function triggerValidationOn(id, events) {
@@ -269,10 +272,17 @@
         }
     }
 
-    function disableDefaultEvents(ruleConfig) {
-        ruleConfig['onsubmit'] = false;
-        ruleConfig['onfocusout'] = false;
-        ruleConfig['onkeyup'] = false;
-        ruleConfig['onclick'] = false;
+    function disableDefaultEvents(validator) {
+        var cfg = validator.settings;
+        var callbacks = ['onsubmit', 'onfocusout', 'onclick', 'onkeyup'];
+        for (var i = 0, l = callbacks.length; i < l; i++) {
+            var callback = callbacks[i];
+            var originalCallback = cfg[callback];
+            cfg[callback] = function(element, event) {
+                if (!element.customValidation) {
+                    originalCallback.apply(validator, [element, event]);
+                }
+            };
+        }
     }
 })();
