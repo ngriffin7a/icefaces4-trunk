@@ -73,26 +73,31 @@
     var old = jsf.ajax.request;
     jsf.ajax.request = function (element, event, options) {
         var e = ((typeof element) == 'string') ? document.getElementById(element) : element;
-        var form = formOf(e.id);
-        var jqForm = ice.ace.jq(form);
-        var isValidForm = jqForm.valid();
-        var validationResult = jqForm.validate();
-        var validElements = validationResult.validElements();
-        if (validElements) {
-            cleanupMessages(validElements);
-        }
+        //run validation only when the entire form is executed
+        if (options && (options.execute == '@form' || options.execute == '@all')) {
+            var form = formOf(e.id);
+            var jqForm = ice.ace.jq(form);
+            var isValidForm = jqForm.valid();
+            var validationResult = jqForm.validate();
+            var validElements = validationResult.validElements();
+            if (validElements) {
+                cleanupMessages(validElements);
+            }
 
-        var skipValidation = false;
-        var targetElementID = options['ice.event.target'];
-        //second try for finding for finding enclosing immediate component root is for components that use submitting
-        //element located outside of the component markup
-        if (isImmediate(element, options) || (targetElementID && isImmediate(document.getElementById(targetElementID), options))) {
-            skipValidation = true;
-            cleanupMessages(validationResult.invalidElements());
-        }
+            var skipValidation = false;
+            var targetElementID = options['ice.event.target'];
+            //second try for finding for finding enclosing immediate component root is for components that use submitting
+            //element located outside of the component markup
+            if (isImmediate(element, options) || (targetElementID && isImmediate(document.getElementById(targetElementID), options))) {
+                skipValidation = true;
+                cleanupMessages(validationResult.invalidElements());
+            }
 
-        if (skipValidation || (form && isValidForm)) {
-            old(element, event, options);
+            if (skipValidation || (form && isValidForm)) {
+                old(element, event, options);
+            }
+        } else {
+           old(element, event, options);
         }
     };
 
@@ -214,38 +219,37 @@
     ice.ace.setupClientValidation = function (id, rule, config, messageType, message, immediate, customEvents) {
         var form = formOf(id);
         if (!form.enabledValidation) {
-            ice.ace.jq(ice.ace.escapeClientId(form.id)).validate().settings.showErrors = noop;
+            var jqForm = ice.ace.jq(ice.ace.escapeClientId(form.id));
+            //cleanup validation messages for elements that where changed after last submit and now pass validation
+            jqForm.validate().settings.showErrors = function() {
+                cleanupMessages(jqForm.validate().successList);
+            };
             form.enabledValidation = true;
         }
 
-        function setup() {
-            var selector = ice.ace.escapeClientId(id);
+        var selector = ice.ace.escapeClientId(id);
+        ice.ace.jq(selector).rules('remove', rule);
 
-            ice.ace.jq(selector).rules('remove', rule);
-
-            var ruleConfig = {};
-            ruleConfig[rule] = config;
-            var messageCreator = {};
-            if (messageType.aceMessage) {
-                messageCreator[rule] = clientValidationMessageFor(messageType.id, message);
-            } else if (messageType.aceMessages) {
-                messageCreator[rule] = clientValidationMessagesFor(messageType.id, message);
-            } else if (messageType.aceGrowlMessages) {
-                messageCreator[rule] = clientValidationGrowlMessagesFor(messageType.id, message, messageType.configuration);
-            }
-            ruleConfig['messages'] = messageCreator;
-            if (customEvents && customEvents.length > 0) {
-                var jqForm = ice.ace.jq(ice.ace.escapeClientId(form.id));
-                //disable default event listeners per entire form (not possible to go finer grain with current API)
-                disableDefaultEvents(jqForm.validate().settings);
-                triggerValidationOn(id, customEvents);
-            }
-
-            ice.ace.jq(selector).rules('add', ruleConfig);
-            document.getElementById(id).immediate = immediate;
+        var ruleConfig = {};
+        ruleConfig[rule] = config;
+        var messageCreator = {};
+        if (messageType.aceMessage) {
+            messageCreator[rule] = clientValidationMessageFor(messageType.id, message);
+        } else if (messageType.aceMessages) {
+            messageCreator[rule] = clientValidationMessagesFor(messageType.id, message);
+        } else if (messageType.aceGrowlMessages) {
+            messageCreator[rule] = clientValidationGrowlMessagesFor(messageType.id, message, messageType.configuration);
+        }
+        ruleConfig['messages'] = messageCreator;
+        if (customEvents && customEvents.length > 0) {
+            var jqForm = ice.ace.jq(ice.ace.escapeClientId(form.id));
+            //disable default event listeners per entire form (not possible to go finer grain with current API)
+            disableDefaultEvents(jqForm.validate().settings);
+            triggerValidationOn(id, customEvents);
         }
 
-        setup();
+        ice.ace.jq(selector).rules('add', ruleConfig);
+        document.getElementById(id).immediate = immediate;
     };
 
     function triggerValidationOn(id, events) {
