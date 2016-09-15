@@ -216,7 +216,7 @@
         };
     }
 
-    ice.ace.setupClientValidation = function (id, rule, config, messageType, message, immediate, customEvents) {
+    ice.ace.setupClientValidation = function (id, focusID, rule, config, messageType, message, immediate, customEvents) {
         var form = formOf(id);
         if (!form.enabledValidation) {
             var jqForm = ice.ace.jq(ice.ace.escapeClientId(form.id));
@@ -247,7 +247,7 @@
             var jqForm = ice.ace.jq(ice.ace.escapeClientId(form.id));
             //disable default event listeners per entire form (not possible to go finer grain with current API)
             disableDefaultEvents(jqForm.validate());
-            triggerValidationOn(id, customEvents);
+            triggerValidationOn(id, focusID, customEvents);
             element.customValidation = true;
         }
 
@@ -255,13 +255,14 @@
         element.immediate = immediate;
     };
 
-    function triggerValidationOn(id, events) {
+    function triggerValidationOn(id, focusID, events) {
         var element = document.getElementById(id);
         var eventTypes = events.split(' ');
         for (var i = 0; i < eventTypes.length; i++) {
             var eventType = eventTypes[i];
             if (eventType) {
-                element.addEventListener(eventType, function () {
+                var triggeringElement = focusID ? document.getElementById(focusID) : element;
+                triggeringElement.addEventListener(eventType, function () {
                     var jqElement = ice.ace.jq(element);
                     var valid = jqElement.valid();
                     if (valid) {

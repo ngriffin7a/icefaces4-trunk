@@ -45,6 +45,8 @@ public class DecimalValidator extends DecimalValidatorBase implements Validator 
             script.append("ice.ace.setupClientValidation('");
             script.append(id);
             script.append("', '");
+            script.append(ComponentUtils.getFocusedElementId(validatedComponent));
+            script.append("', '");
             script.append("number");
             script.append("', ");
             script.append(isEnabled());
