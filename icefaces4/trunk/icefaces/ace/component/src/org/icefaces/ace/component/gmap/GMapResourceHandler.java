@@ -74,10 +74,10 @@ public class GMapResourceHandler extends ResourceHandlerWrapper {
 				String v = gmapVersion == null ? "&v=3.exp" : gmapVersion.trim().equals("") ? "&v=3.exp" : "&v=" + gmapVersion;
                 if (!EnvUtils.isSecure(FacesContext.getCurrentInstance()))
                     apiJS = recreateResource(super.createResource(resourceName, ICEFACES_ACE_LIB),
-                            "http://maps.googleapis.com/maps/api/js?key=" + gmapKey + v + "&sensor=true&libraries=places");
+                            "http://maps.googleapis.com/maps/api/js?key=" + gmapKey + v + "&libraries=places");
                 else
                     apiJS = recreateResource(super.createResource(resourceName, ICEFACES_ACE_LIB),
-                            "https://maps.googleapis.com/maps/api/js?key=" + gmapKey + v + "&sensor=true&libraries=places");
+                            "https://maps.googleapis.com/maps/api/js?key=" + gmapKey + v + "&libraries=places");
             }
             return apiJS;
         } else {
