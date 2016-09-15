@@ -28,7 +28,7 @@ public class ColorEntryBean implements Serializable
     public static final String BEAN_NAME = "colorEntryBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private String basicValue, colorValue, allowEmptyValue, showButtonsValue, showInputValue;
+    private String basicValue, colorValue, allowEmptyValue, showButtonsValue, showInputValue, showPaletteOnly;
 
     public String getBasicValue() {
         return basicValue;
@@ -36,14 +36,6 @@ public class ColorEntryBean implements Serializable
 
     public void setBasicValue(String basicValue) {
         this.basicValue = basicValue;
-    }
-
-    public String getColorValue() {
-        return colorValue;
-    }
-
-    public void setColorValue(String colorValue) {
-        this.colorValue = colorValue;
     }
 
     public String getAllowEmptyValue() {
@@ -54,19 +46,19 @@ public class ColorEntryBean implements Serializable
         this.allowEmptyValue = allowEmptyValue;
     }
 
-    public String getShowButtonsValue() {
-        return showButtonsValue;
-    }
-
-    public void setShowButtonsValue(String showButtonsValue) {
-        this.showButtonsValue = showButtonsValue;
-    }
-
     public String getShowInputValue() {
         return showInputValue;
     }
 
     public void setShowInputValue(String showInputValue) {
         this.showInputValue = showInputValue;
+    }
+
+    public String getShowPaletteOnly() {
+        return showPaletteOnly;
+    }
+
+    public void setShowPaletteOnly(String showPaletteOnly) {
+        this.showPaletteOnly = showPaletteOnly;
     }
 }
