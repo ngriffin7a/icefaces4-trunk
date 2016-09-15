@@ -113,6 +113,9 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
 				}
 			}
 
+			writer.startElement("span", null);
+			writer.writeAttribute("class", "wijmo-wijmenu-text", null);
+
             if(icon != null) {
                 writer.startElement("span", null);
                 writer.writeAttribute("class", icon + " wijmo-wijmenu-icon-left", null);
@@ -129,6 +132,8 @@ public abstract class BaseMenuRenderer extends CoreRenderer {
                 writer.write((String) menuItem.getValue());
                 writer.endElement("span");
             }
+
+			writer.endElement("span");
 
             writer.endElement("a");
 		}
