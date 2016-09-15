@@ -67,6 +67,8 @@ public class LengthValidator extends LengthValidatorBase implements Validator {
             script.append("ice.ace.setupClientValidation('");
             script.append(id);
             script.append("', '");
+            script.append(ComponentUtils.getFocusedElementId(validatedComponent));
+            script.append("', '");
             script.append(rule);
             script.append("', ");
             script.append(validatorConfiguration);

@@ -45,6 +45,8 @@ public class RequiredValidator extends RequiredValidatorBase implements Validato
             script.append("ice.ace.setupClientValidation('");
             script.append(id);
             script.append("', '");
+            script.append(ComponentUtils.getFocusedElementId(validatedComponent));
+            script.append("', '");
             script.append("required");
             script.append("', ");
             script.append(isEnabled());

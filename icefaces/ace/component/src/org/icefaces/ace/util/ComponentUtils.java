@@ -27,6 +27,7 @@
  */
 package org.icefaces.ace.util;
 
+import org.icefaces.component.Focusable;
 import org.icefaces.impl.util.CoreUtils;
 
 import javax.el.ValueExpression;
@@ -393,5 +394,14 @@ public class ComponentUtils {
             }
         }
         return compiledList.iterator();
+    }
+
+    public static String getFocusedElementId(UIComponent component) {
+        if (component instanceof Focusable) {
+            Focusable f = (Focusable) component;
+            return f.getFocusedElementId();
+        } else {
+            return "";
+        }
     }
 }
