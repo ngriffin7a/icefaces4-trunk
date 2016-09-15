@@ -25,8 +25,6 @@ import javax.faces.bean.ManagedBean;
 
 import org.icefaces.samples.showcase.dataGenerators.utilityClasses.DataTableData;
 import org.icefaces.samples.showcase.example.ace.dataTable.Car;
-import org.icefaces.samples.showcase.util.FacesUtils;
-import org.icefaces.ace.component.tooltip.Tooltip;
 
 
 @ManagedBean(name= DelegateTooltipBean.BEAN_NAME)
@@ -39,7 +37,7 @@ public class DelegateTooltipBean implements Serializable {
 	
 	private Object data;
 	private List<Car> carList = new ArrayList<Car>();
-	private Tooltip tooltip;
+	private boolean cancelListener = false;
 	
 	public DelegateTooltipBean() {
 		carList = new ArrayList<Car>(DataTableData.getDefaultData());
@@ -60,16 +58,6 @@ public class DelegateTooltipBean implements Serializable {
 		this.carList = carList;
 	}
 
-	public Tooltip getTooltip() {
-		return tooltip;
-	}
-	
-	public void setTooltip(Tooltip tooltip) {
-		this.tooltip = tooltip;
-	}
-
-	private boolean cancelListener = false;
-
     public boolean isCancelListener() {
         return cancelListener;
     }
@@ -77,39 +65,4 @@ public class DelegateTooltipBean implements Serializable {
     public void setCancelListener(boolean cancelListener) {
         this.cancelListener = cancelListener;
     }
-     
-    public void listener(org.icefaces.ace.event.TooltipDelegateDisplayEvent event) {
-       	
-    	int index = extractIndex();
-    	
-    	if(cancelListener != false) {        	
-    		if (index%2==0){
-    			//odd rows    				
-    			event.cancelDisplay();    		
-    		}
-        	else {
-        		//even rows
-        		//do nothing      		
-        	}
-    	}    	        
-    }
-
-	private int extractIndex() {
-		//extract 'form:tooltip_activeComponent' request parameter, which has the client id of the component that triggered the tooltip
-    	String reqParam = FacesUtils.getRequestParameter(tooltip.getClientId()+"_activeComponent");
-    	
-    	//expected format is 'form:carTable:7:carName'   	
-		// and for portlets it's '_delegateTooltip_WAR_showcaseportlet_:form:carTable:7:carName'
-    	int startIndex = reqParam.indexOf("form:carTable:") + "form:carTable:".length();    	
-    	int endIndex = reqParam.lastIndexOf(":");	  	
-    	int index = 0;
-    	
-    	try {    		
-    		index = Integer.parseInt(reqParam.substring(startIndex, endIndex).trim());   		  
-        } catch (NumberFormatException nfe) {
-        	System.out.println("NumberFormatException: " + nfe.getMessage());
-        }   	
-		return index;
-	}
-    
 }
