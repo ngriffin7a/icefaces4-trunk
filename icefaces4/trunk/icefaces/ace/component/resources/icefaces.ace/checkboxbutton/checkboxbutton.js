@@ -18,7 +18,7 @@
 ice.ace.checkboxbutton = function(clientId, options) {
 	ice.ace.checkboxbutton.register(clientId, options.groupId);
     this.options = options;
-
+	console.log(" checkboxbutton id="+clientId);
     // Selectors
     this.id = clientId;
     this.jqId = ice.ace.escapeClientId(clientId);

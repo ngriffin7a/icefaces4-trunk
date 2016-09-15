@@ -1,3 +1,18 @@
+/*
+ * Copyright 2004-2016 ICEsoft Technologies Canada Corp.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package org.icefaces.ace.component.colorentry;
 
 import org.icefaces.ace.meta.annotation.*;
@@ -35,10 +50,10 @@ import java.util.List;
 	@ICEResourceDependency(name = "colorentry/colorentry.js")
 })
 @ClientBehaviorHolder(events = {
-        @ClientEvent(name="valueChange", javadoc="Fired when the component detects value is changed.",
+        @ClientEvent(name="colorChange", javadoc="Fired when the component detects value is changed.",
                 tlddoc="Fired when the original input changes. Only happens when the input is closed or the choose button is clicked",
                 defaultRender="@all", defaultExecute="@this")
-}, defaultEvent = "valueChange")
+}, defaultEvent = "colorChange")
 public class ColorEntryMeta extends HtmlInputTextMeta{
 
     @Property(tlddoc="This is the preferred format to display the chosen color under the input field.  Valid values are hex, hex3, hsl, rbg, name, none",
@@ -87,8 +102,8 @@ public class ColorEntryMeta extends HtmlInputTextMeta{
     @Property(defaultValue="less", tlddoc="Text shown for togglePaletteOnly when more and less palettes than can be viewed in view area.")
     private String togglePaletteLessText;
 
-    @Property(tlddoc="A color can be selected which is shown when the colorEntry component is first displayed. Afer a color is selected . ")
-    private String color;
+ /*   @Property(tlddoc="A color can be selected which is shown when the colorEntry component is first displayed. Afer a color is selected . ")
+    private String color; */
 
     /* from textEntry */
     @Property(defaultValue = "true", tlddoc="If false, the component will not redisplay its value when the page reloads.")
