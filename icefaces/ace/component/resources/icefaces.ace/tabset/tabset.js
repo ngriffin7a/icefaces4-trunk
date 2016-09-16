@@ -140,6 +140,7 @@ ice.ace.tabset = {
 						.on('keydown', ice.ace.tabset.focusActiveTab);
 				}
 				ice.ace.tabset.resizeMaps(contentParent);
+				ice.ace.tabset.resizeTables(contentParent);
                 cachedNewTab = null;
                 ice.ace.tabset.consoleLog(false, 'tabSet.tabChange.doOnSuccess  EXIT');
             };
@@ -169,6 +170,7 @@ ice.ace.tabset = {
 						.on('keydown', ice.ace.tabset.focusActiveTab);
 				}
 				ice.ace.tabset.resizeMaps(contentParent);
+				ice.ace.tabset.resizeTables(contentParent);
             } else {
                 var targetElement = ice.ace.tabset.getTabIndexField(rootElem, true);
                 if(targetElement) {
@@ -355,6 +357,7 @@ ice.ace.tabset = {
 			firstFocusable.off('keydown', ice.ace.tabset.focusActiveTab)
 				.on('keydown', ice.ace.tabset.focusActiveTab);
 		}
+		ice.ace.tabset.resizeTables(initElem);
 
        ice.ace.tabset.consoleLog(true, "ace:tabSet - ID: " + clientId + " - initialize - " + (new Date().getTime() - initializeStartTime) + "ms");
    },
@@ -846,6 +849,17 @@ ice.ace.tabset = {
 				}
 			} 
 		}
+	},
+
+	resizeTables: function(root) {
+		var tables = ice.ace.jq(root).find('.ui-datatable');
+		tables.each(function(){
+			var id = this.id;
+			if (id) {
+				var table = ice.ace.instance(id);
+				if (table.cfg.paginator) table.resizePaginator();
+			}
+		});
 	}
 };
 
