@@ -159,6 +159,6 @@ public class ComboBox extends ComboBoxBase implements NamingContainer, Focusable
     }
 
     public String getValidatedElementId() {
-        return getClientId() + "_hidden";
+        return getClientId() + "_input";
     }
 }
