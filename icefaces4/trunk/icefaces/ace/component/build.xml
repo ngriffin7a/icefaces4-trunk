@@ -316,7 +316,9 @@
 			<file name="${resources}/icefaces.ace/autocompleteentry/autocompleteentry.js"/>
 			<file name="${resources}/icefaces.ace/combobox/combobox.js"/>
 			<file name="${resources}/icefaces.ace/checkboxbutton/checkboxbutton.js"/>
-			<file name="${resources}/icefaces.ace/confirmationdialog/confirmationdialog.js" />
+            <file name="${resources}/icefaces.ace/confirmationdialog/confirmationdialog.js" />
+            <file name="${resources}/icefaces.ace/colorentry/colorentry.js" />
+            <file name="${resources}/icefaces.ace/colorentry/spectrum.js" />
 			<file name="${resources}/icefaces.ace/datetimeentry/datetimeentry.js" />
 			<file name="${resources}/icefaces.ace/datetimeentry/jquery-ui-timepicker-addon.js" />
 			<file name="${resources}/icefaces.ace/dialog/dialog.js" />
