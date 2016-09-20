@@ -824,7 +824,9 @@ ice.ace.Autocompleter.prototype = {
 				ajaxCfg.trigger = trigger;
 				ice.ace.ab(ajaxCfg);
 			} else if (!this.clientSideModeCfg) {
-				ice.se(event, this.root.get(0));
+				ice.se(event, this.root.get(0), function(p){
+					p('ice.skipClientValidation', true);
+				});
 			}
 		} else {
 			if (this.clientSideModeCfg) {
@@ -841,7 +843,9 @@ ice.ace.Autocompleter.prototype = {
 				}
 				ice.ace.ab(ajaxCfg);
 			} else if (!this.clientSideModeCfg) {
-				ice.se(event, this.root.get(0));
+				ice.se(event, this.root.get(0),  function(p){
+					p('ice.skipClientValidation', true);
+				});
 			}
 		}
 		this.justSubmitted = true;
