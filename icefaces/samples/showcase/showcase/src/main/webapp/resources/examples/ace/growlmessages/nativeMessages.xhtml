@@ -28,20 +28,9 @@
             <ace:panel header="Some important ace:growlMessages attributes">
                 <h:panelGrid columns="4" width="100%" columnClasses="growl-attr-col,growl-attr-col,growl-attr-col,growl-attr-col">
                     <h:outputText value="header"/>
-                    <ace:textEntry value="#{growlMessagesBean.header}">
+                    <ace:textEntry value="#{nativeMessagesBean.header}">
                         <ace:ajax render="demoform2:allMsgsGrowl"/>
                     </ace:textEntry>
-
-                    <h:outputText value="autoHide"/>
-                    <ace:simpleSelectOneMenu id="hideSelector" value="#{growlMessagesBean.autoHide}">
-                        <f:selectItem itemValue="false" itemLabel="false"/>
-                        <f:selectItem itemValue="info" itemLabel="info"/>
-                        <f:selectItem itemValue="warn" itemLabel="warn"/>
-                        <f:selectItem itemValue="error" itemLabel="error"/>
-                        <f:selectItem itemValue="fatal" itemLabel="fatal"/>
-                        <f:selectItem itemValue="true" itemLabel="true"/>
-                        <ace:ajax render="demoform2:allMsgsGrowl"/>
-                    </ace:simpleSelectOneMenu>
                 </h:panelGrid>
             </ace:panel>
         </h:form>
@@ -50,29 +39,29 @@
                 <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
 
                     <h:panelGroup>
-                        <ace:checkboxButton id="infoBox" value="#{growlMessagesBean.info}" />
+                        <ace:checkboxButton id="infoBox" value="#{nativeMessagesBean.info}" />
                         <h:outputText value=" Info" />
                     </h:panelGroup>
                     <h:panelGroup>
-                        <ace:checkboxButton id="warnBox" value="#{growlMessagesBean.warn}" />
+                        <ace:checkboxButton id="warnBox" value="#{nativeMessagesBean.warn}" />
                         <h:outputText value=" Warn" />
                     </h:panelGroup>
                     <h:panelGroup>
-                        <ace:checkboxButton id="errorBox" value="#{growlMessagesBean.error}" />
+                        <ace:checkboxButton id="errorBox" value="#{nativeMessagesBean.error}" />
                         <h:outputText value=" Error" />
                     </h:panelGroup>
                     <h:panelGroup>
-                        <ace:checkboxButton id="fatalBox" value="#{growlMessagesBean.fatal}" />
+                        <ace:checkboxButton id="fatalBox" value="#{nativeMessagesBean.fatal}" />
                         <h:outputText value=" Fatal" />
                     </h:panelGroup>
 
                 </h:panelGrid>
                 <ace:pushButton id="messageButton" value="Show Messages"
-                                actionListener="#{growlMessagesBean.listener}" />
+                                actionListener="#{nativeMessagesBean.listener}" />
             </ace:panel>
 
-            <ace:growlMessages  id="allMsgsGrowl" autoHide="#{growlMessagesBean.autoHide}"
-                                for="@inView" header="#{growlMessagesBean.header}" useNativeNotifications="true"/>
         </h:form>
+        <ace:growlMessages  id="allMsgsGrowl"
+                            for="@inView" header="#{nativeMessagesBean.header}" useNativeNotifications="true"/>
     </ui:define>
 </ui:composition>
