@@ -49,6 +49,30 @@ public class ScheduleRenderer extends Renderer {
 		} else {
 			templateName = "custom";
 		}
+		String sideBar = schedule.getSideBar();
+		String sideBarClass = "sidebar-right";
+		if (sideBar != null) {
+			if ("left".equalsIgnoreCase(sideBar)) sideBarClass = "sidebar-left";
+			else if ("hidden".equalsIgnoreCase(sideBar)) sideBarClass = "sidebar-hidden";
+		}
+		String displayEventDetails = schedule.getDisplayEventDetails();
+		String displayEventDetailsClass = "details-sidebar";
+		if (displayEventDetails != null) {
+			if ("popup".equalsIgnoreCase(displayEventDetails)) {
+				displayEventDetailsClass = "details-popup";
+				displayEventDetails = "popup";
+			} else if ("tooltip".equalsIgnoreCase(displayEventDetails)) {
+				displayEventDetailsClass = "details-tooltip";
+				displayEventDetails = "tooltip";
+			} else if ("disabled".equalsIgnoreCase(displayEventDetails)) {
+				displayEventDetailsClass = "details-disabled";
+				displayEventDetails = "disabled";
+			} else {
+				displayEventDetails = "sidebar";
+			}
+		} else {
+			displayEventDetails = "sidebar";
+		}
 
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId, null);
@@ -74,6 +98,7 @@ public class ScheduleRenderer extends Renderer {
 			.beginArray()
 				.item(clientId)
 				.beginMap()
+					.entry("displayEventDetails", displayEventDetails)
 					.beginArray("events");
 
 					Iterator<ScheduleEvent> iterator = eventList.iterator();
@@ -94,7 +119,8 @@ public class ScheduleRenderer extends Renderer {
           .endFunction();
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "ice-ace-schedule ui-widget " + templateName, null);
+		writer.writeAttribute("class", "ice-ace-schedule ui-widget " + templateName 
+			+ " " + sideBarClass + " " + displayEventDetailsClass, null);
 		writer.endElement("div");
 
 		writer.startElement("script", null);
@@ -103,8 +129,12 @@ public class ScheduleRenderer extends Renderer {
 		writer.endElement("script");
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "event-details", null);
+		writer.writeAttribute("class", "event-details-popup", null);
 		writer.writeAttribute("title", "Event Details", null);
+		writer.endElement("div");
+
+		writer.startElement("div", null);
+		writer.writeAttribute("class", "event-details-tooltip", null);
 		writer.endElement("div");
 
 		writer.endElement("div");

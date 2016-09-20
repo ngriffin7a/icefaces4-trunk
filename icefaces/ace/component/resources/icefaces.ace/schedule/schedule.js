@@ -11,6 +11,7 @@ ice.ace.Schedule = function(id, cfg) {
 	this.id = id;
 	this.jqId = ice.ace.escapeClientId(id);
 	this.jq = ice.ace.jq(this.jqId).find('.ice-ace-schedule');
+	this.cfg = cfg;
 	this.events = cfg.events;
 	
 	var configuration = {};
@@ -21,17 +22,40 @@ ice.ace.Schedule = function(id, cfg) {
 
 	this.eventsMap = this.createEventsMap(this.events);
 
-	var self = this;
-	this.jq.delegate('.schedule-event', 'click', function(event) {
-		var node = event['target'];
-		var parent = node.parentNode;
-		var eventNumber = self.extractEventNumber(node);
-		var date = self.extractEventDate(parent);
-		var eventArray = self.eventsMap[date];
-		var eventData = null;
-		if (eventArray) eventData = eventArray[eventNumber];
-		self.displayEventDetailsPopup(eventData);
-	});
+	if (cfg.displayEventDetails != 'disabled') {
+		var self = this;
+		if (cfg.displayEventDetails == 'tooltip') {
+			this.jq.delegate('.schedule-event', 'mouseover', function(event) {
+				var node = event['target'];
+				var parent = node.parentNode;
+				var eventNumber = self.extractEventNumber(node);
+				var date = self.extractEventDate(parent);
+				var eventArray = self.eventsMap[date];
+				var eventData = null;
+				if (eventArray) eventData = eventArray[eventNumber];
+				var markup = self.getEventDetailsMarkup(eventData);
+				self.displayEventDetailsTooltip(markup, node);
+			});
+			this.jq.delegate('.schedule-event', 'mouseout', function(event) {
+				self.hideEventDetailsTooltip();
+			});
+		} else {
+			this.jq.delegate('.schedule-event', 'click', function(event) {
+				var node = event['target'];
+				var parent = node.parentNode;
+				var eventNumber = self.extractEventNumber(node);
+				var date = self.extractEventDate(parent);
+				var eventArray = self.eventsMap[date];
+				var eventData = null;
+				if (eventArray) eventData = eventArray[eventNumber];
+				var markup = self.getEventDetailsMarkup(eventData);
+				if (self.cfg.displayEventDetails == 'popup')
+					self.displayEventDetailsPopup(markup);
+				else
+					self.displayEventDetailsSidebar(markup);
+			});
+		}
+	}
 };
 
 ice.ace.Schedule.prototype.createEventsMap = function(eventsArray) {
@@ -75,12 +99,33 @@ ice.ace.Schedule.prototype.extractEventDate = function(node) {
 	return result;
 };
 
-ice.ace.Schedule.prototype.displayEventDetailsPopup = function(data) {
-	var eventDetails = ice.ace.jq(this.jqId).find('.event-details');
+ice.ace.Schedule.prototype.getEventDetailsMarkup = function(data) {
 	if (data) {
-		eventDetails.html('<p>Date: '+data.date+'</p><p>Time: '+data.time+'</p><p>Title: '+data.title+'</p><p>Location: '+data.location+'</p><p>Notes: '+data.notes+'</p>');
+		return '<span>Date: '+data.date+'</span><br/><span>Time: '+data.time+'</span><br/><span>Title: '+data.title+'</span><br/><span>Location: '+data.location+'</span><br/><span>Notes: '+data.notes+'</span>';
 	} else {
-		eventDetails.html('No Data');
+		return '<div>No Data</div>';
 	}
+}
+
+ice.ace.Schedule.prototype.displayEventDetailsPopup = function(markup) {
+	var eventDetails = ice.ace.jq(this.jqId).find('.event-details-popup');
+	eventDetails.html(markup);
 	eventDetails.dialog();
+};
+
+ice.ace.Schedule.prototype.displayEventDetailsSidebar = function(markup) {
+	var eventDetails = ice.ace.jq(this.jqId).find('.event-details .event-details-content');
+	eventDetails.html(markup);
+};
+
+ice.ace.Schedule.prototype.displayEventDetailsTooltip = function(markup, node) {
+	var eventDetails = ice.ace.jq(this.jqId).find('.event-details-tooltip');
+	eventDetails.html(markup);
+	eventDetails.dialog({resizable: false, draggable: false, dialogClass: 'ice-ace-schedule-details-tooltip', 
+		position: { my: "left top", at: "right bottom", of: node }});
+	ice.ace.jq(this.jqId).find('.ice-ace-schedule-details-tooltip').show();
+};
+
+ice.ace.Schedule.prototype.hideEventDetailsTooltip = function() {
+	ice.ace.jq(this.jqId).find('.ice-ace-schedule-details-tooltip').hide();
 };

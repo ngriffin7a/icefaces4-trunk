@@ -25,6 +25,8 @@ import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
 
+import java.util.Date;
+
 @Component(
         tagName = "schedule",
         componentClass = "org.icefaces.ace.component.schedule.Schedule",
@@ -56,6 +58,15 @@ public class ScheduleMeta extends UIComponentBaseMeta {
 
 	@Property(tlddoc = "This advanced feature allows to specify a string defining a custom Underscore.js template to render the component in the client. Note that, when using this advanced feature, it is also necessary to define the CSS styling for the template on the page, either inline or in an external CSS resource.")
 	private String customTemplate;
+
+	@Property(tlddoc = "A Date object to specify the month and year with which this component will be loaded in the client. The day and time values are irrelevant for this attribute. If this attribute is not specified, the component will be loaded with the current month, according to the server time.")
+	private Date startWithMonth;
+
+	@Property(tlddoc = "Specifies the location of the sidebar or whether it should be hidden. Possible values are 'right', 'left', and 'hidden'.", defaultValue="right")
+	private String sideBar;
+
+	@Property(tlddoc = "Specifies where to display the event details after clicking on an event tag on the calendar. Possible values are 'sidebar', 'popup', 'tooltip', and 'disabled'.", defaultValue="sidebar")
+	private String displayEventDetails;
 
 	@Property(tlddoc = "The inline style of the component, rendered on the root div of the component.")
 	private String style;
