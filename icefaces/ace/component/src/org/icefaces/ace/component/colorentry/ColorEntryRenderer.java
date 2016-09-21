@@ -104,7 +104,6 @@ public class ColorEntryRenderer extends InputRenderer {
         if(picker.isDisabled()) writer.writeAttribute("disabled", "disabled", "disabled");
         if(picker.isReadonly()) writer.writeAttribute("readonly", "readonly", "readonly");
         String style = "display:none;" +picker.getStyle();
-        writer.writeAttribute("class", ColorEntry.HIDE_INPUT_CLASS, "class");
         if(style != null) writer.writeAttribute("style", style, "style");
         String preferredFormat = picker.getValueFormat().HEX3.getValue();
         if (picker.getValueFormat()!=null){
@@ -132,10 +131,9 @@ public class ColorEntryRenderer extends InputRenderer {
                 .entry("cancelText", picker.getCancelButtonText())
                 .entry("maxSelectionSize", maxSelectionSize)
                 .entry("showSelectionPalette", picker.isShowSelectionPalette());
-
-   /*     if (picker.getColor() !=null) {
-            jb.entry("color", picker.getColor());
-        } */
+        if (picker.getValue() !=null) {
+            jb.entry("color", String.valueOf(picker.getValue()));
+        }
         if (!picker.isRequired()){
             jb.entry("allowEmpty", "true");
         }
@@ -147,6 +145,7 @@ public class ColorEntryRenderer extends InputRenderer {
         }
         if (picker.getStyleClass() !=null ){
             jb.entry("replacerClassName", picker.getStyleClass());
+            jb.entry("containerClassName", picker.getStyleClass());
         }
         if (picker.getPaletteList()!=null){
             jb.beginArray("palette") ;

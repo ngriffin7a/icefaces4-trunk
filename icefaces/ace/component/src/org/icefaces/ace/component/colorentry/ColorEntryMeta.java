@@ -133,4 +133,5 @@ public class ColorEntryMeta extends HtmlInputTextMeta{
    	@Property(
    		tlddoc="Custom CSS style class(es) to use for this component. These style classes can be defined in your page or in a theme CSS file.")
    	private String styleClass;
+
 }
