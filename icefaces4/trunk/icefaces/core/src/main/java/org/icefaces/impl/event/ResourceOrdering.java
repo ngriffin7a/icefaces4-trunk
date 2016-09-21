@@ -28,7 +28,10 @@ import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.*;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.PreRenderComponentEvent;
+import javax.faces.event.SystemEvent;
+import javax.faces.event.SystemEventListener;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
@@ -267,6 +270,11 @@ public class ResourceOrdering implements SystemEventListener {
         }
         //append the rest of the components that do not have dependency data
         List<UIComponent> remainingChildren = new ArrayList<UIComponent>(resourceContainer.getChildren());
+        Comparator<UIComponent> comparator = new ResourceNormalizedNameComparator();
+        TreeSet<UIComponent> orderedRemainingUnknownTypeChildren = new TreeSet<UIComponent>(comparator);
+        TreeSet<UIComponent> orderedRemainingJSChildren = new TreeSet<UIComponent>(comparator);
+        TreeSet<UIComponent> orderedRemainingCSSChildren = new TreeSet<UIComponent>(comparator);
+
         for (UIComponent next: remainingChildren) {
             root.removeComponentResource(context, next, target);
             final Map attributes = next.getAttributes();
@@ -277,15 +285,18 @@ public class ResourceOrdering implements SystemEventListener {
                 if (name == null) {
                     orderedUnknownTypeChildren.add(next);
                 } else if (name.endsWith(JS)) {
-                    orderedJSChildren.add(next);
+                    orderedRemainingJSChildren.add(next);
                 } else if (name.endsWith(CSS)) {
-                    orderedCSSChildren.add(next);
+                    orderedRemainingCSSChildren.add(next);
                 } else {
-                    orderedUnknownTypeChildren.add(next);
+                    orderedRemainingUnknownTypeChildren.add(next);
                 }
                 duplicateCheckList.add(nameAndLibrary);
             }
         }
+        orderedUnknownTypeChildren.addAll(orderedRemainingUnknownTypeChildren);
+        orderedJSChildren.addAll(orderedRemainingJSChildren);
+        orderedCSSChildren.addAll(orderedRemainingCSSChildren);
 
         //add first the CSS to speed up the page rendering
         for (UIComponent componentResource : orderedCSSChildren) {
@@ -384,5 +395,21 @@ public class ResourceOrdering implements SystemEventListener {
 
     private static String normalizeTargetName(String name) {
         return name == null || "".equals(name) ? "head" : name;
+    }
+
+    private static class ResourceNormalizedNameComparator implements Comparator<UIComponent> {
+        public int compare(UIComponent o1, UIComponent o2) {
+            final String nameAndLibrary1 = getResourceNormalizedName(o1);
+            final String nameAndLibrary2 = getResourceNormalizedName(o2);
+
+            return nameAndLibrary1.compareTo(nameAndLibrary2);
+        }
+
+        private static String getResourceNormalizedName(UIComponent o1) {
+            final Map attributes1 = o1.getAttributes();
+            final String name1 = (String) attributes1.get("name");
+            final String library1 = normalizeLibraryName((String) attributes1.get("library"));
+            return name1 + "::" + library1;
+        }
     }
 }
