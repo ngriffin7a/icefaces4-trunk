@@ -3125,6 +3125,7 @@ ice.ace.DataTable.prototype.doMultiRowSelectionEvent = function (lastIndex, curr
     elemRange.each(function (i, elem) {
         var element = ice.ace.jq(elem),
             targetId = element.attr('id').split('_row_')[1];
+		if (!targetId) return; // ICE-11141 element is not an ace:dataTable row, probably ace:panelExpansion
 
         // Adjust State //
         element.addClass('ui-state-active ui-selected');
