@@ -824,7 +824,7 @@ ice.ace.Autocompleter.prototype = {
 				ajaxCfg.trigger = trigger;
 				ice.ace.ab(ajaxCfg);
 			} else if (!this.clientSideModeCfg) {
-				ice.se(event, this.root.get(0), function(p){
+				ice.ser(event, this.root.get(0), function(p){
 					p('ice.skipClientValidation', true);
 				});
 			}
@@ -843,7 +843,7 @@ ice.ace.Autocompleter.prototype = {
 				}
 				ice.ace.ab(ajaxCfg);
 			} else if (!this.clientSideModeCfg) {
-				ice.se(event, this.root.get(0),  function(p){
+				ice.ser(event, this.root.get(0),  function(p){
 					p('ice.skipClientValidation', true);
 				});
 			}
