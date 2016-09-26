@@ -15,13 +15,11 @@
   -->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-    xmlns:ace="http://www.icefaces.org/icefaces/components"
-    xmlns:icecore="http://www.icefaces.org/icefaces/core"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    template="/resources/templates/content-template.xhtml">
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ace="http://www.icefaces.org/icefaces/components"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/resources/templates/content-template.xhtml">
     <ui:param name="title" value="#{msgs['example.ace.autocompleteentry.indicator.title']}"/>
     <ui:param name="description" value="#{msgs['example.ace.autocompleteentry.indicator.description']}"/>
 
@@ -66,7 +64,8 @@
                                          label="Cities of the World:"
                                          labelPosition="left">
                         <f:selectItems value="#{autoCompleteEntryBean.cities}"/>
-						<ace:ajax event="blur" execute="@this"/>
+						<ace:ajax event="blur" execute="@this" render="@all"/>
+                        <ace:ajax event="valueChange" render="@all"/>
                     </ace:autoCompleteEntry>
 					<ace:message for="autoComplete" />
                 </h:panelGrid>
