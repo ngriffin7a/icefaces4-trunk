@@ -16,14 +16,13 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:ace="http://www.icefaces.org/icefaces/components"
                 xmlns:icecore="http://www.icefaces.org/icefaces/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/content-template.xhtml">
 
     <ui:define name="example">
+        <icecore:config messagePersistence="false"/>
         <h:form id="messageDemoForm">
             <ace:panel header="Some important ace:growlMessages attributes">
                 <h:panelGrid columns="4" width="100%" columnClasses="growl-attr-col,growl-attr-col,growl-attr-col,growl-attr-col">
@@ -39,19 +38,27 @@
                 <h:panelGrid id="inputGrid" columns="2" width="100%" styleClass="textEntryInputTable">
 
                     <h:panelGroup>
-                        <ace:checkboxButton id="infoBox" value="#{nativeMessagesBean.info}" />
+                        <ace:checkboxButton id="infoBox" value="#{nativeMessagesBean.info}" >
+                            <ace:ajax execute="@this"/>
+                        </ace:checkboxButton>
                         <h:outputText value=" Info" />
                     </h:panelGroup>
                     <h:panelGroup>
-                        <ace:checkboxButton id="warnBox" value="#{nativeMessagesBean.warn}" />
+                        <ace:checkboxButton id="warnBox" value="#{nativeMessagesBean.warn}">
+                            <ace:ajax execute="@this"/>
+                        </ace:checkboxButton>
                         <h:outputText value=" Warn" />
                     </h:panelGroup>
                     <h:panelGroup>
-                        <ace:checkboxButton id="errorBox" value="#{nativeMessagesBean.error}" />
+                        <ace:checkboxButton id="errorBox" value="#{nativeMessagesBean.error}">
+                            <ace:ajax execute="@this"/>
+                        </ace:checkboxButton>
                         <h:outputText value=" Error" />
                     </h:panelGroup>
                     <h:panelGroup>
-                        <ace:checkboxButton id="fatalBox" value="#{nativeMessagesBean.fatal}" />
+                        <ace:checkboxButton id="fatalBox" value="#{nativeMessagesBean.fatal}">
+                            <ace:ajax execute="@this"/>
+                        </ace:checkboxButton>
                         <h:outputText value=" Fatal" />
                     </h:panelGroup>
 
