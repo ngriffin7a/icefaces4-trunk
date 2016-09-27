@@ -48,7 +48,7 @@ public class ScheduleEvent {
     public String getNotes() { return notes; }
 	public void setNotes(String notes) { this.notes = notes; }
 
-	private String data; // arbitrary data do used with custom templates
+	private String data; // arbitrary data to be used with custom templates and/or in lazy mode
     public String getData() { return data; }
 	public void setData(String data) { this.data = data; }
 }

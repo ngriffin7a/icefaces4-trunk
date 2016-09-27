@@ -18,7 +18,34 @@ ice.ace.Schedule = function(id, cfg) {
 	configuration.template = ice.ace.jq(this.jqId + '_template').html()
 	configuration.events = this.events;
 	configuration.forceSixRows = true;
+	if (this.cfg.isLazy) {
+		configuration.startWithMonth = cfg.lazyYear + '-' + (cfg.lazyMonth + 1) + '-01'; // CLNDR month is 1-relative
+	}
 	this.jq.clndr(configuration);
+
+	if (this.cfg.isLazy) {
+		var self = this;
+		var previousButton = this.jq.find('.clndr-previous-button');
+		var nextButton = this.jq.find('.clndr-next-button');
+		var lazyYear = cfg.lazyYear;
+		var lazyMonth = cfg.lazyMonth;
+		previousButton.on('click', function(e) {
+			e.stopPropagation()
+			if (lazyMonth == 0) {
+				lazyYear--;
+				lazyMonth = 11;
+			} else lazyMonth--;
+			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth);
+		});
+		nextButton.on('click', function(e) {
+			e.stopPropagation()
+			if (lazyMonth == 11) {
+				lazyYear++;
+				lazyMonth = 0;
+			} else lazyMonth++;
+			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth);
+		});
+	}
 
 	this.eventsMap = this.createEventsMap(this.events);
 
@@ -128,4 +155,19 @@ ice.ace.Schedule.prototype.displayEventDetailsTooltip = function(markup, node) {
 
 ice.ace.Schedule.prototype.hideEventDetailsTooltip = function() {
 	ice.ace.jq(this.jqId).find('.ice-ace-schedule-details-tooltip').hide();
+};
+
+ice.ace.Schedule.prototype.sendLazyNavigationRequest = function(event, lazyYear, lazyMonth) {
+    var options = {
+		source: this.id,
+		render: this.id,
+		execute: this.id
+    };
+
+    var params = {};
+    params[this.id + "_lazyYear"] = lazyYear;
+    params[this.id + "_lazyMonth"] = lazyMonth;
+    options.params = params;
+
+	ice.ace.AjaxRequest(options);
 };

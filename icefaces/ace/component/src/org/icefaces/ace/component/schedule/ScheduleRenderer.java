@@ -22,6 +22,7 @@ import org.icefaces.ace.model.schedule.ScheduleEvent;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.model.DataModel;
 import javax.faces.render.Renderer;
 
 import java.io.IOException;
@@ -30,14 +31,38 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class ScheduleRenderer extends Renderer {
 
+	@Override
+	public void decode(FacesContext context, UIComponent component) {
+
+		Schedule schedule = (Schedule) component;
+		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		schedule.resetDataModel();
+	}
+
+	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 			
 		Schedule schedule = (Schedule) component;
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = component.getClientId();
+
+		// if in lazy mode, update current year and month values
+		boolean isLazy = schedule.isLazy();
+		if (isLazy) {
+			Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+			String lazyYear = params.get(schedule.getClientId(context) + "_lazyYear");
+			String lazyMonth = params.get(schedule.getClientId(context) + "_lazyMonth");
+			if (lazyYear != null && lazyMonth != null) {
+				schedule.setLazyYear(new Integer(lazyYear));
+				schedule.setLazyMonth(new Integer(lazyMonth));
+			}
+		}
+		schedule.resetDataModel();
+
 		String template = "";
 		String templateName = schedule.getTemplate();
 		if ("full".equalsIgnoreCase(templateName)) {
@@ -82,29 +107,30 @@ public class ScheduleRenderer extends Renderer {
 			+ template + "</script>");
 		writer.endElement("div");
 
-		// get events
-		Object value = schedule.getValue();
-		List<ScheduleEvent> eventList = null;
-		if (value == null) eventList = Collections.EMPTY_LIST;
-		else if (value instanceof List) eventList = (List<ScheduleEvent>) value;
-		else if (Object[].class.isAssignableFrom(value.getClass())) {
-			ScheduleEvent[] eventArray = (ScheduleEvent[]) value;
-		}
-
-		// render event data
+		// render configuration and event data
 		JSONBuilder jb = JSONBuilder.create();
 		jb.beginFunction("ice.ace.create")
 			.item("Schedule")
 			.beginArray()
 				.item(clientId)
 				.beginMap()
-					.entry("displayEventDetails", displayEventDetails)
-					.beginArray("events");
+					.entry("displayEventDetails", displayEventDetails);
 
-					Iterator<ScheduleEvent> iterator = eventList.iterator();
-					while (iterator.hasNext()) {
-						ScheduleEvent scheduleEvent = iterator.next();
+					if (isLazy) {
+						int[] lazyYearMonthValues = schedule.getLazyYearMonthValues();
+						jb.entry("isLazy", true)
+						.entry("lazyYear", lazyYearMonthValues[0])
+						.entry("lazyMonth", lazyYearMonthValues[1]);
+					}
+
+					jb.beginArray("events");
+
+					int rowCount = schedule.getRowCount();
+					for (int i = 0; i < rowCount; i++) {
+						schedule.setRowIndex(i);
+						ScheduleEvent scheduleEvent = (ScheduleEvent) schedule.getRowData();
 						jb.beginMap();
+						jb.entry("index", i);
 						jb.entry("date", convertDateToClientFormat(scheduleEvent.getDate()));
 						jb.entry("time", convertTimeToClientFormat(scheduleEvent.getDate()));
 						jb.entry("title", scheduleEvent.getTitle());
