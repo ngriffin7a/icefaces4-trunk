@@ -17,8 +17,9 @@
 package org.icefaces.ace.component.schedule;
 
 import org.icefaces.ace.meta.annotation.Component;
+import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.meta.annotation.Property;
-import org.icefaces.ace.meta.baseMeta.UIComponentBaseMeta;
+import org.icefaces.ace.meta.baseMeta.UIDataMeta;
 import org.icefaces.ace.resources.ACEResourceNames;
 
 import org.icefaces.resources.ICEResourceDependencies;
@@ -34,8 +35,8 @@ import java.util.Date;
         generatedClass = "org.icefaces.ace.component.schedule.ScheduleBase",
         componentType = "org.icefaces.Schedule",
         rendererType = "org.icefaces.ScheduleRenderer",
-        extendsClass = "javax.faces.component.UIComponentBase",
-        componentFamily = "org.icefaces.Schedule",
+        extendsClass = "javax.faces.component.UIData",
+        componentFamily = "org.icefaces.ace.Schedule",
         tlddoc = ""
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
@@ -48,9 +49,9 @@ import java.util.Date;
 	@ICEResourceDependency(name = "schedule/clndr.js"),
     @ICEResourceDependency(name = "schedule/schedule.js")
 })
-public class ScheduleMeta extends UIComponentBaseMeta {
+public class ScheduleMeta extends UIDataMeta {
 
-	@Property(tlddoc = "The value should be a List or an Array of org.icefaces.ace.model.schedule.ScheduleEvent objects to be displayed on the schedule. Alternatively, the value can be an instance of org.icefaces.ace.model.schedule.LazyScheduleModel to work in a lazy-loading mode.")
+	@Property(tlddoc = "The value should be a List, Array or DataModel instance of org.icefaces.ace.model.schedule.ScheduleEvent objects to be displayed on the schedule. Alternatively, the value can be an implementation of org.icefaces.ace.model.schedule.LazyScheduleEventLoader to work in a lazy-loading mode, month per month.")
 	private Object value;
 
 	@Property(tlddoc = "The name of the template to use to render the component in the client. The valid values are 'full', 'mini', and 'custom'. Use 'custom' to define your own template in the 'customTemplate' attribute.", defaultValue="full")
@@ -73,4 +74,10 @@ public class ScheduleMeta extends UIComponentBaseMeta {
 
 	@Property(tlddoc = "The CSS style class of the component, rendered on the root div of the component.")
 	private String styleClass;
+
+	@Field(defaultValue="-1")
+	private Integer lazyYear;
+
+	@Field(defaultValue="-1")
+	private Integer lazyMonth;
 }
