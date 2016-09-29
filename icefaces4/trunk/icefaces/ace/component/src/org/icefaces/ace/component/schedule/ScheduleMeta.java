@@ -51,7 +51,7 @@ import java.util.Date;
 })
 public class ScheduleMeta extends UIDataMeta {
 
-	@Property(tlddoc = "The value should be a List, Array or DataModel instance of org.icefaces.ace.model.schedule.ScheduleEvent objects to be displayed on the schedule. Alternatively, the value can be an implementation of org.icefaces.ace.model.schedule.LazyScheduleEventLoader to work in a lazy-loading mode, month per month.")
+	@Property(tlddoc = "The value should be a List, Array, DataModel or a type that can be adapted into a DataModel (java.sql.ResultSet, javax.servlet.jsp.jstl.sql.Result, and java.util.Collection). It must contain the  org.icefaces.ace.model.schedule.ScheduleEvent objects to be displayed on the schedule. Alternatively, the value can be an implementation of org.icefaces.ace.model.schedule.LazyScheduleEventList to work in a lazy-loading mode, month per month.")
 	private Object value;
 
 	@Property(tlddoc = "The name of the template to use to render the component in the client. The valid values are 'full', 'mini', and 'custom'. Use 'custom' to define your own template in the 'customTemplate' attribute.", defaultValue="full")
@@ -68,6 +68,15 @@ public class ScheduleMeta extends UIDataMeta {
 
 	@Property(tlddoc = "Specifies where to display the event details after clicking on an event tag on the calendar. Possible values are 'sidebar', 'popup', 'tooltip', and 'disabled'.", defaultValue="sidebar")
 	private String displayEventDetails;
+
+	@Property(tlddoc = "Enable or disable the built-in event addition controls. These controls appear in a popup when clicking on an empty area of a day square. Adding new events this way is only supported if the component value is an instance of any of the following four types: Array, List, Collection, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="enabled")
+	private String additionControls;
+
+	@Property(tlddoc = "Enable or disable the built-in event editing controls. These controls only appear in the popup and sidebar event details view. Modifying events this way is only supported if the component value is an instance of any of the following three types: Array, List, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="enabled")
+	private String editingControls;
+
+	@Property(tlddoc = "Enable or disable the built-in event deletion controls. These controls only appear in the popup and sidebar event details view. Deleting events this way is only supported if the component value is an instance of any of the following four types: Array, List, Collection, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="enabled")
+	private String deletionControls;
 
 	@Property(tlddoc = "The inline style of the component, rendered on the root div of the component.")
 	private String style;
