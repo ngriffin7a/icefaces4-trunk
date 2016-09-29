@@ -27,7 +27,7 @@ import javax.faces.render.Renderer;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -41,6 +41,52 @@ public class ScheduleRenderer extends Renderer {
 		Schedule schedule = (Schedule) component;
 		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 		schedule.resetDataModel();
+
+		String clientId = schedule.getClientId(context);
+		if (params.containsKey(clientId + "_add")) decodeAdd(context, schedule, params);
+		else if (params.containsKey(clientId + "_edit")) decodeEdit(context, schedule, params);
+		else if (params.containsKey(clientId + "_delete")) decodeDelete(context, schedule, params);
+	}
+
+	public void decodeAdd(FacesContext context, Schedule schedule, Map<String, String> params) {
+		String clientId = schedule.getClientId(context);
+
+		schedule.addEvent(buildScheduleEventFromRequest(params, clientId));
+	}
+
+	public void decodeEdit(FacesContext context, Schedule schedule, Map<String, String> params) {
+		String clientId = schedule.getClientId(context);
+
+		String indexParam = params.get(clientId + "_index");
+
+		int index;
+		try {
+			index = Integer.valueOf(indexParam);
+		} catch(Exception e) {
+			/* TO_DO: log warning */
+			return;
+		}
+
+		schedule.editEvent(index, buildScheduleEventFromRequest(params, clientId));
+	}
+
+	public void decodeDelete(FacesContext context, Schedule schedule, Map<String, String> params) {
+		String clientId = schedule.getClientId(context);
+		Object value = schedule.getValue();
+		if (value instanceof List || Object[].class.isAssignableFrom(value.getClass())) {
+			String indexParam = params.get(clientId + "_index");
+
+			int index;
+			try {
+				index = Integer.valueOf(indexParam);
+			} catch(Exception e) {
+				/* TO_DO: log warning */
+				return;
+			}
+			schedule.deleteEvent(index);
+		} else if (value instanceof Collection) {
+			schedule.deleteEvent(buildScheduleEventFromRequest(params, clientId));
+		}
 	}
 
 	@Override
@@ -54,8 +100,8 @@ public class ScheduleRenderer extends Renderer {
 		boolean isLazy = schedule.isLazy();
 		if (isLazy) {
 			Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-			String lazyYear = params.get(schedule.getClientId(context) + "_lazyYear");
-			String lazyMonth = params.get(schedule.getClientId(context) + "_lazyMonth");
+			String lazyYear = params.get(clientId + "_lazyYear");
+			String lazyMonth = params.get(clientId + "_lazyMonth");
 			if (lazyYear != null && lazyMonth != null) {
 				schedule.setLazyYear(new Integer(lazyYear));
 				schedule.setLazyMonth(new Integer(lazyMonth));
@@ -101,6 +147,7 @@ public class ScheduleRenderer extends Renderer {
 
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId, null);
+		writer.writeAttribute("class", "ice-ace-schedule", null);
 
 		writer.startElement("div", null);
         writer.write("<script type=\"text/template\" id=\"" + clientId + "_template\">"
@@ -114,7 +161,10 @@ public class ScheduleRenderer extends Renderer {
 			.beginArray()
 				.item(clientId)
 				.beginMap()
-					.entry("displayEventDetails", displayEventDetails);
+					.entry("displayEventDetails", displayEventDetails)
+					.entry("isEventAddition", "disabled".equalsIgnoreCase(schedule.getAdditionControls()) ? false : true)
+					.entry("isEventEditing", "disabled".equalsIgnoreCase(schedule.getEditingControls()) ? false : true)
+					.entry("isEventDeletion", "disabled".equalsIgnoreCase(schedule.getDeletionControls()) ? false : true);
 
 					if (isLazy) {
 						int[] lazyYearMonthValues = schedule.getLazyYearMonthValues();
@@ -145,7 +195,7 @@ public class ScheduleRenderer extends Renderer {
           .endFunction();
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "ice-ace-schedule ui-widget " + templateName 
+		writer.writeAttribute("class", "ice-ace-schedule-body ui-widget " + templateName 
 			+ " " + sideBarClass + " " + displayEventDetailsClass, null);
 		writer.endElement("div");
 
@@ -155,12 +205,12 @@ public class ScheduleRenderer extends Renderer {
 		writer.endElement("script");
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "event-details-popup", null);
+		writer.writeAttribute("class", "event-details-popup-body", null);
 		writer.writeAttribute("title", "Event Details", null);
 		writer.endElement("div");
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "event-details-tooltip", null);
+		writer.writeAttribute("class", "event-details-tooltip-body", null);
 		writer.endElement("div");
 
 		writer.endElement("div");
@@ -180,8 +230,47 @@ public class ScheduleRenderer extends Renderer {
 		cal.setTime(date);
 		int hour = cal.get(Calendar.HOUR_OF_DAY);
 		int minute = cal.get(Calendar.MINUTE);
-		String ampm = cal.get(Calendar.AM_PM) == Calendar.AM ? "am" : "pm";
-		return (addLeadingZero(hour) + hour + ":" + addLeadingZero(minute) + minute + " " + ampm);
+		return (addLeadingZero(hour) + hour + ":" + addLeadingZero(minute) + minute);
+	}
+
+	private Date convertDateTimeToServerFormat(String date, String time) {
+		Calendar cal = Calendar.getInstance();
+		String yearString = date.substring(0, 4);
+		String monthString = date.substring(5, 7);
+		String dayString = date.substring(8, 10);
+		String hourString = time.substring(0, time.indexOf(":"));
+		String minuteString = time.substring(time.indexOf(":")+1);
+		try {
+			int year, month, day, hour, minute;
+			year = Integer.valueOf(yearString);
+			month = Integer.valueOf(monthString) - 1;
+			day = Integer.valueOf(dayString);
+			hour = Integer.valueOf(hourString);
+			minute = Integer.valueOf(minuteString);
+			cal.set(year, month, day, hour, minute);
+		} catch (Exception e) {
+			/* TO_DO: log warning */
+			return null;
+		}
+		return cal.getTime();
+	}
+
+	private ScheduleEvent buildScheduleEventFromRequest(Map<String, String> params, String clientId){
+		String date = params.get(clientId + "_date");
+		String time = params.get(clientId + "_time");
+		String title = params.get(clientId + "_title");
+		String location = params.get(clientId + "_location");
+		String notes = params.get(clientId + "_notes");
+
+		ScheduleEvent scheduleEvent = new ScheduleEvent();
+		Date convertedDate = convertDateTimeToServerFormat(date, time);
+		if (convertedDate == null) return null;
+		scheduleEvent.setDate(convertedDate);
+		scheduleEvent.setTitle(title);
+		scheduleEvent.setLocation(location);
+		scheduleEvent.setNotes(notes);
+
+		return scheduleEvent;
 	}
 
 	private String addLeadingZero(int value) {

@@ -21,6 +21,7 @@ import org.icefaces.ace.model.schedule.ScheduleEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 public class Schedule extends ScheduleBase {
@@ -53,6 +54,65 @@ public class Schedule extends ScheduleBase {
 		} else {
 			int[] values = {lazyYear, lazyMonth};
 			return values;
+		}
+	}
+
+	public void addEvent(ScheduleEvent scheduleEvent) {
+		if (scheduleEvent == null) return;
+		if (isLazy()) {
+			LazyScheduleEventList lazyScheduleEventList = (LazyScheduleEventList) getValue();
+			lazyScheduleEventList.add(scheduleEvent);
+		} else {
+			Object value = getValue();
+			if (value instanceof List) {
+				((List) value).add(scheduleEvent);
+			} else if (Object[].class.isAssignableFrom(value.getClass())) {
+				ScheduleEvent[] oldArray = (ScheduleEvent[]) value;
+				ScheduleEvent[] newArray = new ScheduleEvent[oldArray.length+1];
+				for (int i = 0; i < newArray.length; i++) newArray[i] = oldArray[i];
+				newArray[newArray.length-1] = scheduleEvent;
+				setValue(newArray);
+			} else if (value instanceof Collection) {
+				((Collection) value).add(scheduleEvent);
+			}
+		}
+	}
+
+	public void editEvent(int index, ScheduleEvent scheduleEvent) {
+		if (scheduleEvent == null) return;
+		if (isLazy()) {
+			LazyScheduleEventList lazyScheduleEventList = (LazyScheduleEventList) getValue();
+			lazyScheduleEventList.set(index, scheduleEvent);
+		} else {
+			Object value = getValue();
+			if (value instanceof List) {
+				((List) value).set(index, scheduleEvent);
+			} else if (Object[].class.isAssignableFrom(value.getClass())) {
+				((ScheduleEvent[]) value)[index] = scheduleEvent;
+			}
+		}
+	}
+
+	public void deleteEvent(int index) {
+		Object value = getValue();
+		if (value instanceof List) {
+			((List) value).remove(index);
+		} else if (Object[].class.isAssignableFrom(value.getClass())) {
+			ScheduleEvent[] oldArray = (ScheduleEvent[]) value;
+			ScheduleEvent[] newArray = new ScheduleEvent[oldArray.length-1];
+			for (int i = 0; i < oldArray.length; i++) {
+				if (i == index) continue;
+				newArray[i > index ? i-1 : i] = oldArray[i];
+			}
+			setValue(newArray);
+		}		
+	}
+
+	public void deleteEvent(ScheduleEvent scheduleEvent) {
+		if (scheduleEvent == null) return;
+		Object value = getValue();
+		if (value instanceof Collection) {
+			((Collection) value).remove(scheduleEvent);
 		}
 	}
 }

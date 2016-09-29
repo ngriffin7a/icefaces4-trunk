@@ -53,17 +53,19 @@ public class ScheduleTemplates {
 
 				+"<div class=\"event-listing\">"
 					+"<div class=\"event-listing-title ui-state-default\">Events this Month</div>"
+					+"<div class=\"event-listing-body\">"
 						+"<% _.each(eventsThisMonth, function(event) { %>"
 							+"<div class=\"event-item\">"
 								+"<div class=\"event-item-name\"><%= event.title %></div>"
 								+"<div class=\"event-item-location\"><%= event.location %></div>"
 							+"</div>"
 						+"<% }); %>"
+					+"</div>"
 				+"</div>"
 
 				+"<div class=\"event-details\">"
 					+"<div class=\"event-details-title ui-state-default\">Event Details</div>"
-					+"<div class=\"event-details-content\"></div>"
+					+"<div class=\"event-details-body\"></div>"
 				+"</div>"
 
 			+"</div>"

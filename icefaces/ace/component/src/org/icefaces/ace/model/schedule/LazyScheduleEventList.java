@@ -23,9 +23,10 @@ import java.io.Serializable;
  * This list represents a collection of schedule events that are loaded lazily.
  * All the events of a given month are loaded at a time in memory and in the client.
  * The load method must return a new list, based on the given month and year values.
- * In order to support persistence of the Add, Delete and Modify operations performed
- * by the ace:scheulde component, the following methods must be overriden as well:
- * add(ScheduleEvent e), remove(int index), and set(int index, ScheduleEvent element)
+ * Depending on the backing data source being used, in order to guarantee persistence
+ * of the Add, Edit and Delete operations performed by the ace:schedule component, 
+ * it may be necessary to override the following methods as well:
+ * add(ScheduleEvent e), set(int index, ScheduleEvent element), and remove(int index)
  */
 public abstract class LazyScheduleEventList extends WrappedList<ScheduleEvent> implements Serializable {
 
