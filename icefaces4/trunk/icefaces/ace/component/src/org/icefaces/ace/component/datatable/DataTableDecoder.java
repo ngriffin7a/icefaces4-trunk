@@ -24,6 +24,7 @@ import org.icefaces.ace.event.UnselectEvent;
 import org.icefaces.ace.json.JSONException;
 import org.icefaces.ace.json.JSONObject;
 import org.icefaces.ace.model.table.*;
+import org.icefaces.util.JavaScriptRunner;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
@@ -43,6 +44,8 @@ public class DataTableDecoder {
         table.savedSelectionChanges.put(table.getClientId(context), new SelectionDeltaState(context, table));
 
         queueInstantSelectionEvent(context, table, clientId, params);
+
+		if (params.containsKey(clientId + "_lastSelectedIndex")) JavaScriptRunner.runScript(context, "(function(){var table = ice.ace.instance('"+clientId+"');if(table) table.lastSelectIndex = " + params.get(clientId + "_lastSelectedIndex") + "})();");
     }
 
     static void queueInstantSelectionEvent(FacesContext context, DataTable table, String clientId, Map<String,String> params) {

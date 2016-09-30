@@ -3079,6 +3079,7 @@ ice.ace.DataTable.prototype.doSelectionEvent = function (type, deselection, elem
                 params[this.id + '_instantUnselectedRowIndexes'] = targetId;
             }
         }
+		params[_self.id + '_lastSelectedIndex'] = element.index();
 
         // If first row is in this selection, deselection, or will be implicitly deselected by singleSelection
         // resize the scrollable table. IE7 only now
@@ -3148,6 +3149,7 @@ ice.ace.DataTable.prototype.doMultiRowSelectionEvent = function (lastIndex, curr
 
         var params = {};
         params[self.id + '_instantSelectedRowIndexes'] = this.selection;
+		params[self.id + '_lastSelectedIndex'] = current.index();
 
         var firstRowSelected = tbody.children(':first').hasClass('ui-selected');
 
