@@ -48,6 +48,9 @@ public class DecimalValidatorMeta extends UIComponentBaseMeta {
         @Property(tlddoc = "Enables or disables decimal number validation.", defaultValue="true")
         private Boolean enabled;
 
-        @Property(tlddoc = "Trigger validation on specified event.", defaultValue="")
+        @Property(tlddoc = "Trigger validation for a specific JS event (such as 'click' or 'keyup'). Multiple event " +
+                "types can also be specified as a space separated list. When any custom event is specified the default " +
+                "events that the component uses by default are disabled. Keyboard and mouse type events are always " +
+                "supported, with focus event types supported if the input element can receive focus.", defaultValue="")
         private String validateOn;
 }
