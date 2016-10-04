@@ -3381,8 +3381,7 @@ function wijmoASPNetParseOptions(o) {
 				return;
 			}
 			active.children(":first")
-			.removeClass("ui-state-focus")
-			.attr("id", ""); // ICE-7762
+			.removeClass("ui-state-focus");
 			self._trigger("blur");
 			self.activeItem = null;
 		},
