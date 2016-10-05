@@ -26,8 +26,7 @@
  */
 package org.icefaces.ace.component.buttongroup;
 
-import org.icefaces.ace.component.checkboxbutton.CheckboxButton;
-import org.icefaces.ace.component.radiobutton.RadioButton;
+import org.icefaces.ace.api.ButtonGroupMember;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.render.MandatoryResourceComponent;
 
@@ -35,7 +34,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 @MandatoryResourceComponent(tagName = "buttonGroup", value = "org.icefaces.ace.component.buttongroup.ButtonGroup")
 public class ButtonGroupRenderer extends CoreRenderer {
@@ -47,9 +48,9 @@ public class ButtonGroupRenderer extends CoreRenderer {
         String style = (style = buttonGroup.getStyle()) == null ? "" : style.trim();
         String styleClass = (styleClass = buttonGroup.getStyleClass()) == null ? "" : styleClass.trim();
         styleClass += (styleClass.length() > 0 ? " " : "") + "ui-widget ui-widget-content ui-corner-all";
-
+        String clientId = component.getClientId(context);
         writer.startElement("div", component);
-        writer.writeAttribute("id", component.getClientId(context), "id");
+        writer.writeAttribute("id", clientId, "id");
         if (style.length() > 0) {
             writer.writeAttribute("style", style, "style");
         }
@@ -68,19 +69,55 @@ public class ButtonGroupRenderer extends CoreRenderer {
             }
             writer.endElement("div");
         }
+        /* only add the buttonGroup to the list of controlling groups if mutuallyExclusive is true */
+        if (buttonGroup.isMutuallyExclusive()) {
+            List<String> groupList = getGroupFromContext(buttonGroup, context);
+            if (!groupList.contains(clientId)) {
+                groupList.add(clientId);
+                context.getAttributes().put(buttonGroup.GROUP_LIST_KEY, groupList);
+            }
+        }
+
     }
+    private List<String> getGroupFromContext(ButtonGroup group, FacesContext fc){
+         List<String> groupList = new ArrayList<String>();
+         Object olist = fc.getAttributes().get(group.GROUP_LIST_KEY) ;
+         if (olist != null){
+              if (olist instanceof List){
+                 groupList = (List<String>)fc.getAttributes().get(group.GROUP_LIST_KEY);
+              }
+         }  else {
+            // System.out.println(" empty List of button groups......");
+         }
+         return groupList;
+     }
 
     @Override
     public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
         if (context == null || component == null) {
             throw new NullPointerException();
         }
+        String groupId = component.getClientId(context);
+        ButtonGroup groupComp = (ButtonGroup)component;
+        boolean mutuallyExclusive = groupComp.isMutuallyExclusive();
+        if (mutuallyExclusive){
+            context.getAttributes().put(ButtonGroup.GROUP_PARENT_ID, groupId);
+        }
         if (component.getChildCount() > 0) {
             Iterator<UIComponent> kids = component.getChildren().iterator();
             while (kids.hasNext()) {
                 UIComponent kid = kids.next();
+                if (kid instanceof ButtonGroupMember){
+                    ButtonGroupMember bgc = (ButtonGroupMember)kid;
+                    if (bgc.getGroup()==null || bgc.getGroup().length()<1 && mutuallyExclusive ) {
+                        bgc.setGroup(component.getClientId(context));
+                    }
+                }
                 kid.encodeAll(context);
             }
+        }
+        if (mutuallyExclusive){
+            context.getAttributes().remove(ButtonGroup.GROUP_PARENT_ID);
         }
     }
 

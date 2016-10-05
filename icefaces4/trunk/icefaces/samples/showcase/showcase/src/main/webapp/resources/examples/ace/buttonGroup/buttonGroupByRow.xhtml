@@ -1,0 +1,77 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+
+    <ui:define name="example">
+        <h:form id="frm1">
+            <ace:panel header="Choose number of rows of table">
+                <h:selectOneMenu id="numRowSelect" value="#{buttonGroupRow.numberOfRows}"
+                                 valueChangeListener="#{buttonGroupRow.updateRows}"
+                                 converter="javax.faces.Integer" >
+                    <f:selectItem itemLabel="10" itemValue="10"/>
+                    <f:selectItem itemLabel="100" itemValue="100"/>
+                    <f:selectItem itemLabel="500" itemValue="500"/>
+                    <f:selectItem itemLabel="1000" itemValue="1000"/>
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectOneMenu>
+            </ace:panel>
+
+        </h:form>
+     <!--   <h2>Buttons grouped by #{buttonGroupDataTable.group}</h2>   -->
+        <h:form id="frm2">
+            <ui:repeat id="rpt" value="#{buttonGroupRow.buttonGroups}"
+                        var="group" >
+                <ace:buttonGroup id="buttonGroup" header="row #{group.row}" mutuallyExclusive="true">
+                    <h:panelGrid columns="7" >
+                     <ace:radioButton id="b1" label="radio1"  labelPosition="left"
+                                      value="#{group.radio1}" >
+                         <ace:ajax render="@all" execute="@this"/>
+                     </ace:radioButton>
+                     <ace:radioButton id="b2"   label="radio2"
+                                          labelPosition="left" value="#{group.radio2}">
+                         <ace:ajax render="@all" execute="@this"/>
+                     </ace:radioButton>
+                     <ace:radioButton id="b3" label="radio3"
+                                      labelPosition="left" value="#{group.radio3}">
+                         <ace:ajax render="@all" execute="@this"/>
+                     </ace:radioButton>
+                    <h:outputText value=" |"/>
+                    <ace:checkboxButton id="c1" label="checkbox1" labelPosition="left"
+                                       value="#{group.check1}" >
+                       <ace:ajax render="@form" execute="@this"/>
+                     </ace:checkboxButton>
+                     <ace:checkboxButton id="c2" label="checkbox2" labelPosition="left"
+                                        value="#{group.check2}" >
+                        <ace:ajax render="@form" execute="@this"/>
+                     </ace:checkboxButton>
+                     <ace:checkboxButton id="c3" label="checkbox3" labelPosition="left"
+                                         value="#{group.check3}" >
+                         <ace:ajax render="@form" execute="@this"/>
+                     </ace:checkboxButton>
+                   </h:panelGrid>
+                </ace:buttonGroup>
+              <!--  <h:outputText value="Selected checkbox=#{group.selectedCheckbox}"/> -->
+            </ui:repeat>
+        </h:form>
+    </ui:define>
+</ui:composition>

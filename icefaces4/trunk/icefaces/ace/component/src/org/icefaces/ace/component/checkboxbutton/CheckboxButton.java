@@ -16,16 +16,12 @@
 
 package org.icefaces.ace.component.checkboxbutton;
 
-import org.icefaces.ace.component.clientValidator.Validateable;
-import org.icefaces.ace.util.Utils;
+import org.icefaces.ace.api.ButtonGroupMember;
 import org.icefaces.component.Focusable;
-import org.icefaces.impl.util.Util;
-
-import javax.faces.context.FacesContext;
 
 
-public class CheckboxButton extends CheckboxButtonBase implements Focusable {
-
+public class CheckboxButton extends CheckboxButtonBase implements Focusable, ButtonGroupMember {
+    public static final String GROUP_LIST_KEY = "org.icefaces.ace.buttonGroup.LIST_KEY";
     public String getFocusedElementId() {
         return getClientId() + "_button";
     }

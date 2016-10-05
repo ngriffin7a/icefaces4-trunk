@@ -21,6 +21,8 @@ package org.icefaces.ace.component.checkboxbutton;
 import java.io.IOException;
 import java.lang.String;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 import javax.faces.component.UIComponent;
@@ -29,6 +31,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 
+import org.icefaces.ace.api.ButtonGroupMember;
 import org.icefaces.ace.component.buttongroup.ButtonGroup;
 import org.icefaces.ace.util.*;
 
@@ -41,7 +44,8 @@ public class CheckboxButtonRenderer extends InputRenderer {
     private enum EventType {
         HOVER, FOCUS
     }
-
+    private static final Logger logger =
+            Logger.getLogger(CheckboxButtonRenderer.class.toString());
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         Map requestParameterMap = facesContext.getExternalContext().getRequestParameterMap();
         CheckboxButton checkbox = (CheckboxButton) uiComponent;
@@ -208,31 +212,36 @@ public class CheckboxButtonRenderer extends InputRenderer {
 	}
 
 	private String getGroupId(FacesContext facesContext, CheckboxButton checkbox) {
-        UIComponent groupComp;
         String groupId = checkbox.getGroup();
-		if (groupId != null) {
-			groupId = groupId.trim();
-			groupComp = checkbox.findComponent(groupId);
-			groupId = groupComp instanceof ButtonGroup ? groupComp.getClientId(facesContext) : "";
-		}
-		if (groupId == null || "".equals(groupId)) {
-			groupComp = findNearestButtonGroup(checkbox);
-			if (groupComp != null) {
-				groupId = ((ButtonGroup) groupComp).isMutuallyExclusive() ? groupComp.getClientId(facesContext) : "";
-			} else {
-				groupId = "";
-			}
-		}
+        List<String> groupLookInCtx = ComponentUtils.findInFacesContext(checkbox, facesContext);
+        if (!groupLookInCtx.isEmpty()){  //at least one buttonGroup is in the view
+            if (groupId !=null){
+                groupId = groupId.trim();
+                if (groupLookInCtx.contains(groupId)) {
+                    for(String sid: groupLookInCtx){
+                        if (sid.toLowerCase().contains(groupId.toLowerCase())){
+                            groupId=sid;
+                        }
+                    }
+                }  else {
+                    //does it end in the groupId --so incomplete?
+                    groupId= ComponentUtils.findInHeirarchy((ButtonGroupMember)checkbox, facesContext);
+                }
+            } else { //have at least one buttonGroup, but groupId is not set
+                groupId= ComponentUtils.findInHeirarchy((ButtonGroupMember)checkbox, facesContext);
+                if (groupId.length()< 1){
+                    if (logger.isLoggable(Level.FINE)) {
+                        logger.fine("groupId of:-"+groupId+" not found in view.");
+                    }
+                }
+            }
+        }else {  //no buttonGroups in the view buttons are just non-managed buttons
+            groupId="";
+        }
+
 		return groupId;
 	}
 
-	private ButtonGroup findNearestButtonGroup(UIComponent component) {
-		if (component == null) return null;
-		UIComponent parent = component.getParent();
-		if (parent == null) return null;
-		if (parent instanceof ButtonGroup) return (ButtonGroup) parent;
-		return findNearestButtonGroup(parent);
-	}
 	
     private void encodeScript(FacesContext facesContext, ResponseWriter writer,
                               CheckboxButton checkbox, String clientId, EventType type) throws IOException {

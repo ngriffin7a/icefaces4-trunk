@@ -17,15 +17,17 @@
 package org.icefaces.ace.component.radiobutton;
 
 
-import org.icefaces.ace.component.clientValidator.Validateable;
+import org.icefaces.ace.api.ButtonGroupMember;
 import org.icefaces.component.Focusable;
 
-import javax.faces.context.FacesContext;
+import java.util.logging.Logger;
 
-public class RadioButton extends RadioButtonBase implements Focusable {
+public class RadioButton extends RadioButtonBase implements Focusable, ButtonGroupMember {
+    public static final String GROUP_LIST_KEY = "org.icefaces.ace.buttonGroup.LIST_KEY";
 
     public String getFocusedElementId() {
         return getClientId() + "_button";
     }
+
 }
 
