@@ -203,10 +203,16 @@ public class CoalescingResourceHandler extends ResourceHandlerWrapper {
             } else {
                 ArrayList<CoalescingResource.Info> currentResources = resourceInfos.resources;
                 ArrayList<CoalescingResource.Info> previousResources = previousResourceInfos.resources;
+
                 //replace the resource infos only if there are new resources found in the new list
-                if (previousResources.equals(currentResources)) {
+                ArrayList<CoalescingResource.Info> currentResourceCopy = new ArrayList<CoalescingResource.Info>(currentResources);
+                currentResourceCopy.removeAll(previousResources);
+
+                if (currentResourceCopy.isEmpty()) {
+                    //the current resources are a subset of the previous resources -- avoid changing the content of the coalesced resource
                     //force a reload of the coalesced resource -- this is mostly to make theme changing work
-                    previousResourceInfos.modified = !context.isPostback();
+                    resourceInfos.modified = !context.isPostback();
+                    resourceInfos.resources = previousResources;
                 } else {
                     ArrayList<CoalescingResource.Info> sameRequestPreviousResources = (ArrayList<CoalescingResource.Info>) originalRequest.getAttribute(CoalescingResourceHandler.class.getName() + extension);
                     //merge resources that are required by different views but for the same request
