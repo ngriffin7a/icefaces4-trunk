@@ -17,4 +17,6 @@
 package org.icefaces.ace.component.buttongroup;
 
 public class ButtonGroup extends ButtonGroupBase {
+    public static final String GROUP_LIST_KEY = "org.icefaces.ace.buttonGroup.LIST_KEY";
+    public static final String GROUP_PARENT_ID = "org.icefaces.ace.buttonGroup.PARENT_ID";
 }

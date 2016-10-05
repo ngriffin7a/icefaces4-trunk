@@ -29,6 +29,8 @@ package org.icefaces.ace.util;
 
 import org.icefaces.component.Focusable;
 import org.icefaces.impl.util.CoreUtils;
+import org.icefaces.ace.api.ButtonGroupMember;
+import org.icefaces.ace.component.buttongroup.ButtonGroup;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
@@ -404,4 +406,38 @@ public class ComponentUtils {
             return "";
         }
     }
+
+    /**
+        * A buttonGroup will put itself in the context while its children are rendering and
+        * automatically the groupId will set itself.  Any radioButton/checkboxButton that is a descendant of a
+        * buttonGroup component inherits it as a groupId.
+        * @param button
+        * @param context
+        * @return
+        */
+       public static String findInHeirarchy(ButtonGroupMember button, FacesContext context){
+           String groupId="";
+           Object oId = context.getAttributes().get(ButtonGroup.GROUP_PARENT_ID);
+           if (oId!=null){
+               groupId=String.valueOf(oId);
+           }
+           return groupId;
+       }
+
+       /**
+        * This method will look in Context attributes for the buttonGroups registered in the view
+        * @param button
+        * @param fc
+        * @return
+        */
+       public static List<String> findInFacesContext(ButtonGroupMember button, FacesContext fc){
+           List<String> groupList = new ArrayList<String>();
+           Object olist = fc.getAttributes().get(ButtonGroupMember.GROUP_LIST_KEY) ;
+           if (olist != null){
+                if (olist instanceof List){
+                   groupList = (List<String>)fc.getAttributes().get(ButtonGroupMember.GROUP_LIST_KEY);
+                }
+           }
+           return groupList;
+       }
 }

@@ -84,4 +84,7 @@ public class RadioButtonMeta extends UISelectBooleanMeta {
 
 	@Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
 	String accesskey;
+
+	@Property(defaultValue="false", tlddoc="If true it will be assumed that the radioButton is part of a buttonGroup that is within a dataTable for determination of which radioButton is mutually exclusive")
+	private boolean spread;
 }

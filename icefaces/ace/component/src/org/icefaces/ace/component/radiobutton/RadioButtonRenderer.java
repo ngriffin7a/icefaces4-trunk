@@ -18,7 +18,6 @@ package org.icefaces.ace.component.radiobutton;
 
 
 import org.icefaces.ace.component.buttongroup.ButtonGroup;
-import org.icefaces.ace.component.radiobutton.RadioButton;
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
@@ -34,13 +33,19 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.icefaces.ace.api.ButtonGroupMember;
 
 @MandatoryResourceComponent(tagName="radioButton", value="org.icefaces.ace.component.radiobutton.RadioButton")
 public class RadioButtonRenderer extends InputRenderer {
     private enum EventType {
         HOVER, FOCUS
     }
+    private static final Logger logger =
+            Logger.getLogger(RadioButtonRenderer.class.toString());
 
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         Map requestParameterMap = facesContext.getExternalContext().getRequestParameterMap();
@@ -157,21 +162,33 @@ public class RadioButtonRenderer extends InputRenderer {
 
     private void encodeScript(FacesContext facesContext, ResponseWriter writer,
                               RadioButton radioButton, String clientId) throws IOException {
-        UIComponent groupComp;
         String groupId = radioButton.getGroup();
-		if (groupId != null) {
-			groupId = groupId.trim();
-			groupComp = radioButton.findComponent(groupId);
-			groupId = groupComp instanceof ButtonGroup ? groupComp.getClientId(facesContext) : "";
-		}
-		if (groupId == null || "".equals(groupId)) {
-			groupComp = findNearestButtonGroup(radioButton);
-			if (groupComp != null) {
-				groupId = ((ButtonGroup) groupComp).isMutuallyExclusive() ? groupComp.getClientId(facesContext) : "";
-			} else {
-				groupId = "";
-			}
-		}
+        List<String> groupLookInCtx = ComponentUtils.findInFacesContext(radioButton, facesContext);
+        if (!groupLookInCtx.isEmpty()){  //at least one buttonGroup is in the view
+            if (groupId !=null){
+                groupId = groupId.trim();
+                if (groupLookInCtx.contains(groupId)) {
+                    for(String sid: groupLookInCtx){
+                       if (sid.toLowerCase().equals(groupId.toLowerCase())){
+                           groupId=sid;
+                       }
+                    }
+                }  else {
+                    //does it end in the groupId --so incomplete?
+                   groupId= ComponentUtils.findInHeirarchy((ButtonGroupMember)radioButton, facesContext);
+                }
+            } else { //have at least one buttonGroup, but groupId is not set
+                groupId= ComponentUtils.findInHeirarchy((ButtonGroupMember)radioButton, facesContext);
+                if (groupId.length()< 1){
+                    if (logger.isLoggable(Level.FINE)) {
+                        logger.fine("groupId of:-"+groupId+" not found in view.");
+                    }
+                }
+            }
+        }else {  //no buttonGroups in the view buttons are just non-managed buttons
+            groupId="";
+        }
+
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
         JSONBuilder jb = JSONBuilder.create();
         List<UIParameter> uiParamChildren = Utils.captureParameters(radioButton);
@@ -203,14 +220,7 @@ public class RadioButtonRenderer extends InputRenderer {
         writer.writeText("ice.ace.jq(function(){" + jb.toString() + "});", null);
 		writer.endElement("script");
     }
-	
-	private ButtonGroup findNearestButtonGroup(UIComponent component) {
-		if (component == null) return null;
-		UIComponent parent = component.getParent();
-		if (parent == null) return null;
-		if (parent instanceof ButtonGroup) return (ButtonGroup) parent;
-		return findNearestButtonGroup(parent);
-	}
+
 
     /**
      * support similar return values as jsf component
