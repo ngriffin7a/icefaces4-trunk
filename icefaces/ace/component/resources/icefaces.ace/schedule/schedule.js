@@ -13,9 +13,17 @@ ice.ace.Schedule = function(id, cfg) {
 	this.jq = ice.ace.jq(this.jqId).find('.ice-ace-schedule-body');
 	this.cfg = cfg;
 	this.events = cfg.events;
+	var self = this;
 	
 	var configuration = {};
-	configuration.template = ice.ace.jq(this.jqId + '_template').html()
+	if (this.cfg.viewMode == 'week') {
+		configuration.render = function(data) { return self.renderWeekView.call(self, data); };
+		configuration.doneRendering = function() { self.renderWeekEvents.call(self, self.data); };
+	} else if (this.cfg.viewMode == 'day') {
+
+	} else {
+		configuration.template = ice.ace.jq(this.jqId + '_template').html();
+	}
 	configuration.events = this.events;
 	configuration.forceSixRows = true;
 	if (this.cfg.isLazy) {
@@ -24,33 +32,133 @@ ice.ace.Schedule = function(id, cfg) {
 	this.jq.clndr(configuration);
 
 	if (this.cfg.isLazy) {
-		var self = this;
-		var previousButton = this.jq.find('.clndr-previous-button');
+		var previousButton = this.jq.find('.clndr-previous-button'); // maybe we don't use these classes to avoid those listeners
 		var nextButton = this.jq.find('.clndr-next-button');
-		var lazyYear = cfg.lazyYear;
-		var lazyMonth = cfg.lazyMonth;
+		var view = this.cfg.viewMode;
+		var lazyYear = this.cfg.lazyYear;
+		var lazyMonth = this.cfg.lazyMonth;
+		var lazyDay = this.cfg.lazyDay;
+		var is31DaysMonth = lazyMonth == 0 || lazyMonth == 2 || lazyMonth == 4 || lazyMonth == 6
+			|| lazyMonth == 7 || lazyMonth == 9 || lazyMonth == 11;
+		var isLeapYear = ((lazyYear % 4 == 0) && (lazyYear % 100 != 0)) || (lazyYear % 400 == 0);
 		previousButton.on('click', function(e) {
-			e.stopPropagation()
-			if (lazyMonth == 0) {
-				lazyYear--;
-				lazyMonth = 11;
-			} else lazyMonth--;
-			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth);
+			e.stopPropagation();
+			if (view == 'week') {
+				if (is31DaysMonth) {
+					if (lazyMonth == 0) {
+						if (lazyDay <= 7) {
+							lazyYear--;
+							lazyMonth = 11;
+							lazyDay = lazyDay - 7 + 31;
+						} else {
+							lazyDay = lazyDay - 7;
+						}
+					} else if (lazyMonth == 7) {
+						if (lazyDay <= 7) {
+							lazyMonth--;
+							lazyDay = lazyDay - 7 + 31;
+						} else {
+							lazyDay = lazyDay - 7;
+						}
+					} else if (lazyDay <= 7) {
+						lazyMonth--;
+						lazyDay = lazyDay - 7 + 30;
+					} else {
+						lazyDay = lazyDay - 7;
+					}
+				} else {
+					if (lazyMonth == 2) {
+						if (isLeapYear) {
+							if (lazyDay <= 7) {
+								lazyDay = lazyDay - 7 + 29;
+								lazyMonth = 1;
+							} else {
+								lazyDay = lazyDay - 7;
+							}
+						} else {
+							if (lazyDay <= 7) {
+								lazyDay = lazyDay - 7 + 28;
+								lazyMonth = 1;
+							} else {
+								lazyDay = lazyDay - 7;
+							}
+						}
+					} else if (lazyDay <= 7) {
+						lazyMonth--;
+						lazyDay = lazyDay - 7 + 31;
+					} else {
+						lazyDay = lazyDay - 7;
+					}
+				}
+			} else if (view == 'day') {
+
+			} else {
+				if (lazyMonth == 0) {
+					lazyYear--;
+					lazyMonth = 11;
+				} else lazyMonth--;
+				lazyDay = 1;
+			}
+			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth, lazyDay);
 		});
 		nextButton.on('click', function(e) {
-			e.stopPropagation()
-			if (lazyMonth == 11) {
-				lazyYear++;
-				lazyMonth = 0;
-			} else lazyMonth++;
-			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth);
+			e.stopPropagation();
+			if (view == 'week') {
+				if (is31DaysMonth) {
+					if (lazyMonth == 11) {
+						if (lazyDay >= 25) {
+							lazyYear++;
+							lazyMonth = 0;
+							lazyDay = lazyDay + 7 - 31;
+						} else {
+							lazyDay = lazyDay + 7;
+						}
+					} else if (lazyDay >= 24) {
+						lazyMonth++;
+						lazyDay = lazyDay + 7 - 31;
+					} else {
+						lazyDay = lazyDay + 7;
+					}
+				} else {
+					if (lazyMonth == 1) {
+						if (isLeapYear) {
+							if (lazyDay >= 23) {
+								lazyMonth = 2;
+								lazyDay = lazyDay + 7 - 29;
+							} else {
+								lazyDay = lazyDay + 7;
+							}
+						} else {
+							if (lazyDay >= 22) {
+								lazyMonth = 2;
+								lazyDay = lazyDay + 7 - 28;
+							} else {
+								lazyDay = lazyDay + 7;
+							}
+						}
+					} else if (lazyDay >= 24) {
+						lazyMonth++;
+						lazyDay = lazyDay + 7 - 30;
+					} else {
+						lazyDay = lazyDay + 7;
+					}
+				}
+			} else if (view == 'day') {
+
+			} else {
+				if (lazyMonth == 11) {
+					lazyYear++;
+					lazyMonth = 0;
+				} else lazyMonth++;
+				lazyDay = 1;
+			}
+			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth, lazyDay);
 		});
 	}
 
 	this.eventsMap = this.createEventsMap(this.events);
 
 	if (cfg.displayEventDetails != 'disabled') {
-		var self = this;
 		if (cfg.displayEventDetails == 'tooltip') {
 			this.jq.delegate('.schedule-event', 'mouseover', function(event) {
 				var node = event['target'];
@@ -86,7 +194,6 @@ ice.ace.Schedule = function(id, cfg) {
 		}
 	}
 	if (self.cfg.isEventAddition) {
-		var self = this;
 		this.jq.delegate('.day', 'click', function(event) {
 			var node = event['target'];
 			var date = self.extractEventDate(node);
@@ -188,7 +295,7 @@ ice.ace.Schedule.prototype.hideEventDetailsTooltip = function() {
 	ice.ace.jq(this.jqId).find('.event-details-tooltip').hide();
 };
 
-ice.ace.Schedule.prototype.sendLazyNavigationRequest = function(event, lazyYear, lazyMonth) {
+ice.ace.Schedule.prototype.sendLazyNavigationRequest = function(event, lazyYear, lazyMonth, lazyDay) {
     var options = {
 		source: this.id,
 		render: this.id,
@@ -198,6 +305,7 @@ ice.ace.Schedule.prototype.sendLazyNavigationRequest = function(event, lazyYear,
     var params = {};
     params[this.id + "_lazyYear"] = lazyYear;
     params[this.id + "_lazyMonth"] = lazyMonth;
+    params[this.id + "_lazyDay"] = lazyDay;
     options.params = params;
 
 	ice.ace.AjaxRequest(options);
@@ -217,4 +325,175 @@ ice.ace.Schedule.prototype.sendEditRequest = function(event, type) {
     options.params = params;
 
 	ice.ace.AjaxRequest(options);
+};
+
+ice.ace.Schedule.prototype.renderWeekView = function(data) {
+	this.data = data;
+	var i, j;
+	var markup =
+	"<div class=\"clndr-controls ui-state-active\">"
+		+"<div class=\"clndr-previous-button\">&lt;</div>"
+		+"<div class=\"clndr-next-button\">&gt;</div>"
+		+"<div class=\"current-month\">" + data.month + " " + data.year + "</div>"
+	+"</div>"
+
+	+"<div class=\"schedule-content\">"
+
+		/* time grid */
+		+"<div class=\"clndr-grid ui-widget-content\">"
+			+"<table><thead class=\"days-of-the-week ui-state-default\"><tr>"
+				+"<th class=\"header-day\">Time</th>";
+
+				for (i = 0; i < data.daysOfTheWeek.length; i++) {
+					var day = data.daysOfTheWeek[i];
+					markup +="<th class=\"header-day dow-" + i + "\">" + day + "</th>";
+				}
+
+			markup += "</tr></thead>"
+			+"<tbody class=\"days\">";
+
+				for (i = 0; i < 24; i++) {
+					var iString = i < 10 ? '0' + i : i;
+					markup += "<tr>"
+						+"<td class=\"ui-widget-content schedule-cell\">" + i + ":00</td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-0 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-1 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-2 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-3 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-4 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-5 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-6 time-" + iString + "00\"></td>"
+					+"</tr><tr>"
+						+"<td class=\"ui-widget-content schedule-cell\">" + i + ":30</td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-0 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-1 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-2 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-3 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-4 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-5 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell dow-6 time-" + iString + "30\"></td>"
+					+"</tr>";
+				}
+
+			markup += "</tbody></table>"
+		+"</div>";
+
+		markup += "<div class=\"schedule-sidebar ui-widget-content\">"
+
+			+"<div class=\"event-listing\">"
+				+"<div class=\"event-listing-title ui-state-default\">Events this Month</div>"
+				+"<div class=\"event-listing-body\">";
+
+					for (i = 0; i < data.eventsThisMonth.length; i++) {
+						var event = data.eventsThisMonth[i];
+						markup += "<div class=\"event-item\">"
+							+"<div class=\"event-item-name\">" + event.title + "</div>"
+							+"<div class=\"event-item-location\">" + event.location + "</div>"
+						+"</div>";
+					}
+
+				markup += "</div>"
+			+"</div>"
+
+			+"<div class=\"event-details\">"
+				+"<div class=\"event-details-title ui-state-default\">Event Details</div>"
+				+"<div class=\"event-details-body\"></div>"
+			+"</div>"
+
+		+"</div>"
+
+	+"</div>";
+
+	return markup;
+};
+
+ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
+	//special div, sibling of the tooltip and the popup, .html('') to remove previous events
+	var i,j;
+	var lazyYear = this.cfg.lazyYear;
+	var lazyMonth = this.cfg.lazyMonth;
+	var lazyDay = this.cfg.lazyDay;
+	var is31DaysMonth = lazyMonth == 0 || lazyMonth == 2 || lazyMonth == 4 || lazyMonth == 6
+		|| lazyMonth == 7 || lazyMonth == 9 || lazyMonth == 11;
+	var isLeapYear = ((lazyYear % 4 == 0) && (lazyYear % 100 != 0)) || (lazyYear % 400 == 0);
+	var weekStartDate = new Date(lazyYear, lazyMonth, lazyDay, 0, 0, 0, 0);
+	if (is31DaysMonth) {
+		if (lazyMonth == 11) {
+			if (lazyDay >= 25) {
+				lazyYear++;
+				lazyMonth = 0;
+				lazyDay = lazyDay + 7 - 31;
+			} else {
+				lazyDay = lazyDay + 7;
+			}
+		} else if (lazyDay >= 24) {
+			lazyMonth++;
+			lazyDay = lazyDay + 7 - 31;
+		} else {
+			lazyDay = lazyDay + 7;
+		}
+	} else {
+		if (lazyMonth == 1) {
+			if (isLeapYear) {
+				if (lazyDay >= 23) {
+					lazyMonth = 2;
+					lazyDay = lazyDay + 7 - 29;
+				} else {
+					lazyDay = lazyDay + 7;
+				}
+			} else {
+				if (lazyDay >= 22) {
+					lazyMonth = 2;
+					lazyDay = lazyDay + 7 - 28;
+				} else {
+					lazyDay = lazyDay + 7;
+				}
+			}
+		} else if (lazyDay >= 24) {
+			lazyMonth++;
+			lazyDay = lazyDay + 7 - 30;
+		} else {
+			lazyDay = lazyDay + 7;
+		}
+	}
+	var weekEndDate = new Date(lazyYear, lazyMonth, lazyDay, 0, 0, 0, 0);
+	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
+		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
+	this.jq.find('.current-month').html(title);
+	var dowCount = 0;
+	for (i = 0; i < data.days.length; i++) {
+		var day = data.days[i];
+		var date = day.date.toDate();
+		if (date > weekStartDate && date < weekEndDate) {
+			var count = 0;
+			var dow = i % 7;
+			var dayHeader = this.jq.find('.header-day.dow-'+dowCount);
+			dayHeader.html(dayHeader.html() + ', ' + this.getMonthNameShort(date.getMonth()) + '/' + date.getDate());
+			for (j = 0; j < day.events.length; j++) {
+				var event = day.events[j];
+				var hour = event.time.substring(0,2);
+				var selector = '.dow-'+dow+'.time-'+hour+'00';
+				var timeCell = this.jq.find(selector);
+				var offset = timeCell.offset();
+				var width = timeCell.width();
+				var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event event-'+count+'\"></div');
+				eventElement.html(event.time + ' ' + event.title);
+				eventElement.css({position:'absolute', top:offset.top+1, left:offset.left+1, width: width + 'px'}).appendTo(this.jq);
+				//appentTo special div, sibling of the tooltip and the popup
+				count++;
+			}
+			dowCount++;
+		}
+	}
+};
+
+ice.ace.Schedule.prototype.getMonthName = function(monthNumber) {
+	var months = ['January', 'February', 'March', 'April', 'May', 'June',
+		'July', 'August', 'September', 'October', 'November', 'December'];
+	return months[monthNumber];
+};
+ice.ace.Schedule.prototype.getMonthNameShort = function(monthNumber) {
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+		'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	return months[monthNumber];
 };

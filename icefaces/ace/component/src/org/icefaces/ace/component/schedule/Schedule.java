@@ -35,61 +35,68 @@ public class Schedule extends ScheduleBase {
 		Object value = getValue();
 		if (value instanceof LazyScheduleEventList) {
 			LazyScheduleEventList lazyScheduleEventList = (LazyScheduleEventList) value;
-			int[] lazyYearMonthValues = getLazyYearMonthValues();
+			int[] lazyYearMonthValues = getLazyDateValues();
 			List<ScheduleEvent> list = lazyScheduleEventList.load(lazyYearMonthValues[0], lazyYearMonthValues[1]);
 			lazyScheduleEventList.setWrapped(list);
 		}
 		getDataModel();
 	}
 
-	public int[] getLazyYearMonthValues() {
+	public int[] getLazyDateValues() {
 		int lazyYear = getLazyYear();
 		int lazyMonth = getLazyMonth();
-		if (lazyYear == -1 || lazyMonth == -1) { // get current year, month values
-			int[] values = new int[2];
+		int lazyDay = getLazyDay();
+		String viewMode = getViewMode().toLowerCase();
+		if (lazyYear == -1 || lazyMonth == -1 || lazyDay == -1) { // get current date values
+			int[] values = new int[3];
 			Calendar cal = Calendar.getInstance();
-			values[0] = cal.get(Calendar.YEAR);
-			values[1] = cal.get(Calendar.MONTH);
+			if ("month".equals(viewMode)) {
+				values[0] = cal.get(Calendar.YEAR);
+				values[1] = cal.get(Calendar.MONTH);
+				values[2] = 1;
+			} else if ("week".equals(viewMode)) {
+				// determine previous Sunday
+				while (cal.get(Calendar.DAY_OF_WEEK ) != Calendar.SUNDAY) {
+					cal.add(Calendar.DAY_OF_WEEK, -1);
+				}
+				values[0] = cal.get(Calendar.YEAR);
+				values[1] = cal.get(Calendar.MONTH);
+				values[2] = cal.get(Calendar.DATE);
+			} else {
+				values[0] = cal.get(Calendar.YEAR);
+				values[1] = cal.get(Calendar.MONTH);
+				values[2] = cal.get(Calendar.DATE);
+			}
 			return values;
 		} else {
-			int[] values = {lazyYear, lazyMonth};
+			int[] values = {lazyYear, lazyMonth, lazyDay};
 			return values;
 		}
 	}
 
 	public void addEvent(ScheduleEvent scheduleEvent) {
 		if (scheduleEvent == null) return;
-		if (isLazy()) {
-			LazyScheduleEventList lazyScheduleEventList = (LazyScheduleEventList) getValue();
-			lazyScheduleEventList.add(scheduleEvent);
-		} else {
-			Object value = getValue();
-			if (value instanceof List) {
-				((List) value).add(scheduleEvent);
-			} else if (Object[].class.isAssignableFrom(value.getClass())) {
-				ScheduleEvent[] oldArray = (ScheduleEvent[]) value;
-				ScheduleEvent[] newArray = new ScheduleEvent[oldArray.length+1];
-				for (int i = 0; i < newArray.length; i++) newArray[i] = oldArray[i];
-				newArray[newArray.length-1] = scheduleEvent;
-				setValue(newArray);
-			} else if (value instanceof Collection) {
-				((Collection) value).add(scheduleEvent);
-			}
+		Object value = getValue();
+		if (value instanceof List) {
+			((List) value).add(scheduleEvent);
+		} else if (Object[].class.isAssignableFrom(value.getClass())) {
+			ScheduleEvent[] oldArray = (ScheduleEvent[]) value;
+			ScheduleEvent[] newArray = new ScheduleEvent[oldArray.length+1];
+			for (int i = 0; i < newArray.length; i++) newArray[i] = oldArray[i];
+			newArray[newArray.length-1] = scheduleEvent;
+			setValue(newArray);
+		} else if (value instanceof Collection) {
+			((Collection) value).add(scheduleEvent);
 		}
 	}
 
 	public void editEvent(int index, ScheduleEvent scheduleEvent) {
 		if (scheduleEvent == null) return;
-		if (isLazy()) {
-			LazyScheduleEventList lazyScheduleEventList = (LazyScheduleEventList) getValue();
-			lazyScheduleEventList.set(index, scheduleEvent);
-		} else {
-			Object value = getValue();
-			if (value instanceof List) {
-				((List) value).set(index, scheduleEvent);
-			} else if (Object[].class.isAssignableFrom(value.getClass())) {
-				((ScheduleEvent[]) value)[index] = scheduleEvent;
-			}
+		Object value = getValue();
+		if (value instanceof List) {
+			((List) value).set(index, scheduleEvent);
+		} else if (Object[].class.isAssignableFrom(value.getClass())) {
+			((ScheduleEvent[]) value)[index] = scheduleEvent;
 		}
 	}
 

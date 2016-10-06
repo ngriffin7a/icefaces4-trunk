@@ -102,9 +102,11 @@ public class ScheduleRenderer extends Renderer {
 			Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 			String lazyYear = params.get(clientId + "_lazyYear");
 			String lazyMonth = params.get(clientId + "_lazyMonth");
+			String lazyDay = params.get(clientId + "_lazyDay");
 			if (lazyYear != null && lazyMonth != null) {
 				schedule.setLazyYear(new Integer(lazyYear));
 				schedule.setLazyMonth(new Integer(lazyMonth));
+				schedule.setLazyDay(new Integer(lazyDay));
 			}
 		}
 		schedule.resetDataModel();
@@ -112,13 +114,23 @@ public class ScheduleRenderer extends Renderer {
 		String template = "";
 		String templateName = schedule.getTemplate();
 		if ("full".equalsIgnoreCase(templateName)) {
-			template = ScheduleTemplates.full;
 			templateName = "full";
 		} else if ("mini".equalsIgnoreCase(templateName)) {
 			template = ScheduleTemplates.mini;
 			templateName = "mini";
 		} else {
 			templateName = "custom";
+		}
+		String viewMode = schedule.getViewMode();
+		if ("week".equalsIgnoreCase(viewMode)) {
+			viewMode = "week";
+			template = ScheduleTemplates.fullWeek;
+		} else if ("day".equalsIgnoreCase(viewMode)) {
+			viewMode = "day";
+			template = ScheduleTemplates.fullDay;
+		} else {
+			viewMode = "month";
+			template = ScheduleTemplates.fullMonth;
 		}
 		String sideBar = schedule.getSideBar();
 		String sideBarClass = "sidebar-right";
@@ -161,16 +173,18 @@ public class ScheduleRenderer extends Renderer {
 			.beginArray()
 				.item(clientId)
 				.beginMap()
+					.entry("viewMode", viewMode)
 					.entry("displayEventDetails", displayEventDetails)
 					.entry("isEventAddition", "disabled".equalsIgnoreCase(schedule.getAdditionControls()) ? false : true)
 					.entry("isEventEditing", "disabled".equalsIgnoreCase(schedule.getEditingControls()) ? false : true)
 					.entry("isEventDeletion", "disabled".equalsIgnoreCase(schedule.getDeletionControls()) ? false : true);
 
 					if (isLazy) {
-						int[] lazyYearMonthValues = schedule.getLazyYearMonthValues();
+						int[] lazyYearMonthValues = schedule.getLazyDateValues();
 						jb.entry("isLazy", true)
 						.entry("lazyYear", lazyYearMonthValues[0])
-						.entry("lazyMonth", lazyYearMonthValues[1]);
+						.entry("lazyMonth", lazyYearMonthValues[1])
+						.entry("lazyDay", lazyYearMonthValues[2]);
 					}
 
 					jb.beginArray("events");
@@ -196,7 +210,7 @@ public class ScheduleRenderer extends Renderer {
 
 		writer.startElement("div", null);
 		writer.writeAttribute("class", "ice-ace-schedule-body ui-widget " + templateName 
-			+ " " + sideBarClass + " " + displayEventDetailsClass, null);
+			+ " " + viewMode + " " + sideBarClass + " " + displayEventDetailsClass, null);
 		writer.endElement("div");
 
 		writer.startElement("script", null);
