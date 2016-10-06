@@ -78,6 +78,9 @@ public class ScheduleMeta extends UIDataMeta {
 	@Property(tlddoc = "Enable or disable the built-in event deletion controls. These controls only appear in the popup and sidebar event details view. Deleting events this way is only supported if the component value is an instance of any of the following four types: Array, List, Collection, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="enabled")
 	private String deletionControls;
 
+	@Property(tlddoc = "Specifies the range of days that should be displayed at a time in the calendar. Possible values are 'month', 'week', 'day'.", defaultValue="month")
+	private String viewMode;
+
 	@Property(tlddoc = "The inline style of the component, rendered on the root div of the component.")
 	private String style;
 
@@ -89,4 +92,7 @@ public class ScheduleMeta extends UIDataMeta {
 
 	@Field(defaultValue="-1")
 	private Integer lazyMonth;
+
+	@Field(defaultValue="-1")
+	private Integer lazyDay;
 }

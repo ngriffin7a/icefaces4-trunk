@@ -41,29 +41,43 @@
 	width: 75%;
 	display: inline-block;
 }
-.ice-ace-schedule-body.full .clndr-grid table{
+.ice-ace-schedule-body.full .clndr-grid > table{
 	border-collapse: collapse;
+	width: 100%;
 }
 .ice-ace-schedule-body.full .clndr-grid .days-of-the-week {
 	width: 100%;
 }
-.ice-ace-schedule-body.full .clndr-grid .days-of-the-week .header-day {
+.ice-ace-schedule-body.full .clndr-grid .days {
+	width: 100%;
+}
+.ice-ace-schedule-body.full.month .clndr-grid .days-of-the-week .header-day {
 	width: 14.2857%;
 	padding: 14px;
 	text-align: center;
 }
-.ice-ace-schedule-body.full .clndr-grid .days {
-	width: 100%;
-}
-.ice-ace-schedule-body.full .clndr-grid .days .day,
-.ice-ace-schedule-body.full .clndr-grid .days .empty {
+.ice-ace-schedule-body.full.month .clndr-grid .days .day,
+.ice-ace-schedule-body.full.month .clndr-grid .days .empty {
 	width: 14.2857%;
 	height: 100px;
 	text-align: right;
 }
-.ice-ace-schedule-body.full .clndr-grid .days .day.adjacent-month .day-number,
-.ice-ace-schedule-body.full .clndr-grid .days .empty.adjacent-month .day-number {
+.ice-ace-schedule-body.full.month .clndr-grid .days .day.adjacent-month .day-number,
+.ice-ace-schedule-body.full.month .clndr-grid .days .empty.adjacent-month .day-number {
 	opacity: 0.3;
+}
+.ice-ace-schedule-body.full.week .clndr-grid .days-of-the-week .header-day {
+	width: 12.5%;
+	padding: 14px;
+	text-align: center;
+}
+.ice-ace-schedule-body.full.week .clndr-grid .schedule-cell {
+	width: 12.5%;
+	height: 30px;
+}
+.ice-ace-schedule-body.full.week .clndr-grid .schedule-event {
+	position: absolute;
+	z-index: 10;
 }
 .ice-ace-schedule-body.full .clndr-grid .days .today .ui-state-highlight {
 	width: 100%;
