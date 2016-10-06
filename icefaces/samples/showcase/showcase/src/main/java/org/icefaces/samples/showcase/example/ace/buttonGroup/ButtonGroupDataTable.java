@@ -54,18 +54,15 @@ public class ButtonGroupDataTable implements Serializable {
 
 
     public void groupChange(ValueChangeEvent event){
+        this.buttonGroups.clear();
+        this.setData();
         String valueObj = String.valueOf(event.getNewValue());
         if (valueObj.equals("byButtonType")){
             radio1Group = GROUP1_NAME;
             radio2Group= GROUP1_NAME;
             check1Group = GROUP2_NAME;
             check2Group = GROUP2_NAME;
-        } else if (valueObj.equals("singleGroup")){
-            radio1Group = GROUP1_NAME;
-            radio2Group= GROUP1_NAME;
-            check1Group = GROUP1_NAME;
-            check2Group = GROUP1_NAME;
-        } else {
+        } else  {
             radio1Group = GROUP1_NAME;
             radio2Group= GROUP2_NAME;
             check1Group = GROUP3_NAME;

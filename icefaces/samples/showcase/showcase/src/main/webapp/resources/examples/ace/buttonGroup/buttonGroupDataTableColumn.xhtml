@@ -81,10 +81,11 @@
                 </ace:column>
                 <ace:column id="column3">
                     <f:facet name="header">
-                        <h:outputText value="checkboxButton2 Set"/>
+                        <h:outputText value="checkboxButton1 Set"/>
                     </f:facet>
+                        <h:outputLabel id="lc1" for="c1" value="checkbox1"/>
                         <ace:checkboxButton id="c1" group="#{buttonGroupDataTable.check1Group}"
-                               value="#{group.check1}" label="check1 ">
+                               value="#{group.check1}" >
                             <ace:ajax render="@all" execute="@form"/>
                         </ace:checkboxButton>
                 </ace:column>
@@ -92,8 +93,9 @@
                     <f:facet name="header">
                         <h:outputText value="checkboxButton2 Set"/>
                      </f:facet>
+                    <h:outputLabel id="lc2" for="c2" value="checkbox2"/>
                      <ace:checkboxButton id="c2" group="#{buttonGroupDataTable.check2Group}"
-                             value="#{group.check2}" label="check22">
+                             value="#{group.check2}" >
                          <ace:ajax render="@all" execute="@form"/>
                      </ace:checkboxButton>
                 </ace:column>

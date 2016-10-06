@@ -41,36 +41,39 @@
         <h:form id="frm2">
             <ui:repeat id="rpt" value="#{buttonGroupRow.buttonGroups}"
                         var="group" >
-                <ace:buttonGroup id="buttonGroup" header="row #{group.row}" mutuallyExclusive="true">
-                    <h:panelGrid columns="7" >
-                     <ace:radioButton id="b1" label="radio1"  labelPosition="left"
+                <h:panelGrid columns="2" >
+                    <ace:buttonGroup id="rdGroup" header="Row #{group.row} Radios" mutuallyExclusive="true">
+                         <ace:radioButton id="b1" label="radio1"  labelPosition="left"
                                       value="#{group.radio1}" >
-                         <ace:ajax render="@all" execute="@this"/>
-                     </ace:radioButton>
-                     <ace:radioButton id="b2"   label="radio2"
+                             <ace:ajax render="@all" execute="@this"/>
+                         </ace:radioButton>
+                         <ace:radioButton id="b2"   label="radio2"
                                           labelPosition="left" value="#{group.radio2}">
-                         <ace:ajax render="@all" execute="@this"/>
-                     </ace:radioButton>
-                     <ace:radioButton id="b3" label="radio3"
+                            <ace:ajax render="@all" execute="@this"/>
+                         </ace:radioButton>
+                         <ace:radioButton id="b3" label="radio3"
                                       labelPosition="left" value="#{group.radio3}">
-                         <ace:ajax render="@all" execute="@this"/>
-                     </ace:radioButton>
-                    <h:outputText value=" |"/>
-                    <ace:checkboxButton id="c1" label="checkbox1" labelPosition="left"
+                            <ace:ajax render="@all" execute="@this"/>
+                         </ace:radioButton>
+                    </ace:buttonGroup>
+                    <ace:buttonGroup id="cbButtonGroup" header="Row #{group.row} Checkboxes" mutuallyExclusive="true">
+                        <h:outputLabel for="c1" value="checkbox1"/>
+                        <ace:checkboxButton id="c1"
                                        value="#{group.check1}" >
-                       <ace:ajax render="@form" execute="@this"/>
-                     </ace:checkboxButton>
-                     <ace:checkboxButton id="c2" label="checkbox2" labelPosition="left"
+                            <ace:ajax render="@form" execute="@this"/>
+                        </ace:checkboxButton>
+                        <h:outputLabel for="c2" value="checkbox2" />
+                        <ace:checkboxButton id="c2"
                                         value="#{group.check2}" >
-                        <ace:ajax render="@form" execute="@this"/>
-                     </ace:checkboxButton>
-                     <ace:checkboxButton id="c3" label="checkbox3" labelPosition="left"
-                                         value="#{group.check3}" >
-                         <ace:ajax render="@form" execute="@this"/>
-                     </ace:checkboxButton>
-                   </h:panelGrid>
-                </ace:buttonGroup>
-              <!--  <h:outputText value="Selected checkbox=#{group.selectedCheckbox}"/> -->
+                           <ace:ajax render="@form" execute="@this"/>
+                        </ace:checkboxButton>
+                        <h:outputLabel for="c3" value="checkbox3" />
+                          <ace:checkboxButton id="c3"
+                                          value="#{group.check3}" >
+                             <ace:ajax render="@form" execute="@this"/>
+                          </ace:checkboxButton>
+                    </ace:buttonGroup>
+                </h:panelGrid>
             </ui:repeat>
         </h:form>
     </ui:define>
