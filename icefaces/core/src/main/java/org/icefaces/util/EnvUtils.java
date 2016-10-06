@@ -85,9 +85,6 @@ public class EnvUtils {
     public static String NAMESPACE_PARAMETERS = "com.sun.faces.namespaceParameters";
     public static String UPDATE_NETWORK_ERROR_RETRY_TIMEOUTS = "org.icefaces.updateNetworkErrorRetryTimeouts";
     public static String FETCH_PENDING_NOTIFICATIONS_ONLOAD = "org.icefaces.fetchPendingNotificationsOnLoad";
-    public static String CUSTOM_STATE_MANAGER = "org.icefaces.customStateManager";
-    public static String CUSTOM_STATE_MANAGER_MAX_VIEWS = "org.icefaces.customStateManager.maxViews";
-
 
     //Parameters configurable using context parameters but only in compatibility mode
     public static String CONNECTION_LOST_REDIRECT_URI = "org.icefaces.connectionLostRedirectURI";
@@ -682,27 +679,6 @@ public class EnvUtils {
             return EnvConfig.getEnvConfig(facesContext).subtreeDiff;
         }
         return (Boolean.TRUE.equals(subtreeDiff));
-    }
-
-    /**
-     * Returns the value of the context parameter org.icefaces.customStateManager. The default value is false. When value
-     * is true the custom state manager is enabled.
-     *
-     * @param facesContext The current FacesContext instance used to access the application map.
-     * @return Returns the current setting of org.icefaces.subtreeDiff.  The default is true.
-     */
-    public static boolean isCustomStateManager(FacesContext facesContext) {
-        return EnvConfig.getEnvConfig(facesContext).customStateManager;
-    }
-
-    /**
-     * Returns the maximum number of views allowed to exist for a given session when custom state manager is enabled.
-     *
-     * @param facesContext The current FacesContext instance used to access the application map.
-     * @return Returns the maximum number of views.  The default is 15.
-     */
-    public static int getCustomStateManagerMaxViews(FacesContext facesContext) {
-        return (int) EnvConfig.getEnvConfig(facesContext).customStateManagerMaxViews;
     }
 
     /**
@@ -1429,8 +1405,6 @@ class EnvConfig {
     public boolean namespaceParameters;
     public String updateNetworkErrorRetryTimeouts;
     public boolean fetchPendingNotificationsOnLoad;
-    public boolean customStateManager;
-    public long customStateManagerMaxViews;
 
     public EnvConfig(Map initMap) {
         init(initMap);
@@ -1478,8 +1452,6 @@ class EnvConfig {
         redirectOnExceptionMapping = decodeString(initMap, EnvUtils.REDIRECT_ON_EXCEPTION_MAPPING, null, info);
         updateNetworkErrorRetryTimeouts = decodeString(initMap, EnvUtils.UPDATE_NETWORK_ERROR_RETRY_TIMEOUTS, "1000 2000 3000", info);
         fetchPendingNotificationsOnLoad = decodeBoolean(initMap, EnvUtils.FETCH_PENDING_NOTIFICATIONS_ONLOAD, true, info);
-        customStateManager = decodeBoolean(initMap, EnvUtils.CUSTOM_STATE_MANAGER, false, info);
-        customStateManagerMaxViews = decodeLong(initMap, EnvUtils.CUSTOM_STATE_MANAGER_MAX_VIEWS, 15, info);
 
         log.info("ICEfaces Configuration: \n" + info);
     }
