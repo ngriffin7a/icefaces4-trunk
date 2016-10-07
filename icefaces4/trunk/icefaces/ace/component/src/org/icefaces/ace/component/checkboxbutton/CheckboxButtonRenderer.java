@@ -41,7 +41,7 @@ import org.icefaces.ace.renderkit.InputRenderer;
 
 @MandatoryResourceComponent(tagName="checkboxButton", value="org.icefaces.ace.component.checkboxbutton.CheckboxButton")
 public class CheckboxButtonRenderer extends InputRenderer {
-    private enum EventType {
+    protected enum EventType {
         HOVER, FOCUS
     }
     private static final Logger logger =
@@ -79,8 +79,8 @@ public class CheckboxButtonRenderer extends InputRenderer {
         writer.writeAttribute(HTML.ID_ATTR, clientId, null);
 		renderResetSettings(facesContext, uiComponent);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
-
-        encodeScript(facesContext, writer, checkbox, clientId, EventType.HOVER);
+        String script = getScript(facesContext, writer, checkbox, clientId);
+        encodeScript(facesContext, writer, script, clientId, EventType.HOVER);
         encodeRootStyle(writer, checkbox);
 
 		writeLabelAndIndicatorBefore(labelAttributes);
@@ -113,8 +113,9 @@ public class CheckboxButtonRenderer extends InputRenderer {
 		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all " + selectedClass, null);
 
         encodeButtonTabIndex(writer, checkbox, ariaEnabled);
+        encodeButtonStyleClass(writer, isChecked(String.valueOf(checkbox.getValue())), checkbox.isDisabled());
         encodeButtonStyle(writer, checkbox);
-        encodeScript(facesContext, writer, checkbox, clientId, EventType.FOCUS);
+        encodeScript(facesContext, writer, script, clientId, EventType.FOCUS);
 
         renderPassThruAttributes(facesContext, checkbox, HTML.BUTTON_ATTRS, new String[]{"style"});
 
@@ -125,7 +126,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
             writer.endElement(HTML.SPAN_ELEM);
         } else {
             writer.startElement(HTML.SPAN_ELEM, null);
-            encodeIconStyle(writer, checkbox);
+            encodeIconStyle(writer, isChecked(String.valueOf(checkbox.getValue())));
             writer.endElement(HTML.SPAN_ELEM);
         }
 
@@ -243,8 +244,8 @@ public class CheckboxButtonRenderer extends InputRenderer {
 	}
 
 	
-    private void encodeScript(FacesContext facesContext, ResponseWriter writer,
-                              CheckboxButton checkbox, String clientId, EventType type) throws IOException {
+    protected void encodeScript(FacesContext facesContext, ResponseWriter writer,
+                              String script, String clientId, EventType type) throws IOException {
 
         String eventType = "";
         if (EventType.HOVER.equals(type))
@@ -252,7 +253,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
         else if (EventType.FOCUS.equals(type))
             eventType = HTML.ONFOCUS_ATTR;
 
-        writer.writeAttribute(eventType, "if (!document.getElementById('" + clientId + "').widget) "+ getScript(facesContext, writer, checkbox, clientId), null);
+        writer.writeAttribute(eventType, "if (!document.getElementById('" + clientId + "').widget) "+script, null);
     }
 
     /**
@@ -279,33 +280,31 @@ public class CheckboxButtonRenderer extends InputRenderer {
             return Boolean.valueOf(submittedValue.toString());
         }
     }
-
-    private void encodeButtonStyle(ResponseWriter writer, CheckboxButton checkbox) throws IOException {
+    protected void encodeButtonStyleClass(ResponseWriter writer, boolean value, boolean disabled) throws IOException{
         String buttonClasses = "";
         String disabledClass = "ui-state-disabled";
-        Boolean val = (Boolean)checkbox.getValue();
-
-        if (checkbox.isDisabled()) {
+        if (disabled){
             buttonClasses += disabledClass + " ";
         }
-
         if (!buttonClasses.equals("")) {
-            writer.writeAttribute(HTML.CLASS_ATTR, buttonClasses.trim(), null);
+               writer.writeAttribute(HTML.CLASS_ATTR, buttonClasses.trim(), null);
         }
-		
+    }
+
+    private void encodeButtonStyle(ResponseWriter writer, CheckboxButton checkbox) throws IOException {
 		String style = checkbox.getStyle();
 		if (style != null && style.trim().length() > 0)
 			writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
     }
 
-    private void encodeIconStyle(ResponseWriter writer, CheckboxButton checkbox) throws IOException {
+    protected void encodeIconStyle(ResponseWriter writer, boolean value) throws IOException {
         String iconClass = "fa";
         String selectedStyle = "fa-check-square-o";
         String unselectedStyle = "fa-square-o";
 		String largeStyle = "fa-lg";
-        Boolean val = (Boolean)checkbox.getValue();
+       // Boolean val = (Boolean)checkbox.getValue();
 
-        if (val != null && val) {
+        if ((Boolean)value != null && value) {
             iconClass += " " + selectedStyle + " " + largeStyle;
         } else {
             iconClass += " " + unselectedStyle + " " + largeStyle;

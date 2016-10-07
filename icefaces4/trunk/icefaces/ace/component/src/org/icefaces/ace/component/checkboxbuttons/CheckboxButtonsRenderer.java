@@ -27,6 +27,7 @@
 package org.icefaces.ace.component.checkboxbuttons;
 
 
+import org.icefaces.ace.component.checkboxbutton.CheckboxButtonRenderer;
 import org.icefaces.render.MandatoryResourceComponent;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -51,17 +52,11 @@ import javax.faces.FacesException;
 import javax.faces.application.Application;
 
 @MandatoryResourceComponent(tagName = "checkboxButtons", value = "org.icefaces.ace.component.checkboxbuttons.CheckboxButtons")
-public class CheckboxButtonsRenderer extends InputRenderer {
-    private enum EventType {
-        HOVER, FOCUS
-    }
+public class CheckboxButtonsRenderer extends CheckboxButtonRenderer {
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
 
-//		componentIsDisabledOrReadonly ?
-
-//        String clientId = decodeBehaviors(context, component);
         CheckboxButtons checkboxButtons = (CheckboxButtons) component;
 		String clientId = checkboxButtons.getClientId(context);
 
@@ -78,9 +73,9 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		decodeBehaviors(context, checkboxButtons);
     }
 
+
     @Override
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
-        super.encodeBegin(context, component);
         ResponseWriter writer = context.getResponseWriter();
         CheckboxButtons checkboxButtons = (CheckboxButtons) component;
         String style = (style = checkboxButtons.getStyle()) == null ? "" : style.trim();
@@ -159,6 +154,11 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		writer.endElement("div");
     }
 
+    @Override
+    public void encodeEnd(FacesContext context, UIComponent component)throws IOException{
+        //
+    }
+
     private void encodeSelect(FacesContext facesContext, CheckboxButtons checkboxButtons, SelectItemsIterator selectItemsIterator, Converter converter, Object currentSelections) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
         String id = checkboxButtons.getClientId(facesContext);
@@ -202,11 +202,13 @@ public class CheckboxButtonsRenderer extends InputRenderer {
         // Root Container
         writer.startElement(HTML.DIV_ELEM, checkboxButtons);
         writer.writeAttribute(HTML.ID_ATTR, clientId, null);
-		renderResetSettings(facesContext, clientId, checkboxButtons);
+		renderResetSettings(facesContext, (UIComponent)checkboxButtons);
 //        ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
         writer.writeAttribute(HTML.CLASS_ATTR, "ice-checkboxbutton", null);
-        encodeScript(facesContext, writer, checkboxButtons, clientId, EventType.HOVER, item.isDisabled());
+        boolean disabled = item.isDisabled();
+        String script = getScript(facesContext, writer, checkboxButtons, clientId, disabled);
+        encodeScript(facesContext, writer, script, clientId, EventType.HOVER);
 
 		if (label != null) {
 			if ("left".equalsIgnoreCase(labelPosition)
@@ -247,8 +249,10 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all " + selectedClass, null);
 
 		if (ariaEnabled) writer.writeAttribute(HTML.TABINDEX_ATTR, "0", null);
-        encodeButtonStyle(writer, item.isDisabled());
-        encodeScript(facesContext, writer, checkboxButtons, clientId, EventType.FOCUS, item.isDisabled());
+
+        encodeButtonStyleClass(writer,false, disabled);
+        encodeScript(facesContext, writer, script, clientId, EventType.FOCUS);
+
 
         if (label != null && "inField".equalsIgnoreCase(checkboxButtons.getLabelPosition())) {
             writer.startElement(HTML.SPAN_ELEM, null);
@@ -291,17 +295,6 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		Utils.registerLazyComponent(facesContext, clientId, getScript(facesContext, writer, checkboxButtons, clientId, item.isDisabled()));
 	}
 
-    private void encodeScript(FacesContext facesContext, ResponseWriter writer,
-                              CheckboxButtons checkboxButtons, String clientId, EventType type, boolean disabled) throws IOException {
-
-        String eventType = "";
-        if (EventType.HOVER.equals(type))
-            eventType = HTML.ONMOUSEOVER_ATTR;
-        else if (EventType.FOCUS.equals(type))
-            eventType = HTML.ONFOCUS_ATTR;
-
-        writer.writeAttribute(eventType, "if (!document.getElementById('" + clientId + "').widget) "+ getScript(facesContext, writer, checkboxButtons, clientId, disabled), null);
-    }
 
     private String getScript(FacesContext facesContext, ResponseWriter writer,
                               CheckboxButtons checkboxButtons, String clientId, boolean disabled) throws IOException {
@@ -337,33 +330,6 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		return jb.toString();
 	}
 
-    private void encodeButtonStyle(ResponseWriter writer, boolean disabled) throws IOException {
-        String buttonClasses = "";
-        String disabledClass = "ui-state-disabled";
-
-        if (disabled) {
-            buttonClasses += disabledClass + " ";
-        }
-
-        if (!buttonClasses.equals("")) {
-            writer.writeAttribute(HTML.CLASS_ATTR, buttonClasses.trim(), null);
-        }
-    }
-
-    private void encodeIconStyle(ResponseWriter writer, boolean value) throws IOException {
-        String iconClass = "fa";
-        String selectedStyle = "fa-check-square-o";
-        String unselectedStyle = "fa-square-o";
-		String largeStyle = "fa-lg";
-
-        if (value) {
-            iconClass += " " + selectedStyle + " " + largeStyle;
-        } else {
-            iconClass += " " + unselectedStyle + " " + largeStyle;
-        };
-
-        writer.writeAttribute(HTML.CLASS_ATTR, iconClass, null);
-    }
 
     protected boolean isSelected(FacesContext context,
                                  UIComponent component,
@@ -720,19 +686,4 @@ public class CheckboxButtonsRenderer extends InputRenderer {
 		return (value != null ? value.toString() : "");
 	}
 
-	protected void renderResetSettings(FacesContext context, String clientId, CheckboxButtons checkboxButtons) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-
-		JSONBuilder jb = JSONBuilder.create();
-		jb.beginArray();
-		jb.item("checkboxbutton");
-		jb.beginArray();
-		jb.item(clientId);
-		jb.item(EnvUtils.isAriaEnabled(context));
-		jb.item(checkboxButtons.getClientId(context));
-		jb.endArray();
-		jb.endArray();
-
-		writer.writeAttribute("data-ice-reset", jb.toString(), null);
-	}
 }
