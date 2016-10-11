@@ -116,7 +116,6 @@ public class ScheduleRenderer extends Renderer {
 		if ("full".equalsIgnoreCase(templateName)) {
 			templateName = "full";
 		} else if ("mini".equalsIgnoreCase(templateName)) {
-			template = ScheduleTemplates.mini;
 			templateName = "mini";
 		} else {
 			templateName = "custom";
@@ -124,13 +123,10 @@ public class ScheduleRenderer extends Renderer {
 		String viewMode = schedule.getViewMode();
 		if ("week".equalsIgnoreCase(viewMode)) {
 			viewMode = "week";
-			template = ScheduleTemplates.fullWeek;
 		} else if ("day".equalsIgnoreCase(viewMode)) {
 			viewMode = "day";
-			template = ScheduleTemplates.fullDay;
 		} else {
 			viewMode = "month";
-			template = ScheduleTemplates.fullMonth;
 		}
 		String sideBar = schedule.getSideBar();
 		String sideBarClass = "sidebar-right";
@@ -162,8 +158,16 @@ public class ScheduleRenderer extends Renderer {
 		writer.writeAttribute("class", "ice-ace-schedule", null);
 
 		writer.startElement("div", null);
-        writer.write("<script type=\"text/template\" id=\"" + clientId + "_template\">"
-			+ template + "</script>");
+		writer.writeAttribute("class", "event-details-popup-body", null);
+		writer.writeAttribute("title", "Event Details", null);
+		writer.endElement("div");
+
+		writer.startElement("div", null);
+		writer.writeAttribute("class", "event-details-tooltip-body", null);
+		writer.endElement("div");
+
+		writer.startElement("div", null);
+		writer.writeAttribute("class", "events-container", null);
 		writer.endElement("div");
 
 		// render configuration and event data
@@ -180,11 +184,16 @@ public class ScheduleRenderer extends Renderer {
 					.entry("isEventDeletion", "disabled".equalsIgnoreCase(schedule.getDeletionControls()) ? false : true);
 
 					if (isLazy) {
-						int[] lazyYearMonthValues = schedule.getLazyDateValues();
+						int[] lazyDateValues = schedule.getLazyDateValues();
 						jb.entry("isLazy", true)
-						.entry("lazyYear", lazyYearMonthValues[0])
-						.entry("lazyMonth", lazyYearMonthValues[1])
-						.entry("lazyDay", lazyYearMonthValues[2]);
+						.entry("lazyYear", lazyDateValues[0])
+						.entry("lazyMonth", lazyDateValues[1])
+						.entry("lazyDay", lazyDateValues[2]);
+					} else {
+						int[] currentDateValues = schedule.getCurrentDateValues();
+						jb.entry("currentYear", currentDateValues[0])
+						.entry("currentMonth", currentDateValues[1])
+						.entry("currentDay", currentDateValues[2]);
 					}
 
 					jb.beginArray("events");
@@ -217,15 +226,6 @@ public class ScheduleRenderer extends Renderer {
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write(jb.toString());
 		writer.endElement("script");
-
-		writer.startElement("div", null);
-		writer.writeAttribute("class", "event-details-popup-body", null);
-		writer.writeAttribute("title", "Event Details", null);
-		writer.endElement("div");
-
-		writer.startElement("div", null);
-		writer.writeAttribute("class", "event-details-tooltip-body", null);
-		writer.endElement("div");
 
 		writer.endElement("div");
 	}

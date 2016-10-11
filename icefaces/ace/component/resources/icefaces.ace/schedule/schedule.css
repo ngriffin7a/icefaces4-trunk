@@ -75,8 +75,25 @@
 	width: 12.5%;
 	height: 30px;
 }
-.ice-ace-schedule-body.full.week .clndr-grid .schedule-event {
+.ice-ace-schedule-body.full.week .schedule-event {
 	position: absolute;
+	z-index: 10;
+}
+.ice-ace-schedule-body.full.day .clndr-grid .days-of-the-week .header-day {
+	padding: 14px;
+	text-align: center;
+}
+.ice-ace-schedule-body.full.day .clndr-grid .time-cell {
+	width: 12.5%;	
+}
+.ice-ace-schedule-body.full.day .clndr-grid .schedule-cell {
+	height: 30px;
+}
+.ice-ace-schedule-body.full.day .schedule-event {
+	position: absolute;
+	z-index: 10;
+}
+.ice-ace-schedule .schedule-event {
 	z-index: 10;
 }
 .ice-ace-schedule-body.full .clndr-grid .days .today .ui-state-highlight {

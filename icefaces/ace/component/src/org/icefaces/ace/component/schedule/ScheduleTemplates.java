@@ -125,15 +125,7 @@ public class ScheduleTemplates {
 				+".css({position:'absolute', top:offset.top, left:offset.left}).appendTo(document.body);"
 				+"count++;"
 			+"})});}, 1000); %>"
-/*
-								+"<% if (day.classes.indexOf('today') > -1) %><div class=\"ui-state-highlight\"><% ; %>"
-									+"<div class=\"day-number\"><%= day.day %></div>"
-									+"<% var count = 0; %>"
-									+"<% _.each(day.events, function(event) { if (day.classes.indexOf('adjacent-month') == -1) %>"
-										+"<div class=\"ui-state-hover ui-corner-all schedule-event event-<%= count %>\">"
-										+"<%= event.time %> <%= event.title %></div><% ;count++; }); %>"
-								+"<% if (day.classes.indexOf('today') > -1) %></div><% ; %>"
-*/
+
 			+"<div class=\"schedule-sidebar ui-widget-content\">"
 
 				+"<div class=\"event-listing\">"
