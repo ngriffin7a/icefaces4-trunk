@@ -41,7 +41,7 @@ import org.icefaces.ace.api.ButtonGroupMember;
 
 @MandatoryResourceComponent(tagName="radioButton", value="org.icefaces.ace.component.radiobutton.RadioButton")
 public class RadioButtonRenderer extends InputRenderer {
-    private enum EventType {
+    protected enum EventType {
         HOVER, FOCUS
     }
     private static final Logger logger =
@@ -64,7 +64,7 @@ public class RadioButtonRenderer extends InputRenderer {
     }
 
 
-    public void encodeBegin(FacesContext facesContext, UIComponent uiComponent)
+    public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
     throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
         RadioButton radioButton = (RadioButton) uiComponent;
@@ -77,44 +77,43 @@ public class RadioButtonRenderer extends InputRenderer {
         // Root Container
         writer.startElement(HTML.DIV_ELEM, uiComponent);
         writer.writeAttribute(HTML.ID_ATTR, clientId, null);
-		renderResetSettings(facesContext, uiComponent);
+		renderResetSettings(facesContext, clientId);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
-
+        boolean disabled = radioButton.isDisabled();
         encodeRootStyle(writer, radioButton);
 		
 		writeLabelAndIndicatorBefore(labelAttributes);
+        encodeButtonWrappers(writer, firstWrapperClass);
 
-        // First Wrapper
-        writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute(HTML.CLASS_ATTR, firstWrapperClass, null);
-
-        // Second Wrapper
-        writer.startElement(HTML.SPAN_ELEM, null);
-
-        if (ariaEnabled)
-            encodeAriaAttributes(writer, radioButton);
+        if (ariaEnabled) {
+            encodeAriaEnabled(writer, disabled);
+            writer.writeAttribute(HTML.ARIA_DESCRIBED_BY_ATTR, radioButton.getLabel(), null);
+        }
 
         // Button Element
-        writer.startElement(HTML.BUTTON_ELEM, null);
-        writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
+        encodeButtonElementStart(writer, clientId);
+        /* not same */
 		if (labelAttributes.get("label") != null
 			&& !"inField".equals(labelAttributes.get("labelPosition"))) {
 			writer.writeAttribute("aria-labelledby", "label_" + clientId, null);
 		}
-        writer.writeAttribute(HTML.ID_ATTR, clientId+"_button", null);
-        writer.writeAttribute(HTML.NAME_ATTR, clientId+"_button", null);
+
 		String selectedClass = "";
 		Object value = radioButton.getValue();
 		if (value != null && ((Boolean) value)) selectedClass = " ice-ace-radiobutton-selected";
 		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all" + selectedClass, null);
 
         encodeButtonTabIndex(writer, radioButton, ariaEnabled);
-        encodeButtonStyle(writer, radioButton);
+        encodeButtonStyle(writer, radioButton.isDisabled());
+        String style = radioButton.getStyle();
+        if (style != null && style.trim().length() > 0) {
+            writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
+        }
 
         renderPassThruAttributes(facesContext, radioButton, HTML.BUTTON_ATTRS, new String[]{"style"});
-
+ 
 		writer.startElement(HTML.SPAN_ELEM, null);
-		encodeIconStyle(writer, radioButton);
+		encodeIconStyle(writer, (Boolean)value);
 		writer.endElement(HTML.SPAN_ELEM);
 
         writer.endElement(HTML.BUTTON_ELEM);
@@ -122,13 +121,40 @@ public class RadioButtonRenderer extends InputRenderer {
         writer.endElement(HTML.SPAN_ELEM);
 		
 		writeLabelAndIndicatorAfter(labelAttributes);
+        writer.startElement("input", uiComponent);
+        writer.writeAttribute("type", "hidden", null);
+        writer.writeAttribute("autocomplete", "off", null);
+        writer.writeAttribute("name",clientId+"_hidden", null);
+        writer.writeAttribute("value",value, null);
+        writer.writeAttribute("data-ice-clear-ignore", "true", null);
+        writer.endElement("input");
+
+ 		encodeScript(facesContext, writer, radioButton, clientId);
+
+        writer.endElement(HTML.DIV_ELEM);
+
     }
 
-    private void encodeAriaAttributes(ResponseWriter writer, RadioButton radioButton) throws IOException {
-        writer.writeAttribute(HTML.ROLE_ATTR, "radio", null);
-        writer.writeAttribute(HTML.ARIA_DESCRIBED_BY_ATTR, radioButton.getLabel(), null);
-        writer.writeAttribute(HTML.ARIA_DISABLED_ATTR, radioButton.isDisabled(), null);
+    protected void encodeButtonWrappers(ResponseWriter writer, String firstWrapperClass) throws IOException {
+        // First Wrapper
+        writer.startElement(HTML.SPAN_ELEM, null);
+        writer.writeAttribute(HTML.CLASS_ATTR, firstWrapperClass, null);
+
+        // Second Wrapper
+        writer.startElement(HTML.SPAN_ELEM, null);
     }
+
+    protected void encodeButtonElementStart(ResponseWriter writer, String clientId) throws IOException {
+        writer.startElement(HTML.BUTTON_ELEM, null);
+        writer.writeAttribute(HTML.TYPE_ATTR, "button", null);
+        writer.writeAttribute(HTML.ID_ATTR, clientId+"_button", null);
+        writer.writeAttribute(HTML.NAME_ATTR, clientId+"_button", null);
+    }
+
+    protected void encodeAriaEnabled(ResponseWriter writer, boolean disabled) throws IOException {
+   		writer.writeAttribute(HTML.ROLE_ATTR, "radio", null);
+   		writer.writeAttribute(HTML.ARIA_DISABLED_ATTR, disabled, null);
+   	}
 
     private void encodeButtonTabIndex(ResponseWriter writer, RadioButton radioButton, boolean ariaEnabled) throws IOException {
         Integer tabindex = radioButton.getTabindex();
@@ -140,25 +166,6 @@ public class RadioButtonRenderer extends InputRenderer {
             writer.writeAttribute(HTML.TABINDEX_ATTR, tabindex, null);
     }
 
-    public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
-    throws IOException {
-        ResponseWriter writer = facesContext.getResponseWriter();
-        String clientId = uiComponent.getClientId(facesContext);
-        RadioButton radioButton = (RadioButton) uiComponent;
-        Object val = radioButton.getValue();
-
-        writer.startElement("input", uiComponent);
-        writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("autocomplete", "off", null);
-        writer.writeAttribute("name",clientId+"_hidden", null);
-        writer.writeAttribute("value",val, null);
-        writer.writeAttribute("data-ice-clear-ignore", "true", null);
-        writer.endElement("input");
-		
-		encodeScript(facesContext, writer, radioButton, clientId);
-
-        writer.endElement(HTML.DIV_ELEM);
-    }
 
     private void encodeScript(FacesContext facesContext, ResponseWriter writer,
                               RadioButton radioButton, String clientId) throws IOException {
@@ -247,12 +254,11 @@ public class RadioButtonRenderer extends InputRenderer {
         }
     }
 
-    private void encodeButtonStyle(ResponseWriter writer, RadioButton radioButton) throws IOException {
+    protected void encodeButtonStyle(ResponseWriter writer, boolean disabled) throws IOException {
         String buttonClasses = "";
         String disabledClass = "ui-state-disabled";
-        Boolean val = (Boolean)radioButton.getValue();
 
-        if (radioButton.isDisabled()) {
+        if (disabled) {
             buttonClasses += disabledClass + " ";
         }
 
@@ -260,19 +266,15 @@ public class RadioButtonRenderer extends InputRenderer {
             writer.writeAttribute(HTML.CLASS_ATTR, buttonClasses.trim(), null);
         }
 
-		String style = radioButton.getStyle();
-		if (style != null && style.trim().length() > 0)
-			writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
     }
 
-    private void encodeIconStyle(ResponseWriter writer, RadioButton radioButton) throws IOException {
+    protected void encodeIconStyle(ResponseWriter writer, Boolean value) throws IOException {
         String iconClass = "fa";
         String selectedStyle = "fa-dot-circle-o";
         String unselectedStyle = "fa-circle-o";
 		String largeStyle = "fa-lg";
-        Boolean val = (Boolean)radioButton.getValue();
 
-        if (val != null && val) {
+        if (value != null && value) {
             iconClass += " " + selectedStyle + " " + largeStyle;
         } else {
             iconClass += " " + unselectedStyle + " " + largeStyle;
@@ -291,10 +293,8 @@ public class RadioButtonRenderer extends InputRenderer {
         writer.writeAttribute(HTML.CLASS_ATTR, styleClassVal, null);
     }
 
-	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
+	protected void renderResetSettings(FacesContext context, String clientId) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-
-		String clientId = component.getClientId(context);
 
 		JSONBuilder jb = JSONBuilder.create();
 		jb.beginArray();
