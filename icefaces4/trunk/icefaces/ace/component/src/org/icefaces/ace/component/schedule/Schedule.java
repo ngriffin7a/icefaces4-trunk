@@ -74,6 +74,30 @@ public class Schedule extends ScheduleBase {
 		}
 	}
 
+	public int[] getCurrentDateValues() { // TO_DO: read startWith attribute, if set return those values
+		String viewMode = getViewMode().toLowerCase();
+		int[] values = new int[3];
+		Calendar cal = Calendar.getInstance();
+		if ("month".equals(viewMode)) {
+			values[0] = cal.get(Calendar.YEAR);
+			values[1] = cal.get(Calendar.MONTH);
+			values[2] = 1;
+		} else if ("week".equals(viewMode)) {
+			// determine previous Sunday
+			while (cal.get(Calendar.DAY_OF_WEEK ) != Calendar.SUNDAY) {
+				cal.add(Calendar.DAY_OF_WEEK, -1);
+			}
+			values[0] = cal.get(Calendar.YEAR);
+			values[1] = cal.get(Calendar.MONTH);
+			values[2] = cal.get(Calendar.DATE);
+		} else {
+			values[0] = cal.get(Calendar.YEAR);
+			values[1] = cal.get(Calendar.MONTH);
+			values[2] = cal.get(Calendar.DATE);
+		}
+		return values;
+	}
+
 	public void addEvent(ScheduleEvent scheduleEvent) {
 		if (scheduleEvent == null) return;
 		Object value = getValue();
