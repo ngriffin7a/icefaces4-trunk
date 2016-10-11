@@ -568,7 +568,12 @@ ice.ace.Autocompleter.prototype = {
 			var self = this;
 			this.blurObserver = setTimeout(function() {
 				if (!document.getElementById(self.id)) return;
-				try{ice.ace.ab(self.ajaxBlur);}catch(e){}
+				try {
+					self.ajaxBlur.params['ice.skipClientValidation'] = true;
+					ice.ace.ab(self.ajaxBlur);
+				} catch(e) {
+					//ignore exception to avoid interference
+				}
 			}, 390);
 		}
     },
