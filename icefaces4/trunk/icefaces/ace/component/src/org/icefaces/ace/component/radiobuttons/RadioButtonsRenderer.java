@@ -226,7 +226,7 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
             writer.endElement(HTML.SPAN_ELEM);
         } else {
             writer.startElement(HTML.SPAN_ELEM, null);
-            encodeIconStyle(writer, (Boolean)value);
+            encodeIconStyle(writer, (Boolean)selected);
             writer.endElement(HTML.SPAN_ELEM);
         }
 
