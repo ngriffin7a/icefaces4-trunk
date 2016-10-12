@@ -74,9 +74,7 @@
     jsf.ajax.request = function (element, event, options) {
         var e = ((typeof element) == 'string') ? document.getElementById(element) : element;
         //run validation only when the entire form is executed
-        if (options && options['ice.skipClientValidation']) {
-            old(element, event, options);
-        } else {
+        if (options && (options.execute == '@form' || options.execute == '@all')) {
             var form = formOf(e.id);
             var jqForm = ice.ace.jq(form);
             var isValidForm = jqForm.valid();
@@ -98,6 +96,8 @@
             if (skipValidation || (form && isValidForm)) {
                 old(element, event, options);
             }
+        } else {
+           old(element, event, options);
         }
     };
 
