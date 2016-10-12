@@ -569,7 +569,6 @@ ice.ace.Autocompleter.prototype = {
 			this.blurObserver = setTimeout(function() {
 				if (!document.getElementById(self.id)) return;
 				try {
-					self.ajaxBlur.params['ice.skipClientValidation'] = true;
 					ice.ace.ab(self.ajaxBlur);
 				} catch(e) {
 					//ignore exception to avoid interference
@@ -829,9 +828,7 @@ ice.ace.Autocompleter.prototype = {
 				ajaxCfg.trigger = trigger;
 				ice.ace.ab(ajaxCfg);
 			} else if (!this.clientSideModeCfg) {
-				ice.ser(event, this.root.get(0), function(p){
-					p('ice.skipClientValidation', true);
-				});
+				ice.ser(event, this.root.get(0));
 			}
 		} else {
 			if (this.clientSideModeCfg) {
@@ -848,9 +845,7 @@ ice.ace.Autocompleter.prototype = {
 				}
 				ice.ace.ab(ajaxCfg);
 			} else if (!this.clientSideModeCfg) {
-				ice.ser(event, this.root.get(0),  function(p){
-					p('ice.skipClientValidation', true);
-				});
+				ice.ser(event, this.root.get(0));
 			}
 		}
 		this.justSubmitted = true;
