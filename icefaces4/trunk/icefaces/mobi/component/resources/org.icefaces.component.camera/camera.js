@@ -156,7 +156,7 @@
 				cameraButton.style.display = 'none';
 			}
 
-			function renderHTML5Camera(){
+			function renderHTML5Camera(isUserCamera){
 				var popup = document.createElement('div'),
 					closeBtn = document.createElement('a'),
 					video,
@@ -165,11 +165,20 @@
 					keepbutton = document.createElement('a'),
 					redobutton = document.createElement('a'),
 					cancelbutton = document.createElement('a'),
+					togglebutton = document.createElement('a'),
 					canvas = document.createElement('canvas'),
 					ctx = canvas.getContext('2d'),
 					photo = document.createElement('img'),
 					options = {},
 					img = new Image();
+
+				var supportsFacingMode = false;
+				if (navigator.mediaDevices) {
+					var supports = navigator.mediaDevices.getSupportedConstraints();
+					if (supports && supports["facingMode"]) {
+						supportsFacingMode = true;
+					}
+				}
 
 				popup.id = id + '_popup';
 				popup.className = 'mobi-camera-popup';
@@ -194,14 +203,18 @@
 				keepbutton.id = 'keep_' + id;
 				redobutton.id = 'redo_' + id;
 				cancelbutton.id = 'cancel_' + id;
+				togglebutton.id = 'toggle_' + id;
 				
 				keepbutton.className = keepbutton.className + ' mobi-hidden';
 				redobutton.className = redobutton.className + ' mobi-hidden';
 				cancelbutton.className = cancelbutton.className;
+				togglebutton.className = togglebutton.className;
 				
 				redobutton.innerHTML = 'Redo';
 
 				cancelbutton.innerHTML = 'Cancel';
+
+				togglebutton.innerHTML = 'Toggle Front/Back Camera';
 				
 				keepbutton.innerHTML = 'Keep';
 				
@@ -213,16 +226,20 @@
 				popup.appendChild(redobutton);
 				popup.appendChild(keepbutton);
 				popup.appendChild(cancelbutton);
+				if (supportsFacingMode) popup.appendChild(togglebutton);
+
 				document.body.appendChild(popup);
 
 				new ice.mobi.button(startbutton.id);
 				new ice.mobi.button(keepbutton.id);
 				new ice.mobi.button(redobutton.id);
 				new ice.mobi.button(cancelbutton.id);
+				if (supportsFacingMode) new ice.mobi.button(togglebutton.id);
 
 				document.getElementById(startbutton.id).style.marginLeft = '10px';
 				document.getElementById(keepbutton.id).style.marginLeft = '10px';
 				document.getElementById(cancelbutton.id).style.marginLeft = '10px';
+				if (supportsFacingMode) document.getElementById(togglebutton.id).style.marginLeft = '10px';
 
 				if( !options.width ){
 					options.width = popup.clientWidth - 40;
@@ -234,7 +251,8 @@
 					}
 				}
 				
-				options.video = true;
+				if (supportsFacingMode && isUserCamera) options.video = { facingMode: { exact: 'user' } };
+				else options.video = true;
 				options.audio = false;
 				//below params for shim
 				options.el = id + '_videoCtr';
@@ -337,6 +355,11 @@
 					document.body.removeChild(popup);
 				}
 
+				function togglecamera(){
+					document.body.removeChild(popup);
+					renderHTML5Camera(!isUserCamera);
+				}
+
 				function createThumbnailForVideo(){
 					var thumbCanvas = document.createElement('canvas');
 					var thumbCtx = thumbCanvas.getContext('2d');
@@ -387,6 +410,11 @@
 
 				ice.mobi.addListener(cancelbutton, 'click', function(ev){
 					cancelpicture();
+					ev.preventDefault();
+				});
+
+				if (supportsFacingMode) ice.mobi.addListener(togglebutton, 'click', function(ev){
+					togglecamera();
 					ev.preventDefault();
 				});
 				
