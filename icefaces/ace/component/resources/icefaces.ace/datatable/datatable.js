@@ -263,7 +263,7 @@ ice.ace.DataTable = function (id, cfg) {
     }
 
 	if (this.cfg.paginator) {
-		this.resizePaginator();
+		setTimeout(function(){self.resizePaginator();}, 100); // get correct width on first load
 		this.resizePaginatorCallback = function () {
 			self.resizePaginator();
 		};
@@ -324,10 +324,10 @@ ice.ace.DataTable.prototype.destroy = function() {
             .find('thead').unbind('mouseenter');
 
     // Clear scrolling
-    ice.ace.jq(window).unbind('resize', this.scrollableResizeCallback);
+    if (this.scrollableResizeCallback) ice.ace.jq(window).unbind('resize', this.scrollableResizeCallback);
     this.element.find(this.scrollBodySelector).unbind('scroll');
-	ice.ace.jq(window).unbind('resize', this.adjustFooterWidthCallback);
-	ice.ace.jq(window).unbind('resize', this.resizePaginatorCallback);
+	if (this.adjustFooterWidthCallback) ice.ace.jq(window).unbind('resize', this.adjustFooterWidthCallback);
+	if (this.resizePaginatorCallback) ice.ace.jq(window).unbind('resize', this.resizePaginatorCallback);
 
     // Clear filter events
     this.element.off('keyup keypress input', this.filterSelector);
