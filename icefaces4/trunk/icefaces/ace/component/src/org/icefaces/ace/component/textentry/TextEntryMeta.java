@@ -79,7 +79,7 @@ public class TextEntryMeta extends HtmlInputTextMeta {
     @Property(defaultValue = "false", tlddoc="If true, when the user types a string into this field, a row of asterisks will be  displayed instead of the text the user typed.")
     private boolean secret;
 
-    @Property(defaultValue = "true", tlddoc="If false, the component will not redisplay its value when the page reloads.")
+    @Property(defaultValue = "true", tlddoc="If false, the component will not redisplay its value when the page reloads. The main purpose of this attribute is to be used when the 'secret' attribute is set to true, to avoid redisplaying the secret input.")
     private boolean redisplay;
 
 	
