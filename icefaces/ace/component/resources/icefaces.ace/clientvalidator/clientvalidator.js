@@ -308,7 +308,7 @@
         var element = document.getElementById(id);
         if (customEvents && customEvents.length > 0) {
             var jqForm = ice.ace.jq(ice.ace.escapeClientId(form.id));
-            //disable default event listeners per entire form (not possible to go finer grain with current API)
+            //proxy default event listeners for the entire form (not possible to go finer grain with current API)
             disableDefaultEvents(jqForm.validate());
             triggerValidationOn(id, focusID, customEvents);
             element.customValidation = true;
@@ -337,7 +337,7 @@
     }
 
     function disableDefaultEvents(validator) {
-        var eventNames = ['onsubmit', 'onfocusout', 'onclick', 'onkeyup'];
+        var eventNames = ['onsubmit', 'onfocusout', 'onfocusin', 'onclick', 'onkeyup'];
         for (var i = 0, l = eventNames.length; i < l; i++) {
             disableDefaultEvent(eventNames[i], validator);
         }
@@ -345,6 +345,7 @@
 
     function disableDefaultEvent(eventName, validator) {
         var originalCallback = validator.settings[eventName];
+        //proxy the original callbacks, invoke them for elements that do not have 'validateOn' defined
         validator.settings[eventName] = function(element, event) {
             if (!element.customValidation) {
                 return originalCallback.apply(validator, [element, event]);
