@@ -337,16 +337,20 @@
     }
 
     function disableDefaultEvents(validator) {
-        var cfg = validator.settings;
-        var callbacks = ['onsubmit', 'onfocusout', 'onclick', 'onkeyup'];
-        for (var i = 0, l = callbacks.length; i < l; i++) {
-            var callback = callbacks[i];
-            var originalCallback = cfg[callback];
-            cfg[callback] = function(element, event) {
-                if (!element.customValidation) {
-                    originalCallback.apply(validator, [element, event]);
-                }
-            };
+        var eventNames = ['onsubmit', 'onfocusout', 'onclick', 'onkeyup'];
+        for (var i = 0, l = eventNames.length; i < l; i++) {
+            disableDefaultEvent(eventNames[i], validator);
         }
+    }
+
+    function disableDefaultEvent(eventName, validator) {
+        var originalCallback = validator.settings[eventName];
+        validator.settings[eventName] = function(element, event) {
+            if (!element.customValidation) {
+                return originalCallback.apply(validator, [element, event]);
+            } else {
+                return false;
+            }
+        };
     }
 })();
