@@ -73,33 +73,96 @@
     var old = jsf.ajax.request;
     jsf.ajax.request = function (element, event, options) {
         var e = ((typeof element) == 'string') ? document.getElementById(element) : element;
-        //run validation only when the entire form is executed
-        if (options && (options.execute == '@form' || options.execute == '@all')) {
+
+        if (options && options['ice.skipClientValidation']) {
+            old(element, event, options);
+        } else {
             var form = formOf(e.id);
             var jqForm = ice.ace.jq(form);
-            var isValidForm = jqForm.valid();
             var validationResult = jqForm.validate();
             var validElements = validationResult.validElements();
-            if (validElements) {
-                cleanupMessages(validElements);
-            }
+            //determine what rules should not be applied (outside of the 'execute'd components)
+            var disabledRules = disableRules(validationResult, options);
+            try {
+                //run validation
+                var isValidForm = jqForm.valid();
+                if (validElements) {
+                    cleanupMessages(validElements);
+                }
 
-            var skipValidation = false;
-            var targetElementID = options['ice.event.target'];
-            //second try for finding for finding enclosing immediate component root is for components that use submitting
-            //element located outside of the component markup
-            if (isImmediate(element, options) || (targetElementID && isImmediate(document.getElementById(targetElementID), options))) {
-                skipValidation = true;
-                cleanupMessages(validationResult.invalidElements());
-            }
+                var skipValidation = false;
+                var targetElementID = options['ice.event.target'];
+                //second try for finding for finding enclosing immediate component root is for components that use submitting
+                //element located outside of the component markup
+                if (isImmediate(element, options) || (targetElementID && isImmediate(document.getElementById(targetElementID), options))) {
+                    skipValidation = true;
+                    cleanupMessages(validationResult.invalidElements());
+                }
 
-            if (skipValidation || (form && isValidForm)) {
-                old(element, event, options);
+                if (skipValidation || (form && isValidForm)) {
+                    old(element, event, options);
+                }
+            } finally {
+                enableRules(validationResult, disabledRules);
             }
-        } else {
-           old(element, event, options);
         }
     };
+
+    function disableRules(validationResult, options) {
+        var rules = validationResult.settings.rules;
+        var executedComponents = (options.execute || '@all').split(' ');
+        var disabledRules = {};
+        for (var p in rules) {
+            if (rules.hasOwnProperty(p)) {
+                disabledRules[p] = rules[p];
+            }
+        }
+        for (var i = 0, l = executedComponents.length; i < l; i++) {
+            var id = executedComponents[i];
+            if ('@form' == id || '@all' == id) {
+                return {};
+            } else if (rules[id]) {
+                delete disabledRules[id];
+            } else {
+                var e = document.getElementById(id);
+                for (var p in rules) {
+                    if (rules.hasOwnProperty(p)) {
+                        var potentialChild = document.getElementById(p);
+                        if (isParent(e, potentialChild)){
+                            delete disabledRules[p];
+                        }
+                    }
+                }
+            }
+        }
+
+        for (var p in disabledRules) {
+            if (disabledRules.hasOwnProperty(p)) {
+                delete rules[p];
+            }
+        }
+    }
+
+    function enableRules(validationResult, disabledRules) {
+        var rules = validationResult.settings.rules;
+        for (var p in disabledRules) {
+            if (disabledRules.hasOwnProperty(p)) {
+                rules[p] = disabledRules[p];
+            }
+        }
+    }
+
+    function isParent(parent, child) {
+        var cursor = child;
+        while (cursor) {
+            if (cursor == parent) {
+                return true;
+            }
+            cursor = cursor.parentNode;
+        }
+
+        return false;
+    }
 
 	function updateContainerClassName(value) {
 		if (!value) return '';
