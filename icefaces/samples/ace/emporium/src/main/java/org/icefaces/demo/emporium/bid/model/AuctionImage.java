@@ -113,7 +113,7 @@ public class AuctionImage implements Serializable {
 				TreeSet<String> imageFileNames = new TreeSet<String>();
 				for (String name : fileNames) {
 					if (name.toLowerCase().endsWith(EXTENSION) && (!name.toLowerCase().startsWith(DEFAULT_NAME))) {
-						imageFileNames.add(name);
+						imageFileNames.add(name.substring(IMAGE_DIR.length() + 1));
 					}
 				}
 				cachedImagesList = imageFileNames.toArray(new String[0]);
