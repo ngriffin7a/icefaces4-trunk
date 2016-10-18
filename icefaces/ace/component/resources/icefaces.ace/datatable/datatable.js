@@ -3118,10 +3118,26 @@ ice.ace.DataTable.prototype.doMultiRowSelectionEvent = function (lastIndex, curr
         last = ice.ace.jq(tbody.children().get(lastIndex)),
         lower = current.index() < lastIndex,
         elemRange = lower ? last.prevUntil(current.prev()) : last.nextUntil(current.next()),
-        deselectedId, firstRowSelected;
+        deselectedId, firstRowSelected,
+		isDeselect = current.hasClass('ui-selected');
 
     // Sync State //
     self.readSelections();
+
+	var lastId = last.attr('id').split('_row_')[1];
+	if (!isDeselect) {
+		last.addClass('ui-state-active ui-selected');
+		self.deselection = ice.ace.jq.grep(self.deselection, function (r) {
+			return r != lastId;
+		});
+		self.selection.push(lastId);
+	} else {
+		last.removeClass('ui-state-active ui-selected');
+		self.selection = ice.ace.jq.grep(self.selection, function (r) {
+			return r != lastId;
+		});
+		self.deselection.push(lastId);
+	}
 
     elemRange.each(function (i, elem) {
         var element = ice.ace.jq(elem),
@@ -3129,11 +3145,19 @@ ice.ace.DataTable.prototype.doMultiRowSelectionEvent = function (lastIndex, curr
 		if (!targetId) return; // ICE-11141 element is not an ace:dataTable row, probably ace:panelExpansion
 
         // Adjust State //
-        element.addClass('ui-state-active ui-selected');
-        self.deselection = ice.ace.jq.grep(self.deselection, function (r) {
-            return r != targetId;
-        });
-        self.selection.push(targetId);
+		if (!isDeselect) {
+			element.addClass('ui-state-active ui-selected');
+			self.deselection = ice.ace.jq.grep(self.deselection, function (r) {
+				return r != targetId;
+			});
+			self.selection.push(targetId);
+		} else {
+			element.removeClass('ui-state-active ui-selected');
+			self.selection = ice.ace.jq.grep(self.selection, function (r) {
+				return r != targetId;
+			});
+			self.deselection.push(targetId);
+		}
     });
 
     // Write State //
