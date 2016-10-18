@@ -173,10 +173,22 @@
 					img = new Image();
 
 				var supportsFacingMode = false;
+				var videoinputs = 0;
 				if (navigator.mediaDevices) {
 					var supports = navigator.mediaDevices.getSupportedConstraints();
 					if (supports && supports["facingMode"]) {
-						supportsFacingMode = true;
+						var promise = navigator.mediaDevices.enumerateDevices();
+						if (promise) {
+							promise.then(function(devices) {
+								var i;
+								for (i = 0; i < devices.length; i++) {
+									var device = devices[i];
+									if (device.kind == 'videoinput') videoinputs++;
+								}
+							});
+						}
+
+						if (videoinputs > 1) supportsFacingMode = true;
 					}
 				}
 
