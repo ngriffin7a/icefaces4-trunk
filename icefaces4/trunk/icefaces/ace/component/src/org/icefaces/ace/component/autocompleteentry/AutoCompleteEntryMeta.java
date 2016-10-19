@@ -74,8 +74,8 @@ import java.util.List;
 		tlddoc="Fired any time the user adds or removes characters from the text field by typing or by pasting text.",
 		defaultRender="@all", defaultExecute="@this" ),
 	@ClientEvent( name="valueChange",
-		javadoc="Fired when the user gives a more definite input for this component either by clicking on an option from the list, or selecting an option with the keyboard, or pressing enter on the text field.",
-		tlddoc="Fired when the user gives a more definite input for this component either by clicking on an option from the list, or selecting an option with the keyboard, or pressing enter on the text field.",
+		javadoc="(default event) Fired when the user gives a more definite input for this component either by clicking on an option from the list, or selecting an option with the keyboard, or pressing enter on the text field.",
+		tlddoc="(default event) Fired when the user gives a more definite input for this component either by clicking on an option from the list, or selecting an option with the keyboard, or pressing enter on the text field.",
 		defaultRender="@all", defaultExecute="@this" )},
 	defaultEvent="valueChange" )
 public class AutoCompleteEntryMeta extends HtmlInputTextMeta {
