@@ -111,15 +111,6 @@ public class ScheduleRenderer extends Renderer {
 		}
 		schedule.resetDataModel();
 
-		String template = "";
-		String templateName = schedule.getTemplate();
-		if ("full".equalsIgnoreCase(templateName)) {
-			templateName = "full";
-		} else if ("mini".equalsIgnoreCase(templateName)) {
-			templateName = "mini";
-		} else {
-			templateName = "custom";
-		}
 		String viewMode = schedule.getViewMode();
 		if ("week".equalsIgnoreCase(viewMode)) {
 			viewMode = "week";
@@ -129,22 +120,22 @@ public class ScheduleRenderer extends Renderer {
 			viewMode = "month";
 		}
 		String sideBar = schedule.getSideBar();
-		String sideBarClass = "sidebar-right";
+		String sideBarClass = "schedule-config-sidebar-right";
 		if (sideBar != null) {
-			if ("left".equalsIgnoreCase(sideBar)) sideBarClass = "sidebar-left";
-			else if ("hidden".equalsIgnoreCase(sideBar)) sideBarClass = "sidebar-hidden";
+			if ("left".equalsIgnoreCase(sideBar)) sideBarClass = "schedule-config-sidebar-left";
+			else if ("hidden".equalsIgnoreCase(sideBar)) sideBarClass = "schedule-config-sidebar-hidden";
 		}
 		String displayEventDetails = schedule.getDisplayEventDetails();
-		String displayEventDetailsClass = "details-sidebar";
+		String displayEventDetailsClass = "schedule-config-details-sidebar";
 		if (displayEventDetails != null) {
 			if ("popup".equalsIgnoreCase(displayEventDetails)) {
-				displayEventDetailsClass = "details-popup";
+				displayEventDetailsClass = "schedule-config-details-popup";
 				displayEventDetails = "popup";
 			} else if ("tooltip".equalsIgnoreCase(displayEventDetails)) {
-				displayEventDetailsClass = "details-tooltip";
+				displayEventDetailsClass = "schedule-config-details-tooltip";
 				displayEventDetails = "tooltip";
 			} else if ("disabled".equalsIgnoreCase(displayEventDetails)) {
-				displayEventDetailsClass = "details-disabled";
+				displayEventDetailsClass = "schedule-config-details-disabled";
 				displayEventDetails = "disabled";
 			} else {
 				displayEventDetails = "sidebar";
@@ -158,16 +149,16 @@ public class ScheduleRenderer extends Renderer {
 		writer.writeAttribute("class", "ice-ace-schedule", null);
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "event-details-popup-body", null);
+		writer.writeAttribute("class", "schedule-details-popup-content", null);
 		writer.writeAttribute("title", "Event Details", null);
 		writer.endElement("div");
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "event-details-tooltip-body", null);
+		writer.writeAttribute("class", "schedule-details-tooltip-content", null);
 		writer.endElement("div");
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "events-container", null);
+		writer.writeAttribute("class", "schedule-event-container", null);
 		writer.endElement("div");
 
 		// render configuration and event data
@@ -204,8 +195,10 @@ public class ScheduleRenderer extends Renderer {
 						ScheduleEvent scheduleEvent = (ScheduleEvent) schedule.getRowData();
 						jb.beginMap();
 						jb.entry("index", i);
-						jb.entry("date", convertDateToClientFormat(scheduleEvent.getDate()));
-						jb.entry("time", convertTimeToClientFormat(scheduleEvent.getDate()));
+						jb.entry("startDate", convertDateToClientFormat(scheduleEvent.getStartDate()));
+						jb.entry("startTime", convertTimeToClientFormat(scheduleEvent.getStartDate()));
+						jb.entry("endDate", convertDateToClientFormat(scheduleEvent.getEndDate()));
+						jb.entry("endTime", convertTimeToClientFormat(scheduleEvent.getEndDate()));
 						jb.entry("title", scheduleEvent.getTitle());
 						jb.entry("location", scheduleEvent.getLocation());
 						jb.entry("notes", scheduleEvent.getNotes());
@@ -218,8 +211,8 @@ public class ScheduleRenderer extends Renderer {
           .endFunction();
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "ice-ace-schedule-body ui-widget " + templateName 
-			+ " " + viewMode + " " + sideBarClass + " " + displayEventDetailsClass, null);
+		writer.writeAttribute("class", "schedule-main ui-widget" + " schedule-view-" + viewMode + " " 
+			+ sideBarClass + " " + displayEventDetailsClass, null);
 		writer.endElement("div");
 
 		writer.startElement("script", null);
@@ -272,6 +265,8 @@ public class ScheduleRenderer extends Renderer {
 	private ScheduleEvent buildScheduleEventFromRequest(Map<String, String> params, String clientId){
 		String date = params.get(clientId + "_date");
 		String time = params.get(clientId + "_time");
+		String endDate = params.get(clientId + "_endDate");
+		String endTime = params.get(clientId + "_endTime");
 		String title = params.get(clientId + "_title");
 		String location = params.get(clientId + "_location");
 		String notes = params.get(clientId + "_notes");
@@ -279,7 +274,10 @@ public class ScheduleRenderer extends Renderer {
 		ScheduleEvent scheduleEvent = new ScheduleEvent();
 		Date convertedDate = convertDateTimeToServerFormat(date, time);
 		if (convertedDate == null) return null;
-		scheduleEvent.setDate(convertedDate);
+		Date convertedEndDate = convertDateTimeToServerFormat(endDate, endTime);
+		if (convertedEndDate == null) convertedEndDate = new Date(convertedDate.getTime());
+		scheduleEvent.setStartDate(convertedDate);
+		scheduleEvent.setEndDate(convertedEndDate);
 		scheduleEvent.setTitle(title);
 		scheduleEvent.setLocation(location);
 		scheduleEvent.setNotes(notes);

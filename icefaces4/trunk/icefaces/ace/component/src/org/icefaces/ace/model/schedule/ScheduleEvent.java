@@ -24,17 +24,17 @@ public class ScheduleEvent {
     public String getId() { return id; }
 	public void setId(String id) { this.id = id; }
 
-	private Date date;
-    public Date getDate() { return date; }
-	public void setDate(Date date) { this.date = date; }
-
 	private String title;
     public String getTitle() { return title; }
 	public void setTitle(String title) { this.title = title; }
 
+	private Date startDate;
+    public Date getStartDate() { return startDate; }
+	public void setStartDate(Date startDate) { this.startDate = startDate; }
+
 	private Date endDate;
     public Date getEndDate() { return endDate; }
-	public void setEndDate(Date endDate) { this.date = endDate; }
+	public void setEndDate(Date endDate) { this.endDate = endDate; }
 
 	private String location;
     public String getLocation() { return location; }
