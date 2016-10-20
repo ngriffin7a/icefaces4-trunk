@@ -44,7 +44,6 @@ import java.util.Date;
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
 	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
-	@ICEResourceDependency(name = "schedule/underscore.js"),
 	@ICEResourceDependency(name = "schedule/moment.js"),
 	@ICEResourceDependency(name = "schedule/clndr.js"),
     @ICEResourceDependency(name = "schedule/schedule.js")
@@ -53,12 +52,6 @@ public class ScheduleMeta extends UIDataMeta {
 
 	@Property(tlddoc = "The value should be a List, Array, DataModel or a type that can be adapted into a DataModel (java.sql.ResultSet, javax.servlet.jsp.jstl.sql.Result, and java.util.Collection). It must contain the  org.icefaces.ace.model.schedule.ScheduleEvent objects to be displayed on the schedule. Alternatively, the value can be an implementation of org.icefaces.ace.model.schedule.LazyScheduleEventList to work in a lazy-loading mode, month per month.")
 	private Object value;
-
-	@Property(tlddoc = "The name of the template to use to render the component in the client. The valid values are 'full', 'mini', and 'custom'. Use 'custom' to define your own template in the 'customTemplate' attribute.", defaultValue="full")
-	private String template;
-
-	@Property(tlddoc = "This advanced feature allows to specify a string defining a custom Underscore.js template to render the component in the client. Note that, when using this advanced feature, it is also necessary to define the CSS styling for the template on the page, either inline or in an external CSS resource.")
-	private String customTemplate;
 
 	@Property(tlddoc = "A Date object to specify the month and year with which this component will be loaded in the client. The day and time values are irrelevant for this attribute. If this attribute is not specified, the component will be loaded with the current month, according to the server time.")
 	private Date startWithMonth;

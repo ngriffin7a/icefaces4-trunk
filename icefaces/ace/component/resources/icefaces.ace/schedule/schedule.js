@@ -11,7 +11,7 @@ ice.ace.Schedule = function(id, cfg) {
 	this.id = id;
 	this.jqId = ice.ace.escapeClientId(id);
 	this.jqRoot = ice.ace.jq(this.jqId);
-	this.jq = this.jqRoot.find('.ice-ace-schedule-body');
+	this.jq = this.jqRoot.find('.schedule-main');
 	this.cfg = cfg;
 	this.events = cfg.events;
 	var self = this;
@@ -34,6 +34,7 @@ ice.ace.Schedule = function(id, cfg) {
 	if (this.cfg.isLazy) {
 		configuration.startWithMonth = cfg.lazyYear + '-' + (cfg.lazyMonth + 1) + '-01'; // CLNDR month is 1-relative
 	}
+	configuration.dateParameter = 'startDate';
 	this.clndr = this.jq.clndr(configuration);
 
 	if (cfg.displayEventDetails != 'disabled') {
@@ -69,7 +70,7 @@ ice.ace.Schedule = function(id, cfg) {
 		this.jqRoot.delegate('.day, .schedule-cell', 'click', function(event) {
 			var node = event['target'];
 			var date = self.extractEventDate(node);
-			var eventData = {date: date, time: '', title: '', location: '', notes: '', index: ''};
+			var eventData = {startDate: date, startTime: '', endDate: date, endTime: '', title: '', location: '', notes: '', index: ''};
 			var markup = self.getEventDetailsMarkup(eventData, true, false, false);
 			self.displayEventDetailsPopup(markup);
 		});
@@ -109,9 +110,9 @@ ice.ace.Schedule.prototype.getEventDetailsMarkup = function(data, isEventAdditio
 	if (data) {// *** escape HTML characters
 		var markup;
 		if (isEventAddition || isEventEditing) {
-			markup = '<table><tr><td>Date:</td><td><input type="date" name="'+this.id+'_date" value="'+data.date+'"/></td></tr><tr><td>Time:</td><td><input type="time" name="'+this.id+'_time" value="'+data.time+'"/></td></tr><tr><td>Title:</td><td><input type="text" name="'+this.id+'_title" value="'+data.title+'"/></td></tr><tr><td>Location:</td><td><input type="text" name="'+this.id+'_location" value="'+data.location+'"/></td></tr><tr><td>Notes:</td><td><textarea name="'+this.id+'_notes">'+data.notes+'</textarea></td></tr></table><input type="hidden" name="'+this.id+'_index" value="'+data.index+'"/>';
+			markup = '<table><tr><td>Start Date:</td><td><input type="date" name="'+this.id+'_date" value="'+data.startDate+'"/></td></tr><tr><td>Start Time:</td><td><input type="time" name="'+this.id+'_time" value="'+data.startTime+'"/></td></tr><tr><td>End Date:</td><td><input type="date" name="'+this.id+'_endDate" value="'+data.endDate+'"/></td></tr><tr><td>End Time:</td><td><input type="time" name="'+this.id+'_endTime" value="'+data.endTime+'"/></td></tr><tr><tr><td>Title:</td><td><input type="text" name="'+this.id+'_title" value="'+data.title+'"/></td></tr><tr><td>Location:</td><td><input type="text" name="'+this.id+'_location" value="'+data.location+'"/></td></tr><tr><td>Notes:</td><td><textarea name="'+this.id+'_notes">'+data.notes+'</textarea></td></tr></table><input type="hidden" name="'+this.id+'_index" value="'+data.index+'"/>';
 		} else {
-			markup = '<table><tr><td>Date:</td><td>'+data.date+'</td></tr><tr><td>Time:</td><td>'+data.time+'</td></tr><tr><td>Title:</td><td>'+data.title+'</td></tr><tr><td>Location:</td><td>'+data.location+'</td></tr><tr><td>Notes:</td><td>'+data.notes+'</td></tr></table>';
+			markup = '<table><tr><td>Start Date:</td><td>'+data.startDate+'</td></tr><tr><td>Start Time:</td><td>'+data.startTime+'</td></tr><tr><td>End Date:</td><td>'+data.endDate+'</td></tr><tr><td>End Time:</td><td>'+data.endTime+'</td></tr><tr><td>Title:</td><td>'+data.title+'</td></tr><tr><td>Location:</td><td>'+data.location+'</td></tr><tr><td>Notes:</td><td>'+data.notes+'</td></tr></table>';
 		}
 		if (isEventAddition) markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'add\');return false;">Add</button>';
 		else {
@@ -133,26 +134,26 @@ ice.ace.Schedule.prototype.cancelDeletion = function(button) {
 };
 
 ice.ace.Schedule.prototype.displayEventDetailsPopup = function(markup) {
-	var eventDetails = ice.ace.jq(this.jqId).find('.event-details-popup-body');
+	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details-popup-content');
 	eventDetails.html(markup);
-	eventDetails.dialog({dialogClass: 'event-details-popup'});
+	eventDetails.dialog({dialogClass: 'schedule-details-popup'});
 };
 
 ice.ace.Schedule.prototype.displayEventDetailsSidebar = function(markup) {
-	var eventDetails = ice.ace.jq(this.jqId).find('.event-details .event-details-body');
+	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details .schedule-details-content');
 	eventDetails.html(markup);
 };
 
 ice.ace.Schedule.prototype.displayEventDetailsTooltip = function(markup, node) {
-	var eventDetails = ice.ace.jq(this.jqId).find('.event-details-tooltip-body');
+	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details-tooltip-content');
 	eventDetails.html(markup);
-	eventDetails.dialog({resizable: false, draggable: false, dialogClass: 'event-details-tooltip', 
+	eventDetails.dialog({resizable: false, draggable: false, dialogClass: 'schedule-details-tooltip', 
 		position: { my: "left top", at: "right bottom", of: node }});
-	ice.ace.jq(this.jqId).find('.event-details-tooltip').show();
+	ice.ace.jq(this.jqId).find('.schedule-details-tooltip').show();
 };
 
 ice.ace.Schedule.prototype.hideEventDetailsTooltip = function() {
-	ice.ace.jq(this.jqId).find('.event-details-tooltip').hide();
+	ice.ace.jq(this.jqId).find('.schedule-details-tooltip').hide();
 };
 
 ice.ace.Schedule.prototype.sendLazyNavigationRequest = function(event, lazyYear, lazyMonth, lazyDay) {
@@ -191,24 +192,24 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 	this.data = data;
 	var i, j;
 	var markup =
-	"<div class=\"clndr-controls ui-state-active\">"
-		+"<div class=\"clndr-previous-button\">&lt;</div>"
-		+"<div class=\"clndr-next-button\">&gt;</div>"
-		+"<div class=\"current-month\">" + data.month + " " + data. year + "</div>"
+	"<div class=\"schedule-title ui-state-active\">"
+		+"<div class=\"schedule-button-previous\">&lt;</div>"
+		+"<div class=\"schedule-button-next\">&gt;</div>"
+		+"<div class=\"schedule-showing\">" + data.month + " " + data. year + "</div>"
 	+"</div>"
 
 	+"<div class=\"schedule-content\">"
 
-		+"<div class=\"clndr-grid ui-widget-content\">"
-			+"<table><thead class=\"days-of-the-week ui-state-default\"><tr>";
+		+"<div class=\"schedule-grid ui-widget-content\">"
+			+"<table><thead class=\"schedule-dow ui-state-default\"><tr>";
 
 				for (i = 0; i < data.daysOfTheWeek.length; i++) {
 					var day = data.daysOfTheWeek[i];
-					markup += "<th class=\"header-day dow-" + i + "\">" + day + "</th>";
+					markup += "<th class=\"schedule-dow-header schedule-dow-" + i + "\">" + day + "</th>";
 				}
 
 			markup += "</tr></thead>"
-			+"<tbody class=\"days\">";
+			+"<tbody class=\"schedule-days\">";
 
 				for (i = 0; i < data.days.length; i++) {
 					var day = data.days[i];
@@ -220,7 +221,7 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 						var event = day.events[j];
 						if (day.classes.indexOf('adjacent-month') == -1) {
 							markup += "<div class=\"ui-state-hover ui-corner-all schedule-event event-" + event.index + "\">"
-								+ event.time + " " + event.title + "</div>";
+								+ event.startTime + " " + event.title + "</div>";
 						}
 					}
 					if (day.classes.indexOf('today') > -1) markup+= "</div>";
@@ -233,13 +234,13 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 
 		+"<div class=\"schedule-sidebar ui-widget-content\">"
 
-			+"<div class=\"event-listing\">"
-				+"<div class=\"event-listing-title ui-state-default\">Events this Month</div>"
-				+"<div class=\"event-listing-body\">";
+			+"<div class=\"schedule-list\">"
+				+"<div class=\"schedule-list-title ui-state-default\">Events this Month</div>"
+				+"<div class=\"schedule-list-content\">";
 
 					for (i = 0; i < data.eventsThisMonth.length; i++) {
 						var event = data.eventsThisMonth[i];
-						markup += "<div class=\"event-item\">"
+						markup += "<div class=\"schedule-list-event\">"
 							+"<div class=\"event-item-name\">" + event.title + "</div>"
 							+"<div class=\"event-item-location\">" + event.location + "</div>"
 						+"</div>";
@@ -248,9 +249,9 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 				markup += "</div>"
 			+"</div>"
 
-			+"<div class=\"event-details\">"
-				+"<div class=\"event-details-title ui-state-default\">Event Details</div>"
-				+"<div class=\"event-details-body\"></div>"
+			+"<div class=\"schedule-details\">"
+				+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
+				+"<div class=\"schedule-details-content\"></div>"
 			+"</div>"
 
 		+"</div>"
@@ -268,47 +269,47 @@ ice.ace.Schedule.prototype.renderWeekView = function(data) {
 	this.data = data;
 	var i, j;
 	var markup =
-	"<div class=\"clndr-controls ui-state-active\">"
-		+"<div class=\"clndr-previous-button\">&lt;</div>"
-		+"<div class=\"clndr-next-button\">&gt;</div>"
-		+"<div class=\"current-month\">" + data.month + " " + data.year + "</div>"
+	"<div class=\"schedule-title ui-state-active\">"
+		+"<div class=\"schedule-button-previous\">&lt;</div>"
+		+"<div class=\"schedule-button-next\">&gt;</div>"
+		+"<div class=\"schedule-showing\">" + data.month + " " + data.year + "</div>"
 	+"</div>"
 
 	+"<div class=\"schedule-content\">"
 
 		/* time grid */
-		+"<div class=\"clndr-grid ui-widget-content\">"
-			+"<table><thead class=\"days-of-the-week ui-state-default\"><tr>"
-				+"<th class=\"header-day\">Time</th>";
+		+"<div class=\"schedule-grid ui-widget-content\">"
+			+"<table><thead class=\"schedule-dow ui-state-default\"><tr>"
+				+"<th class=\"schedule-dow-header schedule-cell-time\">Time</th>";
 
 				for (i = 0; i < data.daysOfTheWeek.length; i++) {
 					var day = data.daysOfTheWeek[i];
-					markup += "<th class=\"header-day dow-" + i + "\">" + day + "</th>";
+					markup += "<th class=\"schedule-dow-header schedule-dow-" + i + "\">" + day + "</th>";
 				}
 
 			markup += "</tr></thead>"
-			+"<tbody class=\"days\">";
+			+"<tbody class=\"schedule-days\">";
 
 				for (i = 0; i < 24; i++) {
 					var iString = i < 10 ? '0' + i : i;
 					markup += "<tr>"
-						+"<td class=\"ui-widget-content schedule-cell\">" + i + ":00</td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-0 time-" + iString + "00\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-1 time-" + iString + "00\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-2 time-" + iString + "00\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-3 time-" + iString + "00\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-4 time-" + iString + "00\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-5 time-" + iString + "00\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-6 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + i + ":00</td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-0 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-1 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-2 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-3 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-4 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-5 time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-6 time-" + iString + "00\"></td>"
 					+"</tr><tr>"
-						+"<td class=\"ui-widget-content schedule-cell\">" + i + ":30</td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-0 time-" + iString + "30\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-1 time-" + iString + "30\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-2 time-" + iString + "30\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-3 time-" + iString + "30\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-4 time-" + iString + "30\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-5 time-" + iString + "30\"></td>"
-						+"<td class=\"ui-widget-content schedule-cell dow-6 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + i + ":30</td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-0 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-1 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-2 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-3 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-4 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-5 time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-6 time-" + iString + "30\"></td>"
 					+"</tr>";
 				}
 
@@ -317,13 +318,13 @@ ice.ace.Schedule.prototype.renderWeekView = function(data) {
 
 		markup += "<div class=\"schedule-sidebar ui-widget-content\">"
 
-			+"<div class=\"event-listing\">"
-				+"<div class=\"event-listing-title ui-state-default\">Events this Month</div>"
-				+"<div class=\"event-listing-body\">";
+			+"<div class=\"schedule-list\">"
+				+"<div class=\"schedule-list-title ui-state-default\">Events this Month</div>"
+				+"<div class=\"schedule-list-content\">";
 
 					for (i = 0; i < data.eventsThisMonth.length; i++) {
 						var event = data.eventsThisMonth[i];
-						markup += "<div class=\"event-item\">"
+						markup += "<div class=\"schedule-list-event\">"
 							+"<div class=\"event-item-name\">" + event.title + "</div>"
 							+"<div class=\"event-item-location\">" + event.location + "</div>"
 						+"</div>";
@@ -332,9 +333,9 @@ ice.ace.Schedule.prototype.renderWeekView = function(data) {
 				markup += "</div>"
 			+"</div>"
 
-			+"<div class=\"event-details\">"
-				+"<div class=\"event-details-title ui-state-default\">Event Details</div>"
-				+"<div class=\"event-details-body\"></div>"
+			+"<div class=\"schedule-details\">"
+				+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
+				+"<div class=\"schedule-details-content\"></div>"
 			+"</div>"
 
 		+"</div>"
@@ -346,7 +347,7 @@ ice.ace.Schedule.prototype.renderWeekView = function(data) {
 
 ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	this.addListeners();
-	var eventsContainer = ice.ace.jq(this.jqId).find('.events-container');
+	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
 	var currentYear = this.cfg.currentYear;
 	var currentMonth = this.cfg.currentMonth;
@@ -397,14 +398,14 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	var weekEndDate = new Date(currentYear, currentMonth, currentDay, 0, 0, 0, 0);
 	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
 		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
-	this.jq.find('.current-month').html(title);
+	this.jq.find('.schedule-showing').html(title);
 	var i;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
 		var date = new Date();
-		date.setFullYear(event.date.substring(0,4));
-		date.setMonth(parseInt(event.date.substring(5,7) - 1));
-		date.setDate(event.date.substring(8,10));
+		date.setFullYear(event.startDate.substring(0,4));
+		date.setMonth(parseInt(event.startDate.substring(5,7) - 1));
+		date.setDate(event.startDate.substring(8,10));
 		if (date >= weekStartDate && date < weekEndDate) {
 			// determine the day of the week
 			var dateMillis = date.getTime();
@@ -412,22 +413,29 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 			var millisDelta = dateMillis - startDateMillis;
 			var dow = Math.floor(millisDelta / 86400000);
 
-			var hour = event.time.substring(0,2);
-			var minutes = parseInt(event.time.substring(3,5));
-			var selector = '.dow-'+dow+'.time-'+hour+(minutes >= 30 ? '30' : '00');
+			var hour = event.startTime.substring(0,2);
+			var minutes = parseInt(event.startTime.substring(3,5));
+			var selector = '.schedule-dow-'+dow+'.time-'+hour+(minutes >= 30 ? '30' : '00');
 			var timeCell = this.jq.find(selector);
 			var offset = timeCell.offset();
 			var width = timeCell.width();
+			var endHour = event.endTime.substring(0,2);
+			var endMinutes = parseInt(event.endTime.substring(3,5));
+			var endSelector = '.schedule-dow-'+dow+'.time-'+this.determinePreviousTimeCell(endHour, endMinutes);
+			var endTimeCell = this.jq.find(endSelector);
+			var endOffset = endTimeCell.offset();
+			var height = endTimeCell.height();
 			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event event-' + event.index + '\"></div>');
-			eventElement.html(event.time + ' ' + event.title);
-			eventElement.css({position:'absolute', top:offset.top+1, left:offset.left+1, width: width + 'px'}).appendTo(eventsContainer);
+			eventElement.html(event.startTime + ' ' + event.title);
+			eventElement.css({position:'absolute', top:offset.top+2, left:offset.left+2, width: width + 'px', 
+				height: (endOffset.top - offset.top + height) + 'px'}).appendTo(eventsContainer);
 		}
 	}
 	// set day of the week headers
 	var dowCount;
 	for (dowCount = 0; dowCount < 7; dowCount++) {
 		var dowDate = new Date(weekStartDate.getTime() + (86400000 * dowCount));
-		var dayHeader = this.jq.find('.header-day.dow-'+dowCount);
+		var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-'+dowCount);
 		dayHeader.html(this.getDayOfTheWeekNameShort(dowCount) + ', ' 
 			+ this.getMonthNameShort(dowDate.getMonth()) + '/' + dowDate.getDate());
 	}
@@ -435,7 +443,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 
 ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 	this.addListeners();
-	var eventsContainer = ice.ace.jq(this.jqId).find('.events-container');
+	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
 	var i,j;
 	var lazyYear = this.cfg.lazyYear;
@@ -487,30 +495,45 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 	var weekEndDate = new Date(lazyYear, lazyMonth, lazyDay, 0, 0, 0, 0);
 	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
 		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
-	this.jq.find('.current-month').html(title);
+	this.jq.find('.schedule-showing').html(title);
 	var dowCount = 0;
 	for (i = 0; i < data.days.length; i++) {
 		var day = data.days[i];
 		var date = day.date.toDate();
 		if (date >= weekStartDate && date < weekEndDate) {
 			var dow = i % 7;
-			var dayHeader = this.jq.find('.header-day.dow-'+dowCount);
+			var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-'+dowCount);
 			dayHeader.html(this.getDayOfTheWeekNameShort(dow)
 				+ ', ' + this.getMonthNameShort(date.getMonth()) + '/' + date.getDate());
 			for (j = 0; j < day.events.length; j++) {
 				var event = day.events[j];
-				var hour = event.time.substring(0,2);
-				var minutes = parseInt(event.time.substring(3,5));
-				var selector = '.dow-'+dow+'.time-'+hour+(minutes >= 30 ? '30' : '00');
+				var hour = event.startTime.substring(0,2);
+				var minutes = parseInt(event.startTime.substring(3,5));
+				var selector = '.schedule-dow-'+dow+'.time-'+hour+(minutes >= 30 ? '30' : '00');
 				var timeCell = this.jq.find(selector);
 				var offset = timeCell.offset();
 				var width = timeCell.width();
+				var endHour = event.endTime.substring(0,2);
+				var endMinutes = parseInt(event.endTime.substring(3,5));
+				var endSelector = '.schedule-dow-'+dow+'.time-'+this.determinePreviousTimeCell(endHour, endMinutes);
+				var endTimeCell = this.jq.find(endSelector);
+				var endOffset = endTimeCell.offset();
+				var height = endTimeCell.height();
 				var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event event-' + event.index + '\"></div>');
-				eventElement.html(event.time + ' ' + event.title);
-				eventElement.css({position:'absolute', top:offset.top+1, left:offset.left+1, width: width + 'px'}).appendTo(eventsContainer);
+				eventElement.html(event.startTime + ' ' + event.title);
+				eventElement.css({position:'absolute', top:offset.top+2, left:offset.left+2, width: width + 'px',
+					height: (endOffset.top - offset.top + height) + 'px'}).appendTo(eventsContainer);
 			}
 			dowCount++;
 		}
+	}
+	// set day of the week headers
+	var dowCount;
+	for (dowCount = 0; dowCount < 7; dowCount++) {
+		var dowDate = new Date(weekStartDate.getTime() + (86400000 * dowCount));
+		var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-'+dowCount);
+		dayHeader.html(this.getDayOfTheWeekNameShort(dowCount) + ', ' 
+			+ this.getMonthNameShort(dowDate.getMonth()) + '/' + dowDate.getDate());
 	}
 };
 
@@ -518,31 +541,31 @@ ice.ace.Schedule.prototype.renderDayView = function(data) {
 	this.data = data;
 	var i, j;
 	var markup =
-	"<div class=\"clndr-controls ui-state-active\">"
-		+"<div class=\"clndr-previous-button\">&lt;</div>"
-		+"<div class=\"clndr-next-button\">&gt;</div>"
-		+"<div class=\"current-month\">" + data.month + " " + data.year + "</div>"
+	"<div class=\"schedule-title ui-state-active\">"
+		+"<div class=\"schedule-button-previous\">&lt;</div>"
+		+"<div class=\"schedule-button-next\">&gt;</div>"
+		+"<div class=\"schedule-showing\">" + data.month + " " + data.year + "</div>"
 	+"</div>"
 
 	+"<div class=\"schedule-content\">"
 
 		/* time grid */
-		+"<div class=\"clndr-grid ui-widget-content\">"
-			+"<table><thead class=\"days-of-the-week ui-state-default\"><tr>"
-				+"<th class=\"header-day time-cell\">Time</th>"
-				+"<th class=\"header-day dow\"></th>"
+		+"<div class=\"schedule-grid ui-widget-content\">"
+			+"<table><thead class=\"schedule-dow ui-state-default\"><tr>"
+				+"<th class=\"schedule-dow-header schedule-cell-time\">Time</th>"
+				+"<th class=\"schedule-dow-header schedule-dow-single\"></th>"
 			+"</tr></thead>";
 
-			markup += "<tbody class=\"days\">";
+			markup += "<tbody class=\"schedule-days\">";
 
 				for (i = 0; i < 24; i++) {
 					var iString = i < 10 ? '0' + i : i;
 					markup += "<tr>"
-						+"<td class=\"ui-widget-content schedule-cell time-cell\">" + i + ":00</td>"
-						+"<td class=\"ui-widget-content schedule-cell dow time-" + iString + "00\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + i + ":00</td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-single time-" + iString + "00\"></td>"
 					+"</tr><tr>"
-						+"<td class=\"ui-widget-content schedule-cell time-cell\">" + i + ":30</td>"
-						+"<td class=\"ui-widget-content schedule-cell dow time-" + iString + "30\"></td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + i + ":30</td>"
+						+"<td class=\"ui-widget-content schedule-cell schedule-dow-single time-" + iString + "30\"></td>"
 					+"</tr>";
 				}
 
@@ -551,13 +574,13 @@ ice.ace.Schedule.prototype.renderDayView = function(data) {
 
 		markup += "<div class=\"schedule-sidebar ui-widget-content\">"
 
-			+"<div class=\"event-listing\">"
-				+"<div class=\"event-listing-title ui-state-default\">Events this Month</div>"
-				+"<div class=\"event-listing-body\">";
+			+"<div class=\"schedule-list\">"
+				+"<div class=\"schedule-list-title ui-state-default\">Events this Month</div>"
+				+"<div class=\"schedule-list-content\">";
 
 					for (i = 0; i < data.eventsThisMonth.length; i++) {
 						var event = data.eventsThisMonth[i];
-						markup += "<div class=\"event-item\">"
+						markup += "<div class=\"schedule-list-event\">"
 							+"<div class=\"event-item-name\">" + event.title + "</div>"
 							+"<div class=\"event-item-location\">" + event.location + "</div>"
 						+"</div>";
@@ -566,9 +589,9 @@ ice.ace.Schedule.prototype.renderDayView = function(data) {
 				markup += "</div>"
 			+"</div>"
 
-			+"<div class=\"event-details\">"
-				+"<div class=\"event-details-title ui-state-default\">Event Details</div>"
-				+"<div class=\"event-details-body\"></div>"
+			+"<div class=\"schedule-details\">"
+				+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
+				+"<div class=\"schedule-details-content\"></div>"
 			+"</div>"
 
 		+"</div>"
@@ -580,34 +603,41 @@ ice.ace.Schedule.prototype.renderDayView = function(data) {
 
 ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 	this.addListeners();
-	var eventsContainer = ice.ace.jq(this.jqId).find('.events-container');
+	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
 	var currentYear = this.cfg.currentYear;
 	var currentMonth = this.cfg.currentMonth;
 	var currentDay = this.cfg.currentDay;
 	var title = this.getMonthName(currentMonth) + ' ' + currentDay + ', ' + currentYear;
-	this.jq.find('.current-month').html(title);
+	this.jq.find('.schedule-showing').html(title);
 	var i;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
 		var date = new Date();
-		date.setFullYear(event.date.substring(0,4));
-		date.setMonth(parseInt(event.date.substring(5,7) - 1));
-		date.setDate(event.date.substring(8,10));
+		date.setFullYear(event.startDate.substring(0,4));
+		date.setMonth(parseInt(event.startDate.substring(5,7) - 1));
+		date.setDate(event.startDate.substring(8,10));
 		if (date.getFullYear() == currentYear && date.getMonth() == currentMonth && date.getDate() == currentDay) {
-			var hour = event.time.substring(0,2);
-			var minutes = parseInt(event.time.substring(3,5));
-			var selector = '.dow.time-'+hour+(minutes >= 30 ? '30' : '00');
+			var hour = event.startTime.substring(0,2);
+			var minutes = parseInt(event.startTime.substring(3,5));
+			var selector = '.schedule-dow-single.time-'+hour+(minutes >= 30 ? '30' : '00');
 			var timeCell = this.jq.find(selector);
 			var offset = timeCell.offset();
 			var width = timeCell.width();
+			var endHour = event.endTime.substring(0,2);
+			var endMinutes = parseInt(event.endTime.substring(3,5));
+			var endSelector = '.schedule-dow-single.time-'+this.determinePreviousTimeCell(endHour, endMinutes);
+			var endTimeCell = this.jq.find(endSelector);
+			var endOffset = endTimeCell.offset();
+			var height = endTimeCell.height();
 			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event event-' + event.index + '\"></div>');
-			eventElement.html(event.time + ' ' + event.title);
-			eventElement.css({position:'absolute', top:offset.top+1, left:offset.left+1, width: width + 'px'}).appendTo(eventsContainer);
+			eventElement.html(event.startTime + ' ' + event.title);
+			eventElement.css({position:'absolute', top:offset.top+2, left:offset.left+2, width: width + 'px',
+				height: (endOffset.top - offset.top + height) + 'px'}).appendTo(eventsContainer);
 		}
 	}
 	// set day of the week header
-	var dayHeader = this.jq.find('.header-day.dow');
+	var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-single');
 	var date = new Date();
 	date.setFullYear(currentYear);
 	date.setMonth(currentMonth);
@@ -617,31 +647,38 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 
 ice.ace.Schedule.prototype.renderLazyDayEvents = function(data) {
 	this.addListeners();
-	var eventsContainer = ice.ace.jq(this.jqId).find('.events-container');
+	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
 	var i,j;
 	var lazyYear = this.cfg.lazyYear;
 	var lazyMonth = this.cfg.lazyMonth;
 	var lazyDay = this.cfg.lazyDay;
 	var title = this.getMonthName(lazyMonth) + ' ' + lazyDay + ', ' + lazyYear;
-	this.jq.find('.current-month').html(title);
+	this.jq.find('.schedule-showing').html(title);
 	for (i = 0; i < data.days.length; i++) {
 		var day = data.days[i];
 		var date = day.date.toDate();
 		if (date.getFullYear() == lazyYear && date.getMonth() == lazyMonth && date.getDate() == lazyDay) {
-			var dayHeader = this.jq.find('.header-day.dow');
+			var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-single');
 			dayHeader.html(this.getDayOfTheWeekName(date.getDay()));
 			for (j = 0; j < day.events.length; j++) {
 				var event = day.events[j];
-				var hour = event.time.substring(0,2);
-				var minutes = parseInt(event.time.substring(3,5));
-				var selector = '.dow.time-'+hour+(minutes >= 30 ? '30' : '00');
+				var hour = event.startTime.substring(0,2);
+				var minutes = parseInt(event.startTime.substring(3,5));
+				var selector = '.schedule-dow-single.time-'+hour+(minutes >= 30 ? '30' : '00');
 				var timeCell = this.jq.find(selector);
 				var offset = timeCell.offset();
 				var width = timeCell.width();
+				var endHour = event.endTime.substring(0,2);
+				var endMinutes = parseInt(event.endTime.substring(3,5));
+				var endSelector = '.schedule-dow-single.time-'+this.determinePreviousTimeCell(endHour, endMinutes);
+				var endTimeCell = this.jq.find(endSelector);
+				var endOffset = endTimeCell.offset();
+				var height = endTimeCell.height();
 				var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event event-' + event.index + '\"></div');
-				eventElement.html(event.time + ' ' + event.title);
-				eventElement.css({position:'absolute', top:offset.top+1, left:offset.left+1, width: width + 'px'}).appendTo(eventsContainer);
+				eventElement.html(event.startTime + ' ' + event.title);
+				eventElement.css({position:'absolute', top:offset.top+2, left:offset.left+2, width: width + 'px',
+					height: (endOffset.top - offset.top + height) + 'px'}).appendTo(eventsContainer);
 			}
 		}
 	}
@@ -650,8 +687,8 @@ ice.ace.Schedule.prototype.renderLazyDayEvents = function(data) {
 ice.ace.Schedule.prototype.addListeners = function() {
 	var self = this;
 	if (this.cfg.isLazy) {
-		var previousButton = this.jq.find('.clndr-previous-button'); // maybe we don't use these classes to avoid those listeners
-		var nextButton = this.jq.find('.clndr-next-button');
+		var previousButton = this.jq.find('.schedule-button-previous');
+		var nextButton = this.jq.find('.schedule-button-next');
 		var view = this.cfg.viewMode;
 		var lazyYear = this.cfg.lazyYear;
 		var lazyMonth = this.cfg.lazyMonth;
@@ -856,8 +893,8 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth, lazyDay);
 		});
 	} else {
-		var previousButton = this.jq.find('.clndr-previous-button'); // maybe we don't use these classes to avoid those listeners
-		var nextButton = this.jq.find('.clndr-next-button');
+		var previousButton = this.jq.find('.schedule-button-previous');
+		var nextButton = this.jq.find('.schedule-button-next');
 		var view = this.cfg.viewMode;
 		var currentYear = this.cfg.currentYear;
 		var currentMonth = this.cfg.currentMonth;
@@ -971,7 +1008,11 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			self.cfg.currentYear = currentYear;
 			self.cfg.currentMonth = currentMonth;
 			self.cfg.currentDay = currentDay;
-			self.clndr.render();
+			if (view == 'week' || view == 'day') {
+				self.clndr.render();
+			} else {
+				self.clndr.backAction({data:{context:self.clndr}});
+			}
 		});
 		nextButton.on('click', function(e) {
 			e.stopPropagation();
@@ -1065,10 +1106,32 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			self.cfg.currentYear = currentYear;
 			self.cfg.currentMonth = currentMonth;
 			self.cfg.currentDay = currentDay;
-			self.clndr.render();
+			if (view == 'week' || view == 'day') {
+				self.clndr.render();
+			} else {
+				self.clndr.forwardAction({data:{context:self.clndr}});
+			}
 		});
 	}
 };
+
+ice.ace.Schedule.prototype.determinePreviousTimeCell = function(hour, minutes) {
+	var previousHour, previousMinutes;
+	if (parseInt(minutes) >= 30) {
+		previousMinutes = '00';
+		previousHour = hour;
+	} else {
+		if (hour == '00') {
+			previousMinutes = '00';
+			previousHour = '00';
+		} else {
+			previousMinutes = '30';
+			previousHour = parseInt(hour) - 1;
+			previousHour = previousHour < 10 ? '0' + previousHour : previousHour;
+		}
+	}
+	return previousHour + previousMinutes;
+}
 
 ice.ace.Schedule.prototype.getMonthName = function(monthNumber) {
 	var months = ['January', 'February', 'March', 'April', 'May', 'June',
