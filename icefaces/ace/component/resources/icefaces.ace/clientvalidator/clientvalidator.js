@@ -141,6 +141,8 @@
                 delete rules[p];
             }
         }
+
+        return disabledRules;
     }
 
     function enableRules(validationResult, disabledRules) {
