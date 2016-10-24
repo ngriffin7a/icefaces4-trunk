@@ -33,14 +33,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
-import java.io.IOException;
 import java.lang.String;
 import java.util.*;
 import org.icefaces.ace.util.*;
 import javax.faces.component.UIParameter;
 import javax.faces.convert.ConverterException;
 import org.icefaces.util.EnvUtils;
-import org.icefaces.ace.renderkit.InputRenderer;
+
 import javax.faces.model.SelectItem;
 import javax.faces.convert.Converter;
 import javax.el.ExpressionFactory;
@@ -208,7 +207,7 @@ public class CheckboxButtonsRenderer extends CheckboxButtonRenderer {
         writer.writeAttribute(HTML.CLASS_ATTR, "ice-checkboxbutton", null);
         boolean disabled = item.isDisabled();
         String script = getScript(facesContext, writer, checkboxButtons, clientId, disabled);
-        encodeScript(facesContext, writer, script, clientId, EventType.HOVER);
+        encodeScript(writer, EventType.HOVER);
 
 		if (label != null) {
 			if ("left".equalsIgnoreCase(labelPosition)
@@ -251,7 +250,7 @@ public class CheckboxButtonsRenderer extends CheckboxButtonRenderer {
 		if (ariaEnabled) writer.writeAttribute(HTML.TABINDEX_ATTR, "0", null);
 
         encodeButtonStyleClass(writer,false, disabled);
-        encodeScript(facesContext, writer, script, clientId, EventType.FOCUS);
+        encodeScript(writer, EventType.FOCUS);
 
 
         if (label != null && "inField".equalsIgnoreCase(checkboxButtons.getLabelPosition())) {

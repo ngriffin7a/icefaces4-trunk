@@ -32,12 +32,12 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 
 import org.icefaces.ace.api.ButtonGroupMember;
-import org.icefaces.ace.component.buttongroup.ButtonGroup;
 import org.icefaces.ace.util.*;
 
 import org.icefaces.util.EnvUtils;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.ace.renderkit.InputRenderer;
+import org.icefaces.util.JavaScriptRunner;
 
 @MandatoryResourceComponent(tagName="checkboxButton", value="org.icefaces.ace.component.checkboxbutton.CheckboxButton")
 public class CheckboxButtonRenderer extends InputRenderer {
@@ -80,7 +80,8 @@ public class CheckboxButtonRenderer extends InputRenderer {
 		renderResetSettings(facesContext, uiComponent);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         String script = getScript(facesContext, writer, checkbox, clientId);
-        encodeScript(facesContext, writer, script, clientId, EventType.HOVER);
+        writer.writeAttribute("data-init", "if (!document.getElementById('" + clientId + "').widget) " + script, null);
+        encodeScript(writer, EventType.HOVER);
         encodeRootStyle(writer, checkbox);
 
 		writeLabelAndIndicatorBefore(labelAttributes);
@@ -115,7 +116,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
         encodeButtonTabIndex(writer, checkbox, ariaEnabled);
         encodeButtonStyleClass(writer, isChecked(String.valueOf(checkbox.getValue())), checkbox.isDisabled());
         encodeButtonStyle(writer, checkbox);
-        encodeScript(facesContext, writer, script, clientId, EventType.FOCUS);
+        encodeScript(writer, EventType.FOCUS);
 
         renderPassThruAttributes(facesContext, checkbox, HTML.BUTTON_ATTRS, new String[]{"style"});
 
@@ -168,15 +169,11 @@ public class CheckboxButtonRenderer extends InputRenderer {
         writer.writeAttribute("data-ice-clear-ignore", "true", null);
         writer.endElement("input");
 
-		// register checkbox with group
-        writer.startElement("script", null);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.writeText("ice.ace.checkboxbutton.register('"+clientId+"','"+getGroupId(facesContext, checkbox)+"');", null);
-		writer.endElement("script");
+        JavaScriptRunner.runScript(facesContext, "ice.ace.checkboxbutton.register('"+clientId+"','"+getGroupId(facesContext, checkbox)+"');");
 
         writer.endElement(HTML.DIV_ELEM);
-		
-		Utils.registerLazyComponent(facesContext, clientId, getScript(facesContext, writer, checkbox, clientId));
+
+        JavaScriptRunner.runScript(facesContext, "ice.ace.registerLazyComponent('" + clientId + "');");
     }
 
     private String getScript(FacesContext facesContext, ResponseWriter writer,
@@ -244,8 +241,8 @@ public class CheckboxButtonRenderer extends InputRenderer {
 	}
 
 	
-    protected void encodeScript(FacesContext facesContext, ResponseWriter writer,
-                              String script, String clientId, EventType type) throws IOException {
+    protected void encodeScript(ResponseWriter writer,
+                                EventType type) throws IOException {
 
         String eventType = "";
         if (EventType.HOVER.equals(type))
@@ -253,7 +250,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
         else if (EventType.FOCUS.equals(type))
             eventType = HTML.ONFOCUS_ATTR;
 
-        writer.writeAttribute(eventType, "if (!document.getElementById('" + clientId + "').widget) "+script, null);
+        writer.writeAttribute(eventType, "ice.ace.evalInit(this);", null);
     }
 
     /**
