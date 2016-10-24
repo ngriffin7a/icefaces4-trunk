@@ -75,6 +75,31 @@ ice.ace.lazy = function(name, args) {
         return elem.widget;
 };
 
+//evaluate component's init function stored in the 'data-init' attribute
+ice.ace.evalInit = function(element) {
+    var cursor = element;
+    while (cursor) {
+        if (cursor.dataset.init) {
+            ice.globalEval(cursor.dataset.init);
+            break;
+        }
+        cursor = cursor.parentNode;
+    }
+};
+
+//function used to register callback that returns the already created or just-now created widget
+ice.ace.registerLazyComponent = function(id) {
+    ice.ace.lazy.registry[id] = function() {
+        var element = document.getElementById(id);
+        var w = element.widget;
+        if (w) {
+            return w;
+        } else {
+            return ice.ace.evalInit(element);
+        }
+    };
+};
+
 ice.ace.lazy.registry = {}; // store uninitialized lazy components
 
 ice.ace.create = function(name, args) {
