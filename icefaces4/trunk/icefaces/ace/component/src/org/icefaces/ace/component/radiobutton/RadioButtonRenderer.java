@@ -18,6 +18,7 @@ package org.icefaces.ace.component.radiobutton;
 
 
 import org.icefaces.ace.component.buttongroup.ButtonGroup;
+import org.icefaces.ace.component.checkboxbutton.CheckboxButtonRenderer;
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
@@ -38,6 +39,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.icefaces.ace.api.ButtonGroupMember;
+import org.icefaces.util.JavaScriptRunner;
 
 @MandatoryResourceComponent(tagName="radioButton", value="org.icefaces.ace.component.radiobutton.RadioButton")
 public class RadioButtonRenderer extends InputRenderer {
@@ -77,12 +79,15 @@ public class RadioButtonRenderer extends InputRenderer {
         // Root Container
         writer.startElement(HTML.DIV_ELEM, uiComponent);
         writer.writeAttribute(HTML.ID_ATTR, clientId, null);
-		renderResetSettings(facesContext, clientId);
+        encodeScript(writer, EventType.HOVER);
+        renderResetSettings(facesContext, clientId);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         boolean disabled = radioButton.isDisabled();
         encodeRootStyle(writer, radioButton);
-		
-		writeLabelAndIndicatorBefore(labelAttributes);
+        String script = getScript(facesContext, radioButton, clientId);
+        writer.writeAttribute("data-init", "if (!document.getElementById('" + clientId + "').widget) " + script, null);
+
+        writeLabelAndIndicatorBefore(labelAttributes);
         encodeButtonWrappers(writer, firstWrapperClass);
 
         if (ariaEnabled) {
@@ -110,6 +115,8 @@ public class RadioButtonRenderer extends InputRenderer {
             writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
         }
 
+        encodeScript(writer, EventType.FOCUS);
+
         renderPassThruAttributes(facesContext, radioButton, HTML.BUTTON_ATTRS, new String[]{"style"});
  
 		writer.startElement(HTML.SPAN_ELEM, null);
@@ -129,11 +136,20 @@ public class RadioButtonRenderer extends InputRenderer {
         writer.writeAttribute("data-ice-clear-ignore", "true", null);
         writer.endElement("input");
 
- 		encodeScript(facesContext, writer, radioButton, clientId);
-
         writer.endElement(HTML.DIV_ELEM);
 
     }
+
+    protected void encodeScript(ResponseWriter writer, RadioButtonRenderer.EventType type) throws IOException {
+        String eventType = "";
+        if (RadioButtonRenderer.EventType.HOVER.equals(type))
+            eventType = HTML.ONMOUSEOVER_ATTR;
+        else if (RadioButtonRenderer.EventType.FOCUS.equals(type))
+            eventType = HTML.ONFOCUS_ATTR;
+
+        writer.writeAttribute(eventType, "ice.ace.evalInit(this);", null);
+    }
+
 
     protected void encodeButtonWrappers(ResponseWriter writer, String firstWrapperClass) throws IOException {
         // First Wrapper
@@ -167,8 +183,7 @@ public class RadioButtonRenderer extends InputRenderer {
     }
 
 
-    private void encodeScript(FacesContext facesContext, ResponseWriter writer,
-                              RadioButton radioButton, String clientId) throws IOException {
+    private String getScript(FacesContext facesContext, RadioButton radioButton, String clientId) throws IOException {
         String groupId = radioButton.getGroup();
         List<String> groupLookInCtx = ComponentUtils.findInFacesContext(radioButton, facesContext);
         if (!groupLookInCtx.isEmpty()){  //at least one buttonGroup is in the view
@@ -200,7 +215,7 @@ public class RadioButtonRenderer extends InputRenderer {
         JSONBuilder jb = JSONBuilder.create();
         List<UIParameter> uiParamChildren = Utils.captureParameters(radioButton);
 
-        jb.beginFunction("ice.ace.create")
+        jb.beginFunction("ice.ace.lazy")
           .item("radiobutton")
           .beginArray()
           .item(clientId)
@@ -222,10 +237,7 @@ public class RadioButtonRenderer extends InputRenderer {
 
         jb.endMap().endArray().endFunction();
 
-        writer.startElement("script", null);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.writeText("ice.ace.jq(function(){" + jb.toString() + "});", null);
-		writer.endElement("script");
+        return jb.toString();
     }
 
 
