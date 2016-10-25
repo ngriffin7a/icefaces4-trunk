@@ -76,12 +76,16 @@ ice.ace.checkboxbutton.register = function(clientId, groupId) {
         groupId = groupId;
     if (groupId) {
         groups[groupId] = groups[groupId] || {};
-        groups[groupId][clientId] = clientId;
+		if (!groups[groupId][clientId]) {
+			groups[groupId][clientId] = clientId;
+			console.info('### register ' + clientId);
 
-		//cleanup id from the registered checkboxes
-		ice.onElementUpdate(clientId, function() {
-			delete groups[groupId][clientId];
-		});
+			//cleanup id from the registered checkboxes
+			ice.onElementUpdate(clientId, function () {
+				console.info('### cleanup ' + clientId);
+				delete groups[groupId][clientId];
+			});
+		}
     }
 };
 
