@@ -89,15 +89,17 @@ ice.ace.evalInit = function(element) {
 
 //function used to register callback that returns the already created or just-now created widget
 ice.ace.registerLazyComponent = function(id) {
-    ice.ace.lazy.registry[id] = function() {
-        var element = document.getElementById(id);
-        var w = element.widget;
-        if (w) {
-            return w;
-        } else {
-            return ice.ace.evalInit(element);
-        }
-    };
+    if (!ice.ace.lazy.registry[id]) {
+        ice.ace.lazy.registry[id] = function () {
+            var element = document.getElementById(id);
+            var w = element.widget;
+            if (w) {
+                return w;
+            } else {
+                return ice.ace.evalInit(element);
+            }
+        };
+    }
 };
 
 ice.ace.lazy.registry = {}; // store uninitialized lazy components
