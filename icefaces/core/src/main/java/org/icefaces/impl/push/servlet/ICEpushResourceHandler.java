@@ -273,6 +273,10 @@ implements EventListener, PhaseListener, Serializable {
         }
 
         protected MainServlet getMainServlet() {
+            return getMainServlet(true);
+        }
+
+        protected MainServlet getMainServlet(final boolean create) {
             getMainServletLock().lock();
             try {
                 if (mainServlet == null) {
@@ -280,8 +284,8 @@ implements EventListener, PhaseListener, Serializable {
                         mainServlet =
                             (MainServlet)
                                 ((Class)ExtensionRegistry.getBestExtension(servletContext, "org.icepush.MainServlet")).
-                                    getMethod("getInstance", new Class[]{ServletContext.class}).
-                                        invoke(null, servletContext);
+                                    getMethod("getInstance", new Class[] { ServletContext.class, boolean.class }).
+                                        invoke(null, servletContext, create);
                     } catch (final Exception exception) {
                         LOGGER.log(Level.SEVERE, "Cannot instantiate extension org.icepush.MainServlet.", exception);
                         throw new RuntimeException(exception);
@@ -316,7 +320,7 @@ implements EventListener, PhaseListener, Serializable {
 
         @Override
         protected void shutdownMainServlet() {
-            getMainServlet().shutdown();
+            getMainServlet(false).shutdown();
         }
     }
 
