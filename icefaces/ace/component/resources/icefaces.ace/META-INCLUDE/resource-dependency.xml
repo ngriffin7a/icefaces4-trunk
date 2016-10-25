@@ -358,11 +358,6 @@
             <resource name="bridge.js" library="ice.core"/>
         </requires>
     </resource>
-    <resource name="notificationMessage/notificationMessage.js" library="icefaces.ace">
-        <requires>
-            <resource name="bridge.js" library="ice.core"/>
-        </requires>
-    </resource>
 	<resource name="schedule/schedule.js" library="icefaces.ace">
 		<requires>
 			<resource name="util/ace-core.js" library="icefaces.ace"/>

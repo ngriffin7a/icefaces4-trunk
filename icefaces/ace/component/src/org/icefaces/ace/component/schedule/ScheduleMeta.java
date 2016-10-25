@@ -74,6 +74,13 @@ public class ScheduleMeta extends UIDataMeta {
 	@Property(tlddoc = "Specifies the range of days that should be displayed at a time in the calendar. Possible values are 'month', 'week', 'day'.", defaultValue="month")
 	private String viewMode;
 
+    @Property(tlddoc = "Defines a fixed height for the scrollable time grid in pixels.",
+            defaultValue = "600")
+    private Integer scrollHeight;
+
+    @Property(tlddoc = "Enabling renders the time grid of the week and day views in a container that overflows the fixed height and adds a scrollbar.")
+    private boolean scrollable;;
+
 	@Property(tlddoc = "The inline style of the component, rendered on the root div of the component.")
 	private String style;
 
