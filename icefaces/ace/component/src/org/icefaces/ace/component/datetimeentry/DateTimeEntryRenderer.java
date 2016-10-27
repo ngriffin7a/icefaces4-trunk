@@ -216,6 +216,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
 		} else {
 			writer.write("input.removeClass('ui-state-error').removeAttr('aria-invalid');");
 		}
+		writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setDate('"+value+"');");
 		writer.write("})(); // " + value); // make sure to re-apply state classes if value changes
 		writer.endElement("script");
 		writer.endElement("span");
