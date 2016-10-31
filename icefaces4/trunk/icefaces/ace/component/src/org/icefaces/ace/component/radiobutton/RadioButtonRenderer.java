@@ -17,8 +17,7 @@
 package org.icefaces.ace.component.radiobutton;
 
 
-import org.icefaces.ace.component.buttongroup.ButtonGroup;
-import org.icefaces.ace.component.checkboxbutton.CheckboxButtonRenderer;
+
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
@@ -34,7 +33,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 import java.io.IOException;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -137,8 +135,41 @@ public class RadioButtonRenderer extends InputRenderer {
         writer.endElement("input");
 
         writer.endElement(HTML.DIV_ELEM);
-
+        JavaScriptRunner.runScript(facesContext, "ice.ace.radiobutton.register('"+clientId+"','"+getGroupId(facesContext, radioButton)+"');");
+        JavaScriptRunner.runScript(facesContext, "ice.ace.registerLazyComponent('" + clientId + "');");
     }
+
+    private String getGroupId(FacesContext facesContext, RadioButton radioButton) {
+        String groupId = radioButton.getGroup();
+        List<String> groupLookInCtx = ComponentUtils.findInFacesContext(radioButton, facesContext);
+        if (!groupLookInCtx.isEmpty()){  //at least one buttonGroup is in the view
+            if (groupId !=null){
+                groupId = groupId.trim();
+                if (groupLookInCtx.contains(groupId)) {
+                    for(String sid: groupLookInCtx){
+                        if (sid.toLowerCase().contains(groupId.toLowerCase())){
+                            groupId=sid;
+                        }
+                    }
+                }  else {
+                    //does it end in the groupId --so incomplete?
+                    groupId= ComponentUtils.findInHeirarchy((ButtonGroupMember)radioButton, facesContext);
+                }
+            } else { //have at least one buttonGroup, but groupId is not set
+                groupId= ComponentUtils.findInHeirarchy((ButtonGroupMember)radioButton, facesContext);
+                if (groupId.length()< 1){
+                    if (logger.isLoggable(Level.FINE)) {
+                        logger.fine("groupId of:-"+groupId+" not found in view.");
+                    }
+                }
+            }
+        }else {  //no buttonGroups in the view buttons are just non-managed buttons
+            groupId="";
+        }
+
+        return groupId;
+    }
+
 
     protected void encodeScript(ResponseWriter writer, RadioButtonRenderer.EventType type) throws IOException {
         String eventType = "";

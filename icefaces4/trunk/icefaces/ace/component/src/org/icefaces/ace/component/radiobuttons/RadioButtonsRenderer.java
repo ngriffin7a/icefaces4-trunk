@@ -41,6 +41,8 @@ import javax.faces.component.UIParameter;
 import javax.faces.convert.ConverterException;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.ace.renderkit.InputRenderer;
+import org.icefaces.util.JavaScriptRunner;
+
 import javax.faces.model.SelectItem;
 import javax.faces.convert.Converter;
 import javax.el.ExpressionFactory;
@@ -186,7 +188,9 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
 		renderResetSettings(facesContext, clientId);
 
         writer.writeAttribute(HTML.CLASS_ATTR, "ice-ace-radiobutton", null);
-        encodeScript(facesContext, writer, radioButtons, clientId, EventType.HOVER, item.isDisabled());
+		String script = getScript(facesContext, writer, radioButtons, clientId, item.isDisabled());
+		writer.writeAttribute("data-init", "if (!document.getElementById('" + clientId + "').widget) " + script, null);
+        encodeScript(writer, EventType.HOVER);
 
 		if (label != null) {
 			if ("left".equalsIgnoreCase(labelPosition)
@@ -217,7 +221,7 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
 
 		if (ariaEnabled) writer.writeAttribute(HTML.TABINDEX_ATTR, "0", null);
         encodeButtonStyle(writer, item.isDisabled());
-        encodeScript(facesContext, writer, radioButtons, clientId, EventType.FOCUS, item.isDisabled());
+		encodeScript(writer, EventType.FOCUS);
 
         if (label != null && "inField".equalsIgnoreCase(radioButtons.getLabelPosition())) {
             writer.startElement(HTML.SPAN_ELEM, null);
@@ -259,29 +263,10 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
         writer.writeAttribute("data-ice-clear-ignore", "true", null);
         writer.endElement("input");
 
-		// register radio button with group
-        writer.startElement("script", null);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.writeText("ice.ace.radiobutton.register('"+clientId+"','"+radioButtons.getClientId(facesContext)+"');", null);
-		writer.endElement("script");
-
         writer.endElement(HTML.DIV_ELEM);
-		Utils.registerLazyComponent(facesContext, clientId, getScript(facesContext, writer, radioButtons, clientId, item.isDisabled()));
+		JavaScriptRunner.runScript(facesContext, "ice.ace.radiobutton.register('"+clientId+"','"+radioButtons.getClientId(facesContext)+"');");
+		JavaScriptRunner.runScript(facesContext, "ice.ace.registerLazyComponent('" + clientId + "');");
 	}
-
-
-
-	private void encodeScript(FacesContext facesContext, ResponseWriter writer,
-                              RadioButtons radioButtons, String clientId, EventType type, boolean disabled) throws IOException {
-
-        String eventType = "";
-        if (EventType.HOVER.equals(type))
-            eventType = HTML.ONMOUSEOVER_ATTR;
-        else if (EventType.FOCUS.equals(type))
-            eventType = HTML.ONFOCUS_ATTR;
-
-        writer.writeAttribute(eventType, "if (!document.getElementById('" + clientId + "').widget) "+ getScript(facesContext, writer, radioButtons, clientId, disabled), null);
-    }
 
     private String getScript(FacesContext facesContext, ResponseWriter writer,
                               RadioButtons radioButtons, String clientId, boolean disabled) throws IOException {
