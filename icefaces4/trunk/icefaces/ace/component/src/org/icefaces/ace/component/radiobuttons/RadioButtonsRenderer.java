@@ -78,6 +78,10 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
 		decodeBehaviors(context, radioButtons);
     }
 
+	public Object getConvertedValue(FacesContext facesContext, UIComponent uiComponent, Object submittedValue) throws ConverterException {
+		return submittedValue == null ? "" : submittedValue.toString();
+	}
+
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
