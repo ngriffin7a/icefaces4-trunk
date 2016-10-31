@@ -57,7 +57,7 @@ ice.ace.radiobutton = function(clientId, options) {
     var unload = function() {
         // Unload events
         ice.ace.jq(self.jqId).off("click mouseenter mouseleave keypress");
-    }
+    };
 
     ice.onElementUpdate(this.id, unload);
 };
@@ -126,7 +126,7 @@ ice.ace.radiobutton.prototype.onAriaKeypress = function (e) {
             innerSpan.attr("aria-checked", false);
         }
     }
-}
+};
 
 ice.ace.radiobutton.prototype.toggleCheckbox = function (activeButton) {
     var newValue = !this.isChecked();
@@ -196,6 +196,22 @@ ice.ace.radiobutton.toggleOthers = function (options, clientId) {
             }
         }
     }
+};
+
+ice.ace.radiobutton.register = function(clientId, groupId) {
+	var groups = ice.ace.radiobutton.groups,
+		groupId = groupId;
+	if (groupId) {
+		groups[groupId] = groups[groupId] || {};
+		if (!groups[groupId][clientId]) {
+			groups[groupId][clientId] = clientId;
+
+			//cleanup id from the registered checkboxes
+			ice.onElementUpdate(clientId, function () {
+				delete groups[groupId][clientId];
+			});
+		}
+	}
 };
 
 ice.ace.radiobutton.clear = function(id, ariaEnabled, multiple) {
