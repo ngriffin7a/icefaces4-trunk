@@ -39,6 +39,7 @@ import org.icefaces.ace.util.*;
 import javax.faces.component.UIParameter;
 import javax.faces.convert.ConverterException;
 import org.icefaces.util.EnvUtils;
+import org.icefaces.util.JavaScriptRunner;
 
 import javax.faces.model.SelectItem;
 import javax.faces.convert.Converter;
@@ -207,6 +208,7 @@ public class CheckboxButtonsRenderer extends CheckboxButtonRenderer {
         writer.writeAttribute(HTML.CLASS_ATTR, "ice-checkboxbutton", null);
         boolean disabled = item.isDisabled();
         String script = getScript(facesContext, writer, checkboxButtons, clientId, disabled);
+		writer.writeAttribute("data-init", "if (!document.getElementById('" + clientId + "').widget) " + script, null);
         encodeScript(writer, EventType.HOVER);
 
 		if (label != null) {
@@ -283,15 +285,11 @@ public class CheckboxButtonsRenderer extends CheckboxButtonRenderer {
 			}
 		}
 
-		// register checkbox with group
-        writer.startElement("script", null);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.writeText("ice.ace.checkboxbutton.register('"+clientId+"','"+checkboxButtons.getClientId(facesContext)+"');", null);
-		writer.endElement("script");
+		JavaScriptRunner.runScript(facesContext, "ice.ace.checkboxbutton.register('"+clientId+"','"+checkboxButtons.getClientId(facesContext)+"');");
 
-        writer.endElement(HTML.DIV_ELEM);
-		
-		Utils.registerLazyComponent(facesContext, clientId, getScript(facesContext, writer, checkboxButtons, clientId, item.isDisabled()));
+		writer.endElement(HTML.DIV_ELEM);
+
+		JavaScriptRunner.runScript(facesContext, "ice.ace.registerLazyComponent('" + clientId + "');");
 	}
 
 
