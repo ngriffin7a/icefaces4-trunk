@@ -16,14 +16,14 @@
 
 package org.icefaces.ace.component.schedule;
 
-import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.ace.model.schedule.ScheduleEvent;
+import org.icefaces.ace.renderkit.CoreRenderer;
+import org.icefaces.ace.util.JSONBuilder;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.model.DataModel;
-import javax.faces.render.Renderer;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -33,7 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class ScheduleRenderer extends Renderer {
+public class ScheduleRenderer extends CoreRenderer {
 
 	@Override
 	public void decode(FacesContext context, UIComponent component) {
@@ -46,6 +46,8 @@ public class ScheduleRenderer extends Renderer {
 		if (params.containsKey(clientId + "_add")) decodeAdd(context, schedule, params);
 		else if (params.containsKey(clientId + "_edit")) decodeEdit(context, schedule, params);
 		else if (params.containsKey(clientId + "_delete")) decodeDelete(context, schedule, params);
+
+		decodeBehaviors(context, schedule);
 	}
 
 	public void decodeAdd(FacesContext context, Schedule schedule, Map<String, String> params) {
@@ -143,6 +145,7 @@ public class ScheduleRenderer extends Renderer {
 		} else {
 			displayEventDetails = "sidebar";
 		}
+		String scrollableClass = schedule.isScrollable() ? "schedule-config-scrollable" : "";
 
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId, null);
@@ -170,6 +173,8 @@ public class ScheduleRenderer extends Renderer {
 					.entry("isEventEditing", "disabled".equalsIgnoreCase(schedule.getEditingControls()) ? false : true)
 					.entry("isEventDeletion", "disabled".equalsIgnoreCase(schedule.getDeletionControls()) ? false : true);
 
+					if (schedule.isScrollable()) jb.entry("scrollHeight", schedule.getScrollHeight());
+
 					if (isLazy) {
 						int[] lazyDateValues = schedule.getLazyDateValues();
 						jb.entry("isLazy", true)
@@ -182,6 +187,8 @@ public class ScheduleRenderer extends Renderer {
 						.entry("currentMonth", currentDateValues[1])
 						.entry("currentDay", currentDateValues[2]);
 					}
+
+					encodeClientBehaviors(context, schedule, jb);
 
 					jb.beginArray("events");
 
@@ -198,6 +205,8 @@ public class ScheduleRenderer extends Renderer {
 						jb.entry("title", scheduleEvent.getTitle());
 						jb.entry("location", scheduleEvent.getLocation());
 						jb.entry("notes", scheduleEvent.getNotes());
+						String styleClass = scheduleEvent.getStyleClass();
+						if (styleClass != null) jb.entry("styleClass", scheduleEvent.getStyleClass());
 						jb.endMap();
 					}
 
@@ -208,7 +217,7 @@ public class ScheduleRenderer extends Renderer {
 
 		writer.startElement("div", null);
 		writer.writeAttribute("class", "schedule-main ui-widget" + " schedule-view-" + viewMode + " " 
-			+ sideBarClass + " " + displayEventDetailsClass, null);
+			+ sideBarClass + " " + displayEventDetailsClass + " " + scrollableClass, null);
 		writer.endElement("div");
 
 		writer.startElement("script", null);
