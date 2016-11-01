@@ -37,11 +37,18 @@ ice.ace.Schedule = function(id, cfg) {
 	configuration.dateParameter = 'startDate';
 	this.clndr = this.jq.clndr(configuration);
 
+	if (self.cfg.behaviors.eventClick) {
+		this.jqRoot.delegate('.schedule-event', 'click', function(event) {
+			event.stopPropagation();
+			var node = event['target'];
+			var eventIndex = self.extractEventIndex(node);
+			self.sendClickRequest(event, 'event', eventIndex);
+		});
+	}
 	if (cfg.displayEventDetails != 'disabled') {
 		if (cfg.displayEventDetails == 'tooltip') {
 			this.jqRoot.delegate('.schedule-event', 'mouseover', function(event) {
 				var node = event['target'];
-				var parent = node.parentNode;
 				var eventIndex = self.extractEventIndex(node);
 				var eventData = self.events[eventIndex];
 				var markup = self.getEventDetailsMarkup(eventData);
@@ -54,7 +61,6 @@ ice.ace.Schedule = function(id, cfg) {
 			this.jqRoot.delegate('.schedule-event', 'click', function(event) {
 				event.stopImmediatePropagation();
 				var node = event['target'];
-				var parent = node.parentNode;
 				var eventIndex = self.extractEventIndex(node);
 				var eventData = self.events[eventIndex];
 				var markup = self.getEventDetailsMarkup(eventData, false,
@@ -65,6 +71,23 @@ ice.ace.Schedule = function(id, cfg) {
 					self.displayEventDetailsSidebar(markup);
 			});
 		}
+	}
+	if (self.cfg.behaviors.dayClick) {
+		this.jqRoot.delegate('.day', 'click', function(event) {
+			var node = event['target'];
+			node = node.className.indexOf('day-number') > -1 ? node.parentNode : node;
+			var date = self.extractEventDate(node);
+			self.sendClickRequest(event, 'day', date);
+		});
+	}
+	if (self.cfg.behaviors.timeClick) {
+		this.jqRoot.delegate('.schedule-cell', 'click', function(event) {
+			var node = event['target'];
+			node = node.className.indexOf('day-number') > -1 ? node.parentNode : node;
+			var date = self.extractEventDate(node);
+			var time = self.extractEventTime(node);
+			self.sendClickRequest(event, 'time', date + ' ' + time);
+		});
 	}
 	if (self.cfg.isEventAddition) {
 		this.jqRoot.delegate('.day, .schedule-cell', 'click', function(event) {
@@ -81,6 +104,7 @@ ice.ace.Schedule = function(id, cfg) {
 };
 
 ice.ace.Schedule.prototype.extractEventIndex = function(node) {
+	if (node.tagName == 'SPAN') node = node.parentNode; // event text in month view
 	var result = 0;
 	var classes = node.className.split(' ');
 	var i;
@@ -110,6 +134,7 @@ ice.ace.Schedule.prototype.extractEventDate = function(node) {
 };
 
 ice.ace.Schedule.prototype.extractEventTime = function(node) {
+	if (node.className == 'ui-state-highlight') node = node.parentNode; // today's day
 	var result = '';
 	var classes = node.className.split(' ');
 	var i;
@@ -174,28 +199,50 @@ ice.ace.Schedule.prototype.hideEventDetailsTooltip = function() {
 	ice.ace.jq(this.jqId).find('.schedule-details-tooltip').hide();
 };
 
-ice.ace.Schedule.prototype.sendLazyNavigationRequest = function(event, lazyYear, lazyMonth, lazyDay) {
-    var options = {
-		source: this.id,
-		render: this.id,
-		execute: this.id
-    };
+ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, day, type) {
+    var options = {};
+	var behaviors = this.cfg.behaviors;
+
+	if (!behaviors.next && !behaviors.previous) {
+		if (!this.cfg.isLazy) return;
+		options = {
+			source: this.id,
+			render: this.id,
+			execute: this.id
+		};
+	}
 
     var params = {};
-    params[this.id + "_lazyYear"] = lazyYear;
-    params[this.id + "_lazyMonth"] = lazyMonth;
-    params[this.id + "_lazyDay"] = lazyDay;
+	if (this.cfg.isLazy) {
+		params[this.id + "_lazyYear"] = year;
+		params[this.id + "_lazyMonth"] = month;
+		params[this.id + "_lazyDay"] = day;
+	} else {
+		params[this.id + "_currentYear"] = year;
+		params[this.id + "_currentMonth"] = month;
+		params[this.id + "_currentDay"] = day;
+	}
     options.params = params;
 
-	ice.ace.AjaxRequest(options);
+	if (type == 'next' && behaviors.next) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.next, options));
+	} else if (type == 'previous' && behaviors.previous) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.previous, options));
+	} else {
+		ice.ace.AjaxRequest(options);
+	}
 };
 
 ice.ace.Schedule.prototype.sendEditRequest = function(event, type) {
-    var options = {
-		source: this.id,
-		render: this.id,
-		execute: this.id
-    };
+    var options = {};
+	var behaviors = this.cfg.behaviors;
+
+	if (!behaviors.addEvent && !behaviors.editEvent && !behaviors.deleteEvent)
+		options = {
+			source: this.id,
+			render: this.id,
+			execute: this.id
+		};
 
     var params = {};
 	if (type == 'add') params[this.id + "_add"] = true;
@@ -203,7 +250,38 @@ ice.ace.Schedule.prototype.sendEditRequest = function(event, type) {
     else if (type == 'delete') params[this.id + "_delete"] = true;
     options.params = params;
 
-	ice.ace.AjaxRequest(options);
+	if (type == 'add' && behaviors.addEvent) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.addEvent, options));
+	} else if (type == 'edit' && behaviors.editEvent) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.editEvent, options));
+	} else if (type == 'delete' && behaviors.deleteEvent) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.deleteEvent, options));
+	} else {
+		ice.ace.AjaxRequest(options);
+	}
+};
+
+ice.ace.Schedule.prototype.sendClickRequest = function(event, type, data) {
+    var options = {};
+	var behaviors = this.cfg.behaviors;
+
+	if (!behaviors.eventClick && !behaviors.dayClick && !behaviors.timeClick)
+		return;
+
+    var params = {};
+	if (type == 'event') params[this.id + "_eventClick"] = data;
+    else if (type == 'day') params[this.id + "_dayClick"] = data;
+    else if (type == 'time') params[this.id + "_timeClick"] = data;
+	else return;
+    options.params = params;
+
+	if (type == 'event' && behaviors.eventClick) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.eventClick, options));
+	} else if (type == 'day' && behaviors.dayClick) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.dayClick, options));
+	} else if (type == 'time' && behaviors.timeClick) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.timeClick, options));
+	}
 };
 
 ice.ace.Schedule.prototype.renderMonthView = function(data) {
@@ -211,8 +289,8 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 	var i, j;
 	var markup =
 	"<div class=\"schedule-title ui-state-active\">"
-		+"<div class=\"schedule-button-previous\">&lt;</div>"
-		+"<div class=\"schedule-button-next\">&gt;</div>"
+		+"<div class=\"schedule-button-previous\"><i class=\"fa fa-arrow-left\"></i></div>"
+		+"<div class=\"schedule-button-next\"><i class=\"fa fa-arrow-right\"></i></div>"
 		+"<div class=\"schedule-showing\">" + data.month + " " + data. year + "</div>"
 	+"</div>"
 
@@ -238,8 +316,8 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 					for (j = 0; j < day.events.length; j++) {
 						var event = day.events[j];
 						if (day.classes.indexOf('adjacent-month') == -1) {
-							markup += "<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-" + event.index + "\">"
-								+ event.startTime + " " + event.title + "</div>";
+							var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+							markup += "<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-" + event.index + customStyleClass +"\"><span>"+ event.startTime + " " + event.title + "</span></div>";
 						}
 					}
 					if (day.classes.indexOf('today') > -1) markup+= "</div>";
@@ -259,6 +337,7 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 					for (i = 0; i < data.eventsThisMonth.length; i++) {
 						var event = data.eventsThisMonth[i];
 						markup += "<div class=\"schedule-list-event\">"
+							+"<div class=\"event-item-day\">" + event.startDate.substring(8) + "</div>"
 							+"<div class=\"event-item-name\">" + event.title + "</div>"
 							+"<div class=\"event-item-location\">" + event.location + "</div>"
 						+"</div>";
@@ -288,8 +367,8 @@ ice.ace.Schedule.prototype.renderWeekView = function(data) {
 	var i, j;
 	var markup =
 	"<div class=\"schedule-title ui-state-active\">"
-		+"<div class=\"schedule-button-previous\">&lt;</div>"
-		+"<div class=\"schedule-button-next\">&gt;</div>"
+		+"<div class=\"schedule-button-previous\"><i class=\"fa fa-arrow-left\"></i></div>"
+		+"<div class=\"schedule-button-next\"><i class=\"fa fa-arrow-right\"></i></div>"
 		+"<div class=\"schedule-showing\">" + data.month + " " + data.year + "</div>"
 	+"</div>"
 
@@ -305,11 +384,10 @@ ice.ace.Schedule.prototype.renderWeekView = function(data) {
 					markup += "<th class=\"schedule-dow-header schedule-dow-" + i + "\">" + day + "</th>";
 				}
 
-			markup += "<th style=\"width:2%;\">&nbsp;</th>"; // to make up for scrollbar
+			markup += "<th></th>"; // scrollbar width
 
 			markup += "</tr></thead></table>"
-			+"<div style=\"position:relative;height:600px;overflow:scroll;\"><table>"
-				+"<tbody class=\"schedule-days\">";
+			+"<div class=\"schedule-days\"><table><tbody>";
 
 					for (i = 0; i < 24; i++) {
 						var iString = i < 10 ? '0' + i : i;
@@ -341,18 +419,9 @@ ice.ace.Schedule.prototype.renderWeekView = function(data) {
 		markup += "<div class=\"schedule-sidebar ui-widget-content\">"
 
 			+"<div class=\"schedule-list\">"
-				+"<div class=\"schedule-list-title ui-state-default\">Events this Month</div>"
-				+"<div class=\"schedule-list-content\">";
-
-					for (i = 0; i < data.eventsThisMonth.length; i++) {
-						var event = data.eventsThisMonth[i];
-						markup += "<div class=\"schedule-list-event\">"
-							+"<div class=\"event-item-name\">" + event.title + "</div>"
-							+"<div class=\"event-item-location\">" + event.location + "</div>"
-						+"</div>";
-					}
-
-				markup += "</div>"
+				+"<div class=\"schedule-list-title ui-state-default\">Events this Week</div>"
+				+"<div class=\"schedule-list-content\">"
+				+"</div>"
 			+"</div>"
 
 			+"<div class=\"schedule-details\">"
@@ -371,6 +440,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	this.addListeners();
 	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
+	var sidebarEventsContainer = ice.ace.jq(this.jqId).find('.schedule-list-content');
 	var currentYear = this.cfg.currentYear;
 	var currentMonth = this.cfg.currentMonth;
 	var currentDay = this.cfg.currentDay;
@@ -421,6 +491,8 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
 		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
 	this.jq.find('.schedule-showing').html(title);
+	// set the scrollable height, if supplied
+	if  (this.cfg.scrollHeight) this.jq.find('.schedule-days').css({height:this.cfg.scrollHeight});
 	// set day of the week headers and calendar day CSS classes
 	var dowCount;
 	for (dowCount = 0; dowCount < 7; dowCount++) {
@@ -451,18 +523,20 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 			var minutes = parseInt(event.startTime.substring(3,5));
 			var selector = '.schedule-dow-'+dow+'.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
 			var timeCell = this.jq.find(selector);
-			var offset = timeCell.position();
+			var position = timeCell.position();
 			var width = timeCell.width();
 			var endHour = event.endTime.substring(0,2);
 			var endMinutes = parseInt(event.endTime.substring(3,5));
 			var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
 			var endTimeCell = this.jq.find(endSelector);
-			var endOffset = endTimeCell.position();
+			var endPosition = endTimeCell.position();
 			var height = endTimeCell.height();
-			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + '\"></div>');
+			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
-			eventElement.css({position:'absolute', top:offset.top+2, left:offset.left+2, width: width + 'px', 
-				height: (endOffset.top - offset.top + height) + 'px'}).appendTo(eventsContainer);
+			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px', 
+				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+			ice.ace.jq('<div class="schedule-list-event"><div class="event-item-day">'+event.startDate.substring(8)+'</div><div class="event-item-name">'+event.title+'</div><div class="event-item-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
 		}
 	}
 };
@@ -471,6 +545,7 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 	this.addListeners();
 	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
+	var sidebarEventsContainer = ice.ace.jq(this.jqId).find('.schedule-list-content');
 	var i,j;
 	var lazyYear = this.cfg.lazyYear;
 	var lazyMonth = this.cfg.lazyMonth;
@@ -522,6 +597,8 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
 		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
 	this.jq.find('.schedule-showing').html(title);
+	// set the scrollable height, if supplied
+	if  (this.cfg.scrollHeight) this.jq.find('.schedule-days').css({height:this.cfg.scrollHeight});
 	// set day of the week headers and calendar day CSS classes
 	var dowCount;
 	for (dowCount = 0; dowCount < 7; dowCount++) {
@@ -533,6 +610,7 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 		var day = dowDate.getDate();
 		this.jq.find('.schedule-cell.schedule-dow-'+dowCount).addClass('calendar-day-'+dowDate.getFullYear()+'-'+(month < 10 ? '0' + month : month)+'-'+(day < 10 ? '0' + day : day));
 	}
+	ice.ace.jq('.calendar-day-'+moment().format("YYYY-MM-DD")).html('<div class="ui-state-highlight"></div>');
 	// add event divs at appropriate positions
 	for (i = 0; i < data.days.length; i++) {
 		var day = data.days[i];
@@ -545,18 +623,20 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 				var minutes = parseInt(event.startTime.substring(3,5));
 				var selector = '.schedule-dow-'+dow+'.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
 				var timeCell = this.jq.find(selector);
-				var offset = timeCell.position();
+				var position = timeCell.position();
 				var width = timeCell.width();
 				var endHour = event.endTime.substring(0,2);
 				var endMinutes = parseInt(event.endTime.substring(3,5));
 				var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
 				var endTimeCell = this.jq.find(endSelector);
-				var endOffset = endTimeCell.position();
+				var endPosition = endTimeCell.position();
 				var height = endTimeCell.height();
-				var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + '\"></div>');
+				var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+				var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 				eventElement.html(event.startTime + ' ' + event.title);
-				eventElement.css({position:'absolute', top:offset.top+2, left:offset.left+2, width: width + 'px',
-					height: (endOffset.top - offset.top + height) + 'px'}).appendTo(eventsContainer);
+				eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
+					height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+				ice.ace.jq('<div class="schedule-list-event"><div class="event-item-day">'+event.startDate.substring(8)+'</div><div class="event-item-name">'+event.title+'</div><div class="event-item-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
 			}
 		}
 	}
@@ -567,8 +647,8 @@ ice.ace.Schedule.prototype.renderDayView = function(data) {
 	var i, j;
 	var markup =
 	"<div class=\"schedule-title ui-state-active\">"
-		+"<div class=\"schedule-button-previous\">&lt;</div>"
-		+"<div class=\"schedule-button-next\">&gt;</div>"
+		+"<div class=\"schedule-button-previous\"><i class=\"fa fa-arrow-left\"></i></div>"
+		+"<div class=\"schedule-button-next\"><i class=\"fa fa-arrow-right\"></i></div>"
 		+"<div class=\"schedule-showing\">" + data.month + " " + data.year + "</div>"
 	+"</div>"
 
@@ -579,9 +659,10 @@ ice.ace.Schedule.prototype.renderDayView = function(data) {
 			+"<table><thead class=\"schedule-dow ui-state-default\"><tr>"
 				+"<th class=\"schedule-dow-header schedule-cell-time\">Time</th>"
 				+"<th class=\"schedule-dow-header schedule-dow-single\"></th>"
+				+"<th></th>" // scrollbar width
 			+"</tr></thead></table>"
 
-			+"<div style=\"position:relative;height:600px;overflow:scroll;\"><table><tbody class=\"schedule-days\">";
+			+"<div class=\"schedule-days\"><table><tbody>";
 
 					for (i = 0; i < 24; i++) {
 						var iString = i < 10 ? '0' + i : i;
@@ -601,18 +682,9 @@ ice.ace.Schedule.prototype.renderDayView = function(data) {
 		markup += "<div class=\"schedule-sidebar ui-widget-content\">"
 
 			+"<div class=\"schedule-list\">"
-				+"<div class=\"schedule-list-title ui-state-default\">Events this Month</div>"
-				+"<div class=\"schedule-list-content\">";
-
-					for (i = 0; i < data.eventsThisMonth.length; i++) {
-						var event = data.eventsThisMonth[i];
-						markup += "<div class=\"schedule-list-event\">"
-							+"<div class=\"event-item-name\">" + event.title + "</div>"
-							+"<div class=\"event-item-location\">" + event.location + "</div>"
-						+"</div>";
-					}
-
-				markup += "</div>"
+				+"<div class=\"schedule-list-title ui-state-default\">Events this Day</div>"
+				+"<div class=\"schedule-list-content\">"
+				+"</div>"
 			+"</div>"
 
 			+"<div class=\"schedule-details\">"
@@ -631,11 +703,14 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 	this.addListeners();
 	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
+	var sidebarEventsContainer = ice.ace.jq(this.jqId).find('.schedule-list-content');
 	var currentYear = this.cfg.currentYear;
 	var currentMonth = this.cfg.currentMonth;
 	var currentDay = this.cfg.currentDay;
 	var title = this.getMonthName(currentMonth) + ' ' + currentDay + ', ' + currentYear;
 	this.jq.find('.schedule-showing').html(title);
+	// set the scrollable height, if supplied
+	if  (this.cfg.scrollHeight) this.jq.find('.schedule-days').css({height:this.cfg.scrollHeight});
 	// set day of the week header
 	var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-single');
 	var date = new Date();
@@ -658,7 +733,7 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 			var minutes = parseInt(event.startTime.substring(3,5));
 			var selector = '.schedule-dow-single.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
 			var timeCell = this.jq.find(selector);
-			var offset = timeCell.position();
+			var position = timeCell.position();
 			var width = timeCell.width();
 			var endHour = event.endTime.substring(0,2);
 			var endMinutes = parseInt(event.endTime.substring(3,5));
@@ -666,10 +741,12 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 			var endTimeCell = this.jq.find(endSelector);
 			var endOffset = endTimeCell.position();
 			var height = endTimeCell.height();
-			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + '\"></div>');
+			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
-			eventElement.css({position:'absolute', top:offset.top+2, left:offset.left+2, width: width + 'px',
-				height: (endOffset.top - offset.top + height) + 'px'}).appendTo(eventsContainer);
+			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
+				height: (endOffset.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+			ice.ace.jq('<div class="schedule-list-event"><div class="event-item-day">'+event.startTime+'</div><div class="event-item-name">'+event.title+'</div><div class="event-item-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
 		}
 	}
 };
@@ -678,11 +755,14 @@ ice.ace.Schedule.prototype.renderLazyDayEvents = function(data) {
 	this.addListeners();
 	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
+	var sidebarEventsContainer = ice.ace.jq(this.jqId).find('.schedule-list-content');
 	var lazyYear = this.cfg.lazyYear;
 	var lazyMonth = this.cfg.lazyMonth;
 	var lazyDay = this.cfg.lazyDay;
 	var title = this.getMonthName(lazyMonth) + ' ' + lazyDay + ', ' + lazyYear;
 	this.jq.find('.schedule-showing').html(title);
+	// set the scrollable height, if supplied
+	if  (this.cfg.scrollHeight) this.jq.find('.schedule-days').css({height:this.cfg.scrollHeight});
 	// set day of the week header
 	var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-single');
 	var date = new Date();
@@ -705,18 +785,20 @@ ice.ace.Schedule.prototype.renderLazyDayEvents = function(data) {
 			var minutes = parseInt(event.startTime.substring(3,5));
 			var selector = '.schedule-dow-single.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
 			var timeCell = this.jq.find(selector);
-			var offset = timeCell.position();
+			var position = timeCell.position();
 			var width = timeCell.width();
 			var endHour = event.endTime.substring(0,2);
 			var endMinutes = parseInt(event.endTime.substring(3,5));
 			var endSelector = '.schedule-dow-single.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
 			var endTimeCell = this.jq.find(endSelector);
-			var endOffset = endTimeCell.position();
+			var endPosition = endTimeCell.position();
 			var height = endTimeCell.height();
-			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + '\"></div>');
+			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
-			eventElement.css({position:'absolute', top:offset.top+2, left:offset.left+2, width: width + 'px',
-				height: (endOffset.top - offset.top + height) + 'px'}).appendTo(eventsContainer);
+			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
+				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+			ice.ace.jq('<div class="schedule-list-event"><div class="event-item-day">'+event.startTime+'</div><div class="event-item-name">'+event.title+'</div><div class="event-item-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
 		}
 	}
 };
@@ -836,7 +918,7 @@ ice.ace.Schedule.prototype.addListeners = function() {
 				} else lazyMonth--;
 				lazyDay = 1;
 			}
-			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth, lazyDay);
+			self.sendNavigationRequest(e, lazyYear, lazyMonth, lazyDay, 'previous');
 		});
 		nextButton.on('click', function(e) {
 			e.stopPropagation();
@@ -927,7 +1009,7 @@ ice.ace.Schedule.prototype.addListeners = function() {
 				} else lazyMonth++;
 				lazyDay = 1;
 			}
-			self.sendLazyNavigationRequest(e, lazyYear, lazyMonth, lazyDay);
+			self.sendNavigationRequest(e, lazyYear, lazyMonth, lazyDay, 'next');
 		});
 	} else {
 		var previousButton = this.jq.find('.schedule-button-previous');
@@ -1050,6 +1132,7 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			} else {
 				self.clndr.backAction({data:{context:self.clndr}});
 			}
+			self.sendNavigationRequest(e, currentYear, currentMonth, currentDay, 'previous');
 		});
 		nextButton.on('click', function(e) {
 			e.stopPropagation();
@@ -1148,6 +1231,7 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			} else {
 				self.clndr.forwardAction({data:{context:self.clndr}});
 			}
+			self.sendNavigationRequest(e, currentYear, currentMonth, currentDay, 'next');
 		});
 	}
 };

@@ -16,9 +16,13 @@
 
 package org.icefaces.ace.component.schedule;
 
+import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
+import org.icefaces.ace.meta.annotation.ClientEvent;
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Field;
 import org.icefaces.ace.meta.annotation.Property;
+import org.icefaces.ace.meta.annotation.DefaultValueType;
+
 import org.icefaces.ace.meta.baseMeta.UIDataMeta;
 import org.icefaces.ace.resources.ACEResourceNames;
 
@@ -41,6 +45,7 @@ import java.util.Date;
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
+	@ICEResourceDependency(name = "fontawesome/font-awesome.css"),
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
 	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
@@ -48,6 +53,40 @@ import java.util.Date;
 	@ICEResourceDependency(name = "schedule/clndr.js"),
     @ICEResourceDependency(name = "schedule/schedule.js")
 })
+@ClientBehaviorHolder(events = {
+	@ClientEvent( name="eventClick",
+		javadoc="",
+		tlddoc="",
+		defaultRender="@this", defaultExecute="@this" ),
+	@ClientEvent( name="dayClick",
+		javadoc="",
+		tlddoc="",
+		defaultRender="@this", defaultExecute="@this" ),
+	@ClientEvent( name="timeClick",
+		javadoc="",
+		tlddoc="",
+		defaultRender="@this", defaultExecute="@this" ),
+	@ClientEvent( name="addEvent",
+		javadoc="",
+		tlddoc="",
+		defaultRender="@this", defaultExecute="@this" ),
+	@ClientEvent( name="editEvent",
+		javadoc="",
+		tlddoc="",
+		defaultRender="@this", defaultExecute="@this" ),
+	@ClientEvent( name="deleteEvent",
+		javadoc="",
+		tlddoc="",
+		defaultRender="@this", defaultExecute="@this" ),
+	@ClientEvent( name="next",
+		javadoc="",
+		tlddoc="",
+		defaultRender="@this", defaultExecute="@this" ),
+	@ClientEvent( name="previous",
+		javadoc="",
+		tlddoc="",
+		defaultRender="@this", defaultExecute="@this" )},
+	defaultEvent="eventClick" )
 public class ScheduleMeta extends UIDataMeta {
 
 	@Property(tlddoc = "The value should be a List, Array, DataModel or a type that can be adapted into a DataModel (java.sql.ResultSet, javax.servlet.jsp.jstl.sql.Result, and java.util.Collection). It must contain the  org.icefaces.ace.model.schedule.ScheduleEvent objects to be displayed on the schedule. Alternatively, the value can be an implementation of org.icefaces.ace.model.schedule.LazyScheduleEventList to work in a lazy-loading mode, month per month.")
@@ -75,7 +114,7 @@ public class ScheduleMeta extends UIDataMeta {
 	private String viewMode;
 
     @Property(tlddoc = "Defines a fixed height for the scrollable time grid in pixels.",
-            defaultValue = "600")
+            defaultValue = "600", defaultValueType = DefaultValueType.EXPRESSION)
     private Integer scrollHeight;
 
     @Property(tlddoc = "Enabling renders the time grid of the week and day views in a container that overflows the fixed height and adds a scrollbar.")
