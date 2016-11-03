@@ -28,29 +28,25 @@ package org.icefaces.ace.component.radiobuttons;
 
 
 import org.icefaces.ace.component.radiobutton.RadioButtonRenderer;
+import org.icefaces.ace.util.HTML;
+import org.icefaces.ace.util.JSONBuilder;
+import org.icefaces.ace.util.SelectItemsIterator;
+import org.icefaces.ace.util.Utils;
 import org.icefaces.render.MandatoryResourceComponent;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import java.io.IOException;
-import java.io.IOException;
-import java.lang.String;
-import java.util.*;
-import org.icefaces.ace.util.*;
-import javax.faces.component.UIParameter;
-import javax.faces.convert.ConverterException;
 import org.icefaces.util.EnvUtils;
-import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.util.JavaScriptRunner;
 
-import javax.faces.model.SelectItem;
-import javax.faces.convert.Converter;
-import javax.el.ExpressionFactory;
-import javax.el.ELException;
-import java.lang.reflect.Array;
 import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.application.Application;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIParameter;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.model.SelectItem;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @MandatoryResourceComponent(tagName = "radioButtons", value = "org.icefaces.ace.component.radiobuttons.RadioButtons")
 public class RadioButtonsRenderer extends RadioButtonRenderer {
@@ -301,7 +297,7 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
         encodeClientBehaviors(facesContext, radioButtons, jb);
 
         jb.endMap().endArray().endFunction();
-		
+
 		return jb.toString();
 	}
 
@@ -315,7 +311,7 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
 	public String getConvertedValueForClient(FacesContext context, UIComponent component, Object value) throws ConverterException {
 		RadioButtons radioButtons = (RadioButtons) component;
 		Converter converter = radioButtons.getConverter();
-		
+
 		if(converter != null) {
 			return converter.getAsString(context, radioButtons, value);
 		} else {
@@ -331,7 +327,7 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
 				}
 			}
 		}
-		
+
 		return (value != null ? value.toString() : "");
 	}
 
