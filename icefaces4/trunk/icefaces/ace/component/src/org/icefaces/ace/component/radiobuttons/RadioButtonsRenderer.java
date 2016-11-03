@@ -189,7 +189,7 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
         // Root Container
         writer.startElement(HTML.DIV_ELEM, radioButtons);
         writer.writeAttribute(HTML.ID_ATTR, clientId, null);
-		renderResetSettings(facesContext, clientId);
+		renderResetSettings(facesContext, clientId, radioButtons);
 
         writer.writeAttribute(HTML.CLASS_ATTR, "ice-ace-radiobutton", null);
 		String script = getScript(facesContext, writer, radioButtons, clientId, item.isDisabled());
@@ -335,4 +335,19 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
 		return (value != null ? value.toString() : "");
 	}
 
+	public void renderResetSettings(FacesContext context, String clientId, RadioButtons radioButtons) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		JSONBuilder jb = JSONBuilder.create();
+		jb.beginArray();
+		jb.item("radiobutton");
+		jb.beginArray();
+		jb.item(clientId);
+		jb.item(EnvUtils.isAriaEnabled(context));
+		jb.item(radioButtons.getClientId(context));
+		jb.endArray();
+		jb.endArray();
+
+		writer.writeAttribute("data-ice-reset", jb.toString(), null);
+	}
 }
