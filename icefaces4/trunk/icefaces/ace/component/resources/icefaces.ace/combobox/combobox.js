@@ -90,7 +90,7 @@ ice.ace.ComboBox.setDimensionsOnly = function(id) {
 	var $element = root.find('input');
 	var $downArrowButton = $box.find('.ui-combobox-button');
 	instance.element = $element.get(0);
-	instance.hidden = root.find('input[type=hidden]').get(0);
+	instance.hidden = document.getElementById(id + '_hidden');
 	instance.cfg = {};
 	var downArrowButton = $downArrowButton.eq(0);
 	if (ice.ace.jq.browser.msie) {// ie7 fix
