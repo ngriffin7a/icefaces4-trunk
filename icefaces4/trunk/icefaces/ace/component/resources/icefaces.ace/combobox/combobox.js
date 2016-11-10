@@ -753,51 +753,52 @@ ice.ace.ComboBox.prototype = {
     },
 	
 	clientSideModeUpdate: function(filter) {
-		
-		var model = this.clientSideModeCfg.model;
-		var length = model.length;
-		var caseSensitive = this.clientSideModeCfg.caseSensitive;
-		var rows = this.clientSideModeCfg.rows;
-		var value = this.element.value;
-		if (!caseSensitive) value = value.toLowerCase();
-		if (!filter) { 
-			switch (this.clientSideModeCfg.filterMatchMode) {
-				case 'contains':
-				filter = this.containsFilter;
-				break;
-				case 'exact':
-				filter = this.exactFilter;
-				break;
-				case 'startsWith':
-				filter = this.startsWithFilter;
-				break;
-				case 'endsWith':
-				filter = this.endsWithFilter;
-				break;
-				default:
-				filter = this.noFilter;
-				break;
-			}
-		}
-		
-		var rowCount = 0;
-		var result = ice.ace.jq('<div />');
-		for (var i = 0; i < length; i++) {
-			if (model[i]) {
-				var item = caseSensitive ? model[i] : model[i].toLowerCase();
-				if (filter(item, value)) {
-					rowCount++;
-					result.append(this.$content.get(i).cloneNode(true));
-				}
-				if (rowCount >= rows) break;
-			}
-		}
-		this.updateNOW('<div>'+result.html()+'</div>');
-		if (filter == this.noFilter) {
-			this.markFirstMatch();
-		} else {
-			this.markFirst();
-		}
+        if (this.clientSideModeCfg) {
+            var model = this.clientSideModeCfg.model;
+            var length = model.length;
+            var caseSensitive = this.clientSideModeCfg.caseSensitive;
+            var rows = this.clientSideModeCfg.rows;
+            var value = this.element.value;
+            if (!caseSensitive) value = value.toLowerCase();
+            if (!filter) {
+                switch (this.clientSideModeCfg.filterMatchMode) {
+                    case 'contains':
+                        filter = this.containsFilter;
+                        break;
+                    case 'exact':
+                        filter = this.exactFilter;
+                        break;
+                    case 'startsWith':
+                        filter = this.startsWithFilter;
+                        break;
+                    case 'endsWith':
+                        filter = this.endsWithFilter;
+                        break;
+                    default:
+                        filter = this.noFilter;
+                        break;
+                }
+            }
+
+            var rowCount = 0;
+            var result = ice.ace.jq('<div />');
+            for (var i = 0; i < length; i++) {
+                if (model[i]) {
+                    var item = caseSensitive ? model[i] : model[i].toLowerCase();
+                    if (filter(item, value)) {
+                        rowCount++;
+                        result.append(this.$content.get(i).cloneNode(true));
+                    }
+                    if (rowCount >= rows) break;
+                }
+            }
+            this.updateNOW('<div>' + result.html() + '</div>');
+            if (filter == this.noFilter) {
+                this.markFirstMatch();
+            } else {
+                this.markFirst();
+            }
+        }
 		this.render();
 	},
 	
