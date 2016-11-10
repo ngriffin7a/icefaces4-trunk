@@ -59,6 +59,9 @@ public class NotificationPanelRenderer extends CoreRenderer {
 		writer.writeAttribute("id", bar.getClientId(facesContext), null);
 		writer.writeAttribute("class", styleClass + " ui-widget ui-widget-content ui-corner-all", null);
         String style = bar.getStyle();
+        if (!bar.isVisible()) {
+            style = style == null ? "display: none;" : (style + "; display: none;");
+        }
         if(style != null) writer.writeAttribute("style", style, null);
         if (EnvUtils.isAriaEnabled(facesContext)) {
             writer.writeAttribute("role", close == null ? "alert" : "alertdialog", null);
