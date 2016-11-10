@@ -102,7 +102,7 @@ public class MenuBarRenderer extends BaseMenuRenderer {
 		ResponseWriter writer = context.getResponseWriter();
         MenuBar menubar = (MenuBar) abstractMenu;
 		String clientId = menubar.getClientId(context);
-
+		menubar.setSubmenuLabels("");
         writer.startElement("div", menubar);
         writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("style", "display:none;", null);
