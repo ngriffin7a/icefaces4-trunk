@@ -75,28 +75,21 @@ public class AuctionImage implements Serializable {
     }
 
 	public static String staticConvertNameToImageName(String name) {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		// First of all we won't assign any images until we know we have a valid parentDir (ideally resources/items/) to pull from
 		// The image name format is all lowercase, spaces replaced with underscores
-		if (StringUtil.validString(name)) {
-			name = name.toLowerCase();
-			if (name.contains(" ")) {
-				name = name.replaceAll(" ", "_");
-			}
+        if (StringUtil.validString(name)) {
+            String imageName = name.toLowerCase();
+            if (imageName.contains(" ")) {
+                imageName = imageName.replaceAll(" ", "_");
+            }
 
-			String imageName = new String(name);
-
-			// Next we have to check that the image actually exists
-			URL toCheck = null;
-			try {
-				toCheck = externalContext.getResource(IMAGE_DIR + "/" + imageName + EXTENSION);
-			} catch (MalformedURLException e) {
-				//ignore
-			}
-			if (toCheck != null) {
-				return imageName;
-			}
-		}
+            // Next we have to check that the image actually exists
+            // Use classloader to find the image (FacesContext instance is available only on request threads)
+            URL toCheck = StringUtil.class.getResource("/../../" + IMAGE_DIR + "/" + imageName + EXTENSION);
+            if (toCheck != null) {
+                return imageName;
+            }
+        }
 
 		return DEFAULT_NAME;
 	}
