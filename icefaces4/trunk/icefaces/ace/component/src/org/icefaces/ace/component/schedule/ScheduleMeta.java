@@ -41,7 +41,7 @@ import java.util.Date;
         rendererType = "org.icefaces.ScheduleRenderer",
         extendsClass = "javax.faces.component.UIData",
         componentFamily = "org.icefaces.ace.Schedule",
-        tlddoc = ""
+        tlddoc = "A calendar with month, week, and day views that displays events and information about them. The dates must be stored internally in UTC time. They are converted to the time zone specified by the 'timeZone' attribute to display to the user. The class org.icefaces.ace.component.schedule.ScheduleUtils contains utility functions to help with conversion."
 )
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
@@ -125,6 +125,9 @@ public class ScheduleMeta extends UIDataMeta {
 
 	@Property(tlddoc = "The CSS style class of the component, rendered on the root div of the component.")
 	private String styleClass;
+
+    @Property(tlddoc = "A time zone ID String (matching an element of java.util.TimeZone.getAvailableIDs()) or a java.util.TimeZone instance to specify the time zone used for date conversion to and from UTC time. If not specified, the default value is TimeZone.getDefault().")
+    private Object timeZone;
 
 	@Field(defaultValue="-1")
 	private Integer lazyYear;

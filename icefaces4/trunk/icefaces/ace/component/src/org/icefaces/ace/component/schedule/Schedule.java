@@ -18,13 +18,44 @@ package org.icefaces.ace.component.schedule;
 
 import org.icefaces.ace.model.schedule.LazyScheduleEventList;
 import org.icefaces.ace.model.schedule.ScheduleEvent;
+
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.TimeZone;
 
 public class Schedule extends ScheduleBase {
+
+	private TimeZone appropriateTimeZone;
+
+/*
+    @Override
+    public void queueEvent(FacesEvent event) {
+        if (event == null) {
+            throw new NullPointerException();
+        }
+
+        if (event instanceof AjaxBehaviorEvent) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            Map<String, String> params =  context.getExternalContext()
+                                                 .getRequestParameterMap();
+            String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+            if (eventName.equals("cellClick")) {
+                //int columnIndex = Integer.parseInt(params.get(getClientId(context) + "_colIndex"));
+                event = new DataTableCellClickEvent((AjaxBehaviorEvent) event, column);
+            }
+        }
+
+		super.queueEvent(event);
+	}
+*/
 
 	public boolean isLazy() {
 		return getValue() instanceof LazyScheduleEventList;
@@ -146,4 +177,22 @@ public class Schedule extends ScheduleBase {
 			((Collection) value).remove(scheduleEvent);
 		}
 	}
+
+    public TimeZone calculateTimeZone() {
+        if (appropriateTimeZone == null) {
+            Object usertimeZone = getTimeZone();
+            if (usertimeZone != null) {
+                if (usertimeZone instanceof String)
+                    appropriateTimeZone = TimeZone.getTimeZone((String) usertimeZone);
+                else if (usertimeZone instanceof TimeZone)
+                    appropriateTimeZone = (TimeZone) usertimeZone;
+                else
+                    throw new IllegalArgumentException("The value for the 'timeZone' attribute can only be either of type String or of type java.util.TimeZone.");
+            } else {
+                appropriateTimeZone = TimeZone.getDefault();
+            }
+        }
+
+        return appropriateTimeZone;
+    }
 }
