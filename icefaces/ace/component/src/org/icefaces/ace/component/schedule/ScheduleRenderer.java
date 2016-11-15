@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class ScheduleRenderer extends CoreRenderer {
 
@@ -53,7 +54,7 @@ public class ScheduleRenderer extends CoreRenderer {
 	public void decodeAdd(FacesContext context, Schedule schedule, Map<String, String> params) {
 		String clientId = schedule.getClientId(context);
 
-		schedule.addEvent(buildScheduleEventFromRequest(params, clientId));
+		schedule.addEvent(buildScheduleEventFromRequest(schedule, params, clientId));
 	}
 
 	public void decodeEdit(FacesContext context, Schedule schedule, Map<String, String> params) {
@@ -69,7 +70,7 @@ public class ScheduleRenderer extends CoreRenderer {
 			return;
 		}
 
-		schedule.editEvent(index, buildScheduleEventFromRequest(params, clientId));
+		schedule.editEvent(index, buildScheduleEventFromRequest(schedule, params, clientId));
 	}
 
 	public void decodeDelete(FacesContext context, Schedule schedule, Map<String, String> params) {
@@ -87,7 +88,7 @@ public class ScheduleRenderer extends CoreRenderer {
 			}
 			schedule.deleteEvent(index);
 		} else if (value instanceof Collection) {
-			schedule.deleteEvent(buildScheduleEventFromRequest(params, clientId));
+			schedule.deleteEvent(buildScheduleEventFromRequest(schedule, params, clientId));
 		}
 	}
 
@@ -97,6 +98,7 @@ public class ScheduleRenderer extends CoreRenderer {
 		Schedule schedule = (Schedule) component;
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = component.getClientId();
+		TimeZone timeZone = schedule.calculateTimeZone();
 
 		// if in lazy mode, update current year and month values
 		boolean isLazy = schedule.isLazy();
@@ -196,12 +198,14 @@ public class ScheduleRenderer extends CoreRenderer {
 					for (int i = 0; i < rowCount; i++) {
 						schedule.setRowIndex(i);
 						ScheduleEvent scheduleEvent = (ScheduleEvent) schedule.getRowData();
+						Date startDate = ScheduleUtils.toTimeZoneFromUTC(scheduleEvent.getStartDate(), timeZone);
+						Date endDate = ScheduleUtils.toTimeZoneFromUTC(scheduleEvent.getEndDate(), timeZone);
 						jb.beginMap();
 						jb.entry("index", i);
-						jb.entry("startDate", convertDateToClientFormat(scheduleEvent.getStartDate()));
-						jb.entry("startTime", convertTimeToClientFormat(scheduleEvent.getStartDate()));
-						jb.entry("endDate", convertDateToClientFormat(scheduleEvent.getEndDate()));
-						jb.entry("endTime", convertTimeToClientFormat(scheduleEvent.getEndDate()));
+						jb.entry("startDate", convertDateToClientFormat(startDate));
+						jb.entry("startTime", convertTimeToClientFormat(startDate));
+						jb.entry("endDate", convertDateToClientFormat(endDate));
+						jb.entry("endTime", convertTimeToClientFormat(endDate));
 						jb.entry("title", scheduleEvent.getTitle());
 						jb.entry("location", scheduleEvent.getLocation());
 						jb.entry("notes", scheduleEvent.getNotes());
@@ -267,22 +271,23 @@ public class ScheduleRenderer extends CoreRenderer {
 		return cal.getTime();
 	}
 
-	private ScheduleEvent buildScheduleEventFromRequest(Map<String, String> params, String clientId){
-		String date = params.get(clientId + "_date");
-		String time = params.get(clientId + "_time");
+	private ScheduleEvent buildScheduleEventFromRequest(Schedule schedule, Map<String, String> params, String clientId){
+		String startDate = params.get(clientId + "_date");
+		String startTime = params.get(clientId + "_time");
 		String endDate = params.get(clientId + "_endDate");
 		String endTime = params.get(clientId + "_endTime");
 		String title = params.get(clientId + "_title");
 		String location = params.get(clientId + "_location");
 		String notes = params.get(clientId + "_notes");
+		TimeZone timeZone = schedule.calculateTimeZone();
 
 		ScheduleEvent scheduleEvent = new ScheduleEvent();
-		Date convertedDate = convertDateTimeToServerFormat(date, time);
+		Date convertedDate = convertDateTimeToServerFormat(startDate, startTime);
 		if (convertedDate == null) return null;
 		Date convertedEndDate = convertDateTimeToServerFormat(endDate, endTime);
 		if (convertedEndDate == null) convertedEndDate = new Date(convertedDate.getTime());
-		scheduleEvent.setStartDate(convertedDate);
-		scheduleEvent.setEndDate(convertedEndDate);
+		scheduleEvent.setStartDate(ScheduleUtils.toUTCFromTimeZone(convertedDate, timeZone));
+		scheduleEvent.setEndDate(ScheduleUtils.toUTCFromTimeZone(convertedEndDate, timeZone));
 		scheduleEvent.setTitle(title);
 		scheduleEvent.setLocation(location);
 		scheduleEvent.setNotes(notes);

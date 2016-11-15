@@ -37,7 +37,8 @@ ice.ace.Schedule = function(id, cfg) {
 	configuration.dateParameter = 'startDate';
 	this.clndr = this.jq.clndr(configuration);
 
-	if (self.cfg.behaviors.eventClick) {
+	var behaviors = self.cfg.behaviors;
+	if (behaviors && behaviors.eventClick) {
 		this.jqRoot.delegate('.schedule-event', 'click', function(event) {
 			event.stopPropagation();
 			var node = event['target'];
@@ -72,7 +73,7 @@ ice.ace.Schedule = function(id, cfg) {
 			});
 		}
 	}
-	if (self.cfg.behaviors.dayClick) {
+	if (behaviors && behaviors.dayClick) {
 		this.jqRoot.delegate('.day', 'click', function(event) {
 			var node = event['target'];
 			node = node.className.indexOf('day-number') > -1 ? node.parentNode : node;
@@ -80,7 +81,7 @@ ice.ace.Schedule = function(id, cfg) {
 			self.sendClickRequest(event, 'day', date);
 		});
 	}
-	if (self.cfg.behaviors.timeClick) {
+	if (behaviors && behaviors.timeClick) {
 		this.jqRoot.delegate('.schedule-cell', 'click', function(event) {
 			var node = event['target'];
 			node = node.className.indexOf('day-number') > -1 ? node.parentNode : node;
@@ -201,9 +202,9 @@ ice.ace.Schedule.prototype.hideEventDetailsTooltip = function() {
 
 ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, day, type) {
     var options = {};
-	var behaviors = this.cfg.behaviors;
+	var behaviors = this.cfg.behaviors || {};
 
-	if (!behaviors.next && !behaviors.previous) {
+	if ((type == 'next' && !behaviors.next) || (type == 'previous' && !behaviors.previous)) {
 		if (!this.cfg.isLazy) return;
 		options = {
 			source: this.id,
@@ -224,9 +225,9 @@ ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, 
 	}
     options.params = params;
 
-	if (type == 'next' && behaviors.next) {
+	if (type == 'next' && behaviors && behaviors.next) {
 		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.next, options));
-	} else if (type == 'previous' && behaviors.previous) {
+	} else if (type == 'previous' && behaviors && behaviors.previous) {
 		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.previous, options));
 	} else {
 		ice.ace.AjaxRequest(options);
@@ -235,14 +236,17 @@ ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, 
 
 ice.ace.Schedule.prototype.sendEditRequest = function(event, type) {
     var options = {};
-	var behaviors = this.cfg.behaviors;
+	var behaviors = this.cfg.behaviors || {};
 
-	if (!behaviors.addEvent && !behaviors.editEvent && !behaviors.deleteEvent)
+	if ((type == 'add' && !behaviors.addEvent) ||
+		(type == 'edit' && !behaviors.editEvent) ||
+		(type == 'delete' && !behaviors.deleteEvent)) {
 		options = {
 			source: this.id,
 			render: this.id,
 			execute: this.id
 		};
+	}
 
     var params = {};
 	if (type == 'add') params[this.id + "_add"] = true;
@@ -263,7 +267,7 @@ ice.ace.Schedule.prototype.sendEditRequest = function(event, type) {
 
 ice.ace.Schedule.prototype.sendClickRequest = function(event, type, data) {
     var options = {};
-	var behaviors = this.cfg.behaviors;
+	var behaviors = this.cfg.behaviors || {};
 
 	if (!behaviors.eventClick && !behaviors.dayClick && !behaviors.timeClick)
 		return;
