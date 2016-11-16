@@ -216,7 +216,13 @@ public class DateTimeEntryRenderer extends InputRenderer {
 		} else {
 			writer.write("input.removeClass('ui-state-error').removeAttr('aria-invalid');");
 		}
-		writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setDate('"+value+"');");
+
+		if (dateTimeEntry.isTimeOnly()) {
+			writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setTime('"+value+"');");
+		} else {
+			writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setDate('"+value+"');");
+		}
+
 		writer.write("})(); // " + value); // make sure to re-apply state classes if value changes
 		writer.endElement("script");
 		writer.endElement("span");
@@ -233,13 +239,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
 
         String showOn = dateTimeEntry.getShowOn();
         boolean timeOnly = dateTimeEntry.isTimeOnly();
-        StringBuilder script = new StringBuilder();
         JSONBuilder json = JSONBuilder.create();
-        //minDateTime takes precedence for setting minDate, minHour and minMinute
-        //likewise maxDateTime takes precendence for setting maxDate, maxHour and maxMinute
-
-
-        script.append("ice.ace.jq(function(){").append(" new ");
 
         Locale locale = dateTimeEntry.calculateLocale(context);
         json.beginMap()
@@ -253,6 +253,8 @@ public class DateTimeEntryRenderer extends InputRenderer {
 
         if(dateTimeEntry.getPages() != 1)
             json.entry("numberOfMonths", dateTimeEntry.getPages());
+        //minDateTime takes precedence for setting minDate, minHour and minMinute
+        //likewise maxDateTime takes precendence for setting maxDate, maxHour and maxMinute
         Object minDate = dateTimeEntry.getMindate();
         Object maxDate = dateTimeEntry.getMaxdate();
         if (dateTimeEntry.getMinDateTime() !=null ){
