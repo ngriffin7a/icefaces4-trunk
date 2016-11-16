@@ -3,27 +3,138 @@
 	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
 								navigator.mozGetUserMedia ||
 								navigator.mzGetUserMedia;
-	console.log('navigator.getUserMedia support = ' + !!navigator.getUserMedia);
+	console.log('navigator.getUserMedia support = ' + (!!navigator.getUserMedia || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia)));
 	
 	window.URL = window.URL || window.mozURL || window.webkitURL;
 	console.log('window.URL support = ' + !!window.URL);
 
-	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, sessionId, maxwidth, maxheight, buttonImage, captureButtonImage){
+	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, sessionId, maxwidth, maxheight, buttonImage, captureButtonImage, facingMode){
+
+		var ctr = document.getElementById(id);
+		var cameraButton = document.getElementById(id+"_button");
+
+		function getHiddenInput(){
+			var hiddenInputId = id + "_hidden";
+			var hiddenInput = document.getElementById(hiddenInputId);
+			if( !hiddenInput ){
+				hiddenInput = document.createElement('input');
+				hiddenInput.type = 'hidden';
+				hiddenInput.name = id;
+				hiddenInput.id = hiddenInputId;
+
+			}
+			return hiddenInput;
+		}
+
+		function renderCameraFallbackFileUpload(){
+
+			function getFileInput(){
+				var input = document.getElementById(id+'_fileupload');
+				if( !input ){
+					input = document.createElement('input');
+					input.id = id + '_fileupload';
+					input.type = 'file';
+					var isIE = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
+					input.accept = isIE ? 'image/*;capture=camera' : 'image/*';
+					input.capture = true;
+					input.name = id;
+					input.addEventListener('change', convertImageFromFile, false);
+				}
+				return input;
+			}
+
+			function startSpinner(){
+				var input = getFileInput();
+				if( input ){
+					var spinner = document.createElement('i');
+					spinner.id = id + '_spinner';
+					spinner.className = 'fa fa-spinner fa-spin';
+					input.parentNode.appendChild(spinner);
+				}
+			}
+
+			function stopSpinner(){
+				var spinner = document.getElementById(id + '_spinner');
+				if( spinner ){
+					spinner.parentNode.removeChild(spinner);
+				}
+			}
+
+			function submitImageFile(file, success, failure){
+				var encodedForm = '';
+				var formData = new FormData();
+				//TODO missing extra parameters ?
+				formData.append(id, file);
+				var request = new XMLHttpRequest();
+				request.addEventListener("load", success, false);
+				request.addEventListener("error", failure, false);
+				request.open("POST", postURL);
+				request.setRequestHeader("JSESSIONID", sessionId);
+				request.send(formData);
+			}
+
+			function convertImageFromFile(){
+				var cameraForm = ice.mobi.formOf(cameraButton),
+					hiddenInput = getHiddenInput(),
+					fileInput = getFileInput(),
+					file = fileInput.files[0],
+					img = new Image();
+
+				function onSubmitSuccess(){
+					var reader = new FileReader();					
+					var markup = '<span class="ui-button-text">'+captureLabel+'</span>';
+					if (buttonImage) markup = captureButtonImage ? '<img src="'+captureButtonImage+'" />' : '<img src="'+buttonImage+'" />';
+					cameraButton.innerHTML = markup;
+					reader.onload = function(event){
+						img.onload = function(){
+							setTimeout(function(){								
+								var thumbDataURL;
+								var canvas = document.createElement('canvas');
+								var ctx = canvas.getContext('2d');
+								canvas.width = 64;
+								canvas.height = 64;
+								ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 64, 64);
+								thumbDataURL = canvas.toDataURL();
+								canvas = null;
+								fileInput.parentElement.removeChild(fileInput);
+								cameraButton.style.display = 'inline-block';
+								updateThumbnail(thumbDataURL);
+								stopSpinner();
+							},0);
+							
+						}
+						img.src = event.target.result;
+					}
+					reader.readAsDataURL(file);
+				}
+
+				function onSubmitFailure(error){
+					stopSpinner();
+					alert('Error uploading file: ' + error.responseText);
+				}
+
+				//check for image
+				if( file.type.indexOf('image') === -1 ){
+					console.log('ERROR: camera file upload selected non-image: ' + file.type);
+					return;
+				}
+
+				startSpinner();
+				submitImageFile(file, onSubmitSuccess, onSubmitFailure);
+				
+
+
+				
+
+				
+			}
+
+			var input = getFileInput();
+			ctr.appendChild(input);
+			cameraButton.style.display = 'none';
+		}
 
 		function launchHTML5Camera(){
-
-			function getHiddenInput(){
-				var hiddenInputId = id + "_hidden";
-				var hiddenInput = document.getElementById(hiddenInputId);
-				if( !hiddenInput ){
-					hiddenInput = document.createElement('input');
-					hiddenInput.type = 'hidden';
-					hiddenInput.name = id;
-					hiddenInput.id = hiddenInputId;
-
-				}
-				return hiddenInput;
-			}
 
 			function getThumbnail(){
 				var thumbId = id + "-thumb";
@@ -48,115 +159,7 @@
 				}
 			}
 
-			function renderCameraFallbackFileUpload(){
-
-				function getFileInput(){
-					var input = document.getElementById(id+'_fileupload');
-					if( !input ){
-						input = document.createElement('input');
-						input.id = id + '_fileupload';
-						input.type = 'file';
-						var isIE = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
-						input.accept = isIE ? 'image/*;capture=camera' : 'image/*';
-						input.capture = true;
-						input.name = id;
-						input.addEventListener('change', convertImageFromFile, false);
-					}
-					return input;
-				}
-
-				function startSpinner(){
-					var input = getFileInput();
-					if( input ){
-						var spinner = document.createElement('i');
-						spinner.id = id + '_spinner';
-						spinner.className = 'fa fa-spinner fa-spin';
-						input.parentNode.appendChild(spinner);
-					}
-				}
-
-				function stopSpinner(){
-					var spinner = document.getElementById(id + '_spinner');
-					if( spinner ){
-						spinner.parentNode.removeChild(spinner);
-					}
-				}
-
-				function submitImageFile(file, success, failure){
-					var encodedForm = '';
-					var formData = new FormData();
-					//TODO missing extra parameters ?
-					formData.append(id, file);
-					var request = new XMLHttpRequest();
-					request.addEventListener("load", success, false);
-					request.addEventListener("error", failure, false);
-					request.open("POST", postURL);
-					request.setRequestHeader("JSESSIONID", sessionId);
-					request.send(formData);
-				}
-
-				function convertImageFromFile(){
-					var cameraForm = ice.mobi.formOf(cameraButton),
-						hiddenInput = getHiddenInput(),
-						fileInput = getFileInput(),
-						file = fileInput.files[0],
-						img = new Image();
-
-					function onSubmitSuccess(){
-						var reader = new FileReader();					
-						var markup = '<span class="ui-button-text">'+captureLabel+'</span>';
-						if (buttonImage) markup = captureButtonImage ? '<img src="'+captureButtonImage+'" />' : '<img src="'+buttonImage+'" />';
-						cameraButton.innerHTML = markup;
-						reader.onload = function(event){
-							img.onload = function(){
-								setTimeout(function(){								
-									var thumbDataURL;
-									var canvas = document.createElement('canvas');
-									var ctx = canvas.getContext('2d');
-									canvas.width = 64;
-									canvas.height = 64;
-									ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 64, 64);
-									thumbDataURL = canvas.toDataURL();
-									canvas = null;
-									fileInput.parentElement.removeChild(fileInput);
-									cameraButton.style.display = 'inline-block';
-									updateThumbnail(thumbDataURL);
-									stopSpinner();
-								},0);
-								
-							}
-							img.src = event.target.result;
-						}
-						reader.readAsDataURL(file);
-					}
-
-					function onSubmitFailure(error){
-						stopSpinner();
-						alert('Error uploading file: ' + error.responseText);
-					}
-
-					//check for image
-					if( file.type.indexOf('image') === -1 ){
-						console.log('ERROR: camera file upload selected non-image: ' + file.type);
-						return;
-					}
-
-					startSpinner();
-					submitImageFile(file, onSubmitSuccess, onSubmitFailure);
-					
-
-
-					
-
-					
-				}
-
-				var input = getFileInput();
-				ctr.appendChild(input);
-				cameraButton.style.display = 'none';
-			}
-
-			function renderHTML5Camera(isUserCamera){
+			function renderHTML5Camera(facingMode){
 				var popup = document.createElement('div'),
 					closeBtn = document.createElement('a'),
 					video,
@@ -226,7 +229,7 @@
 
 				cancelbutton.innerHTML = 'Cancel';
 
-				togglebutton.innerHTML = 'Toggle Front/Back Camera';
+				togglebutton.innerHTML = 'Toggle Camera';
 				
 				keepbutton.innerHTML = 'Keep';
 				
@@ -263,7 +266,8 @@
 					}
 				}
 				
-				if (supportsFacingMode && isUserCamera) options.video = { facingMode: { exact: 'user' } };
+				if (supportsFacingMode && facingMode == 'front') options.video = { facingMode: { exact: 'user' } };
+				else if (supportsFacingMode && facingMode == 'rear') options.video = { facingMode: { exact: 'environment' } };
 				else options.video = true;
 				options.audio = false;
 				//below params for shim
@@ -282,6 +286,7 @@
 					
 					popup.style.width = ''; //workaround
 					video = document.createElement('video');
+					video.id = id + '_video';
 					videoCtr.appendChild(video);
 					
 					if (navigator.mozGetUserMedia) {
@@ -290,7 +295,26 @@
 					else {
 						video.src = window.URL.createObjectURL(stream);
 					}
-					video.play();
+
+					try {
+						video.play();
+					} catch (e) {
+						setTimeout(function(){
+							var notice = document.createElement('div');
+							notice.id = id + '_notice';
+							var bounds = video.getBoundingClientRect();
+							notice.setAttribute('style', 'position:absolute;z-index:10;'+
+								'background-color:#000;color:#fff;font-family:Verdana;font-size:x-large;font-weight:bold;'+
+								'text-align:center;width:'+video.offsetWidth+'px;height:'+video.offsetHeight+'px;'+
+								'top:'+bounds.top+'px;left:'+bounds.left+'px;opacity:0.3');
+							notice.innerHTML = 'Touch to Start Camera Stream';
+							notice.setAttribute('touchstart', 'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
+							'document.getElementById("'+id+'_video").play();');
+							notice.setAttribute('onclick',  'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
+							'document.getElementById("'+id+'_video").play();');
+							videoCtr.appendChild(notice);
+						}, 1000);
+					}
 					
 					ice.mobi.addListener(video, 'canplay', function(ev){
 						if (!streaming) {
@@ -338,6 +362,7 @@
 					photo.style = 'width:' + options.width + 'px;height' + options.height + 'px;';
 					photo.className = '';
 					startbutton.classList.add('mobi-hidden');
+					togglebutton.classList.add('mobi-hidden');
 					keepbutton.classList.remove('mobi-hidden');
 					redobutton.classList.remove('mobi-hidden');
 				}
@@ -347,6 +372,7 @@
 					keepbutton.classList.add('mobi-hidden');
 					redobutton.classList.add('mobi-hidden');
 					startbutton.classList.remove('mobi-hidden');
+					togglebutton.classList.remove('mobi-hidden');
 					videoCtr.classList.remove('mobi-hidden');
 					var markup = buttonLabel;
 					if (buttonImage) markup = '<img src="'+buttonImage+'" />';
@@ -369,7 +395,8 @@
 
 				function togglecamera(){
 					document.body.removeChild(popup);
-					renderHTML5Camera(!isUserCamera);
+					var nextFacingMode = !facingMode ? 'rear' : (facingMode == 'front' ? 'rear' : 'front');
+					renderHTML5Camera(nextFacingMode);
 				}
 
 				function createThumbnailForVideo(){
@@ -430,19 +457,16 @@
 					ev.preventDefault();
 				});
 				
-				navigator.getUserMedia(options, successCallback, errorCallback);
+				if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+					navigator.mediaDevices.getUserMedia(options).then(successCallback).catch(errorCallback);
+				} else if (navigator.getUserMedia) {
+					navigator.getUserMedia(options, successCallback, errorCallback);
+				}
 			}
 
-			var ctr = document.getElementById(id),
-				streaming = false,
-				cameraButton = document.getElementById(id+"_button");
+			var streaming = false;
 
-			if( 'getUserMedia' in navigator && navigator.getUserMedia && 'URL' in window ){
-			   renderHTML5Camera();
-			}
-			else{
-				renderCameraFallbackFileUpload();
-			}
+			renderHTML5Camera(facingMode);
 		}
 
 		var cameraOptions =  {
@@ -462,9 +486,7 @@
 		var origLaunchFailed = bridgeit.launchFailed;
 		bridgeit.launchFailed = function(compId){
 			if( compId === id ){
-				launchHTML5Camera();
-			}
-			else{
+				renderCameraFallbackFileUpload();
 				origLaunchFailed(compId);
 			}
 		}
@@ -472,15 +494,16 @@
 		var origNotSupported = bridgeit.notSupported;
 		bridgeit.notSupported = function(compId, command){
 			if( command === 'camera' && compId === id){
-				launchHTML5Camera();
-			}
-			else{
+				renderCameraFallbackFileUpload();
 				origNotSupported(compId, command);
 			}
 		}
 
-		bridgeit.camera(id, 'callback'+id, cameraOptions );
-
+		if ('URL' in window && (navigator.getUserMedia || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia))) {
+			launchHTML5Camera();
+		} else {
+			bridgeit.camera(id, 'callback'+id, cameraOptions );
+		}
 	};
 
 })();
