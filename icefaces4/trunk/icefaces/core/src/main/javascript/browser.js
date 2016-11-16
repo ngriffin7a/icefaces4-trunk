@@ -42,7 +42,7 @@
                 if (ice.browser.isFirefox()) {
                     return Number(navigator.userAgent.match(/Firefox[\/\s](\d+)\.\d+/)[1]);
                 } else if (ice.browser.isSafari()) {
-                    return Number(navigator.userAgent.match(/Version\/\s*(\d+)\.\d+\.\d+ Safari/)[1]);
+                    return Number(navigator.userAgent.match(/Version\/(\d+)/)[1]);
                 } else if (ice.browser.isChrome()) {
                     return Number(navigator.userAgent.match(/Chrome\/(\d+)\.\d+/)[1]);
                 } else if (ice.browser.isIE()) {
@@ -61,7 +61,7 @@
                 if (ice.browser.isFirefox()) {
                     return Number(navigator.userAgent.match(/Firefox[\/\s]\d+\.(\d+)/)[1]);
                 } else if (ice.browser.isSafari()) {
-                    return Number(navigator.userAgent.match(/Version\/\s*\d+\.(\d+)\.*Safari/)[1]);
+                    return Number(navigator.userAgent.match(/Version\/\d+\.(\d+)/)[1]);
                 } else if (ice.browser.isChrome()) {
                     return Number(navigator.userAgent.match(/Chrome\/\d+\.(\d+)/)[1]);
                 } else if (ice.browser.isIE()) {
