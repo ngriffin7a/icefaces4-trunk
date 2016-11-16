@@ -158,6 +158,14 @@ ice.ace.Calendar.prototype.setDate = function(date) {
     this.jq.datetimepicker('setDate', date);
 };
 
+ice.ace.Calendar.prototype.setTime = function(time) {
+	if(this.hasTimePicker()) {
+		if (this.cfg.timeOnly) {
+			this.jq.timepicker("setTime", time);
+		}
+	}
+};
+
 ice.ace.Calendar.prototype.getDate = function() {
     return this.jq.datetimepicker('getDate');
 };
