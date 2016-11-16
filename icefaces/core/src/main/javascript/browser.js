@@ -39,7 +39,7 @@
         majorVersion: function() {
             try {
                 if (ice.browser.isFirefox()) {
-                    return Number(navigator.userAgent.match(/Firefox[\/\s](\d+\).\d+/)[1]);
+                    return Number(navigator.userAgent.match(/Firefox[\/\s](\d+)\.\d+/)[1]);
                 } else if (ice.browser.isSafari()) {
                     return Number(navigator.userAgent.match(/Version\/\s*(\d+)\.\d+\.\d+ Safari/)[1]);
                 } else if (ice.browser.isChrome()) {
