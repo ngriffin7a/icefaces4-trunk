@@ -14,29 +14,30 @@
  * governing permissions and limitations under the License.
  */
 
-(function() {
+(function () {
     var userAgent = navigator.userAgent.toLowerCase();
+
     function userAgentContains(s) {
         return userAgent.indexOf(s) >= 0;
     }
 
     ice.browser = {
-        isIE: function() {
+        isIE: function () {
             return userAgentContains('msie');
         },
-        isEdge: function(){
+        isEdge: function () {
             return userAgentContains('trident');
         },
-        isSafari: function(){
+        isSafari: function () {
             return userAgentContains('safari') && !userAgentContains('chrome') && !userAgentContains('mobile safari');
         },
-        isFirefox: function() {
+        isFirefox: function () {
             return userAgentContains('firefox');
         },
-        isChrome: function() {
+        isChrome: function () {
             return userAgentContains('chrome');
         },
-        majorVersion: function() {
+        majorVersion: function () {
             try {
                 if (ice.browser.isFirefox()) {
                     return Number(navigator.userAgent.match(/Firefox[\/\s](\d+)\.\d+/)[1]);
@@ -55,7 +56,7 @@
                 return 0;
             }
         },
-        minorVersion: function() {
+        minorVersion: function () {
             try {
                 if (ice.browser.isFirefox()) {
                     return Number(navigator.userAgent.match(/Firefox[\/\s]\d+\.(\d+)/)[1]);
@@ -76,25 +77,25 @@
         },
 
         os: {
-            isWindows: function() {
+            isWindows: function () {
                 return userAgentContains('windows')
             },
-            isOSX: function() {
+            isOSX: function () {
                 return userAgentContains('macintosh')
             },
-            isLinux: function() {
+            isLinux: function () {
                 return userAgentContains('linux')
             },
-            isAndroid: function() {
+            isAndroid: function () {
                 return userAgentContains('android')
             },
-            isiOS: function() {
+            isiOS: function () {
                 return userAgentContains('ipod') || userAgentContains('ipad') || userAgentContains('iphone');
             }
         },
 
         feature: {
-            localStorageAvailable: function() {
+            localStorageAvailable: function () {
                 var workingLocalStorage = false;
                 if (window.localStorage) {
                     var key = 'testLocalStorage';
@@ -108,10 +109,10 @@
                 }
                 return workingLocalStorage;
             },
-            cookiesEnabled: function() {
+            cookiesEnabled: function () {
                 return navigator.cookieEnabled;
             },
-            isOnline: function() {
+            isOnline: function () {
                 return navigator.onLine;
             }
         }
