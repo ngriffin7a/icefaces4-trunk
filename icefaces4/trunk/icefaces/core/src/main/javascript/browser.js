@@ -94,27 +94,25 @@
             }
         },
 
-        feature: {
-            localStorageAvailable: function () {
-                var workingLocalStorage = false;
-                if (window.localStorage) {
-                    var key = 'testLocalStorage';
-                    var value = String(Math.random());
-                    try {
-                        window.localStorage[key] = value;
-                        workingLocalStorage = window.localStorage[key] == value;
-                    } finally {
-                        window.localStorage.removeItem(key);
-                    }
+        localStorageAvailable: function () {
+            var workingLocalStorage = false;
+            if (window.localStorage) {
+                var key = 'testLocalStorage';
+                var value = String(Math.random());
+                try {
+                    window.localStorage[key] = value;
+                    workingLocalStorage = window.localStorage[key] == value;
+                } finally {
+                    window.localStorage.removeItem(key);
                 }
-                return workingLocalStorage;
-            },
-            cookiesEnabled: function () {
-                return navigator.cookieEnabled;
-            },
-            isOnline: function () {
-                return navigator.onLine;
             }
+            return workingLocalStorage;
+        },
+        cookiesEnabled: function () {
+            return navigator.cookieEnabled;
+        },
+        isOnline: function () {
+            return navigator.onLine;
         }
     }
 })();
