@@ -505,3 +505,107 @@ ice.ace.setResetValue = function(id, value) {
 ice.ace.isSet = function(value) {
 	return !(typeof value == 'undefined' || value === null);
 };
+
+/** Browser detection **/
+(function () {
+    var userAgent = navigator.userAgent.toLowerCase();
+
+    function userAgentContains(s) {
+        return userAgent.indexOf(s) >= 0;
+    }
+
+    ice.ace.browser = {
+        isIE: function () {
+            return userAgentContains('msie');
+        },
+        isEdge: function () {
+            return userAgentContains('trident');
+        },
+        isSafari: function () {
+            return userAgentContains('safari') && !userAgentContains('chrome') && !userAgentContains('mobile safari');
+        },
+        isFirefox: function () {
+            return userAgentContains('firefox');
+        },
+        isChrome: function () {
+            return userAgentContains('chrome');
+        },
+        majorVersion: function () {
+            try {
+                if (ice.ace.browser.isFirefox()) {
+                    return Number(navigator.userAgent.match(/Firefox[\/\s](\d+)\.\d+/)[1]);
+                } else if (ice.ace.browser.isSafari()) {
+                    return Number(navigator.userAgent.match(/Version\/(\d+)/)[1]);
+                } else if (ice.ace.browser.isChrome()) {
+                    return Number(navigator.userAgent.match(/Chrome\/(\d+)\.\d+/)[1]);
+                } else if (ice.ace.browser.isIE()) {
+                    return Number(navigator.userAgent.match(/MSIE (\d+)\.\d+;/)[1]);
+                } else if (ice.ace.browser.isEdge()) {
+                    return Number(navigator.userAgent.match(/Trident.*rv[ :]*(\d+)\.\d+/)[1]);
+                } else {
+                    return 0;
+                }
+            } catch (ex) {
+                return 0;
+            }
+        },
+        minorVersion: function () {
+            try {
+                if (ice.ace.browser.isFirefox()) {
+                    return Number(navigator.userAgent.match(/Firefox[\/\s]\d+\.(\d+)/)[1]);
+                } else if (ice.ace.browser.isSafari()) {
+                    return Number(navigator.userAgent.match(/Version\/\d+\.(\d+)/)[1]);
+                } else if (ice.ace.browser.isChrome()) {
+                    return Number(navigator.userAgent.match(/Chrome\/\d+\.(\d+)/)[1]);
+                } else if (ice.ace.browser.isIE()) {
+                    return Number(navigator.userAgent.match(/MSIE \d+\.(\d+);/)[1]);
+                } else if (ice.ace.browser.isEdge()) {
+                    return Number(navigator.userAgent.match(/Trident.*rv[ :]*\d+\.(\d+)/)[1]);
+                } else {
+                    return 0;
+                }
+            } catch (ex) {
+                return 0;
+            }
+        },
+
+        os: {
+            isWindows: function () {
+                return userAgentContains('windows')
+            },
+            isOSX: function () {
+                return userAgentContains('macintosh')
+            },
+            isLinux: function () {
+                return userAgentContains('linux')
+            },
+            isAndroid: function () {
+                return userAgentContains('android')
+            },
+            isiOS: function () {
+                return userAgentContains('ipod') || userAgentContains('ipad') || userAgentContains('iphone');
+            }
+        },
+
+        localStorageAvailable: function () {
+            var workingLocalStorage = false;
+            if (window.localStorage) {
+                var key = 'testLocalStorage';
+                var value = String(Math.random());
+                try {
+                    window.localStorage[key] = value;
+                    workingLocalStorage = window.localStorage[key] == value;
+                } finally {
+                    window.localStorage.removeItem(key);
+                }
+            }
+            return workingLocalStorage;
+        },
+        cookiesEnabled: function () {
+            return navigator.cookieEnabled;
+        },
+        isOnline: function () {
+            return navigator.onLine;
+        }
+    }
+})();
