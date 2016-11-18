@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ValueChangeEvent;
@@ -75,7 +76,7 @@ public class MicrophoneRenderer extends Renderer {
         Microphone microphone = (Microphone) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = microphone.getClientId();
-		UIComponent fallbackFacet = microphone.getFacet("fallback");
+		//UIComponent fallbackFacet = microphone.getFacet("fallback");
 
 		writer.startElement(SPAN_ELEM, microphone);
 		writer.writeAttribute(ID_ATTR, clientId);
@@ -100,9 +101,11 @@ public class MicrophoneRenderer extends Renderer {
 		writer.writeAttribute(TABINDEX_ATTR, microphone.getTabindex());
 		//writeStandardAttributes(writer, microphone, baseClass.toString(), IDevice.DISABLED_STYLE_CLASS);
 		//default value of unset in params is Integer.MIN_VALUE
-		String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
-		String script = launchFailed + "bridgeit.microphone('" + clientId + "', 'callback"+clientId+"', {postURL:'" + microphone.getPostURL() + "', "
-        + "cookies:{'JSESSIONID':'" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "'}});";
+		//String launchFailed = fallbackFacet != null ? "ice.mobi.fallback.setupLaunchFailed('"+clientId+"_button','"+clientId+"_fallback');" : "";
+		ExternalContext externalContext = facesContext.getExternalContext();
+		String servletPath = externalContext.getRequestContextPath();
+		String recorderWorkerPath = servletPath + "/javax.faces.resource/recorderWorker.js.jsf?ln=org.icefaces.component.microphone";
+		String script = "ice.mobi.microphoneBtnOnclick('" + clientId + "', '" + microphone.getButtonLabel() + "', '" + capturedLabel + "', '" + microphone.getPostURL() + "', '" + MobiJSFUtils.getSessionIdCookie(facesContext) +  "', {workerPath: '" + recorderWorkerPath + "'});";
 		writer.writeAttribute(ONCLICK_ATTR, script);
 		writer.startElement(SPAN_ELEM, microphone);
 		writer.writeText(microphone.getButtonLabel());
@@ -133,20 +136,13 @@ public class MicrophoneRenderer extends Renderer {
 
 		writer.endElement(BUTTON_ELEM);
 
-		if (fallbackFacet != null) {
+		/*if (fallbackFacet != null) {
 			writer.startElement(SPAN_ELEM, microphone);
 			writer.writeAttribute(ID_ATTR, clientId + "_fallback");
 			writer.writeAttribute(STYLE_ATTR, "display:none;");
 			if (fallbackFacet.isRendered()) fallbackFacet.encodeAll(facesContext);
 			writer.endElement(SPAN_ELEM);
-		}
-		writer.startElement("script", microphone);
-		writer.writeAttribute("type", "text/javascript");
-		writer.writeText("if (!bridgeit.isSupportedPlatform('microphone') && document.getElementById('"+clientId+"_fallback')) {");
-		writer.writeText("document.getElementById('"+clientId+"_button').style.display='none';");
-		writer.writeText("document.getElementById('"+clientId+"_fallback').style.display='inline';");
-		writer.writeText("}");
-		writer.endElement("script");
+		}*/
 
 		writer.endElement(SPAN_ELEM);
         microphone.setButtonLabel(oldLabel);

@@ -1,0 +1,22 @@
+.mobi-hidden {
+	display:none !important;
+}
+.mobi-microphone-popup {
+	position: fixed;
+	top: 20px;
+	width: 80%;
+	margin: 0 auto;
+	left: 50%;
+	margin-left: -40%;
+	text-align: center;
+	padding: 20px;
+	z-index: 1000;
+	background-color: #EFEFEF;
+	border: 1px solid #888;
+	border-radius: 5px;
+	box-sizing: border-box;
+}
+.mobi-microphone-popup audio {
+	display: block;
+	margin: 0 auto 20px auto;
+}
