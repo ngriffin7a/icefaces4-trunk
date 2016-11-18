@@ -49,7 +49,11 @@ import java.util.Map;
 
 @ResourceDependencies({
         @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
-        @ResourceDependency(library = "org.icefaces.component.util", name = "component.js")
+        @ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
+        @ResourceDependency(library = "org.icefaces.component.microphone", name = "microphone.css"),
+        @ResourceDependency(library = "org.icefaces.component.microphone", name = "microphone.js"),
+        @ResourceDependency(library = "org.icefaces.component.microphone", name = "recorder.js"),
+        @ResourceDependency(library = "org.icefaces.component.microphone", name = "recorderWorker.js")
 })
 public class MicrophoneMeta extends UIComponentBaseMeta {
 
