@@ -97,10 +97,18 @@ ice.ace.checkboxbutton.prototype.isChecked = function() {
 
 ice.ace.checkboxbutton.prototype.setChecked = function(bool) {
     if (this.options.checkboxButtons) {
-		if (!ice.ace.jq(this.optionSelector).attr('selected'))
-			ice.ace.jq(this.optionSelector).attr('selected', "selected");
-		else
-			ice.ace.jq(this.optionSelector).removeAttr('selected');
+        var option = ice.ace.jq(this.optionSelector);
+        if (!option.attr('selected')) {
+            option.attr('selected', "selected");
+        } else {
+            option.removeAttr('selected');
+        }
+        var event = new UIEvent('click', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+        });
+        option[0].parentNode.dispatchEvent(event);
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
 	}
