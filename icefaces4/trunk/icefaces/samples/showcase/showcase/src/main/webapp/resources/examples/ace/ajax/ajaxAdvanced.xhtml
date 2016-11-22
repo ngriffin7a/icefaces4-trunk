@@ -59,8 +59,8 @@
 									 min="-50"
 									 max="50"
 									 value="#{ajaxAdvancedBean.sliderValue}">
-						<ace:ajax event="slideEnd" execute="@this" render="empty #{ajaxAdvancedBean.updateCelsius ? 'celsius ' : ' '} #{ajaxAdvancedBean.updateFahrenheit ? 'fahrenheit ' : ' '} #{ajaxAdvancedBean.updateKelvin ? 'kelvin' : ' '}" disabled="#{ajaxAdvancedBean.event ne 'slideEnd'}" />
-						<ace:ajax event="slide" execute="@this" render="empty #{ajaxAdvancedBean.updateCelsius ? 'celsius ' : ' '} #{ajaxAdvancedBean.updateFahrenheit ? 'fahrenheit ' : ' '} #{ajaxAdvancedBean.updateKelvin ? 'kelvin' : ' '}" disabled="#{ajaxAdvancedBean.event ne 'slide'}" />
+						<ace:ajax event="slideEnd" execute="@this" render="@this empty #{ajaxAdvancedBean.updateCelsius ? 'celsius ' : ' '} #{ajaxAdvancedBean.updateFahrenheit ? 'fahrenheit ' : ' '} #{ajaxAdvancedBean.updateKelvin ? 'kelvin' : ' '}" disabled="#{ajaxAdvancedBean.event ne 'slideEnd'}" />
+						<ace:ajax event="slide" execute="@this" render="@this empty #{ajaxAdvancedBean.updateCelsius ? 'celsius ' : ' '} #{ajaxAdvancedBean.updateFahrenheit ? 'fahrenheit ' : ' '} #{ajaxAdvancedBean.updateKelvin ? 'kelvin' : ' '}" disabled="#{ajaxAdvancedBean.event ne 'slide'}" />
 					</ace:sliderEntry>
 					<h:panelGrid width="60%" columns="3" cellpadding="20" cellspacing="20">
 						<h:outputText value="Celsius (&#176;C)"/>
