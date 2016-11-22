@@ -119,28 +119,28 @@
 	border-left: none;
 	height: 100%;
 }
-.ice-ace-schedule .schedule-list .schedule-list-title,
-.ice-ace-schedule .schedule-details .schedule-details-title {
+.ice-ace-schedule .schedule-list-title,
+.ice-ace-schedule .schedule-details-title {
 	padding: 14px;
 	text-align: center;
 	letter-spacing: 1px;
 }
-.ice-ace-schedule .schedule-list .schedule-list-event {
+.ice-ace-schedule .schedule-list-content .schedule-list-event {
 	padding: 14px;
 }
-.ice-ace-schedule .schedule-list .schedule-list-event-name {
+.ice-ace-schedule .schedule-list-content .schedule-list-event-name {
 	font-weight: bold;
 }
-.ice-ace-schedule .schedule-list .schedule-list-event-location {
+.ice-ace-schedule .schedule-list-content .schedule-list-event-location {
 	/*font-weight: 400;*/
 }
-.ice-ace-schedule .schedule-list .schedule-list-content {
-	height: 85%;
+.ice-ace-schedule .schedule-list-content {
+	/*height: 85%;*/
 	overflow: auto;
 }
-.ice-ace-schedule .schedule-sidebar .schedule-details .schedule-details-content {
-	padding: 14px;
-	height: 85%;
+.ice-ace-schedule .schedule-sidebar .schedule-details-content {
+	/*padding: 14px;*/
+	/*height: 85%;*/
 	overflow: auto;
 }
 .ice-ace-schedule .schedule-content {

@@ -102,6 +102,12 @@ ice.ace.Schedule = function(id, cfg) {
 			self.displayEventDetailsPopup(markup);
 		});
 	}
+	this.jqRoot.delegate('.schedule-list-title', 'click', function(event) {
+		self.expandEventList();
+	});
+	this.jqRoot.delegate('.schedule-details-title', 'click', function(event) {
+		self.expandEventDetails();
+	});
 };
 
 ice.ace.Schedule.prototype.extractEventIndex = function(node) {
@@ -184,8 +190,9 @@ ice.ace.Schedule.prototype.displayEventDetailsPopup = function(markup) {
 };
 
 ice.ace.Schedule.prototype.displayEventDetailsSidebar = function(markup) {
-	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details .schedule-details-content');
+	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details-content');
 	eventDetails.html(markup);
+	this.expandEventDetails();
 };
 
 ice.ace.Schedule.prototype.displayEventDetailsTooltip = function(markup, node) {
@@ -334,26 +341,22 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 
 		+"<div class=\"schedule-sidebar ui-widget-content\">"
 
-			+"<div class=\"schedule-list\">"
-				+"<div class=\"schedule-list-title ui-state-default\">Events this Month</div>"
-				+"<div class=\"schedule-list-content\">";
+			+"<div class=\"schedule-list-title ui-state-default\">Events this Month</div>"
+			+"<div class=\"schedule-list-content\">";
 
-					for (i = 0; i < data.eventsThisMonth.length; i++) {
-						var event = data.eventsThisMonth[i];
-						markup += "<div class=\"schedule-list-event\">"
-							+"<div class=\"event-item-day\">" + event.startDate.substring(8) + "</div>"
-							+"<div class=\"event-item-name\">" + event.title + "</div>"
-							+"<div class=\"event-item-location\">" + event.location + "</div>"
-						+"</div>";
-					}
+				for (i = 0; i < data.eventsThisMonth.length; i++) {
+					var event = data.eventsThisMonth[i];
+					markup += "<div class=\"schedule-list-event\">"
+						+"<div class=\"schedule-list-event-day\">" + event.startDate.substring(8) + "</div>"
+						+"<div class=\"schedule-list-event-name\">" + event.title + "</div>"
+						+"<div class=\"schedule-list-event-location\">" + event.location + "</div>"
+					+"</div>";
+				}
 
-				markup += "</div>"
-			+"</div>"
+			markup += "</div>"
 
-			+"<div class=\"schedule-details\">"
-				+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
-				+"<div class=\"schedule-details-content\"></div>"
-			+"</div>"
+			+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
+			+"<div class=\"schedule-details-content\"></div>"
 
 		+"</div>"
 
@@ -364,6 +367,7 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 
 ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 	this.addListeners();
+	this.expandEventList();
 };
 
 ice.ace.Schedule.prototype.renderWeekView = function(data) {
@@ -422,16 +426,11 @@ ice.ace.Schedule.prototype.renderWeekView = function(data) {
 
 		markup += "<div class=\"schedule-sidebar ui-widget-content\">"
 
-			+"<div class=\"schedule-list\">"
-				+"<div class=\"schedule-list-title ui-state-default\">Events this Week</div>"
-				+"<div class=\"schedule-list-content\">"
-				+"</div>"
-			+"</div>"
+		+"<div class=\"schedule-list-title ui-state-default\">Events this Week</div>"
+		+"<div class=\"schedule-list-content\"></div>"
 
-			+"<div class=\"schedule-details\">"
-				+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
-				+"<div class=\"schedule-details-content\"></div>"
-			+"</div>"
+		+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
+		+"<div class=\"schedule-details-content\"></div>"
 
 		+"</div>"
 
@@ -540,9 +539,10 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 			eventElement.html(event.startTime + ' ' + event.title);
 			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px', 
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-			ice.ace.jq('<div class="schedule-list-event"><div class="event-item-day">'+event.startDate.substring(8)+'</div><div class="event-item-name">'+event.title+'</div><div class="event-item-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
+			ice.ace.jq('<div class="schedule-list-event"><div class="schedule-list-event-day">'+event.startDate.substring(8)+'</div><div class="schedule-list-event-name">'+event.title+'</div><div class="schedule-list-event-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
 		}
 	}
+	this.expandEventList();
 };
 
 ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
@@ -640,10 +640,11 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 				eventElement.html(event.startTime + ' ' + event.title);
 				eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
 					height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-				ice.ace.jq('<div class="schedule-list-event"><div class="event-item-day">'+event.startDate.substring(8)+'</div><div class="event-item-name">'+event.title+'</div><div class="event-item-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
+				ice.ace.jq('<div class="schedule-list-event"><div class="schedule-list-event-day">'+event.startDate.substring(8)+'</div><div class="schedule-list-event-name">'+event.title+'</div><div class="schedule-list-event-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
 			}
 		}
 	}
+	this.expandEventList();
 };
 
 ice.ace.Schedule.prototype.renderDayView = function(data) {
@@ -685,16 +686,11 @@ ice.ace.Schedule.prototype.renderDayView = function(data) {
 
 		markup += "<div class=\"schedule-sidebar ui-widget-content\">"
 
-			+"<div class=\"schedule-list\">"
-				+"<div class=\"schedule-list-title ui-state-default\">Events this Day</div>"
-				+"<div class=\"schedule-list-content\">"
-				+"</div>"
-			+"</div>"
+			+"<div class=\"schedule-list-title ui-state-default\">Events this Day</div>"
+			+"<div class=\"schedule-list-content\"></div>"
 
-			+"<div class=\"schedule-details\">"
-				+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
-				+"<div class=\"schedule-details-content\"></div>"
-			+"</div>"
+			+"<div class=\"schedule-details-title ui-state-default\">Event Details</div>"
+			+"<div class=\"schedule-details-content\"></div>"
 
 		+"</div>"
 
@@ -750,9 +746,10 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 			eventElement.html(event.startTime + ' ' + event.title);
 			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
 				height: (endOffset.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-			ice.ace.jq('<div class="schedule-list-event"><div class="event-item-day">'+event.startTime+'</div><div class="event-item-name">'+event.title+'</div><div class="event-item-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
+			ice.ace.jq('<div class="schedule-list-event"><div class="schedule-list-event-day">'+event.startTime+'</div><div class="schedule-list-event-name">'+event.title+'</div><div class="schedule-list-event-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
 		}
 	}
+	this.expandEventList();
 };
 
 ice.ace.Schedule.prototype.renderLazyDayEvents = function(data) {
@@ -802,9 +799,10 @@ ice.ace.Schedule.prototype.renderLazyDayEvents = function(data) {
 			eventElement.html(event.startTime + ' ' + event.title);
 			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-			ice.ace.jq('<div class="schedule-list-event"><div class="event-item-day">'+event.startTime+'</div><div class="event-item-name">'+event.title+'</div><div class="event-item-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
+			ice.ace.jq('<div class="schedule-list-event"><div class="schedule-list-event-day">'+event.startTime+'</div><div class="schedule-list-event-name">'+event.title+'</div><div class="schedule-list-event-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
 		}
 	}
+	this.expandEventList();
 };
 
 ice.ace.Schedule.prototype.addListeners = function() {
@@ -1256,7 +1254,33 @@ ice.ace.Schedule.prototype.determinePreviousTimeCell = function(hour, minutes) {
 		}
 	}
 	return previousHour + previousMinutes;
-}
+};
+
+ice.ace.Schedule.prototype.expandEventList = function() {
+	var contentHeight = this.getSidebarContentHeight();
+	var listContent = ice.ace.jq(this.jqId).find('.schedule-list-content');
+	var detailsContent = ice.ace.jq(this.jqId).find('.schedule-details-content');
+	detailsContent.css('height', '0');
+	listContent.css('height', contentHeight + 'px');
+};
+
+ice.ace.Schedule.prototype.expandEventDetails = function() {
+	var contentHeight = this.getSidebarContentHeight();
+	var listContent = ice.ace.jq(this.jqId).find('.schedule-list-content');
+	var detailsContent = ice.ace.jq(this.jqId).find('.schedule-details-content');
+	listContent.css('height', '0');
+	detailsContent.css('height', contentHeight + 'px');
+};
+
+ice.ace.Schedule.prototype.getSidebarContentHeight = function() {
+	var sidebar = ice.ace.jq(this.jqId).find('.schedule-sidebar');
+	var sidebarHeight = sidebar.outerHeight();
+	var listTitle = ice.ace.jq(this.jqId).find('.schedule-list-title');
+	var listTitleHeight = listTitle.outerHeight();
+	var detailsTitle = ice.ace.jq(this.jqId).find('.schedule-details-title');
+	var detailsTitleHeight = detailsTitle.outerHeight();
+	return sidebarHeight - listTitleHeight - detailsTitleHeight;
+};
 
 ice.ace.Schedule.prototype.getMonthName = function(monthNumber) {
 	var months = ['January', 'February', 'March', 'April', 'May', 'June',
