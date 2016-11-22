@@ -87,23 +87,26 @@ public class SectorSeries extends ChartSeries {
     }
 
     public void encodeRendererOptions(JSONBuilder cfg){
-       cfg.beginMap("rendererOptions");
+        cfg.beginMap("rendererOptions");
+        String labels = getDataLabels();
+        String labelFormat = getDataLabelFormatString();
+        Integer sliceMargin = getSliceMargin();
+        Boolean showLabels = getShowDataLabels();
+        Boolean fill = getFill();
 
-            String labels = getDataLabels();
-            Integer sliceMargin = getSliceMargin();
-            Boolean showLabels = getShowDataLabels();
-            Boolean fill = getFill();
+        if (labels != null)
+            cfg.entry("dataLabels", labels);
+        if (showLabels != null)
+            cfg.entry("showDataLabels", showLabels);
+        if (labelFormat !=null){
+            cfg.entry("dataLabelFormatString", labelFormat);
+        }
+        if (fill != null)
+            cfg.entry("fill", fill);
+        if (sliceMargin != null)
+            cfg.entry("sliceMargin", sliceMargin);
 
-            if (labels != null)
-                cfg.entry("dataLabels", labels);
-            if (showLabels != null)
-                cfg.entry("showDataLabels", showLabels);
-            if (fill != null)
-                cfg.entry("fill", fill);
-            if (sliceMargin != null)
-                cfg.entry("sliceMargin", sliceMargin);
-
-            cfg.endMap();
+        cfg.endMap();
     }
 
     @Override
@@ -174,7 +177,20 @@ public class SectorSeries extends ChartSeries {
      * Get gap size between each slice.
      * @param sliceMargin size in degress
      */
-    public void setSliceMargin(Integer sliceMargin) {
+    public void setSliceMargin(Integer sliceMargin)
+    {
         this.sliceMargin = sliceMargin;
+    }
+
+    /**
+     * allows users to determine format of the data Labels
+     * @return
+     */
+    public String getDataLabelFormatString() {
+         return dataLabelFormatString;
+    }
+
+    public void setDataLabelFormatString(String dataLabelFormatString) {
+         this.dataLabelFormatString = dataLabelFormatString;
     }
 }
