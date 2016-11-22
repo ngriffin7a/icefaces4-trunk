@@ -26,6 +26,29 @@
 			return hiddenInput;
 		}
 
+		function getThumbnail(){
+			var thumbId = id + "-thumb";
+			var thumbnail = document.getElementById(thumbId);
+			return thumbnail;
+		}
+
+		function updateThumbnail(dataURL){
+			var thumbnail = getThumbnail();
+			if( thumbnail ){
+				thumbnail.src = dataURL;
+				var cl = thumbnail.parentNode.classList;
+				cl.remove('mobi-thumb');
+				cl.add('mobi-thumb-done');
+			}
+		}
+
+		function hideThumbnail(){
+			var thumbnail = getThumbnail();
+			if( thumbnail ){
+				thumbnail.style.display = "none";
+			}
+		}
+
 		function renderCameraFallbackFileUpload(){
 
 			function getFileInput(){
@@ -136,29 +159,6 @@
 
 		function launchHTML5Camera(){
 
-			function getThumbnail(){
-				var thumbId = id + "-thumb";
-				var thumbnail = document.getElementById(thumbId);
-				return thumbnail;
-			}
-
-			function updateThumbnail(dataURL){
-				var thumbnail = getThumbnail();
-				if( thumbnail ){
-					thumbnail.src = dataURL;
-					var cl = thumbnail.parentNode.classList;
-					cl.remove('mobi-thumb');
-					cl.add('mobi-thumb-done');
-				}
-			}
-
-			function hideThumbnail(){
-				var thumbnail = getThumbnail();
-				if( thumbnail ){
-					thumbnail.style.display = "none";
-				}
-			}
-
 			function renderHTML5Camera(facingMode){
 				var popup = document.createElement('div'),
 					closeBtn = document.createElement('a'),
@@ -175,7 +175,7 @@
 					options = {},
 					img = new Image();
 
-				var supportsFacingMode = false;
+				var supportsFacingMode = true; // temporsry fix
 				var videoinputs = 0;
 				if (navigator.mediaDevices) {
 					var supports = navigator.mediaDevices.getSupportedConstraints();
@@ -486,7 +486,15 @@
 		var origLaunchFailed = bridgeit.launchFailed;
 		bridgeit.launchFailed = function(compId){
 			if( compId === id ){
-				renderCameraFallbackFileUpload();
+				origLaunchFailed(compId);
+				if (window[id + '_fallbackObserver']) {
+					clearTimeout(window[id + '_fallbackObserver']);
+				}
+				window[id + '_fallbackObserver'] = setTimeout(function() {
+					renderCameraFallbackFileUpload();
+				}, 100);
+			}
+			else{
 				origLaunchFailed(compId);
 			}
 		}
@@ -494,7 +502,15 @@
 		var origNotSupported = bridgeit.notSupported;
 		bridgeit.notSupported = function(compId, command){
 			if( command === 'camera' && compId === id){
-				renderCameraFallbackFileUpload();
+				origNotSupported(compId, command);
+				if (window[id + '_fallbackObserver']) {
+					clearTimeout(window[id + '_fallbackObserver']);
+				}
+				window[id + '_fallbackObserver'] = setTimeout(function() {
+					renderCameraFallbackFileUpload();
+				}, 100);
+			}
+			else{
 				origNotSupported(compId, command);
 			}
 		}

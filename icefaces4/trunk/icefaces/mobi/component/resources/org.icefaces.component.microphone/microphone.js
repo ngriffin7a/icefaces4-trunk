@@ -36,7 +36,7 @@
 					input.type = 'file';
 					var isIE = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
 					input.accept = isIE ? 'audio/*;capture=microphone' : 'audio/*';
-					input.capture = true;
+					input.capture = 'microphone';
 					input.name = id;
 					input.addEventListener('change', convertAudioFromFile, false);
 				}
@@ -324,16 +324,26 @@
 		var origLaunchFailed = bridgeit.launchFailed;
 		bridgeit.launchFailed = function(compId){
 			if( compId === id ){
-				renderMicrophoneFallbackFileUpload();
 				origLaunchFailed(compId);
+				if (window[id + '_fallbackObserver']) {
+					clearTimeout(window[id + '_fallbackObserver']);
+				}
+				window[id + '_fallbackObserver'] = setTimeout(function() {
+					renderMicrophoneFallbackFileUpload();
+				}, 100);
 			}
 		}
 
 		var origNotSupported = bridgeit.notSupported;
 		bridgeit.notSupported = function(compId, command){
 			if( command === 'microphone' && compId === id){
-				renderMicrophoneFallbackFileUpload();
 				origNotSupported(compId, command);
+				if (window[id + '_fallbackObserver']) {
+					clearTimeout(window[id + '_fallbackObserver']);
+				}
+				window[id + '_fallbackObserver'] = setTimeout(function() {
+					renderMicrophoneFallbackFileUpload();
+				}, 100);
 			}
 		}
 
