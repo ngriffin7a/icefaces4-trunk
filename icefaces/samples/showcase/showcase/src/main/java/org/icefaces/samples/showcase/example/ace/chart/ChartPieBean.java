@@ -41,7 +41,7 @@ public class ChartPieBean implements Serializable
             add("Commuting", 7);
             add("Orientation", 9);
             setShowDataLabels(true);
-            //setDataLabels("value");
+            setDataLabelFormatString("%.2f%%") ;
             setSliceMargin(4);
             setFill(false);
         }});
