@@ -226,10 +226,6 @@
                 var icon = node.appendChild(document.createElement('span'));
                 icon.className = 'ui-icon ui-icon-alert';
                 node.appendChild(document.createTextNode(text));
-
-                element.cleanupValidationMessage = function () {
-                    container.removeChild(node);
-                };
             } else {
 				if (element.className.indexOf('ui-state-error') == -1)
 					element.className += ' ui-state-error';
@@ -238,6 +234,10 @@
 					updateIconClassName(node.childNodes[0].className);
                 node.childNodes[1].nodeValue = text;
             }
+            //add cleanup function (re-add it even if previously defined, sometimes the element is replaced)
+            element.cleanupValidationMessage = function () {
+                container.removeChild(node);
+            };
 
             return '';
         }
