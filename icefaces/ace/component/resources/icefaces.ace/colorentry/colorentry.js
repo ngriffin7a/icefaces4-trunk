@@ -1,119 +1,221 @@
 if (!window['ice']) window.ice = {};
 if (!window.ice['ace']) window.ice.ace = {};
 
-if (!ice.ace.ColorEntrys) ice.ace.ColorEntrys = {};
-
 ice.ace.ColorEntry = function(id, cfg) {
-    ice.ace.jq().ready(function() {
-        this.id = id;
-        this.jqId = ice.ace.escapeClientId(id);
-        this.jq = ice.ace.jq(this.jqId);
-        this.spanSelector = this.jqId + " > span";
-        var options= cfg.options;
+    console.log(" creating widget for id="+id);
+    var behavior, altFieldVal;
+    this.id = id;
+    this.cfg = cfg;
+    this.jqId = ice.ace.escapeClientId(id);
+    this.jqElId =  this.jqId + '_input';
+    this.jq = ice.ace.jq(this.jqElId);
+ //   this.cfg.formId = this.jq.parents('form:first').attr('id');
+    //i18n and l7n
+  //  this.configureLocale();
+    this.options = cfg;
+    this.pickerFn = "colorpicker";
+    if (this.options.color) {
+        this.jq.value = this.options.color;
+    }
+    //Initialize colrEntry
+    if(!this.cfg.disabled) {
+        console.log(" creating colorpicker!");
+        this.jq.colorpicker(this.cfg);
+    }
 
-        ice.ace.ColorEntry.setResetValue(id);
-        var changeFn = function()
-        {
-            var t =  ice.ace.jq(input).spectrum("get");
-            var valueFormat= cfg.options.preferredFormat;
-            var convertValue = false;
-            if (t && valueFormat)convertValue=true;
-            if (convertValue && valueFormat=="hex"){
-                t.toHex();
-            } else if (convertValue && valueFormat == "hsl"){
-                t.toHsl();
-            } else if (convertValue && valueFormat == "rgb") {
-                t.toRgbString();
-            }else if (convertValue && valueFormat == "hsv"){
-                t.toHsvString();
-            } else if (convertValue){
-                t.toHexString();
-            }
-            if (cfg.behaviors && cfg.behaviors.colorChange) {
-                ice.ace.ab(cfg.behaviors.colorChange);
-            }
+//	ice.ace.setResetValue(this.id, this.getColor());
+
+    //Client behaviors and input skinning
+  /*  if(this.options.popup) {
+        if(this.options.behaviors) {
+            ice.ace.attachBehaviors(this.jq, this.options.behaviors);
+        } */
+
+        //Visuals
+   /*     if(this.options.popup && this.options.theme != false) {
+            ice.ace.util.bindHoverFocusStyle(this.jq);
         }
-        options.change=changeFn;
+        behavior = this.cfg && this.cfg.behaviors && this.cfg.behaviors.valueChange;
+    }   */
+};
 
+ice.ace.ColorEntry.instances = {}; // keep track of initialized instances
+
+ice.ace.ColorEntry.prototype.configureLocale = function() {
+    var localeSettings = ice.ace.locales[this.cfg.options.locale];
+
+    if(localeSettings) {
+        for(var setting in localeSettings) {
+            this.cfg[setting] = localeSettings[setting];
+        }
+    }
+};
+
+
+ice.ace.ColorEntry.prototype.setColor = function(color) {
+    this.jq.colorpicker('setColor', color);
+};
+
+ice.ace.ColorEntry.prototype.getColor= function() {
+    return this.jq.colorpicker('getColor');
+};
+
+ice.ace.ColorEntry.prototype.enable = function() {
+    this.jq.colorpicker('enable');
+};
+
+ice.ace.ColorEntry.prototype.disable = function() {
+    this.jq.colorpicker('disable');
+};
+
+ice.ace.ColorEntry.prototype.destroy = function() {
+    if (this.pickerFn) this.jq[this.pickerFn]("destroy");
+    this.jq =  null;
+};
+
+ice.ace.ColorEntryInit = function( cfg) {
+    ice.ace.jq().ready(function() {
+        var options = cfg.options;
+        var id =  options.id;
+        var behaviors = cfg.behaviors || null;
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
-        ice.ace.jq(input).hide();
-        if (!ice.ace.ColorEntrys[id]) {
-            ice.ace.ColorEntry.lazyInit(id, options);
-        } else {
-            // if instance was previously initialized, create right away and return
-            ice.ace.jq(input).spectrum(options);
+        var trigger = null;
+   /*     ice.ace.jq.each(options, function(key, value) {
+            console.log(key, value);
+        });   */
+        var showOn = options.showOn || 'both';
+        var buttonText = options.buttonText || null;
+        var buttonImage = options.buttonImage || '\/colorpicker\/javax.faces.resource\/colorentry\/ui-colorpicker.png.jsf?ln=icefaces.ace&v=4_2_0_161018';
+        var buttonImageOnly = options.buttonImageOnly || false ;
+        var initEltSet = ice.ace.jq();
+
+        /* add function callbacks to options */
+        var okFn = function(event, color){ 
+             input.value = color.formatted;
+             console.log("val set to "+input.value+" format="+color.formatted);  
+             if (behaviors && behaviors.change) { 
+                 ice.ace.ab(behaviors.change); 
+             } 
+         } ;
+  /*       var selectFn = function(event, color) { 
+             console.log("SELECT format="+color.formatted);  
+             event.cancelBubble();
+         };   */
+ /*       var cancelFn = function(event, color){ 
+            console.log("cancel fn formated="+color.formatted); 
+        } ;
+        var closeFn = function(event, color){ 
+            console.log(" CLOSE fn formatted="+color.formatted); 
+        } ;
+        var initFn = function(event, color){ 
+            console.log("INIT fn formatted="+color.formatted); 
+        } ;
+        var openFn = function(event, color){ 
+            console.log("OPEN fn formatted="+color.formatted); 
+        };
+        var stopFn = function(event, color){ 
+            console.log("stop fn formatted="+color.formatted); 
+        } ; */
+
+        options.ok = okFn; 
+    //    options.cancel = cancelFn; 
+        if (options.showCancelButton) {
+            options.revert = true;
+        }
+//        options.init = initFn; 
+ //       options.close = closeFn; 
+ //       options.select = okFn;
+
+        var create = function(){
+               var widget = ice.ace.lazy("ColorEntry", [id, options]);
+               ice.onElementUpdate(id, function(){
+                   widget.destroy();
+                   initEltSet.remove();
+               });
+               ice.ace.ColorEntry.instances[id] = true;
+               return widget;
+        }
+        var initAndShow = function(){
+               if (ice.ace.instance(id)){
+                   ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
+                   return;
+               }
+               if (trigger){
+                   trigger.remove();
+               }
+               create();
+               if(!ice.ace.instance(id).colorpicker)return;
+               ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
+        }
+        if (!options.popup) {
+            create();
+            return;
+        }
+
+    /*    input.one("focus", function() {
+            if (behavior) {
+                input.off('change').on('change', function() {
+                    ice.setFocus();
+                    ice.ace.ab(behavior);
+                });
+            }
+        });  */
+
+		// if instance was previously initialized, create right away and return
+		if (ice.ace.ColorEntry.instances[id]) {
+			create();
+			return;
+		}
+
+		ice.ace.lazy.registry[id] = function() {
+			if (trigger) trigger.remove();
+			return create();
+		};
+
+        initEltSet = initEltSet.add(input);
+
+        if (ice.ace.jq.inArray(showOn, ["button","all"]) >= 0) {
+            trigger = buttonImageOnly ?
+                ice.ace.jq('<img/>').addClass(triggerClass).
+                    attr({ src: buttonImage, alt: buttonText, title: buttonText }) :
+                ice.ace.jq('<button type="button"></button>').addClass(triggerClass).
+                    html(buttonImage == '' ? buttonText : ice.ace.jq('<img/>').attr(
+                    { src:buttonImage, alt:buttonText, title:buttonText }));
+           // input[isRTL ? 'before' : 'after'](trigger);
+            trigger.one("click", initAndShow);
+            initEltSet = initEltSet.add(trigger);
+        }
+        if (ice.ace.jq.inArray(showOn, ["focus","all"]) >= 0) {
+            setTimeout(function(){
+                input.one("focus", initAndShow);
+            }, 350);
+            initEltSet = initEltSet.add(input);
         }
 
         ice.onElementUpdate(id, function() {
-           if (ice.ace.ColorEntrys[id]){
-               console.log(" destroying spectrum for id="+id);
-               var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
-               ice.ace.jq(input).spectrum("destroy");
-               ice.ace.ColorEntrys[id] = null;
-           } ;
+            // .remove cleans jQuery state unlike .unbind
+            initEltSet.remove();
         });
     });
 };
 
-ice.ace.ColorEntry.setResetValue = function(id){
-    if (typeof ice.ace.resetValues[id] == 'undefined') {
-            var input = ice.ace.escapeClientId(id) + "_input";
-    		if (input){
-    			var initialValue = ice.ace.jq(input).val();
-                console.log(" setting initialValue to="+initialValue);
-    			ice.ace.setResetValue(id, initialValue);
-            }
-    }
-};
-ice.ace.ColorEntry.lazyInit = function(id, options){
-    var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
-    var inputSelector = (ice.ace.escapeClientId(id) + "_input");
-    var inputVal;
-    if (input){
-        ice.ace.jq(input).css("display", "none");
-        inputVal=ice.ace.jq(input).val();
-    }
-    var spanSelector = ice.ace.escapeClientId(id) + " > span";
-    var parentSpan = ice.ace.jq(spanSelector);
-    if (parentSpan.children('div.sp-replacer sp-light').length > 0){
-        //may have to remove it?
-    }  else {
-        var replacerClass = "sp-replacer sp-light ";
-        if (options.replacerClassName){
-           replacerClass += options.replacerClassName;
-        }
-        ice.ace.jq(parentSpan).append("<div class='"+replacerClass+"'> <div class='sp-preview'>" +
-            "<div class='sp-preview-inner' style='background-color:"+inputVal+"'></div></div><div class='sp-dd'>&#9660;</div></div>");
-        // Event Binding with no submit.  Just inits and shows Spectrum
-        ice.ace.jq(parentSpan).on("click", "div", function(e){
-            e.stopPropagation();
-            e.preventDefault();
-            //remove old one and initialize and open spectrum
-            if (ice.ace.jq(parentSpan).find("div.sp-replacer")){
-                ice.ace.jq(parentSpan).find("div.sp-replacer").remove();
-            }
-            ice.ace.ColorEntrys[id] = ice.ace.jq(input).spectrum(options);
-            ice.ace.jq(input).spectrum("show");
-        }) ;
-    }
-} ;
-ice.ace.ColorEntry.reset = function(id, ariaEnabled) {
-	var value = ice.ace.resetValues[id];
-	if (ice.ace.isSet(value)) {
-        var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
-        if (value) {
-            ice.ace.jq(input).val(value);
-        }
-        //no aria role to deal with
+ice.ace.ColorEntry.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var instance = ice.ace.instanceNoLazyInit(id);
+	if (instance) instance.setDate(null);
+	var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
+	if (inFieldLabel) {
+		input.attr({name: id + "_label"});
+		input.val(inFieldLabel);
+		input.addClass(inFieldLabelStyleClass);
+	} else {
+		input.val('');
 	}
-    var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
-    ice.ace.jq(input).spectrum("set", ice.ace.jq(input).val());
 };
 
-ice.ace.ColorEntry.clear = function(id, ariaEnabled){
-    var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
-    if (input){
-        ice.ace.jq(input).val('');
-        ice.ace.jq(input).spectrum("set", ice.ace.jq(input).val());
-    }
-}
+ice.ace.ColorEntry.reset = function(id, inFieldLabel, inFieldLabelStyleClass) {
+	var instance = ice.ace.instanceNoLazyInit(id);
+	if (instance) {
+		var value = ice.ace.resetValues[id];
+		if (ice.ace.isSet(value)) instance.setColor(value);
+	}
+};

@@ -26,7 +26,8 @@ public enum ColorFormat {
      * NAME specifies the color by name when selecting color and will fall back to hex
      * NONE will depend on the input
      */
-    HEX("hex"), HEX3("hex3"), HSL("hsl"), RGB("rgb"), NAME("name"), NONE("none");
+    HEX("HEX"), HEXA("HEXA"), HEXA4("HEXA4"), HEX3("HEX3"), HSL("HSL"), HSLA("HSLA"), HSLPERCENT("HSL%"),
+    RGB("RGB"), RGBA("RGBA"), RGBPERCENT("RGB%"), NAME("NAME"), EXACT("EXACT");
     private String value;
     private ColorFormat(String value){
         this.value=value;
