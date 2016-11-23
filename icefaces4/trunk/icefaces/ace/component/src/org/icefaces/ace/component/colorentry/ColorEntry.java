@@ -16,12 +16,17 @@
 package org.icefaces.ace.component.colorentry;
 
 import org.icefaces.ace.component.clientValidator.Validateable;
+import org.icefaces.component.Focusable;
 
 
-public class ColorEntry extends ColorEntryBase implements Validateable {
-    public final static String HIDE_INPUT_CLASS = ".sp-clear";
+public class ColorEntry extends ColorEntryBase implements Focusable {
+    public final static String INPUT_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all";
+    public static String POPUP_ICON = "colorentry/ui-colorpicker.png";
 
     public String getValidatedElementId() {
+         return getClientId() + "_input";
+     }
+    public String getFocusedElementId() {
          return getClientId() + "_input";
      }
 }
