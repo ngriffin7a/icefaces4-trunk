@@ -60,7 +60,7 @@ ice.ace.checkboxbutton = function(clientId, options) {
     if (options.ariaEnabled)
         ice.ace.jq(this.jqId).on("keypress", function(e) { self.onAriaKeypress(e); });
 
-    if (event.type == "mouseover")
+    if (event && event.type == "mouseover")
         this.addStateCSSClasses('hover');
 
     var unload = function() {
@@ -103,11 +103,18 @@ ice.ace.checkboxbutton.prototype.setChecked = function(bool) {
         } else {
             option.removeAttr('selected');
         }
-        var event = new UIEvent('click', {
-            'view': window,
-            'bubbles': true,
-            'cancelable': true
-        });
+        var event;
+        if (document.createEvent) {
+            event = document.createEvent("Event");
+            event.initEvent("click", true, false);
+        } else {
+            event = new Event('click', {
+                'type': 'click',
+                'view': window,
+                'bubbles': true,
+                'cancelable': true
+            });
+        }
         option[0].parentNode.dispatchEvent(event);
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
