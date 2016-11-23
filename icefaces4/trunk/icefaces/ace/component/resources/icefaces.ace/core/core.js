@@ -79,8 +79,9 @@ ice.ace.lazy = function(name, args) {
 ice.ace.evalInit = function(element) {
     var cursor = element;
     while (cursor) {
-        if (cursor.dataset && cursor.dataset.init) {
-            return ice.globalEval(cursor.dataset.init);
+        var initFunction = (cursor.dataset && cursor.dataset.init) || cursor.getAttribute('data-init');
+        if (initFunction) {
+            return ice.globalEval(initFunction);
             break;
         }
         cursor = cursor.parentNode;
