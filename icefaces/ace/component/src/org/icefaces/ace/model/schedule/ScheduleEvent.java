@@ -21,7 +21,13 @@ import java.util.Date;
 public class ScheduleEvent {
 
 	private String id;
+	/**
+     * For app-specific, business logic use.
+     */
     public String getId() { return id; }
+	/**
+     * For app-specific, business logic use.
+     */
 	public void setId(String id) { this.id = id; }
 
 	private String title;
@@ -47,8 +53,4 @@ public class ScheduleEvent {
 	private String notes;
     public String getNotes() { return notes; }
 	public void setNotes(String notes) { this.notes = notes; }
-
-	private Object data; // arbitrary data associated with this event
-    public Object getData() { return data; }
-	public void setData(Object data) { this.data = data; }
 }

@@ -27,8 +27,11 @@
  */
 package org.icefaces.ace.component.schedule;
 
+import org.icefaces.ace.model.schedule.ScheduleEvent;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class ScheduleUtils {
@@ -81,5 +84,85 @@ public class ScheduleUtils {
 			/* TO_DO: log warning */
 			return null;
 		}
+	}
+
+	public static Date convertDateTimeToServerFormat(String date, String time) {
+		Calendar cal = Calendar.getInstance();
+		String yearString = date.substring(0, 4);
+		String monthString = date.substring(5, 7);
+		String dayString = date.substring(8, 10);
+		String hourString = time.substring(0, time.indexOf(":"));
+		String minuteString = time.substring(time.indexOf(":")+1);
+		try {
+			int year, month, day, hour, minute;
+			year = Integer.valueOf(yearString);
+			month = Integer.valueOf(monthString) - 1;
+			day = Integer.valueOf(dayString);
+			hour = Integer.valueOf(hourString);
+			minute = Integer.valueOf(minuteString);
+			cal.set(year, month, day, hour, minute);
+		} catch (Exception e) {
+			/* TO_DO: log warning */
+			return null;
+		}
+		return cal.getTime();
+	}
+
+	public static ScheduleEvent buildScheduleEventFromRequest(Schedule schedule, 
+			Map<String, String> params, String clientId) {
+		String startDate = params.get(clientId + "_date");
+		String startTime = params.get(clientId + "_time");
+		String endDate = params.get(clientId + "_endDate");
+		String endTime = params.get(clientId + "_endTime");
+		String title = params.get(clientId + "_title");
+		String location = params.get(clientId + "_location");
+		String notes = params.get(clientId + "_notes");
+		String styleClass = params.get(clientId + "_styleClass");
+		String id = params.get(clientId + "_id");
+		TimeZone timeZone = schedule.calculateTimeZone();
+
+		ScheduleEvent scheduleEvent = new ScheduleEvent();
+		Date convertedDate = convertDateTimeToServerFormat(startDate, startTime);
+		if (convertedDate == null) return null;
+		Date convertedEndDate = convertDateTimeToServerFormat(endDate, endTime);
+		if (convertedEndDate == null) convertedEndDate = new Date(convertedDate.getTime());
+		scheduleEvent.setStartDate(toUTCFromTimeZone(convertedDate, timeZone));
+		scheduleEvent.setEndDate(toUTCFromTimeZone(convertedEndDate, timeZone));
+		scheduleEvent.setTitle(title);
+		scheduleEvent.setLocation(location);
+		scheduleEvent.setNotes(notes);
+		if (styleClass != null) scheduleEvent.setStyleClass(styleClass);
+		if (id != null) scheduleEvent.setId(id);
+
+		return scheduleEvent;
+	}
+
+	public static ScheduleEvent buildOldScheduleEventFromRequest(Schedule schedule, 
+			Map<String, String> params, String clientId) {
+		String startDate = params.get(clientId + "_old_startDate");
+		String startTime = params.get(clientId + "_old_startTime");
+		String endDate = params.get(clientId + "_old_endDate");
+		String endTime = params.get(clientId + "_old_endTime");
+		String title = params.get(clientId + "_old_title");
+		String location = params.get(clientId + "_old_location");
+		String notes = params.get(clientId + "_old_notes");
+		String styleClass = params.get(clientId + "_styleClass");
+		String id = params.get(clientId + "_id");
+		TimeZone timeZone = schedule.calculateTimeZone();
+
+		ScheduleEvent scheduleEvent = new ScheduleEvent();
+		Date convertedDate = convertDateTimeToServerFormat(startDate, startTime);
+		if (convertedDate == null) return null;
+		Date convertedEndDate = convertDateTimeToServerFormat(endDate, endTime);
+		if (convertedEndDate == null) convertedEndDate = new Date(convertedDate.getTime());
+		scheduleEvent.setStartDate(toUTCFromTimeZone(convertedDate, timeZone));
+		scheduleEvent.setEndDate(toUTCFromTimeZone(convertedEndDate, timeZone));
+		scheduleEvent.setTitle(title);
+		scheduleEvent.setLocation(location);
+		scheduleEvent.setNotes(notes);
+		if (styleClass != null) scheduleEvent.setStyleClass(styleClass);
+		if (id != null) scheduleEvent.setId(id);
+
+		return scheduleEvent;
 	}
 }
