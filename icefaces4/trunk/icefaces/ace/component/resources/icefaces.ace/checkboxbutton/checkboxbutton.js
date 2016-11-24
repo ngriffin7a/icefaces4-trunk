@@ -103,19 +103,7 @@ ice.ace.checkboxbutton.prototype.setChecked = function(bool) {
         } else {
             option.removeAttr('selected');
         }
-        var event;
-        if (document.createEvent) {
-            event = document.createEvent("Event");
-            event.initEvent("click", true, false);
-        } else {
-            event = new Event('click', {
-                'type': 'click',
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
-            });
-        }
-        option[0].parentNode.dispatchEvent(event);
+        option[0].parentNode.click();
     } else {
 		ice.ace.jq(this.fieldSelector).val(bool == true ? 'true' : 'false');
 	}
