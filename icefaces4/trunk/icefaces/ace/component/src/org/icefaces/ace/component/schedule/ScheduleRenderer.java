@@ -54,7 +54,7 @@ public class ScheduleRenderer extends CoreRenderer {
 	public void decodeAdd(FacesContext context, Schedule schedule, Map<String, String> params) {
 		String clientId = schedule.getClientId(context);
 
-		schedule.addEvent(buildScheduleEventFromRequest(schedule, params, clientId));
+		schedule.addEvent(ScheduleUtils.buildScheduleEventFromRequest(schedule, params, clientId));
 	}
 
 	public void decodeEdit(FacesContext context, Schedule schedule, Map<String, String> params) {
@@ -70,7 +70,7 @@ public class ScheduleRenderer extends CoreRenderer {
 			return;
 		}
 
-		schedule.editEvent(index, buildScheduleEventFromRequest(schedule, params, clientId));
+		schedule.editEvent(index, ScheduleUtils.buildScheduleEventFromRequest(schedule, params, clientId));
 	}
 
 	public void decodeDelete(FacesContext context, Schedule schedule, Map<String, String> params) {
@@ -88,7 +88,7 @@ public class ScheduleRenderer extends CoreRenderer {
 			}
 			schedule.deleteEvent(index);
 		} else if (value instanceof Collection) {
-			schedule.deleteEvent(buildScheduleEventFromRequest(schedule, params, clientId));
+			schedule.deleteEvent(ScheduleUtils.buildScheduleEventFromRequest(schedule, params, clientId));
 		}
 	}
 
@@ -210,7 +210,9 @@ public class ScheduleRenderer extends CoreRenderer {
 						jb.entry("location", scheduleEvent.getLocation());
 						jb.entry("notes", scheduleEvent.getNotes());
 						String styleClass = scheduleEvent.getStyleClass();
-						if (styleClass != null) jb.entry("styleClass", scheduleEvent.getStyleClass());
+						if (styleClass != null) jb.entry("styleClass", styleClass);
+						String id = scheduleEvent.getId();
+						if (id != null) jb.entry("id", id);
 						jb.endMap();
 					}
 
@@ -247,52 +249,6 @@ public class ScheduleRenderer extends CoreRenderer {
 		int hour = cal.get(Calendar.HOUR_OF_DAY);
 		int minute = cal.get(Calendar.MINUTE);
 		return (addLeadingZero(hour) + hour + ":" + addLeadingZero(minute) + minute);
-	}
-
-	private Date convertDateTimeToServerFormat(String date, String time) {
-		Calendar cal = Calendar.getInstance();
-		String yearString = date.substring(0, 4);
-		String monthString = date.substring(5, 7);
-		String dayString = date.substring(8, 10);
-		String hourString = time.substring(0, time.indexOf(":"));
-		String minuteString = time.substring(time.indexOf(":")+1);
-		try {
-			int year, month, day, hour, minute;
-			year = Integer.valueOf(yearString);
-			month = Integer.valueOf(monthString) - 1;
-			day = Integer.valueOf(dayString);
-			hour = Integer.valueOf(hourString);
-			minute = Integer.valueOf(minuteString);
-			cal.set(year, month, day, hour, minute);
-		} catch (Exception e) {
-			/* TO_DO: log warning */
-			return null;
-		}
-		return cal.getTime();
-	}
-
-	private ScheduleEvent buildScheduleEventFromRequest(Schedule schedule, Map<String, String> params, String clientId){
-		String startDate = params.get(clientId + "_date");
-		String startTime = params.get(clientId + "_time");
-		String endDate = params.get(clientId + "_endDate");
-		String endTime = params.get(clientId + "_endTime");
-		String title = params.get(clientId + "_title");
-		String location = params.get(clientId + "_location");
-		String notes = params.get(clientId + "_notes");
-		TimeZone timeZone = schedule.calculateTimeZone();
-
-		ScheduleEvent scheduleEvent = new ScheduleEvent();
-		Date convertedDate = convertDateTimeToServerFormat(startDate, startTime);
-		if (convertedDate == null) return null;
-		Date convertedEndDate = convertDateTimeToServerFormat(endDate, endTime);
-		if (convertedEndDate == null) convertedEndDate = new Date(convertedDate.getTime());
-		scheduleEvent.setStartDate(ScheduleUtils.toUTCFromTimeZone(convertedDate, timeZone));
-		scheduleEvent.setEndDate(ScheduleUtils.toUTCFromTimeZone(convertedEndDate, timeZone));
-		scheduleEvent.setTitle(title);
-		scheduleEvent.setLocation(location);
-		scheduleEvent.setNotes(notes);
-
-		return scheduleEvent;
 	}
 
 	private String addLeadingZero(int value) {

@@ -161,9 +161,14 @@ ice.ace.Schedule.prototype.getEventDetailsMarkup = function(data, isEventAdditio
 		var markup;
 		if (isEventAddition || isEventEditing) {
 			markup = '<table><tr><td>Start Date:</td><td><input type="date" name="'+this.id+'_date" value="'+data.startDate+'"/></td></tr><tr><td>Start Time:</td><td><input type="time" name="'+this.id+'_time" value="'+data.startTime+'"/></td></tr><tr><td>End Date:</td><td><input type="date" name="'+this.id+'_endDate" value="'+data.endDate+'"/></td></tr><tr><td>End Time:</td><td><input type="time" name="'+this.id+'_endTime" value="'+data.endTime+'"/></td></tr><tr><tr><td>Title:</td><td><input type="text" name="'+this.id+'_title" value="'+data.title+'"/></td></tr><tr><td>Location:</td><td><input type="text" name="'+this.id+'_location" value="'+data.location+'"/></td></tr><tr><td>Notes:</td><td><textarea name="'+this.id+'_notes">'+data.notes+'</textarea></td></tr></table><input type="hidden" name="'+this.id+'_index" value="'+data.index+'"/>';
+			if (isEventEditing) {
+				markup += '<input type="hidden" name="'+this.id+'_old_startDate" value="'+data.startDate+'"/><input type="hidden" name="'+this.id+'_old_startTime" value="'+data.startTime+'"/><input type="hidden" name="'+this.id+'_old_endDate" value="'+data.endDate+'"/><input type="hidden" name="'+this.id+'_old_endTime" value="'+data.endTime+'"/><input type="hidden" name="'+this.id+'_old_title" value="'+data.title+'"/><input type="hidden" name="'+this.id+'_old_location" value="'+data.location+'"/><input type="hidden" name="'+this.id+'_old_notes" value="'+data.notes+'"/>';
+			}
 		} else {
 			markup = '<table><tr><td>Start Date:</td><td>'+data.startDate+'</td></tr><tr><td>Start Time:</td><td>'+data.startTime+'</td></tr><tr><td>End Date:</td><td>'+data.endDate+'</td></tr><tr><td>End Time:</td><td>'+data.endTime+'</td></tr><tr><td>Title:</td><td>'+data.title+'</td></tr><tr><td>Location:</td><td>'+data.location+'</td></tr><tr><td>Notes:</td><td>'+data.notes+'</td></tr></table>';
 		}
+		if (data.styleClass) markup += '<input type="hidden" name="'+this.id+'_styleClass" value="'+data.styleClass+'"/>';
+		if (data.id) markup += '<input type="hidden" name="'+this.id+'_id" value="'+data.id+'"/>';
 		if (isEventAddition) markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'add\');return false;">Add</button>';
 		else {
 			if (isEventEditing) markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'edit\');return false;">Save</button> ';
@@ -230,6 +235,8 @@ ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, 
 		params[this.id + "_currentMonth"] = month;
 		params[this.id + "_currentDay"] = day;
 	}
+	params[this.id + "_startDate"] = year + "-" + month + "-" + day;
+	params[this.id + "_endDate"] = year + "-" + month + "-" + day;
     options.params = params;
 
 	if (type == 'next' && behaviors && behaviors.next) {
@@ -284,6 +291,20 @@ ice.ace.Schedule.prototype.sendClickRequest = function(event, type, data) {
     else if (type == 'day') params[this.id + "_dayClick"] = data;
     else if (type == 'time') params[this.id + "_timeClick"] = data;
 	else return;
+
+	if (type == 'event') {
+		var eventData = this.events[data];
+		params[this.id + "_date"] = eventData.startDate;
+		params[this.id + "_time"] = eventData.startTime;
+		params[this.id + "_endDate"] = eventData.endDate;
+		params[this.id + "_endTime"] = eventData.endTime;
+		params[this.id + "_title"] = eventData.title;
+		params[this.id + "_location"] = eventData.location;
+		params[this.id + "_notes"] = eventData.notes;
+		if (eventData.styleClass) params[this.id + "_styleClass"] = eventData.styleClass;
+		if (eventData.id) params[this.id + "_id"] = eventData.id;
+	}
+
     options.params = params;
 
 	if (type == 'event' && behaviors.eventClick) {

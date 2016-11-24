@@ -16,6 +16,9 @@
 
 package org.icefaces.ace.component.schedule;
 
+import org.icefaces.ace.event.ScheduleClickEvent;
+import org.icefaces.ace.event.ScheduleModifyEvent;
+import org.icefaces.ace.event.ScheduleNavigationEvent;
 import org.icefaces.ace.model.schedule.LazyScheduleEventList;
 import org.icefaces.ace.model.schedule.ScheduleEvent;
 
@@ -28,13 +31,13 @@ import javax.faces.model.ListDataModel;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class Schedule extends ScheduleBase {
 
 	private TimeZone appropriateTimeZone;
 
-/*
     @Override
     public void queueEvent(FacesEvent event) {
         if (event == null) {
@@ -43,19 +46,45 @@ public class Schedule extends ScheduleBase {
 
         if (event instanceof AjaxBehaviorEvent) {
             FacesContext context = FacesContext.getCurrentInstance();
-            Map<String, String> params =  context.getExternalContext()
-                                                 .getRequestParameterMap();
-            String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            String eventName = params.get("javax.faces.behavior.event");
+			String clientId = getClientId(context);
 
-            if (eventName.equals("cellClick")) {
-                //int columnIndex = Integer.parseInt(params.get(getClientId(context) + "_colIndex"));
-                event = new DataTableCellClickEvent((AjaxBehaviorEvent) event, column);
+            if (eventName.equals("eventClick")) {
+				ScheduleEvent scheduleEvent = ScheduleUtils.buildScheduleEventFromRequest(this, params, clientId);
+                event = new ScheduleClickEvent((AjaxBehaviorEvent) event, "eventClick", "", "", scheduleEvent);
+            } else if (eventName.equals("dayClick")) {
+				String day = params.get(clientId + "_dayClick");
+                event = new ScheduleClickEvent((AjaxBehaviorEvent) event, "dayClick", day, "", null);
+            } else if (eventName.equals("timeClick")) {
+				String dayTime = params.get(clientId + "_timeClick");
+				String day = dayTime.substring(0, dayTime.indexOf(" "));
+				String time = dayTime.substring(dayTime.indexOf(" ") + 1);
+                event = new ScheduleClickEvent((AjaxBehaviorEvent) event, "timeClick", day, time, null);
+            } else if (eventName.equals("addEvent")) {
+				ScheduleEvent scheduleEvent = ScheduleUtils.buildScheduleEventFromRequest(this, params, clientId);
+                event = new ScheduleModifyEvent((AjaxBehaviorEvent) event, "addEvent", scheduleEvent, null);
+            } else if (eventName.equals("editEvent")) {
+				ScheduleEvent scheduleEvent = ScheduleUtils.buildScheduleEventFromRequest(this, params, clientId);
+				ScheduleEvent oldScheduleEvent = ScheduleUtils.buildOldScheduleEventFromRequest(this, params, clientId);
+                event = new ScheduleModifyEvent((AjaxBehaviorEvent) event, "editEvent", scheduleEvent, oldScheduleEvent);
+            } else if (eventName.equals("deleteEvent")) {
+				ScheduleEvent scheduleEvent = ScheduleUtils.buildScheduleEventFromRequest(this, params, clientId);
+                event = new ScheduleModifyEvent((AjaxBehaviorEvent) event, "deleteEvent", scheduleEvent, null);
+            } else if (eventName.equals("next")) {
+				String startDate = params.get(clientId + "_startDate");
+				String endDate = params.get(clientId + "_endDate");
+                event = new ScheduleNavigationEvent((AjaxBehaviorEvent) event, "next", startDate, endDate);
+            } else if (eventName.equals("previous")) {
+				String startDate = params.get(clientId + "_startDate");
+				String endDate = params.get(clientId + "_endDate");
+                event = new ScheduleNavigationEvent((AjaxBehaviorEvent) event, "previous", startDate, endDate);
             }
         }
 
 		super.queueEvent(event);
 	}
-*/
+
 
 	public boolean isLazy() {
 		return getValue() instanceof LazyScheduleEventList;
