@@ -59,7 +59,7 @@ ice.ace.Schedule = function(id, cfg) {
 				self.hideEventDetailsTooltip();
 			});
 		} else {
-			this.jqRoot.delegate('.schedule-event', 'click', function(event) {
+			this.jqRoot.delegate('.schedule-event, .schedule-list-event', 'click', function(event) {
 				event.stopImmediatePropagation();
 				var node = event['target'];
 				var eventIndex = self.extractEventIndex(node);
@@ -99,7 +99,10 @@ ice.ace.Schedule = function(id, cfg) {
 			time = self.extractEventTime(node);
 			var eventData = {startDate: date, startTime: time, endDate: date, endTime: '', title: '', location: '', notes: '', index: ''};
 			var markup = self.getEventDetailsMarkup(eventData, true, false, false);
-			self.displayEventDetailsPopup(markup);
+			if (self.cfg.displayEventDetails == 'sidebar')
+				self.displayEventDetailsSidebar(markup);
+			else
+				self.displayEventDetailsPopup(markup);
 		});
 	}
 	this.jqRoot.delegate('.schedule-list-title', 'click', function(event) {
@@ -235,8 +238,23 @@ ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, 
 		params[this.id + "_currentMonth"] = month;
 		params[this.id + "_currentDay"] = day;
 	}
-	params[this.id + "_startDate"] = year + "-" + month + "-" + day;
-	params[this.id + "_endDate"] = year + "-" + month + "-" + day;
+
+	var endYear = year;
+	var endMonth = month;
+	var endDay = day;
+	if (this.cfg.viewMode == 'month') {
+		endDay = this.determineLastDayOfMonth(year, month);
+	} else if (this.cfg.viewMode = 'week') {
+		var lastDayOfWeek = this.determineLastDayOfWeek(year, month, day);
+		endYear = lastDayOfWeek.year;
+		endMonth = lastDayOfWeek.month;
+		endDay = lastDayOfWeek.day;
+	}
+	month++; endMonth++; // make 1-relative for delivery
+	params[this.id + "_startDate"] = year + "-" + (month < 10 ? '0' + month : month) + "-" + (day < 10 ? '0' + day : day);
+	params[this.id + "_endDate"] = endYear + "-" + (endMonth < 10 ? '0' + endMonth : endMonth) 
+		+ "-" + (endDay < 10 ? '0' + endDay : endDay);
+
     options.params = params;
 
 	if (type == 'next' && behaviors && behaviors.next) {
@@ -367,10 +385,11 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 
 				for (i = 0; i < data.eventsThisMonth.length; i++) {
 					var event = data.eventsThisMonth[i];
-					markup += "<div class=\"schedule-list-event\">"
-						+"<div class=\"schedule-list-event-day\">" + event.startDate.substring(8) + "</div>"
-						+"<div class=\"schedule-list-event-name\">" + event.title + "</div>"
-						+"<div class=\"schedule-list-event-location\">" + event.location + "</div>"
+					var highlightClass = i % 2 == 1 ? ' ui-state-highlight' : '';
+					markup += "<div class=\"schedule-list-event schedule-event-" + event.index + highlightClass + "\">"
+						+"<span class=\"schedule-list-event-day\">" + event.startDate.substring(8) + "</span>"
+						+"<span class=\"schedule-list-event-name\">" + event.title + "</span>"
+						+"<span class=\"schedule-list-event-location\">" + event.location + "</span>"
 					+"</div>";
 				}
 
@@ -468,50 +487,9 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	var currentYear = this.cfg.currentYear;
 	var currentMonth = this.cfg.currentMonth;
 	var currentDay = this.cfg.currentDay;
-	var is31DaysMonth = currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6
-		|| currentMonth == 7 || currentMonth == 9 || currentMonth == 11;
-	var isLeapYear = ((currentYear % 4 == 0) && (currentYear % 100 != 0)) || (currentYear % 400 == 0);
 	var weekStartDate = new Date(currentYear, currentMonth, currentDay, 0, 0, 0, 0);
-	if (is31DaysMonth) {
-		if (currentMonth == 11) {
-			if (currentDay >= 25) {
-				currentYear++;
-				currentMonth = 0;
-				currentDay = currentDay + 7 - 31;
-			} else {
-				currentDay = currentDay + 7;
-			}
-		} else if (currentDay >= 24) {
-			currentMonth++;
-			currentDay = currentDay + 7 - 31;
-		} else {
-			currentDay = currentDay + 7;
-		}
-	} else {
-		if (currentMonth == 1) {
-			if (isLeapYear) {
-				if (currentDay >= 23) {
-					currentMonth = 2;
-					currentDay = currentDay + 7 - 29;
-				} else {
-					currentDay = currentDay + 7;
-				}
-			} else {
-				if (currentDay >= 22) {
-					currentMonth = 2;
-					currentDay = currentDay + 7 - 28;
-				} else {
-					currentDay = currentDay + 7;
-				}
-			}
-		} else if (currentDay >= 24) {
-			currentMonth++;
-			currentDay = currentDay + 7 - 30;
-		} else {
-			currentDay = currentDay + 7;
-		}
-	}
-	var weekEndDate = new Date(currentYear, currentMonth, currentDay, 0, 0, 0, 0);
+	var lastDayOfWeek = this.determineLastDayOfWeek(currentYear, currentMonth, currentDay);
+	var weekEndDate = new Date(lastDayOfWeek.year, lastDayOfWeek.month, lastDayOfWeek.day, 0, 0, 0, 0);
 	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
 		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
 	this.jq.find('.schedule-showing').html(title);
@@ -530,6 +508,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	}
 	// add event divs at appropriate positions
 	var i;
+	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
 		var date = new Date();
@@ -556,11 +535,13 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 			var endPosition = endTimeCell.position();
 			var height = endTimeCell.height();
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
-			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
 			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px', 
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-			ice.ace.jq('<div class="schedule-list-event"><div class="schedule-list-event-day">'+event.startDate.substring(8)+'</div><div class="schedule-list-event-name">'+event.title+'</div><div class="schedule-list-event-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
+			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
+			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			listing++;
 		}
 	}
 	this.expandEventList();
@@ -575,50 +556,9 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 	var lazyYear = this.cfg.lazyYear;
 	var lazyMonth = this.cfg.lazyMonth;
 	var lazyDay = this.cfg.lazyDay;
-	var is31DaysMonth = lazyMonth == 0 || lazyMonth == 2 || lazyMonth == 4 || lazyMonth == 6
-		|| lazyMonth == 7 || lazyMonth == 9 || lazyMonth == 11;
-	var isLeapYear = ((lazyYear % 4 == 0) && (lazyYear % 100 != 0)) || (lazyYear % 400 == 0);
 	var weekStartDate = new Date(lazyYear, lazyMonth, lazyDay, 0, 0, 0, 0);
-	if (is31DaysMonth) {
-		if (lazyMonth == 11) {
-			if (lazyDay >= 25) {
-				lazyYear++;
-				lazyMonth = 0;
-				lazyDay = lazyDay + 7 - 31;
-			} else {
-				lazyDay = lazyDay + 7;
-			}
-		} else if (lazyDay >= 24) {
-			lazyMonth++;
-			lazyDay = lazyDay + 7 - 31;
-		} else {
-			lazyDay = lazyDay + 7;
-		}
-	} else {
-		if (lazyMonth == 1) {
-			if (isLeapYear) {
-				if (lazyDay >= 23) {
-					lazyMonth = 2;
-					lazyDay = lazyDay + 7 - 29;
-				} else {
-					lazyDay = lazyDay + 7;
-				}
-			} else {
-				if (lazyDay >= 22) {
-					lazyMonth = 2;
-					lazyDay = lazyDay + 7 - 28;
-				} else {
-					lazyDay = lazyDay + 7;
-				}
-			}
-		} else if (lazyDay >= 24) {
-			lazyMonth++;
-			lazyDay = lazyDay + 7 - 30;
-		} else {
-			lazyDay = lazyDay + 7;
-		}
-	}
-	var weekEndDate = new Date(lazyYear, lazyMonth, lazyDay, 0, 0, 0, 0);
+	var lastDayOfWeek = this.determineLastDayOfWeek(lazyYear, lazyMonth, lazyDay);
+	var weekEndDate = new Date(lastDayOfWeek.year, lastDayOfWeek.month, lastDayOfWeek.day, 0, 0, 0, 0);
 	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
 		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
 	this.jq.find('.schedule-showing').html(title);
@@ -636,6 +576,7 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 		this.jq.find('.schedule-cell.schedule-dow-'+dowCount).addClass('calendar-day-'+dowDate.getFullYear()+'-'+(month < 10 ? '0' + month : month)+'-'+(day < 10 ? '0' + day : day));
 	}
 	ice.ace.jq('.calendar-day-'+moment().format("YYYY-MM-DD")).html('<div class="ui-state-highlight"></div>');
+	var listing = 0;
 	// add event divs at appropriate positions
 	for (i = 0; i < data.days.length; i++) {
 		var day = data.days[i];
@@ -657,11 +598,13 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 				var endPosition = endTimeCell.position();
 				var height = endTimeCell.height();
 				var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
-				var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+				var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 				eventElement.html(event.startTime + ' ' + event.title);
 				eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
 					height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-				ice.ace.jq('<div class="schedule-list-event"><div class="schedule-list-event-day">'+event.startDate.substring(8)+'</div><div class="schedule-list-event-name">'+event.title+'</div><div class="schedule-list-event-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
+				var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
+				ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+				listing++;
 			}
 		}
 	}
@@ -743,6 +686,7 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 	this.jq.find('.schedule-cell.schedule-dow-single').addClass('calendar-day-'+currentYear+'-'+(currentMonth < 10 ? '0' + currentMonth : currentMonth)+'-'+(currentDay < 10 ? '0' + currentDay : currentDay));
 	// add event divs at appropriate positions
 	var i;
+	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
 		var date = new Date();
@@ -767,7 +711,9 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 			eventElement.html(event.startTime + ' ' + event.title);
 			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
 				height: (endOffset.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-			ice.ace.jq('<div class="schedule-list-event"><div class="schedule-list-event-day">'+event.startTime+'</div><div class="schedule-list-event-name">'+event.title+'</div><div class="schedule-list-event-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
+			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
+			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startTime+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			listing++;
 		}
 	}
 	this.expandEventList();
@@ -796,6 +742,7 @@ ice.ace.Schedule.prototype.renderLazyDayEvents = function(data) {
 	this.jq.find('.schedule-cell.schedule-dow-single').addClass('calendar-day-'+lazyYear+'-'+(lazyMonth < 10 ? '0' + lazyMonth : lazyMonth)+'-'+(lazyDay < 10 ? '0' + lazyDay : lazyDay));
 	// add event divs at appropriate positions
 	var i;
+	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
 		var date = new Date();
@@ -820,7 +767,9 @@ ice.ace.Schedule.prototype.renderLazyDayEvents = function(data) {
 			eventElement.html(event.startTime + ' ' + event.title);
 			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-			ice.ace.jq('<div class="schedule-list-event"><div class="schedule-list-event-day">'+event.startTime+'</div><div class="schedule-list-event-name">'+event.title+'</div><div class="schedule-list-event-location">'+event.location+'</div></div>').appendTo(sidebarEventsContainer);
+			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
+			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startTime+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			listing++;
 		}
 	}
 	this.expandEventList();
@@ -1256,6 +1205,137 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			}
 			self.sendNavigationRequest(e, currentYear, currentMonth, currentDay, 'next');
 		});
+	}
+
+	// resizable sidebar
+	if (this.jq.hasClass('schedule-config-sidebar-right')
+			|| this.jq.hasClass('schedule-config-sidebar-left')) {
+		var handles = this.jq.hasClass('schedule-config-sidebar-right') ? 'w' : 'e';
+		self.sidebarOriginalSize = 0;
+		self.gridOriginalWidth = 0;
+		this.jq.find('.schedule-sidebar').resizable({handles: handles, containment: 'parent', 
+			create: function (event, ui) {
+				ice.ace.jq(this).parent().on('resize', function (e) {
+					e.stopPropagation();
+				});
+			},
+			start: function(event, ui) {
+				event.stopPropagation();
+				self.sidebarOriginalSize = ui.originalSize.width;
+				self.gridOriginalWidth = self.jq.find('.schedule-grid').width();
+				if (self.jq.hasClass('schedule-config-sidebar-left'))
+					self.jq.find('.schedule-grid').css({position: 'absolute', top: 0, right: 0});
+			},
+			resize: function(event, ui) {
+				event.stopPropagation();
+				var grid = self.jq.find('.schedule-grid');
+				grid.width(self.gridOriginalWidth + (self.sidebarOriginalSize - ui.size.width));
+
+				if (self.cfg.viewMode == 'day') {
+					var timeCell = self.jq.find('.schedule-dow-single.schedule-time-0000');
+					var timeCellWidth = timeCell.width();
+					self.jq.find('.schedule-event').css({width: timeCellWidth});
+					var timeCellLeft = timeCell.position().left;
+					self.jq.find('.schedule-event').css({left: timeCellLeft + 2});
+				} else if (self.cfg.viewMode == 'week') {
+					var i;
+					for (i = 0; i < 7; i++) {
+						var timeCell = self.jq.find('.schedule-dow-' + i + '.schedule-time-0000');
+						var timeCellWidth = timeCell.width();
+						self.jq.find('.schedule-event.schedule-dow-' + i).css({width: timeCellWidth});
+						var timeCellLeft = timeCell.position().left;
+						self.jq.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + 2});
+					}
+				}
+			}
+		});
+	}
+	// resize window
+	ice.ace.jq(window).on('resize', function(e) {
+		var grid = self.jq.find('.schedule-grid');
+		var sidebar = self.jq.find('.schedule-sidebar');
+		grid.attr('style', '');
+		sidebar.attr('style', '');
+
+		if (self.cfg.viewMode == 'day') {
+			var timeCell = self.jq.find('.schedule-dow-single.schedule-time-0000');
+			var timeCellWidth = timeCell.width();
+			self.jq.find('.schedule-event').css({width: timeCellWidth});
+			var timeCellLeft = timeCell.position().left;
+			self.jq.find('.schedule-event').css({left: timeCellLeft + 2});
+		} else if (self.cfg.viewMode == 'week') {
+			var i;
+			for (i = 0; i < 7; i++) {
+				var timeCell = self.jq.find('.schedule-dow-' + i + '.schedule-time-0000');
+				var timeCellWidth = timeCell.width();
+				self.jq.find('.schedule-event.schedule-dow-' + i).css({width: timeCellWidth});
+				var timeCellLeft = timeCell.position().left;
+				self.jq.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + 2});
+			}
+		}
+	});
+};
+
+ice.ace.Schedule.prototype.determineLastDayOfWeek = function(currentYear, currentMonth, currentDay) {
+	var endYear = currentYear;
+	var endMonth = currentMonth;
+	var endDay = currentDay;
+	var is31DaysMonth = currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6
+		|| currentMonth == 7 || currentMonth == 9 || currentMonth == 11;
+	var isLeapYear = ((currentYear % 4 == 0) && (currentYear % 100 != 0)) || (currentYear % 400 == 0);
+	if (is31DaysMonth) {
+		if (currentMonth == 11) {
+			if (currentDay >= 26) {
+				endYear = currentYear + 1;
+				endMonth = 0;
+				endDay = currentDay + 6 - 31;
+			} else {
+				endDay = currentDay + 6;
+			}
+		} else if (currentDay >= 26) {
+			endMonth = currentMonth + 1;
+			endDay = currentDay + 6 - 31;
+		} else {
+			endDay = currentDay + 6;
+		}
+	} else {
+		if (currentMonth == 1) {
+			if (isLeapYear) {
+				if (currentDay >= 24) {
+					endMonth = 2;
+					endDay = currentDay + 6 - 29;
+				} else {
+					endDay = currentDay + 6;
+				}
+			} else {
+				if (currentDay >= 23) {
+					endMonth = 2;
+					endDay = currentDay + 6 - 28;
+				} else {
+					endDay = currentDay + 6;
+				}
+			}
+		} else if (currentDay >= 25) {
+			endMonth = currentMonth + 1;
+			endDay = currentDay + 6 - 30;
+		} else {
+			endDay = currentDay + 6;
+		}
+	}
+	return {year: endYear, month: endMonth, day: endDay};
+};
+
+ice.ace.Schedule.prototype.determineLastDayOfMonth = function(currentYear, currentMonth) {
+	var is31DaysMonth = currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6
+		|| currentMonth == 7 || currentMonth == 9 || currentMonth == 11;
+	var isLeapYear = ((currentYear % 4 == 0) && (currentYear % 100 != 0)) || (currentYear % 400 == 0);
+	if (currentMonth == 1) {
+		if (isLeapYear) return 29;
+		else return 28;
+	} else if (is31DaysMonth) {
+		return 31;
+	} else {
+		return 30;
 	}
 };
 
