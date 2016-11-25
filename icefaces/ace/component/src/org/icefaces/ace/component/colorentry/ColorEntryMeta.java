@@ -73,12 +73,14 @@ public class ColorEntryMeta extends UIInputMeta{
             defaultValueType = DefaultValueType.EXPRESSION)
     private ColorFormat colorFormat;
 
-    @Property(defaultValue="false", tlddoc="If true, will show an inline Frame around the inline component.")
-    private boolean inline;
+  /*  @Property(defaultValue="false", tlddoc="If true, will show an inline Frame around the inline component.")
+    private boolean inline;   */
 
+  @Property(defaultValue = "", tlddoc = "The text to display on the trigger button. Use in conjunction with the showOn option set to \"button\" or \"all\". Default = \"\".")
+  private String buttonText;
 
     @Property(defaultValue="true", tlddoc="if false, the dialog opens automatically upon page load")
-    private boolean popup;
+    private boolean renderAsPopup;
 
     @Property(defaultValue="full", tlddoc="the preset definition of parts to be shown. Valid values are full, popup or inline")
     private String presetParts;
@@ -102,11 +104,6 @@ public class ColorEntryMeta extends UIInputMeta{
             "appear only when a button (specified by popupIcon attribute) is clicked (\"button\"), or appear when either event takes place (\"all\").")
     private String showOn;
 
- /*   @Property(defaultValue = "", tlddoc = "The text to display on the trigger button. Default = \"\".")
-    private String buttonText; */
-
-    @Property(tlddoc="Title to display in the header. If null, use language default")
-    private String title;
 
     @Property(tlddoc = "The URL for the popup button image. Default is the file \"META-INF/resources/icefaces.ace/datetimeentry/calendar_icon.png\" in the components jar. " +
             "showOn attribute must be set to \"button\" or \"both\".")

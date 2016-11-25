@@ -59,7 +59,7 @@ public class ColorEntryRenderer extends InputRenderer {
         String clientId = picker.getClientId(context);
         String valueToRender = getValueAsString(context,picker);
         String inputId = clientId + "_input";
-        boolean popup = picker.isPopup();
+        boolean popup = picker.isRenderAsPopup();
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         String iceFocus = (String) paramMap.get("ice.focus");
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
@@ -105,6 +105,10 @@ public class ColorEntryRenderer extends InputRenderer {
  			writer.writeAttribute("accesskey", accesskey, null);
  			if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
  		}
+        boolean showCloseButton = picker.isShowCloseButton();
+        if (popup){
+            showCloseButton=false;
+        }
         if (popup && ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }
@@ -152,6 +156,10 @@ public class ColorEntryRenderer extends InputRenderer {
             preferredFormat = picker.getColorFormat().getValue();
         }
         String showOn = picker.getShowOn();
+        String parts = picker.getPresetParts().toLowerCase().trim();
+        if (parts.equals("inline")){
+            showOn="focus alt click";
+        }
 
         String iconSrc = picker.getPopupIcon() != null ? getResourceURL(context, picker.getPopupIcon()) : getResourceRequestPath(context, ColorEntry.POPUP_ICON);
 
@@ -165,20 +173,17 @@ public class ColorEntryRenderer extends InputRenderer {
                 .entry("id", clientId)
                 .entry("colorFormat", preferredFormat)
 
-                .entry("parts", picker.getPresetParts())
+                .entry("parts", parts)
                 .entry("disabled", picker.isDisabled());
-        if (valueToRender !=null) {
+    /*    if (valueToRender !=null & valueToRender.length()>0) {
             jb.entry("color", valueToRender);
-        }
-        if (picker.getPresetParts().toLowerCase().trim().equals("inline")){
-            jb.entry("inline", true);
-            jb.entry("inlineFrame", true);
-        } else {
-            jb.entry("autoOpen", !picker.isPopup());
+        }  */
+        if (!parts.equals("inline")){
+            jb.entry("autoOpen", !picker.isRenderAsPopup());
             jb.entry("alpha", picker.isAlpha());
             jb.entry("buttonImage", iconSrc);
             jb.entry("buttonImageOnly", picker.isPopupIconOnly());
-            jb.entry("showCloseButton", picker.isShowCloseButton());
+            jb.entry("showCloseButton", showCloseButton);
             jb.entry("showCancelButton", picker.isShowCancelButton());
             jb.entry("buttonColorize", picker.isButtonColorize());
             jb.entry("showNoneButton", picker.isShowNoneButton());
@@ -222,7 +227,7 @@ public class ColorEntryRenderer extends InputRenderer {
         jb.endMap().endArray().endFunction();
        // String script = jb.toString() + "});";
         String script = jb.toString();
-   System.out.println(" script="+script);
+ //  System.out.println(" script="+script);
 
         writeLabelAndIndicatorAfter(labelAttributes);
         writer.endElement("span");
