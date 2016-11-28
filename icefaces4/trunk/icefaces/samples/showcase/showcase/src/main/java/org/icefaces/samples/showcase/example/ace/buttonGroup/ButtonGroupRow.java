@@ -42,7 +42,7 @@ public class ButtonGroupRow implements Serializable {
 	private String checkboxDescription;
 	private String radioDescription;
 	public ButtonGroupRow(){
-        this.numberOfRows=10;
+        this.numberOfRows=20;
         this.setData();
         /*initial state is each column has own group*/
         radio1Group=GROUP1_NAME;
@@ -133,13 +133,5 @@ public class ButtonGroupRow implements Serializable {
      		buttonGroups.add(new ButtonGroupObject(i));
         }
     }
-    public void updateRows(ValueChangeEvent event){
-        try{
-            this.numberOfRows = Integer.parseInt(String.valueOf(event.getNewValue()));
-        }   catch (NumberFormatException e){
-            e.printStackTrace();
-        }
-        this.buttonGroups.clear();
-        setData();
-    }
+
 }

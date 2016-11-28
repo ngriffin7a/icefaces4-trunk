@@ -23,20 +23,8 @@
     template="/resources/templates/content-template.xhtml">
 
     <ui:define name="example">
-        <h:form id="frm1">
-            <ace:panel header="Choose number of rows of table">
-                <h:selectOneMenu id="numRowSelect" value="#{buttonGroupRow.numberOfRows}"
-                                 valueChangeListener="#{buttonGroupRow.updateRows}"
-                                 converter="javax.faces.Integer" >
-                    <f:selectItem itemLabel="10" itemValue="10"/>
-                    <f:selectItem itemLabel="100" itemValue="100"/>
-                    <f:selectItem itemLabel="500" itemValue="500"/>
-                    <f:selectItem itemLabel="1000" itemValue="1000"/>
-                    <f:ajax execute="@this" render="@all"/>
-                </h:selectOneMenu>
-            </ace:panel>
 
-        </h:form>
+
      <!--   <h2>Buttons grouped by #{buttonGroupDataTable.group}</h2>   -->
         <h:form id="frm2">
             <ui:repeat id="rpt" value="#{buttonGroupRow.buttonGroups}"
