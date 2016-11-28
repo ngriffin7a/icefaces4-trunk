@@ -24,17 +24,7 @@
 
     <ui:define name="example">
         <h:form id="frm1">
-            <ace:panel header="Choose number of rows of table">
-                <h:selectOneMenu id="numRowSelect" value="#{buttonGroupDataTable.numberOfRows}"
-                                 valueChangeListener="#{buttonGroupDataTable.updateRows}"
-                                 converter="javax.faces.Integer" >
-                    <f:selectItem itemLabel="10" itemValue="10"/>
-                    <f:selectItem itemLabel="100" itemValue="100"/>
-                    <f:selectItem itemLabel="500" itemValue="500"/>
-                    <f:selectItem itemLabel="1000" itemValue="1000"/>
-                    <f:ajax execute="@this" render="@all"/>
-                </h:selectOneMenu>
-            </ace:panel>
+
             <ace:panel header="Choose Type of Grouping of buttons by column(s)">
                 <h:panelGrid columns="2">
                     <h:selectOneRadio id="radioSelect" value="#{buttonGroupDataTable.group}"

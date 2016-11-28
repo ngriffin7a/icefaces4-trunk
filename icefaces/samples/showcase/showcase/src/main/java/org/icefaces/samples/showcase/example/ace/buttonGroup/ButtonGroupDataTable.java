@@ -34,7 +34,7 @@ public class ButtonGroupDataTable implements Serializable {
     public static final String GROUP4_NAME="frm2:group4";
 
     public String getBeanName() { return BEAN_NAME; }
-	public int numberOfRows = 10;
+	public int numberOfRows = 20;
 	private List<ButtonGroupObject> buttonGroups = new ArrayList<ButtonGroupObject>() ;
     private String radio1Group, radio2Group, check1Group, check2Group, group;
 
@@ -42,7 +42,6 @@ public class ButtonGroupDataTable implements Serializable {
 	private String checkboxDescription;
 	private String radioDescription;
 	public ButtonGroupDataTable(){
-        this.numberOfRows=10;
         this.setData();
         /*initial state is each column has own group*/
         radio1Group=GROUP1_NAME;
@@ -130,13 +129,5 @@ public class ButtonGroupDataTable implements Serializable {
      		buttonGroups.add(new ButtonGroupObject(i));
         }
     }
-    public void updateRows(ValueChangeEvent event){
-        try{
-            this.numberOfRows = Integer.parseInt(String.valueOf(event.getNewValue()));
-        }   catch (NumberFormatException e){
-            e.printStackTrace();
-        }
-        this.buttonGroups.clear();
-        setData();
-    }
+
 }
