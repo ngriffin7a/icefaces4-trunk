@@ -103,7 +103,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		
 		// value field
 		writer.startElement("span", null);
-		writer.writeAttribute("class", "ui-widget ui-corner-all ui-state-default ui-combobox-value " + getStateStyleClasses(comboBox), null);
+		writer.writeAttribute("class", "ui-widget ui-corner-all ui-state-default ui-combobox-value " + getStateStyleClasses(comboBox) + (comboBox.isDisabled() ? " ui-state-disabled" : ""), null);
 		writer.writeAttribute("style", "display: inline-block; width: " + width + "px;", null);
 		
 		// table layout start
