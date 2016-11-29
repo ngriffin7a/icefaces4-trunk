@@ -217,7 +217,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
 			writer.write("input.removeClass('ui-state-error').removeAttr('aria-invalid');");
 		}
 
-		if (dateTimeEntry.isValid()) {
+		if (dateTimeEntry.isValid() && !isValueBlank(value)) {
 			if (dateTimeEntry.isTimeOnly()) {
 				writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setTime('"+value+"');");
 			} else {
@@ -225,7 +225,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
 			}
 		}
 
-		writer.write("})(); // " + value); // make sure to re-apply state classes if value changes
+		writer.write("})(); // " + value + (isValueBlank(value) ? "" + System.currentTimeMillis() : "")); // make sure to re-apply state classes if value changes
 		writer.endElement("script");
 		writer.endElement("span");
 
