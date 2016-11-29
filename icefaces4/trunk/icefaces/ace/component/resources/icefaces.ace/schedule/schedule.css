@@ -11,6 +11,7 @@
 .ice-ace-schedule .schedule-title {
 	padding: 14px;
 	text-align: center;
+	font-weight: bold;
 }
 .ice-ace-schedule .schedule-title .schedule-button-previous {
 	float: left;
@@ -166,8 +167,17 @@
 .ice-ace-schedule .schedule-config-sidebar-hidden .schedule-grid {
 	width: 100%;
 }
-.ice-ace-schedule .schedule-details {
+.ice-ace-schedule .schedule-details-title,
+.ice-ace-schedule .schedule-details-content {
 	display: none;
+}
+.ice-ace-schedule .schedule-config-details-sidebar .schedule-details-title,
+.ice-ace-schedule .schedule-config-details-sidebar .schedule-details-content {
+	display: block;
+}
+.ice-ace-schedule .schedule-list-title,
+.ice-ace-schedule .schedule-details-title {
+	font-weight: bold;
 }
 .ice-ace-schedule .schedule-grid td {
 	vertical-align: top;
