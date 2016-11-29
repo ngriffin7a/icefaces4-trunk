@@ -16,13 +16,14 @@
 
 package org.icefaces.ace.model.schedule;
 
+import java.util.Date;
 import java.util.List;
 import java.io.Serializable;
 
 /**
  * This list represents a collection of schedule events that are loaded lazily.
- * All the events of a given month are loaded at a time in memory and in the client.
- * The load method must return a new list, based on the given month and year values.
+ * All the events of a given date range are loaded at a time in memory and in the client.
+ * The load method must return a new list, based on the given start and end date values.
  * Depending on the backing data source being used, in order to guarantee persistence
  * of the Add, Edit and Delete operations performed by the ace:schedule component, 
  * it may be necessary to override the following methods as well:
@@ -31,11 +32,11 @@ import java.io.Serializable;
 public abstract class LazyScheduleEventList extends WrappedList<ScheduleEvent> implements Serializable {
 
 	/**
-     * Produce and return a new list of ScheduleEvent objects for a given month
+     * Produce and return a new list of ScheduleEvent objects for a given range of dates.
      *
-     * @param	year	the year number
-     * @param	month	the zero-relative month number, according to java.util.Calendar
-     * @return			a list fo ScheduleEvent objects
+     * @param	startDate	the start date
+     * @param	endDate		the end date
+     * @return				a list of ScheduleEvent objects
      */
-	public abstract List<ScheduleEvent> load(int year, int month);
+	public abstract List<ScheduleEvent> load(Date startDate, Date endDate);
 }

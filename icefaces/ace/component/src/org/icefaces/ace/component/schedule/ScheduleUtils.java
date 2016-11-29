@@ -165,4 +165,135 @@ public class ScheduleUtils {
 
 		return scheduleEvent;
 	}
+
+	/**
+	 * Returns the integer values of the last day of the week, starting with the current day.
+     * Months are 0-relative.
+     */
+	public static int[] determineLastDayOfWeek(int currentYear, int currentMonth, int currentDay) {
+		int endYear = currentYear;
+		int endMonth = currentMonth;
+		int endDay = currentDay;
+		boolean is31DaysMonth = currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6
+			|| currentMonth == 7 || currentMonth == 9 || currentMonth == 11;
+		boolean isLeapYear = ((currentYear % 4 == 0) && (currentYear % 100 != 0)) || (currentYear % 400 == 0);
+		if (is31DaysMonth) {
+			if (currentMonth == 11) {
+				if (currentDay >= 26) {
+					endYear = currentYear + 1;
+					endMonth = 0;
+					endDay = currentDay + 6 - 31;
+				} else {
+					endDay = currentDay + 6;
+				}
+			} else if (currentDay >= 26) {
+				endMonth = currentMonth + 1;
+				endDay = currentDay + 6 - 31;
+			} else {
+				endDay = currentDay + 6;
+			}
+		} else {
+			if (currentMonth == 1) {
+				if (isLeapYear) {
+					if (currentDay >= 24) {
+						endMonth = 2;
+						endDay = currentDay + 6 - 29;
+					} else {
+						endDay = currentDay + 6;
+					}
+				} else {
+					if (currentDay >= 23) {
+						endMonth = 2;
+						endDay = currentDay + 6 - 28;
+					} else {
+						endDay = currentDay + 6;
+					}
+				}
+			} else if (currentDay >= 25) {
+				endMonth = currentMonth + 1;
+				endDay = currentDay + 6 - 30;
+			} else {
+				endDay = currentDay + 6;
+			}
+		}
+
+		int[] values = new int[3];
+		values[0] = endYear;
+		values[1] = endMonth;
+		values[2] = endDay;
+		return values;
+	};
+
+	/**
+	 * Returns the integer day number of the last day of the given month. Months are 0-relative.
+     */
+	public static int determineLastDayOfMonth(int currentYear, int currentMonth) {
+		boolean is31DaysMonth = currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6
+			|| currentMonth == 7 || currentMonth == 9 || currentMonth == 11;
+		boolean isLeapYear = ((currentYear % 4 == 0) && (currentYear % 100 != 0)) || (currentYear % 400 == 0);
+		if (currentMonth == 1) { // February
+			if (isLeapYear) return 29;
+			else return 28;
+		} else if (is31DaysMonth) {
+			return 31;
+		} else {
+			return 30;
+		}
+	}
+
+	/**
+	 * Returns the integer year, month, day, hour, minute, and second values of a Date object. Months are 0-relative
+     * The hour is assumed to be based on a 24-hour clock.
+     */
+	public static DateIntegerValues getDateIntegerValues(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int day = cal.get(Calendar.DATE);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int minute = cal.get(Calendar.MINUTE);
+		int second = cal.get(Calendar.SECOND);
+		return new DateIntegerValues(year, month, day, hour, minute, second);
+	}
+
+	/**
+	 * Returns the Date object from the DateIntegerValues object provided. Months are 0-relative.
+     * The hour is assumed to be based on a 24-hour clock.
+     */
+	public static Date getDateFromIntegerValues(DateIntegerValues values) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, values.getYear());
+		cal.set(Calendar.MONTH, values.getMonth());
+		cal.set(Calendar.DATE, values.getDay());
+		cal.set(Calendar.HOUR_OF_DAY, values.getHour());
+		cal.set(Calendar.MINUTE, values.getMinute());
+		cal.set(Calendar.SECOND, values.getSecond());
+		return cal.getTime();
+	}
+
+	public static class DateIntegerValues {
+		int year;
+		int month;
+		int day;
+		int hour;
+		int minute;
+		int second;
+
+		public DateIntegerValues(int year, int month, int day, int hour, int minute, int second) {
+			this.year = year;
+			this.month = month;
+			this.day = day;
+			this.hour = hour;
+			this.minute = minute;
+			this.second = second;
+		}
+
+		public int getYear() { return this.year; }
+		public int getMonth() { return this.month; }
+		public int getDay() { return this.day; }
+		public int getHour() { return this.hour; }
+		public int getMinute() { return this.minute; }
+		public int getSecond() { return this.second; }
+	}
 }

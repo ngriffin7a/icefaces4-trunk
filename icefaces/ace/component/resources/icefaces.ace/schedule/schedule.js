@@ -489,7 +489,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	var currentDay = this.cfg.currentDay;
 	var weekStartDate = new Date(currentYear, currentMonth, currentDay, 0, 0, 0, 0);
 	var lastDayOfWeek = this.determineLastDayOfWeek(currentYear, currentMonth, currentDay);
-	var weekEndDate = new Date(lastDayOfWeek.year, lastDayOfWeek.month, lastDayOfWeek.day, 0, 0, 0, 0);
+	var weekEndDate = new Date(lastDayOfWeek.year, lastDayOfWeek.month, lastDayOfWeek.day, 23, 59, 59, 999);
 	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
 		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
 	this.jq.find('.schedule-showing').html(title);
@@ -497,14 +497,15 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	if  (this.cfg.scrollHeight) this.jq.find('.schedule-days').css({height:this.cfg.scrollHeight});
 	// set day of the week headers and calendar day CSS classes
 	var dowCount;
+	var dowDate = new Date(weekStartDate.getTime());
 	for (dowCount = 0; dowCount < 7; dowCount++) {
-		var dowDate = new Date(weekStartDate.getTime() + (86400000 * dowCount));
 		var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-'+dowCount);
 		dayHeader.html(this.getDayOfTheWeekNameShort(dowCount) + ', ' 
 			+ this.getMonthNameShort(dowDate.getMonth()) + '/' + dowDate.getDate());
 		var month = dowDate.getMonth() + 1;
 		var day = dowDate.getDate();
 		this.jq.find('.schedule-cell.schedule-dow-'+dowCount).addClass('calendar-day-'+dowDate.getFullYear()+'-'+(month < 10 ? '0' + month : month)+'-'+(day < 10 ? '0' + day : day));
+		dowDate.setDate(dowDate.getDate() + 1);
 	}
 	// add event divs at appropriate positions
 	var i;
@@ -558,7 +559,7 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 	var lazyDay = this.cfg.lazyDay;
 	var weekStartDate = new Date(lazyYear, lazyMonth, lazyDay, 0, 0, 0, 0);
 	var lastDayOfWeek = this.determineLastDayOfWeek(lazyYear, lazyMonth, lazyDay);
-	var weekEndDate = new Date(lastDayOfWeek.year, lastDayOfWeek.month, lastDayOfWeek.day, 0, 0, 0, 0);
+	var weekEndDate = new Date(lastDayOfWeek.year, lastDayOfWeek.month, lastDayOfWeek.day, 23, 59, 59, 999);
 	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
 		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
 	this.jq.find('.schedule-showing').html(title);
@@ -566,46 +567,52 @@ ice.ace.Schedule.prototype.renderLazyWeekEvents = function(data) {
 	if  (this.cfg.scrollHeight) this.jq.find('.schedule-days').css({height:this.cfg.scrollHeight});
 	// set day of the week headers and calendar day CSS classes
 	var dowCount;
+	var dowDate = new Date(weekStartDate.getTime());
 	for (dowCount = 0; dowCount < 7; dowCount++) {
-		var dowDate = new Date(weekStartDate.getTime() + (86400000 * dowCount));
 		var dayHeader = this.jq.find('.schedule-dow-header.schedule-dow-'+dowCount);
 		dayHeader.html(this.getDayOfTheWeekNameShort(dowCount) + ', ' 
 			+ this.getMonthNameShort(dowDate.getMonth()) + '/' + dowDate.getDate());
 		var month = dowDate.getMonth() + 1;
 		var day = dowDate.getDate();
 		this.jq.find('.schedule-cell.schedule-dow-'+dowCount).addClass('calendar-day-'+dowDate.getFullYear()+'-'+(month < 10 ? '0' + month : month)+'-'+(day < 10 ? '0' + day : day));
+		dowDate.setDate(dowDate.getDate() + 1);
 	}
 	ice.ace.jq('.calendar-day-'+moment().format("YYYY-MM-DD")).html('<div class="ui-state-highlight"></div>');
-	var listing = 0;
 	// add event divs at appropriate positions
-	for (i = 0; i < data.days.length; i++) {
-		var day = data.days[i];
-		var date = day.date.toDate();
+	var listing = 0;
+	for (i = 0; i < this.events.length; i++) {
+		var event = this.events[i];
+		var date = new Date();
+		date.setFullYear(event.startDate.substring(0,4));
+		date.setMonth(parseInt(event.startDate.substring(5,7) - 1));
+		date.setDate(event.startDate.substring(8,10));
 		if (date >= weekStartDate && date < weekEndDate) {
-			var dow = i % 7;
-			for (j = 0; j < day.events.length; j++) {
-				var event = day.events[j];
-				var hour = event.startTime.substring(0,2);
-				var minutes = parseInt(event.startTime.substring(3,5));
-				var selector = '.schedule-dow-'+dow+'.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
-				var timeCell = this.jq.find(selector);
-				var position = timeCell.position();
-				var width = timeCell.width();
-				var endHour = event.endTime.substring(0,2);
-				var endMinutes = parseInt(event.endTime.substring(3,5));
-				var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
-				var endTimeCell = this.jq.find(endSelector);
-				var endPosition = endTimeCell.position();
-				var height = endTimeCell.height();
-				var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
-				var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
-				eventElement.html(event.startTime + ' ' + event.title);
-				eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
-					height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
-				var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
-				ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
-				listing++;
-			}
+			// determine the day of the week
+			var dateMillis = date.getTime();
+			var startDateMillis = weekStartDate.getTime();
+			var millisDelta = dateMillis - startDateMillis;
+			var dow = Math.floor(millisDelta / 86400000);
+
+			var hour = event.startTime.substring(0,2);
+			var minutes = parseInt(event.startTime.substring(3,5));
+			var selector = '.schedule-dow-'+dow+'.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
+			var timeCell = this.jq.find(selector);
+			var position = timeCell.position();
+			var width = timeCell.width();
+			var endHour = event.endTime.substring(0,2);
+			var endMinutes = parseInt(event.endTime.substring(3,5));
+			var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
+			var endTimeCell = this.jq.find(endSelector);
+			var endPosition = endTimeCell.position();
+			var height = endTimeCell.height();
+			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+			var eventElement = ice.ace.jq('<div class=\"ui-state-hover ui-corner-all schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+			eventElement.html(event.startTime + ' ' + event.title);
+			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
+				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
+			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			listing++;
 		}
 	}
 	this.expandEventList();

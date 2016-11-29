@@ -202,10 +202,12 @@ public class ScheduleRenderer extends CoreRenderer {
 						Date endDate = ScheduleUtils.toTimeZoneFromUTC(scheduleEvent.getEndDate(), timeZone);
 						jb.beginMap();
 						jb.entry("index", i);
-						jb.entry("startDate", convertDateToClientFormat(startDate));
-						jb.entry("startTime", convertTimeToClientFormat(startDate));
-						jb.entry("endDate", convertDateToClientFormat(endDate));
-						jb.entry("endTime", convertTimeToClientFormat(endDate));
+						ScheduleUtils.DateIntegerValues startDateValues = ScheduleUtils.getDateIntegerValues(startDate);
+						jb.entry("startDate", convertDateToClientFormat(startDateValues));
+						jb.entry("startTime", convertTimeToClientFormat(startDateValues));
+						ScheduleUtils.DateIntegerValues endDateValues = ScheduleUtils.getDateIntegerValues(endDate);
+						jb.entry("endDate", convertDateToClientFormat(endDateValues));
+						jb.entry("endTime", convertTimeToClientFormat(endDateValues));
 						jb.entry("title", scheduleEvent.getTitle());
 						jb.entry("location", scheduleEvent.getLocation());
 						jb.entry("notes", scheduleEvent.getNotes());
@@ -234,21 +236,15 @@ public class ScheduleRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	private String convertDateToClientFormat(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH) + 1;
-		int day = cal.get(Calendar.DATE);
-		return (year + "-" + addLeadingZero(month) + month + "-" + addLeadingZero(day) + day);
+	private String convertDateToClientFormat(ScheduleUtils.DateIntegerValues values) {
+		return (values.getYear() + "-" 
+			+ addLeadingZero(values.getMonth() + 1) + (values.getMonth() + 1) + "-" 
+			+ addLeadingZero(values.getDay()) + values.getDay());
 	}
 
-	private String convertTimeToClientFormat(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int hour = cal.get(Calendar.HOUR_OF_DAY);
-		int minute = cal.get(Calendar.MINUTE);
-		return (addLeadingZero(hour) + hour + ":" + addLeadingZero(minute) + minute);
+	private String convertTimeToClientFormat(ScheduleUtils.DateIntegerValues values) {
+		return (addLeadingZero(values.getHour()) + values.getHour() + ":" 
+			+ addLeadingZero(values.getMinute()) + values.getMinute());
 	}
 
 	private String addLeadingZero(int value) {
