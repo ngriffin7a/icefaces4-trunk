@@ -89,7 +89,11 @@ ice.ace.ConfirmDialog = function(id, cfg) {
 
 ice.ace.ConfirmDialog.prototype.show = function() {
 	var jq = this.jq;
-    setTimeout(function(){jq.dialog('open');},1);
+	var self = this;
+    setTimeout(function(){
+		jq.dialog('open');
+		self.resizeScrollableTables();
+	},1);
 };
 
 ice.ace.ConfirmDialog.prototype.hide = function() {
@@ -99,6 +103,18 @@ ice.ace.ConfirmDialog.prototype.hide = function() {
             jq.dialog('close');
         }
     },1);
+};
+
+ice.ace.ConfirmDialog.prototype.resizeScrollableTables = function() {
+	var tables = this.jq.find('.ui-datatable');
+	tables.each(function(){
+		var id = this.id;
+		if (id) {
+			var table = ice.ace.instance(id);
+			if (table.cfg.scrollable) table.resizeScrolling();
+			if (table.cfg.paginator) table.resizePaginator();
+		}
+	});
 };
 
 ice.ace.ConfirmDialog.browser = function() {
