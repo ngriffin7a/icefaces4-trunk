@@ -101,6 +101,7 @@ public class ScheduleUtils {
 			hour = Integer.valueOf(hourString);
 			minute = Integer.valueOf(minuteString);
 			cal.set(year, month, day, hour, minute);
+			cal.set(Calendar.SECOND, 0);
 		} catch (Exception e) {
 			/* TO_DO: log warning */
 			return null;
