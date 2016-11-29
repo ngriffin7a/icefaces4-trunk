@@ -844,7 +844,10 @@ public class CentralDataList {
 						new Demo(msgs("overview"), msgs("example.ace.resizable.description"),
 								 "resizable", "resizable.xhtml", "ResizableBean.java"),
 						new Demo(msgs("menu.ace.resizable.subMenu.resizeListener"), msgs("example.ace.resizableListener.description"),
-								 "resizable", "resizeListener.xhtml", "ResizeListenerBean.java"))
+								 "resizable", "resizeListener.xhtml", "ResizeListenerBean.java")),
+				new ComponentGroup("ace:schedule", "Schedule", "schedule.html",
+						new Demo(msgs("overview"), msgs("example.ace.schedule.description"),
+								 "schedule", "schedule.xhtml", "ScheduleBean.java"))
 		));
 		
 		return toReturn;

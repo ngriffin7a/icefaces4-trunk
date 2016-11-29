@@ -1,0 +1,54 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{msgs['example.ace.accordionpanel.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.accordionpanel.description']}"/>
+
+    <ui:define name="example">
+        <h:form id="form">
+			<h:outputLabel for="viewMode" value="Select view mode: " />
+			<h:selectOneRadio id="viewMode" value="#{scheduleBean.viewMode}">
+				<f:ajax render="@all" />
+				<f:selectItem itemValue="month" itemLabel="Month" />
+				<f:selectItem itemValue="week" itemLabel="Week" />
+				<f:selectItem itemValue="day" itemLabel="Day" />
+			</h:selectOneRadio>
+			<h:outputLabel for="scrollable" value="Enable scrolling: " />
+			<h:selectBooleanCheckbox id="scrollable" value="#{scheduleBean.scrollable}">
+				<f:ajax render="@all"/>
+			</h:selectBooleanCheckbox>
+			<h:outputLabel for="scrollHeight" value=" Set scroll height: " />
+			<h:inputText id="scrollHeight" value="#{scheduleBean.scrollHeight}">
+				<f:ajax render="@all"/>
+			</h:inputText>
+			<br />
+			<h:outputLabel for="timeZone" value="Select time zone: " />
+			<h:selectOneMenu id="timeZone" value="#{scheduleBean.timeZone}">
+				<f:ajax render="@all"/>
+				<f:selectItems value="#{scheduleBean.timeZoneList}" />
+			</h:selectOneMenu>
+			<ace:schedule id="schedule" value="#{scheduleBean.lazyScheduleEventList}" displayEventDetails="popup" viewMode="#{scheduleBean.viewMode}" scrollable="#{scheduleBean.scrollable}" scrollHeight="#{scheduleBean.scrollHeight}" timeZone="#{scheduleBean.timeZone}" />
+        </h:form>
+    </ui:define>
+</ui:composition>
