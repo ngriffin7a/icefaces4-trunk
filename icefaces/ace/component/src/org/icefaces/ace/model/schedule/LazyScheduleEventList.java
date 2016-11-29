@@ -27,7 +27,9 @@ import java.io.Serializable;
  * Depending on the backing data source being used, in order to guarantee persistence
  * of the Add, Edit and Delete operations performed by the ace:schedule component, 
  * it may be necessary to override the following methods as well:
- * add(ScheduleEvent e), set(int index, ScheduleEvent element), and remove(int index)
+ * boolean add(ScheduleEvent e), 
+ * ScheduleEvent set(int index, ScheduleEvent element), 
+ * ScheduleEvent remove(int index)
  */
 public abstract class LazyScheduleEventList extends WrappedList<ScheduleEvent> implements Serializable {
 

@@ -41,7 +41,6 @@ public class ScheduleRenderer extends CoreRenderer {
 
 		Schedule schedule = (Schedule) component;
 		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-		schedule.resetDataModel();
 
 		String clientId = schedule.getClientId(context);
 		if (params.containsKey(clientId + "_add")) decodeAdd(context, schedule, params);

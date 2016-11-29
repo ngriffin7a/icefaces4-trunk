@@ -52,7 +52,7 @@
 }
 .ice-ace-schedule .schedule-view-month .schedule-grid .schedule-dow .schedule-dow-header {
 	width: 14.2857%;
-	padding: 14px;
+	padding: 14px 0;
 	text-align: center;
 }
 .ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .day,
@@ -77,7 +77,7 @@
 }
 .ice-ace-schedule .schedule-view-week .schedule-grid .schedule-dow .schedule-dow-header {
 	width: 12.5%;
-	padding: 14px;
+	padding: 14px 0;
 	text-align: center;
 }
 .ice-ace-schedule .schedule-view-week .schedule-grid .schedule-cell {
@@ -98,7 +98,7 @@
 	height: 100%;
 }
 .ice-ace-schedule .schedule-view-day .schedule-grid .schedule-dow .schedule-dow-header {
-	padding: 14px;
+	padding: 14px 0;
 	text-align: center;
 }
 .ice-ace-schedule .schedule-view-day .schedule-grid .schedule-cell-time {
@@ -118,7 +118,7 @@
 }
 .ice-ace-schedule .schedule-list-title,
 .ice-ace-schedule .schedule-details-title {
-	padding: 14px;
+	padding: 14px 0;
 	text-align: center;
 	letter-spacing: 1px;
 }
@@ -134,16 +134,10 @@
 .ice-ace-schedule .schedule-list-content .schedule-list-event-name {
 	font-weight: bold;
 }
-.ice-ace-schedule .schedule-list-content .schedule-list-event-location {
-	/*font-weight: 400;*/
-}
 .ice-ace-schedule .schedule-list-content {
-	/*height: 85%;*/
 	overflow: auto;
 }
 .ice-ace-schedule .schedule-sidebar .schedule-details-content {
-	/*padding: 14px;*/
-	/*height: 85%;*/
 	overflow: auto;
 }
 .ice-ace-schedule .schedule-content {
