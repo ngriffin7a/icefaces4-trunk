@@ -217,10 +217,12 @@ public class DateTimeEntryRenderer extends InputRenderer {
 			writer.write("input.removeClass('ui-state-error').removeAttr('aria-invalid');");
 		}
 
-		if (dateTimeEntry.isTimeOnly()) {
-			writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setTime('"+value+"');");
-		} else {
-			writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setDate('"+value+"');");
+		if (dateTimeEntry.isValid()) {
+			if (dateTimeEntry.isTimeOnly()) {
+				writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setTime('"+value+"');");
+			} else {
+				writer.write("var instance = ice.ace.instance('"+clientId+"'); if (instance) instance.setDate('"+value+"');");
+			}
 		}
 
 		writer.write("})(); // " + value); // make sure to re-apply state classes if value changes
