@@ -346,14 +346,6 @@
         <requires>
             <resource name="util/ace-core.js" library="icefaces.ace"/>
             <resource name="util/ace-jquery-ui.js" library="icefaces.ace"/>
-            <resource name="colorentry/parts/jquery.ui.colorpicker-memory.js" library="icefaces.ace"/>
-            <resource name="colorentry/parts/jquery.ui.colorpicker-rgbslider.js" library="icefaces.ace"/>
-            <resource name="colorentry/parts/jquery.ui.colorpicker-swatchesswitcher.js" library="icefaces.ace"/>
-        </requires>
-    </resource>
-    <resource name="colorentry/spectrum.js" library="icefaces.ace">
-        <requires>
-            <resource name="util/ace-core.js" library="icefaces.ace"/>
         </requires>
     </resource>
     <resource name="colorentry/colorentry.js" library="icefaces.ace">

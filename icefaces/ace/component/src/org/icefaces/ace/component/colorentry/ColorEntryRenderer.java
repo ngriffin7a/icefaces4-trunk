@@ -24,6 +24,7 @@ import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.util.JavaScriptRunner;
+import org.icefaces.ace.model.colorEntry.ColorEntryLayout;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -90,7 +91,6 @@ public class ColorEntryRenderer extends InputRenderer {
             writer.endElement("div");
         }
 
-        writeLabelAndIndicatorBefore(labelAttributes);
 
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
@@ -151,12 +151,21 @@ public class ColorEntryRenderer extends InputRenderer {
         if(picker.isDisabled()) writer.writeAttribute("disabled", "disabled", "disabled");
         if(picker.isReadonly()) writer.writeAttribute("readonly", "readonly", "readonly");
         writer.endElement("input");
+        if (popup) {
+            writeLabelAndIndicatorAfter(labelAttributes);
+        }
+
         String preferredFormat = picker.getColorFormat().HEX3.getValue();
         if (picker.getColorFormat()!=null){
             preferredFormat = picker.getColorFormat().getValue();
         }
         String showOn = picker.getShowOn();
         String parts = picker.getPresetParts().toLowerCase().trim();
+        boolean hasPresetParts = true;
+        List<String> partsList = picker.getSelectedParts();
+        if (partsList !=null  && partsList.size()> 0) {
+           hasPresetParts = false;
+        }
         if (parts.equals("inline")){
             showOn="focus alt click";
         }
@@ -172,12 +181,26 @@ public class ColorEntryRenderer extends InputRenderer {
                 .beginMap("options")
                 .entry("id", clientId)
                 .entry("colorFormat", preferredFormat)
-
-                .entry("parts", parts)
                 .entry("disabled", picker.isDisabled());
-    /*    if (valueToRender !=null & valueToRender.length()>0) {
-            jb.entry("color", valueToRender);
-        }  */
+        if (hasPresetParts){
+            jb.entry("parts", parts) ;
+        }else {  /* custom layout */
+            jb.beginArray("parts");
+            for (String entry: partsList){
+                jb.item(entry);
+            }
+            jb.endArray();
+            List<ColorEntryLayout> customLayout =picker.getCustomLayout();
+            if (customLayout!=null && customLayout.size()> 0){
+                jb.beginMap("layout");
+                for (ColorEntryLayout layout: customLayout){
+                    jb.beginArray(layout.getPart());
+                    jb.item(layout.getEntry());
+                    jb.endArray();
+                }
+                jb.endMap();
+            }
+        }
         if (!parts.equals("inline")){
             jb.entry("autoOpen", !picker.isRenderAsPopup());
             jb.entry("alpha", picker.isAlpha());
@@ -198,6 +221,7 @@ public class ColorEntryRenderer extends InputRenderer {
                  .entry("duration", picker.getEffectDuration());
              }
         }
+
         if (picker.getLimit()!=null ){
             jb.entry("limit", picker.getLimit());
         }
