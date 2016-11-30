@@ -18,8 +18,13 @@ package org.icefaces.samples.showcase.example.ace.colorEntry;
 
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ValueChangeEvent;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
 import org.icefaces.ace.component.colorentry.ColorFormat;
+import org.icefaces.ace.model.colorEntry.ColorEntryLayout;
 
 @ManagedBean(name= ColorEntryCustomBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
@@ -28,9 +33,34 @@ public class ColorEntryCustomBean implements Serializable
     public static final String BEAN_NAME = "colorEntryCustomBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    private String value, chooseText="Choose", cancelText="Cancel", customStyleClass="colorEntryCustom1";
-    private boolean showButtons=true;
+    private String value;
+    private List<String> parts = new ArrayList<String>();
+    private List<String> parts1 = new ArrayList<String>(Arrays.asList("header", "preview", "hex", "rgbslider"));
+    private List<String> parts2 = new ArrayList<String>(Arrays.asList("header", "map", "bar", "hex", "hsv", "rgb", "alpha", "preview", "swatches", "footer"));
+    private List<ColorEntryLayout> layout1 = new ArrayList<ColorEntryLayout>();
+    private List<ColorEntryLayout> layout2 = new ArrayList<ColorEntryLayout>();
+    private List<ColorEntryLayout> layout = new ArrayList<ColorEntryLayout>();
     private ColorFormat valueFormat;
+
+    public ColorEntryCustomBean(){
+        layout1.add(new ColorEntryLayout("preview", 0, 0, 1, 1));
+        layout1.add(new ColorEntryLayout("hex", 1,0,1,1));
+        layout1.add(new ColorEntryLayout("rgbslider", 0, 1, 2, 1));
+        layout1.add(new ColorEntryLayout("memory", 0, 2, 2, 1));
+
+        layout2.add(new ColorEntryLayout("hex", 0, 0, 2, 1));
+        layout2.add(new ColorEntryLayout("preview", 2, 0, 1, 1));
+        layout2.add(new ColorEntryLayout("map", 0, 1, 3, 1));
+        layout2.add(new ColorEntryLayout("bar", 0, 2, 1, 4));
+        layout2.add(new ColorEntryLayout("swatches", 2, 2, 1, 4));
+        layout2.add(new ColorEntryLayout("rbg", 1, 2, 1, 1));
+        layout2.add(new ColorEntryLayout("hsv", 0, 2, 1, 4));
+        layout2.add(new ColorEntryLayout("alpha", 1, 3, 1, 1));
+        layout2.add(new ColorEntryLayout("lab", 0, 5, 1, 1));
+        layout2. add(new ColorEntryLayout("cmyk", 1, 5, 1, 2));
+        this.parts = parts1;
+        this.layout = layout1;
+    }
 
     public String getValue() {
         return value;
@@ -40,46 +70,61 @@ public class ColorEntryCustomBean implements Serializable
         this.value = value;
     }
 
-    public String getChooseText() {
-        return chooseText;
-    }
-
-    public void setChooseText(String chooseText) {
-        this.chooseText = chooseText;
-    }
-
-    public String getCancelText() {
-        return cancelText;
-    }
-
-    public void setCancelText(String cancelText) {
-        this.cancelText = cancelText;
-    }
-
-    public String getCustomStyleClass() {
-        return customStyleClass;
-    }
-
-    public void setCustomStyleClass(String customStyleClass) {
-        this.customStyleClass = customStyleClass;
-    }
-
-    public boolean isShowButtons() {
-        return showButtons;
-    }
-
-    public void setShowButtons(boolean showButtons) {
-        this.showButtons = showButtons;
-    }
 
     public ColorFormat[] getColorFormats(){
         return ColorFormat.values();
     }
+
     public ColorFormat getValueFormat() {
         return valueFormat;
     }
 
     public void setValueFormat(ColorFormat valueFormat) {
         this.valueFormat = valueFormat;
+    }
+
+    public List<String> getParts() {
+        return parts;
+    }
+
+    public List<ColorEntryLayout> getLayout() {
+        return layout;
+    }
+
+    public void setLayout(List<ColorEntryLayout> layout) {
+        this.layout = layout;
+    }
+
+    public void setParts(List<String> parts) {
+        this.parts = parts;
+    }
+
+    public void changeLayout(ValueChangeEvent event) {
+        String selectedVal = String.valueOf(event.getNewValue());
+        if (selectedVal.equals("layout1")){
+            this.parts=parts2;
+            this.layout = layout2;
+        } else {
+            this.parts = parts1;
+            this.layout=layout1;
+        }
+    }
+
+    public String getPartsDefined(){
+        if (parts.isEmpty())return "";
+        String definedParts = "| ";
+        for (String part: parts){
+            definedParts += part+" | ";
+        }
+        return definedParts;
+    }
+
+    public String getLayoutDefined(){
+        if (layout.isEmpty())return "";
+        String customLayout = "|";
+        for (ColorEntryLayout cel: layout){
+            customLayout += cel.getPart() + ":" + cel.getEntry()+" | ";
+        }
+        return customLayout;
     }
 }

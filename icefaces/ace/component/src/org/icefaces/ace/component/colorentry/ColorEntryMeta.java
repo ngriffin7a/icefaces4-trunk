@@ -76,11 +76,14 @@ public class ColorEntryMeta extends UIInputMeta{
             defaultValueType = DefaultValueType.EXPRESSION)
     private ColorFormat colorFormat;
 
+    @Property(tlddoc="title to display in the header")
+    private String title;
+
   /*  @Property(defaultValue="false", tlddoc="If true, will show an inline Frame around the inline component.")
     private boolean inline;   */
 
-  @Property(defaultValue = "", tlddoc = "The text to display on the trigger button. Use in conjunction with the showOn option set to \"button\" or \"all\". Default = \"\".")
-  private String buttonText;
+    @Property(defaultValue = "", tlddoc = "The text to display on the trigger button. Use in conjunction with the showOn option set to \"button\" or \"all\". Default = \"\".")
+    private String buttonText;
 
     @Property(defaultValue="true", tlddoc="if false, the dialog opens automatically upon page load")
     private boolean renderAsPopup;
@@ -159,7 +162,7 @@ public class ColorEntryMeta extends UIInputMeta{
    		tlddoc="Custom CSS style class(es) to use for this component. These style classes can be defined in your page or in a theme CSS file.")
    	private String styleClass;
 
-    @Property(tlddoc = "Name of the animation used to show/hide the colorEntry. Use \"show\", \"slideDown\", \"fadeIn\", any of the show/hide " +
+    @Property(tlddoc = "Name of the animation used to show/hide the colorEntry. Use  \"slideDown\", \"fadeIn\", any of the show/hide " +
             "<a href=\"http://docs.jquery.com/UI/Effects\">jQuery UI effects</a>, or \"\" for no animation.", defaultValue = "show")
     private String effect;
 

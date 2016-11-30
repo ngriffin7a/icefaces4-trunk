@@ -23,9 +23,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean(name= ColorEntryPaletteBean.BEAN_NAME)
+@ManagedBean(name= ColorEntrySwatchesBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ColorEntryPaletteBean implements Serializable
+public class ColorEntrySwatchesBean implements Serializable
 {
     public static final String BEAN_NAME = "colorEntryPaletteBean";
 	public String getBeanName() { return BEAN_NAME; }

@@ -1,0 +1,91 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{msgs['example.ace.colorEntry.options.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.colorEntry.options.description']}"/>
+
+    <ui:define name="example">
+        <h:form id="inputOptionsForm">
+            <ace:panel id="inpOptionsPan" header="Options">
+               <h:panelGrid id="inputOptions" columns="2">
+                   <h:outputLabel for="titleId" value="Title"/>
+                   <h:inputText id="titleId" value="#{colorEntryOptionsBean.title}">
+                       <f:ajax execute="@this" render="@all"/>
+                   </h:inputText>
+                   <h:outputLabel for="colorFormat" value="Choose format of Color"/>
+                   <h:selectOneMenu id="colorFormat" value="#{colorEntryOptionsBean.colorFormat}">
+                         <f:selectItems value="#{colorEntryOptionsBean.colorFormats}"/>
+                         <f:ajax execute="@this" render="@all"/>
+                     </h:selectOneMenu>
+                   <h:outputLabel for="showAlpha" value="Show Input for Alpha"/>
+                   <h:selectBooleanCheckbox id="showAlpha"  value="#{colorEntryOptionsBean.showAlpha}">
+                       <f:ajax execute="@this" render="@all"/>
+                   </h:selectBooleanCheckbox>
+                   <h:outputLabel for="showNoneButton" value="Show NoneButton"/>
+                   <h:selectBooleanCheckbox id="showNoneButton"  value="#{colorEntryOptionsBean.showNoneButton}">
+                       <f:ajax execute="@this" render="@all"/>
+                   </h:selectBooleanCheckbox>
+                   <h:outputLabel for="effect" value="Effect"/>
+                   <h:selectOneMenu id="effect"  value="#{colorEntryOptionsBean.effect}">
+                       <f:selectItem itemLabel="show" itemValue="show"/>
+                       <f:selectItem itemLabel="fadeIn" itemValue="fadeIn"/>
+                       <f:selectItem itemLabel="slideDown" itemValue="slideDown"/>
+                       <f:ajax execute="@this" render="@all"/>
+                   </h:selectOneMenu>
+                   <h:selectOneMenu id="duration" value="#{colorEntryOptionsBean.duration}">
+                       <f:selectItem itemLabel="normal" itemValue="normal"/>
+                       <f:selectItem itemLabel="slow" itemValue="slow"/>
+                       <f:selectItem itemLabel="fast" itemValue="fast"/>
+                       <f:ajax execute="@this" render="@all"/>
+                   </h:selectOneMenu>
+
+               </h:panelGrid>
+           </ace:panel>
+
+            <ace:panel id="colorInputPanel" header="ColorEntry" styleClass="required-styling-demo">
+                <h:panelGrid id="inputGrid" columns="1" width="100%" >
+                    <ace:colorEntry id="colorInput" value="#{colorEntryOptionsBean.value}"
+                               title="#{colorEntryOptionsBean.title}"
+                               alpha="#{colorEntryOptionsBean.showAlpha}"
+                               showNoneButton="#{colorEntryOptionsBean.showNoneButton}"
+                               label="ColorEntry" labelPosition="left">
+                    </ace:colorEntry>
+                    <!--             effect="#{colorEntryOptionsBean.effect}"
+                                     duration="#{colorEntryOptionsbean.duration}"  -->
+                    <h:commandButton value="Submit" id="colorEntryBasicSubmit"/>
+                    <ace:message id="message1" for="colorInput" />
+                </h:panelGrid>
+
+            </ace:panel>
+
+            <ace:panel id="colorOutputPanel" header="Entered data">
+                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
+                    <h:outputText id="basicValue" value="Color selected : #{colorEntryOptionsBean.value}"/>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
