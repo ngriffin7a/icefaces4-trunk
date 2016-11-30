@@ -29,24 +29,19 @@
         <h:form id="colorEntryForm">
             <ace:panel id="colorInputPanel" header="ColorEntry" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" >
-                    <ace:colorEntry id="colorInput" value="#{colorEntryBean.basicValue}"
-                               label="Basic Example" labelPosition="left">
+                    <ace:colorEntry id="colorInput" value="#{colorEntryBean.inline}"
+                                    presetParts="inline"
+                               label="Inline" labelPosition="left">
                     </ace:colorEntry>
-                    <ace:colorEntry id="colorInput2" value="#{colorEntryBean.showInputValue}"
-                                label="No Palette and Show Input Field"
-                                labelPosition="left"
-                                showPalette="false"
-                                showInput="true">
+                    <ace:colorEntry id="colorInput2" value="#{colorEntryBean.simplePopup}" presetParts="popup"
+                                label="Simple Popup"
+                                labelPosition="left">
                     </ace:colorEntry>
-                    <ace:colorEntry id="colorInput3" value="#{colorEntryBean.allowEmptyValue}"
+                    <ace:colorEntry id="colorInput3" value="#{colorEntryBean.full}"
                                 required="true"
-                                showButtons="true"
-                                label="Required and showButtons" labelPosition="left">
+                                presetParts="full"
+                                label="Full" labelPosition="left">
                      </ace:colorEntry>
-                    <ace:colorEntry id="colorInput4" value="#{colorEntryBean.showPaletteOnly}"
-                                   showPaletteOnly="true"
-                                   label="Limit Selection to within Palette" labelPosition="left">
-                    </ace:colorEntry>
                     <h:commandButton value="Submit" id="colorEntryBasicSubmit"/>
                     <ace:message id="message1" for="colorInput3" />
                 </h:panelGrid>
@@ -55,10 +50,9 @@
 
             <ace:panel id="colorOutputPanel" header="Entered data">
                 <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
-                    <h:outputText id="basicValue" value="Color selected from basic example: #{colorEntryBean.basicValue}"/>
-                    <h:outputText id="showInputValue"  value="Color Selected from No Palette and ShowInput: #{colorEntryBean.showInputValue}"/>
-                    <h:outputText id="allowEmptyValue" value="Color Selected from Required and showPalette example: #{colorEntryBean.allowEmptyValue}" />
-                    <h:outputText id="showPaletteOnly" value="Color Selected from ShowPaletteOnly example: #{colorEntryBean.showPaletteOnly}" />
+                    <h:outputText id="basicValue" value="Color selected from inline example: #{colorEntryBean.inline}"/>
+                    <h:outputText id="showInputValue"  value="Color Selected from Simple Popup example: #{colorEntryBean.simplePopup}"/>
+                    <h:outputText id="allowEmptyValue" value="Color Selected from full example: #{colorEntryBean.full}" />
                 </h:panelGrid>
             </ace:panel>
         </h:form>

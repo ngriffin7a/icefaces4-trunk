@@ -23,6 +23,9 @@ import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
+import org.icefaces.ace.model.colorEntry.ColorEntryLayout;
+
+import java.util.List;
 
 @Component(
         tagName = "colorEntry",
@@ -82,11 +85,17 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(defaultValue="true", tlddoc="if false, the dialog opens automatically upon page load")
     private boolean renderAsPopup;
 
-    @Property(defaultValue="full", tlddoc="the preset definition of parts to be shown. Valid values are full, popup or inline")
+    @Property(defaultValue="full", tlddoc="the preset definition of parts to be shown. Valid values are \'full\', \'popup\' or \'inline\'")
     private String presetParts;
 
-  /*  @Property(tlddoc="An array of values which can include \'header\', \'preview\',\'hex\',\'rgb\',\'alpha\', \'hsv\',\'rbgslider\',\'footer\'")
-    private String selectedParts;  */
+    @Property(tlddoc="An array of values which can include \'header\', \'preview\',\'hex\',\'rgb\',\'alpha\', \'hsv\',\'rbgslider\',\'footer\'")
+    private List<String> selectedParts;
+
+    @Property(tlddoc="When selectedParts is used for custom configuration, this attribute defines the position of elements in a table layout.  " +
+            "Any layout is possible with HTML tables by specifying cell position and size of each part. The value is an array with four coordinates on order [left, top, width, height].  " +
+            "The coordinates correspond to cells in a table, so if you want to have a part at top-left and spanning two rows, and three columns, the value would be" +
+            "preview, [0, 0, 3, 2] -- to show preview at that location. \'header\' and \'footer\' do not require a position so should only be listed in the selectedParts attribute. ")
+    private List<ColorEntryLayout> customLayout;
 
     @Property(defaultValue="true", tlddoc="Show the Cancel button if buttonpane on popup is visible.  ")
     private boolean showCancelButton;
@@ -112,7 +121,7 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(tlddoc = "When enabled, popup icon is rendered without it appearing on a button. Default: \"false\".")
     private boolean popupIconOnly;
 
-    @Property(defaultValue="false", tlddoc="If a popupIcon is specified, change the background color of the image when the color is changed")
+    @Property(defaultValue="true", tlddoc="If a popupIcon is specified, change the background color of the image when the color is changed")
     private boolean buttonColorize;
 
     @Property(tlddoc="Close thewindow when pressing the Escape key on the keyboard")

@@ -28,37 +28,29 @@ public class ColorEntryBean implements Serializable
     public static final String BEAN_NAME = "colorEntryBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private String basicValue, colorValue, allowEmptyValue, showButtonsValue, showInputValue, showPaletteOnly;
+    private String inline, simplePopup, full;
 
-    public String getBasicValue() {
-        return basicValue;
+    public String getInline() {
+        return inline;
     }
 
-    public void setBasicValue(String basicValue) {
-        this.basicValue = basicValue;
+    public void setInline(String inline) {
+        this.inline = inline;
     }
 
-    public String getAllowEmptyValue() {
-        return allowEmptyValue;
+    public String getSimplePopup() {
+        return simplePopup;
     }
 
-    public void setAllowEmptyValue(String allowEmptyValue) {
-        this.allowEmptyValue = allowEmptyValue;
+    public void setSimplePopup(String simplePopup) {
+        this.simplePopup = simplePopup;
     }
 
-    public String getShowInputValue() {
-        return showInputValue;
+    public String getFull() {
+        return full;
     }
 
-    public void setShowInputValue(String showInputValue) {
-        this.showInputValue = showInputValue;
-    }
-
-    public String getShowPaletteOnly() {
-        return showPaletteOnly;
-    }
-
-    public void setShowPaletteOnly(String showPaletteOnly) {
-        this.showPaletteOnly = showPaletteOnly;
+    public void setFull(String full) {
+        this.full = full;
     }
 }
