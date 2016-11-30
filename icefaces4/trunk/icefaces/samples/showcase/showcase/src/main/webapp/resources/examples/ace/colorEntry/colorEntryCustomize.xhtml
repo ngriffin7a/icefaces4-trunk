@@ -22,63 +22,38 @@
     xmlns:icecore="http://www.icefaces.org/icefaces/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
-    <ui:param name="title" value="#{msgs['example.ace.colorEntry.title']}"/>
-    <ui:param name="description" value="#{msgs['example.ace.colorEntry.description']}"/>
+    <ui:param name="title" value="#{msgs['example.ace.colorEntry.customize.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.colorEntry.customize.description']}"/>
 
     <ui:define name="example">
-        <style type="text/css">
-            .colorEntryCustom1{
-                background: purple;
-            }
 
-            .colorEntryCustom2{
-                background: blue;
-            }
-
-            .colorEntryCustom3{
-                background: green;
-            }
-        </style>
         <h:form id="inputOptionsForm">
-            <ace:panel id="inpOptionsPan" header="Options">
-                <h:panelGrid id="inputOptions" columns="2">
-                    <h:outputLabel for="showButtons" value="Show Buttons"/>
-                    <h:selectBooleanCheckbox id="showButtons"  value="#{colorEntryCustomBean.showButtons}">
-                        <f:ajax execute="@this" render="@all"/>
-                    </h:selectBooleanCheckbox>
-                    <h:outputLabel for="chooseText" value="Choose Button Text"/>
-                    <h:inputText id="chooseText" value="#{colorEntryCustomBean.chooseText}" >
-                        <f:ajax execute="@this" render="@all"/>
-                    </h:inputText>
-                    <h:outputLabel for="cancelText" value="Cancel Button Text"/>
-                    <h:inputText id="cancelText" value="#{colorEntryCustomBean.cancelText}" >
-                        <f:ajax execute="@this" render="@all"/>
-                    </h:inputText>
+        <ace:panel id="inpOptionsPan" header="Options">
+            <!-- NEED TO WORK ON DYNAMIC CHANGING OF LAYOUT -->
+             <!--   <h:panelGrid id="inputOptions" columns="2">
                     <h:outputLabel for="valueFormat" value="Choose format of Value"/>
                     <h:selectOneMenu id="valueFormat" value="#{colorEntryCustomBean.valueFormat}">
                           <f:selectItems value="#{colorEntryCustomBean.colorFormats}"/>
                           <f:ajax execute="@this" render="@all"/>
                       </h:selectOneMenu>
-                    <h:outputLabel for="replacerClass" value="Extra styling to be applied"/>
-                    <h:selectOneMenu id="replacerClass" value="#{colorEntryCustomBean.customStyleClass}">
-                        <f:selectItem itemLabel="purple background" itemValue="colorEntryCustom1"/>
-                        <f:selectItem itemLabel="blue background" itemValue="colorEntryCustom2"/>
-                        <f:selectItem itemLabel="green background" itemValue="colorEntryCustom3"/>
+                    <h:outputLabel for="alternateLayout" value="Choose Custom Layout"/>
+                    <h:selectOneMenu id="alternateLayout" value="#{colorEntryCustomBean.layout}"
+                                     valueChangeListener="#{colorEntryCustomBean.changeLayout}">
+                        <f:selectItem itemLabel="Hex and RGB Slider" itemValue="layout1"/>
+                        <f:selectItem itemLabel="LongColumnLook" itemValue="layout2"/>
                         <f:ajax execute="@this" render="@all"/>
                     </h:selectOneMenu>
-                </h:panelGrid>
+                </h:panelGrid>   -->
             </ace:panel>
         </h:form>
-        <h:form id="colorPickerForm">
+
+        <h:form>
             <ace:panel id="colorInputPanel" header="ColorEntry - Customizable" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" >
                     <ace:colorEntry id="colorInput" value="#{colorEntryCustomBean.value}"
-                               valueFormat="#{colorEntryCustomBean.valueFormat}"
-                               showButtons="#{colorEntryCustomBean.showButtons}"
-                               selectButtonLabel="#{colorEntryCustomBean.chooseText}"
-                               cancelButtonText="#{colorEntryCustomBean.cancelText}"
-                               styleClass="#{colorEntryCustomBean.customStyleClass}"
-                               label="Customizable" labelPosition="left">
+                               selectedParts="#{colorEntryCustomBean.parts}"
+                               customLayout="#{colorEntryCustomBean.layout}"
+                               label="Custom" labelPosition="left">
                         <ace:ajax execute="@this" render="@all" />
                     </ace:colorEntry>
                 </h:panelGrid>
@@ -87,6 +62,14 @@
             <ace:panel id="colorOutputPanel" header="Entered data">
                 <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
                     <h:outputText id="basicValue" value="Color selected: #{colorEntryCustomBean.value}"/>
+                </h:panelGrid>
+            </ace:panel>
+            <ace:panel id="layoutvalues" header="Custom Parts and Layout">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Parts defined:-" for="partsDefined"/>
+                    <h:outputText id="partsDefined" value="#{colorEntryCustomBean.partsDefined}"/>
+                    <h:outputLabel value="Layout defined:-" for="layoutDefined"/>
+                    <h:outputText id="layoutDefined" value="#{colorEntryCustomBean.layoutDefined}"/>
                 </h:panelGrid>
             </ace:panel>
         </h:form>

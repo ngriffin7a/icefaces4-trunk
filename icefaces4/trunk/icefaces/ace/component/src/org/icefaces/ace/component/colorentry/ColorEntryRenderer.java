@@ -47,7 +47,6 @@ public class ColorEntryRenderer extends InputRenderer {
  		 }
          String submittedValue = params.get(clientId + "_input");
          picker.setSubmittedValue(submittedValue);
-       // System.out.println(" check in decode submittedValue="+picker.getSubmittedValue().toString()+" color="+picker.getColor());
          decodeBehaviors(facesContext, component);
      }
 
@@ -182,6 +181,9 @@ public class ColorEntryRenderer extends InputRenderer {
                 .entry("id", clientId)
                 .entry("colorFormat", preferredFormat)
                 .entry("disabled", picker.isDisabled());
+        if (picker.getTitle()!=null && picker.getTitle().length()>0){
+            jb.entry("title", picker.getTitle());
+        }
         if (hasPresetParts){
             jb.entry("parts", parts) ;
         }else {  /* custom layout */
@@ -195,7 +197,10 @@ public class ColorEntryRenderer extends InputRenderer {
                 jb.beginMap("layout");
                 for (ColorEntryLayout layout: customLayout){
                     jb.beginArray(layout.getPart());
-                    jb.item(layout.getEntry());
+                    jb.item(layout.getColumn());
+                    jb.item(layout.getRow());
+                    jb.item(layout.getColspan());
+                    jb.item(layout.getRowspan());
                     jb.endArray();
                 }
                 jb.endMap();
@@ -230,28 +235,12 @@ public class ColorEntryRenderer extends InputRenderer {
         }
 
 
-   /*     if (picker.getPaletteList()!=null){
-            jb.beginArray("palette") ;
-            List<String[]> list = picker.getPaletteList();
-            for (String[] palette: list){
-                jb.beginArray();
-                for (String colorVal: palette){
-                    jb.item(colorVal);
-                }
-                jb.endArray();
-            }
-            jb.endArray();
-        }   */
-
-
         jb.endMap();
 
         encodeClientBehaviors(context, picker, jb);
-      //  jb.endArray().endFunction();
         jb.endMap().endArray().endFunction();
-       // String script = jb.toString() + "});";
         String script = jb.toString();
- //  System.out.println(" script="+script);
+   //System.out.println(" script="+script);
 
         writeLabelAndIndicatorAfter(labelAttributes);
         writer.endElement("span");
@@ -259,7 +248,6 @@ public class ColorEntryRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId+"_script", null);
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
-     //   writer.write("ice.ace.jq(function() {");
         writer.write(script);
 
         writer.endElement("script");
