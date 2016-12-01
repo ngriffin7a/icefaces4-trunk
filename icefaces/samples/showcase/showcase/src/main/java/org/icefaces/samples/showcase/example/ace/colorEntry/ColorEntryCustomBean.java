@@ -18,7 +18,7 @@ package org.icefaces.samples.showcase.example.ace.colorEntry;
 
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Arrays;
@@ -33,7 +33,7 @@ public class ColorEntryCustomBean implements Serializable
     public static final String BEAN_NAME = "colorEntryCustomBean";
 	public String getBeanName() { return BEAN_NAME; }
     
-    private String value;
+    private String value, customLayout;
     private List<String> parts = new ArrayList<String>();
     private List<String> parts1 = new ArrayList<String>(Arrays.asList("header", "preview", "hex", "rgbslider"));
     private List<String> parts2 = new ArrayList<String>(Arrays.asList("header", "map", "bar", "hex", "hsv", "rgb", "alpha", "preview", "swatches", "footer"));
@@ -54,8 +54,8 @@ public class ColorEntryCustomBean implements Serializable
         layout2.add(new ColorEntryLayout("bar", 0, 2, 1, 4));
         layout2.add(new ColorEntryLayout("swatches", 2, 2, 1, 4));
         layout2.add(new ColorEntryLayout("rbg", 1, 2, 1, 1));
-        layout2.add(new ColorEntryLayout("hsv", 0, 2, 1, 4));
-        layout2.add(new ColorEntryLayout("alpha", 1, 3, 1, 1));
+        layout2.add(new ColorEntryLayout("hsv", 1, 3, 1, 1));
+        layout2.add(new ColorEntryLayout("alpha", 1, 4, 1, 1));
         layout2.add(new ColorEntryLayout("lab", 0, 5, 1, 1));
         layout2. add(new ColorEntryLayout("cmyk", 1, 5, 1, 2));
         this.parts = parts1;
@@ -91,17 +91,25 @@ public class ColorEntryCustomBean implements Serializable
         return layout;
     }
 
+    public String getCustomLayout() {
+        return customLayout;
+    }
+
+    public void setCustomLayout(String customLayout) {
+        this.customLayout = customLayout;
+    }
+
     public void setLayout(List<ColorEntryLayout> layout) {
         this.layout = layout;
+
     }
 
     public void setParts(List<String> parts) {
         this.parts = parts;
     }
 
-    public void changeLayout(ValueChangeEvent event) {
-        String selectedVal = String.valueOf(event.getNewValue());
-        if (selectedVal.equals("layout1")){
+    public void changeLayout(AjaxBehaviorEvent event) {
+        if (customLayout.equals("layout2")){
             this.parts=parts2;
             this.layout = layout2;
         } else {
