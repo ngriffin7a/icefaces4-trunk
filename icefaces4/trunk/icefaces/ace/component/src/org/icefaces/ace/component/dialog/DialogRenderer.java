@@ -139,6 +139,7 @@ public class DialogRenderer extends CoreRenderer {
         if (hideEffect != null) jb.entry("hide", hideEffect);
         if (!dialog.isCloseOnEscape()) jb.entry("closeOnEscape", false);
         if (!dialog.isClosable()) jb.entry("closable", false);
+        if (dialog.isMaximizableRestorable()) jb.entry("maximizableRestorable", true);
         if (!dialog.isShowHeader() || hasHeaderFacet) jb.entry("showHeader", false);
         if (onShow != null) jb.entry("onShow", "function(event, ui) {" + onShow + "}", true);
         if (onHide != null) jb.entry("onHide", "function(event, ui) {" + onHide + "}", true);

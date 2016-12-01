@@ -104,6 +104,9 @@ public class DialogMeta extends UIPanelMeta {
 	
 	@Property(tlddoc="Boolean value that specifies whether the dialog should have a close button in the header.", defaultValue="true")
 	private boolean closable;
+
+	@Property(tlddoc="Boolean value that specifies whether the dialog should have maximize and restore buttons in the header. The maximize button expands the dialog to take 95% of the viewport and changes the CSS position value of the dialog to fixed. The restore button changes the current position and dimensions of the dialog to those it had at the moment it was shown.", defaultValue="false")
+	private boolean maximizableRestorable;
 	
 	@Property(tlddoc="Javascript code to be executed when showing the dialog")
 	private String onShow;

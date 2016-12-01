@@ -24,3 +24,28 @@
     visibility: hidden;
     height:0;
 }
+
+.ui-dialog .ui-dialog-titlebar-maximize,
+.ui-dialog .ui-dialog-titlebar-restore {
+	border: 1px solid transparent;
+	position: relative;
+	float:right;
+	top: auto;
+	right: auto;
+	width: 19px;
+	height: 18px;
+	margin: 0;
+}
+
+.ui-dialog .ui-dialog-titlebar-buttonpane {
+	position: absolute;
+	top: 50%;
+	right: 0.3em;
+	height: 18px;
+	margin-top: -10px;
+	padding: 1px;
+}
+
+.ui-dialog.ui-maximizable .ui-dialog-title {
+	margin-right: 54px;
+}
