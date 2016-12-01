@@ -600,7 +600,7 @@
 
 					if (!inst.inline && inst.options.draggable) {
 						var draggableOptions = {
-							handle: part,
+							handle: part
 						}
 						if (inst.options.containment) {
 							draggableOptions.containment = inst.options.containment;
