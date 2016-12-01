@@ -30,20 +30,19 @@
         <h:form id="inputOptionsForm">
         <ace:panel id="inpOptionsPan" header="Options">
             <!-- NEED TO WORK ON DYNAMIC CHANGING OF LAYOUT -->
-             <!--   <h:panelGrid id="inputOptions" columns="2">
+            <h:panelGrid id="inputOptions" columns="2">
                     <h:outputLabel for="valueFormat" value="Choose format of Value"/>
                     <h:selectOneMenu id="valueFormat" value="#{colorEntryCustomBean.valueFormat}">
                           <f:selectItems value="#{colorEntryCustomBean.colorFormats}"/>
                           <f:ajax execute="@this" render="@all"/>
                       </h:selectOneMenu>
                     <h:outputLabel for="alternateLayout" value="Choose Custom Layout"/>
-                    <h:selectOneMenu id="alternateLayout" value="#{colorEntryCustomBean.layout}"
-                                     valueChangeListener="#{colorEntryCustomBean.changeLayout}">
+                    <h:selectOneMenu id="alternateLayout" value="#{colorEntryCustomBean.customLayout}">
                         <f:selectItem itemLabel="Hex and RGB Slider" itemValue="layout1"/>
                         <f:selectItem itemLabel="LongColumnLook" itemValue="layout2"/>
-                        <f:ajax execute="@this" render="@all"/>
+                        <f:ajax execute="@this" render="@all" listener="#{colorEntryCustomBean.changeLayout}"/>
                     </h:selectOneMenu>
-                </h:panelGrid>   -->
+                </h:panelGrid>
             </ace:panel>
         </h:form>
 
@@ -51,6 +50,7 @@
             <ace:panel id="colorInputPanel" header="ColorEntry - Customizable" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" >
                     <ace:colorEntry id="colorInput" value="#{colorEntryCustomBean.value}"
+                               colorFormat="#{colorEntryCustomBean.valueFormat}"
                                selectedParts="#{colorEntryCustomBean.parts}"
                                customLayout="#{colorEntryCustomBean.layout}"
                                label="Custom" labelPosition="left">
