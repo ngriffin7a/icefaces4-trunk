@@ -129,6 +129,9 @@ public class ScheduleMeta extends UIDataMeta {
     @Property(tlddoc = "A time zone ID String (matching an element of java.util.TimeZone.getAvailableIDs()) or a java.util.TimeZone instance to specify the time zone used for date conversion to and from UTC time. If not specified, the default value is TimeZone.getDefault().")
     private Object timeZone;
 
+    @Property(tlddoc = "Defines the default duration (in minutes) of new events added by the user if an end date or time was not set.", defaultValue = "60", defaultValueType = DefaultValueType.EXPRESSION)
+    private Integer defaultDuration;
+
 	@Field(defaultValue="-1")
 	private Integer lazyYear;
 

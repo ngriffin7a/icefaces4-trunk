@@ -122,6 +122,35 @@ public class ScheduleUtils {
 		String id = params.get(clientId + "_id");
 		TimeZone timeZone = schedule.calculateTimeZone();
 
+		// if no start date specified, use current date
+		if (startDate == null || "".equals(startDate)) {
+			Calendar cal = Calendar.getInstance(timeZone);
+			startDate = cal.get(Calendar.YEAR) + "-"
+				+ ((cal.get(Calendar.MONTH)+1) < 10 ? "0" : "") + (cal.get(Calendar.MONTH)+1) + "-"
+				+ (cal.get(Calendar.DATE) < 10 ? "0" : "") + cal.get(Calendar.DATE);
+		}
+
+		// if no start time specified, use next hour
+		if (startTime == null || "".equals(startTime)) {
+			Calendar cal = Calendar.getInstance(timeZone);
+			cal.add(Calendar.HOUR_OF_DAY, 1);
+			startTime = (cal.get(Calendar.HOUR_OF_DAY) < 10 ? "0" : "") + cal.get(Calendar.HOUR_OF_DAY) + ":00";
+			if (cal.get(Calendar.HOUR_OF_DAY) == 0) { // next day
+				startDate = cal.get(Calendar.YEAR) + "-"
+					+ ((cal.get(Calendar.MONTH)+1) < 10 ? "0" : "") + (cal.get(Calendar.MONTH)+1) + "-"
+					+ (cal.get(Calendar.DATE) < 10 ? "0" : "") + cal.get(Calendar.DATE);
+			}
+		}
+
+		// if no end date specified, use start date
+		// if no end time specified, use default duration
+		if ((endDate == null || "".equals(endDate))
+			|| (endTime == null || "".equals(endTime))) {
+			String[] endDateTime = getDefaultEndDateTime(schedule, clientId, startDate, startTime, endDate);
+			endDate = endDateTime[0];
+			endTime = endDateTime[1];
+		}
+
 		ScheduleEvent scheduleEvent = new ScheduleEvent();
 		Date convertedDate = convertDateTimeToServerFormat(startDate, startTime);
 		if (convertedDate == null) return null;
@@ -296,5 +325,39 @@ public class ScheduleUtils {
 		public int getHour() { return this.hour; }
 		public int getMinute() { return this.minute; }
 		public int getSecond() { return this.second; }
+	}
+
+	public static String[] getDefaultEndDateTime(Schedule schedule, String clientId, 
+		String startDate, String startTime, String endDate) {
+		TimeZone timeZone = schedule.calculateTimeZone();
+		String[] endDateTimeValues = new String[2];
+
+		if (startDate.equals(endDate)
+			|| (endDate == null || "".equals(endDate))) {
+			int defaultDuration = schedule.getDefaultDuration();
+			try {
+				Calendar cal = Calendar.getInstance();
+				int year = Integer.valueOf(startDate.substring(0, 4));
+				int month = Integer.valueOf(startDate.substring(5, 7));
+				int day = Integer.valueOf(startDate.substring(8, 10));
+				int hour = Integer.valueOf(startTime.substring(0, startTime.indexOf(":")));
+				int minute = Integer.valueOf(startTime.substring(startTime.indexOf(":")+1));
+				cal.set(year, month-1, day, hour, minute);
+				cal.add(Calendar.MINUTE, defaultDuration);
+				endDateTimeValues[0] = cal.get(Calendar.YEAR) + "-"
+					+ ((cal.get(Calendar.MONTH)+1) < 10 ? "0" : "") + (cal.get(Calendar.MONTH)+1) + "-"
+					+ (cal.get(Calendar.DATE) < 10 ? "0" : "") + cal.get(Calendar.DATE);
+				endDateTimeValues[1] = (cal.get(Calendar.HOUR_OF_DAY) < 10 ? "0" : "") + cal.get(Calendar.HOUR_OF_DAY) + ":"
+					+ (cal.get(Calendar.MINUTE) < 10 ? "0" : "") + cal.get(Calendar.MINUTE);
+			} catch (Exception e) {
+				endDateTimeValues[0] = startDate;
+				endDateTimeValues[1] = startTime;
+			}
+		} else {
+			endDateTimeValues[0] = endDate;
+			endDateTimeValues[1] = startTime;
+		}
+
+		return endDateTimeValues;
 	}
 }
