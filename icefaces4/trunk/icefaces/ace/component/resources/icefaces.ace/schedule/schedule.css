@@ -183,3 +183,7 @@
 .ice-ace-schedule .schedule-details-tooltip {
 	font-size: small;
 }
+.schedule-details-popup-content button {
+	float: right;
+	margin-left: 5px;
+}
