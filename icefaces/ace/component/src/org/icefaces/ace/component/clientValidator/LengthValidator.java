@@ -82,7 +82,9 @@ public class LengthValidator extends LengthValidatorBase implements Validator {
             script.append(getValidateOn());
             script.append("');");
 
+            form.setInView(false);
             children.add(new ScriptOutputWriter(script.toString()));
+            form.setInView(true);
         }
     }
 
