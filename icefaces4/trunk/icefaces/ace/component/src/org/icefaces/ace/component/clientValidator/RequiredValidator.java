@@ -60,7 +60,9 @@ public class RequiredValidator extends RequiredValidatorBase implements Validato
             script.append(getValidateOn());
             script.append("');");
 
+            form.setInView(false);
             children.add(new ScriptOutputWriter(script.toString()));
+            form.setInView(true);
         }
     }
 
