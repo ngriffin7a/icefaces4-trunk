@@ -35,7 +35,7 @@
 					<ace:clientValidateRequired />
 					<ace:clientValidateLength minimum="4" maximum="8" />
 				</ace:textEntry>
-				<br /><br />
+
 				<p>The <b>&lt;ace:checkboxButtons&gt;</b> use an <b>&lt;ace:clientValidateLength&gt;</b> with the minimum attribute set to 2 and the maximum attribute set to 4. </p>
 				<ace:checkboxButtons id="Selections"
 					header="Select from 2 to 4 options"
@@ -49,11 +49,12 @@
 					<ace:clientValidateRequired />
 					<ace:clientValidateLength minimum="2" maximum="4" />
 				</ace:checkboxButtons>
-				<br />
+
 				<ace:pushButton id="submitButton" value="Submit" />
-				<div id="messageDiv" style="width: 400px;">
-				<ace:messages id="messages1" for="@inView" />
-				</div>
+
+				<h:panelGroup id="messageDiv" style="width: 400px;">
+				    <ace:messages id="messages1" for="@inView" />
+				</h:panelGroup>
 			</h:panelGrid>
 			</ace:panel>
 			</h:form>
