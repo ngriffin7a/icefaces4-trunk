@@ -42,7 +42,7 @@ public class RefreshHandler extends TagHandler {
         if (!disabled) {
             FacesContext context = FacesContext.getCurrentInstance();
             Map attrs = context.getAttributes();
-            if (EnvUtils.isMyFaces() || !attrs.containsKey(RefreshHandler.class.getName())) {
+            if (!attrs.containsKey(RefreshHandler.class.getName())) {
                 UIOutput refreshSetup = new RefreshSetupOutput(getInterval(ctx), getDuration(ctx), disabled);
                 refreshSetup.setTransient(true);
                 refreshSetup.setId("refreshSetup");
