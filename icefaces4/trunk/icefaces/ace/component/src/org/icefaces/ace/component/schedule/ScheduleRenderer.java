@@ -112,23 +112,33 @@ public class ScheduleRenderer extends CoreRenderer {
 				schedule.setCurrentDay(new Integer(currentDay));
 		}
 
-/*
 		// set current date values again if they were programmatically changed
 		boolean isCurrentDateProgrammaticallySet = false;
 		Date currentDate = schedule.getCurrentDate();
 		if (currentDate != null) {
 			ScheduleUtils.DateIntegerValues currentDateIntegerValues = 
 				ScheduleUtils.getDateIntegerValues(currentDate);
-			if (currentDateIntegerValues.getYear() != schedule.getCurrentYear()
-				|| currentDateIntegerValues.getMonth() != schedule.getCurrentMonth()
-				|| currentDateIntegerValues.getDay() != schedule.getCurrentDay()) {
+			Integer currentYearFromClient;
+			Integer currentMonthFromClient;
+			Integer currentDayFromClient;
+			if (params.containsKey(clientId + "_navigation")) {
+				currentYearFromClient = new Integer(params.get(clientId + "_oldYear"));
+				currentMonthFromClient = new Integer(params.get(clientId + "_oldMonth"));
+				currentDayFromClient = new Integer(params.get(clientId + "_oldDay"));
+			} else {
+				currentYearFromClient = schedule.getCurrentYear();
+				currentMonthFromClient = schedule.getCurrentMonth();
+				currentDayFromClient = schedule.getCurrentDay();
+			}
+			if (currentDateIntegerValues.getYear() != currentYearFromClient
+				|| currentDateIntegerValues.getMonth() != currentMonthFromClient
+				|| currentDateIntegerValues.getDay() != currentDayFromClient) {
 					isCurrentDateProgrammaticallySet = true;
 					schedule.setCurrentYear(new Integer(currentDateIntegerValues.getYear()));
 					schedule.setCurrentMonth(new Integer(currentDateIntegerValues.getMonth()));
 					schedule.setCurrentDay(new Integer(currentDateIntegerValues.getDay()));
 			}
 		}
-*/
 
 		String viewMode = schedule.getViewMode();
 		if ("week".equalsIgnoreCase(viewMode)) {
@@ -143,16 +153,20 @@ public class ScheduleRenderer extends CoreRenderer {
 		String previousViewMode = params.get(clientId + "_viewMode");
 		String selectedDateString = params.get(clientId + "_selectedDate");
 		boolean clearSelectedDate = false;
-		if (previousViewMode != null && !viewMode.equalsIgnoreCase(previousViewMode)) {
-			if (selectedDateString != null && !"".equals(selectedDateString)) {
-				Date selectedDate = ScheduleUtils.convertDateTimeToServerFormat(selectedDateString, "00:00");
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(selectedDate);
-				schedule.setCurrentYear(cal.get(Calendar.YEAR));
-				schedule.setCurrentMonth(cal.get(Calendar.MONTH));
-				schedule.setCurrentDay(cal.get(Calendar.DATE));
-				clearSelectedDate = true;
+		if (!isCurrentDateProgrammaticallySet) {
+			if (previousViewMode != null && !viewMode.equalsIgnoreCase(previousViewMode)) {
+				if (selectedDateString != null && !"".equals(selectedDateString)) {
+					Date selectedDate = ScheduleUtils.convertDateTimeToServerFormat(selectedDateString, "00:00");
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(selectedDate);
+					schedule.setCurrentYear(cal.get(Calendar.YEAR));
+					schedule.setCurrentMonth(cal.get(Calendar.MONTH));
+					schedule.setCurrentDay(cal.get(Calendar.DATE));
+					clearSelectedDate = true;
+				}
 			}
+		} else {
+			clearSelectedDate = true;
 		}
 
 		// normalize current date values
