@@ -495,7 +495,7 @@ ice.ace.tabset = {
 
                        var previousWidth = node.style.width;
                        //make the width equal to the width that the DIV will have once displayed inside the tab content area
-                       jqNode.css('width', cnt.innerWidth() - parseInt(cnt.css('paddingRight')) - parseInt(cnt.css('paddingLeft')) - parseInt(jqNode.css('paddingRight')) - parseInt(jqNode.css('paddingLeft')) + 'px');
+                       jqNode.parent().removeClass('ui-tabs-hide');
                        ice.ace.animation.run({node: node, name: jsProps.showEffect}, {mode: 'show'}, jsProps.showEffectLength);
                        node.style.width = previousWidth;
                    }
