@@ -32,7 +32,7 @@
                         layout="pageDirection">
                         <f:selectItem id="v0" itemValue="eachOwn" itemLabel="#{msgs['example.ace.buttonGroup.column.groupBy.column']}"  />
                         <f:selectItem id="v1" itemValue="byButtonType" itemLabel="#{msgs['example.ace.buttonGroup.column.groupBy.type']}"/>
-                        <f:ajax execute="@this" render="@all"/>
+                        <ace:ajax execute="@this" render="@all"/>
                     </h:selectOneRadio>
                 </h:panelGrid>
             </ace:panel>
