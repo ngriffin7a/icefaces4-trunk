@@ -114,6 +114,10 @@ ice.ace.Schedule = function(id, cfg) {
 		var stateNode = node.closest('.schedule-state');
 		if (stateNode.hasClass('schedule-state') && !stateNode.hasClass('ui-state-hover')) {
 			stateNode.addClass('ui-state-hover');
+			if (stateNode.hasClass('ui-state-highlight')) {
+				stateNode.removeClass('ui-state-highlight');
+				stateNode.addClass('ui-state-highlight-disabled');
+			}
 		}
 	});
 	this.jqRoot.delegate('.schedule-state', 'mouseleave', function(event) {
@@ -121,7 +125,11 @@ ice.ace.Schedule = function(id, cfg) {
 		var node = ice.ace.jq(event['target']);
 		var stateNode = node.closest('.schedule-state');
 		if (stateNode.hasClass('schedule-state') && stateNode.hasClass('ui-state-hover')) {
-			self.jqRoot.find('.schedule-state').removeClass('ui-state-hover');;
+			self.jqRoot.find('.schedule-state').removeClass('ui-state-hover');
+			if (stateNode.hasClass('ui-state-highlight-disabled') && !stateNode.hasClass('ui-state-active')) {
+				stateNode.removeClass('ui-state-highlight-disabled');
+				stateNode.addClass('ui-state-highlight');
+			}
 		}
 	});
 	if (this.cfg.viewMode == 'month') {
@@ -130,10 +138,26 @@ ice.ace.Schedule = function(id, cfg) {
 			var node = ice.ace.jq(event['target']);
 			var stateNode = node.closest('.schedule-state');
 			if (stateNode.hasClass('schedule-state')) {
-				self.jqRoot.find('.schedule-state.ui-state-active').removeClass('ui-state-active');
-				stateNode.addClass('ui-state-active');
-				var date = self.extractEventDate(stateNode.parent().get(0));
-				document.getElementById(self.id + '_selectedDate').setAttribute('value', date);
+				if (stateNode.hasClass('ui-state-active')) {
+					stateNode.removeClass('ui-state-active');
+					if (stateNode.hasClass('ui-state-highlight-disabled')) {
+						stateNode.removeClass('ui-state-highlight-disabled');
+						stateNode.addClass('ui-state-highlight');
+					}
+					document.getElementById(self.id + '_selectedDate').setAttribute('value', '');
+				} else {
+					var currentDate = self.jqRoot.find('.schedule-state.ui-state-active.ui-state-highlight-disabled');
+					currentDate.removeClass('ui-state-highlight-disabled');
+					currentDate.addClass('ui-state-highlight');
+					self.jqRoot.find('.schedule-state.ui-state-active').removeClass('ui-state-active');
+					stateNode.addClass('ui-state-active');
+					if (stateNode.hasClass('ui-state-highlight')) {
+						stateNode.removeClass('ui-state-highlight');
+						stateNode.addClass('ui-state-highlight-disabled');
+					}
+					var date = self.extractEventDate(stateNode.parent().get(0));
+					document.getElementById(self.id + '_selectedDate').setAttribute('value', date);
+				}
 			}
 		});
 	} else if (this.cfg.viewMode == 'week') {
@@ -142,10 +166,27 @@ ice.ace.Schedule = function(id, cfg) {
 			var node = ice.ace.jq(event['target']);
 			var stateNode = node.closest('.schedule-state');
 			if (stateNode.hasClass('schedule-state')) {
-				self.jqRoot.find('.schedule-state.ui-state-active').removeClass('ui-state-active');
 				var date = self.extractEventDate(stateNode.parent().get(0));
-				self.jqRoot.find('.calendar-day-' + date + ' .schedule-state').addClass('ui-state-active');
-				document.getElementById(self.id + '_selectedDate').setAttribute('value', date);
+				var allDateTimeCells = self.jqRoot.find('.calendar-day-' + date + ' .schedule-state');
+				if (stateNode.hasClass('ui-state-active')) {
+					allDateTimeCells.removeClass('ui-state-active');
+					if (allDateTimeCells.hasClass('ui-state-highlight-disabled')) {
+						allDateTimeCells.removeClass('ui-state-highlight-disabled');
+						allDateTimeCells.addClass('ui-state-highlight');
+					}
+					document.getElementById(self.id + '_selectedDate').setAttribute('value', '');
+				} else {
+					var currentDateCells = self.jqRoot.find('.schedule-state.ui-state-active.ui-state-highlight-disabled');
+					currentDateCells.removeClass('ui-state-highlight-disabled');
+					currentDateCells.addClass('ui-state-highlight');
+					self.jqRoot.find('.schedule-state.ui-state-active').removeClass('ui-state-active');
+					allDateTimeCells.addClass('ui-state-active');
+					if (stateNode.hasClass('ui-state-highlight') || stateNode.hasClass('ui-state-highlight-disabled')) {
+						allDateTimeCells.removeClass('ui-state-highlight');
+						allDateTimeCells.addClass('ui-state-highlight-disabled');
+					}
+					document.getElementById(self.id + '_selectedDate').setAttribute('value', date);
+				}
 			}
 		});
 	}
