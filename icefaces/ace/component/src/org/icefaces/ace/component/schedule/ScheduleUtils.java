@@ -86,6 +86,9 @@ public class ScheduleUtils {
 		}
 	}
 
+	/**
+     * Assumes month is 1-relative
+     */
 	public static Date convertDateTimeToServerFormat(String date, String time) {
 		Calendar cal = Calendar.getInstance();
 		String yearString = date.substring(0, 4);
