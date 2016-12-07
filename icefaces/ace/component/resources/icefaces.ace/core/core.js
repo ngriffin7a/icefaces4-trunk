@@ -64,7 +64,7 @@ ice.ace.lazy = function(name, args) {
     var clientId = args[0], // lazy requires clientId is first arg
         elem = document.getElementById(clientId);
 
-    if (ice.ace.lazy.registry[clientId]) {
+    if (ice.ace.lazy.registry[clientId]) { // only for buttons in a group
 		delete ice.ace.lazy.registry[clientId];
         var component = ice.ace.create(name, args);
         return component;
@@ -89,6 +89,8 @@ ice.ace.evalInit = function(element) {
 };
 
 //function used to register callback that returns the already created or just-now created widget
+//only for buttons in the same group that need to be aware of the existance of other buttons 
+//that may or may not be initialized ICE-9500, ICE-11155
 ice.ace.registerLazyComponent = function(id) {
     if (!ice.ace.lazy.registry[id]) {
         ice.ace.lazy.registry[id] = function () {
