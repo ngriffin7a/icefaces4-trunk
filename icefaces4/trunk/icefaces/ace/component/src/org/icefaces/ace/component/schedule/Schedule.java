@@ -28,6 +28,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-public class Schedule extends ScheduleBase {
+public class Schedule extends ScheduleBase implements Serializable {
 
 	private TimeZone appropriateTimeZone;
 
@@ -107,19 +108,19 @@ public class Schedule extends ScheduleBase {
 	}
 
 	public Date[] getLazyDateRange() {
-		int lazyYear = getLazyYear();
-		int lazyMonth = getLazyMonth();
-		int lazyDay = getLazyDay();
+		int currentYear = getCurrentYear();
+		int currentMonth = getCurrentMonth();
+		int currentDay = getCurrentDay();
 		String viewMode = getViewMode();
-		viewMode = viewMode != null ? viewMode : viewMode.toLowerCase();
+		viewMode = viewMode != null ? viewMode.toLowerCase() : "month";
 
 		// get start date values
 		int[] startValues = new int[3];
 		Calendar cal = Calendar.getInstance(calculateTimeZone()); // right now
-		if (lazyYear != -1 && lazyMonth != -1 && lazyDay != -1) {
-			cal.set(Calendar.YEAR, lazyYear);
-			cal.set(Calendar.MONTH, lazyMonth);
-			cal.set(Calendar.DATE, lazyDay);
+		if (currentYear != -1 && currentMonth != -1 && currentDay != -1) {
+			cal.set(Calendar.YEAR, currentYear);
+			cal.set(Calendar.MONTH, currentMonth);
+			cal.set(Calendar.DATE, currentDay);
 		}
 		if ("day".equals(viewMode)) {
 			startValues[0] = cal.get(Calendar.YEAR);
@@ -164,13 +165,13 @@ public class Schedule extends ScheduleBase {
 		return dateRange;
 	}
 
-	public int[] getLazyDateValues() {
-		int lazyYear = getLazyYear();
-		int lazyMonth = getLazyMonth();
-		int lazyDay = getLazyDay();
+	public int[] getCurrentDateValues() {
+		int currentYear = getCurrentYear();
+		int currentMonth = getCurrentMonth();
+		int currentDay = getCurrentDay();
 		String viewMode = getViewMode();
-		viewMode = viewMode != null ? viewMode : viewMode.toLowerCase();
-		if (lazyYear == -1 || lazyMonth == -1 || lazyDay == -1) { // get current date values
+		viewMode = viewMode != null ? viewMode.toLowerCase() : "month";
+		if (currentYear == -1 || currentMonth == -1 || currentDay == -1) { // get current date values
 			int[] values = new int[3];
 			Calendar cal = Calendar.getInstance(calculateTimeZone()); // right now
 			if ("day".equals(viewMode)) {
@@ -192,33 +193,33 @@ public class Schedule extends ScheduleBase {
 			}
 			return values;
 		} else {
-			int[] values = {lazyYear, lazyMonth, lazyDay};
+			int[] values = new int[3];
+			if ("day".equals(viewMode)) {
+				values[0] = currentYear;
+				values[1] = currentMonth;
+				values[2] = currentDay;
+			} else if ("week".equals(viewMode)) {
+				// determine previous Sunday
+				Calendar cal = Calendar.getInstance();
+				cal.set(Calendar.YEAR, currentYear);
+				cal.set(Calendar.MONTH, currentMonth);
+				cal.set(Calendar.DATE, currentDay);
+				cal.set(Calendar.HOUR_OF_DAY, 0);
+				cal.set(Calendar.MINUTE, 0);
+				cal.set(Calendar.SECOND, 0);
+				while (cal.get(Calendar.DAY_OF_WEEK ) != Calendar.SUNDAY) {
+					cal.add(Calendar.DAY_OF_WEEK, -1);
+				}
+				values[0] = cal.get(Calendar.YEAR);
+				values[1] = cal.get(Calendar.MONTH);
+				values[2] = cal.get(Calendar.DATE);
+			} else {
+				values[0] = currentYear;
+				values[1] = currentMonth;
+				values[2] = 1;
+			}
 			return values;
 		}
-	}
-
-	public int[] getCurrentDateValues() { // TO_DO: read startWith attribute, if set return those values
-		String viewMode = getViewMode().toLowerCase();
-		int[] values = new int[3];
-		Calendar cal = Calendar.getInstance();
-		if ("month".equals(viewMode)) {
-			values[0] = cal.get(Calendar.YEAR);
-			values[1] = cal.get(Calendar.MONTH);
-			values[2] = 1;
-		} else if ("week".equals(viewMode)) {
-			// determine previous Sunday
-			while (cal.get(Calendar.DAY_OF_WEEK ) != Calendar.SUNDAY) {
-				cal.add(Calendar.DAY_OF_WEEK, -1);
-			}
-			values[0] = cal.get(Calendar.YEAR);
-			values[1] = cal.get(Calendar.MONTH);
-			values[2] = cal.get(Calendar.DATE);
-		} else {
-			values[0] = cal.get(Calendar.YEAR);
-			values[1] = cal.get(Calendar.MONTH);
-			values[2] = cal.get(Calendar.DATE);
-		}
-		return values;
 	}
 
 	public void addEvent(ScheduleEvent scheduleEvent) {

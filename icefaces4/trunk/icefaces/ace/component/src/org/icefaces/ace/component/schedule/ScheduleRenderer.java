@@ -99,20 +99,36 @@ public class ScheduleRenderer extends CoreRenderer {
 		String clientId = component.getClientId();
 		TimeZone timeZone = schedule.calculateTimeZone();
 
-		// if in lazy mode, update current year and month values
-		boolean isLazy = schedule.isLazy();
-		if (isLazy) {
-			Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-			String lazyYear = params.get(clientId + "_lazyYear");
-			String lazyMonth = params.get(clientId + "_lazyMonth");
-			String lazyDay = params.get(clientId + "_lazyDay");
-			if (lazyYear != null && lazyMonth != null) {
-				schedule.setLazyYear(new Integer(lazyYear));
-				schedule.setLazyMonth(new Integer(lazyMonth));
-				schedule.setLazyDay(new Integer(lazyDay));
+		// update current date values
+		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		String currentYear = params.get(clientId + "_currentYear");
+		String currentMonth = params.get(clientId + "_currentMonth");
+		String currentDay = params.get(clientId + "_currentDay");
+		if ((currentYear != null && !"".equals(currentYear.trim()))
+			&& (currentMonth != null && !"".equals(currentMonth.trim()))
+			&& (currentDay != null && !"".equals(currentDay.trim()))) {
+				schedule.setCurrentYear(new Integer(currentYear));
+				schedule.setCurrentMonth(new Integer(currentMonth));
+				schedule.setCurrentDay(new Integer(currentDay));
+		}
+
+/*
+		// set current date values again if they were programmatically changed
+		boolean isCurrentDateProgrammaticallySet = false;
+		Date currentDate = schedule.getCurrentDate();
+		if (currentDate != null) {
+			ScheduleUtils.DateIntegerValues currentDateIntegerValues = 
+				ScheduleUtils.getDateIntegerValues(currentDate);
+			if (currentDateIntegerValues.getYear() != schedule.getCurrentYear()
+				|| currentDateIntegerValues.getMonth() != schedule.getCurrentMonth()
+				|| currentDateIntegerValues.getDay() != schedule.getCurrentDay()) {
+					isCurrentDateProgrammaticallySet = true;
+					schedule.setCurrentYear(new Integer(currentDateIntegerValues.getYear()));
+					schedule.setCurrentMonth(new Integer(currentDateIntegerValues.getMonth()));
+					schedule.setCurrentDay(new Integer(currentDateIntegerValues.getDay()));
 			}
 		}
-		schedule.resetDataModel();
+*/
 
 		String viewMode = schedule.getViewMode();
 		if ("week".equalsIgnoreCase(viewMode)) {
@@ -122,6 +138,37 @@ public class ScheduleRenderer extends CoreRenderer {
 		} else {
 			viewMode = "month";
 		}
+
+		// detect a change in view mode and use the selected date if available
+		String previousViewMode = params.get(clientId + "_viewMode");
+		String selectedDateString = params.get(clientId + "_selectedDate");
+		boolean clearSelectedDate = false;
+		if (previousViewMode != null && !viewMode.equalsIgnoreCase(previousViewMode)) {
+			if (selectedDateString != null && !"".equals(selectedDateString)) {
+				Date selectedDate = ScheduleUtils.convertDateTimeToServerFormat(selectedDateString, "00:00");
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(selectedDate);
+				schedule.setCurrentYear(cal.get(Calendar.YEAR));
+				schedule.setCurrentMonth(cal.get(Calendar.MONTH));
+				schedule.setCurrentDay(cal.get(Calendar.DATE));
+				clearSelectedDate = true;
+			}
+		}
+
+		// normalize current date values
+		int[] currentDateValues = schedule.getCurrentDateValues();
+
+		// set normalized current date values
+		schedule.setCurrentYear(currentDateValues[0]);
+		schedule.setCurrentMonth(currentDateValues[1]);
+		schedule.setCurrentDay(currentDateValues[2]);
+		ScheduleUtils.DateIntegerValues dateIntegerValues =
+			new ScheduleUtils.DateIntegerValues(schedule.getCurrentYear(),
+				schedule.getCurrentMonth(), schedule.getCurrentDay(), 0, 0, 0);
+		schedule.setCurrentDate(ScheduleUtils.getDateFromIntegerValues(dateIntegerValues));
+
+		schedule.resetDataModel();
+
 		String sideBar = schedule.getSideBar();
 		String sideBarClass = "schedule-config-sidebar-right";
 		if (sideBar != null) {
@@ -176,18 +223,7 @@ public class ScheduleRenderer extends CoreRenderer {
 
 					if (schedule.isScrollable()) jb.entry("scrollHeight", schedule.getScrollHeight());
 
-					if (isLazy) {
-						int[] lazyDateValues = schedule.getLazyDateValues();
-						jb.entry("isLazy", true)
-						.entry("lazyYear", lazyDateValues[0])
-						.entry("lazyMonth", lazyDateValues[1])
-						.entry("lazyDay", lazyDateValues[2]);
-					} else {
-						int[] currentDateValues = schedule.getCurrentDateValues();
-						jb.entry("currentYear", currentDateValues[0])
-						.entry("currentMonth", currentDateValues[1])
-						.entry("currentDay", currentDateValues[2]);
-					}
+					if (schedule.isLazy()) jb.entry("isLazy", true);
 
 					encodeClientBehaviors(context, schedule, jb);
 
@@ -226,6 +262,45 @@ public class ScheduleRenderer extends CoreRenderer {
 		writer.writeAttribute("class", "schedule-main ui-widget" + " schedule-view-" + viewMode + " " 
 			+ sideBarClass + " " + displayEventDetailsClass + " " + scrollableClass, null);
 		writer.endElement("div");
+
+		writer.startElement("input", null);
+		writer.writeAttribute("id", clientId + "_currentYear", null);
+		writer.writeAttribute("name", clientId + "_currentYear", null);
+		writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("value", "" + currentDateValues[0], null);
+		writer.endElement("input");
+
+		writer.startElement("input", null);
+		writer.writeAttribute("id", clientId + "_currentMonth", null);
+		writer.writeAttribute("name", clientId + "_currentMonth", null);
+		writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("value", "" + currentDateValues[1], null);
+		writer.endElement("input");
+
+		writer.startElement("input", null);
+		writer.writeAttribute("id", clientId + "_currentDay", null);
+		writer.writeAttribute("name", clientId + "_currentDay", null);
+		writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("value", "" + currentDateValues[2], null);
+		writer.endElement("input");
+
+		writer.startElement("input", null);
+		writer.writeAttribute("id", clientId + "_selectedDate", null);
+		writer.writeAttribute("name", clientId + "_selectedDate", null);
+		writer.writeAttribute("type", "hidden", null);
+		if (selectedDateString != null && !clearSelectedDate) {
+			writer.writeAttribute("value", selectedDateString, null);
+		} else {
+			writer.writeAttribute("value", "", null);
+		}
+		writer.endElement("input");
+
+		writer.startElement("input", null);
+		writer.writeAttribute("id", clientId + "_viewMode", null);
+		writer.writeAttribute("name", clientId + "_viewMode", null);
+		writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("value", viewMode, null);
+		writer.endElement("input");
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
