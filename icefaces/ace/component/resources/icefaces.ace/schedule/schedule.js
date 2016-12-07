@@ -349,7 +349,7 @@ ice.ace.Schedule.prototype.hideEventDetailsTooltip = function() {
 	ice.ace.jq(this.jqId).find('.schedule-details-tooltip').hide();
 };
 
-ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, day, type) {
+ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, day, oldYear, oldMonth, oldDay, type) {
     var options = {};
 	var behaviors = this.cfg.behaviors || {};
 
@@ -365,6 +365,10 @@ ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, 
 	}
 
     var params = {};
+	params[this.id + "_navigation"] = true;
+	params[this.id + "_oldYear"] = oldYear;
+	params[this.id + "_oldMonth"] = oldMonth;
+	params[this.id + "_oldDay"] = oldDay;
 
 	var endYear = year;
 	var endMonth = month;
@@ -899,6 +903,9 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			} else currentMonth--;
 			currentDay = 1;
 		}
+		var oldYear = self.cfg.currentYear;
+		var oldMonth = self.cfg.currentMonth;
+		var oldDay = self.cfg.currentDay;
 		self.cfg.currentYear = currentYear;
 		self.cfg.currentMonth = currentMonth;
 		self.cfg.currentDay = currentDay;
@@ -912,7 +919,7 @@ ice.ace.Schedule.prototype.addListeners = function() {
 				self.clndr.backAction({data:{context:self.clndr}});
 			}
 		}
-		self.sendNavigationRequest(e, currentYear, currentMonth, currentDay, 'previous');
+		self.sendNavigationRequest(e, currentYear, currentMonth, currentDay, oldYear, oldMonth, oldDay, 'previous');
 	});
 	nextButton.on('click', function(e) {
 		e.stopPropagation();
@@ -1003,6 +1010,9 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			} else currentMonth++;
 			currentDay = 1;
 		}
+		var oldYear = self.cfg.currentYear;
+		var oldMonth = self.cfg.currentMonth;
+		var oldDay = self.cfg.currentDay;
 		self.cfg.currentYear = currentYear;
 		self.cfg.currentMonth = currentMonth;
 		self.cfg.currentDay = currentDay;
@@ -1016,7 +1026,7 @@ ice.ace.Schedule.prototype.addListeners = function() {
 				self.clndr.forwardAction({data:{context:self.clndr}});
 			}
 		}
-		self.sendNavigationRequest(e, currentYear, currentMonth, currentDay, 'next');
+		self.sendNavigationRequest(e, currentYear, currentMonth, currentDay, oldYear, oldMonth, oldDay, 'next');
 	});
 
 	// resizable sidebar
