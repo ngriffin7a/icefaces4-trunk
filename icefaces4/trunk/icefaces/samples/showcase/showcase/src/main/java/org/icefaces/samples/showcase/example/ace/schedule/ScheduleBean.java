@@ -173,4 +173,11 @@ public class ScheduleBean implements Serializable {
 	}
     public void setTimeZoneList(List<SelectItem> timeZoneList) { this.timeZoneList = timeZoneList; }
 
+	private String sideBar = "right";
+	public String getSideBar() { return sideBar; }
+	public void setSideBar(String sideBar) { this.sideBar = sideBar; }
+
+	private String eventDetails = "popup";
+	public String getEventDetails() { return eventDetails; }
+	public void setEventDetails(String eventDetails) { this.eventDetails = eventDetails; }
 }

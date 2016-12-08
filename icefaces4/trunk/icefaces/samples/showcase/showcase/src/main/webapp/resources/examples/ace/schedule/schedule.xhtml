@@ -29,7 +29,11 @@
 		<style type="text/css">
 			.ice-ace-schedule .schedule-event.meeting {
 				background-image: none;
-				background-color: #ffc;
+				background-color: #fc6;
+			}
+			.ice-ace-schedule .schedule-list-event.ui-state-highlight {
+				background-image: none;
+				background-color: #efefff;
 			}
 		</style>
         <h:form id="form">
@@ -42,7 +46,7 @@
 							<f:selectItem itemValue="day" itemLabel="Day" />
 						</ace:radioButtons>
 						<ace:selectMenu id="timeZone" value="#{scheduleBean.timeZone}" 
-										label="Select time zone: " labelPosition="left">
+										label="Select time zone: " labelPosition="top">
 							<ace:ajax render="@all"/>
 							<f:selectItems value="#{scheduleBean.timeZoneList}" />
 						</ace:selectMenu>
@@ -50,19 +54,35 @@
 											label="Enable scrolling (Week and Day views): " labelPosition="left">
 							<ace:ajax render="@all"/>
 						</ace:checkboxButton>
+						<ace:selectMenu id="sideBar" value="#{scheduleBean.sideBar}"
+										label="Select side bar location: " labelPosition="top">
+							<ace:ajax render="@all"/>
+							<f:selectItem itemValue="right" itemLabel="Right" />
+							<f:selectItem itemValue="left" itemLabel="Left" />
+							<f:selectItem itemValue="hidden" itemLabel="Hidden" />
+						</ace:selectMenu>
 						<ace:textEntry 	id="scrollHeight" value="#{scheduleBean.scrollHeight}"
 										label="Set scroll height: " labelPosition="left">
 							<ace:ajax render="@all"/>
 						</ace:textEntry>
+						<ace:selectMenu id="eventDetails" value="#{scheduleBean.eventDetails}"
+										label="Select event details mode: " labelPosition="top">
+							<ace:ajax render="@all"/>
+							<f:selectItem itemValue="popup" itemLabel="Pop-up" />
+							<f:selectItem itemValue="sidebar" itemLabel="Side Bar" />
+							<f:selectItem itemValue="tooltip" itemLabel="Tooltip" />
+							<f:selectItem itemValue="disabled" itemLabel="Disabled" />
+						</ace:selectMenu>
 				</h:panelGrid>
 			</ace:panel>
 			<ace:schedule 	id="schedule"
 							value="#{scheduleBean.lazyScheduleEventList}"
-							displayEventDetails="popup"
-							viewMode="#{scheduleBean.viewMode}"
+							displayEventDetails="#{scheduleBean.eventDetails}"
 							scrollable="#{scheduleBean.scrollable}"
 							scrollHeight="#{scheduleBean.scrollHeight}"
-							timeZone="#{scheduleBean.timeZone}" />
+							sideBar="#{scheduleBean.sideBar}"
+							timeZone="#{scheduleBean.timeZone}"
+							viewMode="#{scheduleBean.viewMode}" />
         </h:form>
     </ui:define>
 </ui:composition>
