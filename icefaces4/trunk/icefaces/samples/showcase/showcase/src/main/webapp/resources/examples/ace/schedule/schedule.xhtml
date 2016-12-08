@@ -26,29 +26,43 @@
     <ui:param name="description" value="#{msgs['example.ace.accordionpanel.description']}"/>
 
     <ui:define name="example">
+		<style type="text/css">
+			.ice-ace-schedule .schedule-event.meeting {
+				background-image: none;
+				background-color: #ffc;
+			}
+		</style>
         <h:form id="form">
-			<h:outputLabel for="viewMode" value="Select view mode: " />
-			<h:selectOneRadio id="viewMode" value="#{scheduleBean.viewMode}">
-				<f:ajax render="@all" />
-				<f:selectItem itemValue="month" itemLabel="Month" />
-				<f:selectItem itemValue="week" itemLabel="Week" />
-				<f:selectItem itemValue="day" itemLabel="Day" />
-			</h:selectOneRadio>
-			<h:outputLabel for="scrollable" value="Enable scrolling: " />
-			<h:selectBooleanCheckbox id="scrollable" value="#{scheduleBean.scrollable}">
-				<f:ajax render="@all"/>
-			</h:selectBooleanCheckbox>
-			<h:outputLabel for="scrollHeight" value=" Set scroll height: " />
-			<h:inputText id="scrollHeight" value="#{scheduleBean.scrollHeight}">
-				<f:ajax render="@all"/>
-			</h:inputText>
-			<br />
-			<h:outputLabel for="timeZone" value="Select time zone: " />
-			<h:selectOneMenu id="timeZone" value="#{scheduleBean.timeZone}">
-				<f:ajax render="@all"/>
-				<f:selectItems value="#{scheduleBean.timeZoneList}" />
-			</h:selectOneMenu>
-			<ace:schedule id="schedule" value="#{scheduleBean.lazyScheduleEventList}" displayEventDetails="popup" viewMode="#{scheduleBean.viewMode}" scrollable="#{scheduleBean.scrollable}" scrollHeight="#{scheduleBean.scrollHeight}" timeZone="#{scheduleBean.timeZone}" />
+			<ace:panel header="Configuration">
+				<h:panelGrid width="100%" columns="2" cellpadding="6" cellspacing="6">
+						<ace:radioButtons id="viewMode" header="Select view mode" value="#{scheduleBean.viewMode}" labelPosition="top">
+							<ace:ajax render="@all" />
+							<f:selectItem itemValue="month" itemLabel="Month" />
+							<f:selectItem itemValue="week" itemLabel="Week" />
+							<f:selectItem itemValue="day" itemLabel="Day" />
+						</ace:radioButtons>
+						<ace:selectMenu id="timeZone" value="#{scheduleBean.timeZone}" 
+										label="Select time zone: " labelPosition="left">
+							<ace:ajax render="@all"/>
+							<f:selectItems value="#{scheduleBean.timeZoneList}" />
+						</ace:selectMenu>
+						<ace:checkboxButton id="scrollable" value="#{scheduleBean.scrollable}"
+											label="Enable scrolling (Week and Day views): " labelPosition="left">
+							<ace:ajax render="@all"/>
+						</ace:checkboxButton>
+						<ace:textEntry 	id="scrollHeight" value="#{scheduleBean.scrollHeight}"
+										label="Set scroll height: " labelPosition="left">
+							<ace:ajax render="@all"/>
+						</ace:textEntry>
+				</h:panelGrid>
+			</ace:panel>
+			<ace:schedule 	id="schedule"
+							value="#{scheduleBean.lazyScheduleEventList}"
+							displayEventDetails="popup"
+							viewMode="#{scheduleBean.viewMode}"
+							scrollable="#{scheduleBean.scrollable}"
+							scrollHeight="#{scheduleBean.scrollHeight}"
+							timeZone="#{scheduleBean.timeZone}" />
         </h:form>
     </ui:define>
 </ui:composition>
