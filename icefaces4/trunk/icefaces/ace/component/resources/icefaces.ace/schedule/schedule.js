@@ -1,5 +1,17 @@
 /*
+ * Copyright 2004-2016 ICEsoft Technologies Canada Corp.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS
+ * IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 
 if (!window['ice']) window.ice = {};
@@ -73,8 +85,8 @@ ice.ace.Schedule = function(id, cfg) {
 			});
 		}
 	}
-	if (behaviors && behaviors.dayClick) {
-		this.jqRoot.delegate('.day', 'click', function(event) {
+	if (behaviors && behaviors.dayDblclick) {
+		this.jqRoot.delegate('.day', 'dblclick', function(event) {
 			var node = event['target'];
 			node = node.className.indexOf('day-number') > -1 ? node.parentNode : node;
 			node = node.className.indexOf('schedule-state') > -1 ? node.parentNode : node;
@@ -82,8 +94,8 @@ ice.ace.Schedule = function(id, cfg) {
 			self.sendClickRequest(event, 'day', date);
 		});
 	}
-	if (behaviors && behaviors.timeClick) {
-		this.jqRoot.delegate('.schedule-cell', 'click', function(event) {
+	if (behaviors && behaviors.timeDblclick) {
+		this.jqRoot.delegate('.schedule-cell', 'dblclick', function(event) {
 			var node = event['target'];
 			node = node.className.indexOf('day-number') > -1 ? node.parentNode : node;
 			node = node.className.indexOf('schedule-state') > -1 ? node.parentNode : node;
@@ -257,7 +269,7 @@ ice.ace.Schedule.prototype.getEventDetailsMarkup = function(data, isEventAdditio
 		if (data.id) markup += '<input type="hidden" name="'+this.id+'_id" value="'+data.id+'"/>';
 		if (isEventAddition) markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'add\');return false;">Add</button>';
 		else {
-			if (isEventEditing) markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'edit\');return false;">Save</button> ';
+			if (isEventEditing) markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'edit\');ice.ace.jq(document.getElementById(\''+this.id+'\')).find(\'.schedule-details-popup-content\').dialog(\'close\');return false;">Save</button> ';
 			if (isEventDeletion) markup += '<span><button onclick="ice.ace.instance(\''+this.id+'\').confirmDeletion(this);return false;">Delete</button><span style="display:none;">Are you sure? <button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'delete\');return false;">Yes</button> <button onclick="ice.ace.instance(\''+this.id+'\').cancelDeletion(this);return false;">No</button></span></span>';
 		}
 		return markup;
@@ -326,7 +338,7 @@ ice.ace.Schedule.prototype.cancelDeletion = function(button) {
 ice.ace.Schedule.prototype.displayEventDetailsPopup = function(markup) {
 	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details-popup-content');
 	eventDetails.html(markup);
-	eventDetails.dialog({dialogClass: 'schedule-details-popup', resizable: false});
+	eventDetails.dialog({dialogClass: 'schedule-details-popup', resizable: false, width: 320});
 	eventDetails.find('input[type="text"]:eq(0),input[type="text"]:eq(1)').datepicker({dateFormat: 'yy-mm-dd'});
 	eventDetails.find('button').button();
 };
@@ -433,13 +445,13 @@ ice.ace.Schedule.prototype.sendClickRequest = function(event, type, data) {
     var options = {};
 	var behaviors = this.cfg.behaviors || {};
 
-	if (!behaviors.eventClick && !behaviors.dayClick && !behaviors.timeClick)
+	if (!behaviors.eventClick && !behaviors.dayDblclick && !behaviors.timeDblclick)
 		return;
 
     var params = {};
 	if (type == 'event') params[this.id + "_eventClick"] = data;
-    else if (type == 'day') params[this.id + "_dayClick"] = data;
-    else if (type == 'time') params[this.id + "_timeClick"] = data;
+    else if (type == 'day') params[this.id + "_dayDblclick"] = data;
+    else if (type == 'time') params[this.id + "_timeDblclick"] = data;
 	else return;
 
 	if (type == 'event') {
@@ -459,10 +471,10 @@ ice.ace.Schedule.prototype.sendClickRequest = function(event, type, data) {
 
 	if (type == 'event' && behaviors.eventClick) {
 		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.eventClick, options));
-	} else if (type == 'day' && behaviors.dayClick) {
-		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.dayClick, options));
-	} else if (type == 'time' && behaviors.timeClick) {
-		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.timeClick, options));
+	} else if (type == 'day' && behaviors.dayDblclick) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.dayDblclick, options));
+	} else if (type == 'time' && behaviors.timeDblclick) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.timeDblclick, options));
 	}
 };
 
@@ -622,8 +634,11 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 	var weekStartDate = new Date(currentYear, currentMonth, currentDay, 0, 0, 0, 0);
 	var lastDayOfWeek = this.determineLastDayOfWeek(currentYear, currentMonth, currentDay);
 	var weekEndDate = new Date(lastDayOfWeek.year, lastDayOfWeek.month, lastDayOfWeek.day, 23, 59, 59, 999);
-	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + ' - '
-		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate();
+	var weekStartYear = weekStartDate.getFullYear();
+	var weekEndYear = weekEndDate.getFullYear();
+	weekStartYear = currentYear == weekEndYear ? '' : ', ' + weekStartYear;
+	var title = this.getMonthName(weekStartDate.getMonth()) + ' ' + weekStartDate.getDate() + weekStartYear + ' - '
+		+ this.getMonthName(weekEndDate.getMonth()) + ' ' + weekEndDate.getDate() + ', ' + weekEndYear;
 	this.jq.find('.schedule-showing').html(title);
 	// set the scrollable height, if supplied
 	if  (this.cfg.scrollHeight) this.jq.find('.schedule-days').css({height:this.cfg.scrollHeight});
@@ -674,7 +689,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px', 
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
-			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+this.getMonthNameShort(date.getMonth())+' '+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
 			listing++;
 		}
 	}
@@ -753,7 +768,8 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 	date.setDate(currentDay);
 	dayHeader.html(this.getDayOfTheWeekName(date.getDay()));
 	// add calendar day CSS classes
-	this.jq.find('.schedule-cell.schedule-dow-single').addClass('calendar-day-'+currentYear+'-'+(currentMonth < 10 ? '0' + currentMonth : currentMonth)+'-'+(currentDay < 10 ? '0' + currentDay : currentDay));
+	var displayMonth = currentMonth + 1;
+	this.jq.find('.schedule-cell.schedule-dow-single').addClass('calendar-day-'+currentYear+'-'+(displayMonth < 10 ? '0' + displayMonth : displayMonth)+'-'+(currentDay < 10 ? '0' + currentDay : currentDay));
 	// add event divs at appropriate positions
 	var i;
 	var listing = 0;

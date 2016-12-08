@@ -340,6 +340,9 @@
 			<file name="${resources}/icefaces.ace/radiobutton/radiobutton.js" />
 			<file name="${resources}/icefaces.ace/resizable/resizable.js" />
 			<file name="${resources}/icefaces.ace/richtextentry/richtextentry.js" />
+			<file name="${resources}/icefaces.ace/schedule/schedule.js" />
+			<file name="${resources}/icefaces.ace/schedule/clndr.js" />
+			<file name="${resources}/icefaces.ace/schedule/moment.js" />
 			<file name="${resources}/icefaces.ace/selectmenu/selectmenu.js" />
 			<file name="${resources}/icefaces.ace/simpleselectonemenu/simpleselectonemenu.js" />
 			<file name="${resources}/icefaces.ace/sliderentry/slider.js" />

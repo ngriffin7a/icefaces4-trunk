@@ -167,6 +167,7 @@
 }
 .ice-ace-schedule .schedule-grid td {
 	vertical-align: top;
+	padding: 0;
 }
 .ice-ace-schedule .schedule-details-tooltip .ui-dialog-titlebar {
 	display: none;
