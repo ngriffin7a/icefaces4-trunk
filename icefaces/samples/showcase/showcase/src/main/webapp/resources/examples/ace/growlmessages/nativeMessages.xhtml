@@ -25,10 +25,10 @@
         <icecore:config messagePersistence="false"/>
         <h:form id="messageDemoForm">
             <ace:panel header="Some important ace:growlMessages attributes">
-                <h:panelGrid columns="4" width="100%" columnClasses="growl-attr-col,growl-attr-col,growl-attr-col,growl-attr-col">
+                <h:panelGrid columns="1" width="100%" columnClasses="growl-attr-col,growl-attr-col,growl-attr-col,growl-attr-col">
                     <h:outputText value="header"/>
                     <ace:textEntry value="#{nativeMessagesBean.header}">
-                        <ace:ajax render="demoform2:allMsgsGrowl"/>
+                        <ace:ajax render="allMsgsGrowl"/>
                     </ace:textEntry>
 					<h:outputText value=""/>
 					<h:outputText value=""/>
