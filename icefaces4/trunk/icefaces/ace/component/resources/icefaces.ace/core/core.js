@@ -64,7 +64,8 @@ ice.ace.lazy = function(name, args) {
     var clientId = args[0], // lazy requires clientId is first arg
         elem = document.getElementById(clientId);
 
-    if (ice.ace.lazy.registry[clientId]) { // only for buttons in a group
+    if (ice.ace.lazy.registry[clientId]) {
+		// only for components that registered a function in case ice.ace.instance() was called first
 		delete ice.ace.lazy.registry[clientId];
         var component = ice.ace.create(name, args);
         return component;
@@ -89,7 +90,7 @@ ice.ace.evalInit = function(element) {
 };
 
 //function used to register callback that returns the already created or just-now created widget
-//only for buttons in the same group that need to be aware of the existance of other buttons 
+//mainly for buttons in the same group that need to be aware of the existance of other buttons 
 //that may or may not be initialized ICE-9500, ICE-11155
 ice.ace.registerLazyComponent = function(id) {
     if (!ice.ace.lazy.registry[id]) {
@@ -106,7 +107,13 @@ ice.ace.registerLazyComponent = function(id) {
     }
 };
 
-ice.ace.lazy.registry = {}; // store uninitialized lazy components
+// This is a registry to store uninitialized lazy components.
+// Some lazily initialized components require to register here to cover the case when ice.ace.instance()
+// is called on the component before it has been initialized. Registering consists in using the component's
+// client ID as the key and a function as the value. This function will be invoked the first time ice.ace.instance()
+// is invoked, if the component hasn't been initialized yet. The job of this function is to initialize the component
+// and to return this instance, as well as removing the registry entry.
+ice.ace.lazy.registry = {};
 
 ice.ace.create = function(name, args) {
     // if first arg is clientId, registerComponent func will attach js instance to DOM
