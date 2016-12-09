@@ -49,6 +49,13 @@ ice.ace.Schedule = function(id, cfg) {
 	configuration.dateParameter = 'startDate';
 	this.clndr = this.jq.clndr(configuration);
 
+	var selectedDate = document.getElementById(this.id + '_selectedDate').getAttribute('value');
+	if (selectedDate) {
+		if (this.cfg.viewMode == 'month' || this.cfg.viewMode == 'week') {
+			this.jqRoot.find('.calendar-day-' + selectedDate + ' .schedule-state').addClass('ui-state-active');
+		}
+	}
+
 	var behaviors = self.cfg.behaviors;
 	if (behaviors && behaviors.eventClick) {
 		this.jqRoot.delegate('.schedule-event', 'click', function(event) {
