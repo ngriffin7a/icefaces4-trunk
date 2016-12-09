@@ -212,6 +212,7 @@ public class ScheduleRenderer extends CoreRenderer {
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", "ice-ace-schedule", null);
+		writer.writeAttribute("tabindex", "0", null);
 
 		writer.startElement("div", null);
 		writer.writeAttribute("class", "schedule-details-popup-content", null);

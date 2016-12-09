@@ -208,6 +208,13 @@ ice.ace.Schedule = function(id, cfg) {
 	this.jqRoot.delegate('.schedule-details-title', 'click', function(event) {
 		self.expandEventDetails();
 	});
+	if (self.cfg.displayEventDetails == 'popup') {
+		this.jqRoot.on('keydown', function(e) {
+			if (e.keyCode == 27) {
+				ice.ace.jq(document.getElementById(self.id)).find('.schedule-details-popup-content').dialog('close');
+			}
+		});
+	}
 };
 
 ice.ace.Schedule.prototype.extractEventIndex = function(node) {
