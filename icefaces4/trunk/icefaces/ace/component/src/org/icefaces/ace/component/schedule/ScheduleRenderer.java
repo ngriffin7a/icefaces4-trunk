@@ -162,7 +162,6 @@ public class ScheduleRenderer extends CoreRenderer {
 					schedule.setCurrentYear(cal.get(Calendar.YEAR));
 					schedule.setCurrentMonth(cal.get(Calendar.MONTH));
 					schedule.setCurrentDay(cal.get(Calendar.DATE));
-					clearSelectedDate = true;
 				}
 			}
 		} else {
