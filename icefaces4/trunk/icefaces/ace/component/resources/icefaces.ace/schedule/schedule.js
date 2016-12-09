@@ -676,17 +676,18 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 			var selector = '.schedule-dow-'+dow+'.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
 			var timeCell = this.jq.find(selector);
 			var position = timeCell.position();
-			var width = timeCell.width();
+			var width = timeCell.outerWidth() - 1;
 			var endHour = event.endTime.substring(0,2);
 			var endMinutes = parseInt(event.endTime.substring(3,5));
 			var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
 			var endTimeCell = this.jq.find(endSelector);
 			var endPosition = endTimeCell.position();
-			var height = endTimeCell.height();
+			var height = endTimeCell.outerHeight() - 1;
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
-			var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
-			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px', 
+			var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
+			eventElement.css({position:'absolute', top:position.top+(isChrome?1:0), left:position.left+(isChrome?1:0), width: width + 'px', 
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+this.getMonthNameShort(date.getMonth())+' '+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
@@ -785,17 +786,18 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 			var selector = '.schedule-dow-single.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
 			var timeCell = this.jq.find(selector);
 			var position = timeCell.position();
-			var width = timeCell.width();
+			var width = timeCell.outerWidth() - 1;
 			var endHour = event.endTime.substring(0,2);
 			var endMinutes = parseInt(event.endTime.substring(3,5));
 			var endSelector = '.schedule-dow-single.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
 			var endTimeCell = this.jq.find(endSelector);
 			var endPosition = endTimeCell.position();
-			var height = endTimeCell.height();
+			var height = endTimeCell.outerHeight() - 1;
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
-			var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
-			eventElement.css({position:'absolute', top:position.top+2, left:position.left+2, width: width + 'px',
+			var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
+			eventElement.css({position:'absolute', top:position.top+(isChrome?1:0), left:position.left+(isChrome?1:0), width: width + 'px',
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startTime+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
@@ -1069,20 +1071,21 @@ ice.ace.Schedule.prototype.addListeners = function() {
 				var grid = self.jq.find('.schedule-grid');
 				grid.width(self.gridOriginalWidth + (self.sidebarOriginalSize - ui.size.width));
 
+				var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
 				if (self.cfg.viewMode == 'day') {
 					var timeCell = self.jq.find('.schedule-dow-single.schedule-time-0000');
-					var timeCellWidth = timeCell.width();
+					var timeCellWidth = timeCell.outerWidth() - 1;
 					self.jq.find('.schedule-event').css({width: timeCellWidth});
 					var timeCellLeft = timeCell.position().left;
-					self.jq.find('.schedule-event').css({left: timeCellLeft + 2});
+					self.jq.find('.schedule-event').css({left: timeCellLeft + (isChrome?1:0)});
 				} else if (self.cfg.viewMode == 'week') {
 					var i;
 					for (i = 0; i < 7; i++) {
 						var timeCell = self.jq.find('.schedule-dow-' + i + '.schedule-time-0000');
-						var timeCellWidth = timeCell.width();
+						var timeCellWidth = timeCell.outerWidth() - 1;
 						self.jq.find('.schedule-event.schedule-dow-' + i).css({width: timeCellWidth});
 						var timeCellLeft = timeCell.position().left;
-						self.jq.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + 2});
+						self.jq.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + (isChrome?1:0)});
 					}
 				}
 			}
@@ -1095,20 +1098,21 @@ ice.ace.Schedule.prototype.addListeners = function() {
 		grid.attr('style', '');
 		sidebar.attr('style', '');
 
+		var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
 		if (self.cfg.viewMode == 'day') {
 			var timeCell = self.jq.find('.schedule-dow-single.schedule-time-0000');
-			var timeCellWidth = timeCell.width();
+			var timeCellWidth = timeCell.outerWidth() - 1;
 			self.jq.find('.schedule-event').css({width: timeCellWidth});
 			var timeCellLeft = timeCell.position().left;
-			self.jq.find('.schedule-event').css({left: timeCellLeft + 2});
+			self.jq.find('.schedule-event').css({left: timeCellLeft + (isChrome?1:0)});
 		} else if (self.cfg.viewMode == 'week') {
 			var i;
 			for (i = 0; i < 7; i++) {
 				var timeCell = self.jq.find('.schedule-dow-' + i + '.schedule-time-0000');
-				var timeCellWidth = timeCell.width();
+				var timeCellWidth = timeCell.outerWidth() - 1;
 				self.jq.find('.schedule-event.schedule-dow-' + i).css({width: timeCellWidth});
 				var timeCellLeft = timeCell.position().left;
-				self.jq.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + 2});
+				self.jq.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + (isChrome?1:0)});
 			}
 		}
 	});
