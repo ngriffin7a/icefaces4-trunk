@@ -355,6 +355,53 @@ ice.ace.Schedule.prototype.displayEventDetailsPopup = function(markup) {
 	eventDetails.dialog({dialogClass: 'schedule-details-popup', resizable: false, width: 320});
 	eventDetails.find('input[type="text"]:eq(0),input[type="text"]:eq(1)').datepicker({dateFormat: 'yy-mm-dd'});
 	eventDetails.find('button').button();
+	this.addDefaultDurationFunctionality()
+};
+
+ice.ace.Schedule.prototype.addDefaultDurationFunctionality = function() {
+	var self = this;
+	var timeInputs = ice.ace.jq(this.jqId).find('.schedule-details-popup-content').find('select');
+
+	if (timeInputs.size() >= 4) {
+		var startHour = timeInputs.get(0);
+		var startMinute = timeInputs.get(1);
+		var endHour = timeInputs.get(2);
+		var endMinute = timeInputs.get(3);
+		var startDate = ice.ace.jq(self.jqId).find('.schedule-details-popup-content')
+			.find('input[type="text"]:eq(0)');
+		var endDate = ice.ace.jq(self.jqId).find('.schedule-details-popup-content')
+			.find('input[type="text"]:eq(1)');
+
+		var addDefaultDuration = function() {
+			if (startHour.value != 'hh' && startMinute.value != 'mm') {
+				var startDateValue = startDate.datepicker('getDate');
+				if (startDateValue) {
+					var endDateValue = new Date();
+					endDateValue.setFullYear(startDateValue.getFullYear());
+					endDateValue.setMonth(startDateValue.getMonth());
+					endDateValue.setDate(startDateValue.getDate());
+					endDateValue.setHours(parseInt(startHour.value));
+					endDateValue.setMinutes(parseInt(startMinute.value) + self.cfg.defaultDuration);
+
+					if (endHour.value == 'hh' && endMinute.value == 'mm') {
+						endDate.datepicker('setDate', endDateValue.getFullYear() + '-'
+							+ (endDateValue.getMonth() + 1) + '-'
+							+ endDateValue.getDate());
+						var endHours = endDateValue.getHours();
+						ice.ace.jq(endHour).val(endHours < 10 ? '0' + endHours : '' + endHours);
+						var endMinutes = endDateValue.getMinutes();
+						ice.ace.jq(endMinute).val(endMinutes < 10 ? '0' + endMinutes : '' + endMinutes);
+					}
+				}
+			}
+		};
+
+		ice.ace.jq(startHour).add(startMinute).on('change', function() {
+			addDefaultDuration();
+		});
+
+		addDefaultDuration();
+	}
 };
 
 ice.ace.Schedule.prototype.displayEventDetailsSidebar = function(markup) {
