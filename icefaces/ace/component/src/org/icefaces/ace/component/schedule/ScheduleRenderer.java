@@ -231,6 +231,7 @@ public class ScheduleRenderer extends CoreRenderer {
 				.beginMap()
 					.entry("viewMode", viewMode)
 					.entry("displayEventDetails", displayEventDetails)
+					.entry("defaultDuration", schedule.getDefaultDuration())
 					.entry("isEventAddition", "disabled".equalsIgnoreCase(schedule.getAdditionControls()) ? false : true)
 					.entry("isEventEditing", "disabled".equalsIgnoreCase(schedule.getEditingControls()) ? false : true)
 					.entry("isEventDeletion", "disabled".equalsIgnoreCase(schedule.getDeletionControls()) ? false : true);
