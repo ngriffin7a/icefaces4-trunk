@@ -388,34 +388,6 @@ public class AnimationBehavior extends BehaviorBase {
         }
     }
 
-    public Object saveState(FacesContext context) {
-
-        Object[] returnVal = new Object[8];
-        returnVal[0] = saveBindingsState( context );
-        returnVal[1] = effectsLib;
-        returnVal[2] = Boolean.valueOf( usingStyleClass );
-        returnVal[3] = style;
-        returnVal[4] = to;
-        returnVal[5] = from;
-        returnVal[6] = iterations;
-        returnVal[7] = duration;
-
-        return returnVal;
-    }
-
-    public void restoreState(FacesContext context, Object state) {
-
-        Object[] stateArray = (Object[]) state;
-        bindings = restoreBindingsState( context, stateArray[0]);
-        effectsLib = (String) stateArray[1];
-        usingStyleClass = ((Boolean)stateArray[2]).booleanValue();
-        style = (String) stateArray[3];
-        to = (String) stateArray[4];
-        from = (String) stateArray[5];
-        iterations = (Integer) stateArray[6];
-        duration = (Double) stateArray[7];
-    }
-
     public interface IIterator {
         public void next (String name, AnimationBehavior effectBehavior);
     }

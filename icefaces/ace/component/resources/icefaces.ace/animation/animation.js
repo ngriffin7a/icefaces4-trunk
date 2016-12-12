@@ -18,8 +18,7 @@ if (!window['ice']) window.ice = {};
 if (!window.ice['ace']) window.ice.ace = {};
 ice.ace.animation = {};
 		
-ice.ace.animation.run = function(args, options, speed, callback) {
-
+ice.ace.animation.run = function(args, speed, callback) {
 	var node;
 	if (typeof args.node == 'string') {
 		node = ice.ace.jq(ice.ace.escapeClientId(args.node));
@@ -30,22 +29,25 @@ ice.ace.animation.run = function(args, options, speed, callback) {
 	var easing = args.easing || 'easeOutQuad';
 
 	node.queue(function() {
-
-		if (effectName == 'anim') {
-
-			var iterations = args.iterations || 1;
-			var duration = args.duration || 500;
-			
-			for (var i = 0; i < iterations; i++) {
+        var iterations;
+        if (args.iterations == 0) {
+            iterations = 0;
+        } else if (args.iterations) {
+            iterations = args.iterations;
+        } else {
+            iterations = 1;
+        }
+        for (var i = 0; i < iterations; i++) {
+            if (effectName == 'anim') {
+                var duration = args.duration || 500;
 				node.animate(args.from, 0, easing);
 				node.animate(args.to, duration, easing);
-			}
-		} else {
-			if (!options) options = {};
-			if (!options.easing) options.easing = easing;
-			node.effect(effectName, options, speed, callback);
-		}
-		
+            } else {
+                if (!args.easing) args.easing = easing;
+                node.effect(effectName, args, speed, callback);
+            }
+        }
+
 		node.dequeue();
 	});
 };
