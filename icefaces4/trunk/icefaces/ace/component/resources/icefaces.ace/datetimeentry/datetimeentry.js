@@ -126,6 +126,7 @@ ice.ace.Calendar.prototype.bindDateSelectListener = function() {
                         }, 350);
                     }
                 };
+                dateSelectBehavior.source = inputID;
                 ice.ace.ab.call(_self, dateSelectBehavior);
             }
         };
