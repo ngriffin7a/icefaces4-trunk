@@ -261,7 +261,7 @@ public class AnimationBehavior extends BehaviorBase {
         }
         call.append("(");
         call.append(effect.getPropertiesAsJSON());
-        call.append(");");
+        call.append(")");
         // System.out.println(call.toString());
         return call.toString();
     }
