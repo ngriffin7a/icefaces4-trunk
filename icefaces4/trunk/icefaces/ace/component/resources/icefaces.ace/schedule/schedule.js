@@ -387,6 +387,8 @@ ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, 
     var options = {};
 	var behaviors = this.cfg.behaviors || {};
 
+	document.getElementById(this.id + '_selectedDate').setAttribute('value', ''); // clear selected date
+
 	if ((type == 'next' && !behaviors.next) || (type == 'previous' && !behaviors.previous)) {
 		if (!this.cfg.isLazy) return;
 		options = {
