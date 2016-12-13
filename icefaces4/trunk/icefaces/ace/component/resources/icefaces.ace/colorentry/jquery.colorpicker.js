@@ -2272,7 +2272,7 @@
 			};
 
 			that.mode		= that.options.mode;
-
+			console.log(" is that.options.inline true??="+that.options.inline);
 			if (that.element.is('input') || that.options.inline === false) {
 				// Initial color
 				that._setColor(that.element.is('input') ? that.element.val() : that.options.color);
@@ -2532,6 +2532,7 @@
 		},
 
 		_generate: function () {
+			console.log(" generate!") ;
 			var that = this,
 				index,
 				part,
@@ -2541,7 +2542,6 @@
 				classes;
 
 			that._setColor(that.inline || !that.element.is('input') ? that.options.color : that.element.val());
-
 			that[that.inline ? '_generateInline' : '_generatePopup']();
 
 			// Determine the parts to include in this colorpicker
@@ -2791,7 +2791,6 @@
 			var that = this,
 				data,
 				lab;
-
 			if (that.color.set) {
 				data = {
 					formatted: that._formatColor(that.options.colorFormat, that.color),

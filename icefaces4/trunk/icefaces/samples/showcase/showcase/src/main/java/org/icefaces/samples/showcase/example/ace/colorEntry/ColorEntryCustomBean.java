@@ -41,12 +41,22 @@ public class ColorEntryCustomBean implements Serializable
     private List<ColorEntryLayout> layout2 = new ArrayList<ColorEntryLayout>();
     private List<ColorEntryLayout> layout = new ArrayList<ColorEntryLayout>();
     private ColorFormat valueFormat;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public ColorEntryCustomBean(){
         layout1.add(new ColorEntryLayout("preview", 0, 0, 1, 1));
         layout1.add(new ColorEntryLayout("hex", 1,0,1,1));
         layout1.add(new ColorEntryLayout("rgbslider", 0, 1, 2, 1));
         layout1.add(new ColorEntryLayout("memory", 0, 2, 2, 1));
+
 
         layout2.add(new ColorEntryLayout("hex", 0, 0, 2, 1));
         layout2.add(new ColorEntryLayout("preview", 2, 0, 1, 1));
@@ -60,6 +70,7 @@ public class ColorEntryCustomBean implements Serializable
         layout2. add(new ColorEntryLayout("cmyk", 1, 5, 1, 2));
         this.parts = parts1;
         this.layout = layout1;
+        this.title="Simple Layout with RGB Slider";
     }
 
     public String getValue() {
@@ -112,9 +123,11 @@ public class ColorEntryCustomBean implements Serializable
         if (customLayout.equals("layout2")){
             this.parts=parts2;
             this.layout = layout2;
+            this.title = "Layered Custom Layout";
         } else {
             this.parts = parts1;
             this.layout=layout1;
+            this.title="Simple Layout with RGB Slider";
         }
     }
 

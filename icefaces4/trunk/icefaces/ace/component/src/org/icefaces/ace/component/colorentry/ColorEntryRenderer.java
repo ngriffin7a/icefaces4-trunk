@@ -45,7 +45,17 @@ public class ColorEntryRenderer extends InputRenderer {
          if(picker.isDisabled() || picker.isReadonly()) {
                  return;
  		 }
+         boolean popup = picker.isRenderAsPopup();
          String submittedValue = params.get(clientId + "_input");
+        String hidden = params.get(clientId+"_hidden");
+        if (isValueBlank(hidden))hidden= params.get(clientId+"_hidden2");
+         if (!popup){
+           //  System.out.println(" is inline so get value from hidden input field"+hidden2);
+             submittedValue= hidden;
+          /*   if (submittedValue==null || submittedValue.length()<1){
+                System.out.println(" still no submitted value!!");
+             }  */
+         }
          picker.setSubmittedValue(submittedValue);
          decodeBehaviors(facesContext, component);
      }
@@ -60,19 +70,30 @@ public class ColorEntryRenderer extends InputRenderer {
         String valueToRender = getValueAsString(context,picker);
         String inputId = clientId + "_input";
         boolean popup = picker.isRenderAsPopup();
+
+        String showOn = picker.getShowOn();   //default is focus
+        boolean customParts=false;
+        List<String> partsList = picker.getCustomParts();
+        if (partsList !=null  && partsList.size()> 0) {
+           customParts = true;
+        }
         Map paramMap = context.getExternalContext().getRequestParameterMap();
         String iceFocus = (String) paramMap.get("ice.focus");
         boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
         String type = popup ? "text" : "hidden";
+        String iconSrc = picker.getPopupIcon() != null ? getResourceURL(context, picker.getPopupIcon()) : getResourceRequestPath(context, ColorEntry.POPUP_ICON);
+        if (picker.isPopupIconOnly()){
+            type="hidden";
+        }
         Map<String, Object> labelAttributes = getLabelAttributes(component);
         labelAttributes.put("fieldClientId", clientId + "_input");
         if (popup) {
              writeLabelAndIndicatorBefore(labelAttributes);
-         }
+        }
 
         writer.startElement(HTML.SPAN_ELEM, component);
         writer.writeAttribute("id", clientId, "clientId");
-      //  renderResetSettings(context, component);
+        renderResetSettings(context, component);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
         String style = picker.getStyle();
         if(style != null) {
@@ -84,16 +105,36 @@ public class ColorEntryRenderer extends InputRenderer {
         }
         //inline container
         if(!popup) {
-            writer.startElement("div", null);
-            writer.writeAttribute("id", clientId + "_inline", null);
-            writer.writeAttribute("class", "ice-ace-datetimeentry", null);
-            writer.endElement("div");
+            writer.startElement("span", null);
+            writer.writeAttribute("id", inputId, null);
+            writer.writeAttribute("style", "display:inline-block", null);
+            writer.endElement("span");
         }
 
-
         writer.startElement("input", null);
-        writer.writeAttribute("id", inputId, null);
-        writer.writeAttribute("name", inputId, null);
+        String inputFieldId=clientId+"hidden";
+        String preferredFormat = picker.getColorFormat().HEX3.getValue();
+        if (picker.getColorFormat()!=null){
+            preferredFormat = picker.getColorFormat().getValue();
+        }
+
+        String borderColor = "#f2eaea";
+        if (valueToRender !=null) {
+            borderColor=valueToRender ;
+        }
+        if (preferredFormat.startsWith("HEX")){
+            preferredFormat ="#" + preferredFormat;
+            if (!borderColor.startsWith("#")){
+                borderColor="#"+borderColor;
+            }
+        }
+        String popupStyleBorder = "border-left: 12px solid "+borderColor;
+        if (popup){
+            inputFieldId=inputId;
+            writer.writeAttribute("style", popupStyleBorder, null);
+        }
+        writer.writeAttribute("id", inputFieldId, null);
+        writer.writeAttribute("name", inputFieldId, null);
         PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, picker) ;
         writer.writeAttribute("type", type, null);
  		String tabindex = picker.getTabindex();
@@ -105,12 +146,11 @@ public class ColorEntryRenderer extends InputRenderer {
  			if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
  		}
         boolean showCloseButton = picker.isShowCloseButton();
-        if (popup){
-            showCloseButton=false;
-        }
+
         if (popup && ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }
+        /** TODO copied from DateTimeEntryRenderer so refactor **/
         String styleClasses = (themeForms() ? ColorEntry.INPUT_STYLE_CLASS : "");
         if(!isValueBlank(valueToRender)) {
             writer.writeAttribute("value", valueToRender, null);
@@ -123,18 +163,14 @@ public class ColorEntryRenderer extends InputRenderer {
                 labelAttributes.put("labelIsInField", true);
             }
         }
-    /*    writer.writeAttribute("data-ice-clear-ignore", "true", null);
+        writer.writeAttribute("data-ice-clear-ignore", "true", null);
         if (ariaEnabled) {
             writer.writeAttribute("role", "region", null);
-        } */
-   //     ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
-
+        }
 
       /*  boolean hasLabel = (Boolean) labelAttributes.get("hasLabel");
         String labelPosition = (String) labelAttributes.get("labelPosition");
         String label = (String) labelAttributes.get("label"); */
-
-
 
         if (ariaEnabled) {
             final ColorEntry comp = (ColorEntry) component;
@@ -149,27 +185,18 @@ public class ColorEntryRenderer extends InputRenderer {
 
         if(picker.isDisabled()) writer.writeAttribute("disabled", "disabled", "disabled");
         if(picker.isReadonly()) writer.writeAttribute("readonly", "readonly", "readonly");
-        writer.endElement("input");
+
         if (popup) {
+            if(!isValueBlank(styleClasses)) {
+                writer.writeAttribute("class", styleClasses, null);
+            }
+        }
+        writer.endElement("input");
+        if (popup){
             writeLabelAndIndicatorAfter(labelAttributes);
         }
 
-        String preferredFormat = picker.getColorFormat().HEX3.getValue();
-        if (picker.getColorFormat()!=null){
-            preferredFormat = picker.getColorFormat().getValue();
-        }
-        String showOn = picker.getShowOn();
-        String parts = picker.getPresetParts().toLowerCase().trim();
-        boolean hasPresetParts = true;
-        List<String> partsList = picker.getSelectedParts();
-        if (partsList !=null  && partsList.size()> 0) {
-           hasPresetParts = false;
-        }
-        if (parts.equals("inline")){
-            showOn="focus alt click";
-        }
-
-        String iconSrc = picker.getPopupIcon() != null ? getResourceURL(context, picker.getPopupIcon()) : getResourceRequestPath(context, ColorEntry.POPUP_ICON);
+        //String iconSrc = picker.getPopupIcon() != null ? getResourceURL(context, picker.getPopupIcon()) : getResourceRequestPath(context, ColorEntry.POPUP_ICON);
 
         JSONBuilder jb = JSONBuilder.create();
         jb.beginFunction("ice.ace.create")
@@ -181,12 +208,13 @@ public class ColorEntryRenderer extends InputRenderer {
                 .entry("id", clientId)
                 .entry("colorFormat", preferredFormat)
                 .entry("disabled", picker.isDisabled());
+        if (valueToRender!=null && valueToRender.length()>0){
+            jb.entry("color", valueToRender) ;
+        }
         if (picker.getTitle()!=null && picker.getTitle().length()>0){
             jb.entry("title", picker.getTitle());
         }
-        if (hasPresetParts){
-            jb.entry("parts", parts) ;
-        }else {  /* custom layout */
+        if (customParts) {  /* custom layout */
             jb.beginArray("parts");
             for (String entry: partsList){
                 jb.item(entry);
@@ -206,25 +234,31 @@ public class ColorEntryRenderer extends InputRenderer {
                 jb.endMap();
             }
         }
-        if (!parts.equals("inline")){
-            jb.entry("autoOpen", !picker.isRenderAsPopup());
+
+        if (popup){
+         //   jb.entry("autoOpen", !picker.isRenderAsPopup());
             jb.entry("alpha", picker.isAlpha());
             jb.entry("buttonImage", iconSrc);
-            jb.entry("buttonImageOnly", picker.isPopupIconOnly());
+            boolean buttonImageOnly = picker.isPopupIconOnly();
+            if (picker.getButtonText()==null || picker.getButtonText().length()<1){
+                buttonImageOnly = true;
+            }
             jb.entry("showCloseButton", showCloseButton);
             jb.entry("showCancelButton", picker.isShowCancelButton());
             jb.entry("buttonColorize", picker.isButtonColorize());
             jb.entry("showNoneButton", picker.isShowNoneButton());
             if (!showOn.equalsIgnoreCase("focus")) {
-                //          String iconSrc = picker.getPopupIcon() != null ? getResourceURL(context, picker.getPopupIcon()) : getResourceRequestPath(context, picker.POPUP_ICON);
                 jb.entry("showOn", showOn)
                         .entry("buttonImage", iconSrc)
-                        .entry("buttonImageOnly", picker.isPopupIconOnly());
+                        .entry("buttonImageOnly", buttonImageOnly);
             }
             if (picker.getEffect() !=null) {
                  jb.entry("showAnim", picker.getEffect())
                  .entry("duration", picker.getEffectDuration());
-             }
+            }
+        } else{              //default inline
+            jb.entry("inline", true);
+            jb.entry("inlineForm", true);
         }
 
         if (picker.getLimit()!=null ){
@@ -256,10 +290,13 @@ public class ColorEntryRenderer extends InputRenderer {
         writer.writeAttribute("style", "display:none;", null);
         writer.writeAttribute("data-hashcode", script.hashCode(), null);
         writer.endElement("span");
-
+        writer.startElement("input", null);
+        writer.writeAttribute("type", "hidden", null);
+        writer.writeAttribute("id", clientId+"_hidden2", null);
+        writer.writeAttribute("name", clientId+"_hidden2", null);
+        writer.endElement("input");
         writer.endElement(HTML.SPAN_ELEM);
-      //  JavaScriptRunner.runScript(context, "ice.ace.registerLazyComponent('" + clientId + "');");
-        // getting unexpected identifier error with previous line
+
     }
 
     protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {

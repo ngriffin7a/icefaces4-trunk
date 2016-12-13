@@ -179,6 +179,8 @@ public class CentralDataList {
 				new ComponentGroup("ace:colorEntry", "ColorEntry", "colorEntry.html", "colorEntry",
 						new Demo(msgs("overview"), msgs("example.ace.colorEntry.description"),
 								"colorEntry", "colorEntry.xhtml", "ColorEntryBean.java"),
+						new Demo(msgs("menu.ace.colorEntry.subMenu.popup"), msgs("example.ace.colorEntry.popup.description"),
+								"colorEntry", "colorEntryPopup.xhtml", "ColorEntryPopupBean.java"),
 						new Demo(msgs("menu.ace.colorEntry.subMenu.customize"), msgs("example.ace.colorEntry.customize.description"),
 								"colorEntry", "colorEntryCustomize.xhtml", "ColorEntryCustomBean.java"),
 						new Demo(msgs("menu.ace.colorEntry.subMenu.options"), msgs("example.ace.colorEntry.options.description"),

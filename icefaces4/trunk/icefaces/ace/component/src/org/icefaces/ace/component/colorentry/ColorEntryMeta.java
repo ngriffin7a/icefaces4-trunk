@@ -60,8 +60,7 @@ import java.util.List;
 }, defaultEvent = "valueChange")
 public class ColorEntryMeta extends UIInputMeta{
 
-    @Property(defaultValue="false", tlddoc="Whether or not to show the input field for " +
-            "the alpha string representing the chosen color")
+    @Property(defaultValue="false", tlddoc="Whether or not to show the inputs for alpha ")
     private boolean alpha;
 
  /*   @Property(defaultValue="true",
@@ -79,20 +78,14 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(tlddoc="title to display in the header")
     private String title;
 
-  /*  @Property(defaultValue="false", tlddoc="If true, will show an inline Frame around the inline component.")
-    private boolean inline;   */
-
-    @Property(defaultValue = "", tlddoc = "The text to display on the trigger button. Use in conjunction with the showOn option set to \"button\" or \"all\". Default = \"\".")
+    @Property(tlddoc = "The text to display on the trigger button. Use in conjunction with the showOn option set to \"button\" or \"all\". Default = \"\".")
     private String buttonText;
 
-    @Property(defaultValue="true", tlddoc="if false, the dialog opens automatically upon page load")
+    @Property(defaultValue="false", tlddoc="if false, the dialog opens automatically upon page load as an inline component")
     private boolean renderAsPopup;
 
-    @Property(defaultValue="full", tlddoc="the preset definition of parts to be shown. Valid values are \'full\', \'popup\' or \'inline\'")
-    private String presetParts;
-
     @Property(tlddoc="An array of values which can include \'header\', \'preview\',\'hex\',\'rgb\',\'alpha\', \'hsv\',\'rbgslider\',\'footer\'")
-    private List<String> selectedParts;
+    private List<String> customParts;
 
     @Property(tlddoc="When selectedParts is used for custom configuration, this attribute defines the position of elements in a table layout.  " +
             "Any layout is possible with HTML tables by specifying cell position and size of each part. The value is an array with four coordinates on order [left, top, width, height].  " +
@@ -112,7 +105,7 @@ public class ColorEntryMeta extends UIInputMeta{
  /*   @Property(defaultValue="false", tlddoc="Close the popup window when pressing the Enter key on the keyboard, keeping the selected color")
     private boolean okOnEnter;  */
 
-    @Property(defaultValue = "all", tlddoc = "Have the colorEntry appear automatically when the field receives focus (\"focus\"), " +
+    @Property(defaultValue = "focus", tlddoc = "Have the colorEntry appear automatically when the field receives focus (\"focus\"), " +
             "appear only when a button (specified by popupIcon attribute) is clicked (\"button\"), or appear when either event takes place (\"all\").")
     private String showOn;
 
@@ -182,8 +175,5 @@ public class ColorEntryMeta extends UIInputMeta{
 
     @Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
    	String accesskey;
-
- /*   @Field
-    private String color;   */
 
 }
