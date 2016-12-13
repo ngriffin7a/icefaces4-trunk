@@ -283,7 +283,16 @@ ice.ace.Schedule.prototype.getEventDetailsMarkup = function(data, isEventAdditio
 		if (data.id) markup += '<input type="hidden" name="'+this.id+'_id" value="'+data.id+'"/>';
 		if (isEventAddition) markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'add\');return false;">Add</button>';
 		else {
-			if (isEventEditing) markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'edit\');ice.ace.jq(document.getElementById(\''+this.id+'\')).find(\'.schedule-details-popup-content\').dialog(\'close\');return false;">Save</button> ';
+			if (isEventEditing) {
+				var closeDetailsMarkup = '';
+				if (this.cfg.displayEventDetails == 'popup') {
+					closeDetailsMarkup = 'ice.ace.jq(document.getElementById(\''+this.id+'\')).find(\'.schedule-details-popup-content\').dialog(\'close\');';
+				} else if (this.cfg.displayEventDetails == 'sidebar') {
+					closeDetailsMarkup = 'ice.ace.instance(\''+this.id+'\').expandEventList();';
+				}
+				markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'edit\');'
+					+ closeDetailsMarkup + 'return false;">Save</button> ';
+			}
 			if (isEventDeletion) markup += '<span><button onclick="ice.ace.instance(\''+this.id+'\').confirmDeletion(this);return false;">Delete</button><span style="display:none;">Are you sure? <button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'delete\');return false;">Yes</button> <button onclick="ice.ace.instance(\''+this.id+'\').cancelDeletion(this);return false;">No</button></span></span>';
 		}
 		return markup;
@@ -319,7 +328,9 @@ ice.ace.Schedule.prototype.getMinuteSelectionMarkup = function(time) {
 };
 
 ice.ace.Schedule.prototype.addTimeParameters = function(params) {
-	var timeInputs = ice.ace.jq(this.jqId).find('.schedule-details-popup-content').find('select');
+	var detailsContainerClass = this.cfg.displayEventDetails == 'popup' ?
+		'.schedule-details-popup-content' : '.schedule-details-content';
+	var timeInputs = ice.ace.jq(this.jqId).find(detailsContainerClass).find('select');
 
 	if (timeInputs.size() >= 4) {
 		var startHour = timeInputs.get(0).value;
