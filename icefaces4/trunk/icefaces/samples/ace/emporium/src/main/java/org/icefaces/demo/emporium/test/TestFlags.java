@@ -29,7 +29,7 @@ public class TestFlags implements Serializable  {
 	public static final String BEAN_NAME = "testFlags";
 	
 	public static final boolean TEST_NO_INTERVAL_PUSH = false; // Debugging toggle to turn off AuctionWatcher from doing 1/second interval pushes
-	public static final boolean TEST_EXPIRY = true; // Debugging toggle to create short lasting items (true) or normal (false)
+	public static final boolean TEST_EXPIRY = false; // Debugging toggle to create short lasting items (true) or normal (false)
 	public static final boolean TEST_BIDROBOT = false; // Debugging toggle to make BidRobots always spawn and bid really often
 	public static final boolean TEST_MANY_ITEMS = false; // Debugging toggle to make a huge number of random items instead of the usual
 	public static final boolean TEST_MANY_PAST_BIDS = false; // Debugging toggle to generate hundreds of past bid history instead of a dozen
