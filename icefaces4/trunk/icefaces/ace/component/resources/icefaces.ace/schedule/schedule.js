@@ -452,6 +452,9 @@ ice.ace.Schedule.prototype.sendEditRequest = function(event, type) {
 	this.addTimeParameters(params);
     options.params = params;
 
+	// save scroll position
+	window[this.id + '_lastScrollTop'] = this.jqRoot.find('.schedule-days').get(0).scrollTop;
+
 	if (type == 'add' && behaviors.addEvent) {
 		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.addEvent, options));
 	} else if (type == 'edit' && behaviors.editEvent) {
@@ -717,6 +720,12 @@ ice.ace.Schedule.prototype.renderWeekEvents = function(data) {
 		}
 	}
 	this.expandEventList();
+	if  (this.cfg.scrollHeight) {
+		if (window[this.id + '_lastScrollTop']) {
+			this.jqRoot.find('.schedule-days').animate({scrollTop: window[this.id + '_lastScrollTop']}, 1);
+		}
+		delete window[this.id + '_lastScrollTop'];
+	}
 };
 
 ice.ace.Schedule.prototype.renderDayView = function(data) {
@@ -827,6 +836,12 @@ ice.ace.Schedule.prototype.renderDayEvents = function(data) {
 		}
 	}
 	this.expandEventList();
+	if  (this.cfg.scrollHeight) {
+		if (window[this.id + '_lastScrollTop']) {
+			this.jqRoot.find('.schedule-days').animate({scrollTop: window[this.id + '_lastScrollTop']}, 1);
+		}
+		delete window[this.id + '_lastScrollTop'];
+	}
 };
 
 ice.ace.Schedule.prototype.addListeners = function() {
