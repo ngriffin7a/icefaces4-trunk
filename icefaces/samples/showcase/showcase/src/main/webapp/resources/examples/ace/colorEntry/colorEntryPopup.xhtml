@@ -22,8 +22,8 @@
     xmlns:icecore="http://www.icefaces.org/icefaces/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     template="/resources/templates/content-template.xhtml">
-    <ui:param name="title" value="#{msgs['example.ace.colorEntry.title']}"/>
-    <ui:param name="description" value="#{msgs['example.ace.colorEntry.description']}"/>
+    <ui:param name="title" value="#{msgs['example.ace.colorEntry.popup.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.colorEntry.popup.description']}"/>
 
     <ui:define name="example">
 
@@ -32,20 +32,17 @@
                  <h:panelGrid style="text-align: center;" width="100%">
                      <h:panelGroup>
                          <h:outputLabel for="selColorInline" value="Selected Color"/>
-                         <h:outputText id="selColorInline" value="#{colorEntryBean.selectedColor}"
+                         <h:outputText id="selColorInline" value="#{colorEntryPopupBean.selectedColor}"
                                            style="font-weight: bold;"/>
                      </h:panelGroup>
                  </h:panelGrid>
             </ace:panel>
-            <ace:panel id="colorInputPanel" header="ColorEntry" styleClass="required-styling-demo">
-                <h:panelGrid id="inputGrid" columns="1" width="100%" >
-                    <ace:colorEntry id="colorInput" value="#{colorEntryBean.selectedColor}">
+            <ace:panel id="colorInputPanel" header="ColorEntry Popup With Ajax Submit" styleClass="required-styling-demo">
+                    <ace:colorEntry id="colorInput" value="#{colorEntryPopupBean.selectedColor}"
+                              renderAsPopup="true"
+                              Title="Popup">
+                        <ace:ajax execute="@this" render="@all"/>
                     </ace:colorEntry>
-                    <h:commandButton id="submitColor" value="Submit Color">
-                        <f:ajax execute="@this colorInput" render="@all"/>
-                    </h:commandButton>
-                </h:panelGrid>
-
             </ace:panel>
 
         </h:form>

@@ -16,16 +16,15 @@
 
 package org.icefaces.samples.showcase.example.ace.colorEntry;
 
-import java.io.Serializable;
-
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
+import java.io.Serializable;
 
-@ManagedBean(name= ColorEntryBean.BEAN_NAME)
+@ManagedBean(name= ColorEntryPopupBean.BEAN_NAME)
 @CustomScoped(value = "#{window}")
-public class ColorEntryBean implements Serializable
+public class ColorEntryPopupBean implements Serializable
 {
-    public static final String BEAN_NAME = "colorEntryBean";
+    public static final String BEAN_NAME = "colorEntryPopupBean";
 	public String getBeanName() { return BEAN_NAME; }
 
     private String selectedColor;

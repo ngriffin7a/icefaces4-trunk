@@ -29,7 +29,6 @@
 
         <h:form id="inputOptionsForm">
         <ace:panel id="inpOptionsPan" header="Options">
-            <!-- NEED TO WORK ON DYNAMIC CHANGING OF LAYOUT -->
             <h:panelGrid id="inputOptions" columns="2">
                     <h:outputLabel for="valueFormat" value="Choose format of Value"/>
                     <h:selectOneMenu id="valueFormat" value="#{colorEntryCustomBean.valueFormat}">
@@ -51,9 +50,10 @@
                 <h:panelGrid id="inputGrid" columns="1" width="100%" >
                     <ace:colorEntry id="colorInput" value="#{colorEntryCustomBean.value}"
                                colorFormat="#{colorEntryCustomBean.valueFormat}"
-                               selectedParts="#{colorEntryCustomBean.parts}"
+                               customParts="#{colorEntryCustomBean.parts}"
                                customLayout="#{colorEntryCustomBean.layout}"
-                               label="Custom" labelPosition="left">
+                               renderAsPopup="true"
+                               title="#{colorEntryCustomBean.title}">
                         <ace:ajax execute="@this" render="@all" />
                     </ace:colorEntry>
                 </h:panelGrid>

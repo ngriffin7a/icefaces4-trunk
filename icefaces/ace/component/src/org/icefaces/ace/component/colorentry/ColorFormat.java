@@ -19,20 +19,20 @@ package org.icefaces.ace.component.colorentry;
 public enum ColorFormat {
 
     /**
-     * HEX is hexadecimal display in input field
-     * HEX3 is hexadecimal display using 3 characters only if possible
+     * HEX is hexadecimal display in input field eg #112233 (#RRGGBB)
+     * HEX3 is hexadecimal display using 3 characters only if possible (#RGB)
      * HSL is (hue, saturation, lightness) designation of color
      * RGB is  (red, green, blue) of color
      * NAME specifies the color by name when selecting color and will fall back to hex
      * NONE will depend on the input
      */
-    HEX("HEX"), HEXA("HEXA"), HEXA4("HEXA4"), HEX3("HEX3"), HSL("HSL"), HSLA("HSLA"), HSLPERCENT("HSL%"),
-    RGB("RGB"), RGBA("RGBA"), RGBPERCENT("RGB%"), NAME("NAME"), EXACT("EXACT");
-    private String value;
-    private ColorFormat(String value){
+     HEX("HEX"), HEX3("HEX3"), HEXA4("HEXA4"), HSL("HSL"), HSLA("HSLA"), HSLPERCENT("HSL%"),
+     HSLAPERCENT("HSLA%"), RGB("RGB"), RGBA("RGBA"), RGBPERCENT("RGB%"), NAME("NAME"), EXACT("EXACT");
+     private String value;
+     private ColorFormat(String value){
         this.value=value;
     }
-    public String getValue() {
+     public String getValue() {
         return this.value;
     }
 }
