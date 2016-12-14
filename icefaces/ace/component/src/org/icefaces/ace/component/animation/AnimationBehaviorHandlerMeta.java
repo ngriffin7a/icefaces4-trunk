@@ -68,6 +68,6 @@ public class AnimationBehaviorHandlerMeta {
     @Property(required=Required.no, tlddoc="Length of effect in milliseconds. The default value is 500 for free-form animations and varies for pre-defined effects.")
     private Double duration;
 	
-    @Property(required=Required.no, tlddoc="Name of the event that will trigger the animation (e.g. 'click'). The event must be supported by the component. The TLD documentation of each standard JSF component lists which events are supported, which usually map to standard DOM events. The event name must be entered without the 'on' prefix (e.g. for 'onmousemove' the value of this attribute must be 'mousemove').", implementation=Implementation.EXISTS_IN_SUPERCLASS)
+    @Property(required=Required.no, tlddoc="Name of the event that will trigger the animation (e.g. 'click'). The event must be supported by the component.  The event attribute does not support EL expressions, just literal values. The TLD documentation of each standard JSF component lists which events are supported, which usually map to standard DOM events. The event name must be entered without the 'on' prefix (e.g. for 'onmousemove' the value of this attribute must be 'mousemove').", implementation=Implementation.EXISTS_IN_SUPERCLASS)
     private String event;
 }
