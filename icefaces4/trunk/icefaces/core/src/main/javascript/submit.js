@@ -257,19 +257,22 @@ var singleSubmit;
         return function(updates) {
             var updatedFragments = inject(updates.getElementsByTagName('update'), [], function(result, update) {
                 var id = update.getAttribute('id');
-                if (contains(id, 'javax.faces.ViewState') || endsWith(id, '_fixviewstate')) {
+                if (contains(id, 'javax.faces.ViewState') || contains(id, 'javax.faces.ClientWindow') || endsWith(id, '_fixviewstate')) {
                     return result;
                 } else {
                     return append(result, lookupElementById(id));
                 }
             });
             var updatedForms = inject(updatedFragments, [ form ] , function(result, e) {
-                if (isFormElement(e) && not(contains(result, e.form))) {
-                    append(result, e.form);
-                } else {
-                    each(e.getElementsByTagName('form'), function(form) {
-                        append(result, form);
-                    });
+                //collect forms only for fragment updates, skip special ones that were not matched
+                if (e) {
+                    if (isFormElement(e) && not(contains(result, e.form))) {
+                        append(result, e.form);
+                    } else {
+                        each(e.getElementsByTagName('form'), function (form) {
+                            append(result, form);
+                        });
+                    }
                 }
 
                 return result;
