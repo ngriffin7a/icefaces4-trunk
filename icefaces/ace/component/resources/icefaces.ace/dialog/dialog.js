@@ -111,26 +111,6 @@ ice.ace.Dialog = function(parentID, cfg) {
 		}
 	}
 
-	if (this.cfg.maximizableRestorable) {
-		this.cfg.dragStart = function() {
-			if (!_self.originalPositionSet) {
-				_self.originalPositionSet = true;
-				_self.originalTop = _self.jq.parent().css('top');
-				_self.originalLeft = _self.jq.parent().css('left');
-				_self.originalPosition = _self.jq.dialog('option', 'position');
-			}
-		};
-		this.cfg.resizeStart = function() {
-			if (!_self.originalDimensionsSet) {
-				_self.originalDimensionsSet = true;
-				_self.originalHeight = _self.jq.parent().css('height');
-				_self.originalHeightOption = _self.jq.dialog('option', 'height');
-				_self.originalWidth = _self.jq.parent().css('width');
-				_self.originalWidthOption = _self.jq.dialog('option', 'width');
-			}
-		};
-	}
-
     //Create the dialog
     this.cfg.autoOpen = false;
     this.jq.dialog(this.cfg);
@@ -206,21 +186,32 @@ ice.ace.Dialog.prototype.setupButtons = function() {
 	closeButton.appendTo(buttonPane);
 
 	var maximizeButton = ice.ace.jq('<a href="#" class="ui-dialog-titlebar-maximize ui-corner-all" role="button"><span class="ui-icon ui-icon-arrow-4-diag">maximize</span></a>');
+	var restoreButton = ice.ace.jq('<a href="#" class="ui-dialog-titlebar-restore ui-corner-all" role="button"><span class="ui-icon ui-icon-newwin">restore</span></a>');
+
 	maximizeButton.hover(function() { maximizeButton.addClass('ui-state-hover'); },
 		function() { maximizeButton.removeClass('ui-state-hover'); })
 		.focus(function() { maximizeButton.addClass('ui-state-focus'); })
 		.blur(function() { maximizeButton.removeClass('ui-state-focus'); })
-		.click(function(event) { self.maximize(); return false;
+		.click(function(event) {
+			self.maximize();
+			maximizeButton.hide();
+			restoreButton.show();
+			return false;
 		});
 	maximizeButton.appendTo(buttonPane);
 
-	var restoreBButton = ice.ace.jq('<a href="#" class="ui-dialog-titlebar-restore ui-corner-all" role="button"><span class="ui-icon ui-icon-newwin">restore</span></a>');
-	restoreBButton.hover(function() { restoreBButton.addClass('ui-state-hover'); },
-		function() { restoreBButton.removeClass('ui-state-hover'); })
-		.focus(function() { restoreBButton.addClass('ui-state-focus'); })
-		.blur(function() { restoreBButton.removeClass('ui-state-focus'); })
-		.click(function(event) { self.restoreInitialState(); return false; });
-	restoreBButton.appendTo(buttonPane);
+	restoreButton.hover(function() { restoreButton.addClass('ui-state-hover'); },
+		function() { restoreButton.removeClass('ui-state-hover'); })
+		.focus(function() { restoreButton.addClass('ui-state-focus'); })
+		.blur(function() { restoreButton.removeClass('ui-state-focus'); })
+		.click(function(event) {
+			self.restoreInitialState();
+			restoreButton.hide();
+			maximizeButton.show();
+			return false;
+		});
+	restoreButton.appendTo(buttonPane);
+	restoreButton.hide();
 };
 
 ice.ace.Dialog.prototype.show = function() {
@@ -239,7 +230,6 @@ ice.ace.Dialog.prototype.show = function() {
         if ('**none' != focusOn) {
             self.focusInput(focusOn);
         }
-		if (self.cfg.maximizableRestorable) self.resetOriginalState();
     }, 1);
     setTimeout(function() {
 		self.recreateChildEditors();
@@ -262,61 +252,45 @@ ice.ace.Dialog.prototype.hide = function() {
     },1);
 };
 
-ice.ace.Dialog.prototype.resetOriginalState = function() {
-	this.originalCssPosition = '';
-	this.originalDimensionsSet = false;
-	this.originalPositionSet = false;
-	this.originalHeight = '';
-	this.originalHeightOption = '';
-	this.originalWidthOption = '';
-	this.originalWidth = '';
-	this.originalTop = '';
-	this.originalLeft = '';
-};
-
 ice.ace.Dialog.prototype.restoreInitialState = function() {
+	this.jq.dialog('option', 'draggable', this.originalDraggable);
+	this.jq.dialog('option', 'resizable', this.originalResizable);
 	var root = this.jq.parent();
-	if (this.originalCssPosition) {
-		root.css({position: this.originalCssPosition});
-	}
-	if (this.originalDimensionsSet) {
-		root.css({height: this.originalHeight});
-		this.jq.dialog('option', 'height', this.originalHeightOption);
-		root.css({width: this.originalWidth});
-		this.jq.dialog('option', 'width', this.originalWidthOption);
-	}
-	if (this.originalPositionSet) {
-		root.css({top: this.originalTop});
-		root.css({left: this.originalLeft});
-		this.originalPosition = this.jq.dialog('option', 'position', this.originalPosition);
-	}
+	root.css({position: this.originalCssPosition});
+	root.css({height: this.originalHeight});
+	this.jq.dialog('option', 'height', this.originalHeightOption);
+	root.css({width: this.originalWidth});
+	this.jq.dialog('option', 'width', this.originalWidthOption);
+	root.css({top: this.originalTop});
+	root.css({left: this.originalLeft});
+	this.originalPosition = this.jq.dialog('option', 'position', this.originalPosition);
+	this.maximized = false;
 };
 
 ice.ace.Dialog.prototype.maximize = function() {
 	var root = this.jq.parent();
-	if (!this.originalCssPosition) {
-		this.originalCssPosition = root.css('position');
-	}
-	if (!this.originalPositionSet) {
-		this.originalPositionSet = true;
-		this.originalTop = this.jq.parent().css('top');
-		this.originalLeft = this.jq.parent().css('left');
-		this.originalPosition = this.jq.dialog('option', 'position');
-	}
-	if (!this.originalDimensionsSet) {
-		this.originalDimensionsSet = true;
-		this.originalHeight = this.jq.parent().css('height');
-		this.originalHeightOption = this.jq.dialog('option', 'height');
-		this.originalWidth = this.jq.parent().css('width');
-		this.originalWidthOption = this.jq.dialog('option', 'width');
-	}
+	this.originalCssPosition = root.css('position');
+	this.originalPositionSet = true;
+	this.originalTop = this.jq.parent().css('top');
+	this.originalLeft = this.jq.parent().css('left');
+	this.originalPosition = this.jq.dialog('option', 'position');
+	this.originalDimensionsSet = true;
+	this.originalHeight = this.jq.parent().css('height');
+	this.originalHeightOption = this.jq.dialog('option', 'height');
+	this.originalWidth = this.jq.parent().css('width');
+	this.originalWidthOption = this.jq.dialog('option', 'width');
+	this.originalDraggable = this.jq.dialog('option', 'draggable');
+	this.originalResizable = this.jq.dialog('option', 'resizable');
 
 	var $window = ice.ace.jq(window);
 	var newHeight = $window.height() * 0.95;
 	var newWidth = $window.width() * 0.95;
 	var newTop = $window.height() * 0.025;
 	var newLeft = $window.width() * 0.025;
+	this.jq.dialog('option', 'draggable', false);
+	this.jq.dialog('option', 'resizable', false);
 	root.css({position: 'fixed', height: newHeight, width: newWidth, top: newTop, left: newLeft});
+	this.maximized = true;
 };
 
 /**
@@ -332,8 +306,13 @@ ice.ace.Dialog.prototype.onShow = function(event, ui) {
  * Fires an ajax request to invoke a closeListener passing a CloseEvent
  */
 ice.ace.Dialog.prototype.onHide = function(event, ui) {
-	if (this.originalCssPosition) { // reset css position when closing in maximized state
+	if (this.maximized) { // reset css position when closing in maximized state
+		this.jq.dialog('option', 'draggable', this.originalDraggable);
+		this.jq.dialog('option', 'resizable', this.originalResizable);
 		this.jq.parent().css({position: this.originalCssPosition});
+		this.jq.parent().find('.ui-dialog-titlebar-restore').hide();
+		this.jq.parent().find('.ui-dialog-titlebar-maximize').show();
+		this.maximized = false;
 	}
 
     if (typeof event.originalEvent != 'undefined') {
