@@ -238,7 +238,7 @@
 }
 /* overriding handles for rgb slider from original file */
 
-.ui-colorpicker-slider .ui-slider .ui-slider-handle{
+.ui-colorpicker-slider.ui-slider .ui-slider-handle{
 	width: .9em;
 	height: .9em;
 }

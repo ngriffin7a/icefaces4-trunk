@@ -2272,7 +2272,6 @@
 			};
 
 			that.mode		= that.options.mode;
-			console.log(" is that.options.inline true??="+that.options.inline);
 			if (that.element.is('input') || that.options.inline === false) {
 				// Initial color
 				that._setColor(that.element.is('input') ? that.element.val() : that.options.color);
@@ -2532,7 +2531,6 @@
 		},
 
 		_generate: function () {
-			console.log(" generate!") ;
 			var that = this,
 				index,
 				part,
