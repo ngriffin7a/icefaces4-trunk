@@ -2,7 +2,7 @@ if (!window['ice']) window.ice = {};
 if (!window.ice['ace']) window.ice.ace = {};
 
 ice.ace.ColorEntry = function(id, cfg) {
-    console.log(" creating widget for id="+id);
+ //   console.log(" creating widget for id="+id);
     var behavior, altFieldVal;
     this.id = id;
     this.cfg = cfg;
@@ -23,7 +23,7 @@ ice.ace.ColorEntry = function(id, cfg) {
         this.jq.colorpicker(this.cfg);
     }
 
-//	ice.ace.setResetValue(this.id, this.getColor());
+	ice.ace.setResetValue(this.id, this.getColor());
 
 };
 
@@ -70,9 +70,7 @@ ice.ace.ColorEntryInit = function( cfg) {
         var hidden =  ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden");
         var trigger=  null;
         var buttonClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only";
-   /*     ice.ace.jq.each(options, function(key, value) {
-            console.log(key, value);
-        });   */
+
         var showOn = options.showOn || "focus" ;
         var buttonText = options.buttonText || "";
         var buttonImage =  options.buttonImage || null;
@@ -107,14 +105,14 @@ ice.ace.ColorEntryInit = function( cfg) {
             var newColor = color.formatted;
              input.value = newColor;
              input.css({"border-left" : "12px solid", "border-color":newColor});
-             console.log("val set to "+input.value+" format="+color.formatted);  
+          //   console.log("val set to "+input.value+" format="+color.formatted);  
              if (behaviors && behaviors.change) { 
                  ice.ace.ab(behaviors.change); 
              } 
          } ;
         var selectFn = function(event, color){
             var colorFormatted = color.formatted;
-            console.log(" color.formatted="+colorFormatted);
+        //    console.log(" color.formatted="+colorFormatted);
             hidden.value=colorFormatted;
             ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden").val(colorFormatted);
             ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden2").val(colorFormatted);
@@ -130,9 +128,10 @@ ice.ace.ColorEntryInit = function( cfg) {
         }
 
         var create = function(){
-            var widget=ice.ace.lazy("ColorEntry", [id,options]);
+            console.log(" create.....");
+            var widget=ice.ace.create("ColorEntry", [id,options]);
             ice.onElementUpdate(id, function(){
-                   console.log(" colorentry onElementUpdate...destroy...");
+                //   console.log(" colorentry onElementUpdate...destroy...");
                    widget.destroy();
                    initEltSet.remove();
             });
@@ -140,30 +139,35 @@ ice.ace.ColorEntryInit = function( cfg) {
             return widget;
         };
         var initAndShow = function(){
-            console.log("initAndShow.....");
+         //   console.log("initAndShow.....");
             if (ice.ace.instance(id)){
+           //     console.log(" have an instance so show it anad go!");
                 ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
-                   return;
+                return;
             }
             if (trigger){
                 trigger.remove();
             }
             create();
-           // if(!ice.ace.instance(id).colorpicker)return;
-            ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
-        } ;
+            if(!ice.ace.instance(id).colorpicker) {
+                console.log(" no ice.ace.instance available....");
+               // ice.ace.create("ColorEntry", [id, options]);
+            } else {
+                ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
+            }
+        };
         if (inline){
             if (trigger) trigger.remove();
             return create();
         }
 
-
 		// if instance was previously initialized, create right away and return
 		if (ice.ace.ColorEntry.instances[id]) {
+          //  console.log(" widget previously initialized, so create right away and return!");
 			create();
 			return;
 		}
-
+        console.log(" rest of stuff is for non  inline");
         var buttonImageOnlyinputClass="cp-buttonImageOnly";
         if (buttonImageOnly){
             input.attr("class", buttonImageOnlyinputClass);
@@ -171,30 +175,27 @@ ice.ace.ColorEntryInit = function( cfg) {
         initEltSet = initEltSet.add(input);
         var spanSelector =  ice.ace.escapeClientId(id) ;
         var spanElement= ice.ace.jq(spanSelector);
-       // if (!inline && button_both_all>=0) {
         if (!inline && ice.ace.jq.inArray(showOn, ["button","all", "both"]) >= 0) {
-            console.log(" show on button and all...");
-            if (buttonImageOnly){
-                trigger =ice.ace.jq("<img />");
+            if (buttonImageOnly) {
+             //   console.log(" buttonImageONly.....");
+                trigger = ice.ace.jq("<img />");
                 trigger.attr("src", buttonImage);
                 if (buttonText) {
                     trigger.attr("alt", buttonText);
                     trigger.attr("title", buttonText);
                 }
-            }  else {
-                trigger=  ice.ace.jq('<button type="button"></button>').html(buttonImage == '' ? buttonText : ice.ace.jq('<img/>').attr(
-                                    {src: buttonImage, alt: buttonText, title: buttonText}));
+                trigger.one("click", initAndShow);
+                initEltSet = initEltSet.add(trigger);
+                spanElement.append(trigger);
             }
-            trigger.one("click", initAndShow);
-            initEltSet = initEltSet.add(trigger);
-            spanElement.append(trigger);
         }
 
         if (ice.ace.jq.inArray(showOn, ["focus","all", "both"]) >= 0) {
             setTimeout(function(){
+             //   console.log(" within setTimeout....");
                 input.one("focus", initAndShow);
             }, 350);
-          //  initEltSet = initEltSet.add(input);
+            initEltSet = initEltSet.add(input);
         }
 
         ice.onElementUpdate(id, function() {
@@ -205,7 +206,7 @@ ice.ace.ColorEntryInit = function( cfg) {
 };
 
 ice.ace.ColorEntry.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
-    console.log(" clear");
+   // console.log(" clear");
 	var instance = ice.ace.instanceNoLazyInit(id);
 	if (instance) instance.setColor(null);
 	var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));
