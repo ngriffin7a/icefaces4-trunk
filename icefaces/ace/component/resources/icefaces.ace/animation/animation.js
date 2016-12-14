@@ -17,18 +17,18 @@
 if (!window['ice']) window.ice = {};
 if (!window.ice['ace']) window.ice.ace = {};
 ice.ace.animation = {};
-		
-ice.ace.animation.run = function(args, speed, callback) {
-	var node;
-	if (typeof args.node == 'string') {
-		node = ice.ace.jq(ice.ace.escapeClientId(args.node));
-	} else {
-		node = ice.ace.jq(args.node);
-	}
-	var effectName = args.name.toLowerCase();
-	var easing = args.easing || 'easeOutQuad';
 
-	node.queue(function() {
+ice.ace.animation.run = function (args, speed, callback) {
+    var node;
+    if (typeof args.node == 'string') {
+        node = ice.ace.jq(ice.ace.escapeClientId(args.node));
+    } else {
+        node = ice.ace.jq(args.node);
+    }
+    var effectName = args.name.toLowerCase();
+    var easing = args.easing || 'easeOutQuad';
+
+    node.queue(function () {
         var iterations;
         if (args.iterations == 0) {
             iterations = 0;
@@ -37,21 +37,31 @@ ice.ace.animation.run = function(args, speed, callback) {
         } else {
             iterations = 1;
         }
-        for (var i = 0; i < iterations; i++) {
-            if (effectName == 'anim') {
-                var duration = args.duration || 500;
-				node.animate(args.from, 0, easing);
-				node.animate(args.to, duration, easing);
-            } else {
-                if (!args.easing) args.easing = easing;
-                node.effect(effectName, args, speed, callback);
+
+        var element = node[0];
+        if (!element.runningEffect) {
+            for (var i = 0; i < iterations; i++) {
+                if (effectName == 'anim') {
+                    var duration = args.duration || 500;
+                    node.animate(args.from, 0, easing);
+                    node.animate(args.to, duration, easing);
+                } else {
+                    if (!args.easing) args.easing = easing;
+                    element.runningEffect = true;
+                    node.effect(effectName, args, speed, function () {
+                        element.runningEffect = false;
+                        if (callback) {
+                            callback.apply(this, arguments);
+                        }
+                    });
+                }
             }
         }
 
-		node.dequeue();
-	});
+        node.dequeue();
+    });
 };
 
-ice.ace.animation.register = function(args, callback) {
+ice.ace.animation.register = function (args, callback) {
 
 };
