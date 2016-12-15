@@ -205,7 +205,7 @@ ice.ace.Dialog.prototype.setupButtons = function() {
 		.focus(function() { restoreButton.addClass('ui-state-focus'); })
 		.blur(function() { restoreButton.removeClass('ui-state-focus'); })
 		.click(function(event) {
-			self.restoreInitialState();
+			self.restoreOriginalState();
 			restoreButton.hide();
 			maximizeButton.show();
 			return false;
@@ -252,7 +252,7 @@ ice.ace.Dialog.prototype.hide = function() {
     },1);
 };
 
-ice.ace.Dialog.prototype.restoreInitialState = function() {
+ice.ace.Dialog.prototype.restoreOriginalState = function() {
 	this.jq.dialog('option', 'draggable', this.originalDraggable);
 	this.jq.dialog('option', 'resizable', this.originalResizable);
 	var root = this.jq.parent();
@@ -289,6 +289,8 @@ ice.ace.Dialog.prototype.maximize = function() {
 	var newLeft = $window.width() * 0.025;
 	this.jq.dialog('option', 'draggable', false);
 	this.jq.dialog('option', 'resizable', false);
+	this.jq.dialog('option', 'height', newHeight);
+	this.jq.dialog('option', 'width', newWidth);
 	root.css({position: 'fixed', height: newHeight, width: newWidth, top: newTop, left: newLeft});
 	this.maximized = true;
 };
@@ -306,10 +308,12 @@ ice.ace.Dialog.prototype.onShow = function(event, ui) {
  * Fires an ajax request to invoke a closeListener passing a CloseEvent
  */
 ice.ace.Dialog.prototype.onHide = function(event, ui) {
-	if (this.maximized) { // reset css position when closing in maximized state
+	if (this.maximized) { // restore original state when closing in maximized state
 		this.jq.dialog('option', 'draggable', this.originalDraggable);
 		this.jq.dialog('option', 'resizable', this.originalResizable);
 		this.jq.parent().css({position: this.originalCssPosition});
+		this.jq.dialog('option', 'height', this.originalHeightOption);
+		this.jq.dialog('option', 'width', this.originalWidthOption);
 		this.jq.parent().find('.ui-dialog-titlebar-restore').hide();
 		this.jq.parent().find('.ui-dialog-titlebar-maximize').show();
 		this.maximized = false;
