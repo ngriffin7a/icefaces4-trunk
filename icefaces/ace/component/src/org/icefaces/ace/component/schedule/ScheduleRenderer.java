@@ -152,7 +152,7 @@ public class ScheduleRenderer extends CoreRenderer {
 		// detect a change in view mode and use the selected date if available
 		String previousViewMode = params.get(clientId + "_viewMode");
 		String selectedDateString = params.get(clientId + "_selectedDate");
-		boolean clearSelectedDate = false;
+		boolean selectCurrentDate = false;
 		if (!isCurrentDateProgrammaticallySet) {
 			if (previousViewMode != null && !viewMode.equalsIgnoreCase(previousViewMode)) {
 				if (selectedDateString != null && !"".equals(selectedDateString)) {
@@ -165,7 +165,7 @@ public class ScheduleRenderer extends CoreRenderer {
 				}
 			}
 		} else {
-			clearSelectedDate = true;
+			selectCurrentDate = true;
 		}
 
 		// normalize current date values
@@ -303,10 +303,12 @@ public class ScheduleRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId + "_selectedDate", null);
 		writer.writeAttribute("name", clientId + "_selectedDate", null);
 		writer.writeAttribute("type", "hidden", null);
-		if (selectedDateString != null && !clearSelectedDate) {
+		if (selectedDateString != null && !"".equals(selectedDateString) && !selectCurrentDate) {
 			writer.writeAttribute("value", selectedDateString, null);
 		} else {
-			writer.writeAttribute("value", "", null);
+			writer.writeAttribute("value", currentDateValues[0]
+				+ "-" + addLeadingZero((currentDateValues[1] + 1))
+				+ "-" + addLeadingZero(currentDateValues[2]), null);
 		}
 		writer.endElement("input");
 
@@ -326,18 +328,15 @@ public class ScheduleRenderer extends CoreRenderer {
 	}
 
 	private String convertDateToClientFormat(ScheduleUtils.DateIntegerValues values) {
-		return (values.getYear() + "-" 
-			+ addLeadingZero(values.getMonth() + 1) + (values.getMonth() + 1) + "-" 
-			+ addLeadingZero(values.getDay()) + values.getDay());
+		return (values.getYear() + "-" + addLeadingZero(values.getMonth() + 1) + "-" + addLeadingZero(values.getDay()));
 	}
 
 	private String convertTimeToClientFormat(ScheduleUtils.DateIntegerValues values) {
-		return (addLeadingZero(values.getHour()) + values.getHour() + ":" 
-			+ addLeadingZero(values.getMinute()) + values.getMinute());
+		return (addLeadingZero(values.getHour()) + ":" + addLeadingZero(values.getMinute()));
 	}
 
 	private String addLeadingZero(int value) {
-		if (value < 10) return "0";
-		return "";
+		if (value < 10) return ("0" + value);
+		return ("" + value);
 	}
 }

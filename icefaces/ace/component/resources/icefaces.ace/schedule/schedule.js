@@ -50,6 +50,15 @@ ice.ace.Schedule = function(id, cfg) {
 	this.clndr = this.jq.clndr(configuration);
 
 	var selectedDate = document.getElementById(this.id + '_selectedDate').getAttribute('value');
+	// add selected styling
+	if (self.cfg.viewMode == 'week') {
+		self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
+		var dow = self.extractDayOfWeek(self.jqRoot.find('.calendar-day-' + selectedDate).get(0));
+		self.jqRoot.find('.schedule-dow-header.schedule-dow-' + dow).addClass('schedule-selected');
+	} else {
+		self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
+		self.jqRoot.find('.calendar-day-' + selectedDate + ' .schedule-state').addClass('schedule-selected');
+	}
 
 	var behaviors = self.cfg.behaviors;
 	this.jqRoot.delegate('.schedule-event', 'click', function(event) {
@@ -57,6 +66,15 @@ ice.ace.Schedule = function(id, cfg) {
 		var node = event['target'];
 		var eventIndex = self.extractEventIndex(node);
 		var eventData = self.events[eventIndex];
+		// add selected styling
+		if (self.cfg.viewMode == 'week') {
+			self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
+			var dow = self.extractDayOfWeek(self.jqRoot.find('.calendar-day-' + eventData.startDate).get(0));
+			self.jqRoot.find('.schedule-dow-header.schedule-dow-' + dow).addClass('schedule-selected');
+		} else {
+			self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
+			self.jqRoot.find('.calendar-day-' + eventData.startDate + ' .schedule-state').addClass('schedule-selected');
+		}
 		document.getElementById(self.id + '_selectedDate').setAttribute('value', eventData.startDate);
 		if (behaviors && behaviors.eventClick) {
 			self.sendClickRequest(event, 'event', eventIndex);
@@ -154,6 +172,15 @@ ice.ace.Schedule = function(id, cfg) {
 			var node = ice.ace.jq(event['target']);
 			var stateNode = node.closest('.schedule-state');
 			if (stateNode.hasClass('schedule-state')) {
+				// add selected styling
+				if (self.cfg.viewMode == 'week') {
+					self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
+					var dow = self.extractDayOfWeek(stateNode.parent().get(0));
+					self.jqRoot.find('.schedule-dow-header.schedule-dow-' + dow).addClass('schedule-selected');
+				} else {
+					self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
+					stateNode.addClass('schedule-selected');
+				}
 				var date = self.extractEventDate(stateNode.parent().get(0));
 				document.getElementById(self.id + '_selectedDate').setAttribute('value', date);
 			}
@@ -215,6 +242,20 @@ ice.ace.Schedule.prototype.extractEventTime = function(node) {
 		}
 	}
 	if (result) result = result.substring(0,2) + ':' + result.substring(2);
+	return result;
+};
+
+ice.ace.Schedule.prototype.extractDayOfWeek = function(node) {
+	var result = '';
+	var classes = node.className.split(' ');
+	var i;
+	for (i = 0; i < classes.length; i++) {
+		var styleClass = classes[i];
+		if (styleClass.indexOf('schedule-dow-') == 0) {
+			result = styleClass.substring(13);
+			break;
+		}
+	}
 	return result;
 };
 
