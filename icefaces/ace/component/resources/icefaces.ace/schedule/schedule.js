@@ -80,32 +80,31 @@ ice.ace.Schedule = function(id, cfg) {
 			self.sendClickRequest(event, 'event', eventIndex);
 		}
 	});
-	if (cfg.displayEventDetails != 'disabled') {
-		if (cfg.displayEventDetails == 'tooltip') {
-			this.jqRoot.delegate('.schedule-event', 'mouseover', function(event) {
-				var node = event['target'];
-				var eventIndex = self.extractEventIndex(node);
-				var eventData = self.events[eventIndex];
-				var markup = self.getEventDetailsMarkup(eventData);
-				self.displayEventDetailsTooltip(markup, node);
-			});
-			this.jqRoot.delegate('.schedule-event', 'mouseout', function(event) {
-				self.hideEventDetailsTooltip();
-			});
-		} else {
-			this.jqRoot.delegate('.schedule-event, .schedule-list-event', 'click', function(event) {
-				event.stopImmediatePropagation();
-				var node = event['target'];
-				var eventIndex = self.extractEventIndex(node);
-				var eventData = self.events[eventIndex];
-				var markup = self.getEventDetailsMarkup(eventData, false,
-					self.cfg.isEventEditing, self.cfg.isEventDeletion);
-				if (self.cfg.displayEventDetails == 'popup')
-					self.displayEventDetailsPopup(markup);
-				else
-					self.displayEventDetailsSidebar(markup);
-			});
-		}
+	if (cfg.eventDetails != 'disabled') {
+		this.jqRoot.delegate('.schedule-event, .schedule-list-event', 'click', function(event) {
+			event.stopImmediatePropagation();
+			var node = event['target'];
+			var eventIndex = self.extractEventIndex(node);
+			var eventData = self.events[eventIndex];
+			var markup = self.getEventDetailsMarkup(eventData, false,
+				self.cfg.isEventEditing, self.cfg.isEventDeletion);
+			if (self.cfg.eventDetails == 'sidebar')
+				self.displayEventDetailsSidebar(markup);
+			else
+				self.displayEventDetailsPopup(markup);
+		});
+	}
+	if (cfg.displayTooltip) {
+		this.jqRoot.delegate('.schedule-event', 'mouseover', function(event) {
+			var node = event['target'];
+			var eventIndex = self.extractEventIndex(node);
+			var eventData = self.events[eventIndex];
+			var markup = self.getEventDetailsMarkup(eventData);
+			self.displayEventDetailsTooltip(markup, node);
+		});
+		this.jqRoot.delegate('.schedule-event', 'mouseout', function(event) {
+			self.hideEventDetailsTooltip();
+		});
 	}
 	if (behaviors && behaviors.dayDblclick) {
 		this.jqRoot.delegate('.day', 'dblclick', function(event) {
