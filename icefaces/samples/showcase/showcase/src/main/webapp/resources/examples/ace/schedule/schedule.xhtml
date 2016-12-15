@@ -30,6 +30,7 @@
 			.ice-ace-schedule .schedule-event.meeting {
 				background-image: none;
 				background-color: #fc6;
+				border-color: #f93;
 			}
 			.ice-ace-schedule .schedule-list-event.ui-state-highlight {
 				background-image: none;
@@ -70,14 +71,13 @@
 							<ace:ajax render="@all"/>
 							<f:selectItem itemValue="popup" itemLabel="Pop-up" />
 							<f:selectItem itemValue="sidebar" itemLabel="Side Bar" />
-							<f:selectItem itemValue="tooltip" itemLabel="Tooltip" />
 							<f:selectItem itemValue="disabled" itemLabel="Disabled" />
 						</ace:selectMenu>
 				</h:panelGrid>
 			</ace:panel>
 			<ace:schedule 	id="schedule"
 							value="#{scheduleBean.lazyScheduleEventList}"
-							displayEventDetails="#{scheduleBean.eventDetails}"
+							eventDetails="#{scheduleBean.eventDetails}"
 							scrollable="#{scheduleBean.scrollable}"
 							scrollHeight="#{scheduleBean.scrollHeight}"
 							sideBar="#{scheduleBean.sideBar}"
