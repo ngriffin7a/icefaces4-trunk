@@ -30,10 +30,9 @@
         
 	        <h:panelGrid id="ncw" columns="4" rendered="#{!chatBean.hasCurrentRoom}">
 	            <h:outputLabel for="roomIn" value="Select a Chat Room:"/>
-	            <ace:simpleSelectOneMenu id="roomIn" value="#{chatBean.selectedRoom}" required="true">
-	                <f:selectItems value="#{chatService.rooms}" var="room"
-	                               itemLabel="#{room.name} (#{room.occupantsSize} occupants)" itemValue="#{room.name}"/>
-	            </ace:simpleSelectOneMenu>
+	            <ace:selectMenu id="roomIn" value="#{chatBean.selectedRoom}" required="true">
+	                <f:selectItems value="#{chatService.rooms}"/>
+	            </ace:selectMenu>
 	            <emporium:chatPosition id="chatPosition" label="Position:"/>
 	            <ace:message for="roomIn"/>
 	            

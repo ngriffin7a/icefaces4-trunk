@@ -27,6 +27,7 @@ import javax.annotation.PreDestroy;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
@@ -97,8 +98,12 @@ public class ChatService implements Serializable {
 		}
 	}
 
-	public List<ChatRoom> getRooms() {
-		return rooms;
+	public List<SelectItem> getRooms() {
+        ArrayList items = new ArrayList();
+        for (ChatRoom room : rooms) {
+            items.add(new SelectItem(room.getName(), room.getName() + " (" + room.getOccupantsSize() + " occupants)"));
+        }
+        return items;
 	}
 
 	public void setRooms(List<ChatRoom> rooms) {
