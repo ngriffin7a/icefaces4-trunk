@@ -578,7 +578,9 @@ ice.ace.Schedule.prototype.renderMonthView = function(data) {
 
 					if (i % 7 == 0) markup += "<tr>";
 					var adjacentMonth = date.getMonth() != currentMonth;
-					var dateClass = 'calendar-day-' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+					var dateClass = 'calendar-day-' + date.getFullYear()
+						+ '-' + this.addLeadingZero(date.getMonth() + 1)
+						+ '-' + this.addLeadingZero(date.getDate());
 					markup += "<td class=\"day " + dateClass + (adjacentMonth? ' adjacent-month' : '')
 						+ " ui-widget-content\">";
 					if (this.isToday(date)) markup+= "<div class=\"schedule-state ui-state-highlight\">";
@@ -636,7 +638,9 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 		var month = parseInt(event.startDate.substring(5,7)) - 1;
 		var day = parseInt(event.startDate.substring(8,10));
 		if (currentYear == year && currentMonth == month) {
-			var dayDiv = this.jq.find('.calendar-day-' + year + '-' + (month + 1) + '-' + day + ' .schedule-state');
+			var dayDiv = this.jq.find('.calendar-day-' + year
+				+ '-' + this.addLeadingZero(month + 1)
+				+ '-' + this.addLeadingZero(day) + ' .schedule-state');
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html('<span>' + event.startTime + ' ' + event.title + '</span>');
@@ -1343,4 +1347,9 @@ ice.ace.Schedule.prototype.getDayOfTheWeekNameShort = function(dayNumber) {
 	var days = ['Sun', 'Mon', 'Tue', 'Wed', 
 		'Thu', 'Fri', 'Sat'];
 	return days[dayNumber];
+};
+
+ice.ace.Schedule.prototype.addLeadingZero = function(number) {
+	if (number < 10) return ('0' + number);
+	else return ('' + number);
 };
