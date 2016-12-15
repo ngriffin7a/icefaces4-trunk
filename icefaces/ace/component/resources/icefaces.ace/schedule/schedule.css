@@ -55,14 +55,12 @@
 	padding: 14px 0;
 	text-align: center;
 }
-.ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .day,
-.ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .empty {
+.ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .day {
 	width: 14.2857%;
 	height: 100px;
 	text-align: right;
 }
-.ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .day.adjacent-month .day-number,
-.ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .empty.adjacent-month .day-number {
+.ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .day.adjacent-month .day-number {
 	opacity: 0.3;
 }
 .ice-ace-schedule .schedule-view-month .schedule-event {
