@@ -98,8 +98,11 @@ public class ScheduleMeta extends UIDataMeta {
 	@Property(tlddoc = "Specifies the location of the sidebar or whether it should be hidden. Possible values are 'right', 'left', and 'hidden'.", defaultValue="right")
 	private String sideBar;
 
-	@Property(tlddoc = "Specifies where to display the event details after clicking on an event tag on the calendar. Possible values are 'sidebar', 'popup', 'tooltip', and 'disabled'.", defaultValue="popup")
-	private String displayEventDetails;
+	@Property(tlddoc = "Specifies where to display the event details after clicking on an event tag on the calendar. Possible values are 'sidebar', 'popup', and 'disabled'.", defaultValue="popup")
+	private String eventDetails;
+
+	@Property(tlddoc = "Specifies whether to display a tooltip next to an event, containing the event's detailed information.", defaultValue="false")
+	private boolean displayTooltip;
 
 	@Property(tlddoc = "Enable or disable the built-in event addition controls. These controls appear in a popup when clicking on an empty area of a day square. Adding new events this way is only supported if the component value is an instance of any of the following four types: Array, List, Collection, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="enabled")
 	private String additionControls;

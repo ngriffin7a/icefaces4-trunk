@@ -188,24 +188,23 @@ public class ScheduleRenderer extends CoreRenderer {
 			if ("left".equalsIgnoreCase(sideBar)) sideBarClass = "schedule-config-sidebar-left";
 			else if ("hidden".equalsIgnoreCase(sideBar)) sideBarClass = "schedule-config-sidebar-hidden";
 		}
-		String displayEventDetails = schedule.getDisplayEventDetails();
-		String displayEventDetailsClass = "schedule-config-details-sidebar";
-		if (displayEventDetails != null) {
-			if ("popup".equalsIgnoreCase(displayEventDetails)) {
-				displayEventDetailsClass = "schedule-config-details-popup";
-				displayEventDetails = "popup";
-			} else if ("tooltip".equalsIgnoreCase(displayEventDetails)) {
-				displayEventDetailsClass = "schedule-config-details-tooltip";
-				displayEventDetails = "tooltip";
-			} else if ("disabled".equalsIgnoreCase(displayEventDetails)) {
-				displayEventDetailsClass = "schedule-config-details-disabled";
-				displayEventDetails = "disabled";
+		String eventDetails = schedule.getEventDetails();
+		String eventDetailsClass = "schedule-config-details-popup";
+		if (eventDetails != null) {
+			if ("sidebar".equalsIgnoreCase(eventDetails)) {
+				eventDetailsClass = "schedule-config-details-sidebar";
+				eventDetails = "sidebar";
+			} else if ("disabled".equalsIgnoreCase(eventDetails)) {
+				eventDetailsClass = "schedule-config-details-disabled";
+				eventDetails = "disabled";
 			} else {
-				displayEventDetails = "sidebar";
+				eventDetails = "popup";
 			}
 		} else {
-			displayEventDetails = "sidebar";
+			eventDetails = "sidebar";
 		}
+		boolean displayTooltip = schedule.isDisplayTooltip();
+		String tooltipClass = displayTooltip ? "schedule-config-details-tooltip" : "";
 		String scrollableClass = schedule.isScrollable() ? "schedule-config-scrollable" : "";
 
 		writer.startElement("div", null);
@@ -230,7 +229,8 @@ public class ScheduleRenderer extends CoreRenderer {
 				.item(clientId)
 				.beginMap()
 					.entry("viewMode", viewMode)
-					.entry("displayEventDetails", displayEventDetails)
+					.entry("eventDetails", eventDetails)
+					.entry("displayTooltip", displayTooltip)
 					.entry("defaultDuration", schedule.getDefaultDuration())
 					.entry("isEventAddition", "disabled".equalsIgnoreCase(schedule.getAdditionControls()) ? false : true)
 					.entry("isEventEditing", "disabled".equalsIgnoreCase(schedule.getEditingControls()) ? false : true)
@@ -275,7 +275,7 @@ public class ScheduleRenderer extends CoreRenderer {
 
 		writer.startElement("div", null);
 		writer.writeAttribute("class", "schedule-main ui-widget" + " schedule-view-" + viewMode + " " 
-			+ sideBarClass + " " + displayEventDetailsClass + " " + scrollableClass, null);
+			+ sideBarClass + " " + eventDetailsClass + " " + tooltipClass + " " + scrollableClass, null);
 		writer.endElement("div");
 
 		writer.startElement("input", null);
