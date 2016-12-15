@@ -49,8 +49,6 @@ import java.util.Date;
 	@ICEResourceDependency(name = "util/ace-core.js"),
 	@ICEResourceDependency(name = "jquery/jquery.js"),
 	@ICEResourceDependency(name = "util/ace-jquery-ui.js"),
-	@ICEResourceDependency(name = "schedule/moment.js"),
-	@ICEResourceDependency(name = "schedule/clndr.js"),
     @ICEResourceDependency(name = "schedule/schedule.js")
 })
 @ClientBehaviorHolder(events = {
