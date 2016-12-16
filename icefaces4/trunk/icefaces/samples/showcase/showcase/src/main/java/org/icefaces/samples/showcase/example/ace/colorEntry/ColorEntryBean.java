@@ -28,7 +28,7 @@ public class ColorEntryBean implements Serializable
     public static final String BEAN_NAME = "colorEntryBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private String selectedColor;
+    private String selectedColor, title="Choose a Color";
 
     public String getSelectedColor() {
         return selectedColor;
@@ -36,5 +36,13 @@ public class ColorEntryBean implements Serializable
 
     public void setSelectedColor(String selectedColor) {
         this.selectedColor = selectedColor;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
