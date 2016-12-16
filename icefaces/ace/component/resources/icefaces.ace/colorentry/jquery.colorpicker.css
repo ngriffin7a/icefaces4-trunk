@@ -197,6 +197,7 @@
 .ui-colorpicker-cmyk label,
 .ui-colorpicker-alpha label {
     width:					1.5em;
+    padding-left: 0.1em; /*added this to original*/
     display:				inline-block;
 }
 
@@ -241,4 +242,7 @@
 .ui-colorpicker-slider.ui-slider .ui-slider-handle{
 	width: .9em;
 	height: .9em;
+}
+.ui-colorpicker-input {
+	border-left: 12px solid !important;
 }

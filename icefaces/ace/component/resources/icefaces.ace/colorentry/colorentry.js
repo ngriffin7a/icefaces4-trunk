@@ -1,32 +1,32 @@
 if (!window['ice']) window.ice = {};
 if (!window.ice['ace']) window.ice.ace = {};
 
-ice.ace.ColorEntry = function(id, cfg) {
- //   console.log(" creating widget for id="+id);
-    var behavior, altFieldVal;
-    this.id = id;
-    this.cfg = cfg;
-    this.jqId = ice.ace.escapeClientId(id);
-    this.jqElId =  this.jqId + '_input';
-    this.jq = ice.ace.jq(this.jqElId);
- //   this.cfg.formId = this.jq.parents('form:first').attr('id');
-    //i18n and l7n
-  //  this.configureLocale();
+ice.ace.ColorEntry = function(id, cfg) { 
+    console.log(" creating widget for id="+id); 
+    var behavior, altFieldVal; 
+    this.id = id; 
+    this.cfg = cfg; 
+    this.jqId = ice.ace.escapeClientId(id); 
+    this.jqElId =  this.jqId + '_input'; 
+    this.jq = ice.ace.jq(this.jqElId); 
+    //   this.cfg.formId = this.jq.parents('form:first').attr('id'); 
+    // i18n and l7n   //  this.configureLocale(); 
     this.options = cfg;
-    this.pickerFn = "colorpicker";
-    if (this.options.color) {
-        this.jq.value = this.options.color;
-    }
-    //Initialize colrEntry
-    if(!this.cfg.disabled) {
-        console.log(" creating colorpicker!");
-        this.jq.colorpicker(this.cfg);
-    }
-
-	ice.ace.setResetValue(this.id, this.getColor());
-
+    this.pickerFn = "colorpicker"; 
+    if (this.options.color) { 
+        this.jq.value = this.options.color; 
+    } 
+    //create or update colrEntry 
+    if(!this.cfg.disabled) { 
+        console.log(" creating colorpicker and will open it....."); 
+        ice.ace.ColorEntry.instances[id] = this.jq.colorpicker(this.cfg); 
+        if (this.cfg.title){ 
+            this.jq.colorpicker("option", "showOptions", {title: this.cfg.title}); 
+        } 
+    }  
+    ice.ace.setResetValue(this.id, this.getColor());  
 };
-
+ 
 ice.ace.ColorEntry.instances = {}; // keep track of initialized instances
 
 ice.ace.ColorEntry.prototype.configureLocale = function() {
@@ -69,8 +69,7 @@ ice.ace.ColorEntryInit = function( cfg) {
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
         var hidden =  ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden");
         var trigger=  null;
-        var buttonClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only";
-
+        var colorFormat = options.colorFormat;
         var showOn = options.showOn || "focus" ;
         var buttonText = options.buttonText || "";
         var buttonImage =  options.buttonImage || null;
@@ -82,7 +81,7 @@ ice.ace.ColorEntryInit = function( cfg) {
             if (options.title){
                 options.parts.push("header");
             }
-            var colorFormat = options.colorFormat;
+
             if (colorFormat && colorFormat.indexOf("HEX") > -1){
                 options.parts.push("hex");
             }
@@ -103,9 +102,13 @@ ice.ace.ColorEntryInit = function( cfg) {
         /* add function callbacks to options */
         var okFn = function(event, color){ 
             var newColor = color.formatted;
-             input.value = newColor;
-             input.css({"border-left" : "12px solid", "border-color":newColor});
-          //   console.log("val set to "+input.value+" format="+color.formatted);  
+            input.value = newColor;
+            if (colorFormat.indexOf("HEX")>-1){
+                newColor="#"+ newColor;
+            }
+            input.css({"border-left-color":newColor});
+            var borderRule = "border-left-color: "+newColor+" !important";
+            input.attr('style', borderRule);
              if (behaviors && behaviors.change) { 
                  ice.ace.ab(behaviors.change); 
              } 
@@ -135,26 +138,30 @@ ice.ace.ColorEntryInit = function( cfg) {
                    widget.destroy();
                    initEltSet.remove();
             });
-            ice.ace.ColorEntry.instances[id] = true;
+          //  ice.ace.ColorEntry.instances[id] = true;
             return widget;
         };
         var initAndShow = function(){
          //   console.log("initAndShow.....");
-            if (ice.ace.instance(id)){
+           // if (ice.ace.instance(id)){
            //     console.log(" have an instance so show it anad go!");
-                ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
+            /*    ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
                 return;
-            }
+            } */
             if (trigger){
                 trigger.remove();
             }
             create();
-            if(!ice.ace.instance(id).colorpicker) {
+            if ( ice.ace.instance(id).colorpicker){
+                ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
+              //  ice.ace.jq.colorpicker("open");
+            }
+           /* if(!ice.ace.instance(id).colorpicker) {
                 console.log(" no ice.ace.instance available....");
                // ice.ace.create("ColorEntry", [id, options]);
             } else {
-                ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
-            }
+
+            }  */
         };
         if (inline){
             if (trigger) trigger.remove();
@@ -164,7 +171,8 @@ ice.ace.ColorEntryInit = function( cfg) {
 		// if instance was previously initialized, create right away and return
 		if (ice.ace.ColorEntry.instances[id]) {
           //  console.log(" widget previously initialized, so create right away and return!");
-			create();
+			
+            create();
 			return;
 		}
         console.log(" rest of stuff is for non  inline");

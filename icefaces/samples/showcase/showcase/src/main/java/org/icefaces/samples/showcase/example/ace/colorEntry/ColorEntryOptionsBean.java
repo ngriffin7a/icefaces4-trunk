@@ -32,7 +32,7 @@ public class ColorEntryOptionsBean implements Serializable
     private ColorFormat colorFormat;
     private String value;
 
-    private String title, effect, duration;
+    private String effect, duration;
     private boolean showAlpha,inline,showNoneButton;
 
     public boolean isInline() {
@@ -57,14 +57,6 @@ public class ColorEntryOptionsBean implements Serializable
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getEffect() {

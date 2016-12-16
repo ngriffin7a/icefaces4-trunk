@@ -123,12 +123,12 @@ public class ColorEntryRenderer extends InputRenderer {
             borderColor=valueToRender ;
         }
         if (preferredFormat.startsWith("HEX")){
-            preferredFormat ="#" + preferredFormat;
+     //       preferredFormat ="#" + preferredFormat;
             if (!borderColor.startsWith("#")){
                 borderColor="#"+borderColor;
             }
         }
-        String popupStyleBorder = "border-left: 12px solid "+borderColor;
+        String popupStyleBorder = "border-left-color: "+borderColor+" !important;";
         if (popup){
             inputFieldId=inputId;
             writer.writeAttribute("style", popupStyleBorder, null);
