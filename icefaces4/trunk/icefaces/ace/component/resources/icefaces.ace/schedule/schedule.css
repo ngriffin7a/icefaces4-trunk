@@ -186,3 +186,20 @@
 .ice-ace-schedule .schedule-selected {
 	text-decoration: underline;
 }
+.ice-ace-schedule .schedule-sidebar .schedule-details-content {
+	padding: 10px;
+}
+.ice-ace-schedule .schedule-sidebar .schedule-details-content > span {
+	display: block;
+	margin-top: 5px;
+}
+.ice-ace-schedule .schedule-sidebar .schedule-details-content > span > span > span {
+	display: block;
+}
+.ice-ace-schedule .schedule-days .day {
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
