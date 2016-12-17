@@ -95,7 +95,11 @@ ice.ace.Schedule = function(id, cfg) {
 			var eventIndex = self.extractEventIndex(node);
 			var eventData = self.events[eventIndex];
 			var markup = self.getEventDetailsMarkup(eventData);
-			self.displayEventDetailsTooltip(markup, node);
+			if (node.tagName == 'DIV') {
+				self.displayEventDetailsTooltip(markup, node);
+			} else {
+				self.displayEventDetailsTooltip(markup, node.parentNode);
+			}
 		});
 		this.jqRoot.delegate('.schedule-event', 'mouseout', function(event) {
 			self.hideEventDetailsTooltip();
@@ -199,6 +203,10 @@ ice.ace.Schedule.prototype.render = function() {
 	var mainContainer = this.jqRoot.find('.schedule-main');
 	mainContainer.children().remove();
 	mainContainer.html(this.renderConfiguration.render.apply(this, []));
+
+	this.addNavigationListeners();
+	this.addResizeListeners();
+
 	this.renderConfiguration.doneRendering.apply(this, []);
 };
 
@@ -285,7 +293,7 @@ ice.ace.Schedule.prototype.getEventDetailsMarkup = function(data, isEventAdditio
 				markup += '<button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'edit\');'
 					+ closeDetailsMarkup + 'return false;">Save</button> ';
 			}
-			if (isEventDeletion) markup += '<span><button onclick="ice.ace.instance(\''+this.id+'\').confirmDeletion(this);return false;">Delete</button><span style="display:none;">Are you sure? <button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'delete\');return false;">Yes</button> <button onclick="ice.ace.instance(\''+this.id+'\').cancelDeletion(this);return false;">No</button></span></span>';
+			if (isEventDeletion) markup += '<span><button onclick="ice.ace.instance(\''+this.id+'\').confirmDeletion(this);return false;">Delete</button><span style="display:none;"><span>Are you sure? </span><button onclick="ice.ace.instance(\''+this.id+'\').sendEditRequest(event, \'delete\');return false;">Yes</button> <button onclick="ice.ace.instance(\''+this.id+'\').cancelDeletion(this);return false;">No</button></span></span>';
 		}
 		return markup;
 	} else {
@@ -363,16 +371,17 @@ ice.ace.Schedule.prototype.displayEventDetailsPopup = function(markup) {
 
 ice.ace.Schedule.prototype.addDefaultDurationFunctionality = function() {
 	var self = this;
-	var timeInputs = ice.ace.jq(this.jqId).find('.schedule-details-popup-content').find('select');
+	var displayLocation = self.cfg.eventDetails == 'sidebar' ? '' : 'popup-';
+	var timeInputs = ice.ace.jq(this.jqId).find('.schedule-details-'+displayLocation+'content').find('select');
 
 	if (timeInputs.size() >= 4) {
 		var startHour = timeInputs.get(0);
 		var startMinute = timeInputs.get(1);
 		var endHour = timeInputs.get(2);
 		var endMinute = timeInputs.get(3);
-		var startDate = ice.ace.jq(self.jqId).find('.schedule-details-popup-content')
+		var startDate = ice.ace.jq(self.jqId).find('.schedule-details-'+displayLocation+'content')
 			.find('input[type="text"]:eq(0)');
-		var endDate = ice.ace.jq(self.jqId).find('.schedule-details-popup-content')
+		var endDate = ice.ace.jq(self.jqId).find('.schedule-details-'+displayLocation+'content')
 			.find('input[type="text"]:eq(1)');
 
 		var addDefaultDuration = function() {
@@ -411,13 +420,16 @@ ice.ace.Schedule.prototype.displayEventDetailsSidebar = function(markup) {
 	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details-content');
 	eventDetails.html(markup);
 	this.expandEventDetails();
+	eventDetails.find('input[type="text"]:eq(0),input[type="text"]:eq(1)').datepicker({dateFormat: 'yy-mm-dd'});
+	eventDetails.find('button').button();
+	this.addDefaultDurationFunctionality()
 };
 
 ice.ace.Schedule.prototype.displayEventDetailsTooltip = function(markup, node) {
 	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details-tooltip-content');
 	eventDetails.html(markup);
 	eventDetails.dialog({resizable: false, draggable: false, dialogClass: 'schedule-details-tooltip', 
-		position: { my: "left top", at: "right bottom", of: node }});
+		position: { my: "left top", at: "right top", of: node }});
 	ice.ace.jq(this.jqId).find('.schedule-details-tooltip').show();
 };
 
@@ -622,8 +634,6 @@ ice.ace.Schedule.prototype.isToday = function(date) {
 };
 
 ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
-	this.addListeners();
-
 	var sidebarEventsContainer = ice.ace.jq(this.jqId).find('.schedule-list-content');
 	var currentYear = this.cfg.currentYear;
 	var currentMonth = this.cfg.currentMonth;
@@ -722,7 +732,6 @@ ice.ace.Schedule.prototype.renderWeekView = function() {
 };
 
 ice.ace.Schedule.prototype.renderWeekEvents = function() {
-	this.addListeners();
 	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
 	var sidebarEventsContainer = ice.ace.jq(this.jqId).find('.schedule-list-content');
@@ -855,7 +864,6 @@ ice.ace.Schedule.prototype.renderDayView = function() {
 };
 
 ice.ace.Schedule.prototype.renderDayEvents = function() {
-	this.addListeners();
 	var eventsContainer = ice.ace.jq(this.jqId).find('.schedule-event-container');
 	eventsContainer.html('');
 	var sidebarEventsContainer = ice.ace.jq(this.jqId).find('.schedule-list-content');
@@ -918,7 +926,7 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 	}
 };
 
-ice.ace.Schedule.prototype.addListeners = function() {
+ice.ace.Schedule.prototype.addNavigationListeners = function() {
 	var self = this;
 	var previousButton = this.jq.find('.schedule-button-previous');
 	var nextButton = this.jq.find('.schedule-button-next');
@@ -1149,8 +1157,13 @@ ice.ace.Schedule.prototype.addListeners = function() {
 		}
 		self.sendNavigationRequest(e, currentYear, currentMonth, currentDay, oldYear, oldMonth, oldDay, 'next');
 	});
+};
 
-	// resizable sidebar
+ice.ace.Schedule.windowResizeListeners = {};
+
+ice.ace.Schedule.prototype.addResizeListeners = function() {
+	var self = this;
+	// sidebar
 	if (this.jq.hasClass('schedule-config-sidebar-right')
 			|| this.jq.hasClass('schedule-config-sidebar-left')) {
 		var handles = this.jq.hasClass('schedule-config-sidebar-right') ? 'w' : 'e';
@@ -1194,31 +1207,38 @@ ice.ace.Schedule.prototype.addListeners = function() {
 			}
 		});
 	}
-	// resize window
-	ice.ace.jq(window).on('resize', function(e) {
-		var grid = self.jq.find('.schedule-grid');
-		var sidebar = self.jq.find('.schedule-sidebar');
+
+	// window
+	if (ice.ace.Schedule.windowResizeListeners[this.id])
+		ice.ace.jq(window).off('resize', ice.ace.Schedule.windowResizeListeners[this.id]);
+
+	ice.ace.Schedule.windowResizeListeners[this.id] = function(e) {
+		var root = ice.ace.jq(self.jqId);
+		var grid = root.find('.schedule-grid');
+		var sidebar = root.find('.schedule-sidebar');
 		grid.attr('style', '');
 		sidebar.attr('style', '');
 
 		var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
 		if (self.cfg.viewMode == 'day') {
-			var timeCell = self.jq.find('.schedule-dow-single.schedule-time-0000');
+			var timeCell = root.find('.schedule-dow-single.schedule-time-0000');
 			var timeCellWidth = timeCell.outerWidth() - 1;
-			self.jq.find('.schedule-event').css({width: timeCellWidth});
+			root.find('.schedule-event').css({width: timeCellWidth});
 			var timeCellLeft = timeCell.position().left;
-			self.jq.find('.schedule-event').css({left: timeCellLeft + (isChrome?1:0)});
+			root.find('.schedule-event').css({left: timeCellLeft + (isChrome?1:0)});
 		} else if (self.cfg.viewMode == 'week') {
 			var i;
 			for (i = 0; i < 7; i++) {
-				var timeCell = self.jq.find('.schedule-dow-' + i + '.schedule-time-0000');
+				var timeCell = root.find('.schedule-dow-' + i + '.schedule-time-0000');
 				var timeCellWidth = timeCell.outerWidth() - 1;
-				self.jq.find('.schedule-event.schedule-dow-' + i).css({width: timeCellWidth});
+				root.find('.schedule-event.schedule-dow-' + i).css({width: timeCellWidth});
 				var timeCellLeft = timeCell.position().left;
-				self.jq.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + (isChrome?1:0)});
+				root.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + (isChrome?1:0)});
 			}
 		}
-	});
+	};
+
+	ice.ace.jq(window).on('resize', ice.ace.Schedule.windowResizeListeners[this.id]);
 };
 
 ice.ace.Schedule.prototype.determineLastDayOfWeek = function(currentYear, currentMonth, currentDay) {

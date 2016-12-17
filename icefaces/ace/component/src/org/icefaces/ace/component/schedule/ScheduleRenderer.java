@@ -322,6 +322,10 @@ public class ScheduleRenderer extends CoreRenderer {
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write(jb.toString());
+		if (params.containsKey(clientId + "_navigation") && schedule.isLazy() && rowCount == 0) {
+			// force full markup update when there are no events to render
+			writer.write("// " + System.currentTimeMillis());
+		}
 		writer.endElement("script");
 
 		writer.endElement("div");
