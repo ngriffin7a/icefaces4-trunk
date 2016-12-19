@@ -47,8 +47,8 @@ public class ColorEntryRenderer extends InputRenderer {
  		 }
          boolean popup = picker.isRenderAsPopup();
          String submittedValue = params.get(clientId + "_input");
-        String hidden = params.get(clientId+"_hidden");
-        if (isValueBlank(hidden))hidden= params.get(clientId+"_hidden2");
+         String hidden = params.get(clientId+"_hidden");
+         if (isValueBlank(hidden))hidden= params.get(clientId+"_hidden2");
          if (!popup){
            //  System.out.println(" is inline so get value from hidden input field"+hidden2);
              submittedValue= hidden;
@@ -113,25 +113,24 @@ public class ColorEntryRenderer extends InputRenderer {
 
         writer.startElement("input", null);
         String inputFieldId=clientId+"hidden";
-        String preferredFormat = picker.getColorFormat().HEX3.getValue();
+        String preferredFormat = picker.getColorFormat().HEX.getValue();
         if (picker.getColorFormat()!=null){
             preferredFormat = picker.getColorFormat().getValue();
         }
 
-        String borderColor = "#f2eaea";
-        if (valueToRender !=null) {
-            borderColor=valueToRender ;
-        }
-        if (preferredFormat.startsWith("HEX")){
-     //       preferredFormat ="#" + preferredFormat;
-            if (!borderColor.startsWith("#")){
-                borderColor="#"+borderColor;
-            }
-        }
-        String popupStyleBorder = "border-left-color: "+borderColor+" !important;";
         if (popup){
             inputFieldId=inputId;
-            writer.writeAttribute("style", popupStyleBorder, null);
+            String borderColor = "#f2eaea";
+            if (valueToRender!=null && valueToRender.length()>0) {
+                borderColor=valueToRender ;
+                if (preferredFormat.startsWith("HEX")){
+                    if (!borderColor.startsWith("#")){
+                        borderColor="#"+borderColor;
+                    }
+                }
+                String popupStyleBorder = "border-left-color: "+borderColor+" !important;";
+                writer.writeAttribute("style", popupStyleBorder, null);
+            }
         }
         writer.writeAttribute("id", inputFieldId, null);
         writer.writeAttribute("name", inputFieldId, null);
@@ -150,8 +149,11 @@ public class ColorEntryRenderer extends InputRenderer {
         if (popup && ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }
-        /** TODO copied from DateTimeEntryRenderer so refactor **/
-        String styleClasses = (themeForms() ? ColorEntry.INPUT_STYLE_CLASS : "");
+        String inputStyleClass = ColorEntry.INPUT_STYLE_CLASS;
+        if (isValueBlank(valueToRender))  {
+            inputStyleClass = ColorEntry.INPUT_EMPTY_STYLE_CLASS;
+        }
+        String styleClasses = (themeForms() ? inputStyleClass : "");
         if(!isValueBlank(valueToRender)) {
             writer.writeAttribute("value", valueToRender, null);
         } else if (popup && !clientId.equals(iceFocus)) {
@@ -252,9 +254,12 @@ public class ColorEntryRenderer extends InputRenderer {
                         .entry("buttonImage", iconSrc)
                         .entry("buttonImageOnly", buttonImageOnly);
             }
-            if (picker.getEffect() !=null) {
-                 jb.entry("showAnim", picker.getEffect())
-                 .entry("duration", picker.getEffectDuration());
+            if (picker.getEffect() !=null && picker.getEffect().length()> 0) {
+                 jb.entry("showAnim", picker.getEffect()) ;
+                String duration = picker.getEffectDuration();
+                if (duration !=null && duration.length()>0){
+                    jb.entry("duration", duration);
+                }
             }
         } else{              //default inline
             jb.entry("inline", true);
