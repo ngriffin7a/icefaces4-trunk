@@ -43,43 +43,41 @@
                    <h:selectBooleanCheckbox id="showNoneButton"  value="#{colorEntryOptionsBean.showNoneButton}">
                        <f:ajax execute="@this" render="@all"/>
                    </h:selectBooleanCheckbox>
-           <!--        <h:outputLabel for="effect" value="Effect"/>
-                   <h:selectOneMenu id="effect"  value="#{colorEntryOptionsBean.effect}">
-                       <f:selectItem itemLabel="show" itemValue="show"/>
-                       <f:selectItem itemLabel="fadeIn" itemValue="fadeIn"/>
-                       <f:selectItem itemLabel="slideDown" itemValue="slideDown"/>
-                       <f:ajax execute="@this" render="@all"/>
-                   </h:selectOneMenu>
-                   <h:outputLabel for="duration" value="Duration"/>
-                   <h:selectOneMenu id="duration" value="#{colorEntryOptionsBean.duration}">
-                       <f:selectItem itemLabel="normal" itemValue="normal"/>
-                       <f:selectItem itemLabel="slow" itemValue="slow"/>
-                       <f:selectItem itemLabel="fast" itemValue="fast"/>
-                       <f:ajax execute="@this" render="@all"/>
-                   </h:selectOneMenu> -->
-
+                   <h:outputLabel for="effectType" value="Effect"/>
+                   <h:selectOneMenu id="effectType" value="#{colorEntryOptionsBean.effect}">
+                        <f:selectItem itemLabel="fadeIn" itemValue="fadeIn"/>
+                        <f:selectItem itemLabel="slideDown" itemValue="slideDown"/>
+                        <f:selectItem itemLabel="show" itemValue="show"/>
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:selectOneMenu>
+                    <h:outputText id="durationId" value="Duration:-"/>
+                    <h:selectOneMenu id="duration" value="#{colorEntryOptionsBean.duration}">
+                        <f:selectItem itemLabel="slow" itemValue="slow"/>
+                        <f:selectItem itemLabel="fast" itemValue="fast"/>
+                        <f:selectItem itemLabel="normal" itemValue="normal"/>
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:selectOneMenu>
                </h:panelGrid>
            </ace:panel>
 
             <ace:panel id="colorInputPanel" header="ColorEntry" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" >
-                    <ace:colorEntry id="colorInput" value="#{colorEntryOptionsBean.value}"
+                    <ace:colorEntry id="colorInputOptions" value="#{colorEntryOptionsBean.value}"
                                alpha="#{colorEntryOptionsBean.showAlpha}"
                                colorFormat="#{colorEntryOptionsBean.colorFormat}"
                                renderAsPopup="true"
-
+                               effect="#{colorEntryOptionsBean.effect}"
+                               effectDuration="#{colorEntryOptionsBean.duration}"
                                showNoneButton="#{colorEntryOptionsBean.showNoneButton}"
                                label="ColorEntry" labelPosition="left">
                         <ace:ajax execute="@this" render="@all"/>
                     </ace:colorEntry>
-                    <ace:message id="message1" for="colorInput" />
+                    <ace:message id="message1" for="colorInputOptions" />
                 </h:panelGrid>
-           <!--                          effect="#{colorEntryOptionsBean.effect}"
-                                          duration="#{colorEntryOptionsbean.duration}"-->
             </ace:panel>
 
             <ace:panel id="colorOutputPanel" header="Entered data">
-                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
+                <h:panelGrid columns="1" id="outputGrid" width="100%" style="text-align: left;">
                     <h:outputText id="basicValue" value="Color selected : #{colorEntryOptionsBean.value}"/>
                 </h:panelGrid>
             </ace:panel>
