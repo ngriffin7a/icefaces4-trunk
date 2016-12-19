@@ -22,6 +22,7 @@ import org.icefaces.component.Focusable;
 
 public class ColorEntry extends ColorEntryBase implements Focusable {
     public final static String INPUT_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all ui-colorpicker-input";
+    public final static String INPUT_EMPTY_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all";
     public static String POPUP_ICON = "colorentry/ui-colorpicker.png";
 
     public String getValidatedElementId() {

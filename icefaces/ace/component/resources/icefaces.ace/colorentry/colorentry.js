@@ -64,12 +64,16 @@ ice.ace.ColorEntry.prototype.destroy = function() {
 ice.ace.ColorEntryInit = function( cfg) {
     ice.ace.jq().ready(function() {
         var options = cfg.options;
+        var INPUT_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all ui-colorpicker-input";
+        var INPUT_EMPTY_STYLE_CLASS ="ui-inputfield ui-widget ui-state-default ui-corner-all";
         var id =  options.id;
         var behaviors = cfg.behaviors || null;
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
         var hidden =  ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden");
         var trigger=  null;
         var colorFormat = options.colorFormat;
+        var allowEmpty = options.showNoneButton;
+        console.log(" allowEmpty!");
         var showOn = options.showOn || "focus" ;
         var buttonText = options.buttonText || "";
         var buttonImage =  options.buttonImage || null;
@@ -101,33 +105,55 @@ ice.ace.ColorEntryInit = function( cfg) {
         }
         /* add function callbacks to options */
         var okFn = function(event, color){ 
+            var emptyColor="#f2eaea";
+            if (allowEmpty){
+                emptyColor = input.css("background-color") ;
+                if (emptyColor){
+                    console.log(" empty color="+emptyColor);
+                } else {console.log(" find another way to get empty color!");}
+            }
+            else if (!color.formatted || color.formatted=="false"){
+                console.log("OK has been pressed but "+colorFormat+" color format is not supported in this widget");
+                return;
+            }
             var newColor = color.formatted;
-            input.value = newColor;
-            if (colorFormat.indexOf("HEX")>-1){
+            if (allowEmpty  && !color.formatted){
+                newColor = emptyColor;
+                input.attr('css', INPUT_EMPTY_STYLE_CLASS) ;
+            }else if (colorFormat.indexOf("HEX")>-1){
                 newColor="#"+ newColor;
             }
+            if (color.formatted){
+                input.attr('css', INPUT_STYLE_CLASS) ;
+            }
+            input.value = color.formatted;
+
+            console.log(" ok fn newColor="+newColor);
             input.css({"border-left-color":newColor});
             var borderRule = "border-left-color: "+newColor+" !important";
             input.attr('style', borderRule);
-             if (behaviors && behaviors.change) { 
-                 ice.ace.ab(behaviors.change); 
-             } 
+            if (behaviors && behaviors.change) { 
+                ice.ace.ab(behaviors.change); 
+            } 
          } ;
         var selectFn = function(event, color){
+            if (!color.Formatted){
+                console.log(" The current widget does not support the color format of "+colorFormat);
+            }
             var colorFormatted = color.formatted;
-        //    console.log(" color.formatted="+colorFormatted);
-            hidden.value=colorFormatted;
+            console.log(" color.formatted="+colorFormatted);
+            hidden.value = colorFormatted;
             ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden").val(colorFormatted);
             ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden2").val(colorFormatted);
-          //  console.log(" hidden val set to ="+hidden.value+" hidden2.val = "+ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden2").val());
             if (behaviors && behaviors.change){
                 ice.ace.ab(behaviors.change);
             }
-        }
+        };
         if (inline){
             options.select = selectFn;
         }else {
             options.ok = okFn;
+          //  options.select = selectFn;
         }
 
         var create = function(){
@@ -142,7 +168,7 @@ ice.ace.ColorEntryInit = function( cfg) {
             return widget;
         };
         var initAndShow = function(){
-         //   console.log("initAndShow.....");
+            console.log("initAndShow.....");
            // if (ice.ace.instance(id)){
            //     console.log(" have an instance so show it anad go!");
             /*    ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
@@ -170,8 +196,7 @@ ice.ace.ColorEntryInit = function( cfg) {
 
 		// if instance was previously initialized, create right away and return
 		if (ice.ace.ColorEntry.instances[id]) {
-          //  console.log(" widget previously initialized, so create right away and return!");
-			
+            console.log(" widget previously initialized, so create right away and return!");
             create();
 			return;
 		}
