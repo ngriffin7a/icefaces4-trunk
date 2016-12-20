@@ -70,7 +70,9 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(defaultValue="", tlddoc="Change the background color of the elements specified in this element")
     private String altField; */
 
-    @Property(tlddoc="This is the preferred format to display the chosen color under the input field.  Valid values are hex, hex3, hsl, rbg, name, none",
+    @Property(tlddoc="This is the preferred format to display the chosen color under the input field.  Valid values are listed in the ColorFormat enumeration  HEX(\"HEX\"), HEX3(\"HEX3\"), HEXA(\"HEXA\"), RGB(\"RGB\"), RGBA(\"RGBA\"), RGBPERCENT(\"RGB%\"),\n" +
+            "         HSL(\"HSL\"), HSLA(\"HSLA\"), HSLPERCENT(\"HSL%\"),\n" +
+            "         HSLAPERCENT(\"HSLA%\"),NAME(\"NAME\"), EXACT(\"EXACT\")",
             defaultValue="ColorFormat.HEX",
             defaultValueType = DefaultValueType.EXPRESSION)
     private ColorFormat colorFormat;

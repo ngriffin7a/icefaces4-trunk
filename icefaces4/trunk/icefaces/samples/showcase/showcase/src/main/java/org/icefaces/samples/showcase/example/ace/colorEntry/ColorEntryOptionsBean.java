@@ -16,9 +16,12 @@
 
 package org.icefaces.samples.showcase.example.ace.colorEntry;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.CustomScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.icefaces.ace.component.colorentry.ColorFormat;
 
@@ -28,13 +31,22 @@ public class ColorEntryOptionsBean implements Serializable
 {
     public static final String BEAN_NAME = "colorEntryOptionsBean";
 	public String getBeanName() { return BEAN_NAME; }
-
+    private List<ColorFormat> colorFormats = new ArrayList<ColorFormat>();
     private ColorFormat colorFormat = ColorFormat.RGB;
     private String value;
 
     private String effect, duration;
     private boolean showAlpha,inline,showNoneButton;
 
+    @PostConstruct
+    public void init(){
+        this.colorFormats.add(ColorFormat.HEX);
+        this.colorFormats.add(ColorFormat.HEX3);
+        this.colorFormats.add(ColorFormat.RGB);
+        this.colorFormats.add(ColorFormat.RGBPERCENT);
+        this.colorFormats.add(ColorFormat.HSL);
+        this.colorFormats.add(ColorFormat.NAME);
+    }
     public boolean isInline() {
         return inline;
     }
@@ -83,8 +95,8 @@ public class ColorEntryOptionsBean implements Serializable
         this.showAlpha = showAlpha;
     }
 
-    public ColorFormat[] getColorFormats(){
-        return ColorFormat.values();
+    public List<ColorFormat> getColorFormats(){
+        return this.colorFormats;
     }
     public ColorFormat getColorFormat() {
         return colorFormat;
