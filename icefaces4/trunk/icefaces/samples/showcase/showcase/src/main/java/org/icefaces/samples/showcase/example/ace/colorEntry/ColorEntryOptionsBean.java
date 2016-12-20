@@ -29,7 +29,7 @@ public class ColorEntryOptionsBean implements Serializable
     public static final String BEAN_NAME = "colorEntryOptionsBean";
 	public String getBeanName() { return BEAN_NAME; }
 
-    private ColorFormat colorFormat;
+    private ColorFormat colorFormat = ColorFormat.RGB;
     private String value;
 
     private String effect, duration;
