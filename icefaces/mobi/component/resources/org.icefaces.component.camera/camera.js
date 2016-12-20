@@ -528,26 +528,30 @@
 			}
 		}
 
-		var origNotSupported = bridgeit.notSupported;
-		bridgeit.notSupported = function(compId, command){
-			if( command === 'camera' && compId === id){
-				origNotSupported(compId, command);
-				if (window[id + '_fallbackObserver']) {
-					clearTimeout(window[id + '_fallbackObserver']);
-				}
-				window[id + '_fallbackObserver'] = setTimeout(function() {
-					renderCameraFallbackFileUpload();
-				}, 100);
-			}
-			else{
-				origNotSupported(compId, command);
-			}
-		}
-
-		if ('URL' in window && (navigator.getUserMedia || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia))) {
-			launchHTML5Camera();
+		if (ice.mobi.cameraBtnOnclick.iOS) {
+			renderCameraFallbackFileUpload();
 		} else {
-			bridgeit.camera(id, 'callback'+id, cameraOptions );
+			var origNotSupported = bridgeit.notSupported;
+			bridgeit.notSupported = function(compId, command){
+				if( command === 'camera' && compId === id){
+					origNotSupported(compId, command);
+					if (window[id + '_fallbackObserver']) {
+						clearTimeout(window[id + '_fallbackObserver']);
+					}
+					window[id + '_fallbackObserver'] = setTimeout(function() {
+						renderCameraFallbackFileUpload();
+					}, 100);
+				}
+				else{
+					origNotSupported(compId, command);
+				}
+			}
+
+			if ('URL' in window && (navigator.getUserMedia || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia))) {
+				launchHTML5Camera();
+			} else {
+				bridgeit.camera(id, 'callback'+id, cameraOptions );
+			}
 		}
 	};
 
@@ -567,5 +571,7 @@
 			});
 		}
 	}
+
+	ice.mobi.cameraBtnOnclick.iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
 })();
