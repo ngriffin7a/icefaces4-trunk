@@ -17,6 +17,7 @@ ice.ace.ColorEntry = function(id, cfg) { 
         this.jq.value = this.options.color; 
     } 
     //create or update colrEntry 
+
     if(!this.cfg.disabled) { 
         ice.ace.ColorEntry.instances[id] = this.jq.colorpicker(this.cfg); 
         if (this.cfg.title){ 
@@ -64,45 +65,95 @@ ice.ace.ColorEntryInit = function( cfg) {
     ice.ace.jq().ready(function() {
         var options = cfg.options;
         var INPUT_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all ui-colorpicker-input";
-        var INPUT_EMPTY_STYLE_CLASS ="ui-inputfield ui-widget ui-state-default ui-corner-all";
-        var id =  options.id;
+        var INPUT_EMPTY_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all";
+        var INPUT_TRANSPARENT_STYLE_CLASS = INPUT_EMPTY_STYLE_CLASS + " ui-colorpicker-empty";
+        var id = options.id;
         var behaviors = cfg.behaviors || null;
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
-        var hidden =  ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden");
-        var trigger=  null;
+        var hidden = ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden");
+        var trigger = null;
         var colorFormat = options.colorFormat;
         var allowEmpty = options.showNoneButton;
-        console.log(" allowEmpty!");
-        var showOn = options.showOn || "focus" ;
+        var showOn = options.showOn || "focus";
         var buttonText = options.buttonText || "";
-        var buttonImage =  options.buttonImage || null;
-        var buttonImageOnly = options.buttonImageOnly || false ;
+        var buttonImage = options.buttonImage || null;
+        var buttonImageOnly = options.buttonImageOnly || false;
         var initEltSet = ice.ace.jq();
         var inline = (options.inline) || false;
-        if (inline && !options.parts){  //default inline component
+        if (inline && !options.parts) {  //default inline component
             options.parts = ['preview', 'map', 'bar'];
-            if (options.title){
+            if (options.title) {
                 options.parts.push("header");
             }
 
-            if (colorFormat && colorFormat.indexOf("HEX") > -1){
+            if (colorFormat && colorFormat.indexOf("HEX") > -1) {
                 options.parts.push("hex");
             }
             options.part = {
                 map: {size: 128},
                 bar: {size: 128}
-            } ;
-            options.layout= {
-                preview:    [0, 0, 1, 1],
-                hex:        [1, 0, 1, 1],
-                map:        [0, 1, 1, 1],
-                bar:        [1, 1, 1, 1]
             };
-            options.hsv=false;
+            options.layout = {
+                preview: [0, 0, 1, 1],
+                hex: [1, 0, 1, 1],
+                map: [0, 1, 1, 1],
+                bar: [1, 1, 1, 1]
+            };
+            options.hsv = false;
             options.rgb = false;
 
         }
+
+        if (options.colorFormat){
+            if (options.colorFormat == 'HEX3') {
+                options.colorFormat = ['HEX3', 'HEX']
+            }
+            if (options.colorFormat == 'EXACT') {
+                options.colorFormat = ['EXACT', 'NAME']
+            }
+            if (options.colorFormat == 'HSL%') {
+               options.colorFormat = ['HSL%', 'HSL']
+            }
+            if (options.colorFormat =='HSLA'){
+                options.colorFormat = ['HSLA', 'HSL']
+            }
+        }
         /* add function callbacks to options */
+        function getHexValue(newColor) {
+            var hexField = ice.ace.jq('.ui-colorpicker-hex-input');
+            if (hexField) {
+                newColor = "#" + hexField.val();
+                console.log(" new color from hexfield=" + newColor);
+            }
+            return newColor;
+        } ;
+        function setColorBar(color, emptyColor) {
+            var newColor = color.formatted;
+            var colorObj = color;
+            if (allowEmpty && !color.formatted) {
+                newColor = emptyColor;
+                input.attr('class', INPUT_EMPTY_STYLE_CLASS);
+            } else if (colorFormat.indexOf("HEX") > -1) {
+                newColor = "#" + newColor;
+            } else if (colorFormat.indexOf("HSL")> -1){
+                newColor = getHexValue(newColor);
+                var hiddenHexField =ice.ace.jq(ice.ace.escapeClientId(id + "_hiddenHex"));
+                if (hiddenHexField){
+                   hiddenHexField.attr('value',newColor);
+                    console.log(" hiddenHexfield has val ="+hiddenHexField.val());
+                }
+            }
+            if (color.formatted) {
+                input.attr('class',INPUT_STYLE_CLASS);
+            }
+            input.value = color.formatted;
+
+            console.log("setColorBar fn newColor=" + newColor);
+            input.css({"border-left-color": newColor});
+            var borderRule = "border-left-color: " + newColor + " !important";
+            input.attr('style', borderRule);
+        };
+
         var okFn = function(event, color){ 
             var emptyColor="#f2eaea";
             if (allowEmpty){
@@ -112,32 +163,29 @@ ice.ace.ColorEntryInit = function( cfg) {
                 console.log("OK has been pressed but "+colorFormat+" color format is not supported in this widget");
                 return;
             }
-            var newColor = color.formatted;
-            if (allowEmpty  && !color.formatted){
-                newColor = emptyColor;
-                input.attr('css', INPUT_EMPTY_STYLE_CLASS) ;
-            }else if (colorFormat.indexOf("HEX")>-1){
-                newColor="#"+ newColor;
-            }
-            if (color.formatted){
-                input.attr('css', INPUT_STYLE_CLASS) ;
-            }
-            input.value = color.formatted;
+            setColorBar(color, emptyColor);
 
-            console.log(" ok fn newColor="+newColor);
-            input.css({"border-left-color":newColor});
-            var borderRule = "border-left-color: "+newColor+" !important";
-            input.attr('style', borderRule);
             if (behaviors && behaviors.change) { 
-                ice.ace.ab(behaviors.change); 
+                var inputChange = behaviors.change;
+              /*  if (colorFormat.indexOf("HSL")>-1) {
+                    var newColor = "#" + getHexValue(newColor);
+                   inputChange.params[id + '_hexVal'] = newColor;
+                }*/
+                ice.ace.ab(inputChange); 
             } 
          } ;
         var selectFn = function(event, color){
-            if (!color.Formatted){
+            if (!color.formatted){
                 console.log(" The current widget does not support the color format of "+colorFormat);
+                return;
             }
             var colorFormatted = color.formatted;
-            console.log(" color.formatted="+colorFormatted);
+            if (!inline){  //set
+                var emptyColor = input.css("background-color") ;
+                setColorBar(color, emptyColor);
+                return;
+            }
+         //   console.log(" color.formatted="+colorFormatted);
             hidden.value = colorFormatted;
             ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden").val(colorFormatted);
             ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden2").val(colorFormatted);
@@ -149,11 +197,11 @@ ice.ace.ColorEntryInit = function( cfg) {
             options.select = selectFn;
         }else {
             options.ok = okFn;
-          //  options.select = selectFn;
+            options.select = selectFn;
         }
 
         var create = function(){
-            console.log(" create.....");
+          //  console.log(" create.....");
             var widget=ice.ace.create("ColorEntry", [id,options]);
             ice.onElementUpdate(id, function(){
                 //   console.log(" colorentry onElementUpdate...destroy...");

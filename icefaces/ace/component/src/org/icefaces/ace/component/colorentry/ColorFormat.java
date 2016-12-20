@@ -20,14 +20,23 @@ public enum ColorFormat {
 
     /**
      * HEX is hexadecimal display in input field eg #112233 (#RRGGBB)
-     * HEX3 is hexadecimal display using 3 characters only if possible (#RGB)
-     * HSL is (hue, saturation, lightness) designation of color
-     * RGB is  (red, green, blue) of color
+     * HEX3 is hexadecimal display using 3 characters only if possible (#RGB). If HEX3 is
+     * unavailable, then the control falls back to a HEX value.
+     * HEXA is #RRBBGGAA for example #11223344
+     * HSL is (hue, saturation, lightness) designation of color if opaque
+     * HSLA eg hsl(123,45,67,0.123%)
+     * HSL% eg hsla(12%,34%,56%) if opaque
+     * HSLA% eg hsla(123,45,67,0.123%)
+     * RGB is  (red, green, blue) of color if opaque--will not be returned if transparent
+     * RBGA   for example rgb(123,45, 67, 0.123%) includes transparency
+     * RGB% ie rgb(12%,34%,56%)
+     * RGBA% ie rgb(12%,34%,56%,0.123%)
      * NAME specifies the color by name when selecting color and will fall back to hex
-     * NONE will depend on the input
+     * EXACT name color may not always be available and will fall back to NAME value
      */
-     HEX("HEX"), HEX3("HEX3"), HEXA4("HEXA4"), HSL("HSL"), HSLA("HSLA"), HSLPERCENT("HSL%"),
-     HSLAPERCENT("HSLA%"), RGB("RGB"), RGBA("RGBA"), RGBPERCENT("RGB%"), NAME("NAME"), EXACT("EXACT");
+     HEX("HEX"), HEX3("HEX3"), HEXA("HEXA"), RGB("RGB"), RGBA("RGBA"), RGBPERCENT("RGB%"),
+         HSL("HSL"), HSLA("HSLA"), HSLPERCENT("HSL%"),
+         HSLAPERCENT("HSLA%"),NAME("NAME"), EXACT("EXACT");
      private String value;
      private ColorFormat(String value){
         this.value=value;

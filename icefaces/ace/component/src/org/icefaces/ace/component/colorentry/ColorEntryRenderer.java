@@ -48,13 +48,19 @@ public class ColorEntryRenderer extends InputRenderer {
          boolean popup = picker.isRenderAsPopup();
          String submittedValue = params.get(clientId + "_input");
          String hidden = params.get(clientId+"_hidden");
+         if (picker.getColorFormat()!=null){
+             String preferredFormat = picker.getColorFormat().getValue();
+             if (!isValueEmpty(preferredFormat) && preferredFormat.startsWith("HSL")) {
+                String hexVal = params.get(clientId + "_hiddenHex");
+                if (!isValueBlank(hexVal)) {
+                    picker.setHexVal(hexVal);
+                }
+            }
+         }
          if (isValueBlank(hidden))hidden= params.get(clientId+"_hidden2");
          if (!popup){
-           //  System.out.println(" is inline so get value from hidden input field"+hidden2);
+           //   is inline so get value from hidden input field"+hidden2
              submittedValue= hidden;
-          /*   if (submittedValue==null || submittedValue.length()<1){
-                System.out.println(" still no submitted value!!");
-             }  */
          }
          picker.setSubmittedValue(submittedValue);
          decodeBehaviors(facesContext, component);
@@ -91,7 +97,7 @@ public class ColorEntryRenderer extends InputRenderer {
              writeLabelAndIndicatorBefore(labelAttributes);
         }
 
-        writer.startElement(HTML.SPAN_ELEM, component);
+        writer.startElement(HTML.DIV_ELEM, component);
         writer.writeAttribute("id", clientId, "clientId");
         renderResetSettings(context, component);
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
@@ -127,6 +133,9 @@ public class ColorEntryRenderer extends InputRenderer {
                     if (!borderColor.startsWith("#")){
                         borderColor="#"+borderColor;
                     }
+                }
+                if (preferredFormat.startsWith("HSL") && !isValueEmpty(picker.getHexVal())){
+                     borderColor= picker.getHexVal();
                 }
                 String popupStyleBorder = "border-left-color: "+borderColor+" !important;";
                 writer.writeAttribute("style", popupStyleBorder, null);
@@ -282,7 +291,7 @@ public class ColorEntryRenderer extends InputRenderer {
    //System.out.println(" script="+script);
 
         writeLabelAndIndicatorAfter(labelAttributes);
-        writer.endElement("span");
+
         writer.startElement("span", null);
         writer.writeAttribute("id", clientId+"_script", null);
         writer.startElement("script", null);
@@ -290,18 +299,27 @@ public class ColorEntryRenderer extends InputRenderer {
         writer.write(script);
 
         writer.endElement("script");
-
+        writer.endElement("span");
         writer.startElement("span", null);
         writer.writeAttribute("style", "display:none;", null);
         writer.writeAttribute("data-hashcode", script.hashCode(), null);
         writer.endElement("span");
+        if (!popup) {
+            createHiddenField(writer, clientId + "_hidden2");
+        }
+        if (preferredFormat.startsWith("HSL")){
+            createHiddenField(writer, clientId+"_hiddenHex") ;
+        }
+        writer.endElement(HTML.DIV_ELEM);
+
+    }
+
+    private void createHiddenField(ResponseWriter writer, String id) throws IOException {
         writer.startElement("input", null);
         writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("id", clientId+"_hidden2", null);
-        writer.writeAttribute("name", clientId+"_hidden2", null);
+        writer.writeAttribute("id", id, null);
+        writer.writeAttribute("name", id, null);
         writer.endElement("input");
-        writer.endElement(HTML.SPAN_ELEM);
-
     }
 
     protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {

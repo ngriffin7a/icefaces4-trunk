@@ -176,4 +176,6 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(tlddoc = "Access key that, when pressed, transfers focus to this component.")
    	String accesskey;
 
+    @Field
+    String hexVal;
 }
