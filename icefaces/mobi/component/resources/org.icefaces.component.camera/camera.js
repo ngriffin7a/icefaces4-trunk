@@ -8,7 +8,7 @@
 	window.URL = window.URL || window.mozURL || window.webkitURL;
 	console.log('window.URL support = ' + !!window.URL);
 
-	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, sessionId, maxwidth, maxheight, buttonImage, captureButtonImage, facingMode){
+	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, sessionId, maxwidth, maxheight, buttonImage, captureButtonImage){
 
 		var ctr = document.getElementById(id);
 		var cameraButton = document.getElementById(id+"_button");
@@ -159,7 +159,7 @@
 
 		function launchHTML5Camera(){
 
-			function renderHTML5Camera(facingMode){
+			function renderHTML5Camera(deviceId){
 				var popup = document.createElement('div'),
 					closeBtn = document.createElement('a'),
 					video,
@@ -175,11 +175,11 @@
 					options = {},
 					img = new Image();
 
-				var supportsFacingMode = true; // temporsry fix
+				var multipleCameras = false;
 				var videoinputs = 0;
 				if (navigator.mediaDevices) {
 					var supports = navigator.mediaDevices.getSupportedConstraints();
-					if (supports && supports["facingMode"]) {
+					if (supports) {
 						var promise = navigator.mediaDevices.enumerateDevices();
 						if (promise) {
 							promise.then(function(devices) {
@@ -191,7 +191,7 @@
 							});
 						}
 
-						if (videoinputs > 1) supportsFacingMode = true;
+						if (videoinputs > 1) multipleCameras = true;
 					}
 				}
 
@@ -229,7 +229,7 @@
 
 				cancelbutton.innerHTML = 'Cancel';
 
-				togglebutton.innerHTML = 'Toggle Camera';
+				togglebutton.innerHTML = 'Next Camera';
 				
 				keepbutton.innerHTML = 'Keep';
 				
@@ -241,7 +241,7 @@
 				popup.appendChild(redobutton);
 				popup.appendChild(keepbutton);
 				popup.appendChild(cancelbutton);
-				if (supportsFacingMode) popup.appendChild(togglebutton);
+				if (multipleCameras) popup.appendChild(togglebutton);
 
 				document.body.appendChild(popup);
 
@@ -249,12 +249,12 @@
 				new ice.mobi.button(keepbutton.id);
 				new ice.mobi.button(redobutton.id);
 				new ice.mobi.button(cancelbutton.id);
-				if (supportsFacingMode) new ice.mobi.button(togglebutton.id);
+				if (multipleCameras) new ice.mobi.button(togglebutton.id);
 
 				document.getElementById(startbutton.id).style.marginLeft = '10px';
 				document.getElementById(keepbutton.id).style.marginLeft = '10px';
 				document.getElementById(cancelbutton.id).style.marginLeft = '10px';
-				if (supportsFacingMode) document.getElementById(togglebutton.id).style.marginLeft = '10px';
+				if (multipleCameras) document.getElementById(togglebutton.id).style.marginLeft = '10px';
 
 				if( !options.width ){
 					options.width = popup.clientWidth - 40;
@@ -265,9 +265,19 @@
 						options.width = Math.floor(options.width * 0.8);
 					}
 				}
-				
-				if (supportsFacingMode && facingMode == 'front') options.video = { facingMode: { exact: 'user' } };
-				else if (supportsFacingMode && facingMode == 'rear') options.video = { facingMode: { exact: 'environment' } };
+
+
+				function getVideoDevices() {
+					return ice.mobi.cameraBtnOnclick.videoDevices;
+				}
+
+				// use first videoinput device in the list
+				if (!deviceId) {
+					var videoDevices = getVideoDevices();
+					if (videoDevices.length > 0) deviceId = videoDevices[0].deviceId;
+				}
+
+				if (deviceId) options.video = { 'deviceId': { exact: deviceId } };
 				else options.video = true;
 				options.audio = false;
 				//below params for shim
@@ -342,7 +352,12 @@
 					},10);   
 				},
 				errorCallback = function(err){
-					ice.log.debug(ice.log, "mobi:camera activated: getUserMedia is available, but no camera available, falling back to file upload");
+					var errorMessage = '';
+					if (typeof err == 'string') errorMessage = err;
+					else {
+						for (var p in err) errorMessage += p + ' -> ' + err[p] + ', ';
+					}
+					ice.log.debug(ice.log, "mobi:camera activated: getUserMedia is available, but no camera available, falling back to file upload. Error: " + errorMessage);
 					document.body.removeChild(document.getElementById(id+'_popup'));
 					renderCameraFallbackFileUpload();
 				};
@@ -395,8 +410,22 @@
 
 				function togglecamera(){
 					document.body.removeChild(popup);
-					var nextFacingMode = !facingMode ? 'rear' : (facingMode == 'front' ? 'rear' : 'front');
-					renderHTML5Camera(nextFacingMode);
+					var nextDeviceId = null;
+					var videoDevices = getVideoDevices();
+					var i;
+					for (i = 0; i < videoDevices.length; i++) {
+						var device = videoDevices[i];
+						if (device.deviceId == deviceId) { // found current device, use next
+							i++;
+							if (i < videoDevices.length) {
+								nextDeviceId = videoDevices[i].deviceId;
+							} else {
+								nextDeviceId = videoDevices[0].deviceId;
+							}
+							break;
+						}
+					}
+					renderHTML5Camera(nextDeviceId);
 				}
 
 				function createThumbnailForVideo(){
@@ -452,7 +481,7 @@
 					ev.preventDefault();
 				});
 
-				if (supportsFacingMode) ice.mobi.addListener(togglebutton, 'click', function(ev){
+				if (multipleCameras) ice.mobi.addListener(togglebutton, 'click', function(ev){
 					togglecamera();
 					ev.preventDefault();
 				});
@@ -466,7 +495,7 @@
 
 			var streaming = false;
 
-			renderHTML5Camera(facingMode);
+			renderHTML5Camera();
 		}
 
 		var cameraOptions =  {
@@ -521,5 +550,22 @@
 			bridgeit.camera(id, 'callback'+id, cameraOptions );
 		}
 	};
+
+
+	ice.mobi.cameraBtnOnclick.videoDevices = [];
+	if (navigator.mediaDevices) {
+		var promise = navigator.mediaDevices.enumerateDevices();
+		if (promise) {
+			promise.then(function(devices) {
+				var i;
+				for (i = 0; i < devices.length; i++) {
+					var device = devices[i];
+					if (device.kind == 'videoinput') {
+						ice.mobi.cameraBtnOnclick.videoDevices.push(device);
+					}
+				}
+			});
+		}
+	}
 
 })();
