@@ -176,23 +176,8 @@
 					img = new Image();
 
 				var multipleCameras = false;
-				var videoinputs = 0;
-				if (navigator.mediaDevices) {
-					var supports = navigator.mediaDevices.getSupportedConstraints();
-					if (supports) {
-						var promise = navigator.mediaDevices.enumerateDevices();
-						if (promise) {
-							promise.then(function(devices) {
-								var i;
-								for (i = 0; i < devices.length; i++) {
-									var device = devices[i];
-									if (device.kind == 'videoinput') videoinputs++;
-								}
-							});
-						}
-
-						if (videoinputs > 1) multipleCameras = true;
-					}
+				if (ice.mobi.cameraBtnOnclick.videoDevices.length > 1) {
+					multipleCameras = true;
 				}
 
 				popup.id = id + '_popup';
@@ -306,31 +291,13 @@
 						video.src = window.URL.createObjectURL(stream);
 					}
 
-					try {
-						video.play();
-					} catch (e) {
-						setTimeout(function(){
-							var notice = document.createElement('div');
-							notice.id = id + '_notice';
-							var bounds = video.getBoundingClientRect();
-							notice.setAttribute('style', 'position:absolute;z-index:10;'+
-								'background-color:#000;color:#fff;font-family:Verdana;font-size:x-large;font-weight:bold;'+
-								'text-align:center;width:'+video.offsetWidth+'px;height:'+video.offsetHeight+'px;'+
-								'top:'+bounds.top+'px;left:'+bounds.left+'px;opacity:0.3');
-							notice.innerHTML = 'Touch to Start Camera Stream';
-							notice.setAttribute('touchstart', 'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
-							'document.getElementById("'+id+'_video").play();');
-							notice.setAttribute('onclick',  'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
-							'document.getElementById("'+id+'_video").play();');
-							videoCtr.appendChild(notice);
-						}, 1000);
-					}
+					video.play();
 					
 					ice.mobi.addListener(video, 'canplay', function(ev){
 						if (!streaming) {
 							options.width = popup.clientWidth - 40;
 							console.log('begin options.height=' + options.height + ', options.width=' + options.width + ' mobi._windowHeight()=' + mobi._windowHeight());
-							options.height = Math.floor(options.width*(3/4));
+							options.height = Math.floor(options.width*(0.75));
 							console.log('then options.height=' + options.height + ', options.width=' + options.width + ' mobi._windowHeight()=' + mobi._windowHeight());
 							//adjust width and height down if height approaches window height
 							while( options.height > (mobi._windowHeight()*0.9)){
@@ -340,16 +307,32 @@
 							}
 							options.height = Math.floor(options.height);
 							options.width = Math.floor(options.width);
-							video.setAttribute('width', options.width);
-							video.setAttribute('height', options.height);
-							canvas.setAttribute('width', options.width);
-							canvas.setAttribute('height', options.height);
+							video.width = options.width;
+							video.height = options.height;
+							canvas.width = options.width;
+							canvas.height = options.height;
 							streaming = true;
+
+							if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'Android') {
+								var notice = document.createElement('div');
+								notice.id = id + '_notice';
+								var bounds = video.getBoundingClientRect();
+								notice.setAttribute('style', 'position:fixed;z-index:10;'+
+									'background-color:#000;color:#fff;font-family:Verdana;font-size:x-large;font-weight:bold;'+
+									'text-align:center;width:'+video.offsetWidth+'px;height:'+video.offsetHeight+'px;'+
+									'top:'+bounds.top+'px;left:'+bounds.left+'px;opacity:0.3');
+								notice.innerHTML = 'Touch to Start Camera Stream';
+								notice.setAttribute('touchstart', 'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
+								'document.getElementById("'+id+'_video").play();');
+								notice.setAttribute('onclick',  'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
+								'document.getElementById("'+id+'_video").play();');
+								videoCtr.appendChild(notice);
+							}
 						}
 					});   
 					setTimeout(function(){ 
 						popup.style.opacity = 1;
-					},10);   
+					},10);
 				},
 				errorCallback = function(err){
 					var errorMessage = '';
@@ -425,6 +408,7 @@
 							break;
 						}
 					}
+					streaming = false;
 					renderHTML5Camera(nextDeviceId);
 				}
 
@@ -528,7 +512,7 @@
 			}
 		}
 
-		if (ice.mobi.cameraBtnOnclick.iOS) {
+		if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'iOS') {
 			renderCameraFallbackFileUpload();
 		} else {
 			var origNotSupported = bridgeit.notSupported;
@@ -572,6 +556,24 @@
 		}
 	}
 
-	ice.mobi.cameraBtnOnclick.iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+	ice.mobi.cameraBtnOnclick.getMobileOperatingSystem = function() {
+	  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+		  // Windows Phone must come first because its UA also contains "Android"
+		if (/windows phone/i.test(userAgent)) {
+			return "Windows Phone";
+		}
+
+		if (/android/i.test(userAgent)) {
+			return "Android";
+		}
+
+		// iOS detection from: http://stackoverflow.com/a/9039885/177710
+		if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+			return "iOS";
+		}
+
+		return "unknown";
+	};
 
 })();
