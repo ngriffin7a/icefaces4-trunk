@@ -30,12 +30,12 @@
         <h:form id="inputOptionsForm">
         <ace:panel id="inpOptionsPan" header="Options">
             <h:panelGrid id="inputOptions" columns="2">
-                    <h:outputLabel for="valueFormat" value="Choose format of Value"/>
+                    <h:outputLabel for="valueFormat" value="Choose Color Format: "/>
                     <h:selectOneMenu id="valueFormat" value="#{colorEntryCustomBean.valueFormat}">
                           <f:selectItems value="#{colorEntryCustomBean.colorFormats}"/>
                           <f:ajax execute="@this" render="@all"/>
                       </h:selectOneMenu>
-                    <h:outputLabel for="alternateLayout" value="Choose Custom Layout"/>
+                    <h:outputLabel for="alternateLayout" value="Choose Custom Layout: "/>
                     <h:selectOneMenu id="alternateLayout" value="#{colorEntryCustomBean.customLayout}">
                         <f:selectItem itemLabel="Hex and RGB Slider" itemValue="layout1"/>
                         <f:selectItem itemLabel="LongColumnLook" itemValue="layout2"/>
@@ -61,14 +61,14 @@
             
             <ace:panel id="colorOutputPanel" header="Entered data">
                 <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
-                    <h:outputText id="basicValue" value="Color selected: #{colorEntryCustomBean.value}"/>
+                    <h:outputText id="basicValue" value="Color Selected: #{colorEntryCustomBean.value}"/>
                 </h:panelGrid>
             </ace:panel>
             <ace:panel id="layoutvalues" header="Custom Parts and Layout">
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="Parts defined:-" for="partsDefined"/>
+                    <h:outputLabel value="Parts Defined: " for="partsDefined"/>
                     <h:outputText id="partsDefined" value="#{colorEntryCustomBean.partsDefined}"/>
-                    <h:outputLabel value="Layout defined:-" for="layoutDefined"/>
+                    <h:outputLabel value="Layout defined: " for="layoutDefined"/>
                     <h:outputText id="layoutDefined" value="#{colorEntryCustomBean.layoutDefined}"/>
                 </h:panelGrid>
             </ace:panel>
