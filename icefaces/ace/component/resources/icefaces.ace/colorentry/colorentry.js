@@ -18,7 +18,6 @@ ice.ace.ColorEntry = function(id, cfg) { 
     } 
     //create or update colrEntry 
     if(!this.cfg.disabled) { 
-        console.log(" creating colorpicker and will open it....."); 
         ice.ace.ColorEntry.instances[id] = this.jq.colorpicker(this.cfg); 
         if (this.cfg.title){ 
             this.jq.colorpicker("option", "showOptions", {title: this.cfg.title}); 
@@ -108,9 +107,6 @@ ice.ace.ColorEntryInit = function( cfg) {
             var emptyColor="#f2eaea";
             if (allowEmpty){
                 emptyColor = input.css("background-color") ;
-                if (emptyColor){
-                    console.log(" empty color="+emptyColor);
-                } else {console.log(" find another way to get empty color!");}
             }
             else if (!color.formatted || color.formatted=="false"){
                 console.log("OK has been pressed but "+colorFormat+" color format is not supported in this widget");
@@ -169,26 +165,29 @@ ice.ace.ColorEntryInit = function( cfg) {
         };
         var initAndShow = function(){
             console.log("initAndShow.....");
-           // if (ice.ace.instance(id)){
-           //     console.log(" have an instance so show it anad go!");
-            /*    ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
-                return;
-            } */
             if (trigger){
                 trigger.remove();
             }
             create();
             if ( ice.ace.instance(id).colorpicker){
+                console.log(" showing......");
                 ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
-              //  ice.ace.jq.colorpicker("open");
             }
-           /* if(!ice.ace.instance(id).colorpicker) {
-                console.log(" no ice.ace.instance available....");
-               // ice.ace.create("ColorEntry", [id, options]);
-            } else {
-
-            }  */
         };
+        var initButtonAndShow = function(){
+
+            if (trigger){
+                console.log(" removing trigger");
+                trigger.remove();
+            }
+            create();
+            if (ice.ace.instance(id).colorpicker){
+                console.log("showing");
+                ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
+            }else {
+                console.log(" no ice.ace.instance of colorpicker for this id");
+            }
+        } ;
         if (inline){
             if (trigger) trigger.remove();
             return create();
@@ -210,16 +209,16 @@ ice.ace.ColorEntryInit = function( cfg) {
         var spanElement= ice.ace.jq(spanSelector);
         if (!inline && ice.ace.jq.inArray(showOn, ["button","all", "both"]) >= 0) {
             if (buttonImageOnly) {
-             //   console.log(" buttonImageONly.....");
                 trigger = ice.ace.jq("<img />");
                 trigger.attr("src", buttonImage);
                 if (buttonText) {
                     trigger.attr("alt", buttonText);
                     trigger.attr("title", buttonText);
                 }
-                trigger.one("click", initAndShow);
+                setTimeout(function(){
+                    trigger.one("click", initButtonAndShow());
+                }, 350);
                 initEltSet = initEltSet.add(trigger);
-                spanElement.append(trigger);
             }
         }
 
