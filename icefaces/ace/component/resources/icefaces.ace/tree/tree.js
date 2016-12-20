@@ -269,7 +269,8 @@ ice.ace.Tree.prototype.sendNodeSelectionRequest = function(node) {
         ice.ace.AjaxRequest(options);
     }
 
-	this.element.find(this.jqId+"_select").val('');
+    this.element.find(this.jqId+"_select").val('');
+    this.element.find(this.jqId+"_deselect").val('');
 };
 
 ice.ace.Tree.prototype.doClientDeselection = function(node, wrap) {
