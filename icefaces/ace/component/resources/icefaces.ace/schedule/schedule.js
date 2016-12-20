@@ -1331,11 +1331,10 @@ ice.ace.Schedule.prototype.expandEventList = function() {
 };
 
 ice.ace.Schedule.prototype.expandEventDetails = function() {
-	var contentHeight = this.getSidebarContentHeight();
 	var listContent = ice.ace.jq(this.jqId).find('.schedule-list-content');
 	var detailsContent = ice.ace.jq(this.jqId).find('.schedule-details-content');
 	listContent.css('height', '0');
-	detailsContent.css('height', contentHeight + 'px');
+	detailsContent.css('height', 'auto');
 };
 
 ice.ace.Schedule.prototype.getSidebarContentHeight = function() {
