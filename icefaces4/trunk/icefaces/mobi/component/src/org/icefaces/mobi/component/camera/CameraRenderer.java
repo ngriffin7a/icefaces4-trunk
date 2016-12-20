@@ -88,8 +88,6 @@ public class CameraRenderer extends Renderer {
 		Camera camera = (Camera) uiComponent;
 		ResponseWriterWrapper writer = new ResponseWriterWrapper(facesContext.getResponseWriter());
 		String clientId = camera.getClientId();
-		String facingMode = camera.getFacingMode();
-		facingMode = facingMode != null ? ("front".equalsIgnoreCase(facingMode) ? "front" : "rear") : "rear";
 
 		writer.startElement(SPAN_ELEM, camera);
 		writer.writeAttribute(ID_ATTR, clientId);
@@ -116,15 +114,14 @@ public class CameraRenderer extends Renderer {
 		String styleClass = camera.getStyleClass();
 		if (styleClass != null) writer.writeAttribute(CLASS_ATTR, styleClass);
 		writer.writeAttribute(TABINDEX_ATTR, camera.getTabindex());
-		String script = "ice.mobi.cameraBtnOnclick('%s', '%s', '%s', '%s', '%s', %s, %s, '%s', '%s', '%s');";
+		String script = "ice.mobi.cameraBtnOnclick('%s', '%s', '%s', '%s', '%s', %s, %s, '%s', '%s');";
 		writer.writeAttribute(ONCLICK_ATTR, String.format(script, clientId, camera.getButtonLabel(), 
 				camera.getCaptureMessageLabel(), camera.getPostURL(), 
 				MobiJSFUtils.getSessionIdCookie(facesContext),
 				camera.getMaxwidth() > 0 ? camera.getMaxwidth() : "undefined",
 				camera.getMaxheight() > 0 ? camera.getMaxheight() : "undefined",
 				processImageSource(facesContext, camera.getButtonImage(), clientId+"_buttonImage"),
-				processImageSource(facesContext, camera.getCaptureButtonImage(), clientId+"_captureButtonImage"),
-				facingMode
+				processImageSource(facesContext, camera.getCaptureButtonImage(), clientId+"_captureButtonImage")
 				));
 		writer.startElement(SPAN_ELEM, camera);
 		
