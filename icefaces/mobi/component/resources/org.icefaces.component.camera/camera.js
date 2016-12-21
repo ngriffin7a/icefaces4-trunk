@@ -178,6 +178,11 @@
 		function launchHTML5Camera(){
 
 			function renderHTML5Camera(deviceId){
+					  if (window.stream) {
+						window.stream.getTracks().forEach(function(track){
+						  track.stop();
+						})
+					  }
 				var popup = document.createElement('div'),
 					closeBtn = document.createElement('a'),
 					video,
@@ -375,6 +380,15 @@
 					togglebutton.classList.add('mobi-hidden');
 					keepbutton.classList.remove('mobi-hidden');
 					redobutton.classList.remove('mobi-hidden');
+					  if (window.stream) {
+						if (video) {
+							video.src = null;
+							video.parentElement.removeChild(video);
+						}
+						window.stream.getTracks().forEach(function(track){
+						  track.stop();
+						})
+					  }
 				}
 				
 				function redopicture(){
