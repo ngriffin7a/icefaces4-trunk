@@ -27,7 +27,12 @@ public abstract class SessionAwareResourceHandlerWrapper extends ResourceHandler
     public boolean isResourceRequest(FacesContext context) {
         EnvUtils.createSessionOnPageLoad(context);
         if (EnvUtils.isSessionInvalid(context)) {
-            return getWrapped().isResourceRequest(context);
+            //make sure dispose window requests are treated as submit requests even if the session has expired
+            if (WindowScopeManager.isDisposeWindowRequest(context.getExternalContext().getRequestParameterMap())) {
+                return false;
+            } else {
+                return getWrapped().isResourceRequest(context);
+            }
         } else {
             return isSessionAwareResourceRequest(context);
         }

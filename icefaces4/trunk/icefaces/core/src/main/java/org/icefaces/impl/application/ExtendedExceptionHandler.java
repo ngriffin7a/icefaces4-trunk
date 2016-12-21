@@ -132,9 +132,14 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
             fc.setViewRoot(viewRoot);
         }
 
-        //Once we've removed the ViewExpiredException and added the SessionExpiredException, we can
-        //let default processing take over again.
-        getWrapped().handle();
+        if (WindowScopeManager.isDisposeWindowRequest(ec.getRequestParameterMap())) {
+            //shortcut response to avoid responding with a HTTP error
+            fc.responseComplete();
+        } else {
+            //Once we've removed the ViewExpiredException and added the SessionExpiredException, we can
+            //let default processing take over again.
+            getWrapped().handle();
+        }
     }
 
     private boolean isValidSession(FacesContext fc, String viewId) {
