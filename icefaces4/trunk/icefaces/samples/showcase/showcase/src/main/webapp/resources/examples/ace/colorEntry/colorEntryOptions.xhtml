@@ -30,23 +30,23 @@
             <ace:panel id="inpOptionsPan" header="Options">
                <h:panelGrid id="inputOptions" columns="2">
 
-                   <h:outputLabel for="colorFormat" value="Choose format of Color"/>
+                   <h:outputLabel for="colorFormat" value="Choose Format of Color "/>
                    <h:selectOneMenu id="colorFormat" value="#{colorEntryOptionsBean.colorFormat}">
                          <f:selectItems value="#{colorEntryOptionsBean.colorFormats}"/>
                          <f:ajax execute="@this" render="@all"/>
                    </h:selectOneMenu>
-                   <h:outputLabel for="showNoneButton" value="Show NoneButton"/>
+                   <h:outputLabel for="showNoneButton" value="Show NoneButton "/>
                    <h:selectBooleanCheckbox id="showNoneButton"  value="#{colorEntryOptionsBean.showNoneButton}">
                        <f:ajax execute="@this" render="@all"/>
                    </h:selectBooleanCheckbox>
-                   <h:outputLabel for="effectType" value="Effect"/>
+                   <h:outputLabel for="effectType" value="Effect "/>
                    <h:selectOneMenu id="effectType" value="#{colorEntryOptionsBean.effect}">
                         <f:selectItem itemLabel="fadeIn" itemValue="fadeIn"/>
                         <f:selectItem itemLabel="slideDown" itemValue="slideDown"/>
                         <f:selectItem itemLabel="show" itemValue="show"/>
                         <f:ajax execute="@this" render="@all"/>
                     </h:selectOneMenu>
-                    <h:outputText id="durationId" value="Duration:-"/>
+                    <h:outputText id="durationId" value="Duration "/>
                     <h:selectOneMenu id="duration" value="#{colorEntryOptionsBean.duration}">
                         <f:selectItem itemLabel="slow" itemValue="slow"/>
                         <f:selectItem itemLabel="fast" itemValue="fast"/>
@@ -71,9 +71,9 @@
                 </h:panelGrid>
             </ace:panel>
 
-            <ace:panel id="colorOutputPanel" header="Entered data">
+            <ace:panel id="colorOutputPanel" header="Entered Data">
                 <h:panelGrid columns="1" id="outputGrid" width="100%" style="text-align: left;">
-                    <h:outputText id="basicValue" value="Color selected : #{colorEntryOptionsBean.value}"/>
+                    <h:outputText id="basicValue" value="Color Selected  #{colorEntryOptionsBean.value}"/>
                 </h:panelGrid>
             </ace:panel>
         </h:form>
