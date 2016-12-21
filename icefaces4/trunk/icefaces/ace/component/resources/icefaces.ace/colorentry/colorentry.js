@@ -108,11 +108,8 @@ ice.ace.ColorEntryInit = function( cfg) {
             if (options.colorFormat == 'EXACT') {
                 options.colorFormat = ['EXACT', 'NAME']
             }
-            if (options.colorFormat == 'HSL%') {
-               options.colorFormat = ['HSL%', 'HSL']
-            }
-            if (options.colorFormat =='HSLA'){
-                options.colorFormat = ['HSLA', 'HSL']
+            if (options.colorFormat == 'HSL') {
+               options.colorFormat = ['HSL', 'HSLA']
             }
         }
         /* add function callbacks to options */
@@ -170,7 +167,6 @@ ice.ace.ColorEntryInit = function( cfg) {
         var selectFn = function(event, color){
             if (!color.formatted){
                 console.log(" The current widget does not support the color format of "+colorFormat);
-                input.attr('value', previousColor);
                 return;
             }
             var colorFormatted = color.formatted;
