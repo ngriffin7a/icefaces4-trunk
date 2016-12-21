@@ -34,9 +34,13 @@ public class ColorEntryCustomBean implements Serializable
 	public String getBeanName() { return BEAN_NAME; }
     
     private String value, customLayout;
+    private boolean alpha;
+    private boolean showNoneButton;
+    private String title1="Simple Layout with RGB Slider";
+    private String title2= "Layered Custom Layout";
     private List<String> parts = new ArrayList<String>();
     private List<String> parts1 = new ArrayList<String>(Arrays.asList("header", "preview", "hex", "rgbslider"));
-    private List<String> parts2 = new ArrayList<String>(Arrays.asList("header", "map", "bar", "hex", "hsv", "rgb", "alpha", "preview", "swatches", "footer"));
+    private List<String> parts2 = new ArrayList<String>();
     private List<ColorEntryLayout> layout1 = new ArrayList<ColorEntryLayout>();
     private List<ColorEntryLayout> layout2 = new ArrayList<ColorEntryLayout>();
     private List<ColorEntryLayout> layout = new ArrayList<ColorEntryLayout>();
@@ -56,7 +60,16 @@ public class ColorEntryCustomBean implements Serializable
         layout1.add(new ColorEntryLayout("hex", 1,0,1,1));
         layout1.add(new ColorEntryLayout("rgbslider", 0, 1, 2, 1));
         layout1.add(new ColorEntryLayout("memory", 0, 2, 2, 1));
-
+        parts2.add("header");
+        parts2.add("map");
+        parts2.add("bar");
+        parts2.add("hex");
+        parts2.add("hsv");
+        parts2.add("rgb");
+        parts2.add("alpha");
+        parts2.add("preview");
+        parts2.add("swatches");
+        parts2.add("footer");
 
         layout2.add(new ColorEntryLayout("hex", 0, 0, 2, 1));
         layout2.add(new ColorEntryLayout("preview", 2, 0, 1, 1));
@@ -70,7 +83,9 @@ public class ColorEntryCustomBean implements Serializable
         layout2. add(new ColorEntryLayout("cmyk", 1, 5, 1, 2));
         this.parts = parts1;
         this.layout = layout1;
-        this.title="Simple Layout with RGB Slider";
+        this.title="SimpleLayout";
+        this.alpha = false;
+        this.showNoneButton=false;
     }
 
     public String getValue() {
@@ -84,6 +99,22 @@ public class ColorEntryCustomBean implements Serializable
 
     public ColorFormat[] getColorFormats(){
         return ColorFormat.values();
+    }
+
+    public boolean isAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(boolean alpha) {
+        this.alpha = alpha;
+    }
+
+    public boolean isShowNoneButton() {
+        return showNoneButton;
+    }
+
+    public void setShowNoneButton(boolean showNoneButton) {
+        this.showNoneButton = showNoneButton;
     }
 
     public ColorFormat getValueFormat() {
@@ -123,11 +154,15 @@ public class ColorEntryCustomBean implements Serializable
         if (customLayout.equals("layout2")){
             this.parts=parts2;
             this.layout = layout2;
-            this.title = "Layered Custom Layout";
+            this.title = title2;
+            this.alpha=true;
+            this.showNoneButton=true;
         } else {
+            this.alpha = false;
+            this.showNoneButton=false;
             this.parts = parts1;
             this.layout=layout1;
-            this.title="Simple Layout with RGB Slider";
+            this.title=title1;
         }
     }
 
