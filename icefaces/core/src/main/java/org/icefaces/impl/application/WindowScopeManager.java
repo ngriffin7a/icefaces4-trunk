@@ -252,7 +252,7 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         return synchronizationMonitor;
     }
 
-    private static boolean isDisposeWindowRequest(Map parameters) {
+    public static boolean isDisposeWindowRequest(Map parameters) {
         return "ice.dispose.window".equals(parameters.get("ice.submit.type"));
     }
 
