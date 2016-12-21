@@ -178,7 +178,7 @@
 		function launchHTML5Camera(){
 
 			function renderHTML5Camera(deviceId){
-					  if (window.stream) {
+					  if (window.stream && ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'Android') {
 						window.stream.getTracks().forEach(function(track){
 						  track.stop();
 						})
@@ -380,15 +380,6 @@
 					togglebutton.classList.add('mobi-hidden');
 					keepbutton.classList.remove('mobi-hidden');
 					redobutton.classList.remove('mobi-hidden');
-					  if (window.stream) {
-						if (video) {
-							video.src = null;
-							video.parentElement.removeChild(video);
-						}
-						window.stream.getTracks().forEach(function(track){
-						  track.stop();
-						})
-					  }
 				}
 				
 				function redopicture(){
@@ -418,10 +409,10 @@
 				}
 
 				function togglecamera(){
-					  if (window.stream) {
+					  if (window.stream && ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'Android') {
 						if (video) {
 							video.src = null;
-							video.parentElement.removeChild(video);
+							if (video.parentElement) video.parentElement.removeChild(video);
 						}
 						window.stream.getTracks().forEach(function(track){
 						  track.stop();
