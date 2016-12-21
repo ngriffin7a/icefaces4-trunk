@@ -72,26 +72,26 @@ public class ColorEntryMeta extends UIInputMeta{
 
     @Property(tlddoc="This is the preferred format to display the chosen color under the input field.  Valid values are listed in the ColorFormat enumeration  HEX(\"HEX\"), HEX3(\"HEX3\"), HEXA(\"HEXA\"), RGB(\"RGB\"), RGBA(\"RGBA\"), RGBPERCENT(\"RGB%\"),\n" +
             "         HSL(\"HSL\"), HSLA(\"HSLA\"), HSLPERCENT(\"HSL%\"),\n" +
-            "         HSLAPERCENT(\"HSLA%\"),NAME(\"NAME\"), EXACT(\"EXACT\")",
+            "         HSLAPERCENT(\"HSLA%\"),NAME(\"NAME\"), EXACT(\"EXACT\").",
             defaultValue="ColorFormat.HEX",
             defaultValueType = DefaultValueType.EXPRESSION)
     private ColorFormat colorFormat;
 
-    @Property(tlddoc="title to display in the header")
+    @Property(tlddoc="The title to display in the header.")
     private String title;
 
     @Property(tlddoc = "The text to display on the trigger button. Use in conjunction with the showOn option set to \"button\" or \"all\". Default = \"\".")
     private String buttonText;
 
-    @Property(defaultValue="false", tlddoc="if false, the dialog opens automatically upon page load as an inline component")
+    @Property(defaultValue="false", tlddoc="If false, the dialog opens automatically upon page load as an inline component.")
     private boolean renderAsPopup;
 
-    @Property(tlddoc="An array of values which can include \'header\', \'preview\',\'hex\',\'rgb\',\'alpha\', \'hsv\',\'rbgslider\',\'footer\'")
+    @Property(tlddoc="An array of values which can include \'header\', \'preview\',\'hex\',\'rgb\',\'alpha\', \'hsv\',\'rbgslider\', and \'footer\'.")
     private List<String> customParts;
 
     @Property(tlddoc="When selectedParts is used for custom configuration, this attribute defines the position of elements in a table layout.  " +
             "Any layout is possible with HTML tables by specifying cell position and size of each part. The value is an array with four coordinates on order [left, top, width, height].  " +
-            "The coordinates correspond to cells in a table, so if you want to have a part at top-left and spanning two rows, and three columns, the value would be" +
+            "The coordinates correspond to cells in a table, if you want to have a part at top-left and spanning two rows, and three columns, the value would be " +
             "preview, [0, 0, 3, 2] -- to show preview at that location. \'header\' and \'footer\' do not require a position so should only be listed in the selectedParts attribute. ")
     private List<ColorEntryLayout> customLayout;
 
@@ -101,7 +101,7 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(defaultValue="true", tlddoc="Show the Close button if buttonpane on popup is visible")
     private boolean showCloseButton;
 
-    @Property(defaultValue="false", tlddoc="Show the None/Revert button if buttonpane on popup is visible")
+    @Property(defaultValue="false", tlddoc="Show the None/Revert button if buttonpane on popup is visible.")
     private boolean showNoneButton;
 
  /*   @Property(defaultValue="false", tlddoc="Close the popup window when pressing the Enter key on the keyboard, keeping the selected color")
@@ -112,8 +112,9 @@ public class ColorEntryMeta extends UIInputMeta{
     private String showOn;
 
 
-    @Property(tlddoc = "The URL for the popup button image. Default is the file \"META-INF/resources/icefaces.ace/datetimeentry/calendar_icon.png\" in the components jar. " +
-            "showOn attribute must be set to \"button\" or \"both\".")
+    @Property(tlddoc = "The URL for the popup button image. " +
+            "The showOn attribute must be set to \"button\" or \"both\".")
+			/* Add back to description once path to icon is known... Default is the file \"META-INF/resources/icefaces.ace/colorentry/XXXX_icon.png\" in the components jar. */
     private String popupIcon;
 
     @Property(tlddoc = "When enabled, popup icon is rendered without it appearing on a button. Default: \"false\".")
@@ -122,14 +123,14 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(defaultValue="true", tlddoc="If a popupIcon is specified, change the background color of the image when the color is changed")
     private boolean buttonColorize;
 
-    @Property(tlddoc="Close thewindow when pressing the Escape key on the keyboard")
+    @Property(tlddoc="Close the window when pressing the Escape key on the keyboard.")
     private boolean closeOnEscape;
 
   /*  @Property(tlddoc="A list of available palettes may be used for the user to select from.  This must be a list of String arrays at this time")
     private List<String[]> swatches; */
-    @Property( tlddoc="Limit the selectable colors to any of the predefined limits. default is empty string. \'websafe\'=Setof 216 colors composed of 00, 33, 66, 99, cc and ff color channel values in #rrggbb" +
+    @Property( tlddoc="Limit the selectable colors to any of the predefined limits. Default is empty string. \'websafe\'=Set of 216 colors composed of 00, 33, 66, 99, cc and ff color channel values in #rrggbb." +
             " \'nibble\'= 4 bits per color, can be easily converted to #rgb format.  The palette is limited to 4096 colors. \'binary\'=Allow only #00 or #ff as color channel values for primary " +
-            "colors only; only 8 bolors are available with this limit, or \'name\'=limits to closes color name")
+            "colors; only 8 colors are available with this limit, or \'name\'=limits to closes color name.")
     private String limit;
 
     @Property(tlddoc = "Indicator indicating that the user is required to provide a submitted value for this input component.")
@@ -164,12 +165,12 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(defaultValue = "normal", tlddoc = "Control the speed at which colorEntry appears, it may be a time in milliseconds or a string representing one of the three predefined speeds (\"slow\", \"normal\", \"fast\").")
     private String effectDuration;
 
-    @Property(tlddoc="Sets the language to use.  Note that you must load the appropriate language file from the i8n directory. local is included by default")
+    @Property(tlddoc="Sets the language to use.  Note that you must load the appropriate language file from the i8n directory. Local is included by default.")
     private String regional;
-    @Property(tlddoc = "If true then this date time entry will be disabled and can not be entered.", defaultValue = "false")
+    @Property(tlddoc = "If true then this colorEntry will be disabled and can not be entered.", defaultValue = "false")
     private boolean disabled;
 
-    @Property(tlddoc = "If true then this date time entry will be read-only and can not be entered.")
+    @Property(tlddoc = "If true then this colorEntry will be read-only and can not be entered.")
     private boolean readonly;
 
     @Property(tlddoc = "Position of the text field in the tabbing order for the current page. This value must be an integer between 0 and 32767.")
