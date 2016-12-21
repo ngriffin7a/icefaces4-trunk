@@ -12,18 +12,14 @@ ice.ace.ColorEntry = function(id, cfg) { 
     //   this.cfg.formId = this.jq.parents('form:first').attr('id'); 
     // i18n and l7n   //  this.configureLocale(); 
     this.options = cfg;
-    this.pickerFn = "colorpicker"; 
     if (this.options.color) { 
         this.jq.value = this.options.color; 
     } 
     //create or update colrEntry 
-
     if(!this.cfg.disabled) { 
-        ice.ace.ColorEntry.instances[id] = this.jq.colorpicker(this.cfg); 
-        if (this.cfg.title){ 
-            this.jq.colorpicker("option", "showOptions", {title: this.cfg.title}); 
-        } 
+        this.jq.colorpicker(this.cfg); 
     }  
+    ice.ace.ColorEntry.instances[id] = this;
     ice.ace.setResetValue(this.id, this.getColor());  
 };
  
@@ -31,7 +27,6 @@ ice.ace.ColorEntry.instances = {}; // keep track of initialized instances
 
 ice.ace.ColorEntry.prototype.configureLocale = function() {
     var localeSettings = ice.ace.locales[this.cfg.options.locale];
-
     if(localeSettings) {
         for(var setting in localeSettings) {
             this.cfg[setting] = localeSettings[setting];
@@ -57,7 +52,9 @@ ice.ace.ColorEntry.prototype.disable = function() {
 };
 
 ice.ace.ColorEntry.prototype.destroy = function() {
-    if (this.pickerFn) this.jq[this.pickerFn]("destroy");
+    if (this.jq && this.jq.colorpicker){
+        this.jq.colorpicker("destroy");
+    }
     this.jq =  null;
 };
 
@@ -66,12 +63,12 @@ ice.ace.ColorEntryInit = function( cfg) {
         var options = cfg.options;
         var INPUT_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all ui-colorpicker-input";
         var INPUT_EMPTY_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all";
-        var INPUT_TRANSPARENT_STYLE_CLASS = INPUT_EMPTY_STYLE_CLASS + " ui-colorpicker-empty";
         var id = options.id;
         var behaviors = cfg.behaviors || null;
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
         var hidden = ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden");
         var trigger = null;
+        var previousColor=options.color || "";
         var colorFormat = options.colorFormat;
         var allowEmpty = options.showNoneButton;
         var showOn = options.showOn || "focus";
@@ -167,16 +164,13 @@ ice.ace.ColorEntryInit = function( cfg) {
 
             if (behaviors && behaviors.change) { 
                 var inputChange = behaviors.change;
-              /*  if (colorFormat.indexOf("HSL")>-1) {
-                    var newColor = "#" + getHexValue(newColor);
-                   inputChange.params[id + '_hexVal'] = newColor;
-                }*/
                 ice.ace.ab(inputChange); 
             } 
          } ;
         var selectFn = function(event, color){
             if (!color.formatted){
                 console.log(" The current widget does not support the color format of "+colorFormat);
+                input.attr('value', previousColor);
                 return;
             }
             var colorFormatted = color.formatted;
@@ -208,7 +202,6 @@ ice.ace.ColorEntryInit = function( cfg) {
                    widget.destroy();
                    initEltSet.remove();
             });
-          //  ice.ace.ColorEntry.instances[id] = true;
             return widget;
         };
         var initAndShow = function(){
@@ -223,17 +216,13 @@ ice.ace.ColorEntryInit = function( cfg) {
             }
         };
         var initButtonAndShow = function(){
-
             if (trigger){
                 console.log(" removing trigger");
                 trigger.remove();
             }
             create();
             if (ice.ace.instance(id).colorpicker){
-                console.log("showing");
                 ice.ace.instance(id).jq[ice.ace.instance(id).colorpicker]("show");
-            }else {
-                console.log(" no ice.ace.instance of colorpicker for this id");
             }
         } ;
         if (inline){
@@ -243,11 +232,17 @@ ice.ace.ColorEntryInit = function( cfg) {
 
 		// if instance was previously initialized, create right away and return
 		if (ice.ace.ColorEntry.instances[id]) {
-            console.log(" widget previously initialized, so create right away and return!");
+            var widget = ice.ace.ColorEntry.instances[id];
+             if (widget){
+                 console.log(" destroying existing widget");
+                 widget.destroy();
+             } else {
+                 console.log(" no widget to destroy....");
+             }
             create();
 			return;
 		}
-        console.log(" rest of stuff is for non  inline");
+      //  console.log(" rest of stuff is for non  inline");
         var buttonImageOnlyinputClass="cp-buttonImageOnly";
         if (buttonImageOnly){
             input.attr("class", buttonImageOnlyinputClass);
