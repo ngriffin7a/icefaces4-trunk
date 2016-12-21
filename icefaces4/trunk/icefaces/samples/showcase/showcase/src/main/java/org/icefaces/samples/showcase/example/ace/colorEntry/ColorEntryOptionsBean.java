@@ -44,7 +44,8 @@ public class ColorEntryOptionsBean implements Serializable
         this.colorFormats.add(ColorFormat.HEX3);
         this.colorFormats.add(ColorFormat.RGB);
         this.colorFormats.add(ColorFormat.RGBPERCENT);
-        this.colorFormats.add(ColorFormat.HSL);
+        this.colorFormats.add(ColorFormat.HSLA);
+        this.colorFormats.add(ColorFormat.HSLAPERCENT) ;
         this.colorFormats.add(ColorFormat.NAME);
     }
     public boolean isInline() {
