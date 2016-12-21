@@ -8,6 +8,24 @@
 	window.URL = window.URL || window.mozURL || window.webkitURL;
 	console.log('window.URL support = ' + !!window.URL);
 
+	var videoDevices = [];
+	var multipleCameras = false;
+	if (navigator.mediaDevices) {
+		var promise = navigator.mediaDevices.enumerateDevices();
+		if (promise) {
+			promise.then(function(devices) {
+				var i;
+				for (i = 0; i < devices.length; i++) {
+					var device = devices[i];
+					if (device.kind == 'videoinput') {
+						videoDevices.push(device);
+					}
+				}
+				if (videoDevices.length > 1) multipleCameras = true;
+			});
+		}
+	}
+
 	ice.mobi.cameraBtnOnclick = function(id, buttonLabel, captureLabel, postURL, sessionId, maxwidth, maxheight, buttonImage, captureButtonImage){
 
 		var ctr = document.getElementById(id);
@@ -175,11 +193,6 @@
 					options = {},
 					img = new Image();
 
-				var multipleCameras = false;
-				if (ice.mobi.cameraBtnOnclick.videoDevices.length > 1) {
-					multipleCameras = true;
-				}
-
 				popup.id = id + '_popup';
 				popup.className = 'mobi-camera-popup';
 				popup.style.opacity = 0; //TODO test IE
@@ -251,19 +264,18 @@
 					}
 				}
 
-
-				function getVideoDevices() {
-					return ice.mobi.cameraBtnOnclick.videoDevices;
-				}
-
 				// use first videoinput device in the list
 				if (!deviceId) {
-					var videoDevices = getVideoDevices();
 					if (videoDevices.length > 0) deviceId = videoDevices[0].deviceId;
 				}
 
-				if (deviceId) options.video = { 'deviceId': { exact: deviceId } };
-				else options.video = true;
+				if (deviceId) {
+					if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'Android') {
+						options.video = { 'optional': [ { sourceId: deviceId } ] };
+					} else {
+						options.video = { 'deviceId': { exact: deviceId } };
+					}
+				} else options.video = true;
 				options.audio = false;
 				//below params for shim
 				options.el = id + '_videoCtr';
@@ -394,7 +406,6 @@
 				function togglecamera(){
 					document.body.removeChild(popup);
 					var nextDeviceId = null;
-					var videoDevices = getVideoDevices();
 					var i;
 					for (i = 0; i < videoDevices.length; i++) {
 						var device = videoDevices[i];
@@ -538,23 +549,6 @@
 			}
 		}
 	};
-
-
-	ice.mobi.cameraBtnOnclick.videoDevices = [];
-	if (navigator.mediaDevices) {
-		var promise = navigator.mediaDevices.enumerateDevices();
-		if (promise) {
-			promise.then(function(devices) {
-				var i;
-				for (i = 0; i < devices.length; i++) {
-					var device = devices[i];
-					if (device.kind == 'videoinput') {
-						ice.mobi.cameraBtnOnclick.videoDevices.push(device);
-					}
-				}
-			});
-		}
-	}
 
 	ice.mobi.cameraBtnOnclick.getMobileOperatingSystem = function() {
 	  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
