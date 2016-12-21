@@ -37,12 +37,12 @@ public class ColorEntryCustomBean implements Serializable
     private boolean alpha;
     private boolean showNoneButton;
     private String title1="Simple Layout with RGB Slider";
-    private String title2= "Layered Custom Layout";
+    private String title2= "Full Layout";
     private List<String> parts = new ArrayList<String>();
+    private List<String> full = new ArrayList<String>(Arrays.asList("header", "map", "bar", "hex", "hsv", "rgb", "alpha", "lab", "cmyk", "preview", "swatches", "footer"));
     private List<String> parts1 = new ArrayList<String>(Arrays.asList("header", "preview", "hex", "rgbslider"));
-    private List<String> parts2 = new ArrayList<String>();
     private List<ColorEntryLayout> layout1 = new ArrayList<ColorEntryLayout>();
-    private List<ColorEntryLayout> layout2 = new ArrayList<ColorEntryLayout>();
+    private List<ColorEntryLayout> fullLayout = new ArrayList<ColorEntryLayout>();
     private List<ColorEntryLayout> layout = new ArrayList<ColorEntryLayout>();
     private ColorFormat valueFormat;
     private String title;
@@ -60,30 +60,21 @@ public class ColorEntryCustomBean implements Serializable
         layout1.add(new ColorEntryLayout("hex", 1,0,1,1));
         layout1.add(new ColorEntryLayout("rgbslider", 0, 1, 2, 1));
         layout1.add(new ColorEntryLayout("memory", 0, 2, 2, 1));
-        parts2.add("header");
-        parts2.add("map");
-        parts2.add("bar");
-        parts2.add("hex");
-        parts2.add("hsv");
-        parts2.add("rgb");
-        parts2.add("alpha");
-        parts2.add("preview");
-        parts2.add("swatches");
-        parts2.add("footer");
 
-        layout2.add(new ColorEntryLayout("hex", 0, 0, 2, 1));
-        layout2.add(new ColorEntryLayout("preview", 2, 0, 1, 1));
-        layout2.add(new ColorEntryLayout("map", 0, 1, 3, 1));
-        layout2.add(new ColorEntryLayout("bar", 0, 2, 1, 4));
-        layout2.add(new ColorEntryLayout("swatches", 2, 2, 1, 4));
-        layout2.add(new ColorEntryLayout("rbg", 1, 2, 1, 1));
-        layout2.add(new ColorEntryLayout("hsv", 1, 3, 1, 1));
-        layout2.add(new ColorEntryLayout("alpha", 1, 4, 1, 1));
-        layout2.add(new ColorEntryLayout("lab", 0, 5, 1, 1));
-        layout2. add(new ColorEntryLayout("cmyk", 1, 5, 1, 2));
+        fullLayout.add(new ColorEntryLayout("map", 0,0,1,5));
+        fullLayout.add(new ColorEntryLayout("bar", 1,0,1,5));
+        fullLayout.add(new ColorEntryLayout("preview", 2,0,1,1));
+        fullLayout.add(new ColorEntryLayout("hsv", 2,1,1,1));
+        fullLayout.add(new ColorEntryLayout("rgb", 2, 2, 1, 1));
+        fullLayout.add(new ColorEntryLayout("alpha", 2, 3, 1, 1));
+        fullLayout.add(new ColorEntryLayout("hex", 2, 4, 1, 1));
+        fullLayout.add(new ColorEntryLayout("lab", 3, 1, 1, 1));
+        fullLayout.add(new ColorEntryLayout("cmyk", 3, 2, 1, 2));
+        fullLayout.add(new ColorEntryLayout("swatches",4,0, 1, 5));
+
         this.parts = parts1;
         this.layout = layout1;
-        this.title="SimpleLayout";
+        this.title=title1;
         this.alpha = false;
         this.showNoneButton=false;
     }
@@ -143,7 +134,6 @@ public class ColorEntryCustomBean implements Serializable
 
     public void setLayout(List<ColorEntryLayout> layout) {
         this.layout = layout;
-
     }
 
     public void setParts(List<String> parts) {
@@ -152,8 +142,8 @@ public class ColorEntryCustomBean implements Serializable
 
     public void changeLayout(AjaxBehaviorEvent event) {
         if (customLayout.equals("layout2")){
-            this.parts=parts2;
-            this.layout = layout2;
+            this.parts=full;
+            this.layout = fullLayout;
             this.title = title2;
             this.alpha=true;
             this.showNoneButton=true;

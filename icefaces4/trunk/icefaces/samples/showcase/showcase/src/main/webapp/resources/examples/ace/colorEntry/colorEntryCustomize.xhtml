@@ -38,7 +38,7 @@
                     <h:outputLabel for="alternateLayout" value="Choose Custom Layout: "/>
                     <h:selectOneMenu id="alternateLayout" value="#{colorEntryCustomBean.customLayout}">
                         <f:selectItem itemLabel="Hex and RGB Slider" itemValue="layout1"/>
-                        <f:selectItem itemLabel="LongColumnLook" itemValue="layout2"/>
+                        <f:selectItem itemLabel="Full Control" itemValue="layout2"/>
                         <f:ajax execute="@this" render="@all" listener="#{colorEntryCustomBean.changeLayout}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
@@ -52,6 +52,8 @@
                                colorFormat="#{colorEntryCustomBean.valueFormat}"
                                customParts="#{colorEntryCustomBean.parts}"
                                customLayout="#{colorEntryCustomBean.layout}"
+                               alpha = "#{colorEntryCustomBean.alpha}"
+                               showNoneButton ="#{colorEntryCustomBean.showNoneButton}"
                                renderAsPopup="true"
                                title="#{colorEntryCustomBean.title}">
                         <ace:ajax execute="@this" render="@all" />
