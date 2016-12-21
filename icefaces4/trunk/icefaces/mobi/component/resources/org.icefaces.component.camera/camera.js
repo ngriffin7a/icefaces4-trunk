@@ -290,7 +290,7 @@
 				ctx.clearRect(0, 0, options.width, options.height);
 
 				var successCallback = function(stream){
-					
+					window.stream = stream;
 					popup.style.width = ''; //workaround
 					video = document.createElement('video');
 					video.id = id + '_video';
@@ -404,7 +404,15 @@
 				}
 
 				function togglecamera(){
-					document.body.removeChild(popup);
+					  if (window.stream) {
+						if (video) {
+							video.src = null;
+							video.parentElement.removeChild(video);
+						}
+						window.stream.getTracks().forEach(function(track){
+						  track.stop();
+						})
+					  }
 					var nextDeviceId = null;
 					var i;
 					for (i = 0; i < videoDevices.length; i++) {
@@ -420,7 +428,20 @@
 						}
 					}
 					streaming = false;
-					renderHTML5Camera(nextDeviceId);
+					if (nextDeviceId) {
+						deviceId = nextDeviceId;
+						if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'Android') {
+							options.video = { 'optional': [ { sourceId: nextDeviceId } ] };
+						} else {
+							options.video = { 'deviceId': { exact: nextDeviceId } };
+						}
+					} else options.video = true;
+					if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia
+							&& ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() != 'Android') {
+						navigator.mediaDevices.getUserMedia(options).then(successCallback).catch(errorCallback);
+					} else if (navigator.getUserMedia) {
+						navigator.getUserMedia(options, successCallback, errorCallback);
+					}
 				}
 
 				function createThumbnailForVideo(){
@@ -481,7 +502,8 @@
 					ev.preventDefault();
 				});
 				
-				if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+				if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia
+						&& ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() != 'Android') {
 					navigator.mediaDevices.getUserMedia(options).then(successCallback).catch(errorCallback);
 				} else if (navigator.getUserMedia) {
 					navigator.getUserMedia(options, successCallback, errorCallback);
