@@ -132,7 +132,7 @@ public class ExtendedExceptionHandler extends ExceptionHandlerWrapper {
             fc.setViewRoot(viewRoot);
         }
 
-        if (WindowScopeManager.isDisposeWindowRequest(ec.getRequestParameterMap())) {
+        if (sessionExpired && WindowScopeManager.isDisposeWindowRequest(ec.getRequestParameterMap())) {
             //shortcut response to avoid responding with a HTTP error
             fc.responseComplete();
         } else {
