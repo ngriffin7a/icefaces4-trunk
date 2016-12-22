@@ -554,7 +554,7 @@ body, table {
 }
 
 	/*menu*/
-#examplePanel > .ui-panel-titlebar > .ui-panel-title > div { /* ace:menuBar has detail-less wrapper div */
+#examplePanel .ui-panel-titlebar .ui-panel-title div.ice-ace-menu-bar { /* ace:menuBar has detail-less wrapper div */
 	display:inline-block;
 	vertical-align: middle;
 	width:20%;
@@ -563,7 +563,7 @@ body, table {
 	zoom: 1;
 	*display:inline;
 }
-#examplePanel > .ui-panel-titlebar > .ui-panel-title > div > div {
+#examplePanel .ui-panel-titlebar .ui-panel-title div.documentation-menu {
 	display: inline-block;
 	font-size:10pt;
 	height:24px;
