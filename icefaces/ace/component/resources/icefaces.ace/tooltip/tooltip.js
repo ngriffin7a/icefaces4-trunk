@@ -33,7 +33,7 @@ ice.ace.Tooltip = function(id, cfg) {
         this.cfg.behaviors = {};
 
 	if(this.cfg.global) {
-		this.target = "*[title]";
+		this.target = "[title]";
 	}else {
 		if (this.cfg.forDelegate) {
 			this.target = ice.ace.escapeClientId(this.cfg.forDelegate);
@@ -92,7 +92,19 @@ ice.ace.Tooltip = function(id, cfg) {
 	}
 	
 	if (!this.cfg.forDelegate) {
-		this.jq.qtip(this.cfg);
+		if (this.cfg.global) {
+			var count = 0;
+			this.jq.each(function() {
+				var eachCfg = {};
+				for (var p in self.cfg) {
+					eachCfg[p] = self.cfg[p];
+				}
+				eachCfg.id = self.cfg.id + '_' + count++;
+				ice.ace.jq(this).qtip(eachCfg);
+			});
+		} else {
+			this.jq.qtip(this.cfg);
+		}
 	} else {
 		delete self.cfg.events.show; delete self.cfg.events.hide; // will call them manually
 		ice.ace.DelegateTooltips[self.cfg.id] = {};
