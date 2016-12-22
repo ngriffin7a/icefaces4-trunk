@@ -292,15 +292,16 @@
 				options.img = new Image();
 				options.image = ctx.getImageData(0, 0, options.width, options.height);
 
-				ctx.clearRect(0, 0, options.width, options.height);
-
 				var successCallback = function(stream){
 					window.stream = stream;
 					popup.style.width = ''; //workaround
 					video = document.createElement('video');
 					video.id = id + '_video';
 					videoCtr.appendChild(video);
-					
+					var bounds = video.getBoundingClientRect();
+					var videoHeight = bounds.bottom - bounds.top;
+					ctx.clearRect(0, 0, options.width, videoHeight);
+
 					if (navigator.mozGetUserMedia) {
 						video.mozSrcObject = stream;
 					} 
@@ -325,9 +326,9 @@
 							options.height = Math.floor(options.height);
 							options.width = Math.floor(options.width);
 							video.width = options.width;
-							video.height = options.height;
+							//video.height = options.height;
 							canvas.width = options.width;
-							canvas.height = options.height;
+							canvas.height = videoHeight;
 							streaming = true;
 
 							if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'Android') {
@@ -366,15 +367,18 @@
 					var data;
 					
 					canvas.width = options.width;
-					canvas.height = options.height;
-					
-					canvas.getContext('2d').drawImage(video, 0, 0, options.width, options.height);
+					//canvas.height = options.height;
+					var bounds = video.getBoundingClientRect();
+					var videoHeight = bounds.bottom - bounds.top;
+					canvas.height = videoHeight;
+
+					canvas.getContext('2d').drawImage(video, 0, 0, options.width, videoHeight);
 					
 					data = canvas.toDataURL('image/png');
 					photo.setAttribute('src', data);
 
 					videoCtr.className = 'mobi-hidden';
-					photo.style = 'width:' + options.width + 'px;height' + options.height + 'px;';
+					photo.style = 'width:' + options.width + 'px;height' + videoHeight + 'px;';
 					photo.className = '';
 					startbutton.classList.add('mobi-hidden');
 					togglebutton.classList.add('mobi-hidden');
@@ -452,9 +456,24 @@
 				function createThumbnailForVideo(){
 					var thumbCanvas = document.createElement('canvas');
 					var thumbCtx = thumbCanvas.getContext('2d');
-					thumbCanvas.width = 64;
-					thumbCanvas.height = 64;
-					thumbCtx.drawImage(photo, 0, 0, options.width, options.height, 0, 0, 64, 64);
+					var thumb = getThumbnail();
+
+					var thumbWidth, thumbHeight;
+					if (options.width >= canvas.height) {
+						thumbWidth = 64;
+						thumb.setAttribute('width', '64');
+						thumbHeight = (canvas.height * 64.0) / options.width;
+						thumb.setAttribute('height', '');
+					} else {
+						thumbHeight = 64;
+						thumb.setAttribute('height', '64');
+						thumbWidth = (options.width * 64.0) / canvas.height;
+						thumb.setAttribute('width', '');
+					}
+
+					thumbCanvas.width = thumbWidth;
+					thumbCanvas.height = thumbHeight;
+					thumbCtx.drawImage(photo, 0, 0, options.width, canvas.height, 0, 0, thumbWidth, thumbHeight);
 					updateThumbnail(thumbCanvas.toDataURL('image/png'));
 				}
 
