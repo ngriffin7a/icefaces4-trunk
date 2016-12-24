@@ -5,6 +5,7 @@ Custom fixes in .js file:
 * removed 'else' keyword when registering plugin with jQuery
 * commented out aria-atomic attributes, which were causing Javascript errors on IE7
 * removed mechanism that assigned new numeric ids to tooltip instances and instead added call to destroy the previous instance with the same id
+* added support for intelligent tooltip placement (ICE-10094)
 
 Custom fixes in .css file:
 * added custom extensions

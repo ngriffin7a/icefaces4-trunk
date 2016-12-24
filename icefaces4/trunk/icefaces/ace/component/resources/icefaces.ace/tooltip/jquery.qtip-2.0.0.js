@@ -864,6 +864,52 @@ PROTOTYPE._removeTitle = function(reposition)
 	if(!this._trigger('move', [position, viewport.elem || viewport], event)) { return this; }
 	delete position.adjusted;
 
+	// ICE-10094 intelligent tooltip placement
+	// vertical
+	var windowHeight = $(window).height();
+	var scrollTop = $(document).scrollTop();
+	if (my.y === TOP || my.y === CENTER) {
+		var lengthBelow = scrollTop + windowHeight - position.top;
+		if (lengthBelow < tooltipHeight) {
+			position.top = scrollTop + windowHeight - tooltipHeight;
+		}
+	} else {
+		var $target = $(posOptions.target).eq(0);
+		if($target.length > 0) {
+			var lengthAbove = $target.offset().top - scrollTop;
+			if (at.y === BOTTOM) {
+				lengthAbove += $target.outerHeight();
+			} else if (at.y === CENTER) {
+				lengthAbove += ($target.outerHeight() / 2);
+			}
+			if (lengthAbove < tooltipHeight) {
+				position.top = scrollTop;
+			}
+		}
+	}
+	// horizontal
+	var windowWidth = $(window).width();
+	var scrollLeft = $(document).scrollLeft();
+	if (my.x === LEFT || my.x === CENTER) {
+		var lengthRight = scrollLeft + windowWidth - position.left;
+		if (lengthRight < tooltipWidth) {
+			position.left = scrollLeft + windowWidth - tooltipWidth;
+		}
+	} else {
+		var $target = $(posOptions.target).eq(0);
+		if($target.length > 0) {
+			var lengthLeft = $target.offset().left - scrollLeft;
+			if (at.x === RIGHT) {
+				lengthLeft += $target.outerWidth();
+			} else if (at.x === CENTER) {
+				lengthLeft += ($target.outerWidth() / 2);
+			}
+			if (lengthLeft < tooltipWidth) {
+				position.left = scrollLeft;
+			}
+		}
+	}
+
 	// If effect is disabled, target it mouse, no animation is defined or positioning gives NaN out, set CSS directly
 	if(effect === FALSE || !visible || isNaN(position.left) || isNaN(position.top) || target === 'mouse' || !$.isFunction(posOptions.effect)) {
 		tooltip.css(position);
