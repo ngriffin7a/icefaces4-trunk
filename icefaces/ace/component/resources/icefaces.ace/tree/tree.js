@@ -101,6 +101,14 @@ ice.ace.Tree.prototype.tearDownSelection = function() {
 ice.ace.Tree.prototype.setupReordering = function () {
     var self = this;
 
+    var canceledReodering = false;
+    this.cancelOnEsc = function(e) {
+        if (e.which == 27) {
+            canceledReodering = true;
+        }
+    };
+    ice.ace.jq(document).on('keyup', this.cancelOnEsc);
+
     this.sortConfig = {
         connectWith:this.sortableTarget,
 
@@ -126,6 +134,14 @@ ice.ace.Tree.prototype.setupReordering = function () {
                     source = ice.ace.jq(ui.item);
                     index = source.index();
                 self.sendReorderingRequest(source, parent, index, self.cfg.indexIds);
+            }
+
+            if (canceledReodering) {
+                //reset flag
+                canceledReodering = false;
+                return false;
+            } else {
+                return true;
             }
         }
     };
@@ -200,6 +216,7 @@ ice.ace.Tree.prototype.sendReorderingRequest = function(source, parent, index) {
 ice.ace.Tree.prototype.tearDownReordering = function() {
     this.element.off("mouseover", this.sortableTarget);
     this.element.find(this.sortableTarget).sortable("destroy");
+    ice.ace.jq(document).off("keyup", this.cancelOnEsc);
 };
 
 ice.ace.Tree.prototype.setupSelection = function() {
