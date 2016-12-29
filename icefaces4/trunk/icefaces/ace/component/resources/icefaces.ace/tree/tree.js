@@ -48,6 +48,10 @@ ice.ace.Tree = function (clientId, cfg) {
         this.setupReordering();
     }
 
+    this.element
+        .on('keyup', function(ev) {
+            console.info(ev);
+        });
     // Cleanup
     if (!ice.ace.instance(this.cfg.id)) {
         var self = this;
@@ -106,7 +110,8 @@ ice.ace.Tree.prototype.setupReordering = function () {
                 var newParent = ice.ace.jq(this).closest('.if-node-cnt, .if-tree'),
                 source = ice.ace.jq(ui.item),
                 index = source.index();
-                //tear down selection to avoid its 'click' handlers
+
+                //tear down selection to avoid having its 'click' handlers invoked
                 self.tearDownSelection();
                 self.sendReorderingRequest(source, newParent, index);
                 //enable back the selection handlers
