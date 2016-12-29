@@ -106,7 +106,13 @@ ice.ace.Tree.prototype.setupReordering = function () {
                 var newParent = ice.ace.jq(this).closest('.if-node-cnt, .if-tree'),
                 source = ice.ace.jq(ui.item),
                 index = source.index();
+                //tear down selection to avoid its 'click' handlers
+                self.tearDownSelection();
                 self.sendReorderingRequest(source, newParent, index);
+                //enable back the selection handlers
+                setTimeout(function() {
+                    self.setupSelection();
+                }, 10);
             }
         },
         update:function (event, ui) {
@@ -117,7 +123,7 @@ ice.ace.Tree.prototype.setupReordering = function () {
                 self.sendReorderingRequest(source, parent, index, self.cfg.indexIds);
             }
         }
-    }
+    };
 	
 	if (this.cfg.handle) this.sortConfig.handle = this.cfg.handle;
 
@@ -127,7 +133,8 @@ ice.ace.Tree.prototype.setupReordering = function () {
 ice.ace.Tree.prototype.refreshSort = function(id) {
     ice.ace.jq(ice.ace.escapeClientId(id))
         .closest(this.sortableTarget).not('.ui-sortable').sortable(this.sortConfig);
-}
+};
+
 ice.ace.Tree.prototype.rs = ice.ace.Tree.prototype.refreshSort;
 
 ice.ace.Tree.prototype.reindexSiblings = function(source) {
@@ -155,7 +162,7 @@ ice.ace.Tree.prototype.droppedItemSameParent = function(item) {
             : this.getNodeKey(parent).split(':').length - 1;
 
     return item.is("[id^='"+parentid+"']") && (childSize - 1) == parentSize;
-}
+};
 
 ice.ace.Tree.prototype.sendReorderingRequest = function(source, parent, index) {
     var options = {
@@ -183,12 +190,12 @@ ice.ace.Tree.prototype.sendReorderingRequest = function(source, parent, index) {
     } else {
         ice.ace.AjaxRequest(options);
     }
-}
+};
 
 ice.ace.Tree.prototype.tearDownReordering = function() {
     this.element.off("mouseover", this.sortableTarget);
     this.element.find(this.sortableTarget).sortable("destroy");
-}
+};
 
 ice.ace.Tree.prototype.setupSelection = function() {
     var self = this;
