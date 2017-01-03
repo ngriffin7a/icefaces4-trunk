@@ -24,6 +24,16 @@ ice.ace.Tooltip = function(id, cfg) {
     if (prevTooltip) {
          prevTooltip.jq.qtip("destroy");
     }
+	// destroy previous qtip instances of this tooltip component if it was global
+	ice.ace.jq('[title]').each(function(){
+		var api = ice.ace.jq(this).qtip('api');
+		if (api) {
+			var tooltipId = api.get('id'); 
+			if (tooltipId) {
+				if (tooltipId.indexOf(id) == 0) api.destroy(true);
+			}
+		}
+	});
 	this.cfg = cfg;
 	this.target = "";
 	this.preventDisplay = false;
@@ -90,7 +100,7 @@ ice.ace.Tooltip = function(id, cfg) {
 		});
 		content.attr('style', contentStyle);
 	}
-	
+
 	if (!this.cfg.forDelegate) {
 		if (this.cfg.global) {
 			var count = 0;
@@ -100,7 +110,12 @@ ice.ace.Tooltip = function(id, cfg) {
 					eachCfg[p] = self.cfg[p];
 				}
 				eachCfg.id = self.cfg.id + '_' + count++;
-				ice.ace.jq(this).qtip(eachCfg);
+				if (eachCfg.content && eachCfg.content.text && eachCfg.content.text().trim() != '') {
+					ice.ace.jq(this).qtip(eachCfg);
+				} else {
+					eachCfg.content = { text: ice.ace.jq(this).attr('title') };
+					ice.ace.jq(this).qtip(eachCfg);
+				}
 			});
 		} else {
 			this.jq.qtip(this.cfg);
