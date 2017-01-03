@@ -48,10 +48,6 @@ ice.ace.Tree = function (clientId, cfg) {
         this.setupReordering();
     }
 
-    this.element
-        .on('keyup', function(ev) {
-            console.info(ev);
-        });
     // Cleanup
     if (!ice.ace.instance(this.cfg.id)) {
         var self = this;
