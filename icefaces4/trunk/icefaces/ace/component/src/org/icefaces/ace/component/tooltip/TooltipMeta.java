@@ -51,7 +51,7 @@ import javax.el.ValueExpression;
 
 public class TooltipMeta extends UIOutputMeta {
 
-	@Property(tlddoc="Boolean value specifying whether to create tooltips for all elements with a title attribute using the title attribute value.", defaultValue="false")
+	@Property(tlddoc="Boolean value specifying whether to create tooltips for all elements with a title attribute using the title attribute value. If explicit content is nested inside this component's tag, that content will be displayed instead of each element's respective title attributes' values.", defaultValue="false")
 	private boolean global;
 
 	@Property(tlddoc="The corner of the target element by which to position the tooltip by. E.g. topLeft, bottomRight. See <a href=\"http://craigsworks.com/projects/qtip/docs/tutorials/#position\">positioning</a> for all possible values.", defaultValue="bottomRight")

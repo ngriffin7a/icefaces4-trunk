@@ -110,7 +110,7 @@ ice.ace.Tooltip = function(id, cfg) {
 					eachCfg[p] = self.cfg[p];
 				}
 				eachCfg.id = self.cfg.id + '_' + count++;
-				if (eachCfg.content && eachCfg.content.text && eachCfg.content.text().trim() != '') {
+				if (eachCfg.content && eachCfg.content.text && eachCfg.content.text().replace(/^\s+|\s+$/g) != '') {
 					ice.ace.jq(this).qtip(eachCfg);
 				} else {
 					eachCfg.content = { text: ice.ace.jq(this).attr('title') };
