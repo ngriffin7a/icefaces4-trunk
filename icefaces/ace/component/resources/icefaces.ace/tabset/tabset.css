@@ -257,6 +257,10 @@ border-width:0;
 padding:0 1.4em;
 }
 
+.ui-tabs-panel {
+    box-sizing: border-box;
+}
+
 .ui-tabset-vertical .ui-tabs-hide {
 display:none !important;
 }
