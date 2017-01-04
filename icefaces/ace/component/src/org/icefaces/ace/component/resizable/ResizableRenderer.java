@@ -112,7 +112,8 @@ public class ResizableRenderer extends CoreRenderer {
         if (grid != 1) jb.entry("grid", grid);
         if (resizable.isAspectRatio()) jb.entry("aspectRatio", true);
         if (resizable.isGhost()) jb.entry("ghost", true);
-        if (resizable.isContainment()) jb.entry("containment", "ice.ace.escapeClientId('" + resizable.getParent().getClientId(context) +"')", true);
+        //use  parent element not the root element of the parent component
+        if (resizable.isContainment()) jb.entry("containment", "document.getElementById('" + resizable.getClientId(context) +"').parentNode", true);
 
         //Ajax resize
         if(resizable.getResizeListener() != null) {
