@@ -2890,12 +2890,15 @@
 
             // i'm a node, so compute top, left, right, bottom
             else {
-                var element = $(ce), p = [];
-                $([ "Top", "Right", "Left", "Bottom" ]).each(function(i, name) { p[i] = num(element.css("padding" + name)); });
+                var element = $(ce), p = [], m = [];
+                $([ "Top", "Right", "Left", "Bottom" ]).each(function(i, name) {
+                    p[i] = num(element.css("padding" + name));
+                    m[i] = num(element.css("margin" + name));
+                });
 
                 self.containerOffset = element.offset();
                 self.containerPosition = element.position();
-                self.containerSize = { height: (element.innerHeight() - p[3]), width: (element.innerWidth() - p[1]) };
+                self.containerSize = { height: (element.innerHeight() - p[3] - m[3] - p[0] - m[0]), width: (element.innerWidth() - p[1] - m[1] - p[2] - m[2]) };
 
                 var co = self.containerOffset, ch = self.containerSize.height,	cw = self.containerSize.width,
                         width = ($.ui.hasScroll(ce, "left") ? ce.scrollWidth : cw ), height = ($.ui.hasScroll(ce) ? ce.scrollHeight : ch);

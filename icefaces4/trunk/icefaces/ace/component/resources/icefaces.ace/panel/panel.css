@@ -57,6 +57,10 @@
     background: none;
     padding: 0.5em 1em;
 }
+.ui-panel-content {
+    height: 100%;
+    box-sizing: border-box;
+}
 .ui-panel .ui-panel-footer {
     border-width: 1px 0 0;
     margin: 0.5em 0 0;
