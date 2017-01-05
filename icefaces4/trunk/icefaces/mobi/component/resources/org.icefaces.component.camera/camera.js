@@ -332,19 +332,7 @@
 							streaming = true;
 
 							if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'Android') {
-								var notice = document.createElement('div');
-								notice.id = id + '_notice';
-								var bounds = video.getBoundingClientRect();
-								notice.setAttribute('style', 'position:fixed;z-index:10;'+
-									'background-color:#000;color:#fff;font-family:Verdana;font-size:x-large;font-weight:bold;'+
-									'text-align:center;width:'+video.offsetWidth+'px;height:'+video.offsetHeight+'px;'+
-									'top:'+bounds.top+'px;left:'+bounds.left+'px;opacity:0.3');
-								notice.innerHTML = 'Touch to Start Camera Stream';
-								notice.setAttribute('touchstart', 'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
-								'document.getElementById("'+id+'_video").play();');
-								notice.setAttribute('onclick',  'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
-								'document.getElementById("'+id+'_video").play();');
-								videoCtr.appendChild(notice);
+								addOverlay();
 							}
 						}
 					});   
@@ -362,6 +350,34 @@
 					document.body.removeChild(document.getElementById(id+'_popup'));
 					renderCameraFallbackFileUpload();
 				};
+
+				function orientationChangeListener() {
+					removeOverlay();
+					setTimeout(addOverlay, 1000);
+				}
+
+				function addOverlay() {
+					var notice = document.createElement('div');
+					notice.id = id + '_notice';
+					var bounds = video.getBoundingClientRect();
+					notice.setAttribute('style', 'position:fixed;z-index:10;'+
+						'background-color:#000;color:#fff;font-family:Verdana;font-size:x-large;font-weight:bold;'+
+						'text-align:center;width:'+video.offsetWidth+'px;height:'+video.offsetHeight+'px;'+
+						'top:'+bounds.top+'px;left:'+bounds.left+'px;opacity:0.3');
+					notice.innerHTML = 'Touch to Start Camera Stream';
+					notice.setAttribute('touchstart', 'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
+					'document.getElementById("'+id+'_video").play();');
+					notice.setAttribute('onclick',  'document.getElementById("'+id+'_videoCtr").removeChild(document.getElementById("'+id+'_notice"));'+
+					'document.getElementById("'+id+'_video").play();');
+					videoCtr.appendChild(notice);
+					window.addEventListener('orientationchange', orientationChangeListener);
+				}
+
+				function removeOverlay() {
+					var notice = document.getElementById(id + '_notice');
+					if (notice && videoCtr) videoCtr.removeChild(notice);
+					window.removeEventListener("orientationchange", orientationChangeListener);					
+				}
 				
 				function takepicture() {
 					var data;
@@ -393,9 +409,9 @@
 					startbutton.classList.remove('mobi-hidden');
 					togglebutton.classList.remove('mobi-hidden');
 					videoCtr.classList.remove('mobi-hidden');
-					var markup = buttonLabel;
+					var markup = '<span class="ui-button-text">' + buttonLabel + '</span>';
 					if (buttonImage) markup = '<img src="'+buttonImage+'" />';
-					cameraButton.innerText = markup;
+					cameraButton.innerHTML = markup;
 				}
 				
 				function keeppicture(){
@@ -413,6 +429,7 @@
 				}
 
 				function togglecamera(){
+					removeOverlay();
 					  if (window.stream && ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'Android') {
 						if (video) {
 							video.src = null;
