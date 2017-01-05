@@ -35,7 +35,7 @@ import org.icefaces.ace.renderkit.CoreRenderer;
 
 @MandatoryResourceComponent(tagName="linkButton", value="org.icefaces.ace.component.linkbutton.LinkButton")
 public class LinkButtonRenderer extends CoreRenderer {
-	private static final String[] excludedAttributes = {"onclick", "onkeydown", "hreflang", "href", "target", "style", "type"};
+	private static final String[] excludedAttributes = {"hreflang", "href", "target", "style", "type"};
 
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         Map requestParameterMap = facesContext.getExternalContext().getRequestParameterMap();
@@ -202,7 +202,11 @@ public class LinkButtonRenderer extends CoreRenderer {
                               String eventAttr, LinkButton linkButton,
                               List<UIParameter> uiParams, String clientId,
                               boolean doAction) throws IOException {
-
-        writer.writeAttribute(eventAttr, "if (!document.getElementById('" + clientId + "').widget) "+ getScript(facesContext, writer, linkButton, uiParams, clientId, doAction), null);
+        String value = "if (!document.getElementById('" + clientId + "').widget) " + getScript(facesContext, writer, linkButton, uiParams, clientId, doAction);
+        Object passthroughValue = linkButton.getAttributes().get(eventAttr);
+        if (passthroughValue != null) {
+            value = value + "; " + passthroughValue;
+        }
+        writer.writeAttribute(eventAttr, value, null);
     }
 }
