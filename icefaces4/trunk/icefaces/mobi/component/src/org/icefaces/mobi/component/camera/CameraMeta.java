@@ -54,11 +54,11 @@ import java.util.Map;
 public class CameraMeta extends UIComponentBaseMeta {
 
     @Property(defaultValue = "Integer.MIN_VALUE",
-            tlddoc = "The maxium allowed width of image on those platforms where image cropping is supported. ")
+            tlddoc = "The maxium allowed width of image on those platforms where image cropping is supported. This value is ignored if it is not positive.")
     private int maxwidth;
 
     @Property(defaultValue = "Integer.MIN_VALUE",
-            tlddoc = "The maximum allowed height of image on those platforms where image cropping is supported. ")
+            tlddoc = "The maximum allowed height of image on those platforms where image cropping is supported. This value is ignored if it is not positive.")
     private int maxheight;
 
     @Property(defaultValue = "false", tlddoc = TLDConstants.DISABLED)

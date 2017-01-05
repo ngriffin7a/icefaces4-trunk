@@ -382,19 +382,44 @@
 				function takepicture() {
 					var data;
 					
-					canvas.width = options.width;
-					//canvas.height = options.height;
+					canvas.width = video.width;
 					var bounds = video.getBoundingClientRect();
 					var videoHeight = bounds.bottom - bounds.top;
 					canvas.height = videoHeight;
 
-					canvas.getContext('2d').drawImage(video, 0, 0, options.width, videoHeight);
+					var width = video.width;
+					var height = videoHeight;
+
+					if (maxwidth > 0 || maxheight > 0) {
+						if (maxwidth && options.width > maxwidth) {
+							width = maxwidth;
+							height = (maxwidth * videoHeight) / video.width;
+							height = maxheight && height > maxheight ? maxheight : height;
+						} else if (maxheight && videoHeight > maxheight) {
+							height = maxheight;
+							width = (maxheight * video.width) / videoHeight;
+						}
+						try {
+							canvas.width = width;
+							canvas.height = height;
+							canvas.getContext('2d').drawImage(video, 0, 0, video.width, videoHeight, 0, 0, width, height);
+						} catch (e) {
+							canvas.width = video.width;
+							canvas.height = videoHeight;
+							canvas.getContext('2d').drawImage(video, 0, 0, video.width, videoHeight);
+							width = video.width;
+							height = videoHeight;
+						}
+					} else {
+						canvas.getContext('2d').drawImage(video, 0, 0, video.width, videoHeight);
+					}
 					
 					data = canvas.toDataURL('image/png');
 					photo.setAttribute('src', data);
 
 					videoCtr.className = 'mobi-hidden';
-					photo.style = 'width:' + options.width + 'px;height' + videoHeight + 'px;';
+					photo.width = width;
+					photo.height = height;
 					photo.className = '';
 					startbutton.classList.add('mobi-hidden');
 					togglebutton.classList.add('mobi-hidden');
@@ -476,21 +501,21 @@
 					var thumb = getThumbnail();
 
 					var thumbWidth, thumbHeight;
-					if (options.width >= canvas.height) {
+					if (photo.width >= photo.height) {
 						thumbWidth = 64;
 						thumb.setAttribute('width', '64');
-						thumbHeight = (canvas.height * 64.0) / options.width;
+						thumbHeight = (photo.height * 64.0) / photo.width;
 						thumb.setAttribute('height', '');
 					} else {
 						thumbHeight = 64;
 						thumb.setAttribute('height', '64');
-						thumbWidth = (options.width * 64.0) / canvas.height;
+						thumbWidth = (photo.width * 64.0) / photo.height;
 						thumb.setAttribute('width', '');
 					}
 
 					thumbCanvas.width = thumbWidth;
 					thumbCanvas.height = thumbHeight;
-					thumbCtx.drawImage(photo, 0, 0, options.width, canvas.height, 0, 0, thumbWidth, thumbHeight);
+					thumbCtx.drawImage(photo, 0, 0, photo.width, photo.height, 0, 0, thumbWidth, thumbHeight);
 					updateThumbnail(thumbCanvas.toDataURL('image/png'));
 				}
 
