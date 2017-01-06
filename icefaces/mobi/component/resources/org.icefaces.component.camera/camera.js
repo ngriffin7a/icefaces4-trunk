@@ -139,7 +139,9 @@
 								canvas = null;
 								fileInput.parentElement.removeChild(fileInput);
 								cameraButton.style.display = 'inline-block';
-								updateThumbnail(thumbDataURL);
+								if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'iOS')
+									updateThumbnail(event.target.result);
+								else updateThumbnail(thumbDataURL);
 								stopSpinner();
 							},0);
 							
