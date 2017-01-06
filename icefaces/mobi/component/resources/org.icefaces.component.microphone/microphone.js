@@ -224,7 +224,7 @@
 						recording = true;
 						keepbutton.classList.add('mobi-hidden');
 						recordbutton.innerHTML = 'Stop Recording';
-						audio.src = '';
+						delete audio.src;
 					}
 				}
 				
