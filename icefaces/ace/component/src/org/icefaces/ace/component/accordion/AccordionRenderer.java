@@ -168,7 +168,7 @@ public class AccordionRenderer extends CoreRenderer {
 		writer.writeAttribute("value", activeIndex < 0 ? "false" : "" + activeIndex, null);
 		writer.endElement("input");
 	}
-	
+
 	protected void encodeTabs(FacesContext context, Accordion acco) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String titles = "";
@@ -196,12 +196,8 @@ public class AccordionRenderer extends CoreRenderer {
 				writer.startElement("div", null);
                 writer.writeAttribute("id", clientId, null);
 
-				writer.startElement("div", null);
-                writer.writeAttribute("id", clientId + "_content", null);
-				
                 tab.encodeAll(context);
-                
-				writer.endElement("div");
+
 				writer.endElement("div");
 			}
 			if (!titles.isEmpty()){
