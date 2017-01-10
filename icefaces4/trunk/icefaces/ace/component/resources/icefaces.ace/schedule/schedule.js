@@ -26,6 +26,14 @@ ice.ace.Schedule = function(id, cfg) {
 	this.events = cfg.events;
 	var self = this;
 
+	// order events according to their server-side index
+	this.eventsMap = {};
+	var i;
+	for (i = 0; i < cfg.events.length; i++) {
+		var event = cfg.events[i];
+		this.eventsMap[''+event.index] = event;
+	}
+
 	this.cfg.currentYear = parseInt(document.getElementById(this.id + '_currentYear').getAttribute('value'));
 	this.cfg.currentMonth = parseInt(document.getElementById(this.id + '_currentMonth').getAttribute('value'));
 	this.cfg.currentDay = parseInt(document.getElementById(this.id + '_currentDay').getAttribute('value'));
@@ -60,7 +68,7 @@ ice.ace.Schedule = function(id, cfg) {
 		event.stopPropagation();
 		var node = event['target'];
 		var eventIndex = self.extractEventIndex(node);
-		var eventData = self.events[eventIndex];
+		var eventData = self.eventsMap[''+eventIndex];
 		// add selected styling
 		if (self.cfg.viewMode == 'week') {
 			self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
@@ -80,7 +88,7 @@ ice.ace.Schedule = function(id, cfg) {
 			event.stopImmediatePropagation();
 			var node = event['target'];
 			var eventIndex = self.extractEventIndex(node);
-			var eventData = self.events[eventIndex];
+			var eventData = self.eventsMap[''+eventIndex];
 			var markup = self.getEventDetailsMarkup(eventData, false,
 				self.cfg.isEventEditing, self.cfg.isEventDeletion);
 			if (self.cfg.eventDetails == 'sidebar')
@@ -93,7 +101,7 @@ ice.ace.Schedule = function(id, cfg) {
 		this.jqRoot.delegate('.schedule-event', 'mouseover', function(event) {
 			var node = event['target'];
 			var eventIndex = self.extractEventIndex(node);
-			var eventData = self.events[eventIndex];
+			var eventData = self.eventsMap[''+eventIndex];
 			var markup = self.getEventDetailsMarkup(eventData);
 			if (node.tagName == 'DIV') {
 				self.displayEventDetailsTooltip(markup, node);
@@ -765,7 +773,11 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 	this.jqRoot.find('.calendar-day-' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-'
 		+ today.getDate() + ' .schedule-state').addClass('ui-state-highlight');
 	// add event divs at appropriate positions
-	var i;
+	var i,j;
+	var timeSlots = [[], [], [], [], [], [], []];
+	for (i = 0; i < 7; i++) {
+		for (j = 0; j < 48; j++) timeSlots[i][j] = 0;
+	}
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
@@ -782,24 +794,33 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 
 			var hour = event.startTime.substring(0,2);
 			var minutes = parseInt(event.startTime.substring(3,5));
-			var selector = '.schedule-dow-'+dow+'.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
+			var startingTimeSlot = hour+(minutes >= 30 ? '30' : '00');
+			var selector = '.schedule-dow-'+dow+'.schedule-time-'+startingTimeSlot;
 			var timeCell = this.jq.find(selector);
 			var position = timeCell.position();
 			var width = timeCell.outerWidth() - 1;
 			var endHour = event.endTime.substring(0,2);
 			var endMinutes = parseInt(event.endTime.substring(3,5));
-			var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
+			var endingTimeSlot = this.determinePreviousTimeCell(endHour, endMinutes);
+			var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+endingTimeSlot;
 			var endTimeCell = this.jq.find(endSelector);
 			var endPosition = endTimeCell.position();
 			var height = endTimeCell.outerHeight() - 1;
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
+			var timeSlotMultiplicity = timeSlots[dow][this.timeSlotIndexMap[startingTimeSlot]];
+			timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+			var multiplicityAdjustment = timeSlotMultiplicity * 5;
 			var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
-			eventElement.css({position:'absolute', top:position.top+(isChrome?1:0), left:position.left+(isChrome?1:0), width: width + 'px', 
+			eventElement.css({position:'absolute',
+				top:position.top+(isChrome?1:0),
+				left:position.left+multiplicityAdjustment+(isChrome?1:0),
+				width: (width - multiplicityAdjustment) + 'px', 
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+this.getMonthNameShort(date.getMonth())+' '+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			this.markUsedTimeSlots(timeSlots[dow], startingTimeSlot, endingTimeSlot);
 			listing++;
 		}
 	}
@@ -886,6 +907,8 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 	this.jq.find('.schedule-cell.schedule-dow-single').addClass('calendar-day-'+currentYear+'-'+(displayMonth < 10 ? '0' + displayMonth : displayMonth)+'-'+(currentDay < 10 ? '0' + currentDay : currentDay));
 	// add event divs at appropriate positions
 	var i;
+	var timeSlots = [];
+	for (i = 0; i < 48; i++) timeSlots[i] = 0;
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
@@ -896,24 +919,33 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 		if (date.getFullYear() == currentYear && date.getMonth() == currentMonth && date.getDate() == currentDay) {
 			var hour = event.startTime.substring(0,2);
 			var minutes = parseInt(event.startTime.substring(3,5));
-			var selector = '.schedule-dow-single.schedule-time-'+hour+(minutes >= 30 ? '30' : '00');
+			var startingTimeSlot = hour+(minutes >= 30 ? '30' : '00');
+			var selector = '.schedule-dow-single.schedule-time-'+startingTimeSlot;
 			var timeCell = this.jq.find(selector);
 			var position = timeCell.position();
 			var width = timeCell.outerWidth() - 1;
 			var endHour = event.endTime.substring(0,2);
 			var endMinutes = parseInt(event.endTime.substring(3,5));
-			var endSelector = '.schedule-dow-single.schedule-time-'+this.determinePreviousTimeCell(endHour, endMinutes);
+			var endingTimeSlot = this.determinePreviousTimeCell(endHour, endMinutes);
+			var endSelector = '.schedule-dow-single.schedule-time-'+endingTimeSlot;
 			var endTimeCell = this.jq.find(endSelector);
 			var endPosition = endTimeCell.position();
 			var height = endTimeCell.outerHeight() - 1;
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
+			var timeSlotMultiplicity = timeSlots[this.timeSlotIndexMap[startingTimeSlot]];
+			timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+			var multiplicityAdjustment = timeSlotMultiplicity * 5;
 			var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
-			eventElement.css({position:'absolute', top:position.top+(isChrome?1:0), left:position.left+(isChrome?1:0), width: width + 'px',
+			eventElement.css({position:'absolute',
+				top:position.top+(isChrome?1:0),
+				left:position.left+multiplicityAdjustment+(isChrome?1:0),
+				width: (width - multiplicityAdjustment) + 'px',
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startTime+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			this.markUsedTimeSlots(timeSlots, startingTimeSlot, endingTimeSlot);
 			listing++;
 		}
 	}
@@ -924,6 +956,22 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 		}
 		delete window[this.id + '_lastScrollTop'];
 	}
+};
+
+ice.ace.Schedule.prototype.markUsedTimeSlots = function(timeSlots, startingTimeSlot, endingTimeSlot) {
+	var startingIndex = this.timeSlotIndexMap[startingTimeSlot];
+	var endingIndex = this.timeSlotIndexMap[endingTimeSlot];
+	var i;
+	if (endingIndex > startingIndex) // temporary measure to avoid errors with events that span multiple days
+	for (i = startingIndex; i <= endingIndex; i++) timeSlots[i] = timeSlots[i] + 1;
+};
+
+ice.ace.Schedule.prototype.timeSlotIndexMap = {'0000':0, '0030':1, '0100':2, '0130':3, '0200':4, '0230':5,
+	'0300':6, '0330':7, '0400':8, '0430':9, '0500':10, '0530':11, '0600':12, '0630':13, '7000':14, '0730':15,
+	'0800':16, '0830':17, '0900':18, '0930':19, '1000':20, '1030':21, '1100':22, '1130':23, '1200':24, '1230':25,
+	'1300':26, '1330':27, '1400':28, '1430':29, '1500':30, '1530':31, '1600':32, '1630':33, '1700':34, '1730':35,
+	'1800':36, '1830':37, '1900':38, '1930':39, '2000':40, '2030':41, '2100':42, '2130':43, '2200':44, '2230':45,
+	'2300':46, '2330':47
 };
 
 ice.ace.Schedule.prototype.addNavigationListeners = function() {

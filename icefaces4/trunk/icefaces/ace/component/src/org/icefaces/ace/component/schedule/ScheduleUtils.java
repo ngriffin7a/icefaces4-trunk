@@ -363,4 +363,28 @@ public class ScheduleUtils {
 
 		return endDateTimeValues;
 	}
+
+	public static class ScheduleEventDecorator extends ScheduleEvent implements Comparable<ScheduleEventDecorator> {
+
+		private int index;
+
+		public ScheduleEventDecorator(ScheduleEvent original, int index) {
+			this.setId(original.getId());
+			this.setTitle(original.getTitle());
+			this.setStartDate(original.getStartDate());
+			this.setEndDate(original.getEndDate());
+			this.setLocation(original.getLocation());
+			this.setStyleClass(original.getStyleClass());
+			this.setNotes(original.getNotes());
+			this.index = index;
+		}
+
+		public int getIndex() { return index; }
+
+		public int compareTo(ScheduleEventDecorator other) {
+			if (this.getStartDate().after(other.getStartDate())) return 1;
+			else if (this.getStartDate().before(other.getStartDate())) return -1;
+			else return 0;
+		}
+	}
 }
