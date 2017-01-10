@@ -26,8 +26,10 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.model.DataModel;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -244,14 +246,23 @@ public class ScheduleRenderer extends CoreRenderer {
 
 					jb.beginArray("events");
 
+					ArrayList<ScheduleUtils.ScheduleEventDecorator> sortedEvents = 
+						new ArrayList<ScheduleUtils.ScheduleEventDecorator>();
 					int rowCount = schedule.getRowCount();
 					for (int i = 0; i < rowCount; i++) {
 						schedule.setRowIndex(i);
 						ScheduleEvent scheduleEvent = (ScheduleEvent) schedule.getRowData();
+						sortedEvents.add(new ScheduleUtils.ScheduleEventDecorator(scheduleEvent, i));
+					}
+
+					Collections.sort(sortedEvents); // sort in chronological order
+
+					for (int i = 0; i < rowCount; i++) {
+						ScheduleUtils.ScheduleEventDecorator scheduleEvent = sortedEvents.get(i);
 						Date startDate = ScheduleUtils.toTimeZoneFromUTC(scheduleEvent.getStartDate(), timeZone);
 						Date endDate = ScheduleUtils.toTimeZoneFromUTC(scheduleEvent.getEndDate(), timeZone);
 						jb.beginMap();
-						jb.entry("index", i);
+						jb.entry("index", scheduleEvent.getIndex());
 						ScheduleUtils.DateIntegerValues startDateValues = ScheduleUtils.getDateIntegerValues(startDate);
 						jb.entry("startDate", convertDateToClientFormat(startDateValues));
 						jb.entry("startTime", convertTimeToClientFormat(startDateValues));
