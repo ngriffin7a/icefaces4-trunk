@@ -75,10 +75,12 @@ public class ResizableRenderer extends CoreRenderer {
 		writer.writeAttribute("type", "text/javascript", null);
 
         //If it is an image wait until the image is loaded
-        if(target instanceof UIGraphic)
+        if(target instanceof UIGraphic) {
             writer.write("ice.ace.jq(ice.ace.escapeClientId('" + targetId + "')).load(function(){");
-        else
+        } else {
             writer.write("ice.ace.jq(function(){");
+        }
+        writer.write("try {");
 
 		JSONBuilder jb = JSONBuilder.create();
 		jb.beginFunction("ice.ace.create")
@@ -106,6 +108,7 @@ public class ResizableRenderer extends CoreRenderer {
             jb.entry("animateDuration", resizable.getEffectDuration());
         }
 
+
         //Config
         if (resizable.isProxy()) jb.entry("helper", "ui-resizable-proxy");
         if (handles != null) jb.entry("handles", handles);
@@ -113,7 +116,7 @@ public class ResizableRenderer extends CoreRenderer {
         if (resizable.isAspectRatio()) jb.entry("aspectRatio", true);
         if (resizable.isGhost()) jb.entry("ghost", true);
         //use  parent element not the root element of the parent component
-        if (resizable.isContainment()) jb.entry("containment", "document.getElementById('" + resizable.getClientId(context) +"').parentNode", true);
+        if (resizable.isContainment()) jb.entry("containment", "document.getElementById('" + target.getClientId(context) +"').parentNode", true);
 
         //Ajax resize
         if(resizable.getResizeListener() != null) {
@@ -125,7 +128,8 @@ public class ResizableRenderer extends CoreRenderer {
         jb.endMap().endArray().endFunction();
 
         writer.write(jb.toString());
-		writer.write("});");
+        writer.write("} catch (ex) {}");
+        writer.write("});");
 		writer.endElement("script");
         writer.endElement("span");
 	}

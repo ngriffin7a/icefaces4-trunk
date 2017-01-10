@@ -15,9 +15,14 @@
  */
 
 .ace-stackpane {
+    box-sizing: border-box;
+    height: 100%;
+}
+.ace-stackpane-visible {
     opacity:1;
     visibility: visible;
     display: block;
+    height: 100%;
 }
 .ace-stackpane-hidden {
     opacity: 0;
