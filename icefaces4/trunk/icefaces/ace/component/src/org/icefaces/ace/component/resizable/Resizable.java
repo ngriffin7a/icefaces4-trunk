@@ -32,17 +32,18 @@
 
 package org.icefaces.ace.component.resizable;
 
-import javax.faces.component.UIComponentBase;
+import javax.faces.FacesException;
+import javax.faces.component.*;
 import javax.faces.context.FacesContext;
-import javax.faces.component.UINamingContainer;
-import javax.el.ValueExpression;
 import javax.el.MethodExpression;
+import javax.faces.context.ResponseWriter;
 import javax.faces.event.AbortProcessingException;
-import org.icefaces.resources.ICEResourceDependencies;
-import org.icefaces.resources.ICEResourceDependency;
+
+import org.icefaces.ace.util.JSONBuilder;
+
 import javax.faces.event.AjaxBehaviorEvent;
-import java.util.List;
-import java.util.ArrayList;
+import javax.faces.render.Renderer;
+import java.io.IOException;
 
 public class Resizable extends ResizableBase{
 
@@ -61,8 +62,104 @@ public class Resizable extends ResizableBase{
 		}
 	}
 
-	protected FacesContext getFacesContext() {
-		return FacesContext.getCurrentInstance();
-	}
 
+    public void attachRenderer() {
+        final Resizable resizable = this;
+        final UIComponent target = findTarget(resizable);
+
+        UIOutput out = new Setup(target, resizable);
+        target.getChildren().add(0, out);
+    }
+
+    private UIComponent findTarget(Resizable resizable) {
+        String _for = resizable.getFor();
+
+        if (_for != null) {
+            UIComponent component = resizable.findComponent(_for);
+            if (component == null)
+                throw new FacesException("Cannot find component \"" + _for + "\" in view.");
+            else
+                return component;
+        } else {
+            return resizable.getParent();
+        }
+    }
+
+    private class Setup extends UIOutput {
+        private final UIComponent target;
+        private final Resizable resizable;
+
+        public Setup(UIComponent target, Resizable resizable) {
+            this.target = target;
+            this.resizable = resizable;
+        }
+
+        public void encodeEnd(FacesContext context) throws IOException {
+            ResponseWriter writer = context.getResponseWriter();
+            String clientId = this.getClientId(context);
+            String targetId = target.getClientId(context);
+            String handles = resizable.getHandles();
+            int grid = resizable.getGrid();
+
+            writer.startElement("span", this);
+            writer.writeAttribute("id", clientId, null);
+            writer.startElement("script", null);
+            writer.writeAttribute("type", "text/javascript", null);
+
+            //If it is an image wait until the image is loaded
+            if(target instanceof UIGraphic) {
+                writer.write("ice.ace.jq(ice.ace.escapeClientId('" + targetId + "')).load(function(){");
+            } else {
+                writer.write("ice.ace.jq(function(){");
+            }
+
+            JSONBuilder jb = JSONBuilder.create();
+            jb.beginFunction("ice.ace.create")
+                    .item("Resizable")
+                    .beginArray()
+                    .item(clientId)
+                    .beginMap()
+                    .entry("target", targetId);
+
+            //Boundaries
+            int minWidth = resizable.getMinWidth();
+            int maxWidth = resizable.getMaxWidth();
+            int minHeight = resizable.getMinHeight();
+            int maxHeight = resizable.getMaxHeight();
+
+            if (minWidth != Integer.MIN_VALUE) jb.entry("minWidth", minWidth);
+            if (maxWidth != Integer.MAX_VALUE) jb.entry("maxWidth", maxWidth);
+            if (minHeight != Integer.MIN_VALUE) jb.entry("minHeight", minHeight);
+            if (maxHeight != Integer.MAX_VALUE) jb.entry("maxHeight", maxHeight);
+
+            //Animation
+            if(resizable.isAnimate()) {
+                jb.entry("animate", true);
+                jb.entry("animateEasing", resizable.getEffect());
+                jb.entry("animateDuration", resizable.getEffectDuration());
+            }
+
+
+            //Config
+            if (resizable.isProxy()) jb.entry("helper", "ui-resizable-proxy");
+            if (handles != null) jb.entry("handles", handles);
+            if (grid != 1) jb.entry("grid", grid);
+            if (resizable.isAspectRatio()) jb.entry("aspectRatio", true);
+            if (resizable.isGhost()) jb.entry("ghost", true);
+            //use  parent element not the root element of the parent component
+            if (resizable.isContainment()) jb.entry("containment", "document.getElementById('" + target.getClientId(context) +"').parentNode", true);
+
+            //Ajax resize
+            if(resizable.getResizeListener() != null) {
+                jb.entry("ajaxResize", true);
+            }
+
+            jb.endMap().endArray().endFunction();
+
+            writer.write(jb.toString());
+            writer.write("});");
+            writer.endElement("script");
+            writer.endElement("span");
+        }
+    }
 }
