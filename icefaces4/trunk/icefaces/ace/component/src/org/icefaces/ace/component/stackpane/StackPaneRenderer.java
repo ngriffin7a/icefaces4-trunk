@@ -56,7 +56,9 @@ public class StackPaneRenderer extends CoreRenderer {
         writer.startElement(DIV_ELEM, pane);
         writer.writeAttribute(ID_ATTR, clientId, null);
         if (pane.getStyleClass() != null) {
-            writer.writeAttribute(CLASS_ATTR, pane.getStyleClass(), null);
+            writer.writeAttribute(CLASS_ATTR, StackPane.CONTENT_PANE + pane.getStyleClass(), null);
+        } else {
+            writer.writeAttribute(CLASS_ATTR, StackPane.CONTENT_PANE, null);
         }
         if (pane.getStyle() != null) {
             writer.writeAttribute(STYLE_ATTR, pane.getStyle(), null);

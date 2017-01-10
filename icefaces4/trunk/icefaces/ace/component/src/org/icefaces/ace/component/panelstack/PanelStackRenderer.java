@@ -43,7 +43,8 @@ public class PanelStackRenderer extends CoreRenderer {
             /* write out root tag.   */
          writer.startElement(HTML.DIV_ELEM, uiComponent);
          writer.writeAttribute(HTML.ID_ATTR, clientId, HTML.ID_ATTR);
-         writer.writeAttribute(HTML.CLASS_ATTR, "ace-panelstack", null);
+        writer.writeAttribute(HTML.CLASS_ATTR, "ace-panelstack", null);
+        writer.writeAttribute(HTML.STYLE_ATTR, container.getStyle(), null);
 
     }
 
