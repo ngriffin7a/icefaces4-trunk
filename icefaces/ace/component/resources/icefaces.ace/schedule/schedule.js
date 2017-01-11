@@ -774,9 +774,9 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 		+ today.getDate() + ' .schedule-state').addClass('ui-state-highlight');
 	// add event divs at appropriate positions
 	var i,j;
-	var timeSlots = [[], [], [], [], [], [], []];
+	this.weekTimeSlots = [[], [], [], [], [], [], []];
 	for (i = 0; i < 7; i++) {
-		for (j = 0; j < 48; j++) timeSlots[i][j] = 0;
+		for (j = 0; j < 48; j++) this.weekTimeSlots[i][j] = 0;
 	}
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
@@ -809,7 +809,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
-			var timeSlotMultiplicity = timeSlots[dow][this.timeSlotIndexMap[startingTimeSlot]];
+			var timeSlotMultiplicity = this.weekTimeSlots[dow][this.timeSlotIndexMap[startingTimeSlot]];
 			timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
 			var multiplicityAdjustment = timeSlotMultiplicity * 5;
 			var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
@@ -820,7 +820,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+this.getMonthNameShort(date.getMonth())+' '+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
-			this.markUsedTimeSlots(timeSlots[dow], startingTimeSlot, endingTimeSlot);
+			this.markUsedTimeSlots(this.weekTimeSlots[dow], startingTimeSlot, endingTimeSlot);
 			listing++;
 		}
 	}
@@ -907,8 +907,8 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 	this.jq.find('.schedule-cell.schedule-dow-single').addClass('calendar-day-'+currentYear+'-'+(displayMonth < 10 ? '0' + displayMonth : displayMonth)+'-'+(currentDay < 10 ? '0' + currentDay : currentDay));
 	// add event divs at appropriate positions
 	var i;
-	var timeSlots = [];
-	for (i = 0; i < 48; i++) timeSlots[i] = 0;
+	this.dayTimeSlots = [];
+	for (i = 0; i < 48; i++) this.dayTimeSlots[i] = 0;
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
@@ -934,7 +934,7 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			eventElement.html(event.startTime + ' ' + event.title);
-			var timeSlotMultiplicity = timeSlots[this.timeSlotIndexMap[startingTimeSlot]];
+			var timeSlotMultiplicity = this.dayTimeSlots[this.timeSlotIndexMap[startingTimeSlot]];
 			timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
 			var multiplicityAdjustment = timeSlotMultiplicity * 5;
 			var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
@@ -945,7 +945,7 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startTime+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
-			this.markUsedTimeSlots(timeSlots, startingTimeSlot, endingTimeSlot);
+			this.markUsedTimeSlots(this.dayTimeSlots, startingTimeSlot, endingTimeSlot);
 			listing++;
 		}
 	}
@@ -1239,17 +1239,39 @@ ice.ace.Schedule.prototype.addResizeListeners = function() {
 				if (self.cfg.viewMode == 'day') {
 					var timeCell = self.jq.find('.schedule-dow-single.schedule-time-0000');
 					var timeCellWidth = timeCell.outerWidth() - 1;
-					self.jq.find('.schedule-event').css({width: timeCellWidth});
 					var timeCellLeft = timeCell.position().left;
-					self.jq.find('.schedule-event').css({left: timeCellLeft + (isChrome?1:0)});
+					var events = self.jq.find('.schedule-event');
+					events.each(function(){
+						var eventIndex = self.extractEventIndex(this);
+						var eventData = self.eventsMap[''+eventIndex];
+						var hour = eventData.startTime.substring(0,2);
+						var minutes = parseInt(eventData.startTime.substring(3,5));
+						var startingTimeSlot = hour+(minutes >= 30 ? '30' : '00');
+						var timeSlotMultiplicity = self.dayTimeSlots[self.timeSlotIndexMap[startingTimeSlot]] - 1;
+						timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+						var multiplicityAdjustment = timeSlotMultiplicity * 5;
+						ice.ace.jq(this).css({width: timeCellWidth - multiplicityAdjustment,
+							left: timeCellLeft + multiplicityAdjustment + (isChrome?1:0)});
+					});
 				} else if (self.cfg.viewMode == 'week') {
 					var i;
 					for (i = 0; i < 7; i++) {
 						var timeCell = self.jq.find('.schedule-dow-' + i + '.schedule-time-0000');
 						var timeCellWidth = timeCell.outerWidth() - 1;
-						self.jq.find('.schedule-event.schedule-dow-' + i).css({width: timeCellWidth});
 						var timeCellLeft = timeCell.position().left;
-						self.jq.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + (isChrome?1:0)});
+						var events = self.jq.find('.schedule-event.schedule-dow-' + i);
+						events.each(function(){
+							var eventIndex = self.extractEventIndex(this);
+							var eventData = self.eventsMap[''+eventIndex];
+							var hour = eventData.startTime.substring(0,2);
+							var minutes = parseInt(eventData.startTime.substring(3,5));
+							var startingTimeSlot = hour+(minutes >= 30 ? '30' : '00');
+							var timeSlotMultiplicity = self.weekTimeSlots[i][self.timeSlotIndexMap[startingTimeSlot]] - 1;
+							timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+							var multiplicityAdjustment = timeSlotMultiplicity * 5;
+							ice.ace.jq(this).css({width: timeCellWidth - multiplicityAdjustment,
+								left: timeCellLeft + multiplicityAdjustment + (isChrome?1:0)});
+						});
 					}
 				}
 			}
@@ -1271,17 +1293,39 @@ ice.ace.Schedule.prototype.addResizeListeners = function() {
 		if (self.cfg.viewMode == 'day') {
 			var timeCell = root.find('.schedule-dow-single.schedule-time-0000');
 			var timeCellWidth = timeCell.outerWidth() - 1;
-			root.find('.schedule-event').css({width: timeCellWidth});
 			var timeCellLeft = timeCell.position().left;
-			root.find('.schedule-event').css({left: timeCellLeft + (isChrome?1:0)});
+			var events = root.find('.schedule-event');
+			events.each(function(){
+				var eventIndex = self.extractEventIndex(this);
+				var eventData = self.eventsMap[''+eventIndex];
+				var hour = eventData.startTime.substring(0,2);
+				var minutes = parseInt(eventData.startTime.substring(3,5));
+				var startingTimeSlot = hour+(minutes >= 30 ? '30' : '00');
+				var timeSlotMultiplicity = self.dayTimeSlots[self.timeSlotIndexMap[startingTimeSlot]] - 1;
+				timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+				var multiplicityAdjustment = timeSlotMultiplicity * 5;
+				ice.ace.jq(this).css({width: timeCellWidth - multiplicityAdjustment,
+					left: timeCellLeft + multiplicityAdjustment + (isChrome?1:0)});
+			});
 		} else if (self.cfg.viewMode == 'week') {
 			var i;
 			for (i = 0; i < 7; i++) {
 				var timeCell = root.find('.schedule-dow-' + i + '.schedule-time-0000');
 				var timeCellWidth = timeCell.outerWidth() - 1;
-				root.find('.schedule-event.schedule-dow-' + i).css({width: timeCellWidth});
 				var timeCellLeft = timeCell.position().left;
-				root.find('.schedule-event.schedule-dow-' + i).css({left: timeCellLeft + (isChrome?1:0)});
+				var events = root.find('.schedule-event.schedule-dow-' + i)
+				events.each(function(){
+					var eventIndex = self.extractEventIndex(this);
+					var eventData = self.eventsMap[''+eventIndex];
+					var hour = eventData.startTime.substring(0,2);
+					var minutes = parseInt(eventData.startTime.substring(3,5));
+					var startingTimeSlot = hour+(minutes >= 30 ? '30' : '00');
+					var timeSlotMultiplicity = self.weekTimeSlots[i][self.timeSlotIndexMap[startingTimeSlot]] - 1;
+					timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+					var multiplicityAdjustment = timeSlotMultiplicity * 5;
+					ice.ace.jq(this).css({width: timeCellWidth - multiplicityAdjustment,
+						left: timeCellLeft + multiplicityAdjustment + (isChrome?1:0)});
+				});
 			}
 		}
 	};
