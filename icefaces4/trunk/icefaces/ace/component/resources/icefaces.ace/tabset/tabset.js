@@ -784,6 +784,7 @@ ice.ace.tabset = {
 
     createDiv : function(preStyleHidden) {
         var theDiv = document.createElement('div');
+        theDiv.style.height = '100%';
         if (preStyleHidden) {
             ////YAHOO.util.Dom.addClass(theDiv, YAHOO.widget.Tab.prototype.HIDDEN_CLASSNAME);
             // Y.YUI2.util.Dom.hasClass(theDiv, 'yui-hidden');
