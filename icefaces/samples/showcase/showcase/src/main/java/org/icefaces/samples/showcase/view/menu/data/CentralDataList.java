@@ -181,6 +181,8 @@ public class CentralDataList {
 								"colorEntry", "colorEntry.xhtml", "ColorEntryBean.java"),
 						new Demo(msgs("menu.ace.colorEntry.subMenu.popup"), msgs("example.ace.colorEntry.popup.description"),
 								"colorEntry", "colorEntryPopup.xhtml", "ColorEntryPopupBean.java"),
+						new Demo(msgs("menu.ace.colorEntry.subMenu.popupIconOnly"), msgs("example.ace.colorEntry.popupIconOnly.description"),
+								"colorEntry", "colorEntryPopupIconOnly.xhtml", "ColorEntryPopupIconOnlyBean.java"),
 						new Demo(msgs("menu.ace.colorEntry.subMenu.options"), msgs("example.ace.colorEntry.options.description"),
 								"colorEntry", "colorEntryOptions.xhtml", "ColorEntryOptionsBean.java"),
 						new Demo(msgs("menu.ace.colorEntry.subMenu.customize"), msgs("example.ace.colorEntry.customize.description"),

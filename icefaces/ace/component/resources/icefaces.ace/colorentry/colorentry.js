@@ -65,6 +65,7 @@ ice.ace.ColorEntryInit = function( cfg) {
         var INPUT_EMPTY_STYLE_CLASS = "ui-inputfield ui-widget ui-state-default ui-corner-all";
         var id = options.id;
         var behaviors = cfg.behaviors || null;
+        var positionId = ice.ace.escapeClientId(id);
         var input = ice.ace.jq(ice.ace.escapeClientId(id) + "_input");
         var hidden = ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden");
         var trigger = null;
@@ -75,6 +76,12 @@ ice.ace.ColorEntryInit = function( cfg) {
         var buttonText = options.buttonText || "";
         var buttonImage = options.buttonImage || null;
         var buttonImageOnly = options.buttonImageOnly || false;
+        var myposition={
+            of: positionId
+        }
+        if (buttonImageOnly){
+            options.position=myposition;
+        }
         var initEltSet = ice.ace.jq();
         var inline = (options.inline) || false;
         if (inline && !options.parts) {  //default inline component
