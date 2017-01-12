@@ -208,4 +208,8 @@ public class PropertyValues {
             javadocGet = javadocGet + (javadocGet.length() > 0 ? " " : "") + defaultValDesc;
         }
     }
+
+    public String getGeneratedType() {
+        return Utility.getGeneratedType(this);
+    }
 }

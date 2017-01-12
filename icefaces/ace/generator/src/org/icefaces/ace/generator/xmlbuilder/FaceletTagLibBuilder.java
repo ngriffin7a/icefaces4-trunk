@@ -105,7 +105,7 @@ public class FaceletTagLibBuilder extends XMLBuilder{
         }
         addNode(attribute, "required",required);
 
-        String returnAndArgumentType = Utility.getGeneratedType(propertyValues);
+        String returnAndArgumentType = propertyValues.getGeneratedType();
         addNode(attribute, "type", returnAndArgumentType);            
     }    
 }

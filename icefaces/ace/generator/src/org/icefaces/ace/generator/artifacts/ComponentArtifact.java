@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.generator.artifacts;
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.generator.behavior.Behavior;
 import org.icefaces.ace.generator.context.ComponentContext;
 import org.icefaces.ace.generator.context.GeneratorContext;
@@ -83,6 +84,7 @@ public class ComponentArtifact extends Artifact{
             writer.append("import org.icefaces.resources.ICEResourceDependencies;\n");
             writer.append("import org.icefaces.resources.ICEResourceDependency;\n\n");
             writer.append("import org.icefaces.resources.ICEBrowserDependency;\n\n");
+            writer.append("import org.icefaces.ace.component.PassthroughAttributes;\n\n");
             writer.append("import org.icefaces.resources.BrowserType;\n\n");
         }
         if (clazz.isAnnotationPresent(ICEResourceLibrary.class)) {
@@ -127,7 +129,13 @@ public class ComponentArtifact extends Artifact{
             ResourceDependency rd = (ResourceDependency) clazz.getAnnotation(ResourceDependency.class);
             writer.append("@ResourceDependency(name=\"" + rd.name() + "\",library=\"" + rd.library() + "\",target=\"" + rd.target() + "\")\n\n");
         }
-        
+
+        // copy @PassthroughAttributes annotations
+        if (clazz.isAnnotationPresent(PassthroughAttributes.class)) {
+            StringBuilder sb = writePassthroughAttributes(clazz);
+            writer.append(sb.toString());
+        }
+
         component.componentClass();
         writer.append("public ");
         if (!component.componentClass().equals(generatedClassName)) {
@@ -169,6 +177,24 @@ public class ComponentArtifact extends Artifact{
         writer.append("\n\tpublic String getFamily() {\n\t\treturn \"");
         writer.append(Utility.getFamily(component));
         writer.append("\";\n\t}\n\n");
+    }
+
+    private StringBuilder writePassthroughAttributes(Class clazz) {
+        PassthroughAttributes passthroughAttributes = (PassthroughAttributes)clazz.getAnnotation(PassthroughAttributes.class);
+        StringBuilder sb = new StringBuilder();
+        sb.append("@PassthroughAttributes({");
+        String[] attributeNames = passthroughAttributes.value();
+        for (int i = 0; i < attributeNames.length; i++) {
+            String attributeName = attributeNames[i];
+            sb.append("\"");
+            sb.append(attributeName);
+            sb.append("\"");
+            if (i < attributeNames.length - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("})\n");
+        return sb;
     }
 
 
@@ -717,33 +743,6 @@ public class ComponentArtifact extends Artifact{
         writer.append("\t\treturn setOfUsedProperties.size();\n");
         writer.append("\t}\n");
     }
-/*
-    private void handleAttribute() {
-        writer.append("\n\tprivate void handleAttribute(String name, Object value) {\n");
-        writer.append("\t\tList<String> setAttributes = (List<String>) this.getAttributes().get(\"javax.faces.component.UIComponentBase.attributesThatAreSet\");\n");
-        writer.append("\t\tif (setAttributes == null) {\n");
-        writer.append("\t\t\tString cname = this.getClass().getName();\n");
-        writer.append("\t\t\tif (cname != null) {\n");
-        writer.append("\t\t\t\tsetAttributes = new ArrayList<String>(6);\n");
-        writer.append("\t\t\t\tthis.getAttributes().put(\"javax.faces.component.UIComponentBase.attributesThatAreSet\", setAttributes);\n");
-        writer.append("\t\t\t}\n\t\t}\n");
-        writer.append("\t\tif (setAttributes != null) {\n");
-        writer.append("\t\t\tif (value == null) {\n");
-        writer.append("\t\t\t\tValueExpression ve = getValueExpression(name);\n");
-        writer.append("\t\t\t\tif (ve == null) {\n");
-        writer.append("\t\t\t\t\tsetAttributes.remove(name);\n");
-        writer.append("\t\t\t\t}\n");
-        writer.append("\t\t\t} else if (!setAttributes.contains(name)) {\n");
-        writer.append("\t\t\t\tsetAttributes.add(name);\n");
-        writer.append("\t\t\t}\n");
-        writer.append("\t\t}\n");
-        writer.append("\t\tfor(int i=0; i< setAttributes.size(); i++){\n");
-        writer.append("\t\t\t System.out.println(\"Attribute set = \"+setAttributes.get(i));\n");
-        writer.append("\t\t}\n") ;
-        writer.append("if (setAttributes.isEmpty()){\n System.out.println(\"EMPTY LIST\");}\n");
-        writer.append("\t}\n");
-    }
-*/
 
     public void build() {
         ComponentContext compCtx = getComponentContext();

@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.generator.artifacts.Artifact;
 import org.icefaces.ace.generator.utils.PropertyValues;
 import org.icefaces.ace.meta.annotation.*;
@@ -32,6 +33,7 @@ public abstract class MetaContext {
     protected Class activeClass;
 	protected Map<Field, PropertyValues> propertyValuesMap = new HashMap<Field, PropertyValues>();
     protected Map<String, Field> internalFieldsForComponentClass = new HashMap<String, Field>();
+    protected ArrayList<PropertyValues> passthroughAttributeList = new ArrayList();
 
 	protected boolean generateHandler = true;
 	
@@ -47,7 +49,8 @@ public abstract class MetaContext {
      * List of all PropertyValues, alphabetically sorted by resolved property name
      */
     public ArrayList<PropertyValues> getPropertyValuesSorted() {
-        ArrayList<PropertyValues> list = Collections.list(Collections.enumeration(propertyValuesMap.values()));
+        ArrayList<PropertyValues> list = new ArrayList<PropertyValues>(Collections.list(Collections.enumeration(propertyValuesMap.values())));
+        list.addAll(passthroughAttributeList);
         sortByResolvedPropertyName(list);
         return list;
     }
@@ -155,16 +158,25 @@ public abstract class MetaContext {
         }
     }
 
-  /*  protected void processAnnotation(Class clazz) {
-        for (Field field : getDeclaredFields(clazz)) {
-            processPotentiallyIrrelevantField(clazz, field);
-        }
-    } */
      protected void processAnnotation(Class clazz) throws Exception {
         for (Field field : getDeclaredFields(clazz)) {
             processPotentiallyIrrelevantField(clazz, field);
         }
+
+        processPassthroughAttributes(clazz);
     }
+
+    private void processPassthroughAttributes(Class clazz) {
+        PassthroughAttributes passthroughAttributes = (PassthroughAttributes) clazz.getAnnotation(PassthroughAttributes.class);
+        if (passthroughAttributes != null) {
+            String[] attributes = passthroughAttributes.value();
+            for (int i = 0; i < attributes.length; i++) {
+                final String attribute = attributes[i];
+                passthroughAttributeList.add(new PassthroughPropertyValues(attribute));
+            }
+        }
+    }
+
     /**
      * if it's used and not disinherited return true, if not return false;
      * @param clazz
@@ -277,6 +289,32 @@ public abstract class MetaContext {
 		}
         getDeclaredFields(clazz.getSuperclass(), fields);
 	}
+
+    private static class PassthroughPropertyValues extends PropertyValues {
+        private final String attribute;
+
+        public PassthroughPropertyValues(String attribute) {
+            this.attribute = attribute;
+            this.name = attribute;
+            this.tlddoc = "Renders the provided value as an HTML attribute with the same name on the root element of the component.";
+            this.setDefaultValues();
+        }
+
+        @Override
+        public String getArrayAwareType() {
+            return "java.lang.String";
+        }
+
+        @Override
+        public String getGeneratedType() {
+            return "java.lang.String";
+        }
+
+        @Override
+        public String getJavaVariableName() {
+            return attribute;
+        }
+    }
 
     protected void build() {
         Iterator<Artifact> artifacts = getArtifacts();
