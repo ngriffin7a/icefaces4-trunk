@@ -93,17 +93,19 @@
         
         <mobi:fieldsetGroup>
             <mobi:fieldsetRow style="text-align:left">
-                Set the maximum width and height dimensions for the image (on supported devices). Changes will be applied to the next captured image.
+                Set the maximum width and height dimensions for the image (on supported devices). A value of zero uses the whole width and/or height of the captured image. Changes will be applied to the next captured image.
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
 				<h:outputLabel value="Max width:" for="maxWidth" />
-                <ace:textEntry id="maxWidth"
-                        type="number" value="#{cameraBean.maxWidth}" />
+                <ace:textEntry id="maxWidth" type="number" value="#{cameraBean.maxWidth}">
+					<ace:ajax execute="@form" render="@all" />
+				</ace:textEntry>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
 				<h:outputLabel value="Max height:" for="maxHeight" />
-                <ace:textEntry id="maxHeight"
-                        type="number" value="#{cameraBean.maxHeight}" />
+                <ace:textEntry id="maxHeight" type="number" value="#{cameraBean.maxHeight}">
+					<ace:ajax execute="@form" render="@all" />
+				</ace:textEntry>
             </mobi:fieldsetRow>
             <mobi:fieldsetRow>
 				<ace:pushButton value="Set Dimensions" styleClass="submit"/>
