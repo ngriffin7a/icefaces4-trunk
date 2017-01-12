@@ -29,7 +29,7 @@
         <icecore:defaultAction actionListener="#{chatController.submitMessage}" key="Enter"/>
         
 	        <h:panelGrid id="ncw" columns="4" rendered="#{!chatBean.hasCurrentRoom}">
-	            <h:outputLabel for="roomIn" value="Select a Chat Room:"/>
+	            <h:outputLabel id="roomLabel" for="roomIn" value="Select a Chat Room:"/>
 	            <ace:selectMenu id="roomIn" value="#{chatBean.selectedRoom}" required="true">
 	                <f:selectItems value="#{chatService.rooms}"/>
 	            </ace:selectMenu>

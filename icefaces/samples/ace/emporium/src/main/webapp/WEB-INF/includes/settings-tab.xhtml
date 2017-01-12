@@ -28,7 +28,7 @@
                header="Application Settings" headerAlign="center">
         <h:panelGrid columns="4" cellpadding="4" cellspacing="4" styleClass="postTable">
             <h:graphicImage id="nameInHelp" library="images" name="help.png"/>
-            <h:outputLabel for="nameIn" value="Your Name:"/>
+            <h:outputLabel id="nameLabel" for="nameIn" value="Your Name:"/>
             <ace:textEntry id="nameIn" value="#{settingsBean.name}" required="true"
                            autocapitalize="on" autocomplete="on" maxlength="15"
                            placeholder="Enter your name">
@@ -37,7 +37,7 @@
             <ace:message for="nameIn"/>
             
             <h:graphicImage id="sLocHelp" library="images" name="help.png"/>
-            <h:outputLabel for="sLoc" value="Your Location:"/>
+            <h:outputLabel id="locLabel" for="sLoc" value="Your Location:"/>
             <ace:simpleSelectOneMenu id="sLoc" value="#{settingsBean.location}" required="true">
                 <f:selectItem itemValue="" itemLabel="#{listData.defaultSelectLabel}" noSelectionOption="true"/>
                 <f:selectItems value="#{listData.locations}"/>
@@ -45,7 +45,7 @@
             <ace:message for="sLoc"/>
             
             <h:graphicImage id="dbidHelp" library="images" name="help.png"/>
-            <h:outputLabel for="dbid" value="Default Bid Increment ($):"/>
+            <h:outputLabel id="incrLabel" for="dbid" value="Default Bid Increment ($):"/>
             <ace:textEntry id="dbid" value="#{settingsBean.bidIncrement}" required="true"
                            maxlength="5">
                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
@@ -54,7 +54,7 @@
             <ace:message for="dbid"/>
             
             <h:graphicImage id="taboHelp" library="images" name="help.png"/>
-            <h:outputLabel for="tabo" value="Tab Orientation:"/>
+            <h:outputLabel id="tabOrientLabel" for="tabo" value="Tab Orientation:"/>
             <ace:radioButtons id="tabo" value="#{settingsBean.tabOrientation}" required="true"
                               styleClass="ace-radio-buttons-override">
                 <f:selectItems value="#{listData.tabOrientations}"/>
@@ -64,20 +64,20 @@
             <c:if test="#{!testFlags.testGrowlMessages}">
 	            <!-- TODO ICE-10612 - When resolved use the new color picker component instead of this custom composite component approach -->
 	            <h:graphicImage id="ncolorbHelp" library="images" name="help.png"/>
-	            <h:outputLabel for="ncolorb" value="Notification Background:" required="true"/>
+	            <h:outputLabel id="noteBackLabel" for="ncolorb" value="Notification Background:" required="true"/>
 	            <emporium:colorPicker id="ncolorb"
 	                                 value="#{settingsBean.notificationBackground}"/>
 	            <ace:message for="ncolorb"/>
 	            
 	            <h:graphicImage id="ncolorfHelp" library="images" name="help.png"/>
-	            <h:outputLabel for="ncolorf" value="Notification Foreground:" required="true"/>
+	            <h:outputLabel id="noteFrontLabel" for="ncolorf" value="Notification Foreground:" required="true"/>
 	            <emporium:colorPicker id="ncolorf"
 	                                 value="#{settingsBean.notificationForeground}"/>
 	            <ace:message for="ncolorf"/>
             </c:if>
             
             <h:graphicImage id="pWidthHelp" library="images" name="help.png"/>
-            <h:outputLabel for="pWidth" value="Popup Width:"/>
+            <h:outputLabel id="widthLabel" for="pWidth" value="Popup Width:"/>
             <h:panelGroup id="pWidthWrap" layout="block">
                 <h:outputText id="pWidthOut" value="#{settingsBean.popupWidth}px"/>
 				<ace:sliderEntry id="pWidth"
@@ -92,7 +92,7 @@
             
             <!-- TODO ICE-10616 - Note that submitting this form, even with invalid fields above, will still apply the theme. Also the tabSet will be reset to the first index -->
             <h:graphicImage id="themeHelp" library="images" name="help.png"/>
-            <h:outputLabel for="theme" value="ICEfaces Theme:"/>
+            <h:outputLabel id="themeLabel" for="theme" value="ICEfaces Theme:"/>
             <ace:themeSelect id="theme" value="#{settingsBean.themeName}" required="true"/>
             <ace:message for="theme"/>
             
@@ -110,41 +110,41 @@
         </f:facet>
     </ace:panel>
     
-    <ace:tooltip for="nameInHelp" speechBubble="true">
+    <ace:tooltip id="namett" for="nameInHelp" speechBubble="true">
         Customize the name you want associated with all bids, item sales, and chat messages (must be 3 to 15 characters).
     </ace:tooltip>
     
-    <ace:tooltip for="sLocHelp" speechBubble="true">
+    <ace:tooltip id="loctt" for="sLocHelp" speechBubble="true">
         Choose the location any of your sold auction items will originate from.
     </ace:tooltip>
     
-    <ace:tooltip for="dbidHelp" speechBubble="true">
+    <ace:tooltip id="bidtt" for="dbidHelp" speechBubble="true">
         When you begin a bid on an item the default price amount will be automatically incremented by this number (1 to 100).
     </ace:tooltip>
     
-    <ace:tooltip for="taboHelp" speechBubble="true">
+    <ace:tooltip id="tabtt" for="taboHelp" speechBubble="true">
         Choose how you want the tab pane laid out on the page.
     </ace:tooltip>
     
     <c:if test="#{!testFlags.testGrowlMessages}">
-	    <ace:tooltip for="ncolorbHelp" speechBubble="true">
+	    <ace:tooltip id="backColtt" for="ncolorbHelp" speechBubble="true">
 	        Customize the background color of the notification panel that displays messages at the top of the page.
 	    </ace:tooltip>
 	    
-	    <ace:tooltip for="ncolorfHelp" speechBubble="true">
+	    <ace:tooltip id="foreColtt" for="ncolorfHelp" speechBubble="true">
 	        Customize the foreground text color of the notification panel that displays messages at the top of the page.
 	    </ace:tooltip>
     </c:if>
     
-    <ace:tooltip for="pWidthHelp" speechBubble="true">
+    <ace:tooltip id="widthtt" for="pWidthHelp" speechBubble="true">
         Change how wide the chat and bid history popups should be (200 to 2000 pixels).
     </ace:tooltip>
     
-    <ace:tooltip for="themeHelp" speechBubble="true">
+    <ace:tooltip id="themett" for="themeHelp" speechBubble="true">
         Change the component theme used by ICEfaces.
     </ace:tooltip>
     
-    <ace:tooltip for="saveHelp" speechBubble="true">
+    <ace:tooltip id="savett" for="saveHelp" speechBubble="true">
         If selected then your choices on this form will be stored as web browser cookies, and reloaded from there on subsequent visits.
     </ace:tooltip>
 </ui:composition>
