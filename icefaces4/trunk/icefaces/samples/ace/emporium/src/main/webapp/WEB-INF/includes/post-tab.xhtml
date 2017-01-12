@@ -28,7 +28,7 @@
                rendered="#{postBean.postedCount lt auctionController.maxPostedAuctions}">
         <ace:ajax execute="@this" render="@form">
 	    <h:panelGrid columns="3" cellpadding="4" cellspacing="4" styleClass="postTable">
-            <h:outputText value="Item Details" style="font-weight: bold;"/>
+            <h:outputText id="detailsLabel" value="Item Details" style="font-weight: bold;"/>
             <h:outputText value=""/><h:outputText value=""/>
             
 	        <h:outputLabel for="itemNIn" value="Item Name:"/>
@@ -85,7 +85,7 @@
  	                           pattern="MM/dd/yyyy h:mm a"/>
 	        <ace:message for="expiryIn"/>
 	        
-            <h:outputText value="Additional Details" style="font-weight: bold;"/>
+            <h:outputText id="addDetailsLabel" value="Additional Details" style="font-weight: bold;"/>
             <h:outputText value=""/><h:outputText value=""/>
             
             <h:outputLabel for="sellerName" value="Your Seller Name:"/>
