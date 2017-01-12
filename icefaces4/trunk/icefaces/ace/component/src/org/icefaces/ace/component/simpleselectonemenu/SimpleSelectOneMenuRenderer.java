@@ -200,13 +200,25 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 				itemLabel = item.isEscape() ? DOMUtils.escapeAnsi(itemLabel) : itemLabel;
                 boolean isSelected = String.valueOf(convertedValue).equals(itemValue);
                 if (item.isDisabled() || (!isSelected && readonly)) {
-					sb.append("<option disabled=\"disabled\" value=\"" + itemValue.toString() + "\"" + selected + role + ">").append(itemLabel).append("</option>");
+					sb.append("<option disabled=\"disabled\" value=\"" + (itemValue == null ? "" : itemValue) + "\"" + selected + role + ">").append(itemLabel).append("</option>");
+					writer.startElement("option", null);
+					writer.writeAttribute("disabled", "disabled", null);
+					writer.writeAttribute("value", (itemValue == null ? "" : itemValue), null);
+					if (isSelected) writer.writeAttribute("selected", "selected", null);
+					if (ariaEnabled) writer.writeAttribute("role", "option", null);
+					writer.writeText(itemLabel, null);
+					writer.endElement("option");
 				} else {
 					sb.append("<option value=\"" + (itemValue == null ? "" : itemValue) + "\"" + selected + role + ">").append(itemLabel).append("</option>");
+					writer.startElement("option", null);
+					writer.writeAttribute("value", (itemValue == null ? "" : itemValue), null);
+					if (isSelected) writer.writeAttribute("selected", "selected", null);
+					if (ariaEnabled) writer.writeAttribute("role", "option", null);
+					writer.writeText(itemLabel, null);
+					writer.endElement("option");
 				}
 			}
 			String result = sb.toString();
-			writer.write(result);
 			hashBuffer.append(result);
 		}
     }
