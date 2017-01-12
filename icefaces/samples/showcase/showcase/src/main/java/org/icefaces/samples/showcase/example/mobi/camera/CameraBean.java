@@ -58,8 +58,8 @@ public class CameraBean /*extends ExampleImpl<CameraBean>*/ implements
     // upload error message
     private String uploadMessage;
 
-    private Integer maxHeight;
-    private Integer maxWidth;
+    private Integer maxHeight = 0;
+    private Integer maxWidth = 0;
 
     private boolean useImages = false;
 
