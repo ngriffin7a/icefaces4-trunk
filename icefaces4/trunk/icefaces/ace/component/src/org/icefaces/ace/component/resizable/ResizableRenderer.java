@@ -27,8 +27,16 @@
 package org.icefaces.ace.component.resizable;
 
 import org.icefaces.ace.renderkit.CoreRenderer;
+import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.render.MandatoryResourceComponent;
+
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 
 @MandatoryResourceComponent(tagName="resizable", value="org.icefaces.ace.component.resizable.Resizable")
 public class ResizableRenderer extends CoreRenderer {
+
+    public void encodeBehaviors(FacesContext context, Resizable resizable, JSONBuilder jb) throws IOException {
+        encodeClientBehaviors(context, resizable, jb);
+    }
 }

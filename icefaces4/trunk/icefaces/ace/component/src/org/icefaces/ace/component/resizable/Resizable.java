@@ -154,6 +154,8 @@ public class Resizable extends ResizableBase{
                 jb.entry("ajaxResize", true);
             }
 
+            ((ResizableRenderer) resizable.getRenderer(context)).encodeBehaviors(context, resizable, jb);
+
             jb.endMap().endArray().endFunction();
 
             writer.write(jb.toString());
