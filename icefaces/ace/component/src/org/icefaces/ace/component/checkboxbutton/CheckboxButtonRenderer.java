@@ -32,7 +32,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 
 import org.icefaces.ace.api.ButtonGroupMember;
-import org.icefaces.ace.component.PassthroughAttributes;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.ace.util.*;
 
 import org.icefaces.util.EnvUtils;
