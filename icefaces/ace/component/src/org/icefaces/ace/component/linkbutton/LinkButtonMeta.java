@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.linkbutton;
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
@@ -51,6 +52,27 @@ import org.icefaces.resources.ICEResourceLibrary;
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="action", javadoc="Fired when the button is clicked or pressed by any other means (default event).", tlddoc="Fired when the button is clicked or pressed by any other means (default event).", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="action")
+@PassthroughAttributes({
+        "charset",
+        "coords",
+        "dir",
+        "rel",
+        "rev",
+        "shape",
+        "title",
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onblur",
+        "onfocus"
+})
 public class LinkButtonMeta extends UICommandMeta {
 
     @Property(tlddoc = "Href attribute of the anchor element. If specified and actionListener is absent, linkButton works " +

@@ -18,6 +18,7 @@ package org.icefaces.ace.component.radiobutton;
 
 
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
@@ -44,6 +45,8 @@ public class RadioButtonRenderer extends InputRenderer {
     protected enum EventType {
         HOVER, FOCUS
     }
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) RadioButton.class.getAnnotation(PassthroughAttributes.class)).value();
+
     private static final Logger logger =
             Logger.getLogger(RadioButtonRenderer.class.toString());
 
@@ -115,7 +118,7 @@ public class RadioButtonRenderer extends InputRenderer {
 
         encodeScript(writer, EventType.FOCUS);
 
-        renderPassThruAttributes(facesContext, radioButton, HTML.BUTTON_ATTRS, new String[]{"style"});
+        renderPassThruAttributes(facesContext, radioButton, PASSTHROUGH_ATTRIBUTES);
  
 		writer.startElement(HTML.SPAN_ELEM, null);
 		encodeIconStyle(writer, (Boolean)value);

@@ -16,6 +16,7 @@
 
 package org.icefaces.ace.component.pushbutton;
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
@@ -52,6 +53,26 @@ import org.icefaces.resources.ICEResourceLibrary;
 @ClientBehaviorHolder(events = {
 	@ClientEvent(name="action", javadoc="Fired when the button is clicked or pressed by any other means (default event).", tlddoc="Fired when the button is clicked or pressed by any other means (default event).", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="action")
+@PassthroughAttributes({
+      "alt",
+      "dir",
+      "lang",
+      "title",
+      "onclick",
+      "ondblclick",
+      "onkeydown",
+      "onkeypress",
+      "onkeyup",
+      "onmousedown",
+      "onmousemove",
+      "onmouseout",
+      "onmouseover",
+      "onmouseup",
+      "onblur",
+      "onfocus",
+      "onchange",
+      "onselect"
+})
 public class PushButtonMeta extends UICommandMeta {
     
     @Property(tlddoc="A localized user presentable name for this component.")

@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.util.*;
 
 import org.icefaces.util.EnvUtils;
@@ -35,7 +36,7 @@ import org.icefaces.ace.renderkit.CoreRenderer;
 
 @MandatoryResourceComponent(tagName="linkButton", value="org.icefaces.ace.component.linkbutton.LinkButton")
 public class LinkButtonRenderer extends CoreRenderer {
-	private static final String[] excludedAttributes = {"hreflang", "href", "target", "style", "type"};
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) LinkButton.class.getAnnotation(PassthroughAttributes.class)).value();
 
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         Map requestParameterMap = facesContext.getExternalContext().getRequestParameterMap();
@@ -96,7 +97,7 @@ public class LinkButtonRenderer extends CoreRenderer {
 			writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
 		}
 
-        renderPassThruAttributes(facesContext, linkButton, HTML.LINK_ATTRS, excludedAttributes);
+        renderPassThruAttributes(facesContext, linkButton, PASSTHROUGH_ATTRIBUTES);
 
         if (!disabled) {
             encodeScript(facesContext, writer, HTML.ONFOCUS_ATTR,

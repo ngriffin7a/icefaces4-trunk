@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.checkboxbutton;
 
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
@@ -55,6 +56,27 @@ import org.icefaces.resources.ICEResourceLibrary;
             tlddoc="Fired when the button is clicked or pressed by any other means (default event).",
             defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="action")
+@PassthroughAttributes({
+        "alt",
+        "dir",
+        "lang",
+        "title",
+        "type",
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onblur",
+        "onfocus",
+        "onchange",
+        "onselect"
+})
 public class CheckboxButtonMeta extends UISelectBooleanMeta {
 
     @Property(tlddoc="Label to be displayed on the button.")
