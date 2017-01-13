@@ -26,7 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 
-import org.icefaces.ace.component.PassthroughAttributes;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.ace.util.*;
 
 import org.icefaces.util.EnvUtils;

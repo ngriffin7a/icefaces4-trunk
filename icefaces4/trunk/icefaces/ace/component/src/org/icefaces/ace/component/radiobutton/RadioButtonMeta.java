@@ -17,7 +17,7 @@
 package org.icefaces.ace.component.radiobutton;
 
 
-import org.icefaces.ace.component.PassthroughAttributes;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
 import org.icefaces.ace.meta.annotation.ClientEvent;
 import org.icefaces.ace.meta.annotation.Component;

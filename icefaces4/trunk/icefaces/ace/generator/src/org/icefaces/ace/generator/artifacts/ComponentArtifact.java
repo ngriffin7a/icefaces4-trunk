@@ -16,7 +16,7 @@
 
 package org.icefaces.ace.generator.artifacts;
 
-import org.icefaces.ace.component.PassthroughAttributes;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.ace.generator.behavior.Behavior;
 import org.icefaces.ace.generator.context.ComponentContext;
 import org.icefaces.ace.generator.context.GeneratorContext;
@@ -25,7 +25,6 @@ import org.icefaces.ace.generator.utils.PropertyValues;
 import org.icefaces.ace.generator.utils.Utility;
 import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Facet;
-import org.icefaces.resources.ICEBrowserDependency;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
@@ -33,7 +32,6 @@ import org.icefaces.resources.ICEResourceLibrary;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
-import java.lang.RuntimeException;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Logger;
@@ -84,7 +82,7 @@ public class ComponentArtifact extends Artifact{
             writer.append("import org.icefaces.resources.ICEResourceDependencies;\n");
             writer.append("import org.icefaces.resources.ICEResourceDependency;\n\n");
             writer.append("import org.icefaces.resources.ICEBrowserDependency;\n\n");
-            writer.append("import org.icefaces.ace.component.PassthroughAttributes;\n\n");
+            writer.append("import org.icefaces.component.PassthroughAttributes;\n\n");
             writer.append("import org.icefaces.resources.BrowserType;\n\n");
         }
         if (clazz.isAnnotationPresent(ICEResourceLibrary.class)) {

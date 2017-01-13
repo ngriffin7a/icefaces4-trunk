@@ -16,7 +16,7 @@
 
 package org.icefaces.ace.component.pushbutton;
 
-import org.icefaces.ace.component.PassthroughAttributes;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.ace.resources.ACEResourceNames;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
@@ -27,7 +27,6 @@ import org.icefaces.ace.meta.annotation.Property;
 
 import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
 import org.icefaces.ace.meta.annotation.ClientEvent;
-import org.icefaces.ace.api.IceClientBehaviorHolder;
 import org.icefaces.resources.ICEResourceLibrary;
 
   @Component(

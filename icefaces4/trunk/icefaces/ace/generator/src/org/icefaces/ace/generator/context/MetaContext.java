@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 
-import org.icefaces.ace.component.PassthroughAttributes;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.ace.generator.artifacts.Artifact;
 import org.icefaces.ace.generator.utils.PropertyValues;
 import org.icefaces.ace.meta.annotation.*;
@@ -172,7 +172,7 @@ public abstract class MetaContext {
             String[] attributes = passthroughAttributes.value();
             for (int i = 0; i < attributes.length; i++) {
                 final String attribute = attributes[i];
-                passthroughAttributeList.add(new PassthroughPropertyValues(attribute));
+                passthroughAttributeList.add(new PassthroughPropertyValues(attribute, passthroughAttributes.tlddoc()));
             }
         }
     }
@@ -293,10 +293,10 @@ public abstract class MetaContext {
     private static class PassthroughPropertyValues extends PropertyValues {
         private final String attribute;
 
-        public PassthroughPropertyValues(String attribute) {
+        public PassthroughPropertyValues(String attribute, String tlddoc) {
             this.attribute = attribute;
             this.name = attribute;
-            this.tlddoc = "Renders the provided value as an HTML attribute with the same name on the root element of the component.";
+            this.tlddoc = tlddoc;
             this.setDefaultValues();
         }
 
