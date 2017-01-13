@@ -31,6 +31,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionListener;
 
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.util.*;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.render.MandatoryResourceComponent;
@@ -39,6 +40,7 @@ import org.icefaces.ace.renderkit.CoreRenderer;
 
 @MandatoryResourceComponent(tagName="pushButton", value="org.icefaces.ace.component.pushbutton.PushButton")
 public class PushButtonRenderer extends CoreRenderer {
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) PushButton.class.getAnnotation(PassthroughAttributes.class)).value();
 
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
     	Map requestParameterMap = facesContext.getExternalContext().getRequestParameterMap();
@@ -102,7 +104,7 @@ public class PushButtonRenderer extends CoreRenderer {
         if (tabindex != null)
             writer.writeAttribute(HTML.TABINDEX_ATTR, tabindex, null);
 
-        renderPassThruAttributes(facesContext, pushButton, HTML.BUTTON_ATTRS, new String[]{"style", "type"});
+        renderPassThruAttributes(facesContext, pushButton, PASSTHROUGH_ATTRIBUTES);
 
         // yet another span
         writer.startElement(HTML.SPAN_ELEM, null);

@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.radiobutton;
 
 
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
 import org.icefaces.ace.meta.annotation.ClientEvent;
 import org.icefaces.ace.meta.annotation.Component;
@@ -58,6 +59,27 @@ import org.icefaces.resources.ICEResourceLibrary;
             tlddoc="Fired when the button is clicked or pressed by any other means and changes to not selected state.",
             defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="action")
+@PassthroughAttributes({
+        "alt",
+        "dir",
+        "lang",
+        "title",
+        "type",
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onblur",
+        "onfocus",
+        "onchange",
+        "onselect"
+})
 public class RadioButtonMeta extends UISelectBooleanMeta {
 
     @Property(tlddoc="Label to be displayed for the button.")

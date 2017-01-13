@@ -32,6 +32,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.ConverterException;
 
 import org.icefaces.ace.api.ButtonGroupMember;
+import org.icefaces.ace.component.PassthroughAttributes;
 import org.icefaces.ace.util.*;
 
 import org.icefaces.util.EnvUtils;
@@ -44,6 +45,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
     protected enum EventType {
         HOVER, FOCUS
     }
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) CheckboxButton.class.getAnnotation(PassthroughAttributes.class)).value();
     private static final Logger logger =
             Logger.getLogger(CheckboxButtonRenderer.class.toString());
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
@@ -118,7 +120,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
         encodeButtonStyle(writer, checkbox);
         encodeScript(writer, EventType.FOCUS);
 
-        renderPassThruAttributes(facesContext, checkbox, HTML.BUTTON_ATTRS, new String[]{"style"});
+        renderPassThruAttributes(facesContext, checkbox, PASSTHROUGH_ATTRIBUTES);
 
         if (checkbox.getLabel() != null && "inField".equalsIgnoreCase(checkbox.getLabelPosition())) {
             writer.startElement(HTML.SPAN_ELEM, null);
