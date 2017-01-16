@@ -164,7 +164,7 @@
             <metainf dir="${build.dir}/javascript"/>
 
             <manifest>
-                <section name="org.icefaces">
+                <section name="org/icefaces/">
                     <attribute name="Implementation-Title"
                                value="${product} ${product.lib}"/>
                     <attribute name="Implementation-Version"
