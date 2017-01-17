@@ -26,15 +26,33 @@
  */
 package org.icefaces.ace.component.resizable;
 
+import org.icefaces.ace.event.ResizeEvent;
 import org.icefaces.ace.renderkit.CoreRenderer;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.render.MandatoryResourceComponent;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
+import java.util.Map;
 
 @MandatoryResourceComponent(tagName="resizable", value="org.icefaces.ace.component.resizable.Resizable")
 public class ResizableRenderer extends CoreRenderer {
+
+    @Override
+    public void decode(FacesContext context, UIComponent component) {
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        Resizable resizable = (Resizable) component;
+        String clientId = resizable.getClientId(context);
+
+        if(params.containsKey(clientId + "_ajaxResize")) {
+            int width = (new Double(params.get(clientId + "_width"))).intValue();;
+            int height = (new Double(params.get(clientId + "_height"))).intValue();;
+
+            resizable.queueEvent(new ResizeEvent(resizable, width, height));
+        }
+        decodeBehaviors(context, resizable);
+    }
 
     public void encodeBehaviors(FacesContext context, Resizable resizable, JSONBuilder jb) throws IOException {
         encodeClientBehaviors(context, resizable, jb);

@@ -68,7 +68,10 @@ public class Resizable extends ResizableBase{
         final UIComponent target = findTarget(resizable);
 
         UIOutput out = new Setup(target, resizable);
+        target.setInView(false);
+        out.setTransient(true);
         target.getChildren().add(0, out);
+        target.setInView(true);
     }
 
     private UIComponent findTarget(Resizable resizable) {
@@ -96,7 +99,7 @@ public class Resizable extends ResizableBase{
 
         public void encodeEnd(FacesContext context) throws IOException {
             ResponseWriter writer = context.getResponseWriter();
-            String clientId = this.getClientId(context);
+            String clientId = resizable.getClientId(context);
             String targetId = target.getClientId(context);
             String handles = resizable.getHandles();
             int grid = resizable.getGrid();
