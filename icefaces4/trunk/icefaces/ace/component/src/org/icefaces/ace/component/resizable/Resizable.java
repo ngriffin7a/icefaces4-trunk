@@ -42,13 +42,10 @@ import javax.faces.event.AbortProcessingException;
 import org.icefaces.ace.util.JSONBuilder;
 
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.render.Renderer;
 import java.io.IOException;
+import java.util.List;
 
-public class Resizable extends ResizableBase{
-
-	private static final String OPTIMIZED_PACKAGE = "org.icefaces.ace.component.";
-
+public class Resizable extends ResizableBase {
 	public void broadcast(javax.faces.event.FacesEvent event) throws AbortProcessingException {
         if (event instanceof AjaxBehaviorEvent) {
             super.broadcast(event);
@@ -70,7 +67,16 @@ public class Resizable extends ResizableBase{
         UIOutput out = new Setup(target, resizable);
         target.setInView(false);
         out.setTransient(true);
-        target.getChildren().add(0, out);
+        List<UIComponent> children = target.getChildren();
+        //render the setup script as child of the target component only if it has already children, we can assume they all will be rendered
+        if (children.isEmpty()) {
+            UIComponent parent = target.getParent();
+            List<UIComponent> siblings = parent.getChildren();
+            int index = siblings.indexOf(target);
+            siblings.add(index + 1, out);
+        } else {
+            children.add(0, out);
+        }
         target.setInView(true);
     }
 
