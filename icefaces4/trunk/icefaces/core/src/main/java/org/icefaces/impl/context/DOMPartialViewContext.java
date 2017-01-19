@@ -17,7 +17,6 @@
 package org.icefaces.impl.context;
 
 import org.icefaces.impl.event.FixViewState;
-import org.icefaces.impl.util.CoreUtils;
 import org.icefaces.impl.util.DOMUtils;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.util.FocusController;
@@ -49,7 +48,13 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+interface DocumentOperation {
+    void operateOn(Document document);
+}
+
 public class DOMPartialViewContext extends PartialViewContextWrapper {
+    public static final String CUSTOM_UPDATE = "ice.customUpdate";
+    public static final String DATA_ELEMENTUPDATE = "data-elementupdate";
     private static final String JAVAX_FACES_VIEW_HEAD = "javax.faces.ViewHead";
     private static final String JAVAX_FACES_VIEW_BODY = "javax.faces.ViewBody";
     private static final Logger log = Logger.getLogger(DOMPartialViewContext.class.getName());
@@ -60,9 +65,12 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
             Pattern.compile("value=\\\"([^\"]*)\\\"");
     private static final Pattern OPTION_SELECTED =
             Pattern.compile("(selected=\\\"[^\"]*\\\")");
-    public static final String CUSTOM_UPDATE = "ice.customUpdate";
-    public static final String DATA_ELEMENTUPDATE = "data-elementupdate";
+    private static final Runnable NOOP = new Runnable() {
+        public void run() {
+        }
+    };
     private static Method resetValuesMethod;
+
     static {
         try {
             resetValuesMethod = UIViewRoot.class.getDeclaredMethod("resetValues", new Class[] { FacesContext.class, Collection.class });
@@ -72,9 +80,8 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
 
     }
 
-
-    private PartialViewContext wrapped;
     protected FacesContext facesContext;
+    private PartialViewContext wrapped;
     private Boolean isAjaxRequest;
     private DOMUtils.DiffConfig diffConfig = null;
     private boolean clientSideElementUpdateDetermination;
@@ -83,6 +90,133 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         this.wrapped = partialViewContext;
         this.facesContext = facesContext;
         this.clientSideElementUpdateDetermination = EnvUtils.isClientSideElementUpdateDetermination(facesContext);
+    }
+
+    private static void generateElementUpdateNotifications(DOMUtils.EditOperation op, PartialResponseWriter partialWriter, Document oldDOM) throws IOException {
+        final String id;
+        if (op.id == null) {
+            if (op.element instanceof Element) {
+                id = ((Element) op.element).getAttribute("id");
+            } else {
+                id = null;
+            }
+        } else {
+            id = op.id;
+        }
+
+        if (id == null) {
+            //give up on trying to find onElementUpdate marked elements
+            log.warning("Cannot search for onElementUpdate markers into the update " + op);
+            return;
+        }
+
+        final Element e = oldDOM.getElementById(id);
+        if (e != null) {
+            final ArrayList<String> collectedIDs = new ArrayList<String>();
+            if (e.hasAttribute(DATA_ELEMENTUPDATE)) {
+                collectedIDs.add(e.getAttribute("id"));
+            }
+            NodeList elements = e.getElementsByTagName("*");
+            for (int i = 0; i < elements.getLength(); i++) {
+                Element child = (Element) elements.item(i);
+                if (child.hasAttribute(DATA_ELEMENTUPDATE)) {
+                    collectedIDs.add(child.getAttribute("id"));
+                }
+            }
+            //create eval update with code that invokes ice.notifyOnElementUpdateCallbacks with all the IDs that were collected
+            if (!collectedIDs.isEmpty()) {
+                partialWriter.startEval();
+                partialWriter.writeText("ice.notifyOnElementUpdateCallbacks(['" + join(collectedIDs, "','") + "']);", null);
+                partialWriter.endEval();
+            }
+        }
+    }
+
+    private static String join(Collection collection, String delimiter) {
+        StringBuilder sb = new StringBuilder();
+        Iterator iter = collection.iterator();
+        if (iter.hasNext())
+            sb.append(iter.next().toString());
+        while (iter.hasNext()) {
+            sb.append(delimiter);
+            sb.append(iter.next().toString());
+        }
+        return sb.toString();
+    }
+
+    private static String getUpdateId(Element element) {
+        if ("head".equalsIgnoreCase(element.getTagName())) {
+            return JAVAX_FACES_VIEW_HEAD;
+        } else if ("body".equalsIgnoreCase(element.getTagName())) {
+            return JAVAX_FACES_VIEW_BODY;
+        } else {
+            return element.getAttribute("id");
+        }
+    }
+
+    private static Runnable setBodyID(Document document) {
+        NodeList nodes = document.getElementsByTagName("body");
+        if (nodes.getLength() > 0) {
+            final Element body = (Element) nodes.item(0);
+            if (!body.hasAttribute("id")) {
+                body.setAttribute("id", JAVAX_FACES_VIEW_BODY);
+                return new Runnable() {
+                    public void run() {
+                        body.removeAttribute("id");
+                    }
+                };
+            }
+        }
+
+        return NOOP;
+    }
+
+    private static Runnable setHeadID(Document document) {
+        NodeList nodes = document.getElementsByTagName("head");
+        if (nodes.getLength() > 0) {
+            final Element head = (Element) nodes.item(0);
+            if (!head.hasAttribute("id")) {
+                head.setAttribute("id", JAVAX_FACES_VIEW_HEAD);
+                return new Runnable() {
+                    public void run() {
+                        head.removeAttribute("id");
+                    }
+                };
+            }
+        }
+
+        return NOOP;
+    }
+
+    private static String escapeJSString(String text) {
+        final StringBuilder result = new StringBuilder();
+        StringCharacterIterator iterator = new StringCharacterIterator(text);
+        char character = iterator.current();
+        while (character != StringCharacterIterator.DONE) {
+            if (character == '\"') {
+                result.append("\\\"");
+            } else if (character == '\\') {
+                result.append("\\\\");
+            } else if (character == '/') {
+                result.append("\\/");
+            } else if (character == '\b') {
+                result.append("\\b");
+            } else if (character == '\f') {
+                result.append("\\f");
+            } else if (character == '\n') {
+                result.append("\\n");
+            } else if (character == '\r') {
+                result.append("\\r");
+            } else if (character == '\t') {
+                result.append("\\t");
+            } else {
+                //the char is not a special one
+                //add it to the result as is
+                result.append(character);
+            }
+            character = iterator.next();
+        }
+        return result.toString();
     }
 
     @Override
@@ -105,7 +239,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
     public void setAjaxRequest(boolean isAjaxRequest) {
         this.isAjaxRequest = isAjaxRequest;
     }
-
 
     @Override
     public void processPartial(PhaseId phaseId) {
@@ -342,58 +475,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         }
     }
 
-    private static void generateElementUpdateNotifications(DOMUtils.EditOperation op, PartialResponseWriter partialWriter, Document oldDOM) throws IOException {
-        final String id;
-        if (op.id == null) {
-            if (op.element instanceof Element) {
-                id = ((Element) op.element).getAttribute("id");
-            } else {
-                id = null;
-            }
-        } else {
-            id = op.id;
-        }
-
-        if (id == null) {
-            //give up on trying to find onElementUpdate marked elements
-            log.warning("Cannot search for onElementUpdate markers into the update " + op);
-            return;
-        }
-
-        final Element e = oldDOM.getElementById(id);
-        if (e != null) {
-            final ArrayList<String> collectedIDs = new ArrayList<String>();
-            if (e.hasAttribute(DATA_ELEMENTUPDATE)) {
-                collectedIDs.add(e.getAttribute("id"));
-            }
-            NodeList elements = e.getElementsByTagName("*");
-            for (int i = 0; i < elements.getLength(); i++) {
-                Element child = (Element) elements.item(i);
-                if (child.hasAttribute(DATA_ELEMENTUPDATE)) {
-                    collectedIDs.add(child.getAttribute("id"));
-                }
-            }
-            //create eval update with code that invokes ice.notifyOnElementUpdateCallbacks with all the IDs that were collected
-            if (!collectedIDs.isEmpty()) {
-                partialWriter.startEval();
-                partialWriter.writeText("ice.notifyOnElementUpdateCallbacks(['" + join(collectedIDs, "','") + "']);", null);
-                partialWriter.endEval();
-            }
-        }
-    }
-
-    private static String join(Collection collection, String delimiter) {
-        StringBuilder sb = new StringBuilder();
-        Iterator iter = collection.iterator();
-        if (iter.hasNext())
-            sb.append(iter.next().toString());
-        while (iter.hasNext()) {
-            sb.append(delimiter);
-            sb.append(iter.next().toString());
-        }
-        return sb.toString();
-    }
-
     protected Writer getResponseOutputWriter() throws IOException {
         return facesContext.getExternalContext().getResponseOutputWriter();
     }
@@ -421,16 +502,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         }
     }
 
-    private static String getUpdateId(Element element) {
-        if ("head".equalsIgnoreCase(element.getTagName())) {
-            return JAVAX_FACES_VIEW_HEAD;
-        } else if ("body".equalsIgnoreCase(element.getTagName())) {
-            return JAVAX_FACES_VIEW_BODY;
-        } else {
-            return element.getAttribute("id");
-        }
-    }
-
     private List<DOMUtils.EditOperation> domDiff(Document oldDOM, Document newDOM) {
         final Runnable oldHeadRollback = setHeadID(oldDOM);
         final Runnable oldBodyRollback = setBodyID(oldDOM);
@@ -444,45 +515,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
             newHeadRollback.run();
             newBodyRollback.run();
         }
-    }
-
-    private static final Runnable NOOP = new Runnable() {
-        public void run() {
-        }
-    };
-
-    private static Runnable setBodyID(Document document) {
-        NodeList nodes = document.getElementsByTagName("body");
-        if (nodes.getLength() > 0) {
-            final Element body = (Element) nodes.item(0);
-            if (!body.hasAttribute("id")) {
-                body.setAttribute("id", JAVAX_FACES_VIEW_BODY);
-                return new Runnable() {
-                    public void run() {
-                        body.removeAttribute("id");
-                    }
-                };
-            }
-        }
-
-        return NOOP;
-    }
-
-    private static Runnable setHeadID(Document document) {
-        NodeList nodes = document.getElementsByTagName("head");
-        if (nodes.getLength() > 0) {
-            final Element head = (Element) nodes.item(0);
-            if (!head.hasAttribute("id")) {
-                head.setAttribute("id", JAVAX_FACES_VIEW_HEAD);
-                return new Runnable() {
-                    public void run() {
-                        head.removeAttribute("id");
-                    }
-                };
-            }
-        }
-
-        return NOOP;
     }
 
     private void customRenderSubtrees(UIViewRoot viewRoot, Collection<String> renderIds) {
@@ -729,44 +761,12 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
 
     }
 
-    private static String escapeJSString(String text) {
-        final StringBuilder result = new StringBuilder();
-        StringCharacterIterator iterator = new StringCharacterIterator(text);
-        char character = iterator.current();
-        while (character != StringCharacterIterator.DONE) {
-            if (character == '\"') {
-                result.append("\\\"");
-            } else if (character == '\\') {
-                result.append("\\\\");
-            } else if (character == '/') {
-                result.append("\\/");
-            } else if (character == '\b') {
-                result.append("\\b");
-            } else if (character == '\f') {
-                result.append("\\f");
-            } else if (character == '\n') {
-                result.append("\\n");
-            } else if (character == '\r') {
-                result.append("\\r");
-            } else if (character == '\t') {
-                result.append("\\t");
-            } else {
-                //the char is not a special one
-                //add it to the result as is
-                result.append(character);
-            }
-            character = iterator.next();
-        }
-        return result.toString();
-    }
-
-
     private String renderState() throws IOException {
         Map facesMap = facesContext.getAttributes();
         PartialResponseWriter writer = getPartialResponseWriter();
         String viewState = facesContext.getApplication().getStateManager().getViewState(facesContext);
 
-        if (EnvUtils.isJSF22()) {
+        if (EnvUtils.isJSF22OrGreater()) {
             ArrayList formIdList = (ArrayList) facesMap.get(FixViewState.FORM_LIST_KEY);
             if (formIdList != null && !formIdList.isEmpty()) {
                 UIViewRoot viewRoot = facesContext.getViewRoot();
@@ -804,10 +804,6 @@ public class DOMPartialViewContext extends PartialViewContextWrapper {
         }
     }
 
-}
-
-interface DocumentOperation {
-    void operateOn(Document document);
 }
 
 class DOMPartialRenderCallback implements VisitCallback {
