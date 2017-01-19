@@ -47,11 +47,17 @@ import java.util.logging.Logger;
 
 public class EnvUtils {
 
-    private static Logger log = Logger.getLogger(EnvUtils.class.getName());
-
+    //Other parameters used internally by ICEfaces framework.
+    public static final String HEAD_DETECTED = "org.icefaces.headDetected";
+    public static final String BODY_DETECTED = "org.icefaces.bodyDetected";
+    /**
+     * A set of Strings representing all of the reserved words in Java
+     */
+    public static final HashSet<String> JAVA_RESERVED_WORDS;
+    private static final String MOJARRA_STATE_SAVING_MARKER = "~com.sun.faces.saveStateFieldMarker~";
+    private static final String MYFACES_STATE_SAVING_MARKER = "~org.apache.myfaces.saveStateFieldMarker~";
     //The key used to store the current configuration in the application map.
     public static String ICEFACES_ENV_CONFIG = "org.icefaces.env.config";
-
     //Parameters configurable using context parameters
     public static String ICEFACES_AUTO = "org.icefaces.render.auto";
     public static String ICEFACES_AUTOID = "org.icefaces.autoid";
@@ -85,41 +91,52 @@ public class EnvUtils {
     public static String NAMESPACE_PARAMETERS = "com.sun.faces.namespaceParameters";
     public static String UPDATE_NETWORK_ERROR_RETRY_TIMEOUTS = "org.icefaces.updateNetworkErrorRetryTimeouts";
     public static String FETCH_PENDING_NOTIFICATIONS_ONLOAD = "org.icefaces.fetchPendingNotificationsOnLoad";
-
     //Parameters configurable using context parameters but only in compatibility mode
     public static String CONNECTION_LOST_REDIRECT_URI = "org.icefaces.connectionLostRedirectURI";
     public static String SESSION_EXPIRED_REDIRECT_URI = "org.icefaces.sessionExpiredRedirectURI";
     public static String SESSION_TIMEOUT_REDIRECT_URI = "org.icefaces.sessionTimeoutRedirectURI";
-
     //Parameters configurable on a per page-basis as attributes of <ice:config/>
     public static String ICEFACES_RENDER = "org.icefaces.render";
     public static String ARIA_ENABLED = "org.icefaces.aria.enabled";
     public static String BLOCK_UI_ON_SUBMIT = "org.icefaces.blockUIOnSubmit";
     public static String MESSAGE_PERSISTENCE = "org.icefaces.messagePersistence";
     public static String COMPRESS_IDS = "org.icefaces.compressIDs";
-
-    //Other parameters used internally by ICEfaces framework.
-    public static final String HEAD_DETECTED = "org.icefaces.headDetected";
-    public static final String BODY_DETECTED = "org.icefaces.bodyDetected";
+    private static Logger log = Logger.getLogger(EnvUtils.class.getName());
     private static String RESOURCE_PREFIX = "/javax.faces.resource/";
     private static String PATH_TEMPLATE = "org.icefaces.resource.pathTemplate";
     private static String DUMMY_RESOURCE = "auxupload.txt";
     private static String USER_AGENT_COOKIE = "com.icesoft.user-agent";
     private static String HYPERBROWSER = "HyperBrowser";
     private static String[] DEFAULT_TEMPLATE = new String[]{RESOURCE_PREFIX, ".jsf"};
-
     //Use reflection to identify the JSF implementation.
     private static boolean isImplTested = false;
-
     private static boolean isMojarra = false;
-    private static final String MOJARRA_STATE_SAVING_MARKER = "~com.sun.faces.saveStateFieldMarker~";
-
-
     private static boolean isMyFaces = false;
-    private static final String MYFACES_STATE_SAVING_MARKER = "~org.apache.myfaces.saveStateFieldMarker~";
-
     //Use reflection to detect if Flow is available (JSF 2.2 implementations only)
     private static Class FlowClass;
+    private static String stateMarker;
+
+    //Use reflection to identify if the Portlet classes are available.
+    private static Class PortletSessionClass;
+    private static Class PortletRequestClass;
+    private static Class PortletResponseClass;
+    private static Class PortletResourceResponseClass;
+    //Use reflection to identify if a Liferay specific class is available.
+    private static Class LiferayClass;
+    //Use reflection to identify if a WebSphere Portal specific class is available.
+    private static Class WebSpherePortalClass;
+    //Use reflection to identify if a Pluto Portal specific class is available.
+    private static Class PlutoPortalClass;
+    //Use reflection to identify if ICEpush is available.
+    private static boolean icepushPresent;
+    /**
+     * Whether stock JSF components' set attributes are tracked.
+     */
+    private static boolean isStockAttributeTracking = false;
+    private static Map<Class,String> REDIRECT_MAPPING;
+    private static OriginalRequestGetter ORIGINAL_REQUEST_GETTER;
+    //ICE-10792 Use reflection to determine if myfaces context-param org.apache.myfaces.REFRESH_TRANSIENT_BUILD_ON_PSS_PRESERVE_STATE is used
+    private static boolean myFacesRefreshTransientProperty;
 
     static {
         try {
@@ -128,14 +145,6 @@ public class EnvUtils {
             log.log(Level.FINE, "Flow classes not available: ", t);
         }
     }
-
-    private static String stateMarker;
-
-    //Use reflection to identify if the Portlet classes are available.
-    private static Class PortletSessionClass;
-    private static Class PortletRequestClass;
-    private static Class PortletResponseClass;
-    private static Class PortletResourceResponseClass;
 
     static {
         try {
@@ -147,9 +156,6 @@ public class EnvUtils {
             log.log(Level.FINE, "Portlet classes not available: ", t);
         }
     }
-
-    //Use reflection to identify if a Liferay specific class is available.
-    private static Class LiferayClass;
 
     static {
         try {
@@ -164,9 +170,6 @@ public class EnvUtils {
         }
     }
 
-    //Use reflection to identify if a WebSphere Portal specific class is available.
-    private static Class WebSpherePortalClass;
-
     static {
         try {
             WebSpherePortalClass = Class.forName("com.ibm.ws.portletcontainer.PortletContainer");
@@ -175,10 +178,6 @@ public class EnvUtils {
         }
     }
 
-
-    //Use reflection to identify if a Pluto Portal specific class is available.
-    private static Class PlutoPortalClass;
-
     static {
         try {
             PlutoPortalClass = Class.forName("org.apache.pluto.container.PortletRequestContext");
@@ -186,9 +185,6 @@ public class EnvUtils {
             log.log(Level.FINE, "Pluto Portal class not available: ", t);
         }
     }
-
-    //Use reflection to identify if ICEpush is available.
-    private static boolean icepushPresent;
 
     static {
         try {
@@ -199,11 +195,6 @@ public class EnvUtils {
         }
     }
 
-    /**
-     * Whether stock JSF components' set attributes are tracked.
-     */
-    private static boolean isStockAttributeTracking = false;
-
     static {
         try {
             javax.faces.component.html.HtmlOutputText comp = new javax.faces.component.html.HtmlOutputText();
@@ -211,11 +202,6 @@ public class EnvUtils {
         } catch (Throwable t) {
         }
     }
-
-    /**
-     * A set of Strings representing all of the reserved words in Java
-     */
-    public static final HashSet<String> JAVA_RESERVED_WORDS;
 
     static{
         JAVA_RESERVED_WORDS = new HashSet(53);
@@ -274,96 +260,6 @@ public class EnvUtils {
         JAVA_RESERVED_WORDS.add("while");
     }
 
-    private static Map<Class,String> REDIRECT_MAPPING;
-
-    private static interface OriginalRequestGetter {
-        public HttpServletRequest get(FacesContext context);
-    }
-
-    private static OriginalRequestGetter ORIGINAL_REQUEST_GETTER;
-
-    private static class ServletEnvironmentRequestGetter implements OriginalRequestGetter {
-        public HttpServletRequest get(FacesContext context) {
-            return (HttpServletRequest) context.getExternalContext().getRequest();
-        }
-    }
-
-    private static class LiferayOriginalRequestGetter implements OriginalRequestGetter {
-        private Class PortalUtilClass;
-        private Method GetHttpServletRequest;
-        private Method GetOriginalServletRequest;
-
-        private LiferayOriginalRequestGetter() throws ClassNotFoundException, NoSuchMethodException {
-            try {
-                PortalUtilClass = Class.forName("com.liferay.portal.util.PortalUtil");
-            } catch (ClassNotFoundException e) {
-                //the class moved in Liferay 7.*
-                PortalUtilClass = Class.forName("com.liferay.portal.kernel.util.PortalUtil");
-            }
-            GetHttpServletRequest = PortalUtilClass.getDeclaredMethod("getHttpServletRequest", javax.portlet.PortletRequest.class);
-            GetOriginalServletRequest = PortalUtilClass.getDeclaredMethod("getOriginalServletRequest", HttpServletRequest.class);
-        }
-
-        public HttpServletRequest get(FacesContext context) {
-            try {
-                javax.portlet.PortletRequest portletRequest = (javax.portlet.PortletRequest) context.getExternalContext().getRequest();
-                HttpServletRequest httpPortletRequest = (HttpServletRequest) GetHttpServletRequest.invoke(PortalUtilClass, portletRequest);
-                HttpServletRequest realRequest =  (HttpServletRequest) GetOriginalServletRequest.invoke(PortalUtilClass, httpPortletRequest);
-                if( realRequest != null && realRequest.getClass().getName().equals("com.liferay.portal.kernel.portlet.RestrictPortletServletRequest")){
-                    //As of Liferay 6.1.2, things are different so we check for a specific type of request that indicates it's.
-                        Method meth = realRequest.getClass().getMethod("getRequest", new Class[0]);
-                        Object result = meth.invoke(realRequest);
-                    if(result != null){
-                        return (HttpServletRequest)result;
-                    }
-                }
-                return realRequest;
-            } catch (InvocationTargetException e) {
-                return null;
-            } catch (IllegalAccessException e) {
-                return null;
-            } catch (NoSuchMethodException e) {
-                return null;
-            }
-        }
-    }
-
-    private static class WebspherePortalOriginalRequestGetter implements OriginalRequestGetter {
-        public HttpServletRequest get(FacesContext context) {
-            //get original HTTP request using method described here: http://wpcertification.blogspot.ro/2010/05/accessing-underlying-httpservletrequest.html
-            Object request = context.getExternalContext().getRequest();
-            HttpServletRequest httpServletRequest = (HttpServletRequest)request;
-            while(httpServletRequest instanceof HttpServletRequestWrapper){
-                HttpServletRequestWrapper httpServletRequestWrapper = (HttpServletRequestWrapper)httpServletRequest;
-                httpServletRequest =  (HttpServletRequest)httpServletRequestWrapper.getRequest();
-            }
-            return httpServletRequest;
-        }
-    }
-
-    private static class PlutoPortalOriginalRequestGetter implements OriginalRequestGetter {
-        private Class PortletRequestContext;
-        private Method GetHttpServletRequest;
-
-        private PlutoPortalOriginalRequestGetter() throws ClassNotFoundException, NoSuchMethodException {
-            PortletRequestContext = Class.forName("org.apache.pluto.container.PortletRequestContext");
-            GetHttpServletRequest = PortletRequestContext.getDeclaredMethod("getContainerRequest");
-        }
-
-        public HttpServletRequest get(FacesContext context) {
-            try {
-                Map requestMap = context.getExternalContext().getRequestMap();
-                Object requestContext = requestMap.get("org.apache.pluto.container.PortletRequestContext");
-                HttpServletRequest httpServletRequest = (HttpServletRequest) GetHttpServletRequest.invoke(requestContext);
-                return  httpServletRequest;
-            } catch (IllegalAccessException e) {
-                return null;
-            } catch (InvocationTargetException e) {
-                return null;
-            }
-        }
-    }
-
     static {
         try {
             if (isLiferay()) {
@@ -380,6 +276,37 @@ public class EnvUtils {
         } catch (NoSuchMethodException e) {
             log.warning("Cannot get method of class: " + e.getMessage());
         }
+    }
+
+    static{
+        try {
+            if (isMyFaces()) {
+                Class MyfacesConfigClass;
+                MyfacesConfigClass = Class.forName("org.apache.myfaces.shared.config.MyfacesConfig");
+                if (MyfacesConfigClass != null) {
+                    ExternalContext ctx= FacesContext.getCurrentInstance().getExternalContext();
+                    Class[] noparams = new Class[0];
+                    Class[] partype = new Class[1];
+                    partype[0] = javax.faces.context.ExternalContext.class;
+                    Object obj = MyfacesConfigClass.newInstance();
+                    java.lang.reflect.Method method1 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSSPreserveState", noparams);
+                    java.lang.reflect.Method initMethod = MyfacesConfigClass.getMethod("getCurrentInstance", partype[0]);
+                    Object myfacesConfigInstance = initMethod.invoke(null,ctx);
+                    if (myfacesConfigInstance !=null){
+                        Object returnValue = method1.invoke(myfacesConfigInstance, noparams);
+                        java.lang.reflect.Method method2 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSS", noparams);
+                        Object returnValue2 = method2.invoke(myfacesConfigInstance, noparams);
+                        java.lang.reflect.Method method3 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSSAuto", noparams);
+                        Object returnValue3 = method3.invoke(myfacesConfigInstance, noparams);
+                        myFacesRefreshTransientProperty= (String.valueOf(returnValue2).equals("true") && String.valueOf(returnValue).equals("true"));
+                    }
+                }
+            }
+        }catch(Throwable t){
+          //  t.printStackTrace();
+            log.log(Level.FINE, "MyfacesConfig class not available or methods to determine refreshTransientBuildonPSS", t);
+        }
+
     }
 
     /**
@@ -462,7 +389,7 @@ public class EnvUtils {
      * Programmatically override the value of blockUIOnSubmit.
      *
      * @param facesContext The current FacesContext instance used to access the application map.
-     * @param value 
+     * @param value
      */
     public static void setBlockUIOnSubmit(FacesContext facesContext, boolean value) {
         setViewParam(facesContext, BLOCK_UI_ON_SUBMIT, value);
@@ -567,7 +494,6 @@ public class EnvUtils {
         return (Boolean.TRUE.equals(lazyPush));
     }
 
-
     /**
      * Returns true if Liferay classes are detected via reflection.
      *
@@ -576,7 +502,6 @@ public class EnvUtils {
     public static boolean isLiferay() {
         return LiferayClass != null;
     }
-
 
     /**
      * Returns true if WebSphere Portal class is detected via reflection.
@@ -625,7 +550,6 @@ public class EnvUtils {
     public static String getSessionExpiredRedirectURI(FacesContext facesContext) {
         return EnvConfig.getEnvConfig(facesContext).sessionExpiredRedirectURI;
     }
-
 
     /**
      * Returns the value of the context parameter org.icefaces.sessionTimeoutRedirectURI.  The default value is the String
@@ -733,7 +657,6 @@ public class EnvUtils {
         return EnvConfig.getEnvConfig(facesContext).publicContextPath;
     }
 
-
     public static void createSessionOnPageLoad(FacesContext context) {
 
         final ExternalContext externalContext = context.getExternalContext();
@@ -793,39 +716,6 @@ public class EnvUtils {
         return icepushPresent;
     }
 
-    //ICE-10792 Use reflection to determine if myfaces context-param org.apache.myfaces.REFRESH_TRANSIENT_BUILD_ON_PSS_PRESERVE_STATE is used
-    private static boolean myFacesRefreshTransientProperty;
-
-    static{
-        try {
-            if (isMyFaces()) {
-                Class MyfacesConfigClass;
-                MyfacesConfigClass = Class.forName("org.apache.myfaces.shared.config.MyfacesConfig");
-                if (MyfacesConfigClass != null) {
-                    ExternalContext ctx= FacesContext.getCurrentInstance().getExternalContext();
-                    Class[] noparams = new Class[0];
-                    Class[] partype = new Class[1];
-                    partype[0] = javax.faces.context.ExternalContext.class;
-                    Object obj = MyfacesConfigClass.newInstance();
-                    java.lang.reflect.Method method1 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSSPreserveState", noparams);
-                    java.lang.reflect.Method initMethod = MyfacesConfigClass.getMethod("getCurrentInstance", partype[0]);
-                    Object myfacesConfigInstance = initMethod.invoke(null,ctx);
-                    if (myfacesConfigInstance !=null){
-                        Object returnValue = method1.invoke(myfacesConfigInstance, noparams);
-                        java.lang.reflect.Method method2 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSS", noparams);
-                        Object returnValue2 = method2.invoke(myfacesConfigInstance, noparams);
-                        java.lang.reflect.Method method3 = MyfacesConfigClass.getDeclaredMethod("isRefreshTransientBuildOnPSSAuto", noparams);
-                        Object returnValue3 = method3.invoke(myfacesConfigInstance, noparams);
-                        myFacesRefreshTransientProperty= (String.valueOf(returnValue2).equals("true") && String.valueOf(returnValue).equals("true"));
-                    }
-                }
-            }
-        }catch(Throwable t){
-          //  t.printStackTrace();
-            log.log(Level.FINE, "MyfacesConfig class not available or methods to determine refreshTransientBuildonPSS", t);
-        }
-
-    }
     public static boolean isMyfacesRefreshTransientforPSS(){
         return  myFacesRefreshTransientProperty;
     }
@@ -845,9 +735,6 @@ public class EnvUtils {
         }
         return true;
     }
-
-
-    //remove this once multi-form ViewState is addressed
 
     public static boolean needViewStateHack() {
         return isMojarra();
@@ -904,6 +791,9 @@ public class EnvUtils {
     public static boolean instanceofPortletRequest(Object request) {
         return PortletRequestClass != null && PortletRequestClass.isInstance(request);
     }
+
+
+    //remove this once multi-form ViewState is addressed
 
     public static boolean instanceofPortletResponse(Object response) {
         return PortletResponseClass != null && PortletResponseClass.isInstance(response);
@@ -1031,7 +921,6 @@ public class EnvUtils {
         return (Boolean.TRUE.equals(disableDefaultErrorPopups));
     }
 
-
     /**
      * Programmatically override the value of disableDefaultErrorPopups.
      *
@@ -1041,7 +930,6 @@ public class EnvUtils {
     public static void setDisableDefaultErrorPopups(FacesContext facesContext, boolean value) {
         setViewParam(facesContext, DISABLE_DEFAULT_ERROR_POPUPS, value);
     }
-
 
     public static boolean isFastBusyIndicator(FacesContext facesContext) {
         return EnvConfig.getEnvConfig(facesContext).fastBusyIndicator;
@@ -1066,10 +954,10 @@ public class EnvUtils {
     }
 
     /**
-     * Determine whether the current JSF implementation is version 2.2
-     * @return true if JSF implementation is 2.2
+     * Determine whether the current JSF implementation is version 2.2 or greater
+     * @return true if JSF implementation is 2.2 or greater
      */
-    public static boolean isJSF22() {
+    public static boolean isJSF22OrGreater() {
         final String version = FacesContext.class.getPackage().getImplementationVersion();
         if (version == null) {
             try {
@@ -1079,10 +967,9 @@ public class EnvUtils {
                 return false;
             }
         } else {
-            return version.startsWith("2.2");
+            return Integer.parseInt(version.substring(2, 3)) >= 2;
         }
     }
-
 
     private static void testImpl() {
         if (!isImplTested) {
@@ -1110,8 +997,6 @@ public class EnvUtils {
         }
         return stateMarker;
     }
-
-
 
     public static boolean containsBeans(Map<String, Object> scopeMap) {
         //skip the objects saved in the map by ICEfaces framework while testing for the existence of beans
@@ -1275,7 +1160,6 @@ public class EnvUtils {
         return true;
     }
 
-
     public static boolean isCoallesceResources(FacesContext context) {
         return EnvConfig.getEnvConfig(context).coalesceResources;
     }
@@ -1358,13 +1242,111 @@ public class EnvUtils {
     public static boolean getFetchPendingNotificationsOnLoad(FacesContext context) {
         return EnvConfig.getEnvConfig(context).fetchPendingNotificationsOnLoad;
     }
+
+    private static interface OriginalRequestGetter {
+        public HttpServletRequest get(FacesContext context);
+    }
+
+    private static class ServletEnvironmentRequestGetter implements OriginalRequestGetter {
+        public HttpServletRequest get(FacesContext context) {
+            return (HttpServletRequest) context.getExternalContext().getRequest();
+        }
+    }
+
+    private static class LiferayOriginalRequestGetter implements OriginalRequestGetter {
+        private Class PortalUtilClass;
+        private Method GetHttpServletRequest;
+        private Method GetOriginalServletRequest;
+
+        private LiferayOriginalRequestGetter() throws ClassNotFoundException, NoSuchMethodException {
+            try {
+                PortalUtilClass = Class.forName("com.liferay.portal.util.PortalUtil");
+            } catch (ClassNotFoundException e) {
+                //the class moved in Liferay 7.*
+                PortalUtilClass = Class.forName("com.liferay.portal.kernel.util.PortalUtil");
+            }
+            GetHttpServletRequest = PortalUtilClass.getDeclaredMethod("getHttpServletRequest", javax.portlet.PortletRequest.class);
+            GetOriginalServletRequest = PortalUtilClass.getDeclaredMethod("getOriginalServletRequest", HttpServletRequest.class);
+        }
+
+        public HttpServletRequest get(FacesContext context) {
+            try {
+                javax.portlet.PortletRequest portletRequest = (javax.portlet.PortletRequest) context.getExternalContext().getRequest();
+                HttpServletRequest httpPortletRequest = (HttpServletRequest) GetHttpServletRequest.invoke(PortalUtilClass, portletRequest);
+                HttpServletRequest realRequest =  (HttpServletRequest) GetOriginalServletRequest.invoke(PortalUtilClass, httpPortletRequest);
+                if( realRequest != null && realRequest.getClass().getName().equals("com.liferay.portal.kernel.portlet.RestrictPortletServletRequest")){
+                    //As of Liferay 6.1.2, things are different so we check for a specific type of request that indicates it's.
+                        Method meth = realRequest.getClass().getMethod("getRequest", new Class[0]);
+                        Object result = meth.invoke(realRequest);
+                    if(result != null){
+                        return (HttpServletRequest)result;
+                    }
+                }
+                return realRequest;
+            } catch (InvocationTargetException e) {
+                return null;
+            } catch (IllegalAccessException e) {
+                return null;
+            } catch (NoSuchMethodException e) {
+                return null;
+            }
+        }
+    }
+
+    private static class WebspherePortalOriginalRequestGetter implements OriginalRequestGetter {
+        public HttpServletRequest get(FacesContext context) {
+            //get original HTTP request using method described here: http://wpcertification.blogspot.ro/2010/05/accessing-underlying-httpservletrequest.html
+            Object request = context.getExternalContext().getRequest();
+            HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+            while(httpServletRequest instanceof HttpServletRequestWrapper){
+                HttpServletRequestWrapper httpServletRequestWrapper = (HttpServletRequestWrapper)httpServletRequest;
+                httpServletRequest =  (HttpServletRequest)httpServletRequestWrapper.getRequest();
+            }
+            return httpServletRequest;
+        }
+    }
+
+    private static class PlutoPortalOriginalRequestGetter implements OriginalRequestGetter {
+        private Class PortletRequestContext;
+        private Method GetHttpServletRequest;
+
+        private PlutoPortalOriginalRequestGetter() throws ClassNotFoundException, NoSuchMethodException {
+            PortletRequestContext = Class.forName("org.apache.pluto.container.PortletRequestContext");
+            GetHttpServletRequest = PortletRequestContext.getDeclaredMethod("getContainerRequest");
+        }
+
+        public HttpServletRequest get(FacesContext context) {
+            try {
+                Map requestMap = context.getExternalContext().getRequestMap();
+                Object requestContext = requestMap.get("org.apache.pluto.container.PortletRequestContext");
+                HttpServletRequest httpServletRequest = (HttpServletRequest) GetHttpServletRequest.invoke(requestContext);
+                return  httpServletRequest;
+            } catch (IllegalAccessException e) {
+                return null;
+            } catch (InvocationTargetException e) {
+                return null;
+            }
+        }
+    }
 }
 
 class EnvConfig {
-    private static Logger log = Logger.getLogger(EnvConfig.class.getName());
-
     private static final String DEFAULT_VERSIONABLE_TYPES = "*/javascript */css image/*";
-
+    private static Logger log = Logger.getLogger(EnvConfig.class.getName());
+    public boolean disableDefaultErrorPopups;
+    public boolean fastBusyIndicator;
+    public boolean includeScrollOffsets;
+    public boolean focusManaged;
+    public boolean reloadOnUpdateFailure;
+    public boolean coalesceResources;
+    public long warnBeforeExpiryInterval;
+    public boolean clientSideElementUpdateDetermination;
+    public boolean fileEntryRequireJavascript;
+    public String publicContextPath;
+    public String redirectOnExceptionMapping;
+    public boolean namespaceParameters;
+    public String updateNetworkErrorRetryTimeouts;
+    public boolean fetchPendingNotificationsOnLoad;
     boolean autoRender;
     boolean autoId;
     boolean ariaEnabled;
@@ -1387,27 +1369,24 @@ class EnvConfig {
     boolean uniqueResourceURLs;
     boolean lazyWindowScope;
     boolean messagePersistence;
-    public boolean disableDefaultErrorPopups;
-    public boolean fastBusyIndicator;
     boolean replayNavigationOnReload;
     boolean generateHeadUpdate;
     String resourceVersion;
     String versionableTypes;
-    public boolean includeScrollOffsets;
-    public boolean focusManaged;
-    public boolean reloadOnUpdateFailure;
-    public boolean coalesceResources;
-    public long warnBeforeExpiryInterval;
-    public boolean clientSideElementUpdateDetermination;
-    public boolean fileEntryRequireJavascript;
-    public String publicContextPath;
-    public String redirectOnExceptionMapping;
-    public boolean namespaceParameters;
-    public String updateNetworkErrorRetryTimeouts;
-    public boolean fetchPendingNotificationsOnLoad;
 
     public EnvConfig(Map initMap) {
         init(initMap);
+    }
+
+    public static EnvConfig getEnvConfig(FacesContext facesContext) {
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map appMap = externalContext.getApplicationMap();
+        EnvConfig envConfig = (EnvConfig) appMap.get(EnvUtils.ICEFACES_ENV_CONFIG);
+        if (null == envConfig) {
+            envConfig = new EnvConfig(externalContext.getInitParameterMap());
+            appMap.put(EnvUtils.ICEFACES_ENV_CONFIG, envConfig);
+        }
+        return envConfig;
     }
 
     public void init(Map initMap) {
@@ -1455,18 +1434,6 @@ class EnvConfig {
 
         log.info("ICEfaces Configuration: \n" + info);
     }
-
-    public static EnvConfig getEnvConfig(FacesContext facesContext) {
-        ExternalContext externalContext = facesContext.getExternalContext();
-        Map appMap = externalContext.getApplicationMap();
-        EnvConfig envConfig = (EnvConfig) appMap.get(EnvUtils.ICEFACES_ENV_CONFIG);
-        if (null == envConfig) {
-            envConfig = new EnvConfig(externalContext.getInitParameterMap());
-            appMap.put(EnvUtils.ICEFACES_ENV_CONFIG, envConfig);
-        }
-        return envConfig;
-    }
-
 
     boolean decodeBoolean(Map map, String name, boolean defaultValue, StringBuilder info) {
         String paramValue = (String) map.get(name);
