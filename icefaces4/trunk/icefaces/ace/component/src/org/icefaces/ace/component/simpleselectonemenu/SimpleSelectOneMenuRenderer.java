@@ -17,31 +17,29 @@
 package org.icefaces.ace.component.simpleselectonemenu;
 
 import org.icefaces.ace.renderkit.InputRenderer;
-import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.JSONBuilder;
-import org.icefaces.util.EnvUtils;
-import org.icefaces.ace.event.TextChangeEvent;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.impl.util.DOMUtils;
+import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.util.EnvUtils;
 
+import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.el.ELContext;
-import javax.el.ValueExpression;
-
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.io.IOException;
 
 @MandatoryResourceComponent(tagName="simpleSelectOneMenu", value="org.icefaces.ace.component.simpleselectonemenu.SimpleSelectOneMenu")
 public class SimpleSelectOneMenuRenderer extends InputRenderer {
+    private static final String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) SimpleSelectOneMenu.class.getAnnotation(PassthroughAttributes.class)).value();
 
     public boolean getRendersChildren() {
         return true;
@@ -72,18 +70,9 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
         String clientId = uiComponent.getClientId(facesContext);
         SimpleSelectOneMenu simpleSelectOneMenu = (SimpleSelectOneMenu) uiComponent;
         boolean ariaEnabled = EnvUtils.isAriaEnabled(facesContext);
-        Map paramMap = facesContext.getExternalContext().getRequestParameterMap();
         Map<String, Object> labelAttributes = getLabelAttributes(uiComponent);
 		labelAttributes.put("fieldClientId", clientId + "_input");
-        String inFieldLabel = (String) labelAttributes.get("inFieldLabel");
         String inFieldLabelStyleClass = "";
-        String iceFocus = (String) paramMap.get("ice.focus");
-        String mousedownScript = (String) uiComponent.getAttributes().get("onmousedown");
-        String onfocusCombinedValue = "ice.setFocus(this.id);";
-        String onblurCombinedValue = "";
-        Object onfocusAppValue = uiComponent.getAttributes().get("onfocus");
-        Object onblurAppValue = uiComponent.getAttributes().get("onblur");
-        Object onchangeAppValue = uiComponent.getAttributes().get("onchange");
 
 		String inputClientId = clientId + "_input";
 
@@ -104,7 +93,13 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		writer.writeAttribute("class", "ui-widget ui-inputfield " + styleClass, null);
 		String style = simpleSelectOneMenu.getStyle();
 		writer.writeAttribute("style", style, null);
-		Map<String, Object> ariaAttributes = null;
+
+        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
+            String name = PASSTHROUGH_ATTRIBUTES[i];
+            ComponentUtils.renderPassThroughAttribute(writer, simpleSelectOneMenu, name);
+        }
+
+        Map<String, Object> ariaAttributes = null;
 		if (ariaEnabled) {
 			writer.writeAttribute("role", "select", null);
             ariaAttributes = new HashMap<String, Object>();
@@ -113,6 +108,7 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 			ariaAttributes.put("invalid", !simpleSelectOneMenu.isValid());
             writeAriaAttributes(ariaAttributes, labelAttributes);
         }
+
 		String accesskey = simpleSelectOneMenu.getAccesskey();
 		if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
 		String dir = simpleSelectOneMenu.getDir();

@@ -25,6 +25,7 @@ import org.icefaces.ace.meta.annotation.ClientBehaviorHolder;
 import org.icefaces.ace.meta.annotation.ClientEvent;
 import org.icefaces.ace.api.IceClientBehaviorHolder;
 
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
@@ -63,6 +64,21 @@ import java.util.List;
 		tlddoc="Fired any time the component loses focus.",
 		defaultRender="@all", defaultExecute="@this" )},
 	defaultEvent="valueChange" )
+@PassthroughAttributes({
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onblur",
+        "onfocus",
+        "onchange"
+})
 public class SimpleSelectOneMenuMeta extends UISelectOneMeta {
 
     @Property(tlddoc = "Style class name of the container element.", defaultValue="")

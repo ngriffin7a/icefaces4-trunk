@@ -20,23 +20,68 @@ import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.Constants;
 import org.icefaces.ace.util.JSONBuilder;
-import org.icefaces.impl.event.UIOutputWriter;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 
-import javax.faces.application.Resource;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.*;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
 @MandatoryResourceComponent(tagName = "themeSelect", value = "org.icefaces.ace.component.themeselect.ThemeSelect")
 public class ThemeSelectRenderer extends InputRenderer {
+    private static final String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) ThemeSelect.class.getAnnotation(PassthroughAttributes.class)).value();
+
+    private static void writerSelAriaAttrs(FacesContext context, ThemeSelect component) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
+        if (!ariaEnabled) return;
+
+        writer.writeAttribute("role", "listbox", null);
+        if (component.isRequired()) {
+            writer.writeAttribute("aria-required", "true", "required");
+        }
+        if (component.isDisabled()) {
+            writer.writeAttribute("aria-disabled", "true", "disabled");
+        }
+        if (!component.isValid()) {
+            writer.writeAttribute("aria-invalid", "true", null);
+        }
+        String label = component.getLabel();
+        if (label != null) {
+            writer.writeAttribute("aria-label", label, "label");
+        }
+    }
+
+    private static void writeAttributes(FacesContext context, ThemeSelect component, String... keys) throws IOException {
+        Object value;
+        for (String key : keys) {
+            value = component.getAttributes().get(key);
+            if (value != null) {
+                ResponseWriter writer = context.getResponseWriter();
+                writer.writeAttribute(key, value, key);
+            }
+        }
+    }
+
+    private static void renderOptions(FacesContext context, ThemeSelect themeSelectComponent) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        Collection<String> themeList = themeSelectComponent.getThemeList(context);
+        String selectedTheme = themeSelectComponent.getSelectedTheme(context);
+
+        for (String theme : themeList) {
+            writer.startElement("option", null);
+            writer.writeAttribute("value", theme, null);
+            if (theme.equals(selectedTheme)) {
+                writer.writeAttribute("selected", "selected", null);
+            }
+            writer.write(theme);
+            writer.endElement("option");
+        }
+    }
 
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         super.encodeBegin(context, component);
@@ -99,6 +144,12 @@ public class ThemeSelectRenderer extends InputRenderer {
         writeAttributes(context, themeSelectComponent, "accesskey", "dir", "lang", "style", "tabindex", "title", "alt");
         writerSelAriaAttrs(context, themeSelectComponent);
         renderOptions(context, themeSelectComponent);
+
+        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
+            String name = PASSTHROUGH_ATTRIBUTES[i];
+            ComponentUtils.renderPassThroughAttribute(writer, themeSelectComponent, name);
+        }
+
         writer.endElement("select");
 
         renderScript(context, themeSelectComponent);
@@ -128,54 +179,6 @@ public class ThemeSelectRenderer extends InputRenderer {
         }
 
         writer.endElement("span");
-    }
-
-    private static void writerSelAriaAttrs(FacesContext context, ThemeSelect component) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        boolean ariaEnabled = EnvUtils.isAriaEnabled(context);
-        if (!ariaEnabled) return;
-
-        writer.writeAttribute("role", "listbox", null);
-        if (component.isRequired()) {
-            writer.writeAttribute("aria-required", "true", "required");
-        }
-        if (component.isDisabled()) {
-            writer.writeAttribute("aria-disabled", "true", "disabled");
-        }
-        if (!component.isValid()) {
-            writer.writeAttribute("aria-invalid", "true", null);
-        }
-        String label = component.getLabel();
-        if (label != null) {
-            writer.writeAttribute("aria-label", label, "label");
-        }
-    }
-
-    private static void writeAttributes(FacesContext context, ThemeSelect component, String... keys) throws IOException {
-        Object value;
-        for (String key : keys) {
-            value = component.getAttributes().get(key);
-            if (value != null) {
-                ResponseWriter writer = context.getResponseWriter();
-                writer.writeAttribute(key, value, key);
-            }
-        }
-    }
-
-    private static void renderOptions(FacesContext context, ThemeSelect themeSelectComponent) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        Collection<String> themeList = themeSelectComponent.getThemeList(context);
-        String selectedTheme = themeSelectComponent.getSelectedTheme(context);
-
-        for (String theme : themeList) {
-            writer.startElement("option", null);
-            writer.writeAttribute("value", theme, null);
-            if (theme.equals(selectedTheme)) {
-                writer.writeAttribute("selected", "selected", null);
-            }
-            writer.write(theme);
-            writer.endElement("option");
-        }
     }
 
     private void renderScript(FacesContext context, ThemeSelect component) throws IOException {

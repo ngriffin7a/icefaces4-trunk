@@ -62,8 +62,8 @@ public class ComponentUtils {
      * <p/>
      * - If the component is not a value holder, toString of component is used to support Facelets UIInstructions.
      *
-     * @param facesContext   FacesContext instance
-     * @param component UIComponent instance whose value will be returned
+     * @param facesContext FacesContext instance
+     * @param component    UIComponent instance whose value will be returned
      * @return End text
      */
     public static String getStringValueToRender(FacesContext facesContext, UIComponent component) {
@@ -128,8 +128,8 @@ public class ComponentUtils {
     /**
      * Resolves the end text to render by using a specified value
      *
-     * @param facesContext   FacesContext instance
-     * @param component UIComponent instance whose value will be returned
+     * @param facesContext FacesContext instance
+     * @param component    UIComponent instance whose value will be returned
      * @return End text
      */
     public static String getStringValueToRender(FacesContext facesContext, UIComponent component, Object value) {
@@ -231,32 +231,28 @@ public class ComponentUtils {
             if (id.equals("@all") || id.equals("@none")) {
                 //System.out.println("ComponentUtils.findClientIds()    ["+i+"]  " + id);
                 buffer.append(id);
-            }
-            else if (id.equals("@this")) {
+            } else if (id.equals("@this")) {
                 //System.out.println("ComponentUtils.findClientIds()    ["+i+"]  @this  : " + component.getClientId(context));
                 buffer.append(component.getClientId(context));
-            }
-            else if (id.equals("@parent")) {
+            } else if (id.equals("@parent")) {
                 //System.out.println("ComponentUtils.findClientIds()    ["+i+"]  @parent: " + component.getParent().getClientId(context));
                 buffer.append(component.getParent().getClientId(context));
-            }
-            else if (id.equals("@form")) {
+            } else if (id.equals("@form")) {
                 UIComponent form = ComponentUtils.findParentForm(context, component);
                 if (form == null)
                     throw new FacesException("Component " + component.getClientId(context) + " needs to be enclosed in a form");
 
                 buffer.append(form.getClientId(context));
-            }
-            else {
+            } else {
                 UIComponent comp = component.findComponent(id);
 
                 //For portlets, if the standard search doesn't work, it may be necessary to do an absolute search
                 //which requires including the portlet's namespace. So the resulting encoded id looks something
                 //like portletNamespace:container:componentId.  We make the search absolute by pre-pending
                 //a leading colon (:).
-                if(comp == null){
-                    String encodedId = encodeNameSpace(context,id);
-                    if( !encodedId.startsWith(":")){
+                if (comp == null) {
+                    String encodedId = encodeNameSpace(context, id);
+                    if (!encodedId.startsWith(":")) {
                         encodedId = ":" + encodedId;
                     }
                     comp = component.findComponent(encodedId);
@@ -265,8 +261,7 @@ public class ComponentUtils {
 
                 if (comp != null) {
                     buffer.append(comp.getClientId(context));
-                }
-                else {
+                } else {
                     if (context.getApplication().getProjectStage().equals(ProjectStage.Development)) {
                         logger.log(Level.INFO, "Cannot find component with identifier \"{0}\" in view.", id);
                     }
@@ -288,9 +283,9 @@ public class ComponentUtils {
      * @param id The id to encode
      * @return The namespace encoded id
      */
-    public static String encodeNameSpace(FacesContext fc, String id){
+    public static String encodeNameSpace(FacesContext fc, String id) {
 
-        if( id == null || id.trim().length() == 0){
+        if (id == null || id.trim().length() == 0) {
             return id;
         }
 
@@ -299,22 +294,22 @@ public class ComponentUtils {
         String encodedId = ec.encodeNamespace(tempId);
 
         //If no namespace was applied, we're done.
-        if( encodedId.equals(id)){
+        if (encodedId.equals(id)) {
             return id;
         }
 
         //Extract the actual namespace.
         int idStart = encodedId.indexOf(id);
-        String ns = encodedId.substring(0,idStart);
+        String ns = encodedId.substring(0, idStart);
 
         //Check if the id already had the namespace.  If so, we're done.
-        if( id.startsWith(ns) ){
+        if (id.startsWith(ns)) {
             return id;
         }
 
         //If necessary, add the separator character before including the namespace.
         String sep = String.valueOf(UINamingContainer.getSeparatorChar(fc));
-        if( !id.startsWith(sep)){
+        if (!id.startsWith(sep)) {
             id = ":" + id;
         }
 
@@ -346,51 +341,52 @@ public class ComponentUtils {
 
     /**
      * used by GrowlMessagesRenderer and MessagesRenderer for option @inView
+     *
      * @param context
      * @return
      */
-    public static List<String> findIdsInView(FacesContext context){
+    public static List<String> findIdsInView(FacesContext context) {
         List<String> idList = new ArrayList<String>();
-        UIViewRoot root =  context.getViewRoot();
-        for (UIComponent uic : root.getChildren()){
-            getChildIds(uic,idList,context);
+        UIViewRoot root = context.getViewRoot();
+        for (UIComponent uic : root.getChildren()) {
+            getChildIds(uic, idList, context);
         }
         return idList;
     }
 
     /**
-     *
      * @param uic
      * @param idList
      * @param context
      */
-    private static void  getChildIds(UIComponent uic, List<String> idList, FacesContext context) {
+    private static void getChildIds(UIComponent uic, List<String> idList, FacesContext context) {
         idList.add(uic.getClientId(context));
         if (uic.getChildren().size() > 0) {
-           Iterator<UIComponent> iter = uic.getFacetsAndChildren();
-           while (iter.hasNext()) {
-               UIComponent child = iter.next();
-            //   if (child instanceof UIInput){ do we want to just include UIINput or EditableValueHolders?
-                   getChildIds(child, idList, context);
-             //  }
-           }
+            Iterator<UIComponent> iter = uic.getFacetsAndChildren();
+            while (iter.hasNext()) {
+                UIComponent child = iter.next();
+                //   if (child instanceof UIInput){ do we want to just include UIINput or EditableValueHolders?
+                getChildIds(child, idList, context);
+                //  }
+            }
         }
     }
 
     /**
      * used by GrowlMessagesRenderer and MessagesRenderer for option @inView
+     *
      * @param context
      * @param idsInView
      * @return
      */
-    public static Iterator<FacesMessage> getMessagesInView(FacesContext context, List<String> idsInView){
+    public static Iterator<FacesMessage> getMessagesInView(FacesContext context, List<String> idsInView) {
         List<FacesMessage> compiledList = new ArrayList<FacesMessage>();
-        for (String id: idsInView ){
-            if (context.getMessages(id).hasNext() ){
-                Iterator msgIt =  context.getMessages(id);
-                while(msgIt.hasNext()){
-                    FacesMessage fm = (FacesMessage)msgIt.next();
-                //    System.out.println(" adding message="+fm.getSummary() +" for id="+id);
+        for (String id : idsInView) {
+            if (context.getMessages(id).hasNext()) {
+                Iterator msgIt = context.getMessages(id);
+                while (msgIt.hasNext()) {
+                    FacesMessage fm = (FacesMessage) msgIt.next();
+                    //    System.out.println(" adding message="+fm.getSummary() +" for id="+id);
                     compiledList.add(fm);
                 }
             }
@@ -408,36 +404,112 @@ public class ComponentUtils {
     }
 
     /**
-        * A buttonGroup will put itself in the context while its children are rendering and
-        * automatically the groupId will set itself.  Any radioButton/checkboxButton that is a descendant of a
-        * buttonGroup component inherits it as a groupId.
-        * @param button
-        * @param context
-        * @return
-        */
-       public static String findInHeirarchy(ButtonGroupMember button, FacesContext context){
-           String groupId="";
-           Object oId = context.getAttributes().get(ButtonGroup.GROUP_PARENT_ID);
-           if (oId!=null){
-               groupId=String.valueOf(oId);
-           }
-           return groupId;
-       }
+     * A buttonGroup will put itself in the context while its children are rendering and
+     * automatically the groupId will set itself.  Any radioButton/checkboxButton that is a descendant of a
+     * buttonGroup component inherits it as a groupId.
+     *
+     * @param button
+     * @param context
+     * @return
+     */
+    public static String findInHeirarchy(ButtonGroupMember button, FacesContext context) {
+        String groupId = "";
+        Object oId = context.getAttributes().get(ButtonGroup.GROUP_PARENT_ID);
+        if (oId != null) {
+            groupId = String.valueOf(oId);
+        }
+        return groupId;
+    }
 
-       /**
-        * This method will look in Context attributes for the buttonGroups registered in the view
-        * @param button
-        * @param fc
-        * @return
-        */
-       public static List<String> findInFacesContext(ButtonGroupMember button, FacesContext fc){
-           List<String> groupList = new ArrayList<String>();
-           Object olist = fc.getAttributes().get(ButtonGroupMember.GROUP_LIST_KEY) ;
-           if (olist != null){
-                if (olist instanceof List){
-                   groupList = (List<String>)fc.getAttributes().get(ButtonGroupMember.GROUP_LIST_KEY);
-                }
-           }
-           return groupList;
-       }
+    /**
+     * This method will look in Context attributes for the buttonGroups registered in the view
+     *
+     * @param button
+     * @param fc
+     * @return
+     */
+    public static List<String> findInFacesContext(ButtonGroupMember button, FacesContext fc) {
+        List<String> groupList = new ArrayList<String>();
+        Object olist = fc.getAttributes().get(ButtonGroupMember.GROUP_LIST_KEY);
+        if (olist != null) {
+            if (olist instanceof List) {
+                groupList = (List<String>) fc.getAttributes().get(ButtonGroupMember.GROUP_LIST_KEY);
+            }
+        }
+        return groupList;
+    }
+
+    /**
+     * Render pass-through attributes for the given component.
+     *
+     * @param writer
+     * @param component
+     * @param attrs
+     * @throws IOException
+     */
+    public static void renderPassThroughAttributes(ResponseWriter writer, UIComponent component, String[] attrs) throws IOException {
+        for (String attribute : attrs) {
+            Object value = component.getAttributes().get(attribute);
+
+            if (shouldRenderAttribute(value)) {
+                writer.writeAttribute(attribute, value.toString(), attribute);
+            }
+        }
+    }
+
+    /**
+     * Render pass-through attribute for the given component.
+     * @param writer
+     * @param component
+     * @param attribute
+     * @param initialValue
+     * @throws IOException
+     */
+    public static void renderPassThroughAttribute(ResponseWriter writer, UIComponent component, String attribute, String initialValue) throws IOException {
+        Object value = component.getAttributes().get(attribute);
+        String finalValue = value == null ? initialValue : initialValue + value;
+        if (shouldRenderAttribute(finalValue)) {
+            writer.writeAttribute(attribute, finalValue, attribute);
+        }
+    }
+
+    /**
+     * Render pass-through attribute for the given component.
+     * @param writer
+     * @param component
+     * @param attribute
+     * @throws IOException
+     */
+    public static void renderPassThroughAttribute(ResponseWriter writer, UIComponent component, String attribute) throws IOException {
+        renderPassThroughAttribute(writer, component, attribute, "");
+    }
+
+
+    private static boolean shouldRenderAttribute(Object value) {
+        if (value == null)
+            return false;
+
+        if (value instanceof Boolean) {
+            return ((Boolean) value).booleanValue();
+        } else if (value instanceof Number) {
+            Number number = (Number) value;
+
+            if (value instanceof Integer)
+                return number.intValue() != Integer.MIN_VALUE;
+            else if (value instanceof Double)
+                return number.doubleValue() != Double.MIN_VALUE;
+            else if (value instanceof Long)
+                return number.longValue() != Long.MIN_VALUE;
+            else if (value instanceof Byte)
+                return number.byteValue() != Byte.MIN_VALUE;
+            else if (value instanceof Float)
+                return number.floatValue() != Float.MIN_VALUE;
+            else if (value instanceof Short)
+                return number.shortValue() != Short.MIN_VALUE;
+        } else if (value instanceof String) {
+            return ((String) value).length() > 0;
+        }
+
+        return true;
+    }
 }

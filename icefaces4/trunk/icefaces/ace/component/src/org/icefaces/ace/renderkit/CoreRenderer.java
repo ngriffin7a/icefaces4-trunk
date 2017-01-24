@@ -27,6 +27,7 @@
  */
 package org.icefaces.ace.renderkit;
 
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.Constants;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.util.EnvUtils;
@@ -36,8 +37,6 @@ import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UINamingContainer;
-import javax.faces.component.behavior.AjaxBehavior;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -57,20 +56,66 @@ import org.icefaces.ace.util.JSONBuilder;
 public class CoreRenderer extends Renderer {
     private static final Logger logger = Logger.getLogger(CoreRenderer.class.getName());
 
+    /**
+     * Not all text for components are easy to make attributes for components,
+     * especially those for accessibility.  Default values are made available
+     * within the ace jar messages properties files.  Users may override the
+     * key if they prefer their own, or their locale is not available.
+     * @return reference to resource bundle to get localised text for rendering
+     */
+    public static ResourceBundle getComponentResourceBundle(FacesContext context, String ACE_MESSAGES_BUNDLE){
+        Locale locale = context.getViewRoot().getLocale();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String bundleName = context.getApplication().getMessageBundle();
+        if (classLoader == null) {
+            classLoader = bundleName.getClass().getClassLoader();
+        }
+        if (bundleName == null) {
+            bundleName = ACE_MESSAGES_BUNDLE;
+        }
+        return ResourceBundle.getBundle(bundleName, locale, classLoader);
+    }
+
+    /**
+     *
+     * @param bundle
+     * @param MESSAGE_KEY_PREFIX
+     * @param key
+     * @param defaultValue
+     * @return localized or internationalized String value from message bundle
+     */
+    public static String getLocalisedMessageFromBundle(ResourceBundle bundle,
+                                                        String MESSAGE_KEY_PREFIX,
+                                                        String key,
+                                                        String defaultValue){
+         if (null == bundle) {
+             return defaultValue;
+         }
+         String label=defaultValue;
+         try {
+             label = bundle.getString(MESSAGE_KEY_PREFIX + key);
+         } catch(MissingResourceException mre){
+             if (logger.isLoggable(Level.FINE)) {
+                 logger.fine(" BUNDLE missing property : "+key+" defaultValue used : "+defaultValue);
+             }
+         }
+         return label;
+    }
+	
 	protected void renderChildren(FacesContext facesContext, UIComponent component) throws IOException {
 		for (Iterator<UIComponent> iterator = component.getChildren().iterator(); iterator.hasNext();) {
 			UIComponent child = (UIComponent) iterator.next();
 			renderChild(facesContext, child);
 		}
 	}
-
+	
 	protected void renderChild(FacesContext facesContext, UIComponent child) throws IOException {
 		if (!child.isRendered()) {
 			return;
 		}
 
 		child.encodeBegin(facesContext);
-		
+
 		if (child.getRendersChildren()) {
 			child.encodeChildren(facesContext);
 		} else {
@@ -81,10 +126,10 @@ public class CoreRenderer extends Renderer {
 	
 	protected String getActionURL(FacesContext facesContext) {
 		String actionURL = facesContext.getApplication().getViewHandler().getActionURL(facesContext, facesContext.getViewRoot().getViewId());
-		
+
 		return facesContext.getExternalContext().encodeActionURL(actionURL);
 	}
-	
+    
     protected String getResourceURL(FacesContext facesContext, String value) {
         if (value.contains(ResourceHandler.RESOURCE_IDENTIFIER)) {
             return value;
@@ -123,105 +168,17 @@ public class CoreRenderer extends Renderer {
 		}
 		return baseUrl; // default, no encoding
 	}
-    
+
     protected String getResourceRequestPath(FacesContext facesContext, String resourceName) {
 		Resource resource = facesContext.getApplication().getResourceHandler().createResource(resourceName, "icefaces.ace");
 
         return resource.getRequestPath();
 	}
-    	
-	public boolean isPostback(FacesContext facesContext) {
-		return facesContext.getRenderKit().getResponseStateManager().isPostback(facesContext);
-	}
 
-    public boolean isAjaxRequest(FacesContext facesContext) {
-		return facesContext.getPartialViewContext().isAjaxRequest();
-	}
-
-	protected void renderPassThruAttributes(FacesContext facesContext, UIComponent component, String var, String[] attrs) throws IOException {
-		ResponseWriter writer = facesContext.getResponseWriter();
-		
-		for(String event : attrs) {			
-			String eventHandler = (String) component.getAttributes().get(event);
-			
-			if(eventHandler != null)
-				writer.write(var + ".addListener(\"" + event.substring(2, event.length()) + "\", function(e){" + eventHandler + ";});\n");
-		}
-	}
-	
 	protected void renderPassThruAttributes(FacesContext facesContext, UIComponent component, String[] attrs) throws IOException {
-		ResponseWriter writer = facesContext.getResponseWriter();
-		
-		for(String attribute : attrs) {
-			Object value = component.getAttributes().get(attribute);
-			
-			if(shouldRenderAttribute(value))
-				writer.writeAttribute(attribute, value.toString(), attribute);
-		}
+        ComponentUtils.renderPassThroughAttributes(facesContext.getResponseWriter(), component, attrs);
 	}
 	
-	protected void renderPassThruAttributes(FacesContext facesContext, UIComponent component, String[] attrs, String[] ignoredAttrs) throws IOException {
-		ResponseWriter writer = facesContext.getResponseWriter();
-		
-		for(String attribute : attrs) {
-			if(isIgnoredAttribute(attribute, ignoredAttrs)) {
-				continue;
-			}
-			
-			Object value = component.getAttributes().get(attribute);
-			
-			if(shouldRenderAttribute(value))
-				writer.writeAttribute(attribute, value.toString(), attribute);
-		}
-	}
-	
-	private boolean isIgnoredAttribute(String attribute, String[] ignoredAttrs) {
-		for(String ignoredAttribute : ignoredAttrs) {
-			if(attribute.equals(ignoredAttribute)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-    protected boolean shouldRenderAttribute(Object value) {
-        if(value == null)
-            return false;
-      
-        if(value instanceof Boolean) {
-            return ((Boolean) value).booleanValue();
-        }
-        else if(value instanceof Number) {
-        	Number number = (Number) value;
-        	
-            if (value instanceof Integer)
-                return number.intValue() != Integer.MIN_VALUE;
-            else if (value instanceof Double)
-                return number.doubleValue() != Double.MIN_VALUE;
-            else if (value instanceof Long)
-                return number.longValue() != Long.MIN_VALUE;
-            else if (value instanceof Byte)
-                return number.byteValue() != Byte.MIN_VALUE;
-            else if (value instanceof Float)
-                return number.floatValue() != Float.MIN_VALUE;
-            else if (value instanceof Short)
-                return number.shortValue() != Short.MIN_VALUE;
-        }
-        
-        return true;
-    }
-    
-    protected boolean isPostBack() {
-    	FacesContext facesContext = FacesContext.getCurrentInstance();
-    	return facesContext.getRenderKit().getResponseStateManager().isPostback(facesContext);
-    }
-   
-    public String getEscapedClientId(String clientId){
-    	return clientId.replaceAll(":", "\\\\\\\\:");
-    }
-    
-
     public String convertClientId(FacesContext context, String clientId) {
         boolean compressID = EnvUtils.isCompressIDs(context);
         if (!compressID)  {
@@ -234,14 +191,14 @@ public class CoreRenderer extends Renderer {
     public boolean isValueEmpty(String value) {
 		if (value == null || "".equals(value))
 			return true;
-		
+
 		return false;
 	}
-	
+
 	public boolean isValueBlank(String value) {
 		if(value == null)
 			return true;
-		
+
 		return value.trim().equals("");
 	}
 
@@ -302,7 +259,7 @@ public class CoreRenderer extends Renderer {
 
         return domEvent;
     }
-
+	
     protected boolean themeForms() {
         FacesContext context = FacesContext.getCurrentInstance();
         String value = context.getExternalContext().getInitParameter(Constants.THEME_FORMS_PARAM);
@@ -322,11 +279,15 @@ public class CoreRenderer extends Renderer {
 
         viewMap.put(Constants.AUTO_UPDATE, autoUpdateIds);
     }
+
+	/* ------------------------------- */
+	/* --- imported from icemobile --- */
+	/* ------------------------------- */
 	
     protected void decodeBehaviors(FacesContext context, UIComponent component)  {
 		decodeBehaviors(context, component, null);
 	}
-
+	
     protected void decodeBehaviors(FacesContext context, UIComponent component, String proxyClientId)  {
         if (!(component instanceof ClientBehaviorHolder))
             return;
@@ -352,10 +313,6 @@ public class CoreRenderer extends Renderer {
         }
     }
 
-	/* ------------------------------- */
-	/* --- imported from icemobile --- */
-	/* ------------------------------- */
-	
     /**
       * Non-obstrusive way to apply client behaviors.  Brought over from implementation of ace components for ace ajax.
       * will be replaced in 1.4 Beta to reflect support for both mobi:transition and mobi:ajax behaviors
@@ -396,7 +353,7 @@ public class CoreRenderer extends Renderer {
        }
        return sb;
     }
-	
+
     protected void writeJavascriptFile(FacesContext facesContext,
             UIComponent component, String JS_NAME, String JS_MIN_NAME,
             String JS_LIBRARY, String JS2_NAME, String JS2_MIN_NAME, String JS2_LIB) throws IOException {
@@ -436,8 +393,8 @@ public class CoreRenderer extends Renderer {
         writer.endElement(HTML.SPAN_ELEM);
     }
 
-    protected void writeJavascriptFile(FacesContext facesContext, 
-            UIComponent component, String JS_NAME, String JS_MIN_NAME, 
+    protected void writeJavascriptFile(FacesContext facesContext,
+            UIComponent component, String JS_NAME, String JS_MIN_NAME,
             String JS_LIBRARY) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = component.getClientId(facesContext);
@@ -457,11 +414,11 @@ public class CoreRenderer extends Renderer {
             writer.writeAttribute("src", src, null);
             writer.endElement("script");
             setScriptLoaded(facesContext, JS_NAME);
-        } 
+        }
         writer.endElement(HTML.SPAN_ELEM);
     }
-
-    protected void setScriptLoaded(FacesContext facesContext, 
+	
+    protected void setScriptLoaded(FacesContext facesContext,
             String JS_NAME) {
         InlineScriptEventListener.setScriptLoaded(facesContext, JS_NAME);
     }
@@ -469,7 +426,7 @@ public class CoreRenderer extends Renderer {
     protected boolean isScriptLoaded(FacesContext facesContext, String JS_NAME) {
         return InlineScriptEventListener.isScriptLoaded(facesContext, JS_NAME);
     }
-	
+
     /**
      * this method created for mobi:inputText
      * @param context
@@ -517,53 +474,6 @@ public class CoreRenderer extends Renderer {
             }
         }
         return req.toString();
-    }
-
-
-    /**
-     * Not all text for components are easy to make attributes for components,
-     * especially those for accessibility.  Default values are made available
-     * within the ace jar messages properties files.  Users may override the
-     * key if they prefer their own, or their locale is not available.
-     * @return reference to resource bundle to get localised text for rendering
-     */
-    public static ResourceBundle getComponentResourceBundle(FacesContext context, String ACE_MESSAGES_BUNDLE){
-        Locale locale = context.getViewRoot().getLocale();
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        String bundleName = context.getApplication().getMessageBundle();
-        if (classLoader == null) {
-            classLoader = bundleName.getClass().getClassLoader();
-        }
-        if (bundleName == null) {
-            bundleName = ACE_MESSAGES_BUNDLE;
-        }
-        return ResourceBundle.getBundle(bundleName, locale, classLoader);
-    }
-
-    /**
-     *
-     * @param bundle
-     * @param MESSAGE_KEY_PREFIX
-     * @param key
-     * @param defaultValue
-     * @return localized or internationalized String value from message bundle
-     */
-    public static String getLocalisedMessageFromBundle(ResourceBundle bundle,
-                                                        String MESSAGE_KEY_PREFIX,
-                                                        String key,
-                                                        String defaultValue){
-         if (null == bundle) {
-             return defaultValue;
-         }
-         String label=defaultValue;
-         try {
-             label = bundle.getString(MESSAGE_KEY_PREFIX + key);
-         } catch(MissingResourceException mre){
-             if (logger.isLoggable(Level.FINE)) {
-                 logger.fine(" BUNDLE missing property : "+key+" defaultValue used : "+defaultValue);
-             }
-         }
-         return label;
     }
 
 }

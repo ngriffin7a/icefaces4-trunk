@@ -17,29 +17,24 @@
 package org.icefaces.ace.component.textentry;
 
 import org.icefaces.ace.renderkit.InputRenderer;
-import org.icefaces.util.ClientDescriptor;
-import org.icefaces.ace.util.ComponentUtils;
-import org.icefaces.ace.util.HTML;
-import org.icefaces.ace.util.JSONBuilder;
-import org.icefaces.ace.util.Utils;
-import org.icefaces.ace.util.PassThruAttributeWriter;
+import org.icefaces.ace.util.*;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.render.MandatoryResourceComponent;
+import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.EnvUtils;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
-import java.lang.String;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @MandatoryResourceComponent(tagName="textEntry", value="org.icefaces.ace.component.textentry.TextEntry")
 public class TextEntryRenderer extends InputRenderer {
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) TextEntry.class.getAnnotation(PassthroughAttributes.class)).value();
     @Override
 	public void decode(FacesContext context, UIComponent component) {
 		TextEntry textEntry = (TextEntry) component;
@@ -97,19 +92,6 @@ public class TextEntryRenderer extends InputRenderer {
         }
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
-        PassThruAttributeWriter.renderNonBooleanAttributes(writer, textEntry, textEntry.getCommonInputAttributeNames());
-        PassThruAttributeWriter.renderBooleanAttributes(writer, textEntry, textEntry.getBooleanAttNames());
-        if (isNumberType) {
-            PassThruAttributeWriter.renderNonBooleanAttributes(writer, textEntry, textEntry.getNumberAttributeNames());
-        } else {
-            ClientDescriptor client = Utils.getClientDescriptor();
-            String typeVal = (String)textEntry.getAttributes().get("type");
-            if( isDateType && client.isAndroidOS() && client.isICEmobileContainer() ){ //Android container borks date types
-                typeVal = "text";
-            }
-            type = typeVal;
-            PassThruAttributeWriter.renderNonBooleanAttributes(writer, textEntry, textEntry.getInputtextAttributeNames());
-        }
         if (!isDateType) writer.writeAttribute("autocorrect", textEntry.getAutocorrect(), null);
         else writer.writeAttribute("autocorrect", "on", null);
         writer.writeAttribute("autocapitalize", textEntry.getAutocapitalize(), null);
@@ -151,8 +133,6 @@ public class TextEntryRenderer extends InputRenderer {
         writer.writeAttribute("name", nameToRender, null);
         writer.writeAttribute("value", valueToRender , null);
 
-        renderPassThruAttributes(context, textEntry, HTML.INPUT_TEXT_ATTRS);
-        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, component) ;
         if (ariaEnabled) {
             final TextEntry compoent = (TextEntry) component;
             Map<String, Object> ariaAttributes = new HashMap<String, Object>() {{
@@ -193,7 +173,15 @@ public class TextEntryRenderer extends InputRenderer {
 
         jb.endMap().endArray().endFunction();
 		String script = jb.toString();
-        writer.writeAttribute("onfocus", script, null);
+
+        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
+            String name = PASSTHROUGH_ATTRIBUTES[i];
+            if ("onfocus".equals(name)) {
+                ComponentUtils.renderPassThroughAttribute(writer, textEntry, name, script);
+            } else {
+                ComponentUtils.renderPassThroughAttribute(writer, textEntry, name);
+            }
+        }
 
         writer.endElement("input");
 

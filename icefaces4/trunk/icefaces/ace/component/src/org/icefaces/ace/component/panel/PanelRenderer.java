@@ -41,11 +41,13 @@ import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.JSONBuilder;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.impl.event.UIOutputWriter;
 import org.icefaces.render.MandatoryResourceComponent;
 
 @MandatoryResourceComponent(tagName="panel", value="org.icefaces.ace.component.panel.Panel")
 public class PanelRenderer extends CoreRenderer {
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) Panel.class.getAnnotation(PassthroughAttributes.class)).value();
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -130,6 +132,11 @@ public class PanelRenderer extends CoreRenderer {
 		String style = panel.getStyle();
         if(style != null) {
             writer.writeAttribute("style", style, "style");
+        }
+
+        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
+            String name = PASSTHROUGH_ATTRIBUTES[i];
+            ComponentUtils.renderPassThroughAttribute(writer, panel, name);
         }
 
         encodeHeader(context, panel, domUpdateMap);
