@@ -134,10 +134,7 @@ public class PanelRenderer extends CoreRenderer {
             writer.writeAttribute("style", style, "style");
         }
 
-        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
-            String name = PASSTHROUGH_ATTRIBUTES[i];
-            ComponentUtils.renderPassThroughAttribute(writer, panel, name);
-        }
+        ComponentUtils.renderPassThroughAttributes(writer, panel, PASSTHROUGH_ATTRIBUTES);
 
         encodeHeader(context, panel, domUpdateMap);
         encodeContent(context, panel);
