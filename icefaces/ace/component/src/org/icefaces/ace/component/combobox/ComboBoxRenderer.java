@@ -17,34 +17,74 @@
 package org.icefaces.ace.component.combobox;
 
 import org.icefaces.ace.renderkit.InputRenderer;
-import org.icefaces.render.MandatoryResourceComponent;
-import org.icefaces.ace.util.PassThruAttributeWriter;
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.JSONBuilder;
+import org.icefaces.component.PassthroughAttributes;
+import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
-import org.icefaces.ace.event.TextChangeEvent;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import javax.faces.event.ActionEvent;
-import javax.faces.model.SelectItem;
-import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.el.ELContext;
 import javax.el.ValueExpression;
-
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.model.SelectItem;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.io.IOException;
 
 @MandatoryResourceComponent(tagName="comboBox", value="org.icefaces.ace.component.combobox.ComboBox")
 public class ComboBoxRenderer extends InputRenderer {
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) ComboBox.class.getAnnotation(PassthroughAttributes.class)).value();
 
 	private static final String AUTOCOMPLETE_DIV = "_div";
 	private static final String LABEL_CLASS = "ui-combobox-item-label";
 	private static final String VALUE_CLASS = "ui-combobox-item-value";
+
+	private static String escapeSingleQuote(String text) {
+		if (null == text) {
+			return "";
+		}
+		char[] chars = text.toCharArray();
+		StringBuilder buffer = new StringBuilder(chars.length);
+		for (int index = 0; index < chars.length; index++) {
+			char ch = chars[index];
+			if (ch == '\'') {
+				buffer.append("&#39;");
+			} else {
+				buffer.append(ch);
+			}
+		}
+
+		return buffer.toString();
+	}
+
+	private static String escapeJavascriptString(String str) {
+		if (str == null) return "";
+		return str.replace("\\", "\\\\").replace("\'","\\'");
+	}
+
+	// taken from com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer
+	public static void encodeParentAndChildren(FacesContext facesContext, UIComponent parent) throws IOException {
+		parent.encodeBegin(facesContext);
+		if (parent.getRendersChildren()) {
+			parent.encodeChildren(facesContext);
+		} else {
+			if (parent.getChildCount() > 0) {
+				Iterator children = parent.getChildren().iterator();
+				while (children.hasNext()) {
+					UIComponent nextChild = (UIComponent) children.next();
+					if (nextChild.isRendered()) {
+						encodeParentAndChildren(facesContext, nextChild);
+					}
+				}
+			}
+		}
+		parent.encodeEnd(facesContext);
+	}
 
 	public boolean getRendersChildren() {
 		return true;
@@ -56,9 +96,9 @@ public class ComboBoxRenderer extends InputRenderer {
 		Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
 		String clientId = comboBox.getClientId(facesContext);
 		String value = (String) requestMap.get(clientId + "_hidden");
-		
+
 		comboBox.setSubmittedValue(value);
-		
+
 		decodeBehaviors(facesContext, comboBox);
 	}
 
@@ -74,12 +114,6 @@ public class ComboBoxRenderer extends InputRenderer {
 		String inFieldLabel = (String) labelAttributes.get("inFieldLabel");
 		String inFieldLabelStyleClass = "";
 		String iceFocus = (String) paramMap.get("ice.focus");
-		String mousedownScript = (String) uiComponent.getAttributes().get("onmousedown");
-		String onfocusCombinedValue = "ice.setFocus(this.id);";
-		String onblurCombinedValue = "";
-		Object onfocusAppValue = uiComponent.getAttributes().get("onfocus");
-		Object onblurAppValue = uiComponent.getAttributes().get("onblur");
-		Object onchangeAppValue = uiComponent.getAttributes().get("onchange");
 
 		String inputClientId = clientId + "_input";
 
@@ -100,12 +134,12 @@ public class ComboBoxRenderer extends InputRenderer {
 		renderResetSettings(facesContext, uiComponent);
 
 		writeLabelAndIndicatorBefore(labelAttributes);
-		
+
 		// value field
 		writer.startElement("span", null);
 		writer.writeAttribute("class", "ui-widget ui-corner-all ui-state-default ui-combobox-value " + getStateStyleClasses(comboBox) + (comboBox.isDisabled() ? " ui-state-disabled" : ""), null);
 		writer.writeAttribute("style", "display: inline-block; width: " + width + "px;", null);
-		
+
 		// table layout start
 		writer.startElement("div", null);
 		writer.writeAttribute("class", "ui-combobox-table", null);
@@ -120,7 +154,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.writeAttribute("name", inputClientId, null);
 		writer.writeAttribute("style", comboBox.getStyle(), null);
 		writer.writeAttribute("class", "ui-inputfield ui-state-default ui-corner-left " + inFieldLabelStyleClass, null);
-		PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, uiComponent) ;
+
         if (ariaEnabled) {
 			writer.writeAttribute("role", "textbox", null);
 			final ComboBox component = (ComboBox) uiComponent;
@@ -153,9 +187,15 @@ public class ComboBoxRenderer extends InputRenderer {
 		if (title != null) writer.writeAttribute("title", title, null);
 		String placeholder = comboBox.getPlaceholder();
 		if (placeholder != null) writer.writeAttribute("placeholder", placeholder, null);
-		writer.endElement("input");
+
+        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
+            String name = PASSTHROUGH_ATTRIBUTES[i];
+            ComponentUtils.renderPassThroughAttribute(writer, comboBox, name);
+        }
+
+        writer.endElement("input");
 		writer.endElement("span");
-		
+
 		// hidden input
 		String hiddenInputId = clientId + "_hidden";
 		writer.startElement("input", null);
@@ -167,7 +207,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		if (disabled) writer.writeAttribute("disabled", "disabled", null);
 		if (readonly) writer.writeAttribute("readonly", "readonly", null);
 		writer.endElement("input");
-		
+
 		// down arrow span
 		writer.startElement("span", null);
 		writer.writeAttribute("class", "ui-combobox-cell-right", null);
@@ -183,9 +223,9 @@ public class ComboBoxRenderer extends InputRenderer {
 		// table layout end
 		writer.endElement("div");
 		writer.endElement("div");
-		
+
 		writer.endElement("span");
-		
+
 		writeLabelAndIndicatorAfter(labelAttributes);
 
 		String divId = clientId + AUTOCOMPLETE_DIV;
@@ -202,7 +242,7 @@ public class ComboBoxRenderer extends InputRenderer {
 
 		writer.endElement("div");
 	}
-
+		
 	private void encodeScript(FacesContext facesContext, ResponseWriter writer, String clientId, ComboBox comboBox, Map paramMap, String inFieldLabel, String inputClientId, boolean labelIsInField) throws IOException {
 		String divId = clientId + AUTOCOMPLETE_DIV;
 		Object sourceId = paramMap.get("ice.event.captured");
@@ -218,7 +258,7 @@ public class ComboBoxRenderer extends InputRenderer {
 
 			jb.beginFunction("ice.ace.create")
 			.item("ComboBox")
-			
+
 			.beginArray()
 			.item(clientId)
 			.item(divId)
@@ -231,13 +271,13 @@ public class ComboBoxRenderer extends InputRenderer {
 			.entry("p", ""); // dummy property
 			encodeClientBehaviors(facesContext, comboBox, jb);
 			jb.endMap();
-			
+
 			jb.beginMap()
 			.entryNonNullValue("inFieldLabel", inFieldLabel)
 			.entry("inFieldLabelStyleClass", IN_FIELD_LABEL_STYLE_CLASS)
 			.entry("labelIsInField", labelIsInField);
 			jb.endMap();
-			
+
 			int rows = comboBox.getRows();
 			if (rows == 0) rows = Integer.MAX_VALUE;
 			FilterMatchMode filterMatchMode = getFilterMatchMode(comboBox);
@@ -247,7 +287,7 @@ public class ComboBoxRenderer extends InputRenderer {
 			.entry("filterMatchMode", filterMatchMode.toString())
 			.entry("caseSensitive", comboBox.isCaseSensitive())
 			.endMap();
-			
+
 			// effects
 			jb.beginMap()
 			.entry("show", comboBox.getShowEffect())
@@ -255,12 +295,12 @@ public class ComboBoxRenderer extends InputRenderer {
 			.entry("hide", comboBox.getHideEffect())
 			.entry("hideLength", comboBox.getHideEffectLength())
 			.endMap();
-			
+
 			if (placeholder != null) jb.item(placeholder);
 			else jb.item("");
 
 			jb.endArray();
-			
+
 			jb.endFunction();
 
 			writer.writeText(jb.toString(), null);
@@ -269,7 +309,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		}
 
 		writer.endElement("script");
-		
+
 		populateList(facesContext, comboBox);
 
 		// field update script
@@ -316,16 +356,16 @@ public class ComboBoxRenderer extends InputRenderer {
 				requestMap.put(listVar, matches.next());
 				Object value = itemValue.getValue(elContext);
 				boolean disabled = false;
-				
+
 				try {
 					disabled = (Boolean) itemDisabled.getValue(elContext);
 				} catch (Exception e) {}
-			
+
 				writer.startElement("div", null);
 				writer.writeAttribute("style", "border: 0;", null);
 				if (ariaEnabled) writer.writeAttribute("role", "option", null);
 				if (disabled) writer.writeAttribute("class", "ui-state-disabled", null);
-				
+
 				writer.startElement("span", null); // span to display
 				writer.writeAttribute("class", LABEL_CLASS, null);
 				encodeParentAndChildren(facesContext, facet);
@@ -346,7 +386,7 @@ public class ComboBoxRenderer extends InputRenderer {
 				writer.endElement("span");
 				comboBox.resetId(facet);
 				writer.endElement("div");
-				
+
 				requestMap.remove(listVar);
 			}
 			comboBox.setIndex(-1);
@@ -373,17 +413,17 @@ public class ComboBoxRenderer extends InputRenderer {
 							itemValue = itemValue.toString();
 						}
 					}
-					
+
 					if (itemValue == null) itemValue = "";
 					itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
-					
+
 					writer.startElement("div", null);
 					writer.writeAttribute("style", "border: 0;", null);
 					if (item.isDisabled()) {
 						writer.writeAttribute("class", "ui-state-disabled", null);
 					}
 					if (ariaEnabled) writer.writeAttribute("role", "option", null);
-					
+
 					// label span
 					writer.startElement("span", null);
 					writer.writeAttribute("class", LABEL_CLASS, null);
@@ -395,7 +435,7 @@ public class ComboBoxRenderer extends InputRenderer {
 					writer.writeAttribute("style", "visibility:hidden;display:none;", null);
 					writer.writeText(itemValue, null);
 					writer.endElement("span");
-					
+
 					writer.endElement("div");
 				}
 				writer.endElement("div");
@@ -411,7 +451,7 @@ public class ComboBoxRenderer extends InputRenderer {
 	public void encodeDynamicScript(FacesContext facesContext, UIComponent uiComponent, String call) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = uiComponent.getClientId(facesContext);
-		
+
 		writer.startElement("span", null);
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
@@ -419,51 +459,9 @@ public class ComboBoxRenderer extends InputRenderer {
 		writer.endElement("script");
 		writer.endElement("span");
 	}
-		
+
 	public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
-	}
-
-	private static String escapeSingleQuote(String text) {
-		if (null == text) {
-			return "";
-		}
-		char[] chars = text.toCharArray();
-		StringBuilder buffer = new StringBuilder(chars.length);
-		for (int index = 0; index < chars.length; index++) {
-			char ch = chars[index];
-			if (ch == '\'') {
-				buffer.append("&#39;");
-			} else {
-				buffer.append(ch);
-			}
-		}
-
-		return buffer.toString();
-	}
-
-	private static String escapeJavascriptString(String str) {
-		if (str == null) return "";
-		return str.replace("\\", "\\\\").replace("\'","\\'");
-	}
-
-	// taken from com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer
-	public static void encodeParentAndChildren(FacesContext facesContext, UIComponent parent) throws IOException {
-		parent.encodeBegin(facesContext);
-		if (parent.getRendersChildren()) {
-			parent.encodeChildren(facesContext);
-		} else {
-			if (parent.getChildCount() > 0) {
-				Iterator children = parent.getChildren().iterator();
-				while (children.hasNext()) {
-					UIComponent nextChild = (UIComponent) children.next();
-					if (nextChild.isRendered()) {
-						encodeParentAndChildren(facesContext, nextChild);
-					}
-				}
-			}
-		}
-		parent.encodeEnd(facesContext);
 	}
 	
 	private FilterMatchMode getFilterMatchMode(ComboBox comboBox) {
@@ -475,18 +473,10 @@ public class ComboBoxRenderer extends InputRenderer {
 		return FilterMatchMode.startsWith;
 	}
 	
-	private enum FilterMatchMode {
-		contains,
-		exact,
-		startsWith,
-		endsWith,
-		none
-	}
-
 	public String getConvertedValueForClient(FacesContext context, UIComponent component, Object value) throws ConverterException {
 		ComboBox comboBox = (ComboBox) component;
 		Converter converter = comboBox.getConverter();
-		
+
 		if(converter != null) {
 			return converter.getAsString(context, comboBox, value);
 		} else {
@@ -502,7 +492,7 @@ public class ComboBoxRenderer extends InputRenderer {
 				}
 			}
 		}
-		
+
 		return (value != null ? value.toString() : "");
 	}
 
@@ -520,7 +510,7 @@ public class ComboBoxRenderer extends InputRenderer {
 
 		if ("inField".equals(labelPosition)) {
 			ComboBox comboBox = (ComboBox) component;
-			String label = (String) component.getAttributes().get("label");	
+			String label = (String) component.getAttributes().get("label");
 			String indicatorPosition = (String) component.getAttributes().get("indicatorPosition");
 			String optionalIndicator = (String) component.getAttributes().get("optionalIndicator");
 			String requiredIndicator = (String) component.getAttributes().get("requiredIndicator");
@@ -543,5 +533,13 @@ public class ComboBoxRenderer extends InputRenderer {
 		jb.endArray();
 
 		writer.writeAttribute("data-ice-reset", jb.toString(), null);
+	}
+
+	private enum FilterMatchMode {
+		contains,
+		exact,
+		startsWith,
+		endsWith,
+		none
 	}
 }

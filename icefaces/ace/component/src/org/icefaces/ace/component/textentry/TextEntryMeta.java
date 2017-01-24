@@ -20,6 +20,7 @@ import org.icefaces.ace.meta.annotation.*;
 import org.icefaces.ace.meta.baseMeta.HtmlInputTextMeta;
 
 import org.icefaces.ace.resources.ACEResourceNames;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
@@ -57,6 +58,21 @@ import org.icefaces.resources.ICEResourceLibrary;
                 tlddoc="Fired when the component detects value is changed.",
                 defaultRender="@all", defaultExecute="@this")
 }, defaultEvent = "valueChange")
+@PassthroughAttributes({
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onblur",
+        "onfocus",
+        "onchange"
+})
 public class TextEntryMeta extends HtmlInputTextMeta {
 
     @Property(tlddoc = "Indicator indicating that the user is required to provide a submitted value for this input component.")

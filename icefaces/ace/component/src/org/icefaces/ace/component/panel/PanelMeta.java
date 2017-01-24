@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.panel;
 
 import org.icefaces.ace.resources.ACEResourceNames;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 
@@ -63,7 +64,18 @@ import org.icefaces.resources.ICEResourceLibrary;
         defaultExecute="@this",
         argumentClass="org.icefaces.ace.event.CloseEvent")
 }, defaultEvent="toggle")
-
+@PassthroughAttributes({
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup"
+})
 public class PanelMeta extends UIPanelMeta {
 	
 	@Property(tlddoc="Header text of the panel.")

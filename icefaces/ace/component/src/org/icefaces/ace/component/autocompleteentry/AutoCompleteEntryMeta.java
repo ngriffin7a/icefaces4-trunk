@@ -26,6 +26,7 @@ import org.icefaces.ace.meta.annotation.ClientEvent;
 import org.icefaces.ace.api.IceClientBehaviorHolder;
 
 import org.icefaces.ace.resources.ACEResourceNames;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
@@ -78,6 +79,22 @@ import java.util.List;
 		tlddoc="(default event) Fired when the user gives a more definite input for this component either by clicking on an option from the list, or selecting an option with the keyboard, or pressing enter on the text field.",
 		defaultRender="@all", defaultExecute="@this" )},
 	defaultEvent="valueChange" )
+@PassthroughAttributes({
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onblur",
+        "onfocus",
+        "onchange",
+        "onselect"
+})
 public class AutoCompleteEntryMeta extends HtmlInputTextMeta {
 	
     @Property(tlddoc = "Style class name of the container element.", defaultValue="")

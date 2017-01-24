@@ -17,7 +17,9 @@
 package org.icefaces.ace.component.selectmenu;
 
 import org.icefaces.ace.renderkit.InputRenderer;
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.util.EnvUtils;
@@ -41,10 +43,52 @@ import java.io.IOException;
 
 @MandatoryResourceComponent(tagName="selectMenu", value="org.icefaces.ace.component.selectmenu.SelectMenu")
 public class SelectMenuRenderer extends InputRenderer {
-
+    private static final String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) SelectMenu.class.getAnnotation(PassthroughAttributes.class)).value();
     private static final String AUTOCOMPLETE_DIV = "_div";
 	private static final String LABEL_CLASS = "ui-selectmenu-item-label";
 	private static final String VALUE_CLASS = "ui-selectmenu-item-value";
+
+    private static String escapeSingleQuote(String text) {
+        if (null == text) {
+            return "";
+        }
+        char[] chars = text.toCharArray();
+        StringBuilder buffer = new StringBuilder(chars.length);
+        for (int index = 0; index < chars.length; index++) {
+            char ch = chars[index];
+            if (ch == '\'') {
+                buffer.append("&#39;");
+            } else {
+                buffer.append(ch);
+            }
+        }
+
+        return buffer.toString();
+    }
+
+	private static String escapeJavascriptString(String str) {
+		if (str == null) return "";
+		return str.replace("\\", "\\\\").replace("\'","\\'");
+	}
+	
+    // taken from com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer
+	public static void encodeParentAndChildren(FacesContext facesContext, UIComponent parent) throws IOException {
+        parent.encodeBegin(facesContext);
+        if (parent.getRendersChildren()) {
+            parent.encodeChildren(facesContext);
+        } else {
+            if (parent.getChildCount() > 0) {
+                Iterator children = parent.getChildren().iterator();
+                while (children.hasNext()) {
+                    UIComponent nextChild = (UIComponent) children.next();
+                    if (nextChild.isRendered()) {
+                        encodeParentAndChildren(facesContext, nextChild);
+                    }
+                }
+            }
+        }
+        parent.encodeEnd(facesContext);
+    }
 
     public boolean getRendersChildren() {
         return true;
@@ -56,9 +100,9 @@ public class SelectMenuRenderer extends InputRenderer {
         Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
         String clientId = selectMenu.getClientId(facesContext);
         String value = (String) requestMap.get(clientId + "_input");
-		
+
 		selectMenu.setSubmittedValue(value);
-		
+
 		decodeBehaviors(facesContext, selectMenu);
 	}
 	
@@ -73,12 +117,6 @@ public class SelectMenuRenderer extends InputRenderer {
         String inFieldLabel = (String) labelAttributes.get("inFieldLabel");
         String inFieldLabelStyleClass = "";
         String iceFocus = (String) paramMap.get("ice.focus");
-        String mousedownScript = (String) uiComponent.getAttributes().get("onmousedown");
-        String onfocusCombinedValue = "ice.setFocus(this.id);";
-        String onblurCombinedValue = "";
-        Object onfocusAppValue = uiComponent.getAttributes().get("onfocus");
-        Object onblurAppValue = uiComponent.getAttributes().get("onblur");
-        Object onchangeAppValue = uiComponent.getAttributes().get("onchange");
 
 		String inputClientId = clientId + "_input";
 
@@ -105,7 +143,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		if (title != null) writer.writeAttribute("title", title, null);
 
 		writeLabelAndIndicatorBefore(labelAttributes);
-		
+
 		// value field
 		writer.startElement("a", null);
 		boolean disabled = selectMenu.isDisabled();
@@ -123,7 +161,13 @@ public class SelectMenuRenderer extends InputRenderer {
 			if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
 		}
 		else if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
-		if (ariaEnabled) {
+
+        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
+            String name = PASSTHROUGH_ATTRIBUTES[i];
+            ComponentUtils.renderPassThroughAttribute(writer, selectMenu, name);
+        }
+
+        if (ariaEnabled) {
 			writer.writeAttribute("role", "select", null);
             final SelectMenu component = (SelectMenu) uiComponent;
             Map<String, Object> ariaAttributes = new HashMap<String, Object>() {{
@@ -133,14 +177,14 @@ public class SelectMenuRenderer extends InputRenderer {
             }};
             writeAriaAttributes(ariaAttributes, labelAttributes);
         }
-		
+
 		// text span
 		writer.startElement("span", null);
 		writer.writeAttribute("style", selectMenu.getStyle(), null);
 		writer.writeAttribute("class", "ui-inputfield ui-corner-left " + inFieldLabelStyleClass, null);
 		if (dir != null) writer.writeAttribute("dir", dir, null);
 		writer.endElement("span");
-		
+
 		// down arrow span
 		writer.startElement("span", null);
 		writer.writeAttribute("class", "ui-state-default ui-corner-right ui-selectmenu-button", null);
@@ -148,9 +192,9 @@ public class SelectMenuRenderer extends InputRenderer {
 		writer.writeAttribute("class", "fa fa-chevron-down", null);
 		writer.endElement("span");
 		writer.endElement("span");
-		
+
 		writer.endElement("a");
-		
+
 		writeLabelAndIndicatorAfter(labelAttributes);
 
 		writer.startElement("input", null);
@@ -178,7 +222,7 @@ public class SelectMenuRenderer extends InputRenderer {
 
 		writer.endElement("div");
     }
-
+		
     private void encodeScript(FacesContext facesContext, ResponseWriter writer, String clientId, SelectMenu selectMenu, Map paramMap, String inFieldLabel, String inputClientId, boolean labelIsInField) throws IOException {
         String divId = clientId + AUTOCOMPLETE_DIV;
         Object sourceId = paramMap.get("ice.event.captured");
@@ -193,7 +237,7 @@ public class SelectMenuRenderer extends InputRenderer {
 
             jb.beginFunction("ice.ace.create")
             .item("SelectMenu")
-			
+
             .beginArray()
             .item(clientId)
             .item(divId)
@@ -206,14 +250,14 @@ public class SelectMenuRenderer extends InputRenderer {
             .entry("p", ""); // dummy property
             encodeClientBehaviors(facesContext, selectMenu, jb);
             jb.endMap();
-			
+
             jb.beginMap()
             .entryNonNullValue("inFieldLabel", inFieldLabel)
             .entry("inFieldLabelStyleClass", IN_FIELD_LABEL_STYLE_CLASS)
             .entry("labelIsInField", labelIsInField)
             .entry("showListOnInput", selectMenu.isShowListOnInput())
             .endMap();
-			
+
 			// effects
 			jb.beginMap()
 			.entry("show", selectMenu.getShowEffect())
@@ -235,7 +279,7 @@ public class SelectMenuRenderer extends InputRenderer {
 			+ getStateStyleClasses(selectMenu) + " " + selectMenu.getWidth() + " " + selectMenu.isRequired(), null);
 
         writer.endElement("script");
-		
+
 		populateList(facesContext, selectMenu);
 
         // field update script
@@ -282,7 +326,7 @@ public class SelectMenuRenderer extends InputRenderer {
 				requestMap.put(listVar, matches.next());
 				Object value = itemValue.getValue(elContext);
 				boolean disabled = false;
-				
+
 				try {
 					disabled = (Boolean) itemDisabled.getValue(elContext);
 				} catch (Exception e) {}
@@ -294,7 +338,7 @@ public class SelectMenuRenderer extends InputRenderer {
 				if (disabled) styleClass += " ui-state-disabled";
 
                 writer.writeAttribute("class", styleClass, null);
-				
+
 				writer.startElement("span", null); // span to display
 				writer.writeAttribute("class", LABEL_CLASS, null);
 				encodeParentAndChildren(facesContext, facet);
@@ -315,7 +359,7 @@ public class SelectMenuRenderer extends InputRenderer {
                 writer.endElement("span");
 				selectMenu.resetId(facet);
 				writer.endElement("div");
-				
+
 				requestMap.remove(listVar);
             }
             selectMenu.setIndex(-1);
@@ -347,7 +391,7 @@ public class SelectMenuRenderer extends InputRenderer {
 					} else {
 						itemValue = "";
 					}
-					
+
 					itemLabel = itemLabel == null ? itemValue.toString() : itemLabel;
 					itemLabel = "".equals(itemLabel.trim()) ? "&nbsp;" : itemLabel;
 
@@ -368,7 +412,7 @@ public class SelectMenuRenderer extends InputRenderer {
 					sb.append("<span class=\"" + LABEL_CLASS + "\">").append(itemLabel).append("</span>");
 					// value span
 					sb.append("<span class=\"" + VALUE_CLASS + "\" style=\"visibility:hidden;display:none;\">").append(itemValue).append("</span>");
-					
+
 					sb.append("</div>");
 					first = false;
                 }
@@ -384,7 +428,7 @@ public class SelectMenuRenderer extends InputRenderer {
     public void encodeDynamicScript(FacesContext facesContext, UIComponent uiComponent, String call) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = uiComponent.getClientId(facesContext);
-		
+
 		writer.startElement("span", null);
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
@@ -392,52 +436,10 @@ public class SelectMenuRenderer extends InputRenderer {
 		writer.endElement("script");
 		writer.endElement("span");
 	}
-		
+	
 	public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 	}
-
-    private static String escapeSingleQuote(String text) {
-        if (null == text) {
-            return "";
-        }
-        char[] chars = text.toCharArray();
-        StringBuilder buffer = new StringBuilder(chars.length);
-        for (int index = 0; index < chars.length; index++) {
-            char ch = chars[index];
-            if (ch == '\'') {
-                buffer.append("&#39;");
-            } else {
-                buffer.append(ch);
-            }
-        }
-
-        return buffer.toString();
-    }
-	
-	private static String escapeJavascriptString(String str) {
-		if (str == null) return "";
-		return str.replace("\\", "\\\\").replace("\'","\\'");
-	}
-	
-    // taken from com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer
-	public static void encodeParentAndChildren(FacesContext facesContext, UIComponent parent) throws IOException {
-        parent.encodeBegin(facesContext);
-        if (parent.getRendersChildren()) {
-            parent.encodeChildren(facesContext);
-        } else {
-            if (parent.getChildCount() > 0) {
-                Iterator children = parent.getChildren().iterator();
-                while (children.hasNext()) {
-                    UIComponent nextChild = (UIComponent) children.next();
-                    if (nextChild.isRendered()) {
-                        encodeParentAndChildren(facesContext, nextChild);
-                    }
-                }
-            }
-        }
-        parent.encodeEnd(facesContext);
-    }
 	
 	public String getConvertedValueForClient(FacesContext context, UIComponent component, Object value) throws ConverterException {
 		SelectMenu selectMenu = (SelectMenu) component;

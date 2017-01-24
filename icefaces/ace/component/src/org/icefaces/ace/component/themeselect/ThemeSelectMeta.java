@@ -22,6 +22,7 @@ import org.icefaces.ace.meta.annotation.Component;
 import org.icefaces.ace.meta.annotation.Property;
 import org.icefaces.ace.meta.baseMeta.UIInputMeta;
 import org.icefaces.ace.resources.ACEResourceNames;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
@@ -48,7 +49,21 @@ import org.icefaces.resources.ICEResourceLibrary;
         @ClientEvent(name = "valueChange", javadoc = "Fired when theme changes (default event). Theme change done on client side. Event used just for syncing with server side.",
                 tlddoc = "Fired when theme changes (default event). Theme change done on client side. Event used just for syncing with server side.", defaultRender = "@this", defaultExecute = "@this")
 }, defaultEvent = "valueChange")
-
+@PassthroughAttributes({
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onblur",
+        "onfocus",
+        "onchange"
+})
 public class ThemeSelectMeta extends UIInputMeta {
 
     @Property(tlddoc = "Access key that, when pressed, transfers focus to this element.")

@@ -17,6 +17,7 @@
 package org.icefaces.ace.component.maskedentry;
 
 import org.icefaces.ace.resources.ACEResourceNames;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 
@@ -59,6 +60,21 @@ import org.icefaces.resources.ICEResourceLibrary;
 	@ClientEvent(name="blur", javadoc="Fired any time the text input field loses focus.", 
 	tlddoc="Fired any time the text input field loses focus.", defaultRender="@all", defaultExecute="@this")
 }, defaultEvent="valueChange")
+@PassthroughAttributes({
+        "onclick",
+        "ondblclick",
+        "onkeydown",
+        "onkeypress",
+        "onkeyup",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onblur",
+        "onfocus",
+        "onchange"
+})
 public class MaskedEntryMeta extends HtmlInputTextMeta {
 	
 	@Property(required=Required.yes, tlddoc="Masked input for separating input texts with given pattern. \nThese mask definitions can be used: \na - Represents an alpha character (A-Z,a-z) \n9 - Represents a numeric character (0-9) \n* - Represents an alphanumeric character (A-Z,a-z,0-9). All input is optional. Any character not in the definitions list will be automatically entered for the user as they type.")

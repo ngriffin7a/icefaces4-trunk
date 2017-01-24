@@ -40,11 +40,13 @@ import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.ace.util.PassThruAttributeWriter;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 
 @MandatoryResourceComponent(tagName="maskedEntry", value="org.icefaces.ace.component.maskedentry.MaskedEntry")
 public class MaskedEntryRenderer extends InputRenderer {
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) MaskedEntry.class.getAnnotation(PassthroughAttributes.class)).value();
 
     @Override
 	public void decode(FacesContext context, UIComponent component) {
@@ -159,7 +161,6 @@ public class MaskedEntryRenderer extends InputRenderer {
         if (ariaEnabled) {
             writer.writeAttribute("role", "textbox", null);
         }
-        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, maskedEntry) ;
         String valueToRender = null;
 		if (maskedEntry.isValid()) {
 			valueToRender = ComponentUtils.getStringValueToRender(context, maskedEntry);
@@ -206,6 +207,11 @@ public class MaskedEntryRenderer extends InputRenderer {
         if(style != null) writer.writeAttribute("style", style, "style");
 		
 		Utils.writeConcatenatedStyleClasses(writer, defaultClass, styleClass);
+
+        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
+            String name = PASSTHROUGH_ATTRIBUTES[i];
+            ComponentUtils.renderPassThroughAttribute(writer, maskedEntry, name);
+        }
 
         writer.endElement("input");
 		

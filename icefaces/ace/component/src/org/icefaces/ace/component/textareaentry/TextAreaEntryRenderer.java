@@ -21,6 +21,7 @@ import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.ace.util.Utils;
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.ace.util.PassThruAttributeWriter;
@@ -34,6 +35,13 @@ import java.util.Map;
 
 @MandatoryResourceComponent(tagName = "textAreaEntry", value = "org.icefaces.ace.component.textareaentry.TextAreaEntry")
 public class TextAreaEntryRenderer extends InputRenderer {
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) TextAreaEntry.class.getAnnotation(PassthroughAttributes.class)).value();
+
+    public static void printMap(Map<?, ?> map) {
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " = " + entry.getValue() + ";");
+        }
+    }
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -107,10 +115,9 @@ public class TextAreaEntryRenderer extends InputRenderer {
             writer.writeAttribute("maxlength", maxLength, null);
         }
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
-        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, component) ;
         String iceFocus = (String) paramMap.get("ice.focus");
         String inFieldLabel = (String) labelAttributes.get("inFieldLabel");
-        String value = null;
+        String value;
 		if (textAreaEntry.isValid()) {
 			value = ComponentUtils.getStringValueToRender(context, component);
 		} else {
@@ -125,8 +132,6 @@ public class TextAreaEntryRenderer extends InputRenderer {
             labelAttributes.put("labelIsInField", true);
         }
         defaultClass += textAreaEntry.isResizable() ? " ui-textareaentry-resizable" : " ui-textareaentry-non-resizable";
-
-        renderPassThruAttributes(context, textAreaEntry, HTML.TEXTAREA_ATTRS);
 
 		String accesskey = textAreaEntry.getAccesskey();
 		if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
@@ -159,7 +164,7 @@ public class TextAreaEntryRenderer extends InputRenderer {
         if (value != null) {
             writer.writeText(value, "value");
         }
-		
+
         JSONBuilder jb = JSONBuilder.create();
         jb.beginFunction("ice.ace.lazy")
                 .item("TextAreaEntry")
@@ -180,15 +185,17 @@ public class TextAreaEntryRenderer extends InputRenderer {
         }
 
         jb.endMap().endArray().endFunction();
-        writer.writeAttribute("onfocus", jb.toString(), null);
-		
-        writer.endElement("textarea");
-    }
 
-    public static void printMap(Map<?, ?> map) {
-        for (Map.Entry<?, ?> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + " = " + entry.getValue() + ";");
+        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
+            String name = PASSTHROUGH_ATTRIBUTES[i];
+            if ("onfocus".equals(name)) {
+                ComponentUtils.renderPassThroughAttribute(writer, textAreaEntry, name, jb.toString());
+            } else {
+                ComponentUtils.renderPassThroughAttribute(writer, textAreaEntry, name);
+            }
         }
+
+        writer.endElement("textarea");
     }
 
 	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
