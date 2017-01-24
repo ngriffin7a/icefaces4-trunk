@@ -370,8 +370,17 @@ public class ComponentUtils {
      * @throws IOException
      */
     public static void renderPassThroughAttribute(ResponseWriter writer, UIComponent component, String attribute, String initialValue) throws IOException {
-        Object value = component.getAttributes().get(attribute);
-        String finalValue = value == null ? initialValue : initialValue + value;
+        final Object value = component.getAttributes().get(attribute);
+        final Object finalValue;
+        if (initialValue == null || "".equals(initialValue)) {
+            finalValue = value;
+        } else {
+            if (value == null) {
+                finalValue = initialValue;
+            }else {
+                finalValue = initialValue + value;
+            }
+        }
         if (shouldRenderAttribute(finalValue)) {
             writer.writeAttribute(attribute, finalValue, attribute);
         }

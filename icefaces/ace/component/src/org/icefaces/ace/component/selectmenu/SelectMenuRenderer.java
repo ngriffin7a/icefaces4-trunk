@@ -162,10 +162,7 @@ public class SelectMenuRenderer extends InputRenderer {
 		}
 		else if (tabindex == null) writer.writeAttribute("tabindex", "0", null);
 
-        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
-            String name = PASSTHROUGH_ATTRIBUTES[i];
-            ComponentUtils.renderPassThroughAttribute(writer, selectMenu, name);
-        }
+        ComponentUtils.renderPassThroughAttributes(writer, selectMenu, PASSTHROUGH_ATTRIBUTES);
 
         if (ariaEnabled) {
 			writer.writeAttribute("role", "select", null);

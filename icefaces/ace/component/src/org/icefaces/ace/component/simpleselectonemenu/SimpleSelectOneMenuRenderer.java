@@ -94,10 +94,7 @@ public class SimpleSelectOneMenuRenderer extends InputRenderer {
 		String style = simpleSelectOneMenu.getStyle();
 		writer.writeAttribute("style", style, null);
 
-        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
-            String name = PASSTHROUGH_ATTRIBUTES[i];
-            ComponentUtils.renderPassThroughAttribute(writer, simpleSelectOneMenu, name);
-        }
+        ComponentUtils.renderPassThroughAttributes(writer, simpleSelectOneMenu, PASSTHROUGH_ATTRIBUTES);
 
         Map<String, Object> ariaAttributes = null;
 		if (ariaEnabled) {

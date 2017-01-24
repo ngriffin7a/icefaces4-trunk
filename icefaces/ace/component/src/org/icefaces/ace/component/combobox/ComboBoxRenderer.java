@@ -188,10 +188,7 @@ public class ComboBoxRenderer extends InputRenderer {
 		String placeholder = comboBox.getPlaceholder();
 		if (placeholder != null) writer.writeAttribute("placeholder", placeholder, null);
 
-        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
-            String name = PASSTHROUGH_ATTRIBUTES[i];
-            ComponentUtils.renderPassThroughAttribute(writer, comboBox, name);
-        }
+        ComponentUtils.renderPassThroughAttributes(writer, comboBox, PASSTHROUGH_ATTRIBUTES);
 
         writer.endElement("input");
 		writer.endElement("span");

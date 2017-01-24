@@ -145,10 +145,7 @@ public class ThemeSelectRenderer extends InputRenderer {
         writerSelAriaAttrs(context, themeSelectComponent);
         renderOptions(context, themeSelectComponent);
 
-        for (int i = 0; i < PASSTHROUGH_ATTRIBUTES.length; i++) {
-            String name = PASSTHROUGH_ATTRIBUTES[i];
-            ComponentUtils.renderPassThroughAttribute(writer, themeSelectComponent, name);
-        }
+        ComponentUtils.renderPassThroughAttributes(writer, themeSelectComponent, PASSTHROUGH_ATTRIBUTES);
 
         writer.endElement("select");
 
