@@ -42,12 +42,10 @@ import org.icefaces.util.JavaScriptRunner;
 
 @MandatoryResourceComponent(tagName="checkboxButton", value="org.icefaces.ace.component.checkboxbutton.CheckboxButton")
 public class CheckboxButtonRenderer extends InputRenderer {
-    protected enum EventType {
-        HOVER, FOCUS
-    }
     private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) CheckboxButton.class.getAnnotation(PassthroughAttributes.class)).value();
     private static final Logger logger =
             Logger.getLogger(CheckboxButtonRenderer.class.toString());
+
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         Map requestParameterMap = facesContext.getExternalContext().getRequestParameterMap();
         CheckboxButton checkbox = (CheckboxButton) uiComponent;
@@ -63,7 +61,6 @@ public class CheckboxButtonRenderer extends InputRenderer {
 
         decodeBehaviors(facesContext, checkbox);
     }
-
 
     public void encodeBegin(FacesContext facesContext, UIComponent uiComponent)
     throws IOException {
@@ -114,6 +111,9 @@ public class CheckboxButtonRenderer extends InputRenderer {
 		if (value != null) selectedClass = (((Boolean) value) ? "ice-checkboxbutton-checked" : "ice-checkboxbutton-unchecked");
 		else selectedClass = "ice-checkboxbutton-unchecked";
 		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all " + selectedClass, null);
+
+        String accesskey = checkbox.getAccesskey();
+        if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
 
         encodeButtonTabIndex(writer, checkbox, ariaEnabled);
         encodeButtonStyleClass(writer, isChecked(String.valueOf(checkbox.getValue())), checkbox.isDisabled());
@@ -207,7 +207,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
         encodeClientBehaviors(facesContext, checkbox, jb);
 
         jb.endMap().endArray().endFunction();
-		
+
 		return jb.toString();
 	}
 
@@ -242,7 +242,6 @@ public class CheckboxButtonRenderer extends InputRenderer {
 		return groupId;
 	}
 
-	
     protected void encodeScript(ResponseWriter writer,
                                 EventType type) throws IOException {
 
@@ -279,6 +278,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
             return Boolean.valueOf(submittedValue.toString());
         }
     }
+
     protected void encodeButtonStyleClass(ResponseWriter writer, boolean value, boolean disabled) throws IOException{
         String buttonClasses = "";
         String disabledClass = "ui-state-disabled";
@@ -338,4 +338,8 @@ public class CheckboxButtonRenderer extends InputRenderer {
 
 		writer.writeAttribute("data-ice-reset", jb.toString(), null);
 	}
+
+    protected enum EventType {
+        HOVER, FOCUS
+    }
 }
