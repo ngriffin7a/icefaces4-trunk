@@ -125,35 +125,6 @@ public class ComponentUtils {
         return expressionString.substring(expressionString.indexOf(".") + 1, expressionString.length() - 1);
     }
 
-    /**
-     * Resolves the end text to render by using a specified value
-     *
-     * @param facesContext FacesContext instance
-     * @param component    UIComponent instance whose value will be returned
-     * @return End text
-     */
-    public static String getStringValueToRender(FacesContext facesContext, UIComponent component, Object value) {
-        if (value == null) return null;
-
-        ValueHolder valueHolder = (ValueHolder) component;
-
-        Converter converter = valueHolder.getConverter();
-        if (converter != null) {
-            return converter.getAsString(facesContext, component, value);
-        } else {
-            ValueExpression expr = component.getValueExpression("value");
-            if (expr != null) {
-                Class<?> valueType = expr.getType(facesContext.getELContext());
-                Converter converterForType = facesContext.getApplication().createConverter(valueType);
-
-                if (converterForType != null)
-                    return converterForType.getAsString(facesContext, component, value);
-            }
-        }
-
-        return value.toString();
-    }
-
     public static UIComponent findParentForm(FacesContext context, UIComponent component) {
         UIComponent parent = component;
         while (parent != null)
@@ -163,62 +134,8 @@ public class ComponentUtils {
         return parent;
     }
 
-    public static void decorateAttribute(UIComponent component, String attribute, String value) {
-        String attributeValue = (String) component.getAttributes().get(attribute);
-
-        if (attributeValue != null) {
-            if (attributeValue.indexOf(value) == -1) {
-                String decoratedValue = attributeValue + ";" + value;
-
-                component.getAttributes().put(attribute, decoratedValue);
-            } else {
-                component.getAttributes().put(attribute, attributeValue);
-            }
-        } else {
-            component.getAttributes().put(attribute, value);
-        }
-    }
-
-    public static List<SelectItem> createSelectItems(UIComponent component) {
-        List<SelectItem> items = new ArrayList<SelectItem>();
-        Iterator<UIComponent> children = component.getChildren().iterator();
-
-        while (children.hasNext()) {
-            UIComponent child = children.next();
-
-            if (child instanceof UISelectItem) {
-                UISelectItem selectItem = (UISelectItem) child;
-
-                items.add(new SelectItem(selectItem.getItemValue(), selectItem.getItemLabel()));
-            } else if (child instanceof UISelectItems) {
-                Object selectItems = ((UISelectItems) child).getValue();
-
-                if (selectItems instanceof SelectItem[]) {
-                    SelectItem[] itemsArray = (SelectItem[]) selectItems;
-
-                    for (SelectItem item : itemsArray)
-                        items.add(new SelectItem(item.getValue(), item.getLabel()));
-
-                } else if (selectItems instanceof Collection) {
-                    Collection<SelectItem> collection = (Collection<SelectItem>) selectItems;
-
-                    for (SelectItem item : collection)
-                        items.add(new SelectItem(item.getValue(), item.getLabel()));
-                }
-            }
-        }
-
-        return items;
-    }
-
-    public static String idTojQuerySelector(String id) {
-        return "#" + id.replaceAll(":", "\\\\\\\\:");
-    }
-
     public static String findClientIds(FacesContext context, UIComponent component, String list) {
         if (list == null) return "@none";
-
-        //System.out.println("ComponentUtils.findClientIds()  component.clientId: " + component.getClientId(context) + "  list: " + list);
 
         String[] ids = list.split("[,\\s]+");
         StringBuilder buffer = new StringBuilder();
@@ -318,21 +235,8 @@ public class ComponentUtils {
         return id;
     }
 
-    public static String findComponentClientId(String id) {
-        UIComponent component = null;
-
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        component = findComponent(facesContext.getViewRoot(), id);
-
-        return component.getClientId(facesContext);
-    }
-
     public static UIComponent findComponent(UIComponent base, String id) {
         return CoreUtils.findComponentById(base, id);
-    }
-
-    public static boolean isLiteralText(UIComponent component) {
-        return component.getFamily().equalsIgnoreCase("facelets.LiteralText");
     }
 
     public static void enableOnElementUpdateNotify(ResponseWriter writer, String id) throws IOException {
