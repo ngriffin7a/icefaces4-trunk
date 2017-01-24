@@ -77,7 +77,8 @@ import java.util.List;
         "onmouseup",
         "onblur",
         "onfocus",
-        "onchange"
+        "onchange",
+        "onselect"
 })
 public class SimpleSelectOneMenuMeta extends UISelectOneMeta {
 
