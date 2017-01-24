@@ -62,7 +62,8 @@ import org.icefaces.resources.ICEResourceLibrary;
         "onmouseup",
         "onblur",
         "onfocus",
-        "onchange"
+        "onchange",
+        "onselect"
 })
 public class ThemeSelectMeta extends UIInputMeta {
 
