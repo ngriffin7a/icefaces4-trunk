@@ -123,12 +123,6 @@ public class CoreRenderer extends Renderer {
 		}
 		child.encodeEnd(facesContext);
 	}
-	
-	protected String getActionURL(FacesContext facesContext) {
-		String actionURL = facesContext.getApplication().getViewHandler().getActionURL(facesContext, facesContext.getViewRoot().getViewId());
-
-		return facesContext.getExternalContext().encodeActionURL(actionURL);
-	}
     
     protected String getResourceURL(FacesContext facesContext, String value) {
         if (value.contains(ResourceHandler.RESOURCE_IDENTIFIER)) {
@@ -202,10 +196,6 @@ public class CoreRenderer extends Renderer {
 		return value.trim().equals("");
 	}
 
-	protected String escapeText(String value) {
-		return value == null ? "" : value.replaceAll("'", "\\\\'");
-	}
-
     protected void encodeClientBehaviors(FacesContext context, ClientBehaviorHolder component, JSONBuilder jb) throws IOException {
         Map<String,List<ClientBehavior>> behaviorEvents = component.getClientBehaviors();
 
@@ -267,19 +257,6 @@ public class CoreRenderer extends Renderer {
         return value == null ? true : Boolean.valueOf(value);
     }
 
-    protected void addToAutoUpdate(String clientId) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map<String,Object> viewMap = context.getViewRoot().getViewMap();
-        Collection<String> autoUpdateIds = (Collection<String>) viewMap.get(Constants.AUTO_UPDATE);
-
-        if(autoUpdateIds == null) {
-            autoUpdateIds = new HashSet<String>();
-            autoUpdateIds.add(clientId);
-        }
-
-        viewMap.put(Constants.AUTO_UPDATE, autoUpdateIds);
-    }
-
 	/* ------------------------------- */
 	/* --- imported from icemobile --- */
 	/* ------------------------------- */
@@ -288,7 +265,7 @@ public class CoreRenderer extends Renderer {
 		decodeBehaviors(context, component, null);
 	}
 	
-    protected void decodeBehaviors(FacesContext context, UIComponent component, String proxyClientId)  {
+    protected void decodeBehaviors(FacesContext context, UIComponent component, String proxyClientId) {
         if (!(component instanceof ClientBehaviorHolder))
             return;
 
@@ -302,178 +279,14 @@ public class CoreRenderer extends Renderer {
         List<ClientBehavior> behaviorsForEvent = behaviors.get(behaviorEvent);
 
         if (behaviorsForEvent != null && !behaviorsForEvent.isEmpty()) {
-           String behaviorSource = params.get("javax.faces.source");
-           String clientId = proxyClientId == null ? component.getClientId() : proxyClientId;
+            String behaviorSource = params.get("javax.faces.source");
+            String clientId = proxyClientId == null ? component.getClientId() : proxyClientId;
 
-           if(behaviorSource != null && behaviorSource.equals(clientId)) {
-               for (ClientBehavior behavior: behaviorsForEvent) {
-                   behavior.decode(context, component);
-               }
-           }
-        }
-    }
-
-    /**
-      * Non-obstrusive way to apply client behaviors.  Brought over from implementation of ace components for ace ajax.
-      * will be replaced in 1.4 Beta to reflect support for both mobi:transition and mobi:ajax behaviors
-      * Behaviors are rendered as options to the client side widget and applied by widget to necessary dom element
-      */
-    protected StringBuilder encodeClientBehaviors(FacesContext context, ClientBehaviorHolder component, String eventDef) throws IOException {
-       StringBuilder sb = new StringBuilder(255);
-         //ClientBehaviors
-       Map<String,List<ClientBehavior>> eventBehaviors = component.getClientBehaviors();
-       if(!eventBehaviors.isEmpty()) {
-           String clientId = ((UIComponent) component).getClientId(context);
-           List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
-
-           sb.append(",behaviors:{");
-
-           for(Iterator<String> eventIterator = eventBehaviors.keySet().iterator(); eventIterator.hasNext();) {
-               String event = eventIterator.next();
-               if (null==event){
-                   event = eventDef;
-               }
-               String domEvent = getDomEvent(event);
-               sb.append(domEvent + ":");
-               sb.append("function() {");
-               ClientBehaviorContext cbContext = ClientBehaviorContext.createClientBehaviorContext(context, (UIComponent) component, event, clientId, params);
-               for(Iterator<ClientBehavior> behaviorIter = eventBehaviors.get(event).iterator(); behaviorIter.hasNext();) {
-                   ClientBehavior behavior = behaviorIter.next();
-                   String script = behavior.getScript(cbContext);
-                   if(script != null) {
-                       sb.append(script);
-                   }
-               }
-               sb.append("}");
-               if(eventIterator.hasNext()) {
-                   sb.append(",");
-               }
-           }
-           sb.append("}");
-       }
-       return sb;
-    }
-
-    protected void writeJavascriptFile(FacesContext facesContext,
-            UIComponent component, String JS_NAME, String JS_MIN_NAME,
-            String JS_LIBRARY, String JS2_NAME, String JS2_MIN_NAME, String JS2_LIB) throws IOException {
-        ResponseWriter writer = facesContext.getResponseWriter();
-        String clientId = component.getClientId(facesContext);
-        writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute(HTML.CLASS_ATTR, "mobi-hidden", null);
-        writer.writeAttribute(HTML.ID_ATTR, clientId+"_libJS", HTML.ID_ATTR);
-        if (!isScriptLoaded(facesContext, JS_NAME)) {
-            String jsFname = JS_NAME;
-            if (facesContext.isProjectStage(ProjectStage.Production)){
-                jsFname = JS_MIN_NAME;
-            }
-            //set jsFname to min if development stage
-            Resource jsFile = facesContext.getApplication().getResourceHandler().createResource(jsFname, JS_LIBRARY);
-            String src = jsFile.getRequestPath();
-            writer.startElement("script", component);
-            writer.writeAttribute("type", "text/javascript", null);
-            writer.writeAttribute("src", src, null);
-            writer.endElement("script");
-            setScriptLoaded(facesContext, JS_NAME);
-        }
-        if (!isScriptLoaded(facesContext, JS2_NAME)) {
-            String jsFname = JS2_NAME;
-            if (facesContext.isProjectStage(ProjectStage.Production)){
-                jsFname = JS2_MIN_NAME;
-            }
-            //set jsFname to min if development stage
-            Resource jsFile = facesContext.getApplication().getResourceHandler().createResource(jsFname, JS2_LIB);
-            String src = jsFile.getRequestPath();
-            writer.startElement("script", component);
-            writer.writeAttribute("type", "text/javascript", null);
-            writer.writeAttribute("src", src, null);
-            writer.endElement("script");
-            setScriptLoaded(facesContext, JS2_NAME);
-        }
-        writer.endElement(HTML.SPAN_ELEM);
-    }
-
-    protected void writeJavascriptFile(FacesContext facesContext,
-            UIComponent component, String JS_NAME, String JS_MIN_NAME,
-            String JS_LIBRARY) throws IOException {
-        ResponseWriter writer = facesContext.getResponseWriter();
-        String clientId = component.getClientId(facesContext);
-        writer.startElement(HTML.SPAN_ELEM, null);
-        writer.writeAttribute(HTML.ID_ATTR, clientId+"_libJS", HTML.ID_ATTR);
-        writer.writeAttribute(HTML.CLASS_ATTR, "mobi-hidden", null);
-        if (!isScriptLoaded(facesContext, JS_NAME)) {
-            String jsFname = JS_NAME;
-            if (facesContext.isProjectStage(ProjectStage.Production)){
-                jsFname = JS_MIN_NAME;
-            }
-            //set jsFname to min if development stage
-            Resource jsFile = facesContext.getApplication().getResourceHandler().createResource(jsFname, JS_LIBRARY);
-            String src = jsFile.getRequestPath();
-            writer.startElement("script", component);
-            writer.writeAttribute("type", "text/javascript", null);
-            writer.writeAttribute("src", src, null);
-            writer.endElement("script");
-            setScriptLoaded(facesContext, JS_NAME);
-        }
-        writer.endElement(HTML.SPAN_ELEM);
-    }
-	
-    protected void setScriptLoaded(FacesContext facesContext,
-            String JS_NAME) {
-        InlineScriptEventListener.setScriptLoaded(facesContext, JS_NAME);
-    }
-
-    protected boolean isScriptLoaded(FacesContext facesContext, String JS_NAME) {
-        return InlineScriptEventListener.isScriptLoaded(facesContext, JS_NAME);
-    }
-
-    /**
-     * this method created for mobi:inputText
-     * @param context
-     * @param component
-     * @param inEvent
-     * @return
-     */
-    protected String buildAjaxRequest(FacesContext context, ClientBehaviorHolder component, String inEvent) {
-        Map<String,List<ClientBehavior>> behaviorEvents = component.getClientBehaviors();
-        if (behaviorEvents.isEmpty()){
-            return null;
-        }
-
-        String clientId = ((UIComponent) component).getClientId(context);
-
-        StringBuilder req = new StringBuilder();
-
-        List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
-
-        for(Iterator<String> eventIterator = behaviorEvents.keySet().iterator(); eventIterator.hasNext();) {
-            String event = eventIterator.next();
-       //     logger.info("eventIterator returning="+event);
-            String domEvent = event;
-            if (null != inEvent) {
-                domEvent = inEvent;
-   //             logger.info("passed in event="+event);
-            }
-            domEvent = getDomEvent(event);
-      //      logger.info("getDomEvent returns event="+domEvent);
-            if (behaviorEvents.get(event)==null){
-                //logger.warning(" NO behavior for event="+event+" component="+((UIComponent) component).getClientId());
-                return null;
-            }  //don't do anything with domEvent yet as have to use the one the behavior is registered with.
-       //     logger.info("before interation event="+event);
-            for(Iterator<ClientBehavior> behaviorIter = behaviorEvents.get(event).iterator(); behaviorIter.hasNext();) {
-                ClientBehavior behavior = behaviorIter.next();
-                ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, (UIComponent) component, event, clientId, params);
-                String script = behavior.getScript(cbc);    //could be null if disabled
-                if(script != null) {
-                    req.append(script);
+            if (behaviorSource != null && behaviorSource.equals(clientId)) {
+                for (ClientBehavior behavior : behaviorsForEvent) {
+                    behavior.decode(context, component);
                 }
             }
-            if(eventIterator.hasNext()) {
-                req.append(",");
-            }
         }
-        return req.toString();
     }
-
 }
