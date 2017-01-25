@@ -33,8 +33,10 @@ import org.icefaces.resources.ICEResourceLibrary;
         extendsClass = "javax.faces.component.html.HtmlInputText",
         componentType = "org.icefaces.ace.component.TextEntry",
         rendererType = "org.icefaces.ace.component.TextEntryRenderer",
-        disinheritProperties = {"onclick","onblur", "onchange", "ondblclick", "onselect", "onmouseup", "onmousedown","onfocus", "onkeydown",
-                                 "onkeypress", "onkeyup", "onmousemove", "onmouseover", "onmouseout"},
+        disinheritProperties = {
+                "accesskey", "alt", "dir", "lang", "size", "title", "maxlength", "name", "tabindex", "style", "immediate", "rows", "autocomplete",
+                "onclick", "onblur", "onchange", "ondblclick", "onselect", "onmouseup", "onmousedown","onfocus", "onkeydown",
+                "onkeypress", "onkeyup", "onmousemove", "onmouseover", "onmouseout"},
         componentFamily = "org.icefaces.ace.TextEntry",
         tlddoc = "TextEntry is a text input component that can display some placeholder text inside the input field when the component doesn't have a value and is not focussed." +
                 " It also has custom styling for invalid state and required status." +
@@ -59,6 +61,19 @@ import org.icefaces.resources.ICEResourceLibrary;
                 defaultRender="@all", defaultExecute="@this")
 }, defaultEvent = "valueChange")
 @PassthroughAttributes({
+        "accesskey",
+        "alt",
+        "dir",
+        "lang",
+        "size",
+        "title",
+        "maxlength",
+        "name",
+        "tabindex",
+        "style",
+        "immediate",
+        "rows",
+        "autocomplete",
         "onclick",
         "ondblclick",
         "onkeydown",
