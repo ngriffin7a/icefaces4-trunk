@@ -19,11 +19,9 @@ package org.icefaces.ace.component.colorentry;
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
-import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.ace.util.ComponentUtils;
-import org.icefaces.util.JavaScriptRunner;
 import org.icefaces.ace.model.colorEntry.ColorEntryLayout;
 
 import javax.faces.component.UIComponent;
@@ -143,7 +141,6 @@ public class ColorEntryRenderer extends InputRenderer {
         }
         writer.writeAttribute("id", inputFieldId, null);
         writer.writeAttribute("name", inputFieldId, null);
-        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, picker) ;
         writer.writeAttribute("type", type, null);
  		String tabindex = picker.getTabindex();
  		if (tabindex != null)

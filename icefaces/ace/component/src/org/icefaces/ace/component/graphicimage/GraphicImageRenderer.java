@@ -16,7 +16,8 @@
 
 package org.icefaces.ace.component.graphicimage;
 
-import org.icefaces.ace.util.PassThruAttributeWriter;
+import org.icefaces.ace.util.ComponentUtils;
+import org.icefaces.component.PassthroughAttributes;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -29,6 +30,7 @@ import java.util.logging.Logger;
 
 
 public class GraphicImageRenderer extends Renderer {
+    private final static String[] PASSTHROUGH_ATTRIBUTES = ((PassthroughAttributes) GraphicImage.class.getAnnotation(PassthroughAttributes.class)).value();
 
     private static final Logger logger =
             Logger.getLogger(GraphicImageRenderer.class.toString());
@@ -47,21 +49,8 @@ public class GraphicImageRenderer extends Renderer {
         }
         writer.startElement("img", uiComponent);
         writer.writeAttribute("id", clientId, null);
-        //let pass through attributes deal with height and weight
 
-//        String altAttribute = uiGraphic.getAlt();
-//        if (altAttribute == null) {
-//            altAttribute = "";
-//        }
-
-        if (writer.getContentType().equals("application/xhtml+xml") &&
-                null == uiComponent.getAttributes().get("alt")) {
-            // write out an empty alt
-            writer.writeAttribute("alt", "", "alt");
-        }
-
-        PassThruAttributeWriter.renderNonBooleanAttributes(writer, uiComponent, uiGraphic.getAttributesNames());
-        PassThruAttributeWriter.renderBooleanAttributes(writer, uiComponent, uiGraphic.getBooleanAttNames());
+        ComponentUtils.renderPassThroughAttributes(writer, uiGraphic, PASSTHROUGH_ATTRIBUTES);
 
         String styleClass;
         if (null != (styleClass = (String)
