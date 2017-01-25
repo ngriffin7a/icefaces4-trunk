@@ -77,6 +77,9 @@ public class ComponentArtifact extends Artifact{
         writer.append("import javax.faces.component.UniqueIdVendor;\n");
         writer.append("import javax.faces.component.UIViewRoot;\n\n");
 
+        if (clazz.isAnnotationPresent(PassthroughAttributes.class)) {
+            writer.append("import org.icefaces.component.PassthroughAttributes;\n\n");
+        }
         if (clazz.isAnnotationPresent(ICEResourceDependencies.class) ||
             clazz.isAnnotationPresent(ICEResourceDependency.class)) {
             writer.append("import org.icefaces.resources.ICEResourceDependencies;\n");

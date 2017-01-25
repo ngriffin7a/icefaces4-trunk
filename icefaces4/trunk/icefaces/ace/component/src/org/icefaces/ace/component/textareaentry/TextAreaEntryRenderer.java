@@ -18,13 +18,11 @@ package org.icefaces.ace.component.textareaentry;
 
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
-import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
-import org.icefaces.ace.util.PassThruAttributeWriter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

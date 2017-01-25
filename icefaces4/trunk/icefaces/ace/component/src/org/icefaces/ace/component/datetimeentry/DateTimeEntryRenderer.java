@@ -48,13 +48,51 @@ import javax.faces.FacesException;
 import org.icefaces.ace.renderkit.InputRenderer;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.JSONBuilder;
-import org.icefaces.impl.util.Util;
-import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 
 @MandatoryResourceComponent(tagName="dateTimeEntry", value="org.icefaces.ace.component.datetimeentry.DateTimeEntry")
 public class DateTimeEntryRenderer extends InputRenderer {
+
+    public static void printParams() {
+        Map<String, String[]> paramValuesMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterValuesMap();
+        String key;
+        String[] values;
+        for (Map.Entry<String, String[]> entry : paramValuesMap.entrySet()) {
+            key = entry.getKey();
+            values = entry.getValue();
+            System.out.print(key);
+            System.out.print(" = ");
+            for (String value : values) {
+                System.out.print(value);
+                System.out.print(", ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static String convertToEscapedUnicode(String s) {
+        char[] chars = s.toCharArray();
+        String hexStr;
+        StringBuffer stringBuffer = new StringBuffer(chars.length * 6);
+        String[] leadingZeros = {"0000", "000", "00", "0", ""};
+        for (int i = 0; i < chars.length; i++) {
+            hexStr = Integer.toHexString(chars[i]).toUpperCase();
+            stringBuffer.append("\\u");
+            stringBuffer.append(leadingZeros[hexStr.length()]);
+//            stringBuffer.append("0000".substring(0, 4 - hexStr.length()));
+            stringBuffer.append(hexStr);
+        }
+        return stringBuffer.toString();
+    }
+
+    public static void buildUnicodeArray(JSONBuilder json, String arrayName, String[] array, int start) {
+        json.beginArray(arrayName);
+        for (int i = start; i < array.length; i++) {
+            json.item("'" + convertToEscapedUnicode(array[i]) + "'", false);
+        }
+        json.endArray();
+    }
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -127,7 +165,6 @@ public class DateTimeEntryRenderer extends InputRenderer {
         }
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
-        PassThruAttributeWriter.renderHtml5PassThroughAttributes(writer, dateTimeEntry) ;
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", type, null);
 		String tabindex = dateTimeEntry.getTabindex();
@@ -250,7 +287,7 @@ public class DateTimeEntryRenderer extends InputRenderer {
             .entry("locale", locale.toString())
             .entry("timeZoneIsSet", dateTimeEntry.getTimeZone() != null)
             .entry("timeZoneOffset", DateTimeEntryUtils.getTimeZoneOffset(dateTimeEntry))
-            .entryNonNullValue("pattern", 
+            .entryNonNullValue("pattern",
                 DateTimeEntryUtils.parseTimeZone(DateTimeEntryUtils.convertPattern(dateTimeEntry.getPattern()), locale, dateTimeEntry.calculateTimeZone()));
 
         if(dateTimeEntry.getPages() != 1)
@@ -414,46 +451,6 @@ public class DateTimeEntryRenderer extends InputRenderer {
         } catch (ParseException e) {
             throw new ConverterException(e);
         }
-    }
-
-    public static void printParams() {
-        Map<String, String[]> paramValuesMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterValuesMap();
-        String key;
-        String[] values;
-        for (Map.Entry<String, String[]> entry : paramValuesMap.entrySet()) {
-            key = entry.getKey();
-            values = entry.getValue();
-            System.out.print(key);
-            System.out.print(" = ");
-            for (String value : values) {
-                System.out.print(value);
-                System.out.print(", ");
-            }
-            System.out.println();
-        }
-    }
-
-    public static String convertToEscapedUnicode(String s) {
-        char[] chars = s.toCharArray();
-        String hexStr;
-        StringBuffer stringBuffer = new StringBuffer(chars.length * 6);
-        String[] leadingZeros = {"0000", "000", "00", "0", ""};
-        for (int i = 0; i < chars.length; i++) {
-            hexStr = Integer.toHexString(chars[i]).toUpperCase();
-            stringBuffer.append("\\u");
-            stringBuffer.append(leadingZeros[hexStr.length()]);
-//            stringBuffer.append("0000".substring(0, 4 - hexStr.length()));
-            stringBuffer.append(hexStr);
-        }
-        return stringBuffer.toString();
-    }
-
-    public static void buildUnicodeArray(JSONBuilder json, String arrayName, String[] array, int start) {
-        json.beginArray(arrayName);
-        for (int i = start; i < array.length; i++) {
-            json.item("'" + convertToEscapedUnicode(array[i]) + "'", false);
-        }
-        json.endArray();
     }
 
 	protected void renderResetSettings(FacesContext context, UIComponent component) throws IOException {
