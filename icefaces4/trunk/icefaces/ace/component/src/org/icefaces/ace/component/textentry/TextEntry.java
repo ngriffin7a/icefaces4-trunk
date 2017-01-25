@@ -40,80 +40,6 @@ public class TextEntry extends TextEntryBase implements Focusable, Validateable 
         return getClientId() + "_input";
     }
 
-    // ----------------------------------------
-	// ----- imported from mobi:inputText -----
-	// ----------------------------------------
-	
-    //passthrough attributes for textArea
-    private Attribute[] textAreaAttributeNames = {
-            new Attribute("cols", null),
-            new Attribute("dirname", null),
-            new Attribute("wrap", null),
-            new Attribute("rows", null),
-    };
-    
-    private Attribute[] numberAttributeNames = {
-            new Attribute("type", null),
-            new Attribute("min", null),
-            new Attribute("max", null),
-            new Attribute("step", null),
-            new Attribute("rows", null),
-    };
-
-    //passthrough attributes for input text
-    private Attribute[] inputtextAttributeNames = {
-            new Attribute("autocomplete", null),
-            new Attribute("autocapitalize", null),
-            new Attribute("autocorrect", null),
-            new Attribute("pattern", null),
-            new Attribute("size", null)
-    };
-
-    private Attribute[] commonInputAttributeNames = {
-            new Attribute("title", null),
-            new Attribute("placeholder", null),
-            new Attribute("maxlength", null),
-            new Attribute("name", null),
-            new Attribute("tabindex", null),
-            new Attribute("style", null)
-    };
-
-    private Attribute[] booleanAttNames = {
-            new Attribute("immediate", null)};
-
-
-    public Attribute[] getBooleanAttNames() {
-        return booleanAttNames;
-    }
-
-    public void setBooleanAttNames(Attribute[] booleanAttNames) {
-        this.booleanAttNames = booleanAttNames;
-    }
-
-    public Attribute[] getTextAreaAttributeNames() {
-        return textAreaAttributeNames;
-    }
-
-    public void setTextAreaAttributeNames(Attribute[] textAreaAttributeNames) {
-        this.textAreaAttributeNames = textAreaAttributeNames;
-    }
-
-    public Attribute[] getInputtextAttributeNames() {
-        return inputtextAttributeNames;
-    }
-
-    public void setInputTextAttributeNames(Attribute[] inputtextAttributeNames) {
-        this.inputtextAttributeNames = inputtextAttributeNames;
-    }
-
-    public Attribute[] getCommonInputAttributeNames() {
-        return commonInputAttributeNames;
-    }
-
-    public void setCommonInputAttributeNames(Attribute[] commonInputAttributeNames) {
-        this.commonInputAttributeNames = commonInputAttributeNames;
-    }
-
 	public String validateType(String attributeType) {
 	    if (attributeType.equals("text")||attributeType.equals("number")||attributeType.equals("url")||
 	    		attributeType.equals("textarea")||attributeType.equals("phone")||attributeType.equals("email")|| 
@@ -123,9 +49,6 @@ public class TextEntry extends TextEntryBase implements Focusable, Validateable 
 	    else return "text";
 	}
 
-	public Attribute[] getNumberAttributeNames() {
-		return numberAttributeNames;
-	}
     public String getDefaultEventName(FacesContext facesContext){
         return Utils.isTouchEventEnabled(facesContext) ? "onblur" : "onchange";
     }
