@@ -92,6 +92,14 @@ public class TextEntryRenderer extends InputRenderer {
         }
         ComponentUtils.enableOnElementUpdateNotify(writer, clientId);
 
+        if (!isNumberType) {
+            ClientDescriptor client = Utils.getClientDescriptor();
+            String typeVal = (String)textEntry.getAttributes().get("type");
+            if( isDateType && client.isAndroidOS() && client.isICEmobileContainer() ){ //Android container borks date types
+                typeVal = "text";
+            }
+            type = typeVal;
+        }
         if (!isDateType) writer.writeAttribute("autocorrect", textEntry.getAutocorrect(), null);
         else writer.writeAttribute("autocorrect", "on", null);
         writer.writeAttribute("autocapitalize", textEntry.getAutocapitalize(), null);
