@@ -57,6 +57,8 @@ import org.icefaces.resources.ICEResourceLibrary;
             defaultRender="@all", defaultExecute="@this")
 }, defaultEvent = "valueChange")
 @PassthroughAttributes({
+        "cols",
+        "rows",
         "onclick",
         "ondblclick",
         "onkeydown",
@@ -93,10 +95,6 @@ public class TextAreaEntryMeta extends UIInputMeta {
     private String indicatorPosition;
     @Property(tlddoc = "Make the text area resizable via dragging the bottom right corner. Works only if browser supports CSS3 resize property.", defaultValue = "true")
     private boolean resizable;
-    @Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "The number of rows to be displayed.")
-    private int rows;
-    @Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "The number of columns to be displayed.")
-    private int cols;
     @Property(implementation = Implementation.EXISTS_IN_SUPERCLASS, tlddoc = "A localized user presentable name for this component.")
     private String label;
     @Property(defaultValue = "-1", tlddoc = "The maximum number of characters that may be entered in this field.")
