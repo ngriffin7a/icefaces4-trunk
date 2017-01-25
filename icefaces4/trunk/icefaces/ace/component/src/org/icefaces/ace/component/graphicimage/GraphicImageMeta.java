@@ -56,6 +56,9 @@ public class GraphicImageMeta {
     @Property(tlddoc = "The value of the image, which can be of type String (to specify a URL), byte[], or IceOutputResource.")
     private Object value;
 
+    @Property(tlddoc = "Equivalent to the \"src\" attribute.")
+    private String url;
+
     @Property(tlddoc = "Override for the MIME type of the image.")
     private String mimeType;
 

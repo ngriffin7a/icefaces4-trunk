@@ -35,36 +35,15 @@ import java.util.logging.Logger;
 public class GraphicImage extends GraphicImageBase {
     private static final Logger logger =
             Logger.getLogger(GraphicImage.class.toString());
-    //src is NOT part of the pass through attributes
-    private Attribute[] attributesNames = {new Attribute("alt", null),
-            new Attribute("height", null),
-            new Attribute("width", null),
-            new Attribute("style", null),
-            new Attribute("lang", null),
-            new Attribute("usemap", null),
-            new Attribute("longdesc", null),
-            new Attribute("title", null),
-            new Attribute("onclick", "click"),
-            new Attribute("onkeypress", "keypress")};
 
-    private Attribute[] booleanAttNames = {new Attribute("readonly", null),
-            new Attribute("disabled", null)};
-
-
-    public String processSrcAttribute(FacesContext facesContext, Object o, String name, String mimeType,
-                                      String scope) {
-//        ResourceRegistry registry = this.lookupRegistry(facesContext);
+    public String processSrcAttribute(FacesContext facesContext, Object o, String name, String mimeType, String scope) {
         if (o instanceof IceOutputResource) {
             //register resource..
             IceOutputResource iceResource = (IceOutputResource) o;
             //set name for resource to component id??
             return registerAndGetPath(scope, iceResource);
         }
-//	        if (o instanceof Resource){
-//	        	//it's a jsf resource ...do we want to support that??
-//	        	Resource resource = (Resource)o;
-//	        	return resource.getRequestPath();
-//	        }
+
         if (o instanceof byte[]) {
             // have to create the resource first and cache it in ResourceRegistry
             //create IceOutputResource
@@ -106,71 +85,9 @@ public class GraphicImage extends GraphicImageBase {
             value = super.getUrl();
         }
         if (value != null) {
-//            String ctxtPath = facesContext.getExternalContext().getRequestContextPath();
             return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, value);
         } else {
             return "";
-        }
-    }
-
-    private ResourceRegistry lookupRegistry(FacesContext facesContext) {
-        Map applicationMap = facesContext.getExternalContext().getApplicationMap();
-        if (applicationMap.containsKey(ResourceRegistry.class.getName())) {
-            ResourceRegistry rr = (ResourceRegistry) applicationMap.get(ResourceRegistry.class.getName());
-            return rr;
-        }
-        return null;
-    }
-
-    public Attribute[] getAttributesNames() {
-        return attributesNames;
-    }
-
-    public void setAttributesNames(Attribute[] attributesNames) {
-        this.attributesNames = attributesNames;
-    }
-
-
-    public Attribute[] getBooleanAttNames() {
-        return booleanAttNames;
-    }
-
-
-    public void setBooleanAttNames(Attribute[] booleanAttNames) {
-        this.booleanAttNames = booleanAttNames;
-    }
-
-    private static String getImageSource(FacesContext context, UIComponent component, String attrName) {
-        String resourceName = (String) component.getAttributes().get("name");
-        if (resourceName != null) {
-            String libName = (String) component.getAttributes().get("library");
-            ResourceHandler handler = context.getApplication().getResourceHandler();
-            Resource res = handler.createResource(resourceName, libName);
-            if (res == null) {
-                if (context.isProjectStage(ProjectStage.Development)) {
-                    String msg = "Unable to find resource " + resourceName;
-                    context.addMessage(component.getClientId(context),
-                            new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                    msg,
-                                    msg));
-                }
-                return "RES_NOT_FOUND";
-            } else {
-                String requestPath = res.getRequestPath();
-                return context.getExternalContext().encodeResourceURL(requestPath);
-            }
-        } else {
-            String value = (String) component.getAttributes().get(attrName);
-            if (value == null || value.length() == 0) {
-                return "";
-            }
-            if (value.contains(ResourceHandler.RESOURCE_IDENTIFIER)) {
-                return value;
-            } else {
-                value = context.getApplication().getViewHandler().
-                        getResourceURL(context, value);
-                return (context.getExternalContext().encodeResourceURL(value));
-            }
         }
     }
 }
