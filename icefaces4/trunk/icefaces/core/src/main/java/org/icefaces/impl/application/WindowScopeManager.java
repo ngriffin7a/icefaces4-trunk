@@ -316,14 +316,6 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         Map viewMap = viewRoot.getViewMap();
         //additional test necessary when running with Myfaces 2.1.1* or Mojarra 2.2.1*
         IcefacesBeanDestroyRecorder beanDestroyRecorder = (IcefacesBeanDestroyRecorder) viewMap.get(ICEFACES_BEAN_DESTROY_RECORDER);
-
-        //clearing the view map triggers a PreDestroyViewMapEvent captured by ViewScopeManager who in turn
-        //invokes the InjectionProvider implementation to dispose the view scope beans
-        if (!beanDestroyRecorder.isDisposed()) {
-            viewMap.clear();
-        }
-
-        //invoke @PreDestroy annotated method directly in case there's no InjectionProvider implementation configured
         if (!beanDestroyRecorder.isDisposed()) {
             Iterator keys = viewMap.keySet().iterator();
             while (keys.hasNext()) {
@@ -838,4 +830,3 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
 
         }
     }
-}
