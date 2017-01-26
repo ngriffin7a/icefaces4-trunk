@@ -32,19 +32,19 @@ public class FlipSwitch extends FlipSwitchBase {
     //src is NOT part of the pass through attributes
     public static final String FLIPSWITCH_ON_CLASS = "mobi-flipswitch mobi-flipswitch-on ui-widget";
     public static final String FLIPSWITCH_OFF_CLASS = "mobi-flipswitch mobi-flipswitch-off ui-widget";
-    private Attribute[] attributesNames = {
-            new Attribute("tabindex", null),
-            new Attribute("style", null)};
+    private String[] attributesNames = {
+            "tabindex", "style"
+    };
 
-    private Attribute[] booleanAttNames = {new Attribute("required", null),
-            new Attribute("immediate", null)
+    private String[] booleanAttNames = {
+            "required", "immediate"
     };
  
-    public Attribute[] getAttributesNames() {
+    public String[] getAttributesNames() {
         return attributesNames;
     }
 
-	public Attribute[] getBooleanAttNames() {
+	public String[] getBooleanAttNames() {
 		return booleanAttNames;
 	}
 }

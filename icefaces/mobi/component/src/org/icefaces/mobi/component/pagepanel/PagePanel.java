@@ -38,16 +38,15 @@ public class PagePanel extends PagePanelBase {
     public static final String FOOTER_FACET = "footer";
 
     // pass through attributes for style and styleClass attributes.
-    private Attribute[] commonAttributeNames = {
-            new Attribute("style", null),
-            new Attribute("styleClass", null)
+    private String[] commonAttributeNames = {
+            "style", "styleClass"
     };
 
     public PagePanel() {
         super();
     }
 
-    public Attribute[] getCommonAttributeNames() {
+    public String[] getCommonAttributeNames() {
         return commonAttributeNames;
     }
 }

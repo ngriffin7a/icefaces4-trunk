@@ -32,43 +32,34 @@ import javax.faces.event.ListenerFor;
 import javax.faces.render.Renderer;
 import javax.servlet.http.HttpServletRequest;
 
-import org.icefaces.ace.util.Attribute;
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.mobi.util.MobiJSFConstants;
 import org.icefaces.mobi.util.MobiJSFUtils;
-import org.icefaces.ace.util.PassThruAttributeWriter;
-import org.icefaces.mobi.util.CSSUtils;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.ace.util.Constants;
 import org.icefaces.mobi.util.SXUtils;
 
 @ListenerFor(systemEventClass = javax.faces.event.PostAddToViewEvent.class)
 public class DeviceResourceRenderer  extends Renderer implements javax.faces.event.ComponentSystemEventListener {
-    private static final Logger log = Logger.getLogger(DeviceResourceRenderer.class.getName());
-
-    
-
     public static final String CSS_LOCATION = "org.icefaces.component.skins";
     public static final String UTIL_RESOURCE =
             "org.icefaces.component.util";
     public static final String RESOURCE_URL_ERROR = "MOBI_RES_NOT_FOUND";
     public static final String IOS_APP_ID = "727736414";
-    
     public static final String META_CONTENTTYPE = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>";
     public static final String META_VIEWPORT = "<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui'/>";
     public static final String META_IOS_WEBAPPCAPABLE = "<meta name='apple-mobile-web-app-capable' content='yes'/>";
     public static final String META_IOS_APPSTATUSBAR = "<meta name='apple-mobile-web-app-status-bar-style' content='black'/>";
     public static final String META_IOS_SMARTAPPBANNER = "<meta name='apple-itunes-app' content=\"app-id=%s, app-argument=%s\"/>";
-    
     public static final String LINK_SHORTCUT_ICON = "<link href='%s/resources/images/favicon.ico' rel='shortcut icon' type='image/x-icon'/>";
     public static final String LINK_FAV_ICON = "<link href='%s/resources/images/favicon.ico' rel='icon' type='image/x-icon'/>";
-    
     public static final String SCRIPT_ICEMOBILE = "<script type='text/javascript' src='%s%s/javascript/icemobile.js'></script>";
 	public static final String SCRIPT_SIMULATOR = "simulator-interface.js";
 	public static final String CSS_SIMULATOR = "simulator.css";
-
 	public static final String CSS_MOBILE = "mobile.css";
 	public static final String CSS_MOBILE_LOCATION = "org.icefaces.component.css";
+    private static final Logger log = Logger.getLogger(DeviceResourceRenderer.class.getName());
 
     public void processEvent(ComponentSystemEvent event)
             throws AbortProcessingException {
@@ -186,8 +177,8 @@ public class DeviceResourceRenderer  extends Renderer implements javax.faces.eve
         writer.startElement(HTML.LINK_ELEM, comp);
         writer.writeAttribute(HTML.TYPE_ATTR, HTML.LINK_TYPE_TEXT_CSS, HTML.TYPE_ATTR);
         writer.writeAttribute(HTML.REL_ATTR, HTML.STYLE_REL_STYLESHEET, HTML.REL_ATTR);
-        PassThruAttributeWriter.renderNonBooleanAttributes(
-                writer, comp, new Attribute[]{new Attribute("media",null)});
+        ComponentUtils.renderPassThroughAttribute(writer, comp, "media");
+
         writer.writeURIAttribute(HTML.HREF_ATTR, resourceUrl, HTML.HREF_ATTR);
         writer.endElement(HTML.LINK_ELEM);
         

@@ -19,7 +19,6 @@ package org.icefaces.mobi.component.flipswitch;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.JSONBuilder;
-import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.util.ClientDescriptor;
 import org.icefaces.util.UserAgentInfo;
 import org.icefaces.mobi.renderkit.CoreRenderer;
@@ -89,8 +88,9 @@ public class FlipSwitchRenderer extends CoreRenderer {
         }
         writer.writeAttribute("class", styleClass, "class");
 
-        PassThruAttributeWriter.renderNonBooleanAttributes(writer, uiComponent, flipswitch.getAttributesNames());
-        PassThruAttributeWriter.renderBooleanAttributes(writer, uiComponent, flipswitch.getBooleanAttNames());
+        ComponentUtils.renderPassThroughAttributes(writer, flipswitch, flipswitch.getAttributesNames());
+        ComponentUtils.renderPassThroughAttributes(writer, flipswitch, flipswitch.getBooleanAttNames());
+
         String labelOn = flipswitch.getLabelOn();
         String labelOff = flipswitch.getLabelOff();
 //        String event = flipswitch.getDefaultEventName();

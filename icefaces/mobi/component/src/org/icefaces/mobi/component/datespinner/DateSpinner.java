@@ -28,8 +28,6 @@ import java.util.logging.Logger;
 
 public class DateSpinner extends DateSpinnerBase implements Validateable {
 
-    private static Logger logger = Logger.getLogger(DateSpinner.class.getName());
-
     public static final String BLACKOUT_PNL_CLASS = "mobi-date-bg";
     public static final String BLACKOUT_PNL_INVISIBLE_CLASS = "mobi-date-bg-inv";
     public static final String CONTAINER_CLASS = "mobi-date-container ui-widget ui-corner-all";
@@ -44,9 +42,9 @@ public class DateSpinner extends DateSpinnerBase implements Validateable {
     public static final String SEL_VALUE_CLASS = "mobi-date-select-value";
     public static final String BUTTON_DEC_CONT_CLASS = "mobi-date-btn-cont-decr";
     public static final String BUTTON_DEC_CLASS = "mobi-date-btn mobi-date-btn-decr ui-button ui-state-default";
-
-    private Attribute[] commonAttributeNames = {
-            new Attribute("size", null)
+    private static Logger logger = Logger.getLogger(DateSpinner.class.getName());
+    private String[] commonAttributeNames = {
+            "size"
     };
 
     private Locale appropriateLocale;
@@ -132,7 +130,7 @@ public class DateSpinner extends DateSpinnerBase implements Validateable {
         this.dayInt = dateInt;
     }
 
-    public Attribute[] getCommonAttributeNames() {
+    public String[] getCommonAttributeNames() {
         return commonAttributeNames;
     }
 

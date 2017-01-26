@@ -22,9 +22,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.mobi.renderkit.CoreRenderer;
 import org.icefaces.ace.util.HTML;
-import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.ace.util.Utils;
 
 
@@ -43,7 +43,7 @@ public class PagePanelRenderer extends CoreRenderer {
 
         writer.writeAttribute(HTML.ID_ATTR, clientId + "_pgPnl", HTML.ID_ATTR);
         writer.writeAttribute(HTML.CLASS_ATTR, "mobi-pagePanel ui-widget", null);
-        PassThruAttributeWriter.renderNonBooleanAttributes(writer, pagePanel, pagePanel.getCommonAttributeNames());
+        ComponentUtils.renderPassThroughAttributes(writer, pagePanel, pagePanel.getCommonAttributeNames());
 
         if (pagePanel.getStyle()!=null){
             writer.writeAttribute(HTML.STYLE_ATTR, pagePanel.getStyle(), HTML.STYLE_ATTR);
