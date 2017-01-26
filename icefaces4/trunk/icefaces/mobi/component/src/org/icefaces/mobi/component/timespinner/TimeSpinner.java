@@ -29,7 +29,6 @@ import java.util.logging.Logger;
 
 public class TimeSpinner extends TimeSpinnerBase implements Validateable {
 
-    private static Logger logger = Logger.getLogger(TimeSpinner.class.getName());
     public static final String BLACKOUT_PNL_CLASS = "mobi-time-bg";
     public static final String BLACKOUT_PNL_INVISIBLE_CLASS = "mobi-time-bg-inv";
     public static final String CONTAINER_CLASS = "mobi-time-container ui-widget ui-corner-all";
@@ -44,9 +43,9 @@ public class TimeSpinner extends TimeSpinnerBase implements Validateable {
     public static final String SEL_VALUE_CLASS = "mobi-time-select-value";
     public static final String BUTTON_DEC_CONT_CLASS = "mobi-time-btn-cont-decr";
     public static final String BUTTON_DEC_CLASS = "mobi-time-btn mobi-time-btn-decr ui-button ui-state-default";
-
-    private Attribute[] commonAttributeNames = {
-            new Attribute("size", null)
+    private static Logger logger = Logger.getLogger(TimeSpinner.class.getName());
+    private String[] commonAttributeNames = {
+            "size"
     };
 
     private int hourInt;
@@ -134,7 +133,7 @@ public class TimeSpinner extends TimeSpinnerBase implements Validateable {
         return FacesContext.getCurrentInstance();
     }
 
-    public Attribute[] getCommonAttributeNames() {
+    public String[] getCommonAttributeNames() {
         return commonAttributeNames;
     }
 

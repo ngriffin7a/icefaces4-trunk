@@ -16,8 +16,8 @@
 
 package org.icefaces.mobi.component.datespinner;
 
+import org.icefaces.component.PassthroughAttributes;
 import org.icefaces.mobi.renderkit.InputRenderer;
-import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.ComponentUtils;
@@ -46,15 +46,24 @@ import java.util.logging.Logger;
 
 public class DateSpinnerRenderer extends InputRenderer {
 
+    public static final String TOUCH_START_EVENT = "ontouchstart";
+    public static final String CLICK_EVENT = "onclick";
     private static final Logger logger = Logger.getLogger(DateSpinnerRenderer.class.getName());
-
     private static final String JS_NAME = "datespinner.js";
     private static final String JS_MIN_NAME = "datespinner.c.js";
     private static final String JS_LIBRARY = "org.icefaces.component.datespinner";
 
-    public static final String TOUCH_START_EVENT = "ontouchstart";
-    public static final String CLICK_EVENT = "onclick";
-
+    /**
+     * Utility to see if the date spinner will use the native input method for a
+     * data input.  Current can be set by the attribute useNative and iOS
+     * or blackberry
+     *
+     * @param component dateSpinner to test isUseNative.
+     * @return ture if the native dialog should be used
+     */
+    static boolean shouldUseNative(DateSpinner component) {
+        return component.isUseNative() && Utils.getClientDescriptor().isHasNativeDatePicker();
+    }
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -160,8 +169,9 @@ public class DateSpinnerRenderer extends InputRenderer {
                 cbhCall = cbhCall.replace("\"", "\'");
                 writer.writeAttribute(event,"mobi.datespinner.inputNative('"+clientId+"',"+cbhCall+", '"+errorMessage+"');", null);
             }
-			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
-					((DateSpinner) component).getCommonAttributeNames());
+
+            ComponentUtils.renderPassThroughAttributes(writer, spinner, spinner.getCommonAttributeNames());
+
             writer.endElement("input");
             generateErrorMessageSpan(component, writer, clientId);
             writer.endElement("div");
@@ -235,8 +245,8 @@ public class DateSpinnerRenderer extends InputRenderer {
             writer.writeAttribute("onblur", inputCall.toString(), null);
         }
         // apply class attribute and pass though attributes for style.
-        PassThruAttributeWriter.renderNonBooleanAttributes(writer, uiComponent,
-                dateSpinner.getCommonAttributeNames());
+//        PassThruAttributeWriter.renderNonBooleanAttributes(writer, uiComponent,
+//                dateSpinner.getCommonAttributeNames());
         String style = dateSpinner.getStyle();
         if (style!=null){
             writer.writeAttribute(HTML.STYLE_ATTR, style, HTML.STYLE_ATTR);
@@ -304,9 +314,9 @@ public class DateSpinnerRenderer extends InputRenderer {
 
         // look at pattern or converter pattern to decide as two order of input values.
         String pattern = findPattern(dateSpinner);
-        // if we have patter to work off then find out the best way to proceed. 
+        // if we have patter to work off then find out the best way to proceed.
         if (pattern != null) {
-            // use the index to decide the ordering type. 
+            // use the index to decide the ordering type.
             int yStart = pattern.toLowerCase().indexOf("y");
             int mStart = pattern.toLowerCase().indexOf("m");
             int dStart = pattern.toLowerCase().indexOf("d");
@@ -406,7 +416,6 @@ public class DateSpinnerRenderer extends InputRenderer {
         writer.endElement("script");
         writer.endElement("span");
     }
-
 
     @Override
     public Object getConvertedValue(FacesContext context, UIComponent component,
@@ -612,18 +621,6 @@ public class DateSpinnerRenderer extends InputRenderer {
     private boolean isFormattedDate(String inStr, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.parse(inStr, new ParsePosition(0)) != null;
-    }
-
-    /**
-     * Utility to see if the date spinner will use the native input method for a
-     * data input.  Current can be set by the attribute useNative and iOS
-     * or blackberry
-     *
-     * @param component dateSpinner to test isUseNative.
-     * @return ture if the native dialog should be used
-     */
-    static boolean shouldUseNative(DateSpinner component) {
-        return component.isUseNative() && Utils.getClientDescriptor().isHasNativeDatePicker();
     }
 
     private void writePlusIcon(ResponseWriter writer) throws IOException {

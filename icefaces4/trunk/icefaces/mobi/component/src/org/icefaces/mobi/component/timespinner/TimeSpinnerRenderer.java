@@ -18,7 +18,6 @@ package org.icefaces.mobi.component.timespinner;
 
 import org.icefaces.mobi.renderkit.InputRenderer;
 import org.icefaces.ace.util.HTML;
-import org.icefaces.ace.util.PassThruAttributeWriter;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.ComponentUtils;
 
@@ -38,13 +37,16 @@ import java.util.Locale;
 import java.util.logging.Logger;
 
 public class TimeSpinnerRenderer extends InputRenderer {
+    public static final String TOUCH_START_EVENT = "ontouchstart";
+    public static final String CLICK_EVENT = "onclick";
     private static final Logger logger = Logger.getLogger(TimeSpinnerRenderer.class.getName());
     private static final String JS_NAME = "timespinner.js";
     private static final String JS_MIN_NAME = "timespinner.c.js";
     private static final String JS_LIBRARY = "org.icefaces.component.timespinner";
 
-    public static final String TOUCH_START_EVENT = "ontouchstart";
-    public static final String CLICK_EVENT = "onclick";
+    static boolean shouldUseNative(TimeSpinner component) {
+       return component.isUseNative() && Utils.getClientDescriptor().isHasNativeDatePicker();
+    }
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -119,8 +121,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
                writer.writeAttribute(event, "ice.setFocus(''); ice.ace.ab("+cbhCall+");", null) ;
               //  writer.writeAttribute(event, "mobi.timespinner.inputNative('"+clientId+"',"+cbhCall+");", null);
             }
-			PassThruAttributeWriter.renderNonBooleanAttributes(writer, component,
-					((TimeSpinner) component).getCommonAttributeNames());
+            ComponentUtils.renderPassThroughAttributes(writer, spinner, spinner.getCommonAttributeNames());
             writer.endElement("input");
         } else {
             writeJavascriptFile(context, component, JS_NAME, JS_MIN_NAME, JS_LIBRARY);
@@ -170,8 +171,7 @@ public class TimeSpinnerRenderer extends InputRenderer {
             writer.writeAttribute("onblur", onblur.toString(), null);
         }
         // apply class attribute and pass though attributes for style.
-        PassThruAttributeWriter.renderNonBooleanAttributes(writer, uiComponent,
-                timeEntry.getCommonAttributeNames());
+        ComponentUtils.renderPassThroughAttributes(writer, timeEntry, timeEntry.getCommonAttributeNames());
         // apply class attribute and pass though attributes for style.
         String style = timeEntry.getStyle();
         if (style!=null){
@@ -364,7 +364,6 @@ public class TimeSpinnerRenderer extends InputRenderer {
         writer.endElement("span");
     }
 
-
     @Override
     public Object getConvertedValue(FacesContext context, UIComponent component, Object value) throws ConverterException {
         TimeSpinner spinner = (TimeSpinner) component;
@@ -488,10 +487,6 @@ public class TimeSpinnerRenderer extends InputRenderer {
         } else {
             return inputVal;
         }
-    }
-
-    static boolean shouldUseNative(TimeSpinner component) {
-       return component.isUseNative() && Utils.getClientDescriptor().isHasNativeDatePicker();
     }
 
     private void writePlusIcon(ResponseWriter writer) throws IOException {
