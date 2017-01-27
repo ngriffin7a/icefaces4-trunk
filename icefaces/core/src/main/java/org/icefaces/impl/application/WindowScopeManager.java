@@ -77,6 +77,33 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         this.wrapped = wrapped;
     }
 
+    public ResourceHandler getWrapped() {
+        return wrapped;
+    }
+
+    public void handleSessionAwareResourceRequest(FacesContext facesContext) throws IOException {
+        wrapped.handleResourceRequest(facesContext);
+    }
+
+    public boolean isResourceRequest(FacesContext facesContext) {
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map parameters = externalContext.getRequestParameterMap();
+        if (isDisposeWindowRequest(parameters)) {
+            //force the running of the JSF lifecycle so that the registered phase listener has a chance to destroy
+            //the @WindowDisposed annotated view scope beans
+            //
+            //avoid running JSF lifecycle when session is not yet created (for example when dispose window request is
+            //received first after the application was restarted)
+            return facesContext.getExternalContext().getSession(false) == null;
+        }
+
+        return super.isResourceRequest(facesContext);
+    }
+
+    public boolean isSessionAwareResourceRequest(FacesContext context) {
+        return wrapped.isResourceRequest(context);
+    }
+
     public static ScopeMap lookupWindowScope(FacesContext context) {
         try {
             final ExternalContext externalContext = context.getExternalContext();
@@ -356,6 +383,81 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         session.setAttribute(SessionSynchronizationMonitor, new String());
     }
 
+    public static class ScopeMap extends HashMap {
+        private String id;
+        private long activateTimestamp = System.currentTimeMillis();
+        private long deactivateTimestamp = -1;
+        private boolean preDestroyInvoked;
+
+        public ScopeMap(String id, FacesContext facesContext) {
+            this.id = id;
+            boolean processingEvents = facesContext.isProcessingEvents();
+            try {
+                facesContext.setProcessingEvents(true);
+                ScopeContext context = new ScopeContext(ScopeName, this);
+                facesContext.getApplication().publishEvent(facesContext, PostConstructCustomScopeEvent.class, context);
+            } finally {
+                facesContext.setProcessingEvents(processingEvents);
+                sharedMapLookupStrategy.associate(facesContext, id);
+            }
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public ScopeMap(FacesContext facesContext) {
+            this(generateID(), facesContext);
+        }
+
+        private void disactivateIfUnused(FacesContext facesContext) {
+            final UIViewRoot viewRoot = facesContext.getViewRoot();
+            if (!EnvUtils.containsBeans(this) && (viewRoot == null || !EnvUtils.containsDisposedBeans(viewRoot.getViewMap()))) {
+                //the map *does not* contain objects (most probably beans) other than the ones inserted by the framework
+                disactivate(getState(facesContext));
+            }
+        }
+
+        private void discardIfExpired(FacesContext facesContext) {
+            State state = getState(facesContext);
+            if (System.currentTimeMillis() > (deactivateTimestamp + state.expirationPeriod)) {
+                try {
+                    if (!isPreDestroyInvoked()) {
+                        boolean processingEvents = facesContext.isProcessingEvents();
+                        try {
+                            facesContext.setProcessingEvents(true);
+                            ScopeContext context = new ScopeContext(ScopeName, this);
+                            facesContext.getApplication().publishEvent(facesContext, PreDestroyCustomScopeEvent.class, context);
+                        } finally {
+                            preDestroyInvoked();
+                            facesContext.setProcessingEvents(processingEvents);
+                        }
+                    }
+                } finally {
+                    state.disposedWindowScopedMaps.remove(this);
+                }
+            }
+        }
+
+        private void activate(State state) {
+            state.windowScopedMaps.put(id, this);
+            activateTimestamp = System.currentTimeMillis();
+        }
+
+        private void disactivate(State state) {
+            deactivateTimestamp = System.currentTimeMillis();
+            state.disposedWindowScopedMaps.addLast(state.windowScopedMaps.remove(id));
+        }
+
+        public void preDestroyInvoked() {
+            preDestroyInvoked = true;
+        }
+
+        public boolean isPreDestroyInvoked() {
+            return preDestroyInvoked;
+        }
+    }
+
     public static String lookupAssociatedWindowID(Map requestMap) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
@@ -426,118 +528,10 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
         return state;
     }
 
-    public ResourceHandler getWrapped() {
-        return wrapped;
-    }
-
-    public void handleSessionAwareResourceRequest(FacesContext facesContext) throws IOException {
-        wrapped.handleResourceRequest(facesContext);
-    }
-
-    public boolean isResourceRequest(FacesContext facesContext) {
-        ExternalContext externalContext = facesContext.getExternalContext();
-        Map parameters = externalContext.getRequestParameterMap();
-        if (isDisposeWindowRequest(parameters)) {
-            //force the running of the JSF lifecycle so that the registered phase listener has a chance to destroy
-            //the @WindowDisposed annotated view scope beans
-            //
-            //avoid running JSF lifecycle when session is not yet created (for example when dispose window request is
-            //received first after the application was restarted)
-            return facesContext.getExternalContext().getSession(false) == null;
-        }
-
-        return super.isResourceRequest(facesContext);
-    }
-
-    public boolean isSessionAwareResourceRequest(FacesContext context) {
-        return wrapped.isResourceRequest(context);
-    }
-
-    private static interface SharedMapLookupStrategy {
-        ScopeMap lookup(FacesContext context);
-
-        void associate(FacesContext context, String windowID);
-    }
-
-    public static class ScopeMap extends HashMap {
-        private String id;
-        private long activateTimestamp = System.currentTimeMillis();
-        private long deactivateTimestamp = -1;
-        private boolean preDestroyInvoked;
-
-        public ScopeMap(String id, FacesContext facesContext) {
-            this.id = id;
-            boolean processingEvents = facesContext.isProcessingEvents();
-            try {
-                facesContext.setProcessingEvents(true);
-                ScopeContext context = new ScopeContext(ScopeName, this);
-                facesContext.getApplication().publishEvent(facesContext, PostConstructCustomScopeEvent.class, context);
-            } finally {
-                facesContext.setProcessingEvents(processingEvents);
-                sharedMapLookupStrategy.associate(facesContext, id);
-            }
-        }
-
-        public ScopeMap(FacesContext facesContext) {
-            this(generateID(), facesContext);
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        private void disactivateIfUnused(FacesContext facesContext) {
-            final UIViewRoot viewRoot = facesContext.getViewRoot();
-            if (!EnvUtils.containsBeans(this) && (viewRoot == null || !EnvUtils.containsDisposedBeans(viewRoot.getViewMap()))) {
-                //the map *does not* contain objects (most probably beans) other than the ones inserted by the framework
-                disactivate(getState(facesContext));
-            }
-        }
-
-        private void discardIfExpired(FacesContext facesContext) {
-            State state = getState(facesContext);
-            if (System.currentTimeMillis() > (deactivateTimestamp + state.expirationPeriod)) {
-                try {
-                    if (!isPreDestroyInvoked()) {
-                        boolean processingEvents = facesContext.isProcessingEvents();
-                        try {
-                            facesContext.setProcessingEvents(true);
-                            ScopeContext context = new ScopeContext(ScopeName, this);
-                            facesContext.getApplication().publishEvent(facesContext, PreDestroyCustomScopeEvent.class, context);
-                        } finally {
-                            preDestroyInvoked();
-                            facesContext.setProcessingEvents(processingEvents);
-                        }
-                    }
-                } finally {
-                    state.disposedWindowScopedMaps.remove(this);
-                }
-            }
-        }
-
-        private void activate(State state) {
-            state.windowScopedMaps.put(id, this);
-            activateTimestamp = System.currentTimeMillis();
-        }
-
-        private void disactivate(State state) {
-            deactivateTimestamp = System.currentTimeMillis();
-            state.disposedWindowScopedMaps.addLast(state.windowScopedMaps.remove(id));
-        }
-
-        public void preDestroyInvoked() {
-            preDestroyInvoked = true;
-        }
-
-        public boolean isPreDestroyInvoked() {
-            return preDestroyInvoked;
-        }
-    }
-
     public static class State implements Externalizable {
         public HashMap windowScopedMaps = new HashMap();
-        public long expirationPeriod;
         private LinkedList disposedWindowScopedMaps = new LinkedList();
+        public long expirationPeriod;
 
         public State() {
         }
@@ -557,6 +551,12 @@ public class WindowScopeManager extends SessionAwareResourceHandlerWrapper {
             disposedWindowScopedMaps = (LinkedList) in.readObject();
             expirationPeriod = in.readLong();
         }
+    }
+
+    private static interface SharedMapLookupStrategy {
+        ScopeMap lookup(FacesContext context);
+
+        void associate(FacesContext context, String windowID);
     }
 
     private static class TimeBasedHeuristicWindowScopeSharing implements SharedMapLookupStrategy {
