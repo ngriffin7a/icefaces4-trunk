@@ -46,7 +46,8 @@ import org.icefaces.component.PassthroughAttributes;
         "readonly",
         "disabled",
         "ismap",
-        "usemap"
+        "usemap",
+        "style"
 })
 public class GraphicImageMeta {
 
@@ -70,9 +71,6 @@ public class GraphicImageMeta {
 
     @Property(tlddoc = "Space-separated list of CSS style class(es) to be applied when this element is rendered.")
     private String styleClass;
-
-    @Property(tlddoc = "CSS style(s) to be applied when this component is rendered.")
-    private String style;
 }
 
 
