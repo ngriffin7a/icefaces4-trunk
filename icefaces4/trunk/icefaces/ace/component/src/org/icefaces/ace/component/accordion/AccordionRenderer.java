@@ -195,9 +195,14 @@ public class AccordionRenderer extends CoreRenderer {
 				//content
 				writer.startElement("div", null);
                 writer.writeAttribute("id", clientId, null);
+                writer.startElement("div", null);
+                writer.writeAttribute("id", clientId + "_content", null);
+                //help resizable component calculate properly its maximum bounds
+                writer.writeAttribute("style", "height: 100%;", null);
 
                 tab.encodeAll(context);
 
+                writer.endElement("div");
 				writer.endElement("div");
 			}
 			if (!titles.isEmpty()){
