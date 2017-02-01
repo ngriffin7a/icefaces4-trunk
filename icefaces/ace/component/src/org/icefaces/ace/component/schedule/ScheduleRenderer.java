@@ -239,6 +239,7 @@ public class ScheduleRenderer extends CoreRenderer {
 					.entry("isEventDeletion", "disabled".equalsIgnoreCase(schedule.getDeletionControls()) ? false : true);
 
 					if (schedule.isScrollable()) jb.entry("scrollHeight", schedule.getScrollHeight());
+					if (schedule.isTwelveHourClock()) jb.entry("isTwelveHourClock", true);
 
 					if (schedule.isLazy()) jb.entry("isLazy", true);
 
