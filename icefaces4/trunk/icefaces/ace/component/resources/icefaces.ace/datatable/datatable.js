@@ -924,7 +924,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
 
             var target = ice.ace.jq(event.target);
 
-            if (options.allColumnClicks || target.is('td,span,div')) {
+            if (options.allColumnClicks || this == target[0] || this == target[0].parentNode) {
                 // wait for dblclick
                 self.cellClickWaiting = setTimeout(function() {
                     execObsList.call(self, event);
@@ -960,7 +960,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
 
             var target = ice.ace.jq(event.target);
 
-            if (options.allColumnClicks || target.is('td,span,div')) {
+            if (options.allColumnClicks || this == target[0] || this == target[0].parentNode) {
                 self.rowClickWaiting = setTimeout(function() {
                     execObsList.call(self, event);
                     // console.log('row click');
@@ -990,7 +990,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
         this.element.on('dblclick', this.cellSelector, function (event) {
             var target = ice.ace.jq(event.target);
 
-            if (options.allColumnClicks || target.is('td,span,div')) {
+            if (options.allColumnClicks ||  this == target[0] || this == target[0].parentNode) {
                 if (self.rowClickWaiting) clearTimeout(self.rowClickWaiting);
                 if (self.cellClickWaiting) clearTimeout(self.cellClickWaiting);
 
@@ -1017,7 +1017,7 @@ ice.ace.DataTable.prototype.setupClickEvents = function() {
         this.element.on('dblclick', this.rowSelector, function (event) {
             var target = ice.ace.jq(event.target);
 
-            if (options.allColumnClicks || target.is('td,span,div')) {
+            if (options.allColumnClicks || this == target[0] || this == target[0].parentNode) {
                 if (self.rowClickWaiting) clearTimeout(self.rowClickWaiting);
                 if (self.cellClickWaiting) clearTimeout(self.cellClickWaiting);
 
