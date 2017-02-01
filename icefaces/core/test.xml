@@ -204,15 +204,6 @@
                                             types are leveraged where supported, with JavaScript controls substituted on
                                             platforms where they are not.
                                         </li>
-                                        <li>
-                                            <strong>Native</strong>
-                                            controls that provide access to device features like the camera and
-                                            microphone. These controls work in conjunction with the <a href="" id="_t21"
-                                                                                                       name="_t21">
-                                            BridgeIt Utility App.
-                                        </a> to provide cross-platform hybrid web/native app. capabilities right from
-                                            your web applications.
-                                        </li>
                                     </ul>
                                 </p>
                                 <div style="clear:both;"></div>

@@ -31,7 +31,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 
 import org.icefaces.mobi.component.camera.Camera;
-import org.icefaces.mobi.component.camcorder.Camcorder;
 import org.icefaces.mobi.util.MobiJSFUtils;
 import org.icefaces.util.ClientDescriptor;
 
@@ -62,7 +61,7 @@ public class ThumbnailRenderer extends Renderer {
             mFor = comp.getClientId(facesContext);
         } else if (facesContext.isProjectStage(ProjectStage.Development) ||
                 logger.isLoggable(Level.FINER)) {
-            logger.finer(" Cannot find camera or camcorder component with id=" + compId);
+            logger.finer(" Cannot find camera component with id=" + compId);
         }
         if (null == thumbnail.getMFor()) {  //only have to set it once
             thumbnail.setMFor(mFor);
@@ -75,8 +74,7 @@ public class ThumbnailRenderer extends Renderer {
         String clientId = component.getClientId();
         ClientDescriptor cd = component.getClient();
         boolean isForCamera = forComp instanceof Camera;
-        boolean isForCamcorder = forComp instanceof Camcorder;
-        boolean isCam = isForCamera || isForCamcorder;
+        boolean isCam = isForCamera;
         if (cd.isDesktopBrowser() && !isCam ) {
             logger.info("thumbnail not being rendered");
             return;
