@@ -119,7 +119,7 @@ public class ScheduleMeta extends UIDataMeta {
     private Integer scrollHeight;
 
     @Property(tlddoc = "Enabling renders the time grid of the week and day views in a container that overflows the fixed height and adds a scrollbar.")
-    private boolean scrollable;;
+    private boolean scrollable;
 
 	@Property(tlddoc = "The inline style of the component, rendered on the root div of the component.")
 	private String style;
@@ -132,6 +132,9 @@ public class ScheduleMeta extends UIDataMeta {
 
     @Property(tlddoc = "Defines the default duration (in minutes) of new events added by the user if an end date or time was not set.", defaultValue = "60", defaultValueType = DefaultValueType.EXPRESSION)
     private Integer defaultDuration;
+
+    @Property(tlddoc = "Enabling renders the times in the 12-hour clock format.", defaultValue = "false")
+    private boolean twelveHourClock;
 
 	@Field(defaultValue="-1")
 	private Integer currentYear;

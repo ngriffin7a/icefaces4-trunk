@@ -134,6 +134,7 @@ ice.ace.Schedule = function(id, cfg) {
 	}
 	if (self.cfg.isEventAddition) {
 		this.jqRoot.delegate('.day, .schedule-cell', 'dblclick', function(event) {
+			event.stopPropagation();
 			var date, time;
 			var node = event['target'];
 			node = node.className.indexOf('day-number') > -1 ? node.parentNode : node;
@@ -661,7 +662,15 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 				+ '-' + this.addLeadingZero(day) + ' .schedule-state');
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
-			eventElement.html('<span>' + event.startTime + ' ' + event.title + '</span>');
+			var startTime;
+			if (this.cfg.isTwelveHourClock) {
+				var hour = parseInt(event.startTime.substring(0,2));
+				var minutes = event.startTime.substring(3,5);
+				startTime = hour < 13 ? (hour == 12 ? '12:' + minutes + 'p' : hour + ':' + minutes + 'a') : hour - 12 + ':' + minutes + 'p';
+			} else {
+				startTime = event.startTime;
+			}
+			eventElement.html('<span>' + startTime + ' ' + event.title + '</span>');
 			eventElement.appendTo(dayDiv);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startDate.substring(8,10)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
@@ -723,18 +732,32 @@ ice.ace.Schedule.prototype.renderWeekView = function() {
 
 					for (i = 0; i < 24; i++) {
 						var iString = i < 10 ? '0' + i : i;
-						markup += "<tr>"
-							+"<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + i + ":00</td>"
-							+"<td class=\"ui-widget-content schedule-cell schedule-dow-0 schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
+						markup += "<tr>";
+
+							if (this.cfg.isTwelveHourClock) {
+								var hour = i < 13 ? (i == 12 ? '12:00 pm' : i + ':00 am') : i - 12 + ':00 pm';
+								markup += "<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + hour + "</td>";
+							} else {
+								markup += "<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + iString + ":00</td>";
+							}
+
+							markup += "<td class=\"ui-widget-content schedule-cell schedule-dow-0 schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-1 schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-2 schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-3 schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-4 schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-5 schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-6 schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
-						+"</tr><tr>"
-							+"<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + i + ":30</td>"
-							+"<td class=\"ui-widget-content schedule-cell schedule-dow-0 schedule-time-" + iString + "30\"><div class=\"schedule-state\"></div></td>"
+						+"</tr><tr>";
+
+							if (this.cfg.isTwelveHourClock) {
+								var hour = i < 13 ? (i == 12 ? '12:30 pm' : i + ':30 am') : i - 12 + ':30 pm';
+								markup += "<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + hour + "</td>";
+							} else {
+								markup += "<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + iString + ":30</td>";
+							}
+
+							markup += "<td class=\"ui-widget-content schedule-cell schedule-dow-0 schedule-time-" + iString + "30\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-1 schedule-time-" + iString + "30\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-2 schedule-time-" + iString + "30\"><div class=\"schedule-state\"></div></td>"
 							+"<td class=\"ui-widget-content schedule-cell schedule-dow-3 schedule-time-" + iString + "30\"><div class=\"schedule-state\"></div></td>"
@@ -839,7 +862,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 			var height = endTimeCell.outerHeight() - 1;
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
-			eventElement.html(event.startTime + ' ' + event.title);
+			eventElement.html(this.getEventDivMarkup(hour, minutes, endHour, endMinutes, event));
 			var timeSlotMultiplicity = this.weekTimeSlots[dow][this.timeSlotIndexMap[startingTimeSlot]];
 			timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
 			var multiplicityAdjustment = timeSlotMultiplicity * 5;
@@ -929,12 +952,26 @@ ice.ace.Schedule.prototype.renderDayView = function() {
 
 					for (i = 0; i < 24; i++) {
 						var iString = i < 10 ? '0' + i : i;
-						markup += "<tr>"
-							+"<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + i + ":00</td>"
-							+"<td class=\"ui-widget-content schedule-cell schedule-dow-single schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
-						+"</tr><tr>"
-							+"<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + i + ":30</td>"
-							+"<td class=\"ui-widget-content schedule-cell schedule-dow-single schedule-time-" + iString + "30\"><div class=\"schedule-state\"></div></td>"
+						markup += "<tr>";
+
+							if (this.cfg.isTwelveHourClock) {
+								var hour = i < 13 ? (i == 12 ? '12:00 pm' : i + ':00 am') : i - 12 + ':00 pm';
+								markup += "<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + hour + "</td>";
+							} else {
+								markup += "<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + iString + ":00</td>";
+							}
+
+							markup += "<td class=\"ui-widget-content schedule-cell schedule-dow-single schedule-time-" + iString + "00\"><div class=\"schedule-state\"></div></td>"
+						+"</tr><tr>";
+
+							if (this.cfg.isTwelveHourClock) {
+								var hour = i < 13 ? (i == 12 ? '12:30 pm' : i + ':30 am') : i - 12 + ':30 pm';
+								markup += "<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + hour + "</td>";
+							} else {
+								markup += "<td class=\"ui-widget-content schedule-cell schedule-cell-time\">" + iString + ":30</td>";
+							}
+
+							markup += "<td class=\"ui-widget-content schedule-cell schedule-dow-single schedule-time-" + iString + "30\"><div class=\"schedule-state\"></div></td>"
 						+"</tr>";
 					}
 
@@ -1013,7 +1050,7 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 			var height = endTimeCell.outerHeight() - 1;
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
-			eventElement.html(event.startTime + ' ' + event.title);
+			eventElement.html(this.getEventDivMarkup(hour, minutes, endHour, endMinutes, event));
 			var timeSlotMultiplicity = this.dayTimeSlots[this.timeSlotIndexMap[startingTimeSlot]];
 			timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
 			var multiplicityAdjustment = timeSlotMultiplicity * 5;
@@ -1052,6 +1089,42 @@ ice.ace.Schedule.prototype.timeSlotIndexMap = {'0000':0, '0030':1, '0100':2, '01
 	'1300':26, '1330':27, '1400':28, '1430':29, '1500':30, '1530':31, '1600':32, '1630':33, '1700':34, '1730':35,
 	'1800':36, '1830':37, '1900':38, '1930':39, '2000':40, '2030':41, '2100':42, '2130':43, '2200':44, '2230':45,
 	'2300':46, '2330':47
+};
+
+ice.ace.Schedule.prototype.getEventDivMarkup = function(startHour, startMinutes, endHour, endMinutes, event) {
+	var lines;
+	if (startHour == endHour) { // only one line of text
+		// only possible case start time is at 00 minutes, end time is at 30 minutes
+		lines = 1;
+	} else if ((parseInt(endHour) - parseInt(startHour)) == 1) {
+		// case when start time is previous hour at 30 minutes and end time is this hour at 00 minutes (1 line)
+		if (startMinutes == '30' && endMinutes == '00') lines = 1;
+		// case when start time is previous hour at 30 minutes and end time is this hour at 30 minutes (2 lines)
+		if (startMinutes == '30' && endMinutes == '30') lines = 2;
+		// case when start time is previous hour at 00 minutes and end time is this hour at 00 minutes (2 lines)
+		if (startMinutes == '00' && endMinutes == '00') lines = 2;
+		// case when start time is previous hour at 00 minutes and end time is this hour at 30 minutes (3 lines)
+		if (startMinutes == '00' && endMinutes == '30') lines = 3;
+	} else { // 2 or more hours difference (3 lines)
+		lines = 3;
+	}
+	if (lines == 1) {
+		return '<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location;
+	} else {
+		var startTime;
+		if (this.cfg.isTwelveHourClock) {
+			var hour = parseInt(startHour);
+			var minutes = this.addLeadingZero(startMinutes);
+			startTime = hour < 13 ? (hour == 12 ? '12:' + minutes + ' pm' : hour + ':' + minutes + ' am') : hour - 12 + ':' + minutes + ' pm';
+		} else {
+			startTime = event.startTime;		
+		}
+		if (lines == 2) {
+			return startTime + '<br/><span class="schedule-event-bold">' + event.title + '</span>, ' + event.location;
+		} else {
+			return startTime + '<br/><span class="schedule-event-bold">' + event.title + '</span><br/>' + event.location;
+		}
+	}
 };
 
 ice.ace.Schedule.prototype.addNavigationListeners = function() {

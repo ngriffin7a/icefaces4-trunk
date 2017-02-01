@@ -203,3 +203,6 @@
    -ms-user-select: none;
    user-select: none;
 }
+.ice-ace-schedule .schedule-event-bold {
+	font-weight: bold;
+}
