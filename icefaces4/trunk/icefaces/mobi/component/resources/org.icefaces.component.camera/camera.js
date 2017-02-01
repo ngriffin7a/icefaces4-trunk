@@ -163,13 +163,7 @@
 				}
 
 				startSpinner();
-				submitImageFile(file, onSubmitSuccess, onSubmitFailure);
-				
-
-
-				
-
-				
+				submitImageFile(file, onSubmitSuccess, onSubmitFailure);				
 			}
 
 			var input = getFileInput();
@@ -596,46 +590,11 @@
 			cameraOptions.maxheight = maxheight;
 		}
 
-		//setup fallback callback as a chain of responsibility
-		var origLaunchFailed = bridgeit.launchFailed;
-		bridgeit.launchFailed = function(compId){
-			if( compId === id ){
-				origLaunchFailed(compId);
-				if (window[id + '_fallbackObserver']) {
-					clearTimeout(window[id + '_fallbackObserver']);
-				}
-				window[id + '_fallbackObserver'] = setTimeout(function() {
-					renderCameraFallbackFileUpload();
-				}, 100);
-			}
-			else{
-				origLaunchFailed(compId);
-			}
-		}
-
 		if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'iOS') {
 			renderCameraFallbackFileUpload();
 		} else {
-			var origNotSupported = bridgeit.notSupported;
-			bridgeit.notSupported = function(compId, command){
-				if( command === 'camera' && compId === id){
-					origNotSupported(compId, command);
-					if (window[id + '_fallbackObserver']) {
-						clearTimeout(window[id + '_fallbackObserver']);
-					}
-					window[id + '_fallbackObserver'] = setTimeout(function() {
-						renderCameraFallbackFileUpload();
-					}, 100);
-				}
-				else{
-					origNotSupported(compId, command);
-				}
-			}
-
 			if ('URL' in window && (navigator.getUserMedia || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia))) {
 				launchHTML5Camera();
-			} else {
-				bridgeit.camera(id, 'callback'+id, cameraOptions );
 			}
 		}
 	};

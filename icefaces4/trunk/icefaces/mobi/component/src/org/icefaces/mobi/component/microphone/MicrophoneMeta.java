@@ -48,7 +48,6 @@ import java.util.Map;
 )
 
 @ResourceDependencies({
-        @ResourceDependency(library = "icefaces.mobi", name = "core/bridgeit.js"),
         @ResourceDependency(library = "org.icefaces.component.util", name = "component.js"),
         @ResourceDependency(library = "org.icefaces.component.microphone", name = "microphone.css"),
         @ResourceDependency(library = "org.icefaces.component.microphone", name = "microphone.js"),
@@ -92,7 +91,7 @@ public class MicrophoneMeta extends UIComponentBaseMeta {
 
     @Facets
     class FacetsMeta{
-        @Facet(tlddoc = "Allows rendering of nested components that are displayed if the BridgeIt app cannot be used, either due to running on an unsupported platform (such as a desktop OS), or the BridgeIt app not being installed on the device.")
+        @Facet(tlddoc = "Allows rendering of nested components that are displayed if the HTML5 microphone is not supported on this platform/device.")
         UIComponent fallback;
     }
 }

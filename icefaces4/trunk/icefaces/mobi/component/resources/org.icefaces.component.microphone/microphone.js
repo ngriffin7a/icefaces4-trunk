@@ -320,37 +320,8 @@
 			}
 		};
 
-		//setup fallback callback as a chain of responsibility
-		var origLaunchFailed = bridgeit.launchFailed;
-		bridgeit.launchFailed = function(compId){
-			if( compId === id ){
-				origLaunchFailed(compId);
-				if (window[id + '_fallbackObserver']) {
-					clearTimeout(window[id + '_fallbackObserver']);
-				}
-				window[id + '_fallbackObserver'] = setTimeout(function() {
-					renderMicrophoneFallbackFileUpload();
-				}, 100);
-			}
-		}
-
-		var origNotSupported = bridgeit.notSupported;
-		bridgeit.notSupported = function(compId, command){
-			if( command === 'microphone' && compId === id){
-				origNotSupported(compId, command);
-				if (window[id + '_fallbackObserver']) {
-					clearTimeout(window[id + '_fallbackObserver']);
-				}
-				window[id + '_fallbackObserver'] = setTimeout(function() {
-					renderMicrophoneFallbackFileUpload();
-				}, 100);
-			}
-		}
-
 		if ('URL' in window && (navigator.getUserMedia || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia))) {
 			launchHTML5Microphone();
-		} else {
-			bridgeit.microphone(id, 'callback'+id, microphoneOptions );
 		}
 	};
 
