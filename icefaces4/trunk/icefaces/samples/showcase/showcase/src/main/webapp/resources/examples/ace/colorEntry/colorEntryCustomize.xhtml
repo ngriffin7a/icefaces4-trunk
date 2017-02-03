@@ -30,8 +30,8 @@
         <h:form id="inputOptionsForm">
         <ace:panel id="inpOptionsPan" header="Options">
             <h:panelGrid id="inputOptions" columns="2">
-                    <h:outputLabel for="valueFormat" value="Choose Color Format: "/>
-                    <h:selectOneMenu id="valueFormat" value="#{colorEntryCustomBean.valueFormat}">
+                    <h:outputLabel for="colorFormat" value="Choose Color Format: "/>
+                    <h:selectOneMenu id="colorFormat" value="#{colorEntryCustomBean.colorFormat}">
                           <f:selectItems value="#{colorEntryCustomBean.colorFormats}"/>
                           <f:ajax execute="@this" render="@all"/>
                       </h:selectOneMenu>
@@ -49,7 +49,7 @@
             <ace:panel id="colorInputPanel" header="ColorEntry - Customizable" styleClass="required-styling-demo">
                 <h:panelGrid id="inputGrid" columns="1" width="100%" >
                     <ace:colorEntry id="colorInput" value="#{colorEntryCustomBean.value}"
-                               colorFormat="#{colorEntryCustomBean.valueFormat}"
+                               colorFormat="#{colorEntryCustomBean.colorFormat}"
                                customParts="#{colorEntryCustomBean.parts}"
                                customLayout="#{colorEntryCustomBean.layout}"
                                alpha = "#{colorEntryCustomBean.alpha}"

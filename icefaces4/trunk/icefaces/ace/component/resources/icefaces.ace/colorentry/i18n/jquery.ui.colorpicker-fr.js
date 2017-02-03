@@ -1,8 +1,5 @@
-;
-if (!window['ice']) window.ice = {};
-if (!window.ice['ace']) window.ice.ace = {};
-if (ice.ace.jq) {
-	ice.ace.jq(function ($) {
+
+(function ($) {
 		$.colorpicker.regional['fr'] = {
 			ok: 'OK',
 			cancel: 'Annuler',
@@ -28,5 +25,4 @@ if (ice.ace.jq) {
 			cmykK: 'N',
 			alphaA: 'A'
 		};
-	});
-}
+	})(ice.ace.jq);

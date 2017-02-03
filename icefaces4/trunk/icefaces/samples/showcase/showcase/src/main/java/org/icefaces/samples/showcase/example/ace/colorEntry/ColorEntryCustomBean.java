@@ -44,7 +44,7 @@ public class ColorEntryCustomBean implements Serializable
     private List<ColorEntryLayout> layout1 = new ArrayList<ColorEntryLayout>();
     private List<ColorEntryLayout> fullLayout = new ArrayList<ColorEntryLayout>();
     private List<ColorEntryLayout> layout = new ArrayList<ColorEntryLayout>();
-    private ColorFormat valueFormat;
+    private ColorFormat colorFormat;
     private String title;
 
     public String getTitle() {
@@ -109,11 +109,11 @@ public class ColorEntryCustomBean implements Serializable
     }
 
     public ColorFormat getValueFormat() {
-        return valueFormat;
+        return colorFormat;
     }
 
-    public void setValueFormat(ColorFormat valueFormat) {
-        this.valueFormat = valueFormat;
+    public void setValueFormat(ColorFormat colorFormat) {
+        this.colorFormat = colorFormat;
     }
 
     public List<String> getParts() {
@@ -172,5 +172,21 @@ public class ColorEntryCustomBean implements Serializable
             customLayout += cel.getPart() + ":" + cel.getEntry()+" | ";
         }
         return customLayout;
+    }
+
+    protected List<ColorEntryLayout> getFullLayout() {
+        return fullLayout;
+    }
+
+    protected void setFullLayout(List<ColorEntryLayout> fullLayout) {
+        this.fullLayout = fullLayout;
+    }
+
+    protected List<String> getFull() {
+        return full;
+    }
+
+    protected void setFull(List<String> full) {
+        this.full = full;
     }
 }
