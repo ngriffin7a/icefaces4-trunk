@@ -36,8 +36,8 @@ public class PatternValidator extends PatternValidatorBase implements Validator 
             final Validateable v = (Validateable) validatedComponent;
             final String id = v.getValidatedElementId();
             final String messageConfig = MessageMatcher.lookupMessageConfig(validatedComponent);
-            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
-            final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+            final ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
+            final String message = ComponentUtils.getLocalisedMessageFromBundle(bundle,
                     "org.icefaces.ace.component.clientvalidation.", "pattern", "Entry {0} is malformed.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 

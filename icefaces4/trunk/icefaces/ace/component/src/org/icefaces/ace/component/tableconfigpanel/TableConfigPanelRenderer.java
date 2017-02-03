@@ -82,13 +82,13 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
 
         writer.startElement(HTML.DIV_ELEM, null);
         writer.writeAttribute(HTML.CLASS_ATTR, "ui-tableconf-header ui-widget-header ui-corner-tr ui-corner-tl", null);
-        ResourceBundle bundle = getComponentResourceBundle(context, ACE_MESSAGES_BUNDLE);
-        String columnSettingsTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "COLUMN_SETTINGS_TITLE", "Column Settings");
+        ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(context, ACE_MESSAGES_BUNDLE);
+        String columnSettingsTitle = ComponentUtils.getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "COLUMN_SETTINGS_TITLE", "Column Settings");
         writer.writeText(columnSettingsTitle, null);
 
-        String okTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "OK_BUTTON_TITLE", "Save Changes");
-        String closeTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "CLOSE_BUTTON_TITLE", "Cancel Changes");
-        String trashTitle = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "RESET_BUTTON_TITLE", "Reset To Original Settings");
+        String okTitle = ComponentUtils.getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "OK_BUTTON_TITLE", "Save Changes");
+        String closeTitle = ComponentUtils.getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "CLOSE_BUTTON_TITLE", "Cancel Changes");
+        String trashTitle = ComponentUtils.getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "RESET_BUTTON_TITLE", "Reset To Original Settings");
 
         writer.startElement(HTML.SPAN_ELEM, null);
 		writer.writeAttribute(HTML.STYLE_ATTR, "float:right;", null);
@@ -372,11 +372,11 @@ public class TableConfigPanelRenderer extends CoreRenderer implements
     private void writeHeaderRow(TableConfigPanelRenderState state, FacesContext context) throws IOException {
         state.writer.startElement(HTML.DIV_ELEM, null);
         state.writer.writeAttribute(HTML.CLASS_ATTR, "ui-state-default", null);
-        ResourceBundle bundle = getComponentResourceBundle(context, ACE_MESSAGES_BUNDLE);
-        String orderLabel = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "ORDER_LABEL", "Order");
-        String nameLabel = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "NAME_LABEL", "Name");
-        String visibleLabel  = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "VISIBLE_LABEL", "Visible");
-        String sortLabel = getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "SORT_LABEL", "Sort");
+        ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(context, ACE_MESSAGES_BUNDLE);
+        String orderLabel = ComponentUtils.getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "ORDER_LABEL", "Order");
+        String nameLabel = ComponentUtils.getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "NAME_LABEL", "Name");
+        String visibleLabel  = ComponentUtils.getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "VISIBLE_LABEL", "Visible");
+        String sortLabel = ComponentUtils.getLocalisedMessageFromBundle(bundle, TABLECONFIG_KEY_PREFIX, "SORT_LABEL", "Sort");
         if (state.orderingConfigurable) {
             state.writer.startElement(HTML.SPAN_ELEM, null);
             state.writer.writeAttribute(HTML.CLASS_ATTR, "ordering", null);
