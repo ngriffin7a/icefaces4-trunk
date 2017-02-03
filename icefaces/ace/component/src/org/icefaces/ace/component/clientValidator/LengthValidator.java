@@ -58,8 +58,8 @@ public class LengthValidator extends LengthValidatorBase implements Validator {
             final String messageConfig = MessageMatcher.lookupMessageConfig(validatedComponent);
             final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
             final List<UIComponent> children = form.getChildren();
-            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
-            final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+            final ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
+            final String message = ComponentUtils.getLocalisedMessageFromBundle(bundle,
                     "org.icefaces.ace.component.clientvalidation.", rule, "{0} length must be between {1} and {2}.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 

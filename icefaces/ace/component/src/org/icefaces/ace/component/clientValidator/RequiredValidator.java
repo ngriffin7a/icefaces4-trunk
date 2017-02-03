@@ -36,8 +36,8 @@ public class RequiredValidator extends RequiredValidatorBase implements Validato
             final String messageConfig = MessageMatcher.lookupMessageConfig(validatedComponent);
             final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
             final List<UIComponent> children = form.getChildren();
-            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
-            final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+            final ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
+            final String message = ComponentUtils.getLocalisedMessageFromBundle(bundle,
                     "org.icefaces.ace.component.clientvalidation.", "required", "Entry {0} is required.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 

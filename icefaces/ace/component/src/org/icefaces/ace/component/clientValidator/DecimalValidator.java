@@ -16,7 +16,7 @@
 
 package org.icefaces.ace.component.clientValidator;
 
-import org.icefaces.ace.renderkit.CoreRenderer;
+
 import org.icefaces.ace.util.ComponentUtils;
 
 import javax.faces.component.UIComponent;
@@ -36,8 +36,8 @@ public class DecimalValidator extends DecimalValidatorBase implements Validator 
             final String messageConfig = MessageMatcher.lookupMessageConfig(validatedComponent);
             final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
             final List<UIComponent> children = form.getChildren();
-            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
-            final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+            final ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
+            final String message = ComponentUtils.getLocalisedMessageFromBundle(bundle,
                     "org.icefaces.ace.component.clientvalidation.", "decimal", "Entry {0} requires a decimal value.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 

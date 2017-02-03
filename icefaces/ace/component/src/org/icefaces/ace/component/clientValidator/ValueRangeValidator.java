@@ -57,8 +57,8 @@ public class ValueRangeValidator extends ValueRangeValidatorBase implements Vali
             final String messageClientId = MessageMatcher.lookupMessageConfig(validatedComponent);
             final UIComponent form = ComponentUtils.findParentForm(context, validatedComponent);
             final List<UIComponent> children = form.getChildren();
-            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
-            final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+            final ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.ace.resources.messages");
+            final String message = ComponentUtils.getLocalisedMessageFromBundle(bundle,
                     "org.icefaces.ace.component.clientvalidation.", rule, "Entry {0} requires a value between {1} and {2}.");
             final String label = MessageMatcher.lookupLabel(validatedComponent);
 

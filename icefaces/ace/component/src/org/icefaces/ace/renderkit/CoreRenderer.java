@@ -63,7 +63,7 @@ public class CoreRenderer extends Renderer {
      * key if they prefer their own, or their locale is not available.
      * @return reference to resource bundle to get localised text for rendering
      */
-    public static ResourceBundle getComponentResourceBundle(FacesContext context, String ACE_MESSAGES_BUNDLE){
+ /*   public static ResourceBundle getComponentResourceBundle(FacesContext context, String ACE_MESSAGES_BUNDLE){
         Locale locale = context.getViewRoot().getLocale();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String bundleName = context.getApplication().getMessageBundle();
@@ -74,7 +74,7 @@ public class CoreRenderer extends Renderer {
             bundleName = ACE_MESSAGES_BUNDLE;
         }
         return ResourceBundle.getBundle(bundleName, locale, classLoader);
-    }
+    }  */
 
     /**
      *
@@ -84,7 +84,7 @@ public class CoreRenderer extends Renderer {
      * @param defaultValue
      * @return localized or internationalized String value from message bundle
      */
-    public static String getLocalisedMessageFromBundle(ResourceBundle bundle,
+ /*   public static String getLocalisedMessageFromBundle(ResourceBundle bundle,
                                                         String MESSAGE_KEY_PREFIX,
                                                         String key,
                                                         String defaultValue){
@@ -100,7 +100,7 @@ public class CoreRenderer extends Renderer {
              }
          }
          return label;
-    }
+    }  */
 	
 	protected void renderChildren(FacesContext facesContext, UIComponent component) throws IOException {
 		for (Iterator<UIComponent> iterator = component.getChildren().iterator(); iterator.hasNext();) {
