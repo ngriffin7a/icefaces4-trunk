@@ -24,6 +24,7 @@ import org.icefaces.resources.ICEResourceDependencies;
 import org.icefaces.resources.ICEResourceDependency;
 import org.icefaces.resources.ICEResourceLibrary;
 import org.icefaces.ace.model.colorEntry.ColorEntryLayout;
+import org.icefaces.ace.model.colorEntry.SwatchEntry;
 
 import java.util.List;
 
@@ -50,6 +51,11 @@ import java.util.List;
 	@ICEResourceDependency(name = "jquery/jquery.js"),
     @ICEResourceDependency(name = "util/ace-jquery-ui.js"),
     @ICEResourceDependency(name = "colorentry/jquery.colorpicker.js"),
+    @ICEResourceDependency(name = "colorentry/i18n/jquery.ui.colorpicker-i18n-all.js"),
+    @ICEResourceDependency(name = "colorentry/swatches/jquery.ui.colorpicker-pantone.js" ),
+    @ICEResourceDependency(name = "colorentry/swatches/jquery.ui.colorpicker-crayola.js" ),
+    @ICEResourceDependency(name = "colorentry/swatches/jquery.ui.colorpicker-ral-classic.js" ),
+    @ICEResourceDependency(name = "colorentry/swatches/jquery.ui.colorpicker-x11.js" ),
     @ICEResourceDependency(name = "colorentry/jquery.colorpicker.css"),
 	@ICEResourceDependency(name = "colorentry/colorentry.js")
 })
@@ -65,10 +71,13 @@ public class ColorEntryMeta extends UIInputMeta{
 
  /*   @Property(defaultValue="true",
             tlddoc="Change the opacity of the altField element(s) according to the alpha setting")
-    private boolean altAlpha;
+    private boolean altAlpha; */
 
-    @Property(defaultValue="", tlddoc="Change the background color of the elements specified in this element")
-    private String altField; */
+ /*   @Property(defaultValue="", tlddoc="Change the background color of the elements specified in this element")
+    private String altField;
+
+    @Property(tlddoc="Comma-separted list of CSS properties to set color of in the altField attribute.  The following properties are allowed, all others are ignored, background-color, border-color, color, fill, outline-color, stroke")
+    private String altProperties;  */
 
     @Property(tlddoc="This is the preferred format to display the chosen color under the input field.  Valid values are listed in the ColorFormat enumeration  HEX(\"HEX\"), HEX3(\"HEX3\"), HEXA(\"HEXA\"), RGB(\"RGB\"), RGBA(\"RGBA\"), RGBPERCENT(\"RGB%\"),\n" +
             "         HSL(\"HSL\"), HSLA(\"HSLA\"), HSLPERCENT(\"HSL%\"),\n" +
@@ -79,6 +88,14 @@ public class ColorEntryMeta extends UIInputMeta{
 
     @Property(tlddoc="The title to display in the header.")
     private String title;
+
+    @Property(tlddoc = "Locale to be used for labels on this component. May be Locale string or java.util.Locale object" +
+            " Some locales are already defined by String (\'fr\','\'el\',\'en\',\'en-GB\',\'en-US\',\'nl\',\'pt-br\',\'ru\',\'sr\'. " +
+            "Any locale not listed must be created, see messages.properties for ace jar and define the " +
+            "appropriate keys then list the message-bundle in the faces-config of your application. Note that locale is something that must be changed in the view root before expecting" +
+            "the message bundle to be used--as per standard JSF behavior. An ajax update of this attribute will not change anything.  The " +
+            "locale that is changed must be set into the ViewRoot first.  Default is en.")
+    private Object locale;
 
     @Property(tlddoc = "The text to display on the trigger button. Use in conjunction with the showOn option set to \"button\" or \"all\". Default = \"\".")
     private String buttonText;
@@ -111,7 +128,6 @@ public class ColorEntryMeta extends UIInputMeta{
             "appear only when a button (specified by popupIcon attribute) is clicked (\"button\"), or appear when either event takes place (\"all\").")
     private String showOn;
 
-
     @Property(tlddoc = "The URL for the popup button image. " +
             "The showOn attribute must be set to \"button\" or \"both\".")
 			/* Add back to description once path to icon is known... Default is the file \"META-INF/resources/icefaces.ace/colorentry/XXXX_icon.png\" in the components jar. */
@@ -126,8 +142,17 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(tlddoc="Close the window when pressing the Escape key on the keyboard.")
     private boolean closeOnEscape;
 
-  /*  @Property(tlddoc="A list of available palettes may be used for the user to select from.  This must be a list of String arrays at this time")
-    private List<String[]> swatches; */
+    @Property(tlddoc="The name of a predefined swatch defined in a js file.  default value is the \'html\' named swatch from the component itself.  " +
+            " A user defined swatch can be used by defining a new \'swatchesname\' and defining the swatch " +
+            " with the  \'swatches\' attribute.  Currently included values are  \'html\', \'pantone\', \'crayola\'")
+    private String swatchesName;
+
+    @Property(tlddoc="A list of available palettes may be used for the user to select from.  This must be a list of String arrays at this time")
+    private List<SwatchEntry> swatches;
+
+    @Property(tlddoc="if using swatches attribute, this attribute will set the width of the swatches area in px")
+    private int swatchesWidth;
+
     @Property( tlddoc="Limit the selectable colors to any of the predefined limits. Default is empty string. \'websafe\'=Set of 216 colors composed of 00, 33, 66, 99, cc and ff color channel values in #rrggbb." +
             " \'nibble\'= 4 bits per color, can be easily converted to #rgb format.  The palette is limited to 4096 colors. \'binary\'=Allow only #00 or #ff as color channel values for primary " +
             "colors; only 8 colors are available with this limit, or \'name\'=limits to closes color name.")

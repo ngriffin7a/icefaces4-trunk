@@ -186,7 +186,11 @@ public class CentralDataList {
 						new Demo(msgs("menu.ace.colorEntry.subMenu.options"), msgs("example.ace.colorEntry.options.description"),
 								"colorEntry", "colorEntryOptions.xhtml", "ColorEntryOptionsBean.java"),
 						new Demo(msgs("menu.ace.colorEntry.subMenu.customize"), msgs("example.ace.colorEntry.customize.description"),
-								"colorEntry", "colorEntryCustomize.xhtml", "ColorEntryCustomBean.java")
+								"colorEntry", "colorEntryCustomize.xhtml", "ColorEntryCustomBean.java") ,
+						new Demo(msgs("menu.ace.colorEntry.subMenu.locale"), msgs("example.ace.colorEntry.locale.description"),
+								"colorEntry", "colorEntryLocale.xhtml", "ColorEntryLocaleBean.java"),
+						new Demo(msgs("menu.ace.colorEntry.subMenu.swatches"), msgs("example.ace.colorEntry.swatches.description"),
+								"colorEntry", "colorEntrySwatches.xhtml", "ColorEntrySwatchesBean.java")
 						),
 				new ComponentGroup("ace:dateTimeEntry", "DateTimeEntry", "dateTimeEntry.html", "calendar, datepicker",
 					new Demo(msgs("overview"), msgs("example.ace.dateentry.description"),

@@ -1,0 +1,108 @@
+<!--
+  ~ Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    template="/resources/templates/content-template.xhtml">
+    <ui:param name="title" value="#{msgs['example.ace.colorEntry.swatches.title']}"/>
+    <ui:param name="description" value="#{msgs['example.ace.colorEntry.swatches.description']}"/>
+
+    <ui:define name="example">
+
+        <ace:panel header="Choose A Swatch from the Included Swatches">
+           <h:form id="form1_existing">
+               <h:outputLabel id="selSwatchLabl" for="selSwatchName"/>
+               <h:selectOneMenu id="selSwatchName" value="#{colorEntrySwatchesBean.swatchName}">
+                   <f:selectItem itemLabel="html" itemValue="html"  />
+                   <f:selectItem itemLabel="Pantone" itemValue="pantone"  />
+                   <f:selectItem itemLabel="Crayola" itemValue="crayola"/>
+                   <f:selectItem itemLabel="ral-classic" itemValue="ral-classic"/>
+                   <f:ajax execute="@this" render="@all"/>
+               </h:selectOneMenu>
+               <ace:colorEntry id="swatchNameID" value="#{colorEntrySwatchesBean.color}"
+                             renderAsPopup="true"
+                             title="#{colorEntrySwatchesBean.swatchName} Swatch"
+                             swatchesName="#{colorEntrySwatchesBean.swatchName}"
+                             customParts="#{colorEntrySwatchesBean.swatchParts}"
+                             customLayout="#{colorEntrySwatchesBean.swatchLayoutLong}">
+                   <ace:ajax execute="@this" render="@all"/>
+               </ace:colorEntry>
+           </h:form>
+         </ace:panel>
+        <h:form id="form_predef" >
+                <ace:panel header="Predefine A Swatch using Backing Bean">
+                    <ace:colorEntry id="swatchesId" value="#{colorEntrySwatchesBean.fromPredefined}"
+                                    title="Swatch Created from Predefined Model Data"
+                                    renderAsPopup="true"
+                                    swatchesName="predef"
+                                    swatchesWidth="80"
+                                    swatches="#{colorEntrySwatchesBean.predefSwatchEntries}"
+                                    customParts="#{colorEntrySwatchesBean.swatchParts}"
+                                    customLayout="#{colorEntrySwatchesBean.swatchLayout}">
+                         <ace:ajax execute="@this" render="@all"/>
+                    </ace:colorEntry>
+                </ace:panel>
+            </h:form>
+        <h:form id="form3_dynamic">
+            <ace:panel header="Dynamically Choose Four Colours to Create a Swatch">
+                <h:panelGrid columns="1">
+                    <c:forEach items="#{colorEntrySwatchesBean.colorList}" var="entry" varStatus="status" >
+                        <ace:colorEntry id="ce_#{status.index}" value="#{entry}"
+                              title="Choose A Color for A Swatch"
+                              swatchesName="html"
+                              renderAsPopup="true"
+                              colorFormat="#{colorEntrySwatchesBean.colorFormat}"
+                              customParts="#{colorEntrySwatchesBean.parts}"
+                              customLayout="#{colorEntrySwatchesBean.layout}">
+                        </ace:colorEntry>
+                    </c:forEach>
+                    <h:commandButton value="Create Swatch" actionListener="#{colorEntrySwatchesBean.updateSwatch}">
+                        <f:ajax execute="@form" render="@all"/>
+                    </h:commandButton>
+                </h:panelGrid>
+            </ace:panel>
+        </h:form>
+        <h:form id="form2" rendered="#{colorEntrySwatchesBean.haveValues}">
+                <h3>ColorEntry Created from Chosen Colors </h3>
+                 <ace:colorEntry id="swatchesId" value="#{colorEntrySwatchesBean.dynamic}"
+                                    title="Swatch Created from above colors"
+                                    swatchesName="myswatch"
+                                    swatchesWidth="80"
+                                    renderAsPopup="true"
+                                    swatches="#{colorEntrySwatchesBean.swatchEntries}"
+                                    customParts="#{colorEntrySwatchesBean.swatchParts}"
+                                    customLayout="#{colorEntrySwatchesBean.swatchLayout}">
+                         <ace:ajax execute="@this" render="@all"/>
+                 </ace:colorEntry>
+
+            </h:form>
+
+            <ace:panel id="colorOutputPanel" header="Entered data">
+                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
+                    <h:outputText id="basicValue" value="Included Swatches Example: #{colorEntrySwatchesBean.color}"/>
+                    <h:outputText id="predefValue" value="Predefined Swatch Example: #{colorEntrySwatchesBean.fromPredefined}"/>
+                    <h:outputText id="dynamicValue" value="Dynamic Swatch Example: #{colorEntrySwatchesBean.dynamic}"/>
+                </h:panelGrid>
+            </ace:panel>
+        
+    </ui:define>
+</ui:composition>
+

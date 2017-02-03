@@ -43,10 +43,7 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.faces.application.FacesMessage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -424,5 +421,52 @@ public class ComponentUtils {
         }
 
         return true;
+    }
+
+
+    /**
+       * Not all text for components are easy to make attributes for components,
+       * especially those for accessibility.  Default values are made available
+       * within the ace jar messages properties files.  Users may override the
+       * key if they prefer their own, or their locale is not available.
+       * @return reference to resource bundle to get localised text for rendering
+       */
+    public static ResourceBundle getComponentResourceBundle(FacesContext context, String ACE_MESSAGES_BUNDLE){
+          Locale locale = context.getViewRoot().getLocale();
+          ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+          String bundleName = context.getApplication().getMessageBundle();
+          if (classLoader == null) {
+              classLoader = bundleName.getClass().getClassLoader();
+          }
+          if (bundleName == null) {
+              bundleName = ACE_MESSAGES_BUNDLE;
+          }
+        return ResourceBundle.getBundle(bundleName, locale, classLoader);
+    }
+
+      /**
+       *
+       * @param bundle
+       * @param MESSAGE_KEY_PREFIX
+       * @param key
+       * @param defaultValue
+       * @return localized or internationalized String value from message bundle
+       */
+    public static String getLocalisedMessageFromBundle(ResourceBundle bundle,
+             String MESSAGE_KEY_PREFIX,
+             String key,
+             String defaultValue){
+        if (null == bundle) {
+            return defaultValue;
+        }
+        String label=defaultValue;
+        try {
+            label = bundle.getString(MESSAGE_KEY_PREFIX + key);
+        } catch(MissingResourceException mre){
+            if (logger.isLoggable(Level.FINE)) {
+                logger.fine(" BUNDLE missing property : "+key+" defaultValue used : "+defaultValue);
+            }
+        }
+        return label;
     }
 }

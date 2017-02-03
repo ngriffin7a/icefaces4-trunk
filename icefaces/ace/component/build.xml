@@ -319,6 +319,11 @@
             <file name="${resources}/icefaces.ace/confirmationdialog/confirmationdialog.js" />
             <file name="${resources}/icefaces.ace/colorentry/colorentry.js" />
             <file name="${resources}/icefaces.ace/colorentry/jquery.colorpicker.js" />
+            <file name="${resources}/icefaces.ace/colorentry/i18n/jquery.ui.colorpicker-i18n-all.js"/>
+            <file name="${resources}/icefaces.ace/colorentry/swatches/jquery.ui.colorpicker-crayola.js"/>
+            <file name="${resources}/icefaces.ace/colorentry/swatches/jquery.ui.colorpicker-pantone.js"/>
+            <file name="${resources}/icefaces.ace/colorentry/swatches/jquery.ui.colorpicker-ral-classic.js"/>
+            <file name="${resources}/icefaces.ace/colorentry/swatches/jquery.ui.colorpicker-x11.js"/>
 			<file name="${resources}/icefaces.ace/datetimeentry/datetimeentry.js" />
 			<file name="${resources}/icefaces.ace/datetimeentry/jquery-ui-timepicker-addon.js" />
 			<file name="${resources}/icefaces.ace/dialog/dialog.js" />

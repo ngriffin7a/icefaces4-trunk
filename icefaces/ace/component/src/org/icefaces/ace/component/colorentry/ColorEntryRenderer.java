@@ -23,6 +23,8 @@ import org.icefaces.render.MandatoryResourceComponent;
 import org.icefaces.util.EnvUtils;
 import org.icefaces.ace.util.ComponentUtils;
 import org.icefaces.ace.model.colorEntry.ColorEntryLayout;
+import org.icefaces.ace.model.colorEntry.SwatchEntry;
+import org.icefaces.ace.renderkit.InlineScriptEventListener;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -31,10 +33,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 @MandatoryResourceComponent(tagName="colorEntry", value="ColorEntry")
 public class ColorEntryRenderer extends InputRenderer {
+    private static final String ACE_MESSAGES_BUNDLE = "org.icefaces.ace.resources.messages";
+    private static final String COLOR_ENTRY_LOOKUP_KEY = "org.icefaces.ace.component.colorentry.regional.";
     @Override
      public void decode(FacesContext facesContext, UIComponent component) {
          ColorEntry picker = (ColorEntry) component;
@@ -69,7 +75,38 @@ public class ColorEntryRenderer extends InputRenderer {
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ColorEntry picker = (ColorEntry) component;
         ResponseWriter writer = context.getResponseWriter();
+        String lookupLocale=null;
+        Locale mylocale = context.getCurrentInstance().getViewRoot().getLocale();
+        String localeScript=null;
+        String swatchName = (picker.getSwatchesName() !=null)? picker.getSwatchesName() : null;
+        if (swatchName !=null && picker.getSwatches() !=null){
+            encodeSwatch(writer, swatchName, picker.getSwatches(), picker.getClientId(), component, context);
+        }
+        if (picker.getLocale() !=null) {
+            //first see if the locale is a string and if it is already included in plugin
+            if (picker.getLocale() instanceof String) {
+                String lKey = (String)(picker.getLocale());
+                if (lKey.trim().matches("fr|el|en|de|en-GB|en-US|nl|pt-br|ru|sr")) {
+                    lookupLocale = lKey;
+                }  else{
+                    lookupLocale=(String)(picker.getLocale());
+                    localeScript = createRegionalScript(writer, context, lookupLocale);
+                }
+            }else if (picker.getLocale() instanceof java.util.Locale){
+                mylocale = (Locale)picker.getLocale();
+                if (mylocale !=null){
+                    lookupLocale = mylocale.getLanguage();
+                    if (mylocale.getVariant()!=null ) {
+                        lookupLocale+= "-"+mylocale.getVariant();
+                    }
+                    String check = mylocale.toString();
+                    localeScript = createRegionalScript(writer, context, lookupLocale);
+                }
+            }  else {
+                throw new IllegalArgumentException("Type:" +  mylocale.getClass()+ " is not a valid locale type for component id=" + component.getClientId(context));
+            }
 
+        }
         String clientId = picker.getClientId(context);
         String valueToRender = getValueAsString(context,picker);
         String inputId = clientId + "_input";
@@ -176,10 +213,6 @@ public class ColorEntryRenderer extends InputRenderer {
             writer.writeAttribute("role", "region", null);
         }
 
-      /*  boolean hasLabel = (Boolean) labelAttributes.get("hasLabel");
-        String labelPosition = (String) labelAttributes.get("labelPosition");
-        String label = (String) labelAttributes.get("label"); */
-
         if (ariaEnabled) {
             final ColorEntry comp = (ColorEntry) component;
             Map<String, Object> ariaAttributes = new HashMap<String, Object>() {{
@@ -204,13 +237,10 @@ public class ColorEntryRenderer extends InputRenderer {
             writeLabelAndIndicatorAfter(labelAttributes);
         }
 
-        //String iconSrc = picker.getPopupIcon() != null ? getResourceURL(context, picker.getPopupIcon()) : getResourceRequestPath(context, ColorEntry.POPUP_ICON);
-
         JSONBuilder jb = JSONBuilder.create();
         jb.beginFunction("ice.ace.create")
                 .item("ColorEntryInit")
                 .beginArray()
-      /*          .item(clientId) */
                 .beginMap()
                 .beginMap("options")
                 .entry("id", clientId)
@@ -218,6 +248,12 @@ public class ColorEntryRenderer extends InputRenderer {
                 .entry("disabled", picker.isDisabled());
         if (valueToRender!=null && valueToRender.length()>0){
             jb.entry("color", valueToRender) ;
+        }
+        if (lookupLocale!=null){
+            jb.entry("regional", lookupLocale);
+        }
+        if (swatchName!=null && swatchName.length()>0){
+            jb.entry("swatches", swatchName);
         }
         if (picker.getTitle()!=null && picker.getTitle().length()>0){
             jb.entry("title", picker.getTitle());
@@ -242,6 +278,14 @@ public class ColorEntryRenderer extends InputRenderer {
                 jb.endMap();
             }
         }
+   /*     String altField = picker.getAltField();
+        if (!isValueEmpty(altField)){
+            jb.entry("altField", altField);
+            String altProps = picker.getAltProperties();
+            if (!isValueEmpty(altProps)){
+                jb.entry("altProperties", altProps);
+            }
+        }  */
 
         if (popup){
          //   jb.entry("autoOpen", !picker.isRenderAsPopup());
@@ -285,7 +329,6 @@ public class ColorEntryRenderer extends InputRenderer {
         encodeClientBehaviors(context, picker, jb);
         jb.endMap().endArray().endFunction();
         String script = jb.toString();
-   //System.out.println(" script="+script);
 
         writeLabelAndIndicatorAfter(labelAttributes);
 
@@ -293,6 +336,11 @@ public class ColorEntryRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId+"_script", null);
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
+        if (localeScript !=null){
+            //check to see if the script for this locale is already loaded
+
+            writer.write(localeScript.toString());
+        }
         writer.write(script);
 
         writer.endElement("script");
@@ -309,6 +357,57 @@ public class ColorEntryRenderer extends InputRenderer {
         }
         writer.endElement(HTML.DIV_ELEM);
 
+    }
+
+    private void encodeSwatch(ResponseWriter writer, String swatchName, List<SwatchEntry> swatches, String clientId,
+                              UIComponent component, FacesContext context) throws IOException{
+        //idea is to write this before the element div so that Domdiff only updates when necessary
+        writer.startElement(HTML.DIV_ELEM, component);
+        writer.writeAttribute(HTML.ID_ATTR, component.getClientId(context), null);
+        writer.startElement(HTML.SCRIPT_ELEM, component);
+        writer.writeAttribute("type", "text/javascript", null);
+        StringBuilder scriptA = new StringBuilder("ice.ace.jq.colorpicker.swatchesNames['");
+        scriptA.append(swatchName.toLowerCase()).append("']='").append(swatchName).append("';");
+        StringBuilder scriptB =  new StringBuilder("ice.ace.jq.colorpicker.swatches['");
+        scriptB.append(swatchName.toLowerCase());
+        scriptB.append("']=[") ;
+        for (int i=0; i<swatches.size(); i++) {
+            SwatchEntry se = (SwatchEntry)swatches.get(i);
+            if (i!=0)scriptB.append(",");
+           scriptB.append(se.getWrittenEntry()) ;
+        }
+        scriptB.append("]") ;
+        String finalScript = scriptA.toString()+scriptB.toString()+";";
+        writer.write(finalScript);
+        writer.endElement(HTML.SCRIPT_ELEM);
+        writer.endElement(HTML.DIV_ELEM) ;
+    }
+
+    private String createRegionalScript(ResponseWriter writer, FacesContext context, String lookupLocale){
+        String[] lookupRegVals = new String[]{"ok","cancel", "none", "button", "title","transparent","hsvH","hsvS","hsvV","rgbR","rgbG","rgbB",
+                   "labL","labA","labB","hslH","hslS","hslL","cmykC","cmykM","cmykK","cmykC","alphaA"};
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String bundleName = context.getApplication().getMessageBundle()+"_"+lookupLocale;
+        if (classLoader == null) classLoader = bundleName.getClass().getClassLoader();
+        if (bundleName == null) bundleName = ACE_MESSAGES_BUNDLE;
+        final ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(context, bundleName);
+        //create js object to be written to page ahead of init script
+        if (bundle == null){
+            Locale browserLocale = context.getCurrentInstance().getViewRoot().getLocale();
+            lookupLocale = browserLocale.toString();
+        }
+        StringBuilder scriptB =  new StringBuilder("ice.ace.jq.colorpicker.regional['");
+        scriptB.append(lookupLocale);
+        scriptB.append("']=") ;
+        JSONBuilder regionalScript =  JSONBuilder.create();
+        regionalScript.beginMap();
+        for (int i=0; i<lookupRegVals.length; i++){
+            String key = lookupRegVals[i];
+            regionalScript.entry(key,ComponentUtils.getLocalisedMessageFromBundle(bundle,COLOR_ENTRY_LOOKUP_KEY, key,key));
+        }
+        regionalScript.endMap();
+        scriptB.append(regionalScript.toString()).append(";");
+        return scriptB.toString();
     }
 
     private void createHiddenField(ResponseWriter writer, String id) throws IOException {

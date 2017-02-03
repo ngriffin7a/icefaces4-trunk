@@ -10,7 +10,7 @@ ice.ace.ColorEntry = function(id, cfg) { 
     this.jqElId =  this.jqId + '_input'; 
     this.jq = ice.ace.jq(this.jqElId); 
     //   this.cfg.formId = this.jq.parents('form:first').attr('id'); 
-    // i18n and l7n   //  this.configureLocale(); 
+    // i8n and l7n   //  this.configureLocale(); 
     this.options = cfg;
     if (this.options.color) { 
         this.jq.value = this.options.color; 

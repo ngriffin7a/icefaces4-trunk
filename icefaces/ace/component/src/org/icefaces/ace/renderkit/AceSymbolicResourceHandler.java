@@ -59,6 +59,9 @@ public class AceSymbolicResourceHandler extends ResourceHandlerWrapper {
                                 resourceName.equals("autocompleteentry/autocompleteentry.js") ||
                                 resourceName.equals("checkboxbutton/checkboxbutton.js") ||
                                 resourceName.equals("colorentry/colorentry.js")||
+                                resourceName.equals("colorentry/i18n/jquery.ui.colorpicker-i18n-all.js")||
+                                resourceName.equals("colorentry/swatches/jquery.ui.colorpicker-crayola.js")||
+                                resourceName.equals("colorentry/swatches/jquery.ui.colorpicker-pantone.js")||
                                 resourceName.equals("colorentry/jquery.colorpicker.js") ||
                                 resourceName.equals("combobox/combobox.js") ||
                                 resourceName.equals("confirmationdialog/confirmationdialog.js") ||
