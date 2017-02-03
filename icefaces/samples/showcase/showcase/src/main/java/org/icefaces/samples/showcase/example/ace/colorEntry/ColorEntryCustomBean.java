@@ -108,11 +108,11 @@ public class ColorEntryCustomBean implements Serializable
         this.showNoneButton = showNoneButton;
     }
 
-    public ColorFormat getValueFormat() {
+    public ColorFormat getColorFormat() {
         return colorFormat;
     }
 
-    public void setValueFormat(ColorFormat colorFormat) {
+    public void setColorFormat(ColorFormat colorFormat) {
         this.colorFormat = colorFormat;
     }
 
