@@ -21,7 +21,6 @@ import org.icefaces.mobi.renderkit.InputRenderer;
 import org.icefaces.ace.util.Utils;
 import org.icefaces.ace.util.HTML;
 import org.icefaces.ace.util.ComponentUtils;
-import org.icefaces.ace.renderkit.CoreRenderer;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -83,8 +82,8 @@ public class DateSpinnerRenderer extends InputRenderer {
         boolean inputNull = isValueBlank(inputValue);
         boolean hiddenNull = isValueBlank(hiddenValue);
         if (inputNull && dateSpinner.isRequired()){
-            final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.mobi.resources.messages");
-            final String validmessage = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+            final ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.mobi.resources.messages");
+            final String validmessage = ComponentUtils.getLocalisedMessageFromBundle(bundle,
                               "org.icefaces.mobi.component.datespinner.", "required", "Validation Error, the date value for id {0} is required.");
             String errorMessage = MessageFormat.format(validmessage, dateSpinner.getClientId());
             FacesMessage message = new FacesMessage();
@@ -116,8 +115,8 @@ public class DateSpinnerRenderer extends InputRenderer {
         boolean hasBehaviors = !cbh.getClientBehaviors().isEmpty();
         spinner.setTouchEnabled(Utils.isTouchEventEnabled(context));
         String initialValue = ComponentUtils.getStringValueToRender(context, component);
-        final ResourceBundle bundle = CoreRenderer.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.mobi.resources.messages");
-        final String message = CoreRenderer.getLocalisedMessageFromBundle(bundle,
+        final ResourceBundle bundle = ComponentUtils.getComponentResourceBundle(FacesContext.getCurrentInstance(), "org.icefaces.mobi.resources.messages");
+        final String message = ComponentUtils.getLocalisedMessageFromBundle(bundle,
                         "org.icefaces.mobi.component.datespinner.", "yearRange", "Year requires a value between {0} and {1}.");
         String errorMessage = MessageFormat.format(message, Integer.toString(spinner.getYearStart()), Integer.toString(spinner.getYearEnd()));
 
