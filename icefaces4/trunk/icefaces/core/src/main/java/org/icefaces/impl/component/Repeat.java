@@ -36,8 +36,9 @@ public class Repeat extends UIData {
         DataModel model = getDataModel();
         int first = getFirst();
         int rows = getRows();
+        int actualNoRows = getDataModel().getRowCount();
+        rows = rows == 0 || rows > actualNoRows ? actualNoRows : rows;
         int index = first < rows ? first : 0;
-        rows = rows == 0 ? getDataModel().getRowCount() : rows;
 
         while (model.isRowAvailable() && index < first + rows) {
             setRowIndex(index);
