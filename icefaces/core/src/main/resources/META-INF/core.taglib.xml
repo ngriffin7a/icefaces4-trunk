@@ -413,4 +413,53 @@ of "FacesEvent" would work.
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <tag>
+        <tag-name>repeat</tag-name>
+        <description>
+            This tag loads a resource bundle and saves it as a variable in the request scope.
+        </description>
+        <component>
+            <component-type>org.icefaces.impl.component.Repeat</component-type>
+        </component>
+        <attribute>
+            <description>The DataModel instance representing the data to which this component is bound, or a collection
+                of data for which a DataModel instance is synthesized.
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>The request-scope attribute under which the data object for the current index will be
+                exposed when iterating.
+            </description>
+            <name>var</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                The name of the bean representing the iteration status for the current index.
+            </description>
+            <name>varStatus</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                The starting (zero-based) index for the iteration.
+            </description>
+            <name>first</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                The number of items to be rendered.
+            </description>
+            <name>rows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
 </facelet-taglib>
