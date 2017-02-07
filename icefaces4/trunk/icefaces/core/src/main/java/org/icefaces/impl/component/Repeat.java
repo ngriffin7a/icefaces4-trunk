@@ -37,15 +37,17 @@ public class Repeat extends UIData {
         int first = getFirst();
         int rows = getRows();
         int actualNoRows = getDataModel().getRowCount();
-        rows = rows == 0 || rows > actualNoRows ? actualNoRows : rows;
-        int index = first < rows ? first : 0;
+        rows = rows == 0 || rows + first > actualNoRows ? actualNoRows - first : rows;
+        first = first > actualNoRows ? 0 : first;
+        int last = first + rows - 1;
+        int index = first < actualNoRows ? first : 0;
 
-        while (model.isRowAvailable() && index < first + rows) {
+        while (index <= last) {
             setRowIndex(index);
             Object item = model.getRowData();
             requestMap.put(var, item);
             if (varStatus != null) {
-                requestMap.put(varStatus, new VarStatus(first, first + rows, index));
+                requestMap.put(varStatus, new VarStatus(first, last, index));
             }
             super.encodeChildren(context);
             resetClientIDs(this);
