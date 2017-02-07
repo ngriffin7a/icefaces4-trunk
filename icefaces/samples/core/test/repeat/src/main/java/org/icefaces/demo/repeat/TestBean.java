@@ -16,20 +16,51 @@
 
 package org.icefaces.demo.repeat;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 @ManagedBean(name = "test")
-@ApplicationScoped
+@SessionScoped
 public class TestBean implements Serializable {
-    private String[] list = { "a", "b", "c", "d", "e", "f", "g", "h", "j", "k" };
+    private static final String[] list = { "a", "b", "c", "d", "e", "f", "g", "h", "j", "k" };
+    private ArrayList<ClickCounter> counters = new ArrayList<ClickCounter>();
 
     public TestBean() {
+        counters.add(new ClickCounter("A"));
+        counters.add(new ClickCounter("B"));
+        counters.add(new ClickCounter("C"));
         System.out.println(this);
     }
 
     public String[] getList() {
         return list;
+    }
+
+    public ArrayList<ClickCounter> getCounters() {
+        return counters;
+    }
+
+    public static class ClickCounter {
+        private String name;
+        private int clicks;
+
+        public ClickCounter(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getClicks() {
+            return clicks;
+        }
+
+        public void click(ActionEvent e) {
+            ++clicks;
+        }
     }
 }

@@ -142,6 +142,42 @@
         </icecore:repeat>
         </tbody>
     </table>
+
+    <h3>
+        Change items state
+    </h3>
+    <h:form>
+        <table>
+            <thead>
+            <tr>
+                <th colspan="3">"var"</th>
+                <th colspan="4">"varStatus"</th>
+            </tr>
+            <tr>
+                <th>item</th>
+                <th>increment</th>
+                <th>clicks</th>
+                <th>index</th>
+                <th>is first</th>
+                <th>is last</th>
+            </tr>
+            </thead>
+            <tbody>
+            <icecore:repeat value="#{test.counters}" var="item" varStatus="status">
+                <tr>
+                    <td><h:outputText value="#{item.name}"/></td>
+                    <td><h:commandButton value="+" actionListener="#{item.click}">
+                        <f:ajax execute="@form" render="@form"/>
+                    </h:commandButton></td>
+                    <td><h:outputText value="#{item.clicks}"/></td>
+                    <td><h:outputText value="#{status.index}"/></td>
+                    <td><h:outputText value="#{status.first}"/></td>
+                    <td><h:outputText value="#{status.last}"/></td>
+                </tr>
+            </icecore:repeat>
+            </tbody>
+        </table>
+    </h:form>
 </h:body>
 </html>
 
