@@ -1,0 +1,147 @@
+<!--
+  ~ Copyright 2004-2016 ICEsoft Technologies Canada Corp.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the
+  ~ License. You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an "AS
+  ~ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied. See the License for the specific language
+  ~ governing permissions and limitations under the License.
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>Repeat component test page</title>
+    <style type="text/css">
+        th, td {
+            border-bottom: 2px solid grey;
+            padding: 3px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h2>Repeat component test</h2>
+    <h3>
+        Iterate over all items
+    </h3>
+    <table>
+        <thead>
+        <tr>
+            <th>"var"</th>
+            <th colspan="4">"varStatus"</th>
+        </tr>
+        <tr>
+            <th>item</th>
+            <th>index</th>
+            <th>is first</th>
+            <th>is last</th>
+        </tr>
+        </thead>
+        <tbody>
+        <icecore:repeat value="#{test.list}" var="item" varStatus="status">
+            <tr>
+                <td><h:outputText value="#{item}"/></td>
+                <td><h:outputText value="#{status.index}"/></td>
+                <td><h:outputText value="#{status.first}"/></td>
+                <td><h:outputText value="#{status.last}"/></td>
+            </tr>
+        </icecore:repeat>
+        </tbody>
+    </table>
+
+
+    <h3>
+        Iterate from 3rd item
+    </h3>
+    <table>
+        <thead>
+        <tr>
+            <th>"var"</th>
+            <th colspan="4">"varStatus"</th>
+        </tr>
+        <tr>
+            <th>item</th>
+            <th>index</th>
+            <th>is first</th>
+            <th>is last</th>
+        </tr>
+        </thead>
+        <tbody>
+        <icecore:repeat value="#{test.list}" var="item" varStatus="status" first="2">
+            <tr>
+                <td><h:outputText value="#{item}"/></td>
+                <td><h:outputText value="#{status.index}"/></td>
+                <td><h:outputText value="#{status.first}"/></td>
+                <td><h:outputText value="#{status.last}"/></td>
+            </tr>
+        </icecore:repeat>
+        </tbody>
+    </table>
+
+    <h3>
+        Iterate over 5 rows
+    </h3>
+    <table>
+        <thead>
+        <tr>
+            <th>"var"</th>
+            <th colspan="4">"varStatus"</th>
+        </tr>
+        <tr>
+            <th>item</th>
+            <th>index</th>
+            <th>is first</th>
+            <th>is last</th>
+        </tr>
+        </thead>
+        <tbody>
+        <icecore:repeat value="#{test.list}" var="item" varStatus="status" rows="5">
+            <tr>
+                <td><h:outputText value="#{item}"/></td>
+                <td><h:outputText value="#{status.index}"/></td>
+                <td><h:outputText value="#{status.first}"/></td>
+                <td><h:outputText value="#{status.last}"/></td>
+            </tr>
+        </icecore:repeat>
+        </tbody>
+    </table>
+
+    <h3>
+        Iterate from 3rd item over 5 rows
+    </h3>
+    <table>
+        <thead>
+        <tr>
+            <th>"var"</th>
+            <th colspan="4">"varStatus"</th>
+        </tr>
+        <tr>
+            <th>item</th>
+            <th>index</th>
+            <th>is first</th>
+            <th>is last</th>
+        </tr>
+        </thead>
+        <tbody>
+        <icecore:repeat value="#{test.list}" var="item" varStatus="status" first="2" rows="5">
+            <tr>
+                <td><h:outputText value="#{item}"/></td>
+                <td><h:outputText value="#{status.index}"/></td>
+                <td><h:outputText value="#{status.first}"/></td>
+                <td><h:outputText value="#{status.last}"/></td>
+            </tr>
+        </icecore:repeat>
+        </tbody>
+    </table>
+</h:body>
+</html>
+
