@@ -26,6 +26,15 @@
     <ui:param name="description" value="#{msgs['example.ace.colorEntry.options.description']}"/>
 
     <ui:define name="example">
+        <ace:panel>
+             <h:panelGrid style="text-align: center;" width="100%">
+                 <h:panelGroup>
+                     <h:outputLabel for="selColorOptions" value="Selected Color: "/>
+                     <h:outputText id="selColorOptions" value="#{colorEntryOptionsBean.value}"
+                                       style="font-weight: bold;"/>
+                 </h:panelGroup>
+             </h:panelGrid>
+        </ace:panel>
         <h:form id="inputOptionsForm">
             <ace:panel id="inpOptionsPan" header="Options">
                <h:panelGrid id="inputOptions" columns="2">
@@ -67,12 +76,6 @@
                         <ace:ajax execute="@this" render="@all"/>
                     </ace:colorEntry>
                     <ace:message id="message1" for="colorInputOptions" />
-                </h:panelGrid>
-            </ace:panel>
-
-            <ace:panel id="colorOutputPanel" header="Entered Data">
-                <h:panelGrid columns="1" id="outputGrid" width="100%" style="text-align: left;">
-                    <h:outputText id="basicValue" value="Color Selected  #{colorEntryOptionsBean.value}"/>
                 </h:panelGrid>
             </ace:panel>
         </h:form>

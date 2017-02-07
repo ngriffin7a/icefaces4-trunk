@@ -69,16 +69,6 @@ public class ColorEntryMeta extends UIInputMeta{
     @Property(defaultValue="false", tlddoc="Whether or not to show the inputs for alpha ")
     private boolean alpha;
 
- /*   @Property(defaultValue="true",
-            tlddoc="Change the opacity of the altField element(s) according to the alpha setting")
-    private boolean altAlpha; */
-
- /*   @Property(defaultValue="", tlddoc="Change the background color of the elements specified in this element")
-    private String altField;
-
-    @Property(tlddoc="Comma-separted list of CSS properties to set color of in the altField attribute.  The following properties are allowed, all others are ignored, background-color, border-color, color, fill, outline-color, stroke")
-    private String altProperties;  */
-
     @Property(tlddoc="This is the preferred format to display the chosen color under the input field.  Valid values are listed in the ColorFormat enumeration  HEX(\"HEX\"), HEX3(\"HEX3\"), HEXA(\"HEXA\"), RGB(\"RGB\"), RGBA(\"RGBA\"), RGBPERCENT(\"RGB%\"),\n" +
             "         HSL(\"HSL\"), HSLA(\"HSLA\"), HSLPERCENT(\"HSL%\"),\n" +
             "         HSLAPERCENT(\"HSLA%\"),NAME(\"NAME\"), EXACT(\"EXACT\").",
@@ -120,9 +110,6 @@ public class ColorEntryMeta extends UIInputMeta{
 
     @Property(defaultValue="false", tlddoc="Show the None/Revert button if buttonpane on popup is visible.")
     private boolean showNoneButton;
-
- /*   @Property(defaultValue="false", tlddoc="Close the popup window when pressing the Enter key on the keyboard, keeping the selected color")
-    private boolean okOnEnter;  */
 
     @Property(defaultValue = "focus", tlddoc = "Have the colorEntry appear automatically when the field receives focus (\"focus\"), " +
             "appear only when a button (specified by popupIcon attribute) is clicked (\"button\"), or appear when either event takes place (\"all\").")

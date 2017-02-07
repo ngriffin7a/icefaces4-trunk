@@ -26,7 +26,13 @@
     <ui:param name="description" value="#{msgs['example.ace.colorEntry.swatches.description']}"/>
 
     <ui:define name="example">
-
+        <ace:panel>
+             <h:panelGrid style="text-align: center;" width="100%">
+                 <h:outputText id="basicValue" value="Included Swatches Example: #{colorEntrySwatchesBean.color}"/>
+                 <h:outputText id="predefValue" value="Predefined Swatch Example: #{colorEntrySwatchesBean.fromPredefined}"/>
+                 <h:outputText id="dynamicValue" value="From Swatch Created Dynamically: #{colorEntrySwatchesBean.dynamic}"/>
+             </h:panelGrid>
+        </ace:panel>
         <ace:panel header="Choose A Swatch from the Included Swatches">
            <h:form id="form1_existing">
                <h:outputLabel id="selSwatchLabl" for="selSwatchName"/>
@@ -60,7 +66,7 @@
                          <ace:ajax execute="@this" render="@all"/>
                     </ace:colorEntry>
                 </ace:panel>
-            </h:form>
+        </h:form>
         <h:form id="form3_dynamic">
             <ace:panel header="Dynamically Choose Four Colours to Create a Swatch">
                 <h:panelGrid columns="1">
@@ -93,16 +99,7 @@
                          <ace:ajax execute="@this" render="@all"/>
                  </ace:colorEntry>
 
-            </h:form>
-
-            <ace:panel id="colorOutputPanel" header="Entered data">
-                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
-                    <h:outputText id="basicValue" value="Included Swatches Example: #{colorEntrySwatchesBean.color}"/>
-                    <h:outputText id="predefValue" value="Predefined Swatch Example: #{colorEntrySwatchesBean.fromPredefined}"/>
-                    <h:outputText id="dynamicValue" value="Dynamic Swatch Example: #{colorEntrySwatchesBean.dynamic}"/>
-                </h:panelGrid>
-            </ace:panel>
-        
+        </h:form>
     </ui:define>
 </ui:composition>
 

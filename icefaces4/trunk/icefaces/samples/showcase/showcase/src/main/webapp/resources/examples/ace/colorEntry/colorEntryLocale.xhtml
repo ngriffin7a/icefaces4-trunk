@@ -26,7 +26,14 @@
     <ui:param name="description" value="#{msgs['example.ace.colorEntry.locale.description']}"/>
 
     <ui:define name="example">
-
+        <ace:panel>
+             <h:panelGrid style="text-align: center;" width="100%">
+                 <h:panelGroup>
+                     <h:outputLabel for="localeValue" value="Selected Color: "/>
+                     <h:outputText id="localeValue" value="Color Selected: #{colorEntryLocaleBean.color}"/>
+                 </h:panelGroup>
+             </h:panelGrid>
+        </ace:panel>
         <h:form id="inputOptionsForm">
             <ace:panel id="inpOptionsPan" header="Options">
                 <h:panelGrid id="inputOptions" columns="2">
@@ -58,12 +65,6 @@
                                       locale="#{colorEntryLocaleBean.localeString}">
                               <ace:ajax execute="@this" render="@all"/>
                           </ace:colorEntry>
-                </h:panelGrid>
-            </ace:panel>
-            
-            <ace:panel id="colorOutputPanel" header="Entered data">
-                <h:panelGrid id="outputGrid" width="100%" style="text-align: left;">
-                    <h:outputText id="basicValue" value="Color Selected: #{colorEntryLocaleBean.color}"/>
                 </h:panelGrid>
             </ace:panel>
         </h:form>
