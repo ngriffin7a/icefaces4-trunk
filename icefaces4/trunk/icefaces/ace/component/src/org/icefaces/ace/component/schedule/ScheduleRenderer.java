@@ -273,6 +273,7 @@ public class ScheduleRenderer extends CoreRenderer {
 						jb.entry("title", scheduleEvent.getTitle());
 						jb.entry("location", scheduleEvent.getLocation());
 						jb.entry("notes", scheduleEvent.getNotes());
+						jb.entry("isAllDay", scheduleEvent.isAllDay());
 						String styleClass = scheduleEvent.getStyleClass();
 						if (styleClass != null) jb.entry("styleClass", styleClass);
 						String id = scheduleEvent.getId();

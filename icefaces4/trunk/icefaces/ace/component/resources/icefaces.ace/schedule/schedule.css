@@ -57,7 +57,7 @@
 }
 .ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .day {
 	width: 14.2857%;
-	height: 100px;
+	min-height: 100px;
 	text-align: right;
 }
 .ice-ace-schedule .schedule-view-month .schedule-grid .schedule-days .day.adjacent-month .day-number {
@@ -205,4 +205,18 @@
 }
 .ice-ace-schedule .schedule-event-bold {
 	font-weight: bold;
+}
+.ice-ace-schedule .schedule-time-allday {
+	position: relative;
+	overflow: hidden;
+	padding: 0;
+}
+.ice-ace-schedule .schedule-time-allday .schedule-state {
+	border: 0;
+}
+.ice-ace-schedule .schedule-event-allday {
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
 }
