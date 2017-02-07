@@ -92,9 +92,9 @@ ice.ace.Schedule = function(id, cfg) {
 			var markup = self.getEventDetailsMarkup(eventData, false,
 				self.cfg.isEventEditing, self.cfg.isEventDeletion);
 			if (self.cfg.eventDetails == 'sidebar')
-				self.displayEventDetailsSidebar(markup);
+				self.displayEventDetailsSidebar(markup, eventData);
 			else
-				self.displayEventDetailsPopup(markup);
+				self.displayEventDetailsPopup(markup, eventData);
 		});
 	}
 	if (cfg.displayTooltip) {
@@ -144,9 +144,9 @@ ice.ace.Schedule = function(id, cfg) {
 			var eventData = {startDate: date, startTime: time, endDate: date, endTime: '', title: '', location: '', notes: '', index: ''};
 			var markup = self.getEventDetailsMarkup(eventData, true, false, false);
 			if (self.cfg.eventDetails == 'sidebar')
-				self.displayEventDetailsSidebar(markup);
+				self.displayEventDetailsSidebar(markup, eventData);
 			else
-				self.displayEventDetailsPopup(markup);
+				self.displayEventDetailsPopup(markup, eventData);
 		});
 	}
 	this.jqRoot.delegate('.schedule-state', 'mouseenter mouseover', function(event) {
@@ -226,7 +226,7 @@ ice.ace.Schedule.prototype.extractEventIndex = function(node) {
 	var i;
 	for (i = 0; i < classes.length; i++) {
 		var styleClass = classes[i];
-		if (styleClass.indexOf('schedule-event-') == 0) {
+		if (styleClass.indexOf('schedule-event-') == 0 && styleClass != 'schedule-event-allday') {
 			result = styleClass.substring(15);
 			break;
 		}
@@ -281,9 +281,9 @@ ice.ace.Schedule.prototype.getEventDetailsMarkup = function(data, isEventAdditio
 	if (data) {// *** escape HTML characters
 		var markup;
 		if (isEventAddition || isEventEditing) {
-			markup = '<table><tr><td>Start&nbsp;Date:</td><td><input type="text" name="'+this.id+'_date" value="'+data.startDate+'"/></td></tr><tr><td>Start&nbsp;Time:</td><td>'+this.getHourSelectionMarkup(data.startTime)+'&nbsp;:&nbsp;'+this.getMinuteSelectionMarkup(data.startTime)+'</td></tr><tr><td>End&nbsp;Date:</td><td><input type="text" name="'+this.id+'_endDate" value="'+data.endDate+'"/></td></tr><tr><td>End&nbsp;Time:</td><td>'+this.getHourSelectionMarkup(data.endTime)+'&nbsp;:&nbsp;'+this.getMinuteSelectionMarkup(data.endTime)+'</td></tr><tr><tr><td>Title:</td><td><input type="text" name="'+this.id+'_title" value="'+data.title+'"/></td></tr><tr><td>Location:</td><td><input type="text" name="'+this.id+'_location" value="'+data.location+'"/></td></tr><tr><td>Notes:</td><td><textarea name="'+this.id+'_notes">'+data.notes+'</textarea></td></tr></table><input type="hidden" name="'+this.id+'_index" value="'+data.index+'"/>';
+			markup = '<table><tr><td>Start&nbsp;Date:</td><td><input type="text" name="'+this.id+'_date" value="'+data.startDate+'"/></td></tr><tr><td>Start&nbsp;Time:</td><td>'+this.getHourSelectionMarkup(data.startTime, data.isAllDay)+'&nbsp;:&nbsp;'+this.getMinuteSelectionMarkup(data.startTime, data.isAllDay)+'</td></tr><tr><td>End&nbsp;Date:</td><td><input type="text" name="'+this.id+'_endDate" value="'+data.endDate+'"/></td></tr><tr><td>End&nbsp;Time:</td><td>'+this.getHourSelectionMarkup(data.endTime, data.isAllDay)+'&nbsp;:&nbsp;'+this.getMinuteSelectionMarkup(data.endTime, data.isAllDay)+'</td></tr><tr><td>All Day Event: </td><td><input type="checkbox" name="'+this.id+'_allDay" '+(data.isAllDay?'checked':'')+'/></td></tr><tr><td>Title:</td><td><input type="text" name="'+this.id+'_title" value="'+data.title+'"/></td></tr><tr><td>Location:</td><td><input type="text" name="'+this.id+'_location" value="'+data.location+'"/></td></tr><tr><td>Notes:</td><td><textarea name="'+this.id+'_notes">'+data.notes+'</textarea></td></tr></table><input type="hidden" name="'+this.id+'_index" value="'+data.index+'"/>';
 			if (isEventEditing) {
-				markup += '<input type="hidden" name="'+this.id+'_old_startDate" value="'+data.startDate+'"/><input type="hidden" name="'+this.id+'_old_startTime" value="'+data.startTime+'"/><input type="hidden" name="'+this.id+'_old_endDate" value="'+data.endDate+'"/><input type="hidden" name="'+this.id+'_old_endTime" value="'+data.endTime+'"/><input type="hidden" name="'+this.id+'_old_title" value="'+data.title+'"/><input type="hidden" name="'+this.id+'_old_location" value="'+data.location+'"/><input type="hidden" name="'+this.id+'_old_notes" value="'+data.notes+'"/>';
+				markup += '<input type="hidden" name="'+this.id+'_old_startDate" value="'+data.startDate+'"/><input type="hidden" name="'+this.id+'_old_startTime" value="'+data.startTime+'"/><input type="hidden" name="'+this.id+'_old_endDate" value="'+data.endDate+'"/><input type="hidden" name="'+this.id+'_old_endTime" value="'+data.endTime+'"/><input type="hidden" name="'+this.id+'_old_allDay" value="'+data.isAllDay+'"/><input type="hidden" name="'+this.id+'_old_title" value="'+data.title+'"/><input type="hidden" name="'+this.id+'_old_location" value="'+data.location+'"/><input type="hidden" name="'+this.id+'_old_notes" value="'+data.notes+'"/>';
 			}
 		} else {
 			markup = '<table><tr><td>Start Date:</td><td>'+data.startDate+'</td></tr><tr><td>Start Time:</td><td>'+data.startTime+'</td></tr><tr><td>End Date:</td><td>'+data.endDate+'</td></tr><tr><td>End Time:</td><td>'+data.endTime+'</td></tr><tr><td>Title:</td><td>'+data.title+'</td></tr><tr><td>Location:</td><td>'+data.location+'</td></tr><tr><td>Notes:</td><td>'+data.notes+'</td></tr></table>';
@@ -310,26 +310,26 @@ ice.ace.Schedule.prototype.getEventDetailsMarkup = function(data, isEventAdditio
 	}
 }
 
-ice.ace.Schedule.prototype.getHourSelectionMarkup = function(time) {
+ice.ace.Schedule.prototype.getHourSelectionMarkup = function(time, isAllDay) {
 	var hour = time.substring(0,2);
 	var markup = '<select><option value="hh">hh</option>';
 	var i;
 	for (i = 0; i < 24; i++) {
 		var value = ( i < 10 ? '0' : '') + i;
-		var selected = hour == value ? ' selected' : '';
+		var selected = hour == value && !isAllDay ? ' selected' : '';
 		markup += '<option value="'+value+'"'+selected+'>'+value+'</option>';
 	}
 	markup += '<select>';
 	return markup;
 };
 
-ice.ace.Schedule.prototype.getMinuteSelectionMarkup = function(time) {
+ice.ace.Schedule.prototype.getMinuteSelectionMarkup = function(time, isAllDay) {
 	var minute = time.substring(3);
 	var markup = '<select><option value="mm">mm</option>';
 	var i;
 	for (i = 0; i < 60; i = i + 5) {
 		var value = ( i < 10 ? '0' : '') + i;
-		var selected = minute == value ? ' selected' : '';
+		var selected = minute == value && !isAllDay ? ' selected' : '';
 		markup += '<option value="'+value+'"'+selected+'>'+value+'</option>';
 	}
 	markup += '<select>';
@@ -369,13 +369,14 @@ ice.ace.Schedule.prototype.cancelDeletion = function(button) {
 	ice.ace.jq(button.parentNode).hide().siblings().show();
 };
 
-ice.ace.Schedule.prototype.displayEventDetailsPopup = function(markup) {
+ice.ace.Schedule.prototype.displayEventDetailsPopup = function(markup, event) {
 	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details-popup-content');
 	eventDetails.html(markup);
 	eventDetails.dialog({dialogClass: 'schedule-details-popup', resizable: false, width: 320});
 	eventDetails.find('input[type="text"]:eq(0),input[type="text"]:eq(1)').datepicker({dateFormat: 'yy-mm-dd'});
 	eventDetails.find('button').button();
-	this.addDefaultDurationFunctionality()
+	if (!event.isAllDay) this.addDefaultDurationFunctionality();
+	this.addAllDayFunctionality();
 };
 
 ice.ace.Schedule.prototype.addDefaultDurationFunctionality = function() {
@@ -425,13 +426,43 @@ ice.ace.Schedule.prototype.addDefaultDurationFunctionality = function() {
 	}
 };
 
-ice.ace.Schedule.prototype.displayEventDetailsSidebar = function(markup) {
+ice.ace.Schedule.prototype.addAllDayFunctionality = function() {
+	var self = this;
+	var displayLocation = self.cfg.eventDetails == 'sidebar' ? '' : 'popup-';
+	var timeInputs = ice.ace.jq(this.jqId).find('.schedule-details-'+displayLocation+'content').find('select');
+
+	if (timeInputs.size() >= 4) {
+		var allDayCheckbox = ice.ace.jq(this.jqId).find('.schedule-details-'+displayLocation+'content').find('input[type="checkbox"]');
+		if (allDayCheckbox.size() > 0) {
+			var applyAllDayFunctionality = function() {
+				if (allDayCheckbox.get(0).checked) {
+					// disable
+					timeInputs.prop('disabled', true);
+					allDayCheckbox.attr('value', 'true');
+				} else {
+					// enable
+					timeInputs.prop('disabled', false);
+					allDayCheckbox.attr('value', 'false');
+				}
+			};
+
+			allDayCheckbox.on('change', function() {
+				applyAllDayFunctionality();
+			});
+
+			applyAllDayFunctionality();
+		}
+	}
+};
+
+ice.ace.Schedule.prototype.displayEventDetailsSidebar = function(markup, event) {
 	var eventDetails = ice.ace.jq(this.jqId).find('.schedule-details-content');
 	eventDetails.html(markup);
 	this.expandEventDetails();
 	eventDetails.find('input[type="text"]:eq(0),input[type="text"]:eq(1)').datepicker({dateFormat: 'yy-mm-dd'});
 	eventDetails.find('button').button();
-	this.addDefaultDurationFunctionality()
+	if (!event.isAllDay) this.addDefaultDurationFunctionality();
+	this.addAllDayFunctionality();
 };
 
 ice.ace.Schedule.prototype.displayEventDetailsTooltip = function(markup, node) {
@@ -663,7 +694,9 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			var startTime;
-			if (this.cfg.isTwelveHourClock) {
+			if (event.isAllDay) {
+				startTime = 'ALL DAY'
+			} else if (this.cfg.isTwelveHourClock) {
 				var hour = parseInt(event.startTime.substring(0,2));
 				var minutes = event.startTime.substring(3,5);
 				startTime = hour < 13 ? (hour == 12 ? '12:' + minutes + 'p' : hour + ':' + minutes + 'a') : hour - 12 + ':' + minutes + 'p';
@@ -671,7 +704,12 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 				startTime = event.startTime;
 			}
 			eventElement.html('<span>' + startTime + ' ' + event.title + '</span>');
-			eventElement.appendTo(dayDiv);
+			if (event.isAllDay) {
+				eventElement.addClass('schedule-event-allday');
+				eventElement.insertAfter(dayDiv.find('.day-number'));
+			} else {
+				eventElement.appendTo(dayDiv);
+			}
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startDate.substring(8,10)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
 			listing++;
@@ -685,8 +723,16 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 						+ '-' + this.addLeadingZero(month + 1)
 						+ '-' + this.addLeadingZero(j) + ' .schedule-state');
 					var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
-					eventElement.html('<span>(cont.) ' + event.title + '</span>');
-					eventElement.appendTo(dayDiv);
+					if (event.isAllDay) {
+						eventElement.html('<span>ALL DAY ' + event.title + '</span>');
+						eventElement.addClass('schedule-event-allday');
+						var lastAllDayEvent = dayDiv.find('.schedule-event-allday:last');
+						if (lastAllDayEvent.size() > 0) eventElement.insertAfter(lastAllDayEvent);
+						else eventElement.insertAfter(dayDiv.find('.day-number'));
+					} else {
+						eventElement.html('<span>(cont.) ' + event.title + '</span>');
+						eventElement.appendTo(dayDiv);
+					}
 				}
 			} else if (endYear > year || endMonth > month) { // spans till next month
 				var j;
@@ -825,9 +871,65 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 	for (i = 0; i < 7; i++) {
 		for (j = 0; j < 48; j++) this.weekTimeSlots[i][j] = 0;
 	}
+	// process all day events first
+	var allDayEventCount = -1;
+	for (i = 0; i < this.events.length; i++) {
+		var event = this.events[i];
+		var date = new Date();
+		var startYear = event.startDate.substring(0,4);
+		var startMonth = parseInt(event.startDate.substring(5,7) - 1);
+		var startDay = event.startDate.substring(8,10);
+		date.setFullYear(startYear);
+		date.setMonth(startMonth);
+		date.setDate(startDay);
+		if (date >= weekStartDate && date < weekEndDate) {
+			if (event.isAllDay) {
+				allDayEventCount++;
+				this.addAllDayRow(allDayEventCount);
+
+				// determine the day of the week
+				var dateMillis = date.getTime();
+				var startDateMillis = weekStartDate.getTime();
+				var millisDelta = dateMillis - startDateMillis;
+				var dow = Math.floor(millisDelta / 86400000);
+
+				var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+				var eventElement = ice.ace.jq('<div class="ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-allday schedule-event-' + event.index + customStyleClass + '"></div>');
+				eventElement.html('<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location);
+				var selector = '.schedule-dow-'+dow+'.schedule-time-allday-'+allDayEventCount+' .schedule-state';
+				eventElement.appendTo(ice.ace.jq(selector));
+
+				var endYear = event.endDate.substring(0,4);
+				var endMonth = parseInt(event.endDate.substring(5,7) - 1);
+				var endDay = event.endDate.substring(8,10);
+				var spansMultipleDays = !(startYear == endYear && startMonth == endMonth && startDay == endDay);
+
+				if (spansMultipleDays) {
+					var endDate = new Date();
+					endDate.setFullYear(endYear);
+					endDate.setMonth(endMonth);
+					endDate.setDate(endDay);
+					endDate.setHours(23, 59, 59, 999);
+
+					for (dow = dow + 1; dow <= 6; dow++) {
+						date.setDate(date.getDate() + 1);
+						date.setHours(0, 0, 0, 0);
+
+						if (endDate >= date) {
+							var eventElement = ice.ace.jq('<div class="ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-allday schedule-event-' + event.index + customStyleClass + '"></div>');
+							eventElement.html('<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location);
+							var selector = '.schedule-dow-'+dow+'.schedule-time-allday-'+allDayEventCount+' .schedule-state';
+							eventElement.appendTo(ice.ace.jq(selector));
+						}
+					}
+				}
+			}
+		}
+	}
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
+		if (event.isAllDay) continue;
 		var date = new Date();
 		var startYear = event.startDate.substring(0,4);
 		var startMonth = parseInt(event.startDate.substring(5,7) - 1);
@@ -1019,9 +1121,34 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 	var i;
 	this.dayTimeSlots = [];
 	for (i = 0; i < 48; i++) this.dayTimeSlots[i] = 0;
+	// process all day events first
+	var allDayEventCount = -1;
+	for (i = 0; i < this.events.length; i++) {
+		var event = this.events[i];
+		var date = new Date();
+		var startYear = event.startDate.substring(0,4);
+		var startMonth = parseInt(event.startDate.substring(5,7) - 1);
+		var startDay = event.startDate.substring(8,10);
+		date.setFullYear(startYear);
+		date.setMonth(startMonth);
+		date.setDate(startDay);
+		if (date.getFullYear() == currentYear && date.getMonth() == currentMonth && date.getDate() == currentDay) {
+			if (event.isAllDay) {
+				allDayEventCount++;
+				this.addAllDayRow(allDayEventCount);
+
+				var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+				var eventElement = ice.ace.jq('<div class="ui-state-default schedule-dow-single schedule-event schedule-event-allday schedule-event-' + event.index + customStyleClass + '"></div>');
+				eventElement.html('<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location);
+				var selector = '.schedule-dow-single.schedule-time-allday-'+allDayEventCount+' .schedule-state';
+				eventElement.appendTo(ice.ace.jq(this.jqId).find(selector));
+			}
+		}
+	}
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
+		if (event.isAllDay) continue;
 		var date = new Date();
 		var startYear = event.startDate.substring(0,4);
 		var startMonth = event.startDate.substring(5,7) - 1;
@@ -1124,6 +1251,36 @@ ice.ace.Schedule.prototype.getEventDivMarkup = function(startHour, startMinutes,
 		} else {
 			return startTime + '<br/><span class="schedule-event-bold">' + event.title + '</span><br/>' + event.location;
 		}
+	}
+};
+
+ice.ace.Schedule.prototype.addAllDayRow = function(count) {
+
+	if (!count) count = 0;
+
+	var daysGrid = ice.ace.jq(this.jqId).find('.schedule-days > table > tbody');
+
+	if (this.cfg.viewMode == 'week') {
+		var markup = '<tr>';
+		markup += '<td class="ui-widget-content schedule-cell schedule-cell-time schedule-cell-allday">ALL DAY</td>';
+		
+		var i;
+		for (i = 0; i < 7; i++) {
+			markup += '<td class="ui-widget-content schedule-cell schedule-dow-' + i + ' schedule-time-allday schedule-time-allday-' + count + '"><div class="schedule-state"></div></td>';
+		}
+
+		markup += '</tr>';
+
+		ice.ace.jq(markup).prependTo(daysGrid);
+	} else if (this.cfg.viewMode == 'day') {
+		var markup = '<tr>';
+		markup += '<td class="ui-widget-content schedule-cell schedule-cell-time schedule-cell-allday">ALL DAY</td>';
+
+		markup += '<td class="ui-widget-content schedule-cell schedule-dow-single schedule-time-allday schedule-time-allday-' + count + '"><div class="schedule-state"></div></td>';
+
+		markup += '</tr>';
+
+		ice.ace.jq(markup).prependTo(daysGrid);
 	}
 };
 
@@ -1393,7 +1550,7 @@ ice.ace.Schedule.prototype.addResizeListeners = function() {
 					var timeCell = self.jq.find('.schedule-dow-single.schedule-time-0000');
 					var timeCellWidth = timeCell.outerWidth() - 1;
 					var timeCellLeft = timeCell.position().left;
-					var events = self.jq.find('.schedule-event');
+					var events = self.jq.find('.schedule-event').not('.schedule-event-allday');
 					events.each(function(){
 						var eventIndex = self.extractEventIndex(this);
 						var eventData = self.eventsMap[''+eventIndex];
@@ -1412,7 +1569,7 @@ ice.ace.Schedule.prototype.addResizeListeners = function() {
 						var timeCell = self.jq.find('.schedule-dow-' + i + '.schedule-time-0000');
 						var timeCellWidth = timeCell.outerWidth() - 1;
 						var timeCellLeft = timeCell.position().left;
-						var events = self.jq.find('.schedule-event.schedule-dow-' + i);
+						var events = self.jq.find('.schedule-event.schedule-dow-' + i).not('.schedule-event-allday');
 						events.each(function(){
 							var eventIndex = self.extractEventIndex(this);
 							var eventData = self.eventsMap[''+eventIndex];
@@ -1447,7 +1604,7 @@ ice.ace.Schedule.prototype.addResizeListeners = function() {
 			var timeCell = root.find('.schedule-dow-single.schedule-time-0000');
 			var timeCellWidth = timeCell.outerWidth() - 1;
 			var timeCellLeft = timeCell.position().left;
-			var events = root.find('.schedule-event');
+			var events = root.find('.schedule-event').not('.schedule-event-allday');
 			events.each(function(){
 				var eventIndex = self.extractEventIndex(this);
 				var eventData = self.eventsMap[''+eventIndex];
@@ -1466,7 +1623,7 @@ ice.ace.Schedule.prototype.addResizeListeners = function() {
 				var timeCell = root.find('.schedule-dow-' + i + '.schedule-time-0000');
 				var timeCellWidth = timeCell.outerWidth() - 1;
 				var timeCellLeft = timeCell.position().left;
-				var events = root.find('.schedule-event.schedule-dow-' + i)
+				var events = root.find('.schedule-event.schedule-dow-' + i).not('.schedule-event-allday');
 				events.each(function(){
 					var eventIndex = self.extractEventIndex(this);
 					var eventData = self.eventsMap[''+eventIndex];

@@ -16,9 +16,10 @@
 
 package org.icefaces.ace.model.schedule;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ScheduleEvent {
+public class ScheduleEvent implements Serializable {
 
 	private String id;
 	/**
@@ -53,4 +54,8 @@ public class ScheduleEvent {
 	private String notes;
     public String getNotes() { return notes; }
 	public void setNotes(String notes) { this.notes = notes; }
+
+	private boolean allDay;
+    public boolean isAllDay() { return allDay; }
+	public void setAllDay(boolean allDay) { this.allDay = allDay; }
 }

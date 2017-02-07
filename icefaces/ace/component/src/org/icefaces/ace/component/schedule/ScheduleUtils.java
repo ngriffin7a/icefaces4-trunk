@@ -118,6 +118,8 @@ public class ScheduleUtils {
 		String startTime = params.get(clientId + "_time");
 		String endDate = params.get(clientId + "_endDate");
 		String endTime = params.get(clientId + "_endTime");
+		String allDay = params.get(clientId + "_allDay");
+		boolean isAllDay = "true".equalsIgnoreCase(allDay) ? true : false;
 		String title = params.get(clientId + "_title");
 		String location = params.get(clientId + "_location");
 		String notes = params.get(clientId + "_notes");
@@ -134,7 +136,9 @@ public class ScheduleUtils {
 		}
 
 		// if no start time specified, use next hour
-		if (startTime == null || "".equals(startTime)) {
+		if (isAllDay) {
+			startTime = "00:00";
+		} else if (startTime == null || "".equals(startTime)) {
 			Calendar cal = Calendar.getInstance(timeZone);
 			cal.add(Calendar.HOUR_OF_DAY, 1);
 			startTime = (cal.get(Calendar.HOUR_OF_DAY) < 10 ? "0" : "") + cal.get(Calendar.HOUR_OF_DAY) + ":00";
@@ -153,6 +157,9 @@ public class ScheduleUtils {
 			endDate = endDateTime[0];
 			endTime = endDateTime[1];
 		}
+		if (isAllDay) {
+			endTime = "23:59";
+		}
 
 		ScheduleEvent scheduleEvent = new ScheduleEvent();
 		Date convertedDate = convertDateTimeToServerFormat(startDate, startTime);
@@ -161,6 +168,7 @@ public class ScheduleUtils {
 		if (convertedEndDate == null) convertedEndDate = new Date(convertedDate.getTime());
 		scheduleEvent.setStartDate(toUTCFromTimeZone(convertedDate, timeZone));
 		scheduleEvent.setEndDate(toUTCFromTimeZone(convertedEndDate, timeZone));
+		scheduleEvent.setAllDay(isAllDay);
 		scheduleEvent.setTitle(title);
 		scheduleEvent.setLocation(location);
 		scheduleEvent.setNotes(notes);
@@ -176,12 +184,19 @@ public class ScheduleUtils {
 		String startTime = params.get(clientId + "_old_startTime");
 		String endDate = params.get(clientId + "_old_endDate");
 		String endTime = params.get(clientId + "_old_endTime");
+		String allDay = params.get(clientId + "_old_allDay");
+		boolean isAllDay = "true".equalsIgnoreCase(allDay) ? true : false;
 		String title = params.get(clientId + "_old_title");
 		String location = params.get(clientId + "_old_location");
 		String notes = params.get(clientId + "_old_notes");
 		String styleClass = params.get(clientId + "_styleClass");
 		String id = params.get(clientId + "_id");
 		TimeZone timeZone = schedule.calculateTimeZone();
+
+		if (isAllDay) {
+			startTime = "00:00";
+			endTime = "23:59";
+		}
 
 		ScheduleEvent scheduleEvent = new ScheduleEvent();
 		Date convertedDate = convertDateTimeToServerFormat(startDate, startTime);
@@ -190,6 +205,7 @@ public class ScheduleUtils {
 		if (convertedEndDate == null) convertedEndDate = new Date(convertedDate.getTime());
 		scheduleEvent.setStartDate(toUTCFromTimeZone(convertedDate, timeZone));
 		scheduleEvent.setEndDate(toUTCFromTimeZone(convertedEndDate, timeZone));
+		scheduleEvent.setAllDay(isAllDay);
 		scheduleEvent.setTitle(title);
 		scheduleEvent.setLocation(location);
 		scheduleEvent.setNotes(notes);
@@ -376,6 +392,7 @@ public class ScheduleUtils {
 			this.setLocation(original.getLocation());
 			this.setStyleClass(original.getStyleClass());
 			this.setNotes(original.getNotes());
+			this.setAllDay(original.isAllDay());
 			this.index = index;
 		}
 
