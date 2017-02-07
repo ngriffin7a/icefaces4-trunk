@@ -9,8 +9,6 @@ ice.ace.ColorEntry = function(id, cfg) { 
     this.jqId = ice.ace.escapeClientId(id); 
     this.jqElId =  this.jqId + '_input'; 
     this.jq = ice.ace.jq(this.jqElId); 
-    //   this.cfg.formId = this.jq.parents('form:first').attr('id'); 
-    // i8n and l7n   //  this.configureLocale(); 
     this.options = cfg;
     if (this.options.color) { 
         this.jq.value = this.options.color; 
@@ -20,7 +18,7 @@ ice.ace.ColorEntry = function(id, cfg) { 
         this.jq.colorpicker(this.cfg); 
     }  
     ice.ace.ColorEntry.instances[id] = this;
-    ice.ace.setResetValue(this.id, this.getColor());  
+    ice.ace.setResetValue(this.id, cfg.color);  
 };
  
 ice.ace.ColorEntry.instances = {}; // keep track of initialized instances
@@ -124,7 +122,6 @@ ice.ace.ColorEntryInit = function( cfg) {
             var hexField = ice.ace.jq('.ui-colorpicker-hex-input');
             if (hexField) {
                 newColor = "#" + hexField.val();
-                console.log(" new color from hexfield=" + newColor);
             }
             return newColor;
         } ;
@@ -132,47 +129,54 @@ ice.ace.ColorEntryInit = function( cfg) {
             var newColor = color.formatted;
             var colorObj = color;
             if (allowEmpty && !color.formatted) {
-                newColor = emptyColor;
                 input.attr('class', INPUT_EMPTY_STYLE_CLASS);
+                return;
             } else if (colorFormat.indexOf("HEX") > -1) {
                 newColor = "#" + newColor;
             } else if (colorFormat.indexOf("HSL")> -1){
                 newColor = getHexValue(newColor);
                 var hiddenHexField =ice.ace.jq(ice.ace.escapeClientId(id + "_hiddenHex"));
                 if (hiddenHexField){
-                   hiddenHexField.attr('value',newColor);
-                    console.log(" hiddenHexfield has val ="+hiddenHexField.val());
+                    hiddenHexField.attr('value',newColor);
                 }
             }
             if (color.formatted) {
                 input.attr('class',INPUT_STYLE_CLASS);
             }
             input.value = color.formatted;
-
-            console.log("setColorBar fn newColor=" + newColor);
             input.css({"border-left-color": newColor});
             var borderRule = "border-left-color: " + newColor + " !important";
             input.attr('style', borderRule);
         };
 
         var okFn = function(event, color){ 
+         //   console.log(" OK fn");
+            if (!color.formatted || color.formatted=="false"){
+                return;
+            }
             var emptyColor="#f2eaea";
+            ice.ace.setResetValue(this.id, color.formatted);  
             if (allowEmpty){
                 emptyColor = input.css("background-color") ;
             }
-            else if (!color.formatted || color.formatted=="false"){
-                console.log("OK has been pressed but "+colorFormat+" color format is not supported in this widget");
-                return;
-            }
             setColorBar(color, emptyColor);
-
             if (behaviors && behaviors.change) { 
                 var inputChange = behaviors.change;
                 ice.ace.ab(inputChange); 
             } 
          } ;
+        var cancelFn = function(event, color){
+          //  console.log(" cancel fn");
+            if (!ice.ace.resetValues[id]){
+                input.attr('class', INPUT_EMPTY_STYLE_CLASS);
+            } else {
+                color.formatted=ice.ace.resetValues[id];
+                setColorBar(color, ice.ace.resetValues[id])
+            }
+        } ;
         var selectFn = function(event, color){
-            if (!color.formatted){
+        //    console.log(" Select function");
+            if (!color.formatted || color.formatted=="false"){
                 console.log(" The current widget does not support the color format of "+colorFormat);
                 return;
             }
@@ -182,20 +186,19 @@ ice.ace.ColorEntryInit = function( cfg) {
                 setColorBar(color, emptyColor);
                 return;
             }
-         //   console.log(" color.formatted="+colorFormatted);
+            ice.ace.setResetValue(this.id, color.formatted);  
             hidden.value = colorFormatted;
             ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden").val(colorFormatted);
             ice.ace.jq(ice.ace.escapeClientId(id) + "_hidden2").val(colorFormatted);
-            if (behaviors && behaviors.change){
+            if (behaviors && behaviors.change) {
                 ice.ace.ab(behaviors.change);
             }
         };
-        if (inline){
-            options.select = selectFn;
-        }else {
+        if (!inline){
             options.ok = okFn;
-            options.select = selectFn;
         }
+        options.select = selectFn;
+        options.cancel=cancelFn;
 
         var create = function(){
           //  console.log(" create.....");
@@ -237,11 +240,11 @@ ice.ace.ColorEntryInit = function( cfg) {
 		if (ice.ace.ColorEntry.instances[id]) {
             var widget = ice.ace.ColorEntry.instances[id];
              if (widget){
-                 console.log(" destroying existing widget");
+             //    console.log(" destroying existing widget");
                  widget.destroy();
-             } else {
+             } /* else {
                  console.log(" no widget to destroy....");
-             }
+             } */
             create();
 			return;
 		}
@@ -284,7 +287,7 @@ ice.ace.ColorEntryInit = function( cfg) {
 };
 
 ice.ace.ColorEntry.clear = function(id, inFieldLabel, inFieldLabelStyleClass) {
-   // console.log(" clear");
+    console.log(" clear");
 	var instance = ice.ace.instanceNoLazyInit(id);
 	if (instance) instance.setColor(null);
 	var input = ice.ace.jq(ice.ace.escapeClientId(id + "_input"));

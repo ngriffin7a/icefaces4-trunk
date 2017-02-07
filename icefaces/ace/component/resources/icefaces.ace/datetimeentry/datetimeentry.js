@@ -26,7 +26,7 @@ ice.ace.Calendar = function(id, cfg) {
     this.jq = ice.ace.jq(this.jqElId);
     this.cfg.formId = this.jq.parents('form:first').attr('id');
 
-    //i18n and l7n
+    //i8n and l7n
     this.configureLocale();
 
     //Override locale pattern with user pattern
