@@ -1,14 +1,10 @@
 package org.icefaces.impl.component;
 
-import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
-import javax.faces.component.visit.VisitResult;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PostValidateEvent;
-import javax.faces.event.PreValidateEvent;
 import javax.faces.model.DataModel;
 import java.io.IOException;
 import java.util.List;
@@ -98,22 +94,15 @@ public class Repeat extends UIData {
         pushComponentToEL(facesContext, this);
 
         try {
-            VisitResult result = context.invokeVisitCallback(this, callback);
-            if (result == VisitResult.COMPLETE)
-                return true;
-
-            if (result == VisitResult.ACCEPT) {
-                iterateOverChildren(facesContext, new Runnable() {
-                    public void run() {
-                        List<UIComponent> children = Repeat.this.getChildren();
-                        for (UIComponent child : children) {
-                            child.visitTree(context, callback);
-                        }
+            iterateOverChildren(facesContext, new Runnable() {
+                public void run() {
+                    List<UIComponent> children = Repeat.this.getChildren();
+                    for (UIComponent child : children) {
+                        child.visitTree(context, callback);
                     }
-                });
-            }
+                }
+            });
         } finally {
-            // Pop ourselves off the EL stack
             popComponentFromEL(facesContext);
         }
 
