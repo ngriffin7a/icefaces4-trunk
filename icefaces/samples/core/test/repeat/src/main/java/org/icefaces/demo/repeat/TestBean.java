@@ -43,7 +43,7 @@ public class TestBean implements Serializable {
         return counters;
     }
 
-    public static class ClickCounter {
+    public static class ClickCounter implements Serializable {
         private String name;
         private int clicks;
 
