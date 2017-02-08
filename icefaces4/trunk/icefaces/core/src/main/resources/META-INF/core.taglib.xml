@@ -416,7 +416,7 @@ of "FacesEvent" would work.
     <tag>
         <tag-name>repeat</tag-name>
         <description>
-            This tag loads a resource bundle and saves it as a variable in the request scope.
+            This component iterates its child components over a list of items.
         </description>
         <component>
             <component-type>org.icefaces.impl.component.Repeat</component-type>
