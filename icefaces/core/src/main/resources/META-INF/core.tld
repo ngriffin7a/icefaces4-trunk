@@ -382,4 +382,68 @@ This container provides the attributes to configure the userInactivity callback 
             <type>java.lang.String</type>
         </attribute>
     </tag>
+
+    <tag>
+        <description>
+            <![CDATA[This component iterates its child components over a list of items.]]></description>
+        <name>repeat</name>
+        <tag-class/>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>
+                <![CDATA[Zero-relative row number of the first row in the underlying data model to be displayed, or zero to start at the beginning of the data model. Default = '0'.]]></description>
+            <name>first</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>int</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The component identifier for this component. This value must be unique within the closest parent component that is a naming container.]]></description>
+            <name>id</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Return true if this component (and its children) should be rendered during the Render Response phase of the request processing lifecycle. Default = 'true'.]]></description>
+            <name>rendered</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The number of rows (starting with the one identified by the first property) to be displayed, or zero to display the entire set of available rows. Default = '0'.]]></description>
+            <name>rows</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>int</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The DataModel instance representing the data to which this component is bound, or a collection of data for which a DataModel instance is synthesized.]]></description>
+            <name>value</name>
+            <required>yes</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The request-scope attribute (if any) under which the data object for the current row will be exposed when iterating.]]></description>
+            <name>var</name>
+            <required>yes</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The request-scope attribute under which the iteration status for the current row will be exposed.]]></description>
+            <name>varStatus</name>
+            <required>no</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
 </taglib>
