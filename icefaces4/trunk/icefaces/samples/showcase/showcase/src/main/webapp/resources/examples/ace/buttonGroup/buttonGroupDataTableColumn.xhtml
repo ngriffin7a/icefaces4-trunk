@@ -24,17 +24,14 @@
 
     <ui:define name="example">
         <h:form id="frm1">
-
             <ace:panel header="Choose Type of Grouping of buttons by column(s)">
-                <h:panelGrid columns="1">
-                    <h:selectOneRadio id="radioSelect" value="#{buttonGroupDataTable.group}"
+                <h:selectOneRadio id="radioSelect" value="#{buttonGroupDataTable.group}"
                         valueChangeListener="#{buttonGroupDataTable.groupChange}"
                         layout="pageDirection">
                         <f:selectItem id="v0" itemValue="eachOwn" itemLabel="#{msgs['example.ace.buttonGroup.column.groupBy.column']}"  />
                         <f:selectItem id="v1" itemValue="byButtonType" itemLabel="#{msgs['example.ace.buttonGroup.column.groupBy.type']}"/>
                         <ace:ajax execute="@this" render="@all"/>
-                    </h:selectOneRadio>
-                </h:panelGrid>
+                </h:selectOneRadio>
             </ace:panel>
         </h:form>
         <h2>Buttons grouped by #{buttonGroupDataTable.group}</h2>
