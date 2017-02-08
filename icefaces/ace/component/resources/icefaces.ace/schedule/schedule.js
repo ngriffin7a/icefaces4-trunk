@@ -72,7 +72,7 @@ ice.ace.Schedule = function(id, cfg) {
 		// add selected styling
 		if (self.cfg.viewMode == 'week') {
 			self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
-			var dow = self.extractDayOfWeek(self.jqRoot.find('.calendar-day-' + eventData.startDate).get(0));
+			var dow = self.extractDayOfWeek(node);
 			self.jqRoot.find('.schedule-dow-header.schedule-dow-' + dow).addClass('schedule-selected');
 		} else {
 			self.jqRoot.find('.schedule-selected').removeClass('schedule-selected');
@@ -264,6 +264,7 @@ ice.ace.Schedule.prototype.extractEventTime = function(node) {
 };
 
 ice.ace.Schedule.prototype.extractDayOfWeek = function(node) {
+	if (node.tagName == 'SPAN') node = node.parentNode; // event text in month view
 	var result = '';
 	var classes = node.className.split(' ');
 	var i;
@@ -684,14 +685,17 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
-		var year = event.startDate.substring(0,4);
-		var month = parseInt(event.startDate.substring(5,7)) - 1;
-		var day = parseInt(event.startDate.substring(8,10));
-		if (currentYear == year && currentMonth == month) {
-			var dayDiv = this.jq.find('.calendar-day-' + year
-				+ '-' + this.addLeadingZero(month + 1)
-				+ '-' + this.addLeadingZero(day) + ' .schedule-state');
-			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+		var eventStartYear = event.startDate.substring(0,4);
+		var eventStartMonth = parseInt(event.startDate.substring(5,7)) - 1;
+		var eventStartDay = parseInt(event.startDate.substring(8,10));
+		var eventEndYear = event.endDate.substring(0,4);
+		var eventEndMonth = parseInt(event.endDate.substring(5,7)) - 1;
+		var eventEndDay = parseInt(event.endDate.substring(8,10));
+		var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+		if (currentYear == eventStartYear && currentMonth == eventStartMonth) {
+			var dayDiv = this.jq.find('.calendar-day-' + eventStartYear
+				+ '-' + this.addLeadingZero(eventStartMonth + 1)
+				+ '-' + this.addLeadingZero(eventStartDay) + ' .schedule-state');
 			var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 			var startTime;
 			if (event.isAllDay) {
@@ -713,14 +717,12 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startDate.substring(8,10)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
 			listing++;
-			var endYear = event.endDate.substring(0,4);
-			var endMonth = parseInt(event.endDate.substring(5,7)) - 1;
-			var endDay = parseInt(event.endDate.substring(8,10));
-			if (year == endYear && month == endMonth && endDay > day) { // spans multiple days
+			// spans multiple days
+			if (eventStartYear == eventEndYear && eventStartMonth == eventEndMonth && eventEndDay > eventStartDay) {
 				var j;
-				for (j = day+1; j <= endDay; j++) {
-					var dayDiv = this.jq.find('.calendar-day-' + year
-						+ '-' + this.addLeadingZero(month + 1)
+				for (j = eventStartDay+1; j <= eventEndDay; j++) {
+					var dayDiv = this.jq.find('.calendar-day-' + eventStartYear
+						+ '-' + this.addLeadingZero(eventStartMonth + 1)
 						+ '-' + this.addLeadingZero(j) + ' .schedule-state');
 					var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 					if (event.isAllDay) {
@@ -734,13 +736,40 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 						eventElement.appendTo(dayDiv);
 					}
 				}
-			} else if (endYear > year || endMonth > month) { // spans till next month
+			// spans till next month
+			} else if (eventEndYear > eventStartYear || eventEndMonth > eventStartMonth) {
 				var j;
-				for (j = day+1; j <= this.determineLastDayOfMonth(year, month); j++) {
-					var dayDiv = this.jq.find('.calendar-day-' + year
-						+ '-' + this.addLeadingZero(month + 1)
+				for (j = eventStartDay+1; j <= this.determineLastDayOfMonth(eventStartYear, eventStartMonth); j++) {
+					var dayDiv = this.jq.find('.calendar-day-' + eventStartYear
+						+ '-' + this.addLeadingZero(eventStartMonth + 1)
 						+ '-' + this.addLeadingZero(j) + ' .schedule-state');
 					var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+					if (event.isAllDay) {
+						eventElement.html('<span>ALL DAY ' + event.title + '</span>');
+						eventElement.addClass('schedule-event-allday');
+						var lastAllDayEvent = dayDiv.find('.schedule-event-allday:last');
+						if (lastAllDayEvent.size() > 0) eventElement.insertAfter(lastAllDayEvent);
+						else eventElement.insertAfter(dayDiv.find('.day-number'));
+					} else {
+						eventElement.html('<span>(cont.) ' + event.title + '</span>');
+						eventElement.appendTo(dayDiv);
+					}
+				}
+			}
+		} else if (currentYear == eventEndYear && currentMonth == eventEndMonth) {
+			var j;
+			for (j = 1; j <= eventEndDay; j++) {
+				var dayDiv = this.jq.find('.calendar-day-' + eventEndYear
+					+ '-' + this.addLeadingZero(eventEndMonth + 1)
+					+ '-' + this.addLeadingZero(j) + ' .schedule-state');
+				var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+				if (event.isAllDay) {
+					eventElement.html('<span>ALL DAY ' + event.title + '</span>');
+					eventElement.addClass('schedule-event-allday');
+					var lastAllDayEvent = dayDiv.find('.schedule-event-allday:last');
+					if (lastAllDayEvent.size() > 0) eventElement.insertAfter(lastAllDayEvent);
+					else eventElement.insertAfter(dayDiv.find('.day-number'));
+				} else {
 					eventElement.html('<span>(cont.) ' + event.title + '</span>');
 					eventElement.appendTo(dayDiv);
 				}
@@ -875,20 +904,28 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 	var allDayEventCount = -1;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
-		var date = new Date();
+		var eventStartDate = new Date();
 		var startYear = event.startDate.substring(0,4);
 		var startMonth = parseInt(event.startDate.substring(5,7) - 1);
 		var startDay = event.startDate.substring(8,10);
-		date.setFullYear(startYear);
-		date.setMonth(startMonth);
-		date.setDate(startDay);
-		if (date >= weekStartDate && date < weekEndDate) {
+		eventStartDate.setFullYear(startYear);
+		eventStartDate.setMonth(startMonth);
+		eventStartDate.setDate(startDay);
+		var eventEndDate = new Date();
+		var endYear = event.endDate.substring(0,4);
+		var endMonth = parseInt(event.endDate.substring(5,7) - 1);
+		var endDay = event.endDate.substring(8,10);
+		eventEndDate.setFullYear(endYear);
+		eventEndDate.setMonth(endMonth);
+		eventEndDate.setDate(endDay);
+		eventEndDate.setHours(23, 59, 59, 999);
+		if (eventStartDate >= weekStartDate && eventStartDate < weekEndDate) {
 			if (event.isAllDay) {
 				allDayEventCount++;
 				this.addAllDayRow(allDayEventCount);
 
 				// determine the day of the week
-				var dateMillis = date.getTime();
+				var dateMillis = eventStartDate.getTime();
 				var startDateMillis = weekStartDate.getTime();
 				var millisDelta = dateMillis - startDateMillis;
 				var dow = Math.floor(millisDelta / 86400000);
@@ -899,23 +936,14 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 				var selector = '.schedule-dow-'+dow+'.schedule-time-allday-'+allDayEventCount+' .schedule-state';
 				eventElement.appendTo(ice.ace.jq(selector));
 
-				var endYear = event.endDate.substring(0,4);
-				var endMonth = parseInt(event.endDate.substring(5,7) - 1);
-				var endDay = event.endDate.substring(8,10);
 				var spansMultipleDays = !(startYear == endYear && startMonth == endMonth && startDay == endDay);
 
 				if (spansMultipleDays) {
-					var endDate = new Date();
-					endDate.setFullYear(endYear);
-					endDate.setMonth(endMonth);
-					endDate.setDate(endDay);
-					endDate.setHours(23, 59, 59, 999);
-
 					for (dow = dow + 1; dow <= 6; dow++) {
-						date.setDate(date.getDate() + 1);
-						date.setHours(0, 0, 0, 0);
+						eventStartDate.setDate(eventStartDate.getDate() + 1);
+						eventStartDate.setHours(0, 0, 0, 0);
 
-						if (endDate >= date) {
+						if (eventEndDate >= eventStartDate) {
 							var eventElement = ice.ace.jq('<div class="ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-allday schedule-event-' + event.index + customStyleClass + '"></div>');
 							eventElement.html('<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location);
 							var selector = '.schedule-dow-'+dow+'.schedule-time-allday-'+allDayEventCount+' .schedule-state';
@@ -924,22 +952,55 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 					}
 				}
 			}
+		// event starts before the current week
+		} else if (eventEndDate >= weekStartDate && eventEndDate < weekEndDate) {
+			if (event.isAllDay) {
+				allDayEventCount++;
+				this.addAllDayRow(allDayEventCount);
+
+				var date = new Date();
+				date.setFullYear(weekStartDate.getFullYear());
+				date.setMonth(weekStartDate.getMonth());
+				date.setDate(weekStartDate.getDate());
+				var dow;
+				for (dow = 0; dow <= 6; dow++) {
+					date.setDate(weekStartDate.getDate() + dow);
+					date.setHours(0, 0, 0, 0);
+
+					if (eventEndDate >= date) {
+						var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+						var eventElement = ice.ace.jq('<div class="ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-allday schedule-event-' + event.index + customStyleClass + '"></div>');
+						eventElement.html('<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location);
+						var selector = '.schedule-dow-'+dow+'.schedule-time-allday-'+allDayEventCount+' .schedule-state';
+						eventElement.appendTo(ice.ace.jq(selector));
+					}
+				}
+			}
 		}
 	}
+	// process regular events
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
 		if (event.isAllDay) continue;
-		var date = new Date();
+		var eventStartDate = new Date();
 		var startYear = event.startDate.substring(0,4);
 		var startMonth = parseInt(event.startDate.substring(5,7) - 1);
 		var startDay = event.startDate.substring(8,10);
-		date.setFullYear(startYear);
-		date.setMonth(startMonth);
-		date.setDate(startDay);
-		if (date >= weekStartDate && date < weekEndDate) {
+		eventStartDate.setFullYear(startYear);
+		eventStartDate.setMonth(startMonth);
+		eventStartDate.setDate(startDay);
+		var eventEndDate = new Date();
+		var endYear = event.endDate.substring(0,4);
+		var endMonth = parseInt(event.endDate.substring(5,7) - 1);
+		var endDay = event.endDate.substring(8,10);
+		eventEndDate.setFullYear(endYear);
+		eventEndDate.setMonth(endMonth);
+		eventEndDate.setDate(endDay);
+		eventEndDate.setHours(23, 59, 59, 999);
+		if (eventStartDate >= weekStartDate && eventStartDate < weekEndDate) {
 			// determine the day of the week
-			var dateMillis = date.getTime();
+			var dateMillis = eventStartDate.getTime();
 			var startDateMillis = weekStartDate.getTime();
 			var millisDelta = dateMillis - startDateMillis;
 			var dow = Math.floor(millisDelta / 86400000);
@@ -951,9 +1012,6 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 			var timeCell = this.jq.find(selector);
 			var position = timeCell.position();
 			var width = timeCell.outerWidth() - 1;
-			var endYear = event.endDate.substring(0,4);
-			var endMonth = parseInt(event.endDate.substring(5,7) - 1);
-			var endDay = event.endDate.substring(8,10);
 			var spansMultipleDays = !(startYear == endYear && startMonth == endMonth && startDay == endDay);
 			var endHour = spansMultipleDays ? '24' : event.endTime.substring(0,2);
 			var endMinutes = spansMultipleDays ? '00' : parseInt(event.endTime.substring(3,5));
@@ -975,29 +1033,23 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 				width: (width - multiplicityAdjustment) + 'px', 
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
-			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+this.getMonthNameShort(date.getMonth())+' '+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+this.getMonthNameShort(eventStartDate.getMonth())+' '+event.startDate.substring(8)+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
 			this.markUsedTimeSlots(this.weekTimeSlots[dow], startingTimeSlot, endingTimeSlot);
 			listing++;
 			if (spansMultipleDays) {
-				var endDate = new Date();
-				endDate.setFullYear(endYear);
-				endDate.setMonth(endMonth);
-				endDate.setDate(endDay);
-				endDate.setHours(23, 59, 59, 999);
-
 				for (dow = dow + 1; dow <= 6; dow++) {
-					date.setDate(date.getDate() + 1);
-					date.setHours(0, 0, 0, 0);
+					eventStartDate.setDate(eventStartDate.getDate() + 1);
+					eventStartDate.setHours(0, 0, 0, 0);
 
-					if (endDate >= date) {
+					if (eventEndDate >= eventStartDate) {
 						var startingTimeSlot = '0000';
 						var selector = '.schedule-dow-'+dow+'.schedule-time-'+startingTimeSlot;
 						var timeCell = this.jq.find(selector);
 						var position = timeCell.position();
 						var width = timeCell.outerWidth() - 1;
-						var isLastDay = date.getFullYear() == endDate.getFullYear() 
-								&& date.getMonth() == endDate.getMonth()
-								&& date.getDate() == endDate.getDate();
+						var isLastDay = eventStartDate.getFullYear() == eventEndDate.getFullYear() 
+								&& eventStartDate.getMonth() == eventEndDate.getMonth()
+								&& eventStartDate.getDate() == eventEndDate.getDate();
 						var endHour = isLastDay ? event.endTime.substring(0,2) : '24';
 						var endMinutes = isLastDay ? parseInt(event.endTime.substring(3,5)) : '00';
 						var endingTimeSlot = this.determinePreviousTimeCell(endHour, endMinutes);
@@ -1018,6 +1070,47 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 							height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 						this.markUsedTimeSlots(this.weekTimeSlots[dow], startingTimeSlot, endingTimeSlot);
 					}
+				}
+			}
+		// event starts before the current week
+		} else if (eventEndDate >= weekStartDate && eventEndDate < weekEndDate) {
+			var date = new Date();
+			date.setFullYear(weekStartDate.getFullYear());
+			date.setMonth(weekStartDate.getMonth());
+			date.setDate(weekStartDate.getDate());
+			var dow;
+			for (dow = 0; dow <= 6; dow++) {
+				date.setDate(weekStartDate.getDate() + dow);
+				date.setHours(0, 0, 0, 0);
+
+				if (eventEndDate >= date) {
+					var startingTimeSlot = '0000';
+					var selector = '.schedule-dow-'+dow+'.schedule-time-'+startingTimeSlot;
+					var timeCell = this.jq.find(selector);
+					var position = timeCell.position();
+					var width = timeCell.outerWidth() - 1;
+					var isLastDay = date.getFullYear() == eventEndDate.getFullYear() 
+							&& date.getMonth() == eventEndDate.getMonth()
+							&& date.getDate() == eventEndDate.getDate();
+					var endHour = isLastDay ? event.endTime.substring(0,2) : '24';
+					var endMinutes = isLastDay ? parseInt(event.endTime.substring(3,5)) : '00';
+					var endingTimeSlot = this.determinePreviousTimeCell(endHour, endMinutes);
+					var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+endingTimeSlot;
+					var endTimeCell = this.jq.find(endSelector);
+					var endPosition = endTimeCell.position();
+					var height = endTimeCell.outerHeight() - 1;
+					var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+					var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+					eventElement.html('(cont.) ' + event.title);
+					var timeSlotMultiplicity = this.weekTimeSlots[dow][this.timeSlotIndexMap[startingTimeSlot]];
+					timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+					var multiplicityAdjustment = timeSlotMultiplicity * 5;
+					eventElement.css({position:'absolute',
+						top:position.top+(isChrome?1:0),
+						left:position.left+multiplicityAdjustment+(isChrome?1:0),
+						width: (width - multiplicityAdjustment) + 'px', 
+						height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+					this.markUsedTimeSlots(this.weekTimeSlots[dow], startingTimeSlot, endingTimeSlot);
 				}
 			}
 		}
@@ -1125,14 +1218,23 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 	var allDayEventCount = -1;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
-		var date = new Date();
+		var eventStartDate = new Date();
 		var startYear = event.startDate.substring(0,4);
 		var startMonth = parseInt(event.startDate.substring(5,7) - 1);
 		var startDay = event.startDate.substring(8,10);
-		date.setFullYear(startYear);
-		date.setMonth(startMonth);
-		date.setDate(startDay);
-		if (date.getFullYear() == currentYear && date.getMonth() == currentMonth && date.getDate() == currentDay) {
+		eventStartDate.setFullYear(startYear);
+		eventStartDate.setMonth(startMonth);
+		eventStartDate.setDate(startDay);
+		var eventEndDate = new Date();
+		var endYear = event.endDate.substring(0,4);
+		var endMonth = event.endDate.substring(5,7) - 1;
+		var endDay = event.endDate.substring(8,10);
+		eventEndDate.setFullYear(endYear);
+		eventEndDate.setMonth(endMonth);
+		eventEndDate.setDate(endDay);
+		if ((eventStartDate.getFullYear() == currentYear && eventStartDate.getMonth() == currentMonth 
+			&& eventStartDate.getDate() == currentDay) || (eventEndDate.getFullYear() == currentYear 
+			&& eventEndDate.getMonth() == currentMonth && eventEndDate.getDate() == currentDay)) {
 			if (event.isAllDay) {
 				allDayEventCount++;
 				this.addAllDayRow(allDayEventCount);
@@ -1145,18 +1247,28 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 			}
 		}
 	}
+	// process regular events
 	var listing = 0;
 	for (i = 0; i < this.events.length; i++) {
 		var event = this.events[i];
 		if (event.isAllDay) continue;
-		var date = new Date();
+		var eventStartDate = new Date();
 		var startYear = event.startDate.substring(0,4);
 		var startMonth = event.startDate.substring(5,7) - 1;
 		var startDay = event.startDate.substring(8,10);
-		date.setFullYear(startYear);
-		date.setMonth(startMonth);
-		date.setDate(startDay);
-		if (date.getFullYear() == currentYear && date.getMonth() == currentMonth && date.getDate() == currentDay) {
+		eventStartDate.setFullYear(startYear);
+		eventStartDate.setMonth(startMonth);
+		eventStartDate.setDate(startDay);
+		var eventEndDate = new Date();
+		var endYear = event.endDate.substring(0,4);
+		var endMonth = event.endDate.substring(5,7) - 1;
+		var endDay = event.endDate.substring(8,10);
+		eventEndDate.setFullYear(endYear);
+		eventEndDate.setMonth(endMonth);
+		eventEndDate.setDate(endDay);
+		// events that start on this day
+		if (eventStartDate.getFullYear() == currentYear 
+			&& eventStartDate.getMonth() == currentMonth && eventStartDate.getDate() == currentDay) {
 			var hour = event.startTime.substring(0,2);
 			var minutes = parseInt(event.startTime.substring(3,5));
 			var startingTimeSlot = hour+(minutes >= 30 ? '30' : '00');
@@ -1164,9 +1276,6 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 			var timeCell = this.jq.find(selector);
 			var position = timeCell.position();
 			var width = timeCell.outerWidth() - 1;
-			var endYear = event.endDate.substring(0,4);
-			var endMonth = event.endDate.substring(5,7) - 1;
-			var endDay = event.endDate.substring(8,10);
 			var spansMultipleDays = !(startYear == endYear && startMonth == endMonth && startDay == endDay);
 			var endHour = spansMultipleDays ? '24' : event.endTime.substring(0,2);
 			var endMinutes = spansMultipleDays ? '00' : parseInt(event.endTime.substring(3,5));
@@ -1189,6 +1298,39 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
 			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">'+event.startTime+'</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			this.markUsedTimeSlots(this.dayTimeSlots, startingTimeSlot, endingTimeSlot);
+			listing++;
+		// events that don't start on this day but end on this day
+		} else if (eventEndDate.getFullYear() == currentYear 
+			&& eventEndDate.getMonth() == currentMonth && eventEndDate.getDate() == currentDay) {
+			var hour = '00';
+			var minutes = '00';
+			var startingTimeSlot = hour + minutes;
+			var selector = '.schedule-dow-single.schedule-time-'+startingTimeSlot;
+			var timeCell = this.jq.find(selector);
+			var position = timeCell.position();
+			var width = timeCell.outerWidth() - 1;
+			var endHour = event.endTime.substring(0,2);
+			var endMinutes = parseInt(event.endTime.substring(3,5));
+			var endingTimeSlot = this.determinePreviousTimeCell(endHour, endMinutes);
+			var endSelector = '.schedule-dow-single.schedule-time-'+endingTimeSlot;
+			var endTimeCell = this.jq.find(endSelector);
+			var endPosition = endTimeCell.position();
+			var height = endTimeCell.outerHeight() - 1;
+			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+			eventElement.html(this.getEventDivMarkup(hour, minutes, endHour, endMinutes, event, true));
+			var timeSlotMultiplicity = this.dayTimeSlots[this.timeSlotIndexMap[startingTimeSlot]];
+			timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+			var multiplicityAdjustment = timeSlotMultiplicity * 5;
+			var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
+			eventElement.css({position:'absolute',
+				top:position.top+(isChrome?1:0),
+				left:position.left+multiplicityAdjustment+(isChrome?1:0),
+				width: (width - multiplicityAdjustment) + 'px',
+				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
+			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">(continued)</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
 			this.markUsedTimeSlots(this.dayTimeSlots, startingTimeSlot, endingTimeSlot);
 			listing++;
 		}
@@ -1218,7 +1360,7 @@ ice.ace.Schedule.prototype.timeSlotIndexMap = {'0000':0, '0030':1, '0100':2, '01
 	'2300':46, '2330':47
 };
 
-ice.ace.Schedule.prototype.getEventDivMarkup = function(startHour, startMinutes, endHour, endMinutes, event) {
+ice.ace.Schedule.prototype.getEventDivMarkup = function(startHour, startMinutes, endHour, endMinutes, event, continued) {
 	var lines;
 	if (startHour == endHour) { // only one line of text
 		// only possible case start time is at 00 minutes, end time is at 30 minutes
@@ -1236,10 +1378,12 @@ ice.ace.Schedule.prototype.getEventDivMarkup = function(startHour, startMinutes,
 		lines = 3;
 	}
 	if (lines == 1) {
-		return '<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location;
+		return (continued?'(cont.)':'') + '<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location;
 	} else {
 		var startTime;
-		if (this.cfg.isTwelveHourClock) {
+		if (continued) {
+			startTime = '(cont.)';
+		} else if (this.cfg.isTwelveHourClock) {
 			var hour = parseInt(startHour);
 			var minutes = this.addLeadingZero(startMinutes);
 			startTime = hour < 13 ? (hour == 12 ? '12:' + minutes + ' pm' : hour + ':' + minutes + ' am') : hour - 12 + ':' + minutes + ' pm';
