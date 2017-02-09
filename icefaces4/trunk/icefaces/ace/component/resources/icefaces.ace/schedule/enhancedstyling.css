@@ -1,0 +1,32 @@
+.ice-ace-schedule .schedule-styling-enhanced .schedule-days .ui-widget-content {
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+}
+.ice-ace-schedule .schedule-styling-enhanced .schedule-days .ui-widget-content .day-number {
+	color: #333;
+}
+.ice-ace-schedule .schedule-styling-enhanced .schedule-days .ui-widget-content.schedule-cell-time {
+	color: #333;
+}
+.ice-ace-schedule .schedule-styling-enhanced .schedule-days .ui-widget-content .schedule-event {
+	background-image: none;
+	background-color: #ccf;
+	border-left: 2px solid #669;
+	border-top: none;
+	border-right: none;
+	border-bottom: none;
+	padding: 2px;
+	margin-top: 1px;
+	-moz-border-radius: 0;
+    -webkit-border-radius: 0;
+}
+.ice-ace-schedule .schedule-styling-enhanced .schedule-days .schedule-event-container .schedule-event {
+	background-image: none;
+	background-color: #ccf;
+	border-left: 3px solid #669;
+	border-top: none;
+	border-right: none;
+	border-bottom: none;
+	padding: 2px 2px 2px 3px;
+}

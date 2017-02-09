@@ -184,6 +184,7 @@ public class ScheduleRenderer extends CoreRenderer {
 
 		schedule.resetDataModel();
 
+		String enhancedStylingClass = schedule.isApplyEnhancedStyling() ? " schedule-styling-enhanced" : "";
 		String sideBar = schedule.getSideBar();
 		String sideBarClass = "schedule-config-sidebar-right";
 		if (sideBar != null) {
@@ -287,7 +288,7 @@ public class ScheduleRenderer extends CoreRenderer {
           .endFunction();
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "schedule-main ui-widget" + " schedule-view-" + viewMode + " " 
+		writer.writeAttribute("class", "schedule-main ui-widget" + enhancedStylingClass + " schedule-view-" + viewMode + " " 
 			+ sideBarClass + " " + eventDetailsClass + " " + tooltipClass + " " + scrollableClass, null);
 		writer.endElement("div");
 
