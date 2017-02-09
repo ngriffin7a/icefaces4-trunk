@@ -136,6 +136,9 @@ public class ScheduleMeta extends UIDataMeta {
     @Property(tlddoc = "Enabling renders the times in the 12-hour clock format.", defaultValue = "false")
     private boolean twelveHourClock;
 
+    @Property(tlddoc = "Enabling applies an original styling to the day and time girds and to the events rendered on them in the month, week, and day views. This original styling makes it easier to read the information contained in the schedule by styling the contents in additional ways not covered by Themeroller themes. This styling is always the same, regardless of the theme being applied. Other parts of the schedule such as the title, sidebar and event details dialog are not affected by this styling. Setting this attribute to false prevents this original styling from being applied, leaving only the theme styling.", defaultValue = "true")
+    private boolean applyEnhancedStyling;
+
 	@Field(defaultValue="-1")
 	private Integer currentYear;
 
