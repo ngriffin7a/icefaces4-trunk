@@ -590,12 +590,10 @@
 			cameraOptions.maxheight = maxheight;
 		}
 
-		if (ice.mobi.cameraBtnOnclick.getMobileOperatingSystem() == 'iOS') {
-			renderCameraFallbackFileUpload();
+		if ('URL' in window && (navigator.getUserMedia || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia))) {
+			launchHTML5Camera();
 		} else {
-			if ('URL' in window && (navigator.getUserMedia || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia))) {
-				launchHTML5Camera();
-			}
+			renderCameraFallbackFileUpload();
 		}
 	};
 
