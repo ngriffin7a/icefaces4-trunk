@@ -312,7 +312,7 @@ public class EnvUtils {
     /**
      * Returns the value of the context parameter org.icefaces.aria.enabled.  The default value is true and indicates
      * that views are ARIA (Accessible Rich Internet Applications) enabled.  This context parameter is application-wide
-     * and works together with the 'ariaEnabled' attribute of the ICEfaces configuration tag <ice:config> so that ARIA support
+     * and works together with the 'ariaEnabled' attribute of the ICEfaces configuration tag &lt;ice:config&gt; so that ARIA support
      * can be turned on and off selectively on a per page basis.
      *
      * @param facesContext The current FacesContext instance used to access the application map.
@@ -341,7 +341,7 @@ public class EnvUtils {
     /**
      * Returns the value of the context parameter org.icefaces.render.auto.  The default value is true and indicates
      * that DOM changes will automatically be applied to each page.  This context parameter is application-wide and works
-     * together with the render attribute of the ICEfaces configuration tag <ice:config> so that DOM updates can be turned on
+     * together with the render attribute of the ICEfaces configuration tag &lt;ice:config&gt; so that DOM updates can be turned on
      * and off selectively on a per page basis.
      *
      * @param facesContext The current FacesContext instance used to access the application map.
@@ -354,7 +354,7 @@ public class EnvUtils {
     /**
      * Returns the value of the context parameter org.icefaces.compressIDs.  The default value is false and indicates
      * that IDs will not be compressed.  The context parameter is application-wide and works
-     * together with the compressIDs attribute of the ICEfaces configuration tag <ice:config> so that ID
+     * together with the compressIDs attribute of the ICEfaces configuration tag &lt;ice:config&gt; so that ID
      * compression can be turned on and off selectively on a per page basis.
      *
      * @param facesContext The current FacesContext instance used to access the application map.
@@ -372,7 +372,6 @@ public class EnvUtils {
      * Returns the value of the context parameter org.icefaces.blockUIOnSubmit.  The default value is false and indicates
      * that the UI will not be blocked after a request has been submitted.  To help deal with the problems with double-submits,
      * this parameter can be set to true.
-     * <p/>
      *
      * @param facesContext The current FacesContext instance used to access the application map.
      * @return Returns the current setting of org.icefaces.blockUIOnSubmit.  The default is false.
@@ -389,7 +388,7 @@ public class EnvUtils {
      * Programmatically override the value of blockUIOnSubmit.
      *
      * @param facesContext The current FacesContext instance used to access the application map.
-     * @param value
+     * @param value The value to set.
      */
     public static void setBlockUIOnSubmit(FacesContext facesContext, boolean value) {
         setViewParam(facesContext, BLOCK_UI_ON_SUBMIT, value);
@@ -422,7 +421,7 @@ public class EnvUtils {
      * Returns the value of the context parameter org.icefaces.connectionLostRedirectURI.  The default value is the String
      * "null" and indicates that no URI has been set and the default behaviour is taken when the Ajax Push connection is lost.
      * Setting a URI value tells ICEfaces to redirect to that view if the Ajax Push connection is lost.
-     * <p/>
+     * 
      * Note: This value is only relevant when running ICEfaces 2+ with the compatible component suite:
      *
      * @param facesContext The current FacesContext instance used to access the application map.
@@ -479,9 +478,9 @@ public class EnvUtils {
      * ICEpush will be initially lazily.  In other words, ICEpush will not activate and open a blocking connection
      * until the first push request is made.  By setting lazyPush to false, ICEpush will be automatically activated for
      * each ICEfaces page.
-     * <p/>
+     * 
      * This context parameter is application-wide and works together with the lazyPush attribute of the ICEfaces
-     * configuration tag <ice:config> so that ICEpush can be set to activate lazily on a per-page basis.
+     * configuration tag &lt;ice:config&gt; so that ICEpush can be set to activate lazily on a per-page basis.
      *
      * @param facesContext The current FacesContext instance used to access the application map.
      * @return Returns the current setting of org.icefaces.lazyPush.  The default is true.
@@ -541,7 +540,7 @@ public class EnvUtils {
      * Returns the value of the context parameter org.icefaces.sessionExpiredRedirectURI.  The default value is the String
      * "null" and indicates that no URI has been set and the default behaviour is taken when the session expires.  Setting
      * a URI value tells ICEfaces to redirect to that view if the Ajax Push connection is lost.
-     * <p/>
+     * 
      * Note: This value is only relevant when running ICEfaces 2+ with the compatible component suite:
      *
      * @param facesContext The current FacesContext instance used to access the application map.
@@ -555,7 +554,7 @@ public class EnvUtils {
      * Returns the value of the context parameter org.icefaces.sessionTimeoutRedirectURI.  The default value is the String
      * "null" and indicates that no URI has been set and the default behaviour is taken when the session timeouts.  Setting
      * a URI value tells ICEfaces to redirect to that view if the Ajax Push connection is lost.
-     * <p/>
+     * 
      * Note: This value is only relevant when running ICEfaces 2+ with the compatible component suite:
      *
      * @param facesContext The current FacesContext instance used to access the application map.
@@ -925,7 +924,7 @@ public class EnvUtils {
      * Programmatically override the value of disableDefaultErrorPopups.
      *
      * @param facesContext The current FacesContext instance used to access the application map.
-     * @param value
+     * @param value The value to set.
      */
     public static void setDisableDefaultErrorPopups(FacesContext facesContext, boolean value) {
         setViewParam(facesContext, DISABLE_DEFAULT_ERROR_POPUPS, value);

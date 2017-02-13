@@ -225,8 +225,8 @@ public class ResourceRegistry extends SessionAwareResourceHandlerWrapper {
      * Add the provided resource to the custom scope Map.  This is intended to 
      * be used only in cases not covered by the other scope-specific methods.
      *
-     * @param scopeMap the resource
-     * @param scopeMap the resource
+     * @param scopeMap the scopemap
+     * @param resource the resource
      * @return the requestPath of the resource
      */
     public static String addResource(Map scopeMap, Resource resource)  {

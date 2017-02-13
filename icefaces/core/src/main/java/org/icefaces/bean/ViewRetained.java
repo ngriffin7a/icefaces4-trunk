@@ -24,8 +24,7 @@ import java.lang.annotation.Inherited;
 
 /**
  * When this annotation is found on a ViewScoped bean, that bean
- * will be propagated across navigations to the same view ID.</p>
- *
+ * will be propagated across navigations to the same view ID.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

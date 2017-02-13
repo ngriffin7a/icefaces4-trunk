@@ -116,13 +116,13 @@ public class SelectUtils {
     }
     
     /**
-     * Returns true iff component has a {@link UISelectItem} child
+     * Returns true if component has a {@link UISelectItem} child
      * whose itemValue exactly matches the argument value
      * @param ctx
      * @param component
      * @param value
      * @param items
-     * @return
+     * @return boolean 
      */
     
     public static boolean valueIsNoSelectionOption(FacesContext ctx,

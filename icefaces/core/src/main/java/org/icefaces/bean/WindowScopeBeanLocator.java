@@ -33,7 +33,6 @@ public class WindowScopeBeanLocator {
     /**
      * Lookup a bean by its name in the current window scope.
      * @param request servlet request
-     * @param session servlet session
      * @param name the name of the bean as it is declared in its annotation or faces-config.xml file
      * @return the bean when found or null if missing
      */

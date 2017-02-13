@@ -24,6 +24,8 @@ import java.lang.annotation.*;
 public @interface ICEBrowserDependency {
     /**
      * <p>Define the browser that must be used for this dependency to be served.</p>
+     *
+     * @return the BrowserType 
      */
     public BrowserType browser();
 
@@ -33,6 +35,8 @@ public @interface ICEBrowserDependency {
      * is valid to have EL Expressions in the value of this attribute,
      * as long as the expression resolves to an instance of the expected
      * type.</p>
+     *
+     * @return the name 
      */
     public String name();
 
@@ -43,6 +47,8 @@ public @interface ICEBrowserDependency {
      * valid to have EL Expressions in the value of this attribute, as
      * long as the expression resolves to an instance of the expected
      * type.</p>
+     *
+     * @return the libraryName 
      */
     public String library() default "";
 
@@ -56,6 +62,8 @@ public @interface ICEBrowserDependency {
      * must be called instead, as described above.  It is valid to have
      * EL Expressions in the value of this attribute, as long as the
      * expression resolves to an instance of the expected type.</p>
+     *
+     * @return the value 
      */
     public String target() default "";
 }

@@ -184,7 +184,6 @@ public class UserAgentInfo implements Serializable {
 
     /**
      * Test from http://detectmobilebrowsers.com
-     * @param userAgent
      * @return true if mobile
      */
     public boolean isMobileBrowser(){
@@ -200,7 +199,6 @@ public class UserAgentInfo implements Serializable {
 
     /**
      * Adapted from http://detectmobilebrowsers.com
-     * @param userAgent
      * @return true if mobile
      */
     public boolean isTabletBrowser(){

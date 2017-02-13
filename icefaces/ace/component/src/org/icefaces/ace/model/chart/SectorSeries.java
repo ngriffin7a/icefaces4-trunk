@@ -184,7 +184,7 @@ public class SectorSeries extends ChartSeries {
 
     /**
      * allows users to determine format of the data Labels
-     * @return
+     * @return dataLabelFormatString
      */
     public String getDataLabelFormatString() {
          return dataLabelFormatString;
