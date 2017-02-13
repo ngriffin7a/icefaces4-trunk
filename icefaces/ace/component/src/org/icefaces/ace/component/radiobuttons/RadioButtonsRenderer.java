@@ -216,8 +216,8 @@ public class RadioButtonsRenderer extends RadioButtonRenderer {
         // Button Element
 		encodeButtonElementStart(writer,clientId);
 		String selectedClass = "";
-		selectedClass = (selected ? "ice-ace-radiobutton-selected" : "");
-		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all " + selectedClass, null);
+		selectedClass = (selected ? " ice-ace-radiobutton-selected" : "");
+		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all ui-widget-content" + selectedClass, null);
 
 		if (ariaEnabled) writer.writeAttribute(HTML.TABINDEX_ATTR, "0", null);
         encodeButtonStyle(writer, item.isDisabled());

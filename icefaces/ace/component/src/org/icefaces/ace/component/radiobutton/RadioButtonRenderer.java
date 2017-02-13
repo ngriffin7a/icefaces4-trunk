@@ -107,7 +107,7 @@ public class RadioButtonRenderer extends InputRenderer {
 		String selectedClass = "";
 		Object value = radioButton.getValue();
 		if (value != null && ((Boolean) value)) selectedClass = " ice-ace-radiobutton-selected";
-		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all" + selectedClass, null);
+		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all ui-widget-content" + selectedClass, null);
 
         encodeButtonTabIndex(writer, radioButton, ariaEnabled);
         encodeButtonStyle(writer, radioButton.isDisabled());

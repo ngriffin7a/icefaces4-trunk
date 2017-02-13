@@ -247,7 +247,7 @@ public class CheckboxButtonsRenderer extends CheckboxButtonRenderer {
         writer.writeAttribute(HTML.NAME_ATTR, buttonId, null);
 		String selectedClass = "";
 		selectedClass = (selected ? "ice-checkboxbutton-checked" : "ice-checkboxbutton-unchecked");
-		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all " + selectedClass, null);
+		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all ui-widget-content " + selectedClass, null);
 
 		if (ariaEnabled) writer.writeAttribute(HTML.TABINDEX_ATTR, "0", null);
 
