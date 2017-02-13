@@ -110,7 +110,7 @@ public class CheckboxButtonRenderer extends InputRenderer {
 		Object value = checkbox.getValue();
 		if (value != null) selectedClass = (((Boolean) value) ? "ice-checkboxbutton-checked" : "ice-checkboxbutton-unchecked");
 		else selectedClass = "ice-checkboxbutton-unchecked";
-		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all " + selectedClass, null);
+		writer.writeAttribute(HTML.CLASS_ATTR, "ui-corner-all ui-widget-content " + selectedClass, null);
 
         String accesskey = checkbox.getAccesskey();
         if (accesskey != null) writer.writeAttribute("accesskey", accesskey, null);
