@@ -679,6 +679,9 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 	var currentYear = this.cfg.currentYear;
 	var currentMonth = this.cfg.currentMonth;
 	var currentDay = this.cfg.currentDay;
+	var monthStartDate = new Date(currentYear, currentMonth, 1, 0, 0, 0, 0);
+	var lastDayOfMonth = this.determineLastDayOfMonth(currentYear, currentMonth);
+	var monthEndDate = new Date(currentYear, currentMonth, lastDayOfMonth, 23, 59, 59, 999);
 
 	// add event divs at appropriate day divs
 	var i;
@@ -688,9 +691,11 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 		var eventStartYear = event.startDate.substring(0,4);
 		var eventStartMonth = parseInt(event.startDate.substring(5,7)) - 1;
 		var eventStartDay = parseInt(event.startDate.substring(8,10));
+		var eventStartDate = new Date(eventStartYear, eventStartMonth, eventStartDay, 0, 0, 0, 0);
 		var eventEndYear = event.endDate.substring(0,4);
 		var eventEndMonth = parseInt(event.endDate.substring(5,7)) - 1;
 		var eventEndDay = parseInt(event.endDate.substring(8,10));
+		var eventEndDate = new Date(eventEndYear, eventEndMonth, eventEndDay, 23, 59, 59, 999);
 		var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
 		if (currentYear == eventStartYear && currentMonth == eventStartMonth) {
 			var dayDiv = this.jq.find('.calendar-day-' + eventStartYear
@@ -761,6 +766,24 @@ ice.ace.Schedule.prototype.renderMonthEvents = function(data) {
 			for (j = 1; j <= eventEndDay; j++) {
 				var dayDiv = this.jq.find('.calendar-day-' + eventEndYear
 					+ '-' + this.addLeadingZero(eventEndMonth + 1)
+					+ '-' + this.addLeadingZero(j) + ' .schedule-state');
+				var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+				if (event.isAllDay) {
+					eventElement.html('<span>ALL DAY ' + event.title + '</span>');
+					eventElement.addClass('schedule-event-allday');
+					var lastAllDayEvent = dayDiv.find('.schedule-event-allday:last');
+					if (lastAllDayEvent.size() > 0) eventElement.insertAfter(lastAllDayEvent);
+					else eventElement.insertAfter(dayDiv.find('.day-number'));
+				} else {
+					eventElement.html('<span>(cont.) ' + event.title + '</span>');
+					eventElement.appendTo(dayDiv);
+				}
+			}
+		} else if (eventStartDate <= monthStartDate && eventEndDate >= monthEndDate) {
+			var j;
+			for (j = 1; j <= lastDayOfMonth; j++) {
+				var dayDiv = this.jq.find('.calendar-day-' + eventEndYear
+					+ '-' + this.addLeadingZero(currentMonth + 1)
 					+ '-' + this.addLeadingZero(j) + ' .schedule-state');
 				var eventElement = ice.ace.jq('<div class=\"ui-state-default ui-corner-all schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
 				if (event.isAllDay) {
@@ -952,7 +975,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 					}
 				}
 			}
-		// event starts before the current week
+		// event starts before the current week and ends in it
 		} else if (eventEndDate >= weekStartDate && eventEndDate < weekEndDate) {
 			if (event.isAllDay) {
 				allDayEventCount++;
@@ -974,6 +997,20 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 						var selector = '.schedule-dow-'+dow+'.schedule-time-allday-'+allDayEventCount+' .schedule-state';
 						eventElement.appendTo(ice.ace.jq(selector));
 					}
+				}
+			}
+		} else if (eventStartDate <= weekStartDate && eventEndDate >= weekEndDate) {
+			if (event.isAllDay) {
+				allDayEventCount++;
+				this.addAllDayRow(allDayEventCount);
+
+				var dow;
+				for (dow = 0; dow <= 6; dow++) {
+					var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+					var eventElement = ice.ace.jq('<div class="ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-allday schedule-event-' + event.index + customStyleClass + '"></div>');
+					eventElement.html('<span class="schedule-event-bold">' + event.title + '</span>, ' + event.location);
+					var selector = '.schedule-dow-'+dow+'.schedule-time-allday-'+allDayEventCount+' .schedule-state';
+					eventElement.appendTo(ice.ace.jq(selector));
 				}
 			}
 		}
@@ -1072,7 +1109,7 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 					}
 				}
 			}
-		// event starts before the current week
+		// event starts before the current week and ends in the current week
 		} else if (eventEndDate >= weekStartDate && eventEndDate < weekEndDate) {
 			var date = new Date();
 			date.setFullYear(weekStartDate.getFullYear());
@@ -1112,6 +1149,35 @@ ice.ace.Schedule.prototype.renderWeekEvents = function() {
 						height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
 					this.markUsedTimeSlots(this.weekTimeSlots[dow], startingTimeSlot, endingTimeSlot);
 				}
+			}
+		// event starts before the current week and ends after the current week
+		} else if (eventStartDate <= weekStartDate && eventEndDate >= weekEndDate) {
+			var dow;
+			for (dow = 0; dow <= 6; dow++) {
+				var startingTimeSlot = '0000';
+				var selector = '.schedule-dow-'+dow+'.schedule-time-'+startingTimeSlot;
+				var timeCell = this.jq.find(selector);
+				var position = timeCell.position();
+				var width = timeCell.outerWidth() - 1;
+				var endHour = '24';
+				var endMinutes = '00';
+				var endingTimeSlot = this.determinePreviousTimeCell(endHour, endMinutes);
+				var endSelector = '.schedule-dow-'+dow+'.schedule-time-'+endingTimeSlot;
+				var endTimeCell = this.jq.find(endSelector);
+				var endPosition = endTimeCell.position();
+				var height = endTimeCell.outerHeight() - 1;
+				var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+				var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-dow-' + dow + ' schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+				eventElement.html('(cont.) ' + event.title);
+				var timeSlotMultiplicity = this.weekTimeSlots[dow][this.timeSlotIndexMap[startingTimeSlot]];
+				timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+				var multiplicityAdjustment = timeSlotMultiplicity * 5;
+				eventElement.css({position:'absolute',
+					top:position.top+(isChrome?1:0),
+					left:position.left+multiplicityAdjustment+(isChrome?1:0),
+					width: (width - multiplicityAdjustment) + 'px', 
+					height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+				this.markUsedTimeSlots(this.weekTimeSlots[dow], startingTimeSlot, endingTimeSlot);
 			}
 		}
 	}
@@ -1234,7 +1300,8 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 		eventEndDate.setDate(endDay);
 		if ((eventStartDate.getFullYear() == currentYear && eventStartDate.getMonth() == currentMonth 
 			&& eventStartDate.getDate() == currentDay) || (eventEndDate.getFullYear() == currentYear 
-			&& eventEndDate.getMonth() == currentMonth && eventEndDate.getDate() == currentDay)) {
+			&& eventEndDate.getMonth() == currentMonth && eventEndDate.getDate() == currentDay) 
+			|| (eventStartDate < date && eventEndDate > date)) {
 			if (event.isAllDay) {
 				allDayEventCount++;
 				this.addAllDayRow(allDayEventCount);
@@ -1313,6 +1380,38 @@ ice.ace.Schedule.prototype.renderDayEvents = function() {
 			var endHour = event.endTime.substring(0,2);
 			var endMinutes = parseInt(event.endTime.substring(3,5));
 			var endingTimeSlot = this.determinePreviousTimeCell(endHour, endMinutes);
+			var endSelector = '.schedule-dow-single.schedule-time-'+endingTimeSlot;
+			var endTimeCell = this.jq.find(endSelector);
+			var endPosition = endTimeCell.position();
+			var height = endTimeCell.outerHeight() - 1;
+			var customStyleClass = event.styleClass ? ' ' + event.styleClass : '';
+			var eventElement = ice.ace.jq('<div class=\"ui-state-default schedule-event schedule-event-' + event.index + customStyleClass + '\"></div>');
+			eventElement.html(this.getEventDivMarkup(hour, minutes, endHour, endMinutes, event, true));
+			var timeSlotMultiplicity = this.dayTimeSlots[this.timeSlotIndexMap[startingTimeSlot]];
+			timeSlotMultiplicity = timeSlotMultiplicity < 4 ? timeSlotMultiplicity : 4;
+			var multiplicityAdjustment = timeSlotMultiplicity * 5;
+			var isChrome = ice.ace.browser.isChrome() && navigator.userAgent.indexOf('Edge\/') == -1;
+			eventElement.css({position:'absolute',
+				top:position.top+(isChrome?1:0),
+				left:position.left+multiplicityAdjustment+(isChrome?1:0),
+				width: (width - multiplicityAdjustment) + 'px',
+				height: (endPosition.top - position.top + height) + 'px'}).appendTo(eventsContainer);
+			var highlightClass = listing % 2 == 1 ? ' ui-state-highlight' : '';
+			ice.ace.jq('<div class="schedule-list-event schedule-event-' + event.index + highlightClass + '"><span class="schedule-list-event-day">(continued)</span><span class="schedule-list-event-name">'+event.title+'</span><span class="schedule-list-event-location">'+event.location+'</span></div>').appendTo(sidebarEventsContainer);
+			this.markUsedTimeSlots(this.dayTimeSlots, startingTimeSlot, endingTimeSlot);
+			listing++;
+		// events that neither start nor end on this day but that encompass it
+		} else if (eventStartDate < date && eventEndDate > date) {
+			var hour = '00';
+			var minutes = '00';
+			var startingTimeSlot = hour + minutes;
+			var selector = '.schedule-dow-single.schedule-time-'+startingTimeSlot;
+			var timeCell = this.jq.find(selector);
+			var position = timeCell.position();
+			var width = timeCell.outerWidth() - 1;
+			var endHour = '24';
+			var endMinutes = 0;
+			var endingTimeSlot = '2330';
 			var endSelector = '.schedule-dow-single.schedule-time-'+endingTimeSlot;
 			var endTimeCell = this.jq.find(endSelector);
 			var endPosition = endTimeCell.position();
