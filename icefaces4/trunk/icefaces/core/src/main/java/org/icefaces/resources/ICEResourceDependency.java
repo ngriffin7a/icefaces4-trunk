@@ -30,6 +30,8 @@ public @interface ICEResourceDependency {
      * <p>This property is mutually exclusive with 'browser'. If defined,
      * the resource defined in this annotation is assumed to be served
      * to all browsers not overridden.</p>
+     *
+     * @return the dependencies.
      */
     public ICEBrowserDependency[] browserOverride() default {};
 
@@ -40,6 +42,8 @@ public @interface ICEResourceDependency {
      * <p>Note this property has no effect if browserOverride is defined.
      * In that cased this annotation is assumed to apply to all browsers
      * not overridden.</p>
+     *
+     * @return the browser.
      */
     public BrowserType browser() default BrowserType.ALL;
 
@@ -49,6 +53,8 @@ public @interface ICEResourceDependency {
      * is valid to have EL Expressions in the value of this attribute,
      * as long as the expression resolves to an instance of the expected
      * type.</p>
+     *
+     * @return the resourceName.
      */
     public String name() default "";
 
@@ -59,6 +65,8 @@ public @interface ICEResourceDependency {
      * valid to have EL Expressions in the value of this attribute, as
      * long as the expression resolves to an instance of the expected
      * type.</p>
+     *
+     * @return the libraryName.
      */
     public String library() default "";
 
@@ -72,6 +80,8 @@ public @interface ICEResourceDependency {
      * must be called instead, as described above.  It is valid to have
      * EL Expressions in the value of this attribute, as long as the
      * expression resolves to an instance of the expected type.</p>
+     *
+     * @return the target.
      */
     public String target() default "";
 }

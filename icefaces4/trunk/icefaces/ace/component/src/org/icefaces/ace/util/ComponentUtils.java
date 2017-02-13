@@ -244,7 +244,7 @@ public class ComponentUtils {
      * used by GrowlMessagesRenderer and MessagesRenderer for option @inView
      *
      * @param context
-     * @return
+     * @return list of ids in view
      */
     public static List<String> findIdsInView(FacesContext context) {
         List<String> idList = new ArrayList<String>();
@@ -278,7 +278,7 @@ public class ComponentUtils {
      *
      * @param context
      * @param idsInView
-     * @return
+     * @return messages in view iterator
      */
     public static Iterator<FacesMessage> getMessagesInView(FacesContext context, List<String> idsInView) {
         List<FacesMessage> compiledList = new ArrayList<FacesMessage>();
@@ -311,7 +311,7 @@ public class ComponentUtils {
      *
      * @param button
      * @param context
-     * @return
+     * @return the buttonGroup id
      */
     public static String findInHeirarchy(ButtonGroupMember button, FacesContext context) {
         String groupId = "";
@@ -327,7 +327,7 @@ public class ComponentUtils {
      *
      * @param button
      * @param fc
-     * @return
+     * @return the groupList
      */
     public static List<String> findInFacesContext(ButtonGroupMember button, FacesContext fc) {
         List<String> groupList = new ArrayList<String>();

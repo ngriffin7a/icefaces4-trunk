@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2014 ICEsoft Technologies Canada Corp.
+ * Copyright 2004-2017 ICEsoft Technologies Canada Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the
@@ -29,12 +29,15 @@ public interface PortableRenderer {
      * asynchronously rendered
      * (it is already rendered as a result of the user event being
      * processed).
+     * @param group the group of sessions to be rendered
      */
     void render(String group);
 
     /**
      * Render message to the specified group of sessions but only to the clients
      * that have their blocking connection paused.
+     * @param group the group to render
+     * @param options the PushOptions to use during the render
      */
     void render(String group, PushOptions options);
 

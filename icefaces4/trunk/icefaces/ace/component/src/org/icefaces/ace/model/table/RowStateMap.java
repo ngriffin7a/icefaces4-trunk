@@ -114,7 +114,7 @@ public class RowStateMap implements Map<Object, RowState>, Serializable {
      * Remove the row state for a particular row object. A new empty state will
      * be added for the row if it is rendered in a coming request.
      * @param o
-     * @return
+     * @return the rowstate returned by the remove method.
      */
     public RowState remove(Object o) {
         return map.remove(o);
