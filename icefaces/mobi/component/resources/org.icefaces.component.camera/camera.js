@@ -67,7 +67,57 @@
 			}
 		}
 
-		function renderCameraFallbackFileUpload(){
+		function renderCameraFallbackFileUpload(error){
+
+			function displayDialog(message) {
+				var popDiv = document.createElement("div");
+				popDiv.setAttribute(
+					"style",
+					"height:auto;" +
+					"min-height:100px;" +
+					"width:auto;" +
+					"min-width:200px;" +
+					"position:fixed;" +
+					"text-align:center;" +
+					"top: 50px;" +
+					"z-index:999;");
+					popDiv.setAttribute(
+						"class",
+						"ui-widget"
+					);
+				popDiv.innerHTML =
+					'<div class="ui-widget-header ui-corner-top" style="padding:5px;">Camera' +
+					'<a style="float:right;" class="ui-corner-all ui-state-default" ' +
+					'onmouseover="this.setAttribute(\'class\', \'ui-corner-all ui-state-hover\');" '+
+					'onmouseout="this.setAttribute(\'class\', \'ui-corner-all ui-state-default\');" '+
+					'onclick="document.body.removeChild(this.parentNode.parentNode)">'+
+					'<span class="ui-icon ui-icon-closethick"></span></a></div>' +
+					'<div class="ui-widget-content ui-corner-bottom" style="padding:10px;">' +
+					'<p>' + message + '</p>';
+					'</div>';
+				document.body.appendChild(popDiv);
+
+				var centerDiv = function(){
+					if( window.innerWidth ){
+						var leftPos = (window.innerWidth - popDiv.offsetWidth) /2;
+						popDiv.style.left = ''+leftPos + 'px';
+					}
+				}
+				centerDiv();
+				if( window.addEventListener ){
+					window.addEventListener('orientationchange', centerDiv, false);
+					window.addEventListener('resize', centerDiv, false);
+				}
+			}
+
+			if (error) {
+				displayDialog("No camera is available or there was an unknown error.<br />Falling back to file upload.");
+			} else {
+				if (!window.cameraFallbackDialogDisplayed) {
+					displayDialog("Access to the camera is not supported in this browser.<br />Falling back to file upload.");
+					window.cameraFallbackDialogDisplayed = true;
+				}
+			}
 
 			function getFileInput(){
 				var input = document.getElementById(id+'_fileupload');
@@ -344,7 +394,7 @@
 					}
 					ice.log.debug(ice.log, "mobi:camera activated: getUserMedia is available, but no camera available, falling back to file upload. Error: " + errorMessage);
 					document.body.removeChild(document.getElementById(id+'_popup'));
-					renderCameraFallbackFileUpload();
+					renderCameraFallbackFileUpload(true);
 				};
 
 				function orientationChangeListener() {
