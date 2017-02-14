@@ -352,23 +352,29 @@
         }
 
         //override the primitive submit function with one that will block sub-sequent calls
-        var lock = false;
+        var locked = false;
         var originalSubmitFunction = ice.submitFunction;
         ice.submitFunction = function(element, event, options) {
-            var blockedContainer = resolveBlockUIElement(element);
-			var originalElement = element._original ? element._original : element;
-            if (!blockedContainer || (isParentElement(blockedContainer, originalElement) && !lock)
-				|| !isParentElement(blockedContainer, originalElement)) {
-                lock = true;
-                var originalOnEvent = options.onevent;
-                options.onevent = function(submitEvent) {
-                    if (submitEvent.status == 'success') {
-                        lock = false;
+            if (isMonitoringElement(element)) {
+                if (!locked) {
+                    locked = true;
+                    function unlock(submitEvent) {
+                        if (submitEvent.status == 'success') {
+                            locked = false;
+                        }
                     }
-                    if (originalOnEvent) {
-                        originalOnEvent(submitEvent);
+                    if (options.onevent) {
+                        var previousCallback = options.onevent;
+                        options.onevent = function (e) {
+                            previousCallback(e);
+                            unlock(e);
+                        };
+                    } else {
+                        options.onevent = unlock;
                     }
-                };
+                    originalSubmitFunction(element, event, options);
+                }
+            } else {
                 originalSubmitFunction(element, event, options);
             }
         };
