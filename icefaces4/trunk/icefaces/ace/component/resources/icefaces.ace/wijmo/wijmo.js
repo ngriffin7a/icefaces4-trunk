@@ -4111,6 +4111,9 @@ function wijmoASPNetParseOptions(o) {
 				if ($(this).is("a")) {
 					self.activate(e, $(this).parent());
 				}
+			})
+			.bind("focusout", function (e) { // ICE-11224
+				var item = $(this);item.removeClass("ui-state-focus");
 			});
 		},
 

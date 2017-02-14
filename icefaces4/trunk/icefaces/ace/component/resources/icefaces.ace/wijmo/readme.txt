@@ -23,3 +23,4 @@ ICE-9446 added support for a single ace:multiColumnSubmenu in ace:menu
 ICE-9420 added CSS class name to submenus to apply the drop shadow rule
 ICE-9608 fix to handle the effects wrapper container used in slide animations to make sure the menu is hidden properly
 ICE-10279 fix for setting submenus and menu item widths depending on content
+ICE-11224 fix for removing ui-state-focus styling when focusing out
