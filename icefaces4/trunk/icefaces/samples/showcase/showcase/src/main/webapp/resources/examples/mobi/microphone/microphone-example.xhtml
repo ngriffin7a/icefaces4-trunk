@@ -45,7 +45,7 @@
 		<h:panelGroup layout="block">
 			<mobi:fieldsetGroup rendered="#{microphoneBean.outputResource == null}">
 				<mobi:fieldsetRow>
-					<ace:pushButton styleClass="submit"
+					<ace:pushButton styleClass="submit" id="upload"
 									 actionListener="#{microphoneBean.processUploadedAudio}"
 									 value="Upload Recorded Audio">
 						<ace:ajax execute="@all" render="@all" />
@@ -69,5 +69,15 @@
         <h:outputText value="#{microphoneBean.uploadMessage}" style="margin-left:10px"/>
 
     </h:form>
+
+	<script type="text/javascript">
+		(function(){ // disable upload button on iOS
+			if (ice.mobi.microphoneBtnOnclick.getMobileOperatingSystem() == 'iOS') {
+				var uploadButton = document.getElementById('upload_button');
+				uploadButton.setAttribute('disabled', 'disabled');
+				uploadButton.className += ' ui-state-disabled';
+			}
+		})();
+	</script>
 
 </ui:composition>
