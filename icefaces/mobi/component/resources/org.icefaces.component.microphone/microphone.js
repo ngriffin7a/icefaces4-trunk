@@ -26,57 +26,7 @@
 			return hiddenInput;
 		}
 
-		function renderMicrophoneFallbackFileUpload(error){
-
-			function displayDialog(message) {
-				var popDiv = document.createElement("div");
-				popDiv.setAttribute(
-					"style",
-					"height:auto;" +
-					"min-height:100px;" +
-					"width:auto;" +
-					"min-width:200px;" +
-					"position:fixed;" +
-					"text-align:center;" +
-					"top: 50px;" +
-					"z-index:999;");
-					popDiv.setAttribute(
-						"class",
-						"ui-widget"
-					);
-				popDiv.innerHTML =
-					'<div class="ui-widget-header ui-corner-top" style="padding:5px;">Microphone' +
-					'<a style="float:right;" class="ui-corner-all ui-state-default" ' +
-					'onmouseover="this.setAttribute(\'class\', \'ui-corner-all ui-state-hover\');" '+
-					'onmouseout="this.setAttribute(\'class\', \'ui-corner-all ui-state-default\');" '+
-					'onclick="document.body.removeChild(this.parentNode.parentNode)">'+
-					'<span class="ui-icon ui-icon-closethick"></span></a></div>' +
-					'<div class="ui-widget-content ui-corner-bottom" style="padding:10px;">' +
-					'<p>' + message + '</p>';
-					'</div>';
-				document.body.appendChild(popDiv);
-
-				var centerDiv = function(){
-					if( window.innerWidth ){
-						var leftPos = (window.innerWidth - popDiv.offsetWidth) /2;
-						popDiv.style.left = ''+leftPos + 'px';
-					}
-				}
-				centerDiv();
-				if( window.addEventListener ){
-					window.addEventListener('orientationchange', centerDiv, false);
-					window.addEventListener('resize', centerDiv, false);
-				}
-			}
-
-			if (error) {
-				displayDialog("No microphone is available or there was an unknown error.<br />Falling back to file upload.");
-			} else {
-				if (!window.microphoneFallbackDialogDisplayed) {
-					displayDialog("Access to the microphone is not supported in this browser.<br />Falling back to file upload.");
-					window.microphoneFallbackDialogDisplayed = true;
-				}
-			}
+		function renderMicrophoneFallbackFileUpload(){
 
 			function getFileInput(){
 				var input = document.getElementById(id+'_fileupload');
@@ -253,7 +203,7 @@
 				errorCallback = function(err){
 					ice.log.debug(ice.log, "mobi:microphone activated: getUserMedia is available, but no microphone available, falling back to file upload");
 					document.body.removeChild(document.getElementById(id+'_popup'));
-					renderMicrophoneFallbackFileUpload(true);
+					renderMicrophoneFallbackFileUpload();
 				};
 
 				var recording = false;
@@ -375,6 +325,26 @@
 		} else {
 			renderMicrophoneFallbackFileUpload();
 		}
+	};
+
+	ice.mobi.microphoneBtnOnclick.getMobileOperatingSystem = function() {
+	  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+		  // Windows Phone must come first because its UA also contains "Android"
+		if (/windows phone/i.test(userAgent)) {
+			return "Windows Phone";
+		}
+
+		if (/android/i.test(userAgent)) {
+			return "Android";
+		}
+
+		// iOS detection from: http://stackoverflow.com/a/9039885/177710
+		if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+			return "iOS";
+		}
+
+		return "unknown";
 	};
 
 })();
