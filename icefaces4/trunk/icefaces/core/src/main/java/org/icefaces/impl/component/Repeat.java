@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Repeat extends UIData {
+    private enum PropertyKeys {
+        saved
+    }
 
     public Repeat() {
         setRowStatePreserved(true);
@@ -136,7 +139,8 @@ public class Repeat extends UIData {
 
         while (index <= last) {
             setRowIndex(index);
-            restoreDescendantState();
+            restoreState();
+
             Object item = model.getRowData();
             requestMap.put(var, item);
             if (varStatus != null) {
@@ -145,7 +149,7 @@ public class Repeat extends UIData {
 
             runnable.run();
 
-            saveDescendantState();
+            saveState();
             resetClientIDs(this);
             index++;
         }
@@ -168,25 +172,15 @@ public class Repeat extends UIData {
         return null;
     }
 
-    enum PropertyKeys {
-        saved
-    }
-
-    private void restoreDescendantState() {
-        if (getChildCount() > 0) {
-            for (UIComponent kid : getChildren()) {
-                restoreDescendantState(kid);
-            }
+    private void restoreState() {
+        for (UIComponent kid : getChildren()) {
+            restoreState(kid);
         }
     }
 
-    private void restoreDescendantState(UIComponent component) {
-        // Reset the client identifier for this component
-        String id = component.getId();
-        component.setId(id); // Forces client id to be reset
+    private void restoreState(UIComponent component) {
         StateHelper stateHelper = getStateHelper();
         Map<String, SavedState> saved = (Map<String, SavedState>) stateHelper.get(PropertyKeys.saved);
-        // Restore state for this component (if it is a EditableValueHolder)
         if (component instanceof EditableValueHolder) {
             EditableValueHolder input = (EditableValueHolder) component;
             String clientId = component.getClientId();
@@ -195,60 +189,53 @@ public class Repeat extends UIData {
             if (state == null) {
                 input.resetValue();
             } else {
-                input.setValue(state.getValue());
-                input.setValid(state.isValid());
-                input.setSubmittedValue(state.getSubmittedValue());
-                // This *must* be set after the call to setValue(), since
-                // calling setValue() always resets "localValueSet" to true.
-                input.setLocalValueSet(state.isLocalValueSet());
+                input.setValue(state.value);
+                input.setValid(state.valid);
+                input.setSubmittedValue(state.submittedValue);
+                //set after the call to setValue() to avoid "localValueSet" reset
+                input.setLocalValueSet(state.localValueSet);
             }
         } else if (component instanceof UIForm) {
             UIForm form = (UIForm) component;
             String clientId = component.getClientId();
             SavedState state = (saved == null ? null : saved.get(clientId));
             if (state == null) {
-                // submitted is transient state
                 form.setSubmitted(false);
             } else {
-                form.setSubmitted(state.getSubmitted());
+                form.setSubmitted(state.submitted);
             }
         }
 
-        // Restore state for children of this component
         if (component.getChildCount() > 0) {
             for (UIComponent kid : component.getChildren()) {
-                restoreDescendantState(kid);
+                restoreState(kid);
             }
         }
 
-        // Restore state for facets of this component
         if (component.getFacetCount() > 0) {
             for (UIComponent facet : component.getFacets().values()) {
-                restoreDescendantState(facet);
+                restoreState(facet);
             }
         }
     }
 
-    private void saveDescendantState() {
-        if (getChildCount() > 0) {
-            for (UIComponent kid : getChildren()) {
-                saveDescendantState(kid);
-            }
+    private void saveState() {
+        for (UIComponent kid : getChildren()) {
+            saveState(kid);
         }
     }
 
-    private void saveDescendantState(UIComponent component) {
-        // Save state for this component (if it is a EditableValueHolder)
+    private void saveState(UIComponent component) {
         StateHelper stateHelper = getStateHelper();
         Map<String, SavedState> saved = (Map<String, SavedState>) stateHelper.get(PropertyKeys.saved);
         String clientId = component.getClientId();
         if (component instanceof EditableValueHolder) {
             EditableValueHolder input = (EditableValueHolder) component;
             SavedState state = extractSavedState(saved, clientId);
-            state.setValue(input.getLocalValue());
-            state.setValid(input.isValid());
-            state.setSubmittedValue(input.getSubmittedValue());
-            state.setLocalValueSet(input.isLocalValueSet());
+            state.value = input.getLocalValue();
+            state.valid = input.isValid();
+            state.submittedValue = input.getSubmittedValue();
+            state.localValueSet = input.isLocalValueSet();
             if (state.hasDeltaState()) {
                 stateHelper.put(PropertyKeys.saved, clientId, state);
             } else if (saved != null) {
@@ -257,7 +244,7 @@ public class Repeat extends UIData {
         } else if (component instanceof UIForm) {
             UIForm form = (UIForm) component;
             SavedState state = extractSavedState(saved, clientId);
-            state.setSubmitted(form.isSubmitted());
+            state.submitted = form.isSubmitted();
             if (state.hasDeltaState()) {
                 stateHelper.put(PropertyKeys.saved, clientId, state);
             } else if (saved != null) {
@@ -265,17 +252,15 @@ public class Repeat extends UIData {
             }
         }
 
-        // Save state for children of this component
         if (component.getChildCount() > 0) {
             for (UIComponent uiComponent : component.getChildren()) {
-                saveDescendantState(uiComponent);
+                saveState(uiComponent);
             }
         }
 
-        // Save state for facets of this component
         if (component.getFacetCount() > 0) {
             for (UIComponent facet : component.getFacets().values()) {
-                saveDescendantState(facet);
+                saveState(facet);
             }
         }
     }
@@ -295,55 +280,14 @@ public class Repeat extends UIData {
     }
 
     private class SavedState implements Serializable {
-        private Object submittedValue;
-        private boolean submitted;
-        private boolean valid = true;
-        private Object value;
-        private boolean localValueSet;
-
-        Object getSubmittedValue() {
-            return (this.submittedValue);
-        }
-
-        void setSubmittedValue(Object submittedValue) {
-            this.submittedValue = submittedValue;
-        }
-
-        boolean isValid() {
-            return (this.valid);
-        }
-
-        void setValid(boolean valid) {
-            this.valid = valid;
-        }
-
-        Object getValue() {
-            return (this.value);
-        }
-
-        public void setValue(Object value) {
-            this.value = value;
-        }
-
-        boolean isLocalValueSet() {
-            return (this.localValueSet);
-        }
-
-        public void setLocalValueSet(boolean localValueSet) {
-            this.localValueSet = localValueSet;
-        }
-
-        public boolean getSubmitted() {
-            return this.submitted;
-        }
-
-        public void setSubmitted(boolean submitted) {
-            this.submitted = submitted;
-        }
+        Object submittedValue;
+        boolean submitted;
+        boolean valid = true;
+        Object value;
+        boolean localValueSet;
 
         public boolean hasDeltaState() {
-            return submittedValue != null || value != null || localValueSet
-                    || !valid || submitted;
+            return submittedValue != null || value != null || localValueSet || !valid || submitted;
         }
     }
 }
