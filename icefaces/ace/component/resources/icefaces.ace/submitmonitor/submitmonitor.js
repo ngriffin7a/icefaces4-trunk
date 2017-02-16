@@ -90,44 +90,30 @@
             consoleLog('Overlay  !autoCenter  found revert');
         }
 
-        setTimeout(function() {
-            consoleLog('Overlay  setTimeout to add overlay / clone / revert  addElements: ' + addElements);
-            if (whenShownFunc) {
-                whenShownFunc();
-                whenShownFunc = null;
+        function positionOverlay() {
+            var overlayWidth = 0, overlayHeight = 0;
+            if (container == document.body) {
+                overlayWidth = Math.max(document.documentElement.scrollWidth,
+                    Math.max(document.body.scrollWidth, document.body.parentNode.offsetWidth));
+                overlayHeight = Math.max(document.documentElement.scrollHeight,
+                    Math.max(document.body.scrollHeight, document.body.parentNode.offsetHeight));
+            } else {
+                overlayWidth = container.offsetWidth;
+                overlayHeight = container.offsetHeight;
             }
-            if (!addElements) {
-                return;
+            var x = container.offsetTop;
+            var y = container.offsetLeft;
+            overlay.style.cssText = 'top: ' + x + 'px; left: ' + y + 'px; width: ' + overlayWidth + 'px; height: ' + overlayHeight + 'px; position: absolute; z-index: 28000; zoom: 1;';
+            if (container != document.body) {
+                ice.ace.jq(overlay).position({
+                    my: 'left top',
+                    at: 'left top',
+                    of: container,
+                    collision: 'none'
+                });
             }
-            if (revertElem) {
-                revertZIndex = revertElem.css('z-index');
-                revertElem.css('z-index', '28001');
-                revertElem.css('display', '');
-                consoleLog('Overlay  setTimeout  showed revert');
-            }
-            if (overlay) {
-                var overlayWidth = 0, overlayHeight = 0;
-                if (container == document.body) {
-                    overlayWidth = Math.max(document.documentElement.scrollWidth,
-                        Math.max(document.body.scrollWidth, document.body.parentNode.offsetWidth));
-                    overlayHeight = Math.max(document.documentElement.scrollHeight,
-                        Math.max(document.body.scrollHeight, document.body.parentNode.offsetHeight));
-                } else {
-                    overlayWidth = container.offsetWidth;
-                    overlayHeight = container.offsetHeight;
-                }
-                var x = container.offsetTop;
-                var y = container.offsetLeft;
-                overlay.style.cssText = 'top: ' + x + 'px; left: ' + y + 'px; width: '+overlayWidth+'px; height: '+overlayHeight+'px; position: absolute; z-index: 28000; zoom: 1;';
-                if (container != document.body) {
-                    ice.ace.jq(overlay).position({
-                        my: 'left top',
-                        at: 'left top',
-                        of: container,
-                        collision: 'none'});
-                }
-                consoleLog('Overlay  setTimeout  showed and positioned overlay');
-            }
+            consoleLog('Overlay  setTimeout  showed and positioned overlay');
+
             if (cloneToRemove) {
                 cloneToRemove.css('display', '');
                 if (container == document.body) {
@@ -145,6 +131,28 @@
                         collision: 'fit'});
                     consoleLog('Overlay  setTimeout  showed and positioned clone over other');
                 }
+            }
+        }
+
+        ice.ace.jq(window).on('resize', positionOverlay);
+
+        setTimeout(function() {
+            consoleLog('Overlay  setTimeout to add overlay / clone / revert  addElements: ' + addElements);
+            if (whenShownFunc) {
+                whenShownFunc();
+                whenShownFunc = null;
+            }
+            if (!addElements) {
+                return;
+            }
+            if (revertElem) {
+                revertZIndex = revertElem.css('z-index');
+                revertElem.css('z-index', '28001');
+                revertElem.css('display', '');
+                consoleLog('Overlay  setTimeout  showed revert');
+            }
+            if (overlay) {
+                positionOverlay();
             }
         }, addDelay);
 
@@ -384,6 +392,7 @@
         window.ice.onElementUpdate(cfg.id+'_script', function() {
             cleanup = CLEANUP_PENDING;
             cleanupMonitorMapping(cfg.id);
+            ice.ace.jq(window).off('resize', positionOverlay);
             //revert to the original (overridden) submit function
             //there can be multiple levels when more than on submit monitor is on the page
             ice.submitFunction = originalSubmitFunction;
