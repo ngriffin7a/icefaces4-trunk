@@ -118,9 +118,14 @@ public class MicrophoneRenderer extends Renderer {
 	//	writer.writeText("new ice.mobi.button('"+clientId+"_button');");
         StringBuilder uiScript = new StringBuilder("new ice.mobi.button('");
         uiScript.append( clientId ).append( "_button');");
+        String buttonId = clientId + "_button";
+		uiScript.append("if (ice.mobi.microphoneBtnOnclick.getMobileOperatingSystem() == 'iOS') {" +
+				"var buttonElem = document.getElementById('" + buttonId + "');" +
+				"buttonElem.setAttribute('disabled', 'disabled');" +
+				"buttonElem.className += ' ui-state-disabled';" +
+			"}");
         //callback for ICE-10126
         uiScript.append("window['callback" + clientId + "'] = function(arg) {");
-        String buttonId=clientId+"_button";
         String firstLine = "var buttonElem = document.getElementById('"+buttonId+"');";
         uiScript.append(firstLine);
         String secondLine=" if (buttonElem) { " +
