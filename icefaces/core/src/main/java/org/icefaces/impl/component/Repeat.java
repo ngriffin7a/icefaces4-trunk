@@ -12,6 +12,10 @@ import java.util.Map;
 
 public class Repeat extends UIData {
 
+    public Repeat() {
+        setRowStatePreserved(true);
+    }
+
     /**
      * <p>Return the request-scope attribute under which the iteration status for the
      * current row will be exposed.  This property is
