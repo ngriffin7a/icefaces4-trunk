@@ -3358,10 +3358,19 @@ function wijmoASPNetParseOptions(o) {
 			if (self.options.mode === "sliding") {
 				scrollContainer.wijsuperpanel("scrollChildIntoView", item);
 			}
-			active.children(":first:not(.ui-state-disabled)")
-			.addClass("ui-state-focus")
-			//.attr("id", "ui-active-menuitem")
-			.end();
+			// ICE-11224
+			var preventFocusStyling = false;
+			var a = item.find('a');
+			if (a.size() > 0) {
+				var onclick = a.attr('onclick');
+				if (onclick && onclick.indexOf('window.open') >= 0) preventFocusStyling = true;
+			}
+			if (!preventFocusStyling) {
+				active.children(":first:not(.ui-state-disabled)")
+				.addClass("ui-state-focus")
+				//.attr("id", "ui-active-menuitem")
+				.end();
+			}
 
 			self.element.removeAttr("aria-activedescendant");
 			self.element.attr("aria-activedescendant", active.attr("id"));
@@ -4113,7 +4122,7 @@ function wijmoASPNetParseOptions(o) {
 				}
 			})
 			.bind("focusout", function (e) { // ICE-11224
-				var item = $(this);item.removeClass("ui-state-focus");
+				$(this).removeClass("ui-state-focus");
 			});
 		},
 
