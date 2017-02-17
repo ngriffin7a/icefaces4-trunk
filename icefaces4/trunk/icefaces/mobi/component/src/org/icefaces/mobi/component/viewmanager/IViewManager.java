@@ -16,7 +16,7 @@
 
 package org.icefaces.mobi.component.viewmanager;
 
-import org.icemobile.component.IMobiComponent;
+import org.icefaces.mobi.api.IMobiComponent;
 
 public interface IViewManager{
 
