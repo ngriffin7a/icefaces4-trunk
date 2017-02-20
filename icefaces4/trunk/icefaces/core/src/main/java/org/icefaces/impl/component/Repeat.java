@@ -4,6 +4,8 @@ import javax.faces.component.*;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.FacesEvent;
 import javax.faces.model.DataModel;
 import java.io.IOException;
 import java.io.Serializable;
@@ -42,7 +44,7 @@ public class Repeat extends UIData {
     public void processDecodes(final FacesContext context) {
         if (isRendered()) {
             pushComponentToEL(context, this);
-            iterateOverChildren(context, new Runnable() {
+            iterateOverChildren(new Runnable() {
                 public void run() {
                     for (UIComponent child : getChildren()) {
                         if (child.isRendered()) {
@@ -59,7 +61,7 @@ public class Repeat extends UIData {
     public void processValidators(final FacesContext context) {
         if (isRendered()) {
             pushComponentToEL(context, this);
-            iterateOverChildren(context, new Runnable() {
+            iterateOverChildren(new Runnable() {
                 public void run() {
                     for (UIComponent child : getChildren()) {
                         if (child.isRendered()) {
@@ -75,7 +77,7 @@ public class Repeat extends UIData {
     public void processUpdates(final FacesContext context) {
         if (isRendered()) {
             pushComponentToEL(context, this);
-            iterateOverChildren(context, new Runnable() {
+            iterateOverChildren(new Runnable() {
                 public void run() {
                     for (UIComponent child : getChildren()) {
                         if (child.isRendered()) {
@@ -97,7 +99,7 @@ public class Repeat extends UIData {
         pushComponentToEL(facesContext, this);
 
         try {
-            iterateOverChildren(facesContext, new Runnable() {
+            iterateOverChildren(new Runnable() {
                 public void run() {
                     List<UIComponent> children = Repeat.this.getChildren();
                     for (UIComponent child : children) {
@@ -113,7 +115,7 @@ public class Repeat extends UIData {
     }
 
     public void encodeChildren(final FacesContext context) throws IOException {
-        iterateOverChildren(context, new Runnable() {
+        iterateOverChildren(new Runnable() {
             public void run() {
                 try {
                     Repeat.super.encodeChildren(context);
@@ -124,37 +126,64 @@ public class Repeat extends UIData {
         });
     }
 
-    private void iterateOverChildren(FacesContext context, Runnable runnable) {
+    public void broadcast(FacesEvent event) throws AbortProcessingException {
+        int actualNoRows = getDataModel().getRowCount();
+        populateVar(getVar(), getVarStatus(), getValidatedFirst(actualNoRows), getValidatedLast(actualNoRows), getRowIndex());
+        super.broadcast(event);
+        unpopulateVar();
+    }
+
+    private int getValidatedFirst(int actualNoRows) {
+        int first = getFirst();
+        return first > actualNoRows ? 0 : first;
+    }
+
+    private int getValidatedLast(int actualNoRows) {
+        int first = getValidatedFirst(actualNoRows);
+        int rows = getRows();
+        if (rows == 0 || rows + first > actualNoRows) {
+            rows = actualNoRows - first;
+        }
+        return first + rows - 1;
+    }
+
+    private void populateVar(String var, String varStatus, int first, int last, int index) {
+        final Map<String, Object> requestMap = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
+        final DataModel model = getDataModel();
+        final Object item = model.getRowData();
+        requestMap.put(var, item);
+        if (varStatus != null) {
+            requestMap.put(varStatus, new VarStatus(first, last, index));
+        }
+    }
+
+    private void unpopulateVar() {
         final String var = getVar();
         final String varStatus = getVarStatus();
-        final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
-        final DataModel model = getDataModel();
-        int first = getFirst();
-        int rows = getRows();
-        int actualNoRows = getDataModel().getRowCount();
-        rows = rows == 0 || rows + first > actualNoRows ? actualNoRows - first : rows;
-        first = first > actualNoRows ? 0 : first;
-        int last = first + rows - 1;
+        final Map<String, Object> requestMap = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
+        requestMap.remove(var);
+        requestMap.remove(varStatus);
+    }
+
+    private void iterateOverChildren(Runnable runnable) {
+        final String var = getVar();
+        final String varStatus = getVarStatus();
+        final int actualNoRows = getDataModel().getRowCount();
+        final int first = getValidatedFirst(actualNoRows);
+        final int last = getValidatedLast(actualNoRows);
+
         int index = first < actualNoRows ? first : 0;
 
         while (index <= last) {
             setRowIndex(index);
             restoreState();
-
-            Object item = model.getRowData();
-            requestMap.put(var, item);
-            if (varStatus != null) {
-                requestMap.put(varStatus, new VarStatus(first, last, index));
-            }
-
+            populateVar(var, varStatus, first, last, index);
             runnable.run();
-
             saveState();
             resetClientIDs(this);
             index++;
         }
-        requestMap.remove(var);
-        requestMap.remove(varStatus);
+        unpopulateVar();
     }
 
     private void resetClientIDs(UIComponent component) {
