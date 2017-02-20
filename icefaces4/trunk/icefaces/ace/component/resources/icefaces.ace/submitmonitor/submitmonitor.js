@@ -161,6 +161,7 @@
             addElements = false;
             if (overlay) {
                 try {
+                    ice.ace.jq(window).off('resize', positionOverlay);
                     overlay.parentNode.removeChild(overlay);
                 } catch (e) { //ignore, the overlay does not match the document after a html/body level update
                 }
@@ -392,7 +393,6 @@
         window.ice.onElementUpdate(cfg.id+'_script', function() {
             cleanup = CLEANUP_PENDING;
             cleanupMonitorMapping(cfg.id);
-            ice.ace.jq(window).off('resize', positionOverlay);
             //revert to the original (overridden) submit function
             //there can be multiple levels when more than on submit monitor is on the page
             ice.submitFunction = originalSubmitFunction;
