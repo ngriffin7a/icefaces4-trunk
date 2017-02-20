@@ -59,7 +59,7 @@ ice.ace.Dialog = function(parentID, cfg) {
 		var width = ice.ace.jq(node).css('width');
 		if (width != '100%' && width != 'auto' && width.substring(0,1) != '0') return true;
 		else return hasSpecificWidth(node.parentNode);
-	}
+	};
 
 	if (!cfg.width) {
 		var tables = this.jq.find('.ui-datatable');
@@ -110,6 +110,12 @@ ice.ace.Dialog = function(parentID, cfg) {
 			this.cfg.position = {my: this.cfg.dialogPosition, at: this.cfg.relativePosition, of: relativeToElement, collision: 'none'};
 		}
 	}
+
+    this.positionOnWindowResize = function() {
+        _self.jq.dialog({
+            position: _self.cfg.position
+        })
+    };
 
     //Create the dialog
     this.cfg.autoOpen = false;
@@ -230,6 +236,7 @@ ice.ace.Dialog.prototype.show = function() {
         if ('**none' != focusOn) {
             self.focusInput(focusOn);
         }
+        ice.ace.jq(window).on('resize', self.positionOnWindowResize);
     }, 1);
     setTimeout(function() {
 		self.recreateChildEditors();
@@ -240,6 +247,7 @@ ice.ace.Dialog.prototype.hide = function() {
 	var self = this;
     setTimeout(function(){
         if (self.cfg.isVisible){
+            ice.ace.jq(window).off('resize', self.positionOnWindowResize);
             self.jq.dialog('close');
             var oldClass = self.jq.dialogClass;
             self.cfg.isVisible=false;
