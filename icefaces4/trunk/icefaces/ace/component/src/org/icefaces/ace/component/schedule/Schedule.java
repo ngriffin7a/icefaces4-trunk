@@ -52,9 +52,9 @@ public class Schedule extends ScheduleBase implements Serializable {
             String eventName = params.get("javax.faces.behavior.event");
 			String clientId = getClientId(context);
 
-            if (eventName.equals("eventClick")) {
+            if (eventName.equals("selectEvent")) {
 				ScheduleEvent scheduleEvent = ScheduleUtils.buildScheduleEventFromRequest(this, params, clientId);
-                event = new ScheduleClickEvent((AjaxBehaviorEvent) event, "eventClick", "", "", scheduleEvent);
+                event = new ScheduleClickEvent((AjaxBehaviorEvent) event, "selectEvent", "", "", scheduleEvent);
             } else if (eventName.equals("dayDblclick")) {
 				String day = params.get(clientId + "_dayDblclick");
                 event = new ScheduleClickEvent((AjaxBehaviorEvent) event, "dayDblclick", day, "", null);
@@ -73,11 +73,11 @@ public class Schedule extends ScheduleBase implements Serializable {
             } else if (eventName.equals("deleteEvent")) {
 				ScheduleEvent scheduleEvent = ScheduleUtils.buildScheduleEventFromRequest(this, params, clientId);
                 event = new ScheduleModifyEvent((AjaxBehaviorEvent) event, "deleteEvent", scheduleEvent, null);
-            } else if (eventName.equals("next")) {
+            } else if (eventName.equals("navNext")) {
 				String startDate = params.get(clientId + "_startDate");
 				String endDate = params.get(clientId + "_endDate");
                 event = new ScheduleNavigationEvent((AjaxBehaviorEvent) event, "next", startDate, endDate);
-            } else if (eventName.equals("previous")) {
+            } else if (eventName.equals("navPrevious")) {
 				String startDate = params.get(clientId + "_startDate");
 				String endDate = params.get(clientId + "_endDate");
                 event = new ScheduleNavigationEvent((AjaxBehaviorEvent) event, "previous", startDate, endDate);

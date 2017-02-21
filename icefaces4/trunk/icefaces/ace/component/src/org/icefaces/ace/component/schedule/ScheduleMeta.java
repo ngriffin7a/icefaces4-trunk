@@ -52,7 +52,7 @@ import java.util.Date;
     @ICEResourceDependency(name = "schedule/schedule.js")
 })
 @ClientBehaviorHolder(events = {
-	@ClientEvent( name="eventClick",
+	@ClientEvent( name="selectEvent",
 		javadoc="Fired when the user clicks on an event in the schedule. The listener method for this event can take an event object of the type org.icefaces.ace.event.ScheduleClickEvent.",
 		tlddoc="Fired when the user clicks on an event in the schedule. The listener method for this event can take an event object of the type org.icefaces.ace.event.ScheduleClickEvent.",
 		defaultRender="@this", defaultExecute="@this" ),
@@ -76,40 +76,40 @@ import java.util.Date;
 		javadoc="Fired when the user clicks on the 'Yes' button after having clicked on the 'Delete' button in the Event Details dialog to delete an existing event from the schedule The listener method for this event can take an event object of the type org.icefaces.ace.event.ScheduleModifyEvent.",
 		tlddoc="Fired when the user clicks on the 'Yes' button after having clicked on the 'Delete' button in the Event Details dialog to delete an existing event from the schedule. The listener method for this event can take an event object of the type org.icefaces.ace.event.ScheduleModifyEvent.",
 		defaultRender="@this", defaultExecute="@this" ),
-	@ClientEvent( name="next",
+	@ClientEvent( name="navNext",
 		javadoc="Fired when the user clicks on the right arrow of the schedule viewer to navigate to the next month, week or day. The listener method for this event can take an event object of the type org.icefaces.ace.event.ScheduleNavigationEvent.",
 		tlddoc="Fired when the user clicks on the right arrow of the schedule viewer to navigate to the next month, week or day. The listener method for this event can take an event object of the type org.icefaces.ace.event.ScheduleNavigationEvent.",
 		defaultRender="@this", defaultExecute="@this" ),
-	@ClientEvent( name="previous",
+	@ClientEvent( name="navPrevious",
 		javadoc="Fired when the user clicks on the left arrow of the schedule viewer to navigate to the previous month, week or day. The listener method for this event can take an event object of the type org.icefaces.ace.event.ScheduleNavigationEvent.",
 		tlddoc="Fired when the user clicks on the left arrow of the schedule viewer to navigate to the previous month, week or day. The listener method for this event can take an event object of the type org.icefaces.ace.event.ScheduleNavigationEvent.",
 		defaultRender="@this", defaultExecute="@this" )},
-	defaultEvent="eventClick" )
+	defaultEvent="selectEvent" )
 public class ScheduleMeta extends UIDataMeta {
 
 	@Property(tlddoc = "The value should be a List, Array, DataModel or a type that can be adapted into a DataModel (java.sql.ResultSet, javax.servlet.jsp.jstl.sql.Result, and java.util.Collection). It must contain the org.icefaces.ace.model.schedule.ScheduleEvent objects to be displayed on the schedule. Alternatively, the value can be an implementation of org.icefaces.ace.model.schedule.LazyScheduleEventList to work in a lazy-loading mode.")
 	private Object value;
 
-	@Property(tlddoc = "A Date object specifying the date that is currently displayed in the client. This attribute can be used to set an inital date to display or to programmatically set a date to display. This attribute will be automatically updated with the current date being displayed in the client as the user interacts with the component. If the current view mode is set to 'month', this Date object will be automatically changed to the first day of the given month. If the current view mode is set to 'week', this Date object will be automatically changed to the previous Sunday, when the week starts. If the current view mode is set to 'day', this Date object will not change. The time values are irrelevant for this attribute. If this attribute is not specified, the current date is going to be used. This Date object is assumed to be in the time zone specified by the 'timeZone' attribute.")
-	private Date currentDate;
+	@Property(tlddoc = "A Date object specifying the date that is currently displayed in the client. This attribute can be used to set an inital date to display or to programmatically set a date to display. This attribute will be automatically updated with the current date being displayed in the client as the user interacts with the component. If the current view mode is set to 'month', this Date object will be automatically changed to the first day of the given month. If the current view mode is set to 'week', this Date object will be automatically changed to the Sunday when the week starts. If the current view mode is set to 'day', this Date object will not change. The time values are irrelevant for this attribute. If this attribute is not specified, the current date is going to be used. This Date object is assumed to be in the time zone specified by the 'timeZone' attribute.")
+	private Date viewDate;
 
 	@Property(tlddoc = "Specifies the location of the sidebar or whether it should be hidden. Possible values are 'right', 'left', and 'hidden'.", defaultValue="right")
 	private String sideBar;
 
 	@Property(tlddoc = "Specifies where to display the event details after clicking on an event tag on the calendar. Possible values are 'sidebar', 'popup', and 'disabled'.", defaultValue="popup")
-	private String eventDetails;
+	private String showEventDetails;
 
 	@Property(tlddoc = "Specifies whether to display a tooltip next to an event, containing the event's detailed information.", defaultValue="false")
-	private boolean displayTooltip;
+	private boolean showTooltip;
 
-	@Property(tlddoc = "Enable or disable the built-in event addition controls. These controls appear in a popup when clicking on an empty area of a day square. Adding new events this way is only supported if the component value is an instance of any of the following four types: Array, List, Collection, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="enabled")
-	private String additionControls;
+	@Property(tlddoc = "Enable or disable the built-in event addition controls. These controls appear in the popup and sidebar event details view when clicking on an empty area of a day square or an empty time slot. Adding new events this way is only supported if the component value is an instance of any of the following four types: Array, List, Collection, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="true")
+	private boolean enableAddition;
 
-	@Property(tlddoc = "Enable or disable the built-in event editing controls. These controls only appear in the popup and sidebar event details view. Modifying events this way is only supported if the component value is an instance of any of the following three types: Array, List, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="enabled")
-	private String editingControls;
+	@Property(tlddoc = "Enable or disable the built-in event editing controls. These controls appear in the popup and sidebar event details view. Modifying events this way is only supported if the component value is an instance of any of the following three types: Array, List, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="true")
+	private boolean enableEditing;
 
-	@Property(tlddoc = "Enable or disable the built-in event deletion controls. These controls only appear in the popup and sidebar event details view. Deleting events this way is only supported if the component value is an instance of any of the following four types: Array, List, Collection, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="enabled")
-	private String deletionControls;
+	@Property(tlddoc = "Enable or disable the built-in event deletion controls. These controls appear in the popup and sidebar event details view. Deleting events this way is only supported if the component value is an instance of any of the following four types: Array, List, Collection, and org.icefaces.ace.model.schedule.LazyScheduleEventList.", defaultValue="true")
+	private boolean enableDeletion;
 
 	@Property(tlddoc = "Specifies the range of days that should be displayed at a time in the calendar. Possible values are 'month', 'week', 'day'.", defaultValue="month")
 	private String viewMode;
@@ -137,7 +137,7 @@ public class ScheduleMeta extends UIDataMeta {
     private boolean twelveHourClock;
 
     @Property(tlddoc = "Enabling applies an original styling to the day and time girds and to the events rendered on them in the month, week, and day views. This original styling makes it easier to read the information contained in the schedule by styling the contents in additional ways not covered by Themeroller themes. This styling is always the same, regardless of the theme being applied. Other parts of the schedule such as the title, sidebar and event details dialog are not affected by this styling. Setting this attribute to false prevents this original styling from being applied, leaving only the theme styling.", defaultValue = "true")
-    private boolean applyEnhancedStyling;
+    private boolean enhancedStylingEnabled;
 
 	@Field(defaultValue="-1")
 	private Integer currentYear;
