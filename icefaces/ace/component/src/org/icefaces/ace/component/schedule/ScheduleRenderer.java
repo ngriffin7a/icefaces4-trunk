@@ -116,7 +116,7 @@ public class ScheduleRenderer extends CoreRenderer {
 
 		// set current date values again if they were programmatically changed
 		boolean isCurrentDateProgrammaticallySet = false;
-		Date currentDate = schedule.getCurrentDate();
+		Date currentDate = schedule.getViewDate();
 		if (currentDate != null) {
 			ScheduleUtils.DateIntegerValues currentDateIntegerValues = 
 				ScheduleUtils.getDateIntegerValues(currentDate);
@@ -180,18 +180,18 @@ public class ScheduleRenderer extends CoreRenderer {
 		ScheduleUtils.DateIntegerValues dateIntegerValues =
 			new ScheduleUtils.DateIntegerValues(schedule.getCurrentYear(),
 				schedule.getCurrentMonth(), schedule.getCurrentDay(), 0, 0, 0);
-		schedule.setCurrentDate(ScheduleUtils.getDateFromIntegerValues(dateIntegerValues));
+		schedule.setViewDate(ScheduleUtils.getDateFromIntegerValues(dateIntegerValues));
 
 		schedule.resetDataModel();
 
-		String enhancedStylingClass = schedule.isApplyEnhancedStyling() ? " schedule-styling-enhanced" : "";
+		String enhancedStylingClass = schedule.isEnhancedStylingEnabled() ? " schedule-styling-enhanced" : "";
 		String sideBar = schedule.getSideBar();
 		String sideBarClass = "schedule-config-sidebar-right";
 		if (sideBar != null) {
 			if ("left".equalsIgnoreCase(sideBar)) sideBarClass = "schedule-config-sidebar-left";
 			else if ("hidden".equalsIgnoreCase(sideBar)) sideBarClass = "schedule-config-sidebar-hidden";
 		}
-		String eventDetails = schedule.getEventDetails();
+		String eventDetails = schedule.getShowEventDetails();
 		String eventDetailsClass = "schedule-config-details-popup";
 		if (eventDetails != null) {
 			if ("sidebar".equalsIgnoreCase(eventDetails)) {
@@ -206,7 +206,7 @@ public class ScheduleRenderer extends CoreRenderer {
 		} else {
 			eventDetails = "sidebar";
 		}
-		boolean displayTooltip = schedule.isDisplayTooltip();
+		boolean displayTooltip = schedule.isShowTooltip();
 		String tooltipClass = displayTooltip ? "schedule-config-details-tooltip" : "";
 		String scrollableClass = schedule.isScrollable() ? "schedule-config-scrollable" : "";
 
@@ -235,9 +235,9 @@ public class ScheduleRenderer extends CoreRenderer {
 					.entry("eventDetails", eventDetails)
 					.entry("displayTooltip", displayTooltip)
 					.entry("defaultDuration", schedule.getDefaultDuration())
-					.entry("isEventAddition", "disabled".equalsIgnoreCase(schedule.getAdditionControls()) ? false : true)
-					.entry("isEventEditing", "disabled".equalsIgnoreCase(schedule.getEditingControls()) ? false : true)
-					.entry("isEventDeletion", "disabled".equalsIgnoreCase(schedule.getDeletionControls()) ? false : true);
+					.entry("isEventAddition", schedule.isEnableAddition())
+					.entry("isEventEditing", schedule.isEnableEditing())
+					.entry("isEventDeletion", schedule.isEnableDeletion());
 
 					if (schedule.isScrollable()) jb.entry("scrollHeight", schedule.getScrollHeight());
 					if (schedule.isTwelveHourClock()) jb.entry("isTwelveHourClock", true);

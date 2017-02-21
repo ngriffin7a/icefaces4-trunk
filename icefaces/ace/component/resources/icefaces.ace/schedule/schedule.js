@@ -79,7 +79,7 @@ ice.ace.Schedule = function(id, cfg) {
 			self.jqRoot.find('.calendar-day-' + eventData.startDate + ' .schedule-state').addClass('schedule-selected');
 		}
 		document.getElementById(self.id + '_selectedDate').setAttribute('value', eventData.startDate);
-		if (behaviors && behaviors.eventClick) {
+		if (behaviors && behaviors.selectEvent) {
 			self.sendClickRequest(event, 'event', eventIndex);
 		}
 	});
@@ -484,7 +484,7 @@ ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, 
 
 	document.getElementById(this.id + '_selectedDate').setAttribute('value', ''); // clear selected date
 
-	if ((type == 'next' && !behaviors.next) || (type == 'previous' && !behaviors.previous)) {
+	if ((type == 'next' && !behaviors.navNext) || (type == 'previous' && !behaviors.navPrevious)) {
 		if (!this.cfg.isLazy) return;
 		options = {
 			source: this.id,
@@ -517,10 +517,10 @@ ice.ace.Schedule.prototype.sendNavigationRequest = function(event, year, month, 
 
     options.params = params;
 
-	if (type == 'next' && behaviors && behaviors.next) {
-		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.next, options));
-	} else if (type == 'previous' && behaviors && behaviors.previous) {
-		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.previous, options));
+	if (type == 'next' && behaviors && behaviors.navNext) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.navNext, options));
+	} else if (type == 'previous' && behaviors && behaviors.navPrevious) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.navPrevious, options));
 	} else {
 		ice.ace.AjaxRequest(options);
 	}
@@ -565,11 +565,11 @@ ice.ace.Schedule.prototype.sendClickRequest = function(event, type, data) {
     var options = {};
 	var behaviors = this.cfg.behaviors || {};
 
-	if (!behaviors.eventClick && !behaviors.dayDblclick && !behaviors.timeDblclick)
+	if (!behaviors.selectEvent && !behaviors.dayDblclick && !behaviors.timeDblclick)
 		return;
 
     var params = {};
-	if (type == 'event') params[this.id + "_eventClick"] = data;
+	if (type == 'event') params[this.id + "_selectEvent"] = data;
     else if (type == 'day') params[this.id + "_dayDblclick"] = data;
     else if (type == 'time') params[this.id + "_timeDblclick"] = data;
 	else return;
@@ -589,8 +589,8 @@ ice.ace.Schedule.prototype.sendClickRequest = function(event, type, data) {
 
     options.params = params;
 
-	if (type == 'event' && behaviors.eventClick) {
-		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.eventClick, options));
+	if (type == 'event' && behaviors.selectEvent) {
+		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.selectEvent, options));
 	} else if (type == 'day' && behaviors.dayDblclick) {
 		ice.ace.AjaxRequest(ice.ace.extendAjaxArgs(behaviors.dayDblclick, options));
 	} else if (type == 'time' && behaviors.timeDblclick) {
