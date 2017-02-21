@@ -128,6 +128,9 @@
 					keepbutton = document.createElement('a'),
 					cancelbutton = document.createElement('a'),
 					audio = document.createElement('audio'),
+					timer = document.createElement('div'),
+					timerSpan = document.createElement('span'),
+					recDotCanvas = document.createElement('canvas'),
 					options = {},
 					audioContext = new AudioContext();
 					audioInput = null,
@@ -145,6 +148,13 @@
 				closeBtn.innerHTML = "<i class='icon-remove'></i>";
 				
 				audioCtr.id = id + '_audioCtr';
+
+				timer.id = 'timer_' + id;
+				timer.style.padding = '10px';
+				timerSpan.innerHTML = '00:00';
+				timerSpan.style.marginLeft = '10px';
+				recDotCanvas.width = 16;
+				recDotCanvas.height = 16;
 				
 				recordbutton.id = 'record_' + id;
 				
@@ -163,7 +173,11 @@
 				popup.appendChild(closeBtn);
 				popup.appendChild(audioCtr);
 				audio.setAttribute('controls', 'controls');
+				audio.classList.add('mobi-hidden');
 				popup.appendChild(audio);
+				timer.appendChild(recDotCanvas);
+				timer.appendChild(timerSpan);
+				popup.appendChild(timer);
 				popup.appendChild(recordbutton);
 				popup.appendChild(keepbutton);
 				popup.appendChild(cancelbutton);
@@ -213,6 +227,8 @@
 						audioRecorder.stop();
 						audioRecorder.exportWAV(doneEncoding);
 						recording = false;
+						stopTimer();
+						audio.classList.remove('mobi-hidden');
 						keepbutton.classList.remove('mobi-hidden');
 						recordbutton.innerHTML = 'Redo Recording';
 						var markup = buttonLabel;
@@ -222,8 +238,10 @@
 						audioRecorder.clear();
 						audioRecorder.record();
 						recording = true;
+						audio.classList.add('mobi-hidden');
 						keepbutton.classList.add('mobi-hidden');
 						recordbutton.innerHTML = 'Stop Recording';
+						startTimer();
 						delete audio.src;
 					}
 				}
@@ -238,6 +256,35 @@
 
 				function cancelrecording(){
 					document.body.removeChild(popup);
+				}
+
+				var timerObserver;
+
+				function startTimer() {
+					var context = recDotCanvas.getContext('2d');
+					context.beginPath();
+					context.arc(8, 8, 8, 0, 2 * Math.PI, false);
+					context.fillStyle = 'red';
+					context.fill();
+
+					timerSpan.innerHTML = '00:00';
+					timer.classList.remove('mobi-hidden');
+					var totalSeconds = 0, seconds, minutes;
+					timerObserver = setInterval(function() {
+						++totalSeconds;
+						seconds = totalSeconds % 60;
+						minutes = parseInt(totalSeconds / 60);
+						sSeconds = seconds < 10 ? '0' + seconds : seconds;
+						sMinutes = minutes < 10 ? '0' + minutes : minutes;
+						timerSpan.innerHTML = sMinutes + ':' + sSeconds;
+					}, 1000);
+				}
+
+				function stopTimer() {
+					//timer.classList.add('mobi-hidden');
+					clearInterval(timerObserver);
+					var context = recDotCanvas.getContext('2d');
+					context.clearRect(0, 0, 16, 16);
 				}
 
 				function doneEncoding(blob) {
@@ -291,6 +338,12 @@
 					ev.preventDefault();
 				});
 				
+				function adjustAudioElementWidth() {
+					if (screen && screen.width <= 640) audio.setAttribute('style', 'width: ' + (screen.width / 2) + 'px');
+				}
+				window.addEventListener('orientationchange', adjustAudioElementWidth);
+				adjustAudioElementWidth();
+
 				options = {
 					'audio': {
 						'mandatory': {
