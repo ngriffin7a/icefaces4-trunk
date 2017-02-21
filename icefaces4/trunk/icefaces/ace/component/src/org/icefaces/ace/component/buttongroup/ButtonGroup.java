@@ -16,7 +16,9 @@
 
 package org.icefaces.ace.component.buttongroup;
 
-public class ButtonGroup extends ButtonGroupBase {
+import javax.faces.component.NamingContainer;
+
+public class ButtonGroup extends ButtonGroupBase implements NamingContainer{
     public static final String GROUP_LIST_KEY = "org.icefaces.ace.buttonGroup.LIST_KEY";
     public static final String GROUP_PARENT_ID = "org.icefaces.ace.buttonGroup.PARENT_ID";
 }

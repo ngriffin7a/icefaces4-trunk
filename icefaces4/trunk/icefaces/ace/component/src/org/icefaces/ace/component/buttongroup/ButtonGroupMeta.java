@@ -32,7 +32,7 @@ import org.icefaces.resources.ICEResourceLibrary;
         extendsClass = "javax.faces.component.UIComponentBase",
         componentType = "org.icefaces.ace.component.ButtonGroup",
         rendererType = "org.icefaces.ace.component.ButtonGroupRenderer",
-        componentFamily = "org.icefaces.ace.component.ButtonGroup",
+        componentFamily = "javax.faces.NamingContainer",
         tlddoc = "")
 @ICEResourceLibrary(ACEResourceNames.ACE_LIBRARY)
 @ICEResourceDependencies({
