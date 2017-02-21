@@ -44,14 +44,14 @@
 			</ace:panel>
 			<ace:schedule 	id="schedule"
 							value="#{scheduleBean.lazyScheduleEventList}"
-							showEventDetails="disabled"
-							showTooltip="true"
+							showEventDetails="popup"
+							showTooltip="false"
 							scrollable="false"
 							sideBar="hidden"
 							enhancedStylingEnabled="false"
-							additionEnabled="false"
-							editingEnabled="false"
-							deletionEnabled="false"
+							additionEnabled="true"
+							editingEnabled="true"
+							deletionEnabled="true"
 							timeZone="#{scheduleBean.timeZone}"
 							viewMode="#{scheduleBean.viewMode}" />
         </h:form>

@@ -26,6 +26,17 @@
     <ui:param name="description" value="#{msgs['example.ace.accordionpanel.description']}"/>
 
     <ui:define name="example">
+		<style type="text/css">
+			.ice-ace-schedule .schedule-event.meeting {
+				background-image: none;
+				background-color: #fc6;
+				border-color: #f93;
+			}
+			.ice-ace-schedule .schedule-list-event.ui-state-highlight {
+				background-image: none;
+				background-color: #efefff;
+			}
+		</style>
         <h:form id="form">
 			<ace:panel header="Configuration">
 				<h:panelGrid width="100%" columns="2" cellpadding="6" cellspacing="6">
@@ -40,18 +51,36 @@
 							<ace:ajax render="@all"/>
 							<f:selectItems value="#{scheduleBean.timeZoneList}" />
 						</ace:selectMenu>
+						<ace:checkboxButton id="scrollable" value="#{scheduleBean.scrollable}"
+											label="Enable scrolling (Week and Day views): " labelPosition="left">
+							<ace:ajax render="@all"/>
+						</ace:checkboxButton>
+						<ace:selectMenu id="sideBar" value="#{scheduleBean.sideBar}"
+										label="Select side bar location: " labelPosition="top">
+							<ace:ajax render="@all"/>
+							<f:selectItem itemValue="right" itemLabel="Right" />
+							<f:selectItem itemValue="left" itemLabel="Left" />
+							<f:selectItem itemValue="hidden" itemLabel="Hidden" />
+						</ace:selectMenu>
+						<ace:textEntry 	id="scrollHeight" value="#{scheduleBean.scrollHeight}"
+										label="Set scroll height: " labelPosition="left">
+							<ace:ajax render="@all"/>
+						</ace:textEntry>
+						<ace:selectMenu id="eventDetails" value="#{scheduleBean.eventDetails}"
+										label="Select event details mode: " labelPosition="top">
+							<ace:ajax render="@all"/>
+							<f:selectItem itemValue="popup" itemLabel="Pop-up" />
+							<f:selectItem itemValue="sidebar" itemLabel="Side Bar" />
+							<f:selectItem itemValue="disabled" itemLabel="Disabled" />
+						</ace:selectMenu>
 				</h:panelGrid>
 			</ace:panel>
 			<ace:schedule 	id="schedule"
 							value="#{scheduleBean.lazyScheduleEventList}"
-							showEventDetails="disabled"
-							showTooltip="true"
-							scrollable="false"
-							sideBar="hidden"
-							enhancedStylingEnabled="false"
-							additionEnabled="false"
-							editingEnabled="false"
-							deletionEnabled="false"
+							eventDetails="#{scheduleBean.eventDetails}"
+							scrollable="#{scheduleBean.scrollable}"
+							scrollHeight="#{scheduleBean.scrollHeight}"
+							sideBar="#{scheduleBean.sideBar}"
 							timeZone="#{scheduleBean.timeZone}"
 							viewMode="#{scheduleBean.viewMode}" />
         </h:form>

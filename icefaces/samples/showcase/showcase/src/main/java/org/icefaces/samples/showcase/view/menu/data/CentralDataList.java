@@ -786,6 +786,20 @@ public class CentralDataList {
 						new Demo(msgs("overview"), msgs("example.ace.videoPlayer.description"),
 								 "videoPlayer", "videoPlayer.xhtml", "VideoPlayerBean.java"))
 		));
+
+		toReturn.add(new CategoryGroup(msgs("menu.ace.group.schedule.title"),
+				new ComponentGroup("ace:schedule", "Schedule", "schedule.html",
+						new Demo(msgs("overview"), msgs("example.ace.schedule.description"),
+								 "schedule", "schedule.xhtml", "ScheduleBean.java"),
+						new Demo(msgs("example.ace.schedule.event.title"), msgs("example.ace.schedule.event.description"),
+								 "schedule", "scheduleEventEditing.xhtml", "ScheduleEventEditingBean.java"),
+						new Demo(msgs("example.ace.schedule.lazy.title"), msgs("example.ace.schedule.lazy.description"),
+								 "schedule", "scheduleLazyLoading.xhtml", "ScheduleLazyLoadingBean.java"),
+						new Demo(msgs("example.ace.schedule.config.title"), msgs("example.ace.schedule.config.description"),
+								 "schedule", "scheduleConfiguration.xhtml", "ScheduleConfigurationBean.java"),
+						new Demo(msgs("example.ace.schedule.styling.title"), msgs("example.ace.schedule.styling.description"),
+								 "schedule", "scheduleCustomStyling.xhtml", "ScheduleCustomStylingBean.java"))
+		));
 	
 		toReturn.add(new CategoryGroup(msgs("menu.ace.group.validator.title"),
 				new ComponentGroup("ace:clientValidateRequired", "ClientValidateRequired", "clientValidateRequired.html",
@@ -854,10 +868,7 @@ public class CentralDataList {
 						new Demo(msgs("overview"), msgs("example.ace.resizable.description"),
 								 "resizable", "resizable.xhtml", "ResizableBean.java"),
 						new Demo(msgs("menu.ace.resizable.subMenu.resizeListener"), msgs("example.ace.resizableListener.description"),
-								 "resizable", "resizeListener.xhtml", "ResizeListenerBean.java")),
-				new ComponentGroup("ace:schedule", "Schedule", "schedule.html",
-						new Demo(msgs("overview"), msgs("example.ace.schedule.description"),
-								 "schedule", "schedule.xhtml", "ScheduleBean.java"))
+								 "resizable", "resizeListener.xhtml", "ResizeListenerBean.java"))
 		));
 		
 		return toReturn;

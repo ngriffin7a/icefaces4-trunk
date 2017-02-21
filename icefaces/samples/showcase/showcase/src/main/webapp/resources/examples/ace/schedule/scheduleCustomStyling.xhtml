@@ -26,6 +26,46 @@
     <ui:param name="description" value="#{msgs['example.ace.accordionpanel.description']}"/>
 
     <ui:define name="example">
+		<style type="text/css">
+			/* Custom style classes */
+			/* With enhanced styling enabled */
+			.ice-ace-schedule .schedule-event.meeting {
+				background-image: none;
+				background-color: #ffc;
+				border-color: #cc6;
+			}
+			.ice-ace-schedule .schedule-event.public {
+				background-image: none;
+				background-color: #cfc;
+				border-color: #696;
+			}
+
+			/* Custom style classes */
+			/* With enhanced styling disabled */
+			.ice-ace-schedule .schedule-styling-enhanced .schedule-days .ui-widget-content .schedule-event.meeting {
+				background-color: #ffc;
+				border-color: #cc6;
+			}
+
+			.ice-ace-schedule .schedule-styling-enhanced .schedule-days .ui-widget-content .schedule-event.public {
+				background-color: #cfc;
+				border-color: #696;
+			}
+
+			.ice-ace-schedule .schedule-styling-enhanced .schedule-days .schedule-event-container .schedule-event.meeting {
+				background-color: #ffc;
+				border-color: #cc6;
+			}
+
+			.ice-ace-schedule .schedule-styling-enhanced.schedule-view-week .schedule-days .ui-widget-content .schedule-event.public, .ice-ace-schedule .schedule-styling-enhanced.schedule-view-day .schedule-days .ui-widget-content .schedule-event.public {
+				background-color: #cfc;
+				border-left: 3px solid #696;
+				border-top: none;
+				border-right: none;
+				border-bottom: none;
+				padding: 2px 2px 2px 3px;
+			}
+		</style>
         <h:form id="form">
 			<ace:panel header="Configuration">
 				<h:panelGrid width="100%" columns="2" cellpadding="6" cellspacing="6">
@@ -48,7 +88,7 @@
 							showTooltip="true"
 							scrollable="false"
 							sideBar="hidden"
-							enhancedStylingEnabled="false"
+							enhancedStylingEnabled="true"
 							additionEnabled="false"
 							editingEnabled="false"
 							deletionEnabled="false"
